@@ -6,9 +6,10 @@
 import React from 'react';
 
 import { PrimaryButton } from '@components/Button';
-import { FormProvider, useForm } from '@components/Form';
+import { FormProvider } from '@components/Form';
+import { Item } from '@components/Form/Form.components';
+import { useForm } from '@components/Form/Form.state';
 import { useSignup } from '../../Signup.state';
-import SignupFormItem from './SignupFormItem';
 
 const Title = () => {
   const { form } = useSignup();
@@ -21,31 +22,34 @@ const Description = () => {
 };
 
 const SubmitButton = () => {
-  const { canSubmit } = useForm();
-
   return (
-    <PrimaryButton
-      className="s-signup-submit-btn"
-      disabled={!canSubmit}
-      title="Submit Application"
-    />
+    <PrimaryButton className="s-signup-submit-btn" title="Submit Application" />
   );
 };
 
 // -----------------------------------------------------------------------------
+
+const FormContent = () => {
+  const { items } = useForm();
+  return (
+    <>
+      {items.map((props) => (
+        <Item {...props} />
+      ))}
+    </>
+  );
+};
 
 export default () => {
   const { form } = useSignup();
   if (!form) return null;
 
   return (
-    <FormProvider>
+    <FormProvider initialItems={form.items}>
       <div className="s-signup">
         <Title />
         <Description />
-        {form.items.map((item) => (
-          <SignupFormItem {...item} />
-        ))}
+        <FormContent />
         <SubmitButton />
       </div>
     </FormProvider>

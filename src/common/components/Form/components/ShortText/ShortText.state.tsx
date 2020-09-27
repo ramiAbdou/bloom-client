@@ -3,10 +3,9 @@
  * @author Rami Abdou
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { ReactNode, useContext, useState } from 'react';
 
-import { useForm } from '@components/Form/Form.state';
-import { useFormItem } from '../FormItem/FormItem.state';
+import { useForm } from '../../Form.state';
 
 /* 
   _____                                 _   ___ _        _       
@@ -17,15 +16,15 @@ import { useFormItem } from '../FormItem/FormItem.state';
 */
 
 type ShortTextState = {
-  maxCharacters?: number;
-  setMaxCharacters: (value: number) => void;
+  isActive: boolean;
+  setIsActive: (flag: boolean) => void;
   text: string;
   updateText: (value: string) => void;
 };
 
 const initialState: ShortTextState = {
-  maxCharacters: null,
-  setMaxCharacters: () => {},
+  isActive: false,
+  setIsActive: () => {},
   text: '',
   updateText: () => {}
 };
@@ -47,18 +46,25 @@ export const useShortText = () => useContext(ShortTextContext);
   |_| |_| \___/\_/|_\__,_\___|_|  
 */
 
-export default ({ children }) => {
-  const [maxCharacters, setMaxCharacters] = useState(null);
-  const [text, setText] = useState('');
+export type ShortTextProviderProps = {
+  children?: ReactNode;
+  initialValue: string;
+  maxCharacters?: number;
+  title: string;
+  validate?: (value: string) => string;
+};
 
-  const { setValue } = useForm();
-  const { id } = useFormItem();
+export default ({
+  children,
+  initialValue,
+  maxCharacters,
+  title,
+  validate
+}: ShortTextProviderProps) => {
+  const [isActive, setIsActive] = useState(false);
+  const [text, setText] = useState(initialValue ?? '');
 
-  // When the text changes in the input, we should update the value in the
-  // parents Form's map of values.
-  useEffect(() => {
-    if (id) setValue(id, text);
-  }, [id, text]);
+  const { updateItem } = useForm();
 
   const updateText = (value: string) => {
     // If there's no value, set to empty string.
@@ -66,17 +72,15 @@ export default ({ children }) => {
     // If the max characters are specfied and the value is longer than that,
     // don't allow the user to type any more characters.
     else if (maxCharacters && value.length > maxCharacters) return;
+
     setText(value);
+    const errorMessage = validate ? validate(value) : '';
+    updateItem(title, { errorMessage, value });
   };
 
   return (
     <ShortTextContext.Provider
-      value={{
-        maxCharacters,
-        setMaxCharacters,
-        text,
-        updateText
-      }}
+      value={{ isActive, setIsActive, text, updateText }}
     >
       {children}
     </ShortTextContext.Provider>

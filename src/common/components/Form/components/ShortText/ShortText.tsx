@@ -4,20 +4,22 @@
  * @author Rami Abdou
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import useOnClickOutside from 'use-onclickoutside';
 
 import { useScreen } from '@state/screen';
-import { ShortTextProps, TextBarProps } from '../../Form.types';
-import FormItem from '../FormItem/FormItem';
-import FormItemProvider, { useFormItem } from '../FormItem/FormItem.state';
-import ShortTextProvider, { useShortText } from './ShortText.state';
+import CSSModifier from '@util/CSSModifier';
+import ShortTextProvider, {
+  ShortTextProviderProps,
+  useShortText
+} from './ShortText.state';
 
-const TextBar = ({ hasError, placeholder }: TextBarProps) => {
-  const { activate, inactivate, isActive } = useFormItem();
+const TextBar = () => {
   const { isMobile } = useScreen();
-  const { text, updateText } = useShortText();
+  const { isActive, setIsActive, text, updateText } = useShortText();
 
   const inputRef: React.MutableRefObject<HTMLInputElement> = useRef(null);
+  useOnClickOutside(inputRef, () => setIsActive(false));
 
   // This scrolls the input element as far as possible to the right, where it
   // also places the cursor.
@@ -28,28 +30,30 @@ const TextBar = ({ hasError, placeholder }: TextBarProps) => {
   };
 
   const onClick = () => {
-    activate();
+    setIsActive(true);
     if (isMobile) scrollToEnd();
   };
 
-  let className: string;
-  if (hasError && isActive) className = 'c-form-input--error';
-  else if (isActive) className = 'c-form-input--active';
-  else className = 'c-form-input';
+  const className = new CSSModifier()
+    .baseClass('c-form-input')
+    .addClass(isActive, 'c-form-input--active');
 
   return (
-    <button className={className} onFocus={() => inputRef.current.focus()}>
+    <button
+      className={className.value}
+      onFocus={() => inputRef.current.focus()}
+    >
       <input
         ref={inputRef}
         className="c-form-input__txt"
-        placeholder={text || placeholder || ''}
+        placeholder={text || ''}
         type="text"
         value={text}
         onChange={({ target }) => updateText(target.value)}
         onClick={onClick}
         onFocus={onClick}
         // If the user presses tab, inactivate the current form item.
-        onKeyDown={({ keyCode }) => keyCode === 9 && inactivate()}
+        onKeyDown={({ keyCode }) => keyCode === 9 && setIsActive(false)}
       />
     </button>
   );
@@ -57,57 +61,8 @@ const TextBar = ({ hasError, placeholder }: TextBarProps) => {
 
 // -----------------------------------------------------------------------------
 
-const ShortTextContent = ({
-  initialValue,
-  maxCharacters,
-  placeholder,
-  validate,
-  ...props
-}: ShortTextProps) => {
-  const [error, setError] = useState('');
-
-  const { text, setMaxCharacters, updateText } = useShortText();
-
-  useEffect(() => {
-    updateText(initialValue || '');
-    setMaxCharacters(maxCharacters);
-  }, []);
-
-  useEffect(() => {
-    // If the value hasn't changed and there's no validate function, don't
-    // execute this error-checking hook.
-    if (!validate) {
-      if (error) setError('');
-      return () => {};
-    }
-
-    // First, clear the error when the user starts typing.
-    setError('');
-
-    // After 1000 seconds, do the error check.
-    const delayErrorCheck = setTimeout(() => {
-      setError(validate(text));
-    }, 1000);
-
-    // If the value changes, clear the timeout that we had just set above.
-    return () => clearTimeout(delayErrorCheck);
-  }, [text]);
-
-  return (
-    <FormItem
-      errorMessage={error}
-      maxCharacters={maxCharacters}
-      textBar={<TextBar hasError={!!error} placeholder={placeholder} />}
-      value={text}
-      {...props}
-    />
-  );
-};
-
-export default (props: ShortTextProps) => (
-  <FormItemProvider>
-    <ShortTextProvider>
-      <ShortTextContent {...props} />
-    </ShortTextProvider>
-  </FormItemProvider>
+export default (props: ShortTextProviderProps) => (
+  <ShortTextProvider {...props}>
+    <TextBar />
+  </ShortTextProvider>
 );

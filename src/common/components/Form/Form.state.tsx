@@ -5,9 +5,9 @@
  * @author Rami Abdou
  */
 
-import React, { useContext, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 
-import { FormItemValue } from './Form.types';
+import { FormItem } from './Form.types';
 
 /* 
   _____                                 _   ___ _        _       
@@ -17,25 +17,12 @@ import { FormItemValue } from './Form.types';
        |__/|_|                                                   
 */
 
-type FormMap = Map<string, FormItemValue>;
-
 type FormState = {
-  activeItem: string;
-  canSubmit: boolean;
-  setActiveItem: (id: string) => void;
-  setValue: (id: string, value: any) => void;
-  submitForm: () => Promise<void>;
-  valueOf: (id: string) => any;
+  items: FormItem[];
+  updateItem: (title: string, updatedItem: Partial<FormItem>) => void;
 };
 
-const initialState: FormState = {
-  activeItem: '',
-  canSubmit: false,
-  setActiveItem: () => {},
-  setValue: () => {},
-  submitForm: () => Promise.resolve(),
-  valueOf: () => ''
-};
+const initialState: FormState = { items: [], updateItem: () => {} };
 
 /* 
    ___         _           _       __  _  _          _   
@@ -54,37 +41,25 @@ export const useForm = () => useContext(FormContext);
   |_| |_| \___/\_/|_\__,_\___|_|  
 */
 
-// category
-// errorMessage
-// required
-// title
-// value
+type FormProviderProps = { children?: ReactNode; initialItems: FormItem[] };
 
-export default ({ children }) => {
-  const [activeItem, setActiveItem] = useState('');
-  const [canSubmit] = useState(false);
-  const [map, setMap] = useState<FormMap>(new Map<string, FormItemValue>());
+export default ({ children, initialItems }: FormProviderProps) => {
+  const [items, setItems] = useState<FormItem[]>([]);
 
-  const setValue = (id: string, value: any) => {
-    const {};
-    setMap(map.set(id, { value }));
+  useEffect(() => setItems(initialItems), []);
+
+  const updateItem = (title: string, updatedItem: Partial<FormItem>) => {
+    const index = items.findIndex(({ title: key }) => key === title);
+
+    setItems([
+      ...items.slice(0, index),
+      { ...items[index], ...updatedItem },
+      ...items.slice(index + 1, items.length)
+    ]);
   };
 
-  const submitForm = async (): Promise<void> => {};
-
-  const valueOf = (id: string): FormItemValue => map.get(id);
-
   return (
-    <FormContext.Provider
-      value={{
-        activeItem,
-        canSubmit,
-        setActiveItem,
-        setValue,
-        submitForm,
-        valueOf
-      }}
-    >
+    <FormContext.Provider value={{ items, updateItem }}>
       {children}
     </FormContext.Provider>
   );
