@@ -7,7 +7,7 @@
 type ButtonProps = {
   className?: string;
   onClick?: VoidFunction;
-  title?: string;
+  title: string;
 };
 
 type ButtonDisabledProps = { disabled?: boolean };

@@ -34,7 +34,7 @@ export type FormItem = {
   category?: FormQuestionCategory;
   description?: string;
   options: string[];
-  required: boolean;
+  required?: boolean;
   title: string;
   type: FormQuestionType;
 };

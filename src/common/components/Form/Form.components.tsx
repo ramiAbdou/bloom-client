@@ -7,7 +7,7 @@ import React, { useRef } from 'react';
 
 import { FormQuestionType } from '@constants';
 import ShortText from './components/ShortText/ShortText';
-import { FormItem } from './Form.types';
+import { FormItemData } from './Form.types';
 
 // There are 2 options for the label: 1) the standard Label tag or 2) if the
 // component is a ShortText or LongText component and uses a character limit,
@@ -48,7 +48,7 @@ export const Item = ({
   title,
   type,
   validate
-}: FormItem) => {
+}: FormItemData) => {
   const ref = useRef(null);
 
   const baseProps = { initialValue, maxCharacters, title, validate };

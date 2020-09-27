@@ -7,7 +7,7 @@
 
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 
-import { FormItem } from './Form.types';
+import { FormItemData } from './Form.types';
 
 /* 
   _____                                 _   ___ _        _       
@@ -18,11 +18,16 @@ import { FormItem } from './Form.types';
 */
 
 type FormState = {
-  items: FormItem[];
-  updateItem: (title: string, updatedItem: Partial<FormItem>) => void;
+  items: FormItemData[];
+  isCompleted: boolean;
+  updateItem: (title: string, updatedItem: Partial<FormItemData>) => void;
 };
 
-const initialState: FormState = { items: [], updateItem: () => {} };
+const initialState: FormState = {
+  isCompleted: false,
+  items: [],
+  updateItem: () => {}
+};
 
 /* 
    ___         _           _       __  _  _          _   
@@ -41,14 +46,14 @@ export const useForm = () => useContext(FormContext);
   |_| |_| \___/\_/|_\__,_\___|_|  
 */
 
-type FormProviderProps = { children?: ReactNode; initialItems: FormItem[] };
+type FormProviderProps = { children?: ReactNode; initialItems: FormItemData[] };
 
 export default ({ children, initialItems }: FormProviderProps) => {
-  const [items, setItems] = useState<FormItem[]>([]);
+  const [items, setItems] = useState<FormItemData[]>([]);
 
   useEffect(() => setItems(initialItems), []);
 
-  const updateItem = (title: string, updatedItem: Partial<FormItem>) => {
+  const updateItem = (title: string, updatedItem: Partial<FormItemData>) => {
     const index = items.findIndex(({ title: key }) => key === title);
 
     setItems([
@@ -58,8 +63,14 @@ export default ({ children, initialItems }: FormProviderProps) => {
     ]);
   };
 
+  // Is complete if every item is either: 1) not required or 2) required and a
+  // value exists.
+  const isCompleted: boolean = items.every(
+    ({ required, value }: FormItemData) => !required || (required && value)
+  );
+
   return (
-    <FormContext.Provider value={{ items, updateItem }}>
+    <FormContext.Provider value={{ isCompleted, items, updateItem }}>
       {children}
     </FormContext.Provider>
   );

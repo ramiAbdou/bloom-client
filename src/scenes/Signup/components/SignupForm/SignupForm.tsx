@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import shortid from 'shortid';
 
 import { PrimaryButton } from '@components/Button';
 import { FormProvider } from '@components/Form';
@@ -22,8 +23,14 @@ const Description = () => {
 };
 
 const SubmitButton = () => {
+  const { isCompleted } = useForm();
+
   return (
-    <PrimaryButton className="s-signup-submit-btn" title="Submit Application" />
+    <PrimaryButton
+      className="s-signup-submit-btn"
+      disabled={!isCompleted}
+      title="Submit Application"
+    />
   );
 };
 
@@ -31,10 +38,11 @@ const SubmitButton = () => {
 
 const FormContent = () => {
   const { items } = useForm();
+
   return (
     <>
       {items.map((props) => (
-        <Item {...props} />
+        <Item key={shortid()} {...props} />
       ))}
     </>
   );

@@ -24,7 +24,7 @@ const TextBar = () => {
   // This scrolls the input element as far as possible to the right, where it
   // also places the cursor.
   const scrollToEnd = () => {
-    const element = inputRef.current;
+    const { current: element } = inputRef;
     element.scrollLeft = element.scrollWidth - element.clientWidth;
     element.selectionStart = text.length;
   };
@@ -34,15 +34,12 @@ const TextBar = () => {
     if (isMobile) scrollToEnd();
   };
 
-  const className = new CSSModifier()
-    .baseClass('c-form-input')
+  const { css } = new CSSModifier()
+    .class('c-form-input')
     .addClass(isActive, 'c-form-input--active');
 
   return (
-    <button
-      className={className.value}
-      onFocus={() => inputRef.current.focus()}
-    >
+    <button className={css} onFocus={() => inputRef.current.focus()}>
       <input
         ref={inputRef}
         className="c-form-input__txt"

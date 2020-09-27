@@ -6,15 +6,16 @@
 
 import { FormQuestionCategory, FormQuestionType } from '@constants';
 
-export type FormItem = {
+export type FormItemData = {
   category?: FormQuestionCategory;
   description?: string;
   errorMessage?: string;
-  initialValue: any;
+  initialValue?: any;
   maxCharacters?: number;
+  options?: string[];
   required?: boolean;
   title: string;
   type: FormQuestionType;
-  value: any;
+  value?: any;
   validate?: (value: string) => string;
 };
