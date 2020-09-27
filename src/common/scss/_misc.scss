@@ -1,0 +1,26 @@
+/*
+  __  __ _            _ _                           
+ |  \/  (_)___ __ ___| | |__ _ _ _  ___ ___ _  _ ___
+ | |\/| | (_-</ _/ -_) | / _` | ' \/ -_) _ \ || (_-<
+ |_|  |_|_/__/\__\___|_|_\__,_|_||_\___\___/\_,_/__/
+*/
+
+// All miscellaneous styling including shadows, filters and more.
+
+@import './colors';
+@import './spacing';
+
+.m-txt-gradient {
+  background: $bloom-gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.m-overflow-ellipses {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; // Number of lines to show in text.
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,55 @@
+/* 
+  ___          _   
+ | _ \___  ___| |_ 
+ |   / _ \/ _ \  _|
+ |_|_\___/\___/\__|
+*/
+
+@import './common/scss/breakpoints';
+@import './common/scss/colors';
+@import './common/scss/misc';
+@import './common/scss/spacing';
+@import './common/scss/typography';
+
+/* 
+   ___                       _   ___ _                   _      
+  / __|___ _ _  ___ _ _ __ _| | | __| |___ _ __  ___ _ _| |_ ___
+ | (_ / -_) ' \/ -_) '_/ _` | | | _|| / -_) '  \/ -_) ' \  _(_-<
+  \___\___|_||_\___|_| \__,_|_| |___|_\___|_|_|_\___|_||_\__/__/
+*/
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#root { @extend %flex-col; height: 100%; }
+
+#app {
+  background-color: $gray-6;
+  height: 100%;
+  left: 0;
+  overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+// Have all the text elements have a margin of 0, since most of the time we
+// want to implement our own margins regardless.
+
+h1,
+h2,
+h3,
+h4,
+p { margin: 0 }
+
+button,
+input,
+textarea { border: none; outline: none; }
+
+button { background: none; cursor: pointer; padding: 0; }
