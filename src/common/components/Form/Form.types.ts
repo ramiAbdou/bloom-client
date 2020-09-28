@@ -4,18 +4,11 @@
  * @author Rami Abdou
  */
 
-import { FormQuestionCategory, FormQuestionType } from '@constants';
+import { FormQuestion } from '@constants';
 
-export type FormItemData = {
-  category?: FormQuestionCategory;
-  description?: string;
+export interface FormItemData extends FormQuestion {
   errorMessage?: string;
-  initialValue?: any;
   maxCharacters?: number;
-  options?: string[];
-  required?: boolean;
-  title: string;
-  type: FormQuestionType;
   value?: any;
   validate?: (value: string) => string;
-};
+}

@@ -16,7 +16,7 @@ import { FormItemData } from './Form.types';
 
 type LabelProps = { length?: number; maxCharacters?: number; title: string };
 
-export const Label = ({ length, maxCharacters, title }: LabelProps) => {
+const Label = ({ length, maxCharacters, title }: LabelProps) => {
   const showCount = maxCharacters && length;
 
   return (
@@ -32,18 +32,13 @@ export const Label = ({ length, maxCharacters, title }: LabelProps) => {
   );
 };
 
-export const Description = ({ message }) => (
-  <p className="c-form-desc">{message}</p>
-);
+const Description = ({ message }) => <p className="c-form-desc">{message}</p>;
 
-export const ErrorMessage = ({ message }) => (
-  <p className="c-form-error">{message}</p>
-);
+const ErrorMessage = ({ message }) => <p className="c-form-error">{message}</p>;
 
-export const Item = ({
+export default ({
   description,
   errorMessage,
-  initialValue,
   maxCharacters,
   title,
   type,
@@ -51,7 +46,7 @@ export const Item = ({
 }: FormItemData) => {
   const ref = useRef(null);
 
-  const baseProps = { initialValue, maxCharacters, title, validate };
+  const baseProps = { maxCharacters, title, validate };
 
   let body = null;
   if (type === FormQuestionType.SHORT_TEXT) body = <ShortText {...baseProps} />;

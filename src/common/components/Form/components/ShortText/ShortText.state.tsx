@@ -48,7 +48,6 @@ export const useShortText = () => useContext(ShortTextContext);
 
 export type ShortTextProviderProps = {
   children?: ReactNode;
-  initialValue: string;
   maxCharacters?: number;
   title: string;
   validate?: (value: string) => string;
@@ -56,13 +55,12 @@ export type ShortTextProviderProps = {
 
 export default ({
   children,
-  initialValue,
   maxCharacters,
   title,
   validate
 }: ShortTextProviderProps) => {
   const [isActive, setIsActive] = useState(false);
-  const [text, setText] = useState(initialValue ?? '');
+  const [text, setText] = useState('');
 
   const { updateItem } = useForm();
 

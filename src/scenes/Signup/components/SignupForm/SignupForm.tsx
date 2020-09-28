@@ -8,8 +8,8 @@ import shortid from 'shortid';
 
 import { PrimaryButton } from '@components/Button';
 import { FormProvider } from '@components/Form';
-import { Item } from '@components/Form/Form.components';
 import { useForm } from '@components/Form/Form.state';
+import FormItem from '@components/Form/FormItem';
 import { useSignup } from '../../Signup.state';
 
 const Title = () => {
@@ -42,7 +42,7 @@ const FormContent = () => {
   return (
     <>
       {items.map((props) => (
-        <Item key={shortid()} {...props} />
+        <FormItem key={shortid()} {...props} />
       ))}
     </>
   );
@@ -53,7 +53,7 @@ export default () => {
   if (!form) return null;
 
   return (
-    <FormProvider initialItems={form.items}>
+    <FormProvider initialItems={form.questions}>
       <div className="s-signup">
         <Title />
         <Description />

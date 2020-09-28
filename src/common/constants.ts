@@ -30,7 +30,7 @@ export enum FormQuestionType {
   DROPDOWN_MULTIPLE = 'DROPDOWN_MULTIPLE'
 }
 
-export type FormItem = {
+export type FormQuestion = {
   category?: FormQuestionCategory;
   description?: string;
   options: string[];
@@ -39,4 +39,8 @@ export type FormItem = {
   type: FormQuestionType;
 };
 
-export type Form = { title: string; description?: string; items: FormItem[] };
+export type Form = {
+  title: string;
+  description?: string;
+  questions: FormQuestion[];
+};
