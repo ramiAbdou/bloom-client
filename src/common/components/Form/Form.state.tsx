@@ -18,14 +18,20 @@ import { FormItemData } from './Form.types';
 */
 
 type FormState = {
+  activeIndex: number;
+  getItem: (title: string) => FormItemData;
   items: FormItemData[];
   isCompleted: boolean;
+  setActiveIndex: (title: number) => void;
   updateItem: (title: string, updatedItem: Partial<FormItemData>) => void;
 };
 
 const initialState: FormState = {
+  activeIndex: -1,
+  getItem: () => null,
   isCompleted: false,
   items: [],
+  setActiveIndex: () => {},
   updateItem: () => {}
 };
 
@@ -49,9 +55,12 @@ export const useForm = () => useContext(FormContext);
 type FormProviderProps = { children?: ReactNode; initialItems: FormItemData[] };
 
 export default ({ children, initialItems }: FormProviderProps) => {
+  const [activeIndex, setActiveIndex] = useState(-1);
   const [items, setItems] = useState<FormItemData[]>([]);
 
   useEffect(() => setItems(initialItems), []);
+
+  const getItem = (title: string) => items.find((item) => item.title === title);
 
   const updateItem = (title: string, updatedItem: Partial<FormItemData>) => {
     const index = items.findIndex(({ title: key }) => key === title);
@@ -65,12 +74,23 @@ export default ({ children, initialItems }: FormProviderProps) => {
 
   // Is complete if every item is either: 1) not required or 2) required and a
   // value exists.
-  const isCompleted: boolean = items.every(
-    ({ required, value }: FormItemData) => !required || (required && value)
-  );
+  const isCompleted: boolean =
+    items &&
+    items.every(
+      ({ required, value }: FormItemData) => !required || (required && value)
+    );
 
   return (
-    <FormContext.Provider value={{ isCompleted, items, updateItem }}>
+    <FormContext.Provider
+      value={{
+        activeIndex,
+        getItem,
+        isCompleted,
+        items,
+        setActiveIndex,
+        updateItem
+      }}
+    >
       {children}
     </FormContext.Provider>
   );

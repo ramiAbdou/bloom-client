@@ -12,7 +12,7 @@ class SignupGQL extends GraphQL {
         membershipForm {
           title
           description
-          items {
+          questions {
             category
             description
             required

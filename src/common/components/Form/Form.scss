@@ -47,7 +47,8 @@ $PREF: 'c-form';
   background-color: $white;
   border: 1px $gray-4 solid;
   border-radius: 4px;
-  cursor: default;
+  color: $black;
+  cursor: text;
   height: $md;
   padding-left: 8px;
   padding-right: 8px;
@@ -56,11 +57,7 @@ $PREF: 'c-form';
 
 .#{$PREF}-input--active { border: 1px $orange-1 solid; }
 
-.#{$PREF}-input--error {
-  @extend .#{$PREF}-input; 
-
-  border: 1px $red solid;
-}
+.#{$PREF}-input--error { border: 1px $red solid; }
 
 .#{$PREF}-input--lg {
   @extend .#{$PREF}-input;
@@ -76,98 +73,4 @@ $PREF: 'c-form';
 
   border: 1px $orange-1 solid;
   height: 96px;
-}
-
-.#{$PREF}-input__txt {
-  color: $black;
-  cursor: text;
-  height: 100%;
-  padding: 0;
-  width: 100%;
-}
-
-.#{$PREF}-input--lg__txt { @extend .#{$PREF}-input__txt; height: 84px; }
-
-/* 
-  ___                   _                 
- |   \ _ _ ___ _ __  __| |_____ __ ___ _  
- | |) | '_/ _ \ '_ \/ _` / _ \ V  V / ' \ 
- |___/|_| \___/ .__/\__,_\___/\_/\_/|_||_|
-              |_|                         
-*/
-
-.#{$PREF}-dd-opt-ctr {
-  background-color: $white;
-  border-radius: $xxs;
-  box-shadow: 0 4px 5px rgba($color: $black, $alpha: 0.15);
-  margin-bottom: $lg;
-  padding-bottom: $xxs;
-  padding-top: $xxs;
-  position: absolute;
-}
-
-.#{$PREF}-dd-opt {
-  @extend %flex-ac;
-
-  background-color: $white;
-  height: $lg;
-  overflow: hidden;
-  width: 100%;
-
-  @media (hover: hover) {
-    &:hover { background-color: rgba($color: $orange-1, $alpha: 0.2); }
-  }
-}
-
-.#{$PREF}-dd-opt--multiple {
-  @extend .#{$PREF}-dd-opt;
-
-  @media (hover: hover) { &:hover { background-color: $white; } }
-}
-
-// The no result found message.
-.#{$PREF}-dd-opt--none {
-  @extend %flex-ac;
-  
-  height: $lg;
-  margin-left: $sm;
-  width: 100%;
-}
-
-.#{$PREF}-dd-opt__txt {
-  @extend .m-overflow-ellipses;
-
-  color: $black;
-  margin-left: 8px;
-  margin-right: 8px;
-  text-align: left;
-  text-transform: none;
-}
-
-.#{$PREF}-dd-opt__check-ctr {
-  @extend %flex-ac;
-  @extend %flex-c;
-
-  border-radius: 50%;
-  height: $md;
-  margin-left: $xs;
-  margin-right: $xxs;
-  padding: 0;
-  width: $md;
-
-  @media (hover: hover) {
-    &:hover { background-color: rgba($color: $orange-1, $alpha: 0.1); }
-  }
-  
-  /* stylelint-disable-next-line */
-  &:active { background-color: rgba($color: $orange-1, $alpha: 0.3); }
-}
-
-.#{$PREF}-dd-opt__check {
-  border: 1px $gray-4 solid;
-  border-radius: 2px;
-  height: 15px !important;
-  width: 15px !important;
-  
-  &--active { height: 15px !important; width: 15px !important; }
 }

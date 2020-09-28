@@ -33,7 +33,6 @@ const Label = ({ length, maxCharacters, title }: LabelProps) => {
 };
 
 const Description = ({ message }) => <p className="c-form-desc">{message}</p>;
-
 const ErrorMessage = ({ message }) => <p className="c-form-error">{message}</p>;
 
 export default ({
@@ -46,10 +45,11 @@ export default ({
 }: FormItemData) => {
   const ref = useRef(null);
 
-  const baseProps = { maxCharacters, title, validate };
+  const baseProps = { title };
+  const textProps = { ...baseProps, maxCharacters, validate };
 
   let body = null;
-  if (type === FormQuestionType.SHORT_TEXT) body = <ShortText {...baseProps} />;
+  if (type === FormQuestionType.SHORT_TEXT) body = <ShortText {...textProps} />;
 
   return (
     <div ref={ref} className="c-form-item">

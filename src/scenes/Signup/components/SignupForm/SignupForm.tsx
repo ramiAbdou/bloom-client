@@ -38,6 +38,7 @@ const SubmitButton = () => {
 
 const FormContent = () => {
   const { items } = useForm();
+  if (!items) return null;
 
   return (
     <>
