@@ -5,93 +5,55 @@
  * @author Rami Abdou
  */
 
-import React, { ReactNode, useContext, useEffect, useState } from 'react';
+import {
+  Action,
+  action,
+  Computed,
+  computed,
+  createContextStore
+} from 'easy-peasy';
 
 import { FormItemData } from './Form.types';
 
-/* 
-  _____                                 _   ___ _        _       
- |_   _|  _ _ __  ___ ___  __ _ _ _  __| | / __| |_ __ _| |_ ___ 
-   | || || | '_ \/ -_|_-< / _` | ' \/ _` | \__ \  _/ _` |  _/ -_)
-   |_| \_, | .__/\___/__/ \__,_|_||_\__,_| |___/\__\__,_|\__\___|
-       |__/|_|                                                   
-*/
-
-type FormState = {
-  activeIndex: number;
-  getItem: (title: string) => FormItemData;
+interface FormModel {
+  getItem: Computed<FormModel, (title: string) => FormItemData, {}>;
+  isCompleted: Computed<FormModel, boolean>;
   items: FormItemData[];
-  isCompleted: boolean;
-  setActiveIndex: (title: number) => void;
-  updateItem: (title: string, updatedItem: Partial<FormItemData>) => void;
-};
+  next: Action<FormModel, string>;
+  updateItem: Action<FormModel, Partial<FormItemData>>;
+}
 
-const initialState: FormState = {
-  activeIndex: -1,
-  getItem: () => null,
-  isCompleted: false,
+const model: FormModel = {
+  getItem: computed(({ items }) => (title: string) =>
+    items.find((item) => item.title === title)
+  ),
+  isCompleted: computed(
+    ({ items }) =>
+      items &&
+      items.every(
+        ({ required, value }: FormItemData) => !required || (required && value)
+      )
+  ),
   items: [],
-  setActiveIndex: () => {},
-  updateItem: () => {}
+  next: action((state, payload) => {
+    const { items } = state;
+    const index = items.findIndex(({ title }) => title === payload);
+    items[index] = { ...items[index], isActive: false };
+    items[index + 1] = { ...items[index + 1], isActive: true };
+    return { ...state, items };
+  }),
+  updateItem: action((state, payload) => {
+    const { items } = state;
+    const index = items.findIndex(({ title }) => title === payload.title);
+    items[index] = { ...items[index], ...payload };
+    return { ...state, items };
+  })
 };
 
-/* 
-   ___         _           _       __  _  _          _   
-  / __|___ _ _| |_ _____ _| |_    / / | || |___  ___| |__
- | (__/ _ \ ' \  _/ -_) \ /  _|  / /  | __ / _ \/ _ \ / /
-  \___\___/_||_\__\___/_\_\\__| /_/   |_||_\___/\___/_\_\
-*/
-
-const FormContext = React.createContext(initialState);
-export const useForm = () => useContext(FormContext);
-
-/* 
-   ___             _    _         
-  | _ \_ _ _____ _(_)__| |___ _ _ 
-  |  _/ '_/ _ \ V / / _` / -_) '_|
-  |_| |_| \___/\_/|_\__,_\___|_|  
-*/
-
-type FormProviderProps = { children?: ReactNode; initialItems: FormItemData[] };
-
-export default ({ children, initialItems }: FormProviderProps) => {
-  const [activeIndex, setActiveIndex] = useState(-1);
-  const [items, setItems] = useState<FormItemData[]>([]);
-
-  useEffect(() => setItems(initialItems), []);
-
-  const getItem = (title: string) => items.find((item) => item.title === title);
-
-  const updateItem = (title: string, updatedItem: Partial<FormItemData>) => {
-    const index = items.findIndex(({ title: key }) => key === title);
-
-    setItems([
-      ...items.slice(0, index),
-      { ...items[index], ...updatedItem },
-      ...items.slice(index + 1, items.length)
-    ]);
-  };
-
-  // Is complete if every item is either: 1) not required or 2) required and a
-  // value exists.
-  const isCompleted: boolean =
-    items &&
-    items.every(
-      ({ required, value }: FormItemData) => !required || (required && value)
-    );
-
-  return (
-    <FormContext.Provider
-      value={{
-        activeIndex,
-        getItem,
-        isCompleted,
-        items,
-        setActiveIndex,
-        updateItem
-      }}
-    >
-      {children}
-    </FormContext.Provider>
-  );
-};
+export const Form = createContextStore<FormModel>(
+  ({ items }: FormModel) => ({
+    ...model,
+    items: items.map((item) => ({ ...item, isActive: false }))
+  }),
+  { disableImmer: true }
+);

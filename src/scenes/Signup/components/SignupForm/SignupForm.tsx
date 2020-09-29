@@ -7,23 +7,22 @@ import React from 'react';
 import shortid from 'shortid';
 
 import { PrimaryButton } from '@components/Button';
-import { FormProvider } from '@components/Form';
-import { useForm } from '@components/Form/Form.state';
+import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { useSignup } from '../../Signup.state';
 
 const Title = () => {
   const { form } = useSignup();
-  return form ? <h3 className="s-signup-title">{form.title}</h3> : null;
+  return <h3 className="s-signup-title">{form?.title}</h3>;
 };
 
 const Description = () => {
   const { form } = useSignup();
-  return form && form.description ? <p>{form.description}</p> : null;
+  return <p>{form?.description}</p>;
 };
 
 const SubmitButton = () => {
-  const { isCompleted } = useForm();
+  const isCompleted = Form.useStoreState((store) => store.isCompleted);
 
   return (
     <PrimaryButton
@@ -36,13 +35,12 @@ const SubmitButton = () => {
 
 // -----------------------------------------------------------------------------
 
-const FormContent = () => {
-  const { items } = useForm();
-  if (!items) return null;
+const Content = () => {
+  const items = Form.useStoreState((store) => store.items);
 
   return (
     <>
-      {items.map((props) => (
+      {items?.map((props) => (
         <FormItem key={shortid()} {...props} />
       ))}
     </>
@@ -54,13 +52,13 @@ export default () => {
   if (!form) return null;
 
   return (
-    <FormProvider initialItems={form.questions}>
+    <Form.Provider initialData={{ items: form.questions }}>
       <div className="s-signup">
         <Title />
         <Description />
-        <FormContent />
+        <Content />
         <SubmitButton />
       </div>
-    </FormProvider>
+    </Form.Provider>
   );
 };

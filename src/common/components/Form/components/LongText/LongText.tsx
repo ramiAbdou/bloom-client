@@ -1,5 +1,5 @@
 /**
- * @fileoverview Component: ShortText
+ * @fileoverview Component: LongText
  * - Input bar that allows for a maximum character limit.
  * @author Rami Abdou
  */
@@ -9,9 +9,9 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form/Form.state';
 import CSSModifier from '@util/CSSModifier';
-import { ShortTextProps } from '../../Form.types';
+import { LongTextProps } from '../../Form.types';
 
-export default ({ maxCharacters, title }: ShortTextProps) => {
+export default ({ maxCharacters, title }: LongTextProps) => {
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );
@@ -22,13 +22,13 @@ export default ({ maxCharacters, title }: ShortTextProps) => {
   const activate = () => updateItem({ isActive: true, title });
   const inactivate = () => updateItem({ isActive: false, title });
 
-  const inputRef: React.MutableRefObject<HTMLInputElement> = useRef(null);
+  const textareaRef: React.MutableRefObject<HTMLTextAreaElement> = useRef(null);
 
   useEffect(() => {
-    if (isActive) inputRef.current.focus();
+    if (isActive) textareaRef.current.focus();
   }, [isActive]);
 
-  useOnClickOutside(inputRef, () => isActive && inactivate());
+  useOnClickOutside(textareaRef, () => isActive && inactivate());
 
   const updateText = (text: string) => {
     // If the max characters are specfied and the value is longer than that,
@@ -39,18 +39,17 @@ export default ({ maxCharacters, title }: ShortTextProps) => {
 
   const focusOnNextField = ({
     keyCode
-  }: React.KeyboardEvent<HTMLInputElement>) => keyCode === 9 && next(title);
+  }: React.KeyboardEvent<HTMLTextAreaElement>) => keyCode === 9 && next(title);
 
   const { css } = new CSSModifier()
-    .class('c-form-input')
+    .class('c-form-input--lg')
     .addClass(isActive, 'c-form-input--active');
 
   return (
-    <input
-      ref={inputRef}
+    <textarea
+      ref={textareaRef}
       className={css}
       placeholder={value || ''}
-      type="text"
       value={value || ''}
       onChange={({ target }) => updateText(target.value)}
       onClick={activate}

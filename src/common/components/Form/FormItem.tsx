@@ -3,9 +3,10 @@
  * @author Rami Abdou
  */
 
-import React, { useRef } from 'react';
+import React from 'react';
 
 import { FormQuestionType } from '@constants';
+import LongText from './components/LongText/LongText';
 import ShortText from './components/ShortText/ShortText';
 import { FormItemData } from './Form.types';
 
@@ -32,27 +33,34 @@ const Label = ({ length, maxCharacters, title }: LabelProps) => {
   );
 };
 
-const Description = ({ message }) => <p className="c-form-desc">{message}</p>;
-const ErrorMessage = ({ message }) => <p className="c-form-error">{message}</p>;
+type TextProps = { message: string };
+
+const Description = ({ message }: TextProps) => (
+  <p className="c-form-desc">{message}</p>
+);
+
+const ErrorMessage = ({ message }: TextProps) => (
+  <p className="c-form-error">{message}</p>
+);
+
+// -----------------------------------------------------------------------------
 
 export default ({
   description,
   errorMessage,
   maxCharacters,
   title,
-  type,
-  validate
+  type
 }: FormItemData) => {
-  const ref = useRef(null);
-
   const baseProps = { title };
-  const textProps = { ...baseProps, maxCharacters, validate };
+  const textProps = { ...baseProps, maxCharacters };
 
   let body = null;
   if (type === FormQuestionType.SHORT_TEXT) body = <ShortText {...textProps} />;
+  if (type === FormQuestionType.LONG_TEXT) body = <LongText {...textProps} />;
 
   return (
-    <div ref={ref} className="c-form-item">
+    <div className="c-form-item">
       <Label title={title} />
       {description && <Description message={description} />}
       {body}

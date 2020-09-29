@@ -37,7 +37,6 @@ $PREF: 'c-form';
 }
 
 .#{$PREF}-label--count { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
-.#{$PREF}-value { @extend .body--1; max-width: 100%; }
 .#{$PREF}-desc { @extend .body--2; margin-bottom: $xxs; }
 .#{$PREF}-error { @extend .body--3; color: $red; margin-top: $xxs; }
 
@@ -55,10 +54,6 @@ $PREF: 'c-form';
   width: 100%;
 }
 
-.#{$PREF}-input--active { border: 1px $orange-1 solid; }
-
-.#{$PREF}-input--error { border: 1px $red solid; }
-
 .#{$PREF}-input--lg {
   @extend .#{$PREF}-input;
 
@@ -66,11 +61,9 @@ $PREF: 'c-form';
   justify-content: center;
   padding-bottom: $xxs;
   padding-top: $xxs;
+  resize: none;
 }
 
-.#{$PREF}-input--lg--active {
-  @extend .#{$PREF}-input--lg;
+.#{$PREF}-input--active { border: 1px $orange-1 solid; }
 
-  border: 1px $orange-1 solid;
-  height: 96px;
-}
+.#{$PREF}-input--error { border: 1px $red solid; }

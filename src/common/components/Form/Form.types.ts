@@ -8,13 +8,20 @@ import { FormQuestion } from '@constants';
 
 export interface FormItemData extends FormQuestion {
   errorMessage?: string;
+  isActive?: boolean;
   maxCharacters?: number;
   value?: any;
   validate?: (value: string) => string;
 }
 
+export type LongTextProps = {
+  maxCharacters?: number;
+  title: string;
+  value?: any;
+};
+
 export type ShortTextProps = {
   maxCharacters?: number;
   title: string;
-  validate?: (value: string) => string;
+  value?: any;
 };

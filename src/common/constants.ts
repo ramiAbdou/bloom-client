@@ -33,10 +33,10 @@ export enum FormQuestionType {
 export type FormQuestion = {
   category?: FormQuestionCategory;
   description?: string;
-  options: string[];
+  options?: string[];
   required?: boolean;
   title: string;
-  type: FormQuestionType;
+  type?: FormQuestionType;
 };
 
 export type Form = {
