@@ -29,14 +29,13 @@ $PREF: 'c-form';
   max-width: 85%;
 }
 
-.#{$PREF}-label--required { @extend .#{$PREF}-label; }
+.#{$PREF}-label--count { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
 .#{$PREF}-label--required::after {
   color: $red;
   content: '*';
   margin-left: $xxs;
 }
 
-.#{$PREF}-label--count { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
 .#{$PREF}-desc { @extend .body--2; margin-bottom: $xxs; }
 .#{$PREF}-error { @extend .body--3; color: $red; margin-top: $xxs; }
 
@@ -46,7 +45,6 @@ $PREF: 'c-form';
   background-color: $white;
   border: 1px $gray-4 solid;
   border-radius: 4px;
-  color: $black;
   cursor: text;
   height: $md;
   padding-left: 8px;
@@ -65,5 +63,55 @@ $PREF: 'c-form';
 }
 
 .#{$PREF}-input--active { border: 1px $orange-1 solid; }
-
 .#{$PREF}-input--error { border: 1px $red solid; }
+
+.#{$PREF}-dd-opt-ctr {
+  background-color: $white;
+  border-radius: $xxs;
+  box-shadow: 0 4px 5px rgba($color: $black, $alpha: 0.15);
+  margin-bottom: $lg; // For when the dropdown is at the bottom of the page.
+  padding-bottom: $xxs;
+  padding-top: $xxs;
+  position: absolute;
+}
+
+.#{$PREF}-dd-search { @extend .body--2; margin: 8px }
+
+.#{$PREF}-dd-value { cursor: pointer; }
+
+.#{$PREF}-dd-opt {
+  @extend %flex-ac;
+
+  background-color: $white;
+  height: $md;
+  overflow: hidden;
+  width: 100%;
+
+  @media (hover: hover) {
+    &:hover { background-color: $gray-6; }
+  }
+}
+
+.#{$PREF}-dd-opt__txt {
+  @extend .body--3;
+  @extend .m-overflow-ellipses;
+
+  background-color: rgba($color: $green-1, $alpha: 0.5);
+  border-radius: 20px;
+  color: $black;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: left;
+  text-transform: none;
+}
+
+// The no result found message.
+.#{$PREF}-dd-no-result {
+  @extend %flex-ac;
+  
+  height: $lg;
+  margin-left: $sm;
+  width: 100%;
+}

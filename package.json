@@ -28,7 +28,6 @@
     "aws-sdk": "^2.721.0",
     "axios": "^0.19.2",
     "body-scroll-lock": "^3.0.3",
-    "constate": "^3.0.1",
     "deline": "^1.0.4",
     "dotenv-webpack": "^1.8.0",
     "easy-peasy": "^3.3.1",

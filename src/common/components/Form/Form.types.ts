@@ -13,15 +13,3 @@ export interface FormItemData extends FormQuestion {
   value?: any;
   validate?: (value: string) => string;
 }
-
-export type LongTextProps = {
-  maxCharacters?: number;
-  title: string;
-  value?: any;
-};
-
-export type ShortTextProps = {
-  maxCharacters?: number;
-  title: string;
-  value?: any;
-};

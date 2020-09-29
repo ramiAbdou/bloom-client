@@ -6,8 +6,10 @@
 import React from 'react';
 
 import { FormQuestionType } from '@constants';
-import LongText from './components/LongText/LongText';
-import ShortText from './components/ShortText/ShortText';
+import CSSModifier from '@util/CSSModifier';
+import Dropdown from './components/Dropdown';
+import LongText from './components/LongText';
+import ShortText from './components/ShortText';
 import { FormItemData } from './Form.types';
 
 // There are 2 options for the label: 1) the standard Label tag or 2) if the
@@ -15,14 +17,23 @@ import { FormItemData } from './Form.types';
 // then we use the LabelWithCharLimit, in which when the user begins typing,
 // the character limit usage (ex: 42/80) will display across from the label.
 
-type LabelProps = { length?: number; maxCharacters?: number; title: string };
+type LabelProps = {
+  length?: number;
+  maxCharacters?: number;
+  required: boolean;
+  title: string;
+};
 
-const Label = ({ length, maxCharacters, title }: LabelProps) => {
+const Label = ({ length, maxCharacters, required, title }: LabelProps) => {
   const showCount = maxCharacters && length;
+
+  const { css } = new CSSModifier()
+    .class('c-form-label')
+    .addClass(required, 'c-form-label--required');
 
   return (
     <div className="c-form-label-ctr">
-      <p className="c-form-label">{title}</p>
+      <p className={css}>{title}</p>
 
       {showCount && (
         <p className="c-form-label--count">
@@ -49,19 +60,24 @@ export default ({
   description,
   errorMessage,
   maxCharacters,
+  options,
+  required,
   title,
   type
 }: FormItemData) => {
-  const baseProps = { title };
+  const baseProps = { required, title };
+  const dropdownProps = { ...baseProps, options };
   const textProps = { ...baseProps, maxCharacters };
 
   let body = null;
   if (type === FormQuestionType.SHORT_TEXT) body = <ShortText {...textProps} />;
   if (type === FormQuestionType.LONG_TEXT) body = <LongText {...textProps} />;
+  if (type === FormQuestionType.MULTIPLE_CHOICE)
+    body = <Dropdown {...dropdownProps} />;
 
   return (
     <div className="c-form-item">
-      <Label title={title} />
+      <Label required={required} title={title} />
       {description && <Description message={description} />}
       {body}
       {errorMessage && <ErrorMessage message={errorMessage} />}

@@ -9,9 +9,9 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form/Form.state';
 import CSSModifier from '@util/CSSModifier';
-import { ShortTextProps } from '../../Form.types';
+import { FormItemData } from '../Form.types';
 
-export default ({ maxCharacters, title }: ShortTextProps) => {
+export default ({ maxCharacters, title }: FormItemData) => {
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );

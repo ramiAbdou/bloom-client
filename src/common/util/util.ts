@@ -22,19 +22,16 @@ export const addModifier = (
  * @param options Array of options to filter.
  * @param searchString Query string to filter based on.
  */
-export const filterOptions = (options: any[], searchString: string): any[] => {
+export const filterOptions = (
+  options: string[],
+  searchString: string
+): string[] => {
   const lowerCaseSearchString = searchString.toLowerCase();
 
-  return options.reduce((acc: any[], value: any) => {
-    if (
-      (typeof value === 'string' &&
-        value.toLowerCase().startsWith(lowerCaseSearchString)) ||
-      (typeof value === 'object' &&
-        value.value.toLowerCase().startsWith(lowerCaseSearchString))
-    )
-      acc.push(value);
-
-    return acc;
+  return options.reduce((acc: string[], value: string) => {
+    return value.toLowerCase().startsWith(lowerCaseSearchString)
+      ? [...acc, value]
+      : acc;
   }, []);
 };
 

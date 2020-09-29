@@ -9,9 +9,9 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form/Form.state';
 import CSSModifier from '@util/CSSModifier';
-import { LongTextProps } from '../../Form.types';
+import { FormItemData } from '../Form.types';
 
-export default ({ maxCharacters, title }: LongTextProps) => {
+export default ({ maxCharacters, title }: FormItemData) => {
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );
