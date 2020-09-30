@@ -4,12 +4,13 @@
  * @author Rami Abdou
  */
 
-import { FormQuestion } from '@constants';
+import { FormOption, FormQuestion } from '@constants';
 
 export interface FormItemData extends FormQuestion {
   errorMessage?: string;
   isActive?: boolean;
   maxCharacters?: number;
+  options?: FormOption[];
   value?: any;
   validate?: (value: string) => string;
 }

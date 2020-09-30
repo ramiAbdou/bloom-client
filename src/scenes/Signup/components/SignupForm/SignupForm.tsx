@@ -52,7 +52,7 @@ export default () => {
   if (!form) return null;
 
   return (
-    <Form.Provider initialData={{ items: form.questions }}>
+    <Form.Provider initialData={form.questions}>
       <div className="s-signup">
         <Title />
         <Description />

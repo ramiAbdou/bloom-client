@@ -13,7 +13,7 @@ import {
   createContextStore
 } from 'easy-peasy';
 
-import { COLORS } from '@constants';
+import { COLORS, FormQuestion } from '@constants';
 import { FormItemData } from './Form.types';
 
 interface FormModel {
@@ -52,18 +52,16 @@ const model: FormModel = {
 };
 
 export const Form = createContextStore<FormModel>(
-  ({ items }) => ({
+  (items: FormQuestion[]) => ({
     ...model,
-    items: items.map((item: FormItemData) => {
-      return {
-        ...item,
-        isActive: false,
-        options: item.options?.map((value, i: number) => ({
-          bgColor: COLORS[i % COLORS.length],
-          value
-        }))
-      };
-    })
+    items: items.map((item: FormQuestion) => ({
+      ...item,
+      isActive: false,
+      options: (item.options as string[])?.map((value: string, i: number) => ({
+        bgColor: COLORS[i % COLORS.length],
+        value
+      }))
+    }))
   }),
   { disableImmer: true }
 );

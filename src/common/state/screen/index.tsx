@@ -1,1 +1,1 @@
-export { default as ScreenProvider, useScreen } from './Screen.state';
+export { ScreenProvider, useScreen } from './Screen.state';

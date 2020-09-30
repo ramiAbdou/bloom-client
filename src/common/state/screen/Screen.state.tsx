@@ -5,7 +5,7 @@
  * @author Rami Abdou
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 
 /* 
   _____                                 _   ___ _        _       
@@ -46,7 +46,9 @@ export const useScreen = () => useContext(ScreenContext);
   |_| |_| \___/\_/|_\__,_\___|_|  
 */
 
-export default ({ children }) => {
+type ScreenProviderProps = { children: ReactNode };
+
+export const ScreenProvider = ({ children }: ScreenProviderProps) => {
   const [breakpoint, setBreakpoint] = useState<Breakpoint>('D');
   const [width, setWidth] = useState(window.innerWidth);
 

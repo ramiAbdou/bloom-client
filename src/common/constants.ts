@@ -45,7 +45,7 @@ export type FormOption = { bgColor: string; value: string };
 export type FormQuestion = {
   category?: FormQuestionCategory;
   description?: string;
-  options?: FormOption[];
+  options?: string[] | FormOption[];
   required?: boolean;
   title: string;
   type?: FormQuestionType;
