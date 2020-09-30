@@ -7,9 +7,9 @@ import React from 'react';
 
 import { FormQuestionType } from '@constants';
 import CSSModifier from '@util/CSSModifier';
-import Dropdown from './components/Dropdown';
-import LongText from './components/LongText';
-import ShortText from './components/ShortText';
+import Dropdown from './components/Dropdown/Dropdown';
+import LongText from './components/LongText/LongText';
+import ShortText from './components/ShortText/ShortText';
 import { FormItemData } from './Form.types';
 
 // There are 2 options for the label: 1) the standard Label tag or 2) if the

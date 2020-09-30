@@ -12,7 +12,7 @@ import useOnClickOutside from 'use-onclickoutside';
 import { Form } from '@components/Form';
 import { FormOption } from '@constants';
 import CSSModifier from '@util/CSSModifier';
-import { FormItemData } from '../Form.types';
+import { FormItemData } from '../../Form.types';
 
 const Option = ({ selectOption, option }) => (
   <button className="c-form-dd-opt" onClick={selectOption}>
