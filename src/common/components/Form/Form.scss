@@ -94,17 +94,20 @@ $PREF: 'c-form';
   width: 0;
 }
 
-.#{$PREF}-dd-value__txt {
+.#{$PREF}-dd-value-ctr { @extend %flex-ac; }
+
+.#{$PREF}-dd-value {
   @extend %flex-ac;
   @extend .body--3;
 
   border-radius: $sm;
   color: $black;
-  padding-left: 6px;
-  padding-right: 6px;
+  margin-right: $xxs;
+  padding-left: $xxs;
+  padding-right: $xxs;
 }
 
-.#{$PREF}-dd-value__txt::after { content: 'x'; margin-left: $xxs; }
+.#{$PREF}-dd-value::after { content: 'x'; margin-left: $xxs; }
 
 .#{$PREF}-dd-opt {
   @extend %flex-ac;

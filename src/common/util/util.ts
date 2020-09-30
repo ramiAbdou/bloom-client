@@ -22,12 +22,20 @@ export const addModifier = (
  */
 export const filterOptions = (
   options: FormOption[],
-  searchString: string
+  searchString: string,
+  excludedValues?: FormOption[]
 ): FormOption[] => {
   const lowerCaseSearchString = searchString.toLowerCase();
 
+  console.log(excludedValues);
+
+  const isExcluded = (value: FormOption) =>
+    excludedValues &&
+    excludedValues.some((excludedValue) => value.value === excludedValue.value);
+
   return options.reduce((acc: FormOption[], value: FormOption) => {
-    return value.value.toLowerCase().startsWith(lowerCaseSearchString)
+    return !isExcluded(value) &&
+      value.value.toLowerCase().startsWith(lowerCaseSearchString)
       ? [...acc, value]
       : acc;
   }, []);

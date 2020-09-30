@@ -13,13 +13,15 @@ import useOnClickOutside from 'use-onclickoutside';
 import { Form } from '@components/Form';
 import { FormOption } from '@constants';
 import { FormItemData } from '../../Form.types';
-import DropdownProvider, { useDropdown } from './Dropdown.state';
+import DropdownMultipleProvider, {
+  useDropdownMultiple
+} from './DropdownMultiple.state';
 
 type OptionProps = { selectOption: VoidFunction; option: FormOption };
-type ValueProps = { value?: FormOption };
+type ValueProps = { values?: FormOption[] };
 
 const SearchBar = () => {
-  const { searchString, setSearchString } = useDropdown();
+  const { searchString, setSearchString } = useDropdownMultiple();
 
   return (
     <input
@@ -45,10 +47,11 @@ const NoResultsMessage = () => (
 );
 
 const AllOptions = () => {
-  const { filteredOptions, setSearchString, title } = useDropdown();
+  const { filteredOptions, setSearchString, title } = useDropdownMultiple();
+  const { value } = Form.useStoreState(({ getItem }) => getItem(title));
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const selectOption = (option: FormOption) => {
-    updateItem({ isActive: false, title, value: option });
+    updateItem({ isActive: false, title, value: [...value, option] });
     setSearchString('');
   };
 
@@ -66,7 +69,7 @@ const AllOptions = () => {
 };
 
 const OptionContainer = () => {
-  const { filteredOptions, width } = useDropdown();
+  const { filteredOptions, width } = useDropdownMultiple();
   const noOptionsFound = !filteredOptions.length;
 
   return (
@@ -84,25 +87,32 @@ const OptionContainer = () => {
   );
 };
 
-const Value = ({ value }: ValueProps) => {
-  const { title } = useDropdown();
+const Values = ({ values }: ValueProps) => {
+  const { title } = useDropdownMultiple();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const clearValue = () => updateItem({ title, value: null });
+  const deleteValue = (index: number) => {
+    const updatedValues = [...values.slice(0, index), ...values.slice(++index)];
+    updateItem({ title, value: updatedValues });
+  };
 
   return (
-    <button
-      className="c-form-dd-value"
-      style={{ backgroundColor: value?.bgColor }}
-      onClick={clearValue}
-    >
-      {value?.value}
-    </button>
+    <div className="c-form-dd-value-ctr">
+      {values.map(({ bgColor, value }: FormOption, i: number) => (
+        <button
+          className="c-form-dd-value"
+          style={{ backgroundColor: bgColor }}
+          onClick={() => deleteValue(i)}
+        >
+          {value}
+        </button>
+      ))}
+    </div>
   );
 };
 
 const ClickBar = () => {
-  const { title, setWidth } = useDropdown();
-  const { isActive, value } = Form.useStoreState(({ getItem }) =>
+  const { title, setWidth } = useDropdownMultiple();
+  const { isActive, value: values } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );
   const updateItem = Form.useStoreActions((store) => store.updateItem);
@@ -118,7 +128,7 @@ const ClickBar = () => {
       className="c-form-input c-form-dd-bar"
       onClick={toggleActivate}
     >
-      <div>{value && <Value value={value} />}</div>
+      <div>{!!values.length && <Values values={values} />}</div>
       <div className="c-form-dd-arrow" />
     </div>
   );
@@ -134,11 +144,11 @@ export default ({ options, title }: FormItemData) => {
   useOnClickOutside(ref, inactivate);
 
   return (
-    <DropdownProvider options={options} title={title}>
+    <DropdownMultipleProvider options={options} title={title}>
       <div ref={ref}>
         <ClickBar />
         {isActive && <OptionContainer />}
       </div>
-    </DropdownProvider>
+    </DropdownMultipleProvider>
   );
 };
