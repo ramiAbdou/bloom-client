@@ -75,9 +75,25 @@ $PREF: 'c-form';
   position: absolute;
 }
 
-.#{$PREF}-dd-search { @extend .body--2; margin: 8px }
+.#{$PREF}-dd-search {
+  @extend .body--2;
+
+  box-sizing: border-box;
+  padding: 8px;
+  width: 100%;
+ }
 
 .#{$PREF}-dd-value { cursor: pointer; }
+
+.#{$PREF}-dd-value__txt {
+  @extend .body--3;
+
+  background-color: rgba($color: $green-1, $alpha: 0.5);
+  border-radius: $sm;
+  color: $black;
+  padding-left: 6px;
+  padding-right: 6px;
+}
 
 .#{$PREF}-dd-opt {
   @extend %flex-ac;
@@ -97,7 +113,7 @@ $PREF: 'c-form';
   @extend .m-overflow-ellipses;
 
   background-color: rgba($color: $green-1, $alpha: 0.5);
-  border-radius: 20px;
+  border-radius: $sm;
   color: $black;
   margin-left: 8px;
   margin-right: 8px;

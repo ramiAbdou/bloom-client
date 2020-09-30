@@ -59,30 +59,29 @@ const OptionContainer = ({
   return (
     <AnimatePresence>
       <motion.div
+        ref={ref}
         className="c-form-dd-opt-ctr"
         style={{ width: width ?? 0 }}
         transition={{ duration: 0.25 }}
       >
-        <div ref={ref}>
-          <input
-            className="c-form-dd-search"
-            placeholder="Search..."
-            type="text"
-            value={searchString}
-            onChange={({ target }) => setSearchString(target.value)}
-          />
-          {noOptionsFound && <NoResultsMessage />}
-          {!noOptionsFound &&
-            filteredOptions.map((option: string) => (
-              <Option
-                key={value}
-                selectOption={() =>
-                  updateItem({ isActive: false, title, value: option })
-                }
-                value={option}
-              />
-            ))}
-        </div>
+        <input
+          className="c-form-dd-search"
+          placeholder="Search..."
+          type="text"
+          value={searchString}
+          onChange={({ target }) => setSearchString(target.value)}
+        />
+        {noOptionsFound && <NoResultsMessage />}
+        {!noOptionsFound &&
+          filteredOptions.map((option: string) => (
+            <Option
+              key={value}
+              selectOption={() =>
+                updateItem({ isActive: false, title, value: option })
+              }
+              value={option}
+            />
+          ))}
       </motion.div>
     </AnimatePresence>
   );
@@ -112,7 +111,7 @@ export default ({ options, title }: FormItemData) => {
   return (
     <>
       <button ref={ref} className={css} onClick={activate}>
-        <p>{value}</p>
+        <p className="c-form-dd-value__txt">{value}</p>
       </button>
 
       {isActive && <OptionContainer {...optionProps} />}
