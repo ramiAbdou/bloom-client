@@ -51,7 +51,7 @@ const AllOptions = () => {
   const { value } = Form.useStoreState(({ getItem }) => getItem(title));
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const selectOption = (option: FormOption) => {
-    updateItem({ isActive: false, title, value: [...value, option] });
+    updateItem({ title, value: [...value, option] });
     setSearchString('');
   };
 

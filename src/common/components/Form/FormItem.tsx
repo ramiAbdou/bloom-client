@@ -7,7 +7,7 @@ import React from 'react';
 
 import { FormQuestionType } from '@constants';
 import CSSModifier from '@util/CSSModifier';
-// import Dropdown from './components/Dropdown/Dropdown';
+import Dropdown from './components/Dropdown/Dropdown';
 import DropdownMultiple from './components/DropdownMultiple/DropdownMultiple';
 import LongText from './components/LongText/LongText';
 import ShortText from './components/ShortText/ShortText';
@@ -71,10 +71,14 @@ export default ({
   const textProps = { ...baseProps, maxCharacters };
 
   let body = null;
+
   if (type === FormQuestionType.SHORT_TEXT) body = <ShortText {...textProps} />;
-  if (type === FormQuestionType.LONG_TEXT) body = <LongText {...textProps} />;
-  if (type === FormQuestionType.DROPDOWN_MULTIPLE)
+  else if (type === FormQuestionType.LONG_TEXT)
+    body = <LongText {...textProps} />;
+  else if (type === FormQuestionType.DROPDOWN_MULTIPLE)
     body = <DropdownMultiple {...dropdownProps} />;
+  else if (type === FormQuestionType.DROPDOWN)
+    body = <Dropdown {...dropdownProps} />;
 
   return (
     <div className="c-form-item">

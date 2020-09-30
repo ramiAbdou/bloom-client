@@ -15,7 +15,9 @@ const Title = () => (
   <h3 className="s-signup-title">{useSignup().form?.title}</h3>
 );
 
-const Description = () => <p>{useSignup().form?.description}</p>;
+const Description = () => (
+  <p className="s-signup-desc"> {useSignup().form?.description}</p>
+);
 
 const SubmitButton = () => (
   <PrimaryButton
