@@ -6,7 +6,6 @@
 import { ReactNode } from 'react';
 
 const isProduction = process.env.NODE_ENV === 'production';
-
 export const APP = {
   CLIENT_URL: isProduction
     ? process.env.APP_CLIENT_URL

@@ -4,6 +4,11 @@
  */
 
 import axios, { AxiosRequestConfig } from 'axios';
+import {
+  mutation as mutationBuilder,
+  query as queryBuilder
+} from 'gql-query-builder';
+import GQLOptions from 'gql-query-builder/build/IQueryBuilderOptions';
 import moment from 'moment-timezone';
 
 import { APP, FormOption } from '@constants';
@@ -40,15 +45,26 @@ export const filterOptions = (
   }, []);
 };
 
-export const gql = async (data: any) => {
+export const query = async (data: GQLOptions) => {
   const options: AxiosRequestConfig = {
-    data,
+    data: queryBuilder(data),
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     method: 'POST',
     url: `${APP.SERVER_URL}/graphql`
   };
 
-  return (await axios(options)).data.data;
+  return (await axios(options)).data.data[data.operation];
+};
+
+export const mutation = async (data: GQLOptions) => {
+  const options: AxiosRequestConfig = {
+    data: mutationBuilder(data),
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    method: 'POST',
+    url: `${APP.SERVER_URL}/graphql`
+  };
+
+  return (await axios(options)).data.data[data.operation];
 };
 
 /**
