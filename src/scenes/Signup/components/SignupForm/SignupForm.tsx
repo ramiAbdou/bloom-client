@@ -11,41 +11,29 @@ import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { useSignup } from '../../Signup.state';
 
-const Title = () => {
-  const { form } = useSignup();
-  return <h3 className="s-signup-title">{form?.title}</h3>;
-};
+const Title = () => (
+  <h3 className="s-signup-title">{useSignup().form?.title}</h3>
+);
 
-const Description = () => {
-  const { form } = useSignup();
-  return <p>{form?.description}</p>;
-};
+const Description = () => <p>{useSignup().form?.description}</p>;
 
-const SubmitButton = () => {
-  const isCompleted = Form.useStoreState((store) => store.isCompleted);
-
-  return (
-    <PrimaryButton
-      className="s-signup-submit-btn"
-      disabled={!isCompleted}
-      title="Submit Application"
-    />
-  );
-};
+const SubmitButton = () => (
+  <PrimaryButton
+    className="s-signup-submit-btn"
+    disabled={!Form.useStoreState((store) => store.isCompleted)}
+    title="Submit Application"
+  />
+);
 
 // -----------------------------------------------------------------------------
 
-const Content = () => {
-  const items = Form.useStoreState((store) => store.items);
-
-  return (
-    <>
-      {items?.map((props) => (
-        <FormItem key={shortid()} {...props} />
-      ))}
-    </>
-  );
-};
+const Content = () => (
+  <>
+    {Form.useStoreState((store) => store.items)?.map((props) => (
+      <FormItem key={shortid()} {...props} />
+    ))}
+  </>
+);
 
 export default () => {
   const { form } = useSignup();

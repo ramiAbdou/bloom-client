@@ -73,7 +73,7 @@ export default ({
   let body = null;
   if (type === FormQuestionType.SHORT_TEXT) body = <ShortText {...textProps} />;
   if (type === FormQuestionType.LONG_TEXT) body = <LongText {...textProps} />;
-  if (type === FormQuestionType.MULTIPLE_CHOICE)
+  if (type === FormQuestionType.DROPDOWN_MULTIPLE)
     body = <DropdownMultiple {...dropdownProps} />;
 
   return (

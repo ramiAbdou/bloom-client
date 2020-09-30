@@ -44,6 +44,6 @@ $PREF: 'c-btn';
 
 .#{$PREF}-primary--disabled {
   background-color: $gray-4;
-  color: $gray-3;
-  cursor: default;
+  color: $gray-2;
+  cursor: not-allowed;
 }

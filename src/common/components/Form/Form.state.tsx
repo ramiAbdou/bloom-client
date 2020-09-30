@@ -54,24 +54,20 @@ const model: FormModel = {
 export const Form = createContextStore<FormModel>(
   (items: FormQuestion[]) => ({
     ...model,
-    items: items.map((item: FormQuestion) => {
+    items: items.map(({ options, type, ...question }: FormQuestion) => {
       let emptyValue = null;
-      if (item.type === FormQuestionType.MULTIPLE_CHOICE) emptyValue = [];
-      else if (
-        item.type === FormQuestionType.SHORT_TEXT ||
-        item.type === FormQuestionType.LONG_TEXT
-      )
-        emptyValue = '';
+      if (type === FormQuestionType.DROPDOWN_MULTIPLE) emptyValue = [];
+      else if (type === FormQuestionType.SHORT_TEXT) emptyValue = '';
+      else if (type === FormQuestionType.LONG_TEXT) emptyValue = '';
 
       return {
-        ...item,
+        ...question,
         isActive: false,
-        options: (item.options as string[])?.map(
-          (value: string, i: number) => ({
-            bgColor: COLORS[i % COLORS.length],
-            value
-          })
-        ),
+        options: (options as string[])?.map((value: string, i: number) => ({
+          bgColor: COLORS[i % COLORS.length],
+          value
+        })),
+        type,
         value: emptyValue
       };
     })

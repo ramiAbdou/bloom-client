@@ -90,9 +90,13 @@ const OptionContainer = () => {
 const Values = ({ values }: ValueProps) => {
   const { title } = useDropdownMultiple();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const deleteValue = (index: number) => {
+  const deleteValue = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    index: number
+  ) => {
+    e.stopPropagation();
     const updatedValues = [...values.slice(0, index), ...values.slice(++index)];
-    updateItem({ title, value: updatedValues });
+    updateItem({ isActive: true, title, value: updatedValues });
   };
 
   return (
@@ -101,7 +105,7 @@ const Values = ({ values }: ValueProps) => {
         <button
           className="c-form-dd-value"
           style={{ backgroundColor: bgColor }}
-          onClick={() => deleteValue(i)}
+          onClick={(e) => deleteValue(e, i)}
         >
           {value}
         </button>
