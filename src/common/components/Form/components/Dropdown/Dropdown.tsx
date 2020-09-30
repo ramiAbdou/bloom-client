@@ -108,18 +108,19 @@ const ClickBar = () => {
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const toggleActivate = () => updateItem({ isActive: !isActive, title });
 
-  const buttonRef: React.MutableRefObject<HTMLButtonElement> = useRef(null);
-  const width = buttonRef?.current?.offsetWidth;
+  const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
+  const width = ref?.current?.offsetWidth;
   useEffect(() => setWidth(width), [width]);
 
   return (
-    <button
-      ref={buttonRef}
+    <div
+      ref={ref}
       className="c-form-input c-form-dd-bar"
       onClick={toggleActivate}
     >
-      {value && <Value value={value} />}
-    </button>
+      <div>{value && <Value value={value} />}</div>
+      <div className="c-form-dd-arrow" />
+    </div>
   );
 };
 

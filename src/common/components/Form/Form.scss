@@ -84,7 +84,15 @@ $PREF: 'c-form';
   width: 100%;
  }
 
-.#{$PREF}-dd-bar { cursor: pointer; }
+.#{$PREF}-dd-bar { @extend %flex-acsb; cursor: pointer; }
+
+.#{$PREF}-dd-arrow {
+  border-left: $xxs solid transparent;
+  border-right: $xxs solid transparent;
+  border-top: $xxs solid $gray-4; 
+  height: 0;
+  width: 0;
+}
 
 .#{$PREF}-dd-value__txt {
   @extend %flex-ac;
