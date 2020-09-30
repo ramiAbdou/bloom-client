@@ -77,7 +77,6 @@ export default {
   ],
   resolve: {
     alias: {
-      '@caches': path.resolve(__dirname, 'src/common/caches/'),
       '@components': path.resolve(__dirname, 'src/common/components/'),
       '@constants': path.resolve(__dirname, 'src/common/constants.ts'),
       '@hooks': path.resolve(__dirname, 'src/common/hooks/'),

@@ -6,21 +6,36 @@
  */
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import shortid from 'shortid';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form';
 import { FormOption } from '@constants';
-import CSSModifier from '@util/CSSModifier';
 import { FormItemData } from '../../Form.types';
+import DropdownProvider, { useDropdown } from './Dropdown.state';
 
-const Option = ({ selectOption, option }) => (
+type OptionProps = { selectOption: VoidFunction; option: FormOption };
+type ValueProps = { value?: FormOption };
+
+const SearchBar = () => {
+  const { searchString, setSearchString } = useDropdown();
+
+  return (
+    <input
+      className="c-form-dd-search"
+      placeholder="Search..."
+      type="text"
+      value={searchString}
+      onChange={({ target }) => setSearchString(target.value)}
+    />
+  );
+};
+
+const Option = ({ selectOption, option: { bgColor, value } }: OptionProps) => (
   <button className="c-form-dd-opt" onClick={selectOption}>
-    <p
-      className="c-form-dd-opt__txt"
-      style={{ backgroundColor: option.bgColor }}
-    >
-      {option.value}
+    <p className="c-form-dd-opt__txt" style={{ backgroundColor: bgColor }}>
+      {value}
     </p>
   </button>
 );
@@ -29,108 +44,100 @@ const NoResultsMessage = () => (
   <p className="c-form-dd-no-result">No results found.</p>
 );
 
-// -----------------------------------------------------------------------------
-
-type OptionContainerProps = {
-  options: FormOption[];
-  title: string;
-  width?: number;
-};
-
-const filterOptions = (
-  options: FormOption[],
-  searchString: string
-): FormOption[] => {
-  const lowerCaseSearchString = searchString.toLowerCase();
-
-  return options.reduce((acc: FormOption[], value: FormOption) => {
-    return value.value.toLowerCase().startsWith(lowerCaseSearchString)
-      ? [...acc, value]
-      : acc;
-  }, []);
-};
-
-const OptionContainer = ({ options, title, width }: OptionContainerProps) => {
-  const [allOptions] = useState(options);
-  const [searchString, setSearchString] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState(options);
-
+const AllOptions = () => {
+  const { filteredOptions, setSearchString, title } = useDropdown();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const inactivate = () => updateItem({ isActive: false, title });
+  const selectOption = (option: FormOption) => {
+    updateItem({ isActive: false, title, value: option });
+    setSearchString('');
+  };
 
+  return (
+    <>
+      {filteredOptions.map((option: FormOption) => (
+        <Option
+          key={shortid()}
+          option={option}
+          selectOption={() => selectOption(option)}
+        />
+      ))}
+    </>
+  );
+};
+
+const OptionContainer = () => {
+  const { filteredOptions, width } = useDropdown();
   const noOptionsFound = !filteredOptions.length;
-
-  useEffect(() => setFilteredOptions(filterOptions(allOptions, searchString)), [
-    searchString
-  ]);
-
-  const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
-
-  useOnClickOutside(ref, inactivate);
 
   return (
     <AnimatePresence>
       <motion.div
-        ref={ref}
         className="c-form-dd-opt-ctr"
         style={{ width: width ?? 0 }}
         transition={{ duration: 0.25 }}
       >
-        <input
-          className="c-form-dd-search"
-          placeholder="Search..."
-          type="text"
-          value={searchString}
-          onChange={({ target }) => setSearchString(target.value)}
-        />
+        <SearchBar />
         {noOptionsFound && <NoResultsMessage />}
-        {!noOptionsFound &&
-          filteredOptions.map((option) => (
-            <Option
-              key={option.value}
-              option={option}
-              selectOption={() =>
-                updateItem({ isActive: false, title, value: option })
-              }
-            />
-          ))}
+        {!noOptionsFound && <AllOptions />}
       </motion.div>
     </AnimatePresence>
   );
 };
 
-export default ({ options, title }: FormItemData) => {
+const Value = ({ value }: ValueProps) => {
+  const { title } = useDropdown();
+  const updateItem = Form.useStoreActions((store) => store.updateItem);
+  const clearValue = () => updateItem({ title, value: null });
+
+  return (
+    <button
+      className="c-form-dd-value__txt"
+      style={{ backgroundColor: value?.bgColor }}
+      onClick={clearValue}
+    >
+      {value?.value}
+    </button>
+  );
+};
+
+const ClickBar = () => {
+  const { title, setWidth } = useDropdown();
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );
-
-  const ref: React.MutableRefObject<HTMLButtonElement> = useRef(null);
-
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const activate = () => updateItem({ isActive: true, title });
+  const toggleActivate = () => updateItem({ isActive: !isActive, title });
 
-  const optionProps = {
-    options,
-    title,
-    width: ref?.current?.offsetWidth
-  };
-
-  const { css } = new CSSModifier()
-    .class('c-form-input')
-    .class('c-form-dd-value');
+  const buttonRef: React.MutableRefObject<HTMLButtonElement> = useRef(null);
+  const width = buttonRef?.current?.offsetWidth;
+  useEffect(() => setWidth(width), [width]);
 
   return (
-    <>
-      <button ref={ref} className={css} onClick={activate}>
-        <p
-          className="c-form-dd-value__txt"
-          style={{ backgroundColor: value?.bgColor }}
-        >
-          {value?.value}
-        </p>
-      </button>
+    <button
+      ref={buttonRef}
+      className="c-form-input c-form-dd-bar"
+      onClick={toggleActivate}
+    >
+      {value && <Value value={value} />}
+    </button>
+  );
+};
 
-      {isActive && <OptionContainer {...optionProps} />}
-    </>
+export default ({ options, title }: FormItemData) => {
+  const { isActive } = Form.useStoreState(({ getItem }) => getItem(title));
+
+  const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
+  const updateItem = Form.useStoreActions((store) => store.updateItem);
+  const inactivate = () => updateItem({ isActive: false, title });
+
+  useOnClickOutside(ref, inactivate);
+
+  return (
+    <DropdownProvider options={options} title={title}>
+      <div ref={ref}>
+        <ClickBar />
+        {isActive && <OptionContainer />}
+      </div>
+    </DropdownProvider>
   );
 };

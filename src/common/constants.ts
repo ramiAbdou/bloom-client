@@ -3,6 +3,8 @@
  * @author Rami Abdou
  */
 
+import { ReactNode } from 'react';
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 export const APP = {
@@ -23,6 +25,8 @@ export const COLORS = [
   '#F156277F',
   '#EF41237F'
 ];
+
+export type ProviderProps = { children: ReactNode };
 
 export enum FormQuestionCategory {
   FIRST_NAME = 'FIRST_NAME',
