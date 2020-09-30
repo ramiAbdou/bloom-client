@@ -2,30 +2,54 @@
  * @fileoverview GraphQL: Signup
  * @author Rami Abdou
  */
-import { Form } from '@constants';
-import GraphQL from '@util/GraphQL';
 
-class SignupGQL extends GraphQL {
-  getMembershipForm = async (community: string): Promise<Form> => {
-    const result = await this.query(`
-      getCommunity (encodedURLName: "${community}") {
-        membershipForm {
-          title
-          description
-          questions {
-            category
-            description
-            required
-            options
-            title
-            type
+import { mutation, query } from 'gql-query-builder';
+
+import { FormData } from '@constants';
+import { gql } from '@util/util';
+
+export const getMembershipForm = async (community: string) => {
+  const operation = 'getCommunity';
+  const options = query({
+    fields: [
+      'id',
+      {
+        membershipForm: [
+          'title',
+          'description',
+          {
+            questions: [
+              'category',
+              'description',
+              'required',
+              'options',
+              'title',
+              'type'
+            ]
           }
-        }
+        ]
       }
-    `);
+    ],
+    operation,
+    variables: { encodedURLName: { required: true, value: community } }
+  });
 
-    return result.membershipForm;
-  };
-}
+  return (await gql(options))[operation];
+};
 
-export default new SignupGQL();
+export const createMembership = async (
+  communityId: string,
+  data: FormData
+): Promise<string> => {
+  const operation = 'createMembership';
+  const options = mutation({
+    fields: ['id'],
+    operation,
+    variables: {
+      communityId: { type: 'String!', value: communityId },
+      data: { type: '[FormValueInput!]!', value: data }
+    }
+  });
+
+  return (await gql(options)).id;
+};

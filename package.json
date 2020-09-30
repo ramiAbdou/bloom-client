@@ -33,6 +33,7 @@
     "easy-peasy": "^3.3.1",
     "express": "^4.17.1",
     "framer-motion": "^1.10.3",
+    "gql-query-builder": "^3.5.0",
     "is_js": "^0.9.0",
     "jimp": "^0.14.0",
     "jwt-decode": "^2.2.0",

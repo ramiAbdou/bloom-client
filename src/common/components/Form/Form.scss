@@ -17,7 +17,7 @@ $PREF: 'c-form';
   \___\___/_|_|_|_|_|_\___/_||_|
 */
 
-.#{$PREF}-item { margin-bottom: $sm; margin-top: $sm; }
+.#{$PREF}-item { margin-bottom: $md; margin-top: $md; }
 .#{$PREF}-label-ctr { @extend %flex-sb; @extend %flex-ae; width: 100%; }
 
 .#{$PREF}-label {

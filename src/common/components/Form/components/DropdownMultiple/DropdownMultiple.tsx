@@ -103,6 +103,7 @@ const Values = ({ values }: ValueProps) => {
     <div className="c-form-dd-value-ctr">
       {values.map(({ bgColor, value }: FormOption, i: number) => (
         <button
+          key={shortid()}
           className="c-form-dd-value"
           style={{ backgroundColor: bgColor }}
           onClick={(e) => deleteValue(e, i)}

@@ -6,7 +6,7 @@
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 
 import { Form } from '@constants';
-import signupGQL from './Signup.gql';
+import { getMembershipForm } from './Signup.gql';
 
 /* 
   _____                      __  ___ _        _       
@@ -16,8 +16,8 @@ import signupGQL from './Signup.gql';
        |__/|_|                                        
 */
 
-type SignupState = { form: Form };
-const initialState: SignupState = { form: null };
+type SignupState = { communityId: string; form: Form };
+const initialState: SignupState = { communityId: '', form: null };
 
 /* 
    ___         _           _       __  _  _          _   
@@ -39,15 +39,20 @@ export const useSignup = () => useContext(SignupContext);
 type SignupProvider = { children: ReactNode; community: string };
 
 export default ({ children, community }: SignupProvider) => {
+  const [communityId, setCommunityId] = useState('');
   const [form, setForm] = useState<Form>(null);
 
   useEffect(() => {
     (async () => {
-      setForm(await signupGQL.getMembershipForm(community));
+      const result = await getMembershipForm(community);
+      setForm(result.membershipForm as Form);
+      setCommunityId(result.id as string);
     })();
   }, []);
 
   return (
-    <SignupContext.Provider value={{ form }}>{children}</SignupContext.Provider>
+    <SignupContext.Provider value={{ communityId, form }}>
+      {children}
+    </SignupContext.Provider>
   );
 };

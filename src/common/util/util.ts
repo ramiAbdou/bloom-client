@@ -3,9 +3,10 @@
  * @author Rami Abdou
  */
 
+import axios, { AxiosRequestConfig } from 'axios';
 import moment from 'moment-timezone';
 
-import { FormOption } from '@constants';
+import { APP, FormOption } from '@constants';
 
 /**
  * Returns the className with the modifier if the shouldAdd evaluates to true,
@@ -27,8 +28,6 @@ export const filterOptions = (
 ): FormOption[] => {
   const lowerCaseSearchString = searchString.toLowerCase();
 
-  console.log(excludedValues);
-
   const isExcluded = (value: FormOption) =>
     excludedValues &&
     excludedValues.some((excludedValue) => value.value === excludedValue.value);
@@ -39,6 +38,17 @@ export const filterOptions = (
       ? [...acc, value]
       : acc;
   }, []);
+};
+
+export const gql = async (data: any) => {
+  const options: AxiosRequestConfig = {
+    data,
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    method: 'POST',
+    url: `${APP.SERVER_URL}/graphql`
+  };
+
+  return (await axios(options)).data.data;
 };
 
 /**

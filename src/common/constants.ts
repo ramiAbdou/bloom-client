@@ -60,3 +60,9 @@ export type Form = {
   description?: string;
   questions: FormQuestion[];
 };
+
+export type FormData = {
+  category?: FormQuestionCategory;
+  title?: string;
+  value: string;
+}[];
