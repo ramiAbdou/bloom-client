@@ -45,6 +45,7 @@ $PREF: 'c-form';
   background-color: $white;
   border: 1px $gray-4 solid;
   border-radius: 4px;
+  box-sizing: border-box;
   cursor: text;
   height: $md;
   padding-left: 8px;
@@ -88,7 +89,6 @@ $PREF: 'c-form';
 .#{$PREF}-dd-value__txt {
   @extend .body--3;
 
-  background-color: rgba($color: $green-1, $alpha: 0.5);
   border-radius: $sm;
   color: $black;
   padding-left: 6px;
@@ -112,7 +112,6 @@ $PREF: 'c-form';
   @extend .body--3;
   @extend .m-overflow-ellipses;
 
-  background-color: rgba($color: $green-1, $alpha: 0.5);
   border-radius: $sm;
   color: $black;
   margin-left: 8px;
@@ -126,8 +125,9 @@ $PREF: 'c-form';
 // The no result found message.
 .#{$PREF}-dd-no-result {
   @extend %flex-ac;
+  @extend .body--2;
   
-  height: $lg;
-  margin-left: $sm;
+  height: $md;
+  margin-left: 8px;
   width: 100%;
 }

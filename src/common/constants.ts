@@ -14,6 +14,16 @@ export const APP = {
     : 'http://localhost:8080'
 };
 
+export const COLORS = [
+  '#FAA21E7F',
+  '#018A8A7F',
+  '#F580237F',
+  '#2FAA3B7F',
+  '#EF41237F',
+  '#F156277F',
+  '#EF41237F'
+];
+
 export enum FormQuestionCategory {
   FIRST_NAME = 'FIRST_NAME',
   LAST_NAME = 'LAST_NAME',
@@ -30,10 +40,12 @@ export enum FormQuestionType {
   DROPDOWN_MULTIPLE = 'DROPDOWN_MULTIPLE'
 }
 
+export type FormOption = { bgColor: string; value: string };
+
 export type FormQuestion = {
   category?: FormQuestionCategory;
   description?: string;
-  options?: string[];
+  options?: FormOption[];
   required?: boolean;
   title: string;
   type?: FormQuestionType;

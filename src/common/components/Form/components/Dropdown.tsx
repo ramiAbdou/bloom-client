@@ -10,13 +10,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form';
+import { FormOption } from '@constants';
 import CSSModifier from '@util/CSSModifier';
-import { filterOptions } from '@util/util';
 import { FormItemData } from '../Form.types';
 
-const Option = ({ selectOption, value }) => (
+const Option = ({ selectOption, option }) => (
   <button className="c-form-dd-opt" onClick={selectOption}>
-    <p className="c-form-dd-opt__txt">{value}</p>
+    <p
+      className="c-form-dd-opt__txt"
+      style={{ backgroundColor: option.bgColor }}
+    >
+      {option.value}
+    </p>
   </button>
 );
 
@@ -27,18 +32,25 @@ const NoResultsMessage = () => (
 // -----------------------------------------------------------------------------
 
 type OptionContainerProps = {
-  options: string[];
+  options: FormOption[];
   title: string;
-  value?: string;
   width?: number;
 };
 
-const OptionContainer = ({
-  options,
-  title,
-  value,
-  width
-}: OptionContainerProps) => {
+const filterOptions = (
+  options: FormOption[],
+  searchString: string
+): FormOption[] => {
+  const lowerCaseSearchString = searchString.toLowerCase();
+
+  return options.reduce((acc: FormOption[], value: FormOption) => {
+    return value.value.toLowerCase().startsWith(lowerCaseSearchString)
+      ? [...acc, value]
+      : acc;
+  }, []);
+};
+
+const OptionContainer = ({ options, title, width }: OptionContainerProps) => {
   const [allOptions] = useState(options);
   const [searchString, setSearchString] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
@@ -73,13 +85,13 @@ const OptionContainer = ({
         />
         {noOptionsFound && <NoResultsMessage />}
         {!noOptionsFound &&
-          filteredOptions.map((option: string) => (
+          filteredOptions.map((option) => (
             <Option
-              key={value}
+              key={option.value}
+              option={option}
               selectOption={() =>
                 updateItem({ isActive: false, title, value: option })
               }
-              value={option}
             />
           ))}
       </motion.div>
@@ -100,7 +112,6 @@ export default ({ options, title }: FormItemData) => {
   const optionProps = {
     options,
     title,
-    value,
     width: ref?.current?.offsetWidth
   };
 
@@ -111,7 +122,12 @@ export default ({ options, title }: FormItemData) => {
   return (
     <>
       <button ref={ref} className={css} onClick={activate}>
-        <p className="c-form-dd-value__txt">{value}</p>
+        <p
+          className="c-form-dd-value__txt"
+          style={{ backgroundColor: value?.bgColor }}
+        >
+          {value?.value}
+        </p>
       </button>
 
       {isActive && <OptionContainer {...optionProps} />}
