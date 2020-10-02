@@ -37,11 +37,11 @@ export const createMembership = async (
 ): Promise<string> =>
   (
     await mutation({
-      fields: ['id'],
+      fields: [{ user: ['id'] }],
       operation: 'createMembership',
       variables: {
         communityId: { type: 'String!', value: communityId },
         data: { type: '[FormValueInput!]!', value: data }
       }
     })
-  ).id;
+  ).user.id;

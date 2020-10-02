@@ -1,5 +1,5 @@
 /**
- * @fileoverview State: Dropdown
+ * @fileoverview State: DropdownMultiple
  * @author Rami Abdou
  */
 
@@ -8,6 +8,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FormItemData } from '@components/Form/Form.types';
 import { FormOption, ProviderProps } from '@constants';
 import { filterOptions } from '@util/util';
+import { Form } from '../Form.state';
 
 /* 
   _____                      __  ___ _        _       
@@ -17,7 +18,7 @@ import { filterOptions } from '@util/util';
        |__/|_|                                        
 */
 
-type DropdownState = {
+type DropdownMultipleState = {
   filteredOptions: FormOption[];
   options: FormOption[];
   searchString: string;
@@ -27,7 +28,7 @@ type DropdownState = {
   width: number;
 };
 
-const initialState: DropdownState = {
+const initialState: DropdownMultipleState = {
   filteredOptions: [],
   options: [],
   searchString: '',
@@ -44,8 +45,8 @@ const initialState: DropdownState = {
   \___\___/_||_\__\___/_\_\\__| /_/   |_||_\___/\___/_\_\
 */
 
-const DropdownContext = React.createContext(initialState);
-export const useDropdown = () => useContext(DropdownContext);
+const DropdownMultipleContext = React.createContext(initialState);
+export const useDropdownMultiple = () => useContext(DropdownMultipleContext);
 
 /* 
   ___             _    _         
@@ -54,20 +55,27 @@ export const useDropdown = () => useContext(DropdownContext);
  |_| |_| \___/\_/|_\__,_\___|_|  
 */
 
-interface DropdownProviderProps extends ProviderProps, FormItemData {}
+interface DropdownMultipleProviderProps extends ProviderProps, FormItemData {}
 
-export default ({ children, options, title }: DropdownProviderProps) => {
+export default ({
+  children,
+  options,
+  title
+}: DropdownMultipleProviderProps) => {
   const [allOptions] = useState<FormOption[]>(options);
   const [filteredOptions, setFilteredOptions] = useState<FormOption[]>(options);
   const [searchString, setSearchString] = useState('');
   const [width, setWidth] = useState(0);
 
-  useEffect(() => setFilteredOptions(filterOptions(allOptions, searchString)), [
-    searchString
-  ]);
+  const { value } = Form.useStoreState(({ getItem }) => getItem(title));
+
+  useEffect(
+    () => setFilteredOptions(filterOptions(allOptions, searchString, value)),
+    [searchString, value.length]
+  );
 
   return (
-    <DropdownContext.Provider
+    <DropdownMultipleContext.Provider
       value={{
         filteredOptions,
         options,
@@ -79,6 +87,6 @@ export default ({ children, options, title }: DropdownProviderProps) => {
       }}
     >
       {children}
-    </DropdownContext.Provider>
+    </DropdownMultipleContext.Provider>
   );
 };

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Component: SignupForm
+ * @fileoverview Component: MembershipForm
  * @author Rami Abdou
  */
 
@@ -11,7 +11,7 @@ import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { FormData } from '@constants';
 import { createMembership } from '@scenes/Signup/Signup.gql';
-import { useSignup } from '../../Signup.state';
+import { useSignup } from '../Signup.state';
 
 const Title = () => (
   <h3 className="s-signup-title">{useSignup().form?.title}</h3>
@@ -22,16 +22,18 @@ const Description = () => (
 );
 
 const SubmitButton = () => {
+  const { setUserId } = useSignup();
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const data = Form.useStoreState((store) => store.submittableData);
   const submitForm = Form.useStoreState((store) => store.submitForm);
+  const onClick = async () => setUserId(await submitForm(data));
 
   return (
     <PrimaryButton
       className="s-signup-submit-btn"
       disabled={!isCompleted}
       title="Submit Application"
-      onClick={() => submitForm(data)}
+      onClick={onClick}
     />
   );
 };

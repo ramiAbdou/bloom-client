@@ -10,9 +10,9 @@ import React, { useEffect, useRef } from 'react';
 import shortid from 'shortid';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { Form } from '@components/Form';
+import { Form } from '../Form.state';
 import { FormOption } from '@constants';
-import { FormItemData } from '../../Form.types';
+import { FormItemData } from '../Form.types';
 import DropdownMultipleProvider, {
   useDropdownMultiple
 } from './DropdownMultiple.state';
@@ -146,7 +146,7 @@ export default ({ options, title }: FormItemData) => {
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const inactivate = () => updateItem({ isActive: false, title });
 
-  useOnClickOutside(ref, inactivate);
+  useOnClickOutside(ref, () => isActive && inactivate());
 
   return (
     <DropdownMultipleProvider options={options} title={title}>

@@ -45,25 +45,19 @@ export const filterOptions = (
   }, []);
 };
 
-export const query = async (data: GQLOptions) => {
-  const options: AxiosRequestConfig = {
-    data: queryBuilder(data),
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    method: 'POST',
-    url: `${APP.SERVER_URL}/graphql`
-  };
+const config: AxiosRequestConfig = {
+  headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  method: 'POST',
+  url: `${APP.SERVER_URL}/graphql`
+};
 
+export const query = async (data: GQLOptions) => {
+  const options = { ...config, data: queryBuilder(data) };
   return (await axios(options)).data.data[data.operation];
 };
 
 export const mutation = async (data: GQLOptions) => {
-  const options: AxiosRequestConfig = {
-    data: mutationBuilder(data),
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    method: 'POST',
-    url: `${APP.SERVER_URL}/graphql`
-  };
-
+  const options = { ...config, data: mutationBuilder(data) };
   return (await axios(options)).data.data[data.operation];
 };
 

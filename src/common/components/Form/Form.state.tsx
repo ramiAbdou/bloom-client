@@ -29,7 +29,7 @@ interface FormModel {
   items: FormItemData[];
   next: Action<FormModel, string>;
   submittableData: Computed<FormModel, FormData>;
-  submitForm: (data: FormData) => Promise<void>;
+  submitForm: (data: FormData) => Promise<any>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 }
 
@@ -78,7 +78,7 @@ const model: FormModel = {
 
 type FormStoreInitializer = {
   questions: FormQuestion[];
-  submitForm: (data: FormData) => Promise<void>;
+  submitForm: (data: FormData) => Promise<any>;
 };
 
 export const Form = createContextStore<FormModel>(

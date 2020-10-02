@@ -16,8 +16,19 @@ import { getMembershipForm } from './Signup.gql';
        |__/|_|                                        
 */
 
-type SignupState = { communityId: string; form: Form };
-const initialState: SignupState = { communityId: '', form: null };
+type SignupState = {
+  communityId: string;
+  form: Form;
+  userId: string;
+  setUserId: (value: string) => void;
+};
+
+const initialState: SignupState = {
+  communityId: '',
+  form: null,
+  setUserId: () => {},
+  userId: ''
+};
 
 /* 
    ___         _           _       __  _  _          _   
@@ -41,6 +52,7 @@ type SignupProvider = { children: ReactNode; community: string };
 export default ({ children, community }: SignupProvider) => {
   const [communityId, setCommunityId] = useState('');
   const [form, setForm] = useState<Form>(null);
+  const [userId, setUserId] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -51,7 +63,7 @@ export default ({ children, community }: SignupProvider) => {
   }, []);
 
   return (
-    <SignupContext.Provider value={{ communityId, form }}>
+    <SignupContext.Provider value={{ communityId, form, setUserId, userId }}>
       {children}
     </SignupContext.Provider>
   );

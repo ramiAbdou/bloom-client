@@ -8,7 +8,7 @@ import './Signup.scss';
 
 import React from 'react';
 
-import SignupForm from './components/SignupForm/SignupForm';
+import SignupForm from './components/MembershipForm';
 import SignupProvider from './Signup.state';
 
 // -----------------------------------------------------------------------------
