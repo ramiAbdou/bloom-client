@@ -5,10 +5,10 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 
+import { Form } from '@components/Form/Form.state';
 import { FormItemData } from '@components/Form/Form.types';
 import { FormOption, ProviderProps } from '@constants';
 import { filterOptions } from '@util/util';
-import { Form } from '../Form.state';
 
 /* 
   _____                      __  ___ _        _       
@@ -18,7 +18,7 @@ import { Form } from '../Form.state';
        |__/|_|                                        
 */
 
-type DropdownMultipleState = {
+interface DropdownMultipleState {
   filteredOptions: FormOption[];
   options: FormOption[];
   searchString: string;
@@ -26,7 +26,7 @@ type DropdownMultipleState = {
   setWidth: (value: number) => void;
   title: string;
   width: number;
-};
+}
 
 const initialState: DropdownMultipleState = {
   filteredOptions: [],

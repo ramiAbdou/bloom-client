@@ -22,8 +22,7 @@ import {
 } from '@constants';
 import { FormItemData } from './Form.types';
 
-interface FormModel {
-  // getData: () => FormData;
+export interface FormModel {
   getItem: Computed<FormModel, (title: string) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
   items: FormItemData[];

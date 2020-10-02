@@ -10,19 +10,16 @@ import React, { useEffect, useRef } from 'react';
 import shortid from 'shortid';
 import useOnClickOutside from 'use-onclickoutside';
 
+import { Form } from '@components/Form';
 import { FormOption } from '@constants';
-import { Form } from '../Form.state';
 import { FormItemData } from '../Form.types';
-import Dropdown from './Dropdown.state';
+import DropdownProvider, { useDropdown } from './Dropdown.state';
 
 type OptionProps = { selectOption: VoidFunction; option: FormOption };
 type ValueProps = { value?: FormOption };
 
 const SearchBar = () => {
-  const searchString = Dropdown.useStoreState((store) => store.searchString);
-  const setSearchString = Dropdown.useStoreActions(
-    (store) => store.setSearchString
-  );
+  const { searchString, setSearchString } = useDropdown();
 
   return (
     <input
@@ -48,13 +45,7 @@ const NoResultsMessage = () => (
 );
 
 const AllOptions = () => {
-  const filteredOptions = Dropdown.useStoreState(
-    (store) => store.filteredOptions
-  );
-  const title = Dropdown.useStoreState((store) => store.title);
-  const setSearchString = Dropdown.useStoreActions(
-    (store) => store.setSearchString
-  );
+  const { filteredOptions, setSearchString, title } = useDropdown();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const selectOption = (option: FormOption) => {
     updateItem({ isActive: false, title, value: option });
@@ -75,10 +66,7 @@ const AllOptions = () => {
 };
 
 const OptionContainer = () => {
-  const filteredOptions = Dropdown.useStoreState(
-    (store) => store.filteredOptions
-  );
-  const width = Dropdown.useStoreState((store) => store.width);
+  const { filteredOptions, width } = useDropdown();
   const noOptionsFound = !filteredOptions.length;
 
   return (
@@ -97,7 +85,7 @@ const OptionContainer = () => {
 };
 
 const Value = ({ value }: ValueProps) => {
-  const title = Dropdown.useStoreState((store) => store.title);
+  const { title } = useDropdown();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const clearValue = () => updateItem({ title, value: null });
 
@@ -113,8 +101,7 @@ const Value = ({ value }: ValueProps) => {
 };
 
 const ClickBar = () => {
-  const title = Dropdown.useStoreState((store) => store.title);
-  const setWidth = Dropdown.useStoreActions((store) => store.setWidth);
+  const { title, setWidth } = useDropdown();
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );
@@ -123,10 +110,7 @@ const ClickBar = () => {
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   const width = ref?.current?.offsetWidth;
-
-  useEffect(() => {
-    setWidth(width);
-  }, [width]);
+  useEffect(() => setWidth(width), [width]);
 
   return (
     <div
@@ -150,11 +134,11 @@ export default ({ options, title }: FormItemData) => {
   useOnClickOutside(ref, () => isActive && inactivate());
 
   return (
-    <Dropdown.Provider initialData={{ options, title }}>
+    <DropdownProvider options={options} title={title}>
       <div ref={ref}>
         <ClickBar />
         {isActive && <OptionContainer />}
       </div>
-    </Dropdown.Provider>
+    </DropdownProvider>
   );
 };
