@@ -5,12 +5,12 @@
  * @author Rami Abdou
  */
 
+import { Form } from '@components/Form';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 import shortid from 'shortid';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { Form } from '@components/Form';
 import { FormOption } from '@constants';
 import { FormItemData } from '../Form.types';
 import DropdownMultipleProvider, {

@@ -3,10 +3,10 @@
  * @author Rami Abdou
  */
 
+import CSSModifier from '@util/CSSModifier';
 import React from 'react';
 
 import { FormQuestionType } from '@constants';
-import CSSModifier from '@util/CSSModifier';
 import Dropdown from './components/Dropdown';
 import DropdownMultiple from './components/DropdownMultiple';
 import LongText from './components/LongText';

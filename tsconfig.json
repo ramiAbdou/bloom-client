@@ -10,14 +10,12 @@
     "moduleResolution": "node",
     "outDir": "./dist/",
     "paths": {
-      "@api/*": ["common/api/*"],
-      "@caches/*": ["common/caches/*"],
-      "@components/*": ["common/components/*"],
-      "@constants": ["common/constants.ts"],
-      "@hooks/*": ["common/hooks/*"],
+      "@components/*": ["core/components/*"],
+      "@constants": ["core/constants.ts"],
+      "@hooks/*": ["core/hooks/*"],
       "@scenes/*": ["scenes/*"],
-      "@state/*": ["common/state/*"],
-      "@util/*": ["common/util/*"]
+      "@store/*": ["core/store/*"],
+      "@util/*": ["core/util/*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,

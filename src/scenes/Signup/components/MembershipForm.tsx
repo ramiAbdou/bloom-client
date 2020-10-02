@@ -10,7 +10,7 @@ import { PrimaryButton } from '@components/Button';
 import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { FormData } from '@constants';
-import { createMembership } from '@scenes/Signup/Signup.gql';
+import { createMembership } from '../Signup.gql';
 import { useSignup } from '../Signup.state';
 
 const Title = () => (
