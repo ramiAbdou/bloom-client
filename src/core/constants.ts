@@ -7,6 +7,10 @@ import { ReactNode } from 'react';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+/**
+ * APP - Application and Bloom-specific constants.
+ */
+
 export const APP = {
   CLIENT_URL: isProduction
     ? process.env.APP_CLIENT_URL
@@ -26,7 +30,20 @@ export const COLORS = [
   '#EF41237F'
 ];
 
+export const GOOGLE = {
+  CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  REDIRECT_URI: `${APP.SERVER_URL}/google/auth`
+};
+
+/**
+ * GENERAL - General constants.
+ */
+
 export type ProviderProps = { children: ReactNode };
+
+/**
+ * FORMS - Handling of all form-related items including custom Enums.
+ */
 
 export enum FormQuestionCategory {
   FIRST_NAME = 'FIRST_NAME',

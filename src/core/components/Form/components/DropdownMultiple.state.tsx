@@ -3,12 +3,12 @@
  * @author Rami Abdou
  */
 
-import { filterOptions } from '@util/util';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Form } from '@components/Form/Form.state';
 import { FormItemData } from '@components/Form/Form.types';
 import { FormOption, ProviderProps } from '@constants';
+import { filterOptions } from '@util/util';
 
 /* 
   _____                      __  ___ _        _       

@@ -45,10 +45,13 @@ export const filterOptions = (
   }, []);
 };
 
+axios.defaults.withCredentials = true;
+
 const config: AxiosRequestConfig = {
   headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
   method: 'POST',
-  url: `${APP.SERVER_URL}/graphql`
+  url: `${APP.SERVER_URL}/graphql`,
+  withCredentials: true
 };
 
 export const query = async (data: GQLOptions) => {

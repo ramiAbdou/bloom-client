@@ -9,11 +9,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import AuthenticatedPage from '@scenes/Authenticated/Authenticated';
+import LoginPage from '@scenes/Login/Login';
 import SignupPage from '@scenes/Signup/Signup';
 
 export default () => (
   <Router>
     <Switch>
+      <Route exact component={AuthenticatedPage} path="/" />
+      <Route exact component={LoginPage} path="/login" />
       <Route exact component={SignupPage} path="/:community" />
     </Switch>
   </Router>
