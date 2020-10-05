@@ -3,10 +3,11 @@
  * @author Rami Abdou
  */
 
+import { useQuery } from 'graphql-hooks';
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 
 import { Form } from '@constants';
-import { getMembershipForm } from './Signup.gql';
+import { GET_MEMBERSHIP_FORM } from './Signup.gql';
 
 /* 
   _____                      __  ___ _        _       
@@ -54,13 +55,14 @@ export default ({ children, community }: SignupProvider) => {
   const [form, setForm] = useState<Form>(null);
   const [userId, setUserId] = useState('');
 
+  const { data } = useQuery(GET_MEMBERSHIP_FORM, {
+    variables: { encodedURLName: community }
+  });
+
   useEffect(() => {
-    (async () => {
-      const result = await getMembershipForm(community);
-      setForm(result.membershipForm as Form);
-      setCommunityId(result.id as string);
-    })();
-  }, []);
+    setForm(data?.getCommunity?.membershipForm as Form);
+    setCommunityId(data?.getCommunity?.id as string);
+  }, [data]);
 
   return (
     <SignupContext.Provider value={{ communityId, form, setUserId, userId }}>

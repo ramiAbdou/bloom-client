@@ -1,8 +1,6 @@
 /**
  * @fileoverview State: Loader
  * @author Rami Abdou
- *
- * @todo Implement a boolean operator that says when to stop showing the loader.
  */
 
 import React, { useContext, useState } from 'react';
@@ -48,7 +46,6 @@ export const useLoader = () => useContext(LoaderContext);
 
 export default ({ children }) => {
   const [isShowing, setIsShowing] = useState(false);
-
   const hideLoader = () => setIsShowing(false);
   const showLoader = () => setIsShowing(true);
 

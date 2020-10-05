@@ -3,6 +3,7 @@
  * @author Rami Abdou
  */
 
+import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import shortid from 'shortid';
 
@@ -10,7 +11,7 @@ import { PrimaryButton } from '@components/Button';
 import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { FormData } from '@constants';
-import { createMembership } from '../Signup.gql';
+import { CREATE_MEMBERSHIP } from '../Signup.gql';
 import { useSignup } from '../Signup.state';
 
 const Title = () => (
@@ -26,7 +27,7 @@ const SubmitButton = () => {
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const data = Form.useStoreState((store) => store.submittableData);
   const submitForm = Form.useStoreState((store) => store.submitForm);
-  const onClick = async () => setUserId(await submitForm(data));
+  const onClick = async () => setUserId((await submitForm(data)).user.id);
 
   return (
     <PrimaryButton
@@ -49,11 +50,12 @@ const Content = () => (
 );
 
 export default () => {
+  const [createMembership] = useMutation(CREATE_MEMBERSHIP);
   const { communityId, form } = useSignup();
   if (!communityId || !form) return null;
 
   const submitForm = async (data: FormData) =>
-    createMembership(communityId, data);
+    createMembership({ variables: { communityId, data } });
 
   return (
     <Form.Provider initialData={{ questions: form.questions, submitForm }}>
