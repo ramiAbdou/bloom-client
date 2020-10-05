@@ -1,0 +1,147 @@
+/* 
+  ___                 ___                                  _      
+ | __|__ _ _ _ __    / __|___ _ __  _ __  ___ _ _  ___ _ _| |_ ___
+ | _/ _ \ '_| '  \  | (__/ _ \ '  \| '_ \/ _ \ ' \/ -_) ' \  _(_-<
+ |_|\___/_| |_|_|_|  \___\___/_|_|_| .__/\___/_||_\___|_||_\__/__/
+                                   |_|                            
+*/
+
+@import 'src/index.scss';
+
+$PREF: 'c-form';
+
+/* 
+   ___                          
+  / __|___ _ __  _ __  ___ _ _  
+ | (__/ _ \ '  \| '  \/ _ \ ' \ 
+  \___\___/_|_|_|_|_|_\___/_||_|
+*/
+
+.#{$PREF}-item { margin-bottom: $md; margin-top: $md; }
+.#{$PREF}-label-ctr { @extend %flex-sb; @extend %flex-ae; width: 100%; }
+
+.#{$PREF}-label {
+  @extend .meta;
+
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: $xxs;
+  max-width: 85%;
+}
+
+.#{$PREF}-label--count { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
+.#{$PREF}-label--required::after {
+  color: $red;
+  content: '*';
+  margin-left: $xxs;
+}
+
+.#{$PREF}-desc { @extend .body--2; margin-bottom: $xxs; }
+.#{$PREF}-error { @extend .body--3; color: $red; margin-top: $xxs; }
+
+.#{$PREF}-input {
+  @extend %flex-acsb;
+
+  background-color: $white;
+  border: 1px $gray-4 solid;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: text;
+  height: $md;
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 100%;
+}
+
+.#{$PREF}-input--lg {
+  @extend .#{$PREF}-input;
+
+  height: 96px;
+  justify-content: center;
+  padding-bottom: $xxs;
+  padding-top: $xxs;
+  resize: none;
+}
+
+.#{$PREF}-input--active { border: 1px $orange-1 solid; }
+.#{$PREF}-input--error { border: 1px $red solid; }
+
+.#{$PREF}-dd-opt-ctr {
+  background-color: $white;
+  border-radius: $xxs;
+  box-shadow: 0 4px 5px rgba($color: $black, $alpha: 0.15);
+  margin-bottom: $lg; // For when the dropdown is at the bottom of the page.
+  padding-bottom: $xxs;
+  padding-top: $xxs;
+  position: absolute;
+}
+
+.#{$PREF}-dd-search {
+  @extend .body--2;
+
+  box-sizing: border-box;
+  padding: 8px;
+  width: 100%;
+ }
+
+.#{$PREF}-dd-bar { @extend %flex-acsb; cursor: pointer; }
+
+.#{$PREF}-dd-arrow {
+  border-left: $xxs solid transparent;
+  border-right: $xxs solid transparent;
+  border-top: $xxs solid $gray-4; 
+  height: 0;
+  width: 0;
+}
+
+.#{$PREF}-dd-value-ctr { @extend %flex-ac; }
+
+.#{$PREF}-dd-value {
+  @extend %flex-ac;
+  @extend .body--3;
+
+  border-radius: $sm;
+  color: $black;
+  margin-right: $xxs;
+  padding-left: $xxs;
+  padding-right: $xxs;
+}
+
+.#{$PREF}-dd-value::after { content: 'x'; margin-left: $xxs; }
+
+.#{$PREF}-dd-opt {
+  @extend %flex-ac;
+
+  background-color: $white;
+  height: $md;
+  overflow: hidden;
+  width: 100%;
+
+  @media (hover: hover) {
+    &:hover { background-color: $gray-6; }
+  }
+}
+
+.#{$PREF}-dd-opt__txt {
+  @extend .body--3;
+  @extend .m-overflow-ellipses;
+
+  border-radius: $sm;
+  color: $black;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: left;
+  text-transform: none;
+}
+
+// The no result found message.
+.#{$PREF}-dd-no-result {
+  @extend %flex-ac;
+  @extend .body--2;
+  
+  height: $md;
+  margin-left: 8px;
+  width: 100%;
+}

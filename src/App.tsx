@@ -7,26 +7,32 @@
 import './index.scss';
 import '../public/favicon.ico';
 
+import { StoreProvider } from 'easy-peasy';
+import { ClientContext, GraphQLClient } from 'graphql-hooks';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { LoaderProvider } from '@components/Loader';
-import { Toasts, ToastsProvider } from '@components/Toasts';
-import { ScreenProvider } from '@state/screen';
+import { APP } from '@constants';
+import { store } from '@store/Store';
 import AppRouter from './Router';
+
+const client = new GraphQLClient({
+  fetchOptions: { credentials: 'include' },
+  url: `${APP.SERVER_URL}/graphql`
+});
 
 const Background = () => <div id="app" />;
 
 const App = () => (
-  <ScreenProvider>
-    <LoaderProvider>
-      <ToastsProvider>
+  <ClientContext.Provider value={client}>
+    <StoreProvider store={store}>
+      <LoaderProvider>
         <Background />
         <AppRouter />
-        <Toasts />
-      </ToastsProvider>
-    </LoaderProvider>
-  </ScreenProvider>
+      </LoaderProvider>
+    </StoreProvider>
+  </ClientContext.Provider>
 );
 
 ReactDOM.render(<App />, document.getElementById('root'));

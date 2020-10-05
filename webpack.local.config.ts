@@ -77,13 +77,12 @@ export default {
   ],
   resolve: {
     alias: {
-      '@caches': path.resolve(__dirname, 'src/common/caches/'),
-      '@components': path.resolve(__dirname, 'src/common/components/'),
-      '@constants': path.resolve(__dirname, 'src/common/constants.ts'),
-      '@hooks': path.resolve(__dirname, 'src/common/hooks/'),
+      '@components': path.resolve(__dirname, 'src/core/components/'),
+      '@constants': path.resolve(__dirname, 'src/core/constants.ts'),
+      '@hooks': path.resolve(__dirname, 'src/core/hooks/'),
       '@scenes': path.resolve(__dirname, 'src/scenes/'),
-      '@state': path.resolve(__dirname, 'src/common/state/'),
-      '@util': path.resolve(__dirname, 'src/common/util/')
+      '@store': path.resolve(__dirname, 'src/core/store/'),
+      '@util': path.resolve(__dirname, 'src/core/util/')
     },
     extensions: ['.ts', '.tsx', '.js', '.scss']
   }

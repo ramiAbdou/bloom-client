@@ -1,0 +1,49 @@
+/* 
+  ___ _                  ___      _   _               
+ | _ ) |___  ___ _ __   | _ )_  _| |_| |_ ___ _ _  ___
+ | _ \ / _ \/ _ \ '  \  | _ \ || |  _|  _/ _ \ ' \(_-<
+ |___/_\___/\___/_|_|_| |___/\_,_|\__|\__\___/_||_/__/
+*/
+
+@import 'src/index.scss';
+
+$PREF: 'c-btn';
+
+// This is needed since we are manually setting the height of the button which
+// throws off the vertical alignment of the button.
+
+.#{$PREF}-base {
+  @extend %flex-acc;
+
+  border-radius: 8px;
+  text-transform: uppercase;
+
+  @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px);
+}
+
+/*
+  ___     _                       ___      _   _            
+ | _ \_ _(_)_ __  __ _ _ _ _  _  | _ )_  _| |_| |_ ___ _ _  
+ |  _/ '_| | '  \/ _` | '_| || | | _ \ || |  _|  _/ _ \ ' \ 
+ |_| |_| |_|_|_|_\__,_|_|  \_, | |___/\_,_|\__|\__\___/_||_|
+                           |__/
+*/
+
+.#{$PREF}-primary {
+  @extend .#{$PREF}-base;
+
+  background: $orange-1;
+  box-shadow: 0px 2px 6px rgba($color: #000000, $alpha: 0.2);
+  color: $gray-6;
+  height: $lg;
+  padding-left: $lg;
+  padding-right: $lg;
+
+  @include M { width: 100%; }
+}
+
+.#{$PREF}-primary--disabled {
+  background-color: $gray-4;
+  color: $gray-2;
+  cursor: not-allowed;
+}
