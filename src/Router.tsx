@@ -22,6 +22,11 @@ import SignupPage from '@scenes/Signup/Signup';
 import { useStoreActions } from '@store/Store';
 import { GET_USER, IS_LOGGED_IN } from '@store/UserGQL';
 
+/**
+ * For an authenticated route, we first try to retrieve the user (by using the
+ * token stored in the httpOnly cookies), and if the user exists, we update
+ * the global state with the user.
+ */
 const AuthenticatedRoute = ({ component, ...rest }) => {
   const { loading, data } = useQuery(GET_USER);
   const initUser = useStoreActions((store) => store.user.init);
@@ -36,6 +41,10 @@ const AuthenticatedRoute = ({ component, ...rest }) => {
   return <Redirect to="/login" />;
 };
 
+/**
+ * Check to see if the user is logged in (if they have tokens stored in the
+ * httpOnly cookies), and if so, redirect them to the home page.
+ */
 const LoginRoute = ({ component, ...rest }) => {
   const { loading, data } = useQuery(IS_LOGGED_IN);
   if (loading) return <Loader />;
