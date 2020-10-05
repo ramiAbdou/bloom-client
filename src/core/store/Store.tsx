@@ -11,7 +11,7 @@ interface StoreModel {
   user: UserModel;
 }
 
-export const store = createStore({ user: userModel });
+export const store = createStore({ user: userModel }, { disableImmer: true });
 export const { useStoreActions, useStoreState } = createTypedHooks<
   StoreModel
 >();

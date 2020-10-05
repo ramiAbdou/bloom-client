@@ -1,5 +1,5 @@
 /**
- * @fileoverview GraphQL: Signup
+ * @fileoverview GraphQL: User
  * @author Rami Abdou
  */
 
