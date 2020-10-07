@@ -30,11 +30,6 @@ export const COLORS = [
   '#EF41237F'
 ];
 
-export const GOOGLE = {
-  CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-  REDIRECT_URI: `${APP.SERVER_URL}/google/auth`
-};
-
 /**
  * GENERAL - General constants.
  */

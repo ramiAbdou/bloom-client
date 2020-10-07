@@ -5,16 +5,14 @@
 
 import React from 'react';
 
-import { GOOGLE } from '@constants';
+import { APP } from '@constants';
 
 const GOOGLE_AUTH_URL =
   `https://accounts.google.com/o/oauth2/v2/auth` +
   `?scope=https://www.googleapis.com/auth/userinfo.email` +
-  '&prompt=consent' +
-  `&access_type=offline` +
   `&response_type=code` +
-  `&redirect_uri=${GOOGLE.REDIRECT_URI}` +
-  `&client_id=${GOOGLE.CLIENT_ID}`;
+  `&redirect_uri=${`${APP.SERVER_URL}/google/auth`}` +
+  `&client_id=${process.env.GOOGLE_CLIENT_ID}`;
 
 export default () => (
   <button>

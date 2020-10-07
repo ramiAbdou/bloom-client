@@ -7,7 +7,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
-import shortid from 'shortid';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form';
@@ -56,7 +55,7 @@ const AllOptions = () => {
     <>
       {filteredOptions.map((option: FormOption) => (
         <Option
-          key={shortid()}
+          key={option.value}
           option={option}
           selectOption={() => selectOption(option)}
         />

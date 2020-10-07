@@ -5,14 +5,13 @@
 
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
-import shortid from 'shortid';
 
 import { PrimaryButton } from '@components/Button';
 import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { FormData } from '@constants';
-import { CREATE_MEMBERSHIP } from '../Signup.gql';
-import { useSignup } from '../Signup.state';
+import { CREATE_MEMBERSHIP } from '../SignupGQL';
+import { useSignup } from '../SignupProvider';
 
 const Title = () => (
   <h3 className="s-signup-title">{useSignup().form?.title}</h3>
@@ -44,7 +43,7 @@ const SubmitButton = () => {
 const Content = () => (
   <>
     {Form.useStoreState((store) => store.items)?.map((props) => (
-      <FormItem key={shortid()} {...props} />
+      <FormItem key={props.title} {...props} />
     ))}
   </>
 );

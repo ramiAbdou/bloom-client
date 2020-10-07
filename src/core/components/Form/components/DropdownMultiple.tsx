@@ -5,12 +5,11 @@
  * @author Rami Abdou
  */
 
-import { Form } from '@components/Form';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
-import shortid from 'shortid';
 import useOnClickOutside from 'use-onclickoutside';
 
+import { Form } from '@components/Form';
 import { FormOption } from '@constants';
 import { FormItemData } from '../Form.types';
 import DropdownMultipleProvider, {
@@ -59,7 +58,7 @@ const AllOptions = () => {
     <>
       {filteredOptions.map((option: FormOption) => (
         <Option
-          key={shortid()}
+          key={option.value}
           option={option}
           selectOption={() => selectOption(option)}
         />
@@ -103,7 +102,7 @@ const Values = ({ values }: ValueProps) => {
     <div className="c-form-dd-value-ctr">
       {values.map(({ bgColor, value }: FormOption, i: number) => (
         <button
-          key={shortid()}
+          key={value}
           className="c-form-dd-value"
           style={{ backgroundColor: bgColor }}
           onClick={(e) => deleteValue(e, i)}

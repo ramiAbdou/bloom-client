@@ -7,7 +7,7 @@ import { useQuery } from 'graphql-hooks';
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
 
 import { Form } from '@constants';
-import { GET_MEMBERSHIP_FORM } from './Signup.gql';
+import { GET_MEMBERSHIP_FORM } from './SignupGQL';
 
 /* 
   _____                      __  ___ _        _       

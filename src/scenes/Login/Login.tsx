@@ -6,6 +6,7 @@
 import React from 'react';
 
 import GoogleButton from './components/GoogleButton';
+import ZoomButton from './components/ZoomButton';
 
 type LoginProps = { location: { search: string } };
 
@@ -18,6 +19,7 @@ export default ({ location }: LoginProps) => {
 
   return (
     <div>
+      <ZoomButton />
       <p>Sign In</p>
       <GoogleButton />
       {!!errorMessage && <p>{errorMessage}</p>}

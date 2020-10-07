@@ -9,7 +9,7 @@ import './Signup.scss';
 import React from 'react';
 
 import SignupForm from './components/MembershipForm';
-import SignupProvider from './Signup.state';
+import SignupProvider from './SignupProvider';
 
 // -----------------------------------------------------------------------------
 
