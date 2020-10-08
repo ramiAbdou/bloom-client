@@ -6,16 +6,18 @@
 import React from 'react';
 
 import { APP } from '@constants';
+import URLBuilder from '@util/URLBuilder';
 
-const GOOGLE_AUTH_URL =
-  `https://accounts.google.com/o/oauth2/v2/auth` +
-  `?scope=https://www.googleapis.com/auth/userinfo.email` +
-  `&response_type=code` +
-  `&redirect_uri=${`${APP.SERVER_URL}/google/auth`}` +
-  `&client_id=${process.env.GOOGLE_CLIENT_ID}`;
+const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
+  .addParam('scope', 'https://www.googleapis.com/auth/userinfo.email')
+  .addParam('response_type', 'code')
+  .addParam('redirect_uri', `${APP.SERVER_URL}/google/auth`)
+  .addParam('client_id', process.env.GOOGLE_CLIENT_ID);
+
+console.log(url);
 
 export default () => (
   <button>
-    <a href={GOOGLE_AUTH_URL}>Google Login</a>
+    <a href={url}>Google Login</a>
   </button>
 );

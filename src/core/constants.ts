@@ -5,7 +5,7 @@
 
 import { ReactNode } from 'react';
 
-const isProduction = process.env.NODE_ENV === 'production';
+export const isProduction = process.env.NODE_ENV === 'production';
 
 /**
  * APP - Application and Bloom-specific constants.

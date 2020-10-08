@@ -6,16 +6,16 @@
 import React from 'react';
 
 import { APP } from '@constants';
+import URLBuilder from '@util/URLBuilder';
 
-const ZOOM_AUTH_URL =
-  `https://zoom.us/oauth/authorize` +
-  `?response_type=code` +
-  `&redirect_uri=${`${APP.SERVER_URL}/zoom/auth`}` +
-  `&client_id=${process.env.ZOOM_CLIENT_ID}` +
-  `&state=colorstack`;
+const { url } = new URLBuilder('https://zoom.us/oauth/authorize')
+  .addParam('response_type', 'code')
+  .addParam('redirect_uri', `${APP.SERVER_URL}/zoom/auth`)
+  .addParam('client_id', process.env.ZOOM_CLIENT_ID)
+  .addParam('state', 'colorstack');
 
 export default () => (
   <button>
-    <a href={ZOOM_AUTH_URL}>Authenticate Zoom Account</a>
+    <a href={url}>Authenticate Zoom Account</a>
   </button>
 );
