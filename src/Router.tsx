@@ -16,6 +16,7 @@ import {
 } from 'react-router-dom';
 
 import { Loader } from '@components/Loader';
+import EventPage from '@scenes/Event/Event';
 import HomePage from '@scenes/Home/Home';
 import LoginPage from '@scenes/Login/Login';
 import SignupPage from '@scenes/Signup/Signup';
@@ -57,7 +58,15 @@ export default () => (
     <Switch>
       <AuthenticatedRoute exact component={HomePage} path="/" />
       <LoginRoute exact component={LoginPage} path="/login" />
-      <Route exact component={SignupPage} path="/:community" />
+      <LoginRoute exact component={LoginPage} path="/b/:userId" />
+      <Route exact component={SignupPage} path="/:community/apply" />
+      <Route
+        exact
+        component={EventPage}
+        path="/:community/events/:eventShortId"
+      />
     </Switch>
   </Router>
 );
+
+// app.bl.community/colorstack/events/10000

@@ -2,7 +2,6 @@
  * @fileoverview Scene: Login
  * @author Rami Abdou
  */
-
 import React from 'react';
 
 import GoogleButton from './components/GoogleButton';
@@ -12,10 +11,9 @@ import ZoomButton from './components/ZoomButton';
 type LoginProps = { location: { search: string } };
 
 export default ({ location }: LoginProps) => {
-  const params = new URLSearchParams(location.search);
-  const errorMessage: string =
-    params.get('err') === 'user_not_found'
-      ? 'Please sign up for a community before attempting to login.'
+  const errorMessage =
+    new URLSearchParams(location.search).get('err') === 'user_not_found'
+      ? 'You must be accepted into a community before attempting to login.'
       : '';
 
   return (

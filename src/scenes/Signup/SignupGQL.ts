@@ -26,7 +26,7 @@ export const GET_MEMBERSHIP_FORM = query({
     }
   ],
   operation: 'getCommunity',
-  variables: { encodedURLName: { required: true } }
+  variables: { encodedUrlName: { required: true } }
 }).query;
 
 export const CREATE_MEMBERSHIP = mutation({

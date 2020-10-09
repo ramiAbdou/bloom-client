@@ -56,7 +56,7 @@ export default ({ children, community }: SignupProvider) => {
   const [userId, setUserId] = useState('');
 
   const { data } = useQuery(GET_MEMBERSHIP_FORM, {
-    variables: { encodedURLName: community }
+    variables: { encodedUrlName: community }
   });
 
   useEffect(() => {
