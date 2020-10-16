@@ -13,13 +13,7 @@ import {
   createContextStore
 } from 'easy-peasy';
 
-import {
-  COLORS,
-  FormData,
-  FormOption,
-  FormQuestion,
-  QuestionType
-} from '@constants';
+import { FormData, FormQuestion } from '@constants';
 import { FormItemData } from './Form.types';
 
 export interface FormModel {
@@ -31,14 +25,6 @@ export interface FormModel {
   submitForm: (data: FormData) => Promise<any>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 }
-
-const parseValue = (type: QuestionType, value: any) => {
-  if (!value) return value;
-  if (type === 'MULTIPLE_CHOICE') return value.value;
-  if (type === 'DROPDOWN_MULTIPLE')
-    return JSON.stringify(value.map((item: FormOption) => item.value));
-  return value;
-};
 
 const model: FormModel = {
   getItem: computed(({ items }) => (title: string) =>
@@ -61,10 +47,9 @@ const model: FormModel = {
   }),
   submitForm: () => Promise.resolve(),
   submittableData: computed(({ items }) =>
-    items?.map(({ category, title, type, value }) => ({
-      category,
-      title,
-      value: parseValue(type, value)
+    items?.map(({ id, value }) => ({
+      questionId: id,
+      value: Array.isArray(value) ? value : [value]
     }))
   ),
   updateItem: action((state, payload) => {
@@ -92,10 +77,7 @@ export const Form = createContextStore<FormModel>(
       return {
         ...question,
         isActive: false,
-        options: (options as string[])?.map((value: string, i: number) => ({
-          bgColor: COLORS[i % COLORS.length],
-          value
-        })),
+        options,
         type,
         value: emptyValue
       };

@@ -10,12 +10,11 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form';
-import { FormOption } from '@constants';
 import { FormItemData } from '../Form.types';
 import DropdownProvider, { useDropdown } from './Dropdown.state';
 
-type OptionProps = { selectOption: VoidFunction; option: FormOption };
-type ValueProps = { value?: FormOption };
+type OptionProps = { selectOption: VoidFunction; option: string };
+type ValueProps = { value?: string };
 
 const SearchBar = () => {
   const { searchString, setSearchString } = useDropdown();
@@ -31,11 +30,9 @@ const SearchBar = () => {
   );
 };
 
-const Option = ({ selectOption, option: { bgColor, value } }: OptionProps) => (
+const Option = ({ selectOption, option }: OptionProps) => (
   <button className="c-form-dd-opt" onClick={selectOption}>
-    <p className="c-form-dd-opt__txt" style={{ backgroundColor: bgColor }}>
-      {value}
-    </p>
+    <p className="c-form-dd-opt__txt">{option}</p>
   </button>
 );
 
@@ -46,16 +43,16 @@ const NoResultsMessage = () => (
 const AllOptions = () => {
   const { filteredOptions, setSearchString, title } = useDropdown();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const selectOption = (option: FormOption) => {
+  const selectOption = (option) => {
     updateItem({ isActive: false, title, value: option });
     setSearchString('');
   };
 
   return (
     <>
-      {filteredOptions.map((option: FormOption) => (
+      {filteredOptions.map((option) => (
         <Option
-          key={option.value}
+          key={option}
           option={option}
           selectOption={() => selectOption(option)}
         />
@@ -89,12 +86,8 @@ const Value = ({ value }: ValueProps) => {
   const clearValue = () => updateItem({ title, value: null });
 
   return (
-    <button
-      className="c-form-dd-value"
-      style={{ backgroundColor: value?.bgColor }}
-      onClick={clearValue}
-    >
-      {value?.value}
+    <button className="c-form-dd-value" onClick={clearValue}>
+      {value}
     </button>
   );
 };

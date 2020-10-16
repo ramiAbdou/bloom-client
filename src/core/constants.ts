@@ -20,16 +20,6 @@ export const APP = {
     : 'http://localhost:8080'
 };
 
-export const COLORS = [
-  '#FAA21E7F',
-  '#018A8A7F',
-  '#F580237F',
-  '#2FAA3B7F',
-  '#EF41237F',
-  '#F156277F',
-  '#EF41237F'
-];
-
 /**
  * GENERAL - General constants.
  */
@@ -54,15 +44,14 @@ export type QuestionCategory =
   | 'LAST_NAME'
   | 'MEMBERSHIP_TYPE';
 
-export type FormOption = { bgColor: string; value: string };
-
 export type FormQuestion = {
   category?: QuestionCategory;
   description?: string;
+  id: string;
   required?: boolean;
-  options?: FormOption[];
+  options?: string[];
   title: string;
-  type: QuestionType;
+  type?: QuestionType;
 };
 
 export type Form = {
@@ -71,8 +60,4 @@ export type Form = {
   questions: FormQuestion[];
 };
 
-export type FormData = {
-  category?: QuestionCategory;
-  title?: string;
-  value: string;
-}[];
+export type FormData = { questionId: string; value: string[] }[];

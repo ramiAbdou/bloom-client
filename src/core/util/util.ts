@@ -11,7 +11,7 @@ import {
 import GQLOptions from 'gql-query-builder/build/IQueryBuilderOptions';
 import moment from 'moment-timezone';
 
-import { APP, FormOption } from '@constants';
+import { APP } from '@constants';
 
 /**
  * Returns the className with the modifier if the shouldAdd evaluates to true,
@@ -27,19 +27,19 @@ export const addModifier = (
  * Filter a form's options by the given search string.
  */
 export const filterOptions = (
-  options: FormOption[],
+  options: string[],
   searchString: string,
-  excludedValues?: FormOption[]
-): FormOption[] => {
+  excludedValues?: string[]
+): string[] => {
   const lowerCaseSearchString = searchString.toLowerCase();
 
-  const isExcluded = (value: FormOption) =>
+  const isExcluded = (value) =>
     excludedValues &&
-    excludedValues.some((excludedValue) => value.value === excludedValue.value);
+    excludedValues.some((excludedValue) => value === excludedValue);
 
-  return options.reduce((acc: FormOption[], value: FormOption) => {
+  return options.reduce((acc: string[], value: string) => {
     return !isExcluded(value) &&
-      value.value.toLowerCase().startsWith(lowerCaseSearchString)
+      value.toLowerCase().startsWith(lowerCaseSearchString)
       ? [...acc, value]
       : acc;
   }, []);

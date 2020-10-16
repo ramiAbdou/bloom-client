@@ -10,14 +10,13 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form';
-import { FormOption } from '@constants';
 import { FormItemData } from '../Form.types';
 import DropdownMultipleProvider, {
   useDropdownMultiple
 } from './DropdownMultiple.state';
 
-type OptionProps = { selectOption: VoidFunction; option: FormOption };
-type ValueProps = { values?: FormOption[] };
+type OptionProps = { selectOption: VoidFunction; option: string };
+type ValueProps = { values?: string[] };
 
 const SearchBar = () => {
   const { searchString, setSearchString } = useDropdownMultiple();
@@ -33,11 +32,9 @@ const SearchBar = () => {
   );
 };
 
-const Option = ({ selectOption, option: { bgColor, value } }: OptionProps) => (
+const Option = ({ selectOption, option }: OptionProps) => (
   <button className="c-form-dd-opt" onClick={selectOption}>
-    <p className="c-form-dd-opt__txt" style={{ backgroundColor: bgColor }}>
-      {value}
-    </p>
+    <p className="c-form-dd-opt__txt">{option}</p>
   </button>
 );
 
@@ -49,16 +46,16 @@ const AllOptions = () => {
   const { filteredOptions, setSearchString, title } = useDropdownMultiple();
   const { value } = Form.useStoreState(({ getItem }) => getItem(title));
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const selectOption = (option: FormOption) => {
+  const selectOption = (option) => {
     updateItem({ title, value: [...value, option] });
     setSearchString('');
   };
 
   return (
     <>
-      {filteredOptions.map((option: FormOption) => (
+      {filteredOptions.map((option) => (
         <Option
-          key={option.value}
+          key={option}
           option={option}
           selectOption={() => selectOption(option)}
         />
@@ -100,14 +97,13 @@ const Values = ({ values }: ValueProps) => {
 
   return (
     <div className="c-form-dd-value-ctr">
-      {values.map(({ bgColor, value }: FormOption, i: number) => (
+      {values.map((option, i: number) => (
         <button
-          key={value}
+          key={option}
           className="c-form-dd-value"
-          style={{ backgroundColor: bgColor }}
           onClick={(e) => deleteValue(e, i)}
         >
-          {value}
+          {option}
         </button>
       ))}
     </div>

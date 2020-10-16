@@ -7,7 +7,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { Form } from '@components/Form/Form.state';
 import { FormItemData } from '@components/Form/Form.types';
-import { FormOption, ProviderProps } from '@constants';
+import { ProviderProps } from '@constants';
 import { filterOptions } from '@util/util';
 
 /* 
@@ -19,8 +19,8 @@ import { filterOptions } from '@util/util';
 */
 
 interface DropdownMultipleState {
-  filteredOptions: FormOption[];
-  options: FormOption[];
+  filteredOptions: string[];
+  options: string[];
   searchString: string;
   setSearchString: (value: string) => void;
   setWidth: (value: number) => void;
@@ -62,8 +62,8 @@ export default ({
   options,
   title
 }: DropdownMultipleProviderProps) => {
-  const [allOptions] = useState<FormOption[]>(options);
-  const [filteredOptions, setFilteredOptions] = useState<FormOption[]>(options);
+  const [allOptions] = useState<string[]>(options);
+  const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
   const [searchString, setSearchString] = useState('');
   const [width, setWidth] = useState(0);
 

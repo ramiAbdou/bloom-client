@@ -4,13 +4,13 @@
  * @author Rami Abdou
  */
 
-import { FormOption, FormQuestion } from '@constants';
+import { FormQuestion } from '@constants';
 
-export interface FormItemData extends FormQuestion {
+export interface FormItemData extends Partial<FormQuestion> {
   errorMessage?: string;
   isActive?: boolean;
   maxCharacters?: number;
-  options?: FormOption[];
+  options?: string[];
   value?: any;
   validate?: (value: string) => string;
 }
