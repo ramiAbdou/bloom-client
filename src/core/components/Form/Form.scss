@@ -100,6 +100,7 @@ $PREF: 'c-form';
   @extend %flex-ac;
   @extend .body--3;
 
+  background-color: rgba($color: $orange-1, $alpha: 0.5);
   border-radius: $sm;
   color: $black;
   margin-right: $xxs;
@@ -112,7 +113,6 @@ $PREF: 'c-form';
 .#{$PREF}-dd-opt {
   @extend %flex-ac;
 
-  background-color: $white;
   height: $md;
   overflow: hidden;
   width: 100%;
@@ -126,6 +126,7 @@ $PREF: 'c-form';
   @extend .body--3;
   @extend .m-overflow-ellipses;
 
+  background-color: rgba($color: $orange-1, $alpha: 0.5);
   border-radius: $sm;
   color: $black;
   margin-left: 8px;
