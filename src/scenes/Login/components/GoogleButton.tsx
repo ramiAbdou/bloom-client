@@ -14,8 +14,6 @@ const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('redirect_uri', `${APP.SERVER_URL}/google/auth`)
   .addParam('client_id', process.env.GOOGLE_CLIENT_ID);
 
-console.log(url);
-
 export default () => (
   <button>
     <a href={url}>Google Login</a>

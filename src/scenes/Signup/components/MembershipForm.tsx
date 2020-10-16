@@ -14,11 +14,11 @@ import { CREATE_MEMBERSHIP } from '../SignupGQL';
 import { useSignup } from '../SignupProvider';
 
 const Title = () => (
-  <h3 className="s-signup-title">{useSignup().form?.title}</h3>
+  <h3 className="s-signup-title">{useSignup().application?.title}</h3>
 );
 
 const Description = () => (
-  <p className="s-signup-desc"> {useSignup().form?.description}</p>
+  <p className="s-signup-desc"> {useSignup().application?.description}</p>
 );
 
 const SubmitButton = () => {
@@ -50,14 +50,16 @@ const Content = () => (
 
 export default () => {
   const [createMembership] = useMutation(CREATE_MEMBERSHIP);
-  const { communityId, form } = useSignup();
-  if (!communityId || !form) return null;
+  const { communityId, application } = useSignup();
+  if (!communityId || !application) return null;
 
   const submitForm = async (data: FormData) =>
     createMembership({ variables: { communityId, data } });
 
   return (
-    <Form.Provider initialData={{ questions: form.questions, submitForm }}>
+    <Form.Provider
+      initialData={{ questions: application.questions, submitForm }}
+    >
       <div className="s-signup">
         <Title />
         <Description />

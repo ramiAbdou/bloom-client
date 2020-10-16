@@ -16,10 +16,9 @@ import {
 } from 'react-router-dom';
 
 import { Loader } from '@components/Loader';
-import EventPage from '@scenes/Event/Event';
 import HomePage from '@scenes/Home/Home';
 import LoginPage from '@scenes/Login/Login';
-import SignupPage from '@scenes/Signup/Signup';
+import SignupPage from '@scenes/Signup';
 import { useStoreActions } from '@store/Store';
 import { GET_USER, IS_LOGGED_IN } from '@store/UserGQL';
 
@@ -46,27 +45,19 @@ const AuthenticatedRoute = ({ component, ...rest }) => {
  * Check to see if the user is logged in (if they have tokens stored in the
  * httpOnly cookies), and if so, redirect them to the home page.
  */
-const LoginRoute = ({ component, ...rest }) => {
+const LoginRoute = () => {
   const { loading, data } = useQuery(IS_LOGGED_IN);
   if (loading) return <Loader />;
   if (data?.isUserLoggedIn) return <Redirect to="/" />;
-  return <Route {...rest} exact component={component} />;
+  return <Route exact component={LoginPage} path="/login" />;
 };
 
 export default () => (
   <Router>
     <Switch>
-      <AuthenticatedRoute exact component={HomePage} path="/" />
-      <LoginRoute exact component={LoginPage} path="/login" />
-      <LoginRoute exact component={LoginPage} path="/b/:userId" />
       <Route exact component={SignupPage} path="/:community/apply" />
-      <Route
-        exact
-        component={EventPage}
-        path="/:community/events/:eventShortId"
-      />
+      <AuthenticatedRoute exact component={HomePage} path="/" />
+      <LoginRoute />
     </Switch>
   </Router>
 );
-
-// app.bl.community/colorstack/events/10000

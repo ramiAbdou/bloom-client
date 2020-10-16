@@ -40,31 +40,29 @@ export type ProviderProps = { children: ReactNode };
  * FORMS - Handling of all form-related items including custom Enums.
  */
 
-export enum FormQuestionCategory {
-  FIRST_NAME = 'FIRST_NAME',
-  LAST_NAME = 'LAST_NAME',
-  EMAIL = 'EMAIL',
-  GENDER = 'GENDER',
-  MEMBERSHIP_TYPE = 'MEMBERSHIP_TYPE'
-}
+export type QuestionType =
+  | 'DROPDOWN_MULTIPLE'
+  | 'LONG_TEXT'
+  | 'MULTIPLE_CHOICE'
+  | 'SHORT_TEXT';
 
-export enum FormQuestionType {
-  SHORT_TEXT = 'SHORT_TEXT',
-  LONG_TEXT = 'LONG_TEXT',
-  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
-  DROPDOWN = 'DROPDOWN',
-  DROPDOWN_MULTIPLE = 'DROPDOWN_MULTIPLE'
-}
+export type QuestionCategory =
+  | 'DATE_JOINED'
+  | 'EMAIL'
+  | 'FIRST_NAME'
+  | 'GENDER'
+  | 'LAST_NAME'
+  | 'MEMBERSHIP_TYPE';
 
 export type FormOption = { bgColor: string; value: string };
 
 export type FormQuestion = {
-  category?: FormQuestionCategory;
+  category?: QuestionCategory;
   description?: string;
-  options?: string[] | FormOption[];
   required?: boolean;
+  options?: FormOption[];
   title: string;
-  type?: FormQuestionType;
+  type: QuestionType;
 };
 
 export type Form = {
@@ -74,7 +72,7 @@ export type Form = {
 };
 
 export type FormData = {
-  category?: FormQuestionCategory;
+  category?: QuestionCategory;
   title?: string;
   value: string;
 }[];

@@ -18,15 +18,15 @@ import { GET_MEMBERSHIP_FORM } from './SignupGQL';
 */
 
 type SignupState = {
+  application: Form;
   communityId: string;
-  form: Form;
   userId: string;
   setUserId: (value: string) => void;
 };
 
 const initialState: SignupState = {
+  application: null,
   communityId: '',
-  form: null,
   setUserId: () => {},
   userId: ''
 };
@@ -51,8 +51,8 @@ export const useSignup = () => useContext(SignupContext);
 type SignupProvider = { children: ReactNode; community: string };
 
 export default ({ children, community }: SignupProvider) => {
+  const [application, setApplication] = useState<Form>(null);
   const [communityId, setCommunityId] = useState('');
-  const [form, setForm] = useState<Form>(null);
   const [userId, setUserId] = useState('');
 
   const { data } = useQuery(GET_MEMBERSHIP_FORM, {
@@ -60,12 +60,14 @@ export default ({ children, community }: SignupProvider) => {
   });
 
   useEffect(() => {
-    setForm(data?.getCommunity?.membershipForm as Form);
+    setApplication(data?.getCommunity?.application as Form);
     setCommunityId(data?.getCommunity?.id as string);
   }, [data]);
 
   return (
-    <SignupContext.Provider value={{ communityId, form, setUserId, userId }}>
+    <SignupContext.Provider
+      value={{ application, communityId, setUserId, userId }}
+    >
       {children}
     </SignupContext.Provider>
   );

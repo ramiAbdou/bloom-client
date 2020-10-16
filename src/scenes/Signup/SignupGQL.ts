@@ -9,7 +9,7 @@ export const GET_MEMBERSHIP_FORM = query({
   fields: [
     'id',
     {
-      membershipForm: [
+      application: [
         'title',
         'description',
         {
@@ -31,9 +31,6 @@ export const GET_MEMBERSHIP_FORM = query({
 
 export const CREATE_MEMBERSHIP = mutation({
   fields: [{ user: ['id'] }],
-  operation: 'createMembership',
-  variables: {
-    communityId: { type: 'String!' },
-    data: { type: '[FormValueInput!]!' }
-  }
+  operation: 'applyForMembership',
+  variables: { data: { type: '[MembershipDataInput!]!' } }
 }).query;

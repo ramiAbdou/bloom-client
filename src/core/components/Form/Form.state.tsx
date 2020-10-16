@@ -18,7 +18,7 @@ import {
   FormData,
   FormOption,
   FormQuestion,
-  FormQuestionType
+  QuestionType
 } from '@constants';
 import { FormItemData } from './Form.types';
 
@@ -32,10 +32,10 @@ export interface FormModel {
   updateItem: Action<FormModel, Partial<FormItemData>>;
 }
 
-const parseValue = (type: FormQuestionType, value: any) => {
+const parseValue = (type: QuestionType, value: any) => {
   if (!value) return value;
-  if (type === FormQuestionType.DROPDOWN) return value.value;
-  if (type === FormQuestionType.DROPDOWN_MULTIPLE)
+  if (type === 'MULTIPLE_CHOICE') return value.value;
+  if (type === 'DROPDOWN_MULTIPLE')
     return JSON.stringify(value.map((item: FormOption) => item.value));
   return value;
 };
@@ -85,9 +85,9 @@ export const Form = createContextStore<FormModel>(
     ...model,
     items: questions.map(({ options, type, ...question }: FormQuestion) => {
       let emptyValue = null;
-      if (type === FormQuestionType.DROPDOWN_MULTIPLE) emptyValue = [];
-      else if (type === FormQuestionType.SHORT_TEXT) emptyValue = '';
-      else if (type === FormQuestionType.LONG_TEXT) emptyValue = '';
+      if (type === 'DROPDOWN_MULTIPLE') emptyValue = [];
+      else if (type === 'SHORT_TEXT') emptyValue = '';
+      else if (type === 'LONG_TEXT') emptyValue = '';
 
       return {
         ...question,
