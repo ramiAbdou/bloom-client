@@ -6,21 +6,29 @@
 
 import './Signup.scss';
 
-import React from 'react';
+import { useQuery } from 'graphql-hooks';
+import React, { useEffect } from 'react';
 
+import { useStoreActions } from '@store/Store';
 import SignupForm from './components/MembershipForm';
-import SignupProvider from './SignupProvider';
+import { GET_MEMBERSHIP_FORM } from './SignupGQL';
 
 // -----------------------------------------------------------------------------
 
 type SignupProps = { match: { params: { community: string } } };
 
 export default ({ match }: SignupProps) => {
+  const initCommunity = useStoreActions((store) => store.community.init);
   const { community } = match.params;
 
-  return (
-    <SignupProvider community={community}>
-      <SignupForm />
-    </SignupProvider>
-  );
+  const { data } = useQuery(GET_MEMBERSHIP_FORM, {
+    variables: { encodedUrlName: community }
+  });
+
+  useEffect(() => {
+    if (!data?.getCommunity) return;
+    initCommunity(data.getCommunity);
+  }, [data]);
+
+  return  <SignupForm />
 };

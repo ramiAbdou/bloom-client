@@ -7,7 +7,9 @@ import { mutation, query } from 'gql-query-builder';
 
 export const GET_MEMBERSHIP_FORM = query({
   fields: [
+    'encodedUrlName',
     'id',
+    'name',
     {
       application: [
         'title',
@@ -30,7 +32,7 @@ export const GET_MEMBERSHIP_FORM = query({
 }).query;
 
 export const CREATE_MEMBERSHIP = mutation({
-  fields: [{ user: ['id'] }],
+  fields: [{ user: ['email', 'firstName', 'lastName', 'id'] }],
   operation: 'applyForMembership',
   variables: { data: { type: '[MembershipDataInput!]!' } }
 }).query;

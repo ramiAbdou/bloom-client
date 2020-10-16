@@ -10,23 +10,25 @@ import { PrimaryButton } from '@components/Button';
 import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { FormData } from '@constants';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { CREATE_MEMBERSHIP } from '../SignupGQL';
-import { useSignup } from '../SignupProvider';
 
-const Title = () => (
-  <h3 className="s-signup-title">{useSignup().application?.title}</h3>
-);
+const Title = () => {
+  const application = useStoreState(({ community }) => community.application);
+  return <h3 className="s-signup-title"> {application?.title}</h3>;
+};
 
-const Description = () => (
-  <p className="s-signup-desc"> {useSignup().application?.description}</p>
-);
+const Description = () => {
+  const application = useStoreState(({ community }) => community.application);
+  return <p className="s-signup-desc"> {application?.description}</p>;
+};
 
 const SubmitButton = () => {
-  const { setUserId } = useSignup();
+  const initUser = useStoreActions(({ user }) => user.init);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const data = Form.useStoreState((store) => store.submittableData);
   const submitForm = Form.useStoreState((store) => store.submitForm);
-  const onClick = async () => setUserId((await submitForm(data)).user.id);
+  const onClick = async () => initUser((await submitForm(data)).user);
 
   return (
     <PrimaryButton
@@ -50,11 +52,13 @@ const Content = () => (
 
 export default () => {
   const [createMembership] = useMutation(CREATE_MEMBERSHIP);
-  const { communityId, application } = useSignup();
+  const { id: communityId, application } = useStoreState(
+    (state) => state.community
+  );
   if (!communityId || !application) return null;
 
   const submitForm = async (data: FormData) =>
-    createMembership({ variables: { communityId, data } });
+    createMembership({ variables: { data } });
 
   return (
     <Form.Provider
