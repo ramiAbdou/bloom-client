@@ -43,7 +43,8 @@ $PREF: 'c-btn';
 }
 
 .#{$PREF}-primary--disabled {
-  background-color: $gray-4;
-  color: $gray-2;
+  background-color: $gray-5;
+  box-shadow: none;
+  color: $gray-3;
   cursor: not-allowed;
 }
