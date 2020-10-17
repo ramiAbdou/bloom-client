@@ -12,7 +12,6 @@ import { ClientContext, GraphQLClient } from 'graphql-hooks';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { LoaderProvider } from '@components/Loader';
 import ToastQueue from '@components/Toast';
 import { APP } from '@constants';
 import { store } from '@store/Store';
@@ -28,11 +27,9 @@ const Background = () => <div id="app" />;
 const App = () => (
   <ClientContext.Provider value={client}>
     <StoreProvider store={store}>
-      <LoaderProvider>
-        <Background />
-        <AppRouter />
-        <ToastQueue />
-      </LoaderProvider>
+      <Background />
+      <AppRouter />
+      <ToastQueue />
     </StoreProvider>
   </ClientContext.Provider>
 );

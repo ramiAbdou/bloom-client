@@ -21,6 +21,6 @@ export const toastModel: ToastModel = {
   queue: [],
   showToast: thunk((actions, toast) => {
     actions.enqueueToast({ ...toast, id: Math.random() });
-    setTimeout(actions.dequeueToast, 2000 + ANIMATION_DURATION);
+    setTimeout(actions.dequeueToast, 3000 + ANIMATION_DURATION);
   })
 };
