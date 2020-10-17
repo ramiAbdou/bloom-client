@@ -5,6 +5,7 @@
 
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { PrimaryButton } from '@components/Button';
 import { Form } from '@components/Form';
@@ -24,6 +25,7 @@ const Description = () => {
 };
 
 const SubmitButton = () => {
+  const { location, push } = useHistory();
   const initUser = useStoreActions(({ user }) => user.init);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const data = Form.useStoreState((store) => store.submittableData);
@@ -32,7 +34,10 @@ const SubmitButton = () => {
       store.items.filter(({ category }) => category === 'EMAIL')[0]?.value
   );
   const submitForm = Form.useStoreState((store) => store.submitForm);
-  const onClick = async () => initUser((await submitForm(data, email)).user);
+  const onClick = async () => {
+    initUser((await submitForm(data, email)).user);
+    push(`${location.pathname}/confirmation`);
+  };
 
   return (
     <PrimaryButton
@@ -61,9 +66,13 @@ export default () => {
   );
   if (!communityId || !application) return null;
 
-  const submitForm = async (data: FormData, email: string) =>
-    (await createMembership({ variables: { data, email } })).data
-      .applyForMembership;
+  const submitForm = async (data: FormData, email: string) => {
+    const { data: result } = await createMembership({
+      variables: { data, email }
+    });
+
+    return result.applyForMembership;
+  };
 
   return (
     <Form.Provider

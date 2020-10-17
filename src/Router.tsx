@@ -19,6 +19,7 @@ import { Loader } from '@components/Loader';
 import HomePage from '@scenes/Home/Home';
 import LoginPage from '@scenes/Login/Login';
 import SignupPage from '@scenes/Signup';
+import SignupConfirmationPage from '@scenes/Signup/components/Confirmation';
 import { useStoreActions } from '@store/Store';
 import { GET_USER, IS_LOGGED_IN } from '@store/UserGQL';
 
@@ -56,6 +57,11 @@ export default () => (
   <Router>
     <Switch>
       <Route exact component={SignupPage} path="/:community/apply" />
+      <Route
+        exact
+        component={SignupConfirmationPage}
+        path="/:community/apply/confirmation"
+      />
       <AuthenticatedRoute exact component={HomePage} path="/" />
       <LoginRoute />
     </Switch>
