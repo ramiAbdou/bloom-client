@@ -9,6 +9,7 @@ import {
   query as queryBuilder
 } from 'gql-query-builder';
 import GQLOptions from 'gql-query-builder/build/IQueryBuilderOptions';
+import { APIError } from 'graphql-hooks';
 import moment from 'moment-timezone';
 
 import { APP } from '@constants';
@@ -44,6 +45,10 @@ export const filterOptions = (
       : acc;
   }, []);
 };
+
+export const getGraphQLError = (error: APIError<object>) =>
+  // @ts-ignore b/c the message must exist on the GraphQL error object.
+  error?.graphQLErrors[0]?.message;
 
 axios.defaults.withCredentials = true;
 

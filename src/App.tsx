@@ -13,6 +13,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { LoaderProvider } from '@components/Loader';
+import ToastQueue from '@components/Toast';
 import { APP } from '@constants';
 import { store } from '@store/Store';
 import AppRouter from './Router';
@@ -30,6 +31,7 @@ const App = () => (
       <LoaderProvider>
         <Background />
         <AppRouter />
+        <ToastQueue />
       </LoaderProvider>
     </StoreProvider>
   </ClientContext.Provider>

@@ -12,6 +12,7 @@ import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { FormData } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { getGraphQLError } from '@util/util';
 import { CREATE_MEMBERSHIP } from '../SignupGQL';
 
 const Title = () => {
@@ -35,7 +36,9 @@ const SubmitButton = () => {
   );
   const submitForm = Form.useStoreState((store) => store.submitForm);
   const onClick = async () => {
-    initUser((await submitForm(data, email)).user);
+    const result = await submitForm(data, email);
+    if (!result?.user) return;
+    initUser(result.user);
     push(`${location.pathname}/confirmation`);
   };
 
@@ -61,17 +64,21 @@ const Content = () => (
 
 export default () => {
   const [createMembership] = useMutation(CREATE_MEMBERSHIP);
-  const { id: communityId, application } = useStoreState(
-    (state) => state.community
-  );
+  const application = useStoreState(({ community }) => community.application);
+  const communityId = useStoreState(({ community }) => community.id);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+
   if (!communityId || !application) return null;
 
   const submitForm = async (data: FormData, email: string) => {
-    const { data: result } = await createMembership({
+    const { data: result, error } = await createMembership({
       variables: { data, email }
     });
 
-    return result.applyForMembership;
+    const errorMessage = getGraphQLError(error);
+    console.log(errorMessage);
+    if (errorMessage) showToast({ isError: true, message: errorMessage });
+    return !errorMessage && result.applyForMembership;
   };
 
   return (
