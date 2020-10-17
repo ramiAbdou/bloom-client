@@ -18,6 +18,7 @@ export const GET_MEMBERSHIP_FORM = query({
           questions: [
             'category',
             'description',
+            'id',
             'required',
             'options',
             'title',
@@ -34,5 +35,8 @@ export const GET_MEMBERSHIP_FORM = query({
 export const CREATE_MEMBERSHIP = mutation({
   fields: [{ user: ['email', 'firstName', 'lastName', 'id'] }],
   operation: 'applyForMembership',
-  variables: { data: { type: '[MembershipDataInput!]!' } }
+  variables: {
+    data: { type: '[MembershipDataInput!]!' },
+    email: { required: true }
+  }
 }).query;

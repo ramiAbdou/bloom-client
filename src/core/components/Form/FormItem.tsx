@@ -10,7 +10,7 @@ import Dropdown from './components/Dropdown';
 import DropdownMultiple from './components/DropdownMultiple';
 import LongText from './components/LongText';
 import ShortText from './components/ShortText';
-import { FormItemData } from './Form.types';
+import { FormItemData } from './FormTypes';
 
 // There are 2 options for the label: 1) the standard Label tag or 2) if the
 // component is a ShortText or LongText component and uses a character limit,

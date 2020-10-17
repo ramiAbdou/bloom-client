@@ -27,8 +27,12 @@ const SubmitButton = () => {
   const initUser = useStoreActions(({ user }) => user.init);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const data = Form.useStoreState((store) => store.submittableData);
+  const email = Form.useStoreState(
+    (store) =>
+      store.items.filter(({ category }) => category === 'EMAIL')[0]?.value
+  );
   const submitForm = Form.useStoreState((store) => store.submitForm);
-  const onClick = async () => initUser((await submitForm(data)).user);
+  const onClick = async () => initUser((await submitForm(data, email)).user);
 
   return (
     <PrimaryButton
@@ -57,8 +61,9 @@ export default () => {
   );
   if (!communityId || !application) return null;
 
-  const submitForm = async (data: FormData) =>
-    createMembership({ variables: { data } });
+  const submitForm = async (data: FormData, email: string) =>
+    (await createMembership({ variables: { data, email } })).data
+      .applyForMembership;
 
   return (
     <Form.Provider

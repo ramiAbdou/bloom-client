@@ -6,6 +6,8 @@
 
 import React, { useContext, useState } from 'react';
 
+import { ProviderProps } from '@constants';
+
 type ButtonState = {
   hideLoadingButton: VoidFunction;
   isLoading: boolean;
@@ -19,12 +21,10 @@ const initialState: ButtonState = {
 };
 
 const ButtonContext = React.createContext(initialState);
-
 export const useButton = () => useContext(ButtonContext);
 
-export default ({ children }) => {
+export default ({ children }: ProviderProps) => {
   const [isLoading, setIsLoading] = useState(false);
-
   const hideLoadingButton = () => setIsLoading(false);
   const showLoadingButton = () => setIsLoading(true);
 

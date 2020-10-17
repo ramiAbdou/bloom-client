@@ -6,9 +6,10 @@
 import React from 'react';
 
 import CSSModifier from '@util/CSSModifier';
-import { PrimaryButtonProps } from './Button.types';
+import ButtonProvider from './ButtonState';
+import { PrimaryButtonProps } from './ButtonTypes';
 
-export default ({
+const PrimaryButtonContent = ({
   className,
   disabled,
   onClick,
@@ -25,3 +26,9 @@ export default ({
     </button>
   );
 };
+
+export default (props: PrimaryButtonProps) => (
+  <ButtonProvider>
+    <PrimaryButtonContent {...props} />
+  </ButtonProvider>
+);

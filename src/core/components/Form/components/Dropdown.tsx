@@ -10,8 +10,8 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { Form } from '@components/Form';
-import { FormItemData } from '../Form.types';
-import DropdownProvider, { useDropdown } from './Dropdown.state';
+import { FormItemData } from '../FormTypes';
+import DropdownProvider, { useDropdown } from './DropdownState';
 
 type OptionProps = { selectOption: VoidFunction; option: string };
 type ValueProps = { value?: string };

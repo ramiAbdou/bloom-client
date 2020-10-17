@@ -14,7 +14,7 @@ import {
 } from 'easy-peasy';
 
 import { FormData, FormQuestion } from '@constants';
-import { FormItemData } from './Form.types';
+import { FormItemData } from './FormTypes';
 
 export interface FormModel {
   getItem: Computed<FormModel, (title: string) => FormItemData, {}>;
@@ -22,7 +22,7 @@ export interface FormModel {
   items: FormItemData[];
   next: Action<FormModel, string>;
   submittableData: Computed<FormModel, FormData>;
-  submitForm: (data: FormData) => Promise<any>;
+  submitForm: (data: FormData, ...args: any[]) => Promise<any>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 }
 
@@ -49,7 +49,8 @@ const model: FormModel = {
   submittableData: computed(({ items }) =>
     items?.map(({ id, value }) => ({
       questionId: id,
-      value: Array.isArray(value) ? value : [value]
+      // eslint-disable-next-line no-nested-ternary
+      value: value ? (Array.isArray(value) ? value : [value]) : null
     }))
   ),
   updateItem: action((state, payload) => {

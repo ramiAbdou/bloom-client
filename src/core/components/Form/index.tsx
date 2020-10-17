@@ -1,3 +1,3 @@
 import './Form.scss';
 
-export { Form } from './Form.state';
+export { Form } from './FormStore';

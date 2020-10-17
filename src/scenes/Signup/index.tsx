@@ -30,5 +30,5 @@ export default ({ match }: SignupProps) => {
     initCommunity(data.getCommunity);
   }, [data]);
 
-  return  <SignupForm />
+  return <SignupForm />;
 };

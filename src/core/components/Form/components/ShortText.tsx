@@ -8,8 +8,8 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import CSSModifier from '@util/CSSModifier';
-import { Form } from '../Form.state';
-import { FormItemData } from '../Form.types';
+import { Form } from '../FormStore';
+import { FormItemData } from '../FormTypes';
 
 export default ({ maxCharacters, title }: FormItemData) => {
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
