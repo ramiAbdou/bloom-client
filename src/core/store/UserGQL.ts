@@ -6,7 +6,19 @@
 import { query } from 'gql-query-builder';
 
 export const GET_USER = query({
-  fields: ['email', 'id', 'firstName', 'lastName'],
+  fields: [
+    'email',
+    'id',
+    'firstName',
+    'lastName',
+    {
+      memberships: [
+        { community: ['id', 'encodedUrlName', 'name'] },
+        'id',
+        'role'
+      ]
+    }
+  ],
   operation: 'getUser'
 }).query;
 

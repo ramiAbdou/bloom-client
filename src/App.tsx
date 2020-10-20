@@ -15,20 +15,17 @@ import ReactDOM from 'react-dom';
 import ToastQueue from '@components/Toast';
 import { APP } from '@constants';
 import { store } from '@store/Store';
-import AppRouter from './Router';
+import Router from './Router';
 
 const client = new GraphQLClient({
   fetchOptions: { credentials: 'include' },
   url: `${APP.SERVER_URL}/graphql`
 });
 
-const Background = () => <div id="app" />;
-
 const App = () => (
   <ClientContext.Provider value={client}>
     <StoreProvider store={store}>
-      <Background />
-      <AppRouter />
+      <Router />
       <ToastQueue />
     </StoreProvider>
   </ClientContext.Provider>

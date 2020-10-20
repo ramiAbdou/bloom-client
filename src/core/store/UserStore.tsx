@@ -4,13 +4,16 @@
  * @author Rami Abdou
  */
 
-import { Action, action, Computed, computed } from 'easy-peasy';
+import { Action, action, Computed, computed, Thunk, thunk } from 'easy-peasy';
+
+import { Membership } from './MembershipStore';
 
 export type User = {
   email: string;
   firstName: string;
   lastName: string;
   id: string;
+  memberships?: Membership[];
 };
 
 export interface UserModel {
@@ -18,8 +21,9 @@ export interface UserModel {
   firstName: string;
   fullName: Computed<UserModel, string>;
   id: string;
-  init: Action<UserModel, User>;
+  init: Thunk<UserModel, User>;
   lastName: string;
+  setUser: Action<UserModel, User>;
 }
 
 export const userModel: UserModel = {
@@ -27,12 +31,19 @@ export const userModel: UserModel = {
   firstName: '',
   fullName: computed(({ firstName, lastName }) => `${firstName} ${lastName}`),
   id: '',
-  init: action((state, { email, firstName, id, lastName }) => ({
+  init: thunk((actions, user, { getStoreActions }) => {
+    actions.setUser(user);
+
+    // @ts-ignore b/c haven't figured out how to type-check this yet.
+    const { membership } = getStoreActions();
+    membership.init(user.memberships);
+  }),
+  lastName: '',
+  setUser: action((state, { email, firstName, id, lastName }: User) => ({
     ...state,
     email,
     firstName,
     id,
     lastName
-  })),
-  lastName: ''
+  }))
 };

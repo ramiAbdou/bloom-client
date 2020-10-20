@@ -16,12 +16,14 @@ import {
 } from 'react-router-dom';
 
 import Loader from '@components/Loader';
-import HomePage from '@scenes/Home/Home';
-import LoginPage from '@scenes/Login/Login';
-import SignupPage from '@scenes/Signup';
-import SignupConfirmationPage from '@scenes/Signup/components/Confirmation';
-import { useStoreActions } from '@store/Store';
+import SignupPage from '@scenes/Application';
+import SignupConfirmationPage from '@scenes/Application/components/Confirmation';
+import HomePage from '@scenes/Home';
+import LoginPage from '@scenes/Login';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_USER, IS_LOGGED_IN } from '@store/UserGQL';
+
+const Background = () => <div id="app" />;
 
 /**
  * For an authenticated route, we first try to retrieve the user (by using the
@@ -30,15 +32,21 @@ import { GET_USER, IS_LOGGED_IN } from '@store/UserGQL';
  */
 const AuthenticatedRoute = ({ component, ...rest }) => {
   const { loading, data } = useQuery(GET_USER);
-  const initUser = useStoreActions((store) => store.user.init);
+  const initUser = useStoreActions(({ user }) => user.init);
+  const membershipsLoaded = !!useStoreState(
+    ({ membership }) => membership.memberships.length
+  );
 
   useEffect(() => {
     if (!data?.getUser) return;
     initUser(data.getUser);
   }, [data?.getUser?.id]);
 
+  // If there are already memberships stored in the Membership state, then we
+  // know that the user is loaded, so show that.
+  if (membershipsLoaded || data?.getUser)
+    return <Route exact {...rest} component={component} />;
   if (loading) return <Loader />;
-  if (data?.getUser) return <Route exact {...rest} component={component} />;
   return <Redirect to="/login" />;
 };
 
@@ -46,24 +54,44 @@ const AuthenticatedRoute = ({ component, ...rest }) => {
  * Check to see if the user is logged in (if they have tokens stored in the
  * httpOnly cookies), and if so, redirect them to the home page.
  */
-const LoginRoute = () => {
-  const { loading, data } = useQuery(IS_LOGGED_IN);
+const LoginRoute = ({ path }) => {
+  const { error, loading, data } = useQuery(IS_LOGGED_IN);
   if (loading) return <Loader />;
-  if (data?.isUserLoggedIn) return <Redirect to="/" />;
-  return <Route exact component={LoginPage} path="/login" />;
+
+  // If there is an error in the GraphQL query, whether the query structure
+  // was wrong or there the user wasn't authenticated for the request.
+  if (!error && data?.isUserLoggedIn) return <Redirect to="/" />;
+  return <Route exact component={LoginPage} path={path} />;
 };
 
 export default () => (
   <Router>
+    <Background />
     <Switch>
-      <Route exact component={SignupPage} path="/:community/apply" />
+      <LoginRoute path="/login" />
+      <AuthenticatedRoute exact component={HomePage} path="/profile" />
+      <Route exact component={SignupPage} path="/:encodedUrlName/apply" />
       <Route
         exact
         component={SignupConfirmationPage}
-        path="/:community/apply/confirmation"
+        path="/:encodedUrlName/apply/confirmation"
+      />
+      <AuthenticatedRoute
+        exact
+        component={HomePage}
+        path="/:encodedUrlName/admin"
+      />
+      <AuthenticatedRoute
+        exact
+        component={HomePage}
+        path="/:encodedUrlName/admin/members"
+      />
+      <AuthenticatedRoute
+        exact
+        component={HomePage}
+        path="/:encodedUrlName/admin/settings"
       />
       <AuthenticatedRoute exact component={HomePage} path="/" />
-      <LoginRoute />
     </Switch>
   </Router>
 );

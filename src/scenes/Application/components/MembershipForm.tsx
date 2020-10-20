@@ -11,17 +11,18 @@ import { PrimaryButton } from '@components/Button';
 import { Form } from '@components/Form';
 import FormItem from '@components/Form/FormItem';
 import { FormData } from '@constants';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-import { CREATE_MEMBERSHIP } from '../SignupGQL';
+import { CREATE_MEMBERSHIP } from '../ApplicationGQL';
+import { useApplication } from '../ApplicationState';
 
 const Title = () => {
-  const application = useStoreState(({ community }) => community.application);
+  const { application } = useApplication();
   return <h3 className="s-signup-title"> {application?.title}</h3>;
 };
 
 const Description = () => {
-  const application = useStoreState(({ community }) => community.application);
+  const { application } = useApplication();
   return <p className="s-signup-desc"> {application?.description}</p>;
 };
 
@@ -29,10 +30,10 @@ const SubmitButton = () => {
   const { location, push } = useHistory();
   const initUser = useStoreActions(({ user }) => user.init);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
-  const data = Form.useStoreState((store) => store.submittableData);
+  const data = Form.useStoreState(({ submittableData }) => submittableData);
   const email = Form.useStoreState(
-    (store) =>
-      store.items.filter(({ category }) => category === 'EMAIL')[0]?.value
+    ({ items }) =>
+      items.filter(({ category }) => category === 'EMAIL')[0]?.value
   );
   const submitForm = Form.useStoreState((store) => store.submitForm);
   const onClick = async () => {
@@ -64,11 +65,10 @@ const Content = () => (
 
 export default () => {
   const [createMembership] = useMutation(CREATE_MEMBERSHIP);
-  const application = useStoreState(({ community }) => community.application);
-  const communityId = useStoreState(({ community }) => community.id);
+  const { application } = useApplication();
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  if (!communityId || !application) return null;
+  if (!application) return null;
 
   const submitForm = async (data: FormData, email: string) => {
     const { data: result, error } = await createMembership({
@@ -76,7 +76,6 @@ export default () => {
     });
 
     const errorMessage = getGraphQLError(error);
-    console.log(errorMessage);
     if (errorMessage) showToast({ isError: true, message: errorMessage });
     return !errorMessage && result.applyForMembership;
   };
