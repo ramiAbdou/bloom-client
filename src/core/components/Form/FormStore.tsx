@@ -71,7 +71,7 @@ export const Form = createContextStore<FormModel>(
     ...model,
     items: questions.map(({ options, type, ...question }: FormQuestion) => {
       let emptyValue = null;
-      if (type === 'DROPDOWN_MULTIPLE') emptyValue = [];
+      if (type === 'MULTIPLE_SELECT') emptyValue = [];
       else if (type === 'SHORT_TEXT') emptyValue = '';
       else if (type === 'LONG_TEXT') emptyValue = '';
 

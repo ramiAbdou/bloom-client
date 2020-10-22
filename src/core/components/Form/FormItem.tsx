@@ -71,9 +71,11 @@ export default ({
 
   let body = null;
 
+  if (type === 'MULTIPLE_CHOICE') console.log(options);
+
   if (type === 'SHORT_TEXT') body = <ShortText {...textProps} />;
   else if (type === 'LONG_TEXT') body = <LongText {...textProps} />;
-  else if (type === 'DROPDOWN_MULTIPLE')
+  else if (type === 'MULTIPLE_SELECT')
     body = <DropdownMultiple {...dropdownProps} />;
   else if (type === 'MULTIPLE_CHOICE') body = <Dropdown {...dropdownProps} />;
 

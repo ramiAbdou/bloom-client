@@ -10,20 +10,22 @@ import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
 import { GET_MEMBERSHIP_FORM } from './ApplicationGQL';
-import { useApplication } from './ApplicationState';
+import ApplicationProvider, { useApplication } from './ApplicationState';
 import SignupForm from './components/MembershipForm';
 
 // -----------------------------------------------------------------------------
 
-type ApplicationProps = { match: { params: { community: string } } };
+type ApplicationProps = { match: { params: { encodedUrlName: string } } };
 
-export default ({ match }: ApplicationProps) => {
+const ApplicationContent = ({ match }: ApplicationProps) => {
   const { setApplication } = useApplication();
-  const { community } = match.params;
+  const { encodedUrlName } = match.params;
 
   const { data } = useQuery(GET_MEMBERSHIP_FORM, {
-    variables: { encodedUrlName: community }
+    variables: { encodedUrlName }
   });
+
+  console.log(data);
 
   useEffect(() => {
     if (!data?.getCommunity) return;
@@ -32,3 +34,9 @@ export default ({ match }: ApplicationProps) => {
 
   return <SignupForm />;
 };
+
+export default (props: ApplicationProps) => (
+  <ApplicationProvider>
+    <ApplicationContent {...props} />
+  </ApplicationProvider>
+);

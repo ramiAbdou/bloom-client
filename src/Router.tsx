@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 import Loader from '@components/Loader';
-import SignupPage from '@scenes/Application';
+import SignupPage from '@scenes/Application/Application';
 import SignupConfirmationPage from '@scenes/Application/components/Confirmation';
 import HomePage from '@scenes/Home';
 import LoginPage from '@scenes/Login';

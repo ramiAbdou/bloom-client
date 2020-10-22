@@ -31,9 +31,9 @@ export type ProviderProps = { children: ReactNode };
  */
 
 export type QuestionType =
-  | 'DROPDOWN_MULTIPLE'
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
+  | 'MULTIPLE_SELECT'
   | 'SHORT_TEXT';
 
 export type QuestionCategory =
@@ -57,7 +57,7 @@ export type FormQuestion = {
 export type Form = {
   title: string;
   description?: string;
-  questions: FormQuestion[];
+  questions?: FormQuestion[];
 };
 
 export type FormData = { questionId: string; value: string[] }[];
