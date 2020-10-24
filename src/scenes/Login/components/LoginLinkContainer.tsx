@@ -12,6 +12,7 @@ import { Form } from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { DOES_USER_EXIST } from '../Login.gql';
+import { useLogin } from '../Login.state';
 
 const SubmitButton = (props: Partial<PrimaryButtonProps>) => (
   <PrimaryButton
@@ -23,11 +24,17 @@ const SubmitButton = (props: Partial<PrimaryButtonProps>) => (
 );
 
 const Content = () => {
+  const { setHasLoginLinkSent } = useLogin();
   const { value } = Form.useStoreState((store) => store.getItem('Email'));
 
   const [doesUserExist, { data, loading }] = useManualQuery(DOES_USER_EXIST, {
     variables: { email: value }
   });
+
+  const onClick = async () => {
+    const { data: liveData } = await doesUserExist();
+    if (liveData?.doesUserExist) setHasLoginLinkSent(true);
+  };
 
   const message =
     data && !data.doesUserExist && 'You must be a member of a community.';
@@ -35,11 +42,7 @@ const Content = () => {
   return (
     <>
       <FormContent />
-      <SubmitButton
-        disabled={!value}
-        isLoading={loading}
-        onClick={doesUserExist}
-      />
+      <SubmitButton disabled={!value} isLoading={loading} onClick={onClick} />
       {!!message && <ErrorMessage message={message} />}
     </>
   );
