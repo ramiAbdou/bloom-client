@@ -34,9 +34,11 @@ const model: FormModel = {
   isCompleted: computed(
     ({ items }) =>
       items &&
-      items.every(
-        ({ required, value }: FormItemData) => !required || (required && value)
-      )
+      items.every(({ required, value, validate }: FormItemData) => {
+        return (
+          (!required || (required && value)) && (!validate || validate(value))
+        );
+      })
   ),
   itemCSS: null,
   items: [],
@@ -73,20 +75,22 @@ export const Form = createContextStore<FormModel>(
   ({ itemCSS, questions, submitForm }: FormStoreInitializer) => ({
     ...model,
     itemCSS,
-    items: questions?.map(({ options, type, ...question }: FormQuestion) => {
-      let emptyValue = null;
-      if (type === 'MULTIPLE_SELECT') emptyValue = [];
-      else if (type === 'SHORT_TEXT') emptyValue = '';
-      else if (type === 'LONG_TEXT') emptyValue = '';
+    items: questions?.map(
+      ({ options, type, ...question }: Partial<FormItemData>) => {
+        let emptyValue = null;
+        if (type === 'MULTIPLE_SELECT') emptyValue = [];
+        else if (type === 'SHORT_TEXT') emptyValue = '';
+        else if (type === 'LONG_TEXT') emptyValue = '';
 
-      return {
-        ...question,
-        isActive: false,
-        options,
-        type,
-        value: emptyValue
-      };
-    }),
+        return {
+          ...question,
+          isActive: false,
+          options,
+          type,
+          value: emptyValue
+        };
+      }
+    ),
     submitForm
   }),
   { disableImmer: true }

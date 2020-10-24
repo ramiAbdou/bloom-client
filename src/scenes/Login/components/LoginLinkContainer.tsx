@@ -5,6 +5,7 @@
 
 import { useManualQuery } from 'graphql-hooks';
 import React from 'react';
+import validator from 'validator';
 
 import { PrimaryButton } from '@components/Button';
 import { PrimaryButtonProps } from '@components/Button/PrimaryButton';
@@ -26,6 +27,7 @@ const SubmitButton = (props: Partial<PrimaryButtonProps>) => (
 const Content = () => {
   const { email, setEmail, setHasLoginLinkSent } = useLogin();
   const { value } = Form.useStoreState((store) => store.getItem('Email'));
+  const isCompleted = Form.useStoreState((store) => store.isCompleted);
 
   if (email !== value) setEmail(value);
 
@@ -44,7 +46,11 @@ const Content = () => {
   return (
     <>
       <FormContent />
-      <SubmitButton disabled={!value} isLoading={loading} onClick={onClick} />
+      <SubmitButton
+        disabled={!isCompleted}
+        isLoading={loading}
+        onClick={onClick}
+      />
       {!!message && <ErrorMessage message={message} />}
     </>
   );
@@ -59,8 +65,10 @@ export default () => (
           description:
             'Or continue with your email address to receive a login link.',
           placeholder: 'Email',
+          required: true,
           title: 'Email',
-          type: 'SHORT_TEXT'
+          type: 'SHORT_TEXT',
+          validate: (value: string) => validator.isEmail(value)
         }
       ]
     }}
