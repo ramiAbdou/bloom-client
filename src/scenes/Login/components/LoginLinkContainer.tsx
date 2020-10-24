@@ -24,8 +24,10 @@ const SubmitButton = (props: Partial<PrimaryButtonProps>) => (
 );
 
 const Content = () => {
-  const { setHasLoginLinkSent } = useLogin();
+  const { email, setEmail, setHasLoginLinkSent } = useLogin();
   const { value } = Form.useStoreState((store) => store.getItem('Email'));
+
+  if (email !== value) setEmail(value);
 
   const [doesUserExist, { data, loading }] = useManualQuery(DOES_USER_EXIST, {
     variables: { email: value }

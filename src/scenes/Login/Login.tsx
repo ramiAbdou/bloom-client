@@ -5,11 +5,11 @@
 
 import './Login.scss';
 
-import { motion } from 'framer-motion';
 import React from 'react';
 
 import Separator from '@components/Misc/Separator';
 import GoogleContainer from './components/GoogleContainer';
+import LinkSentConfirmation from './components/LinkSentConfirmation';
 import LoginLinkContainer from './components/LoginLinkContainer';
 import LoginProvider, { useLogin } from './Login.state';
 
@@ -19,7 +19,7 @@ const LoginCard = () => {
   return (
     <div className="s-login-card">
       {hasLoginLinkSent ? (
-        <LinkSentConfirmationCard />
+        <LinkSentConfirmation />
       ) : (
         <>
           <GoogleContainer />
@@ -30,16 +30,6 @@ const LoginCard = () => {
     </div>
   );
 };
-
-const LinkSentConfirmationCard = () => (
-  <motion.div
-    animate={{ y: 0 }}
-    initial={{ y: 50 }}
-    transition={{ duration: 0.2 }}
-  >
-    YERRRRR
-  </motion.div>
-);
 
 const LoginContent = () => {
   return (

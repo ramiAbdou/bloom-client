@@ -87,3 +87,30 @@ $PREF: 's-login';
   margin-top: $sm;
   width: 100%;
 }
+
+.#{$PREF}-confirmation {
+  @extend %flex-accol;
+}
+
+.#{$PREF}-confirmation > p > span {
+  font-weight: 700;
+}
+
+.#{$PREF}-confirmation-icon {
+  background-color: $green-1;
+  border-radius: 50%;
+  height: $xl;
+  margin-bottom: $sm;
+  padding: $xs;
+  width: $xl;
+}
+
+.#{$PREF}-confirmation-icon > img {
+  height: 100%;
+  width: 100%;
+}
+
+.#{$PREF}-confirmation-icon > img {
+  height: 100%;
+  width: 100%;
+}
