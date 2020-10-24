@@ -15,11 +15,11 @@ import {
   Switch
 } from 'react-router-dom';
 
-import Loader from '@components/Loader';
+import Loader from '@components/Loader/Loader';
 import SignupPage from '@scenes/Application/Application';
 import SignupConfirmationPage from '@scenes/Application/components/Confirmation';
-import HomePage from '@scenes/Home';
-import LoginPage from '@scenes/Login';
+import HomePage from '@scenes/Home/Home';
+import LoginPage from '@scenes/Login/Login';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_USER, IS_LOGGED_IN } from '@store/UserGQL';
 

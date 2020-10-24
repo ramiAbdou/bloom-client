@@ -6,7 +6,7 @@
      |_|                  |___/ 
 */
 
-// Implements the Bloom Style guide for margins, paddings, and other general 
+// Implements the Bloom Style guide for margins, paddings, and other general
 // spacing guidelines.
 
 $xxs: 6px;
@@ -30,57 +30,115 @@ $page-d: 160px;
 */
 
 %m {
-
   &--auto {
     margin: auto;
   }
 
   &-page {
-
     &--right {
       margin-right: 10%;
 
-      @include T { margin-right: $page-t; }
+      @include T {
+        margin-right: $page-t;
+      }
 
-      @include M { margin-right: $page-m; }
+      @include M {
+        margin-right: $page-m;
+      }
     }
 
     &--left {
       margin-left: 10%;
 
-      @include T { margin-left: $page-t; }
+      @include T {
+        margin-left: $page-t;
+      }
 
-      @include M { margin-left: $page-m; }
+      @include M {
+        margin-left: $page-m;
+      }
     }
 
-    @include D { margin-left: 10%; margin-right: 10%; }
+    @include D {
+      margin-left: 10%;
+      margin-right: 10%;
+    }
 
-    @include T { margin-left: $page-t; margin-right: $page-t; }
+    @include T {
+      margin-left: $page-t;
+      margin-right: $page-t;
+    }
 
-    @include M { margin-left: $page-m; margin-right: $page-m; }
+    @include M {
+      margin-left: $page-m;
+      margin-right: $page-m;
+    }
 
-    @include WW('GT', 1440) { margin-left: auto; margin-right: auto; }
+    @include WW('GT', 1440) {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 }
 
 %flex {
   display: flex;
 
-  &-ac { @extend %flex; align-items: center; }
+  &-ac {
+    @extend %flex;
 
-  &-acc { @extend %flex-ac; justify-content: center; }
+    align-items: center;
+  }
 
-  &-accol { @extend %flex-ac; flex-direction: column; }
+  &-acc {
+    @extend %flex-ac;
 
-  &-acsb { @extend %flex-ac; justify-content: space-between; }
+    justify-content: center;
+  }
 
-  &-ae { @extend %flex; align-items: flex-end; }
+  &-accol {
+    @extend %flex-ac;
 
-  &-c { @extend %flex; justify-content: center; }
+    flex-direction: column;
+  }
 
-  &-col { @extend %flex; flex-direction: column; }
+  &-acccol {
+    @extend %flex-acc;
 
-  &-g { flex-grow: 1; }
+    flex-direction: column;
+  }
 
-  &-sb { @extend %flex; justify-content: space-between; }
+  &-acsb {
+    @extend %flex-ac;
+
+    justify-content: space-between;
+  }
+
+  &-ae {
+    @extend %flex;
+
+    align-items: flex-end;
+  }
+
+  &-c {
+    @extend %flex;
+
+    justify-content: center;
+  }
+
+  &-col {
+    @extend %flex;
+
+    flex-direction: column;
+  }
+
+  &-g {
+    flex-grow: 1;
+  }
+
+  &-sb {
+    @extend %flex;
+
+    justify-content: space-between;
+  }
 }

@@ -13,34 +13,68 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Muli:wght@200;400;500;600;700;800;900&display=swap');
 
-%bloom-font { color: $black; font-family: Muli; }
+%bloom-font {
+  color: $gray-1;
+  font-family: Muli;
+}
 
 // Returns the CSS fonts for different screen sizes.
 
-@mixin font-responsive($weight, $desktop, $desktop-lh, $tablet, $tablet-lh,
-  $mobile, $mobile-lh) {
+@mixin font-responsive(
+  $weight,
+  $desktop,
+  $desktop-lh,
+  $tablet,
+  $tablet-lh,
+  $mobile,
+  $mobile-lh
+) {
   @extend %bloom-font;
 
   font-weight: $weight;
 
-  @include D { font-size: $desktop; line-height: $desktop-lh; }
+  @include D {
+    font-size: $desktop;
+    line-height: $desktop-lh;
+  }
 
-  @include T { font-size: $tablet; line-height: $tablet-lh; }
+  @include T {
+    font-size: $tablet;
+    line-height: $tablet-lh;
+  }
 
-  @include M { font-size: $mobile; line-height: $mobile-lh; }
+  @include M {
+    font-size: $mobile;
+    line-height: $mobile-lh;
+  }
 }
 
-h1 { @include font-responsive(900, 36px, 48px, 32px, 48px, 30px, 36px); }
+h1 {
+  @include font-responsive(900, 36px, 48px, 32px, 48px, 30px, 36px);
+}
 
-h2 { @include font-responsive(700, 30px, 36px, 26px, 36px, 26px, 36px); }
+h2 {
+  @include font-responsive(700, 30px, 36px, 26px, 36px, 26px, 36px);
+}
 
-h3 { @include font-responsive(700, 24px, 36px, 20px, 24px, 20px, 24px); }
+h3 {
+  @include font-responsive(700, 24px, 36px, 20px, 24px, 20px, 24px);
+}
 
-h4 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
+h4 {
+  @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px);
+}
 
-p, textarea, span, input { @extend .body--1; }
+p,
+textarea,
+span,
+input {
+  @extend .body--1;
+}
 
-.meta { @include font-responsive(700, 12px, 24px, 12px, 24px, 12px, 24px); }
+.meta {
+  @include font-responsive(700, 12px, 24px, 12px, 24px, 12px, 24px);
+}
 
 .body--1 {
   @include font-responsive(400, 16px, 24px, 16px, 24px, 16px, 24px);

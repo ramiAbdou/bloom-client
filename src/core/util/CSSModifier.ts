@@ -11,8 +11,14 @@ export default class CSSModifier {
    * Conditionally adds a CSS class based on the boolean flag that's passed.
    * Automatically adds a space between the existing CSS class and the new one.
    */
-  addClass(flag: boolean, name: string) {
-    this.css += flag ? ` ${name}` : '';
+  addClass(flag: boolean, name: string, altName?: string) {
+    if (flag) this.css += ` ${name}`;
+    else if (altName) this.css += ` ${altName}`;
+    return this;
+  }
+
+  addModifier(flag: boolean, modifier: string) {
+    if (flag) this.css += modifier;
     return this;
   }
 

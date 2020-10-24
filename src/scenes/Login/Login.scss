@@ -1,0 +1,41 @@
+@import 'src/index.scss';
+
+$PREF: 's-login';
+
+.#{$PREF} {
+  @extend %flex-acccol;
+
+  height: 100%;
+  width: 100%;
+}
+
+.#{$PREF}-logo {
+  margin-bottom: $sm;
+}
+
+.#{$PREF}-title {
+  margin-bottom: $md;
+}
+
+.#{$PREF}-card {
+  @extend %flex-acccol;
+
+  border: 1px $gray-4 solid;
+  border-radius: $xs;
+  box-shadow: 0 2px 2px rgba($color: $gray-3, $alpha: 0.3);
+  min-width: 400px;
+}
+
+.#{$PREF}-google-btn {
+  border: 1px $gray-4 solid;
+  border-radius: $xxs;
+  box-shadow: 0 2px 2px rgba($color: $gray-3, $alpha: 0.3);
+  height: $lg;
+  margin-bottom: $sm;
+  margin-top: $sm;
+  padding-left: $lg;
+  padding-right: $lg;
+}
+
+.#{$PREF}-google-btn a {
+}

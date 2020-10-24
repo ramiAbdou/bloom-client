@@ -7,7 +7,9 @@ import React from 'react';
 
 import CSSModifier from '@util/CSSModifier';
 import ButtonProvider from './ButtonState';
-import { PrimaryButtonProps } from './ButtonTypes';
+import { ButtonDisabledProps, ButtonProps } from './ButtonTypes';
+
+interface PrimaryButtonProps extends ButtonProps, ButtonDisabledProps {}
 
 const PrimaryButtonContent = ({
   className,

@@ -15,7 +15,7 @@ const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('client_id', process.env.GOOGLE_CLIENT_ID);
 
 export default () => (
-  <button>
+  <button className="s-login-google-btn">
     <a href={url}>Google Login</a>
   </button>
 );

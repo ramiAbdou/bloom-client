@@ -26,7 +26,11 @@ body {
   width: 100%;
 }
 
-#root { @extend %flex-col; height: 100%; }
+#root {
+  @extend %flex-col;
+
+  height: 100%;
+}
 
 #app {
   background-color: $gray-6;
@@ -46,10 +50,26 @@ h1,
 h2,
 h3,
 h4,
-p { margin: 0 }
+p,
+a {
+  margin: 0;
+}
 
 button,
 input,
-textarea { border: none; outline: none; }
+textarea {
+  border: none;
+  outline: none;
+}
 
-button { background: none; cursor: pointer; padding: 0; }
+button {
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+a {
+  color: initial;
+  font-family: Muli;
+  text-decoration: none;
+}

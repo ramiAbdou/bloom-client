@@ -24,6 +24,7 @@ export const APP = {
  * GENERAL - General constants.
  */
 
+export type CommonProps = { className?: string };
 export type ProviderProps = { children: ReactNode };
 
 /**

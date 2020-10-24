@@ -4,12 +4,10 @@
  * @author Rami Abdou
  */
 
-type ButtonProps = {
+export type ButtonProps = {
   className?: string;
   onClick?: VoidFunction;
   title: string;
 };
 
-type ButtonDisabledProps = { disabled?: boolean };
-
-export interface PrimaryButtonProps extends ButtonProps, ButtonDisabledProps {}
+export type ButtonDisabledProps = { disabled?: boolean };

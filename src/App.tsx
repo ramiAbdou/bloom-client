@@ -12,7 +12,7 @@ import { ClientContext, GraphQLClient } from 'graphql-hooks';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ToastQueue from '@components/Toast';
+import ToastQueue from '@components/Toast/Toast';
 import { APP } from '@constants';
 import { store } from '@store/Store';
 import Router from './Router';
