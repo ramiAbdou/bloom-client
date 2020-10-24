@@ -22,20 +22,58 @@ $PREF: 's-login';
   @extend %flex-acccol;
 
   background-color: $white;
-  border: 1px $gray-4 solid;
+  border: 1px $gray-5 solid;
   border-radius: $xxs;
-  box-shadow: 0 2px 2px rgba($color: $gray-3, $alpha: 0.3);
+  box-shadow: 0 2px 2px rgba($color: $gray-4, $alpha: 0.3);
   min-width: $xxl * 5;
   padding: $md;
+  width: 400px;
+
+  @include M {
+    width: $SMALLEST_SCREEN;
+  }
 }
 
-.#{$PREF}-google-btn {
-  border: 1px $gray-4 solid;
-  border-radius: $xxs;
-  box-shadow: 0 2px 2px rgba($color: $gray-3, $alpha: 0.3);
-  height: $lg;
+.#{$PREF}-google {
   margin-bottom: $md;
   width: 100%;
+
+  &--sm {
+    margin-bottom: $xs;
+  }
+}
+
+.#{$PREF}-google > button {
+  @extend %flex-acc;
+
+  border: 1px $gray-5 solid;
+  border-radius: $xxs;
+  box-shadow: 0 0 4px rgba($color: $gray-4, $alpha: 0.3);
+  height: $lg;
+  width: 100%;
+}
+
+.#{$PREF}-google > button:hover {
+  background-color: rgba($color: $gray-6, $alpha: 0.35);
+}
+
+.#{$PREF}-google > button > img {
+  height: $sm;
+  margin-right: $xs;
+  width: $sm;
+}
+
+.#{$PREF}-google > button > a {
+  color: $gray-2;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.#{$PREF}-google > p {
+  @extend .body--2;
+
+  color: $red;
+  margin-top: $xs;
 }
 
 .#{$PREF}-submit-btn {
@@ -46,4 +84,5 @@ $PREF: 's-login';
 .#{$PREF}-form-item {
   margin-bottom: $sm;
   margin-top: $sm;
+  width: 100%;
 }

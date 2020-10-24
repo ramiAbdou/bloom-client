@@ -9,6 +9,8 @@
 // Controls all of the @media queries based on the window width. Mixin
 // functions allow for setting breakpoints at various widths.
 
+$SMALLEST_SCREEN: 320px;
+
 $screen-mobile: 575;
 $screen-tablet: 1024;
 $screen-desktop: 1440;
@@ -64,25 +66,19 @@ $screen-desktop: 1440;
 }
 
 @mixin WW($comparator, $window-width) {
-  @if $comparator=='GT' {
+  @if $comparator== 'GT' {
     @media (min-width: "#{$window-width + 1}px") {
       @content;
     }
-  }
-
-  @else if $comparator=='GTE' {
+  } @else if $comparator== 'GTE' {
     @media (min-width: "#{$window-width}px") {
       @content;
     }
-  }
-
-  @else if $comparator=='LT' {
+  } @else if $comparator== 'LT' {
     @media (max-width: "#{$window-width - 1}px") {
       @content;
     }
-  }
-
-  @else if $comparator=='LTE' {
+  } @else if $comparator== 'LTE' {
     @media (max-width: "#{$window-width}px") {
       @content;
     }
@@ -90,9 +86,15 @@ $screen-desktop: 1440;
 }
 
 @mixin resp($rule, $desktop-val, $tablet-val, $mobile-val) {
-  @include D { #{$rule}: $desktop-val; }
+  @include D {
+    #{$rule}: $desktop-val;
+  }
 
-  @include T { #{$rule}: $tablet-val; }
+  @include T {
+    #{$rule}: $tablet-val;
+  }
 
-  @include M { #{$rule}: $mobile-val; }
+  @include M {
+    #{$rule}: $mobile-val;
+  }
 }

@@ -6,8 +6,8 @@
 import React from 'react';
 
 import CSSModifier from '@util/CSSModifier';
-import ButtonProvider from './ButtonState';
-import { ButtonDisabledProps, ButtonProps } from './ButtonTypes';
+import ButtonProvider from './Button.state';
+import { ButtonDisabledProps, ButtonProps } from './Button.types';
 
 interface PrimaryButtonProps extends ButtonProps, ButtonDisabledProps {}
 
