@@ -25,6 +25,7 @@ export const APP = {
  */
 
 export type CommonProps = { className?: string };
+export type OnClickProps = { onClick?: () => Promise<any> };
 export type ProviderProps = { children: ReactNode };
 
 /**

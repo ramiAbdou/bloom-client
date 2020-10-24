@@ -54,3 +54,7 @@ $PREF: 'c-btn';
   color: $gray-3;
   cursor: not-allowed;
 }
+
+.#{$PREF}-primary--disabled:hover {
+  background: $gray-5;
+}

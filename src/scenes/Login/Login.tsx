@@ -7,7 +7,7 @@ import './Login.scss';
 
 import React from 'react';
 
-import Logo from '@components/Logo/Logo';
+// import Logo from '@components/Logo/Logo';
 import Separator from '@components/Misc/Separator';
 import GoogleContainer from './components/GoogleContainer';
 import LoginLinkContainer from './components/LoginLinkContainer';
@@ -22,8 +22,8 @@ const LoginCard = () => (
 
 export default () => (
   <div className="s-login">
-    <Logo large className="s-login-logo" />
-    <h3 className="s-login-title">Log In to Bloom</h3>
+    {/* <Logo large className="s-login-logo" /> */}
+    {/* <h3 className="s-login-title">Log In to Bloom</h3> */}
     <LoginCard />
   </div>
 );
