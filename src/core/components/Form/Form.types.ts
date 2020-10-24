@@ -10,6 +10,7 @@ export interface FormItemData extends Partial<FormQuestion> {
   errorMessage?: string;
   isActive?: boolean;
   maxCharacters?: number;
+  placeholder?: string;
   options?: string[];
   value?: any;
   validate?: (value: string) => string;

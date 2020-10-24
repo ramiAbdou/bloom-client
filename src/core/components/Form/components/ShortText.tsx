@@ -8,10 +8,10 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import CSSModifier from '@util/CSSModifier';
-import { Form } from '../FormStore';
-import { FormItemData } from '../FormTypes';
+import { Form } from '../Form.store';
+import { FormItemData } from '../Form.types';
 
-export default ({ maxCharacters, title }: FormItemData) => {
+export default ({ maxCharacters, placeholder, title }: FormItemData) => {
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );
@@ -49,7 +49,7 @@ export default ({ maxCharacters, title }: FormItemData) => {
     <input
       ref={inputRef}
       className={css}
-      placeholder={value || ''}
+      placeholder={placeholder || ''}
       type="text"
       value={value || ''}
       onChange={({ target }) => updateText(target.value)}

@@ -5,7 +5,7 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 
-import { FormItemData } from '@components/Form/FormTypes';
+import { FormItemData } from '@components/Form/Form.types';
 import { ProviderProps } from '@constants';
 import { filterOptions } from '@util/util';
 

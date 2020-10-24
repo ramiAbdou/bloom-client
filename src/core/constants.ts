@@ -48,7 +48,7 @@ export type QuestionCategory =
 export type FormQuestion = {
   category?: QuestionCategory;
   description?: string;
-  id: string;
+  id?: string;
   required?: boolean;
   options?: string[];
   title: string;

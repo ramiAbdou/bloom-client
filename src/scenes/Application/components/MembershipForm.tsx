@@ -8,7 +8,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { PrimaryButton } from '@components/Button';
-import { Form } from '@components/Form';
+import { Form } from '@components/Form/Form.store';
 import FormItem from '@components/Form/FormItem';
 import { FormData } from '@constants';
 import { useStoreActions } from '@store/Store';

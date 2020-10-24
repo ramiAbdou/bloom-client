@@ -8,12 +8,6 @@
 module.exports = {
   plugins: ['stylelint-order'],
   rules: {
-    'at-rule-empty-line-before': [
-      'always',
-      {
-        except: ['blockless-after-blockless', 'first-nested']
-      }
-    ],
     'at-rule-no-unknown': null,
     'block-closing-brace-space-before': 'always-single-line',
     'block-opening-brace-space-after': 'always-single-line',
@@ -40,7 +34,6 @@ module.exports = {
       'rules',
       'at-rules'
     ],
-    'order/properties-alphabetical-order': true,
-    'rule-empty-line-before': 'always-multi-line'
+    'order/properties-alphabetical-order': true
   }
 };

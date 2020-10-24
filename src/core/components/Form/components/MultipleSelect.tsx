@@ -9,15 +9,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { Form } from '@components/Form';
-import { FormItemData } from '../FormTypes';
-import DropdownProvider, { useDropdown } from './DropdownState';
+import { Form } from '../Form.store';
+import { FormItemData } from '../Form.types';
+import DropdownMultipleProvider, {
+  useDropdownMultiple
+} from './MultipleSelectState';
 
 type OptionProps = { selectOption: VoidFunction; option: string };
-type ValueProps = { value?: string };
+type ValueProps = { values?: string[] };
 
 const SearchBar = () => {
-  const { searchString, setSearchString } = useDropdown();
+  const { searchString, setSearchString } = useDropdownMultiple();
 
   return (
     <input
@@ -41,10 +43,11 @@ const NoResultsMessage = () => (
 );
 
 const AllOptions = () => {
-  const { filteredOptions, setSearchString, title } = useDropdown();
+  const { filteredOptions, setSearchString, title } = useDropdownMultiple();
+  const { value } = Form.useStoreState(({ getItem }) => getItem(title));
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const selectOption = (option) => {
-    updateItem({ isActive: false, title, value: option });
+    updateItem({ title, value: [...value, option] });
     setSearchString('');
   };
 
@@ -62,7 +65,7 @@ const AllOptions = () => {
 };
 
 const OptionContainer = () => {
-  const { filteredOptions, width } = useDropdown();
+  const { filteredOptions, width } = useDropdownMultiple();
   const noOptionsFound = !filteredOptions.length;
 
   return (
@@ -80,21 +83,36 @@ const OptionContainer = () => {
   );
 };
 
-const Value = ({ value }: ValueProps) => {
-  const { title } = useDropdown();
+const Values = ({ values }: ValueProps) => {
+  const { title } = useDropdownMultiple();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const clearValue = () => updateItem({ title, value: null });
+  const deleteValue = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    index: number
+  ) => {
+    e.stopPropagation();
+    const updatedValues = [...values.slice(0, index), ...values.slice(++index)];
+    updateItem({ isActive: true, title, value: updatedValues });
+  };
 
   return (
-    <button className="c-form-dd-value" onClick={clearValue}>
-      {value}
-    </button>
+    <div className="c-form-dd-value-ctr">
+      {values.map((option, i: number) => (
+        <button
+          key={option}
+          className="c-form-dd-value"
+          onClick={(e) => deleteValue(e, i)}
+        >
+          {option}
+        </button>
+      ))}
+    </div>
   );
 };
 
 const ClickBar = () => {
-  const { title, setWidth } = useDropdown();
-  const { isActive, value } = Form.useStoreState(({ getItem }) =>
+  const { title, setWidth } = useDropdownMultiple();
+  const { isActive, value: values } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );
   const updateItem = Form.useStoreActions((store) => store.updateItem);
@@ -110,7 +128,7 @@ const ClickBar = () => {
       className="c-form-input c-form-dd-bar"
       onClick={toggleActivate}
     >
-      <div>{value && <Value value={value} />}</div>
+      <div>{!!values.length && <Values values={values} />}</div>
       <div className="c-form-dd-arrow" />
     </div>
   );
@@ -126,11 +144,11 @@ export default ({ options, title }: FormItemData) => {
   useOnClickOutside(ref, () => isActive && inactivate());
 
   return (
-    <DropdownProvider options={options} title={title}>
+    <DropdownMultipleProvider options={options} title={title}>
       <div ref={ref}>
         <ClickBar />
         {isActive && <OptionContainer />}
       </div>
-    </DropdownProvider>
+    </DropdownMultipleProvider>
   );
 };

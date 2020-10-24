@@ -3,14 +3,17 @@
  * @author Rami Abdou
  */
 
+import './Form.scss';
+
 import React from 'react';
 
+import { Form } from '@components/Form/Form.store';
+import { FormItemData } from '@components/Form/Form.types';
 import CSSModifier from '@util/CSSModifier';
-import Dropdown from './components/Dropdown';
-import DropdownMultiple from './components/DropdownMultiple';
 import LongText from './components/LongText';
+import MultipleChoice from './components/MultipleChoice';
+import MultipleSelect from './components/MultipleSelect';
 import ShortText from './components/ShortText';
-import { FormItemData } from './FormTypes';
 
 // There are 2 options for the label: 1) the standard Label tag or 2) if the
 // component is a ShortText or LongText component and uses a character limit,
@@ -61,27 +64,30 @@ export default ({
   errorMessage,
   maxCharacters,
   options,
+  placeholder,
   required,
   title,
   type
 }: FormItemData) => {
+  const itemCSS = Form.useStoreState((store) => store.itemCSS);
   const baseProps = { required, title };
   const dropdownProps = { ...baseProps, options };
-  const textProps = { ...baseProps, maxCharacters };
+  const textProps = { ...baseProps, maxCharacters, placeholder };
 
   let body = null;
-
-  if (type === 'MULTIPLE_CHOICE') console.log(options);
 
   if (type === 'SHORT_TEXT') body = <ShortText {...textProps} />;
   else if (type === 'LONG_TEXT') body = <LongText {...textProps} />;
   else if (type === 'MULTIPLE_SELECT')
-    body = <DropdownMultiple {...dropdownProps} />;
-  else if (type === 'MULTIPLE_CHOICE') body = <Dropdown {...dropdownProps} />;
+    body = <MultipleSelect {...dropdownProps} />;
+  else if (type === 'MULTIPLE_CHOICE')
+    body = <MultipleChoice {...dropdownProps} />;
+
+  const { css } = new CSSModifier().addClass(!!itemCSS, itemCSS, 'c-form-item');
 
   return (
-    <div className="c-form-item">
-      <Label required={required} title={title} />
+    <div className={css}>
+      {!placeholder && <Label required={required} title={title} />}
       {description && <Description message={description} />}
       {body}
       {errorMessage && <ErrorMessage message={errorMessage} />}

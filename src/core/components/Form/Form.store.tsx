@@ -14,11 +14,12 @@ import {
 } from 'easy-peasy';
 
 import { FormData, FormQuestion } from '@constants';
-import { FormItemData } from './FormTypes';
+import { FormItemData } from './Form.types';
 
 export interface FormModel {
   getItem: Computed<FormModel, (title: string) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
+  itemCSS: string; // Represented a class string.
   items: FormItemData[];
   next: Action<FormModel, string>;
   submittableData: Computed<FormModel, FormData>;
@@ -37,6 +38,7 @@ const model: FormModel = {
         ({ required, value }: FormItemData) => !required || (required && value)
       )
   ),
+  itemCSS: null,
   items: [],
   next: action((state, payload) => {
     const { items } = state;
@@ -62,14 +64,16 @@ const model: FormModel = {
 };
 
 type FormStoreInitializer = {
+  itemCSS?: string;
   questions: FormQuestion[];
   submitForm: (data: FormData) => Promise<any>;
 };
 
 export const Form = createContextStore<FormModel>(
-  ({ questions, submitForm }: FormStoreInitializer) => ({
+  ({ itemCSS, questions, submitForm }: FormStoreInitializer) => ({
     ...model,
-    items: questions.map(({ options, type, ...question }: FormQuestion) => {
+    itemCSS,
+    items: questions?.map(({ options, type, ...question }: FormQuestion) => {
       let emptyValue = null;
       if (type === 'MULTIPLE_SELECT') emptyValue = [];
       else if (type === 'SHORT_TEXT') emptyValue = '';

@@ -17,8 +17,23 @@ $PREF: 'c-form';
   \___\___/_|_|_|_|_|_\___/_||_|
 */
 
-.#{$PREF}-item { margin-bottom: $md; margin-top: $md; }
-.#{$PREF}-label-ctr { @extend %flex-sb; @extend %flex-ae; width: 100%; }
+.#{$PREF}-item {
+  margin-bottom: $md;
+  margin-top: $md;
+}
+
+.#{$PREF}-item--fill {
+  @extend .#{$PREF}-item;
+
+  width: 100%;
+}
+
+.#{$PREF}-label-ctr {
+  @extend %flex-sb;
+  @extend %flex-ae;
+
+  width: 100%;
+}
 
 .#{$PREF}-label {
   @extend .meta;
@@ -29,15 +44,31 @@ $PREF: 'c-form';
   max-width: 85%;
 }
 
-.#{$PREF}-label--count { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
+.#{$PREF}-label--count {
+  @extend .meta;
+
+  color: $gray-3;
+  margin-bottom: $xxs;
+}
+
 .#{$PREF}-label--required::after {
   color: $red;
   content: '*';
   margin-left: $xxs;
 }
 
-.#{$PREF}-desc { @extend .body--2; margin-bottom: $xxs; }
-.#{$PREF}-error { @extend .body--3; color: $red; margin-top: $xxs; }
+.#{$PREF}-desc {
+  @extend .body--2;
+
+  margin-bottom: $xxs;
+}
+
+.#{$PREF}-error {
+  @extend .body--3;
+
+  color: $red;
+  margin-top: $xxs;
+}
 
 .#{$PREF}-input {
   @extend %flex-acsb;
@@ -53,6 +84,10 @@ $PREF: 'c-form';
   width: 100%;
 }
 
+.#{$PREF}-input::placeholder {
+  color: $gray-4;
+}
+
 .#{$PREF}-input--lg {
   @extend .#{$PREF}-input;
 
@@ -63,8 +98,13 @@ $PREF: 'c-form';
   resize: none;
 }
 
-.#{$PREF}-input--active { border: 1px $orange-1 solid; }
-.#{$PREF}-input--error { border: 1px $red solid; }
+.#{$PREF}-input--active {
+  border: 1px $orange-1 solid;
+}
+
+.#{$PREF}-input--error {
+  border: 1px $red solid;
+}
 
 .#{$PREF}-dd-opt-ctr {
   background-color: $white;
@@ -82,19 +122,25 @@ $PREF: 'c-form';
   box-sizing: border-box;
   padding: 8px;
   width: 100%;
- }
+}
 
-.#{$PREF}-dd-bar { @extend %flex-acsb; cursor: pointer; }
+.#{$PREF}-dd-bar {
+  @extend %flex-acsb;
+
+  cursor: pointer;
+}
 
 .#{$PREF}-dd-arrow {
   border-left: $xxs solid transparent;
   border-right: $xxs solid transparent;
-  border-top: $xxs solid $gray-4; 
+  border-top: $xxs solid $gray-4;
   height: 0;
   width: 0;
 }
 
-.#{$PREF}-dd-value-ctr { @extend %flex-ac; }
+.#{$PREF}-dd-value-ctr {
+  @extend %flex-ac;
+}
 
 .#{$PREF}-dd-value {
   @extend %flex-ac;
@@ -108,7 +154,10 @@ $PREF: 'c-form';
   padding-right: $xxs;
 }
 
-.#{$PREF}-dd-value::after { content: 'x'; margin-left: $xxs; }
+.#{$PREF}-dd-value::after {
+  content: 'x';
+  margin-left: $xxs;
+}
 
 .#{$PREF}-dd-opt {
   @extend %flex-ac;
@@ -118,7 +167,9 @@ $PREF: 'c-form';
   width: 100%;
 
   @media (hover: hover) {
-    &:hover { background-color: $gray-6; }
+    &:hover {
+      background-color: $gray-6;
+    }
   }
 }
 
@@ -141,7 +192,7 @@ $PREF: 'c-form';
 .#{$PREF}-dd-no-result {
   @extend %flex-ac;
   @extend .body--2;
-  
+
   height: $md;
   margin-left: 8px;
   width: 100%;

@@ -5,8 +5,8 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Form } from '@components/Form/FormStore';
-import { FormItemData } from '@components/Form/FormTypes';
+import { Form } from '@components/Form/Form.store';
+import { FormItemData } from '@components/Form/Form.types';
 import { ProviderProps } from '@constants';
 import { filterOptions } from '@util/util';
 
