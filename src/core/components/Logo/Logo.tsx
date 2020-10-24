@@ -7,11 +7,11 @@ import './Logo.scss';
 
 import React from 'react';
 
-import { CommonProps } from '@constants';
+import { ClassNameProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import { bloomLogo } from './images';
 
-interface LogoProps extends CommonProps {
+interface LogoProps extends ClassNameProps {
   large?: boolean; // Makes logo appear 1.5x larger than normal.
 }
 

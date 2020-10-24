@@ -9,6 +9,10 @@
 
 $PREF: 'c-btn';
 
+.btn-txt {
+  @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px);
+}
+
 // This is needed since we are manually setting the height of the button which
 // throws off the vertical alignment of the button.
 
@@ -21,13 +25,29 @@ $PREF: 'c-btn';
   @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px);
 }
 
-/*
-  ___     _                       ___      _   _            
- | _ \_ _(_)_ __  __ _ _ _ _  _  | _ )_  _| |_| |_ ___ _ _  
- |  _/ '_| | '  \/ _` | '_| || | | _ \ || |  _|  _/ _ \ ' \ 
- |_| |_| |_|_|_|_\__,_|_|  \_, | |___/\_,_|\__|\__\___/_||_|
-                           |__/
-*/
+.#{$PREF}-loading {
+  @extend %flex-acc;
+
+  cursor: default;
+}
+
+.#{$PREF}-loading > p {
+  @extend .btn-txt;
+  @extend %flex-acc;
+
+  color: $gray-3;
+  margin-right: $xs;
+}
+
+.#{$PREF}-spinner {
+  border: 2px $gray-6 solid;
+  border-radius: 50%;
+  border-top: 2px $gray-3 solid;
+  height: 18px;
+  width: 18px;
+}
+
+// PRIMARY BUTTON
 
 .#{$PREF}-primary {
   @extend .#{$PREF}-base;
@@ -58,3 +78,5 @@ $PREF: 'c-btn';
 .#{$PREF}-primary--disabled:hover {
   background: $gray-5;
 }
+
+// SECONDARY BUTTON

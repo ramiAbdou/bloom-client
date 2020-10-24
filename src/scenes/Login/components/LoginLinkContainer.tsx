@@ -4,46 +4,42 @@
  */
 
 import { useManualQuery } from 'graphql-hooks';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { PrimaryButton } from '@components/Button';
+import { PrimaryButtonProps } from '@components/Button/PrimaryButton';
 import { Form } from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import { OnClickProps } from '../../../core/constants';
 import { DOES_USER_EXIST } from '../Login.gql';
 
-interface SubmitButtonProps extends OnClickProps {
-  disabled?: boolean;
-}
-
-const SubmitButton = ({ disabled, onClick }: SubmitButtonProps) => (
+const SubmitButton = (props: Partial<PrimaryButtonProps>) => (
   <PrimaryButton
     className="s-login-submit-btn"
-    disabled={disabled}
+    loadingText="Submitting..."
     title="Send Me a Login Link"
-    onClick={onClick}
+    {...props}
   />
 );
 
 const Content = () => {
-  const [message, setMessage] = useState('');
   const { value } = Form.useStoreState((store) => store.getItem('Email'));
 
-  const [doesUserExist] = useManualQuery(DOES_USER_EXIST, {
+  const [doesUserExist, { data, loading }] = useManualQuery(DOES_USER_EXIST, {
     variables: { email: value }
   });
 
-  const onClick = async () => {
-    const { data } = await doesUserExist();
-    if (!data.doesUserExist) setMessage('You must be a member of a community.');
-    else if (message) setMessage('');
-  };
+  const message =
+    data && !data.doesUserExist && 'You must be a member of a community.';
 
   return (
     <>
       <FormContent />
-      <SubmitButton disabled={!value} onClick={onClick} />
+      <SubmitButton
+        disabled={!value}
+        isLoading={loading}
+        onClick={doesUserExist}
+      />
       {!!message && <ErrorMessage message={message} />}
     </>
   );
