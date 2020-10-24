@@ -44,30 +44,27 @@ $PREF: 's-login';
   }
 }
 
-.#{$PREF}-google > button {
+.#{$PREF}-google > a {
   @extend %flex-acc;
 
   border: 1px $gray-5 solid;
   border-radius: $xxs;
   box-shadow: 0 0 4px rgba($color: $gray-4, $alpha: 0.3);
+  color: $gray-2;
+  font-size: 16px;
+  font-weight: 700;
   height: $lg;
   width: 100%;
 }
 
-.#{$PREF}-google > button:hover {
+.#{$PREF}-google > a:hover {
   background-color: rgba($color: $gray-6, $alpha: 0.35);
 }
 
-.#{$PREF}-google > button > img {
+.#{$PREF}-google > a > img {
   height: $sm;
   margin-right: $xs;
   width: $sm;
-}
-
-.#{$PREF}-google > button > a {
-  color: $gray-2;
-  font-size: 16px;
-  font-weight: 700;
 }
 
 .#{$PREF}-google > p {

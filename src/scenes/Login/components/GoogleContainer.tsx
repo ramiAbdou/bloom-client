@@ -19,10 +19,10 @@ const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('client_id', process.env.GOOGLE_CLIENT_ID);
 
 const GoogleButton = () => (
-  <button>
+  <a href={url}>
     <img alt="Google Icon" src={google} />
-    <a href={url}>Sign In with Google</a>
-  </button>
+    Sign In with Google
+  </a>
 );
 
 export default () => {
