@@ -10,13 +10,18 @@ import React from 'react';
 
 import { error } from './images';
 
-type ErrorMessageProps = { message: string };
+type ErrorMessageProps = {
+  marginBottom?: number;
+  marginTop?: number;
+  message: string;
+};
 
-export default ({ message }: ErrorMessageProps) => (
+export default ({ marginBottom, marginTop, message }: ErrorMessageProps) => (
   <motion.div
     animate={{ opacity: 1 }}
     className="c-misc-error"
     initial={{ opacity: 0 }}
+    style={{ marginBottom, marginTop }}
     transition={{ duration: 0.2 }}
   >
     <img alt="Error Icon" src={error} />

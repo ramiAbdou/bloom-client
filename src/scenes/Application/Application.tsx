@@ -9,8 +9,8 @@ import './Application.scss';
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
-import { GET_MEMBERSHIP_FORM } from './ApplicationGQL';
-import ApplicationProvider, { useApplication } from './ApplicationState';
+import { GET_MEMBERSHIP_FORM } from './Application.gql';
+import ApplicationProvider, { useApplication } from './Application.state';
 import SignupForm from './components/MembershipForm';
 
 // -----------------------------------------------------------------------------
@@ -24,8 +24,6 @@ const ApplicationContent = ({ match }: ApplicationProps) => {
   const { data } = useQuery(GET_MEMBERSHIP_FORM, {
     variables: { encodedUrlName }
   });
-
-  console.log(data);
 
   useEffect(() => {
     if (!data?.getCommunity) return;
