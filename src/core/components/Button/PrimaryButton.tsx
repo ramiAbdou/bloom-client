@@ -34,20 +34,20 @@ export default ({
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
-    const timeout: NodeJS.Timeout = setTimeout(() => {
-      if (isLoading) setShowLoadingState(true);
-    }, 100);
+    if (!isLoading && showLoadingState) setShowLoadingState(false);
+    else
+      setTimeout(() => {
+        if (isLoading && !showLoadingState) setShowLoadingState(true);
+      }, 100);
+  }, [isLoading, showLoadingState]);
 
-    return clearTimeout(timeout);
-  });
+  disabled = disabled || showLoadingState;
 
   const { css } = new CSSModifier()
     .class('c-btn-primary')
     .class(className)
     .addClass(disabled, 'c-btn-primary--disabled')
     .addClass(isLoading, 'c-btn--primary--loading');
-
-  disabled = disabled || showLoadingState;
 
   return (
     <motion.button

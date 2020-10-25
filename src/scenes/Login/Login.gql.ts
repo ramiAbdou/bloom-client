@@ -3,9 +3,9 @@
  * @author Rami Abdou
  */
 
-import { query } from 'gql-query-builder';
+import { mutation } from 'gql-query-builder';
 
-export const DOES_USER_EXIST = query({
-  operation: 'doesUserExist',
+export const SEND_TEMPORARY_LOGIN_LINK = mutation({
+  operation: 'sendTemporaryLoginLink',
   variables: { email: { required: true } }
 }).query;

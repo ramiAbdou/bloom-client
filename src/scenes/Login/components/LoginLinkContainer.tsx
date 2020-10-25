@@ -12,13 +12,14 @@ import { PrimaryButtonProps } from '@components/Button/PrimaryButton';
 import { Form } from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import { DOES_USER_EXIST } from '../Login.gql';
+import { getGraphQLError } from '@util/util';
+import { SEND_TEMPORARY_LOGIN_LINK } from '../Login.gql';
 import { useLogin } from '../Login.state';
 
 const SubmitButton = (props: Partial<PrimaryButtonProps>) => (
   <PrimaryButton
     className="s-login-submit-btn"
-    loadingText="Submitting..."
+    loadingText="Sending Link..."
     title="Send Me a Login Link"
     {...props}
   />
@@ -31,17 +32,19 @@ const Content = () => {
 
   if (email !== value) setEmail(value);
 
-  const [doesUserExist, { data, loading }] = useManualQuery(DOES_USER_EXIST, {
-    variables: { email: value }
-  });
+  const [sendTemporaryLoginLink, { error, loading }] = useManualQuery(
+    SEND_TEMPORARY_LOGIN_LINK,
+    {
+      variables: { email: value }
+    }
+  );
 
   const onClick = async () => {
-    const { data: liveData } = await doesUserExist();
-    if (liveData?.doesUserExist) setHasLoginLinkSent(true);
+    const result = await sendTemporaryLoginLink();
+    if (!result.loading && !result.error) setHasLoginLinkSent(true);
   };
 
-  const message =
-    data && !data.doesUserExist && 'You must be a member of a community.';
+  const message = getGraphQLError(error);
 
   return (
     <>
