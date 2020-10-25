@@ -10,7 +10,6 @@ import {
 } from 'gql-query-builder';
 import GQLOptions from 'gql-query-builder/build/IQueryBuilderOptions';
 import { APIError } from 'graphql-hooks';
-import jwt from 'jsonwebtoken';
 import moment from 'moment-timezone';
 
 import { APP } from '@constants';

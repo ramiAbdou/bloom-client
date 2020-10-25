@@ -18,7 +18,6 @@ import {
 
 import Loader from '@components/Loader/Loader';
 import SignupPage from '@scenes/Application/Application';
-import SignupConfirmationPage from '@scenes/Application/components/Confirmation';
 import HomePage from '@scenes/Home/Home';
 import { VERIFY_LOGIN_TOKEN } from '@scenes/Home/Home.gql';
 import LoginPage from '@scenes/Login/Login';
@@ -90,12 +89,7 @@ export default () => (
     <Switch>
       <LoginRoute path="/login" />
       <AuthenticatedRoute exact component={HomePage} path="/profile" />
-      <Route exact component={SignupPage} path="/:encodedUrlName/apply" />
-      <Route
-        exact
-        component={SignupConfirmationPage}
-        path="/:encodedUrlName/apply/confirmation"
-      />
+      <Route component={SignupPage} path="/:encodedUrlName/apply" />
       <AuthenticatedRoute
         exact
         component={HomePage}
@@ -112,6 +106,7 @@ export default () => (
         path="/:encodedUrlName/admin/settings"
       />
       <AuthenticatedRoute exact component={HomePage} path="/" />
+      <Redirect to="/login" />
     </Switch>
   </Router>
 );

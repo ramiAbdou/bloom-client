@@ -9,7 +9,7 @@ import validator from 'validator';
 
 import { PrimaryButton } from '@components/Button';
 import { PrimaryButtonProps } from '@components/Button/PrimaryButton';
-import { Form } from '@components/Form/Form.store';
+import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { getGraphQLError } from '@util/util';
@@ -27,7 +27,10 @@ const SubmitButton = (props: Partial<PrimaryButtonProps>) => (
 
 const Content = () => {
   const { email, setEmail, setHasLoginLinkSent } = useLogin();
-  const { value } = Form.useStoreState((store) => store.getItem('Email'));
+  const value = Form.useStoreState(
+    ({ items }) =>
+      items.filter(({ category }) => category === 'EMAIL')[0]?.value
+  );
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
 
   if (email !== value) setEmail(value);
@@ -65,6 +68,7 @@ export default () => (
       itemCSS: 's-login-form-item',
       questions: [
         {
+          category: 'EMAIL',
           description:
             'Or continue with your email address to receive a login link.',
           placeholder: 'Email',

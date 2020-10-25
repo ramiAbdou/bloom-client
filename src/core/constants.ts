@@ -32,6 +32,8 @@ export type ProviderProps = { children: ReactNode };
  * FORMS - Handling of all form-related items including custom Enums.
  */
 
+export type ApplicationParams = { encodedUrlName: string };
+
 export type QuestionType =
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'

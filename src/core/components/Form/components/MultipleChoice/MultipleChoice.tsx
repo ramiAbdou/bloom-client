@@ -8,7 +8,7 @@
 import React, { useState } from 'react';
 
 import CSSModifier from '@util/CSSModifier';
-import { Form } from '../../Form.store';
+import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
 
 type ChoiceProps = {

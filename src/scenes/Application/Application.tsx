@@ -6,35 +6,21 @@
 
 import './Application.scss';
 
-import { useQuery } from 'graphql-hooks';
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Route } from 'react-router-dom';
 
-import { GET_MEMBERSHIP_FORM } from './Application.gql';
-import ApplicationProvider, { useApplication } from './Application.state';
-import SignupForm from './components/MembershipForm';
+import Application from './Application.store';
+import ApplicationConfirmation from './components/ApplicationConfirmation';
+import ApplicationForm from './components/ApplicationForm';
 
-// -----------------------------------------------------------------------------
+export default () => (
+  <Application.Provider>
+    <Route exact component={ApplicationForm} path="/:encodedUrlName/apply" />
 
-type ApplicationProps = { match: { params: { encodedUrlName: string } } };
-
-const ApplicationContent = ({ match }: ApplicationProps) => {
-  const { setApplication } = useApplication();
-  const { encodedUrlName } = match.params;
-
-  const { data } = useQuery(GET_MEMBERSHIP_FORM, {
-    variables: { encodedUrlName }
-  });
-
-  useEffect(() => {
-    if (!data?.getCommunity) return;
-    setApplication(data.getCommunity.application);
-  }, [data]);
-
-  return <SignupForm />;
-};
-
-export default (props: ApplicationProps) => (
-  <ApplicationProvider>
-    <ApplicationContent {...props} />
-  </ApplicationProvider>
+    <Route
+      exact
+      component={ApplicationConfirmation}
+      path="/:encodedUrlName/apply/confirmation"
+    />
+  </Application.Provider>
 );

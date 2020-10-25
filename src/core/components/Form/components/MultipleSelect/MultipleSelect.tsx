@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { Form } from '../../Form.store';
+import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
 import DropdownMultipleProvider, {
   useDropdownMultiple

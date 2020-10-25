@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import { Form } from './Form.store';
+import Form from './Form.store';
 import FormItem from './FormItem';
 
 export default () => (

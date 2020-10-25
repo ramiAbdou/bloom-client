@@ -8,7 +8,7 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import CSSModifier from '@util/CSSModifier';
-import { Form } from '../../Form.store';
+import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
 
 export default ({ maxCharacters, placeholder, title }: FormItemData) => {

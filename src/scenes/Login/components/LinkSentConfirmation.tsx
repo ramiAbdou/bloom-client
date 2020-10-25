@@ -9,6 +9,12 @@ import React from 'react';
 import { check } from '@components/Toast/images';
 import { useLogin } from '../Login.state';
 
+const Icon = () => (
+  <div className="s-login-confirmation-icon">
+    <img alt="Check Mark" src={check} />
+  </div>
+);
+
 const Content = () => {
   const { email } = useLogin();
 
@@ -19,12 +25,6 @@ const Content = () => {
     </p>
   );
 };
-
-const Icon = () => (
-  <div className="s-login-confirmation-icon">
-    <img alt="Check Mark" src={check} />
-  </div>
-);
 
 export default () => (
   <motion.div

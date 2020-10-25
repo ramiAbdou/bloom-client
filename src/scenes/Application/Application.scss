@@ -19,6 +19,62 @@ $PREF: 's-signup';
   @include resp(width, 600px, 500px, 90%);
 }
 
-.#{$PREF}-title { margin-bottom: $xs; }
-.#{$PREF}-desc { margin-bottom: $md; }
-.#{$PREF}-submit-btn { margin-top: $xxl; width: 100%; }
+.#{$PREF}-title {
+  margin-bottom: $xs;
+}
+.#{$PREF}-desc {
+  margin-bottom: $md;
+}
+
+.#{$PREF}-submit-btn {
+  margin-top: $xxl;
+  width: 100%;
+}
+
+.#{$PREF}-confirmation-ctr {
+  @extend %flex-acccol;
+
+  height: 100%;
+  margin-bottom: $xxl * 2;
+  width: 100%;
+}
+
+.#{$PREF}-confirmation {
+  @extend %flex-acccol;
+
+  background-color: $white;
+  border: 1px $gray-5 solid;
+  border-radius: $xxs;
+  box-shadow: 0 2px 2px rgba($color: $gray-4, $alpha: 0.3);
+  min-width: $xxl * 5;
+  overflow: hidden;
+  padding: $md;
+  width: 400px;
+
+  @include M {
+    width: $SMALLEST_SCREEN;
+  }
+}
+
+.#{$PREF}-confirmation > p > span {
+  font-weight: 700;
+}
+
+.#{$PREF}-confirmation-icon {
+  background-color: $green-1;
+  border-radius: 50%;
+  height: $xl;
+  margin-bottom: $sm;
+  padding: $xs;
+  width: $xl;
+}
+
+.#{$PREF}-confirmation-icon > img {
+  height: 100%;
+  width: 100%;
+}
+
+.#{$PREF}-confirmation-icon > img {
+  height: 100%;
+  width: 100%;
+}

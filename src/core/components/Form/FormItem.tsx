@@ -7,7 +7,7 @@ import './Form.scss';
 
 import React from 'react';
 
-import { Form } from '@components/Form/Form.store';
+import Form from '@components/Form/Form.store';
 import { FormItemData } from '@components/Form/Form.types';
 import CSSModifier from '@util/CSSModifier';
 import LongText from './components/LongText/LongText';

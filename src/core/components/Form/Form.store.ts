@@ -71,7 +71,7 @@ type FormStoreInitializer = {
   submitForm: (data: FormData) => Promise<any>;
 };
 
-export const Form = createContextStore<FormModel>(
+export default createContextStore<FormModel>(
   ({ itemCSS, questions, submitForm }: FormStoreInitializer) => ({
     ...model,
     itemCSS,
