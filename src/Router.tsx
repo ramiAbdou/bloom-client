@@ -12,13 +12,15 @@ import {
   BrowserRouter as Router,
   Redirect,
   Route,
-  Switch
+  Switch,
+  useHistory
 } from 'react-router-dom';
 
 import Loader from '@components/Loader/Loader';
 import SignupPage from '@scenes/Application/Application';
 import SignupConfirmationPage from '@scenes/Application/components/Confirmation';
 import HomePage from '@scenes/Home/Home';
+import { VERIFY_LOGIN_TOKEN } from '@scenes/Home/Home.gql';
 import LoginPage from '@scenes/Login/Login';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_USER, IS_LOGGED_IN } from '@store/UserGQL';
@@ -31,6 +33,7 @@ const Background = () => <div id="app" />;
  * the global state with the user.
  */
 const AuthenticatedRoute = ({ component, ...rest }) => {
+  const loginToken = new URLSearchParams(window.location.search).get('token');
   const { loading, data } = useQuery(GET_USER);
   const initUser = useStoreActions(({ user }) => user.init);
   const membershipsLoaded = !!useStoreState(
@@ -44,8 +47,25 @@ const AuthenticatedRoute = ({ component, ...rest }) => {
 
   // If there are already memberships stored in the Membership state, then we
   // know that the user is loaded, so show that.
+  if (loginToken) return <AuthenticatedRouteWithToken token={loginToken} />;
   if (membershipsLoaded || data?.getUser)
     return <Route exact {...rest} component={component} />;
+  if (loading) return <Loader />;
+  return <Redirect to="/login" />;
+};
+
+const AuthenticatedRouteWithToken = ({ token }) => {
+  const { push } = useHistory();
+  const { data, loading } = useQuery(VERIFY_LOGIN_TOKEN, {
+    variables: { token }
+  });
+
+  // If there are already memberships stored in the Membership state, then we
+  // know that the user is loaded, so show that.
+  if (data?.verifyLoginToken) {
+    push(window.location.pathname);
+    return null;
+  }
   if (loading) return <Loader />;
   return <Redirect to="/login" />;
 };

@@ -10,6 +10,7 @@ import {
 } from 'gql-query-builder';
 import GQLOptions from 'gql-query-builder/build/IQueryBuilderOptions';
 import { APIError } from 'graphql-hooks';
+import jwt from 'jsonwebtoken';
 import moment from 'moment-timezone';
 
 import { APP } from '@constants';
@@ -69,7 +70,4 @@ export const mutation = async (data: GQLOptions) => {
   return (await axios(options)).data.data[data.operation];
 };
 
-/**
- * Returns the estimated timezone of the user.
- */
 export const timezone = (): string => moment.tz(moment.tz.guess()).zoneAbbr();
