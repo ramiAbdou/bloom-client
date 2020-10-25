@@ -1,5 +1,5 @@
 /**
- * @fileoverview Component: Dropdown
+ * @fileoverview Component: MultipleChoiceDD
  * - Dropdown option in a form where a user chooses between different values.
  * Can only select 1 option.
  * @author Rami Abdou
@@ -9,17 +9,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { Form } from '../Form.store';
-import { FormItemData } from '../Form.types';
-import DropdownMultipleProvider, {
-  useDropdownMultiple
-} from './MultipleSelectState';
+import { Form } from '../../Form.store';
+import { FormItemData } from '../../Form.types';
+import MultipleChoiceDDProvider, {
+  useMultipleChoiceDD
+} from './MultipleChoiceDD.state';
 
 type OptionProps = { selectOption: VoidFunction; option: string };
-type ValueProps = { values?: string[] };
+type ValueProps = { value?: string };
 
 const SearchBar = () => {
-  const { searchString, setSearchString } = useDropdownMultiple();
+  const { searchString, setSearchString } = useMultipleChoiceDD();
 
   return (
     <input
@@ -43,11 +43,10 @@ const NoResultsMessage = () => (
 );
 
 const AllOptions = () => {
-  const { filteredOptions, setSearchString, title } = useDropdownMultiple();
-  const { value } = Form.useStoreState(({ getItem }) => getItem(title));
+  const { filteredOptions, setSearchString, title } = useMultipleChoiceDD();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const selectOption = (option) => {
-    updateItem({ title, value: [...value, option] });
+  const selectOption = (option: string) => {
+    updateItem({ isActive: false, title, value: option });
     setSearchString('');
   };
 
@@ -65,7 +64,7 @@ const AllOptions = () => {
 };
 
 const OptionContainer = () => {
-  const { filteredOptions, width } = useDropdownMultiple();
+  const { filteredOptions, width } = useMultipleChoiceDD();
   const noOptionsFound = !filteredOptions.length;
 
   return (
@@ -83,36 +82,21 @@ const OptionContainer = () => {
   );
 };
 
-const Values = ({ values }: ValueProps) => {
-  const { title } = useDropdownMultiple();
+const Value = ({ value }: ValueProps) => {
+  const { title } = useMultipleChoiceDD();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const deleteValue = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    index: number
-  ) => {
-    e.stopPropagation();
-    const updatedValues = [...values.slice(0, index), ...values.slice(++index)];
-    updateItem({ isActive: true, title, value: updatedValues });
-  };
+  const clearValue = () => updateItem({ title, value: null });
 
   return (
-    <div className="c-form-dd-value-ctr">
-      {values.map((option, i: number) => (
-        <button
-          key={option}
-          className="c-form-dd-value"
-          onClick={(e) => deleteValue(e, i)}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
+    <button className="c-form-dd-value" onClick={clearValue}>
+      {value}
+    </button>
   );
 };
 
 const ClickBar = () => {
-  const { title, setWidth } = useDropdownMultiple();
-  const { isActive, value: values } = Form.useStoreState(({ getItem }) =>
+  const { title, setWidth } = useMultipleChoiceDD();
+  const { isActive, value } = Form.useStoreState(({ getItem }) =>
     getItem(title)
   );
   const updateItem = Form.useStoreActions((store) => store.updateItem);
@@ -128,7 +112,7 @@ const ClickBar = () => {
       className="c-form-input c-form-dd-bar"
       onClick={toggleActivate}
     >
-      <div>{!!values.length && <Values values={values} />}</div>
+      <div>{value && <Value value={value} />}</div>
       <div className="c-form-dd-arrow" />
     </div>
   );
@@ -144,11 +128,11 @@ export default ({ options, title }: FormItemData) => {
   useOnClickOutside(ref, () => isActive && inactivate());
 
   return (
-    <DropdownMultipleProvider options={options} title={title}>
+    <MultipleChoiceDDProvider options={options} title={title}>
       <div ref={ref}>
         <ClickBar />
         {isActive && <OptionContainer />}
       </div>
-    </DropdownMultipleProvider>
+    </MultipleChoiceDDProvider>
   );
 };

@@ -10,10 +10,11 @@ import React from 'react';
 import { Form } from '@components/Form/Form.store';
 import { FormItemData } from '@components/Form/Form.types';
 import CSSModifier from '@util/CSSModifier';
-import LongText from './components/LongText';
-import MultipleChoice from './components/MultipleChoice';
-import MultipleSelect from './components/MultipleSelect';
-import ShortText from './components/ShortText';
+import LongText from './components/LongText/LongText';
+import MultipleChoice from './components/MultipleChoice/MultipleChoice';
+import MultipleChoiceDD from './components/MultipleChoice/MultipleChoiceDD';
+import MultipleSelect from './components/MultipleSelect/MultipleSelect';
+import ShortText from './components/ShortText/ShortText';
 
 // There are 2 options for the label: 1) the standard Label tag or 2) if the
 // component is a ShortText or LongText component and uses a character limit,
@@ -80,8 +81,10 @@ export default ({
   else if (type === 'LONG_TEXT') body = <LongText {...textProps} />;
   else if (type === 'MULTIPLE_SELECT')
     body = <MultipleSelect {...dropdownProps} />;
-  else if (type === 'MULTIPLE_CHOICE')
-    body = <MultipleChoice {...dropdownProps} />;
+  else if (type === 'MULTIPLE_CHOICE') {
+    if (options.length >= 5) body = <MultipleChoiceDD {...dropdownProps} />;
+    else body = <MultipleChoice {...dropdownProps} />;
+  }
 
   const { css } = new CSSModifier().addClass(!!itemCSS, itemCSS, 'c-form-item');
 

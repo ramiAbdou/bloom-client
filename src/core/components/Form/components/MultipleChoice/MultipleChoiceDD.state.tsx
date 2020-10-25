@@ -1,5 +1,5 @@
 /**
- * @fileoverview State: Dropdown
+ * @fileoverview State: MultipleChoiceDDState
  * @author Rami Abdou
  */
 
@@ -17,7 +17,7 @@ import { filterOptions } from '@util/util';
        |__/|_|                                        
 */
 
-type DropdownState = {
+type MultipleChoiceDDState = {
   filteredOptions: string[];
   options: string[];
   searchString: string;
@@ -27,7 +27,7 @@ type DropdownState = {
   width: number;
 };
 
-const initialState: DropdownState = {
+const initialState: MultipleChoiceDDState = {
   filteredOptions: [],
   options: [],
   searchString: '',
@@ -44,8 +44,8 @@ const initialState: DropdownState = {
   \___\___/_||_\__\___/_\_\\__| /_/   |_||_\___/\___/_\_\
 */
 
-const DropdownContext = React.createContext(initialState);
-export const useDropdown = () => useContext(DropdownContext);
+const MultipleChoiceDDContext = React.createContext(initialState);
+export const useMultipleChoiceDD = () => useContext(MultipleChoiceDDContext);
 
 /* 
   ___             _    _         
@@ -67,7 +67,7 @@ export default ({ children, options, title }: DropdownProviderProps) => {
   ]);
 
   return (
-    <DropdownContext.Provider
+    <MultipleChoiceDDContext.Provider
       value={{
         filteredOptions,
         options,
@@ -79,6 +79,6 @@ export default ({ children, options, title }: DropdownProviderProps) => {
       }}
     >
       {children}
-    </DropdownContext.Provider>
+    </MultipleChoiceDDContext.Provider>
   );
 };
