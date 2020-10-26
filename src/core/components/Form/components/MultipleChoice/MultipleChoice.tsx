@@ -1,7 +1,6 @@
 /**
- * @fileoverview Component: MultipleChoiceDD
- * - Dropdown option in a form where a user chooses between different values.
- * Can only select 1 option.
+ * @fileoverview Component: MultipleChoice
+ * - Multiple choice case in which there are less than 5 options present.
  * @author Rami Abdou
  */
 
@@ -27,16 +26,14 @@ const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
       <div>
         <div />
       </div>
-      <p className="c-form-dd-opt__txt">{option}</p>
+      <p className="c-form-choice-txt">{option}</p>
     </button>
   );
 };
 
 export default ({ options, title }: FormItemData) => {
   const [selectedOption, setSelectedOption] = useState('');
-
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-
   const selectOption = (option: string) => {
     updateItem({ isActive: false, title, value: option });
     setSelectedOption(option);

@@ -11,11 +11,11 @@ import Form from '@components/Form/Form.store';
 import { FormItemData } from '@components/Form/Form.types';
 import { MessageProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
-import LongText from './components/LongText/LongText';
+import LongText from './components/LongText';
 import MultipleChoice from './components/MultipleChoice/MultipleChoice';
 import MultipleChoiceDD from './components/MultipleChoice/MultipleChoiceDD';
 import MultipleSelect from './components/MultipleSelect/MultipleSelect';
-import ShortText from './components/ShortText/ShortText';
+import ShortText from './components/ShortText';
 import Label from './Label';
 
 const Description = ({ message }: MessageProps) => (

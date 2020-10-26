@@ -25,6 +25,9 @@ type FormModel = {
   itemCSS: string; // Represents a class string.
   items: FormItemData[];
   next: Action<FormModel, string>;
+  setSubmitForm: Action<FormModel, (...args: any[]) => Promise<any>>;
+  submitForm: (...args: any[]) => Promise<any>;
+  submitOnEnter: Computed<FormModel, boolean>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
 
@@ -36,18 +39,20 @@ const model: FormModel = {
       value: value ? (Array.isArray(value) ? value : [value]) : null
     }))
   ),
+
   getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
     items.find((item) => item.category === category || item.title === title)
   ),
+
   isCompleted: computed(
     ({ items }) =>
       items &&
-      items.every(({ required, value, validate }: FormItemData) => {
-        return (
+      items.every(
+        ({ required, value, validate }: FormItemData) =>
           (!required || (required && value)) && (!validate || validate(value))
-        );
-      })
+      )
   ),
+
   itemCSS: null,
   items: [],
 
@@ -63,6 +68,22 @@ const model: FormModel = {
     items[index + 1] = { ...items[index + 1], isActive: true };
     return { ...state, items };
   }),
+
+  setSubmitForm: action((state, submitForm) => ({ ...state, submitForm })),
+
+  submitForm: () => Promise.resolve(),
+
+  /**
+   * submitOnEnter is true if the last item in the form is a SHORT_TEXT or
+   * LONG_TEXT component.
+   */
+  submitOnEnter: computed(
+    ({ isCompleted, items }) =>
+      items.length &&
+      isCompleted &&
+      ['SHORT_TEXT', 'LONG_TEXT'].includes(items[items.length - 1].type)
+  ),
+
   updateItem: action((state, payload) => {
     const { items } = state;
     const index = items.findIndex(({ title }) => title === payload.title);
@@ -71,10 +92,14 @@ const model: FormModel = {
   })
 };
 
-type FormStoreInitializer = { itemCSS?: string; questions: FormQuestion[] };
+type FormStoreInitializer = {
+  itemCSS?: string;
+  questions: FormQuestion[];
+  submitForm?: (data: FormData, ...args: any[]) => Promise<any>;
+};
 
 export default createContextStore<FormModel>(
-  ({ itemCSS, questions }: FormStoreInitializer) => ({
+  ({ itemCSS, questions, submitForm }: FormStoreInitializer) => ({
     ...model,
     itemCSS,
     items: questions?.map(
@@ -92,7 +117,8 @@ export default createContextStore<FormModel>(
           value: emptyValue
         };
       }
-    )
+    ),
+    submitForm
   }),
   { disableImmer: true }
 );

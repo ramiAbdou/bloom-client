@@ -4,7 +4,7 @@
  */
 
 import { useManualQuery } from 'graphql-hooks';
-import React from 'react';
+import React, { useEffect } from 'react';
 import validator from 'validator';
 
 import { PrimaryButton } from '@components/Button';
@@ -17,11 +17,13 @@ import Login from '../Login.store';
 import { getLoginErrorMessage } from '../Login.util';
 
 const SubmitButton = () => {
-  const isCompleted = Form.useStoreState((store) => store.isCompleted);
-  const setEmail = Login.useStoreActions((store) => store.setEmail);
+  const setEmail = Login.useStoreActions((actions) => actions.setEmail);
   const setHasLoginLinkSent = Login.useStoreActions(
-    (store) => store.setHasLoginLinkSent
+    (actions) => actions.setHasLoginLinkSent
   );
+
+  const isCompleted = Form.useStoreState((store) => store.isCompleted);
+  const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
   const value = Form.useStoreState(
     ({ getItem }) => getItem({ category: 'EMAIL' })?.value
   );
@@ -33,13 +35,20 @@ const SubmitButton = () => {
     }
   );
 
-  const onClick = async () => {
+  const submitForm = async () => {
     const result = await sendTemporaryLoginLink();
-    if (!result.loading && !result.error) {
+
+    // sendTemporaryLoginLink returns a boolean when it's complete, so as long
+    // as that is affirmative and there's no errors, we update the Login state.
+    if (result.data && !result.loading && !result.error) {
       setEmail(value);
       setHasLoginLinkSent(true);
     }
   };
+
+  useEffect(() => {
+    setSubmitForm(submitForm);
+  }, [value]);
 
   // getGraphQLError returns the error code (eg: USER_NOT_FOUND) and
   // getLoginErrorMessage converts that to a more readable message.
@@ -53,8 +62,9 @@ const SubmitButton = () => {
         isLoading={loading}
         loadingText="Sending Link..."
         title="Send Me a Login Link"
-        onClick={onClick}
+        onClick={submitForm}
       />
+
       {!!message && <ErrorMessage message={message} />}
     </>
   );
@@ -73,7 +83,7 @@ export default () => (
           required: true,
           title: 'Email',
           type: 'SHORT_TEXT',
-          validate: (value: string) => validator.isEmail(value)
+          validate: (val: string) => validator.isEmail(val)
         }
       ]
     }}

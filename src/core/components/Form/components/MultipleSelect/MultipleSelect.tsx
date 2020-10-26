@@ -34,7 +34,7 @@ const SearchBar = () => {
 
 const Option = ({ selectOption, option }: OptionProps) => (
   <button className="c-form-dd-opt" onClick={selectOption}>
-    <p className="c-form-dd-opt__txt">{option}</p>
+    <p>{option}</p>
   </button>
 );
 

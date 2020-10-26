@@ -7,7 +7,7 @@
 import './Application.scss';
 
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Application from './Application.store';
 import ApplicationConfirmation from './components/ApplicationConfirmation';
@@ -15,12 +15,14 @@ import ApplicationForm from './components/ApplicationForm';
 
 export default () => (
   <Application.Provider>
-    <Route exact component={ApplicationForm} path="/:encodedUrlName/apply" />
+    <Switch>
+      <Route exact component={ApplicationForm} path="/:encodedUrlName/apply" />
 
-    <Route
-      exact
-      component={ApplicationConfirmation}
-      path="/:encodedUrlName/apply/confirmation"
-    />
+      <Route
+        exact
+        component={ApplicationConfirmation}
+        path="/:encodedUrlName/apply/confirmation"
+      />
+    </Switch>
   </Application.Provider>
 );

@@ -47,40 +47,24 @@ $PREF: 'c-form';
   padding-left: 8px;
   padding-right: 8px;
   width: 100%;
+
+  &::placeholder { color: $gray-4; }
+  &--active { border: 1px $orange-1 solid; }
+  &--error { border: 1px $red solid; }
+
+  &--lg {
+    height: 96px;
+    justify-content: center;
+    padding-bottom: $xxs;
+    padding-top: $xxs;
+    resize: none;
+  }
 }
 
-.#{$PREF}-input::placeholder {
-  color: $gray-4;
-}
+// ## MULTIPLE CHOICE
 
-.#{$PREF}-input--lg {
-  @extend .#{$PREF}-input;
-
-  height: 96px;
-  justify-content: center;
-  padding-bottom: $xxs;
-  padding-top: $xxs;
-  resize: none;
-}
-
-.#{$PREF}-input--active {
-  border: 1px $orange-1 solid;
-}
-
-.#{$PREF}-input--error {
-  border: 1px $red solid;
-}
-
-.#{$PREF}-mc-choice {
-  @extend %flex-ac;
-
-  margin-bottom: $xs;
-}
-
-.#{$PREF}-mc-choice:first-of-type {
-  margin-top: $xs;
-}
-
+.#{$PREF}-mc-choice { @extend %flex-ac; margin-bottom: $xs; }
+.#{$PREF}-mc-choice:first-of-type { margin-top: $xs; }
 .#{$PREF}-mc-choice > div {
   @extend %flex-acc;
 
@@ -91,10 +75,7 @@ $PREF: 'c-form';
   width: 16px;
 }
 
-.#{$PREF}-mc-choice--active > div {
-  border: 2px solid $orange-1;
-}
-
+.#{$PREF}-mc-choice--active > div { border: 2px solid $orange-1; }
 .#{$PREF}-mc-choice--active > div > div {
   background-color: $orange-1;
   border-radius: 50%;
@@ -102,74 +83,9 @@ $PREF: 'c-form';
   width: 10px;
 }
 
-.#{$PREF}-dd-opt-ctr {
-  background-color: $white;
-  border-radius: $xxs;
-  box-shadow: 0 4px 5px rgba($color: $black, $alpha: 0.15);
-  margin-bottom: $lg; // For when the dropdown is at the bottom of the page.
-  padding-bottom: $xxs;
-  padding-top: $xxs;
-  position: absolute;
-}
+// ## MULTIPLE (BOTH MULTIPLE CHOICE/SELECT)
 
-.#{$PREF}-dd-search {
-  @extend .body--2;
-
-  box-sizing: border-box;
-  padding: 8px;
-  width: 100%;
-}
-
-.#{$PREF}-dd-bar {
-  @extend %flex-acsb;
-
-  cursor: pointer;
-}
-
-.#{$PREF}-dd-arrow {
-  border-left: $xxs solid transparent;
-  border-right: $xxs solid transparent;
-  border-top: $xxs solid $gray-4;
-  height: 0;
-  width: 0;
-}
-
-.#{$PREF}-dd-value-ctr {
-  @extend %flex-ac;
-}
-
-.#{$PREF}-dd-value {
-  @extend %flex-ac;
-  @extend .body--3;
-
-  background-color: rgba($color: $orange-1, $alpha: 0.5);
-  border-radius: $sm;
-  color: $black;
-  margin-right: $xxs;
-  padding-left: $xxs;
-  padding-right: $xxs;
-}
-
-.#{$PREF}-dd-value::after {
-  content: 'x';
-  margin-left: $xxs;
-}
-
-.#{$PREF}-dd-opt {
-  @extend %flex-ac;
-
-  height: $md;
-  overflow: hidden;
-  width: 100%;
-
-  @media (hover: hover) {
-    &:hover {
-      background-color: $gray-6;
-    }
-  }
-}
-
-.#{$PREF}-dd-opt__txt {
+.#{$PREF}-choice-txt {
   @extend .body--3;
 
   background-color: rgba($color: $orange-1, $alpha: 0.5);
@@ -183,12 +99,82 @@ $PREF: 'c-form';
   text-transform: none;
 }
 
-// The no result found message.
-.#{$PREF}-dd-no-result {
+// ## DROPDOWN (BOTH MULTIPLE CHOICE/SELECT)
+
+.#{$PREF}-dd-bar { @extend %flex-acsb; cursor: pointer; }
+
+.#{$PREF}-dd-arrow {
+  border-left: $xxs solid transparent;
+  border-right: $xxs solid transparent;
+  border-top: $xxs solid $gray-4;
+  height: 0;
+  width: 0;
+}
+
+.#{$PREF}-dd-search {
+  @extend .body--2;
+
+  box-sizing: border-box;
+  padding: 8px;
+  width: 100%;
+}
+
+.#{$PREF}-dd-value-ctr { @extend %flex-ac; }
+
+.#{$PREF}-dd-value {
+  @extend %flex-ac;
+  @extend .body--3;
+
+  background-color: rgba($color: $orange-1, $alpha: 0.5);
+  border-radius: $sm;
+  color: $black;
+  margin-right: $xxs;
+  padding-left: $xxs;
+  padding-right: $xxs;
+
+  &::after { content: 'x'; margin-left: $xxs; }
+}
+
+.#{$PREF}-dd-opt-ctr {
+  background-color: $white;
+  border-radius: $xxs;
+  box-shadow: 0 4px 5px rgba($color: $black, $alpha: 0.15);
+  margin-bottom: $lg; // For when the dropdown is at the bottom of the page.
+  padding-bottom: $xxs;
+  padding-top: $xxs;
+  position: absolute;
+}
+
+// No results message.
+.#{$PREF}-dd-opt-ctr > p {
   @extend %flex-ac;
   @extend .body--2;
 
   height: $md;
   margin-left: 8px;
   width: 100%;
+}
+
+.#{$PREF}-dd-opt {
+  @extend %flex-ac;
+
+  height: $md;
+  overflow: hidden;
+  width: 100%;
+
+  @include HOVER { background-color: $gray-6; }
+}
+
+.#{$PREF}-dd-opt > p {
+  @extend .body--3;
+
+  background-color: rgba($color: $orange-1, $alpha: 0.5);
+  border-radius: $sm;
+  color: $black;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: left;
+  text-transform: none;
 }

@@ -1,7 +1,6 @@
 /**
  * @fileoverview Component: MultipleChoiceDD
- * - Dropdown option in a form where a user chooses between different values.
- * Can only select 1 option.
+ * - Multiple choice case in which there are at least 5 options present.
  * @author Rami Abdou
  */
 
@@ -34,7 +33,7 @@ const SearchBar = () => {
 
 const Option = ({ selectOption, option }: OptionProps) => (
   <button className="c-form-dd-opt" onClick={selectOption}>
-    <p className="c-form-dd-opt__txt">{option}</p>
+    <p>{option}</p>
   </button>
 );
 
