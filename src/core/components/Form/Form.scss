@@ -206,7 +206,6 @@ $PREF: 'c-form';
 
 .#{$PREF}-dd-opt__txt {
   @extend .body--3;
-  @extend .m-overflow-ellipses;
 
   background-color: rgba($color: $orange-1, $alpha: 0.5);
   border-radius: $sm;

@@ -70,6 +70,7 @@ $screen-desktop: 1440;
       @content;
     }
   }
+
   @else if $comparator== 'GTE' {
     @media (min-width: "#{$window-width}px") {
       @content;
