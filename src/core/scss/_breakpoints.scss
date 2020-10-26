@@ -1,9 +1,9 @@
-/* 
-  ___              _             _     _      
+/*
+  ___              _             _     _
  | _ )_ _ ___ __ _| |___ __  ___(_)_ _| |_ ___
  | _ \ '_/ -_) _` | / / '_ \/ _ \ | ' \  _(_-<
  |___/_| \___\__,_|_\_\ .__/\___/_|_||_\__/__/
-                      |_|                     
+                      |_|
 */
 
 // Controls all of the @media queries based on the window width. Mixin
@@ -34,8 +34,8 @@ $screen-desktop: 1440;
 // If the size of the screen is between 576px and 1024px.
 
 @mixin T {
-  @media all 
-    and (min-width: "#{$screen-mobile + 1}px") 
+  @media all
+    and (min-width: "#{$screen-mobile + 1}px")
     and (max-width: "#{$screen-tablet}px") {
     @content;
   }
@@ -64,36 +64,35 @@ $screen-desktop: 1440;
     @content;
   }
 }
-
 @mixin WW($comparator, $window-width) {
   @if $comparator== 'GT' {
     @media (min-width: "#{$window-width + 1}px") {
       @content;
     }
-  } @else if $comparator== 'GTE' {
+  }
+  @else if $comparator== 'GTE' {
     @media (min-width: "#{$window-width}px") {
       @content;
     }
-  } @else if $comparator== 'LT' {
+  }
+  @else if $comparator== 'LT' {
     @media (max-width: "#{$window-width - 1}px") {
       @content;
     }
-  } @else if $comparator== 'LTE' {
+  }
+  @else if $comparator== 'LTE' {
     @media (max-width: "#{$window-width}px") {
       @content;
     }
   }
 }
-
 @mixin resp($rule, $desktop-val, $tablet-val, $mobile-val) {
   @include D {
     #{$rule}: $desktop-val;
   }
-
   @include T {
     #{$rule}: $tablet-val;
   }
-
   @include M {
     #{$rule}: $mobile-val;
   }

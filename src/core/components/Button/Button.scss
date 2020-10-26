@@ -1,5 +1,5 @@
-/* 
-  ___ _                  ___      _   _               
+/*
+  ___ _                  ___      _   _
  | _ ) |___  ___ _ __   | _ )_  _| |_| |_ ___ _ _  ___
  | _ \ / _ \/ _ \ '  \  | _ \ || |  _|  _/ _ \ ' \(_-<
  |___/_\___/\___/_|_|_| |___/\_,_|\__|\__\___/_||_/__/
@@ -53,7 +53,7 @@ $PREF: 'c-btn';
   @extend .#{$PREF}-base;
 
   background: rgba($color: $orange-1, $alpha: 0.9);
-  box-shadow: 0px 2px 6px rgba($color: #000000, $alpha: 0.2);
+  box-shadow: 0 2px 6px rgba($color: #000, $alpha: 0.2);
   color: $gray-6;
   height: $lg;
   padding-left: $lg;

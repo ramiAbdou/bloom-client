@@ -10,13 +10,8 @@ $PREF: 's-login';
   width: 100%;
 }
 
-.#{$PREF}-logo {
-  margin-bottom: $sm;
-}
-
-.#{$PREF}-title {
-  margin-bottom: $md;
-}
+.#{$PREF}-logo { margin-bottom: $sm; }
+.#{$PREF}-title { margin-bottom: $md; }
 
 .#{$PREF}-card {
   @extend %flex-acccol;
@@ -30,18 +25,14 @@ $PREF: 's-login';
   padding: $md;
   width: 400px;
 
-  @include M {
-    width: $SMALLEST_SCREEN;
-  }
+  @include M { width: $SMALLEST_SCREEN; }
 }
 
 .#{$PREF}-google {
   margin-bottom: $md;
   width: 100%;
 
-  &--sm {
-    margin-bottom: $xs;
-  }
+  &--sm { margin-bottom: $xs; }
 }
 
 .#{$PREF}-google > a {
@@ -61,37 +52,14 @@ $PREF: 's-login';
   background-color: rgba($color: $gray-6, $alpha: 0.35);
 }
 
-.#{$PREF}-google > a > img {
-  height: $sm;
-  margin-right: $xs;
-  width: $sm;
-}
+.#{$PREF}-google > a > img { height: $sm; margin-right: $xs; width: $sm; }
+.#{$PREF}-google > p { @extend .body--2; color: $red; margin-top: $xs; }
+.#{$PREF}-submit-btn { margin-top: 0; width: 100%; }
 
-.#{$PREF}-google > p {
-  @extend .body--2;
+.#{$PREF}-form-item { margin-bottom: $sm; margin-top: $sm; width: 100%; }
 
-  color: $red;
-  margin-top: $xs;
-}
-
-.#{$PREF}-submit-btn {
-  margin-top: 0;
-  width: 100%;
-}
-
-.#{$PREF}-form-item {
-  margin-bottom: $sm;
-  margin-top: $sm;
-  width: 100%;
-}
-
-.#{$PREF}-confirmation {
-  @extend %flex-accol;
-}
-
-.#{$PREF}-confirmation > p > span {
-  font-weight: 700;
-}
+.#{$PREF}-confirmation { @extend %flex-accol; }
+.#{$PREF}-confirmation > p > span { font-weight: 700; }
 
 .#{$PREF}-confirmation-icon {
   background-color: $green-1;
@@ -100,11 +68,6 @@ $PREF: 's-login';
   margin-bottom: $sm;
   padding: $xs;
   width: $xl;
-}
-
-.#{$PREF}-confirmation-icon > img {
-  height: 100%;
-  width: 100%;
 }
 
 .#{$PREF}-confirmation-icon > img {

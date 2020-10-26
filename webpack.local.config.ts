@@ -8,6 +8,7 @@ import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
+import StylelintPlugin from 'stylelint-webpack-plugin';
 import webpack from 'webpack';
 
 export default {
@@ -73,6 +74,7 @@ export default {
       template: path.join(__dirname, '/public/index.html')
     }),
     new MiniCssExtractPlugin(),
+    new StylelintPlugin({ fix: true }),
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {

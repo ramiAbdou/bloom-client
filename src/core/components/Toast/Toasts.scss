@@ -1,8 +1,8 @@
 /*
-  _____             _      
+  _____             _
  |_   _|__  __ _ __| |_ ___
    | |/ _ \/ _` (_-<  _(_-<
-   |_|\___/\__,_/__/\__/__/                           
+   |_|\___/\__,_/__/\__/__/
 */
 
 @import 'src/index.scss';
@@ -41,4 +41,8 @@ $PREF: 'c-toast';
   @include M { height: 16px; margin-right: 8px; width: 16px; }
 }
 
-.#{$PREF}__msg { @extend .body--2; color: $white; }
+.#{$PREF}__msg {
+  @extend .body--2;
+
+  color: $white;
+}
