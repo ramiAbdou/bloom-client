@@ -46,9 +46,14 @@ export const filterOptions = (
   }, []);
 };
 
-export const getGraphQLError = (error: APIError<object>) =>
-  // @ts-ignore b/c the message must exist on the GraphQL error object.
-  error?.graphQLErrors[0]?.message;
+export const getGraphQLError = (error: APIError) => {
+  if (!error?.graphQLErrors && !error?.fetchError) return null;
+
+  return error.fetchError
+    ? 'Failed to connect to Bloom servers.'
+    : // @ts-ignore b/c the message must exist on the GraphQL error object.
+      error.graphQLErrors[0]?.message;
+};
 
 axios.defaults.withCredentials = true;
 

@@ -19,7 +19,7 @@ const Content = () => {
   const email = Login.useStoreState((store) => store.email);
   return (
     <p>
-      We sent a login link to <span>{email}</span>. It will expire in 60
+      We sent a temporary login link to <span>{email}</span> that expires in 5
       minutes. You may now close this page.
     </p>
   );
