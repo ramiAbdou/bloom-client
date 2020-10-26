@@ -2,7 +2,7 @@
 
 $PREF: 's-login';
 
-.#{$PREF} {
+.#{$PREF}-ctr {
   @extend %flex-acccol;
 
   height: 100%;
@@ -10,11 +10,8 @@ $PREF: 's-login';
   width: 100%;
 }
 
-.#{$PREF}-logo { margin-bottom: $sm; }
-.#{$PREF}-title { margin-bottom: $md; }
-
 .#{$PREF}-card {
-  @extend %flex-acccol;
+  @extend %flex-col;
 
   background-color: $white;
   border: 1px $gray-5 solid;
@@ -28,11 +25,21 @@ $PREF: 's-login';
   @include M { width: $SMALLEST_SCREEN; }
 }
 
+.#{$PREF}-header { @extend %flex-acsb; }
+.#{$PREF}-header > div { margin-bottom: $lg; }
+.#{$PREF}-header > div > h3 { @extend .meta; }
+.#{$PREF}-header > img {
+  margin-bottom: $lg;
+  margin-left: $lg;
+  margin-top: -$xxl;
+  opacity: 0.75;
+}
+
 .#{$PREF}-google {
   margin-bottom: $md;
   width: 100%;
 
-  &--sm { margin-bottom: $xs; }
+  &--sm { margin-bottom: $sm; }
 }
 
 .#{$PREF}-google > a {
@@ -53,7 +60,6 @@ $PREF: 's-login';
 }
 
 .#{$PREF}-google > a > img { height: $sm; margin-right: $xs; width: $sm; }
-.#{$PREF}-google > p { @extend .body--2; color: $red; margin-top: $xs; }
 .#{$PREF}-submit-btn { margin-top: 0; width: 100%; }
 
 .#{$PREF}-form-item { margin-bottom: $sm; margin-top: $sm; width: 100%; }

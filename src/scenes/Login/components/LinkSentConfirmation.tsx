@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 import { check } from '@components/Toast/images';
-import { useLogin } from '../Login.state';
+import Login from '../Login.store';
 
 const Icon = () => (
   <div className="s-login-confirmation-icon">
@@ -16,8 +16,7 @@ const Icon = () => (
 );
 
 const Content = () => {
-  const { email } = useLogin();
-
+  const email = Login.useStoreState((store) => store.email);
   return (
     <p>
       We sent a login link to <span>{email}</span>. It will expire in 60

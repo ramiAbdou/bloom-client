@@ -26,6 +26,7 @@ export default class CSSModifier {
    * Non-conditionally adds a CSS class to the existing CSS class.
    */
   class(name: string) {
+    if (!name) return this;
     this.css += ` ${name}`;
     return this;
   }

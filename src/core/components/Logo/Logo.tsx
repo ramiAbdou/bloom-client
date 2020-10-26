@@ -7,20 +7,27 @@ import './Logo.scss';
 
 import React from 'react';
 
-import { ClassNameProps } from '@constants';
+import { ClassNameProps, StyleProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import { bloomLogo } from './images';
 
-interface LogoProps extends ClassNameProps {
-  large?: boolean; // Makes logo appear 1.5x larger than normal.
+interface LogoProps extends ClassNameProps, StyleProps {
+  multiplier?: number;
 }
 
-export default ({ className, large }: LogoProps) => {
-  const { css } = new CSSModifier().class('c-logo').addModifier(large, '--lg');
+const LOGO_HEIGHT = 18;
+const LOGO_WIDTH = 75;
+
+export default ({ className, multiplier }: LogoProps) => {
+  const { css } = new CSSModifier().class('c-logo').class(className);
+
+  const style = multiplier
+    ? { height: LOGO_HEIGHT * multiplier, width: LOGO_WIDTH * multiplier }
+    : {};
 
   return (
-    <button className={className}>
-      <img alt="Bloom Logo" className={css} src={bloomLogo} />
+    <button>
+      <img alt="Bloom Logo" className={css} src={bloomLogo} style={style} />
     </button>
   );
 };

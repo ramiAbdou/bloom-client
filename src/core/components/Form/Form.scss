@@ -17,16 +17,8 @@ $PREF: 'c-form';
   \___\___/_|_|_|_|_|_\___/_||_|
 */
 
-.#{$PREF}-item {
-  margin-bottom: $md;
-  margin-top: $md;
-}
-
-.#{$PREF}-item--fill {
-  @extend .#{$PREF}-item;
-
-  width: 100%;
-}
+.#{$PREF}-item { margin-bottom: $md; margin-top: $md; }
+.#{$PREF}-item--fill { width: 100%; }
 
 .#{$PREF}-label-ctr {
   @extend %flex-sb;
@@ -57,11 +49,7 @@ $PREF: 'c-form';
   margin-left: $xxs;
 }
 
-.#{$PREF}-desc {
-  @extend .body--2;
-
-  margin-bottom: $xxs;
-}
+.#{$PREF}-desc { @extend .body--2; margin-bottom: $xxs; }
 
 .#{$PREF}-error {
   @extend .body--3;
