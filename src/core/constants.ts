@@ -21,13 +21,22 @@ export const APP = {
 };
 
 /**
- * GENERAL - General constants.
+ * GENERAL PROPS - General component props.
  */
 
 export type ClassNameProps = { className?: string };
 export type OnClickProps = { onClick?: () => Promise<any> };
 export type ProviderProps = { children: ReactNode };
 export type StyleProps = { style?: React.CSSProperties };
+
+/**
+ * GENERAL - General constants.
+ */
+
+export type LoginError =
+  | 'APPLICATION_PENDING'
+  | 'APPLICATION_REJECTED'
+  | 'USER_NOT_FOUND';
 
 /**
  * FORMS - Handling of all form-related items including custom Enums.

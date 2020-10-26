@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import React from 'react';
 
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import { APP } from '@constants';
+import { APP, LoginError } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import URLBuilder from '@util/URLBuilder';
 import { google } from '../images';
@@ -25,15 +25,24 @@ const GoogleButton = () => (
   </a>
 );
 
+/**
+ * UTILITY: Returns the login error message based on the cookie.
+ */
+const getLoginErrorMessage = (cookie: LoginError) => {
+  if (cookie === 'USER_NOT_FOUND')
+    return `You must apply and be accepted into a commmunity before logging in.`;
+  if (cookie === 'APPLICATION_REJECTED')
+    return `You must be accepted into a commmunity before logging in.`;
+  if (cookie === 'APPLICATION_PENDING')
+    return `You have pending membership applications. Once they are accepted, you will be able to log in.`;
+  return null;
+};
+
 export default () => {
-  const cookie = Cookies.get('LOGIN_ERROR');
+  const cookie = Cookies.get('LOGIN_ERROR') as LoginError;
   if (cookie) Cookies.remove('LOGIN_ERROR');
 
-  const message =
-    cookie === 'USER_NOT_FOUND'
-      ? 'You must be accepted into a community before attempting to login.'
-      : '';
-
+  const message = getLoginErrorMessage(cookie);
   const { css } = new CSSModifier()
     .class('s-login-google')
     .addClass(!!message, 's-login-google--sm');
