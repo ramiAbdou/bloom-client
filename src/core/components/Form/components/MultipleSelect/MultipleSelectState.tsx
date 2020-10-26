@@ -67,7 +67,7 @@ export default ({
   const [searchString, setSearchString] = useState('');
   const [width, setWidth] = useState(0);
 
-  const { value } = Form.useStoreState(({ getItem }) => getItem(title));
+  const { value } = Form.useStoreState(({ getItem }) => getItem({ title }));
 
   useEffect(
     () => setFilteredOptions(filterOptions(allOptions, searchString, value)),

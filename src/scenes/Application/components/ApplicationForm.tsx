@@ -39,7 +39,7 @@ const SubmitButton = () => {
   );
 
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
-  const submittableData = Form.useStoreState((store) => store.submittableData);
+  const submittableData = Form.useStoreState((store) => store.data);
   const email = Form.useStoreState(
     ({ items }) =>
       items.filter(({ category }) => category === 'EMAIL')[0]?.value

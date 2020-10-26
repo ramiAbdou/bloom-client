@@ -8,13 +8,13 @@ import './Misc.scss';
 import { motion } from 'framer-motion';
 import React from 'react';
 
+import { MessageProps } from '@constants';
 import { error } from './images';
 
-type ErrorMessageProps = {
+interface ErrorMessageProps extends MessageProps {
   marginBottom?: number;
   marginTop?: number;
-  message: string;
-};
+}
 
 export default ({ marginBottom, marginTop, message }: ErrorMessageProps) => (
   <motion.div

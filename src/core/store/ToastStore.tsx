@@ -5,8 +5,13 @@
 
 import { Action, action, Thunk, thunk } from 'easy-peasy';
 
+import { MessageProps } from '@constants';
+
 export const ANIMATION_DURATION = 500;
-export type ToastOptions = { id?: number; message: string; isError?: boolean };
+export interface ToastOptions extends MessageProps {
+  id?: number;
+  isError?: boolean;
+}
 
 export type ToastModel = {
   dequeueToast: Action<ToastModel>;

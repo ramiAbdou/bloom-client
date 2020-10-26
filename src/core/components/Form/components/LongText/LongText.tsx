@@ -13,7 +13,7 @@ import { FormItemData } from '../../Form.types';
 
 export default ({ maxCharacters, title }: FormItemData) => {
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
-    getItem(title)
+    getItem({ title })
   );
 
   const next = Form.useStoreActions((store) => store.next);

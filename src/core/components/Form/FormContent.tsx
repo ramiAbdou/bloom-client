@@ -6,11 +6,12 @@
 import React from 'react';
 
 import Form from './Form.store';
+import { FormItemData } from './Form.types';
 import FormItem from './FormItem';
 
 export default () => (
   <>
-    {Form.useStoreState((store) => store.items)?.map((props) => (
+    {Form.useStoreState(({ items }) => items)?.map((props: FormItemData) => (
       <FormItem key={props.title} {...props} />
     ))}
   </>

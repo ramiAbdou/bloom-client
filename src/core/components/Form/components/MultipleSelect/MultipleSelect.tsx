@@ -44,7 +44,7 @@ const NoResultsMessage = () => (
 
 const AllOptions = () => {
   const { filteredOptions, setSearchString, title } = useDropdownMultiple();
-  const { value } = Form.useStoreState(({ getItem }) => getItem(title));
+  const { value } = Form.useStoreState(({ getItem }) => getItem({ title }));
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const selectOption = (option) => {
     updateItem({ title, value: [...value, option] });
@@ -113,7 +113,7 @@ const Values = ({ values }: ValueProps) => {
 const ClickBar = () => {
   const { title, setWidth } = useDropdownMultiple();
   const { isActive, value: values } = Form.useStoreState(({ getItem }) =>
-    getItem(title)
+    getItem({ title })
   );
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const toggleActivate = () => updateItem({ isActive: !isActive, title });
@@ -135,7 +135,7 @@ const ClickBar = () => {
 };
 
 export default ({ options, title }: FormItemData) => {
-  const { isActive } = Form.useStoreState(({ getItem }) => getItem(title));
+  const { isActive } = Form.useStoreState(({ getItem }) => getItem({ title }));
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   const updateItem = Form.useStoreActions((store) => store.updateItem);

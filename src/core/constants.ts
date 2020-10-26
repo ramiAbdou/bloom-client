@@ -28,6 +28,7 @@ export type ClassNameProps = { className?: string };
 export type OnClickProps = { onClick?: () => Promise<any> };
 export type ProviderProps = { children: ReactNode };
 export type StyleProps = { style?: React.CSSProperties };
+export type MessageProps = { message: string };
 
 /**
  * GENERAL - General constants.

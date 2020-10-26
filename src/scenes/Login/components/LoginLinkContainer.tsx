@@ -23,8 +23,7 @@ const SubmitButton = () => {
     (store) => store.setHasLoginLinkSent
   );
   const value = Form.useStoreState(
-    ({ items }) =>
-      items.filter(({ category }) => category === 'EMAIL')[0]?.value
+    ({ getItem }) => getItem({ category: 'EMAIL' })?.value
   );
 
   const [sendTemporaryLoginLink, { error, loading }] = useManualQuery(

@@ -1,33 +1,21 @@
-/*
-  ___                 ___                                  _
- | __|__ _ _ _ __    / __|___ _ __  _ __  ___ _ _  ___ _ _| |_ ___
- | _/ _ \ '_| '  \  | (__/ _ \ '  \| '_ \/ _ \ ' \/ -_) ' \  _(_-<
- |_|\___/_| |_|_|_|  \___\___/_|_|_| .__/\___/_||_\___|_||_\__/__/
-                                   |_|
-*/
+// Handles all Form components CSS.
 
 @import 'src/index.scss';
 
 $PREF: 'c-form';
 
-/*
-   ___
-  / __|___ _ __  _ __  ___ _ _
- | (__/ _ \ '  \| '  \/ _ \ ' \ 
-  \___\___/_|_|_|_|_|_\___/_||_|
-*/
+// ## GENERAL
 
 .#{$PREF}-item { margin-bottom: $md; margin-top: $md; }
-.#{$PREF}-item--fill { width: 100%; }
+.#{$PREF}-desc { @extend .body--2; margin-bottom: $xxs; }
+.#{$PREF}-error { @extend .body--3; color: $red; margin-top: $xxs; }
 
-.#{$PREF}-label-ctr {
-  @extend %flex-sb;
-  @extend %flex-ae;
+// ## LABEL
 
-  width: 100%;
-}
+.#{$PREF}-label { @extend %flex-ae; @extend %flex-sb; width: 100%; }
 
-.#{$PREF}-label {
+// Represents the actually label content (AKA title).
+.#{$PREF}-label > p:not(.c-form-label-count) {
   @extend .meta;
 
   font-size: 14px;
@@ -36,27 +24,16 @@ $PREF: 'c-form';
   max-width: 85%;
 }
 
-.#{$PREF}-label--count {
-  @extend .meta;
-
-  color: $gray-3;
-  margin-bottom: $xxs;
-}
-
-.#{$PREF}-label--required::after {
+// Represents the required symbol after the label's title.
+.#{$PREF}-label--required > p:not(.c-form-label-count)::after {
   color: $red;
   content: '*';
   margin-left: $xxs;
 }
 
-.#{$PREF}-desc { @extend .body--2; margin-bottom: $xxs; }
+.#{$PREF}-label-count { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
 
-.#{$PREF}-error {
-  @extend .body--3;
-
-  color: $red;
-  margin-top: $xxs;
-}
+// ## INPUT
 
 .#{$PREF}-input {
   @extend %flex-acsb;
