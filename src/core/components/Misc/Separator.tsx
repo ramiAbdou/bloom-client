@@ -9,8 +9,8 @@ import './Misc.scss';
 
 import React from 'react';
 
-type SeparatorProps = { style?: React.CSSProperties };
+import { StyleProps } from '@constants';
 
-export default ({ style }: SeparatorProps) => (
+export default ({ style }: StyleProps) => (
   <div className="c-misc-sep" style={style} />
 );

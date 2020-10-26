@@ -30,12 +30,8 @@ const Toast = ({ isError, message }: ToastOptions) => {
       initial={{ y: -100 }}
       transition={{ duration: ANIMATION_DURATION / 1000 }}
     >
-      <img
-        alt="Toaster Icon"
-        className="c-toast__icon"
-        src={isError ? x : check}
-      />
-      <p className="c-toast__msg">{message}</p>
+      <img alt="Toaster Icon" src={isError ? x : check} />
+      <p>{message}</p>
     </motion.div>
   );
 };

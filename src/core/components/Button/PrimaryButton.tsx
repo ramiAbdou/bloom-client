@@ -46,8 +46,7 @@ export default ({
   const { css } = new CSSModifier()
     .class('c-btn-primary')
     .class(className)
-    .addClass(disabled, 'c-btn-primary--disabled')
-    .addClass(isLoading, 'c-btn--primary--loading');
+    .addClass(disabled, 'c-btn-primary--disabled');
 
   return (
     <motion.button

@@ -1,17 +1,8 @@
-/*
-  ___ _                  ___      _   _
- | _ ) |___  ___ _ __   | _ )_  _| |_| |_ ___ _ _  ___
- | _ \ / _ \/ _ \ '  \  | _ \ || |  _|  _/ _ \ ' \(_-<
- |___/_\___/\___/_|_|_| |___/\_,_|\__|\__\___/_||_/__/
-*/
-
 @import 'src/index.scss';
 
 $PREF: 'c-btn';
 
-.btn-txt {
-  @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px);
-}
+.btn-txt { @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px); }
 
 // This is needed since we are manually setting the height of the button which
 // throws off the vertical alignment of the button.
@@ -25,11 +16,7 @@ $PREF: 'c-btn';
   @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px);
 }
 
-.#{$PREF}-loading {
-  @extend %flex-acc;
-
-  cursor: default;
-}
+.#{$PREF}-loading { @extend %flex-acc; cursor: default; }
 
 .#{$PREF}-loading > p {
   @extend .btn-txt;
@@ -59,24 +46,18 @@ $PREF: 'c-btn';
   padding-left: $lg;
   padding-right: $lg;
 
-  @include M {
-    width: 100%;
+  &:hover { background: $orange-1; }
+
+  &--disabled {
+    background-color: $gray-5;
+    box-shadow: none;
+    color: $gray-3;
+    cursor: not-allowed;
+
+    &:hover { background: $gray-5; }
   }
-}
 
-.#{$PREF}-primary:hover {
-  background: $orange-1;
-}
-
-.#{$PREF}-primary--disabled {
-  background-color: $gray-5;
-  box-shadow: none;
-  color: $gray-3;
-  cursor: not-allowed;
-}
-
-.#{$PREF}-primary--disabled:hover {
-  background: $gray-5;
+  @include M { width: 100%; }
 }
 
 // SECONDARY BUTTON

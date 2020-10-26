@@ -1,22 +1,8 @@
-/*
-  _                 _
- | |   ___  __ _ __| |___ _ _
- | |__/ _ \/ _` / _` / -_) '_|
- |____\___/\__,_\__,_\___|_|
-*/
-
 @import 'src/index.scss';
 
 $PREF: 'c-loader';
 
-.#{$PREF} {
-  align-items: center;
-  column-gap: -20px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.#{$PREF}-bg {
+.#{$PREF}-ctr {
   @extend %flex-acc;
 
   background-color: $gray-6;
@@ -28,11 +14,12 @@ $PREF: 'c-loader';
   z-index: 10000;
 }
 
-.#{$PREF}-col {
-  @extend %flex-col;
-
-  margin-left: -8px;
-  margin-right: -8px;
+.#{$PREF} {
+  align-items: center;
+  column-gap: -20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.#{$PREF}-col__img { margin-top: 4px; }
+.#{$PREF} > div { @extend %flex-col; margin-left: -8px; margin-right: -8px; }
+.#{$PREF} > div > img { margin-top: 4px; }

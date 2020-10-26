@@ -1,34 +1,14 @@
-/*
-  __  __ _            _ _
- |  \/  (_)___ __ ___| | |___ __ _ _ _  ___ _  _ ___
- | |\/| | (_-</ _/ -_) | / -_) _` | ' \/ _ \ || (_-<
- |_|  |_|_/__/\__\___|_|_\___\__,_|_||_\___/\_,_/__/
-*/
-
 @import 'src/index.scss';
 
 $PREF: 'c-misc';
 
-.#{$PREF}-sep {
-  border-bottom: 0.5px $gray-5 solid;
-  width: 100%;
-}
+.#{$PREF}-sep { border-bottom: 0.5px $gray-5 solid; width: 100%; }
 
-.#{$PREF}-error {
-  @extend %flex;
-
-  margin-top: $xs;
-}
-
+.#{$PREF}-error { @extend %flex; margin-top: $xs; }
+.#{$PREF}-error > p { @extend .body--2; color: $red; }
 .#{$PREF}-error > img {
   height: 18px;
   margin-right: $xxs;
   margin-top: 4px;
   width: 18px;
-}
-
-.#{$PREF}-error > p {
-  @extend .body--2;
-
-  color: $red;
 }

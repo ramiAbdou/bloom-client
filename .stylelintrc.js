@@ -40,5 +40,6 @@ module.exports = {
       'at-rules'
     ],
     'order/properties-alphabetical-order': true
-  }
+  },
+  ignoreFiles: ['**/*.tsx']
 };

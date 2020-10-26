@@ -19,13 +19,12 @@ type LoaderColumnProps = { images: LoaderImage[] };
 // of something being loaded.
 
 const LoaderColumn = ({ images }: LoaderColumnProps) => (
-  <div className="c-loader-col">
+  <div>
     {images.map(({ img, delay }: LoaderImage) => (
       <motion.img
         key={delay}
         alt="Loading Hexagon"
         animate={{ opacity: 1 }}
-        className="c-loader-col__img"
         initial={{ opacity: 0 }}
         src={img}
         transition={{ delay, duration: 1, yoyo: Infinity }}
@@ -37,7 +36,7 @@ const LoaderColumn = ({ images }: LoaderColumnProps) => (
 const DELAY = 1.5; // Represents 1500 ms.
 
 export default () => (
-  <div className="c-loader-bg">
+  <div className="c-loader-ctr">
     <div className="c-loader">
       <LoaderColumn
         images={[

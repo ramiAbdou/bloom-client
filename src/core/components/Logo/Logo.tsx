@@ -16,12 +16,10 @@ interface LogoProps extends ClassNameProps {
 }
 
 export default ({ className, large }: LogoProps) => {
-  const { css } = new CSSModifier()
-    .class('c-logo-img')
-    .addModifier(large, '--lg');
+  const { css } = new CSSModifier().class('c-logo').addModifier(large, '--lg');
 
   return (
-    <button className={`c-logo ${className}`}>
+    <button className={className}>
       <img alt="Bloom Logo" className={css} src={bloomLogo} />
     </button>
   );

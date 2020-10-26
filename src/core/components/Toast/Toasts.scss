@@ -1,10 +1,3 @@
-/*
-  _____             _
- |_   _|__  __ _ __| |_ ___
-   | |/ _ \/ _` (_-<  _(_-<
-   |_|\___/\__,_/__/\__/__/
-*/
-
 @import 'src/index.scss';
 
 $PREF: 'c-toast';
@@ -33,7 +26,7 @@ $PREF: 'c-toast';
 
 .#{$PREF}--error { background-color: $red; }
 
-.#{$PREF}__icon {
+.#{$PREF} > img {
   height: $sm;
   margin-right: $xs;
   width: $sm;
@@ -41,8 +34,4 @@ $PREF: 'c-toast';
   @include M { height: 16px; margin-right: 8px; width: 16px; }
 }
 
-.#{$PREF}__msg {
-  @extend .body--2;
-
-  color: $white;
-}
+.#{$PREF} > p { @extend .body--2; color: $white; }
