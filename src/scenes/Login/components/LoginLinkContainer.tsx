@@ -14,6 +14,7 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import { getGraphQLError } from '@util/util';
 import { SEND_TEMPORARY_LOGIN_LINK } from '../Login.gql';
 import Login from '../Login.store';
+import { getLoginErrorMessage } from '../Login.util';
 
 const SubmitButton = () => {
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
@@ -41,7 +42,9 @@ const SubmitButton = () => {
     }
   };
 
-  const message = getGraphQLError(error);
+  // getGraphQLError returns the error code (eg: USER_NOT_FOUND) and
+  // getLoginErrorMessage converts that to a more readable message.
+  const message = getLoginErrorMessage(getGraphQLError(error));
 
   return (
     <>

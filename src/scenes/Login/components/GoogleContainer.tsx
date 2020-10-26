@@ -11,6 +11,7 @@ import { APP, LoginError } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import URLBuilder from '@util/URLBuilder';
 import { google } from '../images';
+import { getLoginErrorMessage } from '../Login.util';
 
 const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('scope', 'https://www.googleapis.com/auth/userinfo.email')
@@ -24,19 +25,6 @@ const GoogleButton = () => (
     Sign In with Google
   </a>
 );
-
-/**
- * UTILITY: Returns the login error message based on the cookie.
- */
-const getLoginErrorMessage = (cookie: LoginError) => {
-  if (cookie === 'USER_NOT_FOUND')
-    return `You must apply and be accepted into a commmunity before logging in.`;
-  if (cookie === 'APPLICATION_REJECTED')
-    return `You must be accepted into a commmunity before logging in.`;
-  if (cookie === 'APPLICATION_PENDING')
-    return `You have pending membership applications. Once they are accepted, you will be able to log in.`;
-  return null;
-};
 
 export default () => {
   const cookie = Cookies.get('LOGIN_ERROR') as LoginError;
