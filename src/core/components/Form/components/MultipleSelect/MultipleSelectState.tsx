@@ -18,7 +18,7 @@ import { filterOptions } from '@util/util';
        |__/|_|                                        
 */
 
-interface DropdownMultipleState {
+type DropdownMultipleState = {
   filteredOptions: string[];
   options: string[];
   searchString: string;
@@ -26,7 +26,7 @@ interface DropdownMultipleState {
   setWidth: (value: number) => void;
   title: string;
   width: number;
-}
+};
 
 const initialState: DropdownMultipleState = {
   filteredOptions: [],
@@ -71,7 +71,7 @@ export default ({
 
   useEffect(
     () => setFilteredOptions(filterOptions(allOptions, searchString, value)),
-    [searchString, value.length]
+    [searchString, value]
   );
 
   return (

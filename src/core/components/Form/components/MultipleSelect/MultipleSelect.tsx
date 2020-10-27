@@ -48,11 +48,35 @@ const NoResultsMessage = () => (
 );
 
 const AllOptions = () => {
-  const { filteredOptions, setSearchString, title } = useDropdownMultiple();
+  const {
+    filteredOptions,
+    options,
+    setSearchString,
+    title
+  } = useDropdownMultiple();
   const { value } = Form.useStoreState(({ getItem }) => getItem({ title }));
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const selectOption = (option) => {
-    updateItem({ title, value: [...value, option] });
+
+  const selectOption = (option: string) => {
+    const wasNoneSelected = value.some((element: string) =>
+      ['None', 'None of the Above', 'N/A'].includes(element)
+    );
+
+    const isOptionNone = ['None', 'None of the Above', 'N/A'].includes(option);
+
+    let result: string[];
+    if (wasNoneSelected) result = [option];
+    else result = isOptionNone ? [option] : [...value, option];
+
+    updateItem({
+      // If we've selected all the values available, don't continue to have the
+      // option container open. So we set isActive to false.
+      isActive: !isOptionNone && options.length !== result.length,
+      title,
+      // If the option is a None value and there are other options present, we
+      // should remove them.-
+      value: result
+    });
     setSearchString('');
   };
 

@@ -32,15 +32,34 @@ type FormModel = {
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
 
+/**
+ * All GraphQL requests with data should have the data be populated in an array,
+ * even if the question is not MULTIPLE_SELECT. This helps with parsing
+ * consistency.
+ *
+ * This function ensures that all values are returned as arrays.
+ */
+const parseValue = (value: any) => {
+  if (!value) return null;
+
+  const isArray = Array.isArray(value);
+  if (
+    isArray &&
+    value.length === 1 &&
+    ['None', 'None of the Above', 'N/A'].includes(value[0])
+  )
+    return [];
+
+  return isArray ? value : [value];
+};
+
 const model: FormModel = {
   data: computed(({ items }) =>
     items?.map(({ id, value }) => ({
       questionId: id,
-      // eslint-disable-next-line no-nested-ternary
-      value: value ? (Array.isArray(value) ? value : [value]) : null
+      value: parseValue(value)
     }))
   ),
-
   getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
     items.find((item) => item.category === category || item.title === title)
   ),
