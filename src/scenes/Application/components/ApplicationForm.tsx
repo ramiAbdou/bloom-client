@@ -17,25 +17,33 @@ import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
 import Application from '../Application.store';
 
-const Title = () => {
-  const title = Application.useStoreState(
-    (store) => store.community?.application?.title
+const Icon = () => {
+  const logoUrl = Application.useStoreState(
+    ({ community }) => community?.logoUrl
   );
 
-  return <h3 className="s-signup-title"> {title}</h3>;
+  return <img src={logoUrl} />;
+};
+
+const Title = () => {
+  const title = Application.useStoreState(
+    ({ community }) => community?.application?.title
+  );
+
+  return <h3>{title}</h3>;
 };
 
 const Description = () => {
   const description = Application.useStoreState(
-    (store) => store.community?.application?.description
+    ({ community }) => community?.application?.description
   );
 
-  return <p className="s-signup-desc"> {description}</p>;
+  return <p>{description}</p>;
 };
 
 const SubmitButton = () => {
   const encodedUrlName = Application.useStoreState(
-    (store) => store.community?.encodedUrlName
+    ({ community }) => community?.encodedUrlName
   );
 
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
@@ -74,13 +82,12 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as ApplicationParams;
-
   const application = Application.useStoreState(
-    (store) => store.community?.application
+    ({ community }) => community?.application
   );
 
   const initCommunity = Application.useStoreActions(
-    (store) => store.initCommunity
+    (actions) => actions.initCommunity
   );
 
   const { data, loading, error } = useQuery(GET_MEMBERSHIP_FORM, {
@@ -93,17 +100,17 @@ export default () => {
 
   if (error) return <Redirect to="/login" />;
   if (loading) return <Loader />;
-  if (application)
-    return (
-      <Form.Provider initialData={{ questions: application.questions }}>
-        <div className="s-signup">
-          <Title />
-          <Description />
-          <FormContent />
-          <SubmitButton />
-        </div>
-      </Form.Provider>
-    );
+  if (!application) return null;
 
-  return null;
+  return (
+    <Form.Provider initialData={{ questions: application.questions }}>
+      <div className="s-signup">
+        <Icon />
+        <Title />
+        <Description />
+        <FormContent />
+        <SubmitButton />
+      </div>
+    </Form.Provider>
+  );
 };

@@ -10,6 +10,7 @@ export const GET_MEMBERSHIP_FORM = query({
     'autoAccept',
     'encodedUrlName',
     'id',
+    'logoUrl',
     'name',
     {
       application: [

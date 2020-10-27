@@ -11,9 +11,18 @@ $PREF: 's-signup';
   @include resp(width, 600px, 500px, 90%);
 }
 
-.#{$PREF}-title { margin-bottom: $xs; }
-.#{$PREF}-desc { margin-bottom: $md; }
-.#{$PREF}-submit-btn { margin-top: $xxl; width: 100%; }
+.#{$PREF} > img {
+  border: 2px $gray-1 solid;
+  border-radius: $xxs;
+  height: $lg;
+  margin-bottom: $xs;
+  padding: 2px;
+  width: $lg;
+}
+
+.#{$PREF} > h3 { margin-bottom: $xs; }
+.#{$PREF} > p { margin-bottom: $md; }
+.#{$PREF} > button { margin-top: $xxl; width: 100%; }
 
 .#{$PREF}-confirmation-ctr {
   @extend %flex-acccol;
@@ -45,7 +54,7 @@ $PREF: 's-signup';
   border-radius: 50%;
   height: $xl;
   margin-bottom: $sm;
-  padding: $xs;
+  padding: 8px;
   width: $xl;
 }
 

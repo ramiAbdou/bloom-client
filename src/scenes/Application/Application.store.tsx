@@ -11,6 +11,7 @@ type Community = {
   application: Form;
   autoAccept: boolean;
   encodedUrlName: string;
+  logoUrl: string;
   name: string;
 };
 
