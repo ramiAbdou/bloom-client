@@ -28,13 +28,9 @@ const FullName = () => {
   );
 };
 
-export default () => {
-  // const pictureUrl = useStoreState(({ user }) => user.pictureUrl);
-
-  return (
-    <div className="c-nav-profile">
-      <NoPictureContainer />
-      <FullName />
-    </div>
-  );
-};
+export default () => (
+  <button className="c-nav-profile">
+    <NoPictureContainer />
+    <FullName />
+  </button>
+);

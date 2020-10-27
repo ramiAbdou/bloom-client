@@ -22,10 +22,13 @@ const client = new GraphQLClient({
   url: `${APP.SERVER_URL}/graphql`
 });
 
+const Background = () => <div id="app" />;
+
 const App = () => (
   <ClientContext.Provider value={client}>
     <StoreProvider store={store}>
       <Router />
+      <Background />
       <ToastQueue />
     </StoreProvider>
   </ClientContext.Provider>
