@@ -6,7 +6,7 @@
 
 import { Action, action, Computed, computed, Thunk, thunk } from 'easy-peasy';
 
-import { Membership } from './MembershipStore';
+import { Membership } from './Membership.store';
 
 export type User = {
   email: string;
@@ -14,6 +14,7 @@ export type User = {
   lastName: string;
   id: string;
   memberships?: Membership[];
+  pictureUrl?: string;
 };
 
 export interface UserModel {
@@ -22,7 +23,9 @@ export interface UserModel {
   fullName: Computed<UserModel, string>;
   id: string;
   init: Thunk<UserModel, User>;
+  initials: Computed<UserModel, string>;
   lastName: string;
+  pictureUrl?: string;
   setUser: Action<UserModel, User>;
 }
 
@@ -38,7 +41,11 @@ export const userModel: UserModel = {
     const { membership } = getStoreActions();
     membership.init(user.memberships);
   }),
+  initials: computed(
+    ({ firstName, lastName }) => `${firstName[0]}${lastName[0]}`
+  ),
   lastName: '',
+  pictureUrl: null,
   setUser: action((state, { email, firstName, id, lastName }: User) => ({
     ...state,
     email,

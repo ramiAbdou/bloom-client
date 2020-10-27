@@ -21,8 +21,8 @@ import SignupPage from '@scenes/Application/Application';
 import HomePage from '@scenes/Home/Home';
 import { VERIFY_LOGIN_TOKEN } from '@scenes/Home/Home.gql';
 import LoginPage from '@scenes/Login/Login';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_USER, IS_LOGGED_IN } from '@store/UserGQL';
+import { useStoreActions } from '@store/Store';
+import { GET_USER, IS_LOGGED_IN } from '@store/User.gql';
 
 const Background = () => <div id="app" />;
 
@@ -33,11 +33,8 @@ const Background = () => <div id="app" />;
  */
 const AuthenticatedRoute = ({ component, ...rest }) => {
   const loginToken = new URLSearchParams(window.location.search).get('token');
-  const { loading, data } = useQuery(GET_USER);
+  const { loading, data, error } = useQuery(GET_USER);
   const initUser = useStoreActions(({ user }) => user.init);
-  const membershipsLoaded = !!useStoreState(
-    ({ membership }) => membership.memberships.length
-  );
 
   useEffect(() => {
     if (!data?.getUser) return;
@@ -47,10 +44,10 @@ const AuthenticatedRoute = ({ component, ...rest }) => {
   // If there are already memberships stored in the Membership state, then we
   // know that the user is loaded, so show that.
   if (loginToken) return <AuthenticatedRouteWithToken token={loginToken} />;
-  if (membershipsLoaded || data?.getUser)
-    return <Route exact {...rest} component={component} />;
   if (loading) return <Loader />;
-  return <Redirect to="/login" />;
+  if (error) return <Redirect to="/login" />;
+
+  return <Route exact {...rest} component={component} />;
 };
 
 const AuthenticatedRouteWithToken = ({ token }) => {

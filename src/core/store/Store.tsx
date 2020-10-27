@@ -5,10 +5,10 @@
 
 import { createStore, createTypedHooks, persist } from 'easy-peasy';
 
-import { LoaderModel, loaderModel } from './LoaderStore';
-import { MembershipModel, membershipModel } from './MembershipStore';
-import { ToastModel, toastModel } from './ToastStore';
-import { UserModel, userModel } from './UserStore';
+import { LoaderModel, loaderModel } from './Loader.store';
+import { MembershipModel, membershipModel } from './Membership.store';
+import { ToastModel, toastModel } from './Toast.store';
+import { UserModel, userModel } from './User.store';
 
 type StoreModel = {
   loader: LoaderModel;

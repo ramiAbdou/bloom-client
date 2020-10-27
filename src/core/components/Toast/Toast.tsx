@@ -12,7 +12,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { useStoreState } from '@store/Store';
-import { ANIMATION_DURATION, ToastOptions } from '@store/ToastStore';
+import { ANIMATION_DURATION, ToastOptions } from '@store/Toast.store';
 import CSSModifier from '@util/CSSModifier';
 import { check, x } from './images';
 

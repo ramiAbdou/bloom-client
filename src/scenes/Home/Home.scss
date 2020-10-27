@@ -1,0 +1,31 @@
+@import 'src/index.scss';
+
+$PREF: 's-home';
+
+.#{$PREF} {
+  box-sizing: border-box;
+  height: 100%;
+
+  @include RESP(margin-left, $md, $sm, 0);
+  @include RESP(margin-right, $md, $sm, 0);
+  @include DD { margin: auto; max-width: 1440px; width: 100%; }
+}
+
+.#{$PREF}-sidebar {
+  @extend %flex-col;
+
+  align-items: flex-start;
+  border: 1px $gray-4 solid;
+  border-radius: $xxs;
+  box-sizing: border-box;
+  width: 250px;
+}
+
+.#{$PREF}-sidebar > button {
+  font-size: 14px;
+  margin-bottom: $sm;
+  text-align: left;
+  width: 100%;
+}
+
+.#{$PREF}-sidebar > button:last-child { margin-bottom: 0; }

@@ -11,9 +11,12 @@ export const GET_USER = query({
     'id',
     'firstName',
     'lastName',
+    'pictureUrl',
     {
       memberships: [
-        { community: ['id', 'encodedUrlName', 'name'] },
+        {
+          community: ['id', 'encodedUrlName', 'name', 'logoUrl', 'primaryColor']
+        },
         'id',
         'role'
       ]

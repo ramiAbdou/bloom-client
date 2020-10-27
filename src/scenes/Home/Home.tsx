@@ -3,11 +3,16 @@
  * @author Rami Abdou
  */
 
+import './Home.scss';
+
 import React from 'react';
 
-import { useStoreState } from '@store/Store';
+import Navbar from '@components/Navbar/Navbar';
+import Sidebar from './components/Sidebar';
 
-export default () => {
-  const firstName = useStoreState(({ user }) => user.firstName);
-  return <p>First Name: {firstName} </p>;
-};
+export default () => (
+  <div className="s-home">
+    <Navbar />
+    <Sidebar />
+  </div>
+);

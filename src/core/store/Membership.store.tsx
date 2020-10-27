@@ -11,9 +11,10 @@ type MembershipRole = 'ADMIN' | 'OWNER';
 
 type Community = {
   encodedUrlName: string;
+  logoUrl: string;
   id: string;
-  membership: Membership;
   name: string;
+  primaryColor: string;
 };
 
 export type Membership = {
@@ -24,7 +25,6 @@ export type Membership = {
 };
 
 export type MembershipModel = {
-  activeMembership: Membership;
   init: Thunk<MembershipModel, Membership[]>;
   memberships: Membership[];
   setActiveMembership: Action<MembershipModel, string>;
@@ -32,7 +32,6 @@ export type MembershipModel = {
 };
 
 export const membershipModel: MembershipModel = {
-  activeMembership: null,
   init: thunk((actions, memberships: Membership[]) => {
     // If the array is not populated, then don't set the memberships.
     if (!memberships?.length) return;

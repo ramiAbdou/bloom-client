@@ -1,0 +1,64 @@
+@import 'src/index.scss';
+
+$PREF: 'c-nav';
+
+.#{$PREF} {
+  @extend %flex-acsb;
+
+  border-bottom: 1px $gray-4 solid;
+  border-left: 1px $gray-4 solid;
+  border-radius: 0 0 $xxs $xxs;
+  border-right: 1px $gray-4 solid;
+  height: $xxl;
+  padding-left: $xs;
+  padding-right: $xs;
+}
+
+// ## COMMUNITY ICON CONTAINER
+
+.#{$PREF} > div { @extend %flex-ac; }
+
+// ## COMMUNITY ICON
+
+.#{$PREF}-community {
+  border-radius: $xxs;
+  height: $lg + 4px;
+  padding: 2px;
+  width: $lg + 4px;
+
+  &--active { border: 2px $gray-1 solid; }
+}
+
+.#{$PREF}-community > img { @extend .fill; border-radius: 2px; }
+
+// ## PROFILE DIV
+
+.#{$PREF}-profile {
+  @extend %flex-acc;
+
+  border: 1px $gray-4 solid;
+  border-radius: $xxs;
+  padding: 4px 8px;
+}
+
+// ## PROFILE PICTURE (NO PICTURE FOR USER)
+
+.#{$PREF}-profile-pic {
+  @extend .fill;
+
+  border-radius: 50%;
+  height: 42px;
+  margin-right: $xs;
+  width: 42px;
+
+  &--none { background-color: $gray-2; color: $white; font-size: 16px; }
+}
+
+// ## PROFILE NAME
+
+.#{$PREF}-profile > button > p {
+  @extend .meta;
+
+  font-size: 13px;
+  line-height: 18px;
+}
