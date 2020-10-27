@@ -39,14 +39,11 @@ $PREF: 'c-btn';
 .#{$PREF}-primary {
   @extend .#{$PREF}-base;
 
-  background: rgba($color: $orange-1, $alpha: 0.9);
   box-shadow: 0 2px 6px rgba($color: #000, $alpha: 0.2);
   color: $gray-6;
   height: $lg;
   padding-left: $lg;
   padding-right: $lg;
-
-  &:hover { background: $orange-1; }
 
   &--disabled {
     background-color: $gray-5;
@@ -54,10 +51,8 @@ $PREF: 'c-btn';
     color: $gray-3;
     cursor: not-allowed;
 
-    &:hover { background: $gray-5; }
+    @include HOVER { background: $gray-5; }
   }
 
   @include M { width: 100%; }
 }
-
-// SECONDARY BUTTON

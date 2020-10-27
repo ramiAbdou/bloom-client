@@ -6,6 +6,7 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
+import Form from '@components/Form/Form.store';
 import CSSModifier from '@util/CSSModifier';
 import {
   ButtonDisabledProps,
@@ -31,6 +32,7 @@ export default ({
   onClick,
   title
 }: PrimaryButtonProps) => {
+  const primaryColor = Form.useStoreState((store) => store.primaryColor);
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
@@ -48,9 +50,12 @@ export default ({
     .class(className)
     .addClass(disabled, 'c-btn-primary--disabled');
 
+  const style = !disabled ? { background: primaryColor } : {};
+
   return (
     <motion.button
       className={css}
+      style={style}
       transition={{ duration: 1 }}
       onClick={() => !disabled && !isLoading && onClick()}
     >

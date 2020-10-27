@@ -33,8 +33,8 @@ export default ({ length, maxCharacters, required, title }: LabelProps) => {
     .addClass(required, 'c-form-label--required');
 
   return (
-    <div className="c-form-label">
-      <p className={css}>{title}</p>
+    <div className={css}>
+      <p>{title}</p>
 
       {maxCharacters && length && (
         <LengthCount length={length} maxCharacters={maxCharacters} />
