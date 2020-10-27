@@ -12,7 +12,7 @@ import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import Loader from '@components/Loader/Loader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import { ApplicationParams } from '@constants';
+import { EncodedUrlNameParams } from '@constants';
 import { usePrevious } from '@hooks/usePrevious';
 import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
@@ -90,7 +90,7 @@ const SubmitButton = () => {
 };
 
 export default () => {
-  const { encodedUrlName } = useParams() as ApplicationParams;
+  const { encodedUrlName } = useParams() as EncodedUrlNameParams;
   const application = Application.useStoreState(
     ({ community }) => community?.application
   );

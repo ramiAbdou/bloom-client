@@ -24,9 +24,9 @@ export const APP = {
  * GENERAL PROPS - General component props.
  */
 
+export type ChildrenProps = { children: ReactNode };
 export type ClassNameProps = { className?: string };
 export type OnClickProps = { onClick?: () => Promise<any> };
-export type ProviderProps = { children: ReactNode };
 export type StyleProps = { style?: React.CSSProperties };
 export type MessageProps = { message: string };
 
@@ -43,7 +43,7 @@ export type LoginError =
  * FORMS - Handling of all form-related items including custom Enums.
  */
 
-export type ApplicationParams = { encodedUrlName: string };
+export type EncodedUrlNameParams = { encodedUrlName: string };
 
 export type QuestionType =
   | 'LONG_TEXT'

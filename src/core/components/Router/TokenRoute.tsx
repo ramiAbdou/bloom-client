@@ -24,6 +24,7 @@ export default ({ token }: TokenRouteProps) => {
     push(window.location.pathname);
     return null;
   }
+
   if (loading) return <Loader />;
   return <Redirect to="/login" />;
 };

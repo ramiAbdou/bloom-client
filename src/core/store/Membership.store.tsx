@@ -27,6 +27,8 @@ export type Membership = {
 export type MembershipModel = {
   activeMembership: Computed<MembershipModel, Membership>;
   init: Thunk<MembershipModel, Membership[]>;
+  // getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
+  isMember: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
   memberships: Membership[];
   setActiveMembership: Action<MembershipModel, string>;
   setMemberships: Action<MembershipModel, Membership[]>;
@@ -53,6 +55,17 @@ export const membershipModel: MembershipModel = {
     // cookies to be the first membership's community ID.
     Cookie.set('communityId', community.id);
   }),
+
+  /**
+   * Returns true if there is any membership that has the same encodedUrlName
+   * as the one given.
+   */
+  isMember: computed(({ memberships }) => (encodedUrlName: string) =>
+    memberships?.some(
+      ({ community }) => encodedUrlName === community.encodedUrlName
+    )
+  ),
+
   memberships: [],
   setActiveMembership: action((state, membershipId: string) =>
     // Update the memberships array by setting the isActive: true for the

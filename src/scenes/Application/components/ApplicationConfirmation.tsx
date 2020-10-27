@@ -8,7 +8,7 @@ import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
 import { check } from '@components/Toast/images';
-import { ApplicationParams } from '@constants';
+import { EncodedUrlNameParams } from '@constants';
 import Application from '../Application.store';
 
 const Icon = () => (
@@ -23,7 +23,7 @@ const EmailContainer = () => {
 };
 
 const Content = () => {
-  const { encodedUrlName } = useParams() as ApplicationParams;
+  const { encodedUrlName } = useParams() as EncodedUrlNameParams;
   const autoAccept = Application.useStoreState(
     ({ community }) => community?.autoAccept
   );

@@ -16,7 +16,7 @@ import {
 
 import AuthenticatedRoute from '@components/Router/AuthenticatedRoute';
 import LoginRoute from '@components/Router/LoginRoute';
-import SignupPage from '@scenes/Application/Application';
+import ApplicationPage from '@scenes/Application/Application';
 import HomePage from '@scenes/Home/Home';
 
 export default () => (
@@ -24,8 +24,9 @@ export default () => (
     <Switch>
       <LoginRoute path="/login" />
       <AuthenticatedRoute exact component={HomePage} path="/profile" />
-      <Route component={SignupPage} path="/:encodedUrlName/apply" />
-      <AuthenticatedRoute exact component={HomePage} path="/" />
+      <Route component={ApplicationPage} path="/:encodedUrlName/apply" />
+      <AuthenticatedRoute component={HomePage} path="/:encodedUrlName" />
+      <AuthenticatedRoute exact path="/" />
       <Redirect to="/login" />
     </Switch>
   </Router>

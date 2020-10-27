@@ -7,7 +7,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import Form from '@components/Form/Form.store';
 import { FormItemData } from '@components/Form/Form.types';
-import { ProviderProps } from '@constants';
+import { ChildrenProps } from '@constants';
 import { filterOptions } from '@util/util';
 
 /* 
@@ -55,7 +55,7 @@ export const useDropdownMultiple = () => useContext(DropdownMultipleContext);
  |_| |_| \___/\_/|_\__,_\___|_|  
 */
 
-interface DropdownMultipleProviderProps extends ProviderProps, FormItemData {}
+interface DropdownMultipleProviderProps extends ChildrenProps, FormItemData {}
 
 export default ({
   children,
