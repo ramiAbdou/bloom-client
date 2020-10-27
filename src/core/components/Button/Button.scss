@@ -2,8 +2,6 @@
 
 $PREF: 'c-btn';
 
-.btn-txt { @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px); }
-
 // This is needed since we are manually setting the height of the button which
 // throws off the vertical alignment of the button.
 

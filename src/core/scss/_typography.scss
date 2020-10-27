@@ -60,3 +60,7 @@ p,
 textarea,
 span,
 input { @extend .body--1; }
+
+.btn-txt { @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px); }
+
+button { @extend .btn-txt; }

@@ -15,15 +15,21 @@ const Icon = () => (
   </div>
 );
 
-const Content = () => {
+const EmailContainer = () => {
   const email = Login.useStoreState((store) => store.email);
-  return (
-    <p>
-      We sent a temporary login link to <span>{email}</span> that will expire in
-      5 minutes. You may now close this page.
-    </p>
-  );
+  return <p className="s-login-confirmation-email">{email}</p>;
 };
+
+const Content = () => (
+  <>
+    <p>We sent a temporary login link to the following email:</p>
+    <EmailContainer />
+    <p>
+      It will expire in 5 minutes. If you have any trouble, you can request
+      another login link or login with Google. You may now close this page!
+    </p>
+  </>
+);
 
 export default () => (
   <motion.div
