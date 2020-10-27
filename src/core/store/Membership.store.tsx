@@ -25,16 +25,22 @@ export type Membership = {
 };
 
 export type MembershipModel = {
+  activeEncodedUrlName: Computed<MembershipModel, string>;
   activeMembership: Computed<MembershipModel, Membership>;
   init: Thunk<MembershipModel, Membership[]>;
-  // getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
+  isAdmin: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
   isMember: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
+  isOwner: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
   memberships: Membership[];
   setActiveMembership: Action<MembershipModel, string>;
   setMemberships: Action<MembershipModel, Membership[]>;
 };
 
 export const membershipModel: MembershipModel = {
+  activeEncodedUrlName: computed(
+    ({ activeMembership }) => activeMembership?.community?.encodedUrlName
+  ),
+
   activeMembership: computed(({ memberships }) =>
     memberships.find(({ isActive }: Membership) => isActive)
   ),
@@ -60,9 +66,31 @@ export const membershipModel: MembershipModel = {
    * Returns true if there is any membership that has the same encodedUrlName
    * as the one given.
    */
+  isAdmin: computed(({ memberships }) => (encodedUrlName: string) =>
+    memberships?.some(
+      ({ community, role }) =>
+        !!role && community.encodedUrlName === encodedUrlName
+    )
+  ),
+
+  /**
+   * Returns true if there is any membership that has the same encodedUrlName
+   * as the one given.
+   */
   isMember: computed(({ memberships }) => (encodedUrlName: string) =>
     memberships?.some(
       ({ community }) => encodedUrlName === community.encodedUrlName
+    )
+  ),
+
+  /**
+   * Returns true if there is any membership that has the same encodedUrlName
+   * as the one given.
+   */
+  isOwner: computed(({ memberships }) => (encodedUrlName: string) =>
+    memberships?.some(
+      ({ community, role }) =>
+        role === 'OWNER' && community.encodedUrlName === encodedUrlName
     )
   ),
 

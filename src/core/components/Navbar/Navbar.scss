@@ -51,12 +51,18 @@ $PREF: 'c-nav';
   margin-right: $xs;
   width: 42px;
 
-  &--none { background-color: $gray-2; color: $white; font-size: 16px; }
+  &--none {
+    @extend %flex-acc;
+
+    background-color: $gray-2;
+    color: $white;
+    font-size: 16px;
+  }
 }
 
 // ## PROFILE NAME
 
-.#{$PREF}-profile > button > p {
+.#{$PREF}-profile > div > p {
   @extend .meta;
 
   font-size: 13px;

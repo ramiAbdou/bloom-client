@@ -10,9 +10,7 @@ import { useStoreState } from '@store/Store';
 const NoPictureContainer = () => {
   const initals = useStoreState(({ user }) => user.initials);
   return (
-    <button className="c-nav-profile-pic c-nav-profile-pic--none">
-      {initals}
-    </button>
+    <div className="c-nav-profile-pic c-nav-profile-pic--none">{initals}</div>
   );
 };
 
@@ -21,10 +19,10 @@ const FullName = () => {
   const lastName = useStoreState(({ user }) => user.lastName);
 
   return (
-    <button>
+    <div>
       <p>{firstName}</p>
       <p>{lastName}</p>
-    </button>
+    </div>
   );
 };
 

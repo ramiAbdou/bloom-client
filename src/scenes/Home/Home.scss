@@ -6,10 +6,13 @@ $PREF: 's-home';
   box-sizing: border-box;
   height: 100%;
 
-  @include RESP(margin-left, $md, $sm, 0);
-  @include RESP(margin-right, $md, $sm, 0);
+  @include RESP(margin-left, $xxl, $md, 0);
+  @include RESP(margin-right, $xxl, $md, 0);
   @include DD { margin: auto; max-width: 1440px; width: 100%; }
 }
+
+.#{$PREF}-main { @extend %flex-acsb; box-sizing: border-box; }
+.#{$PREF}-main > * { height: 100%; }
 
 .#{$PREF}-sidebar {
   @extend %flex-col;
@@ -18,10 +21,13 @@ $PREF: 's-home';
   border: 1px $gray-4 solid;
   border-radius: $xxs;
   box-sizing: border-box;
+  padding: 12px;
   width: 250px;
 }
 
-.#{$PREF}-sidebar > button {
+.#{$PREF}-sidebar > a {
+  @extend .btn-txt;
+  
   font-size: 14px;
   margin-bottom: $sm;
   text-align: left;
