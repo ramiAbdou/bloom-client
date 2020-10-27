@@ -47,7 +47,8 @@ $PREF: 's-signup';
   @include M { width: $SMALLEST_SCREEN; }
 }
 
-.#{$PREF}-confirmation > p > span { font-weight: 700; }
+.#{$PREF}-confirmation > p > span { font-size: 18px; font-weight: 700; }
+.#{$PREF}-confirmation > p { width: 100%; }
 
 .#{$PREF}-confirmation-icon {
   background-color: $green-1;
@@ -59,3 +60,15 @@ $PREF: 's-signup';
 }
 
 .#{$PREF}-confirmation-icon > img { height: 100%; width: 100%; }
+
+.#{$PREF}-confirmation-email {
+  background-color: rgba($color: $green-1, $alpha: 0.05);
+  border: 1px $green-1 solid;
+  border-radius: $xxs;
+  color: $green-1;
+  margin-bottom: $sm;
+  margin-top: $sm;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  text-align: center;
+}

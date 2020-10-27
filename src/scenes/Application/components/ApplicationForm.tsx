@@ -13,6 +13,7 @@ import FormContent from '@components/Form/FormContent';
 import Loader from '@components/Loader/Loader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { ApplicationParams } from '@constants';
+import { usePrevious } from '@hooks/usePrevious';
 import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
 import Application from '../Application.store';
@@ -42,6 +43,7 @@ const Description = () => {
 };
 
 const SubmitButton = () => {
+  const setEmail = Application.useStoreActions((actions) => actions.setEmail);
   const encodedUrlName = Application.useStoreState(
     ({ community }) => community?.encodedUrlName
   );
@@ -52,6 +54,12 @@ const SubmitButton = () => {
     ({ items }) =>
       items.filter(({ category }) => category === 'EMAIL')[0]?.value
   );
+
+  const previousEmail = usePrevious(email);
+
+  useEffect(() => {
+    if (email !== previousEmail) setEmail(email);
+  }, [email]);
 
   const [applyForMembership, { error, data, loading }] = useMutation(
     APPLY_FOR_MEMBERSHIP,
@@ -105,8 +113,6 @@ export default () => {
   if (error) return <Redirect to="/login" />;
   if (loading) return <Loader />;
   if (!application) return null;
-
-  console.log(primaryColor);
 
   return (
     <Form.Provider

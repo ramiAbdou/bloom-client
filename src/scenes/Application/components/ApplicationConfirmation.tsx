@@ -12,10 +12,15 @@ import { ApplicationParams } from '@constants';
 import Application from '../Application.store';
 
 const Icon = () => (
-  <div className="s-login-confirmation-icon">
+  <div className="s-signup-confirmation-icon">
     <img alt="Check Mark" src={check} />
   </div>
 );
+
+const EmailContainer = () => {
+  const email = Application.useStoreState((store) => store.email);
+  return <p className="s-signup-confirmation-email">{email}</p>;
+};
 
 const Content = () => {
   const { encodedUrlName } = useParams() as ApplicationParams;
@@ -26,23 +31,31 @@ const Content = () => {
     ({ community }) => community?.name
   );
 
-  const email = Application.useStoreState((store) => store.email);
-
   if (!communityName) return <Redirect to={`/${encodedUrlName}/apply`} />;
   if (!autoAccept)
     return (
-      <p>
-        Your application to {communityName} was received. We'll send you an
-        email when you are accepted into the community.
-      </p>
+      <>
+        <p>
+          Your application to <span>{communityName}</span> was received. When
+          you are accepted into the community, we'll send you an email at:
+        </p>
+
+        <EmailContainer />
+        <p>You may now close this page.</p>
+      </>
     );
 
   return (
-    <p>
-      Congratulations, you've been accepted into the {communityName} community!
-      We just sent a temporary login link to <span>{email}</span>. You may now
-      close this page.
-    </p>
+    <>
+      <p>
+        Congratulations, you've been accepted into the
+        <span>{communityName}</span>
+        community! We just sent a temporary login link to:
+      </p>
+
+      <EmailContainer />
+      <p>You may now close this page.</p>
+    </>
   );
 };
 
