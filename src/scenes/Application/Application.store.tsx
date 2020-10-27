@@ -13,6 +13,7 @@ type Community = {
   encodedUrlName: string;
   logoUrl: string;
   name: string;
+  primaryColor: string;
 };
 
 export type ApplicationModel = {

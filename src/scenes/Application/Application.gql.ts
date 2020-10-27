@@ -12,6 +12,7 @@ export const GET_MEMBERSHIP_FORM = query({
     'id',
     'logoUrl',
     'name',
+    'primaryColor',
     {
       application: [
         'title',

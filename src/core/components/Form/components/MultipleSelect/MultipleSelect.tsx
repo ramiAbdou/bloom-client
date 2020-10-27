@@ -32,11 +32,16 @@ const SearchBar = () => {
   );
 };
 
-const Option = ({ selectOption, option }: OptionProps) => (
-  <button className="c-form-dd-opt" onClick={selectOption}>
-    <p>{option}</p>
-  </button>
-);
+const Option = ({ selectOption, option }: OptionProps) => {
+  const primaryColor = Form.useStoreState((store) => store.primaryColor);
+  const style = { backgroundColor: `${primaryColor}4D` };
+
+  return (
+    <button className="c-form-dd-opt" onClick={selectOption}>
+      <p style={style}>{option}</p>
+    </button>
+  );
+};
 
 const NoResultsMessage = () => (
   <p className="c-form-dd-no-result">No results found.</p>
@@ -86,6 +91,7 @@ const OptionContainer = () => {
 const Values = ({ values }: ValueProps) => {
   const { title } = useDropdownMultiple();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
+
   const deleteValue = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     index: number
@@ -95,12 +101,16 @@ const Values = ({ values }: ValueProps) => {
     updateItem({ isActive: true, title, value: updatedValues });
   };
 
+  const primaryColor = Form.useStoreState((store) => store.primaryColor);
+  const style = { backgroundColor: `${primaryColor}4D` };
+
   return (
     <div className="c-form-dd-value-ctr">
       {values.map((option, i: number) => (
         <button
           key={option}
           className="c-form-dd-value"
+          style={style}
           onClick={(e) => deleteValue(e, i)}
         >
           {option}

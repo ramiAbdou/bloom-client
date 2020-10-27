@@ -12,6 +12,7 @@ import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
 export default ({ maxCharacters, placeholder, title }: FormItemData) => {
+  const primaryColor = Form.useStoreState((store) => store.primaryColor);
   const submitOnEnter = Form.useStoreState((store) => store.submitOnEnter);
   const submitForm = Form.useStoreState((store) => store.submitForm);
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
@@ -46,14 +47,16 @@ export default ({ maxCharacters, placeholder, title }: FormItemData) => {
 
   const { css } = new CSSModifier()
     .class('c-form-input')
-    .class('c-form-input--lg')
-    .addClass(isActive, 'c-form-input--active');
+    .class('c-form-input--lg');
+
+  const style = isActive ? { border: `1px ${primaryColor} solid` } : {};
 
   return (
     <textarea
       ref={textareaRef}
       className={css}
       placeholder={placeholder ?? ''}
+      style={style}
       value={value ?? ''}
       onChange={({ target }) => updateText(target.value)}
       onClick={activate}

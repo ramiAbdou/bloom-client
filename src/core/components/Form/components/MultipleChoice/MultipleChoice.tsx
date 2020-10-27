@@ -17,16 +17,23 @@ type ChoiceProps = {
 };
 
 const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
+  const primaryColor = Form.useStoreState((store) => store.primaryColor);
   const { css } = new CSSModifier()
     .class('c-form-mc-choice')
     .addClass(isSelected, 'c-form-mc-choice--active');
 
+  const outerStyle = isSelected ? { border: `2px ${primaryColor} solid` } : {};
+  const innerStyle = isSelected ? { backgroundColor: primaryColor } : {};
+  const textStyle = { backgroundColor: `${primaryColor}4D` };
+
   return (
     <button className={css} onClick={onClick}>
-      <div>
-        <div />
+      <div style={outerStyle}>
+        <div style={innerStyle} />
       </div>
-      <p className="c-form-choice-txt">{option}</p>
+      <p className="c-form-choice-txt" style={textStyle}>
+        {option}
+      </p>
     </button>
   );
 };

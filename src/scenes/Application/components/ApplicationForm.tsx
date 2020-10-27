@@ -86,6 +86,10 @@ export default () => {
     ({ community }) => community?.application
   );
 
+  const primaryColor = Application.useStoreState(
+    ({ community }) => community?.primaryColor
+  );
+
   const initCommunity = Application.useStoreActions(
     (actions) => actions.initCommunity
   );
@@ -102,8 +106,12 @@ export default () => {
   if (loading) return <Loader />;
   if (!application) return null;
 
+  console.log(primaryColor);
+
   return (
-    <Form.Provider initialData={{ questions: application.questions }}>
+    <Form.Provider
+      initialData={{ primaryColor, questions: application.questions }}
+    >
       <div className="s-signup">
         <Icon />
         <Title />

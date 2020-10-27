@@ -31,11 +31,16 @@ const SearchBar = () => {
   );
 };
 
-const Option = ({ selectOption, option }: OptionProps) => (
-  <button className="c-form-dd-opt" onClick={selectOption}>
-    <p>{option}</p>
-  </button>
-);
+const Option = ({ selectOption, option }: OptionProps) => {
+  const primaryColor = Form.useStoreState((store) => store.primaryColor);
+  const style = { backgroundColor: `${primaryColor}4D` };
+
+  return (
+    <button className="c-form-dd-opt" onClick={selectOption}>
+      <p style={style}>{option}</p>
+    </button>
+  );
+};
 
 const NoResultsMessage = () => (
   <p className="c-form-dd-no-result">No results found.</p>
@@ -83,11 +88,14 @@ const OptionContainer = () => {
 
 const Value = ({ value }: ValueProps) => {
   const { title } = useMultipleChoiceDD();
+  const primaryColor = Form.useStoreState((store) => store.primaryColor);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const clearValue = () => updateItem({ title, value: null });
 
+  const style = { backgroundColor: `${primaryColor}4D` };
+
   return (
-    <button className="c-form-dd-value" onClick={clearValue}>
+    <button className="c-form-dd-value" style={style} onClick={clearValue}>
       {value}
     </button>
   );
