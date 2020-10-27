@@ -69,7 +69,7 @@ const SubmitButton = () => {
         disabled={!isCompleted}
         isLoading={loading}
         loadingText="Sending Link..."
-        title="Send Me a Login Link"
+        title="Send Login Link"
         onClick={submitForm}
       />
 

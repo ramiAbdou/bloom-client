@@ -6,9 +6,9 @@ $PREF: 's-signup';
   margin-left: auto;
   margin-right: auto;
 
-  @include resp(margin-bottom, $xl, $lg, $md);
-  @include resp(margin-top, $xl, $lg, $md);
-  @include resp(width, 600px, 500px, 90%);
+  @include RESP(margin-bottom, $xl, $lg, $md);
+  @include RESP(margin-top, $xl, $lg, $md);
+  @include RESP(width, 600px, 500px, 90%);
 }
 
 .#{$PREF} > img {

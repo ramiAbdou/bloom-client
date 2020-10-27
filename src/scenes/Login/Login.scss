@@ -6,8 +6,9 @@ $PREF: 's-login';
   @extend %flex-acccol;
 
   height: 100%;
-  margin-bottom: $xxl * 2;
   width: 100%;
+
+  @include TD { margin-bottom: $xxl; }
 }
 
 .#{$PREF}-card {
@@ -17,12 +18,11 @@ $PREF: 's-login';
   border: 1px $gray-5 solid;
   border-radius: $xxs;
   box-shadow: 0 2px 2px rgba($color: $gray-4, $alpha: 0.3);
-  min-width: $xxl * 5;
+  max-width: 400px;
   overflow: hidden;
-  padding: $md;
-  width: 400px;
 
-  @include M { width: $SMALLEST_SCREEN; }
+  @include RESP (padding, $md, $sm, $sm);
+  @include M { box-sizing: border-box; width: 90%; }
 }
 
 .#{$PREF}-header { @extend %flex-acsb; }
@@ -30,9 +30,10 @@ $PREF: 's-login';
 .#{$PREF}-header > div > h3 { @extend .meta; }
 .#{$PREF}-header > img {
   margin-bottom: $lg;
-  margin-left: $lg;
-  margin-top: -$xxl;
   opacity: 0.75;
+
+  @include RESP (margin-top, -$xxl, -$xl, -$xl);
+  @include RESP (margin-left, $lg, $md, $sm);
 }
 
 .#{$PREF}-google {

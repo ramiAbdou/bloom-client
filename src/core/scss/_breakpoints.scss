@@ -93,14 +93,8 @@ $screen-desktop: 1440;
     }
   }
 }
-@mixin resp($rule, $desktop-val, $tablet-val, $mobile-val) {
-  @include D {
-    #{$rule}: $desktop-val;
-  }
-  @include T {
-    #{$rule}: $tablet-val;
-  }
-  @include M {
-    #{$rule}: $mobile-val;
-  }
+@mixin RESP($rule, $desktop-val, $tablet-val, $mobile-val) {
+  @include D { #{$rule}: $desktop-val; }
+  @include T { #{$rule}: $tablet-val; }
+  @include M { #{$rule}: $mobile-val; }
 }
