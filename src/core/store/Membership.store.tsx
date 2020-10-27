@@ -4,7 +4,7 @@
  * @author Rami Abdou
  */
 
-import { Action, action, Thunk, thunk } from 'easy-peasy';
+import { Action, action, Computed, computed, Thunk, thunk } from 'easy-peasy';
 import Cookie from 'js-cookie';
 
 type MembershipRole = 'ADMIN' | 'OWNER';
@@ -25,6 +25,7 @@ export type Membership = {
 };
 
 export type MembershipModel = {
+  activeMembership: Computed<MembershipModel, Membership>;
   init: Thunk<MembershipModel, Membership[]>;
   memberships: Membership[];
   setActiveMembership: Action<MembershipModel, string>;
@@ -32,6 +33,10 @@ export type MembershipModel = {
 };
 
 export const membershipModel: MembershipModel = {
+  activeMembership: computed(({ memberships }) =>
+    memberships.find(({ isActive }: Membership) => isActive)
+  ),
+
   init: thunk((actions, memberships: Membership[]) => {
     // If the array is not populated, then don't set the memberships.
     if (!memberships?.length) return;
