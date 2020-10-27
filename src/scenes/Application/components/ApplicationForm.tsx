@@ -81,6 +81,7 @@ const SubmitButton = () => {
         className="s-signup-submit-btn"
         disabled={!isCompleted}
         isLoading={loading}
+        loadingText="Submitting..."
         title="Submit Application"
         onClick={applyForMembership}
       />

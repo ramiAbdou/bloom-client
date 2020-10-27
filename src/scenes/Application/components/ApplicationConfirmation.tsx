@@ -48,9 +48,9 @@ const Content = () => {
   return (
     <>
       <p>
-        Congratulations, you've been accepted into the
-        <span>{communityName}</span>
-        community! We just sent a temporary login link to:
+        Congratulations, you've been accepted into the{' '}
+        <span>{communityName}</span> community! We just sent a temporary login
+        link to:
       </p>
 
       <EmailContainer />
