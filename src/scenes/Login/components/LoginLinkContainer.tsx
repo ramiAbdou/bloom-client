@@ -4,6 +4,7 @@
  */
 
 import { useManualQuery } from 'graphql-hooks';
+import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import validator from 'validator';
 
@@ -50,9 +51,16 @@ const SubmitButton = () => {
     setSubmitForm(submitForm);
   }, [value]);
 
-  // getGraphQLError returns the error code (eg: USER_NOT_FOUND) and
-  // getLoginErrorMessage converts that to a more readable message.
-  const message = getLoginErrorMessage(getGraphQLError(error));
+  // In the case that the user tries to log in with an expired login link,
+  // we want to show the appropriate message.
+  const cookie = Cookies.get('LOGIN_LINK_ERROR');
+  if (cookie) Cookies.remove('LOGIN_LINK_ERROR');
+  const message =
+    cookie === 'TOKEN_EXPIRED'
+      ? 'Your temporary login link has already expired.'
+      : // getGraphQLError returns the error code (eg: USER_NOT_FOUND) and
+        // getLoginErrorMessage converts that to a more readable message.
+        getLoginErrorMessage(getGraphQLError(error));
 
   return (
     <>
