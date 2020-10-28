@@ -34,9 +34,9 @@ export default ({ component, ...rest }: RouteProps) => {
   // know that the user is loaded, so show that.
   const loginToken = new URLSearchParams(window.location.search).get('token');
   if (loginToken) return <TokenRoute token={loginToken} />;
-  if (loading || (isHome && !encodedUrlName)) return <Loader />;
+  if (loading) return <Loader />;
   if (error) return <Redirect to="/login" />;
-  if (isHome) return <Redirect to={`/${encodedUrlName}`} />;
+  if (isHome && encodedUrlName) return <Redirect to={`/${encodedUrlName}`} />;
 
   return <Route exact {...rest} component={component} />;
 };

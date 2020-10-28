@@ -5,6 +5,7 @@ $PREF: 'c-nav';
 .#{$PREF} {
   @extend %flex-acsb;
 
+  background-color: $white;
   border-bottom: 1px $gray-4 solid;
   border-left: 1px $gray-4 solid;
   border-radius: 0 0 $xxs $xxs;

@@ -2,34 +2,62 @@
 
 $PREF: 's-home';
 
+// ## HOME
+
+// Implements the margin that we're used to seeing. We limit the width to be
+// 1440px.
 .#{$PREF} {
   box-sizing: border-box;
   height: 100%;
 
-  @include RESP(margin-left, $xxl, $md, 0);
-  @include RESP(margin-right, $xxl, $md, 0);
+  @include RESP(margin-left, $xxl * 2, $xxl, 0);
+  @include RESP(margin-right, $xxl * 2, $xxl, 0);
   @include DD { margin: auto; max-width: 1440px; width: 100%; }
 }
 
-.#{$PREF}-main { @extend %flex-acsb; box-sizing: border-box; }
+// ## MAIN CONTENT (SIDEBAR AND CONTENT)
+
+.#{$PREF}-main { @extend %flex-sb; box-sizing: border-box; margin-top: $sm; }
 .#{$PREF}-main > * { height: 100%; }
 
-.#{$PREF}-sidebar {
+// ## SIDEBAR
+
+.#{$PREF}-sidebar > div {
   @extend %flex-col;
 
   align-items: flex-start;
-  border: 1px $gray-4 solid;
-  border-radius: $xxs;
+  background-color: $white;
+  border: 1px $gray-5 solid;
+  border-radius: $xs;
   box-sizing: border-box;
+  margin-bottom: $sm;
+  margin-right: $lg;
   padding: 12px;
   width: 250px;
 }
 
-.#{$PREF}-sidebar > a {
+.#{$PREF}-sidebar > div > a {
   @extend .btn-txt;
+  @extend %flex-ac;
   
   font-size: 14px;
-  margin-bottom: $sm;
+  font-weight: 600;
+  margin: $xs 0;
   text-align: left;
   width: 100%;
 }
+
+.#{$PREF}-sidebar > div > a > span { font-size: 18px; margin-right: $xxs; }
+
+.#{$PREF}-sidebar > p {
+  @extend .meta;
+
+  color: $gray-3;
+  font-size: 13px;
+  margin-bottom: $xxs;
+  margin-left: $xs;
+}
+
+// ## CONTENT
+
+.#{$PREF}-content { width: 100%; }

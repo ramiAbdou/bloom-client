@@ -24,6 +24,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     'import/newline-after-import': 2,
     'import/prefer-default-export': 0,
+    'jsx-a11y/accessible-emoji': 0,
     'jsx-a11y/alt-text': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,

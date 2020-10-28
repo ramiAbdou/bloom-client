@@ -20,8 +20,6 @@ export default ({ component, ...rest }: RouteProps) => {
     membership.isAdmin(encodedUrlName)
   );
 
-  console.log(isAdmin);
-
   if (!isAdmin) return <Redirect to={`/${encodedUrlName}`} />;
   return <Route exact {...rest} component={component} />;
 };

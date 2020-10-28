@@ -5,7 +5,7 @@
 
 import { useQuery } from 'graphql-hooks';
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import Loader from '@components/Loader/Loader';
 import LoginPage from '@scenes/Login/Login';
@@ -13,9 +13,8 @@ import { IS_LOGGED_IN } from '@store/User.gql';
 
 // We need to pass in the path instead of just setting it to /login here, so
 // that the Switch component in the router properly switches.
-type LoginRouteProps = { path: string };
 
-export default ({ path }: LoginRouteProps) => {
+export default ({ path }: Partial<RouteProps>) => {
   // Check to see if the user is logged in (if they have tokens stored in the
   // httpOnly cookies), and if so, redirect them to the home page.
   const { error, loading, data } = useQuery(IS_LOGGED_IN);

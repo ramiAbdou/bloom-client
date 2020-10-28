@@ -18,7 +18,7 @@ import Navbar from '@components/Navbar/Navbar';
 import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
 import { useStoreState } from '@store/Store';
-import PendingApplications from './components/PendingApplications/PendingApplications';
+import PendingApplications from './components/Applications/Applications';
 import Sidebar from './components/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
@@ -45,46 +45,29 @@ const HomeContent = () => {
 
   return (
     <Switch>
-      <Route component={PendingApplications} path={`${url}/directory`} />
-      <Route component={PendingApplications} path={`${url}/events`} />
-      <Route component={PendingApplications} path={`${url}/membership`} />
-      <AdminRoute
-        component={PendingApplications}
-        path={`${url}/applications`}
-      />
-      <Redirect to={`${url}/directory`} />
+      <div className="s-home-content">
+        <Route component={PendingApplications} path={`${url}/directory`} />
+        <Route component={PendingApplications} path={`${url}/events`} />
+        <Route component={PendingApplications} path={`${url}/membership`} />
+        <AdminRoute
+          component={PendingApplications}
+          path={`${url}/applications`}
+        />
+        <Redirect to={`${url}/directory`} />
+      </div>
     </Switch>
   );
 };
 
-export default () => {
-  const [height, setHeight] = useState('fit-content');
+export default () => (
+  <AuthenticatedCommunityWrapper>
+    <div className="s-home">
+      <Navbar />
 
-  const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
-  const PADDING = 12;
-  const MARGIN = 24;
-
-  useEffect(() => {
-    if (!ref?.current) return;
-    setHeight(`calc(100% - ${ref?.current.offsetTop + PADDING + MARGIN}px)`);
-  }, [ref?.current?.offsetTop]);
-
-  if (!ref) return null;
-
-  return (
-    <AuthenticatedCommunityWrapper>
-      <div className="s-home">
-        <Navbar />
-
-        <div
-          ref={ref}
-          className="s-home-main"
-          style={{ height, marginTop: MARGIN }}
-        >
-          <Sidebar />
-          <HomeContent />
-        </div>
+      <div className="s-home-main">
+        <Sidebar />
+        <HomeContent />
       </div>
-    </AuthenticatedCommunityWrapper>
-  );
-};
+    </div>
+  </AuthenticatedCommunityWrapper>
+);
