@@ -24,6 +24,7 @@ $PREF: 's-home';
 
 .#{$PREF}-sidebar {
   margin-right: $md;
+  min-width: $xxl * 3;
 
   @include T { margin-left: $xs; }
 }
@@ -38,7 +39,7 @@ $PREF: 's-home';
   box-sizing: border-box;
   margin-bottom: $sm;
   padding: $xs;
-  width: $xxl * 3;
+  width: 100%;
 }
 
 .#{$PREF}-sidebar > div > a {

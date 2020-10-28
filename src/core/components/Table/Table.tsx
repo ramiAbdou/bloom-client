@@ -42,15 +42,13 @@ const BodyCell = (cell: Cell) => {
   );
 };
 
-const Row = (row: RowProps) => {
-  return (
-    <tr {...row.getRowProps()}>
-      {row.cells.map((cell) => (
-        <BodyCell {...cell} />
-      ))}
-    </tr>
-  );
-};
+const Row = (row: RowProps) => (
+  <tr {...row.getRowProps()}>
+    {row.cells.map((cell) => (
+      <BodyCell key={cell.column.id} {...cell} />
+    ))}
+  </tr>
+);
 
 export default ({ className, ...options }: TableProps) => {
   const table = useTable(options);
@@ -75,7 +73,7 @@ export default ({ className, ...options }: TableProps) => {
         <tbody {...table.getTableBodyProps()}>
           {table.rows.map((row) => {
             table.prepareRow(row);
-            return <Row {...row} />;
+            return <Row key={row.id} {...row} />;
           })}
         </tbody>
       </table>
