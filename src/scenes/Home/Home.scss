@@ -10,8 +10,8 @@ $PREF: 's-home';
   box-sizing: border-box;
   height: 100%;
 
-  @include RESP(margin-left, $xxl * 2, $xxl, 0);
-  @include RESP(margin-right, $xxl * 2, $xxl, 0);
+  @include RESP(margin-left, $xxl * 3, $xxl, 0);
+  @include RESP(margin-right, $xxl * 3, $xxl, 0);
   @include DD { margin: auto; max-width: 1440px; width: 100%; }
 }
 
@@ -22,6 +22,8 @@ $PREF: 's-home';
 
 // ## SIDEBAR
 
+.#{$PREF}-sidebar { margin-right: $md; }
+
 .#{$PREF}-sidebar > div {
   @extend %flex-col;
 
@@ -31,8 +33,7 @@ $PREF: 's-home';
   border-radius: $xs;
   box-sizing: border-box;
   margin-bottom: $sm;
-  margin-right: $lg;
-  padding: 12px;
+  padding: $xs;
   width: 250px;
 }
 

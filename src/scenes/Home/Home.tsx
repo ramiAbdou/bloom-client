@@ -5,7 +5,7 @@
 
 import './Home.scss';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import {
   Redirect,
   Route,
@@ -18,7 +18,14 @@ import Navbar from '@components/Navbar/Navbar';
 import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
 import { useStoreState } from '@store/Store';
-import PendingApplications from './components/Applications/Applications';
+import Admins from './components/Admins/Admins';
+import Analytics from './components/Analytics/Analytics';
+import Directory from './components/Directory/Directory';
+import Events from './components/Events/Events';
+import Integrations from './components/Integrations/Integrations';
+import MemberDatabase from './components/MemberDatabase/MemberDatabase';
+import Membership from './components/Membership/Membership';
+import PendingApplications from './components/PendingApplications/PendingApplications';
 import Sidebar from './components/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
@@ -44,18 +51,22 @@ const HomeContent = () => {
   const { url } = useRouteMatch();
 
   return (
-    <Switch>
-      <div className="s-home-content">
-        <Route component={PendingApplications} path={`${url}/directory`} />
-        <Route component={PendingApplications} path={`${url}/events`} />
-        <Route component={PendingApplications} path={`${url}/membership`} />
+    <div className="s-home-content">
+      <Switch>
+        <Route component={Directory} path={`${url}/directory`} />
+        <Route component={Events} path={`${url}/events`} />
+        <Route component={Membership} path={`${url}/membership`} />
+        <AdminRoute component={MemberDatabase} path={`${url}/database`} />
+        <AdminRoute component={Analytics} path={`${url}/analytics`} />
+        <AdminRoute component={Integrations} path={`${url}/integrations`} />
+        <AdminRoute component={Admins} path={`${url}/admins`} />
         <AdminRoute
           component={PendingApplications}
           path={`${url}/applications`}
         />
         <Redirect to={`${url}/directory`} />
-      </div>
-    </Switch>
+      </Switch>
+    </div>
   );
 };
 

@@ -8,42 +8,42 @@ import { Link } from 'react-router-dom';
 
 import Separator from '@components/Misc/Separator';
 
+type LinkOptions = { emoji: string; to: string; title: string };
+
+const memberLinks: LinkOptions[] = [
+  { emoji: '👥', title: 'Directory', to: 'directory' },
+  { emoji: '📅', title: 'Events', to: 'events' },
+  { emoji: '💳', title: 'Your Membership', to: 'membership' }
+];
+
 const MemberOptions = () => (
   <div>
-    <Link to="directory">
-      <span>👥</span> Directory
-    </Link>
-
-    <Link to="events">
-      <span>📅</span> Events
-    </Link>
-
-    <Link to="membership">
-      <span>💳</span> Your Membership
-    </Link>
+    {memberLinks.map(({ emoji, title, to }) => (
+      <Link to={to}>
+        <span>{emoji}</span> {title}
+      </Link>
+    ))}
   </div>
 );
+
+const adminLinks: LinkOptions[] = [
+  { emoji: '🖥', title: 'Member Database', to: 'database' },
+  { emoji: '📝', title: 'Pending Applications', to: 'applications' },
+  { emoji: '📊', title: 'Analytics', to: 'analytics' },
+  { emoji: '🤝', title: 'Integrations', to: 'integrations' },
+  { emoji: '🤩', title: 'Admins', to: 'admins' }
+];
 
 const AdminOptions = () => (
   <>
     <p>ADMIN</p>
 
     <div>
-      <Link to="database">
-        <span>🖥</span> Member Database
-      </Link>
-
-      <Link to="analytics">
-        <span>📊</span> Analytics
-      </Link>
-
-      <Link to="integrations">
-        <span>🤝</span> Integrations
-      </Link>
-
-      <Link to="applications">
-        <span>📝</span> Pending Applications
-      </Link>
+      {adminLinks.map(({ emoji, title, to }) => (
+        <Link to={to}>
+          <span>{emoji}</span> {title}
+        </Link>
+      ))}
 
       <Separator style={{ marginBottom: 12, marginTop: 12 }} />
       <Link to="create-event">+ Create Event</Link>
