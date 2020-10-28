@@ -1,3 +1,10 @@
 // Home for common miscelleneous styles throughout the application.
 
 .fill { box-sizing: border-box; height: 100%; width: 100%; }
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar { display: none; }
+}

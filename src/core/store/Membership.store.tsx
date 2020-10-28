@@ -7,13 +7,34 @@
 import { Action, action, Computed, computed, Thunk, thunk } from 'easy-peasy';
 import Cookie from 'js-cookie';
 
+import { FormQuestion, QuestionType } from '@constants';
+
 type MembershipRole = 'ADMIN' | 'OWNER';
 
+class ApplicationQuestion implements Partial<FormQuestion> {
+  id: string;
+
+  order: number;
+
+  title: QuestionType;
+
+  type: QuestionType;
+}
+
+export type PendingApplication = { questionId: string; value?: string }[];
+
+type SetPendingApplicationArgs = {
+  questions: ApplicationQuestion[];
+  applications: PendingApplication[];
+};
+
 type Community = {
+  applicationQuestions: ApplicationQuestion[];
   encodedUrlName: string;
   logoUrl: string;
   id: string;
   name: string;
+  pendingApplications: PendingApplication[];
   primaryColor: string;
 };
 
@@ -34,6 +55,7 @@ export type MembershipModel = {
   memberships: Membership[];
   setActiveMembership: Action<MembershipModel, string>;
   setMemberships: Action<MembershipModel, Membership[]>;
+  setPendingApplications: Action<MembershipModel, SetPendingApplicationArgs>;
 };
 
 export const membershipModel: MembershipModel = {
@@ -95,6 +117,7 @@ export const membershipModel: MembershipModel = {
   ),
 
   memberships: [],
+
   setActiveMembership: action((state, membershipId: string) =>
     // Update the memberships array by setting the isActive: true for the
     // membership with the given membershipId.
@@ -106,11 +129,39 @@ export const membershipModel: MembershipModel = {
       }))
     })
   ),
+
   setMemberships: action((state, memberships: Membership[]) => ({
     ...state,
     memberships: memberships.map((membership: Membership, i: number) => ({
       ...membership,
       isActive: i === 0
     }))
-  }))
+  })),
+
+  setPendingApplications: action(
+    (
+      { activeMembership, memberships, ...state },
+      { applications, questions }: SetPendingApplicationArgs
+    ) => {
+      const activeMembershipId = activeMembership?.id;
+
+      return {
+        ...state,
+        activeMembership,
+        memberships: memberships.map((membership: Membership) => {
+          if (membership.id !== activeMembershipId) return membership;
+
+          const { community } = membership;
+          return {
+            ...membership,
+            community: {
+              ...community,
+              applicationQuestions: questions,
+              pendingApplications: applications
+            }
+          };
+        })
+      };
+    }
+  )
 };

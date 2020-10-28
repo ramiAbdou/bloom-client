@@ -10,9 +10,9 @@ $PREF: 's-home';
   box-sizing: border-box;
   height: 100%;
 
-  @include RESP(margin-left, $xxl * 3, $xxl, 0);
-  @include RESP(margin-right, $xxl * 3, $xxl, 0);
-  @include DD { margin: auto; max-width: 1440px; width: 100%; }
+  @include RESP(margin-left, $xxl * 3, 0, 0);
+  @include RESP(margin-right, $xxl * 3, 0, 0);
+  @include DD { margin: auto; max-width: 1440px - ($xxl * 6); width: 100%; }
 }
 
 // ## MAIN CONTENT (SIDEBAR AND CONTENT)
@@ -22,7 +22,11 @@ $PREF: 's-home';
 
 // ## SIDEBAR
 
-.#{$PREF}-sidebar { margin-right: $md; }
+.#{$PREF}-sidebar {
+  margin-right: $md;
+
+  @include T { margin-left: $xs; }
+}
 
 .#{$PREF}-sidebar > div {
   @extend %flex-col;
@@ -34,7 +38,7 @@ $PREF: 's-home';
   box-sizing: border-box;
   margin-bottom: $sm;
   padding: $xs;
-  width: 250px;
+  width: $xxl * 3;
 }
 
 .#{$PREF}-sidebar > div > a {
@@ -61,4 +65,4 @@ $PREF: 's-home';
 
 // ## CONTENT
 
-.#{$PREF}-content { width: 100%; }
+.#{$PREF}-content { overflow: hidden; width: 100%; }

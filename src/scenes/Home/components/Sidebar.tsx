@@ -19,7 +19,7 @@ const memberLinks: LinkOptions[] = [
 const MemberOptions = () => (
   <div>
     {memberLinks.map(({ emoji, title, to }) => (
-      <Link to={to}>
+      <Link key={to} to={to}>
         <span>{emoji}</span> {title}
       </Link>
     ))}
@@ -40,7 +40,7 @@ const AdminOptions = () => (
 
     <div>
       {adminLinks.map(({ emoji, title, to }) => (
-        <Link to={to}>
+        <Link key={to} to={to}>
           <span>{emoji}</span> {title}
         </Link>
       ))}

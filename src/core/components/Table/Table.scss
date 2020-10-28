@@ -1,0 +1,68 @@
+@import 'src/index.scss';
+
+$PREF: 'c-table';
+
+.#{$PREF}-ctr {
+  @extend .no-scrollbar;
+  
+  background-color: $white;
+  border: 1px $gray-5 solid;
+  border-radius: 4px;
+  overflow: scroll;
+}
+
+.#{$PREF} {
+  border-collapse: collapse;
+  border-spacing: $xs $xxs;
+  width: max-content;
+
+  th,
+  td {
+    @extend .body--3;
+
+    height: 100%;
+    margin: 0;
+    padding-right: $md;
+    width: fit-content;
+  }
+
+  // ## TABLE ROW
+
+  tbody > tr {
+    border-bottom: 1px $gray-5 solid;
+    cursor: pointer;
+
+    &:last-of-type { border-bottom: none; }
+
+    @include HOVER { background-color: $gray-6; }
+  }
+
+  th {
+    @extend .meta;
+
+    color: $gray-3;
+    text-align: left;
+    vertical-align: middle;
+  }
+  
+  thead > tr { border-bottom: 1px $gray-4 solid; }
+
+  td { max-width: $xxl * 3; vertical-align: top; }
+
+  thead > tr > th,
+  tbody > tr > td { padding: $xs; }
+}
+
+.#{$PREF}-td--multiple-select { @extend %flex-w; }
+
+.#{$PREF}-td--multiple-choice > span, .#{$PREF}-td--multiple-select > span {
+  @extend .body--3;
+
+  background-color: rgba($color: $orange-1, $alpha: 0.25);
+  border-radius: $sm;
+  color: $black;
+  margin: 0 2px $xxs 0;
+  padding-left: 6px;
+  padding-right: 6px;
+  width: fit-content;
+}

@@ -23,4 +23,5 @@ $xxl: 72px;
   &-c { @extend %flex; justify-content: center; }
   &-col { @extend %flex; flex-direction: column; }
   &-sb { @extend %flex; justify-content: space-between; }
+  &-w { @extend %flex; flex-wrap: wrap; }
 }

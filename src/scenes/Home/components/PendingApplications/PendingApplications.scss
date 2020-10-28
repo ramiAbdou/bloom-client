@@ -1,0 +1,13 @@
+@import 'src/index.scss';
+
+$PREF: 's-home-applications';
+
+.#{$PREF} { overflow: hidden; }
+.#{$PREF} > div { margin-top: $md; }
+
+.#{$PREF}-questions > p {
+  @extend .meta;
+
+  margin-right: $sm;
+  width: fit-content;
+}
