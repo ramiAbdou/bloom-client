@@ -18,9 +18,7 @@ interface DataCellProps extends ValueProps {
 }
 
 const DataCell = ({ type, value }: DataCellProps) => {
-  const primaryColor = useStoreState(
-    ({ membership }) => membership.activeMembership?.community?.primaryColor
-  );
+  const primaryColor = useStoreState((store) => store.primaryColor);
 
   const { css } = new CSSModifier()
     .addClass(type === 'MULTIPLE_CHOICE', 'c-table-td--multiple-choice')

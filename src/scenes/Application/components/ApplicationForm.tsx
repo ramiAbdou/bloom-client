@@ -14,6 +14,7 @@ import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
 import { usePrevious } from '@hooks/usePrevious';
+import { useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
 import Application from '../Application.store';
@@ -91,12 +92,9 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
+  const primaryColor = useStoreState((store) => store.primaryColor);
   const application = Application.useStoreState(
     ({ community }) => community?.application
-  );
-
-  const primaryColor = Application.useStoreState(
-    ({ community }) => community?.primaryColor
   );
 
   const initCommunity = Application.useStoreActions(
