@@ -49,6 +49,7 @@ const SubmitButton = () => {
     ({ community }) => community?.encodedUrlName
   );
 
+  const primaryColor = Form.useStoreState((store) => store.primaryColor);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const submittableData = Form.useStoreState((store) => store.data);
   const email = Form.useStoreState(
@@ -79,6 +80,7 @@ const SubmitButton = () => {
       {!!message && <ErrorMessage marginBottom={-24} message={message} />}
 
       <PrimaryButton
+        backgroundColor={primaryColor}
         className="s-signup-submit-btn"
         disabled={!isCompleted}
         isLoading={loading}
