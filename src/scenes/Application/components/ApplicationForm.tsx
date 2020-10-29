@@ -10,7 +10,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import { PrimaryButton } from '@components/Button';
 import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
-import Loader from '@components/Loader/Loader';
+import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
 import { usePrevious } from '@hooks/usePrevious';
@@ -112,7 +112,7 @@ export default () => {
   }, [data]);
 
   if (error) return <Redirect to="/login" />;
-  if (loading) return <Loader />;
+  if (loading) return <FullScreenLoader />;
   if (!application) return null;
 
   return (

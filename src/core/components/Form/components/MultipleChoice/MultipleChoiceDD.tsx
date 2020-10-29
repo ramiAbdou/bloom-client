@@ -33,7 +33,7 @@ const SearchBar = () => {
 
 const Option = ({ selectOption, option }: OptionProps) => {
   const primaryColor = Form.useStoreState((store) => store.primaryColor);
-  const style = { backgroundColor: `${primaryColor}4D` };
+  const style = { backgroundColor: `${primaryColor}33` };
 
   return (
     <button className="c-form-dd-opt" onClick={selectOption}>
@@ -92,7 +92,7 @@ const Value = ({ value }: ValueProps) => {
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const clearValue = () => updateItem({ title, value: null });
 
-  const style = { backgroundColor: `${primaryColor}4D` };
+  const style = { backgroundColor: `${primaryColor}33` };
 
   return (
     <button className="c-form-dd-value" style={style} onClick={clearValue}>

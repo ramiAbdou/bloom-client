@@ -20,6 +20,10 @@ $PREF: 's-home';
 .#{$PREF}-main { @extend %flex-sb; box-sizing: border-box; margin-top: $sm; }
 .#{$PREF}-main > * { height: 100%; }
 
+// Makes the header consistent across each page. Mainly for loading purposes.
+.#{$PREF}-header { @extend %flex-ac; margin-bottom: $sm; }
+.#{$PREF}-header > h3 { margin-right: $sm; }
+
 // ## SIDEBAR
 
 .#{$PREF}-sidebar {

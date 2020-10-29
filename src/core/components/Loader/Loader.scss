@@ -23,3 +23,13 @@ $PREF: 'c-loader';
 
 .#{$PREF} > div { @extend %flex-col; margin-left: -8px; margin-right: -8px; }
 .#{$PREF} > div > img { margin-top: 4px; }
+
+.#{$PREF}-spinner {
+  border: 2px $gray-6 solid;
+  border-radius: 50%;
+  border-top: 2px $gray-3 solid !important;
+  height: 18px;
+  width: 18px;
+
+  &--dark { border: 2px $gray-5 solid; }
+}

@@ -8,12 +8,17 @@ import './PendingApplications.scss';
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
+import Spinner from '@components/Loader/Spinner';
 import Table from '@components/Table/Table';
 import { PendingApplication } from '@store/Membership.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
 
-const Questions = () => {
+const NoPendingApplicationsMessage = () => (
+  <p>There are no pending applications. 👍</p>
+);
+
+const ApplicationTable = () => {
   const applicationQuestions = useStoreState(
     ({ membership }) =>
       membership.activeMembership?.community?.applicationQuestions
@@ -38,7 +43,7 @@ const Questions = () => {
             },
             []
           ),
-    []
+    [pendingApplications?.length]
   );
 
   const columns = useMemo(
@@ -50,17 +55,18 @@ const Questions = () => {
             accessor: id,
             type
           })),
-    []
+    [applicationQuestions?.length]
   );
 
-  return <Table className="" columns={columns} data={data} />;
+  if (!pendingApplications?.length) return <NoPendingApplicationsMessage />;
+  return <Table columns={columns} data={data} />;
 };
 
 export default () => {
   const setPendingApplications = useStoreActions(
     ({ membership }) => membership.setPendingApplications
   );
-  const { data } = useQuery(GET_PENDING_APPLICATIONS);
+  const { data, loading } = useQuery(GET_PENDING_APPLICATIONS);
 
   useEffect(() => {
     if (data)
@@ -70,12 +76,16 @@ export default () => {
         ),
         questions: data?.getCommunity?.application?.questions
       });
-  }, [data?.getCommunity?.application?.questions.length]);
+  }, [data]);
 
   return (
     <div className="s-home-applications">
-      <h3>Pending Applications</h3>
-      <Questions />
+      <div className="s-home-header">
+        <h3>Pending Applications</h3>
+        {loading && <Spinner dark />}
+      </div>
+
+      {!loading && data && <ApplicationTable />}
     </div>
   );
 };

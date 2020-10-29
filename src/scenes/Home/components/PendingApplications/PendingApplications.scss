@@ -3,7 +3,7 @@
 $PREF: 's-home-applications';
 
 .#{$PREF} { overflow: hidden; }
-.#{$PREF} > div { margin-top: $md; }
+.#{$PREF} > p { @extend .body--2; }
 
 .#{$PREF}-questions > p {
   @extend .meta;

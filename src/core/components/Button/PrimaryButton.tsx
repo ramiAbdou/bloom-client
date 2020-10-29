@@ -8,12 +8,12 @@ import React, { useEffect, useState } from 'react';
 
 import Form from '@components/Form/Form.store';
 import CSSModifier from '@util/CSSModifier';
+import Spinner from '../Loader/Spinner';
 import {
   ButtonDisabledProps,
   ButtonLoadingProps,
   ButtonProps
 } from './Button.types';
-import Spinner from './Spinner';
 
 const LoadingState = ({ text }: ButtonLoadingProps) => (
   <motion.div className="c-btn-loading">

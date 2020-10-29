@@ -6,52 +6,20 @@
 import './Table.scss';
 
 import React from 'react';
-import { Cell, Row as RowProps, TableOptions, useTable } from 'react-table';
+import { Hooks, TableOptions, useRowSelect, useTable } from 'react-table';
 
 import { ClassNameProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
+import DataRow from './components/DataRow';
+import HeaderRow from './components/HeaderRow';
+import { addSelectOption } from './Table.util';
 
 interface TableProps extends TableOptions<{}>, ClassNameProps {}
 
-const BodyCell = (cell: Cell) => {
-  const { column, value } = cell;
-
-  // @ts-ignore b/c precondition is that a type exists!
-  const { type } = column;
-
-  const { css } = new CSSModifier()
-    .addClass(type === 'MULTIPLE_CHOICE', 'c-table-td--multiple-choice')
-    .addClass(type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select');
-
-  let content;
-  if (type === 'MULTIPLE_CHOICE') content = <span>{cell.render('Cell')}</span>;
-  else if (type === 'MULTIPLE_SELECT')
-    content = (
-      <>
-        {value?.split(',').map((val) => (
-          <span>{val}</span>
-        ))}
-      </>
-    );
-  else content = cell.render('Cell');
-
-  return (
-    <td className={css} {...cell.getCellProps()}>
-      {content}
-    </td>
-  );
-};
-
-const Row = (row: RowProps) => (
-  <tr {...row.getRowProps()}>
-    {row.cells.map((cell) => (
-      <BodyCell key={cell.column.id} {...cell} />
-    ))}
-  </tr>
-);
-
 export default ({ className, ...options }: TableProps) => {
-  const table = useTable(options);
+  const table = useTable(options, useRowSelect, (hooks: Hooks) =>
+    hooks.visibleColumns.push(addSelectOption)
+  );
 
   const { css } = new CSSModifier()
     .class('c-table')
@@ -59,21 +27,17 @@ export default ({ className, ...options }: TableProps) => {
 
   return (
     <div className="c-table-ctr">
-      <table className={css} {...table.getTableProps()}>
+      <table className={css}>
         <thead>
-          {table.headerGroups.map((group) => (
-            <tr {...group.getHeaderGroupProps()}>
-              {group.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
-            </tr>
+          {table.headerGroups.map((headerGroup) => (
+            <HeaderRow key={headerGroup.id} {...headerGroup} />
           ))}
         </thead>
 
-        <tbody {...table.getTableBodyProps()}>
+        <tbody>
           {table.rows.map((row) => {
             table.prepareRow(row);
-            return <Row key={row.id} {...row} />;
+            return <DataRow key={row.id} {...row} />;
           })}
         </tbody>
       </table>

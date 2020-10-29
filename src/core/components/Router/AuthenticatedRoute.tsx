@@ -7,7 +7,7 @@ import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import Loader from '@components/Loader/Loader';
+import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_USER } from '@store/User.gql';
 import TokenRoute from './TokenRoute';
@@ -34,7 +34,7 @@ export default ({ component, ...rest }: RouteProps) => {
   // know that the user is loaded, so show that.
   const loginToken = new URLSearchParams(window.location.search).get('token');
   if (loginToken) return <TokenRoute token={loginToken} />;
-  if (loading) return <Loader />;
+  if (loading) return <FullScreenLoader />;
   if (error) return <Redirect to="/login" />;
   if (isHome && encodedUrlName) return <Redirect to={`/${encodedUrlName}`} />;
 

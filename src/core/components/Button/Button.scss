@@ -24,14 +24,6 @@ $PREF: 'c-btn';
   margin-right: $xs;
 }
 
-.#{$PREF}-spinner {
-  border: 2px $gray-6 solid;
-  border-radius: 50%;
-  border-top: 2px $gray-3 solid;
-  height: 18px;
-  width: 18px;
-}
-
 // PRIMARY BUTTON
 
 .#{$PREF}-primary {

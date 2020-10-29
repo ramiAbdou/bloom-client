@@ -24,7 +24,7 @@ const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
 
   const outerStyle = isSelected ? { border: `2px ${primaryColor} solid` } : {};
   const innerStyle = isSelected ? { backgroundColor: primaryColor } : {};
-  const textStyle = { backgroundColor: `${primaryColor}4D` };
+  const textStyle = { backgroundColor: `${primaryColor}33` };
 
   return (
     <button className={css} onClick={onClick}>

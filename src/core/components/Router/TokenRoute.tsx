@@ -7,7 +7,7 @@ import { useQuery } from 'graphql-hooks';
 import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import Loader from '@components/Loader/Loader';
+import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import { VERIFY_LOGIN_TOKEN } from '@scenes/Home/Home.gql';
 
 type TokenRouteProps = { token: string };
@@ -25,6 +25,6 @@ export default ({ token }: TokenRouteProps) => {
     return null;
   }
 
-  if (loading) return <Loader />;
+  if (loading) return <FullScreenLoader />;
   return <Redirect to="/login" />;
 };
