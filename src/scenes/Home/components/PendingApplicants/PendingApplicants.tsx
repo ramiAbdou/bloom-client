@@ -78,7 +78,9 @@ export default () => {
   const setPendingApplications = useStoreActions(
     ({ membership }) => membership.setPendingApplications
   );
-  const { data, loading } = useQuery(GET_PENDING_APPLICATIONS);
+  const { data, loading } = useQuery(GET_PENDING_APPLICATIONS, {
+    useCache: true
+  });
 
   useEffect(() => {
     if (data)

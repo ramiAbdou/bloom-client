@@ -15,6 +15,7 @@ import { Row } from '@components/Table/Table.types';
 import { SerializedMembershipData } from '@store/Membership.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_MEMBER_DATABASE } from '../../Home.gql';
+import TableActions from './TableActions';
 
 const Database = () => {
   const databaseQuestions = useStoreState(
@@ -64,17 +65,22 @@ const Database = () => {
 
   return (
     <Table.Provider initialData={{ columns, data }}>
+      <TableActions />
       <TableContent />
     </Table.Provider>
   );
 };
 
 export default () => {
+  const numMembers = useStoreState(
+    ({ membership }) => membership.activeMembership?.community?.members?.length
+  );
   const setMemberDatabase = useStoreActions(
     ({ membership }) => membership.setMemberDatabase
   );
 
-  const { data, loading } = useQuery(GET_MEMBER_DATABASE);
+  const result = useQuery(GET_MEMBER_DATABASE, { useCache: true });
+  const { data } = result;
 
   useEffect(() => {
     if (data)
@@ -83,6 +89,8 @@ export default () => {
         questions: data?.getCommunity?.application?.questions
       });
   }, [data]);
+
+  const loading = result.loading && !data && !numMembers;
 
   return (
     <div className="s-home-database">
