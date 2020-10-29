@@ -6,33 +6,26 @@
 import './Table.scss';
 
 import React from 'react';
-import {
-  Hooks,
-  TableOptions,
-  useRowSelect,
-  useTable,
-  UseTableInstanceProps
-} from 'react-table';
+import { Hooks, useRowSelect, useTable } from 'react-table';
 
-import { ClassNameProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import DataRow from './components/DataRow';
 import HeaderRow from './components/HeaderRow';
+import { TableProps } from './Table.types';
 import { addSelectOption } from './Table.util';
 
-interface TableProps extends TableOptions<{}>, ClassNameProps {}
-
-export default ({ className, ...options }: TableProps) => {
+export default function Table<T extends object>({
+  className,
+  columns,
+  ...props
+}: TableProps) {
+  // List of customizable plugins that we want to use in our table.
   const hooks = [useRowSelect];
 
-  const {
-    headerGroups,
-    prepareRow,
-    rows
-  }: UseTableInstanceProps<{}> = useTable(
-    options,
-    ...hooks,
-    ({ visibleColumns }: Hooks) => visibleColumns.push(addSelectOption)
+  const { headerGroups, prepareRow, rows } = useTable<T>(
+    { ...props, columns },
+    ...hooks
+    // ({ visibleColumns }: Hooks) => visibleColumns.push(addSelectOption)
   );
 
   const { css } = new CSSModifier()
@@ -57,4 +50,4 @@ export default ({ className, ...options }: TableProps) => {
       </table>
     </div>
   );
-};
+}

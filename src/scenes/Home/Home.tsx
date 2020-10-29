@@ -18,7 +18,6 @@ import Navbar from '@components/Navbar/Navbar';
 import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
 import { useStoreState } from '@store/Store';
-import Admins from './components/Admins/Admins';
 import Analytics from './components/Analytics/Analytics';
 import Directory from './components/Directory/Directory';
 import Events from './components/Events/Events';
@@ -59,7 +58,6 @@ const HomeContent = () => {
         <AdminRoute component={MemberDatabase} path={`${url}/database`} />
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />
-        <AdminRoute component={Admins} path={`${url}/admins`} />
         <AdminRoute component={PendingApplicants} path={`${url}/applicants`} />
         <Redirect to={`${url}/directory`} />
       </Switch>

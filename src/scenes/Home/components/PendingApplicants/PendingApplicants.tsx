@@ -8,8 +8,8 @@ import './PendingApplicants.scss';
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
+import Table from '@components/ArchivedTable/Table';
 import Spinner from '@components/Loader/Spinner';
-import Table from '@components/Table/Table';
 import { PendingApplication } from '@store/Membership.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
