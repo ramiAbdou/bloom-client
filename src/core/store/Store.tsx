@@ -17,6 +17,7 @@ import { ToastModel, toastModel } from './Toast.store';
 import { UserModel, userModel } from './User.store';
 
 type StoreModel = {
+  encodedUrlName: Computed<StoreModel, string>;
   primaryColor: Computed<StoreModel, string>;
   loader: LoaderModel;
   membership: MembershipModel;
@@ -26,6 +27,10 @@ type StoreModel = {
 
 export const store = createStore<StoreModel>(
   {
+    encodedUrlName: computed(
+      ({ membership }) =>
+        membership?.activeMembership?.community?.encodedUrlName
+    ),
     loader: loaderModel,
     membership: persist(membershipModel),
     primaryColor: computed(

@@ -29,12 +29,9 @@ import Sidebar from './components/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
+  const activeEncodedUrlName = useStoreState((store) => store.encodedUrlName);
   const isMemberOfCommunity: boolean = useStoreState(({ membership }) =>
     membership.isMember(encodedUrlName)
-  );
-
-  const activeEncodedUrlName = useStoreState(
-    ({ membership }) => membership.activeEncodedUrlName
   );
 
   // If the user isn't a member of the community who's URL we are currently

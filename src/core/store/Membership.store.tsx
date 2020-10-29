@@ -51,7 +51,6 @@ export type Membership = {
 };
 
 export type MembershipModel = {
-  activeEncodedUrlName: Computed<MembershipModel, string>;
   activeMembership: Computed<MembershipModel, Membership>;
   init: Thunk<MembershipModel, Membership[]>;
   isAdmin: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
@@ -64,10 +63,6 @@ export type MembershipModel = {
 };
 
 export const membershipModel: MembershipModel = {
-  activeEncodedUrlName: computed(
-    ({ activeMembership }) => activeMembership?.community?.encodedUrlName
-  ),
-
   activeMembership: computed(({ memberships }) =>
     memberships.find(({ isActive }: Membership) => isActive)
   ),

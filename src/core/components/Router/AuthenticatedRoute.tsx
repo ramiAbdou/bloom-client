@@ -20,9 +20,7 @@ import TokenRoute from './TokenRoute';
 export default ({ component, ...rest }: RouteProps) => {
   const { loading, data, error } = useQuery(GET_USER);
   const initUser = useStoreActions(({ user }) => user.init);
-  const encodedUrlName = useStoreState(
-    ({ membership }) => membership?.activeMembership?.community?.encodedUrlName
-  );
+  const encodedUrlName = useStoreState((store) => store.encodedUrlName);
 
   useEffect(() => {
     if (data?.getUser) initUser(data.getUser);
