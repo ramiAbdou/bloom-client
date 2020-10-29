@@ -8,8 +8,9 @@ import './PendingApplicants.scss';
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
-import Table from '@components/ArchivedTable/Table';
 import Spinner from '@components/Loader/Spinner';
+import Table from '@components/Table/Table';
+import { Row } from '@components/Table/Table.types';
 import { PendingApplication } from '@store/Membership.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
@@ -34,11 +35,15 @@ const ApplicationTable = () => {
       !pendingApplications
         ? []
         : pendingApplications.reduce(
-            (acc: Record<string, any>[], application: PendingApplication) => {
-              const result = {};
-              application.forEach(({ questionId, value }) => {
+            (
+              acc: Row[],
+              { membershipId, data: applicationData }: PendingApplication
+            ) => {
+              const result = { id: membershipId };
+              applicationData.forEach(({ questionId, value }) => {
                 result[questionId] = value;
               });
+
               return [...acc, result];
             },
             []
@@ -51,8 +56,8 @@ const ApplicationTable = () => {
       !applicationQuestions
         ? []
         : applicationQuestions.map(({ type, id, title }) => ({
-            Header: title,
-            accessor: id,
+            id,
+            title,
             type
           })),
     [applicationQuestions?.length]
@@ -72,7 +77,7 @@ export default () => {
     if (data)
       setPendingApplications({
         applications: data?.getCommunity?.pendingMemberships.map(
-          ({ applicationData }) => applicationData
+          ({ application }) => application
         ),
         questions: data?.getCommunity?.application?.questions
       });

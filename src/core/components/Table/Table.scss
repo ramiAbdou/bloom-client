@@ -18,17 +18,9 @@ $PREF: 'c-table';
   border-spacing: $xs $xxs;
   width: max-content;
 
-  th,
-  td {
-    @extend .body--3;
+  // ## TABLE ROW (HEADER AND BODY)
 
-    height: 100%;
-    margin: 0;
-    padding-right: $md;
-    width: fit-content;
-  }
-
-  // ## TABLE ROW
+  thead > tr { border-bottom: 1px $gray-4 solid; }
 
   tbody > tr {
     border-bottom: 1px $gray-5 solid;
@@ -39,6 +31,8 @@ $PREF: 'c-table';
     @include HOVER { background-color: $gray-6; }
   }
 
+  // ## TABLE HEADER CELL
+
   th {
     @extend .meta;
 
@@ -47,12 +41,19 @@ $PREF: 'c-table';
     vertical-align: middle;
   }
   
-  thead > tr { border-bottom: 1px $gray-4 solid; }
+  // ## TABLE CELL
 
-  td { max-width: $xxl * 3; vertical-align: text-top; }
+  td {
+    max-width: $xxl * 3;
+    vertical-align: text-top;
+    
+    .#{$PREF}-select { margin-bottom: 2px; }
+  }
 
-  tr > th,
-  tr > td { padding: $xs; }
+  // ## TABLE CELL (HEADER AND CELL)
+
+  th,
+  td { @extend .body--3; margin: 0; padding: $xs $md $xs $xs; }
 }
 
 .#{$PREF}-td {
@@ -72,15 +73,33 @@ $PREF: 'c-table';
   }
 }
 
-.#{$PREF}-selector { border-right: 1px $gray-5 solid; cursor: pointer; }
-
 .#{$PREF}-select {
-  appearance: none;
   background-color: $white;
-  border: 1px $gray-4 solid;
-  border-radius: 2px;
-  cursor: pointer;
-  height: 16px;
-  padding: 0;
-  width: 16px;
+  cursor: default;
+  left: 0;
+  padding: $xs !important;
+  position: sticky;
+  z-index: 2;
+
+  // This is equivalent to just having border-right, except now, when we scroll
+  // the table the border stays! Previously, it wasn't because of the
+  // border-collapse property set to collapse on the table element.
+  &::after {
+    border-right: 1px solid $gray-5;
+    content: '';
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  div {
+    background-color: $white;
+    border: 1px $gray-4 solid;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 12px;
+    margin: 0;
+    width: 12px;
+  }
 }

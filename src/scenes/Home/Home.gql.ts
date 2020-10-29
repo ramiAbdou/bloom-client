@@ -9,7 +9,11 @@ export const GET_PENDING_APPLICATIONS = query({
   fields: [
     { application: [{ questions: ['id', 'order', 'title', 'type'] }] },
     {
-      pendingMemberships: [{ applicationData: ['questionId', 'value'] }]
+      pendingMemberships: [
+        {
+          application: [{ data: ['questionId', 'value'] }, 'membershipId']
+        }
+      ]
     }
   ],
   operation: 'getCommunity'

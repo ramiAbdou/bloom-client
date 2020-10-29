@@ -21,7 +21,12 @@ class ApplicationQuestion implements Partial<FormQuestion> {
   type: QuestionType;
 }
 
-export type PendingApplication = { questionId: string; value?: string }[];
+type PendingApplicationData = { questionId: string; value?: string };
+
+export type PendingApplication = {
+  data: PendingApplicationData[];
+  membershipId: string;
+};
 
 type SetPendingApplicationArgs = {
   questions: ApplicationQuestion[];

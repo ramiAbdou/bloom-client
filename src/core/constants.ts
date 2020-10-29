@@ -27,8 +27,9 @@ export const APP = {
 export type ChildrenProps = { children: ReactNode };
 export type ClassNameProps = { className?: string };
 export type OnClickProps = { onClick?: () => Promise<any> };
-export type StyleProps = { style?: React.CSSProperties };
 export type MessageProps = { message: string };
+export type StyleProps = { style?: React.CSSProperties };
+export type ValueProps = { value: any };
 
 /**
  * GENERAL - General constants.
