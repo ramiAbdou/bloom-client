@@ -11,3 +11,6 @@ $PREF: 's-home-applicants';
   margin-right: $sm;
   width: fit-content;
 }
+
+.#{$PREF}-actions { @extend %flex-ac; margin-bottom: $sm; }
+.#{$PREF}-actions > button { margin-right: $xs; }

@@ -9,11 +9,13 @@ import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
 import Spinner from '@components/Loader/Spinner';
-import Table from '@components/Table/Table';
+import TableContent from '@components/Table/Table';
+import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
 import { PendingApplication } from '@store/Membership.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
+import TableActions from './TableActions';
 
 const NoPendingApplicationsMessage = () => (
   <p>There are no pending applications. 👍</p>
@@ -64,7 +66,12 @@ const ApplicationTable = () => {
   );
 
   if (!pendingApplications?.length) return <NoPendingApplicationsMessage />;
-  return <Table columns={columns} data={data} />;
+  return (
+    <Table.Provider initialData={{ columns, data }}>
+      <TableActions />
+      <TableContent />
+    </Table.Provider>
+  );
 };
 
 export default () => {

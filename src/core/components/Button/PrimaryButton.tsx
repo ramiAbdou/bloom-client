@@ -6,7 +6,6 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
-import Form from '@components/Form/Form.store';
 import CSSModifier from '@util/CSSModifier';
 import Spinner from '../Loader/Spinner';
 import {
@@ -25,14 +24,15 @@ const LoadingState = ({ text }: ButtonLoadingProps) => (
 export interface PrimaryButtonProps extends ButtonProps, ButtonDisabledProps {}
 
 export default ({
+  backgroundColor,
   className,
   disabled,
   isLoading,
   loadingText,
   onClick,
+  small,
   title
 }: PrimaryButtonProps) => {
-  const primaryColor = Form.useStoreState((store) => store.primaryColor);
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
@@ -48,9 +48,10 @@ export default ({
   const { css } = new CSSModifier()
     .class('c-btn-primary')
     .class(className)
-    .addClass(disabled, 'c-btn-primary--disabled');
+    .addClass(disabled, 'c-btn-primary--disabled')
+    .addClass(small, 'c-btn-primary--sm');
 
-  const style = !disabled ? { background: primaryColor } : {};
+  const style = !disabled ? { background: backgroundColor } : {};
 
   return (
     <motion.button

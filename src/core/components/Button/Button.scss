@@ -6,12 +6,11 @@ $PREF: 'c-btn';
 // throws off the vertical alignment of the button.
 
 .#{$PREF}-base {
+  @extend .btn-txt;
   @extend %flex-acc;
 
   border-radius: 8px;
   text-transform: uppercase;
-
-  @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px);
 }
 
 .#{$PREF}-loading { @extend %flex-acc; cursor: default; }
@@ -29,6 +28,7 @@ $PREF: 'c-btn';
 .#{$PREF}-primary {
   @extend .#{$PREF}-base;
 
+  background-color: $orange-1;
   box-shadow: 0 2px 6px rgba($color: #000, $alpha: 0.2);
   color: $gray-6;
   height: $lg;
@@ -43,6 +43,8 @@ $PREF: 'c-btn';
 
     @include HOVER { background: $gray-5; }
   }
+
+  &--sm { height: 42px; padding-left: $xs; padding-right: $xs; }
 
   @include M { width: 100%; }
 }
