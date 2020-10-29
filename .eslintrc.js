@@ -22,6 +22,13 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-unused-vars': [
+      2,
+      {
+        argsIgnorePattern: '_', // Allow underscores not to be treated as vars.
+        varsIgnorePattern: '_' // Allow underscores not to be treated as vars.
+      }
+    ],
     'import/newline-after-import': 2,
     'import/prefer-default-export': 0,
     'jsx-a11y/accessible-emoji': 0,

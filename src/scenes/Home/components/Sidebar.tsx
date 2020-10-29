@@ -28,7 +28,7 @@ const MemberOptions = () => (
 
 const adminLinks: LinkOptions[] = [
   { emoji: '🖥', title: 'Member Database', to: 'database' },
-  { emoji: '📝', title: 'Pending Applications', to: 'applications' },
+  { emoji: '📝', title: 'Pending Applicants', to: 'applicants' },
   { emoji: '📊', title: 'Analytics', to: 'analytics' },
   { emoji: '🤝', title: 'Integrations', to: 'integrations' },
   { emoji: '🤩', title: 'Admins', to: 'admins' }

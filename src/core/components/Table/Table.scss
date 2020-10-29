@@ -49,10 +49,10 @@ $PREF: 'c-table';
   
   thead > tr { border-bottom: 1px $gray-4 solid; }
 
-  td { max-width: $xxl * 3; vertical-align: top; }
+  td { max-width: $xxl * 3; vertical-align: text-top; }
 
-  thead > tr > th,
-  tbody > tr > td { padding: $xs; }
+  tr > th,
+  tr > td { padding: $xs; }
 }
 
 .#{$PREF}-td {
@@ -72,7 +72,7 @@ $PREF: 'c-table';
   }
 }
 
-.#{$PREF}-selector { border-right: 1px $gray-5 solid; }
+.#{$PREF}-selector { border-right: 1px $gray-5 solid; cursor: pointer; }
 
 .#{$PREF}-select {
   appearance: none;

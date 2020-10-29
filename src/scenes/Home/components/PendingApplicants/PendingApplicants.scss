@@ -1,6 +1,6 @@
 @import 'src/index.scss';
 
-$PREF: 's-home-applications';
+$PREF: 's-home-applicants';
 
 .#{$PREF} { overflow: hidden; }
 .#{$PREF} > p { @extend .body--2; }

@@ -14,6 +14,7 @@ import { useStoreState } from '@store/Store';
 export default ({
   checked,
   style,
+  indeterminate: _,
   ...props
 }: TableToggleRowsSelectedProps | TableToggleAllRowsSelectedProps) => {
   const primaryColor = useStoreState(

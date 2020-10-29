@@ -3,7 +3,7 @@
  * @author Rami Abdou
  */
 
-import './PendingApplications.scss';
+import './PendingApplicants.scss';
 
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
@@ -79,7 +79,7 @@ export default () => {
   }, [data]);
 
   return (
-    <div className="s-home-applications">
+    <div className="s-home-applicants">
       <div className="s-home-header">
         <h3>Pending Applications</h3>
         {loading && <Spinner dark />}

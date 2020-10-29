@@ -15,7 +15,7 @@ const HeaderColumn = (column: HeaderGroup) => {
   );
 
   return (
-    <th key={column.id} className={css} {...column.getHeaderProps()}>
+    <th className={css} {...column.getHeaderProps()}>
       {column.render('Header')}
     </th>
   );
@@ -24,7 +24,7 @@ const HeaderColumn = (column: HeaderGroup) => {
 export default (headerGroup: HeaderGroup) => (
   <tr>
     {headerGroup.headers.map((column) => (
-      <HeaderColumn {...column} />
+      <HeaderColumn key={column.id} {...column} />
     ))}
   </tr>
 );

@@ -25,7 +25,7 @@ import Events from './components/Events/Events';
 import Integrations from './components/Integrations/Integrations';
 import MemberDatabase from './components/MemberDatabase/MemberDatabase';
 import Membership from './components/Membership/Membership';
-import PendingApplications from './components/PendingApplications/PendingApplications';
+import PendingApplicants from './components/PendingApplicants/PendingApplicants';
 import Sidebar from './components/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
@@ -60,10 +60,7 @@ const HomeContent = () => {
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />
         <AdminRoute component={Admins} path={`${url}/admins`} />
-        <AdminRoute
-          component={PendingApplications}
-          path={`${url}/applications`}
-        />
+        <AdminRoute component={PendingApplicants} path={`${url}/applicants`} />
         <Redirect to={`${url}/directory`} />
       </Switch>
     </div>
