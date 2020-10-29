@@ -5,6 +5,18 @@
 
 import { query } from 'gql-query-builder';
 
+export const GET_MEMBER_DATABASE = query({
+  fields: [
+    { application: [{ questions: ['id', 'order', 'title', 'type'] }] },
+    {
+      memberships: [
+        { allData: [{ data: ['questionId', 'value'] }, 'membershipId'] }
+      ]
+    }
+  ],
+  operation: 'getCommunity'
+}).query;
+
 export const GET_PENDING_APPLICATIONS = query({
   fields: [
     { application: [{ questions: ['id', 'order', 'title', 'type'] }] },

@@ -44,7 +44,7 @@ $PREF: 'c-btn';
     @include HOVER { background: $gray-5; }
   }
 
-  &--sm { height: 42px; padding-left: $xs; padding-right: $xs; }
+  &--sm { height: $md; padding-left: $xs; padding-right: $xs; }
 
   @include M { width: 100%; }
 }

@@ -11,7 +11,7 @@ import { FormQuestion, QuestionType } from '@constants';
 
 type MembershipRole = 'ADMIN' | 'OWNER';
 
-class ApplicationQuestion implements Partial<FormQuestion> {
+class MembershipQuestion implements Partial<FormQuestion> {
   id: string;
 
   order: number;
@@ -21,25 +21,32 @@ class ApplicationQuestion implements Partial<FormQuestion> {
   type: QuestionType;
 }
 
-type PendingApplicationData = { questionId: string; value?: string };
+export type MemberData = { questionId: string; value?: string };
 
-export type PendingApplication = {
-  data: PendingApplicationData[];
+export type SerializedMembershipData = {
+  data: MemberData[];
   membershipId: string;
 };
 
 type SetPendingApplicationArgs = {
-  questions: ApplicationQuestion[];
-  applications: PendingApplication[];
+  questions: MembershipQuestion[];
+  applications: SerializedMembershipData[];
+};
+
+type SetMemberDatabaseArgs = {
+  questions: MembershipQuestion[];
+  members: SerializedMembershipData[];
 };
 
 type Community = {
-  applicationQuestions: ApplicationQuestion[];
+  applicationQuestions: MembershipQuestion[];
+  databaseQuestions: MembershipQuestion[];
   encodedUrlName: string;
   logoUrl: string;
   id: string;
+  members: SerializedMembershipData[];
   name: string;
-  pendingApplications: PendingApplication[];
+  pendingApplications: SerializedMembershipData[];
   primaryColor: string;
 };
 
@@ -58,6 +65,7 @@ export type MembershipModel = {
   isOwner: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
   memberships: Membership[];
   setActiveMembership: Action<MembershipModel, string>;
+  setMemberDatabase: Action<MembershipModel, SetMemberDatabaseArgs>;
   setMemberships: Action<MembershipModel, Membership[]>;
   setPendingApplications: Action<MembershipModel, SetPendingApplicationArgs>;
 };
@@ -128,6 +136,31 @@ export const membershipModel: MembershipModel = {
         isActive: membership.id === membershipId
       }))
     })
+  ),
+
+  setMemberDatabase: action(
+    (
+      { activeMembership, memberships, ...state },
+      { questions, members }: SetMemberDatabaseArgs
+    ) => {
+      const activeMembershipId = activeMembership?.id;
+
+      return {
+        ...state,
+        activeMembership,
+        memberships: memberships.map((membership: Membership) => {
+          if (membership.id !== activeMembershipId) return membership;
+          return {
+            ...membership,
+            community: {
+              ...membership.community,
+              databaseQuestions: questions,
+              members
+            }
+          };
+        })
+      };
+    }
   ),
 
   setMemberships: action((state, memberships: Membership[]) => ({

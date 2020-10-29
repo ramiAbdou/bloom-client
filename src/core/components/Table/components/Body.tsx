@@ -27,7 +27,8 @@ const DataCell = ({ type, value }: DataCellProps) => {
   const style = { backgroundColor: `${primaryColor}33` };
 
   let content: React.ReactNode = value;
-  if (type === 'MULTIPLE_CHOICE') content = <span style={style}>{value}</span>;
+  if (type === 'MULTIPLE_CHOICE' && value)
+    content = <span style={style}>{value}</span>;
   else if (type === 'MULTIPLE_SELECT')
     content = (
       <>

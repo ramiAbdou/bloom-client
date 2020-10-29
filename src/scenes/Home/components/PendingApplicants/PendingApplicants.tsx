@@ -12,7 +12,7 @@ import Spinner from '@components/Loader/Spinner';
 import TableContent from '@components/Table/Table';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
-import { PendingApplication } from '@store/Membership.store';
+import { SerializedMembershipData } from '@store/Membership.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
 import TableActions from './TableActions';
@@ -39,7 +39,7 @@ const ApplicationTable = () => {
         : pendingApplications.reduce(
             (
               acc: Row[],
-              { membershipId, data: applicationData }: PendingApplication
+              { membershipId, data: applicationData }: SerializedMembershipData
             ) => {
               const result = { id: membershipId };
               applicationData.forEach(({ questionId, value }) => {

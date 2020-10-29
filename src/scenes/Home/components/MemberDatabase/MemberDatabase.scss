@@ -1,0 +1,9 @@
+@import 'src/index.scss';
+
+$PREF: 's-home-database';
+
+.#{$PREF} { overflow: hidden; }
+.#{$PREF} > p { @extend .body--2; }
+
+.#{$PREF}-actions { @extend %flex-ac; margin-bottom: $sm; }
+.#{$PREF}-actions > button { margin-right: $xs; }
