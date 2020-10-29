@@ -36,8 +36,8 @@ module.exports = {
         name: 'extend'
       },
       'declarations',
-      'rules',
-      'at-rules'
+      'at-rules',
+      'rules'
     ],
     'order/properties-alphabetical-order': true
   },

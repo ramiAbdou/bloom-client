@@ -26,9 +26,9 @@ $PREF: 'c-table';
     border-bottom: 1px $gray-5 solid;
     cursor: pointer;
 
-    &:last-of-type { border-bottom: none; }
-
     @include HOVER { background-color: $gray-6; }
+
+    &:last-of-type { border-bottom: none; }
   }
 
   // ## TABLE HEADER CELL

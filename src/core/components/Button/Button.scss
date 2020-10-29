@@ -28,12 +28,17 @@ $PREF: 'c-btn';
 .#{$PREF}-primary {
   @extend .#{$PREF}-base;
 
-  background-color: $orange-1;
-  box-shadow: 0 2px 6px rgba($color: #000, $alpha: 0.2);
-  color: $gray-6;
+  background-color: rgba($color: $orange-1, $alpha: 0.1);
+  box-shadow: 0 1px $gray-5;
+  color: $orange-1;
   height: $lg;
   padding-left: $lg;
   padding-right: $lg;
+
+  @include HOVER { background-color: rgba($color: $orange-1, $alpha: 0.2); }
+  @include M { width: 100%; }
+
+  &:active { box-shadow: inset 0 2px 2px $gray-4; }
 
   &--disabled {
     background-color: $gray-5;
@@ -45,6 +50,4 @@ $PREF: 'c-btn';
   }
 
   &--sm { height: $md; padding-left: $xs; padding-right: $xs; }
-
-  @include M { width: 100%; }
 }
