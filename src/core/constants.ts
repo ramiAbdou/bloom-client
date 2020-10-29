@@ -26,6 +26,7 @@ export const APP = {
 
 export type ChildrenProps = { children: ReactNode };
 export type ClassNameProps = { className?: string };
+export type IdProps = { id: string };
 export type OnClickProps = { onClick?: () => Promise<any> };
 export type MessageProps = { message: string };
 export type StyleProps = { style?: React.CSSProperties };

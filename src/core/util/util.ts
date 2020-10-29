@@ -75,3 +75,10 @@ export const mutation = async (data: GQLOptions) => {
 };
 
 export const timezone = (): string => moment.tz(moment.tz.guess()).zoneAbbr();
+
+export const toggleArrayValue = (arr: any[], value: any) => {
+  const index = arr.findIndex((val) => val === value);
+  return index < 0
+    ? [...arr, value]
+    : [...arr.slice(0, index), ...arr.slice(index + 1)];
+};

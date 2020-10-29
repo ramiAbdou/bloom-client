@@ -92,14 +92,16 @@ $PREF: 'c-table';
     right: 0;
     top: 0;
   }
-
-  div {
-    background-color: $white;
-    border: 1px $gray-4 solid;
-    border-radius: 2px;
-    cursor: pointer;
-    height: 12px;
-    margin: 0;
-    width: 12px;
-  }
 }
+
+.#{$PREF}-select > div {
+  background-color: $white;
+  border: 1px $gray-4 solid;
+  border-radius: 2px;
+  cursor: pointer;
+  height: 16px;
+  margin: 0;
+  width: 16px;
+}
+
+.#{$PREF}-select--active > div { background-color: $gray-4; }

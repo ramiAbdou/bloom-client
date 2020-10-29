@@ -50,9 +50,9 @@ const DataRow = (row: Row) => {
 
   return (
     <tr>
-      {select && <SelectOption />}
+      {select && <SelectOption id={row.id} />}
       {columns.map(({ id, type }) => (
-        <DataCell key={id} type={type} value={row[id]} />
+        <DataCell key={id + row.id} type={type} value={row[id]} />
       ))}
     </tr>
   );
