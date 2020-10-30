@@ -46,6 +46,8 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
 const HomeContent = () => {
   const { url } = useRouteMatch();
 
+  document.body.style.height = 'auto';
+
   return (
     <div className="s-home-content">
       <Switch>

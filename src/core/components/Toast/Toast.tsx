@@ -17,9 +17,13 @@ import CSSModifier from '@util/CSSModifier';
 import { check, x } from './images';
 
 const Toast = ({ isError, message }: ToastOptions) => {
+  const primaryColor = useStoreState((store) => store.primaryColor);
   const { css } = new CSSModifier()
     .class('c-toast')
     .addClass(isError, 'c-toast--error');
+
+  const customStyle =
+    primaryColor && !isError ? { backgroundColor: primaryColor } : {};
 
   return (
     <motion.div
@@ -28,6 +32,7 @@ const Toast = ({ isError, message }: ToastOptions) => {
       className={css}
       exit={{ opacity: 0, y: -100 }}
       initial={{ y: -100 }}
+      style={customStyle}
       transition={{ duration: ANIMATION_DURATION / 1000 }}
     >
       <img alt="Toaster Icon" src={isError ? x : check} />
