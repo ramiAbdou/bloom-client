@@ -5,11 +5,11 @@
  */
 
 export type ButtonProps = {
-  backgroundColor?: string;
   className?: string;
   isLoading?: boolean;
   loadingText?: string;
   onClick?: VoidFunction;
+  primaryColor?: string;
   small?: boolean;
   title: string;
 };

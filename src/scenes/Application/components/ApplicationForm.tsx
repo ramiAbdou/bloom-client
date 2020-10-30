@@ -80,11 +80,11 @@ const SubmitButton = () => {
       {!!message && <ErrorMessage marginBottom={-24} message={message} />}
 
       <PrimaryButton
-        backgroundColor={primaryColor}
         className="s-signup-submit-btn"
         disabled={!isCompleted}
         isLoading={loading}
         loadingText="Submitting..."
+        primaryColor={primaryColor}
         title="Submit Application"
         onClick={applyForMembership}
       />

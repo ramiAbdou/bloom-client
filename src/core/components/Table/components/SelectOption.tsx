@@ -4,41 +4,47 @@
  */
 
 import React from 'react';
+import { Check } from 'react-feather';
 
 import { IdProps } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { useStoreState } from '@store/Store';
 import Table from '../Table.store';
 
 export const HeaderSelectOption = () => {
+  const primaryColor = useStoreState((store) => store.primaryColor);
   const isAllSelected = Table.useStoreState((state) => state.isAllSelected);
   const toggleAllRows = Table.useStoreActions(
     (actions) => actions.toggleAllRows
   );
 
   const onClick = () => toggleAllRows();
-  const { css } = new CSSModifier()
-    .class('c-table-select')
-    .addClass(isAllSelected, 'c-table-select--active');
+
+  // When selected, the primaryColor acts as an indicator that it is selected.
+  const customStyle = isAllSelected ? { backgroundColor: primaryColor } : {};
 
   return (
-    <th className={css}>
-      <div onClick={onClick} />
+    <th className="c-table-select">
+      <div style={customStyle} onClick={onClick}>
+        {isAllSelected && <Check color="#FFF" />}
+      </div>
     </th>
   );
 };
 
 export default ({ id }: IdProps) => {
+  const primaryColor = useStoreState((store) => store.primaryColor);
   const isSelected = Table.useStoreState((state) => state.isSelected(id));
   const toggleRow = Table.useStoreActions((actions) => actions.toggleRow);
   const onClick = () => toggleRow(id);
 
-  const { css } = new CSSModifier()
-    .class('c-table-select')
-    .addClass(isSelected, 'c-table-select--active');
+  // When selected, the primaryColor acts as an indicator that it is selected.
+  const customStyle = isSelected ? { backgroundColor: primaryColor } : {};
 
   return (
-    <td className={css}>
-      <div onClick={onClick} />
+    <td className="c-table-select">
+      <div style={customStyle} onClick={onClick}>
+        {isSelected && <Check color="#FFF" />}
+      </div>
     </td>
   );
 };

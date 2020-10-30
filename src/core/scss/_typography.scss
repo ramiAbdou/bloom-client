@@ -61,6 +61,8 @@ textarea,
 span,
 input { @extend .body--1; }
 
-.btn-txt { @include font-responsive(700, 12px, 24px, 12px, 24px, 12px, 24px); }
+input::placeholder { @extend .body--2; color: $gray-3; }
+
+.btn-txt { @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px); }
 
 button { @extend .btn-txt; }

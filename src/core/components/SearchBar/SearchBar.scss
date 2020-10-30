@@ -1,0 +1,7 @@
+@import 'src/index.scss';
+
+$PREF: 'c-search';
+
+.#{$PREF} { @extend %flex-ac; justify-content: flex-start; }
+.#{$PREF} > svg { height: 16px; margin-right: $xs; width: 16px; }
+.#{$PREF} > input { padding: 0; width: 100%; }

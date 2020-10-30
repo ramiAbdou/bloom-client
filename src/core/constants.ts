@@ -20,6 +20,10 @@ export const APP = {
     : 'http://localhost:8080'
 };
 
+export const BLOOM = {
+  PRIMARY_COLOR: '#F58023'
+};
+
 /**
  * GENERAL PROPS - General component props.
  */

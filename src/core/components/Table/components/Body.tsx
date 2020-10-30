@@ -62,7 +62,7 @@ export default () => {
 
   return (
     <tbody>
-      {data.map((row: Row) => (
+      {data.slice(0, 100).map((row: Row) => (
         <DataRow key={row.id} {...row} />
       ))}
     </tbody>

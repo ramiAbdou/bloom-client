@@ -43,12 +43,7 @@ $PREF: 'c-table';
   
   // ## TABLE CELL
 
-  td {
-    max-width: $xxl * 3;
-    vertical-align: text-top;
-    
-    .#{$PREF}-select { margin-bottom: 2px; }
-  }
+  td { max-width: $xxl * 3; vertical-align: top; }
 
   // ## TABLE CELL (HEADER AND CELL)
 
@@ -73,6 +68,9 @@ $PREF: 'c-table';
   }
 }
 
+// ## CHECKBOX
+
+// Container for the checkbox select.
 .#{$PREF}-select {
   background-color: $white;
   cursor: default;
@@ -94,14 +92,26 @@ $PREF: 'c-table';
   }
 }
 
+// The actual checkbox. Note that even though we specify the div dimensions to
+// be 16px, because of the border it actually renders as 18px. Update the SVG
+// image accordingly.
+
+$CHECKBOX_DIM: 18px;
+
 .#{$PREF}-select > div {
+  @extend %flex-acc;
+  
   background-color: $white;
   border: 1px $gray-4 solid;
   border-radius: 2px;
   cursor: pointer;
-  height: 16px;
+  height: $CHECKBOX_DIM;
   margin: 0;
-  width: 16px;
+  width: $CHECKBOX_DIM;
 }
 
-.#{$PREF}-select--active > div { background-color: $gray-4; }
+.#{$PREF}-select > div > svg {
+  height: $CHECKBOX_DIM + 2;
+  stroke-width: 3px;
+  width: $CHECKBOX_DIM + 2;
+}
