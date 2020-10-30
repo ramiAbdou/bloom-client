@@ -16,10 +16,13 @@ const ColumnCell = ({ title }: Column) => {
 export default () => {
   const columns = Table.useStoreState((store) => store.columns);
   const select = Table.useStoreState((store) => store.select);
+  const hasData = Table.useStoreState((store) => !!store.filteredData.length);
+
+  const customStyle = !hasData ? { borderBottom: 'none' } : {};
 
   return (
     <thead>
-      <tr>
+      <tr style={customStyle}>
         {select && <HeaderSelectOption />}
         {columns.map((column: Column) => (
           <ColumnCell key={column.id} {...column} />
