@@ -70,4 +70,4 @@ $PREF: 's-home';
 
 // ## CONTENT
 
-.#{$PREF}-content { overflow: hidden; width: 100%; }
+.#{$PREF}-content { margin-bottom: $md; overflow: hidden; width: 100%; }
