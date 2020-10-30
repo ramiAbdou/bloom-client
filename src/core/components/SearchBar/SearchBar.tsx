@@ -8,10 +8,15 @@ import './SearchBar.scss';
 import React from 'react';
 import { Search } from 'react-feather';
 
-type SearchBarProps = { placeholder?: string; onChange?: any; value: string };
+type SearchBarProps = {
+  placeholder?: string;
+  onChange?: any;
+  value: string;
+  width?: any;
+};
 
-export default ({ placeholder, onChange, value }: SearchBarProps) => (
-  <div className="c-form-input c-search">
+export default ({ placeholder, onChange, value, width }: SearchBarProps) => (
+  <div className="c-form-input c-search" style={{ width }}>
     <Search color="#828282" />
     <input
       placeholder={placeholder ?? ''}

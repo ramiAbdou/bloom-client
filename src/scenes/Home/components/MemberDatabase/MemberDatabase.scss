@@ -8,3 +8,7 @@ $PREF: 's-home-database';
 .#{$PREF}-actions { margin-bottom: $sm; }
 .#{$PREF}-actions > div { @extend %flex-ac; margin-bottom: $sm; }
 .#{$PREF}-actions > div > button { margin-right: $xs; }
+
+.#{$PREF}-search-row { @extend %flex-sb; }
+
+.#{$PREF}-search-row > h2 > span { font-size: 13px; margin-left: $xxs; }

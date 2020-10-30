@@ -13,8 +13,11 @@ import { Row } from '@components/Table/Table.types';
 export default () => {
   const [searchString, setSearchString] = useState('');
   const addFilter = Table.useStoreActions((actions) => actions.addFilter);
-  const numApplicants = Table.useStoreState(
+  const numSelected = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
+  );
+  const numResults = Table.useStoreState(
+    ({ filteredData }) => filteredData.length
   );
 
   const onChange = ({ target }) => setSearchString(target.value);
@@ -23,9 +26,10 @@ export default () => {
     addFilter({
       filter: (row: Row) =>
         Object.values(row).some((value: string) => {
+          const lowerCaseSearchString = searchString.toLowerCase();
           return (
             !searchString ||
-            (value && value.toLowerCase().includes(searchString))
+            (value && value.toLowerCase().includes(lowerCaseSearchString))
           );
         }),
       id: 'SEARCH'
@@ -37,22 +41,30 @@ export default () => {
       <div>
         <PrimaryButton
           small
-          disabled={!numApplicants}
-          title={`Make Admins (${numApplicants})`}
+          disabled={!numSelected}
+          title={`Make Admins (${numSelected})`}
         />
 
         <PrimaryButton
           small
-          disabled={!numApplicants}
-          title={`Copy Emails to Clipboard (${numApplicants})`}
+          disabled={!numSelected}
+          title={`Copy Emails to Clipboard (${numSelected})`}
         />
       </div>
 
-      <SearchBar
-        placeholder="Search..."
-        value={searchString}
-        onChange={onChange}
-      />
+      <div className="s-home-database-search-row">
+        <SearchBar
+          placeholder="Search..."
+          value={searchString}
+          width="50%"
+          onChange={onChange}
+        />
+
+        <h2>
+          {numResults}
+          <span>Results Showing</span>
+        </h2>
+      </div>
     </div>
   );
 };
