@@ -13,11 +13,15 @@ export interface ToastOptions extends MessageProps {
   isError?: boolean;
 }
 
+interface ShowToastArgs extends MessageProps {
+  isError?: boolean;
+}
+
 export type ToastModel = {
   dequeueToast: Action<ToastModel>;
   enqueueToast: Action<ToastModel, ToastOptions>;
   queue: ToastOptions[];
-  showToast: Thunk<ToastModel, ToastOptions>;
+  showToast: Thunk<ToastModel, ShowToastArgs>;
 };
 
 export const toastModel: ToastModel = {

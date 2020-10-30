@@ -20,8 +20,10 @@ interface TableModel extends TableOptions {
   addFilter: Action<TableModel, AddFilterArgs>;
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
+  clearSelectedRows: Action<TableModel>;
   columns: Column[];
   data: Row[];
+  emails: Computed<TableModel, string[]>;
   filters: Record<string, TableFilter>;
   filteredData: Computed<TableModel, Row[]>;
   selectedRowIds: string[];
@@ -35,8 +37,17 @@ const model: TableModel = {
     return { ...state, filters };
   }),
 
+  clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
+
   columns: [],
   data: [],
+
+  emails: computed(({ columns, data, selectedRowIds }) => {
+    const { id } = columns.find(({ title }) => title === 'Email');
+    return selectedRowIds.map(
+      (rowId: string) => data.find((row: Row) => row.id === rowId)[id]
+    );
+  }),
 
   /**
    * Returns the filtered data by running all of the filter functions on every
@@ -58,7 +69,7 @@ const model: TableModel = {
    */
   isAllSelected: computed(
     ({ filteredData, selectedRowIds }) =>
-      selectedRowIds.length === filteredData.length
+      !!selectedRowIds.length && selectedRowIds.length === filteredData.length
   ),
 
   /**
