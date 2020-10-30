@@ -58,7 +58,7 @@ const DataRow = (row: Row) => {
 };
 
 export default () => {
-  const data = Table.useStoreState((store) => store.data);
+  const data = Table.useStoreState((store) => store.filteredData);
 
   return (
     <tbody>

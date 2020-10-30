@@ -14,7 +14,10 @@ import {
 import { toggleArrayValue } from '@util/util';
 import { Column, Row, TableFilter, TableOptions } from './Table.types';
 
+type AddFilterArgs = { id: string; filter: TableFilter };
+
 interface TableModel extends TableOptions {
+  addFilter: Action<TableModel, AddFilterArgs>;
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
   columns: Column[];
@@ -27,6 +30,11 @@ interface TableModel extends TableOptions {
 }
 
 const model: TableModel = {
+  addFilter: action(({ filters, ...state }, { id, filter }: AddFilterArgs) => {
+    filters[id] = filter;
+    return { ...state, filters };
+  }),
+
   columns: [],
   data: [],
 
@@ -49,7 +57,8 @@ const model: TableModel = {
    * Returns true if all rows are selected.
    */
   isAllSelected: computed(
-    ({ data, selectedRowIds }) => selectedRowIds.length === data.length
+    ({ filteredData, selectedRowIds }) =>
+      selectedRowIds.length === filteredData.length
   ),
 
   /**
@@ -69,7 +78,9 @@ const model: TableModel = {
    */
   toggleAllRows: action((state) => ({
     ...state,
-    selectedRowIds: !state.isAllSelected ? state.data.map(({ id }) => id) : []
+    selectedRowIds: !state.isAllSelected
+      ? state.filteredData.map(({ id }) => id)
+      : []
   })),
 
   /**

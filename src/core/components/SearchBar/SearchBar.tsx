@@ -8,19 +8,16 @@ import './SearchBar.scss';
 import React from 'react';
 import { Search } from 'react-feather';
 
-import { useActive } from '@hooks/useActive';
-import { useStoreState } from '@store/Store';
+type SearchBarProps = { placeholder?: string; onChange?: any; value: string };
 
-type SearchBarProps = { placeholder?: string };
-
-export default ({ placeholder }: SearchBarProps) => {
-  const [activeRef, isActive] = useActive();
-  const primaryColor = useStoreState((store) => store.primaryColor);
-
-  return (
-    <div ref={activeRef} className="c-form-input c-search">
-      <Search color="#828282" />
-      <input placeholder={placeholder ?? ''} type="text" />
-    </div>
-  );
-};
+export default ({ placeholder, onChange, value }: SearchBarProps) => (
+  <div className="c-form-input c-search">
+    <Search color="#828282" />
+    <input
+      placeholder={placeholder ?? ''}
+      type="text"
+      value={value}
+      onChange={onChange}
+    />
+  </div>
+);
