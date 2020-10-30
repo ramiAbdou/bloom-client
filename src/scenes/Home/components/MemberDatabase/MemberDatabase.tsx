@@ -85,8 +85,10 @@ export default () => {
   useEffect(() => {
     if (data)
       setMemberDatabase({
-        members: data?.getCommunity?.memberships?.map(({ allData }) => allData),
-        questions: data?.getCommunity?.application?.questions
+        members: data?.getMemberDatabase?.memberships?.map(
+          ({ allData }) => allData
+        ),
+        questions: data?.getMemberDatabase?.application?.questions
       });
   }, [data]);
 

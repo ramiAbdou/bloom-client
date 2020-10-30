@@ -85,10 +85,10 @@ export default () => {
   useEffect(() => {
     if (data)
       setPendingApplications({
-        applications: data?.getCommunity?.pendingMemberships.map(
+        applications: data?.getApplicants?.pendingMemberships.map(
           ({ application }) => application
         ),
-        questions: data?.getCommunity?.application?.questions
+        questions: data?.getApplicants?.application?.questions
       });
   }, [data]);
 

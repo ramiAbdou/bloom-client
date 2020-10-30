@@ -6,7 +6,7 @@
 import './SearchBar.scss';
 
 import React from 'react';
-import { Search } from 'react-feather';
+import { IoMdSearch } from 'react-icons/io';
 
 type SearchBarProps = {
   placeholder?: string;
@@ -17,7 +17,7 @@ type SearchBarProps = {
 
 export default ({ placeholder, onChange, value, width }: SearchBarProps) => (
   <div className="c-form-input c-search" style={{ width }}>
-    <Search color="#828282" />
+    <IoMdSearch color="#828282" />
     <input
       placeholder={placeholder ?? ''}
       type="text"

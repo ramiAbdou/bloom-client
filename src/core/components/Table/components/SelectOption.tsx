@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Check } from 'react-feather';
+import { IoMdCheckmark } from 'react-icons/io';
 
 import { IdProps } from '@constants';
 import { useStoreState } from '@store/Store';
@@ -25,7 +25,7 @@ export const HeaderSelectOption = () => {
   return (
     <th className="c-table-select">
       <div style={customStyle} onClick={onClick}>
-        {isAllSelected && <Check color="#FFF" />}
+        {isAllSelected && <IoMdCheckmark color="#FFF" />}
       </div>
     </th>
   );
@@ -43,7 +43,7 @@ export default ({ id }: IdProps) => {
   return (
     <td className="c-table-select">
       <div style={customStyle} onClick={onClick}>
-        {isSelected && <Check color="#FFF" />}
+        {isSelected && <IoMdCheckmark color="#FFF" />}
       </div>
     </td>
   );

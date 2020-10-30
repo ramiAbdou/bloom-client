@@ -14,7 +14,7 @@ export const GET_MEMBER_DATABASE = query({
       ]
     }
   ],
-  operation: 'getCommunity'
+  operation: 'getMemberDatabase'
 }).query;
 
 export const GET_PENDING_APPLICATIONS = query({
@@ -28,7 +28,7 @@ export const GET_PENDING_APPLICATIONS = query({
       ]
     }
   ],
-  operation: 'getCommunity'
+  operation: 'getApplicants'
 }).query;
 
 export const VERIFY_LOGIN_TOKEN = query({
