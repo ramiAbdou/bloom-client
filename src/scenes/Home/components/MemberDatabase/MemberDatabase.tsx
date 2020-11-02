@@ -56,8 +56,8 @@ const Database = () => {
     [questions?.length]
   );
 
-  if (!columns.length || !data.length)
-    return <p>You don't have any members! 🥴</p>;
+  if (!questions?.length) return null;
+  if (!data.length) return <p>You don't have any members! 🥴</p>;
 
   return (
     <Table.Provider initialData={{ columns, data }}>

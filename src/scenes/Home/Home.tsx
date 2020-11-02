@@ -39,6 +39,10 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
     )
   );
 
+  // If the activeEncodedUrlName hasn't been set yet, that means the community
+  // hasn't been loaded in the global state yet, so just wait...
+  if (!activeEncodedUrlName) return null;
+
   // If the user isn't a member of the community who's URL we are currently
   // sitting at, then we redirect them to the first community that they are
   // a member of.

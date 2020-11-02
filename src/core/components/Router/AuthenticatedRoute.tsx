@@ -26,7 +26,7 @@ export default ({ component, ...rest }: RouteProps) => {
   );
 
   useEffect(() => {
-    if (data?.getUser) updateEntities({ data: data.getUser, schema: User });
+    if (data) updateEntities({ data: data.getUser, schema: User });
   }, [data?.getUser?.id]);
 
   const isHome = rest.path === '/';
