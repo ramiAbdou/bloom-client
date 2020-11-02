@@ -4,33 +4,41 @@
  */
 
 import React from 'react';
+import {
+  IoMdAnalytics,
+  IoMdCalendar,
+  IoMdGlobe,
+  IoMdHand,
+  IoMdPaper,
+  IoMdPeople
+} from 'react-icons/io';
 import { Link } from 'react-router-dom';
 
 import Separator from '@components/Misc/Separator';
 
-type LinkOptions = { emoji: string; to: string; title: string };
+type LinkOptions = { Icon: React.FC<any>; to: string; title: string };
 
 const memberLinks: LinkOptions[] = [
-  { emoji: '👥', title: 'Directory', to: 'directory' },
-  { emoji: '📅', title: 'Events', to: 'events' },
-  { emoji: '💳', title: 'Your Membership', to: 'membership' }
+  { Icon: IoMdPeople, title: 'Directory', to: 'directory' },
+  { Icon: IoMdCalendar, title: 'Events', to: 'events' }
 ];
 
 const MemberOptions = () => (
   <>
-    {memberLinks.map(({ emoji, title, to }) => (
+    {memberLinks.map(({ Icon, title, to }) => (
       <Link key={to} to={to}>
-        <span>{emoji}</span> {title}
+        <Icon color="#000" />
+        {title}
       </Link>
     ))}
   </>
 );
 
 const adminLinks: LinkOptions[] = [
-  { emoji: '🖥', title: 'Member Database', to: 'database' },
-  { emoji: '📝', title: 'Pending Applicants', to: 'applicants' },
-  { emoji: '📊', title: 'Analytics', to: 'analytics' },
-  { emoji: '🤝', title: 'Integrations', to: 'integrations' }
+  { Icon: IoMdGlobe, title: 'Member Database', to: 'database' },
+  { Icon: IoMdPaper, title: 'Pending Applicants', to: 'applicants' },
+  { Icon: IoMdAnalytics, title: 'Analytics', to: 'analytics' },
+  { Icon: IoMdHand, title: 'Integrations', to: 'integrations' }
 ];
 
 const AdminOptions = () => (
@@ -38,9 +46,10 @@ const AdminOptions = () => (
     <p>ADMIN</p>
 
     <>
-      {adminLinks.map(({ emoji, title, to }) => (
+      {adminLinks.map(({ Icon, title, to }) => (
         <Link key={to} to={to}>
-          <span>{emoji}</span> {title}
+          <Icon color="#000" />
+          {title}
         </Link>
       ))}
 

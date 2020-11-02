@@ -41,7 +41,7 @@ $PREF: 's-home';
   height: 100%;
   margin-right: $md;
   min-width: $xxl * 3;
-  padding: $xs;
+  padding: $sm $xs;
 
   @include T { margin-left: $xs; }
 }
@@ -52,12 +52,14 @@ $PREF: 's-home';
   
   font-size: 14px;
   font-weight: 600;
-  margin: $xs 0;
+  margin: $sm 0;
   text-align: left;
   width: 100%;
+
+  &:first-of-type { margin-top: 0; }
 }
 
-.#{$PREF}-sidebar > a > span { font-size: 18px; margin-right: $xxs; }
+.#{$PREF}-sidebar > a > svg { margin-right: $xxs; }
 
 .#{$PREF}-sidebar > p {
   @extend .meta;

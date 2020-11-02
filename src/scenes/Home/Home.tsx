@@ -48,7 +48,7 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   // a member of.
   if (!isMember) return <Redirect to={`/${activeEncodedUrlName}`} />;
 
-  // If they are a member, just return the children.
+  // If they are a member, just return the requested content.
   return <>{children}</>;
 };
 
