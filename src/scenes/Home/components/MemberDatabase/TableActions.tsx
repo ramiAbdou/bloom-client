@@ -8,14 +8,15 @@ import React, { useEffect, useState } from 'react';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import SearchBar from '@components/SearchBar/SearchBar';
 import Table from '@components/Table/Table.store';
-import { Row } from '@components/Table/Table.types';
 import { useStoreActions } from '@store/Store';
 
 export default () => {
-  const [searchString, setSearchString] = useState('');
+  const [localSearchString, setLocalSearchString] = useState('');
 
+  const setSearchString = Table.useStoreActions(
+    (actions) => actions.setSearchString
+  );
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const addFilter = Table.useStoreActions((actions) => actions.addFilter);
   const numSelected = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
   );
@@ -25,25 +26,12 @@ export default () => {
   const emails = Table.useStoreState((store) => store.emails);
   const filteredData = Table.useStoreState((store) => store.filteredData);
 
-  const onChange = ({ target }) => setSearchString(target.value);
+  const onChange = ({ target }) => setLocalSearchString(target.value);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      addFilter({
-        filter: (row: Row) =>
-          Object.values(row).some((value: string) => {
-            const lowerCaseSearchString = searchString.toLowerCase();
-            return (
-              !searchString ||
-              (value && value.toLowerCase().includes(lowerCaseSearchString))
-            );
-          }),
-        id: 'SEARCH'
-      });
-    }, 250);
-
+    const timer = setTimeout(() => setSearchString(localSearchString), 250);
     return () => clearTimeout(timer);
-  }, [searchString]);
+  }, [localSearchString]);
 
   const onClick = () => {
     navigator.clipboard.writeText(emails.join(', '));
@@ -71,7 +59,7 @@ export default () => {
       <div className="s-home-database-search-row">
         <SearchBar
           placeholder="Search..."
-          value={searchString}
+          value={localSearchString}
           width="50%"
           onChange={onChange}
         />

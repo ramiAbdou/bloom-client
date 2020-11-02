@@ -9,20 +9,20 @@ import {
   Computed,
   computed,
   createStore,
-  createTypedHooks,
-  persist
+  createTypedHooks
 } from 'easy-peasy';
+import Cookie from 'js-cookie';
 import merge from 'lodash/merge';
 import { Schema } from 'normalizr';
 
 import { parseEntities } from '@util/util';
 import { LoaderModel, loaderModel } from './Loader.store';
-import { MembershipModel, membershipModel } from './Membership.store';
 import {
   Entity,
   EntityRecord,
   IApplicationQuestion,
   ICommunity,
+  IMember,
   IMembership,
   IPendingApplicant,
   IUser
@@ -40,10 +40,11 @@ type StoreModel = {
   community: Computed<StoreModel, ICommunity>;
   entities: Record<Entity, EntityRecord>;
   loader: LoaderModel;
-  membership: MembershipModel;
+  members: Computed<StoreModel, EntityRecord<IMember>>;
   memberships: Computed<StoreModel, EntityRecord<IMembership>>;
   pendingApplicants: Computed<StoreModel, EntityRecord<IPendingApplicant>>;
   primaryColor: Computed<StoreModel, string>;
+  setActiveCommunity: Action<StoreModel, string>;
   toast: ToastModel;
   updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
   user: Computed<StoreModel, IUser>;
@@ -60,8 +61,14 @@ export const store = createStore<StoreModel>(
       ({ entities }) => entities.communities as EntityRecord<ICommunity>
     ),
 
-    community: computed(({ entities }) => {
-      const { activeId, byId } = entities.communities;
+    community: computed(({ communities }) => {
+      const { activeId, byId } = communities;
+
+      // For every request, we should have a communityId set in the token so
+      // we could take advantage of the GQL context and reduce # of args.
+      if (Cookie.get('communityId') !== activeId)
+        Cookie.set('communityId', activeId);
+
       return byId[activeId] as ICommunity;
     }),
 
@@ -69,6 +76,7 @@ export const store = createStore<StoreModel>(
       applicationQuestions: { allIds: [], byId: {} },
       applications: { allIds: [], byId: {} },
       communities: { allIds: [], byId: {} },
+      members: { allIds: [], byId: {} },
       memberships: { allIds: [], byId: {} },
       pendingApplicants: { allIds: [], byId: {} },
       users: { allIds: [], byId: {} }
@@ -76,7 +84,9 @@ export const store = createStore<StoreModel>(
 
     loader: loaderModel,
 
-    membership: persist(membershipModel),
+    members: computed(
+      ({ entities }) => entities.members as EntityRecord<IMember>
+    ),
 
     memberships: computed(
       ({ entities }) => entities.memberships as EntityRecord<IMembership>
@@ -88,6 +98,11 @@ export const store = createStore<StoreModel>(
     ),
 
     primaryColor: computed(({ community }) => community?.primaryColor),
+
+    setActiveCommunity: action((state, communityId: string) => ({
+      ...state,
+      communities: { ...state.communities, activeId: communityId }
+    })),
 
     toast: toastModel,
 

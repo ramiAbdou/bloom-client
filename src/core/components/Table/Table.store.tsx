@@ -12,34 +12,28 @@ import {
 } from 'easy-peasy';
 
 import { toggleArrayValue } from '@util/util';
-import { Column, Row, TableFilter, TableOptions } from './Table.types';
-
-type AddFilterArgs = { id: string; filter: TableFilter };
+import { Column, Row, TableOptions } from './Table.types';
 
 interface TableModel extends TableOptions {
-  addFilter: Action<TableModel, AddFilterArgs>;
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
   clearSelectedRows: Action<TableModel>;
   columns: Column[];
   data: Row[];
   emails: Computed<TableModel, string[]>;
-  filters: Record<string, TableFilter>;
-  filteredData: Computed<TableModel, Row[]>;
+  filteredData: Row[];
+  searchString: string;
   selectedRowIds: string[];
+  setSearchString: Action<TableModel, string>;
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
 }
 
 const model: TableModel = {
-  addFilter: action(({ filters, ...state }, { id, filter }: AddFilterArgs) => {
-    filters[id] = filter;
-    return { ...state, filters };
-  }),
-
   clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
 
   columns: [],
+
   data: [],
 
   emails: computed(({ columns, data, selectedRowIds }) => {
@@ -53,16 +47,7 @@ const model: TableModel = {
    * Returns the filtered data by running all of the filter functions on every
    * row. Returns all the data if there are no filters present.
    */
-  filteredData: computed(({ data, filters }) => {
-    const functions = Object.values(filters);
-    return !functions.length
-      ? data
-      : data.filter((row: Row) =>
-          Object.values(filters).every((filter: TableFilter) => filter(row))
-        );
-  }),
-
-  filters: {},
+  filteredData: [],
 
   /**
    * Returns true if all rows are selected.
@@ -79,9 +64,25 @@ const model: TableModel = {
     isAllSelected || selectedRowIds.includes(rowId)
   ),
 
+  searchString: '',
+
   select: true,
 
   selectedRowIds: [],
+
+  setSearchString: action((state, searchString) => ({
+    ...state,
+    filteredData: state.data.filter((row: Row) =>
+      Object.values(row).some((value: string) => {
+        const lowerCaseSearchString = searchString.toLowerCase();
+        return (
+          !searchString ||
+          (value && value.toLowerCase().includes(lowerCaseSearchString))
+        );
+      })
+    ),
+    searchString
+  })),
 
   /**
    * Updates the data by setting isSelected to true where the ID of the row
@@ -115,6 +116,7 @@ export default createContextStore<TableModel>(
     ...model,
     columns,
     data,
+    filteredData: data,
     select: select ?? true
   }),
   { disableImmer: true }

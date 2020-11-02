@@ -15,6 +15,7 @@ export type Entity =
   | 'applicationQuestions'
   | 'applications'
   | 'communities'
+  | 'members'
   | 'memberships'
   | 'pendingApplicants'
   | 'users';
@@ -31,8 +32,15 @@ export type ICommunity = {
   encodedUrlName: string;
   id: string;
   logoUrl: string;
+  members: EntityID[];
   name: string;
+  pendingApplicants: EntityID[];
   primaryColor: string;
+};
+
+export type IMember = {
+  allData: { questionId: string; value: string }[];
+  id: string;
 };
 
 export type IMembership = {
@@ -57,6 +65,7 @@ export interface EntityRecord<
   T =
     | IApplicationQuestion
     | ICommunity
+    | IMember
     | IMembership
     | IPendingApplicant
     | IUser
@@ -71,12 +80,13 @@ export const ApplicationQuestion = new schema.Entity(
   {}
 );
 
+export const Member = new schema.Entity('members', {});
+
 export const PendingApplicant = new schema.Entity('pendingApplicants', {});
 
 export const Community = new schema.Entity('communities', {
   applicationQuestions: [ApplicationQuestion],
-  // @ts-ignore b/c no matter what, one definition must come before the other.
-  memberships: [Membership],
+  members: [Member],
   pendingApplicants: [PendingApplicant]
 });
 

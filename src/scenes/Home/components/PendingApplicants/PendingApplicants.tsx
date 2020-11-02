@@ -12,7 +12,11 @@ import Spinner from '@components/Loader/Spinner';
 import TableContent from '@components/Table/Table';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
-import { Community, IApplicationQuestion } from '@store/schema';
+import {
+  Community,
+  IApplicationQuestion,
+  IPendingApplicant
+} from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
 import TableActions from './TableActions';
@@ -29,22 +33,29 @@ const ApplicationTable = () => {
       )
   );
 
-  const pendingApplicants = useStoreState((store) => store.pendingApplicants);
+  const applicants: IPendingApplicant[] = useStoreState(
+    ({ pendingApplicants, community }) =>
+      community.pendingApplicants?.map(
+        (applicantId: string) => pendingApplicants.byId[applicantId]
+      )
+  );
 
   const data = useMemo(
     () =>
-      !pendingApplicants
+      !applicants
         ? []
-        : pendingApplicants.allIds.reduce((acc: Row[], applicantId: string) => {
-            const { applicantData } = pendingApplicants.byId[applicantId];
-            const result = { id: applicantId };
-            applicantData.forEach(({ questionId, value }) => {
-              result[questionId] = value;
-            });
+        : applicants.reduce(
+            (acc: Row[], { applicantData, id }: IPendingApplicant) => {
+              const result = { id };
+              applicantData.forEach(({ questionId, value }) => {
+                result[questionId] = value;
+              });
 
-            return [...acc, result];
-          }, []),
-    [pendingApplicants.allIds?.length]
+              return [...acc, result];
+            },
+            []
+          ),
+    [applicants?.length]
   );
 
   const columns = useMemo(
@@ -55,8 +66,7 @@ const ApplicationTable = () => {
     [questions?.length]
   );
 
-  if (!pendingApplicants.allIds?.length)
-    return <NoPendingApplicationsMessage />;
+  if (!applicants?.length) return <NoPendingApplicationsMessage />;
   return (
     <Table.Provider initialData={{ columns, data }}>
       <TableActions />
@@ -74,8 +84,8 @@ export default () => {
 
     updateEntities({
       data: {
-        applicationQuestions: data?.getApplicants.application.questions,
-        pendingApplicants: data?.getApplicants.pendingApplicants
+        ...data.getApplicants,
+        applicationQuestions: data.getApplicants.application.questions
       },
       schema: Community
     });

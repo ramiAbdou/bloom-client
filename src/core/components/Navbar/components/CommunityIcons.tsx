@@ -8,13 +8,9 @@ import React from 'react';
 import { useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 
-type CommunityIconProps = { isActive: boolean; communityId: string };
+type CommunityIconProps = { isActive: boolean; logoUrl: string };
 
-const CommunityIcon = ({ isActive, communityId }: CommunityIconProps) => {
-  const logoUrl = useStoreState(
-    ({ communities }) => communities.byId[communityId].logoUrl
-  );
-
+const CommunityIcon = ({ isActive, logoUrl }: CommunityIconProps) => {
   const { css } = new CSSModifier()
     .class('c-nav-community')
     .addClass(isActive, 'c-nav-community--active');
@@ -27,16 +23,17 @@ const CommunityIcon = ({ isActive, communityId }: CommunityIconProps) => {
 };
 
 export default () => {
-  const activeId = useStoreState(({ communities }) => communities.activeId);
-  const communityIds = useStoreState(({ communities }) => communities.allIds);
+  const { activeId, allIds, byId } = useStoreState(
+    (store) => store.communities
+  );
 
   return (
     <div className="c-nav-community-ctr">
-      {communityIds.map((communityId: string) => (
+      {allIds?.map((communityId: string) => (
         <CommunityIcon
           key={communityId}
-          communityId={communityId}
           isActive={activeId === communityId}
+          logoUrl={byId[communityId]?.logoUrl}
         />
       ))}
     </div>

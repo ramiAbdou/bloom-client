@@ -12,52 +12,48 @@ import Spinner from '@components/Loader/Spinner';
 import TableContent from '@components/Table/Table';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
-import { SerializedMembershipData } from '@store/Membership.store';
+import { Community, IApplicationQuestion, IMember } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_MEMBER_DATABASE } from '../../Home.gql';
 import TableActions from './TableActions';
 
 const Database = () => {
-  const databaseQuestions = useStoreState(
-    ({ membership }) =>
-      membership.activeMembership?.community?.databaseQuestions
+  const questions: IApplicationQuestion[] = useStoreState(
+    ({ applicationQuestions, community }) =>
+      community.applicationQuestions?.map(
+        (questionId: string) => applicationQuestions.byId[questionId]
+      )
   );
 
-  const members = useStoreState(
-    ({ membership }) => membership.activeMembership?.community?.members
+  const allMembers: IMember[] = useStoreState(({ members, community }) =>
+    community.members?.map((memberId: string) => members.byId[memberId])
   );
 
   const data = useMemo(
     () =>
-      !members
+      !allMembers
         ? []
-        : members.reduce(
-            (
-              acc: Row[],
-              { membershipId, data: applicationData }: SerializedMembershipData
-            ) => {
-              const result = { id: membershipId };
-              applicationData.forEach(({ questionId, value }) => {
-                result[questionId] = value;
-              });
+        : allMembers.reduce((acc: Row[], { id, allData }: IMember) => {
+            const result = { id };
+            allData.forEach(({ questionId, value }) => {
+              result[questionId] = value;
+            });
 
-              return [...acc, result];
-            },
-            []
-          ),
-    [members?.length]
+            return [...acc, result];
+          }, []),
+    [allMembers?.length]
   );
 
   const columns = useMemo(
     () =>
-      !databaseQuestions
+      !questions
         ? []
-        : databaseQuestions.map(({ type, id, title }) => ({
+        : questions.map(({ type, id, title }) => ({
             id,
             title,
             type
           })),
-    [databaseQuestions?.length]
+    [questions?.length]
   );
 
   if (!columns.length || !data.length)
@@ -72,24 +68,25 @@ const Database = () => {
 };
 
 export default () => {
+  const updateEntities = useStoreActions((store) => store.updateEntities);
   const numMembers = useStoreState(
-    ({ membership }) => membership.activeMembership?.community?.members?.length
-  );
-  const setMemberDatabase = useStoreActions(
-    ({ membership }) => membership.setMemberDatabase
+    ({ community }) => community.members?.length
   );
 
-  const result = useQuery(GET_MEMBER_DATABASE, { useCache: true });
+  const result = useQuery(GET_MEMBER_DATABASE);
   const { data } = result;
 
   useEffect(() => {
-    if (data)
-      setMemberDatabase({
-        members: data?.getMemberDatabase?.memberships?.map(
-          ({ allData }) => allData
-        ),
-        questions: data?.getMemberDatabase?.application?.questions
-      });
+    if (!data) return;
+
+    updateEntities({
+      data: {
+        ...data.getMemberDatabase,
+        applicationQuestions: data.getMemberDatabase.application.questions,
+        members: data.getMemberDatabase?.memberships
+      },
+      schema: Community
+    });
   }, [data]);
 
   const loading = result.loading && !data && !numMembers;
