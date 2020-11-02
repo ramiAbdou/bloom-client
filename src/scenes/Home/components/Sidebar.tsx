@@ -17,13 +17,13 @@ const memberLinks: LinkOptions[] = [
 ];
 
 const MemberOptions = () => (
-  <div>
+  <>
     {memberLinks.map(({ emoji, title, to }) => (
       <Link key={to} to={to}>
         <span>{emoji}</span> {title}
       </Link>
     ))}
-  </div>
+  </>
 );
 
 const adminLinks: LinkOptions[] = [
@@ -37,7 +37,7 @@ const AdminOptions = () => (
   <>
     <p>ADMIN</p>
 
-    <div>
+    <>
       {adminLinks.map(({ emoji, title, to }) => (
         <Link key={to} to={to}>
           <span>{emoji}</span> {title}
@@ -46,7 +46,7 @@ const AdminOptions = () => (
 
       <Separator style={{ marginBottom: 12, marginTop: 12 }} />
       <Link to="create-event">+ Create Event</Link>
-    </div>
+    </>
   </>
 );
 

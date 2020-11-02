@@ -7,17 +7,25 @@ $PREF: 's-home';
 // Implements the margin that we're used to seeing. We limit the width to be
 // 1440px.
 .#{$PREF} {
+  align-items: flex-start;
   box-sizing: border-box;
+  display: flex;
   height: 100%;
 
-  @include RESP(margin-left, $xxl * 3, 0, 0);
-  @include RESP(margin-right, $xxl * 3, 0, 0);
-  @include DD { margin: auto; max-width: 1440px - ($xxl * 6); width: 100%; }
+  @include DD { margin: auto; max-width: 1440px; width: 100%; }
 }
+
+.#{$PREF}-nav { @extend %flex; height: 100%; }
 
 // ## MAIN CONTENT (SIDEBAR AND CONTENT)
 
-.#{$PREF}-main { @extend %flex-sb; box-sizing: border-box; margin-top: $sm; }
+.#{$PREF}-main {
+  @extend %flex-sb;
+
+  box-sizing: border-box;
+  margin-top: $sm;
+  overflow: hidden;
+}
 .#{$PREF}-main > * { height: 100%; }
 
 // Makes the header consistent across each page. Mainly for loading purposes.
@@ -27,26 +35,18 @@ $PREF: 's-home';
 // ## SIDEBAR
 
 .#{$PREF}-sidebar {
+  background-color: $white;
+  border-right: 1px $gray-5 solid;
+  box-sizing: border-box;
+  height: 100%;
   margin-right: $md;
   min-width: $xxl * 3;
+  padding: $xs;
 
   @include T { margin-left: $xs; }
 }
 
-.#{$PREF}-sidebar > div {
-  @extend %flex-col;
-
-  align-items: flex-start;
-  background-color: $white;
-  border: 1px $gray-5 solid;
-  border-radius: $xs;
-  box-sizing: border-box;
-  margin-bottom: $sm;
-  padding: $xs;
-  width: 100%;
-}
-
-.#{$PREF}-sidebar > div > a {
+.#{$PREF}-sidebar > a {
   @extend .btn-txt;
   @extend %flex-ac;
   
@@ -57,7 +57,7 @@ $PREF: 's-home';
   width: 100%;
 }
 
-.#{$PREF}-sidebar > div > a > span { font-size: 18px; margin-right: $xxs; }
+.#{$PREF}-sidebar > a > span { font-size: 18px; margin-right: $xxs; }
 
 .#{$PREF}-sidebar > p {
   @extend .meta;

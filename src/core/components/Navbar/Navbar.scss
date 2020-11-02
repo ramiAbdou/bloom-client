@@ -3,19 +3,11 @@
 $PREF: 'c-nav';
 
 .#{$PREF} {
-  @extend %flex-acsb;
+  @extend %flex-accol;
 
   background-color: $white;
-  border-bottom: 1px $gray-5 solid;
-  border-left: 1px $gray-5 solid;
-  border-radius: 0 0 $xxs $xxs;
-  border-right: 1px $gray-5 solid;
-  height: $xxl;
-  padding-left: $xs;
-  padding-right: $xs;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  border: 1px $gray-5 solid;
+  padding: $xs;
 }
 
 // ## COMMUNITY ICON CONTAINER
@@ -34,41 +26,3 @@ $PREF: 'c-nav';
 }
 
 .#{$PREF}-community > img { @extend .fill; border-radius: 2px; }
-
-// ## PROFILE DIV
-
-.#{$PREF}-profile {
-  @extend %flex-acc;
-
-  border: 1px $gray-4 solid;
-  border-radius: $xxs;
-  padding: 4px 8px;
-}
-
-// ## PROFILE PICTURE (NO PICTURE FOR USER)
-
-.#{$PREF}-profile-pic {
-  @extend .fill;
-
-  border-radius: 50%;
-  height: 42px;
-  margin-right: $xs;
-  width: 42px;
-
-  &--none {
-    @extend %flex-acc;
-
-    background-color: $gray-2;
-    color: $white;
-    font-size: 16px;
-  }
-}
-
-// ## PROFILE NAME
-
-.#{$PREF}-profile > div > p {
-  @extend .meta;
-
-  font-size: 13px;
-  line-height: 18px;
-}

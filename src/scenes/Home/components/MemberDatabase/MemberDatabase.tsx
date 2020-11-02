@@ -79,11 +79,13 @@ export default () => {
   useEffect(() => {
     if (!data) return;
 
+    console.log(data);
+
     updateEntities({
       data: {
         ...data.getMemberDatabase,
         applicationQuestions: data.getMemberDatabase.application.questions,
-        members: data.getMemberDatabase?.memberships
+        members: data.getMemberDatabase.memberships
       },
       schema: Community
     });

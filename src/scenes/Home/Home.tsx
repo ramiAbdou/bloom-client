@@ -54,7 +54,6 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
 
 const HomeContent = () => {
   const { url } = useRouteMatch();
-  document.body.style.height = 'auto';
 
   return (
     <div className="s-home-content">
@@ -74,10 +73,12 @@ const HomeContent = () => {
 export default () => (
   <AuthenticatedCommunityWrapper>
     <div className="s-home">
-      <Navbar />
+      <div className="s-home-nav">
+        <Navbar />
+        <Sidebar />
+      </div>
 
       <div className="s-home-main">
-        <Sidebar />
         <HomeContent />
       </div>
     </div>
