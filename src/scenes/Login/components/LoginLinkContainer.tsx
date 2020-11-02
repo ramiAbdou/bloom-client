@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import validator from 'validator';
 
-import { PrimaryButton } from '@components/Button';
+import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import ErrorMessage from '@components/Misc/ErrorMessage';

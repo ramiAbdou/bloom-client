@@ -11,6 +11,7 @@ import {
 import GQLOptions from 'gql-query-builder/build/IQueryBuilderOptions';
 import { APIError } from 'graphql-hooks';
 import moment from 'moment-timezone';
+import { normalize, Schema } from 'normalizr';
 
 import { APP } from '@constants';
 
@@ -34,7 +35,7 @@ export const filterOptions = (
 ): string[] => {
   const lowerCaseSearchString = searchString.toLowerCase();
 
-  const isExcluded = (value) =>
+  const isExcluded = (value: string) =>
     excludedValues &&
     excludedValues.some((excludedValue) => value === excludedValue);
 
@@ -63,6 +64,23 @@ const config: AxiosRequestConfig = {
   url: `${APP.SERVER_URL}/graphql`,
   withCredentials: true
 };
+
+export const parseEntities = (data: any, schema: Schema<any>) =>
+  Object.entries(normalize(data, schema).entities).reduce(
+    (acc: Record<string, any>, [key, value]) => {
+      return {
+        ...acc,
+        [key]: {
+          activeId: ['communities', 'memberships'].includes(key)
+            ? Object.keys(value)[0]
+            : null,
+          allIds: Object.keys(value),
+          byId: value
+        }
+      };
+    },
+    {}
+  );
 
 export const query = async (data: GQLOptions) => {
   const options = { ...config, data: queryBuilder(data) };

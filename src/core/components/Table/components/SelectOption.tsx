@@ -11,7 +11,9 @@ import { useStoreState } from '@store/Store';
 import Table from '../Table.store';
 
 export const HeaderSelectOption = () => {
-  const primaryColor = useStoreState((store) => store.primaryColor);
+  const primaryColor = useStoreState(
+    ({ community }) => community?.primaryColor
+  );
   const isAllSelected = Table.useStoreState((state) => state.isAllSelected);
   const toggleAllRows = Table.useStoreActions(
     (actions) => actions.toggleAllRows

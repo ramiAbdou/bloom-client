@@ -23,21 +23,26 @@ import Directory from './components/Directory/Directory';
 import Events from './components/Events/Events';
 import Integrations from './components/Integrations/Integrations';
 import MemberDatabase from './components/MemberDatabase/MemberDatabase';
-import Membership from './components/Membership/Membership';
 import PendingApplicants from './components/PendingApplicants/PendingApplicants';
 import Sidebar from './components/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const activeEncodedUrlName = useStoreState((store) => store.encodedUrlName);
-  const isMemberOfCommunity: boolean = useStoreState(({ membership }) =>
-    membership.isMember(encodedUrlName)
+  const activeEncodedUrlName = useStoreState(
+    ({ community }) => community?.encodedUrlName
+  );
+
+  const isMember: boolean = useStoreState(({ communities, memberships }) =>
+    Object.values(memberships.byId).some(
+      ({ community }) =>
+        encodedUrlName === communities.byId[community]?.encodedUrlName
+    )
   );
 
   // If the user isn't a member of the community who's URL we are currently
   // sitting at, then we redirect them to the first community that they are
   // a member of.
-  if (!isMemberOfCommunity) return <Redirect to={`/${activeEncodedUrlName}`} />;
+  if (!isMember) return <Redirect to={`/${activeEncodedUrlName}`} />;
 
   // If they are a member, just return the children.
   return <>{children}</>;
@@ -45,7 +50,6 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
 
 const HomeContent = () => {
   const { url } = useRouteMatch();
-
   document.body.style.height = 'auto';
 
   return (
@@ -53,7 +57,6 @@ const HomeContent = () => {
       <Switch>
         <Route component={Directory} path={`${url}/directory`} />
         <Route component={Events} path={`${url}/events`} />
-        <Route component={Membership} path={`${url}/membership`} />
         <AdminRoute component={MemberDatabase} path={`${url}/database`} />
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />

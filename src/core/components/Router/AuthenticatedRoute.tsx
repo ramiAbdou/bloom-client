@@ -8,6 +8,7 @@ import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
+import { User } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_USER } from '@store/User.gql';
 import TokenRoute from './TokenRoute';
@@ -19,11 +20,13 @@ import TokenRoute from './TokenRoute';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { loading, data, error } = useQuery(GET_USER);
-  const initUser = useStoreActions(({ user }) => user.init);
-  const encodedUrlName = useStoreState((store) => store.encodedUrlName);
+  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const encodedUrlName = useStoreState(
+    ({ community }) => community?.encodedUrlName
+  );
 
   useEffect(() => {
-    if (data?.getUser) initUser(data.getUser);
+    if (data?.getUser) updateEntities({ data: data.getUser, schema: User });
   }, [data?.getUser?.id]);
 
   const isHome = rest.path === '/';

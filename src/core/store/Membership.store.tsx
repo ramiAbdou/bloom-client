@@ -27,19 +27,12 @@ export type SerializedMembershipData = {
   data: MemberData[];
   membershipId: string;
 };
-
-type SetPendingApplicationArgs = {
-  questions: MembershipQuestion[];
-  applications: SerializedMembershipData[];
-};
-
 type SetMemberDatabaseArgs = {
   questions: MembershipQuestion[];
   members: SerializedMembershipData[];
 };
 
 type Community = {
-  applicationQuestions: MembershipQuestion[];
   databaseQuestions: MembershipQuestion[];
   encodedUrlName: string;
   logoUrl: string;
@@ -60,14 +53,10 @@ export type Membership = {
 export type MembershipModel = {
   activeMembership: Computed<MembershipModel, Membership>;
   init: Thunk<MembershipModel, Membership[]>;
-  isAdmin: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
-  isMember: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
-  isOwner: Computed<MembershipModel, (encodedUrlName: string) => boolean>;
   memberships: Membership[];
   setActiveMembership: Action<MembershipModel, string>;
   setMemberDatabase: Action<MembershipModel, SetMemberDatabaseArgs>;
   setMemberships: Action<MembershipModel, Membership[]>;
-  setPendingApplications: Action<MembershipModel, SetPendingApplicationArgs>;
 };
 
 export const membershipModel: MembershipModel = {
@@ -91,38 +80,6 @@ export const membershipModel: MembershipModel = {
     // cookies to be the first membership's community ID.
     Cookie.set('communityId', community.id);
   }),
-
-  /**
-   * Returns true if there is any membership that has the same encodedUrlName
-   * as the one given.
-   */
-  isAdmin: computed(({ memberships }) => (encodedUrlName: string) =>
-    memberships?.some(
-      ({ community, role }) =>
-        !!role && community.encodedUrlName === encodedUrlName
-    )
-  ),
-
-  /**
-   * Returns true if there is any membership that has the same encodedUrlName
-   * as the one given.
-   */
-  isMember: computed(({ memberships }) => (encodedUrlName: string) =>
-    memberships?.some(
-      ({ community }) => encodedUrlName === community.encodedUrlName
-    )
-  ),
-
-  /**
-   * Returns true if there is any membership that has the same encodedUrlName
-   * as the one given.
-   */
-  isOwner: computed(({ memberships }) => (encodedUrlName: string) =>
-    memberships?.some(
-      ({ community, role }) =>
-        role === 'OWNER' && community.encodedUrlName === encodedUrlName
-    )
-  ),
 
   memberships: [],
 
@@ -169,32 +126,5 @@ export const membershipModel: MembershipModel = {
       ...membership,
       isActive: i === 0
     }))
-  })),
-
-  setPendingApplications: action(
-    (
-      { activeMembership, memberships, ...state },
-      { applications, questions }: SetPendingApplicationArgs
-    ) => {
-      const activeMembershipId = activeMembership?.id;
-
-      return {
-        ...state,
-        activeMembership,
-        memberships: memberships.map((membership: Membership) => {
-          if (membership.id !== activeMembershipId) return membership;
-
-          const { community } = membership;
-          return {
-            ...membership,
-            community: {
-              ...community,
-              applicationQuestions: questions,
-              pendingApplications: applications
-            }
-          };
-        })
-      };
-    }
-  )
+  }))
 };

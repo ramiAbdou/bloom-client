@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { PrimaryButton } from '@components/Button';
+import PrimaryButton from '@components/Button/PrimaryButton';
 import SearchBar from '@components/SearchBar/SearchBar';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';

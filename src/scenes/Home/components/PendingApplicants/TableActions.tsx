@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import { PrimaryButton } from '@components/Button';
+import PrimaryButton from '@components/Button/PrimaryButton';
 import Table from '@components/Table/Table.store';
 
 export default () => {

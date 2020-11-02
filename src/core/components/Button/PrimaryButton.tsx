@@ -57,7 +57,7 @@ export default ({
   // If the primaryColor is passed in, then use that and if not, use the global
   // primaryColor. Note that one of these two options MUST return non-null to
   // display
-  primaryColor = primaryColor ?? useStoreState((store) => store?.primaryColor);
+  primaryColor = primaryColor ?? useStoreState((store) => store.primaryColor);
   const customStyle = !disabled
     ? {
         backgroundColor: primaryColor + (isHovered ? '33' : '1A'),

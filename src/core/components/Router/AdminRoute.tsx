@@ -16,8 +16,12 @@ import { useStoreState } from '@store/Store';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const isAdmin = useStoreState(({ membership }) =>
-    membership.isAdmin(encodedUrlName)
+
+  const isAdmin: boolean = useStoreState(({ communities, memberships }) =>
+    Object.values(memberships.byId).some(
+      ({ community, role }) =>
+        !!role && encodedUrlName === communities.byId[community]?.encodedUrlName
+    )
   );
 
   if (!isAdmin) return <Redirect to={`/${encodedUrlName}`} />;

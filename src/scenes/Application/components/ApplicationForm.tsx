@@ -7,7 +7,7 @@ import { useMutation, useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
-import { PrimaryButton } from '@components/Button';
+import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
@@ -94,7 +94,7 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const primaryColor = useStoreState((store) => store.primaryColor);
+  const primaryColor = useStoreState(({ community }) => community.primaryColor);
   const application = Application.useStoreState(
     ({ community }) => community?.application
   );

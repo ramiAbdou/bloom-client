@@ -12,7 +12,7 @@ import Spinner from '@components/Loader/Spinner';
 import TableContent from '@components/Table/Table';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
-import { SerializedMembershipData } from '@store/Membership.store';
+import { Community, IApplicationQuestion } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
 import TableActions from './TableActions';
@@ -22,50 +22,41 @@ const NoPendingApplicationsMessage = () => (
 );
 
 const ApplicationTable = () => {
-  const applicationQuestions = useStoreState(
-    ({ membership }) =>
-      membership.activeMembership?.community?.applicationQuestions
+  const questions: IApplicationQuestion[] = useStoreState(
+    ({ applicationQuestions, community }) =>
+      community.applicationQuestions?.map(
+        (questionId: string) => applicationQuestions.byId[questionId]
+      )
   );
 
-  const pendingApplications = useStoreState(
-    ({ membership }) =>
-      membership.activeMembership?.community?.pendingApplications
-  );
+  const pendingApplicants = useStoreState((store) => store.pendingApplicants);
 
   const data = useMemo(
     () =>
-      !pendingApplications
+      !pendingApplicants
         ? []
-        : pendingApplications.reduce(
-            (
-              acc: Row[],
-              { membershipId, data: applicationData }: SerializedMembershipData
-            ) => {
-              const result = { id: membershipId };
-              applicationData.forEach(({ questionId, value }) => {
-                result[questionId] = value;
-              });
+        : pendingApplicants.allIds.reduce((acc: Row[], applicantId: string) => {
+            const { applicantData } = pendingApplicants.byId[applicantId];
+            const result = { id: applicantId };
+            applicantData.forEach(({ questionId, value }) => {
+              result[questionId] = value;
+            });
 
-              return [...acc, result];
-            },
-            []
-          ),
-    [pendingApplications?.length]
+            return [...acc, result];
+          }, []),
+    [pendingApplicants.allIds?.length]
   );
 
   const columns = useMemo(
     () =>
-      !applicationQuestions
+      !questions
         ? []
-        : applicationQuestions.map(({ type, id, title }) => ({
-            id,
-            title,
-            type
-          })),
-    [applicationQuestions?.length]
+        : questions.map(({ type, id, title }) => ({ id, title, type })),
+    [questions?.length]
   );
 
-  if (!pendingApplications?.length) return <NoPendingApplicationsMessage />;
+  if (!pendingApplicants.allIds?.length)
+    return <NoPendingApplicationsMessage />;
   return (
     <Table.Provider initialData={{ columns, data }}>
       <TableActions />
@@ -75,21 +66,19 @@ const ApplicationTable = () => {
 };
 
 export default () => {
-  const setPendingApplications = useStoreActions(
-    ({ membership }) => membership.setPendingApplications
-  );
-  const { data, loading } = useQuery(GET_PENDING_APPLICATIONS, {
-    useCache: true
-  });
+  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const { data, loading } = useQuery(GET_PENDING_APPLICATIONS);
 
   useEffect(() => {
-    if (data)
-      setPendingApplications({
-        applications: data?.getApplicants?.pendingMemberships.map(
-          ({ application }) => application
-        ),
-        questions: data?.getApplicants?.application?.questions
-      });
+    if (!data) return;
+
+    updateEntities({
+      data: {
+        applicationQuestions: data?.getApplicants.application.questions,
+        pendingApplicants: data?.getApplicants.pendingApplicants
+      },
+      schema: Community
+    });
   }, [data]);
 
   return (

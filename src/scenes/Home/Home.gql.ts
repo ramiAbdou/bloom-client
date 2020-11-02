@@ -19,13 +19,10 @@ export const GET_MEMBER_DATABASE = query({
 
 export const GET_PENDING_APPLICATIONS = query({
   fields: [
-    { application: [{ questions: ['id', 'order', 'title', 'type'] }] },
+    'id',
+    { application: ['id', { questions: ['id', 'order', 'title', 'type'] }] },
     {
-      pendingMemberships: [
-        {
-          application: [{ data: ['questionId', 'value'] }, 'membershipId']
-        }
-      ]
+      pendingApplicants: ['id', { applicantData: ['questionId', 'value'] }]
     }
   ],
   operation: 'getApplicants'

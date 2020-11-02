@@ -17,7 +17,9 @@ import CSSModifier from '@util/CSSModifier';
 import { check, x } from './images';
 
 const Toast = ({ isError, message }: ToastOptions) => {
-  const primaryColor = useStoreState((store) => store.primaryColor);
+  const primaryColor = useStoreState(
+    ({ community }) => community?.primaryColor
+  );
   const { css } = new CSSModifier()
     .class('c-toast')
     .addClass(isError, 'c-toast--error');
