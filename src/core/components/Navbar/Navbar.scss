@@ -6,7 +6,10 @@ $PREF: 'c-nav';
   @extend %flex-accol;
 
   background-color: $white;
-  border: 1px $gray-5 solid;
+  border-left: 1px $gray-5 solid;
+  border-right: 1px $gray-5 solid;
+  box-sizing: border-box;
+  height: 100%;
   padding: $sm $xs;
 }
 

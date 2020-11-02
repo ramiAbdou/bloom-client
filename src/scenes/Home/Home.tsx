@@ -78,9 +78,7 @@ export default () => (
         <Sidebar />
       </div>
 
-      <div className="s-home-main">
-        <HomeContent />
-      </div>
+      <HomeContent />
     </div>
   </AuthenticatedCommunityWrapper>
 );
