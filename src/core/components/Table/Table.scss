@@ -16,6 +16,7 @@ $PREF: 'c-table';
 .#{$PREF} {
   border-collapse: collapse;
   border-spacing: $xs $xxs;
+  height: fit-content;
   width: max-content;
 
   // ## TABLE ROW (HEADER AND BODY)

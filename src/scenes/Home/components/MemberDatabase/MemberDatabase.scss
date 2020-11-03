@@ -2,7 +2,6 @@
 
 $PREF: 's-home-database';
 
-.#{$PREF} { overflow: hidden; }
 .#{$PREF} > p { @extend .body--2; }
 
 .#{$PREF}-actions { margin-bottom: $sm; }

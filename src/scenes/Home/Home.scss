@@ -14,6 +14,7 @@ $PREF: 's-home';
   grid-template-columns: repeat(16, 1fr);
   height: 100%;
   margin-right: $md;
+  max-height: 100%;
 
   @include DD { margin: auto; max-width: 1440px; width: 100%; }
 }
@@ -29,7 +30,7 @@ $PREF: 's-home';
 }
 
 // Makes the header consistent across each page. Mainly for loading purposes.
-.#{$PREF}-header { @extend %flex-ac; margin-bottom: $sm; }
+.#{$PREF}-header { @extend %flex-ac; grid-row: 1 / span 5; margin-bottom: $sm; }
 .#{$PREF}-header > h3 { margin-right: $sm; }
 
 // ## SIDEBAR
@@ -43,20 +44,24 @@ $PREF: 's-home';
   width: 100%;
 }
 
-.#{$PREF}-sidebar > a {
+.#{$PREF}-sidebar-link {
   @extend .btn-txt;
   @extend %flex-ac;
   
+  border-radius: $xxs;
+  box-sizing: border-box;
   font-size: 14px;
   font-weight: 600;
   margin: $sm 0;
+  padding: $xxs;
   text-align: left;
   width: 100%;
 
+  &--active { background-color: $black; color: $white; }
   &:first-of-type { margin-top: 0; }
 }
 
-.#{$PREF}-sidebar > a > svg { height: $sm; margin-right: 8px; width: $sm; }
+.#{$PREF}-sidebar-link > svg { height: $sm; margin-right: 8px; width: $sm; }
 
 .#{$PREF}-sidebar > p {
   @extend .meta;
@@ -70,9 +75,9 @@ $PREF: 's-home';
 // ## CONTENT
 
 .#{$PREF}-content {
+  box-sizing: border-box;
   grid-column: 5 / -1;
   margin-bottom: $md;
   margin-top: $sm;
-  overflow: scroll;
-  width: 100%;
+  max-height: 100%;
 }

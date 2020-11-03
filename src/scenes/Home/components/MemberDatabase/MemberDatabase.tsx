@@ -63,6 +63,7 @@ const Database = () => {
     <Table.Provider initialData={{ columns, data }}>
       <TableActions />
       <TableContent />
+      <TableActions />
     </Table.Provider>
   );
 };
@@ -79,8 +80,6 @@ export default () => {
   useEffect(() => {
     if (!data) return;
 
-    console.log(data);
-
     updateEntities({
       data: {
         ...data.getMemberDatabase,
@@ -94,13 +93,13 @@ export default () => {
   const loading = result.loading && !data && !numMembers;
 
   return (
-    <div className="s-home-database">
+    <>
       <div className="s-home-header">
         <h3>Member Database</h3>
         {loading && <Spinner dark />}
       </div>
 
       {!loading && data && <Database />}
-    </div>
+    </>
   );
 };
