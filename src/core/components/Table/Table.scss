@@ -8,6 +8,7 @@ $PREF: 'c-table';
   background-color: $white;
   border: 1px $gray-5 solid;
   border-radius: 4px;
+  max-height: 0;
   overflow: scroll;
 
   ::-webkit-scrollbar { background: transparent; display: none !important; }
@@ -21,7 +22,12 @@ $PREF: 'c-table';
 
   // ## TABLE ROW (HEADER AND BODY)
 
-  thead > tr { border-bottom: 1px $gray-4 solid; }
+  thead > tr {
+    background-color: $white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
 
   tbody > tr {
     border-bottom: 1px $gray-5 solid;
@@ -37,9 +43,26 @@ $PREF: 'c-table';
   th {
     @extend .meta;
 
+    background-color: $white;
+    box-sizing: border-box;
     color: $gray-3;
+    position: sticky;
     text-align: left;
+    top: 0;
     vertical-align: middle;
+    z-index: 10;
+
+    &.#{$PREF}-select { z-index: 20; &::after { top: -1px; } }
+    
+
+    &::after {
+      border-bottom: 1px solid $gray-4;
+      bottom: 0;
+      content: '';
+      left: -1px;
+      position: absolute;
+      width: 100%;
+    }
   }
   
   // ## TABLE CELL
