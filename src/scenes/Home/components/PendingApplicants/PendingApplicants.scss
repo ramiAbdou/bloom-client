@@ -3,7 +3,7 @@
 $PREF: 's-home-applicants';
 
 .#{$PREF} { overflow: hidden; }
-.#{$PREF} > p { @extend .body--2; }
+.#{$PREF} > p { @extend .body--1; }
 
 .#{$PREF}-questions > p {
   @extend .meta;

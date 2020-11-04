@@ -6,17 +6,14 @@
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
 
-type CommunityIconProps = { isActive: boolean; logoUrl: string };
+type CommunityIconProps = { borderColor?: string; logoUrl: string };
 
-const CommunityIcon = ({ isActive, logoUrl }: CommunityIconProps) => {
-  const { css } = new CSSModifier()
-    .class('c-nav-community')
-    .addClass(isActive, 'c-nav-community--active');
+const CommunityIcon = ({ borderColor, logoUrl }: CommunityIconProps) => {
+  const customStyle = { border: `3px ${borderColor ?? '#000'} solid` };
 
   return (
-    <button className={css}>
+    <button className="c-nav-community" style={customStyle}>
       <img src={logoUrl} />
     </button>
   );
@@ -24,7 +21,7 @@ const CommunityIcon = ({ isActive, logoUrl }: CommunityIconProps) => {
 
 export default () => {
   const { activeId, allIds, byId } = useStoreState(
-    (store) => store.communities
+    ({ communities }) => communities
   );
 
   return (
@@ -32,7 +29,9 @@ export default () => {
       {allIds?.map((communityId: string) => (
         <CommunityIcon
           key={communityId}
-          isActive={activeId === communityId}
+          borderColor={
+            activeId === communityId && byId[communityId].primaryColor
+          }
           logoUrl={byId[communityId]?.logoUrl}
         />
       ))}

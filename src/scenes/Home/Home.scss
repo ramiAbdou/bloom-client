@@ -34,52 +34,13 @@ $PREF: 's-home';
 .#{$PREF}-header { @extend %flex-ac; grid-row: 1 / span 5; margin-bottom: $sm; }
 .#{$PREF}-header > h3 { margin-right: $sm; }
 
-// ## SIDEBAR
-
-.#{$PREF}-sidebar {
-  background-color: $white;
-  border-right: 1px $gray-5 solid;
-  box-sizing: border-box;
-  height: 100%;
-  padding: $sm $xs;
-  width: 100%;
-}
-
-.#{$PREF}-sidebar-link {
-  @extend .btn-txt;
-  @extend %flex-ac;
-  
-  border-radius: $xxs;
-  box-sizing: border-box;
-  font-size: 14px;
-  font-weight: 600;
-  margin: $sm 0;
-  padding: $xxs;
-  text-align: left;
-  width: 100%;
-
-  &--active { border-radius: 0 $sm $sm 0; }
-  &:first-of-type { margin-top: 0; }
-}
-
-.#{$PREF}-sidebar-link > svg { height: $sm; margin-right: 8px; width: $sm; }
-
-.#{$PREF}-sidebar > p {
-  @extend .meta;
-
-  color: $gray-3;
-  font-size: 13px;
-  margin-bottom: $xxs;
-  margin-left: $xs;
-}
-
 // ## CONTENT
 
 .#{$PREF}-content {
   box-sizing: border-box;
   grid-column: 5 / -1;
   margin-bottom: $md;
-  margin-top: $sm;
+  margin-top: $md;
   max-height: 100%;
   overflow: scroll;
 }

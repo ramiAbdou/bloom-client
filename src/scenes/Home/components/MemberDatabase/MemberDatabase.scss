@@ -3,7 +3,7 @@
 $PREF: 's-home-database';
 
 .#{$PREF} { box-sizing: border-box; max-height: 100%; overflow: hidden; }
-.#{$PREF} > p { @extend .body--2; }
+.#{$PREF} > p { @extend .body--1; }
 
 .#{$PREF}-actions { margin-bottom: $sm; }
 .#{$PREF}-actions > div { @extend %flex-ac; margin-bottom: $sm; }

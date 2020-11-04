@@ -21,11 +21,9 @@ $PREF: 'c-nav';
 
 .#{$PREF}-community {
   border-radius: $xxs;
-  height: $lg + 4px;
+  height: $xl + 4px;
   padding: 2px;
-  width: $lg + 4px;
-
-  &--active { border: 2px $gray-1 solid; }
+  width: $xl + 4px;
 }
 
 .#{$PREF}-community > img { @extend .fill; border-radius: 2px; }

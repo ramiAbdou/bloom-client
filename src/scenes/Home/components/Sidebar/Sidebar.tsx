@@ -3,13 +3,15 @@
  * @author Rami Abdou
  */
 
+import './Sidebar.scss';
+
 import React from 'react';
 import {
   IoMdAdd,
   IoMdAnalytics,
   IoMdCalendar,
+  IoMdGitNetwork,
   IoMdGlobe,
-  IoMdHand,
   IoMdPaper,
   IoMdPeople,
   IoMdPersonAdd
@@ -32,7 +34,7 @@ const MemberOptions = () => {
   const primaryColor = useStoreState((store) => store.primaryColor);
 
   return (
-    <>
+    <div className="s-home-sidebar-section">
       {memberLinks.map(({ Icon, title, to }) => {
         const isActive = window.location.pathname === `${url}/${to}`;
         const iconColor = isActive ? primaryColor : '#000';
@@ -55,15 +57,15 @@ const MemberOptions = () => {
           </Link>
         );
       })}
-    </>
+    </div>
   );
 };
 
 const adminLinks: LinkOptions[] = [
+  { Icon: IoMdAnalytics, title: 'Analytics', to: 'analytics' },
   { Icon: IoMdGlobe, title: 'Member Database', to: 'database' },
   { Icon: IoMdPaper, title: 'Pending Applicants', to: 'applicants' },
-  { Icon: IoMdAnalytics, title: 'Analytics', to: 'analytics' },
-  { Icon: IoMdHand, title: 'Integrations', to: 'integrations' }
+  { Icon: IoMdGitNetwork, title: 'Integrations', to: 'integrations' }
 ];
 
 const AdminOptions = () => {
@@ -71,7 +73,7 @@ const AdminOptions = () => {
   const primaryColor = useStoreState((store) => store.primaryColor);
 
   return (
-    <>
+    <div className="s-home-sidebar-section">
       {adminLinks.map(({ Icon, title, to }) => {
         const isActive = window.location.pathname === `${url}/${to}`;
         const iconColor = isActive ? primaryColor : '#000';
@@ -94,27 +96,30 @@ const AdminOptions = () => {
           </Link>
         );
       })}
-    </>
+    </div>
   );
 };
 
-const QuickActions = () => (
-  <>
-    <Link className="s-home-sidebar-link" to="/">
-      <IoMdAdd color="#000" />
-      Create Event
-    </Link>
+const QuickActions = () => {
+  return (
+    <div className="s-home-sidebar-section">
+      <Link className="s-home-sidebar-link" to="/">
+        <IoMdAdd color="#000" />
+        Create Event
+      </Link>
 
-    <Link className="s-home-sidebar-link" to="/">
-      <IoMdPersonAdd color="#000" />
-      Add Member
-    </Link>
-  </>
-);
+      <Link className="s-home-sidebar-link" to="/">
+        <IoMdPersonAdd color="#000" />
+        Add Member
+      </Link>
+    </div>
+  );
+};
 
 const CommunityName = () => {
   const name = useStoreState(({ community }) => community?.name);
-  return <h4>{name}</h4>;
+  const primaryColor = useStoreState((store) => store.primaryColor);
+  return <h3 style={{ color: primaryColor }}>{name}</h3>;
 };
 
 export default () => (

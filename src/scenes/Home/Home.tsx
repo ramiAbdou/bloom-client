@@ -24,7 +24,7 @@ import Events from './components/Events/Events';
 import Integrations from './components/Integrations/Integrations';
 import MemberDatabase from './components/MemberDatabase/MemberDatabase';
 import PendingApplicants from './components/PendingApplicants/PendingApplicants';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;

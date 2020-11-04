@@ -31,7 +31,7 @@ $PREF: 'c-toast';
   margin-right: $xs;
   width: $sm;
 
-  @include M { height: 16px; margin-right: 8px; width: 16px; }
+  @include M { height: $sm; margin-right: 8px; width: $sm; }
 }
 
-.#{$PREF} > p { @extend .body--2; color: $white; }
+.#{$PREF} > p { @extend .body--1; color: $white; }

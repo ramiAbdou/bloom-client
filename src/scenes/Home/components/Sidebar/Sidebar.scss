@@ -1,0 +1,55 @@
+@import 'src/index.scss';
+
+$PREF: 's-home-sidebar';
+
+// ## SIDEBAR
+
+.#{$PREF} {
+  background-color: $white;
+  border-right: 1px $gray-5 solid;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.#{$PREF} > h3 { margin: $md 0 $sm $md; }
+
+// .#{$PREF}-sidebar-section { margin-left: $sm; }
+
+.#{$PREF}-link {
+  @extend %flex-ac;
+
+  border-left: 3px $white solid;
+  border-radius: $xxs;
+  box-sizing: border-box;
+  font-size: $sm;
+  margin: $sm 0;
+  padding: $xs $xxs $xs $sm;
+  text-align: left;
+  width: 95%;
+
+  &--active { @extend .bold; border-radius: 0 $sm $sm 0; }
+  &:first-of-type { margin-top: 0; }
+}
+
+.#{$PREF}-link > svg { height: $md; margin-right: $xs; width: $md; }
+
+.#{$PREF} > p {
+  @extend .meta;
+
+  color: $gray-3;
+  font-size: 13px;
+  margin-bottom: $xxs;
+  margin-left: $xs;
+}
+
+.#{$PREF}-action {
+  @extend %flex-ac;
+
+  border-radius: $sm;
+  margin: $sm;
+  padding: $xs;
+  text-align: left;
+}
+
+.#{$PREF}-action > svg { height: $md; margin-right: $xs; width: $md; }

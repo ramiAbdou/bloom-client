@@ -29,23 +29,9 @@
 
 .body--1 { @include font-responsive(400, 14px, 24px, 14px, 24px, 14px, 24px); }
 
-.body--1--bold {
-  @include font-responsive(700, 16px, 24px, 16px, 24px, 16px, 24px);
-}
+.bold { font-weight: 600; }
 
 .body--2 {
-  color: $gray-2;
-
-  @include font-responsive(400, 14px, 24px, 14px, 24px, 14px, 24px);
-}
-
-.body--2--bold {
-  color: $gray-2;
-
-  @include font-responsive(700, 14px, 24px, 14px, 24px, 14px, 24px);
-}
-
-.body--3 {
   color: $gray-2;
 
   @include font-responsive(400, 12px, 18px, 12px, 18px, 12px, 18px);
@@ -57,11 +43,12 @@ h3 { @include font-responsive(700, 24px, 36px, 20px, 24px, 20px, 24px); }
 h4 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
 
 p,
+a,
 textarea,
 span,
 input { @extend .body--1; }
 
-input::placeholder { @extend .body--2; color: $gray-3; }
+input::placeholder { @extend .body--1; color: $gray-3; }
 
 .btn-txt { @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px); }
 

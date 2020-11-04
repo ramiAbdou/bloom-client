@@ -69,7 +69,7 @@ $PREF: 'c-table';
   // ## TABLE CELL (HEADER AND CELL)
 
   th,
-  td { @extend .body--3; margin: 0; padding: $xs $md $xs $xs; }
+  td { @extend .body--2; margin: 0; padding: $xs $md $xs $xs; }
 }
 
 .#{$PREF}-td {
@@ -77,7 +77,7 @@ $PREF: 'c-table';
 
   &--multiple-choice > span,
   &--multiple-select > span {
-    @extend .body--3;
+    @extend .body--2;
 
     background-color: rgba($color: $orange-1, $alpha: 0.25);
     border-radius: $sm;
@@ -114,7 +114,7 @@ $PREF: 'c-table';
 }
 
 // The actual checkbox. Note that even though we specify the div dimensions to
-// be 16px, because of the border it actually renders as 18px. Update the SVG
+// be $sm, because of the border it actually renders as 18px. Update the SVG
 // image accordingly.
 
 $CHECKBOX_DIM: 18px;
