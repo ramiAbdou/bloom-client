@@ -14,7 +14,15 @@ $PREF: 's-home-sidebar';
 
 .#{$PREF} > h3 { margin: $md 0 $sm $md; }
 
-// .#{$PREF}-sidebar-section { margin-left: $sm; }
+.#{$PREF}-section > p {
+  @extend .body--2;
+  @extend .bold;
+
+  color: $gray-3;
+  margin-bottom: $sm;
+  margin-left: $sm;
+  text-transform: uppercase;
+}
 
 .#{$PREF}-link {
   @extend %flex-ac;
@@ -22,7 +30,6 @@ $PREF: 's-home-sidebar';
   border-left: 3px $white solid;
   border-radius: $xxs;
   box-sizing: border-box;
-  font-size: $sm;
   margin: $sm 0;
   padding: $xs $xxs $xs $sm;
   text-align: left;

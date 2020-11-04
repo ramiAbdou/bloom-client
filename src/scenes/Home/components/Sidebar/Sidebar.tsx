@@ -73,7 +73,8 @@ const AdminOptions = () => {
   const primaryColor = useStoreState((store) => store.primaryColor);
 
   return (
-    <div className="s-home-sidebar-section">
+    <div className="s-home-sidebar-section" style={{ marginTop: 36 }}>
+      <p>Admin</p>
       {adminLinks.map(({ Icon, title, to }) => {
         const isActive = window.location.pathname === `${url}/${to}`;
         const iconColor = isActive ? primaryColor : '#000';
@@ -102,7 +103,8 @@ const AdminOptions = () => {
 
 const QuickActions = () => {
   return (
-    <div className="s-home-sidebar-section">
+    <div className="s-home-sidebar-section" style={{ marginTop: 36 }}>
+      <p>Quick Actions</p>
       <Link className="s-home-sidebar-link" to="/">
         <IoMdAdd color="#000" />
         Create Event
@@ -127,9 +129,7 @@ export default () => (
     <CommunityName />
     <Separator style={{ marginBottom: 24, marginTop: 24 }} />
     <MemberOptions />
-    <Separator style={{ marginBottom: 24, marginTop: 24 }} />
     <AdminOptions />
-    <Separator style={{ marginBottom: 24, marginTop: 24 }} />
     <QuickActions />
   </div>
 );
