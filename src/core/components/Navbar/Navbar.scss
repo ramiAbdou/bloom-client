@@ -5,7 +5,7 @@ $PREF: 'c-nav';
 .#{$PREF} {
   @extend %flex-accol;
 
-  background-color: $white;
+  background-color: white;
   border-left: 1px $gray-5 solid;
   border-right: 1px $gray-5 solid;
   box-sizing: border-box;

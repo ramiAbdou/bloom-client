@@ -80,7 +80,7 @@ export default () => {
   const { data, loading } = useQuery(GET_PENDING_APPLICATIONS);
 
   useEffect(() => {
-    if (!data) return;
+    if (!data?.getApplicants) return;
 
     updateEntities({
       data: {

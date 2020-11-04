@@ -77,7 +77,7 @@ export default () => {
   const { data } = result;
 
   useEffect(() => {
-    if (!data) return;
+    if (!data?.getMemberDatabase) return;
 
     updateEntities({
       data: {

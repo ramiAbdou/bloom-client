@@ -5,14 +5,14 @@ $PREF: 's-home-sidebar';
 // ## SIDEBAR
 
 .#{$PREF} {
-  background-color: $white;
+  background-color: white;
   border-right: 1px $gray-5 solid;
   box-sizing: border-box;
   height: 100%;
   width: 100%;
 }
 
-.#{$PREF} > h3 { margin: $md 0 $sm $sm; }
+.#{$PREF} > h3 { color: $primary; margin: $md 0 $sm $sm; }
 
 .#{$PREF}-section > p {
   @extend .body--2;
@@ -27,7 +27,7 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-link {
   @extend %flex-ac;
 
-  border-left: 3px $white solid;
+  border-left: 3px white solid;
   border-radius: $xxs;
   box-sizing: border-box;
   margin: $xs 0;

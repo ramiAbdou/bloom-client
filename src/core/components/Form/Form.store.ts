@@ -25,7 +25,6 @@ type FormModel = {
   itemCSS: string; // Represents a class string.
   items: FormItemData[];
   next: Action<FormModel, string>;
-  primaryColor: string;
   setSubmitForm: Action<FormModel, (...args: any[]) => Promise<any>>;
   submitForm: (...args: any[]) => Promise<any>;
   submitOnEnter: Computed<FormModel, boolean>;
@@ -89,8 +88,6 @@ const model: FormModel = {
     return { ...state, items };
   }),
 
-  primaryColor: '#f58023',
-
   setSubmitForm: action((state, submitForm) => ({ ...state, submitForm })),
 
   submitForm: () => Promise.resolve(),
@@ -116,13 +113,12 @@ const model: FormModel = {
 
 type FormStoreInitializer = {
   itemCSS?: string;
-  primaryColor?: string;
   questions: FormQuestion[];
   submitForm?: (data: FormData, ...args: any[]) => Promise<any>;
 };
 
 export default createContextStore<FormModel>(
-  ({ itemCSS, primaryColor, questions, submitForm }: FormStoreInitializer) => ({
+  ({ itemCSS, questions, submitForm }: FormStoreInitializer) => ({
     ...model,
     itemCSS,
     items: questions?.map(
@@ -141,7 +137,6 @@ export default createContextStore<FormModel>(
         };
       }
     ),
-    primaryColor: primaryColor || '#F58023',
     submitForm
   }),
   { disableImmer: true }

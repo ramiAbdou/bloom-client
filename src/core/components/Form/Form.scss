@@ -38,17 +38,18 @@ $PREF: 'c-form';
 .#{$PREF}-input {
   @extend %flex-acsb;
 
-  background-color: $white;
+  background-color: white;
   border: 1px $gray-4 solid;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: text;
-  height: $md;
+  height: $lg;
   padding-left: 8px;
   padding-right: 8px;
   width: 100%;
 
   &::placeholder { color: $gray-4; }
+  &:active { border: 1px $primary solid; }
   &--error { border: 1px $red solid; }
 
   &--lg {
@@ -67,14 +68,21 @@ $PREF: 'c-form';
 .#{$PREF}-mc-choice > div {
   @extend %flex-acc;
 
-  background-color: $white;
+  background-color: white;
   border: 2px solid $gray-4;
   border-radius: 50%;
   height: $sm;
   width: $sm;
 }
 
+.#{$PREF}-mc-choice--active > p {
+  background-color: rgba($color: $primary, $alpha: 0.2);
+}
+
+.#{$PREF}-mc-choice--active > div { border: 2px $primary solid; }
+
 .#{$PREF}-mc-choice--active > div > div {
+  background-color: $primary;
   border-radius: 50%;
   height: 10px;
   width: 10px;
@@ -86,7 +94,7 @@ $PREF: 'c-form';
   @extend .body--2;
 
   border-radius: $sm;
-  color: $black;
+  color: black;
   margin-left: 8px;
   margin-right: 8px;
   padding-left: 6px;
@@ -121,8 +129,9 @@ $PREF: 'c-form';
   @extend %flex-ac;
   @extend .body--2;
 
+  background-color: rgba($color: $primary, $alpha: 0.2);
   border-radius: $sm;
-  color: $black;
+  color: black;
   margin-right: $xxs;
   padding-left: $xxs;
   padding-right: $xxs;
@@ -131,9 +140,9 @@ $PREF: 'c-form';
 }
 
 .#{$PREF}-dd-opt-ctr {
-  background-color: $white;
+  background-color: white;
   border-radius: $xxs;
-  box-shadow: 0 4px 5px rgba($color: $black, $alpha: 0.15);
+  box-shadow: 0 4px 5px rgba($color: black, $alpha: 0.15);
   margin-bottom: $lg; // For when the dropdown is at the bottom of the page.
   padding-bottom: $xxs;
   padding-top: $xxs;
@@ -153,6 +162,7 @@ $PREF: 'c-form';
 .#{$PREF}-dd-opt {
   @extend %flex-ac;
 
+  
   height: $md;
   overflow: hidden;
   width: 100%;
@@ -163,8 +173,9 @@ $PREF: 'c-form';
 .#{$PREF}-dd-opt > p {
   @extend .body--2;
 
+  background-color: rgba($color: $primary, $alpha: 0.2);
   border-radius: $sm;
-  color: $black;
+  color: black;
   margin-left: 8px;
   margin-right: 8px;
   padding-left: 6px;

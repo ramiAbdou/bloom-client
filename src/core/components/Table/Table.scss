@@ -5,7 +5,7 @@ $PREF: 'c-table';
 .#{$PREF}-ctr {
   @extend .no-scrollbar;
   
-  background-color: $white;
+  background-color: white;
   border: 1px $gray-5 solid;
   border-radius: 4px;
   max-height: 0;
@@ -36,7 +36,7 @@ $PREF: 'c-table';
   th {
     @extend .meta;
 
-    background-color: $white;
+    background-color: white;
     box-sizing: border-box;
     color: $gray-3;
     position: sticky;
@@ -79,9 +79,9 @@ $PREF: 'c-table';
   &--multiple-select > span {
     @extend .body--2;
 
-    background-color: rgba($color: $orange-1, $alpha: 0.25);
+    background-color: rgba($color: $primary, $alpha: 0.25);
     border-radius: $sm;
-    color: $black;
+    color: black;
     margin: 0 2px $xxs 0;
     padding-left: 6px;
     padding-right: 6px;
@@ -93,7 +93,7 @@ $PREF: 'c-table';
 
 // Container for the checkbox select.
 .#{$PREF}-select {
-  background-color: $white;
+  background-color: white;
   cursor: default;
   left: 0;
   padding: $xs !important;
@@ -122,7 +122,7 @@ $CHECKBOX_DIM: 18px;
 .#{$PREF}-select > div {
   @extend %flex-acc;
   
-  background-color: $white;
+  background-color: white;
   border: 1px $gray-4 solid;
   border-radius: 2px;
   cursor: pointer;

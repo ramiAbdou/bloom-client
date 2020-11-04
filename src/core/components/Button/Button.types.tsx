@@ -9,7 +9,6 @@ export type ButtonProps = {
   isLoading?: boolean;
   loadingText?: string;
   onClick?: VoidFunction;
-  primaryColor?: string;
   small?: boolean;
   title: string;
 };

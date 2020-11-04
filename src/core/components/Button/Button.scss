@@ -9,7 +9,7 @@ $PREF: 'c-btn';
   @extend .btn-txt;
   @extend %flex-acc;
 
-  border-radius: 8px;
+  border-radius: $xs;
   text-transform: uppercase;
 }
 
@@ -20,7 +20,7 @@ $PREF: 'c-btn';
   @extend %flex-acc;
 
   color: $gray-3;
-  margin-right: $xs;
+  margin-right: $sm;
 }
 
 // PRIMARY BUTTON
@@ -28,11 +28,13 @@ $PREF: 'c-btn';
 .#{$PREF}-primary {
   @extend .#{$PREF}-base;
 
+  // background-color: rgba($color: $primary, $alpha: 0.1);
+
   box-shadow: 0 1px $gray-5;
-  color: $orange-1;
-  height: $lg;
-  padding-left: $lg;
-  padding-right: $lg;
+  color: $primary;
+  height: $xl;
+  padding-left: $xl;
+  padding-right: $xl;
 
   @include M { width: 100%; }
 
@@ -47,5 +49,5 @@ $PREF: 'c-btn';
     @include HOVER { background: $gray-5; }
   }
 
-  &--sm { height: $md; padding-left: $xs; padding-right: $xs; }
+  &--sm { height: $lg; padding-left: $sm; padding-right: $sm; }
 }

@@ -49,7 +49,6 @@ const SubmitButton = () => {
     ({ community }) => community?.encodedUrlName
   );
 
-  const primaryColor = Form.useStoreState((store) => store.primaryColor);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const submittableData = Form.useStoreState((store) => store.data);
   const email = Form.useStoreState(
@@ -84,7 +83,6 @@ const SubmitButton = () => {
         disabled={!isCompleted}
         isLoading={loading}
         loadingText="Submitting..."
-        primaryColor={primaryColor}
         title="Submit Application"
         onClick={applyForMembership}
       />

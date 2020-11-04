@@ -15,7 +15,7 @@ import Cookie from 'js-cookie';
 import merge from 'lodash/merge';
 import { Schema } from 'normalizr';
 
-import { parseEntities } from '@util/util';
+import { getHue, parseEntities } from '@util/util';
 import { LoaderModel, loaderModel } from './Loader.store';
 import {
   Entity,
@@ -65,6 +65,8 @@ export const store = createStore<StoreModel>(
     community: computed(({ communities }) => {
       const { activeId, byId } = communities;
       const result: ICommunity = byId[activeId];
+
+      console.log(communities);
       if (!result) return null;
 
       // For every request, we should have a communityId set in the token so
@@ -91,9 +93,12 @@ export const store = createStore<StoreModel>(
       ({ entities }) => entities.members as EntityRecord<IMember>
     ),
 
-    membership: computed(({ memberships }) => {
+    membership: computed(({ entities, memberships }) => {
       const { activeId, byId } = memberships;
       const result: IMembership = byId[activeId];
+
+      console.log(entities);
+      console.log(memberships.allIds);
 
       if (!result) return null;
       const { role } = result;
@@ -105,16 +110,35 @@ export const store = createStore<StoreModel>(
       return result;
     }),
 
-    memberships: computed(
-      ({ entities }) => entities.memberships as EntityRecord<IMembership>
-    ),
+    memberships: computed(({ entities }) => {
+      // console.log(entities);
+      return entities.memberships as EntityRecord<IMembership>;
+    }),
 
     pendingApplicants: computed(
       ({ entities }) =>
         entities.pendingApplicants as EntityRecord<IPendingApplicant>
     ),
 
-    primaryColor: computed(({ community }) => community?.primaryColor),
+    primaryColor: computed(({ community }) => {
+      const color = community?.primaryColor ?? '#f58023';
+
+      // If the document's primary color is up to date, return early.
+      const { style } = document.documentElement;
+      if (style.getPropertyValue('--primary') === color) return color;
+
+      const hue = getHue(color);
+
+      style.setProperty('--primary', color);
+      style.setProperty('--gray-1', `hsl(${hue}, 5%, 20%)`);
+      style.setProperty('--gray-2', `hsl(${hue}, 5%, 31%)`);
+      style.setProperty('--gray-3', `hsl(${hue}, 5%, 51%)`);
+      style.setProperty('--gray-4', `hsl(${hue}, 5%, 74%)`);
+      style.setProperty('--gray-5', `hsl(${hue}, 5%, 88%)`);
+      style.setProperty('--gray-6', `hsl(${hue}, 5%, 98%)`);
+
+      return color;
+    }),
 
     setActiveCommunity: action((state, communityId: string) => ({
       ...state,

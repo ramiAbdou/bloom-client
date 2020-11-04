@@ -12,7 +12,6 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import { BLOOM } from '@constants';
 import { getGraphQLError } from '@util/util';
 import { SEND_TEMPORARY_LOGIN_LINK } from '../Login.gql';
 import Login from '../Login.store';
@@ -70,7 +69,6 @@ const SubmitButton = () => {
         disabled={!isCompleted}
         isLoading={loading}
         loadingText="Sending Link..."
-        primaryColor={BLOOM.PRIMARY_COLOR}
         title="Send Login Link"
         onClick={submitForm}
       />

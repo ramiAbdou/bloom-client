@@ -11,7 +11,6 @@ import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
 export default ({ maxCharacters, placeholder, title }: FormItemData) => {
-  const primaryColor = Form.useStoreState((store) => store.primaryColor);
   const submitOnEnter = Form.useStoreState((store) => store.submitOnEnter);
   const submitForm = Form.useStoreState((store) => store.submitForm);
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
@@ -44,14 +43,11 @@ export default ({ maxCharacters, placeholder, title }: FormItemData) => {
     if (keyCode === 13 && submitOnEnter) await submitForm();
   };
 
-  const style = isActive ? { border: `1px ${primaryColor} solid` } : {};
-
   return (
     <input
       ref={inputRef}
       className="c-form-input"
       placeholder={placeholder ?? ''}
-      style={style}
       type="text"
       value={value ?? ''}
       onChange={({ target }) => updateText(target.value)}

@@ -121,8 +121,7 @@ const QuickActions = () => {
 
 const CommunityName = () => {
   const name = useStoreState(({ community }) => community?.name);
-  const primaryColor = useStoreState((store) => store.primaryColor);
-  return <h3 style={{ color: primaryColor }}>{name}</h3>;
+  return <h3>{name}</h3>;
 };
 
 export default () => (

@@ -34,4 +34,4 @@ $PREF: 'c-toast';
   @include M { height: $sm; margin-right: 8px; width: $sm; }
 }
 
-.#{$PREF} > p { @extend .body--1; color: $white; }
+.#{$PREF} > p { @extend .body--1; color: white; }

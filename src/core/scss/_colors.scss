@@ -1,17 +1,24 @@
 // Colors from the Bloom style guide.
 
-$black: #000;
-$blue-1: #00558a;
-$gray-1: #333;
-$gray-2: #4f4f4f;
-$gray-3: #828282;
-$gray-4: #bdbdbd;
-$gray-5: #e0e0e0;
-$gray-6: #fafafa;
-$green-1: #018a8a;
-$orange-1: #f58023;
-$red: #ef4123;
-$white: #fff;
-$yellow: #faa21e;
+:root {
+  --primary: #f58023;
+  --gray-1: #333;
+  --gray-2: #4f4f4f;
+  --gray-3: #828282;
+  --gray-4: #bdbdbd;
+  --gray-5: #e0e0e0;
+  --gray-6: #fafafa;
+}
 
-$bloom-gradient: linear-gradient(to right, $yellow, $red);
+// ## CUSTOMIZED THEME COLORS
+
+$primary: var(--primary);
+$gray-1: var(--gray-1);
+$gray-2: var(--gray-2);
+$gray-3: var(--gray-3);
+$gray-4: var(--gray-4);
+$gray-5: var(--gray-5);
+$gray-6: var(--gray-6);
+
+$green-1: #018a8a;
+$red: #ef4123;
