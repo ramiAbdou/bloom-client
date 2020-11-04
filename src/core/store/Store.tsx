@@ -41,6 +41,7 @@ type StoreModel = {
   entities: Record<Entity, EntityRecord>;
   loader: LoaderModel;
   members: Computed<StoreModel, EntityRecord<IMember>>;
+  membership: Computed<StoreModel, IMembership>;
   memberships: Computed<StoreModel, EntityRecord<IMembership>>;
   pendingApplicants: Computed<StoreModel, EntityRecord<IPendingApplicant>>;
   primaryColor: Computed<StoreModel, string>;
@@ -63,13 +64,15 @@ export const store = createStore<StoreModel>(
 
     community: computed(({ communities }) => {
       const { activeId, byId } = communities;
+      const result: ICommunity = byId[activeId];
+      if (!result) return null;
 
       // For every request, we should have a communityId set in the token so
       // we could take advantage of the GQL context and reduce # of args.
       if (Cookie.get('communityId') !== activeId)
         Cookie.set('communityId', activeId);
 
-      return byId[activeId] as ICommunity;
+      return result;
     }),
 
     entities: {
@@ -87,6 +90,20 @@ export const store = createStore<StoreModel>(
     members: computed(
       ({ entities }) => entities.members as EntityRecord<IMember>
     ),
+
+    membership: computed(({ memberships }) => {
+      const { activeId, byId } = memberships;
+      const result: IMembership = byId[activeId];
+
+      if (!result) return null;
+      const { role } = result;
+
+      // For every request, we should have a communityId set in the token so
+      // we could take advantage of the GQL context and reduce # of args.
+      if (Cookie.get('role') !== role) Cookie.set('role', role);
+
+      return result;
+    }),
 
     memberships: computed(
       ({ entities }) => entities.memberships as EntityRecord<IMembership>
