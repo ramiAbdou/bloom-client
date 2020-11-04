@@ -35,6 +35,7 @@ const MemberOptions = () => {
 
   return (
     <div className="s-home-sidebar-section">
+      <p>Main</p>
       {memberLinks.map(({ Icon, title, to }) => {
         const isActive = window.location.pathname === `${url}/${to}`;
         const iconColor = isActive ? primaryColor : '#000';

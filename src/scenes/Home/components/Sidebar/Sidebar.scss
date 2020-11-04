@@ -12,7 +12,7 @@ $PREF: 's-home-sidebar';
   width: 100%;
 }
 
-.#{$PREF} > h3 { margin: $md 0 $sm $md; }
+.#{$PREF} > h3 { margin: $md 0 $sm $sm; }
 
 .#{$PREF}-section > p {
   @extend .body--2;
@@ -30,7 +30,7 @@ $PREF: 's-home-sidebar';
   border-left: 3px $white solid;
   border-radius: $xxs;
   box-sizing: border-box;
-  margin: $sm 0;
+  margin: $xs 0;
   padding: $xs $xxs $xs $sm;
   text-align: left;
   width: 95%;
