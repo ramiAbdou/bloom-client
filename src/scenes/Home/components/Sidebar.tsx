@@ -29,17 +29,27 @@ const memberLinks: LinkOptions[] = [
 
 const MemberOptions = () => {
   const { url } = useRouteMatch();
+  const primaryColor = useStoreState((store) => store.primaryColor);
+
   return (
     <>
       {memberLinks.map(({ Icon, title, to }) => {
         const isActive = window.location.pathname === `${url}/${to}`;
-        const iconColor = isActive ? '#FFF' : '#000';
+        const iconColor = isActive ? primaryColor : '#000';
+        const customStyle = isActive
+          ? {
+              backgroundColor: `${primaryColor}1A`,
+              borderLeft: `3px ${primaryColor} solid`,
+              color: primaryColor
+            }
+          : {};
+
         const { css } = new CSSModifier()
           .class('s-home-sidebar-link')
           .addClass(isActive, 's-home-sidebar-link--active');
 
         return (
-          <Link key={to} className={css} to={to}>
+          <Link key={to} className={css} style={customStyle} to={to}>
             <Icon color={iconColor} />
             {title}
           </Link>
@@ -58,17 +68,27 @@ const adminLinks: LinkOptions[] = [
 
 const AdminOptions = () => {
   const { url } = useRouteMatch();
+  const primaryColor = useStoreState((store) => store.primaryColor);
+
   return (
     <>
       {adminLinks.map(({ Icon, title, to }) => {
         const isActive = window.location.pathname === `${url}/${to}`;
-        const iconColor = isActive ? '#FFF' : '#000';
+        const iconColor = isActive ? primaryColor : '#000';
+        const customStyle = isActive
+          ? {
+              backgroundColor: `${primaryColor}1A`,
+              borderLeft: `3px ${primaryColor} solid`,
+              color: primaryColor
+            }
+          : {};
+
         const { css } = new CSSModifier()
           .class('s-home-sidebar-link')
           .addClass(isActive, 's-home-sidebar-link--active');
 
         return (
-          <Link key={to} className={css} to={to}>
+          <Link key={to} className={css} style={customStyle} to={to}>
             <Icon color={iconColor} />
             {title}
           </Link>

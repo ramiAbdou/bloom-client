@@ -22,13 +22,6 @@ $PREF: 'c-table';
 
   // ## TABLE ROW (HEADER AND BODY)
 
-  thead > tr {
-    background-color: $white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-
   tbody > tr {
     border-bottom: 1px $gray-5 solid;
     cursor: pointer;
@@ -52,7 +45,11 @@ $PREF: 'c-table';
     vertical-align: middle;
     z-index: 10;
 
-    &.#{$PREF}-select { z-index: 20; &::after { top: -1px; } }
+    &.#{$PREF}-select {
+      z-index: 20;
+      
+      &::after { top: -1px; z-index: -1; }
+    }
     
 
     &::after {
