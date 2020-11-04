@@ -41,10 +41,8 @@ type StoreModel = {
   entities: Record<Entity, EntityRecord>;
   loader: LoaderModel;
   members: Computed<StoreModel, EntityRecord<IMember>>;
-  membership: Computed<StoreModel, IMembership>;
   memberships: Computed<StoreModel, EntityRecord<IMembership>>;
   pendingApplicants: Computed<StoreModel, EntityRecord<IPendingApplicant>>;
-  primaryColor: Computed<StoreModel, string>;
   setActiveCommunity: Action<StoreModel, string>;
   toast: ToastModel;
   updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
@@ -66,13 +64,28 @@ export const store = createStore<StoreModel>(
       const { activeId, byId } = communities;
       const result: ICommunity = byId[activeId];
 
-      console.log(communities);
       if (!result) return null;
 
       // For every request, we should have a communityId set in the token so
       // we could take advantage of the GQL context and reduce # of args.
       if (Cookie.get('communityId') !== activeId)
         Cookie.set('communityId', activeId);
+
+      const color = result?.primaryColor ?? '#f58023';
+
+      // If the document's primary color is up to date, return early.
+      const { style } = document.documentElement;
+      if (style.getPropertyValue('--primary') === color) return result;
+
+      const hue = getHue(color);
+
+      style.setProperty('--primary', color);
+      style.setProperty('--gray-1', `hsl(${hue}, 5%, 20%)`);
+      style.setProperty('--gray-2', `hsl(${hue}, 5%, 31%)`);
+      style.setProperty('--gray-3', `hsl(${hue}, 5%, 51%)`);
+      style.setProperty('--gray-4', `hsl(${hue}, 5%, 74%)`);
+      style.setProperty('--gray-5', `hsl(${hue}, 5%, 88%)`);
+      style.setProperty('--gray-6', `hsl(${hue}, 5%, 98%)`);
 
       return result;
     }),
@@ -93,15 +106,14 @@ export const store = createStore<StoreModel>(
       ({ entities }) => entities.members as EntityRecord<IMember>
     ),
 
-    membership: computed(({ entities, memberships }) => {
-      const { activeId, byId } = memberships;
-      const result: IMembership = byId[activeId];
+    memberships: computed(({ entities }) => {
+      const result = entities.memberships as EntityRecord<IMembership>;
 
-      console.log(entities);
-      console.log(memberships.allIds);
+      const { activeId, byId } = result;
+      const activeMembership: IMembership = byId[activeId];
 
-      if (!result) return null;
-      const { role } = result;
+      if (!activeMembership) return result;
+      const { role } = activeMembership;
 
       // For every request, we should have a communityId set in the token so
       // we could take advantage of the GQL context and reduce # of args.
@@ -110,35 +122,10 @@ export const store = createStore<StoreModel>(
       return result;
     }),
 
-    memberships: computed(({ entities }) => {
-      // console.log(entities);
-      return entities.memberships as EntityRecord<IMembership>;
-    }),
-
     pendingApplicants: computed(
       ({ entities }) =>
         entities.pendingApplicants as EntityRecord<IPendingApplicant>
     ),
-
-    primaryColor: computed(({ community }) => {
-      const color = community?.primaryColor ?? '#f58023';
-
-      // If the document's primary color is up to date, return early.
-      const { style } = document.documentElement;
-      if (style.getPropertyValue('--primary') === color) return color;
-
-      const hue = getHue(color);
-
-      style.setProperty('--primary', color);
-      style.setProperty('--gray-1', `hsl(${hue}, 5%, 20%)`);
-      style.setProperty('--gray-2', `hsl(${hue}, 5%, 31%)`);
-      style.setProperty('--gray-3', `hsl(${hue}, 5%, 51%)`);
-      style.setProperty('--gray-4', `hsl(${hue}, 5%, 74%)`);
-      style.setProperty('--gray-5', `hsl(${hue}, 5%, 88%)`);
-      style.setProperty('--gray-6', `hsl(${hue}, 5%, 98%)`);
-
-      return color;
-    }),
 
     setActiveCommunity: action((state, communityId: string) => ({
       ...state,

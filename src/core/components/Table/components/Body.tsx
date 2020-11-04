@@ -7,7 +7,6 @@
 import React from 'react';
 
 import { QuestionType, ValueProps } from '@constants';
-import { useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 import Table from '../Table.store';
 import { Row } from '../Table.types';
@@ -18,24 +17,17 @@ interface DataCellProps extends ValueProps {
 }
 
 const DataCell = ({ type, value }: DataCellProps) => {
-  const primaryColor = useStoreState((store) => store.primaryColor);
-
   const { css } = new CSSModifier()
     .addClass(type === 'MULTIPLE_CHOICE', 'c-table-td--multiple-choice')
     .addClass(type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select');
 
-  const style = { backgroundColor: `${primaryColor}33` };
-
   let content: React.ReactNode = value;
-  if (type === 'MULTIPLE_CHOICE' && value)
-    content = <span style={style}>{value}</span>;
+  if (type === 'MULTIPLE_CHOICE' && value) content = <span>{value}</span>;
   else if (type === 'MULTIPLE_SELECT')
     content = (
       <>
         {value?.split(',').map((individualValue: string) => (
-          <span key={individualValue} style={style}>
-            {individualValue}
-          </span>
+          <span key={individualValue}>{individualValue}</span>
         ))}
       </>
     );

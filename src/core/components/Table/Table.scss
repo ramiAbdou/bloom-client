@@ -79,7 +79,7 @@ $PREF: 'c-table';
   &--multiple-select > span {
     @extend .body--2;
 
-    background-color: rgba($color: $primary, $alpha: 0.25);
+    background-color: rgba($color: $primary, $alpha: 0.2);
     border-radius: $sm;
     color: black;
     margin: 0 2px $xxs 0;
@@ -130,6 +130,8 @@ $CHECKBOX_DIM: 18px;
   margin: 0;
   width: $CHECKBOX_DIM;
 }
+
+.#{$PREF}-select--active > div { background-color: $primary; }
 
 .#{$PREF}-select > div > svg {
   height: $CHECKBOX_DIM + 2;

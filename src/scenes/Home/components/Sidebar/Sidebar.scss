@@ -30,16 +30,32 @@ $PREF: 's-home-sidebar';
   border-left: 3px white solid;
   border-radius: $xxs;
   box-sizing: border-box;
+  color: black;
   margin: $xs 0;
   padding: $xs $xxs $xs $sm;
   text-align: left;
   width: 95%;
 
-  &--active { @extend .bold; border-radius: 0 $sm $sm 0; }
+  &--active {
+    @extend .bold; 
+  
+    background-color: rgba($color: $primary, $alpha: 0.1);
+    border-left: 3px $primary solid;
+    border-radius: 0 $sm $sm 0;
+    color: $primary;
+  }
+
   &:first-of-type { margin-top: 0; }
 }
 
-.#{$PREF}-link > svg { height: $md; margin-right: $xs; width: $md; }
+.#{$PREF}-link > svg {
+  color: black;
+  height: $md;
+  margin-right: $xs;
+  width: $md;
+}
+
+.#{$PREF}-link--active > svg { color: $primary; }
 
 .#{$PREF} > p {
   @extend .meta;
