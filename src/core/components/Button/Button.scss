@@ -28,8 +28,7 @@ $PREF: 'c-btn';
 .#{$PREF}-primary {
   @extend .#{$PREF}-base;
 
-  // background-color: rgba($color: $primary, $alpha: 0.1);
-
+  background-color: rgba($color: $primary-hex, $alpha: 0.1);
   box-shadow: 0 1px $gray-5;
   color: $primary;
   height: $xl;

@@ -14,6 +14,8 @@ $PREF: 's-home-sidebar';
 
 .#{$PREF} > h3 { color: $primary; margin: $md 0 $sm $sm; }
 
+.#{$PREF}-section { margin-top: $md; }
+
 .#{$PREF}-section > p {
   @extend .body--2;
   @extend .bold;
@@ -35,17 +37,6 @@ $PREF: 's-home-sidebar';
   padding: $xs $xxs $xs $sm;
   text-align: left;
   width: 95%;
-
-  &--active {
-    @extend .bold; 
-  
-    background-color: rgba($color: $primary, $alpha: 0.1);
-    border-left: 3px $primary solid;
-    border-radius: 0 $sm $sm 0;
-    color: $primary;
-  }
-
-  &:first-of-type { margin-top: 0; }
 }
 
 .#{$PREF}-link > svg {
@@ -53,6 +44,15 @@ $PREF: 's-home-sidebar';
   height: $md;
   margin-right: $xs;
   width: $md;
+}
+
+.#{$PREF}-link--active {
+  @extend .bold; 
+
+  background-color: rgba($color: $primary-hex, $alpha: 0.1);
+  border-left: 3px $primary solid;
+  border-radius: 0 $sm $sm 0;
+  color: $primary;
 }
 
 .#{$PREF}-link--active > svg { color: $primary; }

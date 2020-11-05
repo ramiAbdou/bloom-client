@@ -76,7 +76,7 @@ $PREF: 'c-form';
 }
 
 .#{$PREF}-mc-choice--active > p {
-  background-color: rgba($color: $primary, $alpha: 0.2);
+  background-color: rgba($color: $primary-hex, $alpha: 0.2);
 }
 
 .#{$PREF}-mc-choice--active > div { border: 2px $primary solid; }
@@ -129,7 +129,7 @@ $PREF: 'c-form';
   @extend %flex-ac;
   @extend .body--2;
 
-  background-color: rgba($color: $primary, $alpha: 0.2);
+  background-color: rgba($color: $primary-hex, $alpha: 0.2);
   border-radius: $sm;
   color: black;
   margin-right: $xxs;
@@ -173,7 +173,7 @@ $PREF: 'c-form';
 .#{$PREF}-dd-opt > p {
   @extend .body--2;
 
-  background-color: rgba($color: $primary, $alpha: 0.2);
+  background-color: rgba($color: $primary-hex, $alpha: 0.2);
   border-radius: $sm;
   color: black;
   margin-left: 8px;

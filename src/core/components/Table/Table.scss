@@ -79,12 +79,12 @@ $PREF: 'c-table';
   &--multiple-select > span {
     @extend .body--2;
 
-    background-color: rgba($color: $primary, $alpha: 0.2);
+    background-color: rgba($color: $primary-hex, $alpha: 0.2);
     border-radius: $sm;
     color: black;
     margin: 0 2px $xxs 0;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: $xs;
+    padding-right: $xs;
     width: fit-content;
   }
 }

@@ -15,7 +15,7 @@ import Cookie from 'js-cookie';
 import merge from 'lodash/merge';
 import { Schema } from 'normalizr';
 
-import { getHue, parseEntities } from '@util/util';
+import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
 import { LoaderModel, loaderModel } from './Loader.store';
 import {
   Entity,
@@ -77,9 +77,11 @@ export const store = createStore<StoreModel>(
       const { style } = document.documentElement;
       if (style.getPropertyValue('--primary') === color) return result;
 
-      const hue = getHue(color);
+      const RGB = getRGBFromHex(color);
+      const hue = getHueFromRGB(RGB);
 
       style.setProperty('--primary', color);
+      style.setProperty('--primary-hex', `${RGB[0]}, ${RGB[1]}, ${RGB[2]}`);
       style.setProperty('--gray-1', `hsl(${hue}, 5%, 20%)`);
       style.setProperty('--gray-2', `hsl(${hue}, 5%, 31%)`);
       style.setProperty('--gray-3', `hsl(${hue}, 5%, 51%)`);

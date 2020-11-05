@@ -2,6 +2,7 @@
 
 :root {
   --primary: #f58023;
+  --primary-hex: 245, 128, 35;
   --gray-1: #333;
   --gray-2: #4f4f4f;
   --gray-3: #828282;
@@ -13,6 +14,7 @@
 // ## CUSTOMIZED THEME COLORS
 
 $primary: var(--primary);
+$primary-hex: var(--primary-hex);
 $gray-1: var(--gray-1);
 $gray-2: var(--gray-2);
 $gray-3: var(--gray-3);

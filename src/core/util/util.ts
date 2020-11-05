@@ -47,9 +47,8 @@ export const filterOptions = (
   }, []);
 };
 
-export const getHue = (hex: string): number => {
-  // Converts the hex color to an RGB value.
-  const RGB = hex
+export const getRGBFromHex = (hex: string): number[] =>
+  hex
     .replace(
       /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
       (m, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
@@ -58,8 +57,7 @@ export const getHue = (hex: string): number => {
     .match(/.{2}/g)
     .map((x) => parseInt(x, 16));
 
-  const [r, g, b] = RGB;
-
+export const getHueFromRGB = ([r, g, b]: number[]): number => {
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
   let h = (max + min) / 2;

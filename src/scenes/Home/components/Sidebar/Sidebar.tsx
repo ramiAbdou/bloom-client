@@ -5,111 +5,67 @@
 
 import './Sidebar.scss';
 
-import React from 'react';
-import {
-  IoMdAdd,
-  IoMdAnalytics,
-  IoMdCalendar,
-  IoMdGitNetwork,
-  IoMdGlobe,
-  IoMdPaper,
-  IoMdPeople,
-  IoMdPersonAdd
-} from 'react-icons/io';
-import { Link, useRouteMatch } from 'react-router-dom';
+import React, { memo } from 'react';
 
 import Separator from '@components/Misc/Separator';
 import { useStoreState } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
+import SectionLink from './SectionLink';
+import Sidebar, { LinkOptions } from './Sidebar.store';
 
-type LinkOptions = { Icon: React.FC<any>; to: string; title: string };
-
-const memberLinks: LinkOptions[] = [
-  { Icon: IoMdPeople, title: 'Directory', to: 'directory' },
-  { Icon: IoMdCalendar, title: 'Events', to: 'events' }
-];
-
-const MemberOptions = () => {
-  const { url } = useRouteMatch();
-
-  return (
-    <div className="s-home-sidebar-section">
-      <p>Main</p>
-      {memberLinks.map(({ Icon, title, to }) => {
-        const isActive = window.location.pathname === `${url}/${to}`;
-        const { css } = new CSSModifier()
-          .class('s-home-sidebar-link')
-          .addClass(isActive, 's-home-sidebar-link--active');
-
-        return (
-          <Link key={to} className={css} to={to}>
-            <Icon />
-            {title}
-          </Link>
-        );
-      })}
-    </div>
-  );
-};
-
-const adminLinks: LinkOptions[] = [
-  { Icon: IoMdAnalytics, title: 'Analytics', to: 'analytics' },
-  { Icon: IoMdGlobe, title: 'Member Database', to: 'database' },
-  { Icon: IoMdPaper, title: 'Pending Applicants', to: 'applicants' },
-  { Icon: IoMdGitNetwork, title: 'Integrations', to: 'integrations' }
-];
-
-const AdminOptions = () => {
-  const { url } = useRouteMatch();
-
-  return (
-    <div className="s-home-sidebar-section" style={{ marginTop: 36 }}>
-      <p>Admin</p>
-      {adminLinks.map(({ Icon, title, to }) => {
-        const isActive = window.location.pathname === `${url}/${to}`;
-        const { css } = new CSSModifier()
-          .class('s-home-sidebar-link')
-          .addClass(isActive, 's-home-sidebar-link--active');
-
-        return (
-          <Link key={to} className={css} to={to}>
-            <Icon />
-            {title}
-          </Link>
-        );
-      })}
-    </div>
-  );
-};
-
-const QuickActions = () => {
-  return (
-    <div className="s-home-sidebar-section" style={{ marginTop: 36 }}>
-      <p>Quick Actions</p>
-      <Link className="s-home-sidebar-link" to="/">
-        <IoMdAdd color="#000" />
-        Create Event
-      </Link>
-
-      <Link className="s-home-sidebar-link" to="/">
-        <IoMdPersonAdd color="#000" />
-        Add Member
-      </Link>
-    </div>
-  );
-};
-
-const CommunityName = () => {
+const CommunityName = memo(() => {
   const name = useStoreState(({ community }) => community?.name);
   return <h3>{name}</h3>;
-};
+});
+
+const SidebarContent = memo(() => {
+  const mainLinks: LinkOptions[] = [
+    { title: 'Directory', to: 'directory' },
+    { title: 'Events', to: 'events' }
+  ];
+
+  const adminLinks: LinkOptions[] = [
+    { title: 'Analytics', to: 'analytics' },
+    { title: 'Member Database', to: 'database' },
+    { title: 'Pending Applicants', to: 'applicants' },
+    { title: 'Integrations', to: 'integrations' }
+  ];
+
+  const actionLinks: LinkOptions[] = [
+    { title: 'Create Event', to: 'create-event' },
+    { title: 'Add Member', to: 'add-member' }
+  ];
+
+  return (
+    <div className="s-home-sidebar">
+      <CommunityName />
+      <Separator style={{ marginBottom: 24, marginTop: 24 }} />
+
+      <div className="s-home-sidebar-section">
+        <p>Main</p>
+        {mainLinks.map((link) => {
+          return <SectionLink key={link.to} {...link} />;
+        })}
+      </div>
+
+      <div className="s-home-sidebar-section">
+        <p>Admin</p>
+        {adminLinks.map((link) => {
+          return <SectionLink key={link.to} {...link} />;
+        })}
+      </div>
+
+      <div className="s-home-sidebar-section">
+        <p>Quick Actions</p>
+        {actionLinks.map((link) => {
+          return <SectionLink key={link.to} {...link} />;
+        })}
+      </div>
+    </div>
+  );
+});
 
 export default () => (
-  <div className="s-home-sidebar">
-    <CommunityName />
-    <Separator style={{ marginBottom: 24, marginTop: 24 }} />
-    <MemberOptions />
-    <AdminOptions />
-    <QuickActions />
-  </div>
+  <Sidebar.Provider>
+    <SidebarContent />
+  </Sidebar.Provider>
 );
