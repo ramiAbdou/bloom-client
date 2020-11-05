@@ -34,13 +34,15 @@ $PREF: 's-home-sidebar';
   @extend %flex-ac;
 
   border-left: 3px white solid;
-  border-radius: $xxs;
+  border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
   color: black;
   margin: $xs 0;
   padding: $xs $xxs $xs $sm;
   text-align: left;
   width: 95%;
+
+  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.07); }
 }
 
 .#{$PREF}-link > svg {
@@ -55,8 +57,9 @@ $PREF: 's-home-sidebar';
 
   background-color: rgba($color: $primary-hex, $alpha: 0.1);
   border-left: 3px $primary solid;
-  border-radius: 0 $lg $lg 0;
   color: $primary;
+
+  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
 }
 
 .#{$PREF}-link--active > svg { color: $primary; }
