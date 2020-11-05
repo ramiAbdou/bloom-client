@@ -6,7 +6,8 @@
 import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import { useStoreState } from '@store/Store';
+import { PickerAction } from '@store/Picker.store';
+import { useStoreActions, useStoreState } from '@store/Store';
 
 const PictureContainer = () => {
   const pictureURL = useStoreState(({ user }) => user.pictureURL);
@@ -31,17 +32,32 @@ const CommunityRole = () => {
   return <p>{role.toLowerCase()}</p>;
 };
 
-export default () => (
-  <button className="s-home-sidebar-profile">
-    <div>
-      <PictureContainer />
+export default () => {
+  const id = 'SIDEBAR_PROFILE';
+  const showPicker = useStoreActions(({ picker }) => picker.showPicker);
 
+  const onClick = () => {
+    // Show a picker that either allows them to view their profile or log out.
+    const actions: PickerAction[] = [
+      { onClick: () => {}, text: 'View Profile' },
+      { onClick: () => {}, text: 'Log Out' }
+    ];
+
+    showPicker({ actions, alignRight: true, id, isFixed: true });
+  };
+
+  return (
+    <button className="s-home-sidebar-profile" id={id} onClick={onClick}>
       <div>
-        <FullName />
-        <CommunityRole />
-      </div>
-    </div>
+        <PictureContainer />
 
-    <IoIosArrowForward color="#000" />
-  </button>
-);
+        <div>
+          <FullName />
+          <CommunityRole />
+        </div>
+      </div>
+
+      <IoIosArrowForward color="#000" />
+    </button>
+  );
+};

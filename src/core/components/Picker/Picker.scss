@@ -1,0 +1,63 @@
+@import 'src/index.scss';
+
+$PREF: 'c-picker';
+
+##{$PREF}-bg {
+  background-color: black;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1000;
+}
+
+.#{$PREF} {
+  background-color: white;
+  border-radius: 8px;
+  left: 50%;
+  position: fixed;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 40px);
+  z-index: 1010;
+}
+
+.#{$PREF}--sm {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba($color: black, $alpha: 0.15);
+  position: absolute;
+  text-align: center;
+  width: 225px;
+  z-index: 10;
+}
+
+.#{$PREF}-option {
+  @extend .btn-txt;
+  @extend .fill;
+  
+  border-bottom: 0.1px $gray-5 solid;
+  color: $gray-2;
+  height: $lg;
+
+  @media (hover: hover) {
+    &:hover { background-color: rgba($color: black, $alpha: 0.02); }
+  }
+
+  /* stylelint-disable-next-line */
+  &:active { background-color: rgba($color: black, $alpha: 0.04); }
+}
+
+.#{$PREF}-option:first-of-type { border-radius: $xxs $xxs 0 0; }
+
+.#{$PREF}-option--red { @extend .#{$PREF}-option; color: $red; }
+
+.#{$PREF}-option--red:last-of-type { border-radius: 0 0 $xxs $xxs; }
+
+.#{$PREF}-option--cancel {
+  @extend .#{$PREF}-option;
+
+  border-radius: 0 0 $xxs $xxs;
+  font-weight: 400;
+}

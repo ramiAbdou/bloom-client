@@ -9,13 +9,14 @@ import '../public/favicon.ico';
 
 import { StoreProvider } from 'easy-peasy';
 import { ClientContext, GraphQLClient } from 'graphql-hooks';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 
+import Picker from '@components/Picker/Picker';
 import ToastQueue from '@components/Toast/Toast';
 import { APP } from '@constants';
-import { store } from '@store/Store';
+import { store, useStoreActions } from '@store/Store';
 import Router from './Router';
 
 const client = new GraphQLClient({
@@ -25,12 +26,32 @@ const client = new GraphQLClient({
 
 const Background = () => <div id="app" />;
 
+const ResizeScreen = () => {
+  const setWindowWidth = useStoreActions(({ screen }) => screen.setWindowWidth);
+  const setCoordinates = useStoreActions(({ picker }) => picker.setCoordinates);
+  const onWindowResize = () => {
+    setCoordinates();
+    setWindowWidth(window.innerWidth);
+  };
+
+  // Add the window resize event listener.
+  useEffect(() => {
+    onWindowResize(); // Set the initial values.
+    window.addEventListener('resize', onWindowResize);
+    return () => window.removeEventListener('resize', onWindowResize);
+  }, []);
+
+  return null;
+};
+
 const App = () => (
   <ClientContext.Provider value={client}>
     <StoreProvider store={store}>
       <IconContext.Provider value={{ className: 'react-icon' }}>
+        <ResizeScreen />
         <Router />
         <Background />
+        <Picker />
         <ToastQueue />
       </IconContext.Provider>
     </StoreProvider>

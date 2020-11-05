@@ -17,6 +17,7 @@ import { Schema } from 'normalizr';
 
 import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
 import { LoaderModel, loaderModel } from './Loader.store';
+import { PickerModel, pickerModel } from './Picker.store';
 import {
   Entity,
   EntityRecord,
@@ -27,6 +28,7 @@ import {
   IPendingApplicant,
   IUser
 } from './schema';
+import { ScreenModel, screenModel } from './Screen.store';
 import { ToastModel, toastModel } from './Toast.store';
 
 type UpdateEntitiesArgs = { data: any; schema: Schema<any> };
@@ -44,6 +46,8 @@ type StoreModel = {
   membership: Computed<StoreModel, IMembership>;
   memberships: Computed<StoreModel, EntityRecord<IMembership>>;
   pendingApplicants: Computed<StoreModel, EntityRecord<IPendingApplicant>>;
+  picker: PickerModel;
+  screen: ScreenModel;
   setActiveCommunity: Action<StoreModel, string>;
   toast: ToastModel;
   updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
@@ -134,6 +138,10 @@ export const store = createStore<StoreModel>(
       ({ entities }) =>
         entities.pendingApplicants as EntityRecord<IPendingApplicant>
     ),
+
+    picker: pickerModel,
+
+    screen: screenModel,
 
     setActiveCommunity: action((state, communityId: string) => ({
       ...state,
