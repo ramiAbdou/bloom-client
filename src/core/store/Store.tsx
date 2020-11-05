@@ -41,6 +41,7 @@ type StoreModel = {
   entities: Record<Entity, EntityRecord>;
   loader: LoaderModel;
   members: Computed<StoreModel, EntityRecord<IMember>>;
+  membership: Computed<StoreModel, IMembership>;
   memberships: Computed<StoreModel, EntityRecord<IMembership>>;
   pendingApplicants: Computed<StoreModel, EntityRecord<IPendingApplicant>>;
   setActiveCommunity: Action<StoreModel, string>;
@@ -107,6 +108,11 @@ export const store = createStore<StoreModel>(
     members: computed(
       ({ entities }) => entities.members as EntityRecord<IMember>
     ),
+
+    membership: computed(({ memberships }) => {
+      const { activeId, byId } = memberships;
+      return byId[activeId];
+    }),
 
     memberships: computed(({ entities }) => {
       const result = entities.memberships as EntityRecord<IMembership>;

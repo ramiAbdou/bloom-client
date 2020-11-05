@@ -5,16 +5,20 @@ $PREF: 's-home-sidebar';
 // ## SIDEBAR
 
 .#{$PREF} {
+  @extend %flex-col;
+
   background-color: white;
   border-right: 1px $gray-5 solid;
+  box-shadow: 0 2px 4px rgba($color: $primary-hex, $alpha: 0.1);
   box-sizing: border-box;
   height: 100%;
   width: 100%;
 }
 
-.#{$PREF} > h3 { color: $primary; margin: $md 0 $sm $sm; }
+.#{$PREF} > h3 { color: $primary; margin: $md 0 0 $sm; }
 
-.#{$PREF}-section { margin-top: $md; }
+.#{$PREF}-section-ctr { height: 100%; }
+.#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
 
 .#{$PREF}-section > p {
   @extend .body--2;
@@ -51,7 +55,7 @@ $PREF: 's-home-sidebar';
 
   background-color: rgba($color: $primary-hex, $alpha: 0.1);
   border-left: 3px $primary solid;
-  border-radius: 0 $sm $sm 0;
+  border-radius: 0 $lg $lg 0;
   color: $primary;
 }
 
@@ -76,3 +80,47 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-action > svg { height: $md; margin-right: $xs; width: $md; }
+
+// ## PROFILE BAR
+
+.#{$PREF}-profile {
+  @extend %flex-acsb;
+
+  border-radius: 0 $xl $xl 0;
+  box-sizing: border-box;
+  margin-bottom: $md;
+  padding: 12px $sm;
+  width: 95%;
+
+  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
+}
+
+.#{$PREF}-profile__picture {
+  border-radius: 50%;
+  height: $xl;
+  margin-right: 12px;
+  width: $xl;
+}
+
+h4.#{$PREF}-profile__picture {
+  @extend %flex-acc;
+
+  background-color: $primary;
+  border-radius: 50%;
+  color: white;
+  height: $xl;
+  width: $xl;
+}
+
+.#{$PREF}-profile > div { @extend %flex-ac; }
+
+.#{$PREF}-profile > div > div { @extend %flex-col; align-items: flex-start; }
+
+.#{$PREF}-profile > div > div > p {
+  &:last-of-type {
+    @extend .body--2;
+
+    color: $gray-3;
+    text-transform: capitalize;
+  }
+}

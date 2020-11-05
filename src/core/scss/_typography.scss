@@ -32,8 +32,6 @@
 .bold { font-weight: 600 !important; }
 
 .body--2 {
-  color: $gray-2;
-
   @include font-responsive(400, 12px, 18px, 12px, 18px, 12px, 18px);
 }
 

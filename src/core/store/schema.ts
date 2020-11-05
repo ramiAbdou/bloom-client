@@ -59,6 +59,7 @@ export type IUser = {
   lastName: string;
   email: string;
   id: string;
+  pictureURL: string;
 };
 
 export interface EntityRecord<

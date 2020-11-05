@@ -5,11 +5,11 @@
 
 import React, { memo } from 'react';
 import {
+  IoIosGlobe,
   IoMdAdd,
   IoMdAnalytics,
   IoMdCalendar,
   IoMdGitNetwork,
-  IoMdGlobe,
   IoMdPaper,
   IoMdPeople,
   IoMdPersonAdd
@@ -25,7 +25,7 @@ const Icon = memo(({ to }: IconProps) => {
   if (to === 'directory') return <IoMdPeople />;
   if (to === 'events') return <IoMdCalendar />;
   if (to === 'analytics') return <IoMdAnalytics />;
-  if (to === 'database') return <IoMdGlobe />;
+  if (to === 'database') return <IoIosGlobe />;
   if (to === 'applicants') return <IoMdPaper />;
   if (to === 'integrations') return <IoMdGitNetwork />;
   if (to === 'create-event') return <IoMdAdd />;

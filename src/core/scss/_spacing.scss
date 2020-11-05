@@ -22,6 +22,7 @@ $xxl: 60px;
   &-ae { @extend %flex; align-items: flex-end; }
   &-c { @extend %flex; justify-content: center; }
   &-col { @extend %flex; flex-direction: column; }
+  &-colsb { @extend %flex-col; justify-content: space-between; }
   &-sb { @extend %flex; justify-content: space-between; }
   &-w { @extend %flex; flex-wrap: wrap; }
 }

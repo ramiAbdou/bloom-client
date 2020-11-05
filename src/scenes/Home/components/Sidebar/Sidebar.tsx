@@ -9,8 +9,9 @@ import React, { memo } from 'react';
 
 import Separator from '@components/Misc/Separator';
 import { useStoreState } from '@store/Store';
-import SectionLink from './SectionLink';
+import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';
+import SidebarLink from './SidebarLink';
 
 const CommunityName = memo(() => {
   const name = useStoreState(({ community }) => community?.name);
@@ -40,26 +41,30 @@ const SidebarContent = memo(() => {
       <CommunityName />
       <Separator style={{ marginBottom: 24, marginTop: 24 }} />
 
-      <div className="s-home-sidebar-section">
-        <p>Main</p>
-        {mainLinks.map((link) => {
-          return <SectionLink key={link.to} {...link} />;
-        })}
+      <div className="s-home-sidebar-section-ctr">
+        <div className="s-home-sidebar-section">
+          <p>Main</p>
+          {mainLinks.map((link) => {
+            return <SidebarLink key={link.to} {...link} />;
+          })}
+        </div>
+
+        <div className="s-home-sidebar-section">
+          <p>Admin</p>
+          {adminLinks.map((link) => {
+            return <SidebarLink key={link.to} {...link} />;
+          })}
+        </div>
+
+        <div className="s-home-sidebar-section">
+          <p>Quick Actions</p>
+          {actionLinks.map((link) => {
+            return <SidebarLink key={link.to} {...link} />;
+          })}
+        </div>
       </div>
 
-      <div className="s-home-sidebar-section">
-        <p>Admin</p>
-        {adminLinks.map((link) => {
-          return <SectionLink key={link.to} {...link} />;
-        })}
-      </div>
-
-      <div className="s-home-sidebar-section">
-        <p>Quick Actions</p>
-        {actionLinks.map((link) => {
-          return <SectionLink key={link.to} {...link} />;
-        })}
-      </div>
+      <ProfileBar />
     </div>
   );
 });
