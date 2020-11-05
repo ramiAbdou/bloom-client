@@ -23,41 +23,32 @@ $PREF: 'c-picker';
   z-index: 1010;
 }
 
-.#{$PREF}--sm {
+.#{$PREF}-content {
+  @extend %flex-col;
+
   background-color: white;
-  border-radius: 4px;
+  border-radius: $sm;
   box-shadow: 0 4px 20px rgba($color: black, $alpha: 0.15);
+  min-width: $xxl * 4;
+  padding: 12px 0;
   position: absolute;
-  text-align: center;
-  width: 225px;
+  width: max-content;
   z-index: 10;
 }
 
 .#{$PREF}-option {
-  @extend .btn-txt;
   @extend .fill;
+  @extend .body--1;
   
-  border-bottom: 0.1px $gray-5 solid;
   color: $gray-2;
-  height: $lg;
+  padding: 12px;
+  text-align: left;
+  width: 100%;
 
-  @media (hover: hover) {
-    &:hover { background-color: rgba($color: black, $alpha: 0.02); }
-  }
+  @include HOVER { background-color: rgba($color: black, $alpha: 0.02); }
 
   /* stylelint-disable-next-line */
   &:active { background-color: rgba($color: black, $alpha: 0.04); }
-}
 
-.#{$PREF}-option:first-of-type { border-radius: $xxs $xxs 0 0; }
-
-.#{$PREF}-option--red { @extend .#{$PREF}-option; color: $red; }
-
-.#{$PREF}-option--red:last-of-type { border-radius: 0 0 $xxs $xxs; }
-
-.#{$PREF}-option--cancel {
-  @extend .#{$PREF}-option;
-
-  border-radius: 0 0 $xxs $xxs;
-  font-weight: 400;
+  &:last-of-type { margin-bottom: 0; }
 }

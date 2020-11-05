@@ -39,11 +39,18 @@ export default () => {
   const onClick = () => {
     // Show a picker that either allows them to view their profile or log out.
     const actions: PickerAction[] = [
-      { onClick: () => {}, text: 'View Profile' },
-      { onClick: () => {}, text: 'Log Out' }
+      { onClick: () => {}, text: 'Manage Membership' },
+      { onClick: () => {}, text: 'Your Profile' },
+      { onClick: () => {}, separator: true, text: 'Log Out' }
     ];
 
-    showPicker({ actions, alignRight: true, id, isFixed: true });
+    showPicker({
+      actions,
+      align: 4,
+      id,
+      isFixed: true,
+      offset: { marginLeft: 17, marginTop: -200 }
+    });
   };
 
   return (

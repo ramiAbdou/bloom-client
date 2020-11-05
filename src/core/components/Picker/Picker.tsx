@@ -12,11 +12,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
+import Separator from '@components/Misc/Separator';
 import { PickerAction } from '@store/Picker.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import PickerContainer from './PickerContainer';
 
-const ActionOption = ({ onClick, text }: PickerAction) => {
+const ActionOption = ({ onClick, separator, text }: PickerAction) => {
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
 
   // After the passed-in onClick is executed, close the picker. This component
@@ -27,31 +28,12 @@ const ActionOption = ({ onClick, text }: PickerAction) => {
   };
 
   return (
-    <motion.button
-      animate={{ y: 0 }}
-      className="c-picker-option"
-      initial={{ y: -15 }}
-      onClick={onOptionClick}
-    >
-      {text}
-    </motion.button>
-  );
-};
-
-// This cancel option will always be there regardless of the other options.
-
-const CancelOption = () => {
-  const closePicker = useStoreActions(({ picker }) => picker.closePicker);
-
-  return (
-    <motion.button
-      animate={{ y: 0 }}
-      className="c-picker-option--cancel"
-      initial={{ y: -15 }}
-      onClick={() => closePicker()}
-    >
-      Cancel
-    </motion.button>
+    <>
+      {separator && <Separator style={{ marginBottom: 8, marginTop: 8 }} />}
+      <button className="c-picker-option" onClick={onOptionClick}>
+        {text}
+      </button>
+    </>
   );
 };
 
@@ -59,10 +41,12 @@ const CancelOption = () => {
 
 export default () => {
   const actions = useStoreState(({ picker }) => picker.actions);
+  const align = useStoreState(({ picker }) => picker.align);
   const coordinates = useStoreState(({ picker }) => picker.coordinates);
   const id = useStoreState(({ picker }) => picker.id);
   const isFixed = useStoreState(({ picker }) => picker.isFixed);
   const isShowing = useStoreState(({ picker }) => picker.isShowing);
+  const offset = useStoreState(({ picker }) => picker.offset);
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
 
@@ -102,8 +86,6 @@ export default () => {
       {actions.map((action) => (
         <ActionOption key={action.text} {...action} />
       ))}
-
-      {isMobile && <CancelOption />}
     </>
   );
 
@@ -117,17 +99,35 @@ export default () => {
   if (!actions.length || !coordinates) return null;
 
   const { left, right, top } = coordinates;
-  const positionStyle = left ? { left, top } : { right, top };
+  const { marginLeft, marginTop } = offset || {};
+  const baseStyle = { top };
+
+  const positionStyle = {
+    ...baseStyle,
+    ...(left ? { left } : { right }),
+    ...(marginLeft ? { marginLeft } : {}),
+    ...(marginTop ? { marginTop } : {})
+  };
+
+  const animate = {
+    opacity: 1,
+    ...(align === 2 || align === 4 ? { x: 0 } : { y: 0 })
+  };
+
+  const initial = {
+    opacity: 0,
+    ...(align === 2 || align === 4 ? { x: -10 } : { y: -10 })
+  };
 
   return (
     <AnimatePresence>
       {isShowing && (
         <motion.div
           ref={ref}
-          animate={{ opacity: 1, y: 0 }}
-          className="c-picker--sm"
+          animate={animate}
+          className="c-picker-content"
           exit={{ opacity: 0 }}
-          initial={{ opacity: 0, y: -10 }}
+          initial={initial}
           style={{
             ...positionStyle,
 

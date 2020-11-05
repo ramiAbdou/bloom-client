@@ -14,12 +14,6 @@ type PickerProps = { children: React.ReactNode };
 
 export default ({ children }: PickerProps) => {
   const isShowing = useStoreState(({ picker }) => picker.isShowing);
-  const isMobile = useStoreState(({ screen }) => screen.isMobile);
-
-  const animate = isMobile ? { top: '50%' } : {};
-  const exit = isMobile ? { top: '-50%' } : {};
-  const initial = isMobile ? { top: '-50%' } : {};
-  const transition = isMobile ? { duration: 0.5 } : {};
 
   return createPortal(
     <AnimatePresence>
@@ -31,15 +25,7 @@ export default ({ children }: PickerProps) => {
             id="c-picker-bg"
             initial={{ opacity: 0 }}
           />
-          <motion.div
-            animate={animate}
-            className="c-picker"
-            exit={exit}
-            initial={initial}
-            transition={transition}
-          >
-            {children}
-          </motion.div>
+          <motion.div className="c-picker">{children}</motion.div>
         </>
       )}
     </AnimatePresence>,
