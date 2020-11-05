@@ -18,7 +18,5 @@
   }
 }
 @mixin PRIMARY_ACTIVE {
-  @media (hover: hover) {
-    &:hover { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
-  }
+  &:active { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
 }
