@@ -25,10 +25,10 @@ $PREF: 'c-picker';
 
 .#{$PREF}-content {
   @extend %flex-col;
+  @extend .shadow-1;
 
   background-color: white;
   border-radius: $sm;
-  box-shadow: 0 4px 20px rgba($color: black, $alpha: 0.15);
   min-width: $xxl * 4;
   padding: 12px 0;
   position: absolute;
@@ -45,10 +45,8 @@ $PREF: 'c-picker';
   text-align: left;
   width: 100%;
 
-  @include HOVER { background-color: rgba($color: black, $alpha: 0.02); }
-
-  /* stylelint-disable-next-line */
-  &:active { background-color: rgba($color: black, $alpha: 0.04); }
+  @include PRIMARY_HOVER;
+  @include PRIMARY_ACTIVE;
 
   &:last-of-type { margin-bottom: 0; }
 }

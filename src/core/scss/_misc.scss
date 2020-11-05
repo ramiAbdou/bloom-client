@@ -1,3 +1,4 @@
+@import './colors.scss';
 @import './spacing.scss';
 
 // Home for common miscelleneous styles throughout the application.
@@ -5,6 +6,19 @@
 // Fills the entire height and width of the parent element.
 .fill { box-sizing: border-box; height: 100%; width: 100%; }
 
+.shadow-1 { box-shadow: 0 2px 4px 1px rgba($color: $primary-hex, $alpha: 0.1); }
+
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 .react-icon { height: $sm; width: $sm; }
+
+@mixin PRIMARY_HOVER {
+  @media (hover: hover) {
+    &:hover { background-color: rgba($color: $primary-hex, $alpha: 0.07); }
+  }
+}
+@mixin PRIMARY_ACTIVE {
+  @media (hover: hover) {
+    &:hover { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
+  }
+}

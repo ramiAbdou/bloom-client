@@ -6,10 +6,10 @@ $PREF: 's-home-sidebar';
 
 .#{$PREF} {
   @extend %flex-col;
+  @extend .shadow-1;
 
   background-color: white;
   border-right: 1px $gray-5 solid;
-  box-shadow: 0 2px 4px rgba($color: $primary-hex, $alpha: 0.1);
   box-sizing: border-box;
   height: 100%;
   width: 100%;
