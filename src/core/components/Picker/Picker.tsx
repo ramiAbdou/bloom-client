@@ -98,12 +98,11 @@ export default () => {
 
   if (!actions.length || !coordinates) return null;
 
-  const { left, right, top } = coordinates;
+  const { bottom, left, right, top } = coordinates;
   const { marginLeft, marginTop } = offset || {};
-  const baseStyle = { top };
 
   const positionStyle = {
-    ...baseStyle,
+    ...(top ? { top } : { bottom }),
     ...(left ? { left } : { right }),
     ...(marginLeft ? { marginLeft } : {}),
     ...(marginTop ? { marginTop } : {})

@@ -49,7 +49,7 @@ export default () => {
       align: 4,
       id,
       isFixed: true,
-      offset: { marginLeft: 17, marginTop: -200 }
+      offset: { marginLeft: 18 }
     });
   };
 

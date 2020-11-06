@@ -14,8 +14,13 @@ export type PickerAction = {
 // This is needed for the absolute positioning. If alignRight is true, then
 // coordinates.left should be null. If it is false, coordinates.right should be
 // null. Top should always have a value if either left or right is populated.
-type PickerCoordinates = { left?: number; right?: number; top?: number };
 type PickerOffset = { marginLeft?: number; marginTop?: number };
+type PickerCoordinates = {
+  bottom?: number;
+  left?: number;
+  right?: number;
+  top?: number;
+};
 
 type PickerOptions = {
   actions: PickerAction[];
@@ -81,49 +86,36 @@ export const pickerModel: PickerModel = {
 
     // The screen should already be loaded and there should be an ID stored.
     // Also, if the element doesn't exist (though it should), don't update.
-    const { innerWidth: windowWidth } = window;
+    const { innerHeight, innerWidth } = window;
     const element: HTMLElement = document.getElementById(id);
 
-    if (!id || !windowWidth || !element) return state;
+    if (!id || !innerWidth || !element) return state;
 
-    const { offsetLeft, offsetTop, offsetWidth } = element;
-    const updatedLeft = offsetLeft;
-    const updatedRight = offsetLeft + offsetWidth;
+    const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = element;
+    const { bottom, left } = coordinates ?? {};
 
-    if (align === 4)
-      return {
-        ...state,
-        coordinates: { left: updatedRight, top: offsetTop }
-      };
+    // CASE: align === 4
+    // Left is going to be the element's left + element width. Bottom is going
+    // to be the element's bottom
 
-    // If there was previously no coordinates, set the coordindates accordingly.
-    if (!coordinates)
-      return {
-        ...state,
-        coordinates: {
-          left: align ? null : updatedLeft,
-          right: align ? updatedRight : null,
-          top: offsetTop
-        }
-      };
+    if (align === 4) {
+      const leftWithWidth = offsetLeft + offsetWidth;
+      const updatedBottom = innerHeight - (offsetTop + offsetHeight);
 
-    const { left, right, top } = coordinates;
+      // If the coordinates haven't changed, then just return the normal state.
+      return coordinates && bottom === updatedBottom && left === leftWithWidth
+        ? state
+        : {
+            ...state,
+            coordinates: { bottom: updatedBottom, left: leftWithWidth }
+          };
+    }
 
-    // If the coordinates are the same as previously, don't update.
-    if (align && right === updatedRight && top === offsetTop) return state;
-    if (!align && left === updatedLeft && top === offsetTop) return state;
+    /**
+     * @todo All of the other align cases: 1, 2, 3.
+     */
 
-    // Otherwise, update the coordinates.
-    if (align)
-      return {
-        ...state,
-        coordinates: { left: null, right: updatedRight, top: offsetTop }
-      };
-
-    return {
-      ...state,
-      coordinates: { left: updatedLeft, right: null, top: offsetTop }
-    };
+    return state;
   }),
 
   showPicker: thunk(({ init, setCoordinates }, options: PickerOptions) => {
