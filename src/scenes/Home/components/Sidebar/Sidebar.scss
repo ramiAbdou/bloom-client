@@ -33,6 +33,7 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-link {
   @extend %flex-ac;
 
+  background-clip: padding-box;
   border-left: 3px white solid;
   border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
@@ -43,7 +44,10 @@ $PREF: 's-home-sidebar';
   text-align: left;
   width: 95%;
 
-  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.07); }
+  @include PRIMARY_HOVER;
+  @include HOVER {
+    border-left: 3px rgba($color: $primary-hex, $alpha: 0.1) solid;
+  }
 }
 
 .#{$PREF}-link > svg {
@@ -60,7 +64,8 @@ $PREF: 's-home-sidebar';
   border-left: 3px $primary solid;
   color: $primary;
 
-  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
+  @include PRIMARY_HOVER;
+  @include HOVER { border-left: 3px $primary solid; }
 }
 
 .#{$PREF}-link--active > svg { color: $primary; }
@@ -96,7 +101,7 @@ $PREF: 's-home-sidebar';
   padding: 12px $sm;
   width: 95%;
 
-  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
+  @include PRIMARY_HOVER;
 }
 
 .#{$PREF}-profile__picture {
