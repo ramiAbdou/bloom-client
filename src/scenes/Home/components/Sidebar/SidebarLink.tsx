@@ -5,12 +5,12 @@
 
 import React, { memo } from 'react';
 import {
+  IoIosCalendar,
+  IoIosDocument,
+  IoIosGitBranch,
   IoIosGlobe,
+  IoIosStats,
   IoMdAdd,
-  IoMdAnalytics,
-  IoMdCalendar,
-  IoMdGitNetwork,
-  IoMdPaper,
   IoMdPeople,
   IoMdPersonAdd
 } from 'react-icons/io';
@@ -23,11 +23,11 @@ type IconProps = { to: string };
 
 const Icon = memo(({ to }: IconProps) => {
   if (to === 'directory') return <IoMdPeople />;
-  if (to === 'events') return <IoMdCalendar />;
-  if (to === 'analytics') return <IoMdAnalytics />;
+  if (to === 'events') return <IoIosCalendar />;
+  if (to === 'analytics') return <IoIosStats />;
   if (to === 'database') return <IoIosGlobe />;
-  if (to === 'applicants') return <IoMdPaper />;
-  if (to === 'integrations') return <IoMdGitNetwork />;
+  if (to === 'applicants') return <IoIosDocument />;
+  if (to === 'integrations') return <IoIosGitBranch />;
   if (to === 'create-event') return <IoMdAdd />;
   if (to === 'add-member') return <IoMdPersonAdd />;
   return null;
