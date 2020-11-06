@@ -6,5 +6,5 @@
 import React from 'react';
 
 export default () => {
-  return <h3>Integrations</h3>;
+  return <h1>Integrations</h1>;
 };

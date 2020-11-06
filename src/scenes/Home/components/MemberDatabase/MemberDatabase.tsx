@@ -5,8 +5,7 @@
 
 import './MemberDatabase.scss';
 
-import { useQuery } from 'graphql-hooks';
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 
 // import Spinner from '@components/Loader/Spinner';
 // import TableContent from '@components/Table/Table';
@@ -106,7 +105,7 @@ import React, { useEffect, useMemo } from 'react';
 export default () => (
   <div className="s-home-database">
     <div className="s-home-header">
-      <h3>Member Database</h3>
+      <h1>Member Database</h1>
     </div>
   </div>
 );

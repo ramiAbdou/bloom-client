@@ -6,5 +6,5 @@
 import React from 'react';
 
 export default () => {
-  return <h3>Events</h3>;
+  return <h1>Events</h1>;
 };

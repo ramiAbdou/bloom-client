@@ -94,7 +94,7 @@ export default () => {
   return (
     <div className="s-home-applicants">
       <div className="s-home-header">
-        <h3>Pending Applications</h3>
+        <h1>Pending Applications</h1>
         {loading && <Spinner dark />}
       </div>
 

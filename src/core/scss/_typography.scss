@@ -3,7 +3,7 @@
 // This essentially imports some CSS classes that create the font-family Muli.
 // That's why we can use that keyword in multiple places in this file.
 
-@import url('https://fonts.googleapis.com/css2?family=Muli:wght@200;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Muli:wght@400;600;700&display=swap');
 
 // Returns the CSS font styling for different screen sizes.
 
@@ -25,29 +25,29 @@
   @include M { font-size: $mobile; line-height: $mobile-lh; }
 }
 
-.meta { @include font-responsive(700, 12px, 24px, 12px, 24px, 12px, 24px); }
-
-.body--1 { @include font-responsive(400, 14px, 24px, 14px, 24px, 14px, 24px); }
-
+.body--1 { @include font-responsive(400, 16px, 20px, 16px, 20px, 16px, 20px); }
+.body--2 { @include font-responsive(400, 14px, 16px, 14px, 16px, 14px, 16px); }
+.meta { @include font-responsive(600, 12px, 16px, 12px, 16px, 12px, 16px); }
 .bold { font-weight: 600 !important; }
 
-.body--2 {
-  @include font-responsive(400, 12px, 18px, 12px, 18px, 12px, 18px);
-}
-
-h1 { @include font-responsive(900, 36px, 48px, 32px, 48px, 30px, 36px); }
-h2 { @include font-responsive(700, 30px, 36px, 26px, 36px, 26px, 36px); }
-h3 { @include font-responsive(700, 24px, 36px, 20px, 24px, 20px, 24px); }
-h4 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
+h1 { @include font-responsive(700, 24px, 32px, 24px, 32px, 24px, 32px); }
+h2 { @include font-responsive(700, 20px, 24px, 20px, 24px, 20px, 24px); }
+h3 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
 
 p,
 a,
 textarea,
 span,
-input { @extend .body--1; }
+input,
+input::placeholder { @extend .body--1; }
 
-input::placeholder { @extend .body--1; color: $gray-3; }
+input::placeholder { color: $gray-3; }
 
-.btn-txt { @include font-responsive(700, 13px, 24px, 13px, 24px, 13px, 24px); }
+.btn-txt {
+  text-decoration: underline;
+  text-transform: uppercase;
 
-button { @extend .btn-txt; }
+  @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);
+}
+
+button { @extend .body--1; @extend .bold; }

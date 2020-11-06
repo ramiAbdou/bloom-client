@@ -17,7 +17,7 @@ $PREF: 's-home';
   max-height: 100%;
   overflow: hidden;
 
-  @include DD { margin: auto; max-width: 1440px; width: 100%; }
+  // @include DD { margin: auto; max-width: 1440px; width: 100%; }
 }
 
 .#{$PREF}-nav {

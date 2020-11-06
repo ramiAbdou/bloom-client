@@ -12,6 +12,7 @@ export type ScreenModel = {
   isMobile: Computed<ScreenModel, boolean>;
   isDesktop: Computed<ScreenModel, boolean>;
   setWindowWidth: Action<ScreenModel, number>;
+  widthRatio: Computed<ScreenModel, number>;
   windowWidth: number;
 };
 
@@ -24,5 +25,6 @@ export const screenModel: ScreenModel = {
   isDesktop: computed(({ breakpoint }) => breakpoint === 'D'),
   isMobile: computed(({ breakpoint }) => breakpoint === 'M'),
   setWindowWidth: action((state, width: number) => ({ ...state, width })),
+  widthRatio: computed(({ windowWidth }) => windowWidth / 1440),
   windowWidth: window.innerWidth
 };

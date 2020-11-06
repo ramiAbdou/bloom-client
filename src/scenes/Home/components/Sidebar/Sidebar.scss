@@ -25,6 +25,7 @@ $PREF: 's-home-sidebar';
   @extend .bold;
 
   color: $gray-3;
+  font-size: 12px;
   margin-bottom: $sm;
   margin-left: $sm;
   text-transform: uppercase;
@@ -111,7 +112,7 @@ $PREF: 's-home-sidebar';
   width: $xl;
 }
 
-h4.#{$PREF}-profile__picture {
+h3.#{$PREF}-profile__picture {
   @extend %flex-acc;
 
   background-color: $primary;
@@ -126,10 +127,11 @@ h4.#{$PREF}-profile__picture {
 .#{$PREF}-profile > div > div { @extend %flex-col; align-items: flex-start; }
 
 .#{$PREF}-profile > div > div > p {
-  &:last-of-type {
-    @extend .body--2;
+  @extend .body--2;
 
+  &:last-of-type {
     color: $gray-3;
+    margin-top: $xxs;
     text-transform: capitalize;
   }
 }

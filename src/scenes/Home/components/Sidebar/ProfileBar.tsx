@@ -17,7 +17,7 @@ const PictureContainer = () => {
 
   if (pictureURL)
     return <img className="s-home-sidebar-profile__picture" src={pictureURL} />;
-  return <h4 className="s-home-sidebar-profile__picture">{initials}</h4>;
+  return <h3 className="s-home-sidebar-profile__picture">{initials}</h3>;
 };
 
 const FullName = () => {
@@ -35,6 +35,7 @@ const CommunityRole = () => {
 export default () => {
   const id = 'SIDEBAR_PROFILE';
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
+  const widthRatio = useStoreState(({ screen }) => screen.widthRatio);
 
   const onClick = () => {
     // Show a picker that either allows them to view their profile or log out.
@@ -49,7 +50,7 @@ export default () => {
       align: 4,
       id,
       isFixed: true,
-      offset: { marginLeft: 18 }
+      offset: { marginLeft: 18 * widthRatio }
     });
   };
 
