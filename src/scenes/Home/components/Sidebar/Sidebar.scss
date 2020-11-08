@@ -9,13 +9,13 @@ $PREF: 's-home-sidebar';
   @extend .shadow-1;
 
   background-color: white;
-  border-right: 1px $gray-5 solid;
+  border-right: none;
   box-sizing: border-box;
   height: 100%;
   width: 100%;
 }
 
-.#{$PREF} > h3 { color: $primary; margin: $md 0 0 $sm; }
+.#{$PREF} > h2 { color: $primary; margin: $md 0 0 $sm; }
 
 .#{$PREF}-section-ctr { height: 100%; }
 .#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }

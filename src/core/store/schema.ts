@@ -7,7 +7,7 @@
 
 import { schema } from 'normalizr';
 
-import { QuestionType } from '@constants';
+import { QuestionCategory, QuestionType } from '@constants';
 
 type EntityID = string;
 
@@ -21,6 +21,7 @@ export type Entity =
   | 'users';
 
 export type IApplicationQuestion = {
+  category: QuestionCategory;
   id: string;
   order: number;
   title: QuestionType;
@@ -49,8 +50,15 @@ export type IMembership = {
   role: 'ADMIN' | 'OWNER';
 };
 
+export type UnresolvedApplicantData = { questionId: string; value: string };
+export type ResolvedApplicantData = {
+  question: IApplicationQuestion;
+  value: string;
+};
+
 export type IPendingApplicant = {
-  applicantData: { questionId: string; value: string }[];
+  applicantData: UnresolvedApplicantData[] | ResolvedApplicantData[];
+  createdAt: string;
   id: string;
 };
 

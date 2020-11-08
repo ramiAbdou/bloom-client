@@ -69,7 +69,7 @@ $PREF: 's-login';
 .#{$PREF}-confirmation > p { width: 100%; }
 
 .#{$PREF}-confirmation-icon {
-  background-color: $green-1;
+  background-color: $green;
   border-radius: 50%;
   height: $xl;
   margin-bottom: $sm;
@@ -80,10 +80,10 @@ $PREF: 's-login';
 .#{$PREF}-confirmation-icon > img { height: 100%; width: 100%; }
 
 .#{$PREF}-confirmation-email {
-  background-color: rgba($color: $green-1, $alpha: 0.05);
-  border: 1px $green-1 solid;
+  background-color: rgba($color: $green, $alpha: 0.05);
+  border: 1px $green solid;
   border-radius: $xxs;
-  color: $green-1;
+  color: $green;
   margin-bottom: $sm;
   margin-top: $sm;
   padding-bottom: 8px;

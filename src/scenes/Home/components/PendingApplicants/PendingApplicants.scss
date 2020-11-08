@@ -1,8 +1,7 @@
 @import 'src/index.scss';
 
-$PREF: 's-home-applicants';
+$PREF: 's-applicants';
 
-.#{$PREF} { overflow: hidden; }
 .#{$PREF} > p { @extend .body--1; }
 
 .#{$PREF}-questions > p {
@@ -14,3 +13,56 @@ $PREF: 's-home-applicants';
 
 .#{$PREF}-actions { @extend %flex-ac; margin-bottom: $sm; }
 .#{$PREF}-actions > button { margin-right: $xs; }
+
+// ## CARD CONTAINER
+
+.#{$PREF}-card-ctr {
+  column-gap: $md;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  row-gap: $md;
+};
+
+// ## CARD
+
+.#{$PREF}-card {
+  @extend .shadow-1;
+
+  background-color: white;
+  border: 1px rgba($color: lightgray, $alpha: 0.5) solid;
+  border-radius: $xs;
+  grid-column-end: span 6;
+  padding: 12px 12px $md $sm;
+};
+
+// ## CARD HEADER
+
+.#{$PREF}-card-header { @extend %flex-acsb; margin-bottom: $sm; }
+
+.#{$PREF}-card-header > div > p {
+  @extend .body--2;
+
+  color: $gray-3;
+  margin-bottom: $xs;
+}
+
+.#{$PREF}-card-header > div > button {
+  > svg { height: $md; width: $md; }
+
+  &:first-of-type > svg { color: $green; margin-right: $xs; }
+  &:last-of-type > svg { color: $red; }
+}
+
+// ## CARD QUESTION
+
+.#{$PREF}-card-question > p:first-of-type { @extend .body--2; margin-bottom: $xs; }
+
+.#{$PREF}-card-question > p:last-of-type {
+  @extend .body--2;
+
+  background-color: rgba($color: $primary-hex, $alpha: 0.1);
+  border-radius: $md;
+  color: $primary;
+  padding: $xxs 12px;
+  width: fit-content;
+}

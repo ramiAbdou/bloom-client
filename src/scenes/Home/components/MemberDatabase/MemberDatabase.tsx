@@ -105,7 +105,7 @@ import React from 'react';
 export default () => (
   <div className="s-home-database">
     <div className="s-home-header">
-      <h1>Member Database</h1>
+      <h1 className="s-home-header-title">Member Database</h1>
     </div>
   </div>
 );

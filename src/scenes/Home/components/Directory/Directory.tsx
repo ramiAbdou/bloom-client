@@ -6,5 +6,5 @@
 import React from 'react';
 
 export default () => {
-  return <h1>Directory</h1>;
+  return <h1 className="s-home-header-title">Directory</h1>;
 };

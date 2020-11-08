@@ -38,9 +38,10 @@ $PREF: 'c-picker';
 
 .#{$PREF}-option {
   @extend .fill;
-  @extend .body--1;
+  @extend .body--2;
   
   color: $gray-2;
+  font-weight: 400;
   padding: 12px;
   text-align: left;
   width: 100%;

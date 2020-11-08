@@ -6,77 +6,49 @@
 import './PendingApplicants.scss';
 
 import { useQuery } from 'graphql-hooks';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 
-import Spinner from '@components/Loader/Spinner';
-import TableContent from '@components/Table/Table';
-import Table from '@components/Table/Table.store';
-import { Row } from '@components/Table/Table.types';
 import {
   Community,
-  IApplicationQuestion,
-  IPendingApplicant
+  IPendingApplicant,
+  ResolvedApplicantData,
+  UnresolvedApplicantData
 } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
-import TableActions from './TableActions';
+import ApplicantCard from './ApplicantCard';
+import Header from './Header';
 
 const NoPendingApplicationsMessage = () => (
   <p>There are no pending applications. 👍</p>
 );
 
-const ApplicationTable = () => {
-  const questions: IApplicationQuestion[] = useStoreState(
-    ({ applicationQuestions, community }) =>
-      community.applicationQuestions?.map(
-        (questionId: string) => applicationQuestions.byId[questionId]
-      )
+export default () => {
+  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const numApplicants = useStoreState(
+    ({ community }) => community?.pendingApplicants?.length
   );
 
   const applicants: IPendingApplicant[] = useStoreState(
-    ({ pendingApplicants, community }) =>
-      community.pendingApplicants?.map(
-        (applicantId: string) => pendingApplicants.byId[applicantId]
-      )
+    ({ applicationQuestions, pendingApplicants, community }) => {
+      // console.log(applicationQuestions);
+      return community.pendingApplicants?.map((applicantId: string) => {
+        const applicant = pendingApplicants.byId[applicantId];
+
+        // @ts-ignore b/c we are simply checking if the data is resolved or not.
+        if (applicant.applicantData[0]?.questionId)
+          applicant.applicantData = (applicant.applicantData as UnresolvedApplicantData[]).map(
+            ({ questionId, value }) => ({
+              question: applicationQuestions.byId[questionId],
+              value
+            })
+          ) as ResolvedApplicantData[];
+
+        return applicant;
+      });
+    }
   );
 
-  const data = useMemo(
-    () =>
-      !applicants
-        ? []
-        : applicants.reduce(
-            (acc: Row[], { applicantData, id }: IPendingApplicant) => {
-              const result = { id };
-              applicantData.forEach(({ questionId, value }) => {
-                result[questionId] = value;
-              });
-
-              return [...acc, result];
-            },
-            []
-          ),
-    [applicants?.length]
-  );
-
-  const columns = useMemo(
-    () =>
-      !questions
-        ? []
-        : questions.map(({ type, id, title }) => ({ id, title, type })),
-    [questions?.length]
-  );
-
-  if (!applicants?.length) return <NoPendingApplicationsMessage />;
-  return (
-    <Table.Provider initialData={{ columns, data }}>
-      <TableActions />
-      <TableContent />
-    </Table.Provider>
-  );
-};
-
-export default () => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
   const { data, loading } = useQuery(GET_PENDING_APPLICATIONS);
 
   useEffect(() => {
@@ -92,13 +64,15 @@ export default () => {
   }, [data]);
 
   return (
-    <div className="s-home-applicants">
-      <div className="s-home-header">
-        <h1>Pending Applications</h1>
-        {loading && <Spinner dark />}
-      </div>
+    <div className="s-applicants">
+      <Header loading={loading} />
+      {data && !numApplicants && <NoPendingApplicationsMessage />}
 
-      {!loading && data && <ApplicationTable />}
+      <div className="s-applicants-card-ctr">
+        {applicants?.map((applicant) => (
+          <ApplicantCard key={applicant.id} {...applicant} />
+        ))}
+      </div>
     </div>
   );
 };

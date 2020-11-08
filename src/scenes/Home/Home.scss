@@ -15,9 +15,6 @@ $PREF: 's-home';
   height: 100%;
   margin-right: $md;
   max-height: 100%;
-  overflow: hidden;
-
-  // @include DD { margin: auto; max-width: 1440px; width: 100%; }
 }
 
 .#{$PREF}-nav {
@@ -31,8 +28,9 @@ $PREF: 's-home';
 }
 
 // Makes the header consistent across each page. Mainly for loading purposes.
-.#{$PREF}-header { @extend %flex-ac; grid-row: 1 / span 5; margin-bottom: $sm; }
-.#{$PREF}-header > h3 { margin-right: $sm; }
+.#{$PREF}-header, .#{$PREF}-header > div { @extend %flex-ac; }
+.#{$PREF}-header { margin-bottom: $md; }
+.#{$PREF}-header-title { margin-right: $sm; }
 
 // ## CONTENT
 
@@ -42,5 +40,6 @@ $PREF: 's-home';
   margin-bottom: $md;
   margin-top: $md;
   max-height: 100%;
-  overflow: scroll;
 }
+
+.#{$PREF}-content-body { overflow: scroll; }

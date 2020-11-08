@@ -15,7 +15,7 @@ import SidebarLink from './SidebarLink';
 
 const CommunityName = memo(() => {
   const name = useStoreState(({ community }) => community?.name);
-  return <h3>{name}</h3>;
+  return <h2>{name}</h2>;
 });
 
 const SidebarContent = memo(() => {

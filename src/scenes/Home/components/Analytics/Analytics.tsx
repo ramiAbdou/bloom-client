@@ -6,5 +6,5 @@
 import React from 'react';
 
 export default () => {
-  return <h1>Analytics</h1>;
+  return <h1 className="s-home-header-title">Analytics</h1>;
 };

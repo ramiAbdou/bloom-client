@@ -50,4 +50,4 @@ input::placeholder { color: $gray-3; }
   @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);
 }
 
-button { @extend .body--1; @extend .bold; }
+button { @extend .body--1; font-weight: 600; }
