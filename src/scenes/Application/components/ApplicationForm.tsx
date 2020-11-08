@@ -32,7 +32,7 @@ const Title = () => {
     ({ community }) => community?.application?.title
   );
 
-  return <h3>{title}</h3>;
+  return <h1>{title}</h1>;
 };
 
 const Description = () => {
@@ -92,7 +92,9 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const primaryColor = useStoreState(({ community }) => community.primaryColor);
+  const primaryColor = useStoreState(
+    ({ community }) => community?.primaryColor
+  );
   const application = Application.useStoreState(
     ({ community }) => community?.application
   );
@@ -106,7 +108,7 @@ export default () => {
   });
 
   useEffect(() => {
-    if (data && !application) initCommunity(data.getCommunity);
+    if (data && !application) initCommunity(data.getApplicationForm);
   }, [data]);
 
   if (error) return <Redirect to="/login" />;

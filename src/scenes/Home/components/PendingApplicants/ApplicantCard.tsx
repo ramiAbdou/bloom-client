@@ -5,11 +5,11 @@
 
 import moment from 'moment-timezone';
 import React from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
 import { QuestionType } from '@constants';
 import { IPendingApplicant, ResolvedApplicantData } from '@store/schema';
+import CSSModifier from '@util/CSSModifier';
 
 type CardQuestionProps = {
   type: QuestionType;
@@ -18,8 +18,15 @@ type CardQuestionProps = {
 };
 
 const CardQuestion = ({ question, type, value }: CardQuestionProps) => {
+  const { css } = new CSSModifier()
+    .class('s-applicants-card-question')
+    .addClass(
+      ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
+      's-applicants-card-question--choice'
+    );
+
   return (
-    <div className="s-applicants-card-question">
+    <div className={css}>
       <p>{question}</p>
       <p>{value}</p>
     </div>
@@ -57,18 +64,21 @@ export default ({ createdAt, applicantData }: IPendingApplicant) => {
     ({ question }) => question.category === 'LAST_NAME'
   );
 
-  const { question: membershipQuestion, value: membershipType } = data.find(
-    ({ question }) => question.category === 'MEMBERSHIP_TYPE'
+  const filteredQuestions = data.filter(
+    ({ question }) => question.inApplicantCard
   );
 
   return (
     <div className="s-applicants-card">
       <CardHeader createdAt={createdAt} fullName={`${firstName} ${lastName}`} />
-      <CardQuestion
-        question={membershipQuestion.title}
-        type={membershipQuestion.type}
-        value={membershipType}
-      />
+      {filteredQuestions.map(({ question, value }) => (
+        <CardQuestion
+          key={question.title}
+          question={question.title}
+          type={question.type}
+          value={value}
+        />
+      ))}
     </div>
   );
 };

@@ -6,8 +6,8 @@ $PREF: 'c-form';
 
 // ## GENERAL
 
-.#{$PREF}-item { margin-bottom: $md; margin-top: $md; }
-.#{$PREF}-desc { @extend .body--1; margin-bottom: $xxs; }
+.#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
+.#{$PREF}-desc { @extend .body--2; margin-bottom: $sm; }
 .#{$PREF}-error { @extend .body--2; color: $red; margin-top: $xxs; }
 
 // ## LABEL
@@ -20,7 +20,7 @@ $PREF: 'c-form';
 
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: $xxs;
+  margin-bottom: $xs;
   max-width: 85%;
 }
 

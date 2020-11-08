@@ -23,6 +23,7 @@ export type Entity =
 export type IApplicationQuestion = {
   category: QuestionCategory;
   id: string;
+  inApplicantCard: boolean;
   order: number;
   title: QuestionType;
   type: QuestionType;

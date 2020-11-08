@@ -37,7 +37,7 @@ export default ({ component, ...rest }: RouteProps) => {
   const loginToken = new URLSearchParams(window.location.search).get('token');
   if (loginToken) return <TokenRoute token={loginToken} />;
   if (loading) return <FullScreenLoader />;
-  if (error) return <Redirect to="/login" />;
+  if (error || !data?.getUser) return <Redirect to="/login" />;
   if (isHome && encodedUrlName) return <Redirect to={`/${encodedUrlName}`} />;
 
   return <Route exact {...rest} component={component} />;

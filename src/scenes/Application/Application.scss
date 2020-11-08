@@ -14,14 +14,14 @@ $PREF: 's-signup';
 .#{$PREF} > img {
   border: 2px $gray-1 solid;
   border-radius: $xxs;
-  height: $lg;
+  height: $xl;
   margin-bottom: $xs;
   padding: 2px;
-  width: $lg;
+  width: $xl;
 }
 
-.#{$PREF} > h3 { margin-bottom: $xs; }
-.#{$PREF} > p { margin-bottom: $md; }
+.#{$PREF} > h1 { margin-bottom: $xs; }
+.#{$PREF} > p { margin-bottom: $lg; }
 .#{$PREF} > button { margin-top: $xxl; width: 100%; }
 
 .#{$PREF}-confirmation-ctr {

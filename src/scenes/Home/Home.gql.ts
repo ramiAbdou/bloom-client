@@ -20,7 +20,18 @@ export const GET_PENDING_APPLICATIONS = query({
   fields: [
     'id',
     {
-      application: [{ questions: ['category', 'id', 'order', 'title', 'type'] }]
+      application: [
+        {
+          questions: [
+            'category',
+            'id',
+            'inApplicantCard',
+            'order',
+            'title',
+            'type'
+          ]
+        }
+      ]
     },
     {
       pendingApplicants: [

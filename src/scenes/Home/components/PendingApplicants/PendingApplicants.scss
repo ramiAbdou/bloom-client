@@ -29,7 +29,7 @@ $PREF: 's-applicants';
   @extend .shadow-1;
 
   background-color: white;
-  border: 1px rgba($color: lightgray, $alpha: 0.5) solid;
+  border: 0.5px $gray-5 solid;
   border-radius: $xs;
   grid-column-end: span 6;
   padding: 12px 12px $md $sm;
@@ -40,10 +40,10 @@ $PREF: 's-applicants';
 .#{$PREF}-card-header { @extend %flex-acsb; margin-bottom: $sm; }
 
 .#{$PREF}-card-header > div > p {
-  @extend .body--2;
+  @extend .meta;
 
   color: $gray-3;
-  margin-bottom: $xs;
+  margin-bottom: $xxs;
 }
 
 .#{$PREF}-card-header > div > button {
@@ -55,14 +55,13 @@ $PREF: 's-applicants';
 
 // ## CARD QUESTION
 
-.#{$PREF}-card-question > p:first-of-type { @extend .body--2; margin-bottom: $xs; }
-
-.#{$PREF}-card-question > p:last-of-type {
-  @extend .body--2;
-
+.#{$PREF}-card-question { margin-bottom: $sm; }
+.#{$PREF}-card-question > p { @extend .body--2; }
+.#{$PREF}-card-question > p:first-of-type { margin-bottom: $xs; }
+.#{$PREF}-card-question > p:last-of-type { @extend .body--2; color: $primary; }
+.#{$PREF}-card-question--choice > p:last-of-type {
   background-color: rgba($color: $primary-hex, $alpha: 0.1);
   border-radius: $md;
-  color: $primary;
   padding: $xxs 12px;
   width: fit-content;
 }
