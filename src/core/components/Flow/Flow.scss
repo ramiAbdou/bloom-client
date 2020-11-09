@@ -36,6 +36,8 @@ $PREF: 'c-flow';
   @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
 }
 
+.#{$PREF}-ctr { max-height: 100%; }
+
 .#{$PREF}__hdr {
   @extend %flex-acsb;
   @extend .fill;

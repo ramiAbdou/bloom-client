@@ -6,12 +6,14 @@
  */
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React from 'react';
+import React, { useRef } from 'react';
+import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps } from '@constants';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 
 export default ({ children }: ChildrenProps) => {
+  const closeFlow = useStoreActions(({ flow }) => flow.closeFlow);
   const isShowing = useStoreState(({ flow }) => flow.isShowing);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
 
@@ -20,11 +22,20 @@ export default ({ children }: ChildrenProps) => {
   const initial = isMobile ? { x: 1000 } : { y: -1000 };
   const transition = isMobile ? { duration: 0.3 } : { duration: 0.5 };
 
+  // If it is desktop or tablet and click happens outside, close the flow.
+  const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
+  useOnClickOutside(ref, (event) => {
+    // @ts-ignore b/c we know that an ID string will exist.
+    const { id } = event.target;
+    if (id === 'c-flow-root') closeFlow();
+  });
+
   return (
     <AnimatePresence>
       {isShowing && (
         <>
           <motion.div
+            ref={ref}
             animate={{ opacity: 0.5 }}
             exit={{ opacity: 0 }}
             id="c-flow-bg"

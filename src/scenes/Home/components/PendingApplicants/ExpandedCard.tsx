@@ -70,8 +70,10 @@ const Header = () => {
 };
 
 export default () => {
-  const data = Applicant.useStoreState(
-    ({ applicant }) => applicant.applicantData as ResolvedApplicantData[]
+  const data = Applicant.useStoreState(({ applicant }) =>
+    (applicant.applicantData as ResolvedApplicantData[])?.filter(
+      ({ question }) => !['FIRST_NAME', 'LAST_NAME'].includes(question.category)
+    )
   );
 
   return (

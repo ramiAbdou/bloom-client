@@ -8,49 +8,40 @@
 
 import './Flow.scss';
 
-import React, { useRef } from 'react';
-import useOnClickOutside from 'use-onclickoutside';
+import React from 'react';
 
 import Form from '@components/Form/Form.store';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import FlowContainer from './FlowContainer';
 import FlowHeader from './FlowHeader';
 
 const CurrentScreen = () => {
   const currentScreen = useStoreState(({ flow }) => flow.currentScreen);
   const screens = useStoreState(({ flow }) => flow.screens);
-  const closeFlow = useStoreActions(({ flow }) => flow.closeFlow);
-  const isMobile = useStoreState(({ screen }) => screen.isMobile);
-
-  // If it is desktop or tablet and click happens outside, close the flow.
-  const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
-  useOnClickOutside(ref, () => !isMobile && closeFlow());
-
   if (!screens.length) return null;
 
   // If there are any screens, display the current screen.
   const { node, header } = screens[currentScreen];
 
   return (
-    <div ref={ref}>
+    <div className="c-flow-ctr">
       {header && <FlowHeader {...header} />}
       <div className="c-flow-content">{node}</div>
     </div>
   );
 };
 
-const FlowContent = () => {
-  const screens = useStoreState(({ flow }) => flow.screens);
-  if (!screens.length) return null;
-  return <CurrentScreen />;
-};
-
 // -----------------------------------------------------------------------------
 
-export default () => (
-  <FlowContainer>
-    <Form.Provider initialData={{ submitForm: () => {} }}>
-      <FlowContent />
-    </Form.Provider>
-  </FlowContainer>
-);
+export default () => {
+  const screens = useStoreState(({ flow }) => flow.screens);
+  if (!screens.length) return null;
+
+  return (
+    <FlowContainer>
+      <Form.Provider initialData={{}}>
+        <CurrentScreen />
+      </Form.Provider>
+    </FlowContainer>
+  );
+};
