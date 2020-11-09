@@ -54,13 +54,13 @@ $PREF: 's-applicants';
 // ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
 
 .#{$PREF}-card-action {
-  height: $md;
-  width: $md;
-  > svg { height: $md; width: $md; }
+  height: 32px;
+  width: 32px;
+  > svg { height: 32px; width: 32px; }
 
   &:first-of-type > svg {
     color: $green;
-    margin-right: $xs;
+    margin-right: 12px;
 
     @include HOVER { color: hsl(150, 80%, 37%); }
   }
