@@ -1,0 +1,69 @@
+@import 'src/index.scss';
+
+$PREF: 'c-flow';
+
+##{$PREF}-bg {
+  background-color: black;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1000;
+}
+
+##{$PREF}-root {
+  @extend %flex-acc;
+
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1010;
+}
+
+.#{$PREF}-content { padding-left: 20px; padding-right: 20px; }
+
+.#{$PREF} {
+  background-color: white;
+  box-sizing: border-box;
+  overflow: scroll;
+  position: fixed;
+  z-index: 20;
+
+  @include M { height: 100%; width: 100%; }
+  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
+}
+
+.#{$PREF}__hdr {
+  @extend %flex-acsb;
+  @extend .fill;
+
+  background-color: white;
+  height: $lg;
+  left: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: sticky;
+  top: 0;
+}
+
+.#{$PREF}__hdr-btn--back {
+  @extend %flex-acc; // Needed to center the image within the button container.
+
+  border-radius: 50%;
+  height: min-content;
+  margin-right: 20px; // Needed to center the title b/c of the secondary button.
+  padding: 10px;
+  width: min-content;
+
+  @media (hover: hover) {
+    &:hover { background-color: rgba($color: #d9c4b3, $alpha: 0.25); }
+  }
+  
+  /* stylelint-disable-next-line */
+  &:active { background-color: rgba($color: $primary, $alpha: 0.25); }
+}
+
+.#{$PREF}__hdr-btn--back__img { height: 20px; padding: 0; width: 20px; }

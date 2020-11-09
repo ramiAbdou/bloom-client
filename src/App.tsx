@@ -13,6 +13,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 
+import Flow from '@components/Flow/Flow';
 import Picker from '@components/Picker/Picker';
 import ToastQueue from '@components/Toast/Toast';
 import { APP } from '@constants';
@@ -27,8 +28,9 @@ const client = new GraphQLClient({
 const Background = () => <div id="app" />;
 
 const ResizeScreen = () => {
-  const setWindowWidth = useStoreActions(({ screen }) => screen.setWindowWidth);
   const setCoordinates = useStoreActions(({ picker }) => picker.setCoordinates);
+  const setWindowWidth = useStoreActions(({ screen }) => screen.setWindowWidth);
+
   const onWindowResize = () => {
     setCoordinates();
     setWindowWidth(window.innerWidth);
@@ -52,6 +54,7 @@ const App = () => (
         <Router />
         <Background />
         <Picker />
+        <Flow />
         <ToastQueue />
       </IconContext.Provider>
     </StoreProvider>

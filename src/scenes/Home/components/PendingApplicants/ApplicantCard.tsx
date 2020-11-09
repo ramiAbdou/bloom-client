@@ -9,7 +9,9 @@ import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
 import { QuestionType } from '@constants';
+import { FlowScreen } from '@store/Flow.store';
 import { IPendingApplicant, ResolvedApplicantData } from '@store/schema';
+import { useStoreActions } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 
 type CardQuestionProps = {
@@ -55,6 +57,22 @@ const CardHeader = ({ createdAt, fullName }: CardHeaderProps) => (
   </div>
 );
 
+const ExpandButton = () => {
+  const showFlow = useStoreActions(({ flow }) => flow.showFlow);
+  const onClick = () => {
+    const screens: FlowScreen[] = [
+      {
+        header: { buttonText: 'Next', title: 'Add a Prompt' },
+        node: <p>BRO</p>
+      }
+    ];
+
+    showFlow(screens);
+  };
+
+  return <UnderlineButton title="See Full Application" onClick={onClick} />;
+};
+
 export default ({ createdAt, applicantData }: IPendingApplicant) => {
   const data = applicantData as ResolvedApplicantData[];
   const { value: firstName } = data.find(
@@ -86,7 +104,7 @@ export default ({ createdAt, applicantData }: IPendingApplicant) => {
         ))}
       </div>
 
-      <UnderlineButton title="See Full Application" />
+      <ExpandButton />
     </div>
   );
 };

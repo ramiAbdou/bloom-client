@@ -12,8 +12,12 @@ type FlowScreenHeader = {
   title: string;
 };
 
-export type FlowScreen = { node: React.ReactNode; header: FlowScreenHeader };
-export type ShowFlowArgs = { flowScreens: FlowScreen[] };
+export type FlowScreen = {
+  node: React.ReactNode;
+  header: FlowScreenHeader;
+  separator?: boolean;
+};
+export type ShowFlowArgs = { screens: FlowScreen[] };
 
 export type FlowModel = {
   closeFlow: Action<FlowModel>;
@@ -44,5 +48,5 @@ export const flowModel: FlowModel = {
 
   screens: [],
 
-  showFlow: action((state, screens) => ({ ...state, screens }))
+  showFlow: action((state, screens) => ({ ...state, isShowing: true, screens }))
 };
