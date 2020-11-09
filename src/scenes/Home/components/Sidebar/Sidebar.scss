@@ -126,12 +126,9 @@ h3.#{$PREF}-profile__picture {
 
 .#{$PREF}-profile > div > div { @extend %flex-col; align-items: flex-start; }
 
-.#{$PREF}-profile > div > div > p {
+.#{$PREF}-profile > div > div > p:last-of-type {
   @extend .body--2;
 
-  &:last-of-type {
-    color: $gray-3;
-    margin-top: $xxs;
-    text-transform: capitalize;
-  }
+  color: $gray-3;
+  text-transform: capitalize;
 }
