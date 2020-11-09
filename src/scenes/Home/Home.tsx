@@ -14,9 +14,9 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 
-import Navbar from '@components/Navbar/Navbar';
 import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
+import Navbar from '@scenes/Home/components/Navbar/Navbar';
 import { useStoreState } from '@store/Store';
 import Analytics from './components/Analytics/Analytics';
 import Directory from './components/Directory/Directory';

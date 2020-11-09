@@ -29,7 +29,7 @@ const CardQuestion = ({ question, type, value }: CardQuestionProps) => {
   return (
     <div className={css}>
       <p>{question}</p>
-      <p>{value}</p>
+      <p>{value ?? 'N/A'}</p>
     </div>
   );
 };
