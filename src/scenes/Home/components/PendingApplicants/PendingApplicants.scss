@@ -36,6 +36,8 @@ $PREF: 's-applicants';
   border-radius: $xs;
   grid-column-end: span 6;
   padding: 12px 12px $md $sm;
+
+  &:last-of-type { margin-bottom: $lg; }
 };
 
 .#{$PREF}-card > button { margin: 20px auto 0 auto; }
