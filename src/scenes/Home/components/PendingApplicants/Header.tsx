@@ -5,6 +5,8 @@
 
 import React from 'react';
 
+import OutlineButton from '@components/Button/OutlineButton';
+import PrimaryButton from '@components/Button/PrimaryButton';
 import Spinner from '@components/Loader/Spinner';
 import { useStoreState } from '@store/Store';
 
@@ -22,6 +24,11 @@ export default ({ loading }: HeaderProps) => {
           Pending Applicants {numApplicants ? `(${numApplicants})` : ''}
         </h1>
         {loading && <Spinner dark />}
+      </div>
+
+      <div>
+        <PrimaryButton title="Accept All" />
+        <OutlineButton title="Reject All" />
       </div>
     </div>
   );

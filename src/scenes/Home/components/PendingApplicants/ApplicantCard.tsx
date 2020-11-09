@@ -7,6 +7,7 @@ import moment from 'moment-timezone';
 import React from 'react';
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
+import UnderlineButton from '@components/Button/UnderlineButton';
 import { QuestionType } from '@constants';
 import { IPendingApplicant, ResolvedApplicantData } from '@store/schema';
 import CSSModifier from '@util/CSSModifier';
@@ -79,6 +80,7 @@ export default ({ createdAt, applicantData }: IPendingApplicant) => {
           value={value}
         />
       ))}
+      <UnderlineButton title="See Full Application" />
     </div>
   );
 };

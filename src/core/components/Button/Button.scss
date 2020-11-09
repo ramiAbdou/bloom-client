@@ -9,7 +9,7 @@ $PREF: 'c-btn';
   @extend .btn-txt;
   @extend %flex-acc;
 
-  border-radius: $xs;
+  border-radius: $xxs;
   text-transform: uppercase;
 }
 
@@ -28,20 +28,13 @@ $PREF: 'c-btn';
 .#{$PREF}-primary {
   @extend .#{$PREF}-base;
 
-  background-color: rgba($color: $primary-hex, $alpha: 0.1);
-  box-shadow: 0 1px $gray-5;
-  color: $primary;
-  height: $xl;
-  padding-left: $xl;
-  padding-right: $xl;
-
-  @include M { width: 100%; }
-
-  &:active { box-shadow: inset 0 2px 2px $gray-4; }
+  background-color: $primary;
+  color: white;
+  padding: $xs $sm;
+  text-decoration: none;
 
   &--disabled {
     background-color: $gray-5;
-    box-shadow: none !important;
     color: $gray-3;
     cursor: not-allowed;
 
@@ -49,4 +42,30 @@ $PREF: 'c-btn';
   }
 
   &--sm { height: $lg; padding-left: $sm; padding-right: $sm; }
+}
+
+// ## OUTLINE BUTTON
+
+.#{$PREF}-outline {
+  @extend .#{$PREF}-base;
+
+  background-color: white;
+  border: 1px $primary solid;
+  color: $primary;
+  padding: $xs $sm;
+  text-decoration: none;
+}
+
+// ## UNDERLINE BUTTON
+
+.#{$PREF}-underline {
+  @extend .#{$PREF}-base;
+
+  color: $primary;
+  padding: $xs $sm;
+  
+  @include HOVER {
+    background-color: rgba($color: $primary-hex, $alpha: 0.1);
+    border-radius: 10px;
+  }
 }

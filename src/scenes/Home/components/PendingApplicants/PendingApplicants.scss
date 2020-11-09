@@ -2,6 +2,8 @@
 
 $PREF: 's-applicants';
 
+.s-home-header > div > button:first-of-type { margin-right: 12px; }
+
 .#{$PREF} > p { @extend .body--1; }
 
 .#{$PREF}-questions > p {
@@ -26,6 +28,9 @@ $PREF: 's-applicants';
 // ## CARD
 
 .#{$PREF}-card {
+  // @extend %flex-col;
+  // @extend %flex-sb;
+
   @extend .shadow-1;
 
   background-color: white;
@@ -34,6 +39,8 @@ $PREF: 's-applicants';
   grid-column-end: span 6;
   padding: 12px 12px $md $sm;
 };
+
+.#{$PREF}-card > button { margin: 20px auto 0 auto; }
 
 // ## CARD HEADER
 
@@ -49,8 +56,18 @@ $PREF: 's-applicants';
 .#{$PREF}-card-header > div > button {
   > svg { height: $md; width: $md; }
 
-  &:first-of-type > svg { color: $green; margin-right: $xs; }
-  &:last-of-type > svg { color: $red; }
+  &:first-of-type > svg {
+    color: $green;
+    margin-right: $xs;
+
+    @include HOVER { color: rgba($color: $green, $alpha: 0.8); }
+  }
+
+  &:last-of-type > svg {
+    color: $red;
+
+    @include HOVER { color: rgba($color: $red, $alpha: 0.8); }
+  }
 }
 
 // ## CARD QUESTION
@@ -65,3 +82,5 @@ $PREF: 's-applicants';
   padding: $xxs 12px;
   width: fit-content;
 }
+
+div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
