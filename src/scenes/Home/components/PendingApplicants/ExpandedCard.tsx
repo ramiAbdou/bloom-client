@@ -53,7 +53,7 @@ const Header = () => {
 
   return (
     <div className="s-applicants-expanded-header">
-      <IoMdArrowBack style={{ height: 32, width: 32 }} />
+      <IoMdArrowBack className="back-arrow" style={{ height: 32, width: 32 }} />
       <h1>{`${firstName} ${lastName}`}</h1>
 
       <div>

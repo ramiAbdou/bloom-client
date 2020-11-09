@@ -3,15 +3,11 @@
 $PREF: 'c-table';
 
 .#{$PREF}-ctr {
-  @extend .no-scrollbar;
-  
   background-color: white;
   border: 1px $gray-5 solid;
   border-radius: 4px;
   max-height: 0;
   overflow: scroll;
-
-  ::-webkit-scrollbar { background: transparent; display: none !important; }
 }
 
 .#{$PREF} {
