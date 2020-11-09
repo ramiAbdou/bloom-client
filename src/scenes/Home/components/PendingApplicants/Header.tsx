@@ -19,7 +19,7 @@ export default ({ loading }: HeaderProps) => {
     <div className="s-home-header">
       <div>
         <h1 className="s-home-header-title">
-          Pending Applications {numApplicants ? `(${numApplicants})` : ''}
+          Pending Applicants {numApplicants ? `(${numApplicants})` : ''}
         </h1>
         {loading && <Spinner dark />}
       </div>
