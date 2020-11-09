@@ -16,6 +16,7 @@ import merge from 'lodash/merge';
 import { Schema } from 'normalizr';
 
 import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
+import { FlowModel, flowModel } from './Flow.store';
 import { LoaderModel, loaderModel } from './Loader.store';
 import { PickerModel, pickerModel } from './Picker.store';
 import {
@@ -41,6 +42,7 @@ type StoreModel = {
   communities: Computed<StoreModel, EntityRecord<ICommunity>>;
   community: Computed<StoreModel, ICommunity>;
   entities: Record<Entity, EntityRecord>;
+  flow: FlowModel;
   loader: LoaderModel;
   members: Computed<StoreModel, EntityRecord<IMember>>;
   membership: Computed<StoreModel, IMembership>;
@@ -109,6 +111,8 @@ export const store = createStore<StoreModel>(
       pendingApplicants: { allIds: [], byId: {} },
       users: { allIds: [], byId: {} }
     },
+
+    flow: flowModel,
 
     loader: loaderModel,
 
