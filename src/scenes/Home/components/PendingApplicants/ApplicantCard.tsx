@@ -71,15 +71,21 @@ export default ({ createdAt, applicantData }: IPendingApplicant) => {
 
   return (
     <div className="s-applicants-card">
-      <CardHeader createdAt={createdAt} fullName={`${firstName} ${lastName}`} />
-      {filteredQuestions.map(({ question, value }) => (
-        <CardQuestion
-          key={question.title}
-          question={question.title}
-          type={question.type}
-          value={value}
+      <div>
+        <CardHeader
+          createdAt={createdAt}
+          fullName={`${firstName} ${lastName}`}
         />
-      ))}
+        {filteredQuestions.map(({ question, value }) => (
+          <CardQuestion
+            key={question.title}
+            question={question.title}
+            type={question.type}
+            value={value}
+          />
+        ))}
+      </div>
+
       <UnderlineButton title="See Full Application" />
     </div>
   );

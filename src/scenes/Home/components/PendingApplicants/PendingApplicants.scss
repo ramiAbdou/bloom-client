@@ -28,14 +28,11 @@ $PREF: 's-applicants';
 // ## CARD
 
 .#{$PREF}-card {
-  // @extend %flex-col;
-  // @extend %flex-sb;
-
+  @extend %flex-col;
+  @extend %flex-sb;
   @extend .shadow-1;
 
   background-color: white;
-  // border: 1px $gray-5 solid;
-
   border-radius: $xs;
   grid-column-end: span 6;
   padding: 12px 12px $md $sm;
@@ -61,23 +58,20 @@ $PREF: 's-applicants';
     color: $green;
     margin-right: $xs;
 
-    @include HOVER { color: rgba($color: $green, $alpha: 0.8); }
+    @include HOVER { color: hsl(150, 80%, 37%); }
   }
 
   &:last-of-type > svg {
     color: $red;
 
-    @include HOVER { color: rgba($color: $red, $alpha: 0.8); }
+    @include HOVER { color: hsl(9, 80%, 59%); }
   }
 }
 
 // ## CARD QUESTION
 
 .#{$PREF}-card-question { margin-bottom: $sm; }
-.#{$PREF}-card-question > p:first-of-type {
-  font-size: 15px;
-  margin-bottom: $xxs;
-}
+.#{$PREF}-card-question > p:first-of-type { margin-bottom: $xxs; }
 .#{$PREF}-card-question > p:last-of-type { @extend .body--2; color: $primary; }
 .#{$PREF}-card-question--choice > p:last-of-type {
   background-color: rgba($color: $primary-hex, $alpha: 0.1);
