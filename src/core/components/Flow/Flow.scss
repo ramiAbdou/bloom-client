@@ -3,7 +3,7 @@
 $PREF: 'c-flow';
 
 ##{$PREF}-bg {
-  background-color: black;
+  background-color: hsla($primary-hue, 5%, 20%, 0.5);
   height: 100vh;
   left: 0;
   position: fixed;
@@ -23,7 +23,7 @@ $PREF: 'c-flow';
   z-index: 1010;
 }
 
-.#{$PREF}-content { padding-left: 20px; padding-right: 20px; }
+.#{$PREF}-content { padding: $md; }
 
 .#{$PREF} {
   background-color: white;

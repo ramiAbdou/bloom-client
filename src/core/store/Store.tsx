@@ -87,8 +87,6 @@ export const store = createStore<StoreModel>(
       const RGB = getRGBFromHex(color);
       const hue = getHueFromRGB(RGB);
 
-      console.log(hue);
-
       style.setProperty('--primary', color);
       style.setProperty('--primary-hex', `${RGB[0]}, ${RGB[1]}, ${RGB[2]}`);
       style.setProperty('--primary-hue', `${hue}`);

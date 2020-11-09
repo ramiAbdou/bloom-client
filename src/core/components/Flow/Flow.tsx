@@ -33,16 +33,14 @@ const CurrentScreen = () => {
 
   return (
     <div ref={ref}>
-      <FlowHeader {...header} />
+      {header && <FlowHeader {...header} />}
       <div className="c-flow-content">{node}</div>
     </div>
   );
 };
 
 const FlowContent = () => {
-  const currentScreen = useStoreState(({ flow }) => flow.currentScreen);
   const screens = useStoreState(({ flow }) => flow.screens);
-  console.log(currentScreen);
   if (!screens.length) return null;
   return <CurrentScreen />;
 };

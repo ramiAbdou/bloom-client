@@ -51,7 +51,11 @@ $PREF: 's-applicants';
   margin-bottom: $xxs;
 }
 
-.#{$PREF}-card-header > div > button {
+// ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
+
+.#{$PREF}-card-action {
+  height: $md;
+  width: $md;
   > svg { height: $md; width: $md; }
 
   &:first-of-type > svg {
@@ -81,3 +85,8 @@ $PREF: 's-applicants';
 }
 
 div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
+
+// ## EXPANDED CARD
+
+.#{$PREF}-expanded-header { @extend %flex-acsb; margin-bottom: $md; }
+.#{$PREF}-expanded-question > p:first-of-type { @extend .bold; }

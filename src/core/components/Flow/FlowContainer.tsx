@@ -7,7 +7,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
-import { createPortal } from 'react-dom';
 
 import { ChildrenProps } from '@constants';
 import { useStoreState } from '@store/Store';
@@ -21,7 +20,7 @@ export default ({ children }: ChildrenProps) => {
   const initial = isMobile ? { x: 1000 } : { y: -1000 };
   const transition = isMobile ? { duration: 0.3 } : { duration: 0.5 };
 
-  return createPortal(
+  return (
     <AnimatePresence>
       {isShowing && (
         <>
@@ -44,7 +43,6 @@ export default ({ children }: ChildrenProps) => {
           </div>
         </>
       )}
-    </AnimatePresence>,
-    document.body
+    </AnimatePresence>
   );
 };

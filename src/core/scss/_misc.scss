@@ -10,7 +10,7 @@
 
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-.react-icon { height: $sm; width: $sm; }
+.react-icon { color: black; height: $sm; width: $sm; }
 
 @mixin PRIMARY_HOVER {
   @media (hover: hover) {

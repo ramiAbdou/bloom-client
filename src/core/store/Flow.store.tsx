@@ -14,19 +14,20 @@ type FlowScreenHeader = {
 
 export type FlowScreen = {
   node: React.ReactNode;
-  header: FlowScreenHeader;
+  header?: FlowScreenHeader;
   separator?: boolean;
 };
-export type ShowFlowArgs = { screens: FlowScreen[] };
+export type ShowFlowArgs = { id: string; screens: FlowScreen[] };
 
 export type FlowModel = {
   closeFlow: Action<FlowModel>;
   currentScreen: number; // Index of the current screen;
   goBack: Action<FlowModel>;
   goForward: Action<FlowModel>;
+  id: string;
   isShowing: boolean;
   screens: FlowScreen[];
-  showFlow: Action<FlowModel, FlowScreen[]>;
+  showFlow: Action<FlowModel, ShowFlowArgs>;
 };
 
 export const flowModel: FlowModel = {
@@ -44,9 +45,16 @@ export const flowModel: FlowModel = {
     currentScreen: ++state.currentScreen
   })),
 
+  id: '',
+
   isShowing: false,
 
   screens: [],
 
-  showFlow: action((state, screens) => ({ ...state, isShowing: true, screens }))
+  showFlow: action((state, { id, screens }: ShowFlowArgs) => ({
+    ...state,
+    id,
+    isShowing: true,
+    screens
+  }))
 };

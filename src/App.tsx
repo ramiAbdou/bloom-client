@@ -13,7 +13,6 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 
-import Flow from '@components/Flow/Flow';
 import Picker from '@components/Picker/Picker';
 import ToastQueue from '@components/Toast/Toast';
 import { APP } from '@constants';
@@ -54,7 +53,6 @@ const App = () => (
         <Router />
         <Background />
         <Picker />
-        <Flow />
         <ToastQueue />
       </IconContext.Provider>
     </StoreProvider>

@@ -8,11 +8,14 @@ import React from 'react';
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
+import Flow from '@components/Flow/Flow';
 import { QuestionType } from '@constants';
 import { FlowScreen } from '@store/Flow.store';
-import { IPendingApplicant, ResolvedApplicantData } from '@store/schema';
-import { useStoreActions } from '@store/Store';
+import { ResolvedApplicantData } from '@store/schema';
+import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
+import Applicant from './Applicant.store';
+import ExpandedCard from './ExpandedCard';
 
 type CardQuestionProps = {
   type: QuestionType;
@@ -36,65 +39,74 @@ const CardQuestion = ({ question, type, value }: CardQuestionProps) => {
   );
 };
 
-type CardHeaderProps = { createdAt: string; fullName: string };
+const CardHeader = () => {
+  const { value: firstName } = Applicant.useStoreState(({ applicant }) =>
+    (applicant.applicantData as ResolvedApplicantData[])?.find(
+      ({ question }) => question.category === 'FIRST_NAME'
+    )
+  );
 
-const CardHeader = ({ createdAt, fullName }: CardHeaderProps) => (
-  <div className="s-applicants-card-header">
-    <div>
-      <p>Applied {moment(createdAt).format('M/D/YY')}</p>
-      <h3 className="c-form">{fullName}</h3>
+  const { value: lastName } = Applicant.useStoreState(({ applicant }) =>
+    (applicant.applicantData as ResolvedApplicantData[])?.find(
+      ({ question }) => question.category === 'LAST_NAME'
+    )
+  );
+
+  const createdAt = Applicant.useStoreState(
+    ({ applicant }) => applicant.createdAt
+  );
+
+  return (
+    <div className="s-applicants-card-header">
+      <div>
+        <p>Applied {moment(createdAt).format('M/D/YY')}</p>
+        <h3 className="c-form">{`${firstName} ${lastName}`}</h3>
+      </div>
+
+      <div>
+        <button className="s-applicants-card-action">
+          <IoIosCheckmarkCircle />
+        </button>
+
+        <button className="s-applicants-card-action">
+          <IoIosCloseCircle />
+        </button>
+      </div>
     </div>
-
-    <div>
-      <button>
-        <IoIosCheckmarkCircle />
-      </button>
-
-      <button>
-        <IoIosCloseCircle />
-      </button>
-    </div>
-  </div>
-);
-
-const ExpandButton = () => {
-  const showFlow = useStoreActions(({ flow }) => flow.showFlow);
-  const onClick = () => {
-    const screens: FlowScreen[] = [
-      {
-        header: { buttonText: 'Next', title: 'Add a Prompt' },
-        node: <p>BRO</p>
-      }
-    ];
-
-    showFlow(screens);
-  };
-
-  return <UnderlineButton title="See Full Application" onClick={onClick} />;
+  );
 };
 
-export default ({ createdAt, applicantData }: IPendingApplicant) => {
-  const data = applicantData as ResolvedApplicantData[];
-  const { value: firstName } = data.find(
-    ({ question }) => question.category === 'FIRST_NAME'
-  );
+const ExpandButton = () => {
+  const FLOW_ID = 'EXPANDED_APPLICANT_CARD';
+  const id = useStoreState(({ flow }) => flow.id);
+  const isShowing = useStoreState(({ flow }) => flow.isShowing);
+  const showFlow = useStoreActions(({ flow }) => flow.showFlow);
 
-  const { value: lastName } = data.find(
-    ({ question }) => question.category === 'LAST_NAME'
-  );
+  const onClick = () => {
+    const screens: FlowScreen[] = [{ node: <ExpandedCard /> }];
+    showFlow({ id: FLOW_ID, screens });
+  };
 
-  const filteredQuestions = data.filter(
-    ({ question }) => question.inApplicantCard
+  return (
+    <>
+      {isShowing && FLOW_ID === id && <Flow />}
+      <UnderlineButton title="See Full Application" onClick={onClick} />
+    </>
+  );
+};
+
+export default () => {
+  const data = Applicant.useStoreState(({ applicant }) =>
+    (applicant.applicantData as ResolvedApplicantData[])?.filter(
+      ({ question }) => question.inApplicantCard
+    )
   );
 
   return (
     <div className="s-applicants-card">
       <div>
-        <CardHeader
-          createdAt={createdAt}
-          fullName={`${firstName} ${lastName}`}
-        />
-        {filteredQuestions.map(({ question, value }) => (
+        <CardHeader />
+        {data.map(({ question, value }) => (
           <CardQuestion
             key={question.title}
             question={question.title}

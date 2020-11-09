@@ -16,6 +16,7 @@ import {
 } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
+import Applicant from './Applicant.store';
 import ApplicantCard from './ApplicantCard';
 import Header from './Header';
 
@@ -31,7 +32,6 @@ export default () => {
 
   const applicants: IPendingApplicant[] = useStoreState(
     ({ applicationQuestions, pendingApplicants, community }) => {
-      // console.log(applicationQuestions);
       return community.pendingApplicants?.map((applicantId: string) => {
         const applicant = pendingApplicants.byId[applicantId];
 
@@ -70,7 +70,9 @@ export default () => {
 
       <div className="s-applicants-card-ctr">
         {applicants?.map((applicant) => (
-          <ApplicantCard key={applicant.id} {...applicant} />
+          <Applicant.Provider key={applicant.id} initialData={{ applicant }}>
+            <ApplicantCard />
+          </Applicant.Provider>
         ))}
       </div>
     </div>

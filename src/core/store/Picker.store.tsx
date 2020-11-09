@@ -94,8 +94,6 @@ export const pickerModel: PickerModel = {
     const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = element;
     const { bottom, left } = coordinates ?? {};
 
-    console.log(element.clientLeft, element.offsetLeft);
-
     // CASE: align === 4
     // Left is going to be the element's left + element width. Bottom is going
     // to be the element's bottom
@@ -103,8 +101,6 @@ export const pickerModel: PickerModel = {
     if (align === 4) {
       const leftWithWidth = offsetLeft + offsetWidth;
       const updatedBottom = innerHeight - (offsetTop + offsetHeight);
-
-      console.log(leftWithWidth);
 
       // If the coordinates haven't changed, then just return the normal state.
       return coordinates && bottom === updatedBottom && left === leftWithWidth
