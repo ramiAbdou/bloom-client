@@ -28,7 +28,7 @@ export default ({ loading }: HeaderProps) => {
 
       <div>
         <PrimaryButton title="Accept All" />
-        <OutlineButton title="Reject All" />
+        <OutlineButton title="Ignore All" />
       </div>
     </div>
   );

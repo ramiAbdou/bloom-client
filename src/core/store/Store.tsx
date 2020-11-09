@@ -85,14 +85,17 @@ export const store = createStore<StoreModel>(
       const RGB = getRGBFromHex(color);
       const hue = getHueFromRGB(RGB);
 
+      console.log(hue);
+
       style.setProperty('--primary', color);
       style.setProperty('--primary-hex', `${RGB[0]}, ${RGB[1]}, ${RGB[2]}`);
+      style.setProperty('--primary-hue', `${hue}`);
       style.setProperty('--gray-1', `hsl(${hue}, 5%, 20%)`);
       style.setProperty('--gray-2', `hsl(${hue}, 5%, 31%)`);
       style.setProperty('--gray-3', `hsl(${hue}, 5%, 51%)`);
       style.setProperty('--gray-4', `hsl(${hue}, 5%, 74%)`);
       style.setProperty('--gray-5', `hsl(${hue}, 5%, 88%)`);
-      style.setProperty('--gray-6', `hsl(${hue}, 5%, 98%)`);
+      style.setProperty('--gray-6', `hsl(${hue}, 5%, 96%)`);
 
       return result;
     }),

@@ -3,6 +3,7 @@
 :root {
   --primary: #f58023;
   --primary-hex: 245, 128, 35;
+  --primary-hue: 27;
   --gray-1: #333;
   --gray-2: #4f4f4f;
   --gray-3: #828282;
@@ -15,6 +16,7 @@
 
 $primary: var(--primary);
 $primary-hex: var(--primary-hex);
+$primary-hue: var(--primary-hue);
 $gray-1: var(--gray-1);
 $gray-2: var(--gray-2);
 $gray-3: var(--gray-3);
@@ -22,5 +24,5 @@ $gray-4: var(--gray-4);
 $gray-5: var(--gray-5);
 $gray-6: var(--gray-6);
 
-$green: #008b45;
+$green: hsl(150, 100%, 27%);
 $red: #f82501;

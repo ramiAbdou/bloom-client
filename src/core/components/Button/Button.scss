@@ -49,7 +49,7 @@ $PREF: 'c-btn';
 .#{$PREF}-outline {
   @extend .#{$PREF}-base;
 
-  background-color: white;
+  background-color: $gray-6;
   border: 1px $primary solid;
   color: $primary;
   padding: $xs $sm;

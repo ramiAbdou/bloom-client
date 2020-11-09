@@ -58,18 +58,20 @@ export const getRGBFromHex = (hex: string): number[] =>
     .map((x) => parseInt(x, 16));
 
 export const getHueFromRGB = ([r, g, b]: number[]): number => {
-  const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
-  let h = (max + min) / 2;
-
+  const max = Math.max(r, g, b);
   if (max === min) return 0;
 
-  const d = max - min;
-  if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
-  if (max === g) h = (b - r) / d + 2;
-  if (max === b) h = (r - g) / d + 4;
+  let hue = (max + min) / 2;
+  const diff = max - min;
 
-  return h / 6;
+  if (max === r) hue = (g - b) / diff;
+  if (max === g) hue = (b - r) / diff + 2;
+  if (max === b) hue = (r - g) / diff + 4;
+
+  hue *= 60;
+
+  return hue < 0 ? hue + 360 : Math.round(hue);
 };
 
 export const getGraphQLError = (error: APIError) => {
