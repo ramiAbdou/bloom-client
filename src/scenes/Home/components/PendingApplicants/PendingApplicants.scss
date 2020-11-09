@@ -88,5 +88,23 @@ div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
 
 // ## EXPANDED CARD
 
-.#{$PREF}-expanded-header { @extend %flex-acsb; margin-bottom: $md; }
+.#{$PREF}-expanded {
+  box-sizing: border-box;
+  max-height: inherit;
+  padding: 0 $md $md $md;
+  
+  &::-webkit-scrollbar { display: none; }
+}
+
+.#{$PREF}-expanded-header {
+  @extend %flex-acsb;
+
+  background-color: white;
+  padding: $md 0;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
 .#{$PREF}-expanded-question > p:first-of-type { @extend .bold; }
+.#{$PREF}-expanded-question:last-of-type { margin-bottom: $md !important; }

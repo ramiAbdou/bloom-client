@@ -23,7 +23,12 @@ $PREF: 'c-flow';
   z-index: 1010;
 }
 
-.#{$PREF}-content { padding: $md; }
+.#{$PREF}-content {
+  max-height: inherit;
+  padding: $md;
+
+  &--custom { padding: 0; }
+}
 
 .#{$PREF} {
   background-color: white;
@@ -33,10 +38,10 @@ $PREF: 'c-flow';
   z-index: 20;
 
   @include M { height: 100%; width: 100%; }
-  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
+  @include TD { border-radius: $xs; max-height: 90vh; width: 550px; }
 }
 
-.#{$PREF}-ctr { max-height: 100%; }
+.#{$PREF}-ctr { max-height: inherit; }
 
 .#{$PREF}__hdr {
   @extend %flex-acsb;

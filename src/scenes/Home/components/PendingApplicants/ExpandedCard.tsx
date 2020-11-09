@@ -79,14 +79,16 @@ export default () => {
   return (
     <div className="s-applicants-expanded">
       <Header />
-      {data.map(({ question, value }) => (
-        <CardQuestion
-          key={question.title}
-          question={question.title}
-          type={question.type}
-          value={value}
-        />
-      ))}
+      <div>
+        {data.map(({ question, value }) => (
+          <CardQuestion
+            key={question.title}
+            question={question.title}
+            type={question.type}
+            value={value}
+          />
+        ))}
+      </div>
     </div>
   );
 };

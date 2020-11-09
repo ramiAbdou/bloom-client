@@ -20,3 +20,5 @@
 @mixin PRIMARY_ACTIVE {
   &:active { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
 }
+
+*::-webkit-scrollbar { display: none; }

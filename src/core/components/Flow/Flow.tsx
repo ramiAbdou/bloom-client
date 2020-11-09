@@ -12,6 +12,7 @@ import React from 'react';
 
 import Form from '@components/Form/Form.store';
 import { useStoreState } from '@store/Store';
+import CSSModifier from '@util/CSSModifier';
 import FlowContainer from './FlowContainer';
 import FlowHeader from './FlowHeader';
 
@@ -22,11 +23,14 @@ const CurrentScreen = () => {
 
   // If there are any screens, display the current screen.
   const { node, header } = screens[currentScreen];
+  const { css } = new CSSModifier()
+    .class('c-flow-content')
+    .addClass(!header, 'c-flow-content--custom');
 
   return (
     <div className="c-flow-ctr">
       {header && <FlowHeader {...header} />}
-      <div className="c-flow-content">{node}</div>
+      <div className={css}>{node}</div>
     </div>
   );
 };
