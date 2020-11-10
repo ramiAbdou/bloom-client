@@ -15,7 +15,7 @@ import {
   UnresolvedApplicantData
 } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_PENDING_APPLICATIONS } from '../../Home.gql';
+import { GET_PENDING_APPLICATIONS } from '../Home/Home.gql';
 import Applicant from './components/ApplicantCard/Applicant.store';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
 import Header from './components/Header';

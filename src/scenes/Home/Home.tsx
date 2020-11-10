@@ -18,12 +18,12 @@ import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
 import Navbar from '@scenes/Home/components/Navbar/Navbar';
 import { useStoreState } from '@store/Store';
-import Analytics from './components/Analytics/Analytics';
-import Directory from './components/Directory/Directory';
-import Events from './components/Events/Events';
-import Integrations from './components/Integrations/Integrations';
-import MemberDatabase from './components/MemberDatabase/MemberDatabase';
-import PendingApplicants from './components/PendingApplicants/PendingApplicants';
+import Analytics from '../Analytics/Analytics';
+import Directory from '../Directory/Directory';
+import Events from '../Events/Events';
+import Integrations from '../Integrations/Integrations';
+import MemberDatabase from '../MemberDatabase/MemberDatabase';
+import PendingApplicants from '../PendingApplicants/PendingApplicants';
 import Sidebar from './components/Sidebar/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
