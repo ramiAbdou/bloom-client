@@ -56,8 +56,12 @@ $PREF: 's-applicants';
 // ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
 
 .#{$PREF}-card-action {
+  @extend .tooltip--bottom;
+
   height: 32px;
+  position: relative;
   width: 32px;
+
   > svg { height: 32px; width: 32px; }
 
   &:first-of-type > svg {

@@ -40,7 +40,6 @@ const CardQuestion = ({ question, type, value }: CardQuestionProps) => {
 };
 
 const CardHeader = () => {
-  const showTooltip = useStoreActions(({ tooltip }) => tooltip.showTooltip);
   const { value: firstName } = Applicant.useStoreState(({ applicant }) =>
     (applicant.applicantData as ResolvedApplicantData[])?.find(
       ({ question }) => question.category === 'FIRST_NAME'
@@ -71,8 +70,7 @@ const CardHeader = () => {
         <button
           ref={acceptRef}
           className="s-applicants-card-action"
-          onFocus={() => showTooltip({ ref: rejectRef, value: 'Reject' })}
-          onMouseOver={() => showTooltip({ ref: acceptRef, value: 'Accept' })}
+          value="Accept"
         >
           <IoIosCheckmarkCircle />
         </button>
@@ -80,8 +78,7 @@ const CardHeader = () => {
         <button
           ref={rejectRef}
           className="s-applicants-card-action"
-          onFocus={() => showTooltip({ ref: rejectRef, value: 'Ignore' })}
-          onMouseOver={() => showTooltip({ ref: rejectRef, value: 'Ignore' })}
+          value="Ignore"
         >
           <IoIosCloseCircle />
         </button>
@@ -91,7 +88,9 @@ const CardHeader = () => {
 };
 
 const ExpandButton = () => {
-  const FLOW_ID = 'EXPANDED_APPLICANT_CARD';
+  const applicantId = Applicant.useStoreState(({ applicant }) => applicant.id);
+  const FLOW_ID = `EXPANDED_APPLICANT_CARD-${applicantId}`;
+
   const id = useStoreState(({ flow }) => flow.id);
   const isShowing = useStoreState(({ flow }) => flow.isShowing);
   const showFlow = useStoreActions(({ flow }) => flow.showFlow);

@@ -13,6 +13,33 @@
 // Disables scrollbar display for all elements.
 *::-webkit-scrollbar { display: none; }
 
+// ## TOOLTIP
+
+.tooltip {
+  @include HOVER { &::before { display: block; } }
+
+  &--bottom::before {
+    @extend .tooltip;
+
+    left: 50%;
+    margin-top: $xxs;
+    top: 100%;
+    transform: translateX(-50%);
+  }
+
+  &::before {
+    background-color: $gray-2;
+    border-radius: $xxs;
+    color: $gray-6;
+    content: attr(value);
+    display: none;
+    padding: $xxs $xs;
+    position: absolute;
+    text-align: center;
+    z-index: 100;
+  }
+}
+
 @mixin PRIMARY_HOVER {
   @media (hover: hover) {
     &:hover { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
