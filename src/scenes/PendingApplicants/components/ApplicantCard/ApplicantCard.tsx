@@ -10,7 +10,7 @@ import Flow from '@components/Flow/Flow';
 import { FlowScreen } from '@store/Flow.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';
-import Applicant from './Applicant.store';
+import Applicant from './ApplicantCard.store';
 import CardQuestion from './CardQuestion';
 import ExpandedCard from './ExpandedCard';
 

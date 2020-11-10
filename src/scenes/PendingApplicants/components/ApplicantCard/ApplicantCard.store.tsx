@@ -12,6 +12,7 @@ type ApplicantModel = {
   applicant: IPendingApplicant;
   createdAt: Computed<ApplicantModel, string>;
   data: Computed<ApplicantModel, ResolvedApplicantData[]>;
+  expandedData: Computed<ApplicantModel, ResolvedApplicantData[]>;
   fullName: Computed<ApplicantModel, string>;
 };
 
@@ -27,6 +28,10 @@ export default createContextStore<ApplicantModel>(
       (applicant?.applicantData as ResolvedApplicantData[])?.filter(
         ({ question }) => question.inApplicantCard
       )
+    ),
+
+    expandedData: computed(
+      ({ applicant }) => applicant?.applicantData as ResolvedApplicantData[]
     ),
 
     fullName: computed(({ applicant }) => {

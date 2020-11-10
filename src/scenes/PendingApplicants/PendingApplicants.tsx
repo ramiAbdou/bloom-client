@@ -16,8 +16,8 @@ import {
 } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../Home/Home.gql';
-import Applicant from './components/ApplicantCard/Applicant.store';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
+import Applicant from './components/ApplicantCard/ApplicantCard.store';
 import Header from './components/Header';
 
 const NoPendingApplicantsMessage = () => (
