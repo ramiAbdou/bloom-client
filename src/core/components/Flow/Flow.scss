@@ -3,6 +3,7 @@
 $PREF: 'c-flow';
 
 ##{$PREF}-bg {
+  backdrop-filter: blur(2px);
   background-color: hsla($primary-hue, 5%, 20%, 0.5);
   height: 100vh;
   left: 0;
