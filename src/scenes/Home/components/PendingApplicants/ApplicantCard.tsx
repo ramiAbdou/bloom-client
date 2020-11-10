@@ -4,7 +4,7 @@
  */
 
 import moment from 'moment-timezone';
-import React from 'react';
+import React, { useRef } from 'react';
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
@@ -40,6 +40,7 @@ const CardQuestion = ({ question, type, value }: CardQuestionProps) => {
 };
 
 const CardHeader = () => {
+  const showTooltip = useStoreActions(({ tooltip }) => tooltip.showTooltip);
   const { value: firstName } = Applicant.useStoreState(({ applicant }) =>
     (applicant.applicantData as ResolvedApplicantData[])?.find(
       ({ question }) => question.category === 'FIRST_NAME'
@@ -56,6 +57,9 @@ const CardHeader = () => {
     ({ applicant }) => applicant.createdAt
   );
 
+  const acceptRef = useRef(null);
+  const rejectRef = useRef(null);
+
   return (
     <div className="s-applicants-card-header">
       <div>
@@ -64,11 +68,21 @@ const CardHeader = () => {
       </div>
 
       <div>
-        <button className="s-applicants-card-action">
+        <button
+          ref={acceptRef}
+          className="s-applicants-card-action"
+          onFocus={() => showTooltip({ ref: rejectRef, value: 'Reject' })}
+          onMouseOver={() => showTooltip({ ref: acceptRef, value: 'Accept' })}
+        >
           <IoIosCheckmarkCircle />
         </button>
 
-        <button className="s-applicants-card-action">
+        <button
+          ref={rejectRef}
+          className="s-applicants-card-action"
+          onFocus={() => showTooltip({ ref: rejectRef, value: 'Ignore' })}
+          onMouseOver={() => showTooltip({ ref: rejectRef, value: 'Ignore' })}
+        >
           <IoIosCloseCircle />
         </button>
       </div>

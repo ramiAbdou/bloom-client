@@ -31,6 +31,7 @@ import {
 } from './schema';
 import { ScreenModel, screenModel } from './Screen.store';
 import { ToastModel, toastModel } from './Toast.store';
+import { TooltipModel, tooltipModel } from './Tooltip.store';
 
 type UpdateEntitiesArgs = { data: any; schema: Schema<any> };
 
@@ -52,6 +53,7 @@ type StoreModel = {
   screen: ScreenModel;
   setActiveCommunity: Action<StoreModel, string>;
   toast: ToastModel;
+  tooltip: TooltipModel;
   updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
   user: Computed<StoreModel, IUser>;
 };
@@ -154,6 +156,8 @@ export const store = createStore<StoreModel>(
     })),
 
     toast: toastModel,
+
+    tooltip: tooltipModel,
 
     /**
      * Main update function that updates all entities (front-end DB). Uses

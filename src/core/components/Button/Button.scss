@@ -29,7 +29,7 @@ $PREF: 'c-btn';
   @extend .#{$PREF}-base;
 
   background-color: $primary;
-  color: white;
+  color: $gray-6;
   padding: $xs $sm;
   text-decoration: none;
 

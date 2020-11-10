@@ -17,7 +17,11 @@ const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('scope', 'https://www.googleapis.com/auth/userinfo.email')
   .addParam('response_type', 'code')
   .addParam('redirect_uri', `${APP.SERVER_URL}/google/auth`)
-  .addParam('client_id', process.env.GOOGLE_CLIENT_ID);
+  .addParam(
+    'client_id',
+    process.env.GOOGLE_CLIENT_ID ??
+      '798034273321-cjv243p569alo4brlefuhv7pnnda521o.apps.googleusercontent.com'
+  );
 
 const GoogleButton = () => (
   <a href={url}>

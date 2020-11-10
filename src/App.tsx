@@ -15,6 +15,7 @@ import { IconContext } from 'react-icons';
 
 import Picker from '@components/Picker/Picker';
 import ToastQueue from '@components/Toast/Toast';
+import Tooltip from '@components/Tooltip/Tooltip';
 import { APP } from '@constants';
 import { store, useStoreActions } from '@store/Store';
 import Router from './Router';
@@ -53,6 +54,7 @@ const App = () => (
         <Router />
         <Background />
         <Picker />
+        <Tooltip />
         <ToastQueue />
       </IconContext.Provider>
     </StoreProvider>
