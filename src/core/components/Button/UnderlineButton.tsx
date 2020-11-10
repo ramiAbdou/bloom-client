@@ -3,23 +3,22 @@
  * @author Rami Abdou
  */
 
-import './Button.scss';
-
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import CSSModifier from '@util/CSSModifier';
 import Spinner from '../Loader/Spinner';
+import Button from './Button';
 import { ButtonLoadingProps, ButtonProps } from './Button.types';
 
-const LoadingState = ({ text }: ButtonLoadingProps) => (
+const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
   <motion.div className="c-btn-loading">
-    {text && <p>{text}</p>}
+    {loadingText && <p>{loadingText}</p>}
     <Spinner />
   </motion.div>
 );
 
-export type OutlineButtonProps = ButtonProps;
+export interface UnderlineButtonProps extends ButtonProps, ButtonLoadingProps {}
 
 export default ({
   className,
@@ -27,7 +26,7 @@ export default ({
   loadingText,
   onClick,
   title
-}: OutlineButtonProps) => {
+}: UnderlineButtonProps) => {
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
@@ -41,12 +40,8 @@ export default ({
   const { css } = new CSSModifier().class('c-btn-underline').class(className);
 
   return (
-    <motion.button
-      className={css}
-      transition={{ duration: 1 }}
-      onClick={() => !isLoading && onClick()}
-    >
-      {showLoadingState ? <LoadingState text={loadingText} /> : title}
-    </motion.button>
+    <Button className={css} onClick={() => !isLoading && onClick()}>
+      {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}
+    </Button>
   );
 };

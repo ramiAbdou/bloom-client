@@ -28,6 +28,8 @@
   }
 
   &::before {
+    @extend .meta;
+
     background-color: $gray-2;
     border-radius: $xxs;
     color: $gray-6;

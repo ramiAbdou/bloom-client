@@ -5,12 +5,11 @@ $PREF: 'c-btn';
 // This is needed since we are manually setting the height of the button which
 // throws off the vertical alignment of the button.
 
-.#{$PREF}-base {
+.#{$PREF} {
   @extend .btn-txt;
   @extend %flex-acc;
 
   border-radius: $xxs;
-  text-transform: uppercase;
 }
 
 .#{$PREF}-loading { @extend %flex-acc; cursor: default; }
@@ -26,12 +25,9 @@ $PREF: 'c-btn';
 // PRIMARY BUTTON
 
 .#{$PREF}-primary {
-  @extend .#{$PREF}-base;
-
   background-color: $primary;
   color: $gray-6;
   padding: $xs $sm;
-  text-decoration: none;
 
   &--disabled {
     background-color: $gray-5;
@@ -40,29 +36,23 @@ $PREF: 'c-btn';
 
     @include HOVER { background: $gray-5; }
   }
-
-  &--sm { height: $lg; padding-left: $sm; padding-right: $sm; }
 }
 
 // ## OUTLINE BUTTON
 
 .#{$PREF}-outline {
-  @extend .#{$PREF}-base;
-
   background-color: inherit;
   border: 1px $primary solid;
   color: $primary;
   padding: $xs $sm;
-  text-decoration: none;
 }
 
 // ## UNDERLINE BUTTON
 
 .#{$PREF}-underline {
-  @extend .#{$PREF}-base;
-
   color: $primary;
   padding: $xs $sm;
+  text-decoration: underline;
   
   @include HOVER {
     background-color: rgba($color: $primary-hex, $alpha: 0.1);

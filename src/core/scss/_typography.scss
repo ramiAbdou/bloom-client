@@ -16,7 +16,6 @@
   $mobile,
   $mobile-lh
 ) {
-  color: $gray-1;
   font-family: Muli;
   font-weight: $weight;
 
@@ -44,7 +43,6 @@ input::placeholder { @extend .body--1; }
 input::placeholder { color: $gray-3; }
 
 .btn-txt {
-  text-decoration: underline;
   text-transform: uppercase;
 
   @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);

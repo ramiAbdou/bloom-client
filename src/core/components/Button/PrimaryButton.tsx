@@ -3,27 +3,29 @@
  * @author Rami Abdou
  */
 
-import './Button.scss';
-
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import CSSModifier from '@util/CSSModifier';
 import Spinner from '../Loader/Spinner';
+import Button from './Button';
 import {
   ButtonDisabledProps,
   ButtonLoadingProps,
   ButtonProps
 } from './Button.types';
 
-const LoadingState = ({ text }: ButtonLoadingProps) => (
+const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
   <motion.div className="c-btn-loading">
-    {text && <p>{text}</p>}
+    {loadingText && <p>{loadingText}</p>}
     <Spinner />
   </motion.div>
 );
 
-export interface PrimaryButtonProps extends ButtonProps, ButtonDisabledProps {}
+export interface PrimaryButtonProps
+  extends ButtonProps,
+    ButtonLoadingProps,
+    ButtonDisabledProps {}
 
 export default ({
   className,
@@ -31,7 +33,6 @@ export default ({
   isLoading,
   loadingText,
   onClick,
-  small,
   title
 }: PrimaryButtonProps) => {
   const [showLoadingState, setShowLoadingState] = useState(false);
@@ -49,16 +50,14 @@ export default ({
   const { css } = new CSSModifier()
     .class('c-btn-primary')
     .class(className)
-    .addClass(disabled, 'c-btn-primary--disabled')
-    .addClass(small, 'c-btn-primary--sm');
+    .addClass(disabled, 'c-btn-primary--disabled');
 
   return (
-    <motion.button
+    <Button
       className={css}
-      transition={{ duration: 1 }}
       onClick={() => !disabled && !isLoading && onClick()}
     >
-      {showLoadingState ? <LoadingState text={loadingText} /> : title}
-    </motion.button>
+      {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}
+    </Button>
   );
 };
