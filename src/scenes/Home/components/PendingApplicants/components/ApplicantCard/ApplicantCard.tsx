@@ -3,15 +3,14 @@
  * @author Rami Abdou
  */
 
-import moment from 'moment-timezone';
-import React, { useRef } from 'react';
+import React, { useMemo } from 'react';
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
 import Flow from '@components/Flow/Flow';
 import { QuestionType } from '@constants';
+import useTraceUpdate from '@hooks/useTraceUpdate';
 import { FlowScreen } from '@store/Flow.store';
-import { ResolvedApplicantData } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 import Applicant from './Applicant.store';
@@ -40,46 +39,23 @@ const CardQuestion = ({ question, type, value }: CardQuestionProps) => {
 };
 
 const CardHeader = () => {
-  const { value: firstName } = Applicant.useStoreState(({ applicant }) =>
-    (applicant.applicantData as ResolvedApplicantData[])?.find(
-      ({ question }) => question.category === 'FIRST_NAME'
-    )
-  );
-
-  const { value: lastName } = Applicant.useStoreState(({ applicant }) =>
-    (applicant.applicantData as ResolvedApplicantData[])?.find(
-      ({ question }) => question.category === 'LAST_NAME'
-    )
-  );
-
-  const createdAt = Applicant.useStoreState(
-    ({ applicant }) => applicant.createdAt
-  );
-
-  const acceptRef = useRef(null);
-  const rejectRef = useRef(null);
+  const createdAt = Applicant.useStoreState((store) => store.createdAt);
+  const fullName = Applicant.useStoreState((store) => store.fullName);
+  useTraceUpdate({ createdAt, fullName });
 
   return (
     <div className="s-applicants-card-header">
       <div>
-        <p>Applied {moment(createdAt).format('M/D/YY')}</p>
-        <h3 className="c-form">{`${firstName} ${lastName}`}</h3>
+        <p>Applied {createdAt}</p>
+        <h3 className="c-form">{fullName}</h3>
       </div>
 
       <div>
-        <button
-          ref={acceptRef}
-          className="s-applicants-card-action"
-          value="Accept"
-        >
+        <button className="s-applicants-card-action" value="Accept">
           <IoIosCheckmarkCircle />
         </button>
 
-        <button
-          ref={rejectRef}
-          className="s-applicants-card-action"
-          value="Ignore"
-        >
+        <button className="s-applicants-card-action" value="Ignore">
           <IoIosCloseCircle />
         </button>
       </div>
@@ -100,20 +76,21 @@ const ExpandButton = () => {
     showFlow({ id: FLOW_ID, screens });
   };
 
+  const shouldShowFlow = useMemo(() => isShowing && FLOW_ID === id, [
+    isShowing,
+    id === FLOW_ID
+  ]);
+
   return (
     <>
-      {isShowing && FLOW_ID === id && <Flow />}
+      {shouldShowFlow && <Flow />}
       <UnderlineButton title="See Full Application" onClick={onClick} />
     </>
   );
 };
 
 export default () => {
-  const data = Applicant.useStoreState(({ applicant }) =>
-    (applicant.applicantData as ResolvedApplicantData[])?.filter(
-      ({ question }) => question.inApplicantCard
-    )
-  );
+  const data = Applicant.useStoreState((store) => store.data);
 
   return (
     <div className="s-applicants-card">

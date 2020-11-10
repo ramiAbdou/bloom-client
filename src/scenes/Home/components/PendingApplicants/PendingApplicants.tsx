@@ -6,7 +6,7 @@
 import './PendingApplicants.scss';
 
 import { useQuery } from 'graphql-hooks';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import {
   Community,
@@ -20,7 +20,7 @@ import Applicant from './components/ApplicantCard/Applicant.store';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
 import Header from './components/Header';
 
-const NoPendingApplicationsMessage = () => (
+const NoPendingApplicantsMessage = () => (
   <p>There are no pending applications. 👍</p>
 );
 
@@ -63,14 +63,16 @@ export default () => {
     });
   }, [data]);
 
+  const memoizedApplicants = useMemo(() => applicants, [numApplicants]);
+
   return (
     <div className="s-applicants">
       <Header loading={loading} />
-      {data && !numApplicants && <NoPendingApplicationsMessage />}
+      {data && !numApplicants && <NoPendingApplicantsMessage />}
 
       <div className="s-applicants-card-ctr">
-        {applicants?.map((applicant) => (
-          <Applicant.Provider key={applicant.id} initialData={{ applicant }}>
+        {memoizedApplicants?.map((applicant) => (
+          <Applicant.Provider key={applicant.id} initialData={applicant}>
             <ApplicantCard />
           </Applicant.Provider>
         ))}
