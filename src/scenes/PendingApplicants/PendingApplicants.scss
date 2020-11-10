@@ -53,6 +53,8 @@ $PREF: 's-applicants';
   margin-bottom: $xxs;
 }
 
+.#{$PREF}-card-header > div:last-of-type { @extend %flex-ac; }
+
 // ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
 
 .#{$PREF}-card-action {
@@ -64,11 +66,14 @@ $PREF: 's-applicants';
 
   > svg { height: 32px; width: 32px; }
 
-  &:first-of-type > svg {
-    color: $green;
-    margin-right: 12px;
+  &:first-of-type {
+    margin-right: $xxs;
 
-    @include HOVER { color: hsl(150, 80%, 37%); }
+    > svg {
+      color: $green;
+
+      @include HOVER { color: hsl(150, 80%, 37%); }
+    }
   }
 
   &:last-of-type > svg {
