@@ -57,11 +57,11 @@ const Header = () => {
       <h1>{`${firstName} ${lastName}`}</h1>
 
       <div>
-        <button className="s-applicants-card-action">
+        <button className="s-applicants-card-action" value="Accept">
           <IoIosCheckmarkCircle />
         </button>
 
-        <button className="s-applicants-card-action">
+        <button className="s-applicants-card-action" value="Ignore">
           <IoIosCloseCircle />
         </button>
       </div>
