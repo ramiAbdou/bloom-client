@@ -99,13 +99,14 @@ export default () => {
   if (!actions.length || !coordinates) return null;
 
   const { bottom, left, right, top } = coordinates;
-  const { marginLeft, marginTop } = offset || {};
+  const { marginBottom, marginLeft, marginTop } = offset || {};
 
   const positionStyle = {
     ...(top ? { top } : { bottom }),
     ...(left ? { left } : { right }),
     ...(marginLeft ? { marginLeft } : {}),
-    ...(marginTop ? { marginTop } : {})
+    ...(marginTop ? { marginTop } : {}),
+    ...(marginBottom ? { marginBottom } : {})
   };
 
   const animate = {

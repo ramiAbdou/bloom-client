@@ -11,7 +11,9 @@ import {
 } from 'react-icons/io';
 
 import Button from '@components/Button/Button';
-import { useStoreActions } from '@store/Store';
+import { ICommunity } from '@store/schema';
+import { useStoreActions, useStoreState } from '@store/Store';
+import Applicant from './ApplicantCard.store';
 
 // In the context of the ExpandedCard, which exits the modal.
 export const BackButton = () => {
@@ -24,9 +26,34 @@ export const BackButton = () => {
 };
 
 export const AcceptButton = () => {
+  const communities = useStoreState((store) => store.communities);
+  const applicantId = Applicant.useStoreState((store) => store.applicant.id);
+  const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const onClick = () =>
-    showToast({ message: 'Membership application accepted.' });
+
+  const onClick = () => {
+    const community: ICommunity = communities.byId[communities.activeId];
+    const { id, pendingApplicants } = community;
+
+    updateEntities({
+      updatedState: {
+        communities: {
+          ...communities,
+          byId: {
+            ...communities.byId,
+            [id]: {
+              ...community,
+              pendingApplicants: pendingApplicants.filter(
+                (a: string) => a !== applicantId
+              )
+            }
+          }
+        }
+      }
+    });
+
+    showToast({ message: 'Application accepted.' });
+  };
 
   return (
     <Button
@@ -40,8 +67,41 @@ export const AcceptButton = () => {
 };
 
 export const IgnoreButton = () => {
+  const communities = useStoreState((store) => store.communities);
+  const applicantId = Applicant.useStoreState((store) => store.applicant.id);
+  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+
+  const onClick = () => {
+    const community: ICommunity = communities.byId[communities.activeId];
+    const { id, pendingApplicants } = community;
+
+    updateEntities({
+      updatedState: {
+        communities: {
+          ...communities,
+          byId: {
+            ...communities.byId,
+            [id]: {
+              ...community,
+              pendingApplicants: pendingApplicants.filter(
+                (a: string) => a !== applicantId
+              )
+            }
+          }
+        }
+      }
+    });
+
+    showToast({ message: 'Application ignored.' });
+  };
+
   return (
-    <Button className="s-applicants-card-action" value="Ignore">
+    <Button
+      className="s-applicants-card-action"
+      value="Ignore"
+      onClick={onClick}
+    >
       <IoIosCloseCircle />
     </Button>
   );

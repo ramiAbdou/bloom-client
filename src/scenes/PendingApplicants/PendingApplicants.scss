@@ -35,6 +35,7 @@ $PREF: 's-applicants';
   background-color: white;
   border-radius: $xs;
   grid-column-end: span 6;
+  height: min-content;
   padding: 12px 12px $md $sm;
 
   &:last-of-type { margin-bottom: $lg; }

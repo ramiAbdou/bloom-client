@@ -32,7 +32,11 @@ import {
 import { ScreenModel, screenModel } from './Screen.store';
 import { ToastModel, toastModel } from './Toast.store';
 
-type UpdateEntitiesArgs = { data: any; schema: Schema<any> };
+type UpdateEntitiesArgs = {
+  data?: any;
+  updatedState?: Partial<Record<Entity, EntityRecord>>;
+  schema?: Schema<any>;
+};
 
 type StoreModel = {
   applicationQuestions: Computed<
@@ -101,13 +105,13 @@ export const store = createStore<StoreModel>(
     }),
 
     entities: {
-      applicationQuestions: { allIds: [], byId: {} },
-      applications: { allIds: [], byId: {} },
-      communities: { allIds: [], byId: {} },
-      members: { allIds: [], byId: {} },
-      memberships: { allIds: [], byId: {} },
-      pendingApplicants: { allIds: [], byId: {} },
-      users: { allIds: [], byId: {} }
+      applicationQuestions: { activeId: null, allIds: [], byId: {} },
+      applications: { activeId: null, allIds: [], byId: {} },
+      communities: { activeId: null, allIds: [], byId: {} },
+      members: { activeId: null, allIds: [], byId: {} },
+      memberships: { activeId: null, allIds: [], byId: {} },
+      pendingApplicants: { activeId: null, allIds: [], byId: {} },
+      users: { activeId: null, allIds: [], byId: {} }
     },
 
     flow: flowModel,
@@ -159,10 +163,14 @@ export const store = createStore<StoreModel>(
      * Main update function that updates all entities (front-end DB). Uses
      * the lodash deep merge function to make the updates.
      */
-    updateEntities: action((state, { data, schema }: UpdateEntitiesArgs) => ({
-      ...state,
-      entities: merge({}, state.entities, parseEntities(data, schema))
-    })),
+    updateEntities: action(
+      (state, { data, updatedState, schema }: UpdateEntitiesArgs) => ({
+        ...state,
+        entities: updatedState
+          ? { ...state.entities, ...updatedState }
+          : merge({}, state.entities, parseEntities(data, schema))
+      })
+    ),
 
     /**
      * There should only be one user queried in the application, and that is

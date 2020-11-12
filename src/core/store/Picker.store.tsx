@@ -14,7 +14,12 @@ export type PickerAction = {
 // This is needed for the absolute positioning. If alignRight is true, then
 // coordinates.left should be null. If it is false, coordinates.right should be
 // null. Top should always have a value if either left or right is populated.
-type PickerOffset = { marginLeft?: number; marginTop?: number };
+type PickerOffset = {
+  marginBottom?: number;
+  marginLeft?: number;
+  marginTop?: number;
+};
+
 type PickerCoordinates = {
   bottom?: number;
   left?: number;
