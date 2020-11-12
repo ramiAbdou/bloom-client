@@ -6,7 +6,6 @@ $PREF: 's-home-sidebar';
 
 .#{$PREF} {
   @extend %flex-col;
-  @extend .shadow-1;
 
   background-color: white;
   border-right: none;

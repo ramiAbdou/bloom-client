@@ -5,6 +5,7 @@
 
 import './Button.scss';
 
+import { motion } from 'framer-motion';
 import React from 'react';
 
 import { ChildrenProps, ValueProps } from '@constants';
@@ -28,8 +29,13 @@ export default ({
     .addClass(!!className, className);
 
   return (
-    <button className={css} onClick={onClick} {...props}>
+    <motion.button
+      className={css}
+      onClick={onClick}
+      {...props}
+      whileTap={{ scale: 0.95 }}
+    >
       {children ?? title}
-    </button>
+    </motion.button>
   );
 };

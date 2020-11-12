@@ -32,7 +32,15 @@
 // ## TOOLTIP
 
 .tooltip {
-  @include HOVER { &::before { opacity: 1; transition-delay: 0.75s; } }
+  @include HOVER {
+    &::before {
+      height: fit-content;
+      opacity: 1;
+      transition-delay: 0.75s;
+      visibility: visible;
+      width: fit-content;
+    }
+  }
 
   &::before {
     @extend .meta;
@@ -42,11 +50,14 @@
     color: $gray-6;
     content: attr(value);
     display: block;
+    height: 0;
     opacity: 0;
     padding: $xxs $xs;
     position: absolute;
     text-align: center;
     text-transform: capitalize;
+    visibility: hidden;
+    width: 0;
     z-index: 10;
   }
 

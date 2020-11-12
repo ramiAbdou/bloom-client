@@ -20,6 +20,7 @@ $PREF: 's-home';
 
 .#{$PREF}-nav {
   @extend %flex;
+  @extend .shadow-1;
 
   grid-column: 1 / 5;
   height: 100%;
