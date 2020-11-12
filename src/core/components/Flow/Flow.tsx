@@ -8,9 +8,11 @@
 
 import './Flow.scss';
 
-import React from 'react';
+import { AnimatePresence } from 'framer-motion';
+import React, { memo } from 'react';
 
 import Form from '@components/Form/Form.store';
+import { IsShowingProps } from '@constants';
 import { useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 import FlowContainer from './FlowContainer';
@@ -37,15 +39,14 @@ const CurrentScreen = () => {
 
 // -----------------------------------------------------------------------------
 
-export default () => {
-  const screens = useStoreState(({ flow }) => flow.screens);
-  if (!screens.length) return null;
-
-  return (
-    <FlowContainer>
-      <Form.Provider initialData={{}}>
-        <CurrentScreen />
-      </Form.Provider>
-    </FlowContainer>
-  );
-};
+export default memo(({ isShowing }: IsShowingProps) => (
+  <AnimatePresence>
+    {isShowing && (
+      <FlowContainer>
+        <Form.Provider initialData={{}}>
+          <CurrentScreen />
+        </Form.Provider>
+      </FlowContainer>
+    )}
+  </AnimatePresence>
+));

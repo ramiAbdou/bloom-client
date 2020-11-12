@@ -53,7 +53,7 @@ const ExpandButton = memo(() => {
 
   return (
     <>
-      {shouldShowFlow && <Flow />}
+      <Flow isShowing={shouldShowFlow} />
       <UnderlineButton title="See Full Application" onClick={onClick} />
     </>
   );

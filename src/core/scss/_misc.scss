@@ -4,6 +4,15 @@
 // Fills the entire height and width of the parent element.
 .fill { box-sizing: border-box; height: 100%; width: 100%; }
 
+// Fills the entire screen.
+.full-screen {
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
 // Shadow that has the primary color hint in it.
 .shadow-1 { box-shadow: 0 2px 4px 1px hsla($primary-hue, 99%, 17%, 0.1); }
 .shadow-2 { box-shadow: 0 2px 4px 3px hsla($primary-hue, 99%, 17%, 0.1); }

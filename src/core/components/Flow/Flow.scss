@@ -3,25 +3,27 @@
 $PREF: 'c-flow';
 
 ##{$PREF}-bg {
+  @extend .full-screen;
+
   backdrop-filter: blur(2px);
   background-color: hsla($primary-hue, 5%, 20%, 0.5);
-  height: 100vh;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100vw;
   z-index: 1000;
 }
 
-##{$PREF}-root {
-  @extend %flex-acc;
+.#{$PREF} {
+  background-color: white;
+  bottom: calc(-50vh + 50%);
+  box-sizing: border-box;
+  left: calc(-50vw + 50%);
+  margin: auto;
+  overflow: scroll;
+  position: absolute;
+  right: calc(-50vw + 50%);
+  top: calc(-50vh + 50%);
+  z-index: 1001;
 
-  height: 100%;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1010;
+  @include M { height: 100%; width: 100%; }
+  @include TD { border-radius: $xs; max-height: 90vh; width: 550px; }
 }
 
 .#{$PREF}-content {
@@ -29,17 +31,6 @@ $PREF: 'c-flow';
   padding: $md;
 
   &--custom { padding: 0; }
-}
-
-.#{$PREF} {
-  background-color: white;
-  box-sizing: border-box;
-  overflow: scroll;
-  position: fixed;
-  z-index: 20;
-
-  @include M { height: 100%; width: 100%; }
-  @include TD { border-radius: $xs; max-height: 90vh; width: 550px; }
 }
 
 .#{$PREF}-ctr { max-height: inherit; }
