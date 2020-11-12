@@ -23,16 +23,7 @@
 // ## TOOLTIP
 
 .tooltip {
-  @include HOVER { &::before { display: block; } }
-
-  &--bottom::before {
-    @extend .tooltip;
-
-    left: 50%;
-    margin-top: $xxs;
-    top: 100%;
-    transform: translateX(-50%);
-  }
+  @include HOVER { &::before { opacity: 1; transition-delay: 0.75s; } }
 
   &::before {
     @extend .meta;
@@ -41,12 +32,24 @@
     border-radius: $xxs;
     color: $gray-6;
     content: attr(value);
-    display: none;
+    display: block;
+    opacity: 0;
     padding: $xxs $xs;
     position: absolute;
     text-align: center;
     text-transform: capitalize;
     z-index: 10;
+  }
+
+  &--bottom {
+    @extend .tooltip;
+
+    &::before {
+      left: 50%;
+      margin-top: $xxs;
+      top: 100%;
+      transform: translateX(-50%);
+    }
   }
 }
 

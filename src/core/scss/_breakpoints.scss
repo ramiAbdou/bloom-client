@@ -16,9 +16,7 @@ $screen-tablet: 1024;
 $screen-desktop: 1440;
 
 @mixin HOVER {
-  @media (hover: hover) {
-    &:hover { @content; }
-  }
+  @media (hover: hover) { &:hover { @content; } }
 }
 
 // If the size of the screen is less than 575px.
