@@ -93,16 +93,16 @@ $PREF: 's-home-sidebar';
 
 // ## PROFILE BAR
 
+.#{$PREF} > div:last-of-type { border-top: 1px $gray-5 solid; }
+
 .#{$PREF}-profile {
   @extend %flex-acsb;
 
   border-radius: 0 $xl $xl 0;
   box-sizing: border-box;
-  margin-bottom: $md;
-  padding: 12px $sm;
+  margin: $xs 0;
+  padding: 12px 20px 12px $sm;
   width: 95%;
-
-  @include PRIMARY_HOVER;
 }
 
 .#{$PREF}-profile__picture {
@@ -127,7 +127,7 @@ h3.#{$PREF}-profile__picture {
 .#{$PREF}-profile > div > div { @extend %flex-col; align-items: flex-start; }
 
 .#{$PREF}-profile > div > div > p:last-of-type {
-  @extend .body--2;
+  @extend .meta;
 
   color: $gray-3;
   text-transform: capitalize;

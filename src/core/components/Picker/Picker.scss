@@ -14,10 +14,8 @@ $PREF: 'c-picker';
 
 .#{$PREF} {
   background-color: white;
-  border-radius: 8px;
   left: 50%;
   position: fixed;
-  text-align: center;
   transform: translate(-50%, -50%);
   width: calc(100% - 40px);
   z-index: 1010;
@@ -25,10 +23,10 @@ $PREF: 'c-picker';
 
 .#{$PREF}-content {
   @extend %flex-col;
-  @extend .shadow-1;
+  @extend .shadow-2;
 
   background-color: white;
-  border-radius: $sm;
+  border-radius: 12px;
   min-width: $xxl * 4;
   padding: 12px 0;
   position: absolute;

@@ -64,7 +64,9 @@ const SidebarContent = memo(() => {
         </div>
       </div>
 
-      <ProfileBar />
+      <div>
+        <ProfileBar />
+      </div>
     </div>
   );
 });

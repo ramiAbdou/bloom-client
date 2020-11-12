@@ -10,22 +10,16 @@ import './Toasts.scss';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
 import { useStoreState } from '@store/Store';
 import { ANIMATION_DURATION, ToastOptions } from '@store/Toast.store';
 import CSSModifier from '@util/CSSModifier';
-import { check, x } from './images';
 
 const Toast = ({ isError, message }: ToastOptions) => {
-  const primaryColor = useStoreState(
-    ({ community }) => community?.primaryColor
-  );
   const { css } = new CSSModifier()
     .class('c-toast')
     .addClass(isError, 'c-toast--error');
-
-  const customStyle =
-    primaryColor && !isError ? { backgroundColor: primaryColor } : {};
 
   return (
     <motion.div
@@ -34,10 +28,10 @@ const Toast = ({ isError, message }: ToastOptions) => {
       className={css}
       exit={{ opacity: 0, y: -100 }}
       initial={{ y: -100 }}
-      style={customStyle}
       transition={{ duration: ANIMATION_DURATION / 1000 }}
     >
-      <img alt="Toaster Icon" src={isError ? x : check} />
+      {isError && <IoIosCloseCircle />}
+      {!isError && <IoIosCheckmarkCircle />}
       <p>{message}</p>
     </motion.div>
   );

@@ -50,7 +50,7 @@ export default () => {
       align: 4,
       id,
       isFixed: true,
-      offset: { marginLeft: 18 * widthRatio }
+      offset: { marginLeft: 24 * widthRatio }
     });
   };
 

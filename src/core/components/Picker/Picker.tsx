@@ -127,11 +127,7 @@ export default () => {
           className="c-picker-content"
           exit={{ opacity: 0 }}
           initial={initial}
-          style={{
-            ...positionStyle,
-
-            position: isFixed ? 'fixed' : 'absolute'
-          }}
+          style={{ ...positionStyle, position: isFixed ? 'fixed' : 'absolute' }}
           transition={{ duration: 0.2 }}
         >
           {body}

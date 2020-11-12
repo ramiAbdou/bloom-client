@@ -59,12 +59,11 @@ $PREF: 's-applicants';
 
 .#{$PREF}-card-action {
   @extend .tooltip--bottom;
+  @extend .react-icon--lg;
 
-  height: 32px;
   position: relative;
-  width: 32px;
 
-  > svg { height: 32px; width: 32px; }
+  > svg { @extend .react-icon--lg; }
 
   &:first-of-type {
     margin-right: $xxs;

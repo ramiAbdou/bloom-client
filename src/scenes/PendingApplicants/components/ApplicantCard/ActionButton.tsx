@@ -18,14 +18,22 @@ export const BackButton = () => {
   const closeFlow = useStoreActions(({ flow }) => flow.closeFlow);
   return (
     <Button onClick={() => closeFlow()}>
-      <IoMdArrowBack className="back-arrow" style={{ height: 32, width: 32 }} />
+      <IoMdArrowBack className="back-arrow" />
     </Button>
   );
 };
 
 export const AcceptButton = () => {
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const onClick = () =>
+    showToast({ message: 'Membership application accepted.' });
+
   return (
-    <Button className="s-applicants-card-action" value="Accept">
+    <Button
+      className="s-applicants-card-action"
+      value="Accept"
+      onClick={onClick}
+    >
       <IoIosCheckmarkCircle />
     </Button>
   );

@@ -5,17 +5,11 @@
 
 import { motion } from 'framer-motion';
 import React from 'react';
+import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { Redirect, useParams } from 'react-router-dom';
 
-import { check } from '@components/Toast/images';
 import { EncodedUrlNameParams } from '@constants';
 import Application from '../Application.store';
-
-const Icon = () => (
-  <div className="s-signup-confirmation-icon">
-    <img alt="Check Mark" src={check} />
-  </div>
-);
 
 const EmailContainer = () => {
   const email = Application.useStoreState((store) => store.email);
@@ -67,7 +61,7 @@ export default () => (
       initial={{ y: 50 }}
       transition={{ duration: 0.2 }}
     >
-      <Icon />
+      <IoIosCheckmarkCircle />
       <Content />
     </motion.div>
   </div>

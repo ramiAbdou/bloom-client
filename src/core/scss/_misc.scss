@@ -6,9 +6,16 @@
 
 // Shadow that has the primary color hint in it.
 .shadow-1 { box-shadow: 0 2px 4px 1px hsla($primary-hue, 99%, 17%, 0.1); }
+.shadow-2 { box-shadow: 0 2px 4px 3px hsla($primary-hue, 99%, 17%, 0.1); }
 
 // Used globally for all react-icons.
-.react-icon { color: black; height: $md; width: $md; }
+.react-icon {
+  color: black;
+  height: $md;
+  width: $md;
+  
+  &--lg { height: 32px; width: 32px; }
+}
 
 // Disables scrollbar display for all elements.
 *::-webkit-scrollbar { display: none; }
@@ -55,7 +62,9 @@
 .back-arrow {
   border-radius: 50%;
   cursor: pointer;
+  height: 26px;
   padding: $xxs;
+  width: 26px;
 
   @include PRIMARY_HOVER;
 }

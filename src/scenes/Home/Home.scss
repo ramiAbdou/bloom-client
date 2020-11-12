@@ -35,6 +35,7 @@ $PREF: 's-home';
   padding-bottom: $md;
   position: sticky;
   top: 0;
+  z-index: 11;
 }
 .#{$PREF}-header-title { margin-right: $sm; }
 

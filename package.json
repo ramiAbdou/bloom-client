@@ -19,6 +19,7 @@
     "@types/lodash": "^4.14.164",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-scroll": "^1.5.5",
+    "@types/shallowequal": "^1.1.1",
     "@types/validator": "^13.1.0",
     "aws-sdk": "^2.780.0",
     "axios": "^0.19.2",
@@ -42,6 +43,7 @@
     "react-load-script": "0.0.6",
     "react-router-dom": "^5.1.2",
     "react-scroll": "^1.8.0",
+    "shallowequal": "^1.1.0",
     "ts-node": "^8.10.2",
     "use-onclickoutside": "^0.3.1",
     "validator": "^13.1.17"

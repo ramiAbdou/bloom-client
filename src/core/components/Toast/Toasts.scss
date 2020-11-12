@@ -14,24 +14,18 @@ $PREF: 'c-toast';
 }
 
 .#{$PREF} {
+  @extend .shadow-1;
   @extend %flex-ac;
 
-  background-color: $green;
+  background-color: $primary;
   border-radius: $xl;
   margin-left: auto;
   margin-right: auto;
   margin-top: $xs;
-  padding: $xs 18px;
+  padding: 12px $sm;
+
+  &--error { background-color: $red; }
 }
 
-.#{$PREF}--error { background-color: $red; }
-
-.#{$PREF} > img {
-  height: $sm;
-  margin-right: $xs;
-  width: $sm;
-
-  @include M { height: $sm; margin-right: 8px; width: $sm; }
-}
-
+.#{$PREF} > svg { @extend .react-icon--lg; color: white; margin-right: $xs; }
 .#{$PREF} > p { @extend .body--1; color: white; }
