@@ -10,10 +10,14 @@ $PREF: 'c-btn';
   @extend %flex-acc;
 
   border-radius: $xxs;
+
+  @include HOVER { opacity: 0.8; }
+  // @include ACTIVE { opacity: 0.5; }
+
+  &--lg { height: $xl; }
 }
 
 .#{$PREF}-loading { @extend %flex-acc; cursor: default; }
-
 .#{$PREF}-loading > p {
   @extend .btn-txt;
   @extend %flex-acc;

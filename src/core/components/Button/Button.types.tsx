@@ -6,9 +6,10 @@
 
 export type ButtonProps = {
   className?: string;
+  disabled?: boolean;
   onClick?: VoidFunction;
   title?: string;
 };
 
-export type ButtonDisabledProps = { disabled?: boolean };
+export type ButtonLargeProps = { large?: boolean };
 export type ButtonLoadingProps = { isLoading?: boolean; loadingText?: string };

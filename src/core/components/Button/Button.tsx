@@ -20,6 +20,7 @@ interface AbstractButtonProps
 export default ({
   className,
   children,
+  disabled,
   onClick,
   title,
   ...props
@@ -28,12 +29,14 @@ export default ({
     .class('c-btn')
     .addClass(!!className, className);
 
+  const tapAnimation = !disabled ? { whileTap: { scale: 0.95 } } : {};
+
   return (
     <motion.button
       className={css}
       onClick={onClick}
       {...props}
-      whileTap={{ scale: 0.9 }}
+      {...tapAnimation}
     >
       {children ?? title}
     </motion.button>

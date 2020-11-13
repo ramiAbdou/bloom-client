@@ -10,7 +10,7 @@ import CSSModifier from '@util/CSSModifier';
 import Spinner from '../Loader/Spinner';
 import Button from './Button';
 import {
-  ButtonDisabledProps,
+  ButtonLargeProps,
   ButtonLoadingProps,
   ButtonProps
 } from './Button.types';
@@ -25,12 +25,13 @@ const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
 export interface PrimaryButtonProps
   extends ButtonProps,
     ButtonLoadingProps,
-    ButtonDisabledProps {}
+    ButtonLargeProps {}
 
 export default ({
   className,
   disabled,
   isLoading,
+  large,
   loadingText,
   onClick,
   title
@@ -50,11 +51,13 @@ export default ({
   const { css } = new CSSModifier()
     .class('c-btn-primary')
     .class(className)
+    .addClass(large, 'c-btn--lg')
     .addClass(disabled, 'c-btn-primary--disabled');
 
   return (
     <Button
       className={css}
+      disabled={disabled}
       onClick={() => !disabled && !isLoading && onClick()}
     >
       {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}

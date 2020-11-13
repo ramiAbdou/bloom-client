@@ -70,6 +70,7 @@ const SubmitButton = () => {
       {!!message && <ErrorMessage marginBottom={-24} message={message} />}
 
       <PrimaryButton
+        large
         className="s-signup-submit-btn"
         disabled={!isCompleted}
         isLoading={loading}

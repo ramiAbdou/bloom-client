@@ -18,6 +18,9 @@ $screen-desktop: 1440;
 @mixin HOVER {
   @media (hover: hover) { &:hover { @content; } }
 }
+@mixin ACTIVE {
+  &:active { @content; }
+}
 
 // If the size of the screen is less than 575px.
 
