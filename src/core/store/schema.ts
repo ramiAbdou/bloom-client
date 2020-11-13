@@ -25,12 +25,17 @@ export type IApplicationQuestion = {
   id: string;
   inApplicantCard: boolean;
   order: number;
+  options: string[];
+  required: boolean;
   title: QuestionType;
   type: QuestionType;
 };
 
 export type ICommunity = {
+  applicationDescription?: string;
   applicationQuestions: EntityID[];
+  applicationTitle?: string;
+  autoAccept?: boolean;
   encodedUrlName: string;
   id: string;
   logoUrl: string;

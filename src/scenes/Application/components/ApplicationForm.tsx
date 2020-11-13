@@ -13,42 +13,33 @@ import FormContent from '@components/Form/FormContent';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
-import { usePrevious } from '@hooks/usePrevious';
-import { useStoreState } from '@store/Store';
+// import { usePrevious } from '@hooks/usePrevious';
+import { Community, IApplicationQuestion } from '@store/schema';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
-import Application from '../Application.store';
 
 const Icon = () => {
-  const logoUrl = Application.useStoreState(
-    ({ community }) => community?.logoUrl
-  );
-
+  const logoUrl = useStoreState(({ community }) => community?.logoUrl);
   return <img src={logoUrl} />;
 };
 
 const Title = () => {
-  const title = Application.useStoreState(
-    ({ community }) => community?.application?.title
-  );
-
+  const title = useStoreState(({ community }) => community?.applicationTitle);
   return <h1>{title}</h1>;
 };
 
 const Description = () => {
-  const description = Application.useStoreState(
-    ({ community }) => community?.application?.description
+  const description = useStoreState(
+    ({ community }) => community?.applicationDescription
   );
 
   return <p>{description}</p>;
 };
 
 const SubmitButton = () => {
-  const setEmail = Application.useStoreActions((actions) => actions.setEmail);
-  const encodedUrlName = Application.useStoreState(
-    ({ community }) => community?.encodedUrlName
-  );
-
+  // const setEmail = Application.useStoreActions((actions) => actions.setEmail);
+  const name = useStoreState(({ community }) => community?.encodedUrlName);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const submittableData = Form.useStoreState((store) => store.data);
   const email = Form.useStoreState(
@@ -56,23 +47,23 @@ const SubmitButton = () => {
       items.filter(({ category }) => category === 'EMAIL')[0]?.value
   );
 
-  const previousEmail = usePrevious(email);
+  // const previousEmail = usePrevious(email);
 
-  useEffect(() => {
-    if (email !== previousEmail) setEmail(email);
-  }, [email]);
+  // useEffect(() => {
+  //   if (email !== previousEmail) setEmail(email);
+  // }, [email]);
 
   const [applyForMembership, { error, data, loading }] = useMutation(
     APPLY_FOR_MEMBERSHIP,
     {
-      variables: { data: submittableData, email, encodedUrlName }
+      variables: { data: submittableData, email, encodedUrlName: name }
     }
   );
 
   const message = getGraphQLError(error);
 
   if (data && !error && !loading)
-    return <Redirect push to={`/${encodedUrlName}/apply/confirmation`} />;
+    return <Redirect push to={`/${name}/apply/confirmation`} />;
 
   return (
     <>
@@ -92,15 +83,14 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const primaryColor = useStoreState(
-    ({ community }) => community?.primaryColor
-  );
-  const application = Application.useStoreState(
-    ({ community }) => community?.application
-  );
+  const updateEntities = useStoreActions((store) => store.updateEntities);
 
-  const initCommunity = Application.useStoreActions(
-    (actions) => actions.initCommunity
+  const questions: IApplicationQuestion[] = useStoreState(
+    ({ community, applicationQuestions }) => {
+      if (!community?.applicationQuestions?.length) return [];
+      const { applicationQuestions: result } = community;
+      return result.map((id: string) => applicationQuestions.byId[id]);
+    }
   );
 
   const { data, loading, error } = useQuery(GET_MEMBERSHIP_FORM, {
@@ -108,17 +98,26 @@ export default () => {
   });
 
   useEffect(() => {
-    if (data && !application) initCommunity(data.getApplicationForm);
+    const { getMembershipForm: result } = data || {};
+    if (!result) return;
+
+    updateEntities({
+      data: {
+        ...result,
+        applicationDescription: result.application.description,
+        applicationQuestions: result.application.questions,
+        applicationTitle: result.application.title
+      },
+      schema: Community
+    });
   }, [data]);
 
   if (error) return <Redirect to="/login" />;
   if (loading) return <FullScreenLoader />;
-  if (!application) return null;
+  if (!questions.length) return null;
 
   return (
-    <Form.Provider
-      initialData={{ primaryColor, questions: application.questions }}
-    >
+    <Form.Provider initialData={{ questions }}>
       <div className="s-signup">
         <Icon />
         <Title />

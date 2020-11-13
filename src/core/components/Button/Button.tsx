@@ -33,7 +33,7 @@ export default ({
       className={css}
       onClick={onClick}
       {...props}
-      whileTap={{ scale: 0.95 }}
+      whileTap={{ scale: 0.9 }}
     >
       {children ?? title}
     </motion.button>

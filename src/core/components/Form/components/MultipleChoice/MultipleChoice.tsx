@@ -6,15 +6,15 @@
 
 import React, { useState } from 'react';
 
+import { OnClickProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
 
-type ChoiceProps = {
+interface ChoiceProps extends OnClickProps {
   isSelected: boolean;
-  onClick: VoidFunction;
   option: string;
-};
+}
 
 const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
   const { css } = new CSSModifier()
@@ -31,6 +31,7 @@ const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
   );
 };
 
+// We use local state to see which option is selected.
 export default ({ options, title }: FormItemData) => {
   const [selectedOption, setSelectedOption] = useState('');
   const updateItem = Form.useStoreActions((store) => store.updateItem);
@@ -41,7 +42,7 @@ export default ({ options, title }: FormItemData) => {
 
   return (
     <>
-      {options.map((option) => (
+      {options.map((option: string) => (
         <Choice
           key={option}
           isSelected={option === selectedOption}

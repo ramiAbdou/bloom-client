@@ -3,6 +3,7 @@
  * @author Rami Abdou
  */
 
+import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import {
   IoIosCheckmarkCircle,
@@ -13,6 +14,7 @@ import {
 import Button from '@components/Button/Button';
 import { ICommunity } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { RESPOND_TO_MEMBERSHIPS } from '../../PendingApplicants.gql';
 import Applicant from './ApplicantCard.store';
 
 // In the context of the ExpandedCard, which exits the modal.
@@ -31,9 +33,17 @@ export const AcceptButton = () => {
   const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const onClick = () => {
+  const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
+    variables: { membershipIds: [applicantId], response: 'ACCEPTED' }
+  });
+
+  const onClick = async () => {
     const community: ICommunity = communities.byId[communities.activeId];
     const { id, pendingApplicants } = community;
+
+    // Call to the server.
+    const { data } = await respondToMemberships();
+    if (!data?.respondToMemberships) return;
 
     updateEntities({
       updatedState: {
@@ -72,9 +82,17 @@ export const IgnoreButton = () => {
   const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const onClick = () => {
+  const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
+    variables: { membershipIds: [applicantId], response: 'REJECTED' }
+  });
+
+  const onClick = async () => {
     const community: ICommunity = communities.byId[communities.activeId];
     const { id, pendingApplicants } = community;
+
+    // Call to the server.
+    const { data } = await respondToMemberships();
+    if (!data?.respondToMemberships) return;
 
     updateEntities({
       updatedState: {

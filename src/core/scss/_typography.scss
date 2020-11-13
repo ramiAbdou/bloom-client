@@ -26,6 +26,7 @@
 
 .body--1 { @include font-responsive(400, 15px, 24px, 15px, 24px, 15px, 24px); }
 .body--2 { @include font-responsive(400, 14px, 20px, 14px, 20px, 14px, 20px); }
+.body--3 { @include font-responsive(400, 13px, 20px, 13px, 20px, 13px, 20px); }
 .meta { @include font-responsive(600, 12px, 16px, 12px, 16px, 12px, 16px); }
 .bold { font-weight: 600 !important; }
 

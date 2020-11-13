@@ -37,10 +37,6 @@ const Option = ({ selectOption, option }: OptionProps) => (
   </button>
 );
 
-const NoResultsMessage = () => (
-  <p className="c-form-dd-no-result">No results found.</p>
-);
-
 const AllOptions = () => {
   const { filteredOptions, setSearchString, title } = useMultipleChoiceDD();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
@@ -74,7 +70,7 @@ const OptionContainer = () => {
         transition={{ duration: 0.25 }}
       >
         <SearchBar />
-        {noOptionsFound && <NoResultsMessage />}
+        {noOptionsFound && <p>No results found.</p>}
         {!noOptionsFound && <AllOptions />}
       </motion.div>
     </AnimatePresence>

@@ -7,6 +7,7 @@
 import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
+import CSSModifier from '@util/CSSModifier';
 import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
@@ -43,10 +44,14 @@ export default ({ maxCharacters, placeholder, title }: FormItemData) => {
     if (keyCode === 13 && submitOnEnter) await submitForm();
   };
 
+  const { css } = new CSSModifier()
+    .class('c-form-input')
+    .addClass(isActive, 'c-form-input--active');
+
   return (
     <input
       ref={inputRef}
-      className="c-form-input"
+      className={css}
       placeholder={placeholder ?? ''}
       type="text"
       value={value ?? ''}
