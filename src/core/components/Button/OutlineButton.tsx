@@ -18,8 +18,6 @@ const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
   </motion.div>
 );
 
-export interface OutlineButtonProps extends ButtonProps, ButtonLoadingProps {}
-
 export default ({
   className,
   disabled,
@@ -27,7 +25,7 @@ export default ({
   loadingText,
   onClick,
   title
-}: OutlineButtonProps) => {
+}: ButtonProps) => {
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {

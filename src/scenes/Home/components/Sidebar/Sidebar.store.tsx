@@ -24,7 +24,11 @@ export default createContextStore<SidebarModel>(
     activeTo: window.location.pathname.substring(
       window.location.pathname.lastIndexOf('/') + 1
     ),
-    isActive: computed(({ activeTo }) => (to: string) => activeTo === to),
+
+    isActive: computed(({ activeTo }) => (to: string) =>
+      activeTo === to || (!activeTo && to === 'directory')
+    ),
+
     setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo }))
   },
   { disableImmer: true }

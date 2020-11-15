@@ -9,6 +9,8 @@ export type ButtonProps = {
   disabled?: boolean;
   href?: string;
   fill?: boolean;
+  isLoading?: boolean;
+  loadingText?: string;
   large?: boolean;
   onClick?: VoidFunction;
   title?: string;

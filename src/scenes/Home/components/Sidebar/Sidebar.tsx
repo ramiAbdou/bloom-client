@@ -13,12 +13,16 @@ import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';
 import SidebarLink from './SidebarLink';
 
-const CommunityName = memo(() => {
-  const name = useStoreState(({ community }) => community?.name);
-  return <h2>{name}</h2>;
-});
-
 const SidebarContent = memo(() => {
+  const name = useStoreState(({ community }) => community?.name);
+  const a = Sidebar.useStoreState(({ activeTo }) => activeTo);
+  console.log(
+    a,
+    window.location.pathname.substring(
+      window.location.pathname.lastIndexOf('/') + 1
+    )
+  );
+
   const mainLinks: LinkOptions[] = [
     { title: 'Directory', to: 'directory' },
     { title: 'Events', to: 'events' }
@@ -38,32 +42,31 @@ const SidebarContent = memo(() => {
 
   return (
     <div className="s-home-sidebar">
-      <CommunityName />
+      <h2>{name}</h2>
       <Separator style={{ marginBottom: 24, marginTop: 24 }} />
 
       <div className="s-home-sidebar-section-ctr">
         <div className="s-home-sidebar-section">
           <p>Main</p>
-          {mainLinks.map((link) => {
-            return <SidebarLink key={link.to} {...link} />;
-          })}
+          {mainLinks.map((link) => (
+            <SidebarLink key={link.to} {...link} />
+          ))}
         </div>
 
         <div className="s-home-sidebar-section">
           <p>Admin</p>
-          {adminLinks.map((link) => {
-            return <SidebarLink key={link.to} {...link} />;
-          })}
+          {adminLinks.map((link) => (
+            <SidebarLink key={link.to} {...link} />
+          ))}
         </div>
 
         <div className="s-home-sidebar-section">
           <p>Quick Actions</p>
-          {actionLinks.map((link) => {
-            return <SidebarLink key={link.to} {...link} />;
-          })}
+          {actionLinks.map((link) => (
+            <SidebarLink key={link.to} {...link} />
+          ))}
         </div>
       </div>
-
       <div>
         <ProfileBar />
       </div>
