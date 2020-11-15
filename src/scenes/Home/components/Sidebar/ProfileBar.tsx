@@ -1,13 +1,17 @@
 /**
  * @fileoverview Scene: ProfileBar
+ * - Controls the ability to log out, manage membership and go to profile.
  * @author Rami Abdou
  */
 
+import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
+import { useHistory } from 'react-router-dom';
 
 import { PickerAction } from '@store/Picker.store';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { LOGOUT } from '@store/User.gql';
 
 const PictureContainer = () => {
   const pictureURL = useStoreState(({ user }) => user.pictureURL);
@@ -20,29 +24,29 @@ const PictureContainer = () => {
   return <h3 className="s-home-sidebar-profile__picture">{initials}</h3>;
 };
 
-const FullName = () => {
-  const fullName = useStoreState(
-    ({ user }) => `${user.firstName} ${user.lastName}`
-  );
-  return <p>{fullName}</p>;
-};
-
-const CommunityRole = () => {
-  const role = useStoreState(({ membership }) => membership.role);
-  return <p>{role.toLowerCase()}</p>;
-};
-
 export default () => {
   const id = 'SIDEBAR_PROFILE';
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
   const widthRatio = useStoreState(({ screen }) => screen.widthRatio);
+  const role = useStoreState(({ membership }) => membership.role);
+  const fullName = useStoreState(
+    ({ user }) => `${user.firstName} ${user.lastName}`
+  );
+
+  const { push } = useHistory();
+  const [logout] = useMutation(LOGOUT);
+
+  const onLogout = async () => {
+    const { error } = await logout();
+    if (!error) push('/login');
+  };
 
   const onClick = () => {
     // Show a picker that either allows them to view their profile or log out.
     const actions: PickerAction[] = [
       { onClick: () => {}, text: 'Manage Membership' },
       { onClick: () => {}, text: 'Your Profile' },
-      { onClick: () => {}, separator: true, text: 'Log Out' }
+      { onClick: onLogout, separator: true, text: 'Log Out' }
     ];
 
     showPicker({
@@ -60,8 +64,8 @@ export default () => {
         <PictureContainer />
 
         <div>
-          <FullName />
-          <CommunityRole />
+          <p>{fullName}</p>
+          <p>{role.toLowerCase()}</p>
         </div>
       </div>
 

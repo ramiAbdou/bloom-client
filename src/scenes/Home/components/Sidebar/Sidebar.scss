@@ -97,12 +97,13 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-profile {
   @extend %flex-acsb;
 
-  border-radius: 0 $xl $xl 0;
   box-sizing: border-box;
   margin: $xs 0;
   padding: 12px 20px 12px $sm;
   width: 95%;
 }
+
+.#{$PREF}-profile > svg { color: $gray-1; }
 
 .#{$PREF}-profile__picture {
   border-radius: 50%;

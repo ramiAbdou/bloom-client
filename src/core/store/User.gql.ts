@@ -3,7 +3,7 @@
  * @author Rami Abdou
  */
 
-import { query } from 'gql-query-builder';
+import { mutation, query } from 'gql-query-builder';
 
 export const GET_USER = query({
   fields: [
@@ -25,3 +25,5 @@ export const GET_USER = query({
 }).query;
 
 export const IS_LOGGED_IN = query({ operation: 'isUserLoggedIn' }).query;
+
+export const LOGOUT = mutation({ operation: 'logout' }).query;

@@ -9,33 +9,11 @@
 import './Picker.scss';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useRef } from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import Separator from '@components/Misc/Separator';
-import { PickerAction } from '@store/Picker.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import PickerContainer from './PickerContainer';
-
-const ActionOption = ({ onClick, separator, text }: PickerAction) => {
-  const closePicker = useStoreActions(({ picker }) => picker.closePicker);
-
-  // After the passed-in onClick is executed, close the picker. This component
-  // should not be used as a Flow. It is meant to be a one-time action picker.
-  const onOptionClick = () => {
-    onClick();
-    closePicker();
-  };
-
-  return (
-    <>
-      {separator && <Separator style={{ marginBottom: 8, marginTop: 8 }} />}
-      <button className="c-picker-option" onClick={onOptionClick}>
-        {text}
-      </button>
-    </>
-  );
-};
+import PickerOption from './PickerOption';
 
 // -----------------------------------------------------------------------------
 
@@ -50,7 +28,7 @@ export default () => {
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
 
-  const ref = useRef(null);
+  const ref: MutableRefObject<HTMLDivElement> = useRef(null);
 
   useOnClickOutside(ref, (event) => {
     if (isMobile) {
@@ -80,21 +58,6 @@ export default () => {
     )
       closePicker();
   });
-
-  const body = (
-    <>
-      {actions.map((action) => (
-        <ActionOption key={action.text} {...action} />
-      ))}
-    </>
-  );
-
-  if (isMobile)
-    return (
-      <PickerContainer>
-        <div ref={ref}>{body}</div>
-      </PickerContainer>
-    );
 
   if (!actions.length || !coordinates) return null;
 
@@ -131,7 +94,9 @@ export default () => {
           style={{ ...positionStyle, position: isFixed ? 'fixed' : 'absolute' }}
           transition={{ duration: 0.2 }}
         >
-          {body}
+          {actions.map((action) => (
+            <PickerOption key={action.text} {...action} />
+          ))}
         </motion.div>
       )}
     </AnimatePresence>
