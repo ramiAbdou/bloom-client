@@ -24,6 +24,8 @@ $PREF: 's-signup';
 .#{$PREF} > p { margin-bottom: $lg; }
 .#{$PREF} > button { margin-top: $xxl; width: 100%; }
 
+// ## CONFIRMATION SCREEN
+
 .#{$PREF}-confirmation-ctr {
   @extend %flex-acccol;
 
@@ -50,16 +52,22 @@ $PREF: 's-signup';
 .#{$PREF}-confirmation > p > span { font-size: 18px; font-weight: 700; }
 .#{$PREF}-confirmation > p { width: 100%; }
 
-.#{$PREF}-confirmation-icon {
-  background-color: $green;
-  border-radius: 50%;
-  height: $xl;
+// ## CONFIRMATION SCREEN (HEADER)
+
+.#{$PREF}-confirmation-header {
+  @extend %flex-ac;
+  @extend .fill;
+
   margin-bottom: $sm;
-  padding: 8px;
-  width: $xl;
 }
 
-.#{$PREF}-confirmation-icon > img { height: 100%; width: 100%; }
+.#{$PREF}-confirmation-header > svg {
+  border-radius: 50%;
+  color: $green;
+  height: $xxl;
+  margin-right: $xs;
+  width: $xxl;
+}
 
 .#{$PREF}-confirmation-email {
   background-color: rgba($color: $green, $alpha: 0.05);

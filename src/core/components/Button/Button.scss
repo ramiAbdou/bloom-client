@@ -26,7 +26,7 @@ $PREF: 'c-btn';
   margin-right: $sm;
 }
 
-.#{$PREF}-disabled { color: $gray-3; cursor: not-allowed; }
+.#{$PREF}-disabled { color: $gray-3 !important; cursor: not-allowed; }
 
 // ## PRIMARY BUTTON
 

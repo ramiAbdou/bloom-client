@@ -13,11 +13,12 @@ import FormContent from '@components/Form/FormContent';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
-// import { usePrevious } from '@hooks/usePrevious';
+import { usePrevious } from '@hooks/usePrevious';
 import { Community, IApplicationQuestion } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
+import Application from '../Application.store';
 
 const Icon = () => {
   const logoUrl = useStoreState(({ community }) => community?.logoUrl);
@@ -38,7 +39,7 @@ const Description = () => {
 };
 
 const SubmitButton = () => {
-  // const setEmail = Application.useStoreActions((actions) => actions.setEmail);
+  const setEmail = Application.useStoreActions((actions) => actions.setEmail);
   const name = useStoreState(({ community }) => community?.encodedUrlName);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const submittableData = Form.useStoreState((store) => store.data);
@@ -47,11 +48,11 @@ const SubmitButton = () => {
       items.filter(({ category }) => category === 'EMAIL')[0]?.value
   );
 
-  // const previousEmail = usePrevious(email);
+  const previousEmail = usePrevious(email);
 
-  // useEffect(() => {
-  //   if (email !== previousEmail) setEmail(email);
-  // }, [email]);
+  useEffect(() => {
+    if (email !== previousEmail) setEmail(email);
+  }, [email]);
 
   const [applyForMembership, { error, data, loading }] = useMutation(
     APPLY_FOR_MEMBERSHIP,
