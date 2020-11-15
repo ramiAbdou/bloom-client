@@ -6,18 +6,30 @@
 import { useManualQuery } from 'graphql-hooks';
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
-import validator from 'validator';
 
 import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
-import FormContent from '@components/Form/FormContent';
 import ErrorMessage from '@components/Misc/ErrorMessage';
+import { LoginError } from '@constants';
 import { getGraphQLError } from '@util/util';
-import { SEND_TEMPORARY_LOGIN_LINK } from '../Login.gql';
-import Login from '../Login.store';
-import { getLoginErrorMessage } from '../Login.util';
+import { SEND_TEMPORARY_LOGIN_LINK } from '../../Login.gql';
+import Login from '../../Login.store';
 
-const SubmitButton = () => {
+/**
+ * UTILITY: Returns the login error message based on the cookie.
+ */
+const getLoginErrorMessage = (error: LoginError) => {
+  if (error === 'USER_NOT_FOUND')
+    return `You must apply and be accepted into a commmunity before logging in.`;
+  if (error === 'APPLICATION_REJECTED')
+    return `You must be accepted into a commmunity before logging in.`;
+  if (error === 'APPLICATION_PENDING')
+    return `You have pending membership applications. Once they are accepted, you will be able to log in.`;
+
+  return error;
+};
+
+export default () => {
   const setEmail = Login.useStoreActions((actions) => actions.setEmail);
   const setHasLoginLinkSent = Login.useStoreActions(
     (actions) => actions.setHasLoginLinkSent
@@ -37,19 +49,17 @@ const SubmitButton = () => {
   );
 
   const submitForm = async () => {
-    const result = await sendTemporaryLoginLink();
+    const { data } = await sendTemporaryLoginLink();
 
     // sendTemporaryLoginLink returns a boolean when it's complete, so as long
     // as that is affirmative and there's no errors, we update the Login state.
-    if (result.data && !result.loading && !result.error) {
+    if (data && !loading && !error) {
       setEmail(value);
       setHasLoginLinkSent(true);
     }
   };
 
-  useEffect(() => {
-    setSubmitForm(submitForm);
-  }, [value]);
+  useEffect(() => setSubmitForm(submitForm), [value]);
 
   // In the case that the user tries to log in with an expired login link,
   // we want to show the appropriate message.
@@ -65,6 +75,8 @@ const SubmitButton = () => {
   return (
     <>
       <PrimaryButton
+        fill
+        large
         className="s-login-submit-btn"
         disabled={!isCompleted}
         isLoading={loading}
@@ -77,26 +89,3 @@ const SubmitButton = () => {
     </>
   );
 };
-
-export default () => (
-  <Form.Provider
-    initialData={{
-      itemCSS: 's-login-form-item',
-      questions: [
-        {
-          category: 'EMAIL',
-          description:
-            'Or continue with your email address to receive a login link.',
-          placeholder: 'Email',
-          required: true,
-          title: 'Email',
-          type: 'SHORT_TEXT',
-          validate: (val: string) => validator.isEmail(val)
-        }
-      ]
-    }}
-  >
-    <FormContent />
-    <SubmitButton />
-  </Form.Provider>
-);

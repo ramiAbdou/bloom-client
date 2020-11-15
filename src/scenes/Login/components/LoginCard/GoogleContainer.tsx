@@ -6,12 +6,26 @@
 import Cookies from 'js-cookie';
 import React from 'react';
 
+import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { APP, LoginError } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import URLBuilder from '@util/URLBuilder';
-import { google } from '../images';
-import { getLoginErrorMessage } from '../Login.util';
+import { google } from '../../images';
+
+/**
+ * UTILITY: Returns the login error message based on the cookie.
+ */
+const getLoginErrorMessage = (error: LoginError) => {
+  if (error === 'USER_NOT_FOUND')
+    return `You must apply and be accepted into a commmunity before logging in.`;
+  if (error === 'APPLICATION_REJECTED')
+    return `You must be accepted into a commmunity before logging in.`;
+  if (error === 'APPLICATION_PENDING')
+    return `You have pending membership applications. Once they are accepted, you will be able to log in.`;
+
+  return error;
+};
 
 const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('scope', 'https://www.googleapis.com/auth/userinfo.email')
@@ -24,17 +38,21 @@ const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   );
 
 const GoogleButton = () => (
-  <a href={url}>
+  <Button fill large href={url}>
     <img alt="Google Icon" src={google} />
     Sign In with Google
-  </a>
+  </Button>
 );
 
 export default () => {
+  // We store the error code in a cookie.
   const cookie = Cookies.get('LOGIN_ERROR') as LoginError;
+  const message = getLoginErrorMessage(cookie);
+
+  // After we get the message, we remove the cookie so that the error doesn't
+  // get shown again.
   if (cookie) Cookies.remove('LOGIN_ERROR');
 
-  const message = getLoginErrorMessage(cookie);
   const { css } = new CSSModifier()
     .class('s-login-google')
     .addClass(!!message, 's-login-google--sm');

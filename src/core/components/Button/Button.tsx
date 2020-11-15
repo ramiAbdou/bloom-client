@@ -21,12 +21,17 @@ export default ({
   className,
   children,
   disabled,
+  href,
+  fill,
+  large,
   onClick,
   title,
   ...props
 }: AbstractButtonProps) => {
   const { css } = new CSSModifier()
     .class('c-btn')
+    .addClass(!!large, 'c-btn--lg')
+    .addClass(!!fill, 'c-btn--fill')
     .addClass(!!className, className);
 
   const tapAnimation = !disabled ? { whileTap: { scale: 0.95 } } : {};
@@ -34,7 +39,7 @@ export default ({
   return (
     <motion.button
       className={css}
-      onClick={onClick}
+      onClick={() => (href ? window.open(href) : onClick())}
       {...props}
       {...tapAnimation}
     >

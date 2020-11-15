@@ -28,8 +28,9 @@ export const BackButton = () => {
 };
 
 export const AcceptButton = () => {
-  const communities = useStoreState((store) => store.communities);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
+  const community = useStoreState((store) => store.community);
+  const communities = useStoreState((store) => store.communities);
   const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -38,7 +39,6 @@ export const AcceptButton = () => {
   });
 
   const onClick = async () => {
-    const community: ICommunity = communities.byId[communities.activeId];
     const { id, pendingApplicants } = community;
 
     // Call to the server.

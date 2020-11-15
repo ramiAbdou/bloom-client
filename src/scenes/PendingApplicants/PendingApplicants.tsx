@@ -18,7 +18,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PENDING_APPLICATIONS } from '../Home/Home.gql';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
 import Applicant from './components/ApplicantCard/ApplicantCard.store';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 
 const NoPendingApplicantsMessage = () => (
   <p>There are no pending applications. 👍</p>

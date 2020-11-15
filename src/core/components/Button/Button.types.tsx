@@ -7,9 +7,11 @@
 export type ButtonProps = {
   className?: string;
   disabled?: boolean;
+  href?: string;
+  fill?: boolean;
+  large?: boolean;
   onClick?: VoidFunction;
   title?: string;
 };
 
-export type ButtonLargeProps = { large?: boolean };
 export type ButtonLoadingProps = { isLoading?: boolean; loadingText?: string };

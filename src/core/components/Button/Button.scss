@@ -15,6 +15,7 @@ $PREF: 'c-btn';
   // @include ACTIVE { opacity: 0.5; }
 
   &--lg { height: $xl; }
+  &--fill { width: 100%; }
 }
 
 .#{$PREF}-loading { @extend %flex-acc; cursor: default; }
@@ -26,7 +27,7 @@ $PREF: 'c-btn';
   margin-right: $sm;
 }
 
-// PRIMARY BUTTON
+// ## PRIMARY BUTTON
 
 .#{$PREF}-primary {
   background-color: $primary;

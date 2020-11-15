@@ -4,9 +4,7 @@ $PREF: 's-login';
 
 .#{$PREF}-ctr {
   @extend %flex-acccol;
-
-  height: 100%;
-  width: 100%;
+  @extend .fill;
 
   @include TD { margin-bottom: $xxl; }
 }
@@ -36,34 +34,22 @@ $PREF: 's-login';
   @include RESP (margin-left, $lg, $md, $sm);
 }
 
-.#{$PREF}-google {
-  margin-bottom: $md;
-  width: 100%;
+// ## GOOGLE BUTTON
 
-  &--sm { margin-bottom: $sm; }
-}
-
-.#{$PREF}-google > a {
-  @extend %flex-acc;
-
-  border: 1px $gray-5 solid;
-  border-radius: $xxs;
-  box-shadow: 0 0 4px rgba($color: $gray-4, $alpha: 0.3);
-  color: $gray-2;
-  font-size: $sm;
-  font-weight: 700;
-  height: $lg;
-  width: 100%;
-}
-
-.#{$PREF}-google > a:hover {
+.#{$PREF}-google { margin-bottom: $md; &--sm { margin-bottom: $sm; } }
+.#{$PREF}-google > button { @extend %flex-acc; border: 1px $gray-5 solid; }
+.#{$PREF}-google > button:hover {
   background-color: rgba($color: $gray-6, $alpha: 0.35);
 }
+.#{$PREF}-google > button > img { height: $sm; margin-right: $xs; width: $sm; }
 
-.#{$PREF}-google > a > img { height: $sm; margin-right: $xs; width: $sm; }
+// ## SUBMIT BUTTON
+
 .#{$PREF}-submit-btn { margin-top: 0; width: 100%; }
 
 .#{$PREF}-form-item { margin-bottom: $sm; margin-top: $sm; width: 100%; }
+
+// ## CONFIRMATION SCREEN
 
 .#{$PREF}-confirmation { @extend %flex-accol; }
 .#{$PREF}-confirmation > p { width: 100%; }

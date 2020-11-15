@@ -6,11 +6,10 @@
 import React, { memo } from 'react';
 import shallowequal from 'shallowequal';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
 import Spinner from '@components/Loader/Spinner';
 import { LoadingProps } from '@constants';
 import { useStoreState } from '@store/Store';
+import { AcceptAllButton, IgnoreAllButton } from './HeaderButton';
 
 export default memo(({ loading }: LoadingProps) => {
   const title = useStoreState(({ community }) => {
@@ -26,8 +25,8 @@ export default memo(({ loading }: LoadingProps) => {
       </div>
 
       <div>
-        <PrimaryButton title="Accept All" />
-        <OutlineButton title="Ignore All" />
+        <AcceptAllButton />
+        <IgnoreAllButton />
       </div>
     </div>
   );
