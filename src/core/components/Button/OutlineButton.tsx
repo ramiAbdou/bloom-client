@@ -22,6 +22,7 @@ export interface OutlineButtonProps extends ButtonProps, ButtonLoadingProps {}
 
 export default ({
   className,
+  disabled,
   isLoading,
   loadingText,
   onClick,
@@ -37,10 +38,17 @@ export default ({
       }, 100);
   }, [isLoading, showLoadingState]);
 
-  const { css } = new CSSModifier().class('c-btn-outline').class(className);
+  const { css } = new CSSModifier()
+    .class('c-btn-outline')
+    .class(className)
+    .addClass(disabled, 'c-btn-outline--disabled');
 
   return (
-    <Button className={css} onClick={() => !isLoading && onClick()}>
+    <Button
+      className={css}
+      disabled={disabled}
+      onClick={() => !isLoading && onClick()}
+    >
       {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}
     </Button>
   );

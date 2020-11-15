@@ -17,6 +17,7 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
   const community = useStoreState((store) => store.community);
   const communities = useStoreState((store) => store.communities);
   const updateEntities = useStoreActions((store) => store.updateEntities);
+  const hasApplicants = !!community.pendingApplicants?.length;
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
     variables: { membershipIds: community.pendingApplicants, response }
@@ -26,8 +27,7 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
     const { id, pendingApplicants } = community;
 
     // Call to the server.
-    const { data, error } = await respondToMemberships();
-    console.log(data, error);
+    const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
     updateEntities({
@@ -49,9 +49,11 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
     });
   };
 
+  const baseProps = { disabled: !hasApplicants, onClick };
+
   if (response === 'ACCEPTED')
-    return <PrimaryButton title="Accept All" onClick={onClick} />;
-  return <OutlineButton title="Ignore All" onClick={onClick} />;
+    return <PrimaryButton {...baseProps} title="Accept All" />;
+  return <OutlineButton title="Ignore All" {...baseProps} />;
 };
 
 export const AcceptAllButton = () => <HeaderButton response="ACCEPTED" />;
