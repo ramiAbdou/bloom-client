@@ -34,7 +34,6 @@ export default () => {
   const setHasLoginLinkSent = Login.useStoreActions(
     (actions) => actions.setHasLoginLinkSent
   );
-
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
   const value = Form.useStoreState(
@@ -49,17 +48,25 @@ export default () => {
   );
 
   const submitForm = async () => {
-    const { data } = await sendTemporaryLoginLink();
+    const {
+      data,
+      loading: loginLoading,
+      error: loginError
+    } = await sendTemporaryLoginLink();
 
     // sendTemporaryLoginLink returns a boolean when it's complete, so as long
     // as that is affirmative and there's no errors, we update the Login state.
-    if (data && !loading && !error) {
+    if (data && !loginLoading && !loginError) {
       setEmail(value);
       setHasLoginLinkSent(true);
     }
   };
 
-  useEffect(() => setSubmitForm(submitForm), [value]);
+  useEffect(() => {
+    // The submit form function houses the updated value of the email, so we
+    // update the function when the value changes.
+    setSubmitForm(submitForm);
+  }, [value]);
 
   // In the case that the user tries to log in with an expired login link,
   // we want to show the appropriate message.

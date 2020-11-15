@@ -23,7 +23,7 @@ export default () => (
           required: true,
           title: 'Email',
           type: 'SHORT_TEXT',
-          validate: (val: string) => validator.isEmail(val)
+          validate: (value: string) => validator.isEmail(value)
         }
       ]
     }}
