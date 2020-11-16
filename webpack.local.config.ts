@@ -67,7 +67,7 @@ export default {
     new CopyWebpackPlugin([
       { from: 'public/manifest.json', to: 'manifest.json' }
     ]),
-    new Dotenv(),
+    new Dotenv({ path: './.env' }),
     new HtmlWebpackPlugin({
       favicon: './public/favicon.ico',
       filename: 'index.html',
