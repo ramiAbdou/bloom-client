@@ -16,7 +16,7 @@ import { useStoreState } from '@store/Store';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-
+  const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
   const isAdmin: boolean = useStoreState(({ communities, memberships }) => {
     return Object.values(memberships.byId).some(
       ({ community, role }) =>
@@ -24,6 +24,6 @@ export default ({ component, ...rest }: RouteProps) => {
     );
   });
 
-  if (!isAdmin) return <Redirect to={`/${encodedUrlName}`} />;
+  if (!isDesktop || !isAdmin) return <Redirect to={`/${encodedUrlName}`} />;
   return <Route exact {...rest} component={component} />;
 };
