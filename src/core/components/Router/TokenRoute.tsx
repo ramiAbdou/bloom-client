@@ -15,11 +15,9 @@ type TokenRouteProps = { token: string };
 export default ({ token }: TokenRouteProps) => {
   const { push } = useHistory();
   const { data, loading } = useQuery(VERIFY_LOGIN_TOKEN, {
-    variables: { token }
+    variables: { loginToken: token }
   });
 
-  // If there are already memberships stored in the Membership state, then we
-  // know that the user is loaded, so show that.
   if (data?.verifyLoginToken) {
     push(window.location.pathname);
     return null;

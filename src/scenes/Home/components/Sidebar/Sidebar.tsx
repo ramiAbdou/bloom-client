@@ -18,6 +18,13 @@ import SidebarLink from './SidebarLink';
 const SidebarContent = () => {
   const name = useStoreState(({ community }) => community.name);
   const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
+  const isAdmin: boolean = useStoreState(({ communities, memberships }) => {
+    return Object.values(memberships.byId).some(
+      ({ community, role }) =>
+        !!role && name === communities.byId[community]?.name
+    );
+  });
+
   const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
 
   const { location } = useHistory();
@@ -59,7 +66,7 @@ const SidebarContent = () => {
           ))}
         </div>
 
-        {isDesktop && (
+        {isDesktop && isAdmin && (
           <div className="s-home-sidebar-section">
             <p>Admin</p>
             {adminLinks.map((link) => (
@@ -68,7 +75,7 @@ const SidebarContent = () => {
           </div>
         )}
 
-        {isDesktop && (
+        {isDesktop && isAdmin && (
           <div className="s-home-sidebar-section">
             <p>Quick Actions</p>
             {actionLinks.map((link) => (

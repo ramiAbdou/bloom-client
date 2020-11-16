@@ -34,8 +34,8 @@ export default ({ component, ...rest }: RouteProps) => {
 
   // If there are already memberships stored in the Membership state, then we
   // know that the user is loaded, so show that.
-  const loginToken = new URLSearchParams(window.location.search).get('token');
-  if (loginToken) return <TokenRoute token={loginToken} />;
+  const token = new URLSearchParams(window.location.search).get('loginToken');
+  if (token) return <TokenRoute token={token} />;
   if (loading) return <FullScreenLoader />;
   if (error || (data && !data.getUser)) return <Redirect to="/login" />;
   if (isHome && encodedUrlName) return <Redirect to={`/${encodedUrlName}`} />;

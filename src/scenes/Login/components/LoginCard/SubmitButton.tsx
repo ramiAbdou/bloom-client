@@ -48,15 +48,11 @@ export default () => {
   );
 
   const submitForm = async () => {
-    const {
-      data,
-      loading: loginLoading,
-      error: loginError
-    } = await sendTemporaryLoginLink();
+    const { error: loginError } = await sendTemporaryLoginLink();
 
     // sendTemporaryLoginLink returns a boolean when it's complete, so as long
     // as that is affirmative and there's no errors, we update the Login state.
-    if (data && !loginLoading && !loginError) {
+    if (!loginError) {
       setEmail(value);
       setHasLoginLinkSent(true);
     }

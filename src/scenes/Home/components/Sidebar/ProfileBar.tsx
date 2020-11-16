@@ -29,7 +29,9 @@ export default () => {
   const clearEntities = useStoreActions((store) => store.clearEntities);
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
   const widthRatio = useStoreState(({ screen }) => screen.widthRatio);
-  const role = useStoreState(({ membership }) => membership.role);
+  const role = useStoreState(({ membership }) =>
+    membership.role ? membership.role.toLowerCase() : 'Member'
+  );
   const fullName = useStoreState(
     ({ user }) => `${user.firstName} ${user.lastName}`
   );
@@ -83,7 +85,7 @@ export default () => {
 
         <div>
           <p>{fullName}</p>
-          <p>{role.toLowerCase()}</p>
+          <p>{role}</p>
         </div>
       </div>
 
