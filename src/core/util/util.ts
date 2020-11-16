@@ -9,9 +9,11 @@ import {
   query as queryBuilder
 } from 'gql-query-builder';
 import GQLOptions from 'gql-query-builder/build/IQueryBuilderOptions';
+import { APIError } from 'graphql-hooks';
 import moment from 'moment-timezone';
+import { normalize, Schema } from 'normalizr';
 
-import { APP, FormOption } from '@constants';
+import { APP } from '@constants';
 
 /**
  * Returns the className with the modifier if the shouldAdd evaluates to true,
@@ -27,22 +29,58 @@ export const addModifier = (
  * Filter a form's options by the given search string.
  */
 export const filterOptions = (
-  options: FormOption[],
+  options: string[],
   searchString: string,
-  excludedValues?: FormOption[]
-): FormOption[] => {
+  excludedValues?: string[]
+): string[] => {
   const lowerCaseSearchString = searchString.toLowerCase();
 
-  const isExcluded = (value: FormOption) =>
+  const isExcluded = (value: string) =>
     excludedValues &&
-    excludedValues.some((excludedValue) => value.value === excludedValue.value);
+    excludedValues.some((excludedValue) => value === excludedValue);
 
-  return options.reduce((acc: FormOption[], value: FormOption) => {
+  return options.reduce((acc: string[], value: string) => {
     return !isExcluded(value) &&
-      value.value.toLowerCase().startsWith(lowerCaseSearchString)
+      value.toLowerCase().startsWith(lowerCaseSearchString)
       ? [...acc, value]
       : acc;
   }, []);
+};
+
+export const getRGBFromHex = (hex: string): number[] =>
+  hex
+    .replace(
+      /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+      (m, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
+    )
+    .substring(1)
+    .match(/.{2}/g)
+    .map((x) => parseInt(x, 16));
+
+export const getHueFromRGB = ([r, g, b]: number[]): number => {
+  const min = Math.min(r, g, b);
+  const max = Math.max(r, g, b);
+  if (max === min) return 0;
+
+  let hue = (max + min) / 2;
+  const diff = max - min;
+
+  if (max === r) hue = (g - b) / diff;
+  if (max === g) hue = (b - r) / diff + 2;
+  if (max === b) hue = (r - g) / diff + 4;
+
+  hue *= 60;
+
+  return hue < 0 ? hue + 360 : Math.round(hue);
+};
+
+export const getGraphQLError = (error: APIError) => {
+  if (!error?.graphQLErrors && !error?.fetchError) return null;
+
+  return error.fetchError
+    ? 'Failed to connect to Bloom servers.'
+    : // @ts-ignore b/c the message must exist on the GraphQL error object.
+      error.graphQLErrors[0]?.message;
 };
 
 axios.defaults.withCredentials = true;
@@ -54,6 +92,23 @@ const config: AxiosRequestConfig = {
   withCredentials: true
 };
 
+export const parseEntities = (data: any, schema: Schema<any>) =>
+  Object.entries(normalize(data, schema).entities).reduce(
+    (acc: Record<string, any>, [key, value]) => {
+      return {
+        ...acc,
+        [key]: {
+          activeId: ['communities', 'memberships'].includes(key)
+            ? Object.keys(value)[0]
+            : null,
+          allIds: Object.keys(value),
+          byId: value
+        }
+      };
+    },
+    {}
+  );
+
 export const query = async (data: GQLOptions) => {
   const options = { ...config, data: queryBuilder(data) };
   return (await axios(options)).data.data[data.operation];
@@ -64,7 +119,11 @@ export const mutation = async (data: GQLOptions) => {
   return (await axios(options)).data.data[data.operation];
 };
 
-/**
- * Returns the estimated timezone of the user.
- */
 export const timezone = (): string => moment.tz(moment.tz.guess()).zoneAbbr();
+
+export const toggleArrayValue = (arr: any[], value: any) => {
+  const index = arr.findIndex((val) => val === value);
+  return index < 0
+    ? [...arr, value]
+    : [...arr.slice(0, index), ...arr.slice(index + 1)];
+};

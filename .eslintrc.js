@@ -20,10 +20,20 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/ban-ts-ignore': 0,
+    '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-unused-vars': [
+      2,
+      {
+        argsIgnorePattern: '_', // Allow underscores not to be treated as vars.
+        varsIgnorePattern: '_' // Allow underscores not to be treated as vars.
+      }
+    ],
     'import/newline-after-import': 2,
     'import/prefer-default-export': 0,
+    'jsx-a11y/accessible-emoji': 0,
+    'jsx-a11y/alt-text': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
     'max-len': ['error'],

@@ -8,16 +8,18 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import CSSModifier from '@util/CSSModifier';
-import { Form } from '../Form.state';
+import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
-export default ({ maxCharacters, title }: FormItemData) => {
+export default ({ maxCharacters, placeholder, title }: FormItemData) => {
+  const submitOnEnter = Form.useStoreState((store) => store.submitOnEnter);
+  const submitForm = Form.useStoreState((store) => store.submitForm);
   const { isActive, value } = Form.useStoreState(({ getItem }) =>
-    getItem(title)
+    getItem({ title })
   );
 
-  const next = Form.useStoreActions((store) => store.next);
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
+  const next = Form.useStoreActions((actions) => actions.next);
+  const updateItem = Form.useStoreActions((actions) => actions.updateItem);
 
   const activate = () => updateItem({ isActive: true, title });
   const inactivate = () => updateItem({ isActive: false, title });
@@ -37,9 +39,10 @@ export default ({ maxCharacters, title }: FormItemData) => {
     updateItem({ title, value: text });
   };
 
-  const focusOnNextField = ({
-    keyCode
-  }: React.KeyboardEvent<HTMLInputElement>) => keyCode === 9 && next(title);
+  const onKeyDown = async ({ keyCode }: React.KeyboardEvent<HTMLElement>) => {
+    if (keyCode === 9) next(title);
+    if (keyCode === 13 && submitOnEnter) await submitForm();
+  };
 
   const { css } = new CSSModifier()
     .class('c-form-input')
@@ -49,13 +52,13 @@ export default ({ maxCharacters, title }: FormItemData) => {
     <input
       ref={inputRef}
       className={css}
-      placeholder={value || ''}
+      placeholder={placeholder ?? ''}
       type="text"
-      value={value || ''}
+      value={value ?? ''}
       onChange={({ target }) => updateText(target.value)}
       onClick={activate}
       // If the user presses TAB, inactivate the current form item.
-      onKeyDown={focusOnNextField}
+      onKeyDown={onKeyDown}
     />
   );
 };

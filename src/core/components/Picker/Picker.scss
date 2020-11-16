@@ -1,0 +1,51 @@
+@import 'src/index.scss';
+
+$PREF: 'c-picker';
+
+##{$PREF}-bg {
+  background-color: black;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1000;
+}
+
+.#{$PREF} {
+  background-color: white;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 40px);
+  z-index: 1010;
+}
+
+.#{$PREF}-content {
+  @extend %flex-col;
+  @extend .shadow-2;
+
+  background-color: white;
+  border-radius: 12px;
+  min-width: $xxl * 4;
+  padding: $xs 0;
+  position: absolute;
+  width: max-content;
+  z-index: 10;
+}
+
+.#{$PREF}-option {
+  @extend .fill;
+  @extend .body--2;
+  
+  color: $gray-2;
+  font-weight: 400;
+  padding: 12px;
+  text-align: left;
+  width: 100%;
+
+  @include PRIMARY_HOVER;
+  @include PRIMARY_ACTIVE;
+
+  &:last-of-type { margin-bottom: 0; }
+}

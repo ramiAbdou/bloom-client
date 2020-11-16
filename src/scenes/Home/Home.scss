@@ -1,0 +1,53 @@
+@import 'src/index.scss';
+
+$PREF: 's-home';
+
+// ## HOME
+
+// Implements the margin that we're used to seeing. We limit the width to be
+// 1440px.
+.#{$PREF} {
+  align-items: flex-start;
+  box-sizing: border-box;
+  column-gap: $md;
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  height: 100%;
+  margin-right: $md;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.#{$PREF}-nav {
+  @extend %flex;
+  @extend .shadow-1;
+
+  grid-column: 1 / 5;
+  height: 100%;
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+// Makes the header consistent across each page. Mainly for loading purposes.
+.#{$PREF}-header, .#{$PREF}-header > div { @extend %flex-acsb; }
+.#{$PREF}-header {
+  background-color: $gray-6;
+  padding-bottom: $md;
+  position: sticky;
+  top: 0;
+  z-index: 11;
+}
+.#{$PREF}-header-title { margin-right: $sm; }
+
+// ## CONTENT
+
+.#{$PREF}-content {
+  box-sizing: border-box;
+  grid-column: 5 / -1;
+  margin-top: $md;
+  max-height: 100vh;
+  overflow: scroll;
+}
+
+.#{$PREF}-content-body { overflow: scroll; }

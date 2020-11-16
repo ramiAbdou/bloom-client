@@ -5,7 +5,7 @@
 
 import { ReactNode } from 'react';
 
-const isProduction = process.env.NODE_ENV === 'production';
+export const isProduction = process.env.NODE_ENV === 'production';
 
 /**
  * APP - Application and Bloom-specific constants.
@@ -20,66 +20,64 @@ export const APP = {
     : 'http://localhost:8080'
 };
 
-export const COLORS = [
-  '#FAA21E7F',
-  '#018A8A7F',
-  '#F580237F',
-  '#2FAA3B7F',
-  '#EF41237F',
-  '#F156277F',
-  '#EF41237F'
-];
+/**
+ * GENERAL PROPS - General component props.
+ */
 
-export const GOOGLE = {
-  CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-  REDIRECT_URI: `${APP.SERVER_URL}/google/auth`
-};
+export type ChildrenProps = { children: ReactNode };
+export type ClassNameProps = { className?: string };
+export type IdProps = { id: string };
+export type IsShowingProps = { isShowing: boolean };
+export type LoadingProps = { loading: boolean };
+export type OnClickProps = { onClick?: (() => Promise<any>) | VoidFunction };
+export type MessageProps = { message: string };
+export type RefProps = { ref: React.MutableRefObject<any> };
+export type StyleProps = { style?: React.CSSProperties };
+export type ValueProps = { value: any };
 
 /**
  * GENERAL - General constants.
  */
 
-export type ProviderProps = { children: ReactNode };
+export type LoginError =
+  | 'APPLICATION_PENDING'
+  | 'APPLICATION_REJECTED'
+  | 'USER_NOT_FOUND';
 
 /**
  * FORMS - Handling of all form-related items including custom Enums.
  */
 
-export enum FormQuestionCategory {
-  FIRST_NAME = 'FIRST_NAME',
-  LAST_NAME = 'LAST_NAME',
-  EMAIL = 'EMAIL',
-  GENDER = 'GENDER',
-  MEMBERSHIP_TYPE = 'MEMBERSHIP_TYPE'
-}
+export type EncodedUrlNameParams = { encodedUrlName: string };
 
-export enum FormQuestionType {
-  SHORT_TEXT = 'SHORT_TEXT',
-  LONG_TEXT = 'LONG_TEXT',
-  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
-  DROPDOWN = 'DROPDOWN',
-  DROPDOWN_MULTIPLE = 'DROPDOWN_MULTIPLE'
-}
+export type QuestionType =
+  | 'LONG_TEXT'
+  | 'MULTIPLE_CHOICE'
+  | 'MULTIPLE_SELECT'
+  | 'SHORT_TEXT';
 
-export type FormOption = { bgColor: string; value: string };
+export type QuestionCategory =
+  | 'DATE_JOINED'
+  | 'EMAIL'
+  | 'FIRST_NAME'
+  | 'GENDER'
+  | 'LAST_NAME'
+  | 'MEMBERSHIP_TYPE';
 
 export type FormQuestion = {
-  category?: FormQuestionCategory;
+  category?: QuestionCategory;
   description?: string;
-  options?: string[] | FormOption[];
+  id?: string;
   required?: boolean;
+  options?: string[];
   title: string;
-  type?: FormQuestionType;
+  type?: QuestionType;
 };
 
 export type Form = {
   title: string;
   description?: string;
-  questions: FormQuestion[];
+  questions?: FormQuestion[];
 };
 
-export type FormData = {
-  category?: FormQuestionCategory;
-  title?: string;
-  value: string;
-}[];
+export type FormData = { questionId: string; value: string[] }[];

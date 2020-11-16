@@ -1,0 +1,134 @@
+@import 'src/index.scss';
+
+$PREF: 's-home-sidebar';
+
+// ## SIDEBAR
+
+.#{$PREF} {
+  @extend %flex-col;
+
+  background-color: white;
+  border-right: none;
+  box-sizing: border-box;
+  height: 100%;
+  max-height: 100vh;
+  width: 100%;
+}
+
+.#{$PREF} > h2 { color: $primary; margin: $md 0 0 $sm; }
+
+.#{$PREF}-section-ctr { height: 100%; }
+.#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
+
+.#{$PREF}-section > p {
+  @extend .body--2;
+  @extend .bold;
+
+  color: $gray-3;
+  font-size: 12px;
+  margin-left: $sm;
+  text-transform: uppercase;
+}
+
+.#{$PREF}-link {
+  @extend %flex-ac;
+
+  background-clip: padding-box;
+  border-left: 3px white solid;
+  border-radius: 0 $lg $lg 0;
+  box-sizing: border-box;
+  color: black;
+  font-size: 14px;
+  margin: $xs 0;
+  padding: $xs $xxs $xs $sm;
+  text-align: left;
+  width: 95%;
+
+  @include PRIMARY_HOVER;
+  @include HOVER {
+    border-left: 3px rgba($color: $primary-hex, $alpha: 0.1) solid;
+  }
+}
+
+.#{$PREF}-link > svg {
+  color: black;
+  height: 20px;
+  margin-right: $xs;
+  width: 20px;
+}
+
+.#{$PREF}-link--active {
+  @extend .bold; 
+
+  background-color: rgba($color: $primary-hex, $alpha: 0.1);
+  border-left: 3px $primary solid;
+  color: $primary;
+
+  @include PRIMARY_HOVER;
+  @include HOVER { border-left: 3px $primary solid; }
+}
+
+.#{$PREF}-link--active > svg { color: $primary; }
+
+.#{$PREF} > p {
+  @extend .meta;
+
+  color: $gray-3;
+  font-size: 13px;
+  margin-bottom: $xxs;
+  margin-left: $xs;
+}
+
+.#{$PREF}-action {
+  @extend %flex-ac;
+
+  border-radius: $sm;
+  margin: $sm;
+  padding: $xs;
+  text-align: left;
+}
+
+.#{$PREF}-action > svg { height: $md; margin-right: $xs; width: $md; }
+
+// ## PROFILE BAR
+
+.#{$PREF} > div:last-of-type { border-top: 1px $gray-5 solid; }
+
+.#{$PREF}-profile {
+  @extend %flex-acsb;
+
+  box-sizing: border-box;
+  margin: $xs 0;
+  padding: 12px 20px 12px $sm;
+  width: 95%;
+}
+
+.#{$PREF}-profile > svg { color: $gray-1; }
+
+.#{$PREF}-profile__picture {
+  border-radius: 50%;
+  height: $xl;
+  margin-right: 12px;
+  width: $xl;
+}
+
+h3.#{$PREF}-profile__picture {
+  @extend %flex-acc;
+
+  background-color: $primary;
+  border-radius: 50%;
+  color: white;
+  height: $xl;
+  width: $xl;
+}
+
+.#{$PREF}-profile > div { @extend %flex-ac; }
+
+.#{$PREF}-profile > div > div { @extend %flex-col; align-items: flex-start; }
+
+.#{$PREF}-profile > div > div > p:last-of-type {
+  @extend .meta;
+
+  color: $gray-3;
+  text-transform: capitalize;
+}

@@ -8,6 +8,7 @@ import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
+import StylelintPlugin from 'stylelint-webpack-plugin';
 import webpack from 'webpack';
 
 export default {
@@ -66,13 +67,14 @@ export default {
     new CopyWebpackPlugin([
       { from: 'public/manifest.json', to: 'manifest.json' }
     ]),
-    new Dotenv(),
+    new Dotenv({ path: './.env' }),
     new HtmlWebpackPlugin({
       favicon: './public/favicon.ico',
       filename: 'index.html',
       template: path.join(__dirname, '/public/index.html')
     }),
     new MiniCssExtractPlugin(),
+    new StylelintPlugin({ fix: true }),
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {

@@ -1,86 +1,28 @@
-/* 
-  ___               _           
- / __|_ __  __ _ __(_)_ _  __ _ 
- \__ \ '_ \/ _` / _| | ' \/ _` |
- |___/ .__/\__,_\__|_|_||_\__, |
-     |_|                  |___/ 
-*/
+// Standard sizes that are used across all SCSS but most likely in margins,
+// paddings as well as width and height of images. Has other applications.
 
-// Implements the Bloom Style guide for margins, paddings, and other general 
-// spacing guidelines.
+$xxs: 4px;
+$xs: 8px;
+$sm: 16px;
+$md: 24px;
+$lg: 36px;
+$xl: 48px;
+$xxl: 60px;
 
-$xxs: 6px;
-$xs: 12px;
-$sm: 24px;
-$md: 36px;
-$lg: 48px;
-$xl: 60px;
-$xxl: 72px;
-
-$page-m: 20px;
-$page-t: 40px;
-$page-d: 160px;
-
-/* 
-  __  __               _         
- |  \/  |__ _ _ _ __ _(_)_ _  ___
- | |\/| / _` | '_/ _` | | ' \(_-<
- |_|  |_\__,_|_| \__, |_|_||_/__/
-                 |___/           
-*/
-
-%m {
-
-  &--auto {
-    margin: auto;
-  }
-
-  &-page {
-
-    &--right {
-      margin-right: 10%;
-
-      @include T { margin-right: $page-t; }
-
-      @include M { margin-right: $page-m; }
-    }
-
-    &--left {
-      margin-left: 10%;
-
-      @include T { margin-left: $page-t; }
-
-      @include M { margin-left: $page-m; }
-    }
-
-    @include D { margin-left: 10%; margin-right: 10%; }
-
-    @include T { margin-left: $page-t; margin-right: $page-t; }
-
-    @include M { margin-left: $page-m; margin-right: $page-m; }
-
-    @include WW('GT', 1440) { margin-left: auto; margin-right: auto; }
-  }
-}
+// Flex configurations that are applicable in all settings.
 
 %flex {
   display: flex;
 
   &-ac { @extend %flex; align-items: center; }
-
   &-acc { @extend %flex-ac; justify-content: center; }
-
   &-accol { @extend %flex-ac; flex-direction: column; }
-
+  &-acccol { @extend %flex-acc; flex-direction: column; }
   &-acsb { @extend %flex-ac; justify-content: space-between; }
-
   &-ae { @extend %flex; align-items: flex-end; }
-
   &-c { @extend %flex; justify-content: center; }
-
   &-col { @extend %flex; flex-direction: column; }
-
-  &-g { flex-grow: 1; }
-
+  &-colsb { @extend %flex-col; justify-content: space-between; }
   &-sb { @extend %flex; justify-content: space-between; }
+  &-w { @extend %flex; flex-wrap: wrap; }
 }

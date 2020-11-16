@@ -3,24 +3,25 @@
  * @author Rami Abdou
  */
 
+import './Login.scss';
+
 import React from 'react';
 
-import GoogleButton from './components/GoogleButton';
+import EmailConfirmation from './components/EmailConfirmation';
+import LoginCard from './components/LoginCard/LoginCard';
+import Login from './Login.store';
 
-type LoginProps = { location: { search: string } };
-
-export default ({ location }: LoginProps) => {
-  const params = new URLSearchParams(location.search);
-  const errorMessage: string =
-    params.get('err') === 'user_not_found'
-      ? 'Please sign up for a community before attempting to login.'
-      : '';
-
-  return (
-    <div>
-      <p>Sign In</p>
-      <GoogleButton />
-      {!!errorMessage && <p>{errorMessage}</p>}
-    </div>
-  );
+const LoginContent = () => {
+  const linkSent = Login.useStoreState((store) => store.hasLoginLinkSent);
+  return linkSent ? <EmailConfirmation /> : <LoginCard />;
 };
+
+export default () => (
+  <Login.Provider>
+    <div className="s-login-ctr">
+      <div className="s-login-card">
+        <LoginContent />
+      </div>
+    </div>
+  </Login.Provider>
+);

@@ -1,26 +1,93 @@
-/*
-  __  __ _            _ _                           
- |  \/  (_)___ __ ___| | |__ _ _ _  ___ ___ _  _ ___
- | |\/| | (_-</ _/ -_) | / _` | ' \/ -_) _ \ || (_-<
- |_|  |_|_/__/\__\___|_|_\__,_|_||_\___\___/\_,_/__/
-*/
+@import './colors.scss';
+@import './spacing.scss';
 
-// All miscellaneous styling including shadows, filters and more.
+// Fills the entire height and width of the parent element.
+.fill { box-sizing: border-box; height: 100%; width: 100%; }
 
-@import './colors';
-@import './spacing';
-
-.m-txt-gradient {
-  background: $bloom-gradient;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+// Fills the entire screen.
+.full-screen {
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
 }
 
-.m-overflow-ellipses {
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; // Number of lines to show in text.
-  overflow: hidden;
-  text-overflow: ellipsis;
+// Shadow that has the primary color hint in it.
+.shadow-1 { box-shadow: 0 2px 4px 1px hsla($primary-hue, 99%, 17%, 0.1); }
+.shadow-2 { box-shadow: 0 2px 4px 3px hsla($primary-hue, 99%, 17%, 0.1); }
+
+// Used globally for all react-icons.
+.react-icon {
+  color: black;
+  height: $md;
+  width: $md;
+  
+  &--lg { height: 32px; width: 32px; }
+}
+
+// Disables scrollbar display for all elements.
+*::-webkit-scrollbar { display: none; }
+
+// ## TOOLTIP
+
+.tooltip {
+  @include HOVER {
+    &::before {
+      height: fit-content;
+      opacity: 1;
+      transition-delay: 0.75s;
+      visibility: visible;
+      width: fit-content;
+    }
+  }
+
+  &::before {
+    @extend .meta;
+
+    background-color: $gray-2;
+    border-radius: $xxs;
+    color: $gray-6;
+    content: attr(value);
+    display: block;
+    height: 0;
+    opacity: 0;
+    padding: $xxs $xs;
+    position: absolute;
+    text-align: center;
+    text-transform: capitalize;
+    visibility: hidden;
+    width: 0;
+    z-index: 10;
+  }
+
+  &--bottom {
+    @extend .tooltip;
+
+    &::before {
+      left: 50%;
+      margin-top: $xxs;
+      top: 100%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@mixin PRIMARY_HOVER {
+  @media (hover: hover) {
+    &:hover { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
+  }
+}
+@mixin PRIMARY_ACTIVE {
+  &:active { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
+}
+
+.back-arrow {
+  border-radius: 50%;
+  cursor: pointer;
+  height: 26px;
+  padding: $xxs;
+  width: 26px;
+
+  @include PRIMARY_HOVER;
 }

@@ -1,0 +1,21 @@
+@import 'src/index.scss';
+
+$PREF: 'c-misc';
+
+// SEPARATOR
+.#{$PREF}-sep { border-bottom: 1px $gray-5 solid; width: 100%; }
+
+// ERROR MESSAGE. Has an icon and some text.
+.#{$PREF}-error { @extend %flex; margin-top: $sm; }
+.#{$PREF}-error > p {
+  @extend .body--2;
+
+  color: $red;
+  line-height: 20px;
+  margin-top: -2px;
+}
+.#{$PREF}-error > img {
+  height: 18px;
+  margin-right: $xxs;
+  width: 18px;
+}

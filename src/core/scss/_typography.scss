@@ -1,69 +1,52 @@
-/*
-  _____                                   _        
- |_   _|  _ _ __  ___  __ _ _ _ __ _ _ __| |_ _  _ 
-   | || || | '_ \/ _ \/ _` | '_/ _` | '_ \ ' \ || |
-   |_| \_, | .__/\___/\__, |_| \__,_| .__/_||_\_, |
-       |__/|_|        |___/         |_|       |__/ 
-*/
-
 @import './breakpoints.scss';
 
 // This essentially imports some CSS classes that create the font-family Muli.
 // That's why we can use that keyword in multiple places in this file.
 
-@import url('https://fonts.googleapis.com/css2?family=Muli:wght@200;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Muli:wght@400;600;700&display=swap');
 
-%bloom-font { color: $black; font-family: Muli; }
+// Returns the CSS font styling for different screen sizes.
 
-// Returns the CSS fonts for different screen sizes.
-
-@mixin font-responsive($weight, $desktop, $desktop-lh, $tablet, $tablet-lh,
-  $mobile, $mobile-lh) {
-  @extend %bloom-font;
-
+@mixin font-responsive(
+  $weight,
+  $desktop,
+  $desktop-lh,
+  $tablet,
+  $tablet-lh,
+  $mobile,
+  $mobile-lh
+) {
+  font-family: Muli;
   font-weight: $weight;
 
   @include D { font-size: $desktop; line-height: $desktop-lh; }
-
   @include T { font-size: $tablet; line-height: $tablet-lh; }
-
   @include M { font-size: $mobile; line-height: $mobile-lh; }
 }
 
-h1 { @include font-responsive(900, 36px, 48px, 32px, 48px, 30px, 36px); }
+.body--1 { @include font-responsive(400, 15px, 24px, 15px, 24px, 15px, 24px); }
+.body--2 { @include font-responsive(400, 14px, 20px, 14px, 20px, 14px, 20px); }
+.body--3 { @include font-responsive(400, 13px, 20px, 13px, 20px, 13px, 20px); }
+.meta { @include font-responsive(600, 12px, 16px, 12px, 16px, 12px, 16px); }
+.bold { font-weight: 600 !important; }
 
-h2 { @include font-responsive(700, 30px, 36px, 26px, 36px, 26px, 36px); }
+h1 { @include font-responsive(700, 24px, 32px, 24px, 32px, 24px, 32px); }
+h2 { @include font-responsive(700, 20px, 24px, 20px, 24px, 20px, 24px); }
+h3 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
 
-h3 { @include font-responsive(700, 24px, 36px, 20px, 24px, 20px, 24px); }
+p,
+a,
+textarea,
+span,
+input,
+input::placeholder { @extend .body--1; }
 
-h4 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
+input::placeholder { color: $gray-3; }
 
-p, textarea, span, input { @extend .body--1; }
+.btn-txt {
+  text-transform: uppercase;
 
-.meta { @include font-responsive(700, 12px, 24px, 12px, 24px, 12px, 24px); }
-
-.body--1 {
-  @include font-responsive(400, 16px, 24px, 16px, 24px, 16px, 24px);
+  @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);
 }
 
-.body--1--bold {
-  @include font-responsive(700, 16px, 24px, 16px, 24px, 16px, 24px);
-}
-
-.body--2 {
-  color: $gray-2;
-
-  @include font-responsive(400, 14px, 24px, 14px, 24px, 14px, 24px);
-}
-
-.body--2--bold {
-  color: $gray-2;
-
-  @include font-responsive(700, 14px, 24px, 14px, 24px, 14px, 24px);
-}
-
-.body--3 {
-  color: $gray-2;
-
-  @include font-responsive(400, 12px, 18px, 12px, 18px, 12px, 18px);
-}
+button { @extend .body--1; font-weight: 600; }

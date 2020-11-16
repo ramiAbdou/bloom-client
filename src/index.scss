@@ -1,30 +1,13 @@
-/* 
-  ___          _   
- | _ \___  ___| |_ 
- |   / _ \/ _ \  _|
- |_|_\___/\___/\__|
-*/
-
 @import './core/scss/breakpoints';
 @import './core/scss/colors';
 @import './core/scss/misc';
 @import './core/scss/spacing';
 @import './core/scss/typography';
 
-/* 
-   ___                       _   ___ _                   _      
-  / __|___ _ _  ___ _ _ __ _| | | __| |___ _ __  ___ _ _| |_ ___
- | (_ / -_) ' \/ -_) '_/ _` | | | _|| / -_) '  \/ -_) ' \  _(_-<
-  \___\___|_||_\___|_| \__,_|_| |___|_\___|_|_|_\___|_||_\__/__/
-*/
+// General elements as well as the application background.
 
 html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
+body { height: 100%; margin: 0; padding: 0; width: 100%; }
 
 #root { @extend %flex-col; height: 100%; }
 
@@ -45,11 +28,13 @@ body {
 h1,
 h2,
 h3,
-h4,
-p { margin: 0 }
+p,
+a { margin: 0; }
 
 button,
 input,
 textarea { border: none; outline: none; }
 
 button { background: none; cursor: pointer; padding: 0; }
+
+a { color: initial; font-family: Muli; text-decoration: none; }

@@ -1,147 +1,161 @@
-/* 
-  ___                 ___                                  _      
- | __|__ _ _ _ __    / __|___ _ __  _ __  ___ _ _  ___ _ _| |_ ___
- | _/ _ \ '_| '  \  | (__/ _ \ '  \| '_ \/ _ \ ' \/ -_) ' \  _(_-<
- |_|\___/_| |_|_|_|  \___\___/_|_|_| .__/\___/_||_\___|_||_\__/__/
-                                   |_|                            
-*/
+// Handles all Form components CSS.
 
 @import 'src/index.scss';
 
 $PREF: 'c-form';
 
-/* 
-   ___                          
-  / __|___ _ __  _ __  ___ _ _  
- | (__/ _ \ '  \| '  \/ _ \ ' \ 
-  \___\___/_|_|_|_|_|_\___/_||_|
-*/
+// ## GENERAL
 
-.#{$PREF}-item { margin-bottom: $md; margin-top: $md; }
-.#{$PREF}-label-ctr { @extend %flex-sb; @extend %flex-ae; width: 100%; }
+.#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
+.#{$PREF}-desc { @extend .body--2; margin-bottom: $sm; }
+.#{$PREF}-error { @extend .body--2; color: $red; margin-top: $xxs; }
 
-.#{$PREF}-label {
+// ## LABEL
+
+.#{$PREF}-label { @extend %flex-ae; @extend %flex-sb; width: 100%; }
+
+// Represents the actually label content (AKA title).
+.#{$PREF}-label > p:not(.c-form-label-count) {
   @extend .meta;
 
   font-size: 14px;
-  font-weight: 600;
-  margin-bottom: $xxs;
+  margin-bottom: $xs;
   max-width: 85%;
 }
 
-.#{$PREF}-label--count { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
-.#{$PREF}-label--required::after {
+// Represents the required symbol after the label's title.
+.#{$PREF}-label--required > p:not(.c-form-label-count)::after {
   color: $red;
   content: '*';
   margin-left: $xxs;
 }
 
-.#{$PREF}-desc { @extend .body--2; margin-bottom: $xxs; }
-.#{$PREF}-error { @extend .body--3; color: $red; margin-top: $xxs; }
+.#{$PREF}-label-count { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
+
+// ## INPUT - The main element that all items will use, especially the short
+// text and long text items. We set a special active state for them.
 
 .#{$PREF}-input {
   @extend %flex-acsb;
 
-  background-color: $white;
+  background-color: white;
   border: 1px $gray-4 solid;
-  border-radius: 4px;
+  border-radius: $xxs;
   box-sizing: border-box;
   cursor: text;
-  height: $md;
-  padding-left: 8px;
-  padding-right: 8px;
+  height: $lg;
+  padding-left: $xs;
+  padding-right: $xs;
   width: 100%;
+
+  &::placeholder { color: $gray-4; }
+  &--active { border: 1px $primary solid; }
+  &--error { border: 1px $red solid; }
+
+  &--lg {
+    height: 96px;
+    justify-content: center;
+    padding-bottom: $xxs;
+    padding-top: $xxs;
+    resize: none;
+  }
 }
 
-.#{$PREF}-input--lg {
-  @extend .#{$PREF}-input;
+// ## MULTIPLE CHOICE
 
-  height: 96px;
-  justify-content: center;
-  padding-bottom: $xxs;
-  padding-top: $xxs;
-  resize: none;
+.#{$PREF}-mc-choice { @extend %flex-ac; margin-bottom: 12px; }
+.#{$PREF}-mc-choice:first-of-type { margin-top: $xs; }
+
+// ## MULTIPLE CHOICE CHECKBOX
+
+.#{$PREF}-mc-choice > div {
+  @extend %flex-acc;
+
+  background-color: white;
+  border: 2px solid $gray-4;
+  border-radius: 50%;
+  height: $sm;
+  width: $sm;
 }
 
-.#{$PREF}-input--active { border: 1px $orange-1 solid; }
-.#{$PREF}-input--error { border: 1px $red solid; }
-
-.#{$PREF}-dd-opt-ctr {
-  background-color: $white;
-  border-radius: $xxs;
-  box-shadow: 0 4px 5px rgba($color: $black, $alpha: 0.15);
-  margin-bottom: $lg; // For when the dropdown is at the bottom of the page.
-  padding-bottom: $xxs;
-  padding-top: $xxs;
-  position: absolute;
+.#{$PREF}-mc-choice--active > div { border: 2px $primary solid; }
+.#{$PREF}-mc-choice--active > div > div {
+  background-color: $primary;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
 }
 
-.#{$PREF}-dd-search {
-  @extend .body--2;
+// ## MULTIPLE CHOICE TEXT (BOTH MULTIPLE CHOICE/SELECT)
 
-  box-sizing: border-box;
-  padding: 8px;
-  width: 100%;
- }
+.#{$PREF}-choice-txt {
+  @extend .body--3;
+
+  background-color: rgba($color: $primary-hex, $alpha: 0.15);
+  border-radius: $sm;
+  color: black;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: left;
+}
+
+// ## DROPDOWN (BOTH MULTIPLE CHOICE/SELECT)
 
 .#{$PREF}-dd-bar { @extend %flex-acsb; cursor: pointer; }
 
 .#{$PREF}-dd-arrow {
   border-left: $xxs solid transparent;
   border-right: $xxs solid transparent;
-  border-top: $xxs solid $gray-4; 
+  border-top: $xxs solid $gray-4;
   height: 0;
   width: 0;
 }
 
+.#{$PREF}-dd-search { box-sizing: border-box; padding: 8px; width: 100%; }
 .#{$PREF}-dd-value-ctr { @extend %flex-ac; }
-
 .#{$PREF}-dd-value {
   @extend %flex-ac;
-  @extend .body--3;
+  @extend .#{$PREF}-choice-txt;
 
-  border-radius: $sm;
-  color: $black;
-  margin-right: $xxs;
-  padding-left: $xxs;
-  padding-right: $xxs;
+  margin-left: 0;
+  margin-right: $xs;
+  padding-left: $xs;
+  padding-right: $xs;
+
+  &::after { content: 'x'; margin-left: $xs; }
 }
 
-.#{$PREF}-dd-value::after { content: 'x'; margin-left: $xxs; }
+.#{$PREF}-dd-opt-ctr {
+  @extend .shadow-2;
+
+  background-color: white;
+  border-radius: $xxs;
+  margin-bottom: $xl; // For when the dropdown is at the bottom of the page.
+  padding-bottom: $xs;
+  padding-top: $xs;
+  position: absolute;
+}
+
+// No results message.
+.#{$PREF}-dd-opt-ctr > p {
+  @extend %flex-ac;
+
+  height: $lg;
+  margin-left: $xs;
+  width: 100%;
+}
 
 .#{$PREF}-dd-opt {
   @extend %flex-ac;
 
-  background-color: $white;
-  height: $md;
+  
+  height: $lg;
   overflow: hidden;
   width: 100%;
 
-  @media (hover: hover) {
-    &:hover { background-color: $gray-6; }
-  }
+  @include HOVER { background-color: $gray-6; }
 }
 
-.#{$PREF}-dd-opt__txt {
-  @extend .body--3;
-  @extend .m-overflow-ellipses;
-
-  border-radius: $sm;
-  color: $black;
-  margin-left: 8px;
-  margin-right: 8px;
-  padding-left: 6px;
-  padding-right: 6px;
-  text-align: left;
-  text-transform: none;
-}
-
-// The no result found message.
-.#{$PREF}-dd-no-result {
-  @extend %flex-ac;
-  @extend .body--2;
-  
-  height: $md;
-  margin-left: 8px;
-  width: 100%;
-}
+.#{$PREF}-dd-opt > p { @extend .#{$PREF}-choice-txt; }

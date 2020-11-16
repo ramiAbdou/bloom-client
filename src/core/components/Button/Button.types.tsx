@@ -4,12 +4,16 @@
  * @author Rami Abdou
  */
 
-type ButtonProps = {
+export type ButtonProps = {
   className?: string;
+  disabled?: boolean;
+  href?: string;
+  fill?: boolean;
+  isLoading?: boolean;
+  loadingText?: string;
+  large?: boolean;
   onClick?: VoidFunction;
-  title: string;
+  title?: string;
 };
 
-type ButtonDisabledProps = { disabled?: boolean };
-
-export interface PrimaryButtonProps extends ButtonProps, ButtonDisabledProps {}
+export type ButtonLoadingProps = { isLoading?: boolean; loadingText?: string };

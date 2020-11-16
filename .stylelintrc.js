@@ -6,20 +6,17 @@
  */
 
 module.exports = {
+  extends: ['stylelint-config-standard'],
   plugins: ['stylelint-order'],
   rules: {
     'at-rule-empty-line-before': [
       'always',
       {
-        except: ['blockless-after-blockless', 'first-nested']
+        except: ['after-same-name', 'first-nested']
       }
     ],
     'at-rule-no-unknown': null,
-    'block-closing-brace-space-before': 'always-single-line',
-    'block-opening-brace-space-after': 'always-single-line',
-    'block-closing-brace-newline-before': 'always-multi-line',
-    'block-opening-brace-newline-after': 'always-multi-line',
-    'declaration-block-single-line-max-declarations': 3,
+    'at-rule-semicolon-newline-after': null,
     'declaration-empty-line-before': [
       'always',
       {
@@ -27,9 +24,11 @@ module.exports = {
         ignore: ['inside-single-line-block']
       }
     ],
+    'declaration-block-single-line-max-declarations': 4,
     'font-family-no-missing-generic-family-keyword': null,
     'max-empty-lines': 1,
     'max-line-length': 80,
+    'no-eol-whitespace': null,
     'order/order': [
       'dollar-variables',
       {
@@ -37,10 +36,10 @@ module.exports = {
         name: 'extend'
       },
       'declarations',
-      'rules',
-      'at-rules'
+      'at-rules',
+      'rules'
     ],
-    'order/properties-alphabetical-order': true,
-    'rule-empty-line-before': 'always-multi-line'
-  }
+    'order/properties-alphabetical-order': true
+  },
+  ignoreFiles: ['**/*.tsx']
 };

@@ -1,0 +1,86 @@
+@import 'src/index.scss';
+
+$PREF: 's-login';
+
+.#{$PREF}-ctr {
+  @extend %flex-acccol;
+  @extend .fill;
+
+  @include TD { margin-bottom: $xxl; }
+}
+
+.#{$PREF}-card {
+  @extend %flex-col;
+
+  background-color: white;
+  border: 1px $gray-5 solid;
+  border-radius: $xxs;
+  max-width: 400px;
+  overflow: hidden;
+
+  @include RESP (padding, $md, $sm, $sm);
+  @include M { box-sizing: border-box; width: 90%; }
+}
+
+.#{$PREF}-header { @extend %flex-acsb; }
+.#{$PREF}-header > div { margin-bottom: $lg; }
+.#{$PREF}-header > div > h3 { @extend .meta; }
+.#{$PREF}-header > img {
+  margin-bottom: $lg;
+  opacity: 0.75;
+
+  @include RESP (margin-top, -$xxl, -$xl, -$xl);
+  @include RESP (margin-left, $lg, $md, $sm);
+}
+
+// ## GOOGLE BUTTON
+
+.#{$PREF}-google { margin-bottom: $md; &--sm { margin-bottom: $sm; } }
+.#{$PREF}-google > button { @extend %flex-acc; border: 1px $gray-5 solid; }
+.#{$PREF}-google > button:hover {
+  background-color: rgba($color: $gray-6, $alpha: 0.35);
+}
+
+.#{$PREF}-google > button > img {
+  height: 20px;
+  margin-right: $xs;
+  width: 20px;
+}
+
+// ## EMAIL CONTAINER (INPUT FIELD AND SUBMIT BUTTON)
+
+.#{$PREF}-form-item { margin-bottom: $sm; margin-top: $sm; width: 100%; }
+.#{$PREF}-submit-btn { margin-top: 0; width: 100%; }
+
+// ## CONFIRMATION SCREEN
+
+.#{$PREF}-confirmation { @extend %flex-accol; }
+.#{$PREF}-confirmation > p { width: 100%; }
+.#{$PREF}-confirmation-header {
+  @extend %flex-ac;
+  @extend .fill;
+
+  margin-bottom: $sm;
+}
+
+// ## CONFIRMATION SCREEN (HEADER)
+
+.#{$PREF}-confirmation-header > svg {
+  border-radius: 50%;
+  color: $green;
+  height: $xxl;
+  margin-right: $xs;
+  width: $xxl;
+}
+
+.#{$PREF}-confirmation-email {
+  background-color: rgba($color: $green, $alpha: 0.05);
+  border: 1px $green solid;
+  border-radius: $xxs;
+  color: $green;
+  margin-bottom: $sm;
+  margin-top: $sm;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  text-align: center;
+}

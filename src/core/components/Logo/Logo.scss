@@ -1,0 +1,8 @@
+@import 'src/index.scss';
+
+$PREF: 'c-logo';
+
+$LOGO_HEIGHT: 18px;
+$LOGO_WIDTH: 75px;
+
+.#{$PREF} { height: $LOGO_HEIGHT; width: $LOGO_WIDTH; }
