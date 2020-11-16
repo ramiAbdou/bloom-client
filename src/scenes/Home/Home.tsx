@@ -52,18 +52,32 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   return <>{children}</>;
 };
 
+const AdminRoutes = () => {
+  const { url } = useRouteMatch();
+  const autoAccept = useStoreState(({ community }) => community.autoAccept);
+
+  return (
+    <>
+      <AdminRoute component={MemberDatabase} path={`${url}/database`} />
+      <AdminRoute component={Analytics} path={`${url}/analytics`} />
+      <AdminRoute component={Integrations} path={`${url}/integrations`} />
+      {!autoAccept && (
+        <AdminRoute component={PendingApplicants} path={`${url}/applicants`} />
+      )}
+    </>
+  );
+};
+
 const HomeContent = () => {
   const { url } = useRouteMatch();
+  const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
 
   return (
     <div className="s-home-content">
       <Switch>
         <Route component={Directory} path={`${url}/directory`} />
         <Route component={Events} path={`${url}/events`} />
-        <AdminRoute component={MemberDatabase} path={`${url}/database`} />
-        <AdminRoute component={Analytics} path={`${url}/analytics`} />
-        <AdminRoute component={Integrations} path={`${url}/integrations`} />
-        <AdminRoute component={PendingApplicants} path={`${url}/applicants`} />
+        {isDesktop && <AdminRoutes />}
         <Redirect to={`${url}/directory`} />
       </Switch>
     </div>

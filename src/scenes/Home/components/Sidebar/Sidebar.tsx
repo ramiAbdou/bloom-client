@@ -5,7 +5,7 @@
 
 import './Sidebar.scss';
 
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Separator from '@components/Misc/Separator';
@@ -15,8 +15,9 @@ import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';
 import SidebarLink from './SidebarLink';
 
-const SidebarContent = memo(() => {
-  const name = useStoreState(({ community }) => community?.name);
+const SidebarContent = () => {
+  const name = useStoreState(({ community }) => community.name);
+  const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
   const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
 
   const { location } = useHistory();
@@ -58,26 +59,30 @@ const SidebarContent = memo(() => {
           ))}
         </div>
 
-        <div className="s-home-sidebar-section">
-          <p>Admin</p>
-          {adminLinks.map((link) => (
-            <SidebarLink key={link.to} {...link} />
-          ))}
-        </div>
+        {isDesktop && (
+          <div className="s-home-sidebar-section">
+            <p>Admin</p>
+            {adminLinks.map((link) => (
+              <SidebarLink key={link.to} {...link} />
+            ))}
+          </div>
+        )}
 
-        <div className="s-home-sidebar-section">
-          <p>Quick Actions</p>
-          {actionLinks.map((link) => (
-            <SidebarLink key={link.to} {...link} />
-          ))}
-        </div>
+        {isDesktop && (
+          <div className="s-home-sidebar-section">
+            <p>Quick Actions</p>
+            {actionLinks.map((link) => (
+              <SidebarLink key={link.to} {...link} />
+            ))}
+          </div>
+        )}
       </div>
       <div>
         <ProfileBar />
       </div>
     </div>
   );
-});
+};
 
 export default () => (
   <Sidebar.Provider>

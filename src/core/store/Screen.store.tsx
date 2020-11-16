@@ -22,9 +22,17 @@ export const screenModel: ScreenModel = {
     if (windowWidth <= 1024 && windowWidth >= 576) return 'T';
     return 'M';
   }),
-  isDesktop: computed(({ breakpoint }) => breakpoint === 'D'),
-  isMobile: computed(({ breakpoint }) => breakpoint === 'M'),
-  setWindowWidth: action((state, width: number) => ({ ...state, width })),
+
+  isDesktop: computed(({ windowWidth }) => windowWidth > 1025),
+
+  isMobile: computed(({ windowWidth }) => windowWidth < 576),
+
+  setWindowWidth: action((state, windowWidth: number) => ({
+    ...state,
+    windowWidth
+  })),
+
   widthRatio: computed(({ windowWidth }) => windowWidth / 1440),
+
   windowWidth: window.innerWidth
 };
