@@ -13,13 +13,6 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import { useStoreActions } from '@store/Store';
 
-/* 
-  _  _             _         
- | || |___ __ _ __| |___ _ _ 
- | __ / -_) _` / _` / -_) '_|
- |_||_\___\__,_\__,_\___|_|  
-*/
-
 // This header is common for both the ScreenEditor and the ModalEditor, so we
 // follow DRY by keeping it here.
 

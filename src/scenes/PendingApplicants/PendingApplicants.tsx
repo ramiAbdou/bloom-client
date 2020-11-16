@@ -21,7 +21,7 @@ import Applicant from './components/ApplicantCard/ApplicantCard.store';
 import Header from './components/Header/Header';
 
 const NoPendingApplicantsMessage = () => (
-  <p>There are no pending applications. 👍</p>
+  <p>There are no pending applicants. 👍</p>
 );
 
 export default () => {

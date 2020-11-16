@@ -5,9 +5,11 @@
 
 import './Sidebar.scss';
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Separator from '@components/Misc/Separator';
+import { usePrevious } from '@hooks/usePrevious';
 import { useStoreState } from '@store/Store';
 import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';
@@ -15,13 +17,16 @@ import SidebarLink from './SidebarLink';
 
 const SidebarContent = memo(() => {
   const name = useStoreState(({ community }) => community?.name);
-  const a = Sidebar.useStoreState(({ activeTo }) => activeTo);
-  console.log(
-    a,
-    window.location.pathname.substring(
-      window.location.pathname.lastIndexOf('/') + 1
-    )
-  );
+  const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
+
+  const { location } = useHistory();
+  const { pathname } = location;
+  const activeTo = pathname.substring(pathname.lastIndexOf('/') + 1);
+  const previousActiveTo = usePrevious(activeTo);
+
+  useEffect(() => {
+    if (previousActiveTo !== activeTo) setActiveTo(activeTo);
+  }, [activeTo]);
 
   const mainLinks: LinkOptions[] = [
     { title: 'Directory', to: 'directory' },

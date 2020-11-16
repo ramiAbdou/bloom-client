@@ -21,9 +21,7 @@ type SidebarModel = {
 
 export default createContextStore<SidebarModel>(
   {
-    activeTo: window.location.pathname.substring(
-      window.location.pathname.lastIndexOf('/') + 1
-    ),
+    activeTo: '',
 
     isActive: computed(({ activeTo }) => (to: string) =>
       activeTo === to || (!activeTo && to === 'directory')

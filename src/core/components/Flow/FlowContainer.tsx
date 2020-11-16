@@ -32,7 +32,7 @@ export default memo(({ children }: ChildrenProps) => {
         exit={{ opacity: 0 }}
         id="c-flow-bg"
         initial={{ opacity: 0 }}
-        transition={{ duration: 0.05 }}
+        transition={{ duration: 0.1 }}
       />
 
       <motion.div
@@ -41,7 +41,7 @@ export default memo(({ children }: ChildrenProps) => {
         className="c-flow"
         exit={exit}
         initial={initial}
-        transition={{ duration: 0.1 }}
+        transition={{ duration: 0.2 }}
       >
         {children}
       </motion.div>
