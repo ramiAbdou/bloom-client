@@ -54,7 +54,10 @@ export type IMembership = {
   community: EntityID;
   id: string;
   role: 'ADMIN' | 'OWNER';
+  type: IMembershipType;
 };
+
+type IMembershipType = { name: string };
 
 export type UnresolvedApplicantData = { questionId: string; value: string };
 export type ResolvedApplicantData = {

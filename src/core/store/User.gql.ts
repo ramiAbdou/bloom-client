@@ -17,7 +17,8 @@ export const GET_USER = query({
           community: ['id', 'encodedUrlName', 'name', 'logoUrl', 'primaryColor']
         },
         'id',
-        'role'
+        'role',
+        { type: ['name'] }
       ]
     }
   ],

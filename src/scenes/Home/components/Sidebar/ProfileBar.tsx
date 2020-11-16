@@ -28,10 +28,9 @@ export default () => {
   const id = 'SIDEBAR_PROFILE';
   const clearEntities = useStoreActions((store) => store.clearEntities);
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
+  const type = useStoreState(({ membership }) => membership.type.name);
   const widthRatio = useStoreState(({ screen }) => screen.widthRatio);
-  const role = useStoreState(({ membership }) =>
-    membership.role ? membership.role.toLowerCase() : 'Member'
-  );
+  const role = useStoreState(({ membership }) => membership.role);
   const fullName = useStoreState(
     ({ user }) => `${user.firstName} ${user.lastName}`
   );
@@ -85,7 +84,7 @@ export default () => {
 
         <div>
           <p>{fullName}</p>
-          <p>{role}</p>
+          <p>{role?.toLowerCase() ?? type}</p>
         </div>
       </div>
 
