@@ -3,12 +3,19 @@
  * @author Rami Abdou
  */
 
+import { query } from 'gql-query-builder';
 import { useQuery } from 'graphql-hooks';
 import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
-import { VERIFY_LOGIN_TOKEN } from '@scenes/Home/Home.gql';
+
+// We're not exporting this to another file since this is the only place we
+// need it.
+const VERIFY_LOGIN_TOKEN = query({
+  operation: 'verifyLoginToken',
+  variables: { loginToken: { required: true } }
+}).query;
 
 type TokenRouteProps = { token: string };
 
