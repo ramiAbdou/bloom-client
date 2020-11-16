@@ -1,6 +1,6 @@
 @import 'src/index.scss';
 
-$PREF: 'c-nav';
+$PREF: 's-home-cbar';
 
 .#{$PREF} {
   @extend %flex-accol;

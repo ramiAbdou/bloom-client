@@ -16,7 +16,7 @@ import {
 
 import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
-import Navbar from '@scenes/Home/components/Navbar/Navbar';
+import CommunityBar from '@scenes/Home/components/CommunityBar/CommunityBar';
 import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
 import Directory from '../Directory/Directory';
@@ -80,7 +80,7 @@ export default () => (
   <AuthenticatedCommunityWrapper>
     <div className="s-home">
       <div className="s-home-nav">
-        <Navbar />
+        <CommunityBar />
         <Sidebar />
       </div>
 
