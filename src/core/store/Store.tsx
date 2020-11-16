@@ -43,6 +43,7 @@ type StoreModel = {
     StoreModel,
     EntityRecord<IApplicationQuestion>
   >;
+  clearEntities: Action<StoreModel>;
   communities: Computed<StoreModel, EntityRecord<ICommunity>>;
   community: Computed<StoreModel, ICommunity>;
   entities: Record<Entity, EntityRecord>;
@@ -66,6 +67,33 @@ export const store = createStore<StoreModel>(
       ({ entities }) =>
         entities.applicationQuestions as EntityRecord<IApplicationQuestion>
     ),
+
+    clearEntities: action((state) => {
+      // Reset the Bloom style guide primary color.
+      const { style } = document.documentElement;
+      style.setProperty('--primary', '#f58023');
+      style.setProperty('--primary-hex', `245, 128, 35`);
+      style.setProperty('--primary-hue', `27`);
+      style.setProperty('--gray-1', `hsl(27, 5%, 20%)`);
+      style.setProperty('--gray-2', `hsl(27, 5%, 31%)`);
+      style.setProperty('--gray-3', `hsl(27, 5%, 51%)`);
+      style.setProperty('--gray-4', `hsl(27, 5%, 74%)`);
+      style.setProperty('--gray-5', `hsl(27, 5%, 88%)`);
+      style.setProperty('--gray-6', `hsl(27, 5%, 96%)`);
+
+      return {
+        ...state,
+        entities: {
+          applicationQuestions: { activeId: null, allIds: [], byId: {} },
+          applications: { activeId: null, allIds: [], byId: {} },
+          communities: { activeId: null, allIds: [], byId: {} },
+          members: { activeId: null, allIds: [], byId: {} },
+          memberships: { activeId: null, allIds: [], byId: {} },
+          pendingApplicants: { activeId: null, allIds: [], byId: {} },
+          users: { activeId: null, allIds: [], byId: {} }
+        }
+      };
+    }),
 
     communities: computed(
       ({ entities }) => entities.communities as EntityRecord<ICommunity>
