@@ -7,7 +7,7 @@ import React, { memo, useMemo } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
 import Modal from '@components/Modal/Modal';
-import { ModalScreen } from '@store/Modal.store';
+import { ModalScreen } from '@components/Modal/Modal.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';
 import Applicant from './ApplicantCard.store';

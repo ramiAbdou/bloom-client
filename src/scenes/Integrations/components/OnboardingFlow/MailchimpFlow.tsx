@@ -6,7 +6,7 @@
 import React, { useEffect, useMemo } from 'react';
 
 import Modal from '@components/Modal/Modal';
-import { ModalScreen } from '@store/Modal.store';
+import { ModalScreen } from '@components/Modal/Modal.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 export default () => {

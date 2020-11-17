@@ -10,7 +10,7 @@ import './Picker.scss';
 import React from 'react';
 
 import Separator from '@components/Misc/Separator';
-import { PickerAction } from '@store/Picker.store';
+import { PickerAction } from '@components/Picker/Picker.store';
 import { useStoreActions } from '@store/Store';
 
 export default ({ onClick, separator, text }: PickerAction) => {

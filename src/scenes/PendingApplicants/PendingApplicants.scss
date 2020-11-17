@@ -87,7 +87,7 @@ $PREF: 's-applicants';
 .#{$PREF}-card-question--choice > p:last-of-type {
   background-color: rgba($color: $primary-hex, $alpha: 0.1);
   border-radius: $md;
-  padding: $xxs 12px;
+  padding: $xxs $xs;
   width: fit-content;
 }
 

@@ -13,7 +13,7 @@ import { createPortal } from 'react-dom';
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
 import { useStoreState } from '@store/Store';
-import { ANIMATION_DURATION, ToastOptions } from '@store/Toast.store';
+import { ANIMATION_DURATION, ToastOptions } from '@components/Toast/Toast.store';
 import CSSModifier from '@util/CSSModifier';
 
 const Toast = ({ isError, message }: ToastOptions) => {

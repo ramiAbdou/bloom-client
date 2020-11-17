@@ -9,9 +9,9 @@ import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
 
-import { PickerAction } from '@store/Picker.store';
+import { PickerAction } from '@components/Picker/Picker.store';
+import { LOGOUT } from '@scenes/Home/Home.gql';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { LOGOUT } from '@store/User.gql';
 
 const PictureContainer = () => {
   const pictureURL = useStoreState(({ user }) => user.pictureURL);

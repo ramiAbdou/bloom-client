@@ -15,10 +15,11 @@ import Cookie from 'js-cookie';
 import merge from 'lodash/merge';
 import { Schema } from 'normalizr';
 
+import { LoaderModel, loaderModel } from '@components/Loader/Loader.store';
+import { ModalModel, modalModel } from '@components/Modal/Modal.store';
+import { PickerModel, pickerModel } from '@components/Picker/Picker.store';
+import { ToastModel, toastModel } from '@components/Toast/Toast.store';
 import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
-import { LoaderModel, loaderModel } from './Loader.store';
-import { ModalModel, modalModel } from './Modal.store';
-import { PickerModel, pickerModel } from './Picker.store';
 import {
   Entity,
   EntityRecord,
@@ -30,7 +31,6 @@ import {
   IUser
 } from './schema';
 import { ScreenModel, screenModel } from './Screen.store';
-import { ToastModel, toastModel } from './Toast.store';
 
 type UpdateEntitiesArgs = {
   data?: any;
