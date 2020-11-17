@@ -45,7 +45,6 @@ $PREF: 'c-picker';
   width: 100%;
 
   @include PRIMARY_HOVER;
-  @include PRIMARY_ACTIVE;
 
   &:last-of-type { margin-bottom: 0; }
 }

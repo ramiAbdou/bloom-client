@@ -36,6 +36,7 @@ $PREF: 'c-btn';
   padding: $xs $sm;
 
   &--disabled { @extend .#{$PREF}-disabled; background-color: $gray-5; }
+  &--green { background-color: $green !important; }
 }
 
 // ## OUTLINE BUTTON
@@ -47,6 +48,7 @@ $PREF: 'c-btn';
   padding: $xs $sm;
 
   &--disabled { @extend .#{$PREF}-disabled; border: none; }
+  &--green { border: 1px $green solid !important; color: $green !important; }
 }
 
 // ## UNDERLINE BUTTON

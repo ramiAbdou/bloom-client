@@ -10,6 +10,7 @@ export type ButtonProps = {
   href?: string;
   fill?: boolean;
   isLoading?: boolean;
+  green?: boolean;
   loadingText?: string;
   large?: boolean;
   onClick?: VoidFunction;

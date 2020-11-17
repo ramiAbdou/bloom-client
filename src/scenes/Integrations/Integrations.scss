@@ -1,0 +1,32 @@
+@import 'src/index.scss';
+
+$PREF: 's-integrations';
+
+// ## INTEGRATIONS
+
+// ## INTEGRATION CARD CONTAINER
+
+.#{$PREF}-card-ctr {
+  @extend %flex-ac;
+  @extend %flex-w;
+};
+
+// ## INTEGRATION CARD
+
+.#{$PREF}-card {
+  @extend .card;
+
+  background-color: white;
+  margin-bottom: $md;
+  margin-right: $md;
+  width: $xxl * 5;
+}
+
+.#{$PREF}-card > img {
+  border-radius: $xs;
+  height: $xxl;
+  margin-bottom: $sm;
+  width: $xxl;
+}
+.#{$PREF}-card > h3 { margin-bottom: $xs; }
+.#{$PREF}-card > p { margin-bottom: $sm; }

@@ -28,15 +28,11 @@ $PREF: 's-applicants';
 // ## CARD
 
 .#{$PREF}-card {
-  @extend %flex-col;
+  @extend .card;
   @extend %flex-sb;
-  @extend .shadow-1;
 
-  background-color: white;
-  border-radius: $xs;
   grid-column-end: span 6;
-  height: min-content;
-  padding: 12px 12px $md $sm;
+  height: fit-content;
 
   &:last-of-type { margin-bottom: $lg; }
 };

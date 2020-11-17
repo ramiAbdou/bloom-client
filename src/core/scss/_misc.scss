@@ -78,10 +78,8 @@
     &:hover { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
   }
 }
-@mixin PRIMARY_ACTIVE {
-  &:active { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
-}
 
+// This back arrow if most often used in a Flow component.
 .back-arrow {
   border-radius: 50%;
   cursor: pointer;
@@ -90,4 +88,13 @@
   width: 26px;
 
   @include PRIMARY_HOVER;
+}
+
+.card {
+  @extend %flex-col;
+  @extend .shadow-1;
+
+  background-color: white;
+  border-radius: $sm;
+  padding: 12px 12px $md $sm;
 }

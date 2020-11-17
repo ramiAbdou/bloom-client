@@ -18,17 +18,16 @@ const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
   </motion.div>
 );
 
-export interface PrimaryButtonProps extends ButtonProps, ButtonLoadingProps {}
-
 export default ({
   className,
   disabled,
+  green,
   isLoading,
   loadingText,
   onClick,
   title,
   ...props
-}: PrimaryButtonProps) => {
+}: ButtonProps) => {
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
@@ -44,6 +43,7 @@ export default ({
   const { css } = new CSSModifier()
     .class('c-btn-primary')
     .class(className)
+    .addClass(!!green, 'c-btn-primary--green')
     .addClass(disabled, 'c-btn-primary--disabled');
 
   return (
