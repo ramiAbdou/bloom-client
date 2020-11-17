@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 import { MessageProps } from '@constants';
-import { error } from './images';
+import error from './images/error.svg';
 
 interface ErrorMessageProps extends MessageProps {
   marginBottom?: number;

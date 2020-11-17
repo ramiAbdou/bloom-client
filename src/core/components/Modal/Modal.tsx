@@ -14,7 +14,7 @@ import React, { memo } from 'react';
 import { IsShowingProps } from '@constants';
 import { useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
-import FlowContainer from './ModalContainer';
+import ModalContainer from './components/ModalContainer';
 
 const CurrentScreen = () => {
   const currentScreen = useStoreState(({ modal }) => modal.currentScreen);
@@ -37,9 +37,9 @@ const CurrentScreen = () => {
 export default memo(({ isShowing }: IsShowingProps) => (
   <AnimatePresence>
     {isShowing && (
-      <FlowContainer>
+      <ModalContainer>
         <CurrentScreen />
-      </FlowContainer>
+      </ModalContainer>
     )}
   </AnimatePresence>
 ));

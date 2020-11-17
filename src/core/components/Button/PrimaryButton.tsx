@@ -8,8 +8,7 @@ import React, { useEffect, useState } from 'react';
 
 import CSSModifier from '@util/CSSModifier';
 import Spinner from '../Loader/Spinner';
-import Button from './Button';
-import { ButtonLoadingProps, ButtonProps } from './Button.types';
+import Button, { ButtonLoadingProps, ButtonProps } from './Button';
 
 const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
   <motion.div className="c-btn-loading">
