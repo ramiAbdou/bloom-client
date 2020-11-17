@@ -22,7 +22,7 @@ $PREF: 'c-picker';
 }
 
 .#{$PREF}-content {
-  @extend %flex-col;
+  @extend .flex-col;
   @extend .shadow-2;
 
   background-color: white;

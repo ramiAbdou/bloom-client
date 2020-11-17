@@ -13,7 +13,7 @@ $PREF: 's-applicants';
   width: fit-content;
 }
 
-.#{$PREF}-actions { @extend %flex-ac; margin-bottom: $sm; }
+.#{$PREF}-actions { @extend .flex-ac; margin-bottom: $sm; }
 .#{$PREF}-actions > button { margin-right: $xs; }
 
 // ## CARD CONTAINER
@@ -29,7 +29,7 @@ $PREF: 's-applicants';
 
 .#{$PREF}-card {
   @extend .card;
-  @extend %flex-sb;
+  @extend .flex-sb;
 
   grid-column-end: span 6;
   height: fit-content;
@@ -41,7 +41,7 @@ $PREF: 's-applicants';
 
 // ## CARD HEADER
 
-.#{$PREF}-card-header { @extend %flex-acsb; margin-bottom: $sm; }
+.#{$PREF}-card-header { @extend .flex-acsb; padding-bottom: $sm; }
 
 .#{$PREF}-card-header > div > p {
   @extend .meta;
@@ -50,7 +50,7 @@ $PREF: 's-applicants';
   margin-bottom: $xxs;
 }
 
-.#{$PREF}-card-header > div:last-of-type { @extend %flex-ac; }
+.#{$PREF}-card-header > div:last-of-type { @extend .flex-ac; }
 
 // ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
 
@@ -103,7 +103,7 @@ div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
 }
 
 .#{$PREF}-expanded-header {
-  @extend %flex-acsb;
+  @extend .flex-acsb;
 
   background-color: white;
   position: sticky;

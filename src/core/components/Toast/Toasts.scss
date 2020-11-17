@@ -3,7 +3,7 @@
 $PREF: 'c-toast';
 
 .#{$PREF}-ctr {
-  @extend %flex-accol;
+  @extend .flex-accol;
 
   left: 50%;
   position: fixed;
@@ -15,7 +15,7 @@ $PREF: 'c-toast';
 
 .#{$PREF} {
   @extend .shadow-1;
-  @extend %flex-ac;
+  @extend .flex-ac;
 
   background-color: $primary;
   border-radius: $xl;

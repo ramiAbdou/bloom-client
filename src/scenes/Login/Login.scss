@@ -3,14 +3,14 @@
 $PREF: 's-login';
 
 .#{$PREF}-ctr {
-  @extend %flex-acccol;
+  @extend .flex-acccol;
   @extend .fill;
 
   @include TD { margin-bottom: $xxl; }
 }
 
 .#{$PREF}-card {
-  @extend %flex-col;
+  @extend .flex-col;
 
   background-color: white;
   border: 1px $gray-5 solid;
@@ -22,7 +22,7 @@ $PREF: 's-login';
   @include M { box-sizing: border-box; width: 90%; }
 }
 
-.#{$PREF}-header { @extend %flex-acsb; }
+.#{$PREF}-header { @extend .flex-acsb; }
 .#{$PREF}-header > div { margin-bottom: $lg; }
 .#{$PREF}-header > div > h3 { @extend .meta; }
 .#{$PREF}-header > img {
@@ -36,7 +36,7 @@ $PREF: 's-login';
 // ## GOOGLE BUTTON
 
 .#{$PREF}-google { margin-bottom: $md; &--sm { margin-bottom: $sm; } }
-.#{$PREF}-google > button { @extend %flex-acc; border: 1px $gray-5 solid; }
+.#{$PREF}-google > button { @extend .flex-acc; border: 1px $gray-5 solid; }
 .#{$PREF}-google > button:hover {
   background-color: rgba($color: $gray-6, $alpha: 0.35);
 }
@@ -54,10 +54,10 @@ $PREF: 's-login';
 
 // ## CONFIRMATION SCREEN
 
-.#{$PREF}-confirmation { @extend %flex-accol; }
+.#{$PREF}-confirmation { @extend .flex-accol; }
 .#{$PREF}-confirmation > p { width: 100%; }
 .#{$PREF}-confirmation-header {
-  @extend %flex-ac;
+  @extend .flex-ac;
   @extend .fill;
 
   margin-bottom: $sm;

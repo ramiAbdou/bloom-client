@@ -7,8 +7,8 @@ $PREF: 's-integrations';
 // ## INTEGRATION CARD CONTAINER
 
 .#{$PREF}-card-ctr {
-  @extend %flex-ac;
-  @extend %flex-w;
+  @extend .flex-ac;
+  @extend .flex-w;
 };
 
 // ## INTEGRATION COMPANY ICON
@@ -42,6 +42,8 @@ $PREF: 's-integrations';
 .#{$PREF}-card > h3 { margin-bottom: $xs; }
 .#{$PREF}-card > p { margin-bottom: $sm; }
 
-// ## ONBOARDING FLOW
+// ## ONBOARDING MODAL
 
 .#{$PREF}-form-item { margin: $md 0 $xl 0; }
+.#{$PREF}-action-ctr { @extend .flex-ac; }
+.#{$PREF}-action-ctr > button:first-of-type { margin-right: $xs; }

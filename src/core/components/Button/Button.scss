@@ -7,11 +7,10 @@ $PREF: 'c-btn';
 
 .#{$PREF} {
   @extend .btn-txt;
-  @extend %flex-acc;
+  @extend .flex-acc;
   
 
   border-radius: $xxs;
-  padding: $xs $sm;
 
   @include HOVER { opacity: 0.8; }
 
@@ -19,10 +18,10 @@ $PREF: 'c-btn';
   &--lg { height: $xl; }
 }
 
-.#{$PREF}-loading { @extend %flex-acc; cursor: default; }
+.#{$PREF}-loading { @extend .flex-acc; cursor: default; }
 .#{$PREF}-loading > p {
   @extend .btn-txt;
-  @extend %flex-acc;
+  @extend .flex-acc;
 
   color: $gray-3;
   margin-right: $sm;
@@ -41,6 +40,7 @@ $PREF: 'c-btn';
   background-color: $primary;
   border: 1px $primary solid;
   color: $gray-6;
+  padding: $xs $sm;
 
   &--disabled {
     @extend .#{$PREF}-disabled;
@@ -58,6 +58,7 @@ $PREF: 'c-btn';
   background-color: inherit;
   border: 1px $primary solid;
   color: $primary;
+  padding: $xs $sm;
 
   &--disabled { @extend .#{$PREF}-disabled; border: none; }
   &--green { border: 1px $green solid !important; color: $green !important; }
@@ -67,6 +68,7 @@ $PREF: 'c-btn';
 
 .#{$PREF}-underline {
   color: $primary;
+  padding: $xs $sm;
   text-decoration: underline;
   
   @include HOVER {

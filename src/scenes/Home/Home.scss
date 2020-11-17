@@ -19,7 +19,7 @@ $PREF: 's-home';
 }
 
 .#{$PREF}-nav {
-  @extend %flex;
+  @extend .flex;
   @extend .shadow-1;
 
   grid-column: 1 / 5;
@@ -30,7 +30,7 @@ $PREF: 's-home';
 }
 
 // Makes the header consistent across each page. Mainly for loading purposes.
-.#{$PREF}-header, .#{$PREF}-header > div { @extend %flex-acsb; }
+.#{$PREF}-header, .#{$PREF}-header > div { @extend .flex-acsb; }
 .#{$PREF}-header {
   background-color: $gray-6;
   padding-bottom: $md;

@@ -31,7 +31,7 @@ $PREF: 'c-modal';
 .#{$PREF}-ctr { max-height: inherit; }
 
 .#{$PREF}-header {
-  @extend %flex-acsb;
+  @extend .flex-acsb;
   @extend .fill;
 
   background-color: white;
@@ -42,7 +42,7 @@ $PREF: 'c-modal';
 }
 
 .#{$PREF}__hdr-btn--back {
-  @extend %flex-acc; // Needed to center the image within the button container.
+  @extend .flex-acc; // Needed to center the image within the button container.
 
   border-radius: 50%;
   height: min-content;
@@ -62,5 +62,5 @@ $PREF: 'c-modal';
 
 // ## CONFIRMATION MODAL
 
-.#{$PREF}--confirmation-action-ctr { @extend %flex-ac; }
+.#{$PREF}--confirmation-action-ctr { @extend .flex-ac; }
 .#{$PREF}--confirmation-action-ctr > button:first-of-type { margin-right: $xs; }

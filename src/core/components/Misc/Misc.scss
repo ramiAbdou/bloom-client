@@ -6,7 +6,7 @@ $PREF: 'c-misc';
 .#{$PREF}-sep { border-bottom: 1px $gray-5 solid; width: 100%; }
 
 // ERROR MESSAGE. Has an icon and some text.
-.#{$PREF}-error { @extend %flex; margin-top: $sm; }
+.#{$PREF}-error { @extend .flex; margin-top: $sm; }
 .#{$PREF}-error > p {
   @extend .body--2;
 

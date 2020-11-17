@@ -5,7 +5,7 @@ $PREF: 's-home-sidebar';
 // ## SIDEBAR
 
 .#{$PREF} {
-  @extend %flex-col;
+  @extend .flex-col;
 
   background-color: white;
   border-right: none;
@@ -31,7 +31,7 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-link {
-  @extend %flex-ac;
+  @extend .flex-ac;
 
   background-clip: padding-box;
   border-left: 3px white solid;
@@ -80,7 +80,7 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-action {
-  @extend %flex-ac;
+  @extend .flex-ac;
 
   border-radius: $sm;
   margin: $sm;
@@ -95,7 +95,7 @@ $PREF: 's-home-sidebar';
 .#{$PREF} > div:last-of-type { border-top: 1px $gray-5 solid; }
 
 .#{$PREF}-profile {
-  @extend %flex-acsb;
+  @extend .flex-acsb;
 
   box-sizing: border-box;
   margin: $xs 0;
@@ -113,7 +113,7 @@ $PREF: 's-home-sidebar';
 }
 
 h3.#{$PREF}-profile__picture {
-  @extend %flex-acc;
+  @extend .flex-acc;
 
   background-color: $primary;
   border-radius: 50%;
@@ -122,9 +122,9 @@ h3.#{$PREF}-profile__picture {
   width: $xl;
 }
 
-.#{$PREF}-profile > div { @extend %flex-ac; }
+.#{$PREF}-profile > div { @extend .flex-ac; }
 
-.#{$PREF}-profile > div > div { @extend %flex-col; align-items: flex-start; }
+.#{$PREF}-profile > div > div { @extend .flex-col; align-items: flex-start; }
 
 .#{$PREF}-profile > div > div > p:last-of-type {
   @extend .meta;

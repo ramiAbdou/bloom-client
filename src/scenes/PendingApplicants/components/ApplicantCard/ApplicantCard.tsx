@@ -7,7 +7,6 @@ import React, { memo, useMemo } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
 import Modal from '@components/Modal/Modal';
-import { CustomModalScreen } from '@components/Modal/Modal.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';
 import Applicant from './ApplicantCard.store';
@@ -41,10 +40,7 @@ const ExpandButton = memo(() => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () => {
-    const screens: CustomModalScreen[] = [{ node: <ExpandedCard /> }];
-    showModal({ id: MODAL_ID, screens, type: 'CUSTOM' });
-  };
+  const onClick = () => showModal({ id: MODAL_ID });
 
   const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
     isShowing,
@@ -53,7 +49,10 @@ const ExpandButton = memo(() => {
 
   return (
     <>
-      <Modal isShowing={shouldShowModal} />
+      <Modal isShowing={shouldShowModal}>
+        <ExpandedCard />
+      </Modal>
+
       <UnderlineButton title="See Full Application" onClick={onClick} />
     </>
   );

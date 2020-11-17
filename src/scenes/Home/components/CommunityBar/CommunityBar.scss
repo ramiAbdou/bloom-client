@@ -3,7 +3,7 @@
 $PREF: 's-home-cbar';
 
 .#{$PREF} {
-  @extend %flex-accol;
+  @extend .flex-accol;
 
   background-color: white;
   border-right: 1px $gray-5 solid;
@@ -15,7 +15,7 @@ $PREF: 's-home-cbar';
 
 // ## COMMUNITY ICON CONTAINER
 
-.#{$PREF} > div { @extend %flex-ac; }
+.#{$PREF} > div { @extend .flex-ac; }
 
 // ## COMMUNITY ICON
 

@@ -59,6 +59,7 @@ const model: FormModel = {
       value: parseValue(value)
     }))
   ),
+
   getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
     items.find((item) => item.category === category || item.title === title)
   ),
@@ -73,6 +74,7 @@ const model: FormModel = {
   ),
 
   itemCSS: null,
+
   items: [],
 
   /**

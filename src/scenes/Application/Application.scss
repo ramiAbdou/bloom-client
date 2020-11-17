@@ -27,7 +27,7 @@ $PREF: 's-signup';
 // ## CONFIRMATION SCREEN
 
 .#{$PREF}-confirmation-ctr {
-  @extend %flex-acccol;
+  @extend .flex-acccol;
 
   height: 100%;
   margin-bottom: $xxl * 2;
@@ -35,7 +35,7 @@ $PREF: 's-signup';
 }
 
 .#{$PREF}-confirmation {
-  @extend %flex-acccol;
+  @extend .flex-acccol;
 
   background-color: white;
   border: 1px $gray-5 solid;
@@ -55,7 +55,7 @@ $PREF: 's-signup';
 // ## CONFIRMATION SCREEN (HEADER)
 
 .#{$PREF}-confirmation-header {
-  @extend %flex-ac;
+  @extend .flex-ac;
   @extend .fill;
 
   margin-bottom: $sm;

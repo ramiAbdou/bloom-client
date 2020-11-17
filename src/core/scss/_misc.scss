@@ -91,7 +91,7 @@
 }
 
 .card {
-  @extend %flex-col;
+  @extend .flex-col;
   @extend .shadow-1;
 
   background-color: white;
