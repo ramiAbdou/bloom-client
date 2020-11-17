@@ -27,11 +27,11 @@ export default ({ name, description, href }: IntegrationCardProps) => {
 
   return (
     <div className="s-integrations-card">
-      <img alt="Integration Logo" src={logo} />
+      <img alt="Integration Logo" className="s-integrations-icon" src={logo} />
       <h3>{name}</h3>
       <p>{description}</p>
 
-      <OutlineButton green href={href} title="Connect +" />
+      <OutlineButton href={href} title="Connect +" />
     </div>
   );
 };

@@ -11,6 +11,23 @@ $PREF: 's-integrations';
   @extend %flex-w;
 };
 
+// ## INTEGRATION COMPANY ICON
+
+.#{$PREF}-icon {
+  border-radius: $xs;
+  height: $xxl;
+  margin-bottom: $sm;
+  width: $xxl;
+
+  &--lg {
+    @extend .#{$PREF}-icon;
+
+    height: $xxl + $xs;
+    margin-bottom: $xs;
+    width: $xxl + $xs;
+  }
+}
+
 // ## INTEGRATION CARD
 
 .#{$PREF}-card {
@@ -22,11 +39,9 @@ $PREF: 's-integrations';
   width: $xxl * 5;
 }
 
-.#{$PREF}-card > img {
-  border-radius: $xs;
-  height: $xxl;
-  margin-bottom: $sm;
-  width: $xxl;
-}
 .#{$PREF}-card > h3 { margin-bottom: $xs; }
 .#{$PREF}-card > p { margin-bottom: $sm; }
+
+// ## ONBOARDING FLOW
+
+.#{$PREF}-form-item { margin: $md 0 $xl 0; }

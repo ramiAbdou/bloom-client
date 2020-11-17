@@ -8,8 +8,10 @@ $PREF: 'c-btn';
 .#{$PREF} {
   @extend .btn-txt;
   @extend %flex-acc;
+  
 
   border-radius: $xxs;
+  padding: $xs $sm;
 
   @include HOVER { opacity: 0.8; }
 
@@ -26,16 +28,27 @@ $PREF: 'c-btn';
   margin-right: $sm;
 }
 
-.#{$PREF}-disabled { color: $gray-3 !important; cursor: not-allowed; }
+.#{$PREF}-disabled {
+  color: $gray-3 !important;
+  cursor: not-allowed;
+
+  @include HOVER { opacity: 1; }
+}
 
 // ## PRIMARY BUTTON
 
 .#{$PREF}-primary {
   background-color: $primary;
+  border: 1px $primary solid;
   color: $gray-6;
-  padding: $xs $sm;
 
-  &--disabled { @extend .#{$PREF}-disabled; background-color: $gray-5; }
+  &--disabled {
+    @extend .#{$PREF}-disabled;
+
+    background-color: $gray-5;
+    border: 1px $gray-5 solid;
+  }
+  
   &--green { background-color: $green !important; }
 }
 
@@ -45,7 +58,6 @@ $PREF: 'c-btn';
   background-color: inherit;
   border: 1px $primary solid;
   color: $primary;
-  padding: $xs $sm;
 
   &--disabled { @extend .#{$PREF}-disabled; border: none; }
   &--green { border: 1px $green solid !important; color: $green !important; }
@@ -55,7 +67,6 @@ $PREF: 'c-btn';
 
 .#{$PREF}-underline {
   color: $primary;
-  padding: $xs $sm;
   text-decoration: underline;
   
   @include HOVER {

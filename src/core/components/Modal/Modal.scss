@@ -17,7 +17,6 @@ $PREF: 'c-modal';
   height: fit-content;
   left: calc(-50vw + 50%);
   margin: auto;
-  min-height: $xxl * 5;
   overflow: scroll;
   position: absolute;
   right: calc(-50vw + 50%);
@@ -60,3 +59,8 @@ $PREF: 'c-modal';
 }
 
 .#{$PREF}__hdr-btn--back__img { height: 20px; padding: 0; width: 20px; }
+
+// ## CONFIRMATION MODAL
+
+.#{$PREF}--confirmation-action-ctr { @extend %flex-ac; }
+.#{$PREF}--confirmation-action-ctr > button:first-of-type { margin-right: $xs; }

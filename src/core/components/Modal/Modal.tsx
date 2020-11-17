@@ -1,5 +1,5 @@
 /**
- * @fileoverview Component: Flow
+ * @fileoverview Component: Modal
  * - Represents a user flow in which they use multiple screens to execute
  * something. Example: When a user wants to edit a prompt answer, a Flow
  * would open with multiple screens.
@@ -9,36 +9,29 @@
 import './Modal.scss';
 
 import { AnimatePresence } from 'framer-motion';
-import React, { memo } from 'react';
+import React, { memo, ReactNode } from 'react';
 
 import { IsShowingProps } from '@constants';
 import { useStoreState } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
+import ConfirmationModal from './components/ConfirmationModal/ConfirmationModal';
+import CurrentScreen from './components/CustomModal/CurrentScreen';
 import ModalContainer from './components/ModalContainer';
 
-const CurrentScreen = () => {
-  const currentScreen = useStoreState(({ modal }) => modal.currentScreen);
-  const screens = useStoreState(({ modal }) => modal.screens);
-  if (!screens.length) return null;
+const Content = () => {
+  const type = useStoreState(({ modal }) => modal.type);
+  let body: ReactNode = null;
 
-  // If there are any screens, display the current screen.
-  const { node } = screens[currentScreen];
-  const { css } = new CSSModifier().class('c-modal-content');
+  if (type === 'CONFIRMATION') body = <ConfirmationModal />;
+  if (type === 'CUSTOM') body = <CurrentScreen />;
 
-  return (
-    <div className="c-modal-ctr">
-      <div className={css}>{node}</div>
-    </div>
-  );
+  return <div className="c-modal-content">{body}</div>;
 };
-
-// -----------------------------------------------------------------------------
 
 export default memo(({ isShowing }: IsShowingProps) => (
   <AnimatePresence>
     {isShowing && (
       <ModalContainer>
-        <CurrentScreen />
+        <Content />
       </ModalContainer>
     )}
   </AnimatePresence>
