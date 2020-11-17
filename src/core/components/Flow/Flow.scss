@@ -14,8 +14,10 @@ $PREF: 'c-flow';
   background-color: white;
   bottom: calc(-50vh + 50%);
   box-sizing: border-box;
+  height: fit-content;
   left: calc(-50vw + 50%);
   margin: auto;
+  min-height: $xxl * 5;
   overflow: scroll;
   position: absolute;
   right: calc(-50vw + 50%);
@@ -26,24 +28,16 @@ $PREF: 'c-flow';
   @include TD { border-radius: $xs; max-height: 90vh; width: 550px; }
 }
 
-.#{$PREF}-content {
-  max-height: inherit;
-  padding: $md;
-
-  &--custom { padding: 0; }
-}
-
+.#{$PREF}-content { max-height: inherit; padding: $md; }
 .#{$PREF}-ctr { max-height: inherit; }
 
-.#{$PREF}__hdr {
+.#{$PREF}-header {
   @extend %flex-acsb;
   @extend .fill;
 
   background-color: white;
   height: $lg;
   left: 0;
-  padding-left: 20px;
-  padding-right: 20px;
   position: sticky;
   top: 0;
 }

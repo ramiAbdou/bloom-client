@@ -38,11 +38,16 @@ export type ICommunity = {
   autoAccept?: boolean;
   encodedUrlName: string;
   id: string;
+  integrations: EntityID;
   logoUrl: string;
   members: EntityID[];
   name: string;
   pendingApplicants: EntityID[];
   primaryColor: string;
+};
+
+export type ICommunityIntegrations = {
+  mailchimpListId?: string;
 };
 
 export type IMember = {

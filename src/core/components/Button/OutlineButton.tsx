@@ -25,7 +25,8 @@ export default ({
   isLoading,
   loadingText,
   onClick,
-  title
+  title,
+  ...props
 }: ButtonProps) => {
   const [showLoadingState, setShowLoadingState] = useState(false);
 
@@ -48,6 +49,7 @@ export default ({
       className={css}
       disabled={disabled}
       onClick={() => !isLoading && onClick()}
+      {...props}
     >
       {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}
     </Button>

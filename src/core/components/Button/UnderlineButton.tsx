@@ -18,15 +18,14 @@ const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
   </motion.div>
 );
 
-export interface UnderlineButtonProps extends ButtonProps, ButtonLoadingProps {}
-
 export default ({
   className,
   isLoading,
   loadingText,
   onClick,
-  title
-}: UnderlineButtonProps) => {
+  title,
+  ...props
+}: ButtonProps) => {
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
@@ -40,7 +39,7 @@ export default ({
   const { css } = new CSSModifier().class('c-btn-underline').class(className);
 
   return (
-    <Button className={css} onClick={() => !isLoading && onClick()}>
+    <Button className={css} onClick={() => !isLoading && onClick()} {...props}>
       {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}
     </Button>
   );

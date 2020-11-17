@@ -14,7 +14,14 @@ export const GET_USER = query({
     {
       memberships: [
         {
-          community: ['id', 'encodedUrlName', 'name', 'logoUrl', 'primaryColor']
+          community: [
+            'id',
+            'encodedUrlName',
+            'name',
+            'logoUrl',
+            'primaryColor',
+            { integrations: ['mailchimpListId'] }
+          ]
         },
         'id',
         'role',

@@ -98,7 +98,6 @@ div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
 .#{$PREF}-expanded {
   box-sizing: border-box;
   max-height: inherit;
-  padding: 0 $md $md $md;
   
   &::-webkit-scrollbar { display: none; }
 }
@@ -107,9 +106,8 @@ div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
   @extend %flex-acsb;
 
   background-color: white;
-  padding: $md 0;
   position: sticky;
-  top: 0;
+  top: $md;
   z-index: 2;
 }
 

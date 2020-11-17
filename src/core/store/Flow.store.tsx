@@ -13,7 +13,7 @@ type FlowScreenHeader = {
 };
 
 export type FlowScreen = {
-  node: React.ReactNode;
+  node?: React.ReactNode;
   header?: FlowScreenHeader;
   separator?: boolean;
 };

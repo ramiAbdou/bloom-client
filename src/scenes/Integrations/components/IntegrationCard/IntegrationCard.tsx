@@ -11,7 +11,11 @@ import stripe from '../../images/stripe.png';
 import zapier from '../../images/zapier.png';
 import zoom from '../../images/zoom.svg';
 
-type IntegrationCardProps = { name: string; description: string; href: string };
+export type IntegrationCardProps = {
+  name: string;
+  description: string;
+  href: string;
+};
 
 export default ({ name, description, href }: IntegrationCardProps) => {
   let logo: any;
