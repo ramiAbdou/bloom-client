@@ -5,26 +5,28 @@
 
 import React, { useEffect, useMemo } from 'react';
 
-import Flow from '@components/Flow/Flow';
-import { FlowScreen } from '@store/Flow.store';
+import Modal from '@components/Modal/Modal';
+import { ModalScreen } from '@store/Modal.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 export default () => {
   const FLOW_ID = 'MAILCHIMP-FLOW';
 
-  const id = useStoreState(({ flow }) => flow.id);
-  const isShowing = useStoreState(({ flow }) => flow.isShowing);
-  const showFlow = useStoreActions(({ flow }) => flow.showFlow);
+  const id = useStoreState(({ modal }) => modal.id);
+  const isShowing = useStoreState(({ modal }) => modal.isShowing);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   useEffect(() => {
-    const screens: FlowScreen[] = [{ node: <h1>Integrate with Mailchimp</h1> }];
-    showFlow({ id: FLOW_ID, screens });
+    const screens: ModalScreen[] = [
+      { node: <h1>Integrate with Mailchimp</h1> }
+    ];
+    showModal({ id: FLOW_ID, screens });
   }, []);
 
-  const shouldShowFlow = useMemo(() => isShowing && FLOW_ID === id, [
+  const shouldShowModal = useMemo(() => isShowing && FLOW_ID === id, [
     isShowing,
     id === FLOW_ID
   ]);
 
-  return <Flow isShowing={shouldShowFlow} />;
+  return <Modal isShowing={shouldShowModal} />;
 };

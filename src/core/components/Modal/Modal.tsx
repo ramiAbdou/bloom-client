@@ -6,7 +6,7 @@
  * @author Rami Abdou
  */
 
-import './Flow.scss';
+import './Modal.scss';
 
 import { AnimatePresence } from 'framer-motion';
 import React, { memo } from 'react';
@@ -14,19 +14,19 @@ import React, { memo } from 'react';
 import { IsShowingProps } from '@constants';
 import { useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
-import FlowContainer from './FlowContainer';
+import FlowContainer from './ModalContainer';
 
 const CurrentScreen = () => {
-  const currentScreen = useStoreState(({ flow }) => flow.currentScreen);
-  const screens = useStoreState(({ flow }) => flow.screens);
+  const currentScreen = useStoreState(({ modal }) => modal.currentScreen);
+  const screens = useStoreState(({ modal }) => modal.screens);
   if (!screens.length) return null;
 
   // If there are any screens, display the current screen.
   const { node } = screens[currentScreen];
-  const { css } = new CSSModifier().class('c-flow-content');
+  const { css } = new CSSModifier().class('c-modal-content');
 
   return (
-    <div className="c-flow-ctr">
+    <div className="c-modal-ctr">
       <div className={css}>{node}</div>
     </div>
   );

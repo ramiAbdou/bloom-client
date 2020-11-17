@@ -19,9 +19,9 @@ import Applicant from './ApplicantCard.store';
 
 // In the context of the ExpandedCard, which exits the modal.
 export const BackButton = () => {
-  const closeFlow = useStoreActions(({ flow }) => flow.closeFlow);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   return (
-    <Button onClick={() => closeFlow()}>
+    <Button onClick={() => closeModal()}>
       <IoMdArrowBack className="back-arrow" />
     </Button>
   );

@@ -13,7 +13,7 @@ import { ChildrenProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 export default memo(({ children }: ChildrenProps) => {
-  const closeFlow = useStoreActions(({ flow }) => flow.closeFlow);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
 
   const animate = isMobile ? { x: 0 } : { opacity: 1, scale: 1 };
@@ -22,15 +22,15 @@ export default memo(({ children }: ChildrenProps) => {
 
   // If it is desktop or tablet and click happens outside, close the flow.
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
-  useOnClickOutside(ref, () => closeFlow());
+  useOnClickOutside(ref, () => closeModal());
 
   return (
     <>
       <motion.div
-        key="c-flow-bg"
+        key="c-modal-bg"
         animate={{ opacity: 0.5 }}
         exit={{ opacity: 0 }}
-        id="c-flow-bg"
+        id="c-modal-bg"
         initial={{ opacity: 0 }}
         transition={{ duration: 0.1 }}
       />
@@ -38,7 +38,7 @@ export default memo(({ children }: ChildrenProps) => {
       <motion.div
         ref={ref}
         animate={animate}
-        className="c-flow"
+        className="c-modal"
         exit={exit}
         initial={initial}
         transition={{ duration: 0.2 }}
