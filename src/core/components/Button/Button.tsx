@@ -16,7 +16,7 @@ export type ButtonProps = {
   disabled?: boolean;
   href?: string;
   fill?: boolean;
-  isLoading?: boolean;
+  loading?: boolean;
   green?: boolean;
   loadingText?: string;
   large?: boolean;
@@ -24,7 +24,7 @@ export type ButtonProps = {
   title?: string;
 };
 
-export type ButtonLoadingProps = { isLoading?: boolean; loadingText?: string };
+export type ButtonLoadingProps = { loading?: boolean; loadingText?: string };
 
 interface AbstractButtonProps
   extends ButtonProps,

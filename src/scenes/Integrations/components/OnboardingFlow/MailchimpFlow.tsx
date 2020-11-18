@@ -3,6 +3,7 @@
  * @author Rami Abdou
  */
 
+import { useMutation } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
@@ -12,6 +13,7 @@ import FormContent from '@components/Form/FormContent';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
+import { UPDATE_MAILCHIMP_LIST_ID } from '../../Integrations.gql';
 import Integrations from '../../Integrations.store';
 
 const Content = () => {
@@ -21,7 +23,39 @@ const Content = () => {
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const id = useStoreState(({ modal }) => modal.id);
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const options = useStoreState(
+    ({ integrations }) => integrations?.mailchimpLists ?? []
+  );
   const setFlow = Integrations.useStoreActions((store) => store.setFlow);
+  const items = Form.useStoreState((store) => store.items);
+  const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
+  const submitForm = Form.useStoreState((store) => store.submitForm);
+
+  const mailchimpListName = items.find(
+    (item) => item.title === 'Step 2: Select Audience/List ID'
+  )?.value;
+
+  const [updateMailchimpListId, { loading, error }] = useMutation(
+    UPDATE_MAILCHIMP_LIST_ID
+  );
+
+  useEffect(() => {
+    const option = options.find(({ name }) => name === mailchimpListName);
+    const mailchimpListId = option?.id;
+
+    if (!mailchimpListId) return;
+
+    const onSubmit = async () => {
+      const { error: runtimeError } = await updateMailchimpListId({
+        variables: { mailchimpListId }
+      });
+
+      if (!runtimeError) closeModal();
+    };
+
+    setSubmitForm(onSubmit);
+  }, [mailchimpListName]);
 
   useEffect(() => {
     showModal({ id: FLOW_ID, onClose: () => setFlow(null) });
@@ -31,6 +65,12 @@ const Content = () => {
     isShowing,
     id === FLOW_ID
   ]);
+
+  if (error)
+    showToast({
+      isError: true,
+      message: 'Failed to submit. Please try again soon.'
+    });
 
   return (
     <Modal isShowing={shouldShowModal}>
@@ -44,7 +84,12 @@ const Content = () => {
       <FormContent />
 
       <div className="s-integrations-action-ctr">
-        <PrimaryButton disabled={!isCompleted} title="Finish" />
+        <PrimaryButton
+          disabled={!isCompleted}
+          loading={loading}
+          title="Finish"
+          onClick={() => submitForm()}
+        />
         <OutlineButton title="Cancel" onClick={() => closeModal()} />
       </div>
     </Modal>
@@ -79,7 +124,7 @@ export default () => {
           },
           {
             description: `Choose the Mailchimp Audience/List that you would like new members to automatically be added to upon joining your community.`,
-            options,
+            options: options.map(({ name }) => name),
             required: true,
             title: 'Step 2: Select Audience/List ID',
             type: 'MULTIPLE_CHOICE'

@@ -49,7 +49,7 @@ export type ICommunity = {
 
 export type IIntegrations = {
   isMailchimpAuthenticated: boolean;
-  mailchimpLists: string[];
+  mailchimpLists: { name: string; id: string }[];
   mailchimpListId: string;
 };
 

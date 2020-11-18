@@ -21,7 +21,7 @@ export default ({
   className,
   disabled,
   green,
-  isLoading,
+  loading,
   loadingText,
   onClick,
   title,
@@ -30,12 +30,12 @@ export default ({
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
-    if (!isLoading && showLoadingState) setShowLoadingState(false);
+    if (!loading && showLoadingState) setShowLoadingState(false);
     else
       setTimeout(() => {
-        if (isLoading && !showLoadingState) setShowLoadingState(true);
+        if (loading && !showLoadingState) setShowLoadingState(true);
       }, 100);
-  }, [isLoading, showLoadingState]);
+  }, [loading, showLoadingState]);
 
   disabled = disabled || showLoadingState;
 
@@ -49,7 +49,7 @@ export default ({
     <Button
       className={css}
       disabled={disabled}
-      onClick={() => !disabled && !isLoading && onClick()}
+      onClick={() => !disabled && !loading && onClick()}
       {...props}
     >
       {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}

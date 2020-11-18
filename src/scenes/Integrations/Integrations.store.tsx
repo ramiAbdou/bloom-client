@@ -14,10 +14,7 @@ export type IntegrationsModel = {
 
 const model: IntegrationsModel = {
   flow: null,
-  setFlow: action((state, flow) => {
-    console.log('setFlow', flow);
-    return { ...state, flow };
-  })
+  setFlow: action((state, flow) => ({ ...state, flow }))
 };
 
 export default createContextStore<IntegrationsModel>(model, {

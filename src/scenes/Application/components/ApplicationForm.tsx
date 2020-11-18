@@ -74,7 +74,7 @@ const SubmitButton = () => {
         large
         className="s-signup-submit-btn"
         disabled={!isCompleted}
-        isLoading={loading}
+        loading={loading}
         loadingText="Submitting..."
         title="Submit Application"
         onClick={applyForMembership}
