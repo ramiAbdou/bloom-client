@@ -8,11 +8,11 @@ import { IoIosCheckmarkCircle } from 'react-icons/io';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
-import mailchimp from '../../images/mailchimp.png';
-import stripe from '../../images/stripe.png';
-import zapier from '../../images/zapier.png';
-import zoom from '../../images/zoom.svg';
-import IntegrationsStore, { IntegrationsFlow } from '../../Integrations.store';
+import mailchimp from '../images/mailchimp.png';
+import stripe from '../images/stripe.png';
+import zapier from '../images/zapier.png';
+import zoom from '../images/zoom.svg';
+import IntegrationsStore, { IntegrationsModal } from '../Integrations.store';
 
 export type IntegrationCardProps = {
   completed?: boolean;
@@ -36,12 +36,16 @@ export default ({
   else if (name === 'Zapier') logo = zapier;
 
   // onClick only executes if href isn't populated, per the Button component.
-  const onClick = () => setFlow(name.toUpperCase() as IntegrationsFlow);
+  const onClick = () =>
+    setFlow(`${name.toUpperCase()}_FLOW` as IntegrationsModal);
 
   // If the href is present, the user hasn't authenticated anything. Otherwise,
   // it means the user authenticated (logged in), but didn't finish the
   // respective process (ie: choosing a Mailchimp Audience ID).
   const buttonText = href ? 'Connect +' : 'Finish Connecting +';
+
+  const onSeeDetails = () =>
+    setFlow(`${name.toUpperCase()}_DETAILS` as IntegrationsModal);
 
   return (
     <div className="s-integrations-card">
@@ -63,7 +67,9 @@ export default ({
       <h3>{name}</h3>
       <p>{description}</p>
 
-      {completed && <PrimaryButton green title="See Details" />}
+      {completed && (
+        <PrimaryButton green title="See Details" onClick={onSeeDetails} />
+      )}
 
       {!completed && (
         <OutlineButton href={href} title={buttonText} onClick={onClick} />

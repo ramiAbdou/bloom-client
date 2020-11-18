@@ -5,11 +5,16 @@
 
 import { Action, action, createContextStore } from 'easy-peasy';
 
-export type IntegrationsFlow = 'MAILCHIMP' | 'STRIPE' | 'ZAPIER' | 'ZOOM';
+export type IntegrationsModal =
+  | 'MAILCHIMP_DETAILS'
+  | 'MAILCHIMP_FLOW'
+  | 'STRIPE_FLOW'
+  | 'ZAPIER_FLOW'
+  | 'ZOOM_FLOW';
 
 export type IntegrationsModel = {
-  flow: IntegrationsFlow;
-  setFlow: Action<IntegrationsModel, IntegrationsFlow>;
+  flow: IntegrationsModal;
+  setFlow: Action<IntegrationsModel, IntegrationsModal>;
 };
 
 const model: IntegrationsModel = {
