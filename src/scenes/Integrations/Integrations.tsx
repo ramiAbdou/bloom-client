@@ -107,8 +107,6 @@ export default () => {
   useEffect(() => {
     if (!data?.getIntegrations) return;
 
-    console.log(data);
-
     updateEntities({
       data: { ...data.getIntegrations },
       schema: Community
@@ -119,7 +117,7 @@ export default () => {
     <Integrations.Provider>
       <div className="s-integrations">
         <Header loading={loading} />
-        <Cards />
+        {!loading && <Cards />}
         <OnboardingFlow />
       </div>
     </Integrations.Provider>
