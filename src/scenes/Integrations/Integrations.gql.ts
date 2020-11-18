@@ -5,7 +5,10 @@
 
 import { query } from 'gql-query-builder';
 
-export const GET_MAILCHIMP_LIST_IDS = query({
-  fields: ['id', { integrations: ['mailchimpLists'] }],
+export const GET_INTEGRATIONS = query({
+  fields: [
+    'id',
+    { integrations: ['id', 'isMailchimpAuthenticated', 'mailchimpLists'] }
+  ],
   operation: 'getIntegrations'
 }).query;

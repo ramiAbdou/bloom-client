@@ -25,6 +25,7 @@ import {
   EntityRecord,
   IApplicationQuestion,
   ICommunity,
+  IIntegrations,
   IMember,
   IMembership,
   IPendingApplicant,
@@ -47,6 +48,7 @@ type StoreModel = {
   communities: Computed<StoreModel, EntityRecord<ICommunity>>;
   community: Computed<StoreModel, ICommunity>;
   entities: Record<Entity, EntityRecord>;
+  integrations: Computed<StoreModel, IIntegrations>;
   loader: LoaderModel;
   members: Computed<StoreModel, EntityRecord<IMember>>;
   membership: Computed<StoreModel, IMembership>;
@@ -84,13 +86,14 @@ export const store = createStore<StoreModel>(
       return {
         ...state,
         entities: {
-          applicationQuestions: { activeId: null, allIds: [], byId: {} },
-          applications: { activeId: null, allIds: [], byId: {} },
+          applicationQuestions: { allIds: [], byId: {} },
+          applications: { allIds: [], byId: {} },
           communities: { activeId: null, allIds: [], byId: {} },
-          members: { activeId: null, allIds: [], byId: {} },
+          integrations: { allIds: [], byId: {} },
+          members: { allIds: [], byId: {} },
           memberships: { activeId: null, allIds: [], byId: {} },
-          pendingApplicants: { activeId: null, allIds: [], byId: {} },
-          users: { activeId: null, allIds: [], byId: {} }
+          pendingApplicants: { allIds: [], byId: {} },
+          users: { allIds: [], byId: {} }
         }
       };
     }),
@@ -133,14 +136,20 @@ export const store = createStore<StoreModel>(
     }),
 
     entities: {
-      applicationQuestions: { activeId: null, allIds: [], byId: {} },
-      applications: { activeId: null, allIds: [], byId: {} },
+      applicationQuestions: { allIds: [], byId: {} },
+      applications: { allIds: [], byId: {} },
       communities: { activeId: null, allIds: [], byId: {} },
-      members: { activeId: null, allIds: [], byId: {} },
+      integrations: { allIds: [], byId: {} },
+      members: { allIds: [], byId: {} },
       memberships: { activeId: null, allIds: [], byId: {} },
-      pendingApplicants: { activeId: null, allIds: [], byId: {} },
-      users: { activeId: null, allIds: [], byId: {} }
+      pendingApplicants: { allIds: [], byId: {} },
+      users: { allIds: [], byId: {} }
     },
+
+    integrations: computed(({ community, entities }) => {
+      const { byId } = entities.integrations as EntityRecord<IIntegrations>;
+      return byId[community?.integrations];
+    }),
 
     loader: loaderModel,
 

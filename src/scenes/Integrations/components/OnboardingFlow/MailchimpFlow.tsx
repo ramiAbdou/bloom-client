@@ -3,7 +3,6 @@
  * @author Rami Abdou
  */
 
-import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
@@ -13,10 +12,9 @@ import FormContent from '@components/Form/FormContent';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
-import { GET_MAILCHIMP_LIST_IDS } from '../../Integrations.gql';
 
 const Content = () => {
-  const FLOW_ID = 'MAILCHIMP-FLOW';
+  const FLOW_ID = 'MAILCHIMP_FLOW';
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
@@ -40,7 +38,7 @@ const Content = () => {
         src={mailchimp}
       />
 
-      <h1>Integrate with Mailchimp</h1>
+      <h1 className="s-integrations-title">Integrate with Mailchimp</h1>
       <FormContent />
 
       <div className="s-integrations-action-ctr">
@@ -52,9 +50,15 @@ const Content = () => {
 };
 
 export default () => {
-  const { data, loading, error } = useQuery(GET_MAILCHIMP_LIST_IDS);
-  if (loading || error) return null;
-  const options = data?.getIntegrations?.integrations?.mailchimpLists ?? [];
+  const isMailchimpAuthenticated = useStoreState(
+    ({ integrations }) => integrations?.isMailchimpAuthenticated
+  );
+
+  const options = useStoreState(
+    ({ integrations }) => integrations?.mailchimpLists ?? []
+  );
+
+  if (!options.length) return null;
 
   return (
     <Form.Provider
@@ -62,10 +66,20 @@ export default () => {
         itemCSS: 's-integrations-form-item',
         questions: [
           {
+            completed: isMailchimpAuthenticated,
+            description: `Log in with your Mailchimp account.`,
+            node: !isMailchimpAuthenticated && (
+              <PrimaryButton title="Authorize" />
+            ),
+            required: true,
+            title: 'Step 1: Authorize Your Mailchimp Account',
+            type: 'CUSTOM'
+          },
+          {
             description: `Choose the Mailchimp Audience/List that you would like new members to automatically be added to upon joining your community.`,
             options,
             required: true,
-            title: 'Select Audience/List ID',
+            title: 'Step 2: Select Audience/List ID',
             type: 'MULTIPLE_CHOICE'
           }
         ]

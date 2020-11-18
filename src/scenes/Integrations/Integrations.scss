@@ -44,6 +44,8 @@ $PREF: 's-integrations';
 
 // ## ONBOARDING MODAL
 
-.#{$PREF}-form-item { margin: $md 0 $xl 0; }
+.#{$PREF}-form-item { margin: $xl 0; }
+.#{$PREF}-title { margin-bottom: -$sm; }
+
 .#{$PREF}-action-ctr { @extend .flex-ac; }
 .#{$PREF}-action-ctr > button:first-of-type { margin-right: $xs; }

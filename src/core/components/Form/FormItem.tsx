@@ -29,9 +29,11 @@ const ErrorMessage = ({ message }: MessageProps) => (
 // -----------------------------------------------------------------------------
 
 export default ({
+  completed,
   description,
   errorMessage,
   maxCharacters,
+  node,
   options,
   placeholder,
   required,
@@ -60,9 +62,11 @@ export default ({
 
   return (
     <div className={css}>
-      {!placeholder && <Label required={required} title={title} />}
+      {!placeholder && (
+        <Label completed={completed} required={required} title={title} />
+      )}
       {description && <Description message={description} />}
-      {body}
+      {body ?? node}
       {errorMessage && <ErrorMessage message={errorMessage} />}
     </div>
   );

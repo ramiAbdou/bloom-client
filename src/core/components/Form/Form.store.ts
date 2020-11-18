@@ -68,8 +68,9 @@ const model: FormModel = {
     ({ items }) =>
       items &&
       items.every(
-        ({ required, value, validate }: FormItemData) =>
-          (!required || (required && value)) && (!validate || validate(value))
+        ({ completed, required, value, validate }: FormItemData) =>
+          (!required || !!value || !!completed) &&
+          (!validate || validate(value))
       )
   ),
 

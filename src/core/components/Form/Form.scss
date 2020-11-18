@@ -13,18 +13,20 @@ $PREF: 'c-form';
 // ## LABEL
 
 .#{$PREF}-label { @extend .flex-ae; @extend .flex-sb; width: 100%; }
+.#{$PREF}-label > div > svg { color: $green; margin-right: $xs; }
 
 // Represents the actually label content (AKA title).
-.#{$PREF}-label > p:not(.c-form-label-count) {
+
+.#{$PREF}-label > div { @extend .flex-ac; margin-bottom: $xs; width: 100%; }
+.#{$PREF}-label > div > p {
   @extend .meta;
 
   font-size: 14px;
-  margin-bottom: $xs;
   max-width: 85%;
 }
 
 // Represents the required symbol after the label's title.
-.#{$PREF}-label--required > p:not(.c-form-label-count)::after {
+.#{$PREF}-label--required > div > p::after {
   color: $red;
   content: '*';
   margin-left: $xxs;

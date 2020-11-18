@@ -5,15 +5,28 @@
 
 import './Integrations.scss';
 
-import React from 'react';
+import { useQuery } from 'graphql-hooks';
+import React, { memo, useEffect } from 'react';
 
-import { APP, isProduction } from '@constants';
-import { useStoreState } from '@store/Store';
+import Spinner from '@components/Loader/Spinner';
+import { APP, isProduction, LoadingProps } from '@constants';
+import { Community } from '@store/schema';
+import { useStoreActions, useStoreState } from '@store/Store';
 import URLBuilder from '@util/URLBuilder';
 import IntegrationCard, {
   IntegrationCardProps
 } from './components/IntegrationCard/IntegrationCard';
 import MailchimpFlow from './components/OnboardingFlow/MailchimpFlow';
+import { GET_INTEGRATIONS } from './Integrations.gql';
+
+const Header = memo(({ loading }: LoadingProps) => (
+  <div className="s-home-header">
+    <div>
+      <h1 className="s-home-header-title">Integrations</h1>
+      {loading && <Spinner dark />}
+    </div>
+  </div>
+));
 
 const OnboardingFlow = () => {
   const flow = new URLSearchParams(window.location.search).get('flow');
@@ -23,19 +36,31 @@ const OnboardingFlow = () => {
   return null;
 };
 
-export default () => {
+const Cards = () => {
   const state = useStoreState(({ community }) => community.encodedUrlName);
+
+  const isMailchimpAuthenticated = useStoreState(
+    ({ integrations }) => integrations?.isMailchimpAuthenticated
+  );
+
+  const mailchimpListId = useStoreState(
+    ({ integrations }) => integrations?.mailchimpListId
+  );
+
   const BASE_URI = isProduction ? APP.SERVER_URL : 'http://127.0.0.1:8080';
 
   const integrationData: IntegrationCardProps[] = [
     {
       description: `Quickly add every new member of the community to your Mailchimp
     listserv.`,
-      href: new URLBuilder('https://login.mailchimp.com/oauth2/authorize')
-        .addParam('response_type', 'code')
-        .addParam('client_id', process.env.MAILCHIMP_CLIENT_ID)
-        .addParam('redirect_uri', `${BASE_URI}/mailchimp/auth`)
-        .addParam('state', state).url,
+      href:
+        !isMailchimpAuthenticated &&
+        new URLBuilder('https://login.mailchimp.com/oauth2/authorize')
+          .addParam('response_type', 'code')
+          .addParam('client_id', process.env.MAILCHIMP_CLIENT_ID)
+          .addParam('redirect_uri', `${BASE_URI}/mailchimp/auth`)
+          .addParam('state', state).url,
+      isCompleted: !!mailchimpListId,
       name: 'Mailchimp'
     },
     {
@@ -56,17 +81,31 @@ export default () => {
   ];
 
   return (
+    <div className="s-integrations-card-ctr">
+      {integrationData.map((props: IntegrationCardProps) => (
+        <IntegrationCard key={props.name} {...props} />
+      ))}
+    </div>
+  );
+};
+
+export default () => {
+  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const { data, loading } = useQuery(GET_INTEGRATIONS);
+
+  useEffect(() => {
+    if (!data?.getIntegrations) return;
+
+    updateEntities({
+      data: { ...data.getIntegrations },
+      schema: Community
+    });
+  }, [data]);
+
+  return (
     <div className="s-integrations">
-      <div className="s-home-header">
-        <h1 className="s-home-header-title">Integrations</h1>
-      </div>
-
-      <div className="s-integrations-card-ctr">
-        {integrationData.map((data: IntegrationCardProps) => (
-          <IntegrationCard key={data.name} {...data} />
-        ))}
-      </div>
-
+      <Header loading={loading} />
+      <Cards />
       <OnboardingFlow />
     </div>
   );

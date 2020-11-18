@@ -53,6 +53,7 @@ export type LoginError =
 export type EncodedUrlNameParams = { encodedUrlName: string };
 
 export type QuestionType =
+  | 'CUSTOM'
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
   | 'MULTIPLE_SELECT'
@@ -68,8 +69,10 @@ export type QuestionCategory =
 
 export type FormQuestion = {
   category?: QuestionCategory;
+  completed?: boolean;
   description?: string;
   id?: string;
+  node?: ReactNode;
   required?: boolean;
   options?: string[];
   title: string;

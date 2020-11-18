@@ -15,6 +15,7 @@ export type Entity =
   | 'applicationQuestions'
   | 'applications'
   | 'communities'
+  | 'integrations'
   | 'members'
   | 'memberships'
   | 'pendingApplicants'
@@ -46,8 +47,10 @@ export type ICommunity = {
   primaryColor: string;
 };
 
-export type ICommunityIntegrations = {
-  mailchimpListId?: string;
+export type IIntegrations = {
+  isMailchimpAuthenticated: boolean;
+  mailchimpLists: string[];
+  mailchimpListId: string;
 };
 
 export type IMember = {
@@ -88,6 +91,7 @@ export interface EntityRecord<
   T =
     | IApplicationQuestion
     | ICommunity
+    | IIntegrations
     | IMember
     | IMembership
     | IPendingApplicant
@@ -103,13 +107,13 @@ export const ApplicationQuestion = new schema.Entity(
   {}
 );
 
-export const Member = new schema.Entity('members', {});
+export const Integrations = new schema.Entity('integrations', {});
 
 export const PendingApplicant = new schema.Entity('pendingApplicants', {});
 
 export const Community = new schema.Entity('communities', {
   applicationQuestions: [ApplicationQuestion],
-  members: [Member],
+  integrations: Integrations,
   pendingApplicants: [PendingApplicant]
 });
 
