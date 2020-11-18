@@ -54,6 +54,8 @@ const Cards = () => {
     ({ integrations }) => integrations?.isMailchimpAuthenticated
   );
 
+  console.log(isMailchimpAuthenticated);
+
   const mailchimpListId = useStoreState(
     ({ integrations }) => integrations?.mailchimpListId
   );
