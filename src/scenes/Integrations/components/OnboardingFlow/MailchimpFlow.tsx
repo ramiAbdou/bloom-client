@@ -12,6 +12,7 @@ import FormContent from '@components/Form/FormContent';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
+import Integrations from '../../Integrations.store';
 
 const Content = () => {
   const FLOW_ID = 'MAILCHIMP_FLOW';
@@ -20,9 +21,10 @@ const Content = () => {
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const id = useStoreState(({ modal }) => modal.id);
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
+  const setFlow = Integrations.useStoreActions((store) => store.setFlow);
 
   useEffect(() => {
-    showModal({ id: FLOW_ID });
+    showModal({ id: FLOW_ID, onClose: () => setFlow(null) });
   }, []);
 
   const shouldShowModal = useMemo(() => isShowing && FLOW_ID === id, [

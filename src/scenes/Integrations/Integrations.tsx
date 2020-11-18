@@ -18,6 +18,7 @@ import IntegrationCard, {
 } from './components/IntegrationCard/IntegrationCard';
 import MailchimpFlow from './components/OnboardingFlow/MailchimpFlow';
 import { GET_INTEGRATIONS } from './Integrations.gql';
+import Integrations, { IntegrationsFlow } from './Integrations.store';
 
 const Header = memo(({ loading }: LoadingProps) => (
   <div className="s-home-header">
@@ -29,9 +30,19 @@ const Header = memo(({ loading }: LoadingProps) => (
 ));
 
 const OnboardingFlow = () => {
-  const flow = new URLSearchParams(window.location.search).get('flow');
+  const searchParam = new URLSearchParams(window.location.search).get('flow');
+  const flow = Integrations.useStoreState((store) => store.flow);
+  const setFlow = Integrations.useStoreActions((store) => store.setFlow);
 
-  if (flow === 'mailchimp') return <MailchimpFlow />;
+  useEffect(() => {
+    if (searchParam && searchParam !== flow)
+      setFlow(searchParam.toUpperCase() as IntegrationsFlow);
+  }, []);
+
+  // Flow is showing when the modal isShowing is true and there is a populated
+  // value of the Integrations store flow.
+
+  if (flow === 'MAILCHIMP') return <MailchimpFlow />;
 
   return null;
 };
@@ -103,10 +114,12 @@ export default () => {
   }, [data]);
 
   return (
-    <div className="s-integrations">
-      <Header loading={loading} />
-      <Cards />
-      <OnboardingFlow />
-    </div>
+    <Integrations.Provider>
+      <div className="s-integrations">
+        <Header loading={loading} />
+        <Cards />
+        <OnboardingFlow />
+      </div>
+    </Integrations.Provider>
   );
 };

@@ -6,7 +6,7 @@
  */
 
 import { motion } from 'framer-motion';
-import React, { memo, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps } from '@constants';
@@ -14,6 +14,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 
 export default memo(({ children }: ChildrenProps) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const onClose = useStoreState(({ modal }) => modal.onClose);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
 
   const animate = isMobile ? { x: 0 } : { opacity: 1, scale: 1 };
@@ -23,6 +24,10 @@ export default memo(({ children }: ChildrenProps) => {
   // If it is desktop or tablet and click happens outside, close the flow.
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   useOnClickOutside(ref, () => closeModal());
+
+  useEffect(() => {
+    return () => onClose();
+  }, []);
 
   return (
     <>

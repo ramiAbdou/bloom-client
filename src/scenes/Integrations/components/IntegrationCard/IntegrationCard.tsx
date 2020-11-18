@@ -6,12 +6,11 @@
 import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
-import { useStoreActions } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
 import stripe from '../../images/stripe.png';
 import zapier from '../../images/zapier.png';
 import zoom from '../../images/zoom.svg';
-import MailchimpFlow from '../OnboardingFlow/MailchimpFlow';
+import IntegrationsStore, { IntegrationsFlow } from '../../Integrations.store';
 
 export type IntegrationCardProps = {
   description: string;
@@ -26,7 +25,7 @@ export default ({
   description,
   href
 }: IntegrationCardProps) => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
 
   // This will only be the case if the user loads the page with the query
   // string flow=[name] in the URL without properly going to the backend.
@@ -39,10 +38,7 @@ export default ({
   else if (name === 'Zapier') logo = zapier;
 
   // onClick only executes if href isn't populated, per the Button component.
-  const onClick = () => {
-    if (name === 'Mailchimp')
-      showModal({ id: 'MAILCHIMP_FLOW', screens: [<MailchimpFlow />] });
-  };
+  const onClick = () => setFlow(name.toUpperCase() as IntegrationsFlow);
 
   // If the href is present, the user hasn't authenticated anything. Otherwise,
   // it means the user authenticated (logged in), but didn't finish the

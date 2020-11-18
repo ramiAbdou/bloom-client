@@ -9,6 +9,7 @@ import { ReactNode } from 'react';
 import { IdProps } from '@constants';
 
 export interface ShowModalArgs extends IdProps {
+  onClose?: VoidFunction;
   screens?: ReactNode[];
 }
 
@@ -19,6 +20,7 @@ export type ModalModel = {
   goForward: Action<ModalModel>;
   id: string;
   isShowing: boolean;
+  onClose: VoidFunction;
   screens: ReactNode[];
   showModal: Action<ModalModel, ShowModalArgs>;
 };
@@ -45,6 +47,8 @@ export const modalModel: ModalModel = {
   id: '',
 
   isShowing: false,
+
+  onClose: () => {},
 
   screens: [],
 
