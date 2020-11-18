@@ -49,10 +49,11 @@ $PREF: 'c-btn';
     border: 1px $gray-5 solid;
   }
 
-  &--keep-color {
-    background-color: rgba($color: $green, $alpha: 0.1) !important;
-    border: none;
-    color: $green !important;
+  &--green {
+    background-clip: padding-box;
+    background-color: rgba($color: $green, $alpha: 0.1);
+    border: 1px rgba($color: $green, $alpha: 0.1) solid;
+    color: $green;
   }
 }
 

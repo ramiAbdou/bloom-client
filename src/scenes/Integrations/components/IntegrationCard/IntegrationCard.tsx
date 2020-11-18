@@ -63,7 +63,7 @@ export default ({
       <h3>{name}</h3>
       <p>{description}</p>
 
-      {completed && <PrimaryButton disabled keepColor title="See Details" />}
+      {completed && <PrimaryButton green title="See Details" />}
 
       {!completed && (
         <OutlineButton href={href} title={buttonText} onClick={onClick} />
