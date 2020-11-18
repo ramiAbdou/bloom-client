@@ -101,11 +101,17 @@ export default () => {
     ({ integrations }) => integrations?.isMailchimpAuthenticated
   );
 
+  const isMailchimpCompleted = useStoreState(
+    ({ integrations }) => !!integrations?.mailchimpListId
+  );
+
   const options = useStoreState(
     ({ integrations }) => integrations?.mailchimpLists ?? []
   );
 
-  if (!options.length) return null;
+  // This will only be the case if the user loads the page with the query
+  // string flow=[name] in the URL without properly going to the backend.
+  if (isMailchimpCompleted || !options.length) return null;
 
   return (
     <Form.Provider
@@ -115,9 +121,6 @@ export default () => {
           {
             completed: isMailchimpAuthenticated,
             description: `Log in with your Mailchimp account.`,
-            node: !isMailchimpAuthenticated && (
-              <PrimaryButton title="Authorize" />
-            ),
             required: true,
             title: 'Step 1: Authorize Your Mailchimp Account',
             type: 'CUSTOM'

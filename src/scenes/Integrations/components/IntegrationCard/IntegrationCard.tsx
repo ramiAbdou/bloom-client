@@ -4,8 +4,10 @@
  */
 
 import React from 'react';
+import { IoIosCheckmarkCircle } from 'react-icons/io';
 
 import OutlineButton from '@components/Button/OutlineButton';
+import PrimaryButton from '@components/Button/PrimaryButton';
 import mailchimp from '../../images/mailchimp.png';
 import stripe from '../../images/stripe.png';
 import zapier from '../../images/zapier.png';
@@ -13,23 +15,19 @@ import zoom from '../../images/zoom.svg';
 import IntegrationsStore, { IntegrationsFlow } from '../../Integrations.store';
 
 export type IntegrationCardProps = {
+  completed?: boolean;
   description: string;
-  isCompleted?: boolean;
   name: string;
   href: string;
 };
 
 export default ({
-  isCompleted,
+  completed,
   name,
   description,
   href
 }: IntegrationCardProps) => {
   const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
-
-  // This will only be the case if the user loads the page with the query
-  // string flow=[name] in the URL without properly going to the backend.
-  if (isCompleted) return null;
 
   let logo: any;
   if (name === 'Mailchimp') logo = mailchimp;
@@ -47,11 +45,29 @@ export default ({
 
   return (
     <div className="s-integrations-card">
-      <img alt="Integration Logo" className="s-integrations-icon" src={logo} />
+      <div className="flex-acsb">
+        <img
+          alt="Integration Logo"
+          className="s-integrations-icon"
+          src={logo}
+        />
+
+        {completed && (
+          <div className="s-integrations-card-completed">
+            <IoIosCheckmarkCircle />
+            <p>Connected</p>
+          </div>
+        )}
+      </div>
+
       <h3>{name}</h3>
       <p>{description}</p>
 
-      <OutlineButton href={href} title={buttonText} onClick={onClick} />
+      {completed && <PrimaryButton disabled keepColor title="See Details" />}
+
+      {!completed && (
+        <OutlineButton href={href} title={buttonText} onClick={onClick} />
+      )}
     </div>
   );
 };

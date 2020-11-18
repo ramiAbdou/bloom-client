@@ -16,8 +16,8 @@ export type ButtonProps = {
   disabled?: boolean;
   href?: string;
   fill?: boolean;
+  keepColor?: boolean;
   loading?: boolean;
-  green?: boolean;
   loadingText?: string;
   large?: boolean;
   onClick?: VoidFunction;

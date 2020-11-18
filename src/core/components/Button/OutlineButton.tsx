@@ -20,7 +20,6 @@ const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
 export default ({
   className,
   disabled,
-  green,
   loading,
   loadingText,
   onClick,
@@ -40,7 +39,6 @@ export default ({
   const { css } = new CSSModifier()
     .class('c-btn-outline')
     .class(className)
-    .addClass(!!green, 'c-btn-outline--green')
     .addClass(disabled, 'c-btn-outline--disabled');
 
   return (

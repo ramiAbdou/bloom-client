@@ -12,6 +12,7 @@ export const GET_INTEGRATIONS = query({
       integrations: [
         'id',
         'isMailchimpAuthenticated',
+        'mailchimpListId',
         { mailchimpLists: ['id', 'name'] }
       ]
     }

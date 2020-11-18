@@ -20,7 +20,7 @@ const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
 export default ({
   className,
   disabled,
-  green,
+  keepColor,
   loading,
   loadingText,
   onClick,
@@ -42,8 +42,8 @@ export default ({
   const { css } = new CSSModifier()
     .class('c-btn-primary')
     .class(className)
-    .addClass(!!green, 'c-btn-primary--green')
-    .addClass(disabled, 'c-btn-primary--disabled');
+    .addClass(disabled, 'c-btn-primary--disabled')
+    .addClass(keepColor, 'c-btn-primary--keep-color');
 
   return (
     <Button

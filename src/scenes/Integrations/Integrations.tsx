@@ -54,16 +54,15 @@ const Cards = () => {
     ({ integrations }) => integrations?.isMailchimpAuthenticated
   );
 
-  console.log(isMailchimpAuthenticated);
-
-  const mailchimpListId = useStoreState(
-    ({ integrations }) => integrations?.mailchimpListId
+  const isMailchimpComplete = useStoreState(
+    ({ integrations }) => !!integrations?.mailchimpListId
   );
 
   const BASE_URI = isProduction ? APP.SERVER_URL : 'http://127.0.0.1:8080';
 
   const integrationData: IntegrationCardProps[] = [
     {
+      completed: isMailchimpComplete,
       description: `Quickly add every new member of the community to your Mailchimp
     listserv.`,
       href:
@@ -73,7 +72,6 @@ const Cards = () => {
           .addParam('client_id', process.env.MAILCHIMP_CLIENT_ID)
           .addParam('redirect_uri', `${BASE_URI}/mailchimp/auth`)
           .addParam('state', state).url,
-      isCompleted: !!mailchimpListId,
       name: 'Mailchimp'
     },
     {
@@ -108,6 +106,8 @@ export default () => {
 
   useEffect(() => {
     if (!data?.getIntegrations) return;
+
+    console.log(data);
 
     updateEntities({
       data: { ...data.getIntegrations },
