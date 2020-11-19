@@ -15,7 +15,7 @@ $PREF: 's-login';
   background-color: white;
   border: 1px $gray-5 solid;
   border-radius: $xxs;
-  max-width: 400px;
+  max-width: $xxl * 7;
   overflow: hidden;
 
   @include RESP (padding, $md, $sm, $sm);

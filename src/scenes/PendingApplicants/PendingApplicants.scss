@@ -83,7 +83,7 @@ $PREF: 's-applicants';
 
 .#{$PREF}-card-question { margin-bottom: $sm; }
 .#{$PREF}-card-question > p:first-of-type { margin-bottom: $xxs; }
-.#{$PREF}-card-question > p:last-of-type { @extend .body--2; color: $primary; }
+.#{$PREF}-card-question > p:last-of-type { color: $primary; }
 .#{$PREF}-card-question--choice > p:last-of-type {
   background-color: rgba($color: $primary-hex, $alpha: 0.1);
   border-radius: $md;

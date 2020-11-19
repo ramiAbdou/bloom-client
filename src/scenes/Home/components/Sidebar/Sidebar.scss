@@ -21,7 +21,6 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
 
 .#{$PREF}-section > p {
-  @extend .body--2;
   @extend .bold;
 
   color: $gray-3;
