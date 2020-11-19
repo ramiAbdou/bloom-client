@@ -11,10 +11,11 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import Modal from '@components/Modal/Modal';
+import { Integrations } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
 import { UPDATE_MAILCHIMP_LIST_ID } from '../../Integrations.gql';
-import Integrations from '../../Integrations.store';
+import IntegrationsStore from '../../Integrations.store';
 
 const Content = () => {
   const FLOW_ID = 'MAILCHIMP_FLOW';
@@ -27,10 +28,11 @@ const Content = () => {
   const options = useStoreState(
     ({ integrations }) => integrations?.mailchimpLists ?? []
   );
-  const setFlow = Integrations.useStoreActions((store) => store.setFlow);
+  const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
   const items = Form.useStoreState((store) => store.items);
   const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
   const submitForm = Form.useStoreState((store) => store.submitForm);
+  const updateEntities = useStoreActions((store) => store.updateEntities);
 
   const mailchimpListName = items.find(
     (item) => item.title === 'Step 2: Select Audience/List ID'
@@ -47,11 +49,18 @@ const Content = () => {
     if (!mailchimpListId) return;
 
     const onSubmit = async () => {
-      const { error: runtimeError } = await updateMailchimpListId({
+      const { data, error: runtimeError } = await updateMailchimpListId({
         variables: { mailchimpListId }
       });
 
-      if (!runtimeError) closeModal();
+      if (runtimeError) return;
+
+      updateEntities({
+        data: { ...data.updateMailchimpListId },
+        schema: Integrations
+      });
+
+      closeModal();
     };
 
     setSubmitForm(onSubmit);

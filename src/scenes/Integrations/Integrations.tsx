@@ -14,6 +14,7 @@ import { Community } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import URLBuilder from '@util/URLBuilder';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
+import ZoomDetails from './components/ExpandedDetails/ZoomDetails';
 import IntegrationCard, {
   IntegrationCardProps
 } from './components/IntegrationCard';
@@ -37,7 +38,7 @@ const IntegrationModal = () => {
 
   useEffect(() => {
     if (searchParam && searchParam !== flow)
-      setFlow(searchParam.toUpperCase() as IntegrationsModal);
+      setFlow(`${searchParam.toUpperCase()}_FLOW` as IntegrationsModal);
   }, []);
 
   // Flow is showing when the modal isShowing is true and there is a populated
@@ -45,6 +46,7 @@ const IntegrationModal = () => {
 
   if (flow === 'MAILCHIMP_FLOW') return <MailchimpFlow />;
   if (flow === 'MAILCHIMP_DETAILS') return <MailchimpDetails />;
+  if (flow === 'ZOOM_DETAILS') return <ZoomDetails />;
 
   return null;
 };
@@ -58,6 +60,10 @@ const Cards = () => {
 
   const isMailchimpComplete = useStoreState(
     ({ integrations }) => !!integrations?.mailchimpListId
+  );
+
+  const isZoomAuthenticated = useStoreState(
+    ({ integrations }) => !!integrations?.isZoomAuthenticated
   );
 
   const BASE_URI = isProduction ? APP.SERVER_URL : 'http://127.0.0.1:8080';
@@ -82,12 +88,15 @@ const Cards = () => {
       name: 'Stripe'
     },
     {
+      completed: isZoomAuthenticated,
       description: 'Host Zoom events with your account in 1-click.',
-      href: new URLBuilder('https://zoom.us/oauth/authorize')
-        .addParam('response_type', 'code')
-        .addParam('client_id', process.env.ZOOM_CLIENT_ID)
-        .addParam('redirect_uri', `${APP.SERVER_URL}/zoom/auth`)
-        .addParam('state', state).url,
+      href:
+        !isZoomAuthenticated &&
+        new URLBuilder('https://zoom.us/oauth/authorize')
+          .addParam('response_type', 'code')
+          .addParam('client_id', process.env.ZOOM_CLIENT_ID)
+          .addParam('redirect_uri', `${APP.SERVER_URL}/zoom/auth`)
+          .addParam('state', state).url,
       name: 'Zoom'
     },
     {

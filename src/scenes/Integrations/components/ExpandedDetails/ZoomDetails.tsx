@@ -8,20 +8,24 @@ import React, { useEffect, useMemo } from 'react';
 import OutlineButton from '@components/Button/OutlineButton';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions, useStoreState } from '@store/Store';
-import mailchimp from '../../images/mailchimp.png';
+import zoom from '../../images/zoom.svg';
 import Integrations from '../../Integrations.store';
 
 export default () => {
-  const FLOW_ID = 'MAILCHIMP_DETAILS';
+  const FLOW_ID = 'ZOOM_DETAILS';
 
   const id = useStoreState(({ modal }) => modal.id);
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
-  const mailchimpListId = useStoreState(
-    ({ integrations }) => integrations.mailchimpListId
+  const zoomEmail = useStoreState(
+    ({ integrations }) => integrations.zoomAccountInfo?.email
   );
 
-  const mailchimpListName = useStoreState(
-    ({ integrations }) => integrations.mailchimpListName
+  const zoomPmi = useStoreState(
+    ({ integrations }) => integrations.zoomAccountInfo?.pmi
+  );
+
+  const zoomUserId = useStoreState(
+    ({ integrations }) => integrations.zoomAccountInfo?.userId
   );
 
   const setFlow = Integrations.useStoreActions((store) => store.setFlow);
@@ -39,22 +43,22 @@ export default () => {
 
   return (
     <Modal isShowing={shouldShowModal}>
-      <img
-        alt="Mailchimp Icon"
-        className="s-integrations-icon--lg"
-        src={mailchimp}
-      />
-
-      <h1>Mailchimp Integration Details</h1>
+      <img alt="Zoom Icon" className="s-integrations-icon--lg" src={zoom} />
+      <h1>Zoom Integration Details</h1>
 
       <div className="s-integrations-details-item">
-        <p>Audience/List Name</p>
-        <p>{mailchimpListName}</p>
+        <p> Associated Email</p>
+        <p>{zoomEmail}</p>
       </div>
 
       <div className="s-integrations-details-item">
-        <p>Audience/List ID</p>
-        <p>{mailchimpListId}</p>
+        <p>Personal Meeting ID</p>
+        <p>{zoomPmi}</p>
+      </div>
+
+      <div className="s-integrations-details-item">
+        <p>User ID</p>
+        <p>{zoomUserId}</p>
       </div>
 
       <div className="s-integrations-action-ctr">

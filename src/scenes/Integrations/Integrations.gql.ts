@@ -12,9 +12,11 @@ export const GET_INTEGRATIONS = query({
       integrations: [
         'id',
         'isMailchimpAuthenticated',
+        'isZoomAuthenticated',
         'mailchimpListId',
         'mailchimpListName',
-        { mailchimpLists: ['id', 'name'] }
+        { mailchimpLists: ['id', 'name'] },
+        { zoomAccountInfo: ['email', 'pmi', 'userId'] }
       ]
     }
   ],
@@ -22,6 +24,7 @@ export const GET_INTEGRATIONS = query({
 }).query;
 
 export const UPDATE_MAILCHIMP_LIST_ID = mutation({
+  fields: ['id', 'mailchimpListId', 'mailchimpListName'],
   operation: 'updateMailchimpListId',
   variables: { mailchimpListId: { required: true } }
 }).query;
