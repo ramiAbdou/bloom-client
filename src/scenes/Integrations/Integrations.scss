@@ -13,17 +13,17 @@ $PREF: 's-integrations';
 .#{$PREF}-icon {
   border-radius: $xs;
   height: $xxl;
-  margin-bottom: $sm;
   width: $xxl;
 
   &--lg {
-    @extend .#{$PREF}-icon;
-
+    border-radius: $xs;
     height: $xxl + $xs;
-    margin-bottom: $xs;
+    margin-bottom: $sm;
     width: $xxl + $xs;
   }
 }
+
+.#{$PREF}-header { @extend .flex-acsb; margin-bottom: $sm; }
 
 // ## INTEGRATION CARD
 

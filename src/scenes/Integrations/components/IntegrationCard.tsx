@@ -49,12 +49,8 @@ export default ({
 
   return (
     <div className="s-integrations-card">
-      <div className="flex-acsb">
-        <img
-          alt="Integration Logo"
-          className="s-integrations-icon"
-          src={logo}
-        />
+      <div className="s-integrations-header">
+        <img alt="Company Logo" className="s-integrations-icon" src={logo} />
 
         {completed && (
           <div className="s-integrations-card-completed">
