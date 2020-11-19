@@ -22,7 +22,7 @@ $PREF: 's-signup';
 
 .#{$PREF} > h1 { margin-bottom: $xs; }
 .#{$PREF} > p { margin-bottom: $lg; }
-.#{$PREF} > button { margin-top: $xxl; width: 100%; }
+.#{$PREF} > button { margin: $xxl 0; width: 100%; }
 
 // ## CONFIRMATION SCREEN
 

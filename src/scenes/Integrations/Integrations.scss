@@ -41,7 +41,7 @@ $PREF: 's-integrations';
 
 .#{$PREF}-card-completed { @extend .flex-ac; margin-right: $sm; }
 .#{$PREF}-card-completed > svg { color: $green; margin-right: $xxs; }
-.#{$PREF}-card-completed > p { @extend .meta; color: $green; font-size: 14px; }
+.#{$PREF}-card-completed > p { @extend .bold; color: $green; }
 
 // ## ONBOARDING MODAL
 
