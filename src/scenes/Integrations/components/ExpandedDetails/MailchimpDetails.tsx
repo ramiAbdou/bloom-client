@@ -20,6 +20,10 @@ export default () => {
     ({ integrations }) => integrations.mailchimpListId
   );
 
+  const mailchimpListName = useStoreState(
+    ({ integrations }) => integrations.mailchimpListName
+  );
+
   const setFlow = Integrations.useStoreActions((store) => store.setFlow);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -42,6 +46,11 @@ export default () => {
       />
 
       <h1>Mailchimp Integration Details</h1>
+
+      <div className="s-integrations-details-item">
+        <p>Mailchimp Audience/List Name</p>
+        <p>{mailchimpListName}</p>
+      </div>
 
       <div className="s-integrations-details-item">
         <p>Mailchimp Audience/List ID</p>

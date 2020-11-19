@@ -51,6 +51,7 @@ export type IIntegrations = {
   isMailchimpAuthenticated: boolean;
   mailchimpLists: { name: string; id: string }[];
   mailchimpListId: string;
+  mailchimpListName: string;
 };
 
 export type IMember = {

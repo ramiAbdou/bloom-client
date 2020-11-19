@@ -13,6 +13,7 @@ export const GET_INTEGRATIONS = query({
         'id',
         'isMailchimpAuthenticated',
         'mailchimpListId',
+        'mailchimpListName',
         { mailchimpLists: ['id', 'name'] }
       ]
     }
