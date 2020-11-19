@@ -14,6 +14,7 @@ import { Community } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import URLBuilder from '@util/URLBuilder';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
+import StripeDetails from './components/ExpandedDetails/StripeDetails';
 import ZoomDetails from './components/ExpandedDetails/ZoomDetails';
 import IntegrationCard, {
   IntegrationCardProps
@@ -46,6 +47,7 @@ const IntegrationModal = () => {
 
   if (flow === 'MAILCHIMP_FLOW') return <MailchimpFlow />;
   if (flow === 'MAILCHIMP_DETAILS') return <MailchimpDetails />;
+  if (flow === 'STRIPE_DETAILS') return <StripeDetails />;
   if (flow === 'ZOOM_DETAILS') return <ZoomDetails />;
 
   return null;
