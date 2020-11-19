@@ -83,7 +83,11 @@ const Cards = () => {
     },
     {
       description: 'Host Zoom events with your account in 1-click.',
-      href: 'https://zoom.com/',
+      href: new URLBuilder('https://zoom.us/oauth/authorize')
+        .addParam('response_type', 'code')
+        .addParam('client_id', process.env.ZOOM_CLIENT_ID)
+        .addParam('redirect_uri', `${APP.SERVER_URL}/zoom/auth`)
+        .addParam('state', state).url,
       name: 'Zoom'
     },
     {
