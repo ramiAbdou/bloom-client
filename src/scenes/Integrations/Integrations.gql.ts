@@ -16,6 +16,7 @@ export const GET_INTEGRATIONS = query({
         'mailchimpListId',
         'mailchimpListName',
         { mailchimpLists: ['id', 'name'] },
+        'stripeAccountId',
         { zoomAccountInfo: ['email', 'pmi', 'userId'] }
       ]
     }

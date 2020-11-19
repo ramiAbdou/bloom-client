@@ -14,7 +14,7 @@ $PREF: 'c-toast';
 }
 
 .#{$PREF} {
-  @extend .shadow-1;
+  @extend .shadow--1;
   @extend .flex-ac;
 
   background-color: $primary;

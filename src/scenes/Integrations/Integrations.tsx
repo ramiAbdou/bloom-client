@@ -62,6 +62,10 @@ const Cards = () => {
     ({ integrations }) => !!integrations?.mailchimpListId
   );
 
+  const isStripeAuthenticated = useStoreState(
+    ({ integrations }) => !!integrations?.stripeAccountId
+  );
+
   const isZoomAuthenticated = useStoreState(
     ({ integrations }) => !!integrations?.isZoomAuthenticated
   );
@@ -83,8 +87,24 @@ const Cards = () => {
       name: 'Mailchimp'
     },
     {
+      completed: isStripeAuthenticated,
       description: 'Collect monthly or yearly dues payments from your members.',
-      href: 'https://stripe.com/',
+      href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
+        .addParam('response_type', 'code')
+        .addParam(
+          'client_id',
+          isProduction
+            ? process.env.STRIPE_CLIENT_ID
+            : process.env.STRIPE_TEST_CLIENT_ID
+        )
+        .addParam('scope', 'read_write')
+        .addParam(
+          'redirect_uri',
+          isProduction
+            ? `${APP.SERVER_URL}/stripe/auth`
+            : 'https://d00220485baf.ngrok.io/stripe/auth'
+        )
+        .addParam('state', state).url,
       name: 'Stripe'
     },
     {

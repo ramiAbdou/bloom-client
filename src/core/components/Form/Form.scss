@@ -124,7 +124,7 @@ $PREF: 'c-form';
 }
 
 .#{$PREF}-dd-opt-ctr {
-  @extend .shadow-2;
+  @extend .shadow--1;
 
   background-color: white;
   border-radius: $xxs;

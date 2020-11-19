@@ -23,7 +23,7 @@ $PREF: 'c-picker';
 
 .#{$PREF}-content {
   @extend .flex-col;
-  @extend .shadow-2;
+  @extend .shadow--1;
 
   background-color: white;
   border-radius: 12px;
@@ -36,6 +36,7 @@ $PREF: 'c-picker';
 
 .#{$PREF}-option {
   @extend .fill;
+  @extend .body--1;
   
   color: $gray-2;
   padding: 12px;

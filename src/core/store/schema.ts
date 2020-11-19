@@ -53,6 +53,7 @@ export type IIntegrations = {
   mailchimpLists: { name: string; id: string }[];
   mailchimpListId: string;
   mailchimpListName: string;
+  stripeAccountId: string;
   zoomAccountInfo: { email: string; pmi: number; userId: string };
 };
 
