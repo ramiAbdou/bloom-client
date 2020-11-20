@@ -1,51 +1,19 @@
 /**
- * @fileoverview Component: Mailchimp Details
+ * @fileoverview Component: Stripe Details
  * @author Rami Abdou
  */
 
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import Modal from '@components/Modal/Modal';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import stripe from '../../images/stripe.png';
-import Integrations from '../../Integrations.store';
+import ExpandedDetails, { ExpandedDetailProps } from './ExpandedDetails';
 
 export default () => {
-  const MODAL_ID = 'STRIPE_DETAILS';
-
-  const id = useStoreState(({ modal }) => modal.id);
-  const isShowing = useStoreState(({ modal }) => modal.isShowing);
-  const stripeAccountId = useStoreState(
+  const value = useStoreState(
     ({ integrations }) => integrations.stripeAccountId
   );
 
-  const setFlow = Integrations.useStoreActions((store) => store.setFlow);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
-  useEffect(() => {
-    showModal({ id: MODAL_ID, onClose: () => setFlow(null) });
-  }, []);
-
-  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
-    isShowing,
-    id === MODAL_ID
-  ]);
-
-  return (
-    <Modal isShowing={shouldShowModal}>
-      <img alt="Stripe Icon" className="s-integrations-icon--lg" src={stripe} />
-      <h1>Stripe Integration Details</h1>
-
-      <div className="s-integrations-details-item">
-        <p>Account ID</p>
-        <p>{stripeAccountId}</p>
-      </div>
-
-      <div className="s-integrations-action-ctr">
-        <OutlineButton title="Close" onClick={() => closeModal()} />
-      </div>
-    </Modal>
-  );
+  const details: ExpandedDetailProps[] = [{ label: 'Account ID', value }];
+  return <ExpandedDetails details={details} logo={stripe} name="Stripe" />;
 };

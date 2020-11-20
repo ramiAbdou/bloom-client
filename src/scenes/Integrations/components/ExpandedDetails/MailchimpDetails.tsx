@@ -3,63 +3,27 @@
  * @author Rami Abdou
  */
 
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import Modal from '@components/Modal/Modal';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
-import Integrations from '../../Integrations.store';
+import ExpandedDetails, { ExpandedDetailProps } from './ExpandedDetails';
 
 export default () => {
-  const MODAL_ID = 'MAILCHIMP_DETAILS';
-
-  const id = useStoreState(({ modal }) => modal.id);
-  const isShowing = useStoreState(({ modal }) => modal.isShowing);
-  const mailchimpListId = useStoreState(
-    ({ integrations }) => integrations.mailchimpListId
-  );
-
-  const mailchimpListName = useStoreState(
+  const listName = useStoreState(
     ({ integrations }) => integrations.mailchimpListName
   );
 
-  const setFlow = Integrations.useStoreActions((store) => store.setFlow);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const listId = useStoreState(
+    ({ integrations }) => integrations.mailchimpListId
+  );
 
-  useEffect(() => {
-    showModal({ id: MODAL_ID, onClose: () => setFlow(null) });
-  }, []);
-
-  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
-    isShowing,
-    id === MODAL_ID
-  ]);
+  const details: ExpandedDetailProps[] = [
+    { label: 'Audience/List Name', value: listName },
+    { label: 'Audience/List ID', value: listId }
+  ];
 
   return (
-    <Modal isShowing={shouldShowModal}>
-      <img
-        alt="Mailchimp Icon"
-        className="s-integrations-icon--lg"
-        src={mailchimp}
-      />
-
-      <h1>Mailchimp Integration Details</h1>
-
-      <div className="s-integrations-details-item">
-        <p>Audience/List Name</p>
-        <p>{mailchimpListName}</p>
-      </div>
-
-      <div className="s-integrations-details-item">
-        <p>Audience/List ID</p>
-        <p>{mailchimpListId}</p>
-      </div>
-
-      <div className="s-integrations-action-ctr">
-        <OutlineButton title="Close" onClick={() => closeModal()} />
-      </div>
-    </Modal>
+    <ExpandedDetails details={details} logo={mailchimp} name="Mailchimp" />
   );
 };
