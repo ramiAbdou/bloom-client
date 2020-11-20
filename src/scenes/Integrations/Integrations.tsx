@@ -6,31 +6,30 @@
 import './Integrations.scss';
 
 import { useQuery } from 'graphql-hooks';
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-import Spinner from '@components/Loader/Spinner';
-import { APP, isProduction, LoadingProps } from '@constants';
+import { APP, isProduction } from '@constants';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import URLBuilder from '@util/URLBuilder';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
 import StripeDetails from './components/ExpandedDetails/StripeDetails';
 import ZoomDetails from './components/ExpandedDetails/ZoomDetails';
+import Header from './components/Header';
 import IntegrationCard, {
   IntegrationCardProps
 } from './components/IntegrationCard';
 import MailchimpFlow from './components/OnboardingFlow/MailchimpFlow';
+import mailchimp from './images/mailchimp.png';
+import stripe from './images/stripe.png';
+import zapier from './images/zapier.png';
+import zoom from './images/zoom.svg';
 import { GET_INTEGRATIONS } from './Integrations.gql';
 import Integrations, { IntegrationsModal } from './Integrations.store';
 
-const Header = memo(({ loading }: LoadingProps) => (
-  <div className="s-home-header">
-    <div>
-      <h1 className="s-home-header-title">Integrations</h1>
-      {loading && <Spinner dark />}
-    </div>
-  </div>
-));
+const MAILCHIMP_BASE_URI = isProduction
+  ? APP.SERVER_URL
+  : 'http://127.0.0.1:8080';
 
 const IntegrationModal = () => {
   const searchParam = new URLSearchParams(window.location.search).get('flow');
@@ -54,7 +53,9 @@ const IntegrationModal = () => {
 };
 
 const Cards = () => {
-  const state = useStoreState(({ community }) => community.encodedUrlName);
+  const encodedUrlName = useStoreState(
+    ({ community }) => community.encodedUrlName
+  );
 
   const isMailchimpAuthenticated = useStoreState(
     ({ integrations }) => integrations?.isMailchimpAuthenticated
@@ -72,20 +73,19 @@ const Cards = () => {
     ({ integrations }) => !!integrations?.isZoomAuthenticated
   );
 
-  const BASE_URI = isProduction ? APP.SERVER_URL : 'http://127.0.0.1:8080';
-
   const integrationData: IntegrationCardProps[] = [
     {
       completed: isMailchimpComplete,
-      description: `Quickly add every new member of the community to your Mailchimp
-    listserv.`,
+      description: `Quickly add every new member of the community to your
+      Mailchimp listserv.`,
       href:
         !isMailchimpAuthenticated &&
         new URLBuilder('https://login.mailchimp.com/oauth2/authorize')
           .addParam('response_type', 'code')
           .addParam('client_id', process.env.MAILCHIMP_CLIENT_ID)
-          .addParam('redirect_uri', `${BASE_URI}/mailchimp/auth`)
-          .addParam('state', state).url,
+          .addParam('redirect_uri', `${MAILCHIMP_BASE_URI}/mailchimp/auth`)
+          .addParam('state', encodedUrlName).url,
+      logo: mailchimp,
       name: 'Mailchimp'
     },
     {
@@ -106,24 +106,25 @@ const Cards = () => {
             ? `${APP.SERVER_URL}/stripe/auth`
             : 'https://d00220485baf.ngrok.io/stripe/auth'
         )
-        .addParam('state', state).url,
+        .addParam('state', encodedUrlName).url,
+      logo: stripe,
       name: 'Stripe'
     },
     {
       completed: isZoomAuthenticated,
       description: 'Host Zoom events with your account in 1-click.',
-      href:
-        !isZoomAuthenticated &&
-        new URLBuilder('https://zoom.us/oauth/authorize')
-          .addParam('response_type', 'code')
-          .addParam('client_id', process.env.ZOOM_CLIENT_ID)
-          .addParam('redirect_uri', `${APP.SERVER_URL}/zoom/auth`)
-          .addParam('state', state).url,
+      href: new URLBuilder('https://zoom.us/oauth/authorize')
+        .addParam('response_type', 'code')
+        .addParam('client_id', process.env.ZOOM_CLIENT_ID)
+        .addParam('redirect_uri', `${APP.SERVER_URL}/zoom/auth`)
+        .addParam('state', encodedUrlName).url,
+      logo: zoom,
       name: 'Zoom'
     },
     {
       description: 'For just about any other integration you want.',
       href: 'https://zapier.com/',
+      logo: zapier,
       name: 'Zapier'
     }
   ];
@@ -142,12 +143,11 @@ export default () => {
   const { data, loading } = useQuery(GET_INTEGRATIONS);
 
   useEffect(() => {
-    if (!data?.getIntegrations) return;
-
-    updateEntities({
-      data: { ...data.getIntegrations },
-      schema: Schema.COMMUNITY
-    });
+    if (data?.getIntegrations)
+      updateEntities({
+        data: { ...data.getIntegrations },
+        schema: Schema.COMMUNITY
+      });
   }, [data]);
 
   return (
