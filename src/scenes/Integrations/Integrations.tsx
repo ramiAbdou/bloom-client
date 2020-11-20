@@ -19,7 +19,7 @@ import Header from './components/Header';
 import IntegrationCard, {
   IntegrationCardProps
 } from './components/IntegrationCard';
-import MailchimpFlow from './components/OnboardingFlow/MailchimpFlow';
+import MailchimpFlow from './components/MailchimpFlow/MailchimpFlow';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';
 import zapier from './images/zapier.png';

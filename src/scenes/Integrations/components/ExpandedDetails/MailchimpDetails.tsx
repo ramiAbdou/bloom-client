@@ -12,7 +12,7 @@ import mailchimp from '../../images/mailchimp.png';
 import Integrations from '../../Integrations.store';
 
 export default () => {
-  const FLOW_ID = 'MAILCHIMP_DETAILS';
+  const MODAL_ID = 'MAILCHIMP_DETAILS';
 
   const id = useStoreState(({ modal }) => modal.id);
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
@@ -29,12 +29,12 @@ export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   useEffect(() => {
-    showModal({ id: FLOW_ID, onClose: () => setFlow(null) });
+    showModal({ id: MODAL_ID, onClose: () => setFlow(null) });
   }, []);
 
-  const shouldShowModal = useMemo(() => isShowing && FLOW_ID === id, [
+  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
     isShowing,
-    id === FLOW_ID
+    id === MODAL_ID
   ]);
 
   return (

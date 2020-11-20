@@ -20,7 +20,7 @@ export type ButtonProps = {
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
-  onClick?: VoidFunction;
+  onClick?: Function;
   title?: string;
 };
 

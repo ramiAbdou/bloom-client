@@ -12,7 +12,7 @@ import stripe from '../../images/stripe.png';
 import Integrations from '../../Integrations.store';
 
 export default () => {
-  const FLOW_ID = 'STRIPE_DETAILS';
+  const MODAL_ID = 'STRIPE_DETAILS';
 
   const id = useStoreState(({ modal }) => modal.id);
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
@@ -25,12 +25,12 @@ export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   useEffect(() => {
-    showModal({ id: FLOW_ID, onClose: () => setFlow(null) });
+    showModal({ id: MODAL_ID, onClose: () => setFlow(null) });
   }, []);
 
-  const shouldShowModal = useMemo(() => isShowing && FLOW_ID === id, [
+  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
     isShowing,
-    id === FLOW_ID
+    id === MODAL_ID
   ]);
 
   return (
