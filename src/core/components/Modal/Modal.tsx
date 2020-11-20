@@ -13,7 +13,7 @@ import React, { memo } from 'react';
 
 import { ChildrenProps, IsShowingProps } from '@constants';
 import { useStoreState } from '@store/Store';
-import ModalContainer from './components/ModalContainer';
+import ModalContainer from './ModalContainer';
 
 const CurrentScreen = () => {
   const currentScreen = useStoreState(({ modal }) => modal.currentScreen);
