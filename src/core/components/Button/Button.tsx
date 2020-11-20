@@ -20,6 +20,7 @@ export type ButtonProps = {
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
+  noScale?: boolean;
   onClick?: Function;
   title?: string;
 };
@@ -54,6 +55,7 @@ export default ({
   href,
   fill,
   large,
+  noScale,
   onClick,
   title
 }: AbstractButtonProps) => {
@@ -64,7 +66,8 @@ export default ({
     .addClass(!!className, className);
 
   // The core Bloom button animation, the scaling down!
-  const tapAnimation = !disabled ? { whileTap: { scale: 0.95 } } : {};
+  const tapAnimation =
+    !disabled && !noScale ? { whileTap: { scale: 0.95 } } : {};
 
   return (
     <motion.button
