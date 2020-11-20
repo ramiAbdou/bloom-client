@@ -11,16 +11,6 @@
 
 import { schema } from 'normalizr';
 
-export type Entity =
-  | 'applicationQuestions'
-  | 'applications'
-  | 'communities'
-  | 'integrations'
-  | 'members'
-  | 'memberships'
-  | 'pendingApplicants'
-  | 'users';
-
 // ## NORMALIZR SCHEMA DECLARATIONS
 
 const ApplicationQuestion = new schema.Entity('applicationQuestions', {});

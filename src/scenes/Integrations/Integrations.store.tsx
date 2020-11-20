@@ -5,6 +5,8 @@
 
 import { Action, action, createContextStore } from 'easy-peasy';
 
+import { IIntegrations } from '@store/entities';
+
 export type IntegrationsModal =
   | 'MAILCHIMP_DETAILS'
   | 'MAILCHIMP_FLOW'
@@ -14,11 +16,13 @@ export type IntegrationsModal =
 
 export type IntegrationsModel = {
   flow: IntegrationsModal;
+  integrations: IIntegrations;
   setFlow: Action<IntegrationsModel, IntegrationsModal>;
 };
 
 const model: IntegrationsModel = {
   flow: null,
+  integrations: null,
   setFlow: action((state, flow) => ({ ...state, flow }))
 };
 

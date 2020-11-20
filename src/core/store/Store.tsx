@@ -1,5 +1,9 @@
 /**
- * @fileoverview Store: Application
+ * @fileoverview Store
+ * - Global store that manages the entire application's state. The entities
+ * object as a normalized database for the React application. Most stores that
+ * are defined in this global store are defined in the common components folder
+ * (ie: PickerModel, ToastModel).
  * @author Rami Abdou
  */
 
@@ -22,35 +26,28 @@ import { ToastModel, toastModel } from '@components/Toast/Toast.store';
 import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
 import {
   EntityRecord,
-  IApplicationQuestion,
   ICommunity,
+  IEntities,
   IIntegrations,
-  IMember,
   IMembership,
+  initialEntities,
   IPendingApplicant,
   IUser
 } from './entities';
-import { Entity } from './schema';
 import { ScreenModel, screenModel } from './Screen.store';
 
 type UpdateEntitiesArgs = {
   data?: any;
-  updatedState?: Partial<Record<Entity, EntityRecord>>;
+  updatedState?: Partial<IEntities>;
   schema?: Schema<any>;
 };
 
 type StoreModel = {
-  applicationQuestions: Computed<
-    StoreModel,
-    EntityRecord<IApplicationQuestion>
-  >;
   clearEntities: Action<StoreModel>;
-  communities: Computed<StoreModel, EntityRecord<ICommunity>>;
   community: Computed<StoreModel, ICommunity>;
-  entities: Record<Entity, EntityRecord>;
+  entities: IEntities;
   integrations: Computed<StoreModel, IIntegrations>;
   loader: LoaderModel;
-  members: Computed<StoreModel, EntityRecord<IMember>>;
   membership: Computed<StoreModel, IMembership>;
   memberships: Computed<StoreModel, EntityRecord<IMembership>>;
   modal: ModalModel;
@@ -65,11 +62,6 @@ type StoreModel = {
 
 export const store = createStore<StoreModel>(
   {
-    applicationQuestions: computed(
-      ({ entities }) =>
-        entities.applicationQuestions as EntityRecord<IApplicationQuestion>
-    ),
-
     clearEntities: action((state) => {
       // Reset the Bloom style guide primary color.
       const { style } = document.documentElement;
@@ -83,27 +75,11 @@ export const store = createStore<StoreModel>(
       style.setProperty('--gray-5', `hsl(27, 5%, 88%)`);
       style.setProperty('--gray-6', `hsl(27, 5%, 96%)`);
 
-      return {
-        ...state,
-        entities: {
-          applicationQuestions: { allIds: [], byId: {} },
-          applications: { allIds: [], byId: {} },
-          communities: { activeId: null, allIds: [], byId: {} },
-          integrations: { allIds: [], byId: {} },
-          members: { allIds: [], byId: {} },
-          memberships: { activeId: null, allIds: [], byId: {} },
-          pendingApplicants: { allIds: [], byId: {} },
-          users: { allIds: [], byId: {} }
-        }
-      };
+      return { ...state, entities: initialEntities };
     }),
 
-    communities: computed(
-      ({ entities }) => entities.communities as EntityRecord<ICommunity>
-    ),
-
-    community: computed(({ communities }) => {
-      const { activeId, byId } = communities;
+    community: computed(({ entities }) => {
+      const { activeId, byId } = entities.communities;
       const result: ICommunity = byId[activeId];
 
       if (!result) return null;
@@ -135,16 +111,7 @@ export const store = createStore<StoreModel>(
       return result;
     }),
 
-    entities: {
-      applicationQuestions: { allIds: [], byId: {} },
-      applications: { allIds: [], byId: {} },
-      communities: { activeId: null, allIds: [], byId: {} },
-      integrations: { allIds: [], byId: {} },
-      members: { allIds: [], byId: {} },
-      memberships: { activeId: null, allIds: [], byId: {} },
-      pendingApplicants: { allIds: [], byId: {} },
-      users: { allIds: [], byId: {} }
-    },
+    entities: initialEntities,
 
     integrations: computed(({ community, entities }) => {
       const { byId } = entities.integrations as EntityRecord<IIntegrations>;
@@ -152,10 +119,6 @@ export const store = createStore<StoreModel>(
     }),
 
     loader: loaderModel,
-
-    members: computed(
-      ({ entities }) => entities.members as EntityRecord<IMember>
-    ),
 
     membership: computed(({ memberships }) => {
       const { activeId, byId } = memberships;
@@ -189,10 +152,15 @@ export const store = createStore<StoreModel>(
 
     screen: screenModel,
 
-    setActiveCommunity: action((state, communityId: string) => ({
-      ...state,
-      communities: { ...state.communities, activeId: communityId }
-    })),
+    setActiveCommunity: action(
+      ({ entities, ...state }, communityId: string) => ({
+        ...state,
+        entities: {
+          ...entities,
+          communities: { ...entities.communities, activeId: communityId }
+        }
+      })
+    ),
 
     toast: toastModel,
 

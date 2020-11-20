@@ -89,10 +89,11 @@ export default () => {
   const updateEntities = useStoreActions((store) => store.updateEntities);
 
   const questions: IApplicationQuestion[] = useStoreState(
-    ({ community, applicationQuestions }) => {
+    ({ community, entities }) => {
+      const { byId } = entities.applicationQuestions;
       if (!community?.applicationQuestions?.length) return [];
       const { applicationQuestions: result } = community;
-      return result.map((id: string) => applicationQuestions.byId[id]);
+      return result.map((id: string) => byId[id]);
     }
   );
 

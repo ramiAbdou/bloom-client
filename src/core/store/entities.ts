@@ -3,11 +3,7 @@
  * @author Rami Abdou
  */
 
-/* eslint-disable @typescript-eslint/no-use-before-define */
-
 import { QuestionCategory, QuestionType } from '@constants';
-
-type EntityID = string;
 
 export type IApplicationQuestion = {
   category: QuestionCategory;
@@ -22,16 +18,16 @@ export type IApplicationQuestion = {
 
 export type ICommunity = {
   applicationDescription?: string;
-  applicationQuestions: EntityID[];
+  applicationQuestions: string[];
   applicationTitle?: string;
   autoAccept?: boolean;
   encodedUrlName: string;
   id: string;
-  integrations: EntityID;
+  integrations: string;
   logoUrl: string;
-  members: EntityID[];
+  members: string[];
   name: string;
-  pendingApplicants: EntityID[];
+  pendingApplicants: string[];
   primaryColor: string;
 };
 
@@ -45,13 +41,8 @@ export type IIntegrations = {
   zoomAccountInfo: { email: string; pmi: number; userId: string };
 };
 
-export type IMember = {
-  allData: { questionId: string; value: string }[];
-  id: string;
-};
-
 export type IMembership = {
-  community: EntityID;
+  community: string;
   id: string;
   role: 'ADMIN' | 'OWNER';
   type: IMembershipType;
@@ -79,17 +70,30 @@ export type IUser = {
   pictureURL: string;
 };
 
-export interface EntityRecord<
-  T =
-    | IApplicationQuestion
-    | ICommunity
-    | IIntegrations
-    | IMember
-    | IMembership
-    | IPendingApplicant
-    | IUser
-> {
+export interface EntityRecord<T> {
   activeId?: string;
   allIds: string[];
   byId: Record<string, T>;
 }
+
+export type IEntities = {
+  applicationQuestions: EntityRecord<IApplicationQuestion>;
+  communities: EntityRecord<ICommunity>;
+  integrations: EntityRecord<IIntegrations>;
+  memberships: EntityRecord<IMembership>;
+  pendingApplicants: EntityRecord<IPendingApplicant>;
+  users: EntityRecord<IUser>;
+};
+
+// Initial state for all of the entity (DB) definitions.
+export const initialEntities: IEntities = {
+  applicationQuestions: {
+    allIds: [],
+    byId: {}
+  },
+  communities: { activeId: null, allIds: [], byId: {} },
+  integrations: { allIds: [], byId: {} },
+  memberships: { activeId: null, allIds: [], byId: {} },
+  pendingApplicants: { allIds: [], byId: {} },
+  users: { allIds: [], byId: {} }
+};
