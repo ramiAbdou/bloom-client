@@ -25,7 +25,7 @@ const NoPendingApplicantsMessage = () => (
 );
 
 export default () => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const numApplicants = useStoreState(
     ({ community }) => community?.pendingApplicants?.length
   );

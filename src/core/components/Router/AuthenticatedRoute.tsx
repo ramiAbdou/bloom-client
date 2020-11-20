@@ -20,7 +20,7 @@ import TokenRoute from './TokenRoute';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { loading, data, error } = useQuery(GET_USER);
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const encodedUrlName = useStoreState(
     ({ community }) => community?.encodedUrlName
   );

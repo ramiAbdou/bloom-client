@@ -1,6 +1,6 @@
 @import 'src/index.scss';
 
-$PREF: 's-home-database';
+$PREF: 's-database';
 
 .#{$PREF} { box-sizing: border-box; max-height: 100%; overflow: hidden; }
 .#{$PREF} > p { @extend .body--1; }

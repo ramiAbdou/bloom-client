@@ -19,10 +19,10 @@ import { ChildrenProps, EncodedUrlNameParams } from '@constants';
 import CommunityBar from '@scenes/Home/components/CommunityBar/CommunityBar';
 import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
+import Database from '../Database/Database';
 import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
-import MemberDatabase from '../MemberDatabase/MemberDatabase';
 import PendingApplicants from '../PendingApplicants/PendingApplicants';
 import Sidebar from './components/Sidebar/Sidebar';
 
@@ -62,7 +62,7 @@ const HomeContent = () => {
       <Switch>
         <Route component={Directory} path={`${url}/directory`} />
         <Route component={Events} path={`${url}/events`} />
-        <AdminRoute component={MemberDatabase} path={`${url}/database`} />
+        <AdminRoute component={Database} path={`${url}/database`} />
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />
         {!autoAccept && (

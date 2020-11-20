@@ -68,7 +68,7 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const logoUrl = useStoreState(({ community }) => community?.logoUrl);
   const title = useStoreState(({ community }) => community?.applicationTitle);
   const description = useStoreState(

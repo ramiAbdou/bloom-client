@@ -17,7 +17,7 @@ export default (): UseClientRequestResult<any, object> => {
   const options = useStoreState(
     ({ integrations }) => integrations?.mailchimpLists ?? []
   );
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const mailchimpListName = items.find(

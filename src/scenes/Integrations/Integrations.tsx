@@ -148,7 +148,7 @@ const Cards = () => {
 };
 
 export default () => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const { data, loading } = useQuery(GET_INTEGRATIONS);
 
   useEffect(() => {
