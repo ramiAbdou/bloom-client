@@ -2,8 +2,7 @@
 
 $PREF: 'c-btn';
 
-// This is needed since we are manually setting the height of the button which
-// throws off the vertical alignment of the button.
+// ## BASIC BUTTON
 
 .#{$PREF} {
   @extend .btn-txt;
@@ -18,14 +17,12 @@ $PREF: 'c-btn';
   &--lg { height: $xl; }
 }
 
-.#{$PREF}-loading { @extend .flex-acc; cursor: default; }
-.#{$PREF}-loading > p {
-  @extend .btn-txt;
-  @extend .flex-acc;
+// ## LOADING STATE
 
-  color: $gray-3;
-  margin-right: $sm;
-}
+.#{$PREF}-loading { @extend .flex-acc; }
+.#{$PREF}-loading > p { @extend .btn-txt; color: $gray-3; margin-right: $sm; }
+
+// ## DISABLED STATE
 
 .#{$PREF}-disabled {
   color: $gray-3 !important;
