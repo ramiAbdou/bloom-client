@@ -14,7 +14,8 @@ import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
 import { usePrevious } from '@hooks/usePrevious';
-import { Community, IApplicationQuestion } from '@store/schema';
+import { IApplicationQuestion } from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
@@ -110,7 +111,7 @@ export default () => {
         applicationQuestions: result.application.questions,
         applicationTitle: result.application.title
       },
-      schema: Community
+      schema: Schema.COMMUNITY
     });
   }, [data]);
 

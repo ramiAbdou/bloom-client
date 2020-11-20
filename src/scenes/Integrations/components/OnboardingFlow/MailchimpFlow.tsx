@@ -11,7 +11,7 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import Modal from '@components/Modal/Modal';
-import { Integrations } from '@store/schema';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
 import { UPDATE_MAILCHIMP_LIST_ID } from '../../Integrations.gql';
@@ -57,7 +57,7 @@ const Content = () => {
 
       updateEntities({
         data: { ...data.updateMailchimpListId },
-        schema: Integrations
+        schema: Schema.INTEGRATIONS
       });
 
       closeModal();

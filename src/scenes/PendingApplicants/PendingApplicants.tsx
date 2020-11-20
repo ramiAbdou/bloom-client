@@ -9,11 +9,11 @@ import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
 import {
-  Community,
   IPendingApplicant,
   ResolvedApplicantData,
   UnresolvedApplicantData
-} from '@store/schema';
+} from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
 import Applicant from './components/ApplicantCard/ApplicantCard.store';
@@ -59,7 +59,7 @@ export default () => {
         ...data.getApplicants,
         applicationQuestions: data.getApplicants.application.questions
       },
-      schema: Community
+      schema: Schema.COMMUNITY
     });
   }, [data]);
 

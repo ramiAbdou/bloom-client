@@ -10,7 +10,7 @@ import React, { memo, useEffect } from 'react';
 
 import Spinner from '@components/Loader/Spinner';
 import { APP, isProduction, LoadingProps } from '@constants';
-import { Community } from '@store/schema';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import URLBuilder from '@util/URLBuilder';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
@@ -146,7 +146,7 @@ export default () => {
 
     updateEntities({
       data: { ...data.getIntegrations },
-      schema: Community
+      schema: Schema.COMMUNITY
     });
   }, [data]);
 

@@ -12,7 +12,7 @@ import {
 } from 'react-icons/io';
 
 import Button from '@components/Button/Button';
-import { ICommunity } from '@store/schema';
+import { ICommunity } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RESPOND_TO_MEMBERSHIPS } from '../../PendingApplicants.gql';
 import Applicant from './ApplicantCard.store';

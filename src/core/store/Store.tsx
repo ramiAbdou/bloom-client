@@ -21,7 +21,6 @@ import { PickerModel, pickerModel } from '@components/Picker/Picker.store';
 import { ToastModel, toastModel } from '@components/Toast/Toast.store';
 import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
 import {
-  Entity,
   EntityRecord,
   IApplicationQuestion,
   ICommunity,
@@ -30,7 +29,8 @@ import {
   IMembership,
   IPendingApplicant,
   IUser
-} from './schema';
+} from './entities';
+import { Entity } from './schema';
 import { ScreenModel, screenModel } from './Screen.store';
 
 type UpdateEntitiesArgs = {
