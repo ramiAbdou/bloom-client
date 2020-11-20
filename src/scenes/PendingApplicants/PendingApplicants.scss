@@ -2,7 +2,7 @@
 
 $PREF: 's-applicants';
 
-.s-home-header > div > button:first-of-type { margin-right: 12px; }
+.#{$PREF}-accept-all { margin-right: 12px; }
 
 .#{$PREF} > p { @extend .body--1; }
 

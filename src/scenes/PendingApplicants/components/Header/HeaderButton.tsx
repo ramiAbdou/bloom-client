@@ -52,7 +52,14 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
   const baseProps = { disabled: !hasApplicants, onClick };
 
   if (response === 'ACCEPTED')
-    return <PrimaryButton {...baseProps} title="Accept All" />;
+    return (
+      <PrimaryButton
+        className="s-applicants-accept-all"
+        {...baseProps}
+        title="Accept All"
+      />
+    );
+
   return <OutlineButton title="Ignore All" {...baseProps} />;
 };
 

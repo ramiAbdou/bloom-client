@@ -5,8 +5,16 @@
 
 import React from 'react';
 
+import MultiButton from '@components/Button/MultiButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 
-type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
-
 export const AddMemberButton = () => <PrimaryButton title="Add Member" />;
+
+export const MemberAdminButton = () => (
+  <MultiButton
+    options={[
+      { onClick: () => {}, title: 'Members' },
+      { onClick: () => {}, title: 'Admins' }
+    ]}
+  />
+);
