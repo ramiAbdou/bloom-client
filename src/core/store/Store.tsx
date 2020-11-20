@@ -25,13 +25,11 @@ import { PickerModel, pickerModel } from '@components/Picker/Picker.store';
 import { ToastModel, toastModel } from '@components/Toast/Toast.store';
 import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
 import {
-  EntityRecord,
   ICommunity,
   IEntities,
   IIntegrations,
   IMembership,
   initialEntities,
-  IPendingApplicant,
   IUser
 } from './entities';
 import { ScreenModel, screenModel } from './Screen.store';
@@ -49,12 +47,9 @@ type StoreModel = {
   integrations: Computed<StoreModel, IIntegrations>;
   loader: LoaderModel;
   membership: Computed<StoreModel, IMembership>;
-  memberships: Computed<StoreModel, EntityRecord<IMembership>>;
   modal: ModalModel;
-  pendingApplicants: Computed<StoreModel, EntityRecord<IPendingApplicant>>;
   picker: PickerModel;
   screen: ScreenModel;
-  setActiveCommunity: Action<StoreModel, string>;
   toast: ToastModel;
   updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
   user: Computed<StoreModel, IUser>;
@@ -114,53 +109,32 @@ export const store = createStore<StoreModel>(
     entities: initialEntities,
 
     integrations: computed(({ community, entities }) => {
-      const { byId } = entities.integrations as EntityRecord<IIntegrations>;
+      const { byId } = entities.integrations;
       return byId[community?.integrations];
     }),
 
     loader: loaderModel,
 
-    membership: computed(({ memberships }) => {
-      const { activeId, byId } = memberships;
-      return byId[activeId];
-    }),
+    membership: computed(({ entities }) => {
+      const { activeId, byId } = entities.memberships;
+      const result = byId[activeId];
 
-    memberships: computed(({ entities }) => {
-      const result = entities.memberships as EntityRecord<IMembership>;
+      if (result) {
+        const { role } = result;
 
-      const { activeId, byId } = result;
-      const activeMembership: IMembership = byId[activeId];
-
-      if (!activeMembership) return result;
-      const { role } = activeMembership;
-
-      // For every request, we should have a communityId set in the token so
-      // we could take advantage of the GQL context and reduce # of args.
-      if (Cookie.get('role') !== role) Cookie.set('role', role);
+        // For every request, we should have a communityId set in the token so
+        // we could take advantage of the GQL context and reduce # of args.
+        if (Cookie.get('role') !== role) Cookie.set('role', role);
+      }
 
       return result;
     }),
 
     modal: modalModel,
 
-    pendingApplicants: computed(
-      ({ entities }) =>
-        entities.pendingApplicants as EntityRecord<IPendingApplicant>
-    ),
-
     picker: pickerModel,
 
     screen: screenModel,
-
-    setActiveCommunity: action(
-      ({ entities, ...state }, communityId: string) => ({
-        ...state,
-        entities: {
-          ...entities,
-          communities: { ...entities.communities, activeId: communityId }
-        }
-      })
-    ),
 
     toast: toastModel,
 

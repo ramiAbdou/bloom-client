@@ -32,12 +32,13 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
     ({ community }) => community?.encodedUrlName
   );
 
-  const isMember: boolean = useStoreState(({ communities, memberships }) =>
-    Object.values(memberships.byId).some(
+  const isMember: boolean = useStoreState(({ entities }) => {
+    const { communities, memberships } = entities;
+    return Object.values(memberships.byId).some(
       ({ community }) =>
         encodedUrlName === communities.byId[community]?.encodedUrlName
-    )
-  );
+    );
+  });
 
   // If the activeEncodedUrlName hasn't been set yet, that means the community
   // hasn't been loaded in the global state yet, so just wait...

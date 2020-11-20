@@ -30,7 +30,7 @@ export const BackButton = () => {
 export const AcceptButton = () => {
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
   const community = useStoreState((store) => store.community);
-  const communities = useStoreState((store) => store.communities);
+  const communities = useStoreState(({ entities }) => entities.communities);
   const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -77,7 +77,7 @@ export const AcceptButton = () => {
 };
 
 export const IgnoreButton = () => {
-  const communities = useStoreState((store) => store.communities);
+  const communities = useStoreState(({ entities }) => entities.communities);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
   const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);

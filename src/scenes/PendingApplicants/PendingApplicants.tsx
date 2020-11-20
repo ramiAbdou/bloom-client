@@ -31,15 +31,20 @@ export default () => {
   );
 
   const applicants: IPendingApplicant[] = useStoreState(
-    ({ entities, pendingApplicants, community }) => {
-      const { byId } = entities.applicationQuestions;
+    ({ entities, community }) => {
+      const { byId: byApplicationQuestion } = entities.applicationQuestions;
+      const { byId: byApplicant } = entities.pendingApplicants;
+
       return community.pendingApplicants?.map((applicantId: string) => {
-        const applicant = pendingApplicants.byId[applicantId];
+        const applicant = byApplicant[applicantId];
 
         // @ts-ignore b/c we are simply checking if the data is resolved or not.
         if (applicant.applicantData[0]?.questionId)
           applicant.applicantData = (applicant.applicantData as UnresolvedApplicantData[]).map(
-            ({ questionId, value }) => ({ question: byId[questionId], value })
+            ({ questionId, value }) => ({
+              question: byApplicationQuestion[questionId],
+              value
+            })
           ) as ResolvedApplicantData[];
 
         return applicant;

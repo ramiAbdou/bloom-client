@@ -18,10 +18,11 @@ import SidebarLink from './SidebarLink';
 const SidebarContent = () => {
   const name = useStoreState(({ community }) => community.name);
   const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
-  const isAdmin: boolean = useStoreState(({ communities, memberships }) => {
-    return Object.values(memberships.byId).some(
-      ({ community, role }) =>
-        !!role && name === communities.byId[community]?.name
+  const isAdmin: boolean = useStoreState(({ entities }) => {
+    const { byId: byCommunity } = entities.communities;
+    const { byId: byMembership } = entities.memberships;
+    return Object.values(byMembership).some(
+      ({ community, role }) => !!role && name === byCommunity[community]?.name
     );
   });
 
