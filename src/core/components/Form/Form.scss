@@ -86,7 +86,8 @@ $PREF: 'c-form';
 // ## MULTIPLE CHOICE TEXT (BOTH MULTIPLE CHOICE/SELECT)
 
 .#{$PREF}-choice-txt {
-  background-color: rgba($color: $primary-hex, $alpha: 0.15);
+  @extend .primary-bg;
+  
   border-radius: $sm;
   color: black;
   font-size: 13px;

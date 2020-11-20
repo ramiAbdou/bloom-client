@@ -13,8 +13,14 @@
   width: 100vw;
 }
 
+// SHADOWS
+
 // Shadow that has the primary color hint in it.
 .shadow--1 { box-shadow: 0 2px 4px 1px hsla($primary-hue, 99%, 17%, 0.1); }
+.shadow--2 { box-shadow: 0 2px 4px 1px hsla($primary-hue, 99%, 17%, 0.15); }
+
+// BACKGROUND COLOR
+.primary-bg { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
 
 // Used globally for all react-icons.
 .react-icon {
@@ -72,6 +78,8 @@
   }
 }
 
+// ## HOVER STATE (DILUTED PRIMARY COLOR)
+
 @mixin PRIMARY_HOVER {
   @media (hover: hover) {
     &:hover { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
@@ -88,6 +96,8 @@
 
   @include PRIMARY_HOVER;
 }
+
+// ## CARD
 
 .card {
   @extend .flex-col;

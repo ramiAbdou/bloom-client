@@ -72,8 +72,6 @@ $PREF: 'c-btn';
   padding: $xs $sm;
   text-decoration: underline;
   
-  @include HOVER {
-    background-color: rgba($color: $primary-hex, $alpha: 0.1);
-    border-radius: 10px;
-  }
+  @include PRIMARY_HOVER;
+  @include HOVER { border-radius: 10px; }
 }

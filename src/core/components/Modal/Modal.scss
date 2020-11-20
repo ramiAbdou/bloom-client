@@ -2,13 +2,17 @@
 
 $PREF: 'c-modal';
 
-##{$PREF}-bg {
+// ## MODAL BACKGROUND (DARK OPACITY)
+
+.#{$PREF}-ctr {
   @extend .full-screen;
 
   backdrop-filter: blur(2px);
   background-color: hsla($primary-hue, 5%, 20%, 0.5);
   z-index: 1000;
 }
+
+// ## MODAL CONTAINER
 
 .#{$PREF} {
   background-color: white;
@@ -28,7 +32,8 @@ $PREF: 'c-modal';
 }
 
 .#{$PREF}-content { max-height: inherit; padding: $md; }
-.#{$PREF}-ctr { max-height: inherit; }
+
+// ## MODAL HEADER
 
 .#{$PREF}-header {
   @extend .flex-acsb;
@@ -40,27 +45,3 @@ $PREF: 'c-modal';
   position: sticky;
   top: 0;
 }
-
-.#{$PREF}__hdr-btn--back {
-  @extend .flex-acc; // Needed to center the image within the button container.
-
-  border-radius: 50%;
-  height: min-content;
-  margin-right: 20px; // Needed to center the title b/c of the secondary button.
-  padding: 10px;
-  width: min-content;
-
-  @media (hover: hover) {
-    &:hover { background-color: rgba($color: #d9c4b3, $alpha: 0.25); }
-  }
-  
-  /* stylelint-disable-next-line */
-  &:active { background-color: rgba($color: $primary, $alpha: 0.25); }
-}
-
-.#{$PREF}__hdr-btn--back__img { height: 20px; padding: 0; width: 20px; }
-
-// ## CONFIRMATION MODAL
-
-.#{$PREF}--confirmation-action-ctr { @extend .flex-ac; }
-.#{$PREF}--confirmation-action-ctr > button:first-of-type { margin-right: $xs; }

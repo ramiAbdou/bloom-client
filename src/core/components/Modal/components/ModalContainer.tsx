@@ -32,10 +32,10 @@ export default memo(({ children }: ChildrenProps) => {
   return (
     <>
       <motion.div
-        key="c-modal-bg"
+        key="c-modal-ctr"
         animate={{ opacity: 0.5 }}
+        className="c-modal-ctr"
         exit={{ opacity: 0 }}
-        id="c-modal-bg"
         initial={{ opacity: 0 }}
         transition={{ duration: 0.1 }}
       />

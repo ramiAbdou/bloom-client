@@ -18,9 +18,7 @@ import ModalContainer from './components/ModalContainer';
 const CurrentScreen = () => {
   const currentScreen = useStoreState(({ modal }) => modal.currentScreen);
   const screens = useStoreState(({ modal }) => modal.screens);
-
-  if (!screens?.length) return null;
-  return <>{screens[currentScreen]}</>;
+  return screens.length ? <>{screens[currentScreen]}</> : null;
 };
 
 interface ModalProps extends IsShowingProps, Partial<ChildrenProps> {}
