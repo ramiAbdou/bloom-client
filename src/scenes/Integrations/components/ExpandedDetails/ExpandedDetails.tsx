@@ -19,7 +19,7 @@ type ExpandedDetailsProps = {
 };
 
 const Detail = memo(({ label, value }: ExpandedDetailProps) => (
-  <div className="s-integrations-details-item">
+  <div className="s-integrations-modal-item--detail">
     <p>{label}</p>
     <p>{value}</p>
   </div>

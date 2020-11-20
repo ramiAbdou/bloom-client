@@ -2,12 +2,6 @@
 
 $PREF: 's-integrations';
 
-// ## INTEGRATIONS
-
-// ## INTEGRATION CARD CONTAINER
-
-.#{$PREF}-card-ctr { @extend .flex-w; }
-
 // ## INTEGRATION COMPANY ICON
 
 .#{$PREF}-icon {
@@ -17,13 +11,11 @@ $PREF: 's-integrations';
 
   &--lg {
     border-radius: $xs;
-    height: $xxl + $xs;
+    height: $xxl + $xs; // 68px
     margin-bottom: $sm;
-    width: $xxl + $xs;
+    width: $xxl + $xs; // 68px
   }
 }
-
-.#{$PREF}-header { @extend .flex-acsb; margin-bottom: $sm; }
 
 // ## INTEGRATION CARD
 
@@ -39,19 +31,24 @@ $PREF: 's-integrations';
 .#{$PREF}-card > h3 { margin-bottom: $xs; }
 .#{$PREF}-card > p { margin-bottom: $sm; }
 
-.#{$PREF}-card-completed { @extend .flex-ac; margin-right: $sm; }
-.#{$PREF}-card-completed > svg { color: $green; margin-right: $xxs; }
-.#{$PREF}-card-completed > p { @extend .bold; color: $green; }
+// ## CARD HEADER
 
-// ## ONBOARDING MODAL
+.#{$PREF}-card-header { @extend .flex-acsb; margin-bottom: $sm; }
 
-.#{$PREF}-form-item { margin: $xl 0; }
-.#{$PREF}-title { margin-bottom: -$sm; }
+// ## CARD CONNECTED (CHECK MARK AND LABEL)
+
+.#{$PREF}-connected { @extend .flex-ac; margin-right: $sm; }
+.#{$PREF}-connected > svg { color: $green; margin-right: $xxs; }
+.#{$PREF}-connected > p { @extend .bold; color: $green; }
+
+// ## MODAL (ONBOARDING AND DETAILS)
+
+.#{$PREF}-modal-item {
+  margin: $xl 0;
+
+  &--detail { margin: $md 0; }
+  &--detail > p:last-of-type { @extend .bold; color: $primary; }
+}
 
 .#{$PREF}-action-ctr { @extend .flex-ac; margin-top: $lg; }
 .#{$PREF}-action-ctr > button:first-of-type { margin-right: $xs; }
-
-// ## DETAILS MODAL
-
-.#{$PREF}-details-item { margin: $md 0; }
-.#{$PREF}-details-item > p:last-of-type { @extend .bold; color: $primary; }

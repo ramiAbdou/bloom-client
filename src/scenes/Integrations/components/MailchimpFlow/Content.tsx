@@ -16,7 +16,6 @@ import IntegrationsStore from '../../Integrations.store';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
 export default () => {
-  const MODAL_ID = 'MAILCHIMP_FLOW';
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
@@ -27,6 +26,7 @@ export default () => {
   const submitForm = Form.useStoreState((store) => store.submitForm);
 
   const { error, loading } = useMailchimpSubmit();
+  const MODAL_ID = 'MAILCHIMP_FLOW';
 
   useEffect(() => {
     showModal({ id: MODAL_ID, onClose: () => setFlow(null) });
@@ -46,7 +46,7 @@ export default () => {
         src={mailchimp}
       />
 
-      <h1 className="s-integrations-title">Integrate with Mailchimp</h1>
+      <h1 style={{ marginBottom: -24 }}>Integrate with Mailchimp</h1>
       <FormContent />
 
       <div className="s-integrations-action-ctr">

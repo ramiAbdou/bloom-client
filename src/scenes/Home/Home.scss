@@ -29,6 +29,8 @@ $PREF: 's-home';
   width: 100%;
 }
 
+// ## HEADER
+
 // Makes the header consistent across each page. Mainly for loading purposes.
 .#{$PREF}-header, .#{$PREF}-header > div { @extend .flex-acsb; }
 .#{$PREF}-header {

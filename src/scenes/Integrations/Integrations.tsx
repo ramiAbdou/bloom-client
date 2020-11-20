@@ -42,7 +42,7 @@ const IntegrationModal = () => {
   }, []);
 
   // Flow is showing when the modal isShowing is true and there is a populated
-  // value of the Integrations store flow.
+  // value of flow.
 
   if (flow === 'MAILCHIMP_FLOW') return <MailchimpFlow />;
   if (flow === 'MAILCHIMP_DETAILS') return <MailchimpDetails />;
@@ -52,6 +52,8 @@ const IntegrationModal = () => {
   return null;
 };
 
+// Responsible for fetching and supplying all the data to the children card
+// components to process and render.
 const Cards = () => {
   const encodedUrlName = useStoreState(
     ({ community }) => community.encodedUrlName
@@ -74,6 +76,7 @@ const Cards = () => {
   );
 
   const integrationData: IntegrationCardProps[] = [
+    // ## MAILCHIMP
     {
       completed: isMailchimpComplete,
       description: `Quickly add every new member of the community to your
@@ -88,6 +91,8 @@ const Cards = () => {
       logo: mailchimp,
       name: 'Mailchimp'
     },
+
+    // ## STRIPE
     {
       completed: isStripeAuthenticated,
       description: 'Collect monthly or yearly dues payments from your members.',
@@ -110,6 +115,8 @@ const Cards = () => {
       logo: stripe,
       name: 'Stripe'
     },
+
+    // ## ZOOM
     {
       completed: isZoomAuthenticated,
       description: 'Host Zoom events with your account in 1-click.',
@@ -121,6 +128,8 @@ const Cards = () => {
       logo: zoom,
       name: 'Zoom'
     },
+
+    // ## ZAPIER
     {
       description: 'For just about any other integration you want.',
       href: 'https://zapier.com/',
@@ -130,7 +139,7 @@ const Cards = () => {
   ];
 
   return (
-    <div className="s-integrations-card-ctr">
+    <div className="flex-w">
       {integrationData.map((props: IntegrationCardProps) => (
         <IntegrationCard key={props.name} {...props} />
       ))}
@@ -152,11 +161,9 @@ export default () => {
 
   return (
     <Integrations.Provider>
-      <div className="s-integrations">
-        <Header loading={loading} />
-        {!loading && <Cards />}
-        <IntegrationModal />
-      </div>
+      <Header loading={loading} />
+      {!loading && <Cards />}
+      <IntegrationModal />
     </Integrations.Provider>
   );
 };

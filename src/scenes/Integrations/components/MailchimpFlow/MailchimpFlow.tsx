@@ -29,7 +29,7 @@ export default () => {
   return (
     <Form.Provider
       initialData={{
-        itemCSS: 's-integrations-form-item',
+        itemCSS: 's-integrations-modal-item',
         questions: [
           {
             completed: isMailchimpAuthenticated,

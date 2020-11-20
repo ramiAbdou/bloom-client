@@ -50,11 +50,11 @@ export default ({
   href
 }: IntegrationCardProps) => (
   <div className="s-integrations-card">
-    <div className="s-integrations-header">
+    <div className="s-integrations-card-header">
       <img alt="Company Logo" className="s-integrations-icon" src={logo} />
 
       {completed && (
-        <div className="s-integrations-card-completed">
+        <div className="s-integrations-connected">
           <IoIosCheckmarkCircle />
           <p>Connected</p>
         </div>
