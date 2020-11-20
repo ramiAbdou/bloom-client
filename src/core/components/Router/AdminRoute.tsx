@@ -17,10 +17,12 @@ import { useStoreState } from '@store/Store';
 export default ({ component, ...rest }: RouteProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
   const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
-  const isAdmin: boolean = useStoreState(({ communities, memberships }) => {
-    return Object.values(memberships.byId).some(
+  const isAdmin: boolean = useStoreState(({ entities }) => {
+    const { byId: byCommunity } = entities.communities;
+    const { byId: byMembership } = entities.memberships;
+    return Object.values(byMembership).some(
       ({ community, role }) =>
-        !!role && encodedUrlName === communities.byId[community]?.encodedUrlName
+        !!role && encodedUrlName === byCommunity[community]?.encodedUrlName
     );
   });
 

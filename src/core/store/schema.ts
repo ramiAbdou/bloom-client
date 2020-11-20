@@ -1,117 +1,44 @@
 /**
  * @fileoverview Store: Schema
+ * - Defines the normalizr schema needed to normalize all of the data based
+ * on the relationships of the data. Structures in a way that is very similar
+ * to the actual PostgreSQL DB.
  * @author Rami Abdou
  */
 
 /* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { schema } from 'normalizr';
 
-import { QuestionCategory, QuestionType } from '@constants';
+// ## NORMALIZR SCHEMA DECLARATIONS
 
-type EntityID = string;
+const ApplicationQuestion = new schema.Entity('applicationQuestions', {});
 
-export type Entity =
-  | 'applicationQuestions'
-  | 'applications'
-  | 'communities'
-  | 'members'
-  | 'memberships'
-  | 'pendingApplicants'
-  | 'users';
+const Integrations = new schema.Entity('integrations', {});
 
-export type IApplicationQuestion = {
-  category: QuestionCategory;
-  id: string;
-  inApplicantCard: boolean;
-  order: number;
-  options: string[];
-  required: boolean;
-  title: QuestionType;
-  type: QuestionType;
-};
+const PendingApplicant = new schema.Entity('pendingApplicants', {});
 
-export type ICommunity = {
-  applicationDescription?: string;
-  applicationQuestions: EntityID[];
-  applicationTitle?: string;
-  autoAccept?: boolean;
-  encodedUrlName: string;
-  id: string;
-  logoUrl: string;
-  members: EntityID[];
-  name: string;
-  pendingApplicants: EntityID[];
-  primaryColor: string;
-};
-
-export type IMember = {
-  allData: { questionId: string; value: string }[];
-  id: string;
-};
-
-export type IMembership = {
-  community: EntityID;
-  id: string;
-  role: 'ADMIN' | 'OWNER';
-  type: IMembershipType;
-};
-
-type IMembershipType = { name: string };
-
-export type UnresolvedApplicantData = { questionId: string; value: string };
-export type ResolvedApplicantData = {
-  question: IApplicationQuestion;
-  value: string;
-};
-
-export type IPendingApplicant = {
-  applicantData: UnresolvedApplicantData[] | ResolvedApplicantData[];
-  createdAt: string;
-  id: string;
-};
-
-export type IUser = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  id: string;
-  pictureURL: string;
-};
-
-export interface EntityRecord<
-  T =
-    | IApplicationQuestion
-    | ICommunity
-    | IMember
-    | IMembership
-    | IPendingApplicant
-    | IUser
-> {
-  activeId?: string;
-  allIds: string[];
-  byId: Record<string, T>;
-}
-
-export const ApplicationQuestion = new schema.Entity(
-  'applicationQuestions',
-  {}
-);
-
-export const Member = new schema.Entity('members', {});
-
-export const PendingApplicant = new schema.Entity('pendingApplicants', {});
-
-export const Community = new schema.Entity('communities', {
+const Community = new schema.Entity('communities', {
   applicationQuestions: [ApplicationQuestion],
-  members: [Member],
+  integrations: Integrations,
   pendingApplicants: [PendingApplicant]
 });
 
-export const Membership = new schema.Entity('memberships', {
+const Membership = new schema.Entity('memberships', {
   community: Community
 });
 
-export const User = new schema.Entity('users', {
-  memberships: [Membership]
-});
+const User = new schema.Entity('users', { memberships: [Membership] });
+
+// We define an object that carries all the schemas to have everything
+// centralized and to reduce confusion with the Interface declarations
+// (ie: ICommunity, IUser, etc).
+export const Schema = {
+  APPLICATION_QUESTION: ApplicationQuestion,
+  COMMUNITY: Community,
+  INTEGRATIONS: Integrations,
+  MEMBERSHIP: Membership,
+  PENDING_APPLICANT: PendingApplicant,
+  USER: User
+};

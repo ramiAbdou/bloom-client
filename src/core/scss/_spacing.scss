@@ -11,18 +11,18 @@ $xxl: 60px;
 
 // Flex configurations that are applicable in all settings.
 
-%flex {
+.flex {
   display: flex;
 
-  &-ac { @extend %flex; align-items: center; }
-  &-acc { @extend %flex-ac; justify-content: center; }
-  &-accol { @extend %flex-ac; flex-direction: column; }
-  &-acccol { @extend %flex-acc; flex-direction: column; }
-  &-acsb { @extend %flex-ac; justify-content: space-between; }
-  &-ae { @extend %flex; align-items: flex-end; }
-  &-c { @extend %flex; justify-content: center; }
-  &-col { @extend %flex; flex-direction: column; }
-  &-colsb { @extend %flex-col; justify-content: space-between; }
-  &-sb { @extend %flex; justify-content: space-between; }
-  &-w { @extend %flex; flex-wrap: wrap; }
+  &-ac { @extend .flex; align-items: center; }
+  &-acc { @extend .flex-ac; justify-content: center; }
+  &-accol { @extend .flex-ac; flex-direction: column; }
+  &-acccol { @extend .flex-acc; flex-direction: column; }
+  &-acsb { @extend .flex-ac; justify-content: space-between; }
+  &-ae { @extend .flex; align-items: flex-end; }
+  &-c { @extend .flex; justify-content: center; }
+  &-col { @extend .flex; flex-direction: column; }
+  &-colsb { @extend .flex-col; justify-content: space-between; }
+  &-sb { @extend .flex; justify-content: space-between; }
+  &-w { @extend .flex; flex-wrap: wrap; }
 }

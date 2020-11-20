@@ -12,6 +12,7 @@ import {
   computed,
   createContextStore
 } from 'easy-peasy';
+import { UseClientRequestResult } from 'graphql-hooks';
 
 import { FormData, FormQuestion, QuestionCategory } from '@constants';
 import { FormItemData } from './Form.types';
@@ -21,12 +22,20 @@ type GetItemArgs = { category?: QuestionCategory; title?: string };
 type FormModel = {
   data: Computed<FormModel, FormData>;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
+  getValue: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
   itemCSS: string; // Represents a class string.
   items: FormItemData[];
   next: Action<FormModel, string>;
-  setSubmitForm: Action<FormModel, (...args: any[]) => Promise<any>>;
-  submitForm: (...args: any[]) => Promise<any>;
+  setSubmitForm: Action<
+    FormModel,
+    (
+      ...args: any[]
+    ) => Promise<any> | Promise<UseClientRequestResult<any, object>>
+  >;
+  submitForm: (
+    ...args: any[]
+  ) => Promise<any> | Promise<UseClientRequestResult<any, object>>;
   submitOnEnter: Computed<FormModel, boolean>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
@@ -59,20 +68,28 @@ const model: FormModel = {
       value: parseValue(value)
     }))
   ),
+
   getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
     items.find((item) => item.category === category || item.title === title)
+  ),
+
+  getValue: computed(({ items }) => ({ category, title }: GetItemArgs) =>
+    items.find((item) => item.category === category || item.title === title)
+      ?.value
   ),
 
   isCompleted: computed(
     ({ items }) =>
       items &&
       items.every(
-        ({ required, value, validate }: FormItemData) =>
-          (!required || (required && value)) && (!validate || validate(value))
+        ({ completed, required, value, validate }: FormItemData) =>
+          (!required || !!value || !!completed) &&
+          (!validate || validate(value))
       )
   ),
 
   itemCSS: null,
+
   items: [],
 
   /**

@@ -12,16 +12,16 @@ import {
 } from 'react-icons/io';
 
 import Button from '@components/Button/Button';
-import { ICommunity } from '@store/schema';
+import { ICommunity } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RESPOND_TO_MEMBERSHIPS } from '../../PendingApplicants.gql';
 import Applicant from './ApplicantCard.store';
 
 // In the context of the ExpandedCard, which exits the modal.
 export const BackButton = () => {
-  const closeFlow = useStoreActions(({ flow }) => flow.closeFlow);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   return (
-    <Button onClick={() => closeFlow()}>
+    <Button onClick={() => closeModal()}>
       <IoMdArrowBack className="back-arrow" />
     </Button>
   );
@@ -30,7 +30,7 @@ export const BackButton = () => {
 export const AcceptButton = () => {
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
   const community = useStoreState((store) => store.community);
-  const communities = useStoreState((store) => store.communities);
+  const communities = useStoreState(({ entities }) => entities.communities);
   const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -77,7 +77,7 @@ export const AcceptButton = () => {
 };
 
 export const IgnoreButton = () => {
-  const communities = useStoreState((store) => store.communities);
+  const communities = useStoreState(({ entities }) => entities.communities);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
   const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);

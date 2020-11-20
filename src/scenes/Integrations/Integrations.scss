@@ -1,0 +1,54 @@
+@import 'src/index.scss';
+
+$PREF: 's-integrations';
+
+// ## INTEGRATION COMPANY ICON
+
+.#{$PREF}-icon {
+  border-radius: $xs;
+  height: $xxl;
+  width: $xxl;
+
+  &--lg {
+    border-radius: $xs;
+    height: $xxl + $xs; // 68px
+    margin-bottom: $sm;
+    width: $xxl + $xs; // 68px
+  }
+}
+
+// ## INTEGRATION CARD
+
+.#{$PREF}-card {
+  @extend .card;
+
+  background-color: white;
+  margin-bottom: $md;
+  margin-right: $md;
+  width: $xxl * 5;
+}
+
+.#{$PREF}-card > h3 { margin-bottom: $xs; }
+.#{$PREF}-card > p { margin-bottom: $sm; }
+
+// ## CARD HEADER
+
+.#{$PREF}-card-header { @extend .flex-acsb; margin-bottom: $sm; }
+
+// ## CARD CONNECTED (CHECK MARK AND LABEL)
+
+.#{$PREF}-connected { @extend .flex-ac; margin-right: $sm; }
+.#{$PREF}-connected > svg { color: $green; margin-right: $xxs; }
+.#{$PREF}-connected > p { @extend .bold; color: $green; }
+
+// ## MODAL (ONBOARDING AND DETAILS)
+
+.#{$PREF}-modal-item {
+  margin: $xl 0;
+
+  &--detail { margin: $md 0; }
+  &--detail > p:last-of-type { @extend .bold; color: $primary; }
+}
+
+.#{$PREF}-action-ctr { @extend .flex-ac; margin-top: $lg; }
+.#{$PREF}-action-ctr > button:first-of-type { margin-right: $xs; }

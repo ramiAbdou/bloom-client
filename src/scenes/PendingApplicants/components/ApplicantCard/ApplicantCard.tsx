@@ -6,8 +6,7 @@
 import React, { memo, useMemo } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
-import Flow from '@components/Flow/Flow';
-import { FlowScreen } from '@store/Flow.store';
+import Modal from '@components/Modal/Modal';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';
 import Applicant from './ApplicantCard.store';
@@ -35,25 +34,25 @@ const CardHeader = () => {
 
 const ExpandButton = memo(() => {
   const applicantId = Applicant.useStoreState(({ applicant }) => applicant.id);
-  const FLOW_ID = `EXPANDED_APPLICANT_CARD-${applicantId}`;
+  const MODAL_ID = `EXPANDED_APPLICANT_CARD-${applicantId}`;
 
-  const id = useStoreState(({ flow }) => flow.id);
-  const isShowing = useStoreState(({ flow }) => flow.isShowing);
-  const showFlow = useStoreActions(({ flow }) => flow.showFlow);
+  const id = useStoreState(({ modal }) => modal.id);
+  const isShowing = useStoreState(({ modal }) => modal.isShowing);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () => {
-    const screens: FlowScreen[] = [{ node: <ExpandedCard /> }];
-    showFlow({ id: FLOW_ID, screens });
-  };
+  const onClick = () => showModal({ id: MODAL_ID });
 
-  const shouldShowFlow = useMemo(() => isShowing && FLOW_ID === id, [
+  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
     isShowing,
-    id === FLOW_ID
+    id === MODAL_ID
   ]);
 
   return (
     <>
-      <Flow isShowing={shouldShowFlow} />
+      <Modal isShowing={shouldShowModal}>
+        <ExpandedCard />
+      </Modal>
+
       <UnderlineButton title="See Full Application" onClick={onClick} />
     </>
   );

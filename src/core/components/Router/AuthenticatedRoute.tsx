@@ -8,9 +8,9 @@ import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
-import { User } from '@store/schema';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_USER } from '@store/User.gql';
+import { GET_USER } from './Router.gql';
 import TokenRoute from './TokenRoute';
 
 /**
@@ -27,7 +27,7 @@ export default ({ component, ...rest }: RouteProps) => {
 
   useEffect(() => {
     if (!data?.getUser) return;
-    updateEntities({ data: data.getUser, schema: User });
+    updateEntities({ data: data.getUser, schema: Schema.USER });
   }, [data?.getUser]);
 
   const isHome = rest.path === '/';

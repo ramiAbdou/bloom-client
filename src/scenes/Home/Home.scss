@@ -19,8 +19,8 @@ $PREF: 's-home';
 }
 
 .#{$PREF}-nav {
-  @extend %flex;
-  @extend .shadow-1;
+  @extend .flex;
+  @extend .shadow--1;
 
   grid-column: 1 / 5;
   height: 100%;
@@ -29,8 +29,10 @@ $PREF: 's-home';
   width: 100%;
 }
 
+// ## HEADER
+
 // Makes the header consistent across each page. Mainly for loading purposes.
-.#{$PREF}-header, .#{$PREF}-header > div { @extend %flex-acsb; }
+.#{$PREF}-header, .#{$PREF}-header > div { @extend .flex-acsb; }
 .#{$PREF}-header {
   background-color: $gray-6;
   padding-bottom: $md;

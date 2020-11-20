@@ -6,13 +6,13 @@
 import { Action, action } from 'easy-peasy';
 
 export type LoaderModel = {
-  isLoading: boolean;
+  loading: boolean;
   hideLoader: Action<LoaderModel>;
   showLoader: Action<LoaderModel>;
 };
 
 export const loaderModel: LoaderModel = {
-  hideLoader: action(() => ({ isLoading: false })),
-  isLoading: false,
-  showLoader: action(() => ({ isLoading: true }))
+  hideLoader: action(() => ({ loading: false })),
+  loading: false,
+  showLoader: action(() => ({ loading: true }))
 };

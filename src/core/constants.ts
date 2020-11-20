@@ -24,12 +24,14 @@ export const APP = {
  * GENERAL PROPS - General component props.
  */
 
+export type Function = (() => Promise<any>) | VoidFunction;
+
 export type ChildrenProps = { children: ReactNode };
 export type ClassNameProps = { className?: string };
 export type IdProps = { id: string };
 export type IsShowingProps = { isShowing: boolean };
 export type LoadingProps = { loading: boolean };
-export type OnClickProps = { onClick?: (() => Promise<any>) | VoidFunction };
+export type OnClickProps = { onClick?: Function };
 export type MessageProps = { message: string };
 export type RefProps = { ref: React.MutableRefObject<any> };
 export type StyleProps = { style?: React.CSSProperties };
@@ -51,6 +53,7 @@ export type LoginError =
 export type EncodedUrlNameParams = { encodedUrlName: string };
 
 export type QuestionType =
+  | 'CUSTOM'
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
   | 'MULTIPLE_SELECT'
@@ -66,8 +69,10 @@ export type QuestionCategory =
 
 export type FormQuestion = {
   category?: QuestionCategory;
+  completed?: boolean;
   description?: string;
   id?: string;
+  node?: ReactNode;
   required?: boolean;
   options?: string[];
   title: string;

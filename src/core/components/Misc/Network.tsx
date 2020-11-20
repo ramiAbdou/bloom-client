@@ -9,7 +9,7 @@ import './Misc.scss';
 import React from 'react';
 
 import { ClassNameProps, StyleProps } from '@constants';
-import { network } from './images';
+import network from './images/network.svg';
 
 interface NetworkProps extends StyleProps, ClassNameProps {}
 

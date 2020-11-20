@@ -9,7 +9,6 @@ import React, { ReactElement } from 'react';
 
 import Form from '@components/Form/Form.store';
 import { FormItemData } from '@components/Form/Form.types';
-import { MessageProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import LongText from './components/LongText';
 import MultipleChoice from './components/MultipleChoice/MultipleChoice';
@@ -18,20 +17,12 @@ import MultipleSelect from './components/MultipleSelect/MultipleSelect';
 import ShortText from './components/ShortText';
 import Label from './Label';
 
-const Description = ({ message }: MessageProps) => (
-  <p className="c-form-desc">{message}</p>
-);
-
-const ErrorMessage = ({ message }: MessageProps) => (
-  <p className="c-form-error">{message}</p>
-);
-
-// -----------------------------------------------------------------------------
-
 export default ({
+  completed,
   description,
   errorMessage,
   maxCharacters,
+  node,
   options,
   placeholder,
   required,
@@ -60,10 +51,12 @@ export default ({
 
   return (
     <div className={css}>
-      {!placeholder && <Label required={required} title={title} />}
-      {description && <Description message={description} />}
-      {body}
-      {errorMessage && <ErrorMessage message={errorMessage} />}
+      {!placeholder && (
+        <Label completed={completed} required={required} title={title} />
+      )}
+      {description && <p className="c-form-desc">{description}</p>}
+      {body ?? node}
+      {errorMessage && <p className="c-form-error">{errorMessage}</p>}
     </div>
   );
 };

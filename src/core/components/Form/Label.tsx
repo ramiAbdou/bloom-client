@@ -6,6 +6,7 @@
 import './Form.scss';
 
 import React from 'react';
+import { IoIosCheckmarkCircle } from 'react-icons/io';
 
 import CSSModifier from '@util/CSSModifier';
 
@@ -15,6 +16,7 @@ import CSSModifier from '@util/CSSModifier';
 // the character limit usage (ex: 42/80) will display across from the label.
 
 type LabelProps = {
+  completed?: boolean;
   length?: number;
   maxCharacters?: number;
   required: boolean;
@@ -27,14 +29,23 @@ const LengthCount = ({ length, maxCharacters }: Partial<LabelProps>) => (
   </p>
 );
 
-export default ({ length, maxCharacters, required, title }: LabelProps) => {
+export default ({
+  completed,
+  length,
+  maxCharacters,
+  required,
+  title
+}: LabelProps) => {
   const { css } = new CSSModifier()
     .class('c-form-label')
     .addClass(required, 'c-form-label--required');
 
   return (
     <div className={css}>
-      <p>{title}</p>
+      <div>
+        {completed && <IoIosCheckmarkCircle />}
+        <p>{title}</p>
+      </div>
 
       {maxCharacters && length && (
         <LengthCount length={length} maxCharacters={maxCharacters} />

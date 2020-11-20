@@ -6,7 +6,7 @@
 import { Computed, computed, createContextStore } from 'easy-peasy';
 import moment from 'moment-timezone';
 
-import { IPendingApplicant, ResolvedApplicantData } from '@store/schema';
+import { IPendingApplicant, ResolvedApplicantData } from '@store/entities';
 
 type ApplicantModel = {
   applicant: IPendingApplicant;

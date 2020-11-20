@@ -23,7 +23,7 @@ const CommunityIcon = ({ borderColor, logoUrl }: CommunityIconProps) => {
 
 const Icons = () => {
   const { activeId, allIds, byId } = useStoreState(
-    ({ communities }) => communities
+    ({ entities }) => entities.communities
   );
 
   return (

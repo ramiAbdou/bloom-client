@@ -82,7 +82,7 @@ export default () => {
         large
         className="s-login-submit-btn"
         disabled={!isCompleted}
-        isLoading={loading}
+        loading={loading}
         loadingText="Sending Link..."
         title="Send Login Link"
         onClick={submitForm}

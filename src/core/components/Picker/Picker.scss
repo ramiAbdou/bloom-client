@@ -22,8 +22,8 @@ $PREF: 'c-picker';
 }
 
 .#{$PREF}-content {
-  @extend %flex-col;
-  @extend .shadow-2;
+  @extend .flex-col;
+  @extend .shadow--1;
 
   background-color: white;
   border-radius: 12px;
@@ -36,16 +36,14 @@ $PREF: 'c-picker';
 
 .#{$PREF}-option {
   @extend .fill;
-  @extend .body--2;
+  @extend .body--1;
   
   color: $gray-2;
-  font-weight: 400;
   padding: 12px;
   text-align: left;
   width: 100%;
 
   @include PRIMARY_HOVER;
-  @include PRIMARY_ACTIVE;
 
   &:last-of-type { margin-bottom: 0; }
 }

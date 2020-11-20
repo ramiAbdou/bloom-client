@@ -1,5 +1,9 @@
 /**
- * @fileoverview Store: Application
+ * @fileoverview Store
+ * - Global store that manages the entire application's state. The entities
+ * object as a normalized database for the React application. Most stores that
+ * are defined in this global store are defined in the common components folder
+ * (ie: PickerModel, ToastModel).
  * @author Rami Abdou
  */
 
@@ -15,47 +19,37 @@ import Cookie from 'js-cookie';
 import merge from 'lodash/merge';
 import { Schema } from 'normalizr';
 
+import { LoaderModel, loaderModel } from '@components/Loader/Loader.store';
+import { ModalModel, modalModel } from '@components/Modal/Modal.store';
+import { PickerModel, pickerModel } from '@components/Picker/Picker.store';
+import { ToastModel, toastModel } from '@components/Toast/Toast.store';
 import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
-import { FlowModel, flowModel } from './Flow.store';
-import { LoaderModel, loaderModel } from './Loader.store';
-import { PickerModel, pickerModel } from './Picker.store';
 import {
-  Entity,
-  EntityRecord,
-  IApplicationQuestion,
   ICommunity,
-  IMember,
+  IEntities,
+  IIntegrations,
   IMembership,
-  IPendingApplicant,
+  initialEntities,
   IUser
-} from './schema';
+} from './entities';
 import { ScreenModel, screenModel } from './Screen.store';
-import { ToastModel, toastModel } from './Toast.store';
 
 type UpdateEntitiesArgs = {
   data?: any;
-  updatedState?: Partial<Record<Entity, EntityRecord>>;
+  updatedState?: Partial<IEntities>;
   schema?: Schema<any>;
 };
 
 type StoreModel = {
-  applicationQuestions: Computed<
-    StoreModel,
-    EntityRecord<IApplicationQuestion>
-  >;
   clearEntities: Action<StoreModel>;
-  communities: Computed<StoreModel, EntityRecord<ICommunity>>;
   community: Computed<StoreModel, ICommunity>;
-  entities: Record<Entity, EntityRecord>;
-  flow: FlowModel;
+  entities: IEntities;
+  integrations: Computed<StoreModel, IIntegrations>;
   loader: LoaderModel;
-  members: Computed<StoreModel, EntityRecord<IMember>>;
   membership: Computed<StoreModel, IMembership>;
-  memberships: Computed<StoreModel, EntityRecord<IMembership>>;
-  pendingApplicants: Computed<StoreModel, EntityRecord<IPendingApplicant>>;
+  modal: ModalModel;
   picker: PickerModel;
   screen: ScreenModel;
-  setActiveCommunity: Action<StoreModel, string>;
   toast: ToastModel;
   updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
   user: Computed<StoreModel, IUser>;
@@ -63,11 +57,6 @@ type StoreModel = {
 
 export const store = createStore<StoreModel>(
   {
-    applicationQuestions: computed(
-      ({ entities }) =>
-        entities.applicationQuestions as EntityRecord<IApplicationQuestion>
-    ),
-
     clearEntities: action((state) => {
       // Reset the Bloom style guide primary color.
       const { style } = document.documentElement;
@@ -81,26 +70,11 @@ export const store = createStore<StoreModel>(
       style.setProperty('--gray-5', `hsl(27, 5%, 88%)`);
       style.setProperty('--gray-6', `hsl(27, 5%, 96%)`);
 
-      return {
-        ...state,
-        entities: {
-          applicationQuestions: { activeId: null, allIds: [], byId: {} },
-          applications: { activeId: null, allIds: [], byId: {} },
-          communities: { activeId: null, allIds: [], byId: {} },
-          members: { activeId: null, allIds: [], byId: {} },
-          memberships: { activeId: null, allIds: [], byId: {} },
-          pendingApplicants: { activeId: null, allIds: [], byId: {} },
-          users: { activeId: null, allIds: [], byId: {} }
-        }
-      };
+      return { ...state, entities: initialEntities };
     }),
 
-    communities: computed(
-      ({ entities }) => entities.communities as EntityRecord<ICommunity>
-    ),
-
-    community: computed(({ communities }) => {
-      const { activeId, byId } = communities;
+    community: computed(({ entities }) => {
+      const { activeId, byId } = entities.communities;
       const result: ICommunity = byId[activeId];
 
       if (!result) return null;
@@ -132,58 +106,35 @@ export const store = createStore<StoreModel>(
       return result;
     }),
 
-    entities: {
-      applicationQuestions: { activeId: null, allIds: [], byId: {} },
-      applications: { activeId: null, allIds: [], byId: {} },
-      communities: { activeId: null, allIds: [], byId: {} },
-      members: { activeId: null, allIds: [], byId: {} },
-      memberships: { activeId: null, allIds: [], byId: {} },
-      pendingApplicants: { activeId: null, allIds: [], byId: {} },
-      users: { activeId: null, allIds: [], byId: {} }
-    },
+    entities: initialEntities,
 
-    flow: flowModel,
+    integrations: computed(({ community, entities }) => {
+      const { byId } = entities.integrations;
+      return byId[community?.integrations];
+    }),
 
     loader: loaderModel,
 
-    members: computed(
-      ({ entities }) => entities.members as EntityRecord<IMember>
-    ),
+    membership: computed(({ entities }) => {
+      const { activeId, byId } = entities.memberships;
+      const result = byId[activeId];
 
-    membership: computed(({ memberships }) => {
-      const { activeId, byId } = memberships;
-      return byId[activeId];
-    }),
+      if (result) {
+        const { role } = result;
 
-    memberships: computed(({ entities }) => {
-      const result = entities.memberships as EntityRecord<IMembership>;
-
-      const { activeId, byId } = result;
-      const activeMembership: IMembership = byId[activeId];
-
-      if (!activeMembership) return result;
-      const { role } = activeMembership;
-
-      // For every request, we should have a communityId set in the token so
-      // we could take advantage of the GQL context and reduce # of args.
-      if (Cookie.get('role') !== role) Cookie.set('role', role);
+        // For every request, we should have a communityId set in the token so
+        // we could take advantage of the GQL context and reduce # of args.
+        if (Cookie.get('role') !== role) Cookie.set('role', role);
+      }
 
       return result;
     }),
 
-    pendingApplicants: computed(
-      ({ entities }) =>
-        entities.pendingApplicants as EntityRecord<IPendingApplicant>
-    ),
+    modal: modalModel,
 
     picker: pickerModel,
 
     screen: screenModel,
-
-    setActiveCommunity: action((state, communityId: string) => ({
-      ...state,
-      communities: { ...state.communities, activeId: communityId }
-    })),
 
     toast: toastModel,
 

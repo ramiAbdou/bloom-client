@@ -9,7 +9,7 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import LoginPage from '@scenes/Login/Login';
-import { IS_LOGGED_IN } from '@store/User.gql';
+import { IS_LOGGED_IN } from './Router.gql';
 
 // We need to pass in the path instead of just setting it to /login here, so
 // that the Switch component in the router properly switches.

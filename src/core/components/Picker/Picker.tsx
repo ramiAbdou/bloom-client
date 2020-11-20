@@ -15,8 +15,6 @@ import useOnClickOutside from 'use-onclickoutside';
 import { useStoreActions, useStoreState } from '@store/Store';
 import PickerOption from './PickerOption';
 
-// -----------------------------------------------------------------------------
-
 export default () => {
   const actions = useStoreState(({ picker }) => picker.actions);
   const align = useStoreState(({ picker }) => picker.align);

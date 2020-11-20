@@ -13,7 +13,7 @@ $PREF: 's-applicants';
   width: fit-content;
 }
 
-.#{$PREF}-actions { @extend %flex-ac; margin-bottom: $sm; }
+.#{$PREF}-actions { @extend .flex-ac; margin-bottom: $sm; }
 .#{$PREF}-actions > button { margin-right: $xs; }
 
 // ## CARD CONTAINER
@@ -28,15 +28,11 @@ $PREF: 's-applicants';
 // ## CARD
 
 .#{$PREF}-card {
-  @extend %flex-col;
-  @extend %flex-sb;
-  @extend .shadow-1;
+  @extend .card;
+  @extend .flex-sb;
 
-  background-color: white;
-  border-radius: $xs;
   grid-column-end: span 6;
-  height: min-content;
-  padding: 12px 12px $md $sm;
+  height: fit-content;
 
   &:last-of-type { margin-bottom: $lg; }
 };
@@ -45,7 +41,7 @@ $PREF: 's-applicants';
 
 // ## CARD HEADER
 
-.#{$PREF}-card-header { @extend %flex-acsb; margin-bottom: $sm; }
+.#{$PREF}-card-header { @extend .flex-acsb; padding-bottom: $sm; }
 
 .#{$PREF}-card-header > div > p {
   @extend .meta;
@@ -54,7 +50,7 @@ $PREF: 's-applicants';
   margin-bottom: $xxs;
 }
 
-.#{$PREF}-card-header > div:last-of-type { @extend %flex-ac; }
+.#{$PREF}-card-header > div:last-of-type { @extend .flex-ac; }
 
 // ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
 
@@ -87,11 +83,12 @@ $PREF: 's-applicants';
 
 .#{$PREF}-card-question { margin-bottom: $sm; }
 .#{$PREF}-card-question > p:first-of-type { margin-bottom: $xxs; }
-.#{$PREF}-card-question > p:last-of-type { @extend .body--2; color: $primary; }
+.#{$PREF}-card-question > p:last-of-type { color: $primary; }
 .#{$PREF}-card-question--choice > p:last-of-type {
-  background-color: rgba($color: $primary-hex, $alpha: 0.1);
+  @extend .primary-bg;
+
   border-radius: $md;
-  padding: $xxs 12px;
+  padding: $xxs $xs;
   width: fit-content;
 }
 
@@ -102,18 +99,16 @@ div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
 .#{$PREF}-expanded {
   box-sizing: border-box;
   max-height: inherit;
-  padding: 0 $md $md $md;
   
   &::-webkit-scrollbar { display: none; }
 }
 
 .#{$PREF}-expanded-header {
-  @extend %flex-acsb;
+  @extend .flex-acsb;
 
   background-color: white;
-  padding: $md 0;
   position: sticky;
-  top: 0;
+  top: $md;
   z-index: 2;
 }
 

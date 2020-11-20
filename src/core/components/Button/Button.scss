@@ -2,12 +2,12 @@
 
 $PREF: 'c-btn';
 
-// This is needed since we are manually setting the height of the button which
-// throws off the vertical alignment of the button.
+// ## BASIC BUTTON
 
 .#{$PREF} {
   @extend .btn-txt;
-  @extend %flex-acc;
+  @extend .flex-acc;
+  
 
   border-radius: $xxs;
 
@@ -17,25 +17,41 @@ $PREF: 'c-btn';
   &--lg { height: $xl; }
 }
 
-.#{$PREF}-loading { @extend %flex-acc; cursor: default; }
-.#{$PREF}-loading > p {
-  @extend .btn-txt;
-  @extend %flex-acc;
+// ## LOADING STATE
 
-  color: $gray-3;
-  margin-right: $sm;
+.#{$PREF}-loading { @extend .flex-acc; }
+.#{$PREF}-loading > p { @extend .btn-txt; color: $gray-3; margin-right: $sm; }
+
+// ## DISABLED STATE
+
+.#{$PREF}-disabled {
+  color: $gray-3 !important;
+  cursor: not-allowed;
+
+  @include HOVER { opacity: 1; }
 }
-
-.#{$PREF}-disabled { color: $gray-3 !important; cursor: not-allowed; }
 
 // ## PRIMARY BUTTON
 
 .#{$PREF}-primary {
   background-color: $primary;
+  border: 1px $primary solid;
   color: $gray-6;
   padding: $xs $sm;
 
-  &--disabled { @extend .#{$PREF}-disabled; background-color: $gray-5; }
+  &--disabled {
+    @extend .#{$PREF}-disabled;
+
+    background-color: $gray-5;
+    border: 1px $gray-5 solid;
+  }
+
+  &--green {
+    background-clip: padding-box;
+    background-color: rgba($color: $green, $alpha: 0.1);
+    border: 1px rgba($color: $green, $alpha: 0.1) solid;
+    color: $green;
+  }
 }
 
 // ## OUTLINE BUTTON
@@ -56,8 +72,6 @@ $PREF: 'c-btn';
   padding: $xs $sm;
   text-decoration: underline;
   
-  @include HOVER {
-    background-color: rgba($color: $primary-hex, $alpha: 0.1);
-    border-radius: 10px;
-  }
+  @include PRIMARY_HOVER;
+  @include HOVER { border-radius: 10px; }
 }

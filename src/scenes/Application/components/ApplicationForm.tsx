@@ -14,29 +14,12 @@ import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
 import { usePrevious } from '@hooks/usePrevious';
-import { Community, IApplicationQuestion } from '@store/schema';
+import { IApplicationQuestion } from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
 import Application from '../Application.store';
-
-const Icon = () => {
-  const logoUrl = useStoreState(({ community }) => community?.logoUrl);
-  return <img src={logoUrl} />;
-};
-
-const Title = () => {
-  const title = useStoreState(({ community }) => community?.applicationTitle);
-  return <h1>{title}</h1>;
-};
-
-const Description = () => {
-  const description = useStoreState(
-    ({ community }) => community?.applicationDescription
-  );
-
-  return <p>{description}</p>;
-};
 
 const SubmitButton = () => {
   const setEmail = Application.useStoreActions((actions) => actions.setEmail);
@@ -74,7 +57,7 @@ const SubmitButton = () => {
         large
         className="s-signup-submit-btn"
         disabled={!isCompleted}
-        isLoading={loading}
+        loading={loading}
         loadingText="Submitting..."
         title="Submit Application"
         onClick={applyForMembership}
@@ -86,12 +69,18 @@ const SubmitButton = () => {
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
   const updateEntities = useStoreActions((store) => store.updateEntities);
+  const logoUrl = useStoreState(({ community }) => community?.logoUrl);
+  const title = useStoreState(({ community }) => community?.applicationTitle);
+  const description = useStoreState(
+    ({ community }) => community?.applicationDescription
+  );
 
   const questions: IApplicationQuestion[] = useStoreState(
-    ({ community, applicationQuestions }) => {
+    ({ community, entities }) => {
+      const { byId } = entities.applicationQuestions;
       if (!community?.applicationQuestions?.length) return [];
       const { applicationQuestions: result } = community;
-      return result.map((id: string) => applicationQuestions.byId[id]);
+      return result.map((id: string) => byId[id]);
     }
   );
 
@@ -110,7 +99,7 @@ export default () => {
         applicationQuestions: result.application.questions,
         applicationTitle: result.application.title
       },
-      schema: Community
+      schema: Schema.COMMUNITY
     });
   }, [data]);
 
@@ -121,9 +110,9 @@ export default () => {
   return (
     <Form.Provider initialData={{ questions }}>
       <div className="s-signup">
-        <Icon />
-        <Title />
-        <Description />
+        <img src={logoUrl} />
+        <h1>{title}</h1>
+        <p>{description}</p>
         <FormContent />
         <SubmitButton />
       </div>

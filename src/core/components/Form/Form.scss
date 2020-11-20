@@ -7,24 +7,21 @@ $PREF: 'c-form';
 // ## GENERAL
 
 .#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
-.#{$PREF}-desc { @extend .body--2; margin-bottom: $sm; }
-.#{$PREF}-error { @extend .body--2; color: $red; margin-top: $xxs; }
+.#{$PREF}-desc { margin-bottom: $sm; }
+.#{$PREF}-error { color: $red; margin-top: $xxs; }
 
 // ## LABEL
 
-.#{$PREF}-label { @extend %flex-ae; @extend %flex-sb; width: 100%; }
+.#{$PREF}-label { @extend .flex-ae; @extend .flex-sb; width: 100%; }
+.#{$PREF}-label > div > svg { color: $green; margin-right: $xs; }
 
 // Represents the actually label content (AKA title).
-.#{$PREF}-label > p:not(.c-form-label-count) {
-  @extend .meta;
 
-  font-size: 14px;
-  margin-bottom: $xs;
-  max-width: 85%;
-}
+.#{$PREF}-label > div { @extend .flex-ac; margin-bottom: $xs; width: 100%; }
+.#{$PREF}-label > div > p { @extend .bold; max-width: 90%; }
 
 // Represents the required symbol after the label's title.
-.#{$PREF}-label--required > p:not(.c-form-label-count)::after {
+.#{$PREF}-label--required > div > p::after {
   color: $red;
   content: '*';
   margin-left: $xxs;
@@ -36,7 +33,7 @@ $PREF: 'c-form';
 // text and long text items. We set a special active state for them.
 
 .#{$PREF}-input {
-  @extend %flex-acsb;
+  @extend .flex-acsb;
 
   background-color: white;
   border: 1px $gray-4 solid;
@@ -63,13 +60,13 @@ $PREF: 'c-form';
 
 // ## MULTIPLE CHOICE
 
-.#{$PREF}-mc-choice { @extend %flex-ac; margin-bottom: 12px; }
+.#{$PREF}-mc-choice { @extend .flex-ac; margin-bottom: 12px; }
 .#{$PREF}-mc-choice:first-of-type { margin-top: $xs; }
 
 // ## MULTIPLE CHOICE CHECKBOX
 
 .#{$PREF}-mc-choice > div {
-  @extend %flex-acc;
+  @extend .flex-acc;
 
   background-color: white;
   border: 2px solid $gray-4;
@@ -89,11 +86,11 @@ $PREF: 'c-form';
 // ## MULTIPLE CHOICE TEXT (BOTH MULTIPLE CHOICE/SELECT)
 
 .#{$PREF}-choice-txt {
-  @extend .body--3;
-
-  background-color: rgba($color: $primary-hex, $alpha: 0.15);
+  @extend .primary-bg;
+  
   border-radius: $sm;
   color: black;
+  font-size: 13px;
   margin-left: 8px;
   margin-right: 8px;
   padding-left: 6px;
@@ -103,7 +100,7 @@ $PREF: 'c-form';
 
 // ## DROPDOWN (BOTH MULTIPLE CHOICE/SELECT)
 
-.#{$PREF}-dd-bar { @extend %flex-acsb; cursor: pointer; }
+.#{$PREF}-dd-bar { @extend .flex-acsb; cursor: pointer; }
 
 .#{$PREF}-dd-arrow {
   border-left: $xxs solid transparent;
@@ -114,9 +111,9 @@ $PREF: 'c-form';
 }
 
 .#{$PREF}-dd-search { box-sizing: border-box; padding: 8px; width: 100%; }
-.#{$PREF}-dd-value-ctr { @extend %flex-ac; }
+.#{$PREF}-dd-value-ctr { @extend .flex-ac; }
 .#{$PREF}-dd-value {
-  @extend %flex-ac;
+  @extend .flex-ac;
   @extend .#{$PREF}-choice-txt;
 
   margin-left: 0;
@@ -128,7 +125,7 @@ $PREF: 'c-form';
 }
 
 .#{$PREF}-dd-opt-ctr {
-  @extend .shadow-2;
+  @extend .shadow--1;
 
   background-color: white;
   border-radius: $xxs;
@@ -140,7 +137,7 @@ $PREF: 'c-form';
 
 // No results message.
 .#{$PREF}-dd-opt-ctr > p {
-  @extend %flex-ac;
+  @extend .flex-ac;
 
   height: $lg;
   margin-left: $xs;
@@ -148,7 +145,7 @@ $PREF: 'c-form';
 }
 
 .#{$PREF}-dd-opt {
-  @extend %flex-ac;
+  @extend .flex-ac;
 
   
   height: $lg;

@@ -4,55 +4,44 @@
  */
 
 import { motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import CSSModifier from '@util/CSSModifier';
 import Spinner from '../Loader/Spinner';
-import Button from './Button';
-import { ButtonLoadingProps, ButtonProps } from './Button.types';
+import Button, {
+  ButtonLoadingProps,
+  ButtonProps,
+  useLoadingState
+} from './Button';
 
 const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
   <motion.div className="c-btn-loading">
-    {loadingText && <p>{loadingText}</p>}
+    <p>{loadingText}</p>
     <Spinner />
   </motion.div>
 );
 
-export interface PrimaryButtonProps extends ButtonProps, ButtonLoadingProps {}
-
 export default ({
   className,
   disabled,
-  isLoading,
+  green,
+  loading,
   loadingText,
-  onClick,
   title,
   ...props
-}: PrimaryButtonProps) => {
-  const [showLoadingState, setShowLoadingState] = useState(false);
-
-  useEffect(() => {
-    if (!isLoading && showLoadingState) setShowLoadingState(false);
-    else
-      setTimeout(() => {
-        if (isLoading && !showLoadingState) setShowLoadingState(true);
-      }, 100);
-  }, [isLoading, showLoadingState]);
-
+}: ButtonProps) => {
+  // If the button is in it's loading state, it should be disabled.
+  const showLoadingState = useLoadingState(loading);
   disabled = disabled || showLoadingState;
 
   const { css } = new CSSModifier()
     .class('c-btn-primary')
     .class(className)
-    .addClass(disabled, 'c-btn-primary--disabled');
+    .addClass(disabled, 'c-btn-primary--disabled')
+    .addClass(green, 'c-btn-primary--green');
 
   return (
-    <Button
-      className={css}
-      disabled={disabled}
-      onClick={() => !disabled && !isLoading && onClick()}
-      {...props}
-    >
+    <Button className={css} disabled={disabled} {...props}>
       {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}
     </Button>
   );

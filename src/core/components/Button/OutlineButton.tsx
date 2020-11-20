@@ -4,16 +4,19 @@
  */
 
 import { motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import CSSModifier from '@util/CSSModifier';
 import Spinner from '../Loader/Spinner';
-import Button from './Button';
-import { ButtonLoadingProps, ButtonProps } from './Button.types';
+import Button, {
+  ButtonLoadingProps,
+  ButtonProps,
+  useLoadingState
+} from './Button';
 
 const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
   <motion.div className="c-btn-loading">
-    {loadingText && <p>{loadingText}</p>}
+    <p>{loadingText}</p>
     <Spinner />
   </motion.div>
 );
@@ -21,20 +24,14 @@ const LoadingState = ({ loadingText }: ButtonLoadingProps) => (
 export default ({
   className,
   disabled,
-  isLoading,
+  loading,
   loadingText,
-  onClick,
-  title
+  title,
+  ...props
 }: ButtonProps) => {
-  const [showLoadingState, setShowLoadingState] = useState(false);
-
-  useEffect(() => {
-    if (!isLoading && showLoadingState) setShowLoadingState(false);
-    else
-      setTimeout(() => {
-        if (isLoading && !showLoadingState) setShowLoadingState(true);
-      }, 100);
-  }, [isLoading, showLoadingState]);
+  // If the button is in it's loading state, it should be disabled.
+  const showLoadingState = useLoadingState(loading);
+  disabled = disabled || showLoadingState;
 
   const { css } = new CSSModifier()
     .class('c-btn-outline')
@@ -42,11 +39,7 @@ export default ({
     .addClass(disabled, 'c-btn-outline--disabled');
 
   return (
-    <Button
-      className={css}
-      disabled={disabled}
-      onClick={() => !isLoading && onClick()}
-    >
+    <Button className={css} disabled={disabled} {...props}>
       {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}
     </Button>
   );

@@ -15,7 +15,7 @@ type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
 
 const HeaderButton = ({ response }: HeaderButtonProps) => {
   const community = useStoreState((store) => store.community);
-  const communities = useStoreState((store) => store.communities);
+  const communities = useStoreState(({ entities }) => entities.communities);
   const updateEntities = useStoreActions((store) => store.updateEntities);
   const hasApplicants = !!community.pendingApplicants?.length;
 

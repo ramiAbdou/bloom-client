@@ -9,11 +9,11 @@ import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
 import {
-  Community,
   IPendingApplicant,
   ResolvedApplicantData,
   UnresolvedApplicantData
-} from '@store/schema';
+} from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
 import Applicant from './components/ApplicantCard/ApplicantCard.store';
@@ -31,15 +31,18 @@ export default () => {
   );
 
   const applicants: IPendingApplicant[] = useStoreState(
-    ({ applicationQuestions, pendingApplicants, community }) => {
+    ({ entities, community }) => {
+      const { byId: byApplicationQuestion } = entities.applicationQuestions;
+      const { byId: byApplicant } = entities.pendingApplicants;
+
       return community.pendingApplicants?.map((applicantId: string) => {
-        const applicant = pendingApplicants.byId[applicantId];
+        const applicant = byApplicant[applicantId];
 
         // @ts-ignore b/c we are simply checking if the data is resolved or not.
         if (applicant.applicantData[0]?.questionId)
           applicant.applicantData = (applicant.applicantData as UnresolvedApplicantData[]).map(
             ({ questionId, value }) => ({
-              question: applicationQuestions.byId[questionId],
+              question: byApplicationQuestion[questionId],
               value
             })
           ) as ResolvedApplicantData[];
@@ -59,7 +62,7 @@ export default () => {
         ...data.getApplicants,
         applicationQuestions: data.getApplicants.application.questions
       },
-      schema: Community
+      schema: Schema.COMMUNITY
     });
   }, [data]);
 
