@@ -17,11 +17,14 @@ const ApplicationQuestion = new schema.Entity('applicationQuestions', {});
 
 const Integrations = new schema.Entity('integrations', {});
 
+const Members = new schema.Entity('members', {});
+
 const PendingApplicant = new schema.Entity('pendingApplicants', {});
 
 const Community = new schema.Entity('communities', {
   applicationQuestions: [ApplicationQuestion],
   integrations: Integrations,
+  members: [Members],
   pendingApplicants: [PendingApplicant]
 });
 
@@ -38,6 +41,7 @@ export const Schema = {
   APPLICATION_QUESTION: ApplicationQuestion,
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
+  MEMBER: Members,
   MEMBERSHIP: Membership,
   PENDING_APPLICANT: PendingApplicant,
   USER: User

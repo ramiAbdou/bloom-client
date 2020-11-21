@@ -41,6 +41,11 @@ export type IIntegrations = {
   zoomAccountInfo: { email: string; pmi: number; userId: string };
 };
 
+export type IMember = {
+  allData: { questionId: string; value: string }[];
+  id: string;
+};
+
 export type IMembership = {
   community: string;
   id: string;
@@ -80,6 +85,7 @@ export type IEntities = {
   applicationQuestions: EntityRecord<IApplicationQuestion>;
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
+  members: EntityRecord<IMember>;
   memberships: EntityRecord<IMembership>;
   pendingApplicants: EntityRecord<IPendingApplicant>;
   users: EntityRecord<IUser>;
@@ -90,6 +96,7 @@ export const initialEntities: IEntities = {
   applicationQuestions: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
+  members: { allIds: [], byId: {} },
   memberships: { activeId: null, allIds: [], byId: {} },
   pendingApplicants: { allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
