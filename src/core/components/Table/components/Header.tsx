@@ -9,13 +9,8 @@ import Table from '../Table.store';
 import { Column } from '../Table.types';
 import { HeaderSelectOption } from './SelectOption';
 
-const ColumnCell = ({ title }: Column) => {
-  return <th>{title}</th>;
-};
-
 export default () => {
   const columns = Table.useStoreState((store) => store.columns);
-  const select = Table.useStoreState((store) => store.select);
   const hasData = Table.useStoreState((store) => !!store.filteredData.length);
 
   const customStyle = !hasData ? { borderBottom: 'none' } : {};
@@ -23,9 +18,11 @@ export default () => {
   return (
     <thead>
       <tr style={customStyle}>
-        {/* {select && <HeaderSelectOption />} */}
-        {columns.map((column: Column) => (
-          <ColumnCell key={column.id} {...column} />
+        {columns.map(({ title }: Column, i: number) => (
+          <th key={title}>
+            {!i && <HeaderSelectOption />}
+            {title}
+          </th>
         ))}
       </tr>
     </thead>

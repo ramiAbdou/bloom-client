@@ -7,17 +7,17 @@
 import React, { ReactNode } from 'react';
 
 import Tag from '@components/Misc/Tag';
-import { QuestionType, ValueProps } from '@constants';
+import { ChildrenProps, QuestionType, ValueProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import Table from '../Table.store';
 import { Row } from '../Table.types';
 import SelectOption from './SelectOption';
 
-interface DataCellProps extends ValueProps {
+interface DataCellProps extends Partial<ChildrenProps>, ValueProps {
   type: QuestionType;
 }
 
-const DataCell = ({ type, value }: DataCellProps) => {
+const DataCell = ({ children, type, value }: DataCellProps) => {
   const { css } = new CSSModifier()
     .addClass(type === 'MULTIPLE_CHOICE', 'c-table-td--multiple-choice')
     .addClass(type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select');
@@ -33,18 +33,25 @@ const DataCell = ({ type, value }: DataCellProps) => {
       </>
     );
 
-  return <td className={css}>{content}</td>;
+  return (
+    <td className={css}>
+      <div>
+        {children}
+        {content}
+      </div>
+    </td>
+  );
 };
 
 const DataRow = (row: Row) => {
-  const select = Table.useStoreState((store) => store.select);
   const columns = Table.useStoreState((store) => store.columns);
 
   return (
     <tr>
-      {/* {select && <SelectOption id={row.id} />} */}
-      {columns.map(({ id, type }) => (
-        <DataCell key={id + row.id} type={type} value={row[id]} />
+      {columns.map(({ id, type }, i: number) => (
+        <DataCell key={id + row.id} type={type} value={row[id]}>
+          {!i && <SelectOption id={row.id} />}
+        </DataCell>
       ))}
     </tr>
   );

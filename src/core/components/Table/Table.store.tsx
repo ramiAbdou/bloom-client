@@ -12,9 +12,9 @@ import {
 } from 'easy-peasy';
 
 import { toggleArrayValue } from '@util/util';
-import { Column, Row, TableOptions } from './Table.types';
+import { Column, Row } from './Table.types';
 
-interface TableModel extends TableOptions {
+type TableModel = {
   clearSelectedRows: Action<TableModel>;
   columns: Column[];
   data: Row[];
@@ -27,7 +27,7 @@ interface TableModel extends TableOptions {
   setSearchString: Action<TableModel, string>;
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
-}
+};
 
 const model: TableModel = {
   clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
@@ -65,8 +65,6 @@ const model: TableModel = {
   ),
 
   searchString: '',
-
-  select: true,
 
   selectedRowIds: [],
 

@@ -12,5 +12,3 @@ export interface Row extends Record<string, any> {
 }
 
 export type TableFilter = (row: Row) => boolean;
-
-export type TableOptions = { select?: boolean };

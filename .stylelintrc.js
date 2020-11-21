@@ -24,7 +24,7 @@ module.exports = {
         ignore: ['inside-single-line-block']
       }
     ],
-    'declaration-block-single-line-max-declarations': 4,
+    'declaration-block-single-line-max-declarations': 6,
     'font-family-no-missing-generic-family-keyword': null,
     'max-empty-lines': 1,
     'max-line-length': 80,

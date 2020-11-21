@@ -107,3 +107,14 @@
   border-radius: $sm;
   padding: 12px 12px $md $sm;
 }
+
+// ## TEXT OVERFLOW
+
+@mixin OVERFLOW_ELLIPSES($lines: 1) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

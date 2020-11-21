@@ -19,31 +19,29 @@ $PREF: 'c-table';
   width: max-content;
 }
 
-.#{$PREF}-td {
-  &--multiple-select { @extend .flex-w; }
-
-  &--multiple-choice > span,
-  &--multiple-select > span {
-    background-color: rgba($color: $primary-hex, $alpha: 0.2);
-    border-radius: $sm;
-    color: black;
-    margin: 0 2px $xxs 0;
-    padding-left: $xs;
-    padding-right: $xs;
-    width: fit-content;
-  }
-}
+.#{$PREF}-td--multiple-select > div { @extend .flex-w; }
 
 // ## TABLE ROW (HEADER AND BODY)
 
 tbody > tr {
+  background-color: inherit;
   border-bottom: 1px $gray-5 solid;
   cursor: pointer;
 
-  @include HOVER { box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15); }
+  @include HOVER {
+    box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
+    position: relative;
+    transform: scale(1);
+    z-index: 1000;
+  }
 
   &:last-of-type { border-bottom: none; }
 }
+
+// ## TABLE CELL (HEADER AND CELL)
+
+th,
+td { left: 0; margin: 0; padding: $sm $md $sm $sm; position: sticky; top: 0; }
 
 // ## TABLE HEADER CELL
 
@@ -58,13 +56,6 @@ th {
   top: 0;
   vertical-align: middle;
   z-index: 10;
-
-  // &.#{$PREF}-select {
-  //   z-index: 20;
-    
-  //   &::after { top: -1px; z-index: -1; }
-  // }
-  
 
   &::after {
     border-bottom: 1px solid $gray-5;
@@ -81,60 +72,63 @@ th {
 
 // ## TABLE CELL
 
-td { color: $gray-1; max-width: $xxl * 3; vertical-align: top; }
-td > .c-misc-tag { margin-left: 0; }
-
-// ## TABLE CELL (HEADER AND CELL)
-
-th,
-td { margin: 0; padding: $sm $md $sm $sm; }
-
-// ## CHECKBOX
-
-// Container for the checkbox select.
-.#{$PREF}-select {
+td {
   background-color: white;
-  cursor: default;
-  left: 0;
-  padding: $xs !important;
-  position: sticky;
-  z-index: 2;
+  color: $gray-1;
+  max-width: $xxl * 4;
+  vertical-align: top;
+}
 
-  // This is equivalent to just having border-right, except now, when we scroll
-  // the table the border stays! Previously, it wasn't because of the
-  // border-collapse property set to collapse on the table element.
+td > div > .c-misc-tag { margin: 0 $xxs $xxs 0; }
+
+td > div { @include OVERFLOW_ELLIPSES(3); }
+
+th:first-of-type { z-index: 11; }
+
+td:first-of-type {
+  z-index: 9;
+
   &::after {
-    border-right: 1px solid $gray-5;
+    border-right: 1px solid $gray-6;
     content: '';
     height: 100%;
+    left: -1px;
     position: absolute;
-    right: 0;
     top: 0;
+    width: 100%;
   }
 }
+
+th:first-of-type,
+td:first-of-type > div { @extend .flex-ac; }
+
+th > .c-table-select { border: 1px $gray-3 solid; z-index: 11; }
+td > div > .c-table-select { z-index: 9; }
 
 // The actual checkbox. Note that even though we specify the div dimensions to
 // be $sm, because of the border it actually renders as 18px. Update the SVG
 // image accordingly.
 
-$CHECKBOX_DIM: 18px;
-
-.#{$PREF}-select > div {
+.#{$PREF}-select {
   @extend .flex-acc;
   
   background-color: white;
   border: 1px $gray-4 solid;
   border-radius: 2px;
   cursor: pointer;
-  height: $CHECKBOX_DIM;
-  margin: 0;
-  width: $CHECKBOX_DIM;
+  height: $sm;
+  margin: 0 $lg 0 0;
+  position: relative;
+  width: $sm;
 }
 
-.#{$PREF}-select--active > div { background-color: $primary; }
+.#{$PREF}-select--active {
+  background-color: $primary;
+  border: 1px $primary solid !important;
+}
 
-.#{$PREF}-select > div > svg {
-  height: $CHECKBOX_DIM + 2;
+.#{$PREF}-select > svg {
+  height: $sm + 2;
   stroke-width: 3px;
-  width: $CHECKBOX_DIM + 2;
+  width: $sm + 2;
 }

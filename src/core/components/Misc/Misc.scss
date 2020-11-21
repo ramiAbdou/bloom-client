@@ -30,4 +30,6 @@ $PREF: 'c-misc';
   padding-right: 6px;
   text-align: left;
   width: fit-content;
+
+  @include OVERFLOW_ELLIPSES;
 }

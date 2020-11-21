@@ -23,11 +23,9 @@ export const HeaderSelectOption = () => {
     .addClass(isAllSelected, 'c-table-select--active');
 
   return (
-    <th className={css}>
-      <div onClick={onClick}>
-        {isAllSelected && <IoMdCheckmark color="#FFF" />}
-      </div>
-    </th>
+    <div className={css} onClick={onClick}>
+      {isAllSelected && <IoMdCheckmark color="#FFF" />}
+    </div>
   );
 };
 
@@ -36,11 +34,13 @@ export default ({ id }: IdProps) => {
   const toggleRow = Table.useStoreActions((actions) => actions.toggleRow);
   const onClick = () => toggleRow(id);
 
+  const { css } = new CSSModifier()
+    .class('c-table-select')
+    .addClass(isSelected, 'c-table-select--active');
+
   return (
-    <td className="c-table-select">
-      <div onClick={onClick}>
-        {isSelected && <IoMdCheckmark color="#FFF" />}
-      </div>
-    </td>
+    <div className={css} onClick={onClick}>
+      {isSelected && <IoMdCheckmark color="#FFF" />}
+    </div>
   );
 };
