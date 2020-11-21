@@ -23,9 +23,7 @@ export default createContextStore<SidebarModel>(
   {
     activeTo: '',
 
-    isActive: computed(({ activeTo }) => (to: string) =>
-      activeTo === to || (!activeTo && to === 'directory')
-    ),
+    isActive: computed(({ activeTo }) => (to: string) => activeTo === to),
 
     setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo }))
   },

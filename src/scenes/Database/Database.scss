@@ -2,12 +2,25 @@
 
 $PREF: 's-database';
 
-.#{$PREF} { box-sizing: border-box; max-height: 100%; overflow: hidden; }
-.#{$PREF} > p { @extend .body--1; }
+// ## ACTION ROW
 
-.#{$PREF}-actions { margin-bottom: $sm; }
-.#{$PREF}-actions > div { @extend .flex-ac; margin-bottom: $sm; }
-.#{$PREF}-actions > div > button { margin-right: $xs; }
+.#{$PREF}-action-row { @extend .flex-acsb; }
 
-.#{$PREF}-search-row { @extend .flex-sb; }
-.#{$PREF}-search-row > h2 > span { font-size: 13px; margin-left: $xxs; }
+// ## SEARCH BAR
+
+.#{$PREF}-search {
+  @extend .flex-ac;
+
+  background-color: $gray-5;
+  border-radius: 20px;
+  color: $gray-3;
+  padding: $xs $sm;
+  width: $xxl * 5;
+}
+
+.#{$PREF}-search > svg { color: $gray-3; margin-right: $xs; }
+.#{$PREF}-search > input { background-color: inherit; }
+
+// ## ACTION
+
+.#{$PREF}-action { background-color: $gray-5; padding: 6px; }
