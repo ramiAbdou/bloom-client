@@ -32,7 +32,11 @@ tbody > tr {
     box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
     position: relative;
     transform: scale(1);
-    z-index: 1000;
+    z-index: 10;
+
+    // When hovering on the row, we remove the border to the right of the
+    // checkbox row.
+    // > td:first-of-type { &::after { border-right: none; } }
   }
 
   &:last-of-type { border-bottom: none; }
@@ -50,12 +54,13 @@ th {
 
   background-color: $gray-6;
   box-sizing: border-box;
+  max-width: $xxl * 5;
   position: sticky;
   text-align: left;
   text-transform: uppercase;
   top: 0;
   vertical-align: middle;
-  z-index: 10;
+  z-index: 11;
 
   &::after {
     border-bottom: 1px solid $gray-5;
@@ -75,7 +80,7 @@ th {
 td {
   background-color: white;
   color: $gray-1;
-  max-width: $xxl * 4;
+  max-width: $xxl * 5;
   vertical-align: top;
 }
 
@@ -83,13 +88,13 @@ td > div > .c-misc-tag { margin: 0 $xxs $xxs 0; }
 
 td > div { @include OVERFLOW_ELLIPSES(3); }
 
-th:first-of-type { z-index: 11; }
+th:first-of-type { z-index: 12; }
 
 td:first-of-type {
   z-index: 9;
 
   &::after {
-    border-right: 1px solid $gray-6;
+    border-right: 1px solid $gray-5;
     content: '';
     height: 100%;
     left: -1px;
@@ -99,10 +104,16 @@ td:first-of-type {
   }
 }
 
-th:first-of-type,
+th:first-of-type > div,
 td:first-of-type > div { @extend .flex-ac; }
 
-th > .c-table-select { border: 1px $gray-3 solid; z-index: 11; }
+th > div {
+  max-width: 100%;
+
+  @include OVERFLOW_ELLIPSES;
+}
+
+th > div > .c-table-select { border: 1px $gray-3 solid; z-index: 12; }
 td > div > .c-table-select { z-index: 9; }
 
 // The actual checkbox. Note that even though we specify the div dimensions to

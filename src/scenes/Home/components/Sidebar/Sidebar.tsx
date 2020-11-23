@@ -57,7 +57,7 @@ const SidebarContent = () => {
   return (
     <div className="s-home-sidebar">
       <h2>{name}</h2>
-      <Separator style={{ marginBottom: 24, marginTop: 24 }} />
+      <Separator style={{ marginBottom: 12, marginTop: 24 }} />
 
       <div className="s-home-sidebar-section-ctr">
         <div className="s-home-sidebar-section">

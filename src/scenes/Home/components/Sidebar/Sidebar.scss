@@ -46,6 +46,8 @@ $PREF: 's-home-sidebar';
   @include HOVER {
     border-left: 3px rgba($color: $primary-hex, $alpha: 0.1) solid;
   }
+
+  &:last-of-type { margin-bottom: 12px; }
 }
 
 .#{$PREF}-link > svg {

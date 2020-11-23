@@ -20,8 +20,10 @@ export default () => {
       <tr style={customStyle}>
         {columns.map(({ title }: Column, i: number) => (
           <th key={title}>
-            {!i && <HeaderSelectOption />}
-            {title}
+            <div>
+              {!i && <HeaderSelectOption />}
+              {title}
+            </div>
           </th>
         ))}
       </tr>
