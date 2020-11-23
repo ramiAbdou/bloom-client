@@ -16,17 +16,22 @@ $PREF: 's-home';
   margin-right: $md;
   max-height: 100vh;
   overflow: hidden;
+
+  @include WW('LTE', 1330) { grid-template-columns: repeat(12, 1fr); }
+  @include MT { display: block; margin-left: $md; }
 }
 
 .#{$PREF}-nav {
   @extend .flex;
   @extend .shadow--1;
 
-  grid-column: 1 / 5;
+  grid-column-end: span 4;
   height: 100%;
   position: sticky;
   top: 0;
   width: 100%;
+
+  @include MT { display: none; }
 }
 
 // ## HEADER
@@ -50,6 +55,8 @@ $PREF: 's-home';
   margin-top: $md;
   max-height: 100vh;
   overflow: scroll;
+
+  // @include WW('LTE', 1330) { grid-column: 6 / -1; }
 }
 
 .#{$PREF}-content-body { overflow: scroll; }
