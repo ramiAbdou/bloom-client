@@ -4,7 +4,9 @@
  */
 
 import React from 'react';
+import { IoMdArrowDropdown } from 'react-icons/io';
 
+import Meta from '@components/Typography/Meta';
 import Table from '../Table.store';
 import { Column } from '../Table.types';
 import { HeaderSelectOption } from './SelectOption';
@@ -22,7 +24,8 @@ export default () => {
           <th key={title}>
             <div>
               {!i && <HeaderSelectOption />}
-              {title}
+              <Meta>{title}</Meta>
+              <IoMdArrowDropdown />
             </div>
           </th>
         ))}

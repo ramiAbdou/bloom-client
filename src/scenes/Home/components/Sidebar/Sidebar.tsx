@@ -38,13 +38,11 @@ const SidebarContent = () => {
     pathname.includes('/') ? pathname.lastIndexOf('/') : pathname.length
   );
 
-  console.log(activeTo);
-
   const previousActiveTo = usePrevious(activeTo);
 
   useEffect(() => {
     if (previousActiveTo !== activeTo) setActiveTo(activeTo);
-  }, [activeTo]);
+  }, [activeTo, location.pathname]);
 
   const mainLinks: LinkOptions[] = [
     { title: 'Directory', to: 'directory' },

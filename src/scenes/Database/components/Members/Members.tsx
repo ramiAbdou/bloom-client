@@ -46,8 +46,6 @@ const DatabaseTable = () => {
     [allMembers?.length]
   );
 
-  // console.log(data);
-
   const columns = useMemo(
     () =>
       !questions

@@ -41,8 +41,6 @@ export const PromoteToAdminIcon = () => {
     (store) => store.selectedRowIds.length > 15
   );
 
-  console.log(disabled);
-
   return (
     <Button
       noHover

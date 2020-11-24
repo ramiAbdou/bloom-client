@@ -35,10 +35,6 @@ tbody > tr {
     position: relative;
     transform: scale(1);
     z-index: 10;
-
-    // When hovering on the row, we remove the border to the right of the
-    // checkbox row.
-    // > td:first-of-type { &::after { border-right: none; } }
   }
 
   &:last-of-type { border-bottom: none; }
@@ -56,8 +52,6 @@ td { left: 0; margin: 0; padding: $sm $md $sm $sm; position: sticky; }
 // ## TABLE HEADER CELL
 
 th {
-  @extend .meta;
-
   background-color: $gray-6;
   box-sizing: border-box;
   max-width: $xxl * 5;
@@ -68,6 +62,14 @@ th {
   vertical-align: middle;
   z-index: 11;
 
+  @include HOVER {
+    cursor: pointer;
+
+    > div > svg { visibility: visible; }
+  }
+
+  // We need to make the border bottom and border right position absolute to
+  // achieve the scrolling functionality that we want.
   &::after {
     border-bottom: 1px solid $gray-5;
     border-right: 1px solid $gray-5;
@@ -94,10 +96,18 @@ td > div > .c-misc-tag { margin: 0 $xxs $xxs 0; }
 
 td > div { @include OVERFLOW_ELLIPSES(3); }
 
-th > div {
-  max-width: 100%;
+th > div { @extend .flex-ac; max-width: 100%; }
+
+th > div > p {
+  color: $gray-3 !important;
 
   @include OVERFLOW_ELLIPSES;
+}
+
+th > div > svg {
+  color: $gray-3 !important;
+  margin-left: $xxs;
+  visibility: hidden;
 }
 
 th:first-of-type { z-index: 12; }

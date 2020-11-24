@@ -23,9 +23,6 @@ export default () => {
     (store) => store.isAllPageSelected
   );
 
-  const selectedRowIds = Table.useStoreState((store) => store.selectedRowIds);
-  console.log(selectedRowIds);
-
   useEffect(() => {
     setHeight(TABLE_HEIGHT * (window.innerHeight / 710));
   }, [windowWidth]);
