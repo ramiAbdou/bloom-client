@@ -64,6 +64,7 @@ export default ({
 }: AbstractButtonProps) => {
   const { css } = new CSSModifier()
     .class('c-btn')
+    .addClass(!!disabled, 'c-btn-disabled')
     .addClass(!!large, 'c-btn--lg')
     .addClass(!!fill, 'c-btn--fill')
     .addClass(!!noHover, 'c-btn--no-hover')

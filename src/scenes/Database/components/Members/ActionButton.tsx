@@ -10,6 +10,7 @@ import Button from '@components/Button/Button';
 import ArrowUpCircle from '@components/Icons/ArrowUpCircle';
 import Copy from '@components/Icons/Copy';
 import Trash from '@components/Icons/Trash';
+import Table from '@components/Table/Table.store';
 
 export const CopyEmailIcon = () => (
   <Button noHover className="s-database-action" value="Copy Email">
@@ -35,8 +36,21 @@ export const FilterIcon = () => (
   </Button>
 );
 
-export const PromoteToAdminIcon = () => (
-  <Button noHover className="s-database-action" value="Promote to Admin">
-    <ArrowUpCircle />
-  </Button>
-);
+export const PromoteToAdminIcon = () => {
+  const disabled = Table.useStoreState(
+    (store) => store.selectedRowIds.length > 15
+  );
+
+  console.log(disabled);
+
+  return (
+    <Button
+      noHover
+      className="s-database-action"
+      disabled={disabled}
+      value="Promote to Admin"
+    >
+      <ArrowUpCircle />
+    </Button>
+  );
+};

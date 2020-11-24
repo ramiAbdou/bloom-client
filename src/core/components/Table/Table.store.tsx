@@ -15,7 +15,6 @@ import { toggleArrayValue } from '@util/util';
 import { Column, Row } from './Table.types';
 
 type TableModel = {
-  clearSelectedRows: Action<TableModel>;
   columns: Column[];
   data: Row[];
   emails: Computed<TableModel, string[]>;
@@ -35,8 +34,6 @@ type TableModel = {
 };
 
 const model: TableModel = {
-  clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
-
   columns: [],
 
   data: [],

@@ -25,7 +25,7 @@ $PREF: 'c-btn';
 
 .#{$PREF}-disabled {
   color: $gray-3 !important;
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 
   @include HOVER { opacity: 1; }
 }
