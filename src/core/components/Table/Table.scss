@@ -45,7 +45,7 @@ tbody > tr {
 }
 
 .#{$PREF}-tr--active {
-  > td { background-color: rgba($color: $primary-hex, $alpha: 0.05); }
+  > td { background-color: hsl($primary-hue, 35%, 93%); }
 }
 
 // ## TABLE CELL (HEADER AND CELL)
