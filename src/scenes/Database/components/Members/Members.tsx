@@ -18,8 +18,8 @@ import ActionRow from './ActionRow';
 const DatabaseTable = () => {
   const questions: IApplicationQuestion[] = useStoreState(
     ({ community, entities }) => {
-      const { byId } = entities.applicationQuestions;
-      return community.applicationQuestions?.map(
+      const { byId } = entities.membershipQuestions;
+      return community.membershipQuestions?.map(
         (questionId: string) => byId[questionId]
       );
     }
@@ -45,11 +45,14 @@ const DatabaseTable = () => {
     [allMembers?.length]
   );
 
+  // console.log(data);
+
   const columns = useMemo(
     () =>
       !questions
         ? []
-        : questions.map(({ type, id, title }) => ({
+        : questions.map(({ category, type, id, title }) => ({
+            category,
             id,
             title,
             type
@@ -76,8 +79,8 @@ export default () => {
       updateEntities({
         data: {
           ...data.getDatabase,
-          applicationQuestions: data.getDatabase.application.questions,
-          members: data.getDatabase.memberships
+          members: data.getDatabase.memberships,
+          membershipQuestions: data.getDatabase.questions
         },
         schema: Schema.COMMUNITY
       });

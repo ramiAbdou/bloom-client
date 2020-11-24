@@ -13,7 +13,7 @@ import { schema } from 'normalizr';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
-const ApplicationQuestion = new schema.Entity('applicationQuestions', {});
+const MembershipQuestion = new schema.Entity('membershipQuestions', {});
 
 const Integrations = new schema.Entity('integrations', {});
 
@@ -22,9 +22,9 @@ const Members = new schema.Entity('members', {});
 const PendingApplicant = new schema.Entity('pendingApplicants', {});
 
 const Community = new schema.Entity('communities', {
-  applicationQuestions: [ApplicationQuestion],
   integrations: Integrations,
   members: [Members],
+  membershipQuestions: [MembershipQuestion],
   pendingApplicants: [PendingApplicant]
 });
 
@@ -38,11 +38,11 @@ const User = new schema.Entity('users', { memberships: [Membership] });
 // centralized and to reduce confusion with the Interface declarations
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
-  APPLICATION_QUESTION: ApplicationQuestion,
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
   MEMBER: Members,
   MEMBERSHIP: Membership,
+  MEMBERSHIP_QUESTION: MembershipQuestion,
   PENDING_APPLICANT: PendingApplicant,
   USER: User
 };

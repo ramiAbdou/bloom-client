@@ -25,7 +25,8 @@ $PREF: 'c-table';
 // ## TABLE ROW (HEADER AND BODY)
 
 tbody > tr {
-  background-color: inherit;
+  // background-color: inherit;
+
   border-bottom: 1px $gray-5 solid;
   cursor: pointer;
 
@@ -41,6 +42,10 @@ tbody > tr {
   }
 
   &:last-of-type { border-bottom: none; }
+}
+
+.#{$PREF}-tr--active {
+  > td { background-color: rgba($color: $primary-hex, $alpha: 0.05); }
 }
 
 // ## TABLE CELL (HEADER AND CELL)
@@ -126,7 +131,7 @@ td > div > .c-table-select { z-index: 9; }
   
   background-color: white;
   border: 1px $gray-4 solid;
-  border-radius: 2px;
+  border-radius: $xxs;
   cursor: pointer;
   height: $sm;
   margin: 0 $lg 0 0;

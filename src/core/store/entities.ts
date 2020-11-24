@@ -18,7 +18,7 @@ export type IApplicationQuestion = {
 
 export type ICommunity = {
   applicationDescription?: string;
-  applicationQuestions: string[];
+  membershipQuestions: string[];
   applicationTitle?: string;
   autoAccept?: boolean;
   encodedUrlName: string;
@@ -82,7 +82,7 @@ export interface EntityRecord<T> {
 }
 
 export type IEntities = {
-  applicationQuestions: EntityRecord<IApplicationQuestion>;
+  membershipQuestions: EntityRecord<IApplicationQuestion>;
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
@@ -93,10 +93,10 @@ export type IEntities = {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
-  applicationQuestions: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { allIds: [], byId: {} },
+  membershipQuestions: { allIds: [], byId: {} },
   memberships: { activeId: null, allIds: [], byId: {} },
   pendingApplicants: { allIds: [], byId: {} },
   users: { allIds: [], byId: {} }

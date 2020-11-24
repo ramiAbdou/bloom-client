@@ -77,9 +77,9 @@ export default () => {
 
   const questions: IApplicationQuestion[] = useStoreState(
     ({ community, entities }) => {
-      const { byId } = entities.applicationQuestions;
-      if (!community?.applicationQuestions?.length) return [];
-      const { applicationQuestions: result } = community;
+      const { byId } = entities.membershipQuestions;
+      if (!community?.membershipQuestions?.length) return [];
+      const { membershipQuestions: result } = community;
       return result.map((id: string) => byId[id]);
     }
   );
@@ -96,7 +96,7 @@ export default () => {
       data: {
         ...result,
         applicationDescription: result.application.description,
-        applicationQuestions: result.application.questions,
+        membershipQuestions: result.application.questions,
         applicationTitle: result.application.title
       },
       schema: Schema.COMMUNITY

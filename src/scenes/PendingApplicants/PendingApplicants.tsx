@@ -32,7 +32,7 @@ export default () => {
 
   const applicants: IPendingApplicant[] = useStoreState(
     ({ entities, community }) => {
-      const { byId: byApplicationQuestion } = entities.applicationQuestions;
+      const { byId: byApplicationQuestion } = entities.membershipQuestions;
       const { byId: byApplicant } = entities.pendingApplicants;
 
       return community.pendingApplicants?.map((applicantId: string) => {
@@ -60,7 +60,7 @@ export default () => {
     updateEntities({
       data: {
         ...data.getApplicants,
-        applicationQuestions: data.getApplicants.application.questions
+        membershipQuestions: data.getApplicants.application.questions
       },
       schema: Schema.COMMUNITY
     });

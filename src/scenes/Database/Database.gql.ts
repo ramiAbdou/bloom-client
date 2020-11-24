@@ -8,7 +8,7 @@ import { query } from 'gql-query-builder';
 export const GET_DATABASE = query({
   fields: [
     'id',
-    { application: ['id', { questions: ['category', 'id', 'title', 'type'] }] },
+    { questions: ['category', 'id', 'title', 'type'] },
     { memberships: ['id', { allData: ['questionId', 'value'] }] }
   ],
   operation: 'getDatabase'

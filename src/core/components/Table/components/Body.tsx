@@ -4,6 +4,7 @@
  * @author Rami Abdou
  */
 
+import moment from 'moment-timezone';
 import React, { ReactNode } from 'react';
 
 import Tag from '@components/Misc/Tag';
@@ -44,15 +45,23 @@ const DataCell = ({ children, type, value }: DataCellProps) => {
 };
 
 const DataRow = (row: Row) => {
+  const isSelected = Table.useStoreState((state) => state.isSelected(row.id));
   const columns = Table.useStoreState((store) => store.columns);
 
+  const { css } = new CSSModifier().addClass(isSelected, 'c-table-tr--active');
+
   return (
-    <tr>
-      {columns.map(({ id, type }, i: number) => (
-        <DataCell key={id + row.id} type={type} value={row[id]}>
-          {!i && <SelectOption id={row.id} />}
-        </DataCell>
-      ))}
+    <tr className={css}>
+      {columns.map(({ category, id, type }, i: number) => {
+        const value =
+          category === 'JOINED_ON' ? moment(row[id]).format('M/D/YY') : row[id];
+
+        return (
+          <DataCell key={id + row.id} type={type} value={value}>
+            {!i && <SelectOption id={row.id} />}
+          </DataCell>
+        );
+      })}
     </tr>
   );
 };
