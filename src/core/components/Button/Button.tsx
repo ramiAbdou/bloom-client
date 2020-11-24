@@ -57,7 +57,8 @@ export default ({
   large,
   noScale,
   onClick,
-  title
+  title,
+  ...props
 }: AbstractButtonProps) => {
   const { css } = new CSSModifier()
     .class('c-btn')
@@ -74,6 +75,7 @@ export default ({
       className={css}
       onClick={() => !disabled && (href ? window.open(href) : onClick())}
       {...tapAnimation}
+      {...props}
     >
       {children ?? title}
     </motion.button>

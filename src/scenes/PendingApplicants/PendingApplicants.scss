@@ -55,10 +55,10 @@ $PREF: 's-applicants';
 // ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
 
 .#{$PREF}-card-action {
+  @extend .tooltip;
   @extend .tooltip--bottom;
+  @extend .tooltip--middle;
   @extend .react-icon--lg;
-
-  position: relative;
 
   > svg { @extend .react-icon--lg; }
 

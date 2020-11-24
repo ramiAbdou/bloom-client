@@ -86,12 +86,4 @@ $PREF: 'c-btn';
   &--active { background-color: $primary; color: $gray-6; }
   &:first-of-type { border-radius: $xxs 0 0 $xxs; }
   &:last-of-type { border-radius: 0 $xxs $xxs 0; }
-
-  // color: $primary;
-  // padding: $xs $sm;
-  // text-decoration: underline;
-  
-  // @include PRIMARY_HOVER;
-  // @include HOVER { border-radius: 10px; }
-  // &:first-of-type { border-radius: ; }
 }

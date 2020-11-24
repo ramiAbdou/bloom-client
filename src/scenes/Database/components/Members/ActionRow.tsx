@@ -6,7 +6,14 @@
 import React from 'react';
 import { IoIosSearch } from 'react-icons/io';
 
-import { FilterIcon } from './ActionButton';
+import Table from '@components/Table/Table.store';
+import {
+  CopyEmailIcon,
+  DeleteMemberIcon,
+  ExportDataIcon,
+  FilterIcon,
+  PromoteToAdminIcon
+} from './ActionButton';
 
 const SearchBar = () => (
   <div className="s-database-search">
@@ -16,13 +23,23 @@ const SearchBar = () => (
 );
 
 export default () => {
+  const isAnythingSelected = Table.useStoreState(
+    (store) => !!store.selectedRowIds.length
+  );
+
   return (
     <div className="s-database-action-row">
       <SearchBar />
 
-      <div>
-        <FilterIcon />
-      </div>
+      {!isAnythingSelected && <FilterIcon />}
+      {isAnythingSelected && (
+        <div>
+          <CopyEmailIcon />
+          <ExportDataIcon />
+          <PromoteToAdminIcon />
+          <DeleteMemberIcon />
+        </div>
+      )}
     </div>
   );
 };

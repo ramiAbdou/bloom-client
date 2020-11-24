@@ -65,6 +65,7 @@ const DatabaseTable = () => {
 
   return (
     <Table.Provider initialData={{ columns, data }}>
+      <ActionRow />
       <TableContent />
     </Table.Provider>
   );
@@ -86,10 +87,5 @@ export default () => {
       });
   }, [data]);
 
-  return (
-    <>
-      <ActionRow />
-      <DatabaseTable />
-    </>
-  );
+  return <DatabaseTable />;
 };
