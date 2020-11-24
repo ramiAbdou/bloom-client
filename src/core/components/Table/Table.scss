@@ -4,7 +4,7 @@ $PREF: 'c-table';
 
 // ## TABLE CONTAINER
 
-.#{$PREF}-ctr {
+##{$PREF}-ctr {
   background-color: white;
   border: 1px $gray-5 solid;
   border-radius: $xs;
@@ -16,6 +16,7 @@ $PREF: 'c-table';
   border-collapse: collapse;
   border-spacing: $xs $xxs;
   height: fit-content;
+  transform: rotateX(0deg);
   width: max-content;
 }
 
@@ -88,6 +89,12 @@ td > div > .c-misc-tag { margin: 0 $xxs $xxs 0; }
 
 td > div { @include OVERFLOW_ELLIPSES(3); }
 
+th > div {
+  max-width: 100%;
+
+  @include OVERFLOW_ELLIPSES;
+}
+
 th:first-of-type { z-index: 12; }
 
 td:first-of-type {
@@ -106,12 +113,6 @@ td:first-of-type {
 
 th:first-of-type > div,
 td:first-of-type > div { @extend .flex-ac; }
-
-th > div {
-  max-width: 100%;
-
-  @include OVERFLOW_ELLIPSES;
-}
 
 th > div > .c-table-select { border: 1px $gray-3 solid; z-index: 12; }
 td > div > .c-table-select { z-index: 9; }
@@ -142,4 +143,23 @@ td > div > .c-table-select { z-index: 9; }
   height: $sm + 2;
   stroke-width: 3px;
   width: $sm + 2;
+}
+
+// ## PAGINATION CONTAINER
+
+.#{$PREF}-pagination-ctr { margin-top: $sm; }
+
+// ## PAGINATION ROW
+
+.#{$PREF}-pagination-row { @extend .flex-ac; margin-top: $sm; }
+.#{$PREF}-pagination-row > button:first-of-type { margin-right: $xs; }
+.#{$PREF}-pagination-row > button:last-of-type { margin-left: $xs; }
+.#{$PREF}-pagination-btn {
+  @extend .body--1;
+
+  border-radius: 50%;
+  margin-right: $xxs;
+  padding: 1px $xs;
+
+  &--active { background-color: $primary; color: white; }
 }

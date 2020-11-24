@@ -1,0 +1,5 @@
+@import 'src/index.scss';
+
+$PREF: 'c-typography';
+
+.#{$PREF}-meta { @extend .meta; color: $gray-2; }

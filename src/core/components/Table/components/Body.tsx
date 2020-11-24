@@ -59,10 +59,14 @@ const DataRow = (row: Row) => {
 
 export default () => {
   const data = Table.useStoreState((store) => store.filteredData);
+  const range = Table.useStoreState((store) => store.range);
+
+  const floor = range * 100;
+  const ceiling = floor + 100;
 
   return (
     <tbody>
-      {data.slice(0, 100).map((row: Row) => (
+      {data.slice(floor, ceiling).map((row: Row) => (
         <DataRow key={row.id} {...row} />
       ))}
     </tbody>
