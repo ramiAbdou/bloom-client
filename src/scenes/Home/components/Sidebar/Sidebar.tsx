@@ -16,6 +16,9 @@ import Sidebar, { LinkOptions } from './Sidebar.store';
 import SidebarLink from './SidebarLink';
 
 const SidebarContent = () => {
+  const encodedUrlName = useStoreState(
+    ({ community }) => community.encodedUrlName
+  );
   const name = useStoreState(({ community }) => community.name);
   const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
   const isAdmin: boolean = useStoreState(({ entities }) => {
@@ -30,7 +33,11 @@ const SidebarContent = () => {
 
   const { location } = useHistory();
   const { pathname } = location;
-  const activeTo = pathname.substring(pathname.lastIndexOf('/') + 1);
+  const activeTo = pathname.substring(
+    pathname.indexOf(`${encodedUrlName}/`) + encodedUrlName.length + 1,
+    pathname.includes('/') ? pathname.lastIndexOf('/') : pathname.length
+  );
+
   const previousActiveTo = usePrevious(activeTo);
 
   useEffect(() => {
