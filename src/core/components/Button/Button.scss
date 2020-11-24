@@ -10,7 +10,7 @@ $PREF: 'c-btn';
   
   border-radius: $xxs;
 
-  @include HOVER { opacity: 0.8; }
+  &:not(.c-btn--no-hover) { @include HOVER { opacity: 0.8; } }
 
   &--fill { width: 100%; }
   &--lg { height: $xl; }

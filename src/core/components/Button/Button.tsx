@@ -21,6 +21,7 @@ export type ButtonProps = {
   loadingText?: string;
   large?: boolean;
   noScale?: boolean;
+  noHover?: boolean;
   onClick?: Function;
   title?: string;
 };
@@ -56,6 +57,7 @@ export default ({
   fill,
   large,
   noScale,
+  noHover,
   onClick,
   title,
   ...props
@@ -64,6 +66,7 @@ export default ({
     .class('c-btn')
     .addClass(!!large, 'c-btn--lg')
     .addClass(!!fill, 'c-btn--fill')
+    .addClass(!!noHover, 'c-btn--no-hover')
     .addClass(!!className, className);
 
   // The core Bloom button animation, the scaling down!
