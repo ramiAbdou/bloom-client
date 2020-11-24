@@ -175,3 +175,17 @@ td > div > .c-table-select { z-index: 9; }
     @include HOVER { background-color: $primary; color: white; }
   }
 }
+
+// ## SELECTED BANNER
+
+.#{$PREF}-banner {
+  @extend .flex-acc;
+  @extend .shadow--1;
+
+  background-color: white;
+  border-radius: $xs;
+  margin-bottom: $xs;
+  padding: $xs 0;
+}
+
+.#{$PREF}-banner > p { margin-right: $sm; }

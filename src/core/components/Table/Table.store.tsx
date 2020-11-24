@@ -20,6 +20,7 @@ type TableModel = {
   data: Row[];
   emails: Computed<TableModel, string[]>;
   filteredData: Row[];
+  isAllPageSelected: Computed<TableModel, boolean>;
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
   page: number;
@@ -28,6 +29,7 @@ type TableModel = {
   selectedRowIds: string[];
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
+  toggleAllPageRows: Action<TableModel>;
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
 };
@@ -53,7 +55,16 @@ const model: TableModel = {
   filteredData: [],
 
   /**
-   * Returns true if all rows are selected.
+   * Returns true if all of the filtered data rows are selected.
+   */
+  isAllPageSelected: computed(({ filteredData, range, selectedRowIds }) =>
+    filteredData
+      .slice(range[0], range[1])
+      .every(({ id: rowId }) => selectedRowIds.includes(rowId))
+  ),
+
+  /**
+   * Returns true if all of the filtered data rows are selected.
    */
   isAllSelected: computed(
     ({ filteredData, selectedRowIds }) =>
@@ -98,6 +109,18 @@ const model: TableModel = {
       })
     ),
     searchString
+  })),
+
+  /**
+   * Updates the data by setting isSelected to true where the ID of the row
+   * matches the ID of the data (row).
+   */
+  toggleAllPageRows: action(({ range, ...state }) => ({
+    ...state,
+    range,
+    selectedRowIds: !state.isAllPageSelected
+      ? state.filteredData.slice(range[0], range[1]).map(({ id }) => id)
+      : []
   })),
 
   /**

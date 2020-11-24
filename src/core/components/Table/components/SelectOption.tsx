@@ -11,20 +11,23 @@ import CSSModifier from '@util/CSSModifier';
 import Table from '../Table.store';
 
 export const HeaderSelectOption = () => {
-  const isAllSelected = Table.useStoreState((state) => state.isAllSelected);
-  const toggleAllRows = Table.useStoreActions(
-    (actions) => actions.toggleAllRows
+  const isAllPageSelected = Table.useStoreState(
+    (state) => state.isAllPageSelected
   );
 
-  const onClick = () => toggleAllRows();
+  const toggleAllPageRows = Table.useStoreActions(
+    (actions) => actions.toggleAllPageRows
+  );
+
+  const onClick = () => toggleAllPageRows();
 
   const { css } = new CSSModifier()
     .class('c-table-select')
-    .addClass(isAllSelected, 'c-table-select--active');
+    .addClass(isAllPageSelected, 'c-table-select--active');
 
   return (
     <div className={css} onClick={onClick}>
-      {isAllSelected && <IoMdCheckmark color="#FFF" />}
+      {isAllPageSelected && <IoMdCheckmark color="#FFF" />}
     </div>
   );
 };
