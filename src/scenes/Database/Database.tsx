@@ -11,18 +11,19 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Admins from './components/Admins/Admins';
 import Header from './components/Header';
 import Members from './components/Members/Members';
+import Database from './Database.store';
 
 export default () => {
   const { url } = useRouteMatch();
 
   return (
-    <>
-      <Header loading={false} />
+    <Database.Provider>
+      <Header />
       <Switch>
         <Route component={Admins} path={`${url}/admins`} />
         <Route component={Members} path={`${url}/members`} />
         <Redirect to={`${url}/members`} />
       </Switch>
-    </>
+    </Database.Provider>
   );
 };

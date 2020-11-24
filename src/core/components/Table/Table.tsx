@@ -12,7 +12,7 @@ import Body from './components/Body';
 import Header from './components/Header';
 import PaginationBar from './components/PaginationBar';
 
-const TABLE_HEIGHT = 60 * 7.5;
+const TABLE_HEIGHT = 60 * 8;
 
 export default () => {
   const [height, setHeight] = useState(0);

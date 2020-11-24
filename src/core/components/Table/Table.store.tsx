@@ -22,7 +22,8 @@ type TableModel = {
   filteredData: Row[];
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
-  range: number;
+  page: number;
+  range: Computed<TableModel, [number, number]>;
   searchString: string;
   selectedRowIds: string[];
   setRange: Action<TableModel, number>;
@@ -67,20 +68,22 @@ const model: TableModel = {
   ),
 
   /**
-   * Represents the range (currently in 100s) that the table is currently
+   * Represents the page (currently in 100s) that the table is currently
    * paginated on. In other words, 0 represents 1-99, 1 represents 100-199,
    * 2 represents 200-299, etc.
    */
-  range: 0,
+  page: 0,
+
+  range: computed(({ page }) => [page * 100, page * 100 + 100]),
 
   searchString: '',
 
   selectedRowIds: [],
 
-  setRange: action((state, range) => {
+  setRange: action((state, page) => {
     const element = document.getElementById('c-table-ctr');
     element.scroll({ top: 0 });
-    return { ...state, range };
+    return { ...state, page };
   }),
 
   setSearchString: action((state, searchString) => ({

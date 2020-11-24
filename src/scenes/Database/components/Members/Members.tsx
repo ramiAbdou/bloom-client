@@ -13,6 +13,7 @@ import { IApplicationQuestion, IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_DATABASE } from '../../Database.gql';
+import Database from '../../Database.store';
 import ActionRow from './ActionRow';
 
 const DatabaseTable = () => {
@@ -73,6 +74,9 @@ const DatabaseTable = () => {
 
 export default () => {
   const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const currentLoading = Database.useStoreState((store) => store.loading);
+  const setLoading = Database.useStoreActions((actions) => actions.setLoading);
+
   const { data, loading } = useQuery(GET_DATABASE);
 
   useEffect(() => {
@@ -86,6 +90,12 @@ export default () => {
         schema: Schema.COMMUNITY
       });
   }, [data]);
+
+  useEffect(() => {
+    if (loading !== currentLoading) setLoading(loading);
+  }, [loading]);
+
+  if (loading) return null;
 
   return <DatabaseTable />;
 };

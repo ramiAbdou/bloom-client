@@ -38,6 +38,8 @@ const SidebarContent = () => {
     pathname.includes('/') ? pathname.lastIndexOf('/') : pathname.length
   );
 
+  console.log(activeTo);
+
   const previousActiveTo = usePrevious(activeTo);
 
   useEffect(() => {

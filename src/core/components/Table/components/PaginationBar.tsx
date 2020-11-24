@@ -12,7 +12,7 @@ import CSSModifier from '@util/CSSModifier';
 import Table from '../Table.store';
 
 const RangeRow = () => {
-  const range = Table.useStoreState((store) => store.range);
+  const page = Table.useStoreState((store) => store.page);
   const setRange = Table.useStoreActions((store) => store.setRange);
   const numPages = Table.useStoreState(({ filteredData }) =>
     Math.ceil(filteredData.length / 100)
@@ -32,7 +32,7 @@ const RangeRow = () => {
 
   return (
     <div className="c-table-pagination-row">
-      <Button onClick={() => range > 0 && setRange(range - 1)}>
+      <Button onClick={() => page > 0 && setRange(page - 1)}>
         <IoIosArrowBack />
       </Button>
 
@@ -41,7 +41,7 @@ const RangeRow = () => {
 
         const { css } = new CSSModifier()
           .class('c-table-pagination-btn')
-          .addClass(range === num, 'c-table-pagination-btn--active');
+          .addClass(page === num, 'c-table-pagination-btn--active');
 
         const onClick = () => !isEllipses && setRange(num);
 
@@ -52,7 +52,7 @@ const RangeRow = () => {
         );
       })}
 
-      <Button onClick={() => range < numPages && setRange(range + 1)}>
+      <Button onClick={() => page < numPages && setRange(page + 1)}>
         <IoIosArrowForward />
       </Button>
     </div>
@@ -60,10 +60,10 @@ const RangeRow = () => {
 };
 
 export default () => {
-  const range = Table.useStoreState((store) => store.range);
+  const page = Table.useStoreState((store) => store.page);
   const numData = Table.useStoreState((store) => store.filteredData.length);
 
-  const floor = range * 100 + 1;
+  const floor = page * 100 + 1;
   const ceiling = numData - floor >= 99 ? floor + 99 : numData;
 
   return (

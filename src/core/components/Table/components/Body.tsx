@@ -68,9 +68,9 @@ const DataRow = (row: Row) => {
 
 export default () => {
   const data = Table.useStoreState((store) => store.filteredData);
-  const range = Table.useStoreState((store) => store.range);
+  const page = Table.useStoreState((store) => store.page);
 
-  const floor = range * 100;
+  const floor = page * 100;
   const ceiling = floor + 100;
 
   return (

@@ -15,5 +15,3 @@ export type Column = {
 export interface Row extends Record<string, any> {
   id: string;
 }
-
-export type TableFilter = (row: Row) => boolean;

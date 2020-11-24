@@ -152,11 +152,11 @@ td > div > .c-table-select { z-index: 9; }
 
 // ## PAGINATION CONTAINER
 
-.#{$PREF}-pagination-ctr { margin-top: $sm; }
+.#{$PREF}-pagination-ctr { @extend .flex-acsb; margin-top: $sm; }
 
 // ## PAGINATION ROW
 
-.#{$PREF}-pagination-row { @extend .flex-ac; margin-top: $sm; }
+.#{$PREF}-pagination-row { @extend .flex-ac; }
 .#{$PREF}-pagination-row > button:first-of-type { margin-right: $xs; }
 .#{$PREF}-pagination-row > button:last-of-type { margin-left: $xs; }
 .#{$PREF}-pagination-btn {
@@ -166,5 +166,12 @@ td > div > .c-table-select { z-index: 9; }
   margin-right: $xxs;
   padding: 1px $xs;
 
-  &--active { background-color: $primary; color: white; }
+  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.15); }
+
+  &--active {
+    background-color: $primary;
+    color: white;
+
+    @include HOVER { background-color: $primary; color: white; }
+  }
 }
