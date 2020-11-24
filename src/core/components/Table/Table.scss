@@ -45,7 +45,7 @@ tbody > tr {
 }
 
 .#{$PREF}-tr--active {
-  > td { background-color: hsl($primary-hue, 35%, 93%); }
+  > td { background-color: $primary-hover; }
 }
 
 // ## TABLE CELL (HEADER AND CELL)

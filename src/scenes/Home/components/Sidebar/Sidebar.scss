@@ -32,7 +32,7 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-link {
   @extend .flex-ac;
 
-  background-clip: padding-box;
+  background-clip: padding-box; // Needed to set the border-left color.
   border-left: 3px white solid;
   border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
@@ -60,7 +60,7 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-link--active {
   @extend .bold; 
 
-  background-color: rgba($color: $primary-hex, $alpha: 0.1);
+  background-color: $primary-hover;
   border-left: 3px $primary solid;
   color: $primary;
 
