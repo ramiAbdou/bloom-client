@@ -42,7 +42,6 @@ const sortByColumn = (
 type TableModel = {
   columns: Column[];
   data: Row[];
-  emails: Computed<TableModel, string[]>;
   filteredData: Row[];
   isAllPageSelected: Computed<TableModel, boolean>;
   isAllSelected: Computed<TableModel, boolean>;
@@ -65,13 +64,6 @@ const model: TableModel = {
   columns: [],
 
   data: [],
-
-  emails: computed(({ columns, data, selectedRowIds }) => {
-    const { id } = columns.find(({ title }) => title === 'Email');
-    return selectedRowIds.map(
-      (rowId: string) => data.find((row: Row) => row.id === rowId)[id]
-    );
-  }),
 
   /**
    * Returns the filtered data by running all of the filter functions on every
@@ -144,7 +136,7 @@ const model: TableModel = {
       if (columnId === sortedColumnId) {
         sortedColumnDirection =
           sortedColumnDirection === 'ASC' ? 'DESC' : 'ASC';
-      } else sortedColumnDirection = 'DESC';
+      } else sortedColumnDirection = 'ASC';
 
       const updatedFilteredData = sortByColumn(
         columnId,

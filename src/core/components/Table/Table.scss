@@ -112,7 +112,8 @@ th > div > svg {
   width: 12px !important;
 }
 
-th.c-table-selected-col > div > svg { visibility: visible; }
+th.c-table-selected-col > div > svg { fill: $primary; visibility: visible; }
+th.c-table-selected-col > div > p { color: $primary !important; }
 
 th:first-of-type { z-index: 12; }
 

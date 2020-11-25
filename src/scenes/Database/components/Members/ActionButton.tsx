@@ -11,9 +11,10 @@ import ArrowUpCircle from '@components/Icons/ArrowUpCircle';
 import Copy from '@components/Icons/Copy';
 import Trash from '@components/Icons/Trash';
 import Table from '@components/Table/Table.store';
-import { ValueProps } from '@constants';
+import { Row } from '@components/Table/Table.types';
+import { OnClickProps, ValueProps } from '@constants';
 
-interface DatabaseActionProps extends ValueProps {
+interface DatabaseActionProps extends OnClickProps, ValueProps {
   Component: FC;
   disabled?: boolean;
 }
@@ -26,9 +27,20 @@ const DatabaseAction = memo(
   )
 );
 
-export const CopyEmailIcon = () => (
-  <DatabaseAction Component={Copy} value="Copy Email" />
-);
+export const CopyEmailIcon = () => {
+  const emails = Table.useStoreState(({ columns, data, selectedRowIds }) => {
+    const columnId = columns.find(({ title }) => title === 'Email').id;
+    return selectedRowIds.map(
+      (rowId: string) => data.find((row: Row) => row.id === rowId)[columnId]
+    );
+  });
+
+  const onClick = () => navigator.clipboard.writeText(emails.join(','));
+
+  return (
+    <DatabaseAction Component={Copy} value="Copy Email" onClick={onClick} />
+  );
+};
 
 export const DeleteMemberIcon = () => (
   <DatabaseAction Component={Trash} value="Delete Member" />
