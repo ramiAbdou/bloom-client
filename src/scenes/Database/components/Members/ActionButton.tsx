@@ -13,16 +13,14 @@ import Copy from '@components/Icons/Copy';
 import Trash from '@components/Icons/Trash';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
-import { LoadingProps, OnClickProps, ValueProps } from '@constants';
+import { LoadingProps, OnClickProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { DELETE_MEMBERSHIPS } from '../../Database.gql';
 
-interface DatabaseActionProps
-  extends Partial<LoadingProps>,
-    OnClickProps,
-    ValueProps {
+interface DatabaseActionProps extends Partial<LoadingProps>, OnClickProps {
   Component: FC;
   disabled?: boolean;
+  value?: string;
 }
 
 const DatabaseAction = memo(
@@ -41,8 +39,6 @@ export const CopyEmailIcon = () => {
       return selectedRow?.[columnId];
     });
   });
-
-  console.log(emails.length);
 
   const onClick = () => navigator.clipboard.writeText(emails.join(','));
 
