@@ -12,8 +12,11 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
+import {
+  ANIMATION_DURATION,
+  ToastOptions
+} from '@components/Toast/Toast.store';
 import { useStoreState } from '@store/Store';
-import { ANIMATION_DURATION, ToastOptions } from '@components/Toast/Toast.store';
 import CSSModifier from '@util/CSSModifier';
 
 const Toast = ({ isError, message }: ToastOptions) => {
@@ -44,7 +47,7 @@ export default () => {
     <div className="c-toast-ctr">
       <AnimatePresence>
         {queue.map(({ id, ...toast }) => (
-          <Toast key={id} {...toast} />
+          <Toast key={id} id={id} {...toast} />
         ))}
       </AnimatePresence>
     </div>,

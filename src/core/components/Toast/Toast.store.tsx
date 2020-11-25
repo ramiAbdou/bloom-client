@@ -9,7 +9,7 @@ import { MessageProps } from '@constants';
 
 export const ANIMATION_DURATION = 500;
 export interface ToastOptions extends MessageProps {
-  id?: number;
+  id: number;
   isError?: boolean;
 }
 
