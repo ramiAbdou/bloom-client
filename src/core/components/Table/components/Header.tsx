@@ -31,7 +31,7 @@ export default () => {
           const { css } = new CSSModifier()
             .addClass(sortedColumnId === id, 'c-table-selected-col')
             .addClass(
-              ['SHORT_TEXT', 'CUSTOM'].includes(type),
+              !type || ['SHORT_TEXT', 'CUSTOM'].includes(type),
               'c-table-cell--sm'
             )
             .addClass(

@@ -43,8 +43,6 @@
     &::before { opacity: 1; transition-delay: 0.75s; visibility: visible; }
   }
 
-  &:active { &::before { display: none; opacity: 0; visibility: hidden; } }
-
   &::before {
     @extend .meta;
 
@@ -64,7 +62,7 @@
     z-index: 100;
   }
 
-  &:active { &::before { opacity: 0; visibility: hidden; } }
+  &:active { &::before { display: none; opacity: 0; visibility: hidden; } }
 
   &--bottom { &::before { margin-top: $xxs; top: 100%; } }
   &--middle { &::before { left: 50%; transform: translateX(-50%); } }

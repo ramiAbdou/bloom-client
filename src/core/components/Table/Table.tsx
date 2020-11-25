@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { useStoreState } from '@store/Store';
 import Body from './components/Body';
 import Header from './components/Header';
-import PaginationBar from './components/PaginationBar';
+import Pagination from './components/Pagination/Pagination';
 import SelectedBanner from './components/SelectedBanner';
 import Table from './Table.store';
 
@@ -39,7 +39,7 @@ export default () => {
         </table>
       </div>
 
-      <PaginationBar />
+      <Pagination />
     </>
   );
 };

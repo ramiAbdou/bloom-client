@@ -197,6 +197,15 @@ td > div > .c-table-select { z-index: 9; }
 
     @include HOVER { background-color: $primary; color: white; }
   }
+
+  &--ellipses { @include HOVER { background-color: initial; cursor: default; } }
+}
+
+.#{$PREF}-pagination-arrow {
+  border-radius: 50%;
+  padding: 2px;
+
+  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.15); }
 }
 
 // ## SELECTED BANNER
