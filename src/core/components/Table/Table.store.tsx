@@ -40,6 +40,7 @@ const sortByColumn = (
 };
 
 type TableModel = {
+  clearSelectedRows: Action<TableModel>;
   columns: Column[];
   data: Row[];
   filteredData: Row[];
@@ -58,9 +59,12 @@ type TableModel = {
   toggleAllPageRows: Action<TableModel>;
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
+  updateData: Action<TableModel, Row[]>;
 };
 
 const model: TableModel = {
+  clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
+
   columns: [],
 
   data: [],
@@ -109,6 +113,8 @@ const model: TableModel = {
   selectedRowIds: [],
 
   setRange: action((state, page) => {
+    // When going to a new page, we need to ensure that the scroll position is
+    // set to 0 so they start at the top of the page.
     const element = document.getElementById('c-table-ctr');
     element.scroll({ top: 0 });
     return { ...state, page };
@@ -185,25 +191,19 @@ const model: TableModel = {
    * Updates the data by setting isSelected to true where the ID of the row
    * matches the ID of the data (row).
    */
-  toggleRow: action((state, rowId: string) => ({
+  toggleRow: action(({ selectedRowIds, ...state }, rowId: string) => ({
     ...state,
-    selectedRowIds: toggleArrayValue(state.selectedRowIds, rowId)
-  }))
+    selectedRowIds: toggleArrayValue(selectedRowIds, rowId)
+  })),
+
+  updateData: action((state, data) => ({ ...state, data, filteredData: data }))
 };
 
 export type TableStoreInitializer = {
   columns: Column[];
-  data: Row[];
-  select?: boolean;
 };
 
 export default createContextStore<TableModel>(
-  ({ columns, data, select }: TableStoreInitializer) => ({
-    ...model,
-    columns,
-    data,
-    filteredData: data,
-    select: select ?? true
-  }),
+  (columns: Column[]) => ({ ...model, columns }),
   { disableImmer: true }
 );

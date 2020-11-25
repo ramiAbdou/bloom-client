@@ -3,7 +3,7 @@
  * @author Rami Abdou
  */
 
-import { query } from 'gql-query-builder';
+import { mutation, query } from 'gql-query-builder';
 
 export const GET_DATABASE = query({
   fields: [
@@ -12,4 +12,9 @@ export const GET_DATABASE = query({
     { memberships: ['id', { allData: ['questionId', 'value'] }] }
   ],
   operation: 'getDatabase'
+}).query;
+
+export const DELETE_MEMBERSHIPS = mutation({
+  operation: 'deleteMemberships',
+  variables: { membershipIds: { required: true, type: '[String!]' } }
 }).query;

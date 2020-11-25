@@ -74,21 +74,23 @@ const DataRow = (row: Row) => {
 
 export default () => {
   const filteredData = Table.useStoreState((store) => store.filteredData);
-  const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
-  const sortedColumnDirection = Table.useStoreState(
-    (store) => store.sortedColumnDirection
-  );
-  const [dataToShow, setDataToShow] = useState(filteredData);
+  // const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
+  // const sortedColumnDirection = Table.useStoreState(
+  //   (store) => store.sortedColumnDirection
+  // );
   const floor = Table.useStoreState((store) => store.range[0]);
   const ceiling = Table.useStoreState((store) => store.range[1]);
 
-  useEffect(() => {
-    setDataToShow(filteredData);
-  }, [sortedColumnId, sortedColumnDirection]);
+  // useEffect(() => {
+  //   setDataToShow(filteredData);
+  // }, [sortedColumnId, sortedColumnDirection]);
+
+  // console.log('table data', tableData);
+  // console.log('data to show', dataToShow);
 
   return (
     <tbody>
-      {dataToShow.slice(floor, ceiling).map((row: Row) => (
+      {filteredData.slice(floor, ceiling).map((row: Row) => (
         <DataRow key={row.id} {...row} />
       ))}
     </tbody>

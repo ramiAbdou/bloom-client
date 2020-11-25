@@ -17,6 +17,43 @@ import Database from '../../Database.store';
 import ActionRow from './ActionRow';
 
 const DatabaseTable = () => {
+  const allMembers: IMember[] = useStoreState(({ entities, community }) => {
+    const { byId } = entities.members;
+    return community.members?.map((memberId: string) => byId[memberId]);
+  });
+
+  const updateData = Table.useStoreActions((actions) => actions.updateData);
+
+  // Used primarily for the removal of members. This will not update the
+  // data if the number of members doesn't change.
+  useEffect(() => {
+    updateData(
+      allMembers.reduce((acc: Row[], { id, allData }: IMember) => {
+        const result = { id };
+        allData.forEach(({ questionId, value }) => {
+          result[questionId] = value;
+        });
+
+        return [...acc, result];
+      }, [])
+    );
+  }, [allMembers?.length]);
+
+  if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
+
+  return (
+    <>
+      <ActionRow />
+      <TableContent />
+    </>
+  );
+};
+
+export default () => {
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const currentLoading = Database.useStoreState((store) => store.loading);
+  const setLoading = Database.useStoreActions((actions) => actions.setLoading);
+
   const questions: IApplicationQuestion[] = useStoreState(
     ({ community, entities }) => {
       const { byId } = entities.membershipQuestions;
@@ -25,55 +62,6 @@ const DatabaseTable = () => {
       );
     }
   );
-
-  const allMembers: IMember[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.members;
-    return community.members?.map((memberId: string) => byId[memberId]);
-  });
-
-  const data = useMemo(
-    () =>
-      !allMembers
-        ? []
-        : allMembers.reduce((acc: Row[], { id, allData }: IMember) => {
-            const result = { id };
-            allData.forEach(({ questionId, value }) => {
-              result[questionId] = value;
-            });
-
-            return [...acc, result];
-          }, []),
-    [allMembers?.length]
-  );
-
-  const columns = useMemo(
-    () =>
-      !questions
-        ? []
-        : questions.map(({ category, type, id, title }) => ({
-            category,
-            id,
-            title,
-            type
-          })),
-    [questions?.length]
-  );
-
-  if (!questions?.length) return null;
-  if (!data.length) return <p>You don't have any members! 🥴</p>;
-
-  return (
-    <Table.Provider initialData={{ columns, data }}>
-      <ActionRow />
-      <TableContent />
-    </Table.Provider>
-  );
-};
-
-export default () => {
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
-  const currentLoading = Database.useStoreState((store) => store.loading);
-  const setLoading = Database.useStoreActions((actions) => actions.setLoading);
 
   const { data, loading } = useQuery(GET_DATABASE);
 
@@ -93,7 +81,24 @@ export default () => {
     if (loading !== currentLoading) setLoading(loading);
   }, [loading]);
 
-  if (loading) return null;
+  const columns = useMemo(
+    () =>
+      !questions
+        ? []
+        : questions.map(({ category, type, id, title }) => ({
+            category,
+            id,
+            title,
+            type
+          })),
+    [questions?.length]
+  );
 
-  return <DatabaseTable />;
+  if (loading || !questions?.length) return null;
+
+  return (
+    <Table.Provider initialData={columns}>
+      <DatabaseTable />
+    </Table.Provider>
+  );
 };
