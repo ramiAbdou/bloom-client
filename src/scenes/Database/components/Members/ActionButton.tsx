@@ -6,6 +6,7 @@
 import { useMutation } from 'graphql-hooks';
 import React, { FC, memo } from 'react';
 import { IoIosExit, IoMdFunnel } from 'react-icons/io';
+import { useHistory } from 'react-router-dom';
 
 import Button from '@components/Button/Button';
 import ArrowUpCircle from '@components/Icons/ArrowUpCircle';
@@ -84,20 +85,19 @@ export const PromoteToAdminIcon = () => {
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
-  const clearSelectedRows = Table.useStoreActions(
-    (store) => store.clearSelectedRows
-  );
   const disabled = Table.useStoreState(
     (store) => store.selectedRowIds.length > 15
   );
   // const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
 
+  const { push } = useHistory();
+
   const [promoteToAdmin] = useMutation(PROMOTE_TO_ADMIN);
 
   const onClick = async () => {
     const { data } = await promoteToAdmin({ variables: { membershipIds } });
-    if (!data?.deleteMemberships) return;
-    clearSelectedRows();
+    if (!data?.promoteToAdmin) return;
+    push('admins');
   };
 
   return (

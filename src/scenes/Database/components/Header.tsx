@@ -3,7 +3,7 @@
  * @author Rami Abdou
  */
 
-import React, { memo } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import MultiButton from '@components/Button/MultiButton';
@@ -12,11 +12,17 @@ import Spinner from '@components/Loader/Spinner';
 import Database from '../Database.store';
 
 const AddMemberButton = () => <PrimaryButton title="Add Member" />;
+const AddAdminButton = () => <PrimaryButton title="Add Admin" />;
 
 const MemberAdminButton = () => {
-  const { push } = useHistory();
+  const { location, push } = useHistory();
+  const { pathname } = location;
+  const activeIndex =
+    pathname.substring(pathname.lastIndexOf('/') + 1) === 'members' ? 0 : 1;
+
   return (
     <MultiButton
+      activeIndex={activeIndex}
       options={[
         { onClick: () => push('members'), title: 'Members' },
         { onClick: () => push('admins'), title: 'Admins' }
@@ -27,6 +33,9 @@ const MemberAdminButton = () => {
 
 export default () => {
   const loading = Database.useStoreState((store) => store.loading);
+  const { pathname } = useHistory().location;
+  const isMembers =
+    pathname.substring(pathname.lastIndexOf('/') + 1) === 'members';
 
   return (
     <div className="s-home-header">
@@ -38,9 +47,11 @@ export default () => {
       {!loading && (
         <>
           <MemberAdminButton />
-          <AddMemberButton />
         </>
       )}
+
+      {!loading && isMembers && <AddMemberButton />}
+      {!loading && !isMembers && <AddAdminButton />}
     </div>
   );
 };

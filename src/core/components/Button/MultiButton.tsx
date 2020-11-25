@@ -9,11 +9,14 @@ import CSSModifier from '@util/CSSModifier';
 import Button, { ButtonProps } from './Button';
 
 interface MultiButtonProps extends ButtonProps {
+  activeIndex?: number;
   options: { onClick: Function; title: string }[];
 }
 
-export default ({ options }: MultiButtonProps) => {
-  const [activeTitle, setActiveTitle] = useState(options[0].title);
+export default ({ activeIndex, options }: MultiButtonProps) => {
+  const [activeTitle, setActiveTitle] = useState(
+    options[activeIndex ?? 0].title
+  );
 
   return (
     <div>
