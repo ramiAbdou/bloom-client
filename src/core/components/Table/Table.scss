@@ -54,7 +54,8 @@ td { left: 0; margin: 0; padding: $sm $md $sm $sm; position: sticky; }
 th {
   background-color: $gray-6;
   box-sizing: border-box;
-  max-width: $xxl * 5;
+  // max-width: $xxl * 5;
+
   position: sticky;
   text-align: left;
   text-transform: uppercase;
@@ -83,12 +84,19 @@ th {
   }
 }
 
+.c-table-cell {
+  &--sm { max-width: $xxl * 3; width: $xxl * 3; }
+  &--md { max-width: $xxl * 4; width: $xxl * 4; }
+  &--lg { max-width: $xxl * 5; width: $xxl * 6; }
+}
+
 // ## TABLE CELL
 
 td {
   background-color: white;
   color: $gray-1;
-  max-width: $xxl * 5;
+  // max-width: $xxl * 5;
+
   vertical-align: top;
 }
 

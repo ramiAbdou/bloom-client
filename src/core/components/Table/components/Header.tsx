@@ -27,11 +27,18 @@ export default () => {
   return (
     <thead>
       <tr style={customStyle}>
-        {columns.map(({ id, title }: Column, i: number) => {
-          const { css } = new CSSModifier().addClass(
-            sortedColumnId === id,
-            'c-table-selected-col'
-          );
+        {columns.map(({ type, id, title }: Column, i: number) => {
+          const { css } = new CSSModifier()
+            .addClass(sortedColumnId === id, 'c-table-selected-col')
+            .addClass(
+              ['SHORT_TEXT', 'CUSTOM'].includes(type),
+              'c-table-cell--sm'
+            )
+            .addClass(
+              ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
+              'c-table-cell--md'
+            )
+            .addClass(['LONG_TEXT'].includes(type), 'c-table-cell--lg');
 
           const showCaretUp = sortedColumnId === id && direction === 'ASC';
 

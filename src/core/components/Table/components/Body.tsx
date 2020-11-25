@@ -21,7 +21,13 @@ interface DataCellProps extends Partial<ChildrenProps>, ValueProps {
 const DataCell = ({ children, type, value }: DataCellProps) => {
   const { css } = new CSSModifier()
     .addClass(type === 'MULTIPLE_CHOICE', 'c-table-td--multiple-choice')
-    .addClass(type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select');
+    .addClass(type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select')
+    .addClass(['SHORT_TEXT', 'CUSTOM'].includes(type), 'c-table-cell--sm')
+    .addClass(
+      ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
+      'c-table-cell--md'
+    )
+    .addClass(['LONG_TEXT'].includes(type), 'c-table-cell--lg');
 
   let content: ReactNode = value;
   if (type === 'MULTIPLE_CHOICE' && value) content = <Tag value={value} />;
