@@ -15,7 +15,7 @@ import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
 import { LoadingProps, OnClickProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { DELETE_MEMBERSHIPS } from '../../Database.gql';
+import { DELETE_MEMBERSHIPS, PROMOTE_TO_ADMIN } from '../../Database.gql';
 
 interface DatabaseActionProps extends Partial<LoadingProps>, OnClickProps {
   Component: FC;
@@ -48,45 +48,25 @@ export const CopyEmailIcon = () => {
 };
 
 export const DeleteMemberIcon = () => {
-  const community = useStoreState((store) => store.community);
-  const communities = useStoreState(({ entities }) => entities.communities);
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const members = useStoreState((store) => store.community.members);
+  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
-  );
-  const clearSelectedRows = Table.useStoreActions(
-    (store) => store.clearSelectedRows
   );
 
   const [deleteMemberships] = useMutation(DELETE_MEMBERSHIPS);
 
   const onClick = async () => {
-    const { id, members } = community;
-
     const { data } = await deleteMemberships({ variables: { membershipIds } });
     if (!data?.deleteMemberships) return;
 
-    updateEntities({
-      updatedState: {
-        communities: {
-          ...communities,
-          byId: {
-            ...communities.byId,
-            [id]: {
-              ...community,
-              members: members.filter(
-                (memberId: string) => !membershipIds.includes(memberId)
-              )
-            }
-          }
-        }
-      }
+    updateCommunity({
+      members: members.filter(
+        (memberId: string) => !membershipIds.includes(memberId)
+      )
     });
-
-    clearSelectedRows();
   };
 
-  // DELETE_MEMBERSHIPS
   return (
     <DatabaseAction Component={Trash} value="Delete Member" onClick={onClick} />
   );
@@ -101,15 +81,53 @@ export const FilterIcon = () => (
 );
 
 export const PromoteToAdminIcon = () => {
+  // const membershipIds = Table.useStoreState(
+  //   ({ selectedRowIds }) => selectedRowIds
+  // );
+  // const clearSelectedRows = Table.useStoreActions(
+  //   (store) => store.clearSelectedRows
+  // );
   const disabled = Table.useStoreState(
     (store) => store.selectedRowIds.length > 15
   );
+  // const updateEntities = useStoreActions((actions) => actions.updateEntities);
+
+  // const [promoteToAdmin] = useMutation(PROMOTE_TO_ADMIN);
+
+  // const onClick = async () => {
+  //   const { id, members } = community;
+
+  //   const { data } = await deleteMemberships({ variables: { membershipIds } });
+  //   if (!data?.deleteMemberships) return;
+
+  //   updateEntities({
+  //     updatedState: {
+  //       communities: {
+  //         ...communities,
+  //         byId: {
+  //           ...communities.byId,
+  //           [id]: {
+  //             ...community,
+  //             members: members.filter(
+  //               (memberId: string) => !membershipIds.includes(memberId)
+  //             )
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+
+  //   clearSelectedRows();
+  // };
+
+  // PROMOTE_TO_ADMIN
 
   return (
     <DatabaseAction
       Component={ArrowUpCircle}
       disabled={disabled}
       value="Promote to Admin"
+      // onClick={onClick}
     />
   );
 };

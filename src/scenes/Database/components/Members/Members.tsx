@@ -22,21 +22,25 @@ const DatabaseTable = () => {
     return community.members?.map((memberId: string) => byId[memberId]);
   });
 
+  const clearSelectedRows = Table.useStoreActions(
+    (actions) => actions.clearSelectedRows
+  );
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
   // Used primarily for the removal of members. This will not update the
   // data if the number of members doesn't change.
   useEffect(() => {
-    updateData(
-      allMembers.reduce((acc: Row[], { id, allData }: IMember) => {
-        const result = { id };
-        allData.forEach(({ questionId, value }) => {
-          result[questionId] = value;
-        });
+    const data = allMembers.reduce((acc: Row[], { id, allData }: IMember) => {
+      const result = { id };
+      allData.forEach(({ questionId, value }) => {
+        result[questionId] = value;
+      });
 
-        return [...acc, result];
-      }, [])
-    );
+      return [...acc, result];
+    }, []);
+
+    updateData(data);
+    clearSelectedRows();
   }, [allMembers?.length]);
 
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;

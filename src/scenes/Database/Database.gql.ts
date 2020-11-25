@@ -18,3 +18,8 @@ export const DELETE_MEMBERSHIPS = mutation({
   operation: 'deleteMemberships',
   variables: { membershipIds: { required: true, type: '[String!]' } }
 }).query;
+
+export const PROMOTE_TO_ADMIN = mutation({
+  operation: 'promoteToAdmin',
+  variables: { membershipIds: { required: true, type: '[String!]' } }
+}).query;

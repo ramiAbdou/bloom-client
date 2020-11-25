@@ -51,6 +51,7 @@ type StoreModel = {
   picker: PickerModel;
   screen: ScreenModel;
   toast: ToastModel;
+  updateCommunity: Action<StoreModel, Partial<ICommunity>>;
   updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
   user: Computed<StoreModel, IUser>;
 };
@@ -137,6 +138,27 @@ export const store = createStore<StoreModel>(
     screen: screenModel,
 
     toast: toastModel,
+
+    updateCommunity: action(
+      ({ entities, ...state }, payload: Partial<ICommunity>) => {
+        const { communities } = entities;
+        const { id } = state.community;
+
+        return {
+          ...state,
+          entities: {
+            ...entities,
+            communities: {
+              ...communities,
+              byId: {
+                ...communities.byId,
+                [id]: { ...state.community, ...payload }
+              }
+            }
+          }
+        };
+      }
+    ),
 
     /**
      * Main update function that updates all entities (front-end DB). Uses

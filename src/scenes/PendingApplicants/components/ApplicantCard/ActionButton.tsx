@@ -29,9 +29,10 @@ export const BackButton = () => {
 
 export const AcceptButton = () => {
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
-  const community = useStoreState((store) => store.community);
-  const communities = useStoreState(({ entities }) => entities.communities);
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const applicants = useStoreState(
+    ({ community }) => community.pendingApplicants
+  );
+  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
@@ -39,27 +40,12 @@ export const AcceptButton = () => {
   });
 
   const onClick = async () => {
-    const { id, pendingApplicants } = community;
-
     // Call to the server.
     const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
-    updateEntities({
-      updatedState: {
-        communities: {
-          ...communities,
-          byId: {
-            ...communities.byId,
-            [id]: {
-              ...community,
-              pendingApplicants: pendingApplicants.filter(
-                (a: string) => a !== applicantId
-              )
-            }
-          }
-        }
-      }
+    updateCommunity({
+      pendingApplicants: applicants.filter((a: string) => a !== applicantId)
     });
 
     showToast({ message: 'Application accepted.' });
