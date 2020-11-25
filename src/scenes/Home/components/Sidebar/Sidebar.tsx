@@ -6,19 +6,15 @@
 import './Sidebar.scss';
 
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import Separator from '@components/Misc/Separator';
-import { usePrevious } from '@hooks/usePrevious';
 import { useStoreState } from '@store/Store';
 import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';
 import SidebarLink from './SidebarLink';
+import useActiveTo from './useActiveTo';
 
 const SidebarContent = () => {
-  const encodedUrlName = useStoreState(
-    ({ community }) => community.encodedUrlName
-  );
   const name = useStoreState(({ community }) => community.name);
   const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
   const isAdmin: boolean = useStoreState(({ entities }) => {
@@ -30,19 +26,11 @@ const SidebarContent = () => {
   });
 
   const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
-
-  const { location } = useHistory();
-  const { pathname } = location;
-  const activeTo = pathname.substring(
-    pathname.indexOf(`${encodedUrlName}/`) + encodedUrlName.length + 1,
-    pathname.includes('/') ? pathname.lastIndexOf('/') : pathname.length
-  );
-
-  const previousActiveTo = usePrevious(activeTo);
+  const activeTo = useActiveTo();
 
   useEffect(() => {
-    if (previousActiveTo !== activeTo) setActiveTo(activeTo);
-  }, [activeTo, location.pathname]);
+    setActiveTo(activeTo);
+  }, [activeTo]);
 
   const mainLinks: LinkOptions[] = [
     { title: 'Directory', to: 'directory' },
@@ -99,8 +87,14 @@ const SidebarContent = () => {
   );
 };
 
-export default () => (
-  <Sidebar.Provider>
-    <SidebarContent />
-  </Sidebar.Provider>
-);
+export default () => {
+  const activeTo = useActiveTo();
+  // console.log('HERE2');
+  console.log(window.location.pathname, activeTo);
+
+  return (
+    <Sidebar.Provider initialData={activeTo}>
+      <SidebarContent />
+    </Sidebar.Provider>
+  );
+};

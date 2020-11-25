@@ -20,12 +20,12 @@ type SidebarModel = {
 };
 
 export default createContextStore<SidebarModel>(
-  {
-    activeTo: '',
+  (initialActiveTo: string) => ({
+    activeTo: initialActiveTo,
 
     isActive: computed(({ activeTo }) => (to: string) => activeTo === to),
 
     setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo }))
-  },
+  }),
   { disableImmer: true }
 );
