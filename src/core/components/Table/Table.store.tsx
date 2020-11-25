@@ -28,6 +28,9 @@ type TableModel = {
   selectedRowIds: string[];
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
+  setSortedColumn: Action<TableModel, string>;
+  sortedColumnDirection: 'ASC' | 'DESC';
+  sortedColumnId: string;
   toggleAllPageRows: Action<TableModel>;
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
@@ -107,6 +110,25 @@ const model: TableModel = {
     ),
     searchString
   })),
+
+  setSortedColumn: action((state, sortedColumnId) => {
+    let sortedColumnDirection: 'ASC' | 'DESC';
+
+    if (state.sortedColumnId === sortedColumnId) {
+      if (state.sortedColumnDirection === 'ASC') sortedColumnDirection = 'DESC';
+      if (state.sortedColumnDirection === 'DESC') sortedColumnDirection = 'ASC';
+    } else sortedColumnDirection = 'DESC';
+
+    return {
+      ...state,
+      sortedColumnDirection,
+      sortedColumnId
+    };
+  }),
+
+  sortedColumnDirection: null,
+
+  sortedColumnId: null,
 
   /**
    * Updates the data by setting isSelected to true where the ID of the row
