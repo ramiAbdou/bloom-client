@@ -14,6 +14,31 @@ import {
 import { toggleArrayValue } from '@util/util';
 import { Column, Row } from './Table.types';
 
+type SortDirection = 'ASC' | 'DESC';
+
+const sortByColumn = (
+  columnId: string,
+  data: Row[],
+  direction: SortDirection
+): Row[] => {
+  return data.sort((a: Row, b: Row) => {
+    const aValue = a[columnId];
+    const bValue = b[columnId];
+
+    if (aValue < bValue) {
+      if (direction === 'ASC') return -1;
+      if (direction === 'DESC') return 1;
+    }
+
+    if (bValue < aValue) {
+      if (direction === 'ASC') return 1;
+      if (direction === 'DESC') return -1;
+    }
+
+    return 0;
+  });
+};
+
 type TableModel = {
   columns: Column[];
   data: Row[];
@@ -29,7 +54,7 @@ type TableModel = {
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
   setSortedColumn: Action<TableModel, string>;
-  sortedColumnDirection: 'ASC' | 'DESC';
+  sortedColumnDirection: SortDirection;
   sortedColumnId: string;
   toggleAllPageRows: Action<TableModel>;
   toggleAllRows: Action<TableModel>;
@@ -111,20 +136,31 @@ const model: TableModel = {
     searchString
   })),
 
-  setSortedColumn: action((state, sortedColumnId) => {
-    let sortedColumnDirection: 'ASC' | 'DESC';
+  setSortedColumn: action(
+    (
+      { data, filteredData, sortedColumnId, sortedColumnDirection, ...state },
+      columnId
+    ) => {
+      if (columnId === sortedColumnId) {
+        sortedColumnDirection =
+          sortedColumnDirection === 'ASC' ? 'DESC' : 'ASC';
+      } else sortedColumnDirection = 'DESC';
 
-    if (state.sortedColumnId === sortedColumnId) {
-      if (state.sortedColumnDirection === 'ASC') sortedColumnDirection = 'DESC';
-      if (state.sortedColumnDirection === 'DESC') sortedColumnDirection = 'ASC';
-    } else sortedColumnDirection = 'DESC';
+      const updatedFilteredData = sortByColumn(
+        columnId,
+        filteredData,
+        sortedColumnDirection
+      );
 
-    return {
-      ...state,
-      sortedColumnDirection,
-      sortedColumnId
-    };
-  }),
+      return {
+        ...state,
+        data: sortByColumn(columnId, data, sortedColumnDirection),
+        filteredData: updatedFilteredData,
+        sortedColumnDirection,
+        sortedColumnId: columnId
+      };
+    }
+  ),
 
   sortedColumnDirection: null,
 

@@ -5,7 +5,7 @@
  */
 
 import moment from 'moment-timezone';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import Tag from '@components/Misc/Tag';
 import { ChildrenProps, QuestionType, ValueProps } from '@constants';
@@ -67,13 +67,22 @@ const DataRow = (row: Row) => {
 };
 
 export default () => {
-  const data = Table.useStoreState((store) => store.filteredData);
+  const filteredData = Table.useStoreState((store) => store.filteredData);
+  const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
+  const sortedColumnDirection = Table.useStoreState(
+    (store) => store.sortedColumnDirection
+  );
+  const [dataToShow, setDataToShow] = useState(filteredData);
   const floor = Table.useStoreState((store) => store.range[0]);
   const ceiling = Table.useStoreState((store) => store.range[1]);
 
+  useEffect(() => {
+    setDataToShow(filteredData);
+  }, [sortedColumnId, sortedColumnDirection]);
+
   return (
     <tbody>
-      {data.slice(floor, ceiling).map((row: Row) => (
+      {dataToShow.slice(floor, ceiling).map((row: Row) => (
         <DataRow key={row.id} {...row} />
       ))}
     </tbody>

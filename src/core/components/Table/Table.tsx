@@ -23,6 +23,10 @@ export default () => {
     (store) => store.isAllPageSelected
   );
 
+  const filteredData = Table.useStoreState((store) => store.filteredData);
+
+  console.log(filteredData);
+
   useEffect(() => {
     setHeight(TABLE_HEIGHT * (window.innerHeight / 710));
   }, [windowWidth]);

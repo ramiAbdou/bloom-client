@@ -19,7 +19,10 @@ export const HeaderSelectOption = () => {
     (actions) => actions.toggleAllPageRows
   );
 
-  const onClick = () => toggleAllPageRows();
+  const onClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+    toggleAllPageRows();
+  };
 
   const { css } = new CSSModifier()
     .class('c-table-select')
