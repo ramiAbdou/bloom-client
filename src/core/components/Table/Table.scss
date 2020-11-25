@@ -105,9 +105,11 @@ th > div > p {
 }
 
 th > div > svg {
-  color: $gray-3 !important;
-  margin-left: $xxs;
+  fill: $gray-3;
+  height: 12px !important;
+  margin-left: $xs;
   visibility: hidden;
+  width: 12px !important;
 }
 
 th:first-of-type { z-index: 12; }

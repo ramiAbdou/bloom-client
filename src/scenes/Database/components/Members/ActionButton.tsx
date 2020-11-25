@@ -3,7 +3,7 @@
  * @author Rami Abdou
  */
 
-import React from 'react';
+import React, { FC, memo } from 'react';
 import { IoIosExit, IoMdFunnel } from 'react-icons/io';
 
 import Button from '@components/Button/Button';
@@ -11,29 +11,35 @@ import ArrowUpCircle from '@components/Icons/ArrowUpCircle';
 import Copy from '@components/Icons/Copy';
 import Trash from '@components/Icons/Trash';
 import Table from '@components/Table/Table.store';
+import { ValueProps } from '@constants';
+
+interface DatabaseActionProps extends ValueProps {
+  Component: FC;
+  disabled?: boolean;
+}
+
+const DatabaseAction = memo(
+  ({ Component, value, ...props }: DatabaseActionProps) => (
+    <Button noHover className="s-database-action" value={value} {...props}>
+      <Component />
+    </Button>
+  )
+);
 
 export const CopyEmailIcon = () => (
-  <Button noHover className="s-database-action" value="Copy Email">
-    <Copy />
-  </Button>
+  <DatabaseAction Component={Copy} value="Copy Email" />
 );
 
 export const DeleteMemberIcon = () => (
-  <Button noHover className="s-database-action" value="Delete Member">
-    <Trash />
-  </Button>
+  <DatabaseAction Component={Trash} value="Delete Member" />
 );
 
 export const ExportDataIcon = () => (
-  <Button noHover className="s-database-action" value="Export Member Data">
-    <IoIosExit />
-  </Button>
+  <DatabaseAction Component={IoIosExit} value="Export Member Data" />
 );
 
 export const FilterIcon = () => (
-  <Button noHover className="s-database-action" value="Filter">
-    <IoMdFunnel />
-  </Button>
+  <DatabaseAction Component={IoMdFunnel} value="Filter" />
 );
 
 export const PromoteToAdminIcon = () => {
@@ -42,13 +48,10 @@ export const PromoteToAdminIcon = () => {
   );
 
   return (
-    <Button
-      noHover
-      className="s-database-action"
+    <DatabaseAction
+      Component={ArrowUpCircle}
       disabled={disabled}
       value="Promote to Admin"
-    >
-      <ArrowUpCircle />
-    </Button>
+    />
   );
 };
