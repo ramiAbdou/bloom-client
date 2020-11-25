@@ -25,8 +25,6 @@ $PREF: 'c-table';
 // ## TABLE ROW (HEADER AND BODY)
 
 tbody > tr {
-  // background-color: inherit;
-
   border-bottom: 1px $gray-5 solid;
   cursor: pointer;
 
@@ -54,8 +52,6 @@ td { left: 0; margin: 0; padding: $sm $md $sm $sm; position: sticky; }
 th {
   background-color: $gray-6;
   box-sizing: border-box;
-  // max-width: $xxl * 5;
-
   position: sticky;
   text-align: left;
   text-transform: uppercase;
@@ -66,6 +62,7 @@ th {
   @include HOVER {
     cursor: pointer;
 
+    > div > p { max-width: 85%; }
     > div > svg { visibility: visible; }
   }
 
@@ -95,8 +92,6 @@ th {
 td {
   background-color: white;
   color: $gray-1;
-  // max-width: $xxl * 5;
-
   vertical-align: top;
 }
 
@@ -121,7 +116,11 @@ th > div > svg {
 }
 
 th.c-table-selected-col > div > svg { fill: $primary; visibility: visible; }
-th.c-table-selected-col > div > p { color: $primary !important; }
+
+th.c-table-selected-col > div > p {
+  color: $primary !important;
+  max-width: 85%;
+}
 
 th:first-of-type { z-index: 12; }
 

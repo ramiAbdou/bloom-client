@@ -81,53 +81,31 @@ export const FilterIcon = () => (
 );
 
 export const PromoteToAdminIcon = () => {
-  // const membershipIds = Table.useStoreState(
-  //   ({ selectedRowIds }) => selectedRowIds
-  // );
-  // const clearSelectedRows = Table.useStoreActions(
-  //   (store) => store.clearSelectedRows
-  // );
+  const membershipIds = Table.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds
+  );
+  const clearSelectedRows = Table.useStoreActions(
+    (store) => store.clearSelectedRows
+  );
   const disabled = Table.useStoreState(
     (store) => store.selectedRowIds.length > 15
   );
-  // const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  // const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
 
-  // const [promoteToAdmin] = useMutation(PROMOTE_TO_ADMIN);
+  const [promoteToAdmin] = useMutation(PROMOTE_TO_ADMIN);
 
-  // const onClick = async () => {
-  //   const { id, members } = community;
-
-  //   const { data } = await deleteMemberships({ variables: { membershipIds } });
-  //   if (!data?.deleteMemberships) return;
-
-  //   updateEntities({
-  //     updatedState: {
-  //       communities: {
-  //         ...communities,
-  //         byId: {
-  //           ...communities.byId,
-  //           [id]: {
-  //             ...community,
-  //             members: members.filter(
-  //               (memberId: string) => !membershipIds.includes(memberId)
-  //             )
-  //           }
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   clearSelectedRows();
-  // };
-
-  // PROMOTE_TO_ADMIN
+  const onClick = async () => {
+    const { data } = await promoteToAdmin({ variables: { membershipIds } });
+    if (!data?.deleteMemberships) return;
+    clearSelectedRows();
+  };
 
   return (
     <DatabaseAction
       Component={ArrowUpCircle}
       disabled={disabled}
       value="Promote to Admin"
-      // onClick={onClick}
+      onClick={onClick}
     />
   );
 };
