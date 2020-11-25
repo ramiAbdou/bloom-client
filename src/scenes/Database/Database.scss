@@ -35,6 +35,7 @@ $PREF: 's-database';
   padding: 6px;
 
   &:nth-of-type(3) { &::before { margin-left: -$xxs; } }
+  &:nth-of-type(4) > svg { fill: $red; }
 
   &:last-of-type { @extend .tooltip--right; }
   &--red { color: $red; }
