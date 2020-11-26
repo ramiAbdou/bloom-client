@@ -17,6 +17,7 @@ const AddAdminButton = () => <PrimaryButton title="Add Admin" />;
 const MemberAdminButton = () => {
   const { location, push } = useHistory();
   const { pathname } = location;
+
   const activeIndex =
     pathname.substring(pathname.lastIndexOf('/') + 1) === 'members' ? 0 : 1;
 

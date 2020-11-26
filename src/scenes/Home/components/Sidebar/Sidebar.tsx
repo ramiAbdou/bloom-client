@@ -87,12 +87,8 @@ const SidebarContent = () => {
   );
 };
 
-export default () => {
-  const activeTo = useActiveTo();
-
-  return (
-    <Sidebar.Provider initialData={activeTo}>
-      <SidebarContent />
-    </Sidebar.Provider>
-  );
-};
+export default () => (
+  <Sidebar.Provider>
+    <SidebarContent />
+  </Sidebar.Provider>
+);
