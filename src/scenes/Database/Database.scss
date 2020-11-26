@@ -40,3 +40,5 @@ $PREF: 's-database';
   &:last-of-type { @extend .tooltip--right; }
   &--red { color: $red; }
 }
+
+// .#{$PREF}-action > a {  }

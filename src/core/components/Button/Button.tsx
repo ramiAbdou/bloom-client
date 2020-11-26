@@ -77,7 +77,9 @@ export default ({
   return (
     <motion.button
       className={css}
-      onClick={() => !disabled && (href ? window.open(href) : onClick())}
+      onClick={() =>
+        !disabled && onClick && (href ? window.open(href) : onClick())
+      }
       {...tapAnimation}
       {...props}
     >
