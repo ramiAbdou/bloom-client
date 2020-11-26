@@ -7,13 +7,11 @@ import React from 'react';
 import { IoIosSearch } from 'react-icons/io';
 
 import Table from '@components/Table/Table.store';
-import {
-  CopyEmailIcon,
-  DeleteMemberIcon,
-  ExportDataIcon,
-  FilterIcon,
-  PromoteToAdminIcon
-} from './ActionButton';
+import CopyEmailsIcon from './CopyEmailsIcon';
+import DeleteMembersIcon from './DeleteMembersIcon';
+import ExportDataIcon from './ExportDataIcon';
+import FilterIcon from './FilterIcon';
+import PromoteToAdminIcon from './PromoteToAdminIcon';
 
 const SearchBar = () => (
   <div className="s-database-search">
@@ -34,10 +32,10 @@ export default () => {
       {!isAnythingSelected && <FilterIcon />}
       {isAnythingSelected && (
         <div>
-          <CopyEmailIcon />
+          <CopyEmailsIcon />
           <ExportDataIcon />
           <PromoteToAdminIcon />
-          <DeleteMemberIcon />
+          <DeleteMembersIcon />
         </div>
       )}
     </div>
