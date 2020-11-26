@@ -11,24 +11,31 @@ import {
   createContextStore
 } from 'easy-peasy';
 
-import { QuestionType } from '@constants';
 import { toggleArrayValue } from '@util/util';
 import { Column, Row } from './Table.types';
 
 type SortDirection = 'ASC' | 'DESC';
 
+/**
+ * Sorts the given data by the column ID, either in an ASC or DESC fashion. All
+ * data is formatted as a CSV string, so we can do a simple equality check,
+ * instead of having to worry about arrays.
+ *
+ * @param columnId The column's ID of the value needed in the row.
+ * @param data Data to be sorted.
+ * @param direction ASC or DESC
+ */
 const sortByColumn = (
   columnId: string,
-  type: QuestionType,
   data: Row[],
   direction: SortDirection
-): Row[] => {
-  return data.sort((a: Row, b: Row) => {
+): Row[] =>
+  data.sort((a: Row, b: Row) => {
     const aValue = a[columnId]?.toLowerCase();
     const bValue = b[columnId]?.toLowerCase();
 
-    // if (!aValue?.length) return 1;
-    // if (!bValue?.length) return 1;
+    if (!aValue?.length) return 1;
+    if (!bValue?.length) return -1;
 
     if (aValue < bValue) {
       if (direction === 'ASC') return -1;
@@ -42,7 +49,6 @@ const sortByColumn = (
 
     return 0;
   });
-};
 
 type TableModel = {
   clearSelectedRows: Action<TableModel>;
@@ -151,30 +157,18 @@ const model: TableModel = {
       },
       columnId
     ) => {
-      let updatedDirection: SortDirection = sortedColumnDirection;
+      let direction: SortDirection = sortedColumnDirection;
 
       if (columnId === sortedColumnId)
-        updatedDirection = updatedDirection === 'ASC' ? 'DESC' : 'ASC';
-      else updatedDirection = 'ASC';
-
-      const updatedFilteredData = sortByColumn(
-        columnId,
-        columns.find(({ id }) => id === columnId).type,
-        filteredData,
-        updatedDirection
-      );
+        direction = direction === 'ASC' ? 'DESC' : 'ASC';
+      else direction = 'ASC';
 
       return {
         ...state,
         columns,
-        data: sortByColumn(
-          columnId,
-          columns.find(({ id }) => id === columnId).type,
-          data,
-          updatedDirection
-        ),
-        filteredData: updatedFilteredData,
-        sortedColumnDirection: updatedDirection,
+        data: sortByColumn(columnId, data, direction),
+        filteredData: sortByColumn(columnId, filteredData, direction),
+        sortedColumnDirection: direction,
         sortedColumnId: columnId
       };
     }
