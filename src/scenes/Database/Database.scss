@@ -34,11 +34,10 @@ $PREF: 's-database';
   margin-left: $xs;
   padding: 6px;
 
-  &:nth-of-type(3) { &::before { margin-left: -$xxs; } }
-  &:nth-of-type(4) > svg { fill: $red; }
-
-  &:last-of-type { @extend .tooltip--right; }
-  &--red { color: $red; }
+  &:nth-of-type(2) { &::before { margin-left: -$xxs; } }
+  &:nth-of-type(3) > svg { fill: $red; }
 }
 
-// .#{$PREF}-action > a {  }
+// For all buttons that are not the Promote to Admin button, we set the tooltip
+// to be to the right side of the icon.
+:not(a) > .#{$PREF}-action { &:last-of-type { @extend .tooltip--right; } }
