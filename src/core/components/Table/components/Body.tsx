@@ -5,7 +5,7 @@
  */
 
 import moment from 'moment-timezone';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 
 import Tag from '@components/Misc/Tag';
 import { ChildrenProps, QuestionType, ValueProps } from '@constants';
@@ -76,6 +76,11 @@ export default () => {
   const filteredData = Table.useStoreState((store) => store.filteredData);
   const floor = Table.useStoreState((store) => store.range[0]);
   const ceiling = Table.useStoreState((store) => store.range[1]);
+
+  // Fetching these values forces React to re-render, which in the case of
+  // sorting, we do want to re-render our data.
+  Table.useStoreState((store) => store.sortedColumnId);
+  Table.useStoreState((store) => store.sortedColumnDirection);
 
   return (
     <tbody>
