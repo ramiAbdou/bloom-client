@@ -14,9 +14,8 @@ import { useStoreActions, useStoreState } from '@store/Store';
 
 export default memo(({ children }: ChildrenProps) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const onClose = useStoreState(({ modal }) => modal.onClose);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
-
+  const onClose = useStoreState(({ modal }) => modal.onClose);
   const animate = isMobile ? { x: 0 } : { opacity: 1, scale: 1 };
   const exit = isMobile ? { x: 1000 } : { opacity: 0, scale: 0.75 };
   const initial = isMobile ? { x: 1000 } : { opacity: 0.25, scale: 0.5 };
@@ -27,7 +26,7 @@ export default memo(({ children }: ChildrenProps) => {
 
   useEffect(() => {
     return () => onClose();
-  }, []);
+  }, [onClose]);
 
   return (
     <>

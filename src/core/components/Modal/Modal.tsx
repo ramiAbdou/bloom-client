@@ -9,10 +9,11 @@
 import './Modal.scss';
 
 import { AnimatePresence } from 'framer-motion';
-import React, { memo } from 'react';
+import React, { useMemo } from 'react';
 
-import { ChildrenProps, IsShowingProps } from '@constants';
+import { ChildrenProps, IdProps } from '@constants';
 import { useStoreState } from '@store/Store';
+import CSSModifier from '@util/CSSModifier';
 import ModalContainer from './ModalContainer';
 
 const CurrentScreen = () => {
@@ -21,14 +22,30 @@ const CurrentScreen = () => {
   return screens.length ? <>{screens[currentScreen]}</> : null;
 };
 
-interface ModalProps extends IsShowingProps, Partial<ChildrenProps> {}
+interface ModalProps extends IdProps, Partial<ChildrenProps> {
+  confirmation?: boolean;
+}
 
-export default memo(({ children, isShowing }: ModalProps) => (
-  <AnimatePresence>
-    {isShowing && (
-      <ModalContainer>
-        <div className="c-modal-content">{children ?? <CurrentScreen />}</div>
-      </ModalContainer>
-    )}
-  </AnimatePresence>
-));
+export default ({ confirmation, children, id: MODAL_ID }: ModalProps) => {
+  const isShowing = useStoreState(({ modal }) => modal.isShowing);
+  const id = useStoreState(({ modal }) => modal.id);
+
+  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
+    isShowing,
+    id === MODAL_ID
+  ]);
+
+  const { css } = new CSSModifier()
+    .class('c-modal-content')
+    .addClass(confirmation, 'c-modal--confirmation');
+
+  return (
+    <AnimatePresence>
+      {shouldShowModal && (
+        <ModalContainer>
+          <div className={css}>{children ?? <CurrentScreen />}</div>
+        </ModalContainer>
+      )}
+    </AnimatePresence>
+  );
+};

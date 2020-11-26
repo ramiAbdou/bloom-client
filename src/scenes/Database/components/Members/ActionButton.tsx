@@ -9,9 +9,12 @@ import { IoIosExit, IoMdFunnel } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@components/Button/Button';
+import OutlineButton from '@components/Button/OutlineButton';
+import PrimaryButton from '@components/Button/PrimaryButton';
 import ArrowUpCircle from '@components/Icons/ArrowUpCircle';
 import Copy from '@components/Icons/Copy';
 import Trash from '@components/Icons/Trash';
+import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
 import { LoadingProps, OnClickProps } from '@constants';
@@ -88,24 +91,49 @@ export const PromoteToAdminIcon = () => {
   const disabled = Table.useStoreState(
     (store) => store.selectedRowIds.length > 15
   );
-  // const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
-
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const setOnClose = useStoreActions(({ modal }) => modal.setOnClose);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const { push } = useHistory();
+  const [promoteToAdmin, { loading }] = useMutation(PROMOTE_TO_ADMIN);
 
-  const [promoteToAdmin] = useMutation(PROMOTE_TO_ADMIN);
+  const MODAL_ID = 'CONFIRM_PROMOTE_TO_ADMIN';
 
-  const onClick = async () => {
+  const goToAdmins = () => push('admins');
+
+  const onPromote = async () => {
+    setOnClose(goToAdmins);
     const { data } = await promoteToAdmin({ variables: { membershipIds } });
     if (!data?.promoteToAdmin) return;
-    push('admins');
+    closeModal();
   };
 
+  const onClick = () => showModal({ id: MODAL_ID });
+
   return (
-    <DatabaseAction
-      Component={ArrowUpCircle}
-      disabled={disabled}
-      value="Promote to Admin"
-      onClick={onClick}
-    />
+    <>
+      <Modal confirmation id={MODAL_ID}>
+        <h1>Promote to admin?</h1>
+        <p>
+          Are you sure you want to promote this member to admin? They will be
+          granted all admin priviledges. You can undo this action at any time.
+        </p>
+        <div>
+          <PrimaryButton
+            loading={loading}
+            title="Promote"
+            onClick={onPromote}
+          />
+          <OutlineButton title="Cancel" onClick={closeModal} />
+        </div>
+      </Modal>
+
+      <DatabaseAction
+        Component={ArrowUpCircle}
+        disabled={disabled}
+        value="Promote to Admin"
+        onClick={onClick}
+      />
+    </>
   );
 };

@@ -10,7 +10,7 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import Modal from '@components/Modal/Modal';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
 import IntegrationsStore from '../../Integrations.store';
 import useMailchimpSubmit from './useMailchimpSubmit';
@@ -19,8 +19,6 @@ export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
-  const id = useStoreState(({ modal }) => modal.id);
-  const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
   const submitForm = Form.useStoreState((store) => store.submitForm);
@@ -39,7 +37,7 @@ export default () => {
     });
 
   return (
-    <Modal isShowing={isShowing && MODAL_ID === id}>
+    <Modal id={MODAL_ID}>
       <img
         alt="Mailchimp Icon"
         className="s-integrations-icon--lg"

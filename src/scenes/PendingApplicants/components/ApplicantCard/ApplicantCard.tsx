@@ -3,11 +3,11 @@
  * @author Rami Abdou
  */
 
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
 import Modal from '@components/Modal/Modal';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';
 import Applicant from './ApplicantCard.store';
 import CardQuestion from './CardQuestion';
@@ -35,21 +35,12 @@ const CardHeader = () => {
 const ExpandButton = memo(() => {
   const applicantId = Applicant.useStoreState(({ applicant }) => applicant.id);
   const MODAL_ID = `EXPANDED_APPLICANT_CARD-${applicantId}`;
-
-  const id = useStoreState(({ modal }) => modal.id);
-  const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-
   const onClick = () => showModal({ id: MODAL_ID });
-
-  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
-    isShowing,
-    id === MODAL_ID
-  ]);
 
   return (
     <>
-      <Modal isShowing={shouldShowModal}>
+      <Modal id={MODAL_ID}>
         <ExpandedCard />
       </Modal>
 

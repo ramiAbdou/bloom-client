@@ -89,8 +89,6 @@ const SidebarContent = () => {
 
 export default () => {
   const activeTo = useActiveTo();
-  // console.log('HERE2');
-  console.log(window.location.pathname, activeTo);
 
   return (
     <Sidebar.Provider initialData={activeTo}>
