@@ -85,29 +85,23 @@ export const FilterIcon = () => (
 );
 
 export const PromoteToAdminIcon = () => {
-  const membershipIds = Table.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
-  const disabled = Table.useStoreState(
-    (store) => store.selectedRowIds.length > 15
-  );
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const setOnClose = useStoreActions(({ modal }) => modal.setOnClose);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const membershipIds = Table.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds
+  );
+
   const { push } = useHistory();
   const [promoteToAdmin, { loading }] = useMutation(PROMOTE_TO_ADMIN);
-
-  const MODAL_ID = 'CONFIRM_PROMOTE_TO_ADMIN';
-
-  const goToAdmins = () => push('admins');
-
   const onPromote = async () => {
-    setOnClose(goToAdmins);
+    setOnClose(() => push('admins'));
     const { data } = await promoteToAdmin({ variables: { membershipIds } });
     if (!data?.promoteToAdmin) return;
     closeModal();
   };
 
+  const MODAL_ID = 'CONFIRM_PROMOTE_TO_ADMIN';
   const onClick = () => showModal({ id: MODAL_ID });
 
   return (
@@ -130,7 +124,7 @@ export const PromoteToAdminIcon = () => {
 
       <DatabaseAction
         Component={ArrowUpCircle}
-        disabled={disabled}
+        disabled={membershipIds.length > 15}
         value="Promote to Admin"
         onClick={onClick}
       />
