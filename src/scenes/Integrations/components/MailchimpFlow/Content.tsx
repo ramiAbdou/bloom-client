@@ -32,8 +32,8 @@ export default () => {
 
   if (error)
     showToast({
-      isError: true,
-      message: 'Failed to submit. Please try again soon.'
+      message: 'Failed to submit. Please try again soon.',
+      type: 'ERROR'
     });
 
   return (

@@ -5,27 +5,27 @@ $PREF: 'c-toast';
 .#{$PREF}-ctr {
   @extend .flex-accol;
 
-  left: 50%;
+  bottom: 0;
   position: fixed;
-  top: 0;
-  transform: translateX(-50%);
+  right: 0;
+  // transform: translateX(-50%);
+
   width: fit-content;
   z-index: 1000;
 }
 
 .#{$PREF} {
   @extend .shadow--1;
-  @extend .flex-ac;
 
   background-color: $primary;
   border-radius: $xl;
+  margin-bottom: $sm;
   margin-left: auto;
-  margin-right: auto;
-  margin-top: $xs;
-  padding: 12px $sm;
+  margin-right: $sm;
+  padding: $xs 12px;
 
   &--error { background-color: $red; }
+  &--pessimistic { background-color: $gray-1; }
 }
 
-.#{$PREF} > svg { @extend .react-icon--lg; color: white; margin-right: $xs; }
 .#{$PREF} > p { @extend .body--1; color: white; }

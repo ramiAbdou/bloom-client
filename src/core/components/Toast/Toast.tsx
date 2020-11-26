@@ -10,33 +10,31 @@ import './Toasts.scss';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { IoIosCheckmarkCircle, IoIosCloseCircle } from 'react-icons/io';
 
-import {
-  ANIMATION_DURATION,
-  ToastOptions
-} from '@components/Toast/Toast.store';
-import { useStoreState } from '@store/Store';
+import { ToastOptions } from '@components/Toast/Toast.store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 
-const Toast = ({ isError, message }: ToastOptions) => {
+const Toast = ({ id, type, message }: ToastOptions) => {
+  const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
+  const onClick = () => dequeueToast(id);
+
   const { css } = new CSSModifier()
     .class('c-toast')
-    .addClass(isError, 'c-toast--error');
+    .addClass(type === 'ERROR', 'c-toast--error')
+    .addClass(type === 'PESSIMISTIC', 'c-toast--pessimistic');
 
   return (
-    <motion.div
+    <motion.button
       key="toast"
-      animate={{ y: 0 }}
+      animate={{ x: 0 }}
       className={css}
-      exit={{ opacity: 0, y: -100 }}
-      initial={{ y: -100 }}
-      transition={{ duration: ANIMATION_DURATION / 1000 }}
+      exit={{ opacity: 0, x: 150 }}
+      initial={{ x: 150 }}
+      onClick={onClick}
     >
-      {isError && <IoIosCloseCircle />}
-      {!isError && <IoIosCheckmarkCircle />}
       <p>{message}</p>
-    </motion.div>
+    </motion.button>
   );
 };
 
@@ -46,8 +44,8 @@ export default () => {
   return createPortal(
     <div className="c-toast-ctr">
       <AnimatePresence>
-        {queue.map(({ id, ...toast }) => (
-          <Toast key={id} id={id} {...toast} />
+        {queue.map((toast) => (
+          <Toast key={toast.id} {...toast} />
         ))}
       </AnimatePresence>
     </div>,

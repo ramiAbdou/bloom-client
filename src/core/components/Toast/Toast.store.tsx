@@ -5,31 +5,42 @@
 
 import { Action, action, Thunk, thunk } from 'easy-peasy';
 
-import { MessageProps } from '@constants';
+import { IdProps, MessageProps } from '@constants';
 
-export const ANIMATION_DURATION = 500;
-export interface ToastOptions extends MessageProps {
-  id: number;
-  isError?: boolean;
+type ToastType = 'STANDARD' | 'PESSIMISTIC' | 'ERROR';
+export interface ToastOptions extends IdProps, MessageProps {
+  type?: ToastType;
 }
 
 interface ShowToastArgs extends MessageProps {
-  isError?: boolean;
+  type?: ToastType;
 }
 
 export type ToastModel = {
-  dequeueToast: Action<ToastModel>;
+  dequeueToast: Action<ToastModel, string>;
   enqueueToast: Action<ToastModel, ToastOptions>;
   queue: ToastOptions[];
   showToast: Thunk<ToastModel, ShowToastArgs>;
 };
 
 export const toastModel: ToastModel = {
-  dequeueToast: action(({ queue: [, ...end] }) => ({ queue: end })),
+  dequeueToast: action(({ queue }, id: string) => {
+    const index = queue.findIndex(({ id: toastId }) => toastId === id);
+    return {
+      queue:
+        index === -1
+          ? queue
+          : [...queue.slice(0, index), ...queue.slice(index + 1)]
+    };
+  }),
+
   enqueueToast: action(({ queue }, toast) => ({ queue: [...queue, toast] })),
+
   queue: [],
-  showToast: thunk((actions, toast) => {
-    actions.enqueueToast({ ...toast, id: Math.random() });
-    setTimeout(actions.dequeueToast, 3000 + ANIMATION_DURATION);
+
+  showToast: thunk(({ dequeueToast, enqueueToast }, toast) => {
+    const id = `${toast.message}-${Math.random()}`;
+    enqueueToast({ id, ...toast });
+    setTimeout(() => dequeueToast(id), 5000);
   })
 };
