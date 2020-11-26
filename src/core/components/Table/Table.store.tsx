@@ -11,6 +11,7 @@ import {
   createContextStore
 } from 'easy-peasy';
 
+import { QuestionType } from '@constants';
 import { toggleArrayValue } from '@util/util';
 import { Column, Row } from './Table.types';
 
@@ -18,12 +19,16 @@ type SortDirection = 'ASC' | 'DESC';
 
 const sortByColumn = (
   columnId: string,
+  type: QuestionType,
   data: Row[],
   direction: SortDirection
 ): Row[] => {
   return data.sort((a: Row, b: Row) => {
-    const aValue = a[columnId];
-    const bValue = b[columnId];
+    const aValue = a[columnId]?.toLowerCase();
+    const bValue = b[columnId]?.toLowerCase();
+
+    // if (!aValue?.length) return 1;
+    // if (!bValue?.length) return 1;
 
     if (aValue < bValue) {
       if (direction === 'ASC') return -1;
@@ -136,25 +141,40 @@ const model: TableModel = {
 
   setSortedColumn: action(
     (
-      { data, filteredData, sortedColumnId, sortedColumnDirection, ...state },
+      {
+        columns,
+        data,
+        filteredData,
+        sortedColumnId,
+        sortedColumnDirection,
+        ...state
+      },
       columnId
     ) => {
-      if (columnId === sortedColumnId) {
-        sortedColumnDirection =
-          sortedColumnDirection === 'ASC' ? 'DESC' : 'ASC';
-      } else sortedColumnDirection = 'ASC';
+      let updatedDirection: SortDirection = sortedColumnDirection;
+
+      if (columnId === sortedColumnId)
+        updatedDirection = updatedDirection === 'ASC' ? 'DESC' : 'ASC';
+      else updatedDirection = 'ASC';
 
       const updatedFilteredData = sortByColumn(
         columnId,
+        columns.find(({ id }) => id === columnId).type,
         filteredData,
-        sortedColumnDirection
+        updatedDirection
       );
 
       return {
         ...state,
-        data: sortByColumn(columnId, data, sortedColumnDirection),
+        columns,
+        data: sortByColumn(
+          columnId,
+          columns.find(({ id }) => id === columnId).type,
+          data,
+          updatedDirection
+        ),
         filteredData: updatedFilteredData,
-        sortedColumnDirection,
+        sortedColumnDirection: updatedDirection,
         sortedColumnId: columnId
       };
     }

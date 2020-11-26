@@ -16,7 +16,7 @@ import {
   createTypedHooks
 } from 'easy-peasy';
 import Cookie from 'js-cookie';
-import merge from 'lodash/merge';
+import merge from 'lodash.merge';
 import { Schema } from 'normalizr';
 
 import { LoaderModel, loaderModel } from '@components/Loader/Loader.store';
