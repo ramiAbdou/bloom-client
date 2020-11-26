@@ -80,8 +80,7 @@ export default () => {
   // Fetching these values forces React to re-render, which in the case of
   // sorting, we do want to re-render our data.
   Table.useStoreState((store) => store.sortedColumnId);
-  const d = Table.useStoreState((store) => store.sortedColumnDirection);
-  console.log(filteredData);
+  Table.useStoreState((store) => store.sortedColumnDirection);
 
   return (
     <tbody>

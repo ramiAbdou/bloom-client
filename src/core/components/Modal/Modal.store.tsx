@@ -53,10 +53,7 @@ export const modalModel: ModalModel = {
 
   screens: [],
 
-  setOnClose: action((state, onClose: VoidFunction) => {
-    console.log(onClose);
-    return { ...state, onClose };
-  }),
+  setOnClose: action((state, onClose: VoidFunction) => ({ ...state, onClose })),
 
   showModal: action((state, modal: ShowModalArgs) => ({
     ...state,
