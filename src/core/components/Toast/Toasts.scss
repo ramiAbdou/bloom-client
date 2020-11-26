@@ -20,7 +20,7 @@ $PREF: 'c-toast';
   margin-bottom: $sm;
   margin-left: auto;
   margin-right: $sm;
-  padding: $xs 12px;
+  padding: 12px $sm;
 
   &--error { background-color: $red; }
   &--pessimistic { background-color: $gray-1; }

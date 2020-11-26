@@ -38,9 +38,9 @@ export const toastModel: ToastModel = {
 
   queue: [],
 
-  showToast: thunk(({ dequeueToast, enqueueToast }, toast) => {
+  showToast: thunk((actions, toast) => {
     const id = `${toast.message}-${Math.random()}`;
-    enqueueToast({ id, ...toast });
-    setTimeout(() => dequeueToast(id), 5000);
+    actions.enqueueToast({ id, ...toast });
+    setTimeout(() => actions.dequeueToast(id), 5000);
   })
 };

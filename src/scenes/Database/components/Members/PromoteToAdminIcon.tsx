@@ -20,7 +20,7 @@ const MODAL_ID = 'CONFIRM_PROMOTE_TO_ADMIN';
 
 const PromoteToAdminModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const setOnClose = useStoreActions(({ modal }) => modal.setOnClose);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
@@ -29,10 +29,13 @@ const PromoteToAdminModal = () => {
   const [promoteToAdmin, { loading }] = useMutation(PROMOTE_TO_ADMIN);
 
   const onPromote = async () => {
-    setOnClose(() => push('admins'));
     const { data } = await promoteToAdmin({ variables: { membershipIds } });
     if (!data?.promoteToAdmin) return;
-    closeModal();
+
+    closeModal(() => {
+      push('admins');
+      showToast({ message: 'Member(s) promoted to admin.' });
+    });
   };
 
   return (

@@ -20,6 +20,7 @@ const MODAL_ID = 'DELETE_MEMBERS';
 const DeleteMembersModal = () => {
   const members = useStoreState(({ community }) => community.members);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
@@ -31,10 +32,17 @@ const DeleteMembersModal = () => {
     const { data } = await deleteMemberships({ variables: { membershipIds } });
     if (!data?.deleteMemberships) return;
 
-    updateCommunity({
-      members: members.filter(
-        (memberId: string) => !membershipIds.includes(memberId)
-      )
+    closeModal(() => {
+      updateCommunity({
+        members: members.filter(
+          (memberId: string) => !membershipIds.includes(memberId)
+        )
+      });
+
+      showToast({
+        message: 'Member(s) removed from the community.',
+        type: 'PESSIMISTIC'
+      });
     });
   };
 
