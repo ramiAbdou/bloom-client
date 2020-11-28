@@ -29,7 +29,7 @@ const Toast = ({ id, type, message }: ToastOptions) => {
       key="toast"
       animate={{ x: 0 }}
       className={css}
-      exit={{ opacity: 0, x: 150 }}
+      exit={{ opacity: 0, x: 250 }}
       initial={{ x: 150 }}
       onClick={onClick}
     >

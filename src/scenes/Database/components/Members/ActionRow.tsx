@@ -7,6 +7,7 @@ import React from 'react';
 import { IoIosSearch } from 'react-icons/io';
 
 import Table from '@components/Table/Table.store';
+import { useStoreState } from '@store/Store';
 import CopyEmailsIcon from './CopyEmailsIcon';
 import DeleteMembersIcon from './DeleteMembersIcon';
 import ExportDataIcon from './ExportDataIcon';
@@ -21,8 +22,11 @@ const SearchBar = () => (
 );
 
 export default () => {
+  const isOwner = useStoreState(
+    ({ membership }) => membership.role === 'OWNER'
+  );
   const isAnythingSelected = Table.useStoreState(
-    (store) => !!store.selectedRowIds.length
+    ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
   return (
@@ -34,7 +38,7 @@ export default () => {
         <div>
           <CopyEmailsIcon />
           <ExportDataIcon />
-          <PromoteToAdminIcon />
+          {isOwner && <PromoteToAdminIcon />}
           <DeleteMembersIcon />
         </div>
       )}

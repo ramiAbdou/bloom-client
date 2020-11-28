@@ -8,6 +8,7 @@ import { Action, action, Thunk, thunk } from 'easy-peasy';
 import { IdProps, MessageProps } from '@constants';
 
 type ToastType = 'STANDARD' | 'PESSIMISTIC' | 'ERROR';
+
 export interface ToastOptions extends IdProps, MessageProps {
   type?: ToastType;
 }

@@ -71,6 +71,7 @@ export default () => {
       <DeleteMembersModal />
       <DatabaseAction
         Component={Trash}
+        className="s-database-action--delete"
         value="Delete Member"
         onClick={onClick}
       />

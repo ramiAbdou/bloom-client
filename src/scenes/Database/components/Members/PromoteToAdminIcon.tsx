@@ -33,7 +33,7 @@ const PromoteToAdminModal = () => {
     if (!data?.promoteToAdmin) return;
 
     closeModal(() => {
-      push('admins');
+      // push('admins');
       showToast({ message: 'Member(s) promoted to admin.' });
     });
   };
@@ -65,6 +65,7 @@ export default () => {
       <PromoteToAdminModal />
       <DatabaseAction
         Component={ArrowUpCircle}
+        className="s-database-action--promote"
         disabled={disabled}
         value="Promote to Admin"
         onClick={onClick}

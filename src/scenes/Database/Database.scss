@@ -34,8 +34,8 @@ $PREF: 's-database';
   margin-left: $xs;
   padding: 6px;
 
-  &:nth-of-type(2) { &::before { margin-left: -$xxs; } }
-  &:nth-of-type(3) > svg { fill: $red; }
+  &--promote { &::before { margin-left: -$xxs; } }
+  &--delete > svg { fill: $red; }
 }
 
 // For all buttons that are not the Promote to Admin button, we set the tooltip

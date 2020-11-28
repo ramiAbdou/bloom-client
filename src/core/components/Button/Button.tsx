@@ -74,12 +74,16 @@ export default ({
   const tapAnimation =
     !disabled && !noScale ? { whileTap: { scale: 0.95 } } : {};
 
+  const onAllowedClick = () => {
+    if (disabled) return;
+    if (href) window.open(href);
+    else if (onClick) onClick();
+  };
+
   return (
     <motion.button
       className={css}
-      onClick={() =>
-        !disabled && onClick && (href ? window.open(href) : onClick())
-      }
+      onClick={onAllowedClick}
       {...tapAnimation}
       {...props}
     >
