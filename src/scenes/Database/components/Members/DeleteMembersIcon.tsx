@@ -24,6 +24,9 @@ const DeleteMembersModal = () => {
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
+  const numMembers = Table.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds.length
+  );
 
   const onDelete = async () => {
     const allMembers = members;
@@ -36,7 +39,7 @@ const DeleteMembersModal = () => {
       });
 
       showToast({
-        message: 'Member(s) removed from the community.',
+        message: `${numMembers} member(s) removed from the community.`,
         mutationOptionsOnClose: [
           DELETE_MEMBERSHIPS,
           { variables: { membershipIds } }
