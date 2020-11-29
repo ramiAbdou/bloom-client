@@ -26,12 +26,20 @@ export type ModalModel = {
 };
 
 export const modalModel: ModalModel = {
-  closeModal: action((state, onClose?: Function) => ({
-    ...state,
-    id: '',
-    isShowing: false,
-    onClose: onClose ?? (() => {})
-  })),
+  closeModal: action((state, onClose?: Function) => {
+    let updatedOnClose: Function;
+
+    if (onClose) updatedOnClose = onClose;
+    else if (state.onClose) updatedOnClose = state.onClose;
+    else updatedOnClose = () => {};
+
+    return {
+      ...state,
+      id: '',
+      isShowing: false,
+      onClose: updatedOnClose
+    };
+  }),
 
   currentScreen: 0,
 
@@ -53,9 +61,10 @@ export const modalModel: ModalModel = {
 
   screens: [],
 
-  showModal: action((state, modal: ShowModalArgs) => ({
+  showModal: action((state, { onClose, ...modal }: ShowModalArgs) => ({
     ...state,
     ...modal,
-    isShowing: true
+    isShowing: true,
+    onClose: onClose ?? (() => {})
   }))
 };

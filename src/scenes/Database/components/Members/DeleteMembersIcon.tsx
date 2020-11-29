@@ -3,7 +3,6 @@
  * @author Rami Abdou
  */
 
-import { useMutation } from 'graphql-hooks';
 import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
@@ -26,11 +25,8 @@ const DeleteMembersModal = () => {
     ({ selectedRowIds }) => selectedRowIds
   );
 
-  const [deleteMemberships, { loading }] = useMutation(DELETE_MEMBERSHIPS);
-
   const onDelete = async () => {
-    const { data } = await deleteMemberships({ variables: { membershipIds } });
-    if (!data?.deleteMemberships) return;
+    const allMembers = members;
 
     closeModal(() => {
       updateCommunity({
@@ -41,7 +37,13 @@ const DeleteMembersModal = () => {
 
       showToast({
         message: 'Member(s) removed from the community.',
-        type: 'PESSIMISTIC'
+        mutationOptionsOnClose: [
+          DELETE_MEMBERSHIPS,
+          { variables: { membershipIds } }
+        ],
+        onUndo: () => updateCommunity({ members: allMembers }),
+        type: 'PESSIMISTIC',
+        undo: true
       });
     });
   };
@@ -55,7 +57,7 @@ const DeleteMembersModal = () => {
         database.
       </p>
       <div>
-        <PrimaryButton loading={loading} title="Remove" onClick={onDelete} />
+        <PrimaryButton title="Remove" onClick={onDelete} />
         <OutlineButton title="Cancel" onClick={closeModal} />
       </div>
     </Modal>

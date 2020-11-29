@@ -3,25 +3,24 @@
  * @author Rami Abdou
  */
 
-import { Action, action, Thunk, thunk } from 'easy-peasy';
+import { Action, action } from 'easy-peasy';
+import { UseClientRequestOptions } from 'graphql-hooks';
 
 import { IdProps, MessageProps } from '@constants';
 
 type ToastType = 'STANDARD' | 'PESSIMISTIC' | 'ERROR';
 
-export interface ToastOptions extends IdProps, MessageProps {
+export interface ToastOptions extends Partial<IdProps>, MessageProps {
+  mutationOptionsOnClose?: [string, UseClientRequestOptions<any>];
+  onUndo?: Function;
   type?: ToastType;
-}
-
-interface ShowToastArgs extends MessageProps {
-  type?: ToastType;
+  undo?: boolean;
 }
 
 export type ToastModel = {
   dequeueToast: Action<ToastModel, string>;
-  enqueueToast: Action<ToastModel, ToastOptions>;
   queue: ToastOptions[];
-  showToast: Thunk<ToastModel, ShowToastArgs>;
+  showToast: Action<ToastModel, ToastOptions>;
 };
 
 export const toastModel: ToastModel = {
@@ -35,13 +34,9 @@ export const toastModel: ToastModel = {
     };
   }),
 
-  enqueueToast: action(({ queue }, toast) => ({ queue: [...queue, toast] })),
-
   queue: [],
 
-  showToast: thunk((actions, toast) => {
-    const id = `${toast.message}-${Math.random()}`;
-    actions.enqueueToast({ id, ...toast });
-    setTimeout(() => actions.dequeueToast(id), 5000);
-  })
+  showToast: action(({ queue }, toast) => ({
+    queue: [...queue, { id: `${toast.message}-${Math.random()}`, ...toast }]
+  }))
 };

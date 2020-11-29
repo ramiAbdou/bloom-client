@@ -24,6 +24,14 @@ $PREF: 'c-toast';
 
   &--error { background-color: $red; }
   &--pessimistic { background-color: $gray-1; }
+
+  &--undo {
+    @extend .flex-acsb;
+
+    > p { margin-right: $xs; }
+    > button { color: white; }
+    > button:hover { background-color: rgba($color: white, $alpha: 0.1); }
+  }
 }
 
 .#{$PREF} > p { @extend .body--1; color: white; }
