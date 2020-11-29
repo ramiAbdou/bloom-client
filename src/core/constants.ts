@@ -69,23 +69,3 @@ export type QuestionCategory =
   | 'JOINED_ON'
   | 'LAST_NAME'
   | 'MEMBERSHIP_TYPE';
-
-export type FormQuestion = {
-  category?: QuestionCategory;
-  completed?: boolean;
-  description?: string;
-  id?: string;
-  node?: ReactNode;
-  required?: boolean;
-  options?: string[];
-  title: string;
-  type?: QuestionType;
-};
-
-export type Form = {
-  title: string;
-  description?: string;
-  questions?: FormQuestion[];
-};
-
-export type FormData = { questionId: string; value: string[] }[];

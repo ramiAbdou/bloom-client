@@ -7,6 +7,10 @@
 export default class CSSModifier {
   css = '';
 
+  constructor(name?: string) {
+    if (name) this.css = name;
+  }
+
   /**
    * Conditionally adds a CSS class based on the boolean flag that's passed.
    * Automatically adds a space between the existing CSS class and the new one.

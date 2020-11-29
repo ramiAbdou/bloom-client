@@ -12,12 +12,10 @@ import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
 export default ({ maxCharacters, placeholder, title }: FormItemData) => {
-  const submitOnEnter = Form.useStoreState((store) => store.submitOnEnter);
-  const submitForm = Form.useStoreState((store) => store.submitForm);
-  const { isActive, value } = Form.useStoreState(({ getItem }) =>
-    getItem({ title })
+  const isActive = Form.useStoreState(
+    ({ getItem }) => getItem({ title }).isActive
   );
-
+  const value = Form.useStoreState(({ getItem }) => getItem({ title }).value);
   const next = Form.useStoreActions((store) => store.next);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
 
@@ -41,7 +39,6 @@ export default ({ maxCharacters, placeholder, title }: FormItemData) => {
 
   const onKeyDown = async ({ keyCode }: React.KeyboardEvent<HTMLElement>) => {
     if (keyCode === 9) next(title);
-    if (keyCode === 13 && submitOnEnter) await submitForm();
   };
 
   const { css } = new CSSModifier()

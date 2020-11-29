@@ -131,9 +131,10 @@ const model: TableModel = {
     return { ...state, page };
   }),
 
-  setSearchString: action((state, searchString) => ({
+  setSearchString: action(({ data, ...state }, searchString) => ({
     ...state,
-    filteredData: state.data.filter((row: Row) =>
+    data,
+    filteredData: data.filter((row: Row) =>
       Object.values(row).some((value: string) => {
         const lowerCaseSearchString = searchString.toLowerCase();
         return (

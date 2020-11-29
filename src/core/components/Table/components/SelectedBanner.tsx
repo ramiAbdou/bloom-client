@@ -9,7 +9,7 @@ import UnderlineButton from '@components/Button/UnderlineButton';
 import Table from '../Table.store';
 
 const BannerButton = () => {
-  const numMembers = Table.useStoreState((store) => store.data.length);
+  const numMembers = Table.useStoreState(({ data }) => data.length);
   const numFilteredMembers = Table.useStoreState(
     (store) => store.filteredData.length
   );
@@ -27,15 +27,15 @@ const BannerButton = () => {
 };
 
 const BannerMessage = () => {
+  const numTotalMembers = Table.useStoreState(({ data }) => data.length);
   const numSelectedMembers = Table.useStoreState(
     (store) => store.selectedRowIds.length
   );
-  const numMembers = Table.useStoreState((store) => store.data.length);
 
-  if (numSelectedMembers === numMembers)
+  if (numSelectedMembers === numTotalMembers)
     return (
       <p>
-        All <span>{numMembers}</span> members in the database are selected.
+        All <span>{numTotalMembers}</span> members in the database are selected.
       </p>
     );
 

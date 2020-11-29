@@ -14,15 +14,13 @@ import {
 } from 'easy-peasy';
 import { UseClientRequestResult } from 'graphql-hooks';
 
-import { FormData, FormQuestion, QuestionCategory } from '@constants';
-import { FormItemData } from './Form.types';
+import { QuestionCategory } from '@constants';
+import { FormItemData, FormQuestion } from './Form.types';
 
 type GetItemArgs = { category?: QuestionCategory; title?: string };
 
 type FormModel = {
-  data: Computed<FormModel, FormData>;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
-  getValue: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
   itemCSS: string; // Represents a class string.
   items: FormItemData[];
@@ -36,7 +34,6 @@ type FormModel = {
   submitForm: (
     ...args: any[]
   ) => Promise<any> | Promise<UseClientRequestResult<any, object>>;
-  submitOnEnter: Computed<FormModel, boolean>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
 
@@ -47,7 +44,7 @@ type FormModel = {
  *
  * This function ensures that all values are returned as arrays.
  */
-const parseValue = (value: any) => {
+export const parseValue = (value: any) => {
   if (!value) return null;
 
   const isArray = Array.isArray(value);
@@ -62,20 +59,8 @@ const parseValue = (value: any) => {
 };
 
 const model: FormModel = {
-  data: computed(({ items }) =>
-    items?.map(({ id, value }) => ({
-      questionId: id,
-      value: parseValue(value)
-    }))
-  ),
-
   getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
     items.find((item) => item.category === category || item.title === title)
-  ),
-
-  getValue: computed(({ items }) => ({ category, title }: GetItemArgs) =>
-    items.find((item) => item.category === category || item.title === title)
-      ?.value
   ),
 
   isCompleted: computed(
@@ -109,17 +94,6 @@ const model: FormModel = {
 
   submitForm: () => Promise.resolve(),
 
-  /**
-   * submitOnEnter is true if the last item in the form is a SHORT_TEXT or
-   * LONG_TEXT component.
-   */
-  submitOnEnter: computed(
-    ({ isCompleted, items }) =>
-      items.length &&
-      isCompleted &&
-      ['SHORT_TEXT', 'LONG_TEXT'].includes(items[items.length - 1].type)
-  ),
-
   updateItem: action((state, payload) => {
     const { items } = state;
     const index = items.findIndex(({ title }) => title === payload.title);
@@ -128,15 +102,11 @@ const model: FormModel = {
   })
 };
 
-type FormStoreInitializer = {
-  itemCSS?: string;
-  questions: FormQuestion[];
-  submitForm?: (data: FormData, ...args: any[]) => Promise<any>;
-};
+type FormStoreInitializer = { itemCSS?: string; questions: FormQuestion[] };
 
 export default createContextStore<FormModel>(
   (initialData: FormStoreInitializer) => {
-    const { itemCSS, questions, submitForm } = initialData || {};
+    const { itemCSS, questions } = initialData || {};
     return {
       ...model,
       itemCSS,
@@ -156,8 +126,7 @@ export default createContextStore<FormModel>(
               value: emptyValue
             };
           }
-        ) ?? [],
-      submitForm
+        ) ?? []
     };
   },
   { disableImmer: true }

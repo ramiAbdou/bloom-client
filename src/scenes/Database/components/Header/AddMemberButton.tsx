@@ -31,14 +31,18 @@ const AddMemberInput = ({ onClickAdmin, selected }: AddMemberInputProps) => {
 };
 
 const AddMemberModal = () => {
+  // Start with 1 new member that is empty (email is empty string).
   const [newMembers, setNewMembers] = useState<NewMemberData[]>([
     { admin: false, email: '' }
   ]);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
+  // For each member, this controls the toggle admin functionality.
   const toggleAdmin = (email: string) => {
     const index = newMembers.findIndex((element) => element.email === email);
     const { admin, ...newMember } = newMembers[index];
+
+    // We set the members to be the same except with the admin toggle flipped.
     setNewMembers([
       ...newMembers.slice(0, index),
       { admin: !admin, ...newMember },
@@ -46,6 +50,7 @@ const AddMemberModal = () => {
     ]);
   };
 
+  // When adding another member, we again just add an empty input.
   const onAddAnother = () =>
     setNewMembers([...newMembers, { admin: false, email: '' }]);
 

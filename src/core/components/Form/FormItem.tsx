@@ -46,7 +46,7 @@ export default ({
     else body = <MultipleChoice {...optionProps} />;
   }
 
-  // Either use the custom CSS or the default CSS, but not both.
+  // Either use the custom CSS class or the default CSS, but not both.
   const { css } = new CSSModifier().addClass(!!itemCSS, itemCSS, 'c-form-item');
 
   return (

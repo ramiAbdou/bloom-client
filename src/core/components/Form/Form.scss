@@ -36,7 +36,7 @@ $PREF: 'c-form';
   @extend .flex-acsb;
 
   background-color: white;
-  border: 1px $gray-5 solid;
+  border: 1px $gray-4 solid;
   border-radius: $xxs;
   box-sizing: border-box;
   cursor: text;
@@ -61,6 +61,7 @@ $PREF: 'c-form';
     @extend .#{$PREF}-input;
 
     background-color: $gray-5;
+    border: 1px $gray-5 solid;
     color: $gray-2;
 
     &:focus { background-color: white; }

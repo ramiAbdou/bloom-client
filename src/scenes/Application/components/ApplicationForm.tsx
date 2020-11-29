@@ -8,7 +8,7 @@ import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
 import PrimaryButton from '@components/Button/PrimaryButton';
-import Form from '@components/Form/Form.store';
+import Form, { parseValue } from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
@@ -25,7 +25,12 @@ const SubmitButton = () => {
   const setEmail = Application.useStoreActions((actions) => actions.setEmail);
   const name = useStoreState(({ community }) => community?.encodedUrlName);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
-  const submittableData = Form.useStoreState((store) => store.data);
+  const dataToSubmit = Form.useStoreState(({ items }) =>
+    items.map(({ id, value }) => ({
+      questionId: id,
+      value: parseValue(value)
+    }))
+  );
   const email = Form.useStoreState(
     ({ items }) =>
       items.filter(({ category }) => category === 'EMAIL')[0]?.value
@@ -40,7 +45,7 @@ const SubmitButton = () => {
   const [applyForMembership, { error, data, loading }] = useMutation(
     APPLY_FOR_MEMBERSHIP,
     {
-      variables: { data: submittableData, email, encodedUrlName: name }
+      variables: { data: dataToSubmit, email, encodedUrlName: name }
     }
   );
 
@@ -96,8 +101,8 @@ export default () => {
       data: {
         ...result,
         applicationDescription: result.application.description,
-        membershipQuestions: result.application.questions,
-        applicationTitle: result.application.title
+        applicationTitle: result.application.title,
+        membershipQuestions: result.application.questions
       },
       schema: Schema.COMMUNITY
     });
