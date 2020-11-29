@@ -16,13 +16,14 @@ import { useStoreActions } from '@store/Store';
 const MODAL_ID = 'ADD_MEMBERS';
 
 type NewMemberData = { email: string; admin: boolean };
+type AddMemberInputProps = { onClickAdmin: VoidFunction; selected: boolean };
 
-const AddMemberInput = () => {
+const AddMemberInput = ({ onClickAdmin, selected }: AddMemberInputProps) => {
   return (
-    <div>
-      <input className="c-form-input" placeholder="Email" />
+    <div className="s-database-header-add-modal-email">
+      <input className="c-form-input--dark" placeholder="Email" />
       <div>
-        <Checkbox />
+        <Checkbox selected={selected} onClick={onClickAdmin} />
         <p>Make Admin</p>
       </div>
     </div>
@@ -30,8 +31,23 @@ const AddMemberInput = () => {
 };
 
 const AddMemberModal = () => {
-  const [newMembers, setNewMembers] = useState<NewMemberData[]>([]);
+  const [newMembers, setNewMembers] = useState<NewMemberData[]>([
+    { admin: false, email: '' }
+  ]);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+
+  const toggleAdmin = (email: string) => {
+    const index = newMembers.findIndex((element) => element.email === email);
+    const { admin, ...newMember } = newMembers[index];
+    setNewMembers([
+      ...newMembers.slice(0, index),
+      { admin: !admin, ...newMember },
+      ...newMembers.slice(index + 1)
+    ]);
+  };
+
+  const onAddAnother = () =>
+    setNewMembers([...newMembers, { admin: false, email: '' }]);
 
   return (
     <Modal className="s-database-header-add-modal" id={MODAL_ID}>
@@ -44,9 +60,14 @@ const AddMemberModal = () => {
           they can finish filling out their profile.
         </p>
 
-        <AddMemberInput />
+        {newMembers.map(({ admin, email }) => (
+          <AddMemberInput
+            selected={admin}
+            onClickAdmin={() => toggleAdmin(email)}
+          />
+        ))}
 
-        <UnderlineButton title="+ Add Another" />
+        <UnderlineButton title="+ Add Another" onClick={onAddAnother} />
 
         <div>
           <PrimaryButton title="Add" />
