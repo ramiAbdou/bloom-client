@@ -150,15 +150,10 @@ td > div > .c-table-select { z-index: 9; }
 
 .#{$PREF}-select {
   @extend .flex-acc;
-  
+
   background-color: white;
-  border: 1px $gray-4 solid;
-  border-radius: $xxs;
-  cursor: pointer;
-  height: $sm;
   margin: 0 $lg 0 0;
   position: relative;
-  width: $sm;
 }
 
 .#{$PREF}-select--active {

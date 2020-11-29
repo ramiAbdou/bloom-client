@@ -46,7 +46,7 @@ $PREF: 'c-form';
   width: 100%;
 
   &::placeholder { color: $gray-4; }
-  &--active { border: 1px $primary solid; }
+  &:focus { border: 1px $primary solid; }
   &--error { border: 1px $red solid; }
 
   &--lg {

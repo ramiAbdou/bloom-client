@@ -33,3 +33,23 @@ $PREF: 'c-misc';
 
   @include OVERFLOW_ELLIPSES;
 }
+
+// CHECKBOX
+
+.#{$PREF}-checkbox {
+  @extend .flex-acc;
+  
+  background-color: inherit;
+  border: 1px $gray-4 solid;
+  border-radius: $xxs;
+  cursor: pointer;
+  height: $sm;
+  width: $sm;
+
+  &--active {
+    background-color: $primary !important;
+    border: 1px $primary solid !important;
+  }
+}
+
+.#{$PREF}-checkbox > svg { height: $sm + 2; stroke-width: 3px; width: $sm + 2; }

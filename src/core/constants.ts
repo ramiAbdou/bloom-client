@@ -24,7 +24,10 @@ export const APP = {
  * GENERAL PROPS - General component props.
  */
 
-export type Function = (() => Promise<any>) | VoidFunction;
+export type Function =
+  | ((...args: any) => Promise<any>)
+  | ((...args: any) => void)
+  | VoidFunction;
 
 export type ChildrenProps = { children: ReactNode };
 export type ClassNameProps = { className?: string };

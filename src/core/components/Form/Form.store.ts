@@ -135,26 +135,30 @@ type FormStoreInitializer = {
 };
 
 export default createContextStore<FormModel>(
-  ({ itemCSS, questions, submitForm }: FormStoreInitializer) => ({
-    ...model,
-    itemCSS,
-    items: questions?.map(
-      ({ options, type, ...question }: Partial<FormItemData>) => {
-        let emptyValue = null;
-        if (type === 'MULTIPLE_SELECT') emptyValue = [];
-        else if (type === 'SHORT_TEXT') emptyValue = '';
-        else if (type === 'LONG_TEXT') emptyValue = '';
+  (initialData: FormStoreInitializer) => {
+    const { itemCSS, questions, submitForm } = initialData || {};
+    return {
+      ...model,
+      itemCSS,
+      items:
+        questions?.map(
+          ({ options, type, ...question }: Partial<FormItemData>) => {
+            let emptyValue = null;
+            if (type === 'MULTIPLE_SELECT') emptyValue = [];
+            else if (type === 'SHORT_TEXT') emptyValue = '';
+            else if (type === 'LONG_TEXT') emptyValue = '';
 
-        return {
-          ...question,
-          isActive: false,
-          options,
-          type,
-          value: emptyValue
-        };
-      }
-    ),
-    submitForm
-  }),
+            return {
+              ...question,
+              isActive: false,
+              options,
+              type,
+              value: emptyValue
+            };
+          }
+        ) ?? [],
+      submitForm
+    };
+  },
   { disableImmer: true }
 );

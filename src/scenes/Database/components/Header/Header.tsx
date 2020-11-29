@@ -3,15 +3,17 @@
  * @author Rami Abdou
  */
 
+import './Header.scss';
+
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import MultiButton from '@components/Button/MultiButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import Spinner from '@components/Loader/Spinner';
-import Database from '../Database.store';
+import Database from '../../Database.store';
+import AddMemberButton from './AddMemberButton';
 
-const AddMemberButton = () => <PrimaryButton title="Add Member" />;
 const AddAdminButton = () => <PrimaryButton title="Add Admin" />;
 
 const MemberAdminButton = () => {

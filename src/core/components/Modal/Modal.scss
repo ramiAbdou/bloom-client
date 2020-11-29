@@ -22,7 +22,7 @@ $PREF: 'c-modal';
   left: calc(-50vw + 50%);
   margin: auto;
   overflow: scroll;
-  position: absolute;
+  position: fixed;
   right: calc(-50vw + 50%);
   top: calc(-50vh + 50%);
   z-index: 1001;

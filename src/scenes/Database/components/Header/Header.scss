@@ -1,0 +1,17 @@
+@import 'src/index.scss';
+
+$PREF: 's-database-header';
+
+// ## ADD MEMBER MODAL
+
+.#{$PREF}-add-modal > h1 { margin-bottom: $sm; }
+.#{$PREF}-add-modal > p { margin-bottom: $md; }
+.#{$PREF}-add-modal > div:first-of-type {
+  @extend .flex-acsb;
+
+  margin-bottom: $sm;
+}
+.#{$PREF}-add-modal > div:first-of-type > input { width: 65%; }
+.#{$PREF}-add-modal > div:first-of-type > div { @extend .flex-ac; }
+.#{$PREF}-add-modal > div:first-of-type > div > div { margin-right: $xs; }
+.#{$PREF}-add-modal > button { margin-bottom: $md; }

@@ -46,8 +46,7 @@ export default ({ maxCharacters, placeholder, title }: FormItemData) => {
 
   const { css } = new CSSModifier()
     .class('c-form-input')
-    .class('c-form-input--lg')
-    .addClass(isActive, 'c-form-input--active');
+    .class('c-form-input--lg');
 
   return (
     <textarea
