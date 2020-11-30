@@ -18,19 +18,14 @@ import {
   IdProps,
   StyleProps
 } from '@constants';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
+import ModalBackground from './ModalBackground';
 import ModalContainer from './ModalContainer';
-
-const CurrentScreen = () => {
-  const currentScreen = useStoreState(({ modal }) => modal.currentScreen);
-  const screens = useStoreState(({ modal }) => modal.screens);
-  return screens.length ? <>{screens[currentScreen]}</> : null;
-};
 
 interface ModalProps
   extends IdProps,
-    Partial<ChildrenProps>,
+    ChildrenProps,
     ClassNameProps,
     StyleProps {
   confirmation?: boolean;
@@ -62,9 +57,12 @@ export default ({
   return (
     <AnimatePresence>
       {shouldShowModal && (
-        <ModalContainer width={width}>
-          <div className={css}>{children ?? <CurrentScreen />}</div>
-        </ModalContainer>
+        <>
+          <ModalBackground />
+          <ModalContainer width={width} onClose={onClose}>
+            <div className={css}>{children}</div>
+          </ModalContainer>
+        </>
       )}
     </AnimatePresence>
   );

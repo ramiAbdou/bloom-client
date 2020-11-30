@@ -35,27 +35,16 @@ export default memo(({ children, onClose, width }: ModalContainerProps) => {
   }, [onClose]);
 
   return (
-    <>
-      <motion.div
-        key="c-modal-ctr"
-        animate={{ opacity: 0.5 }}
-        className="c-modal-ctr"
-        exit={{ opacity: 0 }}
-        initial={{ opacity: 0 }}
-        transition={{ duration: 0.1 }}
-      />
-
-      <motion.div
-        ref={ref}
-        animate={animate}
-        className="c-modal"
-        exit={exit}
-        initial={initial}
-        style={width ? { width } : {}}
-        transition={{ duration: 0.2 }}
-      >
-        {children}
-      </motion.div>
-    </>
+    <motion.div
+      ref={ref}
+      animate={animate}
+      className="c-modal"
+      exit={exit}
+      initial={initial}
+      style={width ? { width } : {}}
+      transition={{ duration: 0.2 }}
+    >
+      {children}
+    </motion.div>
   );
 });

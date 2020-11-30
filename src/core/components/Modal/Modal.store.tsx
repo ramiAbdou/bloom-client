@@ -14,10 +14,7 @@ export interface ShowModalArgs extends IdProps {
 
 export type ModalModel = {
   closeModal: Action<ModalModel>;
-  currentScreen: number; // Index of the current screen;
-  goBack: Action<ModalModel>;
-  goForward: Action<ModalModel>;
-  id: string;
+  id: string; // Every modal must have unique identifier to help rendering.
   isShowing: boolean;
   screens: ReactNode[];
   showModal: Action<ModalModel, ShowModalArgs>;
@@ -28,18 +25,6 @@ export const modalModel: ModalModel = {
     ...state,
     id: '',
     isShowing: false
-  })),
-
-  currentScreen: 0,
-
-  goBack: action((state) => ({
-    ...state,
-    currentScreen: --state.currentScreen
-  })),
-
-  goForward: action((state) => ({
-    ...state,
-    currentScreen: ++state.currentScreen
   })),
 
   id: '',
