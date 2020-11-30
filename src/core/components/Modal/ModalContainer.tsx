@@ -6,7 +6,7 @@
  */
 
 import { motion } from 'framer-motion';
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps } from '@constants';
@@ -28,11 +28,16 @@ export default memo(({ children, onClose, width }: ModalContainerProps) => {
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   useOnClickOutside(ref, () => closeModal());
 
+  // We memoize the onClose function so that we don't continuously re-render.
+  // The dep array is empty because the props will be present on component will
+  // mount, which is where the onClose function enters.
+  const memoizedOnClose = useCallback(() => onClose(), []);
+
   useEffect(() => {
     return () => {
-      if (onClose) onClose();
+      if (memoizedOnClose) memoizedOnClose();
     };
-  }, [onClose]);
+  }, [memoizedOnClose]);
 
   return (
     <motion.div
