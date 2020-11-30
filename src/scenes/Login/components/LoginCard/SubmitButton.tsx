@@ -73,7 +73,7 @@ export default () => {
       ? 'Your temporary login link has already expired.'
       : // getGraphQLError returns the error code (eg: USER_NOT_FOUND) and
         // getLoginErrorMessage converts that to a more readable message.
-        getLoginErrorMessage(getGraphQLError(error));
+        getLoginErrorMessage(getGraphQLError(error) as LoginError);
 
   return (
     <>

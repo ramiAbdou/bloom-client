@@ -3,6 +3,7 @@
  * @author Rami Abdou
  */
 
+import { useMutation } from 'graphql-hooks';
 import React, { memo } from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
@@ -14,6 +15,8 @@ import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
+import { getGraphQLError } from '@util/util';
+import { CREATE_MEMBERSHIPS } from '../../Database.gql';
 import AddMember from './AddMemberButton.store';
 
 const MODAL_ID = 'ADD_MEMBERS';
@@ -133,7 +136,11 @@ const AddMemberModal = () => {
   const showErrors = AddMember.useStoreActions((store) => store.showErrors);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
-  const onAdd = () => {
+  const [createMemberships, { error, loading }] = useMutation(
+    CREATE_MEMBERSHIPS
+  );
+
+  const onAdd = async () => {
     if (
       members.some(
         ({ emailError, firstNameError, lastNameError }) =>
@@ -141,7 +148,23 @@ const AddMemberModal = () => {
       )
     )
       showErrors();
+    else {
+      const result = await createMemberships({
+        variables: {
+          members: members.map(({ admin, email, firstName, lastName }) => ({
+            email,
+            firstName,
+            isAdmin: admin,
+            lastName
+          }))
+        }
+      });
+
+      if (!result.error) closeModal();
+    }
   };
+
+  const message = getGraphQLError(error);
 
   return (
     <Modal
@@ -164,8 +187,15 @@ const AddMemberModal = () => {
 
       <UnderlineButton title="+ Add Another" onClick={() => addEmptyMember()} />
 
+      {message && <ErrorMessage marginBottom={24} message={message} />}
+
       <div>
-        <PrimaryButton title="Add" onClick={onAdd} />
+        <PrimaryButton
+          loading={loading}
+          loadingText="Adding..."
+          title="Add"
+          onClick={onAdd}
+        />
         <OutlineButton title="Cancel" onClick={closeModal} />
       </div>
     </Modal>

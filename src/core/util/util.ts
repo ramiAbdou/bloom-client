@@ -76,7 +76,7 @@ export const getHueFromRGB = ([r, g, b]: number[]): number => {
   return hue < 0 ? hue + 360 : Math.round(hue);
 };
 
-export const getGraphQLError = (error: APIError) => {
+export const getGraphQLError = (error: APIError): string => {
   if (!error?.graphQLErrors && !error?.fetchError) return null;
 
   return error.fetchError
