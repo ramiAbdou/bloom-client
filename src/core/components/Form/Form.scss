@@ -58,8 +58,6 @@ $PREF: 'c-form';
   }
   
   &--dark {
-    @extend .#{$PREF}-input;
-
     background-color: $gray-5;
     border: 1px $gray-5 solid;
     color: $gray-2;

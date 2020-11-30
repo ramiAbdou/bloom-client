@@ -5,6 +5,11 @@
 
 import { mutation, query } from 'gql-query-builder';
 
+export const DELETE_MEMBERSHIPS = mutation({
+  operation: 'deleteMemberships',
+  variables: { membershipIds: { required: true, type: '[String!]' } }
+}).query;
+
 export const GET_DATABASE = query({
   fields: [
     'id',
@@ -14,12 +19,12 @@ export const GET_DATABASE = query({
   operation: 'getDatabase'
 }).query;
 
-export const DELETE_MEMBERSHIPS = mutation({
-  operation: 'deleteMemberships',
-  variables: { membershipIds: { required: true, type: '[String!]' } }
-}).query;
-
 export const PROMOTE_TO_ADMIN = mutation({
   operation: 'promoteToAdmin',
   variables: { membershipIds: { required: true, type: '[String!]' } }
+}).query;
+
+export const CREATE_MEMBERSHIPS = mutation({
+  operation: 'createMemberships',
+  variables: { members: { required: true, type: '[NewMemberInput!]' } }
 }).query;

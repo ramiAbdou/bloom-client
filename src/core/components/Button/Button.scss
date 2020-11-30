@@ -27,7 +27,7 @@ $PREF: 'c-btn';
   color: $gray-3 !important;
   cursor: not-allowed !important;
 
-  @include HOVER { opacity: 1; }
+  @include HOVER { opacity: 1 !important; }
 }
 
 // ## PRIMARY BUTTON

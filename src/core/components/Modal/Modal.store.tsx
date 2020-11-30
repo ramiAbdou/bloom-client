@@ -6,10 +6,11 @@
 import { Action, action } from 'easy-peasy';
 import { ReactNode } from 'react';
 
-import { Function, IdProps } from '@constants';
+import { IdProps } from '@constants';
+import { serializeFunc } from '@util/util';
 
 export interface ShowModalArgs extends IdProps {
-  onClose?: VoidFunction;
+  onClose?: Function;
   screens?: ReactNode[];
 }
 
@@ -20,19 +21,19 @@ export type ModalModel = {
   goForward: Action<ModalModel>;
   id: string;
   isShowing: boolean;
-  onClose: VoidFunction;
+  onClose: string;
   screens: ReactNode[];
-  setOnClose: Action<ModalModel, VoidFunction>;
+  setOnClose: Action<ModalModel, string>;
   showModal: Action<ModalModel, ShowModalArgs>;
 };
 
 export const modalModel: ModalModel = {
   closeModal: action((state, onClose?: Function) => {
-    let updatedOnClose: Function;
+    let updatedOnClose: string;
 
-    if (onClose) updatedOnClose = onClose;
+    if (onClose) updatedOnClose = serializeFunc(onClose);
     else if (state.onClose) updatedOnClose = state.onClose;
-    else updatedOnClose = () => {};
+    else updatedOnClose = null;
 
     return {
       ...state,
@@ -58,16 +59,16 @@ export const modalModel: ModalModel = {
 
   isShowing: false,
 
-  onClose: () => {},
+  onClose: null,
 
   screens: [],
 
-  setOnClose: action((state, onClose: VoidFunction) => ({ ...state, onClose })),
+  setOnClose: action((state, onClose: string) => ({ ...state, onClose })),
 
   showModal: action((state, { onClose, ...modal }: ShowModalArgs) => ({
     ...state,
     ...modal,
     isShowing: true,
-    onClose: onClose ?? (() => {})
+    onClose: onClose ? serializeFunc(onClose) : null
   }))
 };

@@ -12,7 +12,7 @@ import Checkbox from '@components/Misc/Checkbox';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 import AddMember from './AddMemberButton.store';
 
@@ -24,39 +24,71 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   );
   const admin = AddMember.useStoreState((store) => store.getMember(id)?.admin);
   const email = AddMember.useStoreState((store) => store.getMember(id)?.email);
-  const error = AddMember.useStoreState((store) => store.getMember(id)?.error);
-  const updateEmail = AddMember.useStoreActions((store) => store.updateEmail);
+  const emailError = AddMember.useStoreState(
+    (store) => store.getMember(id)?.emailError
+  );
+  const firstName = AddMember.useStoreState(
+    (store) => store.getMember(id)?.firstName
+  );
+  const lastName = AddMember.useStoreState(
+    (store) => store.getMember(id)?.lastName
+  );
+  const updateMember = AddMember.useStoreActions((store) => store.updateMember);
   const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);
-
-  const { css } = new CSSModifier('s-database-header-add-modal-email').addClass(
-    !!error,
-    's-database-header-add-modal-email--error'
+  const isOwner = useStoreState(
+    ({ membership }) => membership.role === 'OWNER'
   );
 
-  const { css: inputCSS } = new CSSModifier().addClass(
-    isShowingErrors && !!error,
-    'c-form-input c-form-input--error',
+  const { css: divCSS } = new CSSModifier(
+    's-database-header-add-modal-email'
+  ).addClass(!!emailError, 's-database-header-add-modal-email--error');
+
+  const { css: inputCSS } = new CSSModifier('c-form-input').addClass(
+    isShowingErrors && !!emailError,
+    'c-form-input--error',
     'c-form-input--dark'
   );
 
   return (
-    <div className={css}>
+    <div className={divCSS}>
       <div>
+        <input
+          className={inputCSS}
+          placeholder="First Name"
+          value={firstName}
+          onChange={({ target }) =>
+            updateMember({ field: 'FIRST_NAME', id, value: target.value })
+          }
+        />
+
+        <input
+          className={inputCSS}
+          placeholder="Last Name"
+          value={lastName}
+          onChange={({ target }) =>
+            updateMember({ field: 'LAST_NAME', id, value: target.value })
+          }
+        />
+
         <input
           className={inputCSS}
           placeholder="Email"
           value={email}
-          onChange={({ target }) => updateEmail({ email: target.value, id })}
+          onChange={({ target }) =>
+            updateMember({ field: 'EMAIL', id, value: target.value })
+          }
         />
 
-        <div>
-          <Checkbox selected={admin} onClick={() => toggleAdmin(id)} />
-          <p>Make Admin</p>
-        </div>
+        {isOwner && (
+          <div>
+            <Checkbox selected={admin} onClick={() => toggleAdmin(id)} />
+            <p>Make Admin</p>
+          </div>
+        )}
       </div>
 
-      {isShowingErrors && error && (
-        <ErrorMessage marginBottom={16} message={error} />
+      {isShowingErrors && emailError && (
+        <ErrorMessage marginBottom={16} message={emailError} />
       )}
     </div>
   );
@@ -72,13 +104,20 @@ const AddMemberModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const onAdd = () => {
-    if (members.some(({ error }) => !!error)) showErrors();
+    if (
+      members.some(
+        ({ emailError, firstNameError, lastNameError }) =>
+          emailError || firstNameError || lastNameError
+      )
+    )
+      showErrors();
   };
 
   return (
     <Modal
       className="s-database-header-add-modal"
       id={MODAL_ID}
+      width={750}
       onClose={() => clearMembers()}
     >
       <h1>Add Member(s)</h1>
@@ -90,10 +129,10 @@ const AddMemberModal = () => {
       </p>
 
       {members.map(({ id }) => (
-        <AddMemberInput key={Math.random()} id={id} />
+        <AddMemberInput key={id} id={id} />
       ))}
 
-      <UnderlineButton title="+ Add Another" onClick={addEmptyMember} />
+      <UnderlineButton title="+ Add Another" onClick={() => addEmptyMember()} />
 
       <div>
         <PrimaryButton title="Add" onClick={onAdd} />

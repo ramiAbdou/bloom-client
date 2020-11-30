@@ -11,9 +11,16 @@ import './Modal.scss';
 import { AnimatePresence } from 'framer-motion';
 import React, { useEffect, useMemo } from 'react';
 
-import { ChildrenProps, ClassNameProps, Function, IdProps } from '@constants';
+import {
+  ChildrenProps,
+  ClassNameProps,
+  Function,
+  IdProps,
+  StyleProps
+} from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
+import { serializeFunc } from '@util/util';
 import ModalContainer from './ModalContainer';
 
 const CurrentScreen = () => {
@@ -22,9 +29,14 @@ const CurrentScreen = () => {
   return screens.length ? <>{screens[currentScreen]}</> : null;
 };
 
-interface ModalProps extends IdProps, Partial<ChildrenProps>, ClassNameProps {
+interface ModalProps
+  extends IdProps,
+    Partial<ChildrenProps>,
+    ClassNameProps,
+    StyleProps {
   confirmation?: boolean;
   onClose?: Function;
+  width?: number;
 }
 
 export default ({
@@ -32,15 +44,20 @@ export default ({
   children,
   className,
   id: MODAL_ID,
-  onClose
+  onClose,
+  width
 }: ModalProps) => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const id = useStoreState(({ modal }) => modal.id);
   const setOnClose = useStoreActions(({ modal }) => modal.setOnClose);
 
+  const serializedOnClose = serializeFunc(onClose);
+
+  console.log(serializedOnClose);
+
   useEffect(() => {
-    if (onClose) setOnClose(onClose);
-  }, [onClose]);
+    if (serializedOnClose) setOnClose(serializedOnClose);
+  }, [serializedOnClose]);
 
   const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
     isShowing,
@@ -55,7 +72,7 @@ export default ({
   return (
     <AnimatePresence>
       {shouldShowModal && (
-        <ModalContainer>
+        <ModalContainer width={width}>
           <div className={css}>{children ?? <CurrentScreen />}</div>
         </ModalContainer>
       )}

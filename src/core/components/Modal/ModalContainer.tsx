@@ -11,8 +11,13 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { deserializeFunc } from '../../util/util';
 
-export default memo(({ children }: ChildrenProps) => {
+interface ModalContainerProps extends ChildrenProps {
+  width?: number;
+}
+
+export default memo(({ children, width }: ModalContainerProps) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
   const onClose = useStoreState(({ modal }) => modal.onClose);
@@ -25,7 +30,9 @@ export default memo(({ children }: ChildrenProps) => {
   useOnClickOutside(ref, () => closeModal());
 
   useEffect(() => {
-    return () => onClose();
+    return () => {
+      if (onClose) deserializeFunc(onClose)();
+    };
   }, [onClose]);
 
   return (
@@ -45,6 +52,7 @@ export default memo(({ children }: ChildrenProps) => {
         className="c-modal"
         exit={exit}
         initial={initial}
+        style={width ? { width } : {}}
         transition={{ duration: 0.2 }}
       >
         {children}

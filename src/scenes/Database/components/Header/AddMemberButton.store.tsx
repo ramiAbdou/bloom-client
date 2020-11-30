@@ -18,28 +18,39 @@ import { uuid } from '@util/util';
 interface AddMemberData extends IdProps {
   admin: boolean;
   email: string;
-  error: string;
+  emailError: string;
+  firstName: string;
+  firstNameError: string;
+  lastName: string;
+  lastNameError: string;
 }
 
-type UpdateEmailArgs = { id: string; email: string };
+type UpdateMemberArgs = {
+  field: 'EMAIL' | 'FIRST_NAME' | 'LAST_NAME';
+  id: string;
+  value: string;
+};
 
 export type AddMemberModel = {
   addEmptyMember: Action<AddMemberModel>;
-  clearErrors: Action<AddMemberModel>;
   clearMembers: Action<AddMemberModel>;
   getMember: Computed<AddMemberModel, (id: string) => AddMemberData, {}>;
   members: AddMemberData[];
   isShowingErrors: boolean;
   showErrors: Action<AddMemberModel>;
   toggleAdmin: Action<AddMemberModel, string>;
-  updateEmail: Action<AddMemberModel, UpdateEmailArgs>;
+  updateMember: Action<AddMemberModel, UpdateMemberArgs>;
 };
 
 const generateEmptyMember = (): AddMemberData => ({
   admin: false,
   email: '',
-  error: 'This is not a valid email address.',
-  id: uuid()
+  emailError: 'This is not a valid email address.',
+  firstName: '',
+  firstNameError: 'Please fill out a first name.',
+  id: uuid(),
+  lastName: '',
+  lastNameError: 'Please fill out a last name.'
 });
 
 const addMemberModel: AddMemberModel = {
@@ -49,15 +60,14 @@ const addMemberModel: AddMemberModel = {
     members: [...members, generateEmptyMember()]
   })),
 
-  clearErrors: action((state) => ({
-    ...state,
-    members: [generateEmptyMember()]
-  })),
-
-  clearMembers: action((state) => ({
-    ...state,
-    members: [generateEmptyMember()]
-  })),
+  clearMembers: action((state) => {
+    console.log('HERE');
+    return {
+      ...state,
+      isShowingErrors: false,
+      members: [generateEmptyMember()]
+    };
+  }),
 
   getMember: computed(({ members }) => (id: string) =>
     members.find((member) => member.id === id)
@@ -71,27 +81,35 @@ const addMemberModel: AddMemberModel = {
 
   toggleAdmin: action(({ members, ...state }, id: string) => {
     const index = members.findIndex((element) => element.id === id);
-    const { admin, ...member } = members[index];
-
-    return {
-      ...state,
-      members: [
-        ...members.slice(0, index),
-        { admin: !admin, ...member },
-        ...members.slice(index + 1)
-      ]
-    };
+    const member = members[index];
+    members[index] = { ...member, admin: !member.admin };
+    return { ...state, members };
   }),
 
-  updateEmail: action(({ members, ...state }, { id, email }) => {
+  updateMember: action(({ members, ...state }, { field, id, value }) => {
     const index = members.findIndex((element) => element.id === id);
-    members[index] = {
-      ...members[index],
-      email,
-      error: validator.isEmail(email)
-        ? ''
-        : 'This is not a valid email address.'
-    };
+    const member = members[index];
+
+    if (field === 'EMAIL')
+      members[index] = {
+        ...member,
+        email: value,
+        emailError: validator.isEmail(value)
+          ? ''
+          : 'This is not a valid email address.'
+      };
+    else if (field === 'FIRST_NAME')
+      members[index] = {
+        ...member,
+        firstName: value,
+        firstNameError: value.length ? '' : 'Please fill out a first name.'
+      };
+    else
+      members[index] = {
+        ...member,
+        lastName: value,
+        lastNameError: value.length ? '' : 'Please fill out a last name.'
+      };
 
     return { ...state, members };
   })
