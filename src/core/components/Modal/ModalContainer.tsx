@@ -6,7 +6,7 @@
  */
 
 import { motion } from 'framer-motion';
-import React, { memo, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps } from '@constants';
@@ -14,10 +14,16 @@ import { useStoreActions, useStoreState } from '@store/Store';
 
 interface ModalContainerProps extends ChildrenProps {
   onClose?: Function;
+  onCloseDeps?: any[];
   width?: number;
 }
 
-export default memo(({ children, onClose, width }: ModalContainerProps) => {
+export default ({
+  children,
+  onClose,
+  onCloseDeps,
+  width
+}: ModalContainerProps) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
   const animate = isMobile ? { x: 0 } : { opacity: 1, scale: 1 };
@@ -31,7 +37,7 @@ export default memo(({ children, onClose, width }: ModalContainerProps) => {
   // We memoize the onClose function so that we don't continuously re-render.
   // The dep array is empty because the props will be present on component will
   // mount, which is where the onClose function enters.
-  const memoizedOnClose = useCallback(() => onClose(), []);
+  const memoizedOnClose = useCallback(() => onClose(), onCloseDeps ?? []);
 
   useEffect(() => {
     return () => {
@@ -52,4 +58,4 @@ export default memo(({ children, onClose, width }: ModalContainerProps) => {
       {children}
     </motion.div>
   );
-});
+};

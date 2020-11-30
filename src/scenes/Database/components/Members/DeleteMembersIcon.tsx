@@ -3,7 +3,7 @@
  * @author Rami Abdou
  */
 
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
@@ -17,6 +17,8 @@ import DatabaseAction from './DatabaseAction';
 const MODAL_ID = 'DELETE_MEMBERS';
 
 const DeleteMembersModal = () => {
+  const [shouldSetOnClose, setShouldSetOnClose] = useState(false);
+
   const members = useStoreState(({ community }) => community.members);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
@@ -29,14 +31,21 @@ const DeleteMembersModal = () => {
   );
 
   const onClose = () => {
+    // shouldSetOnClose will only be true if we clicked the remove button.
+    if (!shouldSetOnClose) return;
+
     const allMembers = members;
 
+    // Filter the community members to NOT have the selected members.
     updateCommunity({
       members: members.filter(
         (memberId: string) => !membershipIds.includes(memberId)
       )
     });
 
+    // After the toast finishes showing, we call the mutation that actually
+    // deletes the members from the community. We supply an undo function
+    // that resets the members.
     showToast({
       message: `${numMembers} member(s) removed from the community.`,
       mutationOptionsOnClose: [
@@ -49,8 +58,18 @@ const DeleteMembersModal = () => {
     });
   };
 
+  const onRemove = () => {
+    setShouldSetOnClose(true);
+    setTimeout(closeModal, 0);
+  };
+
   return (
-    <Modal confirmation id={MODAL_ID} onClose={onClose}>
+    <Modal
+      confirmation
+      id={MODAL_ID}
+      onClose={onClose}
+      onCloseDeps={[shouldSetOnClose]}
+    >
       <h1>Remove member(s)?</h1>
       <p>
         Are you sure you want to remove these member(s)? They will no longer
@@ -58,7 +77,7 @@ const DeleteMembersModal = () => {
         database.
       </p>
       <div>
-        <PrimaryButton title="Remove" onClick={closeModal} />
+        <PrimaryButton title="Remove" onClick={onRemove} />
         <OutlineButton title="Cancel" onClick={closeModal} />
       </div>
     </Modal>

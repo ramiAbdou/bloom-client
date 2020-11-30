@@ -30,6 +30,7 @@ interface ModalProps
     StyleProps {
   confirmation?: boolean;
   onClose?: Function;
+  onCloseDeps?: any[];
   width?: number;
 }
 
@@ -38,8 +39,7 @@ export default ({
   children,
   className,
   id: MODAL_ID,
-  onClose,
-  width
+  ...containerProps
 }: ModalProps) => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const id = useStoreState(({ modal }) => modal.id);
@@ -59,7 +59,7 @@ export default ({
       {shouldShowModal && (
         <>
           <ModalBackground />
-          <ModalContainer width={width} onClose={onClose}>
+          <ModalContainer {...containerProps}>
             <div className={css}>{children}</div>
           </ModalContainer>
         </>

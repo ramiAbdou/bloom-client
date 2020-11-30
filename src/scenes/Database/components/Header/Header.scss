@@ -5,7 +5,6 @@ $PREF: 's-database-header';
 // ## ADD MEMBER MODAL
 
 .#{$PREF}-add-modal { @include D { width: 750px; } }
-.#{$PREF}-add-modal > h1 { margin-bottom: $sm; }
 .#{$PREF}-add-modal > p { margin-bottom: $md; }
 .#{$PREF}-add-modal-email > div:first-of-type {
   @extend .flex-ac;

@@ -186,7 +186,6 @@ const AddMemberModal = () => {
       ))}
 
       <UnderlineButton title="+ Add Another" onClick={() => addEmptyMember()} />
-
       {message && <ErrorMessage marginBottom={24} message={message} />}
 
       <div>
