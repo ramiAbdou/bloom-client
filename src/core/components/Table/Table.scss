@@ -124,6 +124,8 @@ th.c-table-selected-col > div > p {
 }
 
 th:first-of-type { z-index: 12; }
+
+td:last-of-type,
 th:last-of-type { width: -webkit-fill-available; }
 
 td:first-of-type {
