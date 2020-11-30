@@ -9,37 +9,26 @@ import { ReactNode } from 'react';
 import { IdProps } from '@constants';
 
 export interface ShowModalArgs extends IdProps {
-  onClose?: Function;
   screens?: ReactNode[];
 }
 
 export type ModalModel = {
-  closeModal: Action<ModalModel, void | Function>;
+  closeModal: Action<ModalModel>;
   currentScreen: number; // Index of the current screen;
   goBack: Action<ModalModel>;
   goForward: Action<ModalModel>;
   id: string;
   isShowing: boolean;
-  onClose: Function;
   screens: ReactNode[];
   showModal: Action<ModalModel, ShowModalArgs>;
 };
 
 export const modalModel: ModalModel = {
-  closeModal: action((state, onClose?: Function) => {
-    let updatedOnClose: Function;
-
-    if (onClose) updatedOnClose = onClose;
-    else if (state.onClose) updatedOnClose = state.onClose;
-    else updatedOnClose = () => {};
-
-    return {
-      ...state,
-      id: '',
-      isShowing: false,
-      onClose: updatedOnClose
-    };
-  }),
+  closeModal: action((state) => ({
+    ...state,
+    id: '',
+    isShowing: false
+  })),
 
   currentScreen: 0,
 
@@ -57,14 +46,11 @@ export const modalModel: ModalModel = {
 
   isShowing: false,
 
-  onClose: null,
-
   screens: [],
 
-  showModal: action((state, { onClose, ...modal }: ShowModalArgs) => ({
+  showModal: action((state, modal: ShowModalArgs) => ({
     ...state,
     ...modal,
-    isShowing: true,
-    onClose: onClose ?? (() => {})
+    isShowing: true
   }))
 };

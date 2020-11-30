@@ -29,20 +29,20 @@ const PromoteToAdminModal = () => {
   const { push } = useHistory();
   const [promoteToAdmin, { loading }] = useMutation(PROMOTE_TO_ADMIN);
 
-  const onPromote = async () => {
-    const { data } = await promoteToAdmin({ variables: { membershipIds } });
-    if (!data?.promoteToAdmin) return;
-
-    closeModal(() => {
-      push('admins');
-      showToast({
-        message: `${numMembersPromoted} member(s) promoted to admin.`
-      });
+  const onClose = () => {
+    push('admins');
+    showToast({
+      message: `${numMembersPromoted} member(s) promoted to admin.`
     });
   };
 
+  const onPromote = async () => {
+    const { error } = await promoteToAdmin({ variables: { membershipIds } });
+    if (!error) closeModal();
+  };
+
   return (
-    <Modal confirmation id={MODAL_ID}>
+    <Modal confirmation id={MODAL_ID} onClose={onClose}>
       <h1>Promote to admin?</h1>
       <p>
         Are you sure you want to promote this member to admin? They will be

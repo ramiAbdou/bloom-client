@@ -33,11 +33,11 @@ export default ({ details, logo, name }: ExpandedDetailsProps) => {
   const MODAL_ID = `${name.toUpperCase()}_DETAILS`;
 
   useEffect(() => {
-    showModal({ id: MODAL_ID, onClose: () => setFlow(null) });
+    showModal({ id: MODAL_ID });
   }, []);
 
   return (
-    <Modal id={MODAL_ID}>
+    <Modal id={MODAL_ID} onClose={() => setFlow(null)}>
       <img className="s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>
 

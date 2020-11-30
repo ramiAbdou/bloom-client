@@ -28,31 +28,29 @@ const DeleteMembersModal = () => {
     ({ selectedRowIds }) => selectedRowIds.length
   );
 
-  const onDelete = async () => {
+  const onClose = () => {
     const allMembers = members;
 
-    closeModal(() => {
-      updateCommunity({
-        members: members.filter(
-          (memberId: string) => !membershipIds.includes(memberId)
-        )
-      });
+    updateCommunity({
+      members: members.filter(
+        (memberId: string) => !membershipIds.includes(memberId)
+      )
+    });
 
-      showToast({
-        message: `${numMembers} member(s) removed from the community.`,
-        mutationOptionsOnClose: [
-          DELETE_MEMBERSHIPS,
-          { variables: { membershipIds } }
-        ],
-        onUndo: () => updateCommunity({ members: allMembers }),
-        type: 'PESSIMISTIC',
-        undo: true
-      });
+    showToast({
+      message: `${numMembers} member(s) removed from the community.`,
+      mutationOptionsOnClose: [
+        DELETE_MEMBERSHIPS,
+        { variables: { membershipIds } }
+      ],
+      onUndo: () => updateCommunity({ members: allMembers }),
+      type: 'PESSIMISTIC',
+      undo: true
     });
   };
 
   return (
-    <Modal confirmation id={MODAL_ID}>
+    <Modal confirmation id={MODAL_ID} onClose={onClose}>
       <h1>Remove member(s)?</h1>
       <p>
         Are you sure you want to remove these member(s)? They will no longer
@@ -60,7 +58,7 @@ const DeleteMembersModal = () => {
         database.
       </p>
       <div>
-        <PrimaryButton title="Remove" onClick={onDelete} />
+        <PrimaryButton title="Remove" onClick={closeModal} />
         <OutlineButton title="Cancel" onClick={closeModal} />
       </div>
     </Modal>

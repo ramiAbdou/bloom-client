@@ -27,7 +27,7 @@ export default () => {
   const MODAL_ID = 'MAILCHIMP_FLOW';
 
   useEffect(() => {
-    showModal({ id: MODAL_ID, onClose: () => setFlow(null) });
+    showModal({ id: MODAL_ID });
   }, []);
 
   if (error)
@@ -37,7 +37,7 @@ export default () => {
     });
 
   return (
-    <Modal id={MODAL_ID}>
+    <Modal id={MODAL_ID} onClose={() => setFlow(null)}>
       <img
         alt="Mailchimp Icon"
         className="s-integrations-icon--lg"
