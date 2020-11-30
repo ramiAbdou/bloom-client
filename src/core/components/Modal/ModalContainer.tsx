@@ -30,7 +30,9 @@ export default memo(({ children, width }: ModalContainerProps) => {
   useOnClickOutside(ref, () => closeModal());
 
   useEffect(() => {
+    console.log(onClose);
     return () => {
+      console.log(onClose);
       if (onClose) deserializeFunc(onClose)();
     };
   }, [onClose]);

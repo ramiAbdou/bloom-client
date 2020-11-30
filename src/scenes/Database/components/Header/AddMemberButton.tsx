@@ -30,8 +30,14 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   const firstName = AddMember.useStoreState(
     (store) => store.getMember(id)?.firstName
   );
+  const firstNameError = AddMember.useStoreState(
+    (store) => store.getMember(id)?.firstNameError
+  );
   const lastName = AddMember.useStoreState(
     (store) => store.getMember(id)?.lastName
+  );
+  const lastNameError = AddMember.useStoreState(
+    (store) => store.getMember(id)?.lastNameError
   );
   const updateMember = AddMember.useStoreActions((store) => store.updateMember);
   const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);
@@ -43,17 +49,41 @@ const AddMemberInput = memo(({ id }: IdProps) => {
     's-database-header-add-modal-email'
   ).addClass(!!emailError, 's-database-header-add-modal-email--error');
 
-  const { css: inputCSS } = new CSSModifier('c-form-input').addClass(
+  const { css: firstNameCSS } = new CSSModifier('c-form-input').addClass(
+    isShowingErrors && !!firstNameError,
+    'c-form-input--error',
+    'c-form-input--dark'
+  );
+
+  const { css: lastNameCSS } = new CSSModifier('c-form-input').addClass(
+    isShowingErrors && !!lastNameError,
+    'c-form-input--error',
+    'c-form-input--dark'
+  );
+
+  const { css: emailCSS } = new CSSModifier('c-form-input').addClass(
     isShowingErrors && !!emailError,
     'c-form-input--error',
     'c-form-input--dark'
   );
 
+  let message: string;
+
+  if (
+    (firstNameError && lastNameError) ||
+    (firstNameError && emailError) ||
+    (lastNameError && emailError)
+  )
+    message = 'Please fix the errors with the fields above.';
+  else if (firstNameError) message = firstNameError;
+  else if (lastNameError) message = lastNameError;
+  else if (emailError) message = emailError;
+
   return (
     <div className={divCSS}>
       <div>
         <input
-          className={inputCSS}
+          className={firstNameCSS}
           placeholder="First Name"
           value={firstName}
           onChange={({ target }) =>
@@ -62,7 +92,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
         />
 
         <input
-          className={inputCSS}
+          className={lastNameCSS}
           placeholder="Last Name"
           value={lastName}
           onChange={({ target }) =>
@@ -71,7 +101,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
         />
 
         <input
-          className={inputCSS}
+          className={emailCSS}
           placeholder="Email"
           value={email}
           onChange={({ target }) =>
@@ -87,8 +117,8 @@ const AddMemberInput = memo(({ id }: IdProps) => {
         )}
       </div>
 
-      {isShowingErrors && emailError && (
-        <ErrorMessage marginBottom={16} message={emailError} />
+      {isShowingErrors && !!message && (
+        <ErrorMessage marginBottom={16} message={message} />
       )}
     </div>
   );

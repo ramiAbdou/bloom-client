@@ -129,7 +129,7 @@ export const mutation = async (data: GQLOptions) => {
  */
 export const deserializeFunc = (
   funcString: string // eslint-disable-next-line no-eval
-) => eval(`return ${funcString}`)();
+) => () => {};
 
 // var actualFunction = new Function('return ' + foo.toString())()
 

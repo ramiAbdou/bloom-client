@@ -61,7 +61,6 @@ const addMemberModel: AddMemberModel = {
   })),
 
   clearMembers: action((state) => {
-    console.log('HERE');
     return {
       ...state,
       isShowingErrors: false,

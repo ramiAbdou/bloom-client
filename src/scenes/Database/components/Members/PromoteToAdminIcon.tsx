@@ -24,6 +24,7 @@ const PromoteToAdminModal = () => {
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
+  const numMembersPromoted = membershipIds.length;
 
   const { push } = useHistory();
   const [promoteToAdmin, { loading }] = useMutation(PROMOTE_TO_ADMIN);
@@ -33,8 +34,10 @@ const PromoteToAdminModal = () => {
     if (!data?.promoteToAdmin) return;
 
     closeModal(() => {
-      // push('admins');
-      showToast({ message: 'Member(s) promoted to admin.' });
+      push('admins');
+      showToast({
+        message: `${numMembersPromoted} member(s) promoted to admin.`
+      });
     });
   };
 
