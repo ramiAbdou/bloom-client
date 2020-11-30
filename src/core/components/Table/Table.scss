@@ -16,6 +16,7 @@ $PREF: 'c-table';
   border-collapse: collapse;
   border-spacing: $xs $xxs;
   height: fit-content;
+  min-width: 100%;
   transform: rotateX(0deg);
   width: max-content;
 }
@@ -82,9 +83,9 @@ th {
 }
 
 .c-table-cell {
-  &--sm { max-width: $xxl * 3; width: $xxl * 3; }
+  &--sm { max-width: $xxl * 3.25; width: $xxl * 3.25; }
   &--md { max-width: $xxl * 4; width: $xxl * 4; }
-  &--lg { max-width: $xxl * 5; width: $xxl * 6; }
+  &--lg { max-width: $xxl * 5; width: $xxl * 5; }
 }
 
 // ## TABLE CELL
@@ -123,6 +124,7 @@ th.c-table-selected-col > div > p {
 }
 
 th:first-of-type { z-index: 12; }
+th:last-of-type { width: -webkit-fill-available; }
 
 td:first-of-type {
   z-index: 9;

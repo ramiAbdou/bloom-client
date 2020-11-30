@@ -16,7 +16,7 @@ import { GET_DATABASE } from '../../Database.gql';
 import Database from '../../Database.store';
 import ActionRow from './ActionRow';
 
-const DatabaseTable = () => {
+const MemberTable = () => {
   const allMembers: IMember[] = useStoreState(({ entities, community }) => {
     const { byId } = entities.members;
     return community.members?.map((memberId: string) => byId[memberId]);
@@ -102,7 +102,7 @@ export default () => {
 
   return (
     <Table.Provider initialData={columns}>
-      <DatabaseTable />
+      <MemberTable />
     </Table.Provider>
   );
 };

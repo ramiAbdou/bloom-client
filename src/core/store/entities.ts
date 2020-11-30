@@ -5,6 +5,13 @@
 
 import { QuestionCategory, QuestionType } from '@constants';
 
+export type IAdmin = {
+  email: string;
+  firstName: string;
+  id: string;
+  lastName: string;
+};
+
 export type IApplicationQuestion = {
   category: QuestionCategory;
   id: string;
@@ -17,8 +24,8 @@ export type IApplicationQuestion = {
 };
 
 export type ICommunity = {
+  admins: string[];
   applicationDescription?: string;
-  membershipQuestions: string[];
   applicationTitle?: string;
   autoAccept?: boolean;
   encodedUrlName: string;
@@ -26,6 +33,7 @@ export type ICommunity = {
   integrations: string;
   logoUrl: string;
   members: string[];
+  membershipQuestions: string[];
   name: string;
   pendingApplicants: string[];
   primaryColor: string;
@@ -82,10 +90,11 @@ export interface EntityRecord<T> {
 }
 
 export type IEntities = {
-  membershipQuestions: EntityRecord<IApplicationQuestion>;
+  admins: EntityRecord<IAdmin>;
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
+  membershipQuestions: EntityRecord<IApplicationQuestion>;
   memberships: EntityRecord<IMembership>;
   pendingApplicants: EntityRecord<IPendingApplicant>;
   users: EntityRecord<IUser>;
@@ -93,6 +102,7 @@ export type IEntities = {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
+  admins: { activeId: null, allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { allIds: [], byId: {} },

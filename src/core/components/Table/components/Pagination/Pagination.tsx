@@ -5,12 +5,16 @@
 
 import React from 'react';
 
+import Table from '../../Table.store';
 import DisplayingText from './DisplayingText';
 import PaginationBar from './PaginationBar';
 
-export default () => (
-  <div className="c-table-pagination-ctr">
-    <DisplayingText />
-    <PaginationBar />
-  </div>
-);
+export default () => {
+  const numRows = Table.useStoreState((store) => store.data.length);
+  return (
+    <div className="c-table-pagination-ctr">
+      <DisplayingText />
+      {numRows >= 100 && <PaginationBar />}
+    </div>
+  );
+};
