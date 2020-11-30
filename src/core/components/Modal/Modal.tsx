@@ -9,10 +9,10 @@
 import './Modal.scss';
 
 import { AnimatePresence } from 'framer-motion';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
-import { ChildrenProps, ClassNameProps, IdProps } from '@constants';
-import { useStoreState } from '@store/Store';
+import { ChildrenProps, ClassNameProps, Function, IdProps } from '@constants';
+import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 import ModalContainer from './ModalContainer';
 
@@ -24,16 +24,23 @@ const CurrentScreen = () => {
 
 interface ModalProps extends IdProps, Partial<ChildrenProps>, ClassNameProps {
   confirmation?: boolean;
+  onClose?: Function;
 }
 
 export default ({
   confirmation,
   children,
   className,
-  id: MODAL_ID
+  id: MODAL_ID,
+  onClose
 }: ModalProps) => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const id = useStoreState(({ modal }) => modal.id);
+  const setOnClose = useStoreActions(({ modal }) => modal.setOnClose);
+
+  useEffect(() => {
+    if (onClose) setOnClose(onClose);
+  }, [onClose]);
 
   const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
     isShowing,

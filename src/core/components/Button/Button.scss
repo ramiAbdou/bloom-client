@@ -72,7 +72,7 @@ $PREF: 'c-btn';
   text-decoration: underline;
   
   @include PRIMARY_HOVER;
-  @include HOVER { border-radius: 10px; }
+  @include HOVER { border-radius: $xs; }
 }
 
 // ## MULTI BUTTON

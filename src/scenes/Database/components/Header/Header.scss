@@ -6,10 +6,14 @@ $PREF: 's-database-header';
 
 .#{$PREF}-add-modal > h1 { margin-bottom: $sm; }
 .#{$PREF}-add-modal > p { margin-bottom: $md; }
-.#{$PREF}-add-modal-email { @extend .flex-acsb; margin-bottom: $sm; }
-.#{$PREF}-add-modal-email > input { width: 70%; }
-.#{$PREF}-add-modal-email > div { @extend .flex-ac; }
-.#{$PREF}-add-modal-email > div > div { margin-right: $xs; }
+.#{$PREF}-add-modal-email > div:first-of-type {
+  @extend .flex-acsb;
+
+  margin-bottom: $sm;
+}
+.#{$PREF}-add-modal-email > div > input { width: 70%; }
+.#{$PREF}-add-modal-email > div > div { @extend .flex-ac; }
+.#{$PREF}-add-modal-email > div > div > .c-misc-checkbox { margin-right: $xs; }
 .#{$PREF}-add-modal > button { margin-bottom: $md; }
 .#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
 .#{$PREF}-add-modal > div:last-of-type > button:first-of-type {

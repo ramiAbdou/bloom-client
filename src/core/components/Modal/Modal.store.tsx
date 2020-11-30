@@ -22,6 +22,7 @@ export type ModalModel = {
   isShowing: boolean;
   onClose: VoidFunction;
   screens: ReactNode[];
+  setOnClose: Action<ModalModel, VoidFunction>;
   showModal: Action<ModalModel, ShowModalArgs>;
 };
 
@@ -60,6 +61,8 @@ export const modalModel: ModalModel = {
   onClose: () => {},
 
   screens: [],
+
+  setOnClose: action((state, onClose: VoidFunction) => ({ ...state, onClose })),
 
   showModal: action((state, { onClose, ...modal }: ShowModalArgs) => ({
     ...state,

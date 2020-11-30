@@ -3,6 +3,8 @@
  * @author Rami Abdou
  */
 
+/* eslint-disable no-bitwise */
+
 import axios, { AxiosRequestConfig } from 'axios';
 import {
   mutation as mutationBuilder,
@@ -127,3 +129,15 @@ export const toggleArrayValue = (arr: any[], value: any) => {
     ? [...arr, value]
     : [...arr.slice(0, index), ...arr.slice(index + 1)];
 };
+
+/**
+ * Open-source method for generating a uuid without using a 3rd party package.
+ *
+ * @see https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
+ */
+export const uuid = () =>
+  'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0,
+      v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
