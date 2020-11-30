@@ -9,7 +9,7 @@
 import './Modal.scss';
 
 import { AnimatePresence } from 'framer-motion';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
   ChildrenProps,
@@ -20,7 +20,6 @@ import {
 } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
-import { serializeFunc } from '@util/util';
 import ModalContainer from './ModalContainer';
 
 const CurrentScreen = () => {
@@ -49,23 +48,11 @@ export default ({
 }: ModalProps) => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const id = useStoreState(({ modal }) => modal.id);
-  const onCloseState = useStoreState(({ modal }) => modal.onClose);
-  const setOnClose = useStoreActions(({ modal }) => modal.setOnClose);
-
-  const serializedOnClose = serializeFunc(onClose);
 
   const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
     isShowing,
     id === MODAL_ID
   ]);
-
-  useEffect(() => {
-    if (shouldShowModal && serializedOnClose) {
-      console.log(serializedOnClose);
-      setOnClose(serializedOnClose);
-    }
-    // else if (!shouldShowModal && onCloseState) setOnClose(null);
-  }, [serializedOnClose, shouldShowModal]);
 
   const { css } = new CSSModifier()
     .class('c-modal-content')

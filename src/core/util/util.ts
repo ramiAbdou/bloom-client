@@ -121,25 +121,6 @@ export const mutation = async (data: GQLOptions) => {
   return (await axios(options)).data.data[data.operation];
 };
 
-/**
- * Serializes the given func to a string by using eval and return the
- * function string.
- *
- * @param func Function to serialize.
- */
-export const deserializeFunc = (
-  funcString: string // eslint-disable-next-line no-eval
-) => () => {};
-
-// var actualFunction = new Function('return ' + foo.toString())()
-
-/**
- * Serializes the given func to a string.
- *
- * @param func Function to serialize.
- */
-export const serializeFunc = (func: Function) => func.toString();
-
 export const timezone = (): string => moment.tz(moment.tz.guess()).zoneAbbr();
 
 export const toggleArrayValue = (arr: any[], value: any) => {

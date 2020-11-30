@@ -11,7 +11,6 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { deserializeFunc } from '../../util/util';
 
 interface ModalContainerProps extends ChildrenProps {
   width?: number;
@@ -30,10 +29,8 @@ export default memo(({ children, width }: ModalContainerProps) => {
   useOnClickOutside(ref, () => closeModal());
 
   useEffect(() => {
-    console.log(onClose);
     return () => {
-      console.log(onClose);
-      if (onClose) deserializeFunc(onClose)();
+      if (onClose) onClose();
     };
   }, [onClose]);
 
