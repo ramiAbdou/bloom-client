@@ -51,7 +51,7 @@ export default () => {
   const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const currentLoading = Database.useStoreState((store) => store.loading);
   const setLoading = Database.useStoreActions((actions) => actions.setLoading);
-
+  const isOwner = useStoreState((store) => store.isOwner);
   const isAdminsLoaded = useStoreState(
     ({ community }) => !!community.admins?.length
   );
@@ -83,7 +83,7 @@ export default () => {
   if (loading || !isAdminsLoaded) return null;
 
   return (
-    <Table.Provider initialData={columns}>
+    <Table.Provider initialData={{ columns, select: isOwner }}>
       <ActionRow />
       <AdminTable />
     </Table.Provider>

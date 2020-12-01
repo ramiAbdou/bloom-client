@@ -96,7 +96,7 @@ export default () => {
   if (loading || !questions?.length) return null;
 
   return (
-    <Table.Provider initialData={columns}>
+    <Table.Provider initialData={{ columns }}>
       <ActionRow />
       <MemberTable />
     </Table.Provider>

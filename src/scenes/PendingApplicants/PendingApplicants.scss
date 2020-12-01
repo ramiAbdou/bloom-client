@@ -2,6 +2,13 @@
 
 $PREF: 's-applicants';
 
+// ## HEADER
+
+.#{$PREF}-header { @extend .flex-acsb; }
+.#{$PREF}-header > div:last-of-type { @extend .flex-ac; }
+
+// ## ACCEPT ALL BUTTON
+
 .#{$PREF}-accept-all { margin-right: 12px; }
 
 .#{$PREF} > p { @extend .body--1; }

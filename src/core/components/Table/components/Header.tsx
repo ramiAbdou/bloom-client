@@ -18,6 +18,7 @@ export default () => {
   const hasData = Table.useStoreState((store) => !!store.filteredData.length);
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
+  const select = Table.useStoreState((store) => store.select);
   const setSortedColumn = Table.useStoreActions(
     (actions) => actions.setSortedColumn
   );
@@ -45,7 +46,7 @@ export default () => {
           return (
             <th key={title} className={css} onClick={() => setSortedColumn(id)}>
               <div>
-                {!i && <HeaderSelectOption />}
+                {!i && select && <HeaderSelectOption />}
                 <Meta>{title}</Meta>
                 {showCaretUp ? <CaretUp /> : <CaretDown />}
               </div>

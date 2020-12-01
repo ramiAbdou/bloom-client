@@ -42,6 +42,7 @@ type StoreModel = {
   community: Computed<StoreModel, ICommunity>;
   entities: IEntities;
   integrations: Computed<StoreModel, IIntegrations>;
+  isOwner: Computed<StoreModel, boolean>;
   loader: LoaderModel;
   membership: Computed<StoreModel, IMembership>;
   modal: ModalModel;
@@ -96,6 +97,9 @@ export const store = createStore<StoreModel>(
       const { byId } = entities.integrations;
       return byId[community?.integrations];
     }),
+
+    //  membership?.role === 'OWNER'
+    isOwner: computed(({ membership }) => false),
 
     loader: loaderModel,
 

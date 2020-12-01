@@ -20,7 +20,7 @@ export default memo(({ loading }: LoadingProps) => {
   );
 
   return (
-    <div className="s-home-header">
+    <div className="s-home-header s-applicants-header">
       <div>
         <h1 className="s-home-header-title">{title}</h1>
         {loading && <Spinner dark />}

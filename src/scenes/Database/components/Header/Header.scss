@@ -2,6 +2,17 @@
 
 $PREF: 's-database-header';
 
+// ## HEADER
+
+.#{$PREF} { display: grid; grid-template-columns: repeat(12, 1fr); }
+.#{$PREF} > div:first-child { grid-column-end: span 5; }
+.#{$PREF} > *:nth-child(2) { grid-column-end: span 4; }
+.#{$PREF} > *:nth-child(3) {
+  grid-column-end: span 3;
+  justify-self: end;
+  width: fit-content;
+}
+
 // ## ADD MEMBER MODAL
 
 .#{$PREF}-add-modal { @include D { width: 750px; } }

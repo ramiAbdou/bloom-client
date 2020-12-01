@@ -12,9 +12,7 @@ import DeleteMembersIcon from './DeleteAdminIcon';
 import PromoteToAdminIcon from './DemoteAdminIcon';
 
 export default () => {
-  const isOwner = useStoreState(
-    ({ membership }) => membership.role === 'OWNER'
-  );
+  const isOwner = useStoreState((store) => store.isOwner);
   const isAnythingSelected = Table.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );

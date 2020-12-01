@@ -14,11 +14,12 @@ interface MultiButtonProps extends ButtonProps {
 }
 
 export default ({ activeIndex, options }: MultiButtonProps) => (
-  <div>
+  <div className="c-btn-multi-ctr">
     {options.map(({ title, onClick }, i: number) => {
-      const { css } = new CSSModifier()
-        .class('c-btn-multi')
-        .addClass(options[activeIndex].title === title, 'c-btn-multi--active');
+      const { css } = new CSSModifier('c-btn-multi').addClass(
+        options[activeIndex].title === title,
+        'c-btn-multi--active'
+      );
 
       const onClickButton = () => {
         if (onClick) onClick();

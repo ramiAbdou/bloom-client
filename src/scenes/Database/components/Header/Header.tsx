@@ -34,16 +34,14 @@ const MemberAdminButton = () => {
 };
 
 export default () => {
-  const isOwner = useStoreState(
-    ({ membership }) => membership.role === 'OWNER'
-  );
+  const isOwner = useStoreState((store) => store.isOwner);
   const loading = Database.useStoreState((store) => store.loading);
   const { pathname } = useHistory().location;
   const isMembers =
     pathname.substring(pathname.lastIndexOf('/') + 1) === 'members';
 
   return (
-    <div className="s-home-header">
+    <div className="s-home-header s-database-header">
       <div>
         <h1 className="s-home-header-title">Member Database</h1>
         {loading && <Spinner dark />}
@@ -52,11 +50,10 @@ export default () => {
       {!loading && (
         <>
           <MemberAdminButton />
+          {isMembers && <AddMemberButton />}
+          {!isMembers && isOwner && <AddAdminButton />}
         </>
       )}
-
-      {!loading && isMembers && <AddMemberButton />}
-      {!loading && !isMembers && isOwner && <AddAdminButton />}
     </div>
   );
 };

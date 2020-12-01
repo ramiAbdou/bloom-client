@@ -77,6 +77,8 @@ $PREF: 'c-btn';
 
 // ## MULTI BUTTON
 
+.#{$PREF}-multi-ctr { @extend .flex-ac; }
+
 .#{$PREF}-multi {
   background-color: inherit;
   border: 1px $primary solid;

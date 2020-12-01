@@ -36,7 +36,9 @@ $PREF: 's-home';
 // ## HEADER
 
 // Makes the header consistent across each page. Mainly for loading purposes.
-.#{$PREF}-header, .#{$PREF}-header > div { @extend .flex-acsb; }
+// However, each page should implement their own positioning whether it is
+// grid-based or flex-based.
+
 .#{$PREF}-header {
   background-color: $gray-6;
   padding-bottom: $md;
@@ -44,6 +46,9 @@ $PREF: 's-home';
   top: 0;
   z-index: 11;
 }
+
+// Contains the header's title and the loading spinner to be on same line.
+.#{$PREF}-header > div:first-child { @extend .flex-ac; }
 .#{$PREF}-header-title { margin-right: $sm; }
 
 // ## CONTENT
@@ -56,3 +61,15 @@ $PREF: 's-home';
 }
 
 .#{$PREF}-content-body { overflow: scroll; }
+
+// .#{$PREF}-header > *:nth-child(2),
+// .#{$PREF}-header > *:nth-child(3) { grid-column-end: span 4; }
+
+// display: grid;
+//   grid-template-columns: repeat(12, 1fr);
+
+// .#{$PREF}-header > div:first-child {
+//   @extend .flex-ac;
+
+//   grid-column-end: span 5;
+// }

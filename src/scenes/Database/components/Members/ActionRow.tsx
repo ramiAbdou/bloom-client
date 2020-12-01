@@ -15,9 +15,7 @@ import FilterIcon from './FilterIcon';
 import PromoteToAdminIcon from './PromoteToAdminIcon';
 
 export default () => {
-  const isOwner = useStoreState(
-    ({ membership }) => membership.role === 'OWNER'
-  );
+  const isOwner = useStoreState((store) => store.isOwner);
   const isAnythingSelected = Table.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );

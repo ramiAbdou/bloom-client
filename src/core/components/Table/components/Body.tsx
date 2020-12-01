@@ -53,6 +53,7 @@ const DataCell = ({ children, type, value }: DataCellProps) => {
 const DataRow = (row: Row) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(row.id));
   const columns = Table.useStoreState((store) => store.columns);
+  const select = Table.useStoreState((store) => store.select);
 
   const { css } = new CSSModifier().addClass(isSelected, 'c-table-tr--active');
 
@@ -64,7 +65,7 @@ const DataRow = (row: Row) => {
 
         return (
           <DataCell key={id + row.id} type={type} value={value}>
-            {!i && <SelectOption id={row.id} />}
+            {!i && select && <SelectOption id={row.id} />}
           </DataCell>
         );
       })}

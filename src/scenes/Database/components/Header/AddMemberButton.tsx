@@ -44,9 +44,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   );
   const updateMember = AddMember.useStoreActions((store) => store.updateMember);
   const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);
-  const isOwner = useStoreState(
-    ({ membership }) => membership.role === 'OWNER'
-  );
+  const isOwner = useStoreState((store) => store.isOwner);
 
   const { css: divCSS } = new CSSModifier(
     's-database-header-add-modal-email'

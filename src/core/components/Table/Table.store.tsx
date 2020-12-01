@@ -61,6 +61,7 @@ type TableModel = {
   page: number;
   range: Computed<TableModel, [number, number]>;
   searchString: string;
+  select: boolean;
   selectedRowIds: string[];
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
@@ -122,6 +123,8 @@ const model: TableModel = {
   range: computed(({ page }) => [page * 100, page * 100 + 100]),
 
   searchString: '',
+
+  select: true,
 
   selectedRowIds: [],
 
@@ -220,11 +223,13 @@ const model: TableModel = {
   updateData: action((state, data) => ({ ...state, data, filteredData: data }))
 };
 
-export type TableStoreInitializer = {
-  columns: Column[];
-};
+export type TableStoreInitializer = { columns: Column[]; select?: boolean };
 
 export default createContextStore<TableModel>(
-  (columns: Column[]) => ({ ...model, columns }),
+  ({ columns, select }: TableStoreInitializer) => ({
+    ...model,
+    columns,
+    select: select ?? true
+  }),
   { disableImmer: true }
 );

@@ -234,4 +234,4 @@ td > div > .c-table-select { z-index: 9; }
 }
 
 .#{$PREF}-search > svg { color: $gray-3; margin-right: $xs; }
-.#{$PREF}-search > input { background-color: inherit; }
+.#{$PREF}-search > input { background-color: inherit; width: 100%; }
