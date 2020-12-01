@@ -14,6 +14,8 @@ import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_DATABASE } from '../../Database.gql';
 import Database from '../../Database.store';
+import AddMemberStore from '../Header/AddMember.store';
+import { AddMemberModal } from '../Header/AddMemberButton';
 import ActionRow from './ActionRow';
 
 const MemberTable = () => {
@@ -96,9 +98,15 @@ export default () => {
   if (loading || !questions?.length) return null;
 
   return (
-    <Table.Provider initialData={{ columns }}>
-      <ActionRow />
-      <MemberTable />
-    </Table.Provider>
+    <>
+      <Table.Provider initialData={{ columns }}>
+        <ActionRow />
+        <MemberTable />
+      </Table.Provider>
+
+      <AddMemberStore.Provider>
+        <AddMemberModal />
+      </AddMemberStore.Provider>
+    </>
   );
 };

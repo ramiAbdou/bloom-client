@@ -14,6 +14,8 @@ import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_ADMINS } from '../../Database.gql';
 import Database from '../../Database.store';
+import AddAdminStore from '../Header/AddAdmin.store';
+import { AddAdminModal } from '../Header/AddAdminButton';
 import ActionRow from './ActionRow';
 
 const AdminTable = () => {
@@ -89,9 +91,15 @@ export default () => {
   if (loading || !isAdminsLoaded) return null;
 
   return (
-    <Table.Provider initialData={{ columns, select: isOwner }}>
-      <ActionRow />
-      <AdminTable />
-    </Table.Provider>
+    <>
+      <Table.Provider initialData={{ columns, select: isOwner }}>
+        <ActionRow />
+        <AdminTable />
+      </Table.Provider>
+
+      <AddAdminStore.Provider>
+        <AddAdminModal />
+      </AddAdminStore.Provider>
+    </>
   );
 };

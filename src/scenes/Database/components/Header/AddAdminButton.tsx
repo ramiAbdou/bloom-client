@@ -115,7 +115,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   );
 });
 
-const AddAdminModal = () => {
+export const AddAdminModal = () => {
   const admins = AddAdmin.useStoreState((store) => store.admins);
   const addEmptyMember = AddAdmin.useStoreActions(
     (store) => store.addEmptyMember
@@ -207,13 +207,5 @@ const AddAdminModal = () => {
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal({ id: MODAL_ID });
-
-  return (
-    <>
-      <AddAdmin.Provider>
-        <AddAdminModal />
-      </AddAdmin.Provider>
-      <PrimaryButton title="Add Admin" onClick={onClick} />
-    </>
-  );
+  return <PrimaryButton title="Add Admin" onClick={onClick} />;
 };

@@ -125,7 +125,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   );
 });
 
-const AddMemberModal = () => {
+export const AddMemberModal = () => {
   const members = AddMember.useStoreState((store) => store.members);
   const addEmptyMember = AddMember.useStoreActions(
     (store) => store.addEmptyMember
@@ -202,13 +202,5 @@ const AddMemberModal = () => {
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal({ id: MODAL_ID });
-
-  return (
-    <>
-      <AddMember.Provider>
-        <AddMemberModal />
-      </AddMember.Provider>
-      <PrimaryButton title="Add Member" onClick={onClick} />
-    </>
-  );
+  return <PrimaryButton title="Add Member" onClick={onClick} />;
 };
