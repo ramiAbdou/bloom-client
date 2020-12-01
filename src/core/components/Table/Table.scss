@@ -220,3 +220,18 @@ td > div > .c-table-select { z-index: 9; }
 
 .#{$PREF}-banner > p { margin-right: $sm; }
 .#{$PREF}-banner > p > span { font-weight: 700; }
+
+// ## SEARCH BAR
+
+.#{$PREF}-search {
+  @extend .flex-ac;
+
+  background-color: $gray-5;
+  border-radius: 20px;
+  color: $gray-3;
+  padding: $xs $sm;
+  width: $xxl * 5;
+}
+
+.#{$PREF}-search > svg { color: $gray-3; margin-right: $xs; }
+.#{$PREF}-search > input { background-color: inherit; }

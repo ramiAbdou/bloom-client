@@ -10,7 +10,7 @@ import DisplayingText from './DisplayingText';
 import PaginationBar from './PaginationBar';
 
 export default () => {
-  const numRows = Table.useStoreState((store) => store.data.length);
+  const numRows = Table.useStoreState((store) => store.filteredData.length);
   return (
     <div className="c-table-pagination-ctr">
       <DisplayingText />

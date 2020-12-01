@@ -89,10 +89,12 @@ const model: TableModel = {
   /**
    * Returns true if all of the filtered data rows are selected.
    */
-  isAllPageSelected: computed(({ filteredData, range, selectedRowIds }) =>
-    filteredData
-      .slice(range[0], range[1])
-      .every(({ id: rowId }) => selectedRowIds.includes(rowId))
+  isAllPageSelected: computed(
+    ({ filteredData, range, selectedRowIds }) =>
+      !!selectedRowIds.length &&
+      filteredData
+        .slice(range[0], range[1])
+        .every(({ id: rowId }) => selectedRowIds.includes(rowId))
   ),
 
   /**
@@ -134,15 +136,19 @@ const model: TableModel = {
   setSearchString: action(({ data, ...state }, searchString) => ({
     ...state,
     data,
-    filteredData: data.filter((row: Row) =>
-      Object.values(row).some((value: string) => {
-        const lowerCaseSearchString = searchString.toLowerCase();
+    filteredData: data.filter((row: Row) => {
+      const lowerCaseSearchString = searchString.toLowerCase();
+
+      // As long as some values (answers to questions) in the row include
+      // the search string, then it passes through the filter.
+      return Object.values(row).some((value: string) => {
+        const lowerCaseValue = value?.toLowerCase();
         return (
           !searchString ||
-          (value && value.toLowerCase().includes(lowerCaseSearchString))
+          (value && lowerCaseValue.includes(lowerCaseSearchString))
         );
-      })
-    ),
+      });
+    }),
     searchString
   })),
 

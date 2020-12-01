@@ -4,8 +4,8 @@
  */
 
 import React from 'react';
-import { IoIosSearch } from 'react-icons/io';
 
+import SearchBar from '@components/Table/components/SeachBar';
 import Table from '@components/Table/Table.store';
 import { useStoreState } from '@store/Store';
 import CopyEmailsIcon from './CopyEmailsIcon';
@@ -13,13 +13,6 @@ import DeleteMembersIcon from './DeleteMembersIcon';
 import ExportDataIcon from './ExportDataIcon';
 import FilterIcon from './FilterIcon';
 import PromoteToAdminIcon from './PromoteToAdminIcon';
-
-const SearchBar = () => (
-  <div className="s-database-search">
-    <IoIosSearch />
-    <input placeholder="Search members..." type="text" />
-  </div>
-);
 
 export default () => {
   const isOwner = useStoreState(
