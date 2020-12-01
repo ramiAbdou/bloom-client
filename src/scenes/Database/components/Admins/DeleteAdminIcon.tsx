@@ -94,7 +94,7 @@ export default () => {
       <DatabaseAction
         Component={Trash}
         className="s-database-action--delete"
-        value="Delete Member"
+        value="Delete Admin"
         onClick={onClick}
       />
     </>

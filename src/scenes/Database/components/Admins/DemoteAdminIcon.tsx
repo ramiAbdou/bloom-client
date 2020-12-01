@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
-import ArrowUpCircle from '@components/Icons/ArrowUpCircle';
+import ArrowDownCircle from '@components/Icons/ArrowDownCircle';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { useStoreActions } from '@store/Store';
@@ -67,10 +67,10 @@ export default () => {
     <>
       <PromoteToAdminModal />
       <DatabaseAction
-        Component={ArrowUpCircle}
-        className="s-database-action--promote"
+        Component={ArrowDownCircle}
+        className="s-database-action--demote"
         disabled={disabled}
-        value="Promote to Admin"
+        value="Demote to Member"
         onClick={onClick}
       />
     </>

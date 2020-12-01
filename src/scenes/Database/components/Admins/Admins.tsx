@@ -12,13 +12,13 @@ import { Column, Row } from '@components/Table/Table.types';
 import { IAdmin } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_ADMINS, GET_DATABASE } from '../../Database.gql';
+import { GET_ADMINS } from '../../Database.gql';
 import Database from '../../Database.store';
+import ActionRow from './ActionRow';
 
 const AdminTable = () => {
   const admins: IAdmin[] = useStoreState(({ entities, community }) => {
-    const { allIds, byId } = entities.admins;
-    console.log(allIds.length);
+    const { byId } = entities.admins;
     return community.admins?.map((adminId: string) => byId[adminId]);
   });
 
@@ -84,6 +84,7 @@ export default () => {
 
   return (
     <Table.Provider initialData={columns}>
+      <ActionRow />
       <AdminTable />
     </Table.Provider>
   );

@@ -9,7 +9,7 @@ import Copy from '@components/Icons/Copy';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
 import { useStoreActions } from '@store/Store';
-import DatabaseAction from './DatabaseAction';
+import DatabaseAction from '../DatabaseAction';
 
 export default () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);

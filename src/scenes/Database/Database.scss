@@ -19,6 +19,7 @@ $PREF: 's-database';
   margin-left: $xs;
   padding: 6px;
 
+  &--demote { &::before { margin-left: -$xxs; } }
   &--promote { &::before { margin-left: -$xxs; } }
   &--delete > svg { fill: $red; }
 }

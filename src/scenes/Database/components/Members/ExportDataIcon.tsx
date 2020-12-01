@@ -9,7 +9,7 @@ import { IoIosExit } from 'react-icons/io';
 
 import Table from '@components/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import DatabaseAction from './DatabaseAction';
+import DatabaseAction from '../DatabaseAction';
 
 export default () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
