@@ -58,21 +58,7 @@ type StoreModel = {
 
 export const store = createStore<StoreModel>(
   {
-    clearEntities: action((state) => {
-      // Reset the Bloom style guide primary color.
-      const { style } = document.documentElement;
-      style.setProperty('--primary', '#f58023');
-      style.setProperty('--primary-hex', `245, 128, 35`);
-      style.setProperty('--primary-hue', `27`);
-      style.setProperty('--gray-1', `hsl(27, 5%, 20%)`);
-      style.setProperty('--gray-2', `hsl(27, 5%, 31%)`);
-      style.setProperty('--gray-3', `hsl(27, 5%, 51%)`);
-      style.setProperty('--gray-4', `hsl(27, 5%, 74%)`);
-      style.setProperty('--gray-5', `hsl(27, 5%, 88%)`);
-      style.setProperty('--gray-6', `hsl(27, 5%, 96%)`);
-
-      return { ...state, entities: initialEntities };
-    }),
+    clearEntities: action((state) => ({ ...state, entities: initialEntities })),
 
     community: computed(({ entities }) => {
       const { activeId, byId } = entities.communities;
