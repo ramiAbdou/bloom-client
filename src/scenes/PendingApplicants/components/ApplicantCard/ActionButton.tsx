@@ -65,7 +65,7 @@ export const AcceptButton = () => {
 export const IgnoreButton = () => {
   const communities = useStoreState(({ entities }) => entities.communities);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
@@ -74,27 +74,16 @@ export const IgnoreButton = () => {
 
   const onClick = async () => {
     const community: ICommunity = communities.byId[communities.activeId];
-    const { id, pendingApplicants } = community;
+    const { pendingApplicants } = community;
 
     // Call to the server.
     const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
-    updateEntities({
-      updatedState: {
-        communities: {
-          ...communities,
-          byId: {
-            ...communities.byId,
-            [id]: {
-              ...community,
-              pendingApplicants: pendingApplicants.filter(
-                (a: string) => a !== applicantId
-              )
-            }
-          }
-        }
-      }
+    updateCommunity({
+      pendingApplicants: pendingApplicants.filter(
+        (a: string) => a !== applicantId
+      )
     });
 
     showToast({ message: 'Application ignored.' });

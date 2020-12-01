@@ -7,6 +7,7 @@
  * @author Rami Abdou
  */
 
+// import merge from 'deepmerge';
 import {
   Action,
   action,
@@ -16,7 +17,7 @@ import {
   createTypedHooks
 } from 'easy-peasy';
 import Cookie from 'js-cookie';
-import merge from 'lodash.merge';
+import mergeWith from 'lodash.mergewith';
 import { Schema } from 'normalizr';
 
 import { LoaderModel, loaderModel } from '@components/Loader/Loader.store';
@@ -34,11 +35,7 @@ import {
 } from './entities';
 import { ScreenModel, screenModel } from './Screen.store';
 
-type UpdateEntitiesArgs = {
-  data?: any;
-  updatedState?: Partial<IEntities>;
-  schema?: Schema<any>;
-};
+type UpdateEntitiesArgs = { data?: any; schema?: Schema<any> };
 
 type StoreModel = {
   clearEntities: Action<StoreModel>;
@@ -107,10 +104,9 @@ export const store = createStore<StoreModel>(
       const result = byId[activeId];
 
       if (result) {
-        const { role } = result;
-
         // For every request, we should have a communityId set in the token so
         // we could take advantage of the GQL context and reduce # of args.
+        const { role } = result;
         if (Cookie.get('role') !== role) Cookie.set('role', role);
       }
 
@@ -150,16 +146,24 @@ export const store = createStore<StoreModel>(
      * Main update function that updates all entities (front-end DB). Uses
      * the lodash deep merge function to make the updates.
      */
-    updateEntities: action(
-      (state, { data, updatedState, schema }: UpdateEntitiesArgs) => {
-        return {
-          ...state,
-          entities: updatedState
-            ? { ...state.entities, ...updatedState }
-            : merge({}, state.entities, parseEntities(data, schema))
-        };
-      }
-    ),
+    updateEntities: action((state, { data, schema }: UpdateEntitiesArgs) => {
+      return {
+        ...state,
+        entities: mergeWith(
+          state.entities,
+          parseEntities(data, schema),
+          // eslint-disable-next-line consistent-return
+          (target: any, source: any) => {
+            if (Array.isArray(target)) {
+              const updatedSource = source.filter(
+                (value: any) => !target.includes(value)
+              );
+              return target.concat(updatedSource);
+            }
+          }
+        ) as IEntities
+      };
+    }),
 
     /**
      * There should only be one user queried in the application, and that is

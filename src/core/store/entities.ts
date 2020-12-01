@@ -102,7 +102,7 @@ export type IEntities = {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
-  admins: { activeId: null, allIds: [], byId: {} },
+  admins: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { allIds: [], byId: {} },

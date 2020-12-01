@@ -15,8 +15,7 @@ type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
 
 const HeaderButton = ({ response }: HeaderButtonProps) => {
   const community = useStoreState((store) => store.community);
-  const communities = useStoreState(({ entities }) => entities.communities);
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const hasApplicants = !!community.pendingApplicants?.length;
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
@@ -24,28 +23,17 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
   });
 
   const onClick = async () => {
-    const { id, pendingApplicants } = community;
+    const { pendingApplicants } = community;
 
     // Call to the server.
     const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
-    updateEntities({
-      updatedState: {
-        communities: {
-          ...communities,
-          byId: {
-            ...communities.byId,
-            [id]: {
-              ...community,
-              pendingApplicants: pendingApplicants.filter(
-                (applicantId: string) =>
-                  !community.pendingApplicants.includes(applicantId)
-              )
-            }
-          }
-        }
-      }
+    updateCommunity({
+      pendingApplicants: pendingApplicants.filter(
+        (applicantId: string) =>
+          !community.pendingApplicants.includes(applicantId)
+      )
     });
   };
 

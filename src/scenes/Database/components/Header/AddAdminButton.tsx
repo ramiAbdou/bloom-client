@@ -4,7 +4,7 @@
  */
 
 import { useMutation } from 'graphql-hooks';
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
@@ -15,7 +15,7 @@ import { IdProps } from '@constants';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
-import { getGraphQLError, parseEntities } from '@util/util';
+import { getGraphQLError } from '@util/util';
 import { CREATE_MEMBERSHIPS } from '../../Database.gql';
 import AddAdmin from './AddAdmin.store';
 
@@ -123,7 +123,6 @@ const AddAdminModal = () => {
   const clearMembers = AddAdmin.useStoreActions((store) => store.clearMembers);
   const showErrors = AddAdmin.useStoreActions((store) => store.showErrors);
   const communityId = useStoreState(({ community }) => community.id);
-  const currentAdmins = useStoreState(({ entities }) => entities.admins);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const updateEntities = useStoreActions((actions) => actions.updateEntities);
 
@@ -156,14 +155,9 @@ const AddAdminModal = () => {
 
       updateEntities({
         data: {
-          admins: [
-            ...currentAdmins.allIds.map(
-              (adminId: string) => currentAdmins.byId[adminId]
-            ),
-            ...updatedData
-              .filter(({ role }) => !!role)
-              .map(({ user }) => ({ ...user }))
-          ],
+          admins: updatedData
+            .filter(({ role }) => !!role)
+            .map(({ user }) => ({ ...user })),
           id: communityId
         },
         schema: Schema.COMMUNITY
@@ -172,8 +166,6 @@ const AddAdminModal = () => {
       closeModal();
     }
   };
-
-  // console.log(daadmins.byId);
 
   const message = getGraphQLError(error);
 
