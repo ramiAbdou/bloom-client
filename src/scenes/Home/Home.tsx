@@ -24,6 +24,7 @@ import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
 import PendingApplicants from '../PendingApplicants/PendingApplicants';
+import ProfilePicker from './components/Sidebar/ProfilePicker';
 import Sidebar from './components/Sidebar/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
@@ -87,5 +88,7 @@ export default () => (
 
       <HomeContent />
     </div>
+
+    <ProfilePicker />
   </AuthenticatedCommunityWrapper>
 );

@@ -9,33 +9,44 @@
 import './Picker.scss';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { MutableRefObject, useMemo, useRef } from 'react';
+import React, {
+  CSSProperties,
+  MutableRefObject,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { ChildrenProps, IdProps, StyleProps } from '@constants';
+import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 
-interface PickerProps extends ChildrenProps, IdProps, StyleProps {}
+interface PickerProps
+  extends ChildrenProps,
+    IdProps,
+    ClassNameProps,
+    StyleProps {
+  align?: 'RIGHT_BOTTOM' | 'BOTTOM_LEFT';
+}
 
-export default ({ children, id: PICKER_ID, style }: PickerProps) => {
-  const align = useStoreState(({ picker }) => picker.align);
-  const coordinates = useStoreState(({ picker }) => picker.coordinates);
+export default ({
+  align,
+  className,
+  children,
+  id: PICKER_ID,
+  style
+}: PickerProps) => {
+  // const coordinates = useStoreState(({ picker }) => picker.coordinates);
   const id = useStoreState(({ picker }) => picker.id);
-  const isFixed = useStoreState(({ picker }) => picker.isFixed);
   const isShowing = useStoreState(({ picker }) => picker.isShowing);
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
-  const isMobile = useStoreState(({ screen }) => screen.isMobile);
 
+  const element: HTMLElement = document.getElementById(id);
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
 
+  // If the click happened within the element that was used to open the
+  // Picker, then we don't close the picker.
   useOnClickOutside(ref, (event) => {
-    if (isMobile) {
-      closePicker();
-      return;
-    }
-
-    const element: HTMLElement = document.getElementById(id);
-
     // If the element doesn't exist, then just close the picker.
     if (!element) {
       closePicker();
@@ -46,8 +57,6 @@ export default ({ children, id: PICKER_ID, style }: PickerProps) => {
     const { clientX, clientY } = event;
     const { offsetLeft, offsetTop, offsetHeight, offsetWidth } = element;
 
-    // If the click happened within the element that was used to open the
-    // Picker, then we don't close the picker.
     if (
       clientX < offsetLeft ||
       clientX > offsetLeft + offsetWidth ||
@@ -57,29 +66,45 @@ export default ({ children, id: PICKER_ID, style }: PickerProps) => {
       closePicker();
   });
 
+  useEffect(() => {}, [window.innerWidth]);
+
   const shouldShowPicker = useMemo(() => isShowing && PICKER_ID === id, [
     isShowing,
     id === PICKER_ID
   ]);
 
-  if (!shouldShowPicker || !coordinates) return null;
+  if (!shouldShowPicker || !element) return null;
 
-  const { bottom, left, right, top } = coordinates;
+  // ## START: CALCULATE PICKER COORDINATES AND ANIMATION STYLING
 
-  const positionStyle = {
-    ...(top ? { top } : { bottom }),
-    ...(left ? { left } : { right })
-  };
+  let positionStyle: Partial<CSSProperties> = {};
+  let initial: any = { opacity: 0 };
+  let animate: any = { opacity: 1 };
 
-  const animate = {
-    opacity: 1,
-    ...(align === 2 || align === 4 ? { x: 0 } : { y: 0 })
-  };
+  const { innerHeight } = window;
+  const { left, top, height, width } = element.getBoundingClientRect();
 
-  const initial = {
-    opacity: 0,
-    ...(align === 2 || align === 4 ? { x: -10 } : { y: -10 })
-  };
+  // ## CASE #1: RIGHT_BOTTOM - Left is going to be the element's left +
+  // element width. Bottom is going to be the element's bottom.
+
+  if (align === 'RIGHT_BOTTOM') {
+    const leftWithWidth = left + width;
+    const updatedBottom = innerHeight - (top + height);
+    positionStyle = { bottom: updatedBottom, left: leftWithWidth + 12 };
+    initial = { ...initial, x: -10 };
+    animate = { ...animate, x: 0 };
+  }
+
+  // ## CASE #2: BOTTOM_LEFT - Left is going to be the element's left +
+  // element width. Bottom is going to be the element's bottom.
+
+  if (align === 'BOTTOM_LEFT') {
+    positionStyle = { left, top: top + height + 12 };
+    initial = { ...initial, y: -10 };
+    animate = { ...animate, y: 0 };
+  }
+
+  // ## END: CALCULATE PICKER COORDINATES
 
   return (
     <AnimatePresence>
@@ -87,14 +112,10 @@ export default ({ children, id: PICKER_ID, style }: PickerProps) => {
         <motion.div
           ref={ref}
           animate={animate}
-          className="c-picker-content"
+          className={`c-picker ${className || ''}`}
           exit={{ opacity: 0 }}
           initial={initial}
-          style={{
-            ...positionStyle,
-            ...style,
-            position: isFixed ? 'fixed' : 'absolute'
-          }}
+          style={{ ...positionStyle, ...style }}
         >
           {children}
         </motion.div>

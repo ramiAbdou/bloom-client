@@ -26,13 +26,8 @@ const client = new GraphQLClient({
 const Background = () => <div id="app" />;
 
 const ResizeScreen = () => {
-  const setCoordinates = useStoreActions(({ picker }) => picker.setCoordinates);
   const setWindowWidth = useStoreActions(({ screen }) => screen.setWindowWidth);
-
-  const onWindowResize = () => {
-    setCoordinates();
-    setWindowWidth(window.innerWidth);
-  };
+  const onWindowResize = () => setWindowWidth(window.innerWidth);
 
   // Add the window resize event listener.
   useEffect(() => {

@@ -8,6 +8,7 @@ import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 
 import { useStoreActions, useStoreState } from '@store/Store';
+import ProfilePicker from './ProfilePicker';
 
 const PictureContainer = () => {
   const pictureURL = useStoreState(({ user }) => user.pictureURL);
@@ -30,7 +31,7 @@ export default () => {
     ({ user }) => `${user.firstName} ${user.lastName}`
   );
 
-  const onClick = () => showPicker({ align: 4, id: PICKER_ID });
+  const onClick = () => showPicker(PICKER_ID);
 
   return (
     <button className="s-home-sidebar-profile" id={PICKER_ID} onClick={onClick}>

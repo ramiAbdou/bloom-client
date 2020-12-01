@@ -12,12 +12,11 @@ import Picker from '@components/Picker/Picker';
 import { PickerAction } from '@components/Picker/Picker.store';
 import PickerOption from '@components/Picker/PickerOption';
 import { LOGOUT } from '@scenes/Home/Home.gql';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 
 const PICKER_ID = 'PROFILE_PICKER';
 
 export default () => {
-  const widthRatio = useStoreState(({ screen }) => screen.widthRatio);
   const clearEntities = useStoreActions((store) => store.clearEntities);
 
   const { push } = useHistory();
@@ -53,7 +52,7 @@ export default () => {
   ];
 
   return (
-    <Picker id={PICKER_ID} style={{ marginLeft: 24 * widthRatio }}>
+    <Picker align="RIGHT_BOTTOM" id={PICKER_ID} style={{ marginLeft: 36 }}>
       {actions.map((action) => (
         <PickerOption key={action.text} {...action} />
       ))}

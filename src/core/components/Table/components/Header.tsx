@@ -7,9 +7,8 @@ import React from 'react';
 
 import CaretDown from '@components/Icons/CaretDown';
 import CaretUp from '@components/Icons/CaretUp';
-import { PickerAction } from '@components/Picker/Picker.store';
 import Meta from '@components/Typography/Meta';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 import Table from '../Table.store';
 import { Column } from '../Table.types';
@@ -38,22 +37,18 @@ const HeaderCell = ({ type, id, title }: Column) => {
 
   const showCaretUp = sortedColumnId === id && direction === 'ASC';
 
-  const onClick = () => {
-    showPicker({
-      align: 4,
-      id,
-      isFixed: true
-    });
-  };
+  const onClick = () => showPicker(id);
 
   return (
-    <th key={title} className={css} onClick={onClick}>
-      <div>
-        {select && <HeaderSelectOption />}
-        <Meta>{title}</Meta>
-        {showCaretUp ? <CaretUp /> : <CaretDown />}
-      </div>
-    </th>
+    <>
+      <th key={title} className={css} id={id} onClick={onClick}>
+        <div>
+          {select && <HeaderSelectOption />}
+          <Meta>{title}</Meta>
+          {showCaretUp ? <CaretUp /> : <CaretDown />}
+        </div>
+      </th>
+    </>
   );
 };
 
@@ -67,7 +62,7 @@ export default () => {
     <thead>
       <tr style={customStyle}>
         {columns.map((column: Column) => (
-          <HeaderCell {...column} />
+          <HeaderCell key={column.id} {...column} />
         ))}
       </tr>
     </thead>

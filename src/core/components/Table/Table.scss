@@ -8,8 +8,9 @@ $PREF: 'c-table';
   background-color: white;
   border: 1px $gray-5 solid;
   border-radius: $xs;
-  max-height: 0;
   overflow: scroll;
+  position: relative;
+  z-index: 1;
 }
 
 .#{$PREF} {
@@ -236,3 +237,9 @@ td:first-of-type > div { @extend .flex-ac; }
 
 .#{$PREF}-search > svg { color: $gray-3; margin-right: $xs; }
 .#{$PREF}-search > input { background-color: inherit; width: 100%; }
+
+// ## COLUMN PICKER
+
+.#{$PREF}-col-picker > input { margin-bottom: $sm; }
+.#{$PREF}-col-picker > div { @extend .flex-ac; margin-bottom: $xs; }
+.#{$PREF}-col-picker > div > svg { margin-right: $xs; }

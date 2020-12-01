@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useStoreState } from '@store/Store';
 import Body from './components/Body';
+import ColumnPicker from './components/ColumnPicker';
 import Header from './components/Header';
 import Pagination from './components/Pagination/Pagination';
 import SelectedBanner from './components/SelectedBanner';
@@ -22,6 +23,7 @@ export default () => {
   const isAllPageSelected = Table.useStoreState(
     (store) => store.isAllPageSelected
   );
+  const columns = Table.useStoreState((store) => store.columns);
 
   useEffect(() => {
     setHeight(
@@ -40,6 +42,10 @@ export default () => {
       </div>
 
       <Pagination />
+
+      {columns.map(({ id, title }) => (
+        <ColumnPicker key={id} id={id} title={title} />
+      ))}
     </>
   );
 };
