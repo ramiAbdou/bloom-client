@@ -37,7 +37,9 @@ export default ({
   // We memoize the onClose function so that we don't continuously re-render.
   // The dep array is empty because the props will be present on component will
   // mount, which is where the onClose function enters.
-  const memoizedOnClose = useCallback(() => onClose(), onCloseDeps ?? []);
+  const memoizedOnClose = useCallback(() => {
+    if (onClose) onClose();
+  }, onCloseDeps ?? []);
 
   useEffect(() => {
     return () => {

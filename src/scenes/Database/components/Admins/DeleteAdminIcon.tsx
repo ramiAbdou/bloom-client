@@ -14,11 +14,12 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { DELETE_MEMBERSHIPS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
-const MODAL_ID = 'DELETE_MEMBERS';
+const MODAL_ID = 'DELETE_ADMINS';
 
 const DeleteMembersModal = () => {
   const [shouldSetOnClose, setShouldSetOnClose] = useState(false);
 
+  const admins = useStoreState(({ community }) => community.admins);
   const members = useStoreState(({ community }) => community.members);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
@@ -38,9 +39,8 @@ const DeleteMembersModal = () => {
 
     // Filter the community members to NOT have the selected members.
     updateCommunity({
-      members: members.filter(
-        (memberId: string) => !membershipIds.includes(memberId)
-      )
+      admins: admins.filter((id: string) => !membershipIds.includes(id)),
+      members: members.filter((id: string) => !membershipIds.includes(id))
     });
 
     // After the toast finishes showing, we call the mutation that actually

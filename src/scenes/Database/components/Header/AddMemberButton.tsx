@@ -132,6 +132,7 @@ export const AddMemberModal = () => {
   );
   const clearMembers = AddMember.useStoreActions((store) => store.clearMembers);
   const showErrors = AddMember.useStoreActions((store) => store.showErrors);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const [createMemberships, { error, loading }] = useMutation(
@@ -158,19 +159,18 @@ export const AddMemberModal = () => {
         }
       });
 
-      if (!result.error) closeModal();
+      if (result.error || !result.data) return;
+
+      showToast({ message: `${members.length} members(s) invited.` });
+      clearMembers();
+      setTimeout(closeModal, 0);
     }
   };
 
   const message = getGraphQLError(error);
 
   return (
-    <Modal
-      className="s-database-header-add-modal"
-      id={MODAL_ID}
-      width={750}
-      onClose={() => clearMembers()}
-    >
+    <Modal className="s-database-header-add-modal" id={MODAL_ID} width={750}>
       <h1>Add Member(s)</h1>
 
       <p>

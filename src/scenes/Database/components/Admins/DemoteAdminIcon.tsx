@@ -39,15 +39,15 @@ const DemoteToMemberModal = () => {
     });
 
     showToast({
-      message: `${numMembersDemoted} member(s) demoted to member.`
+      message: `${numMembersDemoted} admin(s) demoted to member.`,
+      type: 'PESSIMISTIC'
     });
   };
 
   const onDemote = async () => {
-    const { data, error } = await toggleAdmin({
+    const { error } = await toggleAdmin({
       variables: { membershipIds: adminIds }
     });
-    console.log(data);
 
     setShouldSetOnClose(true);
     setTimeout(() => {
@@ -56,7 +56,12 @@ const DemoteToMemberModal = () => {
   };
 
   return (
-    <Modal confirmation id={MODAL_ID} onClose={onClose}>
+    <Modal
+      confirmation
+      id={MODAL_ID}
+      onClose={onClose}
+      onCloseDeps={[shouldSetOnClose]}
+    >
       <h1>Demote to member?</h1>
       <p>
         Are you sure you want to demote this admin to member? They will be lose

@@ -122,6 +122,7 @@ export const AddAdminModal = () => {
   );
   const clearMembers = AddAdmin.useStoreActions((store) => store.clearMembers);
   const showErrors = AddAdmin.useStoreActions((store) => store.showErrors);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
   const communityId = useStoreState(({ community }) => community.id);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const updateEntities = useStoreActions((actions) => actions.updateEntities);
@@ -163,19 +164,17 @@ export const AddAdminModal = () => {
         schema: Schema.COMMUNITY
       });
 
-      closeModal();
+      showToast({ message: `${admins.length} admin(s) added.` });
+      clearMembers();
+
+      setTimeout(closeModal, 0);
     }
   };
 
   const message = getGraphQLError(error);
 
   return (
-    <Modal
-      className="s-database-header-add-modal"
-      id={MODAL_ID}
-      width={750}
-      onClose={() => clearMembers()}
-    >
+    <Modal className="s-database-header-add-modal" id={MODAL_ID} width={750}>
       <h1>Add Admin(s)</h1>
 
       <p>
