@@ -8,7 +8,7 @@ import { QuestionCategory, QuestionType } from '@constants';
 export type IAdmin = {
   email: string;
   firstName: string;
-  id: string;
+  id: string; // This is simply the membership ID, not the user ID.
   lastName: string;
 };
 

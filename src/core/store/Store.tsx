@@ -98,8 +98,7 @@ export const store = createStore<StoreModel>(
       return byId[community?.integrations];
     }),
 
-    //  membership?.role === 'OWNER'
-    isOwner: computed(({ membership }) => false),
+    isOwner: computed(({ membership }) => membership?.role === 'OWNER'),
 
     loader: loaderModel,
 

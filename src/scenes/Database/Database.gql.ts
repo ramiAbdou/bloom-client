@@ -13,7 +13,7 @@ export const DELETE_MEMBERSHIPS = mutation({
 export const GET_ADMINS = query({
   fields: [
     'id',
-    { memberships: [{ user: ['id', 'firstName', 'lastName', 'email'] }] }
+    { memberships: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] }
   ],
   operation: 'getAdmins'
 }).query;
@@ -27,8 +27,8 @@ export const GET_DATABASE = query({
   operation: 'getDatabase'
 }).query;
 
-export const PROMOTE_TO_ADMIN = mutation({
-  operation: 'promoteToAdmin',
+export const TOGGLE_ADMINS = mutation({
+  operation: 'toggleAdmins',
   variables: { membershipIds: { required: true, type: '[String!]' } }
 }).query;
 

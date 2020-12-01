@@ -63,7 +63,13 @@ export default () => {
     if (!result) return;
 
     updateEntities({
-      data: { ...result, admins: result.memberships.map(({ user }) => user) },
+      data: {
+        ...result,
+        admins: result.memberships.map(({ id, user }) => {
+          const { id: _, ...rest } = user;
+          return { id, ...rest };
+        })
+      },
       schema: Schema.COMMUNITY
     });
   }, [data]);

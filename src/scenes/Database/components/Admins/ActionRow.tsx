@@ -19,7 +19,7 @@ export default () => {
 
   return (
     <div className="s-database-action-row">
-      <SearchBar />
+      <SearchBar placeholder="Search admins..." />
 
       {isOwner && isAnythingSelected && (
         <div>

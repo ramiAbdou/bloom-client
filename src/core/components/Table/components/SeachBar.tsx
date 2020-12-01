@@ -10,7 +10,9 @@ import { IoIosSearch } from 'react-icons/io';
 
 import Table from '../Table.store';
 
-export default () => {
+type SearchBarProps = { placeholder?: string };
+
+export default ({ placeholder }: SearchBarProps) => {
   const [value, setValue] = useState('');
 
   const setSearchString = Table.useStoreActions(
@@ -26,7 +28,7 @@ export default () => {
     <div className="c-table-search">
       <IoIosSearch />
       <input
-        placeholder="Search members..."
+        placeholder={placeholder ?? 'Search...'}
         type="text"
         value={value}
         onChange={({ target }) => setValue(target.value)}

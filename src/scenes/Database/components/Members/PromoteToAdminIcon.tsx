@@ -13,7 +13,7 @@ import ArrowUpCircle from '@components/Icons/ArrowUpCircle';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { useStoreActions } from '@store/Store';
-import { PROMOTE_TO_ADMIN } from '../../Database.gql';
+import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const MODAL_ID = 'CONFIRM_PROMOTE_TO_ADMIN';
@@ -27,7 +27,7 @@ const PromoteToAdminModal = () => {
   const numMembersPromoted = membershipIds.length;
 
   const { push } = useHistory();
-  const [promoteToAdmin, { loading }] = useMutation(PROMOTE_TO_ADMIN);
+  const [toggleAdmin, { loading }] = useMutation(TOGGLE_ADMINS);
 
   const onClose = () => {
     push('admins');
@@ -37,7 +37,7 @@ const PromoteToAdminModal = () => {
   };
 
   const onPromote = async () => {
-    const { error } = await promoteToAdmin({ variables: { membershipIds } });
+    const { error } = await toggleAdmin({ variables: { membershipIds } });
     if (!error) closeModal();
   };
 
