@@ -13,7 +13,6 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 
-import Picker from '@components/Picker/Picker';
 import ToastQueue from '@components/Toast/Toast';
 import { APP } from '@constants';
 import { store, useStoreActions } from '@store/Store';
@@ -52,7 +51,6 @@ const App = () => (
         <ResizeScreen />
         <Router />
         <Background />
-        <Picker />
         <ToastQueue />
       </IconContext.Provider>
     </StoreProvider>

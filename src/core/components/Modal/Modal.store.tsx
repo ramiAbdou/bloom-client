@@ -4,20 +4,16 @@
  */
 
 import { Action, action } from 'easy-peasy';
-import { ReactNode } from 'react';
 
 import { IdProps } from '@constants';
 
-export interface ShowModalArgs extends IdProps {
-  screens?: ReactNode[];
-}
+export type ShowModalArgs = IdProps;
 
 export type ModalModel = {
   closeModal: Action<ModalModel>;
   id: string; // Every modal must have unique identifier to help rendering.
   isShowing: boolean;
-  screens: ReactNode[];
-  showModal: Action<ModalModel, ShowModalArgs>;
+  showModal: Action<ModalModel, string>;
 };
 
 export const modalModel: ModalModel = {
@@ -31,11 +27,5 @@ export const modalModel: ModalModel = {
 
   isShowing: false,
 
-  screens: [],
-
-  showModal: action((state, modal: ShowModalArgs) => ({
-    ...state,
-    ...modal,
-    isShowing: true
-  }))
+  showModal: action((state, id: string) => ({ ...state, id, isShowing: true }))
 };

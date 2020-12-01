@@ -4,13 +4,9 @@
  * @author Rami Abdou
  */
 
-import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
-import { useHistory } from 'react-router-dom';
 
-import { PickerAction } from '@components/Picker/Picker.store';
-import { LOGOUT } from '@scenes/Home/Home.gql';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const PictureContainer = () => {
@@ -24,61 +20,20 @@ const PictureContainer = () => {
   return <h3 className="s-home-sidebar-profile__picture">{initials}</h3>;
 };
 
+const PICKER_ID = 'PROFILE_PICKER';
+
 export default () => {
-  const id = 'SIDEBAR_PROFILE';
-  const clearEntities = useStoreActions((store) => store.clearEntities);
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
   const type = useStoreState(({ membership }) => membership.type.name);
-  const widthRatio = useStoreState(({ screen }) => screen.widthRatio);
   const role = useStoreState(({ membership }) => membership.role);
   const fullName = useStoreState(
     ({ user }) => `${user.firstName} ${user.lastName}`
   );
 
-  const { push } = useHistory();
-  const [logout] = useMutation(LOGOUT);
-
-  const onLogout = async () => {
-    const { error } = await logout();
-    if (error) return;
-
-    // Clear the entities that we've fetched and reset the Bloom style guide
-    // primary color.
-    clearEntities();
-
-    const { style } = document.documentElement;
-    style.setProperty('--primary', '#f58023');
-    style.setProperty('--primary-hex', `245, 128, 35`);
-    style.setProperty('--primary-hue', `27`);
-    style.setProperty('--gray-1', `hsl(27, 5%, 20%)`);
-    style.setProperty('--gray-2', `hsl(27, 5%, 31%)`);
-    style.setProperty('--gray-3', `hsl(27, 5%, 51%)`);
-    style.setProperty('--gray-4', `hsl(27, 5%, 74%)`);
-    style.setProperty('--gray-5', `hsl(27, 5%, 88%)`);
-    style.setProperty('--gray-6', `hsl(27, 5%, 96%)`);
-
-    push('/login');
-  };
-
-  const onClick = () => {
-    // Show a picker that either allows them to view their profile or log out.
-    const actions: PickerAction[] = [
-      { onClick: () => {}, text: 'Manage Membership' },
-      { onClick: () => {}, text: 'Your Profile' },
-      { onClick: onLogout, separator: true, text: 'Log Out' }
-    ];
-
-    showPicker({
-      actions,
-      align: 4,
-      id,
-      isFixed: true,
-      offset: { marginLeft: 24 * widthRatio }
-    });
-  };
+  const onClick = () => showPicker({ align: 4, id: PICKER_ID });
 
   return (
-    <button className="s-home-sidebar-profile" id={id} onClick={onClick}>
+    <button className="s-home-sidebar-profile" id={PICKER_ID} onClick={onClick}>
       <div>
         <PictureContainer />
 

@@ -68,7 +68,7 @@ export default () => {
   const disabled = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
   );
-  const onClick = () => showModal({ id: MODAL_ID });
+  const onClick = () => showModal(MODAL_ID);
 
   return (
     <>

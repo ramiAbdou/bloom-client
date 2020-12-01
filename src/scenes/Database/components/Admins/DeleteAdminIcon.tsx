@@ -3,7 +3,7 @@
  * @author Rami Abdou
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
@@ -72,7 +72,7 @@ const DeleteMembersModal = () => {
 
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal({ id: MODAL_ID });
+  const onClick = () => showModal(MODAL_ID);
 
   return (
     <>

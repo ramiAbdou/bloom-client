@@ -9,20 +9,20 @@
 import './Picker.scss';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { MutableRefObject, useRef } from 'react';
+import React, { MutableRefObject, useMemo, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
+import { ChildrenProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
-import PickerOption from './PickerOption';
 
-export default () => {
-  const actions = useStoreState(({ picker }) => picker.actions);
+interface PickerProps extends ChildrenProps, IdProps, StyleProps {}
+
+export default ({ children, id: PICKER_ID, style }: PickerProps) => {
   const align = useStoreState(({ picker }) => picker.align);
   const coordinates = useStoreState(({ picker }) => picker.coordinates);
   const id = useStoreState(({ picker }) => picker.id);
   const isFixed = useStoreState(({ picker }) => picker.isFixed);
   const isShowing = useStoreState(({ picker }) => picker.isShowing);
-  const offset = useStoreState(({ picker }) => picker.offset);
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
 
@@ -57,17 +57,18 @@ export default () => {
       closePicker();
   });
 
-  if (!actions.length || !coordinates) return null;
+  const shouldShowPicker = useMemo(() => isShowing && PICKER_ID === id, [
+    isShowing,
+    id === PICKER_ID
+  ]);
+
+  if (!shouldShowPicker || !coordinates) return null;
 
   const { bottom, left, right, top } = coordinates;
-  const { marginBottom, marginLeft, marginTop } = offset || {};
 
   const positionStyle = {
     ...(top ? { top } : { bottom }),
-    ...(left ? { left } : { right }),
-    ...(marginLeft ? { marginLeft } : {}),
-    ...(marginTop ? { marginTop } : {}),
-    ...(marginBottom ? { marginBottom } : {})
+    ...(left ? { left } : { right })
   };
 
   const animate = {
@@ -89,12 +90,13 @@ export default () => {
           className="c-picker-content"
           exit={{ opacity: 0 }}
           initial={initial}
-          style={{ ...positionStyle, position: isFixed ? 'fixed' : 'absolute' }}
-          transition={{ duration: 0.2 }}
+          style={{
+            ...positionStyle,
+            ...style,
+            position: isFixed ? 'fixed' : 'absolute'
+          }}
         >
-          {actions.map((action) => (
-            <PickerOption key={action.text} {...action} />
-          ))}
+          {children}
         </motion.div>
       )}
     </AnimatePresence>

@@ -33,7 +33,7 @@ export default ({ details, logo, name }: ExpandedDetailsProps) => {
   const MODAL_ID = `${name.toUpperCase()}_DETAILS`;
 
   useEffect(() => {
-    showModal({ id: MODAL_ID });
+    showModal(MODAL_ID);
   }, []);
 
   return (

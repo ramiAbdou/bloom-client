@@ -10,6 +10,7 @@ import React, { useEffect } from 'react';
 import Separator from '@components/Misc/Separator';
 import { useStoreState } from '@store/Store';
 import ProfileBar from './ProfileBar';
+import ProfilePicker from './ProfilePicker';
 import Sidebar, { LinkOptions } from './Sidebar.store';
 import SidebarLink from './SidebarLink';
 import useActiveTo from './useActiveTo';
@@ -88,7 +89,11 @@ const SidebarContent = () => {
 };
 
 export default () => (
-  <Sidebar.Provider>
-    <SidebarContent />
-  </Sidebar.Provider>
+  <>
+    <Sidebar.Provider>
+      <SidebarContent />
+    </Sidebar.Provider>
+
+    <ProfilePicker />
+  </>
 );

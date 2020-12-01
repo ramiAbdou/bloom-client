@@ -48,6 +48,8 @@ tbody > tr {
 th,
 td { left: 0; margin: 0; padding: $sm $md $sm $sm; position: sticky; }
 
+td > div > .c-table-select { z-index: 9; }
+
 // ## TABLE HEADER CELL
 
 th {
@@ -60,12 +62,14 @@ th {
   vertical-align: middle;
   z-index: 11;
 
-  @include HOVER {
-    cursor: pointer;
-
-    > div > p { max-width: 85%; }
-    > div > svg { visibility: visible; }
+  @include HOVER { background-color: $gray-5; cursor: pointer; }
+  
+  > div > .c-table-select {
+    border: 1px $gray-3 solid;
+    display: none;
+    z-index: 12;
   }
+  &:first-of-type > div > .c-table-select { display: flex; }
 
   // We need to make the border bottom and border right position absolute to
   // achieve the scrolling functionality that we want.
@@ -144,9 +148,6 @@ td:first-of-type {
 
 th:first-of-type > div,
 td:first-of-type > div { @extend .flex-ac; }
-
-th > div > .c-table-select { border: 1px $gray-3 solid; z-index: 12; }
-td > div > .c-table-select { z-index: 9; }
 
 // The actual checkbox. Note that even though we specify the div dimensions to
 // be $sm, because of the border it actually renders as 18px. Update the SVG

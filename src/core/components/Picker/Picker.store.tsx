@@ -11,15 +11,6 @@ export type PickerAction = {
   text: string;
 };
 
-// This is needed for the absolute positioning. If alignRight is true, then
-// coordinates.left should be null. If it is false, coordinates.right should be
-// null. Top should always have a value if either left or right is populated.
-type PickerOffset = {
-  marginBottom?: number;
-  marginLeft?: number;
-  marginTop?: number;
-};
-
 type PickerCoordinates = {
   bottom?: number;
   left?: number;
@@ -28,15 +19,12 @@ type PickerCoordinates = {
 };
 
 type PickerOptions = {
-  actions: PickerAction[];
   align: 1 | 2 | 3 | 4;
   id: string;
   isFixed?: boolean;
-  offset?: PickerOffset;
 };
 
 export type PickerModel = {
-  actions: PickerAction[];
   align: 1 | 2 | 3 | 4;
   closePicker: Action<PickerModel>;
   coordinates: PickerCoordinates;
@@ -44,14 +32,11 @@ export type PickerModel = {
   init: Action<PickerModel, PickerOptions>;
   isFixed: boolean;
   isShowing: boolean;
-  offset?: PickerOffset;
   setCoordinates: Action<PickerModel>;
   showPicker: Thunk<PickerModel, PickerOptions>;
 };
 
 export const pickerModel: PickerModel = {
-  actions: [],
-
   align: 1,
 
   closePicker: action((state) => ({
@@ -60,7 +45,7 @@ export const pickerModel: PickerModel = {
     alignRight: false,
     coordinates: null,
     id: '',
-    isFixed: false,
+    isFixed: true,
     isShowing: false
   })),
 
@@ -68,23 +53,17 @@ export const pickerModel: PickerModel = {
 
   id: '',
 
-  init: action(
-    (state, { actions, align, isFixed, id, offset }: PickerOptions) => ({
-      ...state,
-      actions,
-      align,
-      id,
-      isFixed,
-      isShowing: true,
-      offset
-    })
-  ),
+  init: action((state, { align, isFixed, id }: PickerOptions) => ({
+    ...state,
+    align,
+    id,
+    isFixed,
+    isShowing: true
+  })),
 
-  isFixed: false,
+  isFixed: true,
 
   isShowing: false,
-
-  offset: null,
 
   setCoordinates: action((state) => {
     const { align, coordinates, id } = state;
@@ -101,7 +80,7 @@ export const pickerModel: PickerModel = {
 
     // CASE: align === 4
     // Left is going to be the element's left + element width. Bottom is going
-    // to be the element's bottom
+    // to be the element's bottom.
 
     if (align === 4) {
       const leftWithWidth = offsetLeft + offsetWidth;

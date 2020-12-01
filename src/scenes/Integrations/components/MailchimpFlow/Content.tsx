@@ -27,7 +27,7 @@ export default () => {
   const MODAL_ID = 'MAILCHIMP_FLOW';
 
   useEffect(() => {
-    showModal({ id: MODAL_ID });
+    showModal(MODAL_ID);
   }, []);
 
   if (error)

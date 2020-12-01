@@ -205,6 +205,6 @@ export const AddAdminModal = () => {
 
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal({ id: MODAL_ID });
+  const onClick = () => showModal(MODAL_ID);
   return <PrimaryButton title="Add Admin" onClick={onClick} />;
 };
