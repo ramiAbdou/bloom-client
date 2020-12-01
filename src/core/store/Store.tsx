@@ -165,12 +165,14 @@ export const store = createStore<StoreModel>(
      * the lodash deep merge function to make the updates.
      */
     updateEntities: action(
-      (state, { data, updatedState, schema }: UpdateEntitiesArgs) => ({
-        ...state,
-        entities: updatedState
-          ? { ...state.entities, ...updatedState }
-          : merge({}, state.entities, parseEntities(data, schema))
-      })
+      (state, { data, updatedState, schema }: UpdateEntitiesArgs) => {
+        return {
+          ...state,
+          entities: updatedState
+            ? { ...state.entities, ...updatedState }
+            : merge({}, state.entities, parseEntities(data, schema))
+        };
+      }
     ),
 
     /**
@@ -179,7 +181,7 @@ export const store = createStore<StoreModel>(
      */
     user: computed(({ entities }) => {
       const { allIds, byId } = entities.users;
-      return byId[allIds[0]] as IUser;
+      return byId[allIds[0]];
     })
   },
   { disableImmer: true }

@@ -17,7 +17,8 @@ import Database from '../../Database.store';
 
 const AdminTable = () => {
   const admins: IAdmin[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.admins;
+    const { allIds, byId } = entities.admins;
+    console.log(allIds.length);
     return community.admins?.map((adminId: string) => byId[adminId]);
   });
 

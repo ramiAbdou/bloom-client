@@ -4,49 +4,44 @@
  */
 
 import { useMutation } from 'graphql-hooks';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import UnderlineButton from '@components/Button/UnderlineButton';
-import Checkbox from '@components/Misc/Checkbox';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
-import { getGraphQLError } from '@util/util';
+import { getGraphQLError, parseEntities } from '@util/util';
 import { CREATE_MEMBERSHIPS } from '../../Database.gql';
-import AddMember from './AddMember.store';
+import AddAdmin from './AddAdmin.store';
 
-const MODAL_ID = 'ADD_MEMBERS';
+const MODAL_ID = 'ADD_ADMINS';
 
 const AddMemberInput = memo(({ id }: IdProps) => {
-  const isShowingErrors = AddMember.useStoreState(
+  const isShowingErrors = AddAdmin.useStoreState(
     (store) => store.isShowingErrors
   );
-  const admin = AddMember.useStoreState((store) => store.getMember(id)?.admin);
-  const email = AddMember.useStoreState((store) => store.getMember(id)?.email);
-  const emailError = AddMember.useStoreState(
+  const email = AddAdmin.useStoreState((store) => store.getMember(id)?.email);
+  const emailError = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.emailError
   );
-  const firstName = AddMember.useStoreState(
+  const firstName = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.firstName
   );
-  const firstNameError = AddMember.useStoreState(
+  const firstNameError = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.firstNameError
   );
-  const lastName = AddMember.useStoreState(
+  const lastName = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.lastName
   );
-  const lastNameError = AddMember.useStoreState(
+  const lastNameError = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.lastNameError
   );
-  const updateMember = AddMember.useStoreActions((store) => store.updateMember);
-  const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);
-  const isOwner = useStoreState(
-    ({ membership }) => membership.role === 'OWNER'
-  );
+  const updateMember = AddAdmin.useStoreActions((store) => store.updateMember);
 
   const { css: divCSS } = new CSSModifier(
     's-database-header-add-modal-email'
@@ -111,13 +106,6 @@ const AddMemberInput = memo(({ id }: IdProps) => {
             updateMember({ field: 'EMAIL', id, value: target.value })
           }
         />
-
-        {isOwner && (
-          <div>
-            <Checkbox selected={admin} onClick={() => toggleAdmin(id)} />
-            <p>Make Admin</p>
-          </div>
-        )}
       </div>
 
       {isShowingErrors && !!message && (
@@ -127,14 +115,17 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   );
 });
 
-const AddMemberModal = () => {
-  const members = AddMember.useStoreState((store) => store.members);
-  const addEmptyMember = AddMember.useStoreActions(
+const AddAdminModal = () => {
+  const admins = AddAdmin.useStoreState((store) => store.admins);
+  const addEmptyMember = AddAdmin.useStoreActions(
     (store) => store.addEmptyMember
   );
-  const clearMembers = AddMember.useStoreActions((store) => store.clearMembers);
-  const showErrors = AddMember.useStoreActions((store) => store.showErrors);
+  const clearMembers = AddAdmin.useStoreActions((store) => store.clearMembers);
+  const showErrors = AddAdmin.useStoreActions((store) => store.showErrors);
+  const communityId = useStoreState(({ community }) => community.id);
+  const currentAdmins = useStoreState(({ entities }) => entities.admins);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
 
   const [createMemberships, { error, loading }] = useMutation(
     CREATE_MEMBERSHIPS
@@ -142,7 +133,7 @@ const AddMemberModal = () => {
 
   const onAdd = async () => {
     if (
-      members.some(
+      admins.some(
         ({ emailError, firstNameError, lastNameError }) =>
           emailError || firstNameError || lastNameError
       )
@@ -151,18 +142,38 @@ const AddMemberModal = () => {
     else {
       const result = await createMemberships({
         variables: {
-          members: members.map(({ admin, email, firstName, lastName }) => ({
+          members: admins.map(({ email, firstName, lastName }) => ({
             email,
             firstName,
-            isAdmin: admin,
+            isAdmin: true,
             lastName
           }))
         }
       });
 
-      if (!result.error) closeModal();
+      const { createMemberships: updatedData } = result.data || {};
+      if (result.error || !result.data) return;
+
+      updateEntities({
+        data: {
+          admins: [
+            ...currentAdmins.allIds.map(
+              (adminId: string) => currentAdmins.byId[adminId]
+            ),
+            ...updatedData
+              .filter(({ role }) => !!role)
+              .map(({ user }) => ({ ...user }))
+          ],
+          id: communityId
+        },
+        schema: Schema.COMMUNITY
+      });
+
+      closeModal();
     }
   };
+
+  // console.log(daadmins.byId);
 
   const message = getGraphQLError(error);
 
@@ -173,15 +184,15 @@ const AddMemberModal = () => {
       width={750}
       onClose={() => clearMembers()}
     >
-      <h1>Add Member(s)</h1>
+      <h1>Add Admin(s)</h1>
 
       <p>
-        Type in the email address of the member(s) you want to add to the
+        Type in the email address of the admin(s) you want to add to the
         community. We'll send them an email invite with a login link, where they
         can finish filling out their profile.
       </p>
 
-      {members.map(({ id }) => (
+      {admins.map(({ id }) => (
         <AddMemberInput key={id} id={id} />
       ))}
 
@@ -207,10 +218,10 @@ export default () => {
 
   return (
     <>
-      <AddMember.Provider>
-        <AddMemberModal />
-      </AddMember.Provider>
-      <PrimaryButton title="Add Member" onClick={onClick} />
+      <AddAdmin.Provider>
+        <AddAdminModal />
+      </AddAdmin.Provider>
+      <PrimaryButton title="Add Admin" onClick={onClick} />
     </>
   );
 };

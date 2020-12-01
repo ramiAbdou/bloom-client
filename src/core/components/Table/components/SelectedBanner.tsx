@@ -35,7 +35,7 @@ const BannerMessage = () => {
   if (numSelectedMembers === numTotalMembers)
     return (
       <p>
-        All <span>{numTotalMembers}</span> members in the database are selected.
+        All <span>{numTotalMembers}</span> members are selected.
       </p>
     );
 

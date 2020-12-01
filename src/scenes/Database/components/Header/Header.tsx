@@ -9,12 +9,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import MultiButton from '@components/Button/MultiButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
 import Spinner from '@components/Loader/Spinner';
+import { useStoreState } from '@store/Store';
 import Database from '../../Database.store';
+import AddAdminButton from './AddAdminButton';
 import AddMemberButton from './AddMemberButton';
-
-const AddAdminButton = () => <PrimaryButton title="Add Admin" />;
 
 const MemberAdminButton = () => {
   const { location, push } = useHistory();
@@ -35,6 +34,9 @@ const MemberAdminButton = () => {
 };
 
 export default () => {
+  const isOwner = useStoreState(
+    ({ membership }) => membership.role === 'OWNER'
+  );
   const loading = Database.useStoreState((store) => store.loading);
   const { pathname } = useHistory().location;
   const isMembers =
@@ -54,7 +56,7 @@ export default () => {
       )}
 
       {!loading && isMembers && <AddMemberButton />}
-      {!loading && !isMembers && <AddAdminButton />}
+      {!loading && !isMembers && isOwner && <AddAdminButton />}
     </div>
   );
 };

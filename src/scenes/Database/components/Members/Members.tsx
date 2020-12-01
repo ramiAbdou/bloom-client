@@ -45,12 +45,7 @@ const MemberTable = () => {
 
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
 
-  return (
-    <>
-      <ActionRow />
-      <TableContent />
-    </>
-  );
+  return <TableContent />;
 };
 
 export default () => {
@@ -102,6 +97,7 @@ export default () => {
 
   return (
     <Table.Provider initialData={columns}>
+      <ActionRow />
       <MemberTable />
     </Table.Provider>
   );
