@@ -14,16 +14,10 @@ import { useStoreActions, useStoreState } from '@store/Store';
 
 interface ModalContainerProps extends ChildrenProps {
   onClose?: Function;
-  onCloseDeps?: any[];
   width?: number;
 }
 
-export default ({
-  children,
-  onClose,
-  onCloseDeps,
-  width
-}: ModalContainerProps) => {
+export default ({ children, onClose, width }: ModalContainerProps) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
   const animate = isMobile ? { x: 0 } : { opacity: 1, scale: 1 };
@@ -39,7 +33,7 @@ export default ({
   // mount, which is where the onClose function enters.
   const memoizedOnClose = useCallback(() => {
     if (onClose) onClose();
-  }, onCloseDeps ?? []);
+  }, []);
 
   useEffect(() => {
     return () => {

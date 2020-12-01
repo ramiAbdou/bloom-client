@@ -30,7 +30,6 @@ interface ModalProps
     StyleProps {
   confirmation?: boolean;
   onClose?: Function;
-  onCloseDeps?: any[];
   width?: number;
 }
 

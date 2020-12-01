@@ -4,7 +4,7 @@
  */
 
 import { useMutation } from 'graphql-hooks';
-import React, { useState } from 'react';
+import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
@@ -18,8 +18,6 @@ import DatabaseAction from '../DatabaseAction';
 const MODAL_ID = 'DEMOTE_TO_MEMBER_CONFIRMATION';
 
 const DemoteToMemberModal = () => {
-  const [shouldSetOnClose, setShouldSetOnClose] = useState(false);
-
   const admins = useStoreState(({ community }) => community.admins);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
@@ -29,9 +27,12 @@ const DemoteToMemberModal = () => {
 
   const [toggleAdmin, { loading }] = useMutation(TOGGLE_ADMINS);
 
-  const onClose = () => {
-    // shouldSetOnClose will only be true if we clicked the remove button.
-    if (!shouldSetOnClose) return;
+  const onDemote = async () => {
+    const { error } = await toggleAdmin({
+      variables: { membershipIds: adminIds }
+    });
+
+    if (error) return;
 
     // Filter the community members to NOT have the selected members.
     updateCommunity({
@@ -42,26 +43,12 @@ const DemoteToMemberModal = () => {
       message: `${numMembersDemoted} admin(s) demoted to member.`,
       type: 'PESSIMISTIC'
     });
-  };
 
-  const onDemote = async () => {
-    const { error } = await toggleAdmin({
-      variables: { membershipIds: adminIds }
-    });
-
-    setShouldSetOnClose(true);
-    setTimeout(() => {
-      if (!error) closeModal();
-    }, 0);
+    setTimeout(() => closeModal(), 0);
   };
 
   return (
-    <Modal
-      confirmation
-      id={MODAL_ID}
-      onClose={onClose}
-      onCloseDeps={[shouldSetOnClose]}
-    >
+    <Modal confirmation id={MODAL_ID}>
       <h1>Demote to member?</h1>
       <p>
         Are you sure you want to demote this admin to member? They will be lose

@@ -29,27 +29,30 @@ const PromoteToAdminModal = () => {
   const { push } = useHistory();
   const [toggleAdmin, { loading }] = useMutation(TOGGLE_ADMINS);
 
-  const onClose = () => {
-    push('admins');
+  const onPromote = async () => {
+    const { error } = await toggleAdmin({ variables: { membershipIds } });
+    if (error) return;
     showToast({
       message: `${numMembersPromoted} member(s) promoted to admin.`
     });
-  };
 
-  const onPromote = async () => {
-    const { error } = await toggleAdmin({ variables: { membershipIds } });
-    if (!error) closeModal();
+    setTimeout(closeModal, 0);
   };
 
   return (
-    <Modal confirmation id={MODAL_ID} onClose={onClose}>
+    <Modal confirmation id={MODAL_ID} onClose={() => push('admins')}>
       <h1>Promote to admin?</h1>
       <p>
         Are you sure you want to promote this member to admin? They will be
         granted all admin priviledges. You can undo this action at any time.
       </p>
       <div>
-        <PrimaryButton loading={loading} title="Promote" onClick={onPromote} />
+        <PrimaryButton
+          loading={loading}
+          loadingText="Promoting..."
+          title="Promote"
+          onClick={onPromote}
+        />
         <OutlineButton title="Cancel" onClick={closeModal} />
       </div>
     </Modal>

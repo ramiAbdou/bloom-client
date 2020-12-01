@@ -17,8 +17,6 @@ import DatabaseAction from '../DatabaseAction';
 const MODAL_ID = 'DELETE_ADMINS';
 
 const DeleteMembersModal = () => {
-  const [shouldSetOnClose, setShouldSetOnClose] = useState(false);
-
   const admins = useStoreState(({ community }) => community.admins);
   const members = useStoreState(({ community }) => community.members);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
@@ -29,10 +27,7 @@ const DeleteMembersModal = () => {
     ({ selectedRowIds }) => selectedRowIds.length
   );
 
-  const onClose = () => {
-    // shouldSetOnClose will only be true if we clicked the remove button.
-    if (!shouldSetOnClose) return;
-
+  const onRemove = () => {
     const allAdmins = admins;
     const allMembers = members;
 
@@ -55,20 +50,12 @@ const DeleteMembersModal = () => {
       type: 'PESSIMISTIC',
       undo: true
     });
-  };
 
-  const onRemove = () => {
-    setShouldSetOnClose(true);
     setTimeout(closeModal, 0);
   };
 
   return (
-    <Modal
-      confirmation
-      id={MODAL_ID}
-      onClose={onClose}
-      onCloseDeps={[shouldSetOnClose]}
-    >
+    <Modal confirmation id={MODAL_ID}>
       <h1>Remove admin(s)?</h1>
       <p>
         Are you sure you want to remove these member(s)? They will no longer
