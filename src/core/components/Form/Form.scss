@@ -18,7 +18,7 @@ $PREF: 'c-form';
 // Represents the actually label content (AKA title).
 
 .#{$PREF}-label > div { @extend .flex-ac; margin-bottom: $xs; width: 100%; }
-.#{$PREF}-label > div > p { @extend .bold; max-width: 90%; }
+.#{$PREF}-label > div > p { @extend .sb; max-width: 90%; }
 
 // Represents the required symbol after the label's title.
 .#{$PREF}-label--required > div > p::after {

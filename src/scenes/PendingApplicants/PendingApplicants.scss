@@ -119,5 +119,5 @@ div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
   z-index: 2;
 }
 
-.#{$PREF}-expanded-question > p:first-of-type { @extend .bold; }
+.#{$PREF}-expanded-question > p:first-of-type { @extend .sb; }
 .#{$PREF}-expanded-question:last-of-type { margin-bottom: $md !important; }

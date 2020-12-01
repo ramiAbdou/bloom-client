@@ -16,7 +16,7 @@ interface ColumnPickerProps extends IdProps {
 
 export default ({ id, title }: ColumnPickerProps) => {
   return (
-    <Picker align="BOTTOM_LEFT" className="s-table-col-picker" id={id}>
+    <Picker align="BOTTOM_LEFT" className="c-table-col-picker" id={id}>
       <input placeholder={title} type="text" />
       <div>
         <IoArrowUp />

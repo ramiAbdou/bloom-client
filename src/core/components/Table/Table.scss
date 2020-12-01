@@ -243,3 +243,4 @@ td:first-of-type > div { @extend .flex-ac; }
 .#{$PREF}-col-picker > input { margin-bottom: $sm; }
 .#{$PREF}-col-picker > div { @extend .flex-ac; margin-bottom: $xs; }
 .#{$PREF}-col-picker > div > svg { margin-right: $xs; }
+.#{$PREF}-col-picker > div > p { @extend .bold; }

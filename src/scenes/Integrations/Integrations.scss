@@ -39,7 +39,7 @@ $PREF: 's-integrations';
 
 .#{$PREF}-connected { @extend .flex-ac; margin-right: $sm; }
 .#{$PREF}-connected > svg { color: $green; margin-right: $xxs; }
-.#{$PREF}-connected > p { @extend .bold; color: $green; }
+.#{$PREF}-connected > p { @extend .sb; color: $green; }
 
 // ## MODAL (ONBOARDING AND DETAILS)
 
@@ -47,7 +47,7 @@ $PREF: 's-integrations';
   margin: $xl 0;
 
   &--detail { margin: $md 0; }
-  &--detail > p:last-of-type { @extend .bold; color: $primary; }
+  &--detail > p:last-of-type { @extend .sb; color: $primary; }
 }
 
 .#{$PREF}-action-ctr { @extend .flex-ac; margin-top: $lg; }

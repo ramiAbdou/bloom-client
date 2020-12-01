@@ -21,7 +21,7 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
 
 .#{$PREF}-section > p {
-  @extend .bold;
+  @extend .sb;
 
   color: $gray-3;
   font-size: 12px;
@@ -58,7 +58,7 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-link--active {
-  @extend .bold; 
+  @extend .sb; 
 
   background-color: $primary-hover;
   border-left: 3px $primary solid;
