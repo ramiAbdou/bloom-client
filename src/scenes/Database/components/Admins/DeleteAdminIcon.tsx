@@ -24,9 +24,7 @@ const DeleteMembersModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
-  const membershipIds = Table.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
   const numMembers = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
   );
@@ -35,24 +33,25 @@ const DeleteMembersModal = () => {
     // shouldSetOnClose will only be true if we clicked the remove button.
     if (!shouldSetOnClose) return;
 
+    const allAdmins = admins;
     const allMembers = members;
 
     // Filter the community members to NOT have the selected members.
     updateCommunity({
-      admins: admins.filter((id: string) => !membershipIds.includes(id)),
-      members: members.filter((id: string) => !membershipIds.includes(id))
+      admins: admins.filter((id: string) => !adminIds.includes(id)),
+      members: members?.filter((id: string) => !adminIds.includes(id))
     });
 
     // After the toast finishes showing, we call the mutation that actually
     // deletes the members from the community. We supply an undo function
     // that resets the members.
     showToast({
-      message: `${numMembers} member(s) removed from the community.`,
+      message: `${numMembers} admin(s) removed from the community.`,
       mutationOptionsOnClose: [
         DELETE_MEMBERSHIPS,
-        { variables: { membershipIds } }
+        { variables: { membershipIds: adminIds } }
       ],
-      onUndo: () => updateCommunity({ members: allMembers }),
+      onUndo: () => updateCommunity({ admins: allAdmins, members: allMembers }),
       type: 'PESSIMISTIC',
       undo: true
     });
@@ -70,7 +69,7 @@ const DeleteMembersModal = () => {
       onClose={onClose}
       onCloseDeps={[shouldSetOnClose]}
     >
-      <h1>Remove member(s)?</h1>
+      <h1>Remove admin(s)?</h1>
       <p>
         Are you sure you want to remove these member(s)? They will no longer
         have access to your community and they will not show up in the member

@@ -35,11 +35,12 @@ const DeleteMembersModal = () => {
     // shouldSetOnClose will only be true if we clicked the remove button.
     if (!shouldSetOnClose) return;
 
+    const allAdmins = admins;
     const allMembers = members;
 
     // Filter the community members to NOT have the selected members.
     updateCommunity({
-      admins: admins.filter((id: string) => !membershipIds.includes(id)),
+      admins: admins?.filter((id: string) => !membershipIds.includes(id)),
       members: members.filter((id: string) => !membershipIds.includes(id))
     });
 
@@ -52,7 +53,7 @@ const DeleteMembersModal = () => {
         DELETE_MEMBERSHIPS,
         { variables: { membershipIds } }
       ],
-      onUndo: () => updateCommunity({ members: allMembers }),
+      onUndo: () => updateCommunity({ admins: allAdmins, members: allMembers }),
       type: 'PESSIMISTIC',
       undo: true
     });
