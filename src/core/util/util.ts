@@ -83,22 +83,42 @@ export const getGraphQLError = (error: APIError): string => {
  * whether or not the class is added).
  */
 export const makeClass = (
-  arr: (string | [any, string])[] | [any, string]
+  arr: (string | [any, string])[] | [boolean, string]
 ): string => {
+  // If the input is a tuple (array of size 2), meaning that the first element
+  // is a boolean, then we just return the string if the boolean is true.
   if (typeof arr[0] === 'boolean')
     return (arr[0] as boolean) ? (arr[1] as string) : '';
-  return (arr.reduce((acc: string, curr: string | [boolean, string]) => {
-    if (!Array.isArray(curr)) {
-      if (curr) return `${acc} ${curr}`;
 
-      // This handles the case in which we just pass in a className, and we
-      // want to add it when it isn't null.
+  // If the input is an array of tuples | strings, then we reduce the array.
+  return ((arr as (string | [any, string])[]).reduce(
+    (acc: string, curr: string | [boolean, string]) => {
+      if (!Array.isArray(curr)) {
+        if (curr) return `${acc} ${curr}`;
+
+        // This handles the case in which we just pass in a className, and we
+        // want to add it when it isn't null.
+        return acc;
+      }
+
+      if (curr[0]) return `${acc} ${curr[1]}`;
       return acc;
-    }
+    },
+    ''
+  ) as string).trimLeft();
+};
 
-    if (curr[0]) return `${acc} ${curr[1]}`;
-    return acc;
-  }, '') as string).trimLeft();
+/**
+ * Returns the first value in which the condition is true.
+ */
+export const takeFirst = (arr: ([boolean, string] | string)[]) => {
+  for (let i = 0; i < arr.length; i++) {
+    const element = arr[i];
+    if (!Array.isArray(element)) return element;
+    if (element[0]) return element[1];
+  }
+
+  return null;
 };
 
 export const parseEntities = (data: any, schema: Schema<any>) =>

@@ -12,7 +12,8 @@ import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
+import { takeFirst } from '@util/util';
 import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
@@ -61,16 +62,21 @@ const PromoteToAdminModal = () => {
 
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const disabled = Table.useStoreState(
+  const membershipId = useStoreState(({ membership }) => membership.id);
+  const tooManySelected = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
+  );
+  const selfSelected = Table.useStoreState(({ selectedRowIds }) =>
+    selectedRowIds.includes(membershipId)
   );
 
   const onClick = () => showModal(MODAL_ID);
 
-  let tooltip: string;
-
-  if (!disabled) tooltip = `Promote to Admin(s)`;
-  else if (disabled) tooltip = `Can only promote 15 members admins at a time.`;
+  const tooltip: string = takeFirst([
+    [tooManySelected, 'Can only promote 15 members admins at a time.'],
+    [selfSelected, `Can't promote yourself.`],
+    'Promote to Admin(s)'
+  ]);
 
   return (
     <>
@@ -78,7 +84,7 @@ export default () => {
       <DatabaseAction
         Component={IoArrowUpCircle}
         className="s-database-action--promote"
-        disabled={disabled}
+        disabled={tooManySelected || selfSelected}
         value={tooltip}
         onClick={onClick}
       />

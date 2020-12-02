@@ -7,7 +7,7 @@ import React, { FC, memo } from 'react';
 
 import Button from '@components/Button/Button';
 import { ClassNameProps, LoadingProps, OnClickProps } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 
 interface DatabaseActionProps
   extends Partial<LoadingProps>,
@@ -19,13 +19,27 @@ interface DatabaseActionProps
 }
 
 export default memo(
-  ({ Component, value, className, ...props }: DatabaseActionProps) => {
-    const { css } = new CSSModifier()
-      .class('s-database-action')
-      .class(className);
+  ({
+    Component,
+    disabled,
+    value,
+    className,
+    ...props
+  }: DatabaseActionProps) => {
+    const css = makeClass([
+      's-database-action',
+      [disabled, 's-database-action--disabled'],
+      className
+    ]);
 
     return (
-      <Button noHover className={css} value={value} {...props}>
+      <Button
+        noHover
+        className={css}
+        disabled={disabled}
+        value={value}
+        {...props}
+      >
         <Component />
       </Button>
     );
