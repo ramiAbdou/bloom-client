@@ -75,6 +75,20 @@ export const getGraphQLError = (error: APIError): string => {
       error.graphQLErrors[0]?.message;
 };
 
+/**
+ * Returns a string that represents a CSS class based on the conditional
+ * (and non-conditional) classes provided.
+ *
+ * @param arr Array of classes or conditional classes (boolean that determines
+ * whether or not the class is added).
+ */
+export const makeClass = (arr: (string | [boolean, string])[]): string =>
+  (arr.reduce((acc: string, curr: string | [boolean, string]) => {
+    if (!Array.isArray(curr)) return `${acc} ${curr}`;
+    if (!!curr[0] as boolean) return `${acc} ${curr[1]}`;
+    return acc;
+  }, '') as string).trimLeft();
+
 export const parseEntities = (data: any, schema: Schema<any>) =>
   Object.entries(normalize(data, schema).entities).reduce(
     (acc: Record<string, any>, [key, value]) => {

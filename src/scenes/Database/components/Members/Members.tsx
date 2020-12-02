@@ -51,7 +51,7 @@ const MemberTable = () => {
   const [renameQuestion] = useMutation(RENAME_QUESTION);
 
   const onRenameColumn = async ({ title, id }: Column) => {
-    const { data, error } = await renameQuestion({ variables: { id, title } });
+    const { error } = await renameQuestion({ variables: { id, title } });
     if (error) return;
     updateColumnName([id, title]);
   };

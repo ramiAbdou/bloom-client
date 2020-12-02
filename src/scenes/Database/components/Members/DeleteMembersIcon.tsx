@@ -11,6 +11,7 @@ import Trash from '@components/Icons/Trash';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { makeClass } from '@util/util';
 import { DELETE_MEMBERSHIPS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
@@ -73,16 +74,31 @@ const DeleteMembersModal = () => {
 };
 
 export default () => {
+  const membershipId = useStoreState(({ membership }) => membership.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const disabled = Table.useStoreState(({ selectedRowIds }) =>
+    selectedRowIds.includes(membershipId)
+  );
+
   const onClick = () => showModal(MODAL_ID);
+
+  const css = makeClass([
+    's-database-action--delete',
+    [disabled, 's-database-action--disabled']
+  ]);
+
+  const value = !disabled
+    ? 'Delete Member'
+    : `Can't delete member(s) because you selected yourself.`;
 
   return (
     <>
       <DeleteMembersModal />
       <DatabaseAction
         Component={Trash}
-        className="s-database-action--delete"
-        value="Delete Member"
+        className={css}
+        disabled={disabled}
+        value={value}
         onClick={onClick}
       />
     </>
