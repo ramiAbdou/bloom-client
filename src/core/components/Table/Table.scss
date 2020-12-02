@@ -94,6 +94,8 @@ th {
   &--lg { max-width: $xxl * 5; width: $xxl * 5; }
 }
 
+// canRename
+
 // ## TABLE CELL
 
 td {
@@ -124,17 +126,17 @@ th > div > svg {
 
 th.c-table-col--picker { background-color: $gray-5; cursor: pointer; }
 
+th:first-of-type { z-index: 12; }
+
+td:last-of-type,
+th:last-of-type { width: -webkit-fill-available; }
+
 th.c-table-selected-col > div > svg { fill: $primary; visibility: visible; }
 
 th.c-table-selected-col > div > p {
   color: $primary !important;
   max-width: 85%;
 }
-
-th:first-of-type { z-index: 12; }
-
-td:last-of-type,
-th:last-of-type { width: -webkit-fill-available; }
 
 td:first-of-type {
   z-index: 9;

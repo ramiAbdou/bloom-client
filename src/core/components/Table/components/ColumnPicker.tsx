@@ -25,6 +25,7 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
   const [value, setValue] = useState<string>(title);
 
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
+  const canRename = Table.useStoreState((store) => store.canRename);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const setSortedColumn = Table.useStoreActions(
@@ -61,12 +62,14 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
 
   return (
     <Picker align="BOTTOM_LEFT" className="c-table-col-picker" id={id}>
-      <Input
-        value={value}
-        onChange={({ target }) => setValue(target.value)}
-        onClickOutside={renameColumn}
-        onKeyDown={onKeyDown}
-      />
+      {canRename && (
+        <Input
+          value={value}
+          onChange={({ target }) => setValue(target.value)}
+          onClickOutside={renameColumn}
+          onKeyDown={onKeyDown}
+        />
+      )}
 
       <Button className={ascendingCSS} onClick={onClick}>
         <IoArrowUp />

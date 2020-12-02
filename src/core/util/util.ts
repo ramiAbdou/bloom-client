@@ -83,16 +83,25 @@ export const getGraphQLError = (error: APIError): string => {
  * whether or not the class is added).
  */
 export const makeClass = (
-  arr: (string | [any, string])[] | [boolean, string]
+  arr:
+    | (string | [any, string] | [any, string, string])[]
+    | [boolean, string]
+    | [boolean, string, string]
 ): string => {
   // If the input is a tuple (array of size 2), meaning that the first element
   // is a boolean, then we just return the string if the boolean is true.
-  if (typeof arr[0] === 'boolean')
-    return (arr[0] as boolean) ? (arr[1] as string) : '';
+  if (typeof arr[0] === 'boolean') {
+    if (arr[0]) return arr[1] as string;
+    if (arr.length === 3) return arr[2] as string;
+    return '';
+  }
 
   // If the input is an array of tuples | strings, then we reduce the array.
   return ((arr as (string | [any, string])[]).reduce(
-    (acc: string, curr: string | [boolean, string]) => {
+    (
+      acc: string,
+      curr: string | [boolean, string] | [boolean, string, string]
+    ) => {
       if (!Array.isArray(curr)) {
         if (curr) return `${acc} ${curr}`;
 
@@ -102,6 +111,7 @@ export const makeClass = (
       }
 
       if (curr[0]) return `${acc} ${curr[1]}`;
+      if (curr.length === 3) return `${acc} ${curr[2]}`;
       return acc;
     },
     ''

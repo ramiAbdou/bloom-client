@@ -92,7 +92,9 @@ export default () => {
 
   return (
     <>
-      <Table.Provider initialData={{ columns, select: isOwner }}>
+      <Table.Provider
+        initialData={{ canRename: false, columns, select: isOwner }}
+      >
         <ActionRow />
         <AdminTable />
       </Table.Provider>

@@ -10,6 +10,7 @@ import CaretUp from '@components/Icons/CaretUp';
 import Meta from '@components/Typography/Meta';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Table from '../Table.store';
 import { Column } from '../Table.types';
 import { HeaderSelectOption } from './SelectOption';
@@ -50,12 +51,15 @@ const HeaderCell = ({ type, id, title }: Column) => {
 export default () => {
   const columns = Table.useStoreState((store) => store.columns);
   const hasData = Table.useStoreState((store) => !!store.filteredData.length);
+  const canRename = Table.useStoreState((store) => store.canRename);
 
   const customStyle = !hasData ? { borderBottom: 'none' } : {};
 
+  const css = makeClass([canRename, 'c-table--rename']);
+
   return (
     <thead>
-      <tr style={customStyle}>
+      <tr className={css} style={customStyle}>
         {columns.map((column: Column) => (
           <HeaderCell key={column.id} {...column} />
         ))}

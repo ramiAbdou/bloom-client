@@ -51,6 +51,7 @@ const sortByColumn = (
   });
 
 type TableModel = {
+  canRename: boolean;
   clearSelectedRows: Action<TableModel>;
   columns: Column[];
   data: Row[];
@@ -76,6 +77,8 @@ type TableModel = {
 };
 
 const model: TableModel = {
+  canRename: true,
+
   clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
 
   columns: [],
@@ -234,11 +237,16 @@ const model: TableModel = {
   updateData: action((state, data) => ({ ...state, data, filteredData: data }))
 };
 
-export type TableStoreInitializer = { columns: Column[]; select?: boolean };
+export type TableStoreInitializer = {
+  canRename?: boolean;
+  columns: Column[];
+  select?: boolean;
+};
 
 export default createContextStore<TableModel>(
-  ({ columns, select }: TableStoreInitializer) => ({
+  ({ canRename, columns, select }: TableStoreInitializer) => ({
     ...model,
+    canRename: canRename ?? true,
     columns,
     select: select ?? true
   }),
