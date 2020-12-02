@@ -84,7 +84,14 @@ export const getGraphQLError = (error: APIError): string => {
  */
 export const makeClass = (arr: (string | [any, string])[]): string =>
   (arr.reduce((acc: string, curr: string | [boolean, string]) => {
-    if (!Array.isArray(curr)) return `${acc} ${curr}`;
+    if (!Array.isArray(curr)) {
+      if (curr) return `${acc} ${curr}`;
+
+      // This handles the case in which we just pass in a className, and we
+      // want to add it when it isn't null.
+      return acc;
+    }
+
     if (curr[0]) return `${acc} ${curr[1]}`;
     return acc;
   }, '') as string).trimLeft();

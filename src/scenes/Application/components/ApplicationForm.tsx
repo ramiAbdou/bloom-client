@@ -14,7 +14,7 @@ import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
 import { usePrevious } from '@hooks/usePrevious';
-import { IApplicationQuestion } from '@store/entities';
+import { IMembershipQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
@@ -80,7 +80,7 @@ export default () => {
     ({ community }) => community?.applicationDescription
   );
 
-  const questions: IApplicationQuestion[] = useStoreState(
+  const questions: IMembershipQuestion[] = useStoreState(
     ({ community, entities }) => {
       const { byId } = entities.membershipQuestions;
       if (!community?.membershipQuestions?.length) return [];

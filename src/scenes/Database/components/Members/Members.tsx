@@ -9,7 +9,7 @@ import React, { useEffect, useMemo } from 'react';
 import TableContent from '@components/Table/Table';
 import Table from '@components/Table/Table.store';
 import { Column, Row } from '@components/Table/Table.types';
-import { IApplicationQuestion, IMember } from '@store/entities';
+import { IMember, IMembershipQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_DATABASE, RENAME_QUESTION } from '../../Database.gql';
@@ -27,9 +27,7 @@ const MemberTable = () => {
   const clearSelectedRows = Table.useStoreActions(
     (actions) => actions.clearSelectedRows
   );
-  const updateColumnName = Table.useStoreActions(
-    (actions) => actions.updateColumnName
-  );
+  const updatedColumn = Table.useStoreActions((store) => store.updateColumn);
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
   // Used primarily for the removal of members. This will not update the
@@ -50,10 +48,11 @@ const MemberTable = () => {
 
   const [renameQuestion] = useMutation(RENAME_QUESTION);
 
-  const onRenameColumn = async ({ title, id }: Column) => {
-    const { error } = await renameQuestion({ variables: { id, title } });
-    if (error) return;
-    updateColumnName([id, title]);
+  const onRenameColumn = async ({ title, id, version }: Column) => {
+    const { error } = await renameQuestion({
+      variables: { id, title, version }
+    });
+    if (!error) updatedColumn({ id, title, version: ++version });
   };
 
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
@@ -66,7 +65,7 @@ export default () => {
   const currentLoading = Database.useStoreState((store) => store.loading);
   const setLoading = Database.useStoreActions((actions) => actions.setLoading);
 
-  const questions: IApplicationQuestion[] = useStoreState(
+  const questions: IMembershipQuestion[] = useStoreState(
     ({ community, entities }) => {
       const { byId } = entities.membershipQuestions;
       return community.membershipQuestions?.map(
@@ -93,18 +92,9 @@ export default () => {
     if (loading !== currentLoading) setLoading(loading);
   }, [loading]);
 
-  const columns = useMemo(
-    () =>
-      !questions
-        ? []
-        : questions.map(({ category, type, id, title }) => ({
-            category,
-            id,
-            title,
-            type
-          })),
-    [questions?.length]
-  );
+  const columns = useMemo(() => questions ?? [], [questions?.length]);
+
+  console.log(columns);
 
   if (loading || !questions?.length) return null;
 

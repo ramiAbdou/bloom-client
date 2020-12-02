@@ -48,11 +48,12 @@ export default ({ onRenameColumn }: TableProps) => {
 
       <Pagination />
 
-      {columns.map(({ id, title }) => (
+      {columns.map(({ id, title, version }) => (
         <ColumnPicker
           key={id}
           id={id}
           title={title}
+          version={version}
           onRenameColumn={memoizedOnRenameColumn}
         />
       ))}

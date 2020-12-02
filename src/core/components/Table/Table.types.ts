@@ -10,6 +10,7 @@ export type Column = {
   id: string;
   type: QuestionType;
   title: string;
+  version: number;
 };
 
 export interface Row extends Record<string, any> {

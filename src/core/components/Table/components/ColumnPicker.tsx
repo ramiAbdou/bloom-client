@@ -18,9 +18,10 @@ import Table from '../Table.store';
 interface ColumnPickerProps extends IdProps {
   onRenameColumn?: Function;
   title: string;
+  version: number;
 }
 
-export default ({ id, onRenameColumn, title }: ColumnPickerProps) => {
+export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
   const [value, setValue] = useState<string>(title);
 
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
@@ -32,7 +33,7 @@ export default ({ id, onRenameColumn, title }: ColumnPickerProps) => {
 
   const renameColumn = async () => {
     if (onRenameColumn && value && title !== value)
-      onRenameColumn({ id, title: value });
+      onRenameColumn({ id, title: value, version });
   };
 
   const onClick = () => {

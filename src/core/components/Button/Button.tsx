@@ -66,9 +66,9 @@ export default ({
     'c-btn',
     [disabled, 'c-btn-disabled'],
     [large, 'c-btn--lg'],
-    [fill, 'c-btn-fill'],
-    [noHover, 'c-btn-no-hover'],
-    [className, className]
+    [fill, 'c-btn--fill'],
+    [noHover, 'c-btn--no-hover'],
+    className
   ]);
 
   // The core Bloom button animation, the scaling down!

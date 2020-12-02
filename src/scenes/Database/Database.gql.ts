@@ -21,7 +21,7 @@ export const GET_ADMINS = query({
 export const GET_DATABASE = query({
   fields: [
     'id',
-    { questions: ['category', 'id', 'title', 'type'] },
+    { questions: ['category', 'id', 'title', 'type', 'version'] },
     { memberships: ['id', { allData: ['questionId', 'value'] }] }
   ],
   operation: 'getDatabase'
@@ -41,5 +41,9 @@ export const CREATE_MEMBERSHIPS = mutation({
 export const RENAME_QUESTION = mutation({
   fields: ['id'],
   operation: 'renameQuestion',
-  variables: { id: { required: true }, title: { required: true } }
+  variables: {
+    id: { required: true },
+    title: { required: true },
+    version: { required: true, type: 'Int' }
+  }
 }).query;

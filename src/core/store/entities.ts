@@ -12,7 +12,7 @@ export type IAdmin = {
   lastName: string;
 };
 
-export type IApplicationQuestion = {
+export type IMembershipQuestion = {
   category: QuestionCategory;
   id: string;
   inApplicantCard: boolean;
@@ -21,6 +21,7 @@ export type IApplicationQuestion = {
   required: boolean;
   title: QuestionType;
   type: QuestionType;
+  version: number;
 };
 
 export type ICommunity = {
@@ -65,7 +66,7 @@ type IMembershipType = { name: string };
 
 export type UnresolvedApplicantData = { questionId: string; value: string };
 export type ResolvedApplicantData = {
-  question: IApplicationQuestion;
+  question: IMembershipQuestion;
   value: string;
 };
 
@@ -94,7 +95,7 @@ export type IEntities = {
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
-  membershipQuestions: EntityRecord<IApplicationQuestion>;
+  membershipQuestions: EntityRecord<IMembershipQuestion>;
   memberships: EntityRecord<IMembership>;
   pendingApplicants: EntityRecord<IPendingApplicant>;
   users: EntityRecord<IUser>;

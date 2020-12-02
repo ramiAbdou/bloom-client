@@ -71,7 +71,7 @@ type TableModel = {
   toggleAllPageRows: Action<TableModel>;
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
-  updateColumnName: Action<TableModel, [string, string]>;
+  updateColumn: Action<TableModel, Partial<Column>>;
   updateData: Action<TableModel, Row[]>;
 };
 
@@ -221,13 +221,15 @@ const model: TableModel = {
     selectedRowIds: toggleArrayValue(selectedRowIds, rowId)
   })),
 
-  updateColumnName: action(({ columns, ...state }, [columnId, title]) => ({
-    ...state,
-    columns: columns.map((column) => {
-      if (column.id !== columnId) return column;
-      return { ...column, title };
+  updateColumn: action(
+    ({ columns, ...state }, updatedColumn: Partial<Column>) => ({
+      ...state,
+      columns: columns.map((column) => {
+        if (column.id !== updatedColumn.id) return column;
+        return { ...column, ...updatedColumn };
+      })
     })
-  })),
+  ),
 
   updateData: action((state, data) => ({ ...state, data, filteredData: data }))
 };
