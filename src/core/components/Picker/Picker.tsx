@@ -44,9 +44,16 @@ export default ({
   const element: HTMLElement = document.getElementById(id);
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
 
+  const shouldShowPicker = useMemo(() => isShowing && PICKER_ID === id, [
+    isShowing,
+    id === PICKER_ID
+  ]);
+
   // If the click happened within the element that was used to open the
   // Picker, then we don't close the picker.
   useOnClickOutside(ref, (event) => {
+    if (!shouldShowPicker) return;
+
     // If the element doesn't exist, then just close the picker.
     if (!element) {
       closePicker();
@@ -68,16 +75,12 @@ export default ({
 
   useEffect(() => {}, [window.innerWidth]);
 
-  const shouldShowPicker = useMemo(() => isShowing && PICKER_ID === id, [
-    isShowing,
-    id === PICKER_ID
-  ]);
-
   if (!shouldShowPicker || !element) return null;
 
   // ## START: CALCULATE PICKER COORDINATES AND ANIMATION STYLING
 
   let positionStyle: Partial<CSSProperties> = {};
+  let exit: any = {};
   let initial: any = { opacity: 0 };
   let animate: any = { opacity: 1 };
 
@@ -92,6 +95,7 @@ export default ({
     const updatedBottom = innerHeight - (top + height);
     positionStyle = { bottom: updatedBottom, left: leftWithWidth + 12 };
     initial = { ...initial, x: -10 };
+    exit = { ...exit, x: 10 };
     animate = { ...animate, x: 0 };
   }
 
@@ -101,6 +105,7 @@ export default ({
   if (align === 'BOTTOM_LEFT') {
     positionStyle = { left, top: top + height + 12 };
     initial = { ...initial, y: -10 };
+    exit = { ...exit, y: 10 };
     animate = { ...animate, y: 0 };
   }
 
@@ -113,7 +118,7 @@ export default ({
           ref={ref}
           animate={animate}
           className={`c-picker ${className || ''}`}
-          exit={{ opacity: 0 }}
+          exit={exit}
           initial={initial}
           style={{ ...positionStyle, ...style }}
         >

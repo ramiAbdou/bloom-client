@@ -52,7 +52,7 @@ export default () => {
   ];
 
   return (
-    <Picker align="RIGHT_BOTTOM" id={PICKER_ID} style={{ marginLeft: 36 }}>
+    <Picker align="RIGHT_BOTTOM" id={PICKER_ID} style={{ marginLeft: 24 }}>
       {actions.map((action) => (
         <PickerOption key={action.text} {...action} />
       ))}

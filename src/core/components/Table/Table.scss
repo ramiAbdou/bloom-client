@@ -1,4 +1,5 @@
 @import 'src/index.scss';
+@import 'src/core/components/Form/Form.scss';
 
 $PREF: 'c-table';
 
@@ -240,7 +241,23 @@ td:first-of-type > div { @extend .flex-ac; }
 
 // ## COLUMN PICKER
 
-.#{$PREF}-col-picker > input { margin-bottom: $sm; }
-.#{$PREF}-col-picker > div { @extend .flex-ac; margin-bottom: $xs; }
-.#{$PREF}-col-picker > div > svg { margin-right: $xs; }
-.#{$PREF}-col-picker > div > p { @extend .bold; }
+// Added a div before the name to make it take higher precedence.
+div.#{$PREF}-col-picker { @extend .shadow--2; padding: $sm; }
+.#{$PREF}-col-picker > input {
+  @extend .c-form-input;
+  @extend .c-form-input--gray;
+
+  margin-bottom: $sm;
+}
+.#{$PREF}-col-picker > button {
+  @extend .flex-ac;
+
+  justify-content: left;
+  margin-bottom: $xs;
+  padding: $xxs 0;
+  width: 100%;
+
+  @include PRIMARY_HOVER;
+}
+.#{$PREF}-col-picker > button > svg { margin-right: $xs; }
+.#{$PREF}-col-picker > button > p { @extend .sb; }

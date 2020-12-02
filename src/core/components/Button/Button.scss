@@ -5,7 +5,6 @@ $PREF: 'c-btn';
 // ## BASIC BUTTON
 
 .#{$PREF} {
-  @extend .btn-txt;
   @extend .flex-acc;
   
   border-radius: $xxs;
@@ -33,6 +32,8 @@ $PREF: 'c-btn';
 // ## PRIMARY BUTTON
 
 .#{$PREF}-primary {
+  @extend .btn-txt;
+
   background-color: $primary;
   border: 1px $primary solid;
   color: $gray-6;
@@ -56,6 +57,8 @@ $PREF: 'c-btn';
 // ## OUTLINE BUTTON
 
 .#{$PREF}-outline {
+  @extend .btn-txt;
+
   background-color: inherit;
   border: 1px $primary solid;
   color: $primary;
@@ -67,6 +70,8 @@ $PREF: 'c-btn';
 // ## UNDERLINE BUTTON
 
 .#{$PREF}-underline {
+  @extend .btn-txt;
+
   color: $primary;
   padding: $xs $sm;
   text-decoration: underline;
@@ -80,6 +85,8 @@ $PREF: 'c-btn';
 .#{$PREF}-multi-ctr { @extend .flex-ac; }
 
 .#{$PREF}-multi {
+  @extend .btn-txt;
+  
   background-color: inherit;
   border: 1px $primary solid;
   color: $primary;

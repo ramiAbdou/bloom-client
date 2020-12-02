@@ -56,6 +56,14 @@ $PREF: 'c-form';
     padding-top: $xxs;
     resize: none;
   }
+
+  &--gray {
+    background-color: $gray-6;
+    border: 1px $gray-4 solid;
+    color: black;
+
+    &:focus { background-color: white; }
+  }
   
   &--dark {
     background-color: $gray-5;

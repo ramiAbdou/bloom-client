@@ -5,10 +5,10 @@ $PREF: 'c-picker';
 .#{$PREF}-ctr { @extend .flex; }
 
 .#{$PREF} {
-  @extend .shadow--1;
+  @extend .shadow--2;
 
   background-color: white;
-  border-radius: 12px;
+  border-radius: $xs;
   min-width: $xxl * 4;
   padding: $xs 0;
   position: absolute;

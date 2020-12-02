@@ -16,7 +16,8 @@ export default class CSSModifier {
    * Automatically adds a space between the existing CSS class and the new one.
    */
   addClass(flag: boolean, name: string, altName?: string) {
-    if (flag) this.css += ` ${name}`;
+    if (flag && !this.css) this.css += name;
+    else if (flag) this.css += ` ${name}`;
     else if (altName) this.css += ` ${altName}`;
     return this;
   }
@@ -30,8 +31,8 @@ export default class CSSModifier {
    * Non-conditionally adds a CSS class to the existing CSS class.
    */
   class(name: string) {
-    if (!name) return this;
-    this.css += ` ${name}`;
+    if (!this.css) this.css = name;
+    else this.css += ` ${name}`;
     return this;
   }
 }

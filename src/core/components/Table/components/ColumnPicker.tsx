@@ -7,6 +7,7 @@
 import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
+import Button from '@components/Button/Button';
 import Picker from '@components/Picker/Picker';
 import { IdProps } from '@constants';
 
@@ -17,16 +18,16 @@ interface ColumnPickerProps extends IdProps {
 export default ({ id, title }: ColumnPickerProps) => {
   return (
     <Picker align="BOTTOM_LEFT" className="c-table-col-picker" id={id}>
-      <input placeholder={title} type="text" />
-      <div>
+      <input type="text" value={title} />
+      <Button>
         <IoArrowUp />
         <p>Sort Ascending</p>
-      </div>
+      </Button>
 
-      <div>
+      <Button>
         <IoArrowDown />
         <p>Sort Descending</p>
-      </div>
+      </Button>
     </Picker>
   );
 };
