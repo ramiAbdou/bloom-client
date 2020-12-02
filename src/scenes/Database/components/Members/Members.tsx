@@ -12,6 +12,7 @@ import { Column, Row } from '@components/Table/Table.types';
 import { IMember, IMembershipQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { getGraphQLError } from '@util/util';
 import { GET_DATABASE, RENAME_QUESTION } from '../../Database.gql';
 import Database from '../../Database.store';
 import AddMemberStore from '../Header/AddMember.store';
@@ -23,11 +24,12 @@ const MemberTable = () => {
     const { byId } = entities.members;
     return community.members?.map((memberId: string) => byId[memberId]);
   });
-
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
   const clearSelectedRows = Table.useStoreActions(
     (actions) => actions.clearSelectedRows
   );
-  const updatedColumn = Table.useStoreActions((store) => store.updateColumn);
+  const updateColumn = Table.useStoreActions((store) => store.updateColumn);
+
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
   // Used primarily for the removal of members. This will not update the
@@ -52,7 +54,9 @@ const MemberTable = () => {
     const { error } = await renameQuestion({
       variables: { id, title, version }
     });
-    if (!error) updatedColumn({ id, title, version: ++version });
+
+    if (error) showToast({ message: getGraphQLError(error), type: 'ERROR' });
+    else updateColumn({ id, title, version: ++version });
   };
 
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
@@ -93,8 +97,6 @@ export default () => {
   }, [loading]);
 
   const columns = useMemo(() => questions ?? [], [questions?.length]);
-
-  console.log(columns);
 
   if (loading || !questions?.length) return null;
 

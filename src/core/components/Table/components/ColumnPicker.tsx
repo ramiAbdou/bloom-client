@@ -12,7 +12,7 @@ import Input from '@components/Misc/Input';
 import Picker from '@components/Picker/Picker';
 import { Function, IdProps } from '@constants';
 import { useStoreActions } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Table from '../Table.store';
 
 interface ColumnPickerProps extends IdProps {
@@ -32,8 +32,8 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
   );
 
   const renameColumn = async () => {
-    if (onRenameColumn && value && title !== value)
-      onRenameColumn({ id, title: value, version });
+    if (!onRenameColumn || !value || title === value) return;
+    await onRenameColumn({ id, title: value, version });
   };
 
   const onClick = () => {
@@ -41,15 +41,17 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
     closePicker();
   };
 
-  const { css: ascendingCSS } = new CSSModifier().addClass(
-    direction === 'ASC' && sortedColumnId === id,
-    'c-table-col-picker-button--active'
-  );
+  const isSortedColumn = sortedColumnId === id;
 
-  const { css: descendingCSS } = new CSSModifier().addClass(
-    direction === 'DESC' && sortedColumnId === id,
+  const ascendingCSS = makeClass([
+    direction === 'ASC' && isSortedColumn,
     'c-table-col-picker-button--active'
-  );
+  ]);
+
+  const descendingCSS = makeClass([
+    direction === 'DESC' && isSortedColumn,
+    'c-table-col-picker-button--active'
+  ]);
 
   const onKeyDown = async (key: string) => {
     if (key !== 'Enter') return;

@@ -38,8 +38,8 @@ export default ({
 }: InputProps) => {
   const ref: MutableRefObject<HTMLInputElement> = useRef(null);
 
-  useOnClickOutside(ref, () => {
-    if (onClickOutside) onClickOutside();
+  useOnClickOutside(ref, async () => {
+    if (onClickOutside) await onClickOutside();
   });
 
   // Selects the entire value of the input, which uses the custom highlight

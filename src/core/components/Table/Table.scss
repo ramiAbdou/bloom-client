@@ -255,12 +255,14 @@ div.#{$PREF}-col-picker { @extend .shadow--2; padding: $sm; }
   @extend .flex-ac;
 
   justify-content: left;
-  margin-bottom: $xs;
   padding: $xxs 0;
   width: 100%;
 
   @include PRIMARY_HOVER;
 }
+
+.#{$PREF}-col-picker > button:first-of-type { margin-bottom: $xs; }
+
 .#{$PREF}-col-picker > button > svg { margin-right: $xs; }
 .#{$PREF}-col-picker > button > p { @extend .sb; }
 

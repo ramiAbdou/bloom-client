@@ -39,7 +39,7 @@ export const CREATE_MEMBERSHIPS = mutation({
 }).query;
 
 export const RENAME_QUESTION = mutation({
-  fields: ['id'],
+  fields: ['id', 'title'],
   operation: 'renameQuestion',
   variables: {
     id: { required: true },

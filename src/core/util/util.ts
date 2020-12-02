@@ -82,8 +82,12 @@ export const getGraphQLError = (error: APIError): string => {
  * @param arr Array of classes or conditional classes (boolean that determines
  * whether or not the class is added).
  */
-export const makeClass = (arr: (string | [any, string])[]): string =>
-  (arr.reduce((acc: string, curr: string | [boolean, string]) => {
+export const makeClass = (
+  arr: (string | [any, string])[] | [any, string]
+): string => {
+  if (typeof arr[0] === 'boolean')
+    return (arr[0] as boolean) ? (arr[1] as string) : '';
+  return (arr.reduce((acc: string, curr: string | [boolean, string]) => {
     if (!Array.isArray(curr)) {
       if (curr) return `${acc} ${curr}`;
 
@@ -95,6 +99,7 @@ export const makeClass = (arr: (string | [any, string])[]): string =>
     if (curr[0]) return `${acc} ${curr[1]}`;
     return acc;
   }, '') as string).trimLeft();
+};
 
 export const parseEntities = (data: any, schema: Schema<any>) =>
   Object.entries(normalize(data, schema).entities).reduce(

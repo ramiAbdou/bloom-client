@@ -141,7 +141,7 @@ const model: TableModel = {
     ...state,
     data,
     filteredData: data.filter((row: Row) => {
-      const lowerCaseSearchString = searchString.toLowerCase();
+      const lowerCaseSearchString = searchString.toLowerCase().trim();
 
       // As long as some values (answers to questions) in the row include
       // the search string, then it passes through the filter.
