@@ -3,7 +3,7 @@
  * @author Rami Abdou
  */
 
-import { Action, action } from 'easy-peasy';
+import { Action, action, Computed, computed } from 'easy-peasy';
 
 export type PickerAction = {
   separator?: boolean;
@@ -14,6 +14,7 @@ export type PickerAction = {
 export type PickerModel = {
   closePicker: Action<PickerModel>;
   id: string;
+  isIdShowing: Computed<PickerModel, (id: string) => boolean, {}>;
   isShowing: boolean;
   showPicker: Action<PickerModel, string>;
 };
@@ -27,6 +28,10 @@ export const pickerModel: PickerModel = {
   })),
 
   id: '',
+
+  isIdShowing: computed(({ id, isShowing }) => (PICKER_ID: string) =>
+    isShowing && id === PICKER_ID
+  ),
 
   isShowing: false,
 

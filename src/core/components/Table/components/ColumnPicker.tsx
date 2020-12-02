@@ -4,11 +4,11 @@
  * @author Rami Abdou
  */
 
-import React, { MutableRefObject, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
-import useOnClickOutside from 'use-onclickoutside';
 
 import Button from '@components/Button/Button';
+import Input from '@components/Misc/Input';
 import Picker from '@components/Picker/Picker';
 import { Function, IdProps } from '@constants';
 import { useStoreActions } from '@store/Store';
@@ -31,13 +31,9 @@ export default ({ id, onRenameColumn, title }: ColumnPickerProps) => {
   );
 
   const renameColumn = async () => {
-    console.log(value);
     if (onRenameColumn && value && title !== value)
       onRenameColumn({ id, title: value });
   };
-
-  const inputRef: MutableRefObject<HTMLInputElement> = useRef(null);
-  useOnClickOutside(inputRef, renameColumn);
 
   const onClick = () => {
     setSortedColumn(id);
@@ -54,14 +50,19 @@ export default ({ id, onRenameColumn, title }: ColumnPickerProps) => {
     'c-table-col-picker-button--active'
   );
 
+  const onKeyDown = async (key: string) => {
+    if (key !== 'Enter') return;
+    await renameColumn();
+    closePicker();
+  };
+
   return (
     <Picker align="BOTTOM_LEFT" className="c-table-col-picker" id={id}>
-      <input
-        ref={inputRef}
-        type="text"
+      <Input
         value={value}
         onChange={({ target }) => setValue(target.value)}
-        onKeyDown={({ key }) => key === 'Enter' && renameColumn()}
+        onClickOutside={renameColumn}
+        onKeyDown={onKeyDown}
       />
 
       <Button className={ascendingCSS} onClick={onClick}>

@@ -122,6 +122,8 @@ th > div > svg {
   width: 12px !important;
 }
 
+th.c-table-col--picker { background-color: $gray-5; cursor: pointer; }
+
 th.c-table-selected-col > div > svg { fill: $primary; visibility: visible; }
 
 th.c-table-selected-col > div > p {

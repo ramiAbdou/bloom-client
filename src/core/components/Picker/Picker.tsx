@@ -18,13 +18,7 @@ import React, {
 } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import {
-  ChildrenProps,
-  ClassNameProps,
-  Function,
-  IdProps,
-  StyleProps
-} from '@constants';
+import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 interface PickerProps

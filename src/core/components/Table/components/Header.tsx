@@ -8,7 +8,7 @@ import React from 'react';
 import CaretDown from '@components/Icons/CaretDown';
 import CaretUp from '@components/Icons/CaretUp';
 import Meta from '@components/Typography/Meta';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 import Table from '../Table.store';
 import { Column } from '../Table.types';
@@ -18,6 +18,7 @@ const HeaderCell = ({ type, id, title }: Column) => {
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const select = Table.useStoreState((store) => store.select);
+  const isIdShowing = useStoreState(({ picker }) => picker.isIdShowing(id));
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
 
   const { css } = new CSSModifier()
@@ -30,20 +31,19 @@ const HeaderCell = ({ type, id, title }: Column) => {
       ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
       'c-table-cell--md'
     )
-    .addClass(['LONG_TEXT'].includes(type), 'c-table-cell--lg');
+    .addClass(['LONG_TEXT'].includes(type), 'c-table-cell--lg')
+    .addClass(isIdShowing, 'c-table-col--picker');
 
   const showCaretUp = sortedColumnId === id && direction === 'ASC';
 
   return (
-    <>
-      <th key={title} className={css} id={id} onClick={() => showPicker(id)}>
-        <div>
-          {select && <HeaderSelectOption />}
-          <Meta>{title}</Meta>
-          {showCaretUp ? <CaretUp /> : <CaretDown />}
-        </div>
-      </th>
-    </>
+    <th key={title} className={css} id={id} onClick={() => showPicker(id)}>
+      <div>
+        {select && <HeaderSelectOption />}
+        <Meta>{title}</Meta>
+        {showCaretUp ? <CaretUp /> : <CaretDown />}
+      </div>
+    </th>
   );
 };
 

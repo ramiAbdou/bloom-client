@@ -7,7 +7,13 @@
 
 import './Misc.scss';
 
-import React, { ChangeEvent, MutableRefObject, useRef } from 'react';
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  MutableRefObject,
+  useRef
+} from 'react';
+import useOnClickOutside from 'use-onclickoutside';
 
 import { ValueProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
@@ -16,15 +22,34 @@ interface InputProps extends ValueProps {
   dark?: boolean;
   error?: boolean;
   gray?: boolean;
+  onClickOutside?: (...args: any) => any;
   onChange: (event: ChangeEvent<HTMLInputElement>) => any;
+  onKeyDown?: (key: string) => any;
 }
 
-export default ({ dark, error, gray, onChange, value }: InputProps) => {
+export default ({
+  dark,
+  error,
+  gray,
+  onChange,
+  onClickOutside,
+  onKeyDown,
+  value
+}: InputProps) => {
   const ref: MutableRefObject<HTMLInputElement> = useRef(null);
+
+  useOnClickOutside(ref, () => {
+    if (onClickOutside) onClickOutside();
+  });
 
   // Selects the entire value of the input, which uses the custom highlight
   // color.
   const onClick = () => ref?.current?.select();
+
+  const modifiedKeyDown = ({ key }: KeyboardEvent<HTMLInputElement>) => {
+    if (key === 'Enter') ref.current.blur();
+    if (onKeyDown) onKeyDown(key);
+  };
 
   const { css } = new CSSModifier('c-misc-input')
     .addClass(dark, 'c-misc-input--dark')
@@ -39,6 +64,7 @@ export default ({ dark, error, gray, onChange, value }: InputProps) => {
       value={value}
       onChange={onChange}
       onClick={onClick}
+      onKeyDown={modifiedKeyDown}
     />
   );
 };
