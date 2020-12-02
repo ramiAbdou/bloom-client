@@ -94,7 +94,7 @@ export default () => {
   });
 
   useEffect(() => {
-    const { getMembershipForm: result } = data || {};
+    const { getApplication: result } = data || {};
     if (!result) return;
 
     updateEntities({

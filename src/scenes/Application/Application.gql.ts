@@ -31,7 +31,7 @@ export const GET_MEMBERSHIP_FORM = query({
       ]
     }
   ],
-  operation: 'getMembershipForm',
+  operation: 'getApplication',
   variables: { encodedUrlName: { required: true } }
 }).query;
 
