@@ -113,23 +113,3 @@
 // PATH
 
 path { color: inherit; }
-
-.dropdown {
-  position: relative;
-  
-  &--active { > div { display: block; } }
-
-  > .c-picker {
-    @extend .meta;
-
-    border-radius: $xxs;
-    display: none;
-    padding: $sm;
-    position: absolute;
-    z-index: 100;
-  }
-
-  &--bottom { > .c-picker { margin-top: $xxs; top: 100%; } }
-  &--middle { > .c-picker { left: 50%; transform: translateX(-50%); } }
-  &--right { > .c-picker { left: initial; right: 0; transform: initial; } }
-}

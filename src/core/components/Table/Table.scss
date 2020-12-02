@@ -261,3 +261,6 @@ div.#{$PREF}-col-picker { @extend .shadow--2; padding: $sm; }
 }
 .#{$PREF}-col-picker > button > svg { margin-right: $xs; }
 .#{$PREF}-col-picker > button > p { @extend .sb; }
+
+.#{$PREF}-col-picker-button--active > svg,
+.#{$PREF}-col-picker-button--active > p { color: $primary; }

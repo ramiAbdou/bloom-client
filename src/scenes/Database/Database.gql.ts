@@ -37,3 +37,9 @@ export const CREATE_MEMBERSHIPS = mutation({
   operation: 'createMemberships',
   variables: { members: { required: true, type: '[NewMemberInput!]' } }
 }).query;
+
+export const RENAME_QUESTION = mutation({
+  fields: ['id'],
+  operation: 'renameQuestion',
+  variables: { id: { required: true }, title: { required: true } }
+}).query;

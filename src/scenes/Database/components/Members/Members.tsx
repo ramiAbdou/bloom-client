@@ -3,16 +3,16 @@
  * @author Rami Abdou
  */
 
-import { useQuery } from 'graphql-hooks';
+import { useMutation, useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
 import TableContent from '@components/Table/Table';
 import Table from '@components/Table/Table.store';
-import { Row } from '@components/Table/Table.types';
+import { Column, Row } from '@components/Table/Table.types';
 import { IApplicationQuestion, IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_DATABASE } from '../../Database.gql';
+import { GET_DATABASE, RENAME_QUESTION } from '../../Database.gql';
 import Database from '../../Database.store';
 import AddMemberStore from '../Header/AddMember.store';
 import { AddMemberModal } from '../Header/AddMemberButton';
@@ -26,6 +26,9 @@ const MemberTable = () => {
 
   const clearSelectedRows = Table.useStoreActions(
     (actions) => actions.clearSelectedRows
+  );
+  const updateColumnName = Table.useStoreActions(
+    (actions) => actions.updateColumnName
   );
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
@@ -45,9 +48,17 @@ const MemberTable = () => {
     clearSelectedRows();
   }, [allMembers?.length]);
 
+  const [renameQuestion] = useMutation(RENAME_QUESTION);
+
+  const onRenameColumn = async ({ title, id }: Column) => {
+    const { data, error } = await renameQuestion({ variables: { id, title } });
+    if (error) return;
+    updateColumnName([id, title]);
+  };
+
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
 
-  return <TableContent />;
+  return <TableContent onRenameColumn={onRenameColumn} />;
 };
 
 export default () => {

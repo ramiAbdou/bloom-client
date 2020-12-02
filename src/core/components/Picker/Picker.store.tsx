@@ -30,9 +30,11 @@ export const pickerModel: PickerModel = {
 
   isShowing: false,
 
-  showPicker: action((state, id: string) => ({
-    ...state,
-    id,
-    isShowing: true
-  }))
+  showPicker: action((state, id: string) => {
+    return {
+      ...state,
+      id,
+      isShowing: true
+    };
+  })
 };

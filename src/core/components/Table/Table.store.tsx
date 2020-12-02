@@ -71,6 +71,7 @@ type TableModel = {
   toggleAllPageRows: Action<TableModel>;
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
+  updateColumnName: Action<TableModel, [string, string]>;
   updateData: Action<TableModel, Row[]>;
 };
 
@@ -218,6 +219,14 @@ const model: TableModel = {
   toggleRow: action(({ selectedRowIds, ...state }, rowId: string) => ({
     ...state,
     selectedRowIds: toggleArrayValue(selectedRowIds, rowId)
+  })),
+
+  updateColumnName: action(({ columns, ...state }, [columnId, title]) => ({
+    ...state,
+    columns: columns.map((column) => {
+      if (column.id !== columnId) return column;
+      return { ...column, title };
+    })
   })),
 
   updateData: action((state, data) => ({ ...state, data, filteredData: data }))

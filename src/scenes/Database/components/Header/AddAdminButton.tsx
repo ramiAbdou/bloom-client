@@ -10,6 +10,7 @@ import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import UnderlineButton from '@components/Button/UnderlineButton';
 import ErrorMessage from '@components/Misc/ErrorMessage';
+import Input from '@components/Misc/Input';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import { Schema } from '@store/schema';
@@ -47,24 +48,6 @@ const AddMemberInput = memo(({ id }: IdProps) => {
     's-database-header-add-modal-email'
   ).addClass(!!emailError, 's-database-header-add-modal-email--error');
 
-  const { css: firstNameCSS } = new CSSModifier('c-form-input').addClass(
-    isShowingErrors && !!firstNameError,
-    'c-form-input--error',
-    'c-form-input--dark'
-  );
-
-  const { css: lastNameCSS } = new CSSModifier('c-form-input').addClass(
-    isShowingErrors && !!lastNameError,
-    'c-form-input--error',
-    'c-form-input--dark'
-  );
-
-  const { css: emailCSS } = new CSSModifier('c-form-input').addClass(
-    isShowingErrors && !!emailError,
-    'c-form-input--error',
-    'c-form-input--dark'
-  );
-
   let message: string;
 
   if (
@@ -80,28 +63,28 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   return (
     <div className={divCSS}>
       <div>
-        <input
-          className={firstNameCSS}
-          placeholder="First Name"
-          value={firstName}
+        <Input
+          dark
+          error={isShowingErrors && !!firstNameError}
+          value={firstName || 'First Name'}
           onChange={({ target }) =>
             updateMember({ field: 'FIRST_NAME', id, value: target.value })
           }
         />
 
-        <input
-          className={lastNameCSS}
-          placeholder="Last Name"
-          value={lastName}
+        <Input
+          dark
+          error={isShowingErrors && !!lastNameError}
+          value={lastName || 'Last Name'}
           onChange={({ target }) =>
             updateMember({ field: 'LAST_NAME', id, value: target.value })
           }
         />
 
-        <input
-          className={emailCSS}
-          placeholder="Email"
-          value={email}
+        <Input
+          dark
+          error={isShowingErrors && !!emailError}
+          value={email || 'Email'}
           onChange={({ target }) =>
             updateMember({ field: 'EMAIL', id, value: target.value })
           }

@@ -18,9 +18,6 @@ const HeaderCell = ({ type, id, title }: Column) => {
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const select = Table.useStoreState((store) => store.select);
-  const setSortedColumn = Table.useStoreActions(
-    (actions) => actions.setSortedColumn
-  );
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
 
   const { css } = new CSSModifier()
@@ -37,11 +34,9 @@ const HeaderCell = ({ type, id, title }: Column) => {
 
   const showCaretUp = sortedColumnId === id && direction === 'ASC';
 
-  const onClick = () => showPicker(id);
-
   return (
     <>
-      <th key={title} className={css} id={id} onClick={onClick}>
+      <th key={title} className={css} id={id} onClick={() => showPicker(id)}>
         <div>
           {select && <HeaderSelectOption />}
           <Meta>{title}</Meta>

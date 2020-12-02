@@ -5,8 +5,9 @@
 
 import './Table.scss';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import { Function } from '@constants';
 import { useStoreState } from '@store/Store';
 import Body from './components/Body';
 import ColumnPicker from './components/ColumnPicker';
@@ -17,7 +18,9 @@ import Table from './Table.store';
 
 const TABLE_HEIGHT = 60 * 8;
 
-export default () => {
+type TableProps = { onRenameColumn?: Function };
+
+export default ({ onRenameColumn }: TableProps) => {
   const [height, setHeight] = useState(0);
   const windowWidth = useStoreState(({ screen }) => screen.windowWidth);
   const isAllPageSelected = Table.useStoreState(
@@ -30,6 +33,8 @@ export default () => {
       TABLE_HEIGHT * (window.innerHeight / 710) - (isAllPageSelected ? 60 : 0)
     );
   }, [isAllPageSelected, windowWidth]);
+
+  const memoizedOnRenameColumn = useCallback(onRenameColumn, []);
 
   return (
     <>
@@ -44,7 +49,12 @@ export default () => {
       <Pagination />
 
       {columns.map(({ id, title }) => (
-        <ColumnPicker key={id} id={id} title={title} />
+        <ColumnPicker
+          key={id}
+          id={id}
+          title={title}
+          onRenameColumn={memoizedOnRenameColumn}
+        />
       ))}
     </>
   );
