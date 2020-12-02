@@ -20,9 +20,9 @@ $PREF: 's-database';
   padding: 6px;
 
   &--demote { &::before { margin-left: -$xxs; } }
-  &--promote { &::before { margin-left: -$xxs; } }
-  &--delete > svg { fill: $red; }
-  &--disabled > svg { fill: $gray-3; }
+  &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
+  &--delete > svg { color: $red; }
+  &--disabled > svg { color: $gray-3; }
 }
 
 // For all buttons that are not the Promote to Admin button, we set the tooltip

@@ -5,11 +5,11 @@
 
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
+import { IoArrowUpCircle } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
-import ArrowUpCircle from '@components/Icons/ArrowUpCircle';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { useStoreActions } from '@store/Store';
@@ -64,16 +64,22 @@ export default () => {
   const disabled = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
   );
+
   const onClick = () => showModal(MODAL_ID);
+
+  let tooltip: string;
+
+  if (!disabled) tooltip = `Promote to Admin(s)`;
+  else if (disabled) tooltip = `Can only promote 15 members admins at a time.`;
 
   return (
     <>
       <PromoteToAdminModal />
       <DatabaseAction
-        Component={ArrowUpCircle}
+        Component={IoArrowUpCircle}
         className="s-database-action--promote"
         disabled={disabled}
-        value="Promote to Admin"
+        value={tooltip}
         onClick={onClick}
       />
     </>

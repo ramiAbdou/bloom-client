@@ -4,10 +4,10 @@
  */
 
 import React from 'react';
+import { IoTrash } from 'react-icons/io5';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
-import Trash from '@components/Icons/Trash';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -88,14 +88,14 @@ export default () => {
   ]);
 
   const value = !disabled
-    ? 'Delete Member'
+    ? 'Delete Member(s)'
     : `Can't delete member(s) because you selected yourself.`;
 
   return (
     <>
       <DeleteMembersModal />
       <DatabaseAction
-        Component={Trash}
+        Component={IoTrash}
         className={css}
         disabled={disabled}
         value={value}
