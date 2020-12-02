@@ -72,7 +72,7 @@ const Picker = ({
 
   let positionStyle: Partial<CSSProperties> = {};
   let exit: any = {};
-  let initial: any = { opacity: 0 };
+  let initial: any = { opacity: 0.5 };
   let animate: any = { opacity: 1 };
 
   const { innerHeight } = window;

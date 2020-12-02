@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import { ChildrenProps, ValueProps } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 
 export type ButtonProps = {
   className?: string;
@@ -62,13 +62,14 @@ export default ({
   title,
   ...props
 }: AbstractButtonProps) => {
-  const { css } = new CSSModifier()
-    .class('c-btn')
-    .addClass(!!disabled, 'c-btn-disabled')
-    .addClass(!!large, 'c-btn--lg')
-    .addClass(!!fill, 'c-btn--fill')
-    .addClass(!!noHover, 'c-btn--no-hover')
-    .addClass(!!className, className);
+  const css = makeClass([
+    'c-btn',
+    [disabled, 'c-btn-disabled'],
+    [large, 'c-btn--lg'],
+    [fill, 'c-btn-fill'],
+    [noHover, 'c-btn-no-hover'],
+    [className, className]
+  ]);
 
   // The core Bloom button animation, the scaling down!
   const tapAnimation =

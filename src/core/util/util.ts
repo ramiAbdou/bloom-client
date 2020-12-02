@@ -82,10 +82,10 @@ export const getGraphQLError = (error: APIError): string => {
  * @param arr Array of classes or conditional classes (boolean that determines
  * whether or not the class is added).
  */
-export const makeClass = (arr: (string | [boolean, string])[]): string =>
+export const makeClass = (arr: (string | [any, string])[]): string =>
   (arr.reduce((acc: string, curr: string | [boolean, string]) => {
     if (!Array.isArray(curr)) return `${acc} ${curr}`;
-    if (!!curr[0] as boolean) return `${acc} ${curr[1]}`;
+    if (curr[0]) return `${acc} ${curr[1]}`;
     return acc;
   }, '') as string).trimLeft();
 
