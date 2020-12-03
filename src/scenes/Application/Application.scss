@@ -44,7 +44,7 @@ $PREF: 's-signup';
   padding: $md;
   width: 400px;
 
-  @include M { width: $SMALLEST_SCREEN; }
+  @include M { width: 320px; }
 }
 
 .#{$PREF}-confirmation > p > span { font-size: 18px; font-weight: 700; }

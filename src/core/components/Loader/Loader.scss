@@ -1,15 +1,13 @@
 $PREF: 'c-loader';
 
+// ## FULL SCREEN LOADER
+
 .#{$PREF}-ctr {
   @extend .flex-acc;
+  @extend .full-screen;
 
   background-color: $gray-6;
-  height: 100%;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 10000;
+  z-index: 1005;
 }
 
 .#{$PREF} {
@@ -21,6 +19,8 @@ $PREF: 'c-loader';
 
 .#{$PREF} > div { @extend .flex-col; margin-left: -8px; margin-right: -8px; }
 .#{$PREF} > div > img { margin-top: 4px; }
+
+// ## SPINNER
 
 .#{$PREF}-spinner {
   border: 2px $gray-6 solid;

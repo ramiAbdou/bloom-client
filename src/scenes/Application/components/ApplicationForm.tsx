@@ -12,7 +12,6 @@ import Form, {
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
-import { usePrevious } from '@hooks/usePrevious';
 import { IMembershipQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -21,6 +20,7 @@ import { APPLY_FOR_MEMBERSHIP, GET_MEMBERSHIP_FORM } from '../Application.gql';
 import Application from '../Application.store';
 
 const SubmitButton = () => {
+  const storedEmail = Application.useStoreState((store) => store.email);
   const setEmail = Application.useStoreActions((actions) => actions.setEmail);
   const name = useStoreState(({ community }) => community?.encodedUrlName);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
@@ -37,10 +37,8 @@ const SubmitButton = () => {
       items.filter(({ category }) => category === 'EMAIL')[0]?.value
   );
 
-  const previousEmail = usePrevious(email);
-
   useEffect(() => {
-    if (email !== previousEmail) setEmail(email);
+    if (email !== storedEmail) setEmail(email);
   }, [email]);
 
   const [applyForMembership, { error, data, loading }] = useMutation(

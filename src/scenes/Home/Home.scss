@@ -14,7 +14,7 @@ $PREF: 's-home';
   margin-right: $md;
   max-height: 100vh;
 
-  @include WW('LTE', 1330) { grid-template-columns: repeat(12, 1fr); }
+  @include LTE(1330) { grid-template-columns: repeat(12, 1fr); }
   @include MT { display: block; margin-left: $md; }
 }
 
