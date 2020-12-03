@@ -33,6 +33,7 @@ const ResizeScreen = () => {
   useEffect(() => {
     onWindowResize(); // Set the initial values.
     window.addEventListener('resize', onWindowResize);
+
     return () => window.removeEventListener('resize', onWindowResize);
   }, []);
 

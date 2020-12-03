@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: Input
- * - Resuable and customizable input component. Has three different versions:
- * regular, dark and gray.
- * @author Rami Abdou
- */
-
 import './Misc.scss';
 
 import React, {
@@ -27,6 +20,10 @@ interface InputProps extends ValueProps {
   onKeyDown?: (key: string) => any;
 }
 
+/**
+ * Resuable and customizable input component. Has three different versions:
+ * regular, dark and gray.
+ */
 export default ({
   dark,
   error,

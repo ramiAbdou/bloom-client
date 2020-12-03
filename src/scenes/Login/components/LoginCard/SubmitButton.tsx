@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: LoginLinkContainer
- * @author Rami Abdou
- */
-
 import { useManualQuery } from 'graphql-hooks';
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
@@ -31,11 +26,14 @@ const getLoginErrorMessage = (error: LoginError) => {
 
 export default () => {
   const setEmail = Login.useStoreActions((actions) => actions.setEmail);
+
   const setHasLoginLinkSent = Login.useStoreActions(
     (actions) => actions.setHasLoginLinkSent
   );
+
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
+
   const value = Form.useStoreState(
     ({ getItem }) => getItem({ category: 'EMAIL' })?.value
   );
@@ -68,6 +66,7 @@ export default () => {
   // we want to show the appropriate message.
   const cookie = Cookies.get('LOGIN_LINK_ERROR');
   if (cookie) Cookies.remove('LOGIN_LINK_ERROR');
+
   const message =
     cookie === 'TOKEN_EXPIRED'
       ? 'Your temporary login link has already expired.'
