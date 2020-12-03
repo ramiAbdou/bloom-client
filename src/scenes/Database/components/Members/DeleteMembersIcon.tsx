@@ -31,6 +31,12 @@ const DeleteMembersModal = () => {
     const allAdmins = admins;
     const allMembers = members;
 
+    console.log(allMembers.length);
+
+    console.log(
+      members.filter((id: string) => !membershipIds.includes(id)).length
+    );
+
     // Filter the community members to NOT have the selected members.
     updateCommunity({
       admins: admins?.filter((id: string) => !membershipIds.includes(id)),

@@ -20,6 +20,33 @@ const MemberTable = () => {
     return community.members?.map((memberId: string) => byId[memberId]);
   });
 
+  const clearSelectedRows = Table.useStoreActions(
+    (actions) => actions.clearSelectedRows
+  );
+
+  const updateData = Table.useStoreActions((actions) => actions.updateData);
+
+  const rows: Row[] = useStoreState(({ entities, community }) => {
+    const { byId } = entities.members;
+    return community.members?.reduce((acc: Row[], id: string) => {
+      const { allData } = byId[id];
+      const result = { id };
+
+      allData.forEach(({ questionId, value }) => {
+        result[questionId] = value;
+      });
+
+      return [...acc, result];
+    }, []);
+  });
+
+  // Used primarily for the removal of members. This will not update the
+  // data if the number of members doesn't change.
+  useEffect(() => {
+    updateData(rows);
+    clearSelectedRows();
+  }, [rows?.length]);
+
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateColumn = Table.useStoreActions((store) => store.updateColumn);
 
@@ -43,20 +70,6 @@ export default () => {
   const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const currentLoading = Database.useStoreState((store) => store.loading);
   const setLoading = Database.useStoreActions((actions) => actions.setLoading);
-
-  const rows: Row[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.members;
-    return community.members?.reduce((acc: Row[], id: string) => {
-      const { allData } = byId[id];
-      const result = { id };
-
-      allData.forEach(({ questionId, value }) => {
-        result[questionId] = value;
-      });
-
-      return [...acc, result];
-    }, []);
-  });
 
   const questions: IMembershipQuestion[] = useStoreState(
     ({ community, entities }) => {
@@ -83,18 +96,11 @@ export default () => {
     if (loading !== currentLoading) setLoading(loading);
   }, [loading]);
 
-  if (loading || !questions?.length || !rows.length) return null;
+  if (loading || !questions?.length) return null;
 
   return (
     <>
-      <Table.Provider
-        runtimeModel={{
-          ...tableModel,
-          columns: questions,
-          data: rows,
-          filteredData: rows
-        }}
-      >
+      <Table.Provider runtimeModel={{ ...tableModel, columns: questions }}>
         <ActionRow />
         <MemberTable />
       </Table.Provider>
