@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Login
- * @author Rami Abdou
+
  */
 
 import './Login.scss';

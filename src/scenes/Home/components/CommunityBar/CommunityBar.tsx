@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: CommunityBar
- * @author Rami Abdou
+
  */
 
 import './CommunityBar.scss';

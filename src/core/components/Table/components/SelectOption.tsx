@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Checkbox
- * @author Rami Abdou
+
  */
 
 import React from 'react';

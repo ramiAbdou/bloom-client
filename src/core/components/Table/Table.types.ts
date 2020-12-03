@@ -1,6 +1,6 @@
 /**
  * @fileoverview Types: Table
- * @author Rami Abdou
+
  */
 
 import { QuestionCategory, QuestionType } from '@constants';

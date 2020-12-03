@@ -1,7 +1,7 @@
 /**
  * @fileoverview Types: Form
  * - Builds interfaces and types for all Form components.
- * @author Rami Abdou
+
  */
 
 import { ReactNode } from 'react';

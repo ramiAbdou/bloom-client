@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: TokenRoute
- * @author Rami Abdou
+
  */
 
 import { query } from 'gql-query-builder';

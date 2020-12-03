@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: ApplicantCard
- * @author Rami Abdou
+
  */
 
 import React, { memo } from 'react';

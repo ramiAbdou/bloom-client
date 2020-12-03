@@ -2,7 +2,7 @@
  * @fileoverview Component: PickerOption
  * - Option selection for the picker modal. Should execute some function
  * on click.
- * @author Rami Abdou
+
  */
 
 import './Picker.scss';

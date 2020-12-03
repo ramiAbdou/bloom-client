@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Export Data Icon
- * @author Rami Abdou
+
  */
 
 import React from 'react';

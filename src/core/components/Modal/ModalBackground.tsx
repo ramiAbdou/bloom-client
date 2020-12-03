@@ -3,7 +3,7 @@
  * - The darkish overlay that lays underneath the actual modal. Has a high
  * z-index so any clicks that hit outside of the modal content will hit this
  * background.
- * @author Rami Abdou
+
  */
 
 import { motion } from 'framer-motion';

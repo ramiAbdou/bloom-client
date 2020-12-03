@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Button
- * @author Rami Abdou
+
  */
 
 import './Button.scss';

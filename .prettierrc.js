@@ -1,6 +1,6 @@
 /**
  * @fileoverview Config: Prettier
- * @author Rami Abdou
+
  */
 
 module.exports = {

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: AddMemberButton
- * @author Rami Abdou
+
  */
 
 import { useMutation } from 'graphql-hooks';

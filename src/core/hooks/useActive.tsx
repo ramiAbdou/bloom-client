@@ -1,6 +1,6 @@
 /**
  * @fileoverview Hook: useActive
- * @author Rami Abdou
+
  */
 
 /* eslint-disable consistent-return */

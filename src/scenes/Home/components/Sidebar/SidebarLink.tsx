@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Sidebar
- * @author Rami Abdou
+
  */
 
 import React, { memo } from 'react';

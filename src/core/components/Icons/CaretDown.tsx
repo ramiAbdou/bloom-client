@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: CaretDown
- * @author Rami Abdou
+
  */
 
 import React from 'react';

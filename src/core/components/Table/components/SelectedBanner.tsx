@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: SelectedBanner
- * @author Rami Abdou
+
  */
 
 import React from 'react';

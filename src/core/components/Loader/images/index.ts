@@ -1,6 +1,6 @@
 /**
  * @fileoverview Exports all images for the Loader component.
- * @author Rami Abdou
+
  */
 
 export { default as loader1 } from './loader-1.svg';

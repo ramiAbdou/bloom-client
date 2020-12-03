@@ -2,7 +2,7 @@
  * @fileoverview State: Form
  * - Controls all of the Form functionality including click events, submitting
  * capability and more.
- * @author Rami Abdou
+
  */
 
 import {

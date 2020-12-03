@@ -3,7 +3,7 @@
  * - Core routing logic of the entire application. Nested logic should live
  * within each of the high level components. The Home route should have the
  * most nested logic within it.
- * @author Rami Abdou
+
  */
 
 import React from 'react';

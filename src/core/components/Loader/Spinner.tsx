@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Spinner
- * @author Rami Abdou
+
  */
 
 import { motion } from 'framer-motion';

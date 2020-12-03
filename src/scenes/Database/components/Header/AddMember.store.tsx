@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: AddMember
- * @author Rami Abdou
+
  */
 
 import {

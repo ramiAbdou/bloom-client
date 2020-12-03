@@ -4,7 +4,7 @@
  * object as a normalized database for the React application. Most stores that
  * are defined in this global store are defined in the common components folder
  * (ie: PickerModel, ToastModel).
- * @author Rami Abdou
+
  */
 
 // import merge from 'deepmerge';

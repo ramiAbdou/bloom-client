@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Members
- * @author Rami Abdou
+
  */
 
 import { useMutation, useQuery } from 'graphql-hooks';

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Filter
- * @author Rami Abdou
+
  */
 
 import React from 'react';

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Database
- * @author Rami Abdou
+
  */
 
 import './Database.scss';

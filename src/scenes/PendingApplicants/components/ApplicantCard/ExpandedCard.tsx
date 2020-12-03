@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: ExpandedCard
- * @author Rami Abdou
+
  */
 
 import React from 'react';

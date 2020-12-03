@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Mailchimp Flow
- * @author Rami Abdou
+
  */
 
 import React from 'react';

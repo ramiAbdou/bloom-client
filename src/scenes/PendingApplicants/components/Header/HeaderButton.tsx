@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Header
- * @author Rami Abdou
+
  */
 
 import { useMutation } from 'graphql-hooks';

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Screen
- * @author Rami Abdou
+
  */
 
 import { Action, action, Computed, computed } from 'easy-peasy';

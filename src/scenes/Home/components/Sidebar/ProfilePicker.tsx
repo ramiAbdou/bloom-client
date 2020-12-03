@@ -1,7 +1,7 @@
 /**
  * @fileoverview Scene: ProfileBar
  * - Controls the ability to log out, manage membership and go to profile.
- * @author Rami Abdou
+
  */
 
 import { useMutation } from 'graphql-hooks';

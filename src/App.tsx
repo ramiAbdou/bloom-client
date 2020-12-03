@@ -1,9 +1,3 @@
-/**
- * @fileoverview Component: App
- * - All globally-used React Context Providers are here.
- * @author Rami Abdou
- */
-
 import './index.scss';
 import '../public/favicon.ico';
 

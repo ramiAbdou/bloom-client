@@ -2,7 +2,7 @@
  * @fileoverview Component: Dropdown
  * - Dropdown option in a form where a user chooses between different values.
  * Can only select 1 option.
- * @author Rami Abdou
+
  */
 
 import { AnimatePresence, motion } from 'framer-motion';

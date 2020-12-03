@@ -1,7 +1,7 @@
 /**
  * @fileoverview Utility: URLBuilder
  * - Simplifies the process of adding query parameters to a URL.
- * @author Rami Abdou
+
  */
 
 export default class URLBuilder {

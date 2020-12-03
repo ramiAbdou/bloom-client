@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: ActionButton
- * @author Rami Abdou
+
  */
 
 import { useMutation } from 'graphql-hooks';

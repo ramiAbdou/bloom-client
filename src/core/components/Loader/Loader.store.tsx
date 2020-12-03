@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Loader
- * @author Rami Abdou
+
  */
 
 import { Action, action } from 'easy-peasy';

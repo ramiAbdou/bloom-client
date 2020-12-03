@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Table
- * @author Rami Abdou
+
  */
 
 import './Table.scss';

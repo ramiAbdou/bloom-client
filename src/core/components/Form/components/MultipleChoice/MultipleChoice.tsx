@@ -1,7 +1,7 @@
 /**
  * @fileoverview Component: MultipleChoice
  * - Multiple choice case in which there are less than 5 options present.
- * @author Rami Abdou
+
  */
 
 import React, { useState } from 'react';

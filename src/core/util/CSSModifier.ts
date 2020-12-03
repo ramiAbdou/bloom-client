@@ -1,7 +1,7 @@
 /**
  * @fileoverview Utility: CSSModifier
  *  - Used when a component conditionally adds multiple CSS classes.
- * @author Rami Abdou
+
  */
 
 export default class CSSModifier {

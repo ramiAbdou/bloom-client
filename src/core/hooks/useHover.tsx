@@ -2,7 +2,7 @@
  * @fileoverview Hook: useHover
  * - Returns the ref that we pass into a React component, as well as the status
  * of isHovered.
- * @author Rami Abdou
+
  */
 
 /* eslint-disable consistent-return */

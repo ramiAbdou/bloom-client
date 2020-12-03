@@ -2,7 +2,7 @@
  * @fileoverview Hook: usePrevious
  * Wraps any value and returns the previous value before an update to that value
  * happens.
- * @author Rami Abdou
+
  */
 
 import { useEffect, useRef } from 'react';

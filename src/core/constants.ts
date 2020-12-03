@@ -1,6 +1,6 @@
 /**
  * @fileoverview Utility: Constants
- * @author Rami Abdou
+
  */
 
 import { ReactNode } from 'react';

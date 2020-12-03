@@ -1,6 +1,6 @@
 /**
  * @fileoverview Hook: Mailchimp Submit
- * @author Rami Abdou
+
  */
 
 import { UseClientRequestResult, useMutation } from 'graphql-hooks';

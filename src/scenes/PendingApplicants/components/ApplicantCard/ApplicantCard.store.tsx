@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Applicant
- * @author Rami Abdou
+
  */
 
 import { Computed, computed, createContextStore } from 'easy-peasy';

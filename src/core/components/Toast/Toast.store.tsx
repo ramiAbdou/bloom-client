@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Toast
- * @author Rami Abdou
+
  */
 
 import { Action, action } from 'easy-peasy';

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Integrations
- * @author Rami Abdou
+
  */
 
 import './Integrations.scss';

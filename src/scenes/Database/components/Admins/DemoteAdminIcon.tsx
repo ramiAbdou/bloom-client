@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: DemoteToAdmin
- * @author Rami Abdou
+
  */
 
 import { useMutation } from 'graphql-hooks';

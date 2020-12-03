@@ -1,7 +1,7 @@
 /**
  * @fileoverview Entry: Server
  * - Entry point of the application in the production environment.
- * @author Rami Abdou
+
  */
 
 import express from 'express';

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: IntegrationCard
- * @author Rami Abdou
+
  */
 
 import React, { memo } from 'react';

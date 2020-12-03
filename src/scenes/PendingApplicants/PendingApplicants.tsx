@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: PendingApplications
- * @author Rami Abdou
+
  */
 
 import './PendingApplicants.scss';

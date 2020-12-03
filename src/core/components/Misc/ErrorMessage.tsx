@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: ErrorMessage
- * @author Rami Abdou
+
  */
 
 import './Misc.scss';

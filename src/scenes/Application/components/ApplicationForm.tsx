@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: MembershipForm
- * @author Rami Abdou
+
  */
 
 import { useMutation, useQuery } from 'graphql-hooks';

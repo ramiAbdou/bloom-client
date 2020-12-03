@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Logo
- * @author Rami Abdou
+
  */
 
 import './Logo.scss';

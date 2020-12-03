@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: AuthenticatedRoute
- * @author Rami Abdou
+
  */
 
 import { useQuery } from 'graphql-hooks';

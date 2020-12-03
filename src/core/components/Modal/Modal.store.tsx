@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Flow
- * @author Rami Abdou
+
  */
 
 import { Action, action } from 'easy-peasy';

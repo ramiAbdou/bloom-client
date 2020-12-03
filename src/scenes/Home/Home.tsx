@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Home
- * @author Rami Abdou
+
  */
 
 import './Home.scss';

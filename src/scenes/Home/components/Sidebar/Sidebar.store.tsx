@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Sidebar
- * @author Rami Abdou
+
  */
 
 import {

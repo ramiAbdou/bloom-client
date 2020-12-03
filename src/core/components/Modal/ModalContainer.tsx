@@ -2,7 +2,7 @@
  * @fileoverview Component: FlowContainer
  * - This controls the animation of the container of the Flow, which changes
  * for mobile and tablet/desktop.
- * @author Rami Abdou
+
  */
 
 import { motion } from 'framer-motion';

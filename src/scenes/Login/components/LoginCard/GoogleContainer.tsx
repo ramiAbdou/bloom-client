@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: GoogleButton
- * @author Rami Abdou
+
  */
 
 import Cookies from 'js-cookie';

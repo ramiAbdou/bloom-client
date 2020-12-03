@@ -1,7 +1,7 @@
 /**
  * @fileoverview Component: Body
  * - Represents the DATA of the table.
- * @author Rami Abdou
+
  */
 
 import moment from 'moment-timezone';

@@ -1,7 +1,7 @@
 /**
  * @fileoverview Scene: ColumnPicker
  * - Controls the ability to log out, manage membership and go to profile.
- * @author Rami Abdou
+
  */
 
 import React, { useState } from 'react';

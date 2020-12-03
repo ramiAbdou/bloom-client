@@ -1,6 +1,6 @@
 /**
  * @fileoverview State: MultipleChoiceDDState
- * @author Rami Abdou
+
  */
 
 import React, { useContext, useEffect, useState } from 'react';

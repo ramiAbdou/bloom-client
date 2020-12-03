@@ -1,6 +1,6 @@
 /**
  * @fileoverview Hook: useActiveTo
- * @author Rami Abdou
+
  */
 
 import { useHistory } from 'react-router-dom';

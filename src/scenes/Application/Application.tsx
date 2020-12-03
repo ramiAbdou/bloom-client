@@ -1,7 +1,7 @@
 /**
  * @fileoverview Scene: Application
  * - Users will sign up to be a member of an organization here.
- * @author Rami Abdou
+
  */
 
 import './Application.scss';

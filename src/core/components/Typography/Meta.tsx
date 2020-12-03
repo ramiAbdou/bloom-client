@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Meta
- * @author Rami Abdou
+
  */
 
 import './Typography.scss';

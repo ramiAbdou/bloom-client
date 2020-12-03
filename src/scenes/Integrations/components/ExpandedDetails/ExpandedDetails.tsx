@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Expanded Details
- * @author Rami Abdou
+
  */
 
 import React, { memo, useEffect } from 'react';

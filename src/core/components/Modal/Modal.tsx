@@ -3,7 +3,7 @@
  * - Represents a user flow in which they use multiple screens to execute
  * something. Example: When a user wants to edit a prompt answer, a Flow
  * would open with multiple screens.
- * @author Rami Abdou
+
  */
 
 import './Modal.scss';

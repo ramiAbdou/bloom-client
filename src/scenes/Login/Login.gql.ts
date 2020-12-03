@@ -1,6 +1,6 @@
 /**
  * @fileoverview GraphQL: Login
- * @author Rami Abdou
+
  */
 
 import { mutation } from 'gql-query-builder';

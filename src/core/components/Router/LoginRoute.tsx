@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: LoginRoute
- * @author Rami Abdou
+
  */
 
 import { useQuery } from 'graphql-hooks';

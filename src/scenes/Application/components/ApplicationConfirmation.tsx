@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: MembershipForm
- * @author Rami Abdou
+
  */
 
 import { motion } from 'framer-motion';

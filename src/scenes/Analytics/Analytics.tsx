@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Analytics
- * @author Rami Abdou
+
  */
 
 import React from 'react';

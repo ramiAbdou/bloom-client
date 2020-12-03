@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Tag
- * @author Rami Abdou
+
  */
 
 import './Misc.scss';

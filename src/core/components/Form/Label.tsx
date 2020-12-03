@@ -1,6 +1,6 @@
 /**
  * @fileoverview Components: Label
- * @author Rami Abdou
+
  */
 
 import './Form.scss';

@@ -1,7 +1,7 @@
 /**
  * @fileoverview Component: ShortText
  * - Input bar that allows for a maximum character limit.
- * @author Rami Abdou
+
  */
 
 import React from 'react';

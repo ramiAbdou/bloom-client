@@ -1,6 +1,6 @@
 /**
  * @fileoverview Components: FormContent
- * @author Rami Abdou
+
  */
 
 import React from 'react';

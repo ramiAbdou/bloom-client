@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Schema
- * @author Rami Abdou
+
  */
 
 import { QuestionCategory, QuestionType } from '@constants';

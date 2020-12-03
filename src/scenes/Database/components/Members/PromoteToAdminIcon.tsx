@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: PromoteToAdmin
- * @author Rami Abdou
+
  */
 
 import { useMutation } from 'graphql-hooks';

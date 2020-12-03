@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Mailchimp Modal Content
- * @author Rami Abdou
+
  */
 
 import React, { useEffect } from 'react';

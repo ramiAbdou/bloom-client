@@ -2,7 +2,7 @@
  * @fileoverview Component: Toasts
  * - Bloom branded toast that slides in from the top of the screen for a few
  * seconds on confirmation of some arbitrary event.
- * @author Rami Abdou
+
  */
 
 import './Toasts.scss';

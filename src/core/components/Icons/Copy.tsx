@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Copy
- * @author Rami Abdou
+
  */
 
 import React from 'react';

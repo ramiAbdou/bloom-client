@@ -1,6 +1,6 @@
 /**
  * @fileoverview Utility: General
- * @author Rami Abdou
+
  */
 
 import { APIError } from 'graphql-hooks';

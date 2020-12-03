@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: DatabaseAction
- * @author Rami Abdou
+
  */
 
 import React, { FC, memo } from 'react';

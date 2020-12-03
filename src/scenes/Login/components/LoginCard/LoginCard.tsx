@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: LoginCard
- * @author Rami Abdou
+
  */
 
 import React from 'react';

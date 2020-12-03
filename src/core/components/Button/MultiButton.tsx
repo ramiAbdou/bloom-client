@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: MultiButton
- * @author Rami Abdou
+
  */
 
 import React from 'react';

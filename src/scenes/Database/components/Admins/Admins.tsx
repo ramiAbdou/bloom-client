@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Admins
- * @author Rami Abdou
+
  */
 
 import { useQuery } from 'graphql-hooks';

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Stripe Details
- * @author Rami Abdou
+
  */
 
 import React from 'react';

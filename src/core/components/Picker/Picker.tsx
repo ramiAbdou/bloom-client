@@ -3,7 +3,7 @@
  * - Modal-like component that executes different actions based on the options.
  * This is similar to the Flow component, except there is only a singular
  * screen.
- * @author Rami Abdou
+
  */
 
 import './Picker.scss';

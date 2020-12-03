@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: ArrowUpCircle
- * @author Rami Abdou
+
  */
 
 import React from 'react';

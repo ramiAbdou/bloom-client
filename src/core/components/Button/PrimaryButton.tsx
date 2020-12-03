@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: PrimaryButton
- * @author Rami Abdou
+
  */
 
 import { motion } from 'framer-motion';

@@ -1,6 +1,6 @@
 /**
  * @fileoverview State: DropdownMultiple
- * @author Rami Abdou
+
  */
 
 import React, { useContext, useEffect, useState } from 'react';

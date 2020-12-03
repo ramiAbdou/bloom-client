@@ -2,7 +2,7 @@
  * @fileoverview Component: SearchBar
  * - Deep searches through every row in the table, and since most of the rows
  * data values are all strings, no complex logic is needed to search.
- * @author Rami Abdou
+
  */
 
 import React, { useEffect, useState } from 'react';

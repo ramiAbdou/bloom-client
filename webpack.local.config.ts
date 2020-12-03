@@ -1,6 +1,6 @@
 /**
  * @fileoverview Config: Webpack (Development)
- * @author Rami Abdou
+
  */
 
 import CopyWebpackPlugin from 'copy-webpack-plugin';

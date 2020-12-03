@@ -1,7 +1,7 @@
 /**
  * @fileoverview Component: Network
  * - Network graphic from the Bloom style guide.
- * @author Rami Abdou
+
  */
 
 import './Misc.scss';

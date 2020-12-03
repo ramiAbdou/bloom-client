@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Table
- * @author Rami Abdou
+
  */
 
 import {

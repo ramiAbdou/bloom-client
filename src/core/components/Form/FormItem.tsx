@@ -1,6 +1,6 @@
 /**
  * @fileoverview Components: Form
- * @author Rami Abdou
+
  */
 
 import './Form.scss';

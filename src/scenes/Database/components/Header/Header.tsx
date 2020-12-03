@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Header
- * @author Rami Abdou
+
  */
 
 import './Header.scss';

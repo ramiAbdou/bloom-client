@@ -1,7 +1,7 @@
 /**
  * @fileoverview Component: MultipleChoiceDD
  * - Multiple choice case in which there are at least 5 options present.
- * @author Rami Abdou
+
  */
 
 import { AnimatePresence, motion } from 'framer-motion';

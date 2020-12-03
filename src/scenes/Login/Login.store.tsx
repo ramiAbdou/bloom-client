@@ -1,6 +1,6 @@
 /**
  * @fileoverview Store: Login
- * @author Rami Abdou
+
  */
 
 import { Action, action, createContextStore } from 'easy-peasy';

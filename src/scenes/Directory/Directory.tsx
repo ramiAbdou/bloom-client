@@ -1,6 +1,6 @@
 /**
  * @fileoverview Scene: Directory
- * @author Rami Abdou
+
  */
 
 import React from 'react';

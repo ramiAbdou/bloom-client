@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Trash
- * @author Rami Abdou
+
  */
 import React from 'react';
 

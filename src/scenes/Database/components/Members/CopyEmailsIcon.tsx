@@ -1,6 +1,6 @@
 /**
  * @fileoverview Component: Copy Emails Icon
- * @author Rami Abdou
+
  */
 
 import React from 'react';
