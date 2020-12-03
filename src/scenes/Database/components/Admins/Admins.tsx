@@ -7,7 +7,7 @@ import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
-import Table from '@components/Table/Table.store';
+import Table, { tableModel } from '@components/Table/Table.store';
 import { Column, Row } from '@components/Table/Table.types';
 import { IAdmin } from '@store/entities';
 import { Schema } from '@store/schema';
@@ -82,7 +82,7 @@ export default () => {
 
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.
-  const columns: Partial<Column>[] = [
+  const columns: Column[] = [
     { id: 'First Name', title: 'First Name', type: 'SHORT_TEXT' },
     { id: 'Last Name', title: 'Last Name', type: 'SHORT_TEXT' },
     { id: 'Email', title: 'Email', type: 'SHORT_TEXT' }
@@ -93,7 +93,12 @@ export default () => {
   return (
     <>
       <Table.Provider
-        initialData={{ canRename: false, columns, select: isOwner }}
+        runtimeModel={{
+          ...tableModel,
+          canRename: false,
+          columns,
+          select: isOwner
+        }}
       >
         <ActionRow />
         <AdminTable />

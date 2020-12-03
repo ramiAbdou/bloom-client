@@ -8,7 +8,11 @@ import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
 import PrimaryButton from '@components/Button/PrimaryButton';
-import Form, { parseValue } from '@components/Form/Form.store';
+import Form, {
+  formatQuestions,
+  formModel,
+  parseValue
+} from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
@@ -113,7 +117,9 @@ export default () => {
   if (!questions.length) return null;
 
   return (
-    <Form.Provider initialData={{ questions }}>
+    <Form.Provider
+      runtimeModel={{ ...formModel, items: formatQuestions(questions) }}
+    >
       <div className="s-signup">
         <img src={logoUrl} />
         <h1>{title}</h1>

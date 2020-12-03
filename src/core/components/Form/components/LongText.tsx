@@ -11,7 +11,7 @@ import CSSModifier from '@util/CSSModifier';
 import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
-export default ({ maxCharacters, placeholder, title }: FormItemData) => {
+export default ({ maxCharacters, title }: FormItemData) => {
   const isActive = Form.useStoreState(
     ({ getItem }) => getItem({ title }).isActive
   );
@@ -49,7 +49,6 @@ export default ({ maxCharacters, placeholder, title }: FormItemData) => {
     <textarea
       ref={textareaRef}
       className={css}
-      placeholder={placeholder ?? ''}
       value={value ?? ''}
       onChange={({ target }) => updateText(target.value)}
       onClick={activate}

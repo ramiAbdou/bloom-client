@@ -16,7 +16,9 @@ import {
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
-import Applicant from './components/ApplicantCard/ApplicantCard.store';
+import Applicant, {
+  applicantModel
+} from './components/ApplicantCard/ApplicantCard.store';
 import Header from './components/Header/Header';
 import { GET_PENDING_APPLICATIONS } from './PendingApplicants.gql';
 
@@ -75,7 +77,10 @@ export default () => {
 
       <div className="s-applicants-card-ctr">
         {memoizedApplicants?.map((applicant) => (
-          <Applicant.Provider key={applicant.id} initialData={applicant}>
+          <Applicant.Provider
+            key={applicant.id}
+            runtimeModel={{ ...applicantModel, applicant }}
+          >
             <ApplicantCard />
           </Applicant.Provider>
         ))}

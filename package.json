@@ -24,7 +24,7 @@
     "aws-sdk": "^2.780.0",
     "axios": "^0.19.2",
     "body-scroll-lock": "^3.1.5",
-    "easy-peasy": "^3.3.1",
+    "easy-peasy": "^4.0.1",
     "express": "^4.17.1",
     "framer-motion": "^1.10.3",
     "gql-query-builder": "^3.5.0",

@@ -22,7 +22,7 @@ export default () => {
 
   return (
     <div className="s-database-action-row">
-      <SearchBar placeholder="Search members..." />
+      <SearchBar value="Search members..." />
 
       {!isAnythingSelected && <FilterIcon />}
       {isAnythingSelected && (

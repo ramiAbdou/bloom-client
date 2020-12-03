@@ -76,7 +76,7 @@ type TableModel = {
   updateData: Action<TableModel, Row[]>;
 };
 
-const model: TableModel = {
+export const tableModel: TableModel = {
   canRename: true,
 
   clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
@@ -237,18 +237,6 @@ const model: TableModel = {
   updateData: action((state, data) => ({ ...state, data, filteredData: data }))
 };
 
-export type TableStoreInitializer = {
-  canRename?: boolean;
-  columns: Column[];
-  select?: boolean;
-};
-
-export default createContextStore<TableModel>(
-  ({ canRename, columns, select }: TableStoreInitializer) => ({
-    ...model,
-    canRename: canRename ?? true,
-    columns,
-    select: select ?? true
-  }),
-  { disableImmer: true }
-);
+export default createContextStore<TableModel>((model: TableModel) => model, {
+  disableImmer: true
+});

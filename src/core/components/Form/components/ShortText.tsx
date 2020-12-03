@@ -4,13 +4,13 @@
  * @author Rami Abdou
  */
 
-import React, { useEffect, useRef } from 'react';
-import useOnClickOutside from 'use-onclickoutside';
+import React from 'react';
 
+import Input from '@components/Misc/Input';
 import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
-export default ({ maxCharacters, placeholder, title }: FormItemData) => {
+export default ({ maxCharacters, title }: FormItemData) => {
   const isActive = Form.useStoreState(
     ({ getItem }) => getItem({ title }).isActive
   );
@@ -21,14 +21,6 @@ export default ({ maxCharacters, placeholder, title }: FormItemData) => {
   const activate = () => updateItem({ isActive: true, title });
   const inactivate = () => updateItem({ isActive: false, title });
 
-  const inputRef: React.MutableRefObject<HTMLInputElement> = useRef(null);
-
-  useEffect(() => {
-    if (isActive) inputRef.current.focus();
-  }, [isActive]);
-
-  useOnClickOutside(inputRef, () => isActive && inactivate());
-
   const updateText = (text: string) => {
     // If the max characters are specfied and the value is longer than that,
     // don't allow the user to type any more characters.
@@ -36,21 +28,29 @@ export default ({ maxCharacters, placeholder, title }: FormItemData) => {
     updateItem({ title, value: text });
   };
 
-  const onKeyDown = async ({ keyCode }: React.KeyboardEvent<HTMLElement>) => {
-    if (keyCode === 9) next(title);
-  };
+  const onKeyDown = (key: string) => key === 'Tab' && next(title);
 
   return (
-    <input
-      ref={inputRef}
-      className="c-form-input"
-      placeholder={placeholder ?? ''}
-      type="text"
-      value={value ?? ''}
+    <Input
+      value={value}
       onChange={({ target }) => updateText(target.value)}
-      onClick={activate}
-      // If the user presses TAB, inactivate the current form item.
+      onClickOutside={() => isActive && inactivate()}
       onKeyDown={onKeyDown}
     />
   );
 };
+
+// return (
+//   <input
+//     ref={inputRef}
+//     onClick={activate}
+//     // If the user presses TAB, inactivate the current form item.
+//     onKeyDown={onKeyDown}
+//   />
+// );
+
+// const inputRef: React.MutableRefObject<HTMLInputElement> = useRef(null);
+
+// useEffect(() => {
+//   if (isActive) inputRef.current.focus();
+// }, [isActive]);

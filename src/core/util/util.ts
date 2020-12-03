@@ -121,7 +121,7 @@ export const makeClass = (
 /**
  * Returns the first value in which the condition is true.
  */
-export const takeFirst = (arr: ([boolean, string] | string)[]) => {
+export const takeFirst = (arr: ([boolean, any] | any)[]) => {
   for (let i = 0; i < arr.length; i++) {
     const element = arr[i];
     if (!Array.isArray(element)) return element;

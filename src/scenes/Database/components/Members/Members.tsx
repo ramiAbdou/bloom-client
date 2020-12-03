@@ -7,7 +7,7 @@ import { useMutation, useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
 import TableContent from '@components/Table/Table';
-import Table from '@components/Table/Table.store';
+import Table, { tableModel } from '@components/Table/Table.store';
 import { Column, Row } from '@components/Table/Table.types';
 import { IMember, IMembershipQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
@@ -102,7 +102,7 @@ export default () => {
 
   return (
     <>
-      <Table.Provider initialData={{ columns }}>
+      <Table.Provider runtimeModel={{ ...tableModel, columns }}>
         <ActionRow />
         <MemberTable />
       </Table.Provider>

@@ -24,7 +24,6 @@ export default ({
   maxCharacters,
   node,
   options,
-  placeholder,
   required,
   title,
   type
@@ -33,7 +32,7 @@ export default ({
 
   const baseProps = { required, title };
   const optionProps = { ...baseProps, options };
-  const textProps = { ...baseProps, maxCharacters, placeholder };
+  const textProps = { ...baseProps, maxCharacters };
 
   let body: ReactElement = null;
 
@@ -51,7 +50,7 @@ export default ({
 
   return (
     <div className={css}>
-      {!placeholder && (
+      {!title && (
         <Label completed={completed} required={required} title={title} />
       )}
       {description && <p className="c-form-desc">{description}</p>}

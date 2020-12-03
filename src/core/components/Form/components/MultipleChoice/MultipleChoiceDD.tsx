@@ -23,9 +23,8 @@ const SearchBar = () => {
   return (
     <input
       className="c-form-dd-search"
-      placeholder="Search..."
       type="text"
-      value={searchString}
+      value={searchString ?? 'Search...'}
       onChange={({ target }) => setSearchString(target.value)}
     />
   );

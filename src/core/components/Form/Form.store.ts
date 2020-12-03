@@ -15,11 +15,12 @@ import {
 import { UseClientRequestResult } from 'graphql-hooks';
 
 import { QuestionCategory } from '@constants';
-import { FormItemData, FormQuestion } from './Form.types';
+import { takeFirst } from '@util/util';
+import { FormItemData } from './Form.types';
 
 type GetItemArgs = { category?: QuestionCategory; title?: string };
 
-type FormModel = {
+export type FormModel = {
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
   itemCSS: string; // Represents a class string.
@@ -36,6 +37,30 @@ type FormModel = {
   ) => Promise<any> | Promise<UseClientRequestResult<any, object>>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
+
+/**
+ * Formats the given questions into valid Form items by adding the additional
+ * properties and initializing the values for each question.
+ *
+ * @param questions Questions to format into items.
+ */
+export const formatQuestions = (questions: FormItemData[]) =>
+  questions?.map(
+    ({ options, type, value, ...question }: Partial<FormItemData>) => {
+      const emptyValue: string | string[] = takeFirst([
+        [type === 'MULTIPLE_SELECT', []],
+        [['SHORT_TEXT', 'LONG_TEXT'].includes(type), '']
+      ]);
+
+      return {
+        ...question,
+        isActive: false,
+        options,
+        type,
+        value: value ?? emptyValue
+      };
+    }
+  ) ?? [];
 
 /**
  * All GraphQL requests with data should have the data be populated in an array,
@@ -58,7 +83,7 @@ export const parseValue = (value: any) => {
   return isArray ? value : [value];
 };
 
-const model: FormModel = {
+export const formModel: FormModel = {
   getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
     items.find((item) => item.category === category || item.title === title)
   ),
@@ -102,32 +127,7 @@ const model: FormModel = {
   })
 };
 
-type FormStoreInitializer = { itemCSS?: string; questions: FormQuestion[] };
-
 export default createContextStore<FormModel>(
-  (initialData: FormStoreInitializer) => {
-    const { itemCSS, questions } = initialData || {};
-    return {
-      ...model,
-      itemCSS,
-      items:
-        questions?.map(
-          ({ options, type, ...question }: Partial<FormItemData>) => {
-            let emptyValue = null;
-            if (type === 'MULTIPLE_SELECT') emptyValue = [];
-            else if (type === 'SHORT_TEXT') emptyValue = '';
-            else if (type === 'LONG_TEXT') emptyValue = '';
-
-            return {
-              ...question,
-              isActive: false,
-              options,
-              type,
-              value: emptyValue
-            };
-          }
-        ) ?? []
-    };
-  },
+  (runtimeModel: FormModel) => runtimeModel,
   { disableImmer: true }
 );

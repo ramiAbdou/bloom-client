@@ -6,11 +6,11 @@
 import { QuestionCategory, QuestionType } from '@constants';
 
 export type Column = {
-  category: QuestionCategory;
+  category?: QuestionCategory;
   id: string;
   type: QuestionType;
   title: string;
-  version: number;
+  version?: number;
 };
 
 export interface Row extends Record<string, any> {

@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import Form from '@components/Form/Form.store';
+import Form, { formatQuestions, formModel } from '@components/Form/Form.store';
 import { useStoreState } from '@store/Store';
 import Content from './Content';
 
@@ -28,9 +28,10 @@ export default () => {
 
   return (
     <Form.Provider
-      initialData={{
+      runtimeModel={{
+        ...formModel,
         itemCSS: 's-integrations-modal-item',
-        questions: [
+        items: formatQuestions([
           {
             completed: isMailchimpAuthenticated,
             description: `Log in with your Mailchimp account.`,
@@ -47,7 +48,7 @@ export default () => {
             title: 'Step 2: Select Audience/List ID',
             type: 'MULTIPLE_CHOICE'
           }
-        ]
+        ])
       }}
     >
       <Content />

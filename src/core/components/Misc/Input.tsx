@@ -61,7 +61,7 @@ export default ({
       ref={ref}
       className={css}
       type="text"
-      value={value}
+      value={value ?? ''}
       onChange={onChange}
       onClick={onClick}
       onKeyDown={modifiedKeyDown}

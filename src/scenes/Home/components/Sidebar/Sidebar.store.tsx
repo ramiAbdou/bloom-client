@@ -19,13 +19,12 @@ type SidebarModel = {
   setActiveTo: Action<SidebarModel, string>;
 };
 
-export default createContextStore<SidebarModel>(
-  (initialActiveTo: string) => ({
-    activeTo: initialActiveTo,
+const model: SidebarModel = {
+  activeTo: null,
 
-    isActive: computed(({ activeTo }) => (to: string) => activeTo === to),
+  isActive: computed(({ activeTo }) => (to: string) => activeTo === to),
 
-    setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo }))
-  }),
-  { disableImmer: true }
-);
+  setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo }))
+};
+
+export default createContextStore<SidebarModel>(model, { disableImmer: true });
