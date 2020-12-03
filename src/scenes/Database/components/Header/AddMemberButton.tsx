@@ -15,8 +15,7 @@ import Input from '@components/Misc/Input';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
-import { getGraphQLError } from '@util/util';
+import { getGraphQLError, makeClass } from '@util/util';
 import { CREATE_MEMBERSHIPS } from '../../Database.gql';
 import AddMember from './AddMember.store';
 
@@ -26,30 +25,38 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   const isShowingErrors = AddMember.useStoreState(
     (store) => store.isShowingErrors
   );
+
   const admin = AddMember.useStoreState((store) => store.getMember(id)?.admin);
   const email = AddMember.useStoreState((store) => store.getMember(id)?.email);
+
   const emailError = AddMember.useStoreState(
     (store) => store.getMember(id)?.emailError
   );
+
   const firstName = AddMember.useStoreState(
     (store) => store.getMember(id)?.firstName
   );
+
   const firstNameError = AddMember.useStoreState(
     (store) => store.getMember(id)?.firstNameError
   );
+
   const lastName = AddMember.useStoreState(
     (store) => store.getMember(id)?.lastName
   );
+
   const lastNameError = AddMember.useStoreState(
     (store) => store.getMember(id)?.lastNameError
   );
+
   const updateMember = AddMember.useStoreActions((store) => store.updateMember);
   const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);
   const isOwner = useStoreState((store) => store.isOwner);
 
-  const { css: divCSS } = new CSSModifier(
-    's-database-header-add-modal-email'
-  ).addClass(!!emailError, 's-database-header-add-modal-email--error');
+  const css = makeClass([
+    's-database-header-add-modal-email',
+    [emailError, 's-database-header-add-modal-email--error']
+  ]);
 
   let message: string;
 
@@ -64,7 +71,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   else if (emailError) message = emailError;
 
   return (
-    <div className={divCSS}>
+    <div className={css}>
       <div>
         <Input
           dark
@@ -110,9 +117,11 @@ const AddMemberInput = memo(({ id }: IdProps) => {
 
 export const AddMemberModal = () => {
   const members = AddMember.useStoreState((store) => store.members);
+
   const addEmptyMember = AddMember.useStoreActions(
     (store) => store.addEmptyMember
   );
+
   const clearMembers = AddMember.useStoreActions((store) => store.clearMembers);
   const showErrors = AddMember.useStoreActions((store) => store.showErrors);
   const showToast = useStoreActions(({ toast }) => toast.showToast);

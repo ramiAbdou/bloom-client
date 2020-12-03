@@ -1,16 +1,11 @@
-/**
- * @fileoverview Component: GoogleButton
-
- */
-
 import Cookies from 'js-cookie';
 import React from 'react';
 
 import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { APP, LoginError } from '@constants';
-import CSSModifier from '@util/CSSModifier';
 import URLBuilder from '@util/URLBuilder';
+import { makeClass } from '@util/util';
 import google from '../../images/google.svg';
 
 /**
@@ -49,9 +44,7 @@ export default () => {
   // get shown again.
   if (cookie) Cookies.remove('LOGIN_ERROR');
 
-  const { css } = new CSSModifier()
-    .class('s-login-google')
-    .addClass(!!message, 's-login-google--sm');
+  const css = makeClass(['s-login-google', [message, 's-login-google--sm']]);
 
   return (
     <div className={css}>

@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import UnderlineButton from '@components/Button/UnderlineButton';
 import { ToastOptions } from '@components/Toast/Toast.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 
 const Toast = ({
   id,
@@ -38,11 +38,12 @@ const Toast = ({
     };
   }, [wasUndid]);
 
-  const { css } = new CSSModifier()
-    .class('c-toast')
-    .addClass(type === 'ERROR', 'c-toast--error')
-    .addClass(type === 'PESSIMISTIC', 'c-toast--pessimistic')
-    .addClass(!!undo, 'c-toast--undo');
+  const css = makeClass([
+    'c-toast',
+    [type === 'ERROR', 'c-toast--error'],
+    [type === 'PESSIMISTIC', 'c-toast--pessimistic'],
+    [!!undo, 'c-toast--undo']
+  ]);
 
   const onUndoClick = () => {
     setWasUndid(true);

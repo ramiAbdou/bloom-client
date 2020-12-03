@@ -1,14 +1,9 @@
-/**
- * @fileoverview Component: PaginationBar
-
- */
-
 import React from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import Button from '@components/Button/Button';
 import { ValueProps } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Table from '../../Table.store';
 
 type PaginationValue = number | '...';
@@ -56,10 +51,11 @@ const PaginationNumber = ({ value }: ValueProps) => {
 
   const isEllipses = value === '...';
 
-  const { css } = new CSSModifier()
-    .class('c-table-pagination-btn')
-    .addClass(page === value, 'c-table-pagination-btn--active')
-    .addClass(isEllipses, 'c-table-pagination-btn--ellipses');
+  const css = makeClass([
+    'c-table-pagination-btn',
+    [page === value, 'c-table-pagination-btn--active'],
+    [isEllipses, 'c-table-pagination-btn--ellipses']
+  ]);
 
   const onClick = () => !isEllipses && setRange(value);
 
@@ -87,6 +83,7 @@ const BackButton = () => {
 const NextButton = () => {
   const page = Table.useStoreState((store) => store.page);
   const setRange = Table.useStoreActions((store) => store.setRange);
+
   const numPages = Table.useStoreState(({ filteredData }) =>
     Math.ceil(filteredData.length / 100)
   );
@@ -103,9 +100,11 @@ const NextButton = () => {
 
 export default () => {
   const page = Table.useStoreState((store) => store.page);
+
   const numPages = Table.useStoreState(({ filteredData }) =>
     Math.ceil(filteredData.length / 100)
   );
+
   const nums = getPaginationValues(Array.from(Array(numPages).keys()), page);
 
   return (

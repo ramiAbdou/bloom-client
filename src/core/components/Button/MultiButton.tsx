@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Button, { ButtonProps } from './Button';
 
 interface MultiButtonProps extends ButtonProps {
@@ -11,10 +11,10 @@ interface MultiButtonProps extends ButtonProps {
 export default ({ activeIndex, options }: MultiButtonProps) => (
   <div className="c-btn-multi-ctr">
     {options.map(({ title, onClick }, i: number) => {
-      const { css } = new CSSModifier('c-btn-multi').addClass(
-        options[activeIndex].title === title,
-        'c-btn-multi--active'
-      );
+      const css = makeClass([
+        'c-btn-multi',
+        [options[activeIndex].title === title, 'c-btn-multi--active']
+      ]);
 
       const onClickButton = () => {
         if (onClick) onClick();

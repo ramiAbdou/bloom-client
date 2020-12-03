@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: AddMemberButton
-
- */
-
 import { useMutation } from 'graphql-hooks';
 import React, { memo } from 'react';
 
@@ -15,8 +10,7 @@ import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
-import { getGraphQLError } from '@util/util';
+import { getGraphQLError, makeClass } from '@util/util';
 import { CREATE_MEMBERSHIPS } from '../../Database.gql';
 import AddAdmin from './AddAdmin.store';
 
@@ -26,27 +20,35 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   const isShowingErrors = AddAdmin.useStoreState(
     (store) => store.isShowingErrors
   );
+
   const email = AddAdmin.useStoreState((store) => store.getMember(id)?.email);
+
   const emailError = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.emailError
   );
+
   const firstName = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.firstName
   );
+
   const firstNameError = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.firstNameError
   );
+
   const lastName = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.lastName
   );
+
   const lastNameError = AddAdmin.useStoreState(
     (store) => store.getMember(id)?.lastNameError
   );
+
   const updateMember = AddAdmin.useStoreActions((store) => store.updateMember);
 
-  const { css: divCSS } = new CSSModifier(
-    's-database-header-add-modal-email'
-  ).addClass(!!emailError, 's-database-header-add-modal-email--error');
+  const css = makeClass([
+    's-database-header-add-modal-email',
+    [emailError, 's-database-header-add-modal-email--error']
+  ]);
 
   let message: string;
 
@@ -61,7 +63,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
   else if (emailError) message = emailError;
 
   return (
-    <div className={divCSS}>
+    <div className={css}>
       <div>
         <Input
           dark
@@ -100,9 +102,11 @@ const AddMemberInput = memo(({ id }: IdProps) => {
 
 export const AddAdminModal = () => {
   const admins = AddAdmin.useStoreState((store) => store.admins);
+
   const addEmptyMember = AddAdmin.useStoreActions(
     (store) => store.addEmptyMember
   );
+
   const clearMembers = AddAdmin.useStoreActions((store) => store.clearMembers);
   const showErrors = AddAdmin.useStoreActions((store) => store.showErrors);
   const showToast = useStoreActions(({ toast }) => toast.showToast);

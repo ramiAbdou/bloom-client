@@ -9,7 +9,7 @@ import {
   StyleProps
 } from '@constants';
 import { useStoreState } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import ModalBackground from './ModalBackground';
 import ModalContainer from './ModalContainer';
 
@@ -38,10 +38,11 @@ export default ({
     id === MODAL_ID
   ]);
 
-  const { css } = new CSSModifier()
-    .class('c-modal-content')
-    .addClass(confirmation, 'c-modal--confirmation')
-    .addClass(!!className, className);
+  const css = makeClass([
+    'c-modal-content',
+    [confirmation, 'c-modal--confirmation'],
+    className
+  ]);
 
   return (
     <AnimatePresence>

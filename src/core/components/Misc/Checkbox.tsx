@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IoMdCheckmark } from 'react-icons/io';
 
 import { ClassNameProps, OnClickProps } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 
 interface CheckboxProps extends ClassNameProps, OnClickProps {
   selected?: boolean;
@@ -19,10 +19,11 @@ export default ({ className, selected, onClick }: CheckboxProps) => {
     else setIsSelected(!isSelected);
   };
 
-  const { css } = new CSSModifier()
-    .class('c-misc-checkbox')
-    .addClass(selected || isSelected, 'c-misc-checkbox--active')
-    .addClass(!!className, className);
+  const css = makeClass([
+    'c-misc-checkbox',
+    [selected || isSelected, 'c-misc-checkbox--active'],
+    className
+  ]);
 
   return (
     <div className={css} onClick={onClickCheckbox}>

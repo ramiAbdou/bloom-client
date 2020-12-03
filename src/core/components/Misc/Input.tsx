@@ -7,7 +7,7 @@ import React, {
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ValueProps } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 
 interface InputProps extends ValueProps {
   dark?: boolean;
@@ -46,10 +46,12 @@ export default ({
     if (onKeyDown) onKeyDown(key);
   };
 
-  const { css } = new CSSModifier('c-misc-input')
-    .addClass(dark, 'c-misc-input--dark')
-    .addClass(gray, 'c-misc-input--gray')
-    .addClass(error, 'c-misc-input--error');
+  const css = makeClass([
+    'c-misc-input',
+    [dark, 'c-misc-input--dark'],
+    [gray, 'c-misc-input--gray'],
+    [error, 'c-misc-input--error']
+  ]);
 
   return (
     <input

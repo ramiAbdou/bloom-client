@@ -17,7 +17,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import { useStoreState } from '@store/Store';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Sidebar, { LinkOptions } from './Sidebar.store';
 
 type IconProps = { to: string };
@@ -37,13 +37,15 @@ const Icon = memo(({ to }: IconProps) => {
 export default ({ to, title }: LinkOptions) => {
   const isActive = Sidebar.useStoreState((store) => store.isActive(to));
   const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
+
   const encodedUrlName = useStoreState(
     ({ community }) => community.encodedUrlName
   );
 
-  const { css } = new CSSModifier()
-    .class('s-home-sidebar-link')
-    .addClass(isActive, 's-home-sidebar-link--active');
+  const css = makeClass([
+    's-home-sidebar-link',
+    [isActive, 's-home-sidebar-link--active']
+  ]);
 
   return (
     <Link

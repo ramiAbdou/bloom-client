@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Spinner from '../Loader/Spinner';
 import Button, {
   ButtonLoadingProps,
@@ -26,12 +26,13 @@ export default ({
 }: ButtonProps) => {
   // If the button is in it's loading state, it should be disabled.
   const showLoadingState = useLoadingState(loading);
-  disabled = disabled || showLoadingState;
+  disabled = disabled || useLoadingState(loading);
 
-  const { css } = new CSSModifier()
-    .class('c-btn-outline')
-    .class(className)
-    .addClass(disabled, 'c-btn-outline--disabled');
+  const css = makeClass([
+    'c-btn-outline',
+    [disabled, 'c-btn-outline--disabled'],
+    className
+  ]);
 
   return (
     <Button className={css} disabled={disabled} {...props}>

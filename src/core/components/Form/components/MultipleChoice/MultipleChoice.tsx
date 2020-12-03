@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 
 import { OnClickProps } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
 
@@ -17,9 +17,10 @@ interface ChoiceProps extends OnClickProps {
 }
 
 const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
-  const { css } = new CSSModifier()
-    .class('c-form-mc-choice')
-    .addClass(isSelected, 'c-form-mc-choice--active');
+  const css = makeClass([
+    'c-form-mc-choice',
+    [isSelected, 'c-form-mc-choice--active']
+  ]);
 
   return (
     <button className={css} onClick={onClick}>
@@ -35,6 +36,7 @@ const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
 export default ({ options, title }: FormItemData) => {
   const [selectedOption, setSelectedOption] = useState('');
   const updateItem = Form.useStoreActions((store) => store.updateItem);
+
   const selectOption = (option: string) => {
     updateItem({ title, value: option });
     setSelectedOption(option);
