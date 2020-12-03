@@ -1,4 +1,5 @@
 import { useMutation } from 'graphql-hooks';
+import Cookie from 'js-cookie';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -23,6 +24,9 @@ export default () => {
     // Clear the entities that we've fetched and reset the Bloom style guide
     // primary color.
     clearEntities();
+
+    Cookie.remove('communityId');
+    Cookie.remove('role');
 
     const { style } = document.documentElement;
     style.setProperty('--primary', '#f58023');
