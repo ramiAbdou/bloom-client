@@ -65,9 +65,11 @@ const DemoteToMemberModal = () => {
 
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+
   const disabled = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
   );
+
   const onClick = () => showModal(MODAL_ID);
 
   return (

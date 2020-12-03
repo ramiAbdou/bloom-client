@@ -78,6 +78,8 @@ export default () => {
   const floor = Table.useStoreState((store) => store.range[0]);
   const ceiling = Table.useStoreState((store) => store.range[1]);
 
+  // console.log(filteredData);
+
   // Fetching these values forces React to re-render, which in the case of
   // sorting, we do want to re-render our data.
   Table.useStoreState((store) => store.sortedColumnId);

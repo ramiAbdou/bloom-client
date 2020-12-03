@@ -49,7 +49,11 @@ module.exports = {
         prev: '*',
         next: ['function', 'multiline-const', 'multiline-expression']
       },
-      { blankLine: 'always', prev: '*', next: 'return' }
+      {
+        blankLine: 'always',
+        prev: ['multiline-const', 'multiline-expression'],
+        next: 'return'
+      }
     ],
     'react/button-has-type': 0,
     'react/jsx-filename-extension': 0,

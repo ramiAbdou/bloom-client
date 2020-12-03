@@ -8,11 +8,10 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 
-import { ValueProps } from '@constants';
 import Table from '../Table.store';
 
-export default ({ value }: ValueProps) => {
-  const [localSearchString, setLocalSearchString] = useState('');
+export default ({ placeholder }) => {
+  const [value, setValue] = useState('');
 
   const setSearchString = Table.useStoreActions(
     (store) => store.setSearchString
@@ -27,9 +26,10 @@ export default ({ value }: ValueProps) => {
     <div className="c-table-search">
       <IoIosSearch />
       <input
+        placeholder={placeholder ?? 'Search...'}
         type="text"
-        value={localSearchString ?? value}
-        onChange={({ target }) => setLocalSearchString(target.value)}
+        value={value}
+        onChange={({ target }) => setValue(target.value)}
       />
     </div>
   );

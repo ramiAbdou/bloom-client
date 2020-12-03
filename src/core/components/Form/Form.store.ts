@@ -108,6 +108,7 @@ export const formModel: FormModel = {
     const { items } = state;
     const index = items.findIndex(({ title }) => title === payload.title);
     items[index] = { ...items[index], ...payload };
+
     return { ...state, items };
   })
 };

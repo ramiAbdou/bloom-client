@@ -1,13 +1,8 @@
-/**
- * @fileoverview Components: FormContent
-
- */
-
 import React from 'react';
 
-import Form from './Form.store';
-import { FormItemData } from './Form.types';
-import FormItem from './FormItem';
+import Form from '../Form.store';
+import { FormItemData } from '../Form.types';
+import FormItem from '../FormItem';
 
 export default () => (
   <>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Function } from '@constants';
 import { useStoreState } from '@store/Store';
@@ -29,8 +29,6 @@ export default ({ onRenameColumn }: TableProps) => {
     );
   }, [isAllPageSelected, windowWidth]);
 
-  const memoizedOnRenameColumn = useCallback(onRenameColumn, []);
-
   return (
     <>
       {isAllPageSelected && <SelectedBanner />}
@@ -49,7 +47,7 @@ export default ({ onRenameColumn }: TableProps) => {
           id={id}
           title={title}
           version={version}
-          onRenameColumn={memoizedOnRenameColumn}
+          onRenameColumn={onRenameColumn}
         />
       ))}
     </>

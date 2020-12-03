@@ -27,6 +27,7 @@ const AdminTable = () => {
   const clearSelectedRows = Table.useStoreActions(
     (actions) => actions.clearSelectedRows
   );
+
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
   // Used primarily for the removal of members. This will not update the
@@ -54,6 +55,7 @@ export default () => {
   const currentLoading = Database.useStoreState((store) => store.loading);
   const setLoading = Database.useStoreActions((actions) => actions.setLoading);
   const isOwner = useStoreState((store) => store.isOwner);
+
   const isAdminsLoaded = useStoreState(
     ({ community }) => !!community.admins?.length
   );

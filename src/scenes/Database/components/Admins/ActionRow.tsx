@@ -13,13 +13,14 @@ import PromoteToAdminIcon from './DemoteAdminIcon';
 
 export default () => {
   const isOwner = useStoreState((store) => store.isOwner);
+
   const isAnythingSelected = Table.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
   return (
     <div className="s-database-action-row">
-      <SearchBar value="Search admins..." />
+      <SearchBar placeholder="Search admins..." />
 
       {isOwner && isAnythingSelected && (
         <div>

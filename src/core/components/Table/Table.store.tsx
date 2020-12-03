@@ -137,6 +137,7 @@ export const tableModel: TableModel = {
     // set to 0 so they start at the top of the page.
     const element = document.getElementById('c-table-ctr');
     element.scroll({ top: 0 });
+
     return { ...state, page };
   }),
 
@@ -150,6 +151,7 @@ export const tableModel: TableModel = {
       // the search string, then it passes through the filter.
       return Object.values(row).some((value: string) => {
         const lowerCaseValue = value?.toLowerCase();
+
         return (
           !searchString ||
           (value && lowerCaseValue.includes(lowerCaseSearchString))
@@ -229,12 +231,17 @@ export const tableModel: TableModel = {
       ...state,
       columns: columns.map((column) => {
         if (column.id !== updatedColumn.id) return column;
+
         return { ...column, ...updatedColumn };
       })
     })
   ),
 
-  updateData: action((state, data) => ({ ...state, data, filteredData: data }))
+  updateData: action((state, data: Row[]) => ({
+    ...state,
+    data,
+    filteredData: data
+  }))
 };
 
 export default createContextStore<TableModel>((model: TableModel) => model, {

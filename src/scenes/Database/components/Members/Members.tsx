@@ -1,10 +1,5 @@
-/**
- * @fileoverview Scene: Members
-
- */
-
 import { useMutation, useQuery } from 'graphql-hooks';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
 import Table, { tableModel } from '@components/Table/Table.store';
@@ -24,29 +19,9 @@ const MemberTable = () => {
     const { byId } = entities.members;
     return community.members?.map((memberId: string) => byId[memberId]);
   });
+
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const clearSelectedRows = Table.useStoreActions(
-    (actions) => actions.clearSelectedRows
-  );
   const updateColumn = Table.useStoreActions((store) => store.updateColumn);
-
-  const updateData = Table.useStoreActions((actions) => actions.updateData);
-
-  // Used primarily for the removal of members. This will not update the
-  // data if the number of members doesn't change.
-  useEffect(() => {
-    const data = allMembers.reduce((acc: Row[], { id, allData }: IMember) => {
-      const result = { id };
-      allData.forEach(({ questionId, value }) => {
-        result[questionId] = value;
-      });
-
-      return [...acc, result];
-    }, []);
-
-    updateData(data);
-    clearSelectedRows();
-  }, [allMembers?.length]);
 
   const [renameQuestion] = useMutation(RENAME_QUESTION);
 
@@ -69,12 +44,24 @@ export default () => {
   const currentLoading = Database.useStoreState((store) => store.loading);
   const setLoading = Database.useStoreActions((actions) => actions.setLoading);
 
+  const rows: Row[] = useStoreState(({ entities, community }) => {
+    const { byId } = entities.members;
+    return community.members?.reduce((acc: Row[], id: string) => {
+      const { allData } = byId[id];
+      const result = { id };
+
+      allData.forEach(({ questionId, value }) => {
+        result[questionId] = value;
+      });
+
+      return [...acc, result];
+    }, []);
+  });
+
   const questions: IMembershipQuestion[] = useStoreState(
     ({ community, entities }) => {
       const { byId } = entities.membershipQuestions;
-      return community.membershipQuestions?.map(
-        (questionId: string) => byId[questionId]
-      );
+      return community.membershipQuestions?.map((id: string) => byId[id]);
     }
   );
 
@@ -96,13 +83,18 @@ export default () => {
     if (loading !== currentLoading) setLoading(loading);
   }, [loading]);
 
-  const columns = useMemo(() => questions ?? [], [questions?.length]);
-
-  if (loading || !questions?.length) return null;
+  if (loading || !questions?.length || !rows.length) return null;
 
   return (
     <>
-      <Table.Provider runtimeModel={{ ...tableModel, columns }}>
+      <Table.Provider
+        runtimeModel={{
+          ...tableModel,
+          columns: questions,
+          data: rows,
+          filteredData: rows
+        }}
+      >
         <ActionRow />
         <MemberTable />
       </Table.Provider>
