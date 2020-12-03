@@ -48,8 +48,8 @@ export default ({
 
   const css = makeClass([
     'c-misc-input',
-    [dark, 'c-misc-input--dark'],
-    [gray, 'c-misc-input--gray'],
+    [!error && dark, 'c-misc-input--dark'],
+    [!error && gray, 'c-misc-input--gray'],
     [error, 'c-misc-input--error']
   ]);
 
