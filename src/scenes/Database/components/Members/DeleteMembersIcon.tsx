@@ -6,6 +6,7 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { takeFirst } from '@util/util';
 import { DELETE_MEMBERSHIPS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
@@ -70,18 +71,32 @@ const DeleteMembersModal = () => {
 };
 
 export default () => {
+  const isOwner = useStoreState((store) => store.isOwner);
   const membershipId = useStoreState(({ membership }) => membership.id);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const selectedSelf = Table.useStoreState(({ selectedRowIds }) =>
-    selectedRowIds.includes(membershipId)
-  );
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const selectedRowIds = Table.useStoreState((store) => store.selectedRowIds);
+
+  const notEnoughPermissions: boolean = useStoreState(({ entities }) => {
+    if (isOwner) return false;
+    const { allIds, byId } = entities.members;
+    const adminIds = allIds.filter((id: string) => !!byId[id].role);
+    if (selectedRowIds.some((id: string) => adminIds.includes(id))) return true;
+    return false;
+  });
+
+  const selectedSelf: boolean = selectedRowIds.includes(membershipId);
 
   const onClick = () => showModal(MODAL_ID);
 
-  const value = !selectedSelf
-    ? 'Delete Member(s)'
-    : `Can't delete member(s) because you selected yourself.`;
+  const tooltip: string = takeFirst([
+    [selectedSelf, `Can't delete member(s) because you selected yourself.`],
+    [
+      notEnoughPermissions,
+      `You don't have the permissions to delete other admins.`
+    ],
+    'Delete Member(s)'
+  ]);
 
   return (
     <>
@@ -89,8 +104,8 @@ export default () => {
       <DatabaseAction
         Component={IoTrash}
         className="s-database-action--delete"
-        disabled={selectedSelf}
-        value={value}
+        disabled={selectedSelf || notEnoughPermissions}
+        value={tooltip}
         onClick={onClick}
       />
     </>

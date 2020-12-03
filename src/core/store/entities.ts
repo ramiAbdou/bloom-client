@@ -48,6 +48,7 @@ export type IIntegrations = {
 export type IMember = {
   allData: { questionId: string; value: string }[];
   id: string;
+  role?: 'ADMIN' | 'OWNER';
 };
 
 export type IMembership = {

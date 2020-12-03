@@ -16,7 +16,7 @@ export default ({ onClick, separator, text }: PickerAction) => {
   // should not be used as a Flow. It is meant to be a one-time action picker.
   const onOptionClick = () => {
     onClick();
-    closePicker();
+    setTimeout(closePicker, 0);
   };
 
   return (

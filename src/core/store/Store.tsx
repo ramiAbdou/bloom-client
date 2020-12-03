@@ -6,7 +6,6 @@
  * (ie: PickerModel, ToastModel).
  */
 
-// import merge from 'deepmerge';
 import {
   Action,
   action,

@@ -17,7 +17,7 @@ export const GET_DATABASE = query({
   fields: [
     'id',
     { questions: ['category', 'id', 'title', 'type', 'version'] },
-    { memberships: ['id', { allData: ['questionId', 'value'] }] }
+    { memberships: ['id', 'role', { allData: ['questionId', 'value'] }] }
   ],
   operation: 'getDatabase'
 }).query;
