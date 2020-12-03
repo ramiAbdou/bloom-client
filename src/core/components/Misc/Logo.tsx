@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ClassNameProps, StyleProps } from '@constants';
 import CSSModifier from '@util/CSSModifier';
-import { bloomLogo } from './images/bloom.svg';
+import bloom from './images/bloom.svg';
 
 interface LogoProps extends ClassNameProps, StyleProps {
   multiplier?: number; // Changes the size of the logo dynamically.
@@ -21,7 +21,7 @@ export default ({ className, multiplier }: LogoProps) => {
 
   return (
     <button>
-      <img alt="Bloom Logo" className={css} src={bloomLogo} style={style} />
+      <img alt="Bloom Logo" className={css} src={bloom} style={style} />
     </button>
   );
 };
