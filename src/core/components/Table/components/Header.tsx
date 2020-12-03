@@ -1,12 +1,6 @@
-/**
- * @fileoverview Component: Header
-
- */
-
 import React from 'react';
+import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
-import CaretDown from '@components/Icons/CaretDown';
-import CaretUp from '@components/Icons/CaretUp';
 import Meta from '@components/Typography/Meta';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
@@ -42,7 +36,7 @@ const HeaderCell = ({ type, id, title }: Column) => {
       <div>
         {select && <HeaderSelectOption />}
         <Meta>{title}</Meta>
-        {showCaretUp ? <CaretUp /> : <CaretDown />}
+        {showCaretUp ? <IoCaretUp /> : <IoCaretDown />}
       </div>
     </th>
   );

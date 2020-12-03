@@ -112,3 +112,7 @@
 // PATH
 
 path { color: inherit; }
+
+// SELECTION BACKGROUND
+
+*::selection { background-color: $primary-hover; }

@@ -4,10 +4,10 @@
  */
 
 import React from 'react';
+import { IoTrash } from 'react-icons/io5';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
-import Trash from '@components/Icons/Trash';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -23,6 +23,7 @@ const DeleteMembersModal = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
+
   const numMembers = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
   );
@@ -78,7 +79,7 @@ export default () => {
     <>
       <DeleteMembersModal />
       <DatabaseAction
-        Component={Trash}
+        Component={IoTrash}
         className="s-database-action--delete"
         value="Delete Admin"
         onClick={onClick}

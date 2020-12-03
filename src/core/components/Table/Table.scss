@@ -114,7 +114,7 @@ th > div > p {
 }
 
 th > div > svg {
-  fill: $gray-3;
+  color: $gray-3;
   height: 12px !important;
   margin-left: $xs;
   visibility: hidden;
@@ -128,7 +128,7 @@ th:first-of-type { z-index: 12; }
 td:last-of-type,
 th:last-of-type { width: -webkit-fill-available; }
 
-th.c-table-selected-col > div > svg { fill: $primary; visibility: visible; }
+th.c-table-selected-col > div > svg { color: $primary; visibility: visible; }
 
 th.c-table-selected-col > div > p {
   color: $primary !important;

@@ -14,9 +14,11 @@ import { UPDATE_MAILCHIMP_LIST_ID } from '../../Integrations.gql';
 export default (): UseClientRequestResult<any, object> => {
   const items = Form.useStoreState((store) => store.items);
   const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
+
   const options = useStoreState(
     ({ integrations }) => integrations?.mailchimpLists ?? []
   );
+
   const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 

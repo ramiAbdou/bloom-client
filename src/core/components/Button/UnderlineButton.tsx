@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: UnderlineButton
-
- */
-
 import React from 'react';
 
 import CSSModifier from '@util/CSSModifier';

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: PrimaryButton
-
- */
-
 import { motion } from 'framer-motion';
 import React from 'react';
 

@@ -5,10 +5,10 @@
 
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
+import { IoArrowDownCircle } from 'react-icons/io5';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
-import ArrowDownCircle from '@components/Icons/ArrowDownCircle';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -76,7 +76,7 @@ export default () => {
     <>
       <DemoteToMemberModal />
       <DatabaseAction
-        Component={ArrowDownCircle}
+        Component={IoArrowDownCircle}
         className="s-database-action--demote"
         disabled={disabled}
         value="Demote to Member"

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: MultiButton
-
- */
-
 import React from 'react';
 
 import CSSModifier from '@util/CSSModifier';
