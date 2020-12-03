@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IoCheckmark } from 'react-icons/io5';
 
 import { ClassNameProps, OnClickProps } from '@constants';
@@ -9,25 +9,22 @@ interface CheckboxProps extends ClassNameProps, OnClickProps {
 }
 
 export default ({ className, selected, onClick }: CheckboxProps) => {
-  const [isSelected, setIsSelected] = useState(false);
-
-  const onClickCheckbox = (
+  const onClickHandler = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.stopPropagation();
     if (onClick) onClick();
-    else setIsSelected(!isSelected);
   };
 
   const css = makeClass([
     'c-misc-checkbox',
-    [selected || isSelected, 'c-misc-checkbox--active'],
+    [selected, 'c-misc-checkbox--active'],
     className
   ]);
 
   return (
-    <div className={css} onClick={onClickCheckbox}>
-      {(selected || isSelected) && <IoCheckmark color="#FFF" />}
+    <div className={css} onClick={onClickHandler}>
+      {selected && <IoCheckmark color="#FFF" />}
     </div>
   );
 };

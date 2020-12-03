@@ -36,7 +36,7 @@ $PREF: 's-database-header';
   > p { width: max-content; }
 }
 
-.#{$PREF}-add-modal-email > div > div > .c-misc-checkbox { margin-right: $xs; }
+.#{$PREF}-add-modal-email > div > div > .c-misc-checkbox { margin-right: 12px; }
 .#{$PREF}-add-modal > button { margin-bottom: $md; }
 .#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
 .#{$PREF}-add-modal > div:last-of-type > button:first-of-type {

@@ -21,7 +21,7 @@ const DataCell = ({ children, type, value }: DataCellProps) => {
     [['LONG_TEXT'].includes(type), 'c-table-cell--lg']
   ]);
 
-  let content: ReactNode = value;
+  let content: ReactNode = <p>{value}</p>;
   if (type === 'MULTIPLE_CHOICE' && value) content = <Tag value={value} />;
   else if (type === 'MULTIPLE_SELECT')
     content = (
