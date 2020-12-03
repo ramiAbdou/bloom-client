@@ -1,7 +1,6 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
-import Meta from '@components/Typography/Meta';
 import { useStoreActions, useStoreState } from '@store/Store';
 import CSSModifier from '@util/CSSModifier';
 import { makeClass } from '@util/util';
@@ -35,7 +34,7 @@ const HeaderCell = ({ type, id, title }: Column) => {
     <th key={title} className={css} id={id} onClick={() => showPicker(id)}>
       <div>
         {select && <HeaderSelectOption />}
-        <Meta>{title}</Meta>
+        <p className="meta">{title}</p>
         {showCaretUp ? <IoCaretUp /> : <IoCaretDown />}
       </div>
     </th>

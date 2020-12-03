@@ -1,11 +1,5 @@
-/**
- * @fileoverview Component: DisplayingText
-
- */
-
 import React from 'react';
 
-import Meta from '@components/Typography/Meta';
 import Table from '../../Table.store';
 
 export default () => {
@@ -17,5 +11,5 @@ export default () => {
     ? `Displaying ${floor}-${ceiling} of ${numData} results.`
     : 'No results found.';
 
-  return <Meta>{message}</Meta>;
+  return <p className="meta">{message}</p>;
 };
