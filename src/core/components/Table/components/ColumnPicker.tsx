@@ -7,7 +7,7 @@ import Picker from '@components/Picker/Picker';
 import { Function, IdProps } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
-import Table from '../Table.store';
+import Table, { SortDirection } from '../Table.store';
 
 interface ColumnPickerProps extends IdProps {
   onRenameColumn?: Function;
@@ -32,8 +32,8 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
     await onRenameColumn({ id, title: value, version });
   };
 
-  const onClick = () => {
-    setSortedColumn(id);
+  const onClick = (columnDirection: SortDirection) => {
+    setSortedColumn([id, columnDirection]);
     closePicker();
   };
 
@@ -66,12 +66,12 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
         />
       )}
 
-      <Button className={ascendingCSS} onClick={onClick}>
+      <Button className={ascendingCSS} onClick={() => onClick('ASC')}>
         <IoArrowUp />
         <p>Sort Ascending</p>
       </Button>
 
-      <Button className={descendingCSS} onClick={onClick}>
+      <Button className={descendingCSS} onClick={() => onClick('DESC')}>
         <IoArrowDown />
         <p>Sort Descending</p>
       </Button>

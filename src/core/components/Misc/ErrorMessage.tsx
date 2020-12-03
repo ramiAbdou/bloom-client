@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import React from 'react';
+import { IoAlertCircleOutline } from 'react-icons/io5';
 
 import { MessageProps } from '@constants';
-import error from './images/error.svg';
 
 interface ErrorMessageProps extends MessageProps {
   marginBottom?: number;
@@ -17,7 +17,7 @@ export default ({ marginBottom, marginTop, message }: ErrorMessageProps) => (
     style={{ marginBottom, marginTop }}
     transition={{ duration: 0.2 }}
   >
-    <img alt="Error Icon" src={error} />
+    <IoAlertCircleOutline />
     <p>{message}</p>
   </motion.div>
 );

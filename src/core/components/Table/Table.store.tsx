@@ -9,7 +9,7 @@ import {
 import { toggleArrayValue } from '@util/util';
 import { Column, Row } from './Table.types';
 
-type SortDirection = 'ASC' | 'DESC';
+export type SortDirection = 'ASC' | 'DESC';
 
 /**
  * Sorts the given data by the column ID, either in an ASC or DESC fashion. All
@@ -61,7 +61,7 @@ type TableModel = {
   selectedRowIds: string[];
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
-  setSortedColumn: Action<TableModel, string>;
+  setSortedColumn: Action<TableModel, [string, SortDirection]>;
   sortedColumnDirection: SortDirection;
   sortedColumnId: string;
   toggleAllPageRows: Action<TableModel>;
@@ -156,34 +156,30 @@ export const tableModel: TableModel = {
     searchString
   })),
 
-  setSortedColumn: action(
-    (
-      {
-        columns,
-        data,
-        filteredData,
-        sortedColumnId,
-        sortedColumnDirection,
-        ...state
-      },
-      columnId
-    ) => {
-      let direction: SortDirection = sortedColumnDirection;
+  /**
+   * Sets the sorted column ID and direction of the column to be sorted.
+   */
+  setSortedColumn: action((state, [id, direction]) => {
+    const { data, filteredData, sortedColumnDirection, sortedColumnId } = state;
 
-      if (columnId === sortedColumnId)
-        direction = direction === 'ASC' ? 'DESC' : 'ASC';
-      else direction = 'ASC';
-
+    // If the column ID is the same and the direction is the same direction,
+    // we should effectively unapply the sorting.
+    if (sortedColumnId === id && direction === sortedColumnDirection) {
       return {
         ...state,
-        columns,
-        data: sortByColumn(columnId, data, direction),
-        filteredData: sortByColumn(columnId, filteredData, direction),
-        sortedColumnDirection: direction,
-        sortedColumnId: columnId
+        filteredData: data,
+        sortedColumnDirection: null,
+        sortedColumnId: null
       };
     }
-  ),
+
+    return {
+      ...state,
+      filteredData: sortByColumn(id, filteredData, direction),
+      sortedColumnDirection: direction,
+      sortedColumnId: id
+    };
+  }),
 
   sortedColumnDirection: null,
 

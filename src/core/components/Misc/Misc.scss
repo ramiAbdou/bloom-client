@@ -1,24 +1,20 @@
 $PREF: 'c-misc';
 
-// SEPARATOR
+// ## SEPARATOR
 
 .#{$PREF}-sep { border-bottom: 1px $gray-5 solid; width: 100%; }
 
-// ERROR MESSAGE. Has an icon and some text.
+// ## ERROR MESSAGE - Has an icon and some text.
 
 .#{$PREF}-error { @extend .flex; margin-bottom: $md; margin-top: $sm; }
 .#{$PREF}-error > p { color: $red; line-height: 20px; margin-top: -2px; }
-.#{$PREF}-error > img {
-  height: 18px;
-  margin-right: $xxs;
-  width: 18px;
-}
+.#{$PREF}-error > svg { color: $red; margin: -2px $xxs 0 0; }
 
 // ## BLOOM LOGO
 
 .#{$PREF}-logo { height: 18px; width: 75px; }
 
-// TAG
+// ## TAG
 
 .#{$PREF}-tag {
   @extend .primary-bg;
@@ -26,10 +22,8 @@ $PREF: 'c-misc';
   border-radius: $sm;
   color: black;
   font-size: 13px;
-  margin-left: 8px;
-  margin-right: 8px;
-  padding-left: 6px;
-  padding-right: 6px;
+  margin: 0 $xs;
+  padding: 0 6px;
   text-align: left;
   width: fit-content;
 
