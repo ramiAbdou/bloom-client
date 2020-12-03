@@ -1,17 +1,11 @@
-/**
- * @fileoverview Scene: ProfileBar
- * - Controls the ability to log out, manage membership and go to profile.
-
- */
-
 import React from 'react';
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import { useStoreActions, useStoreState } from '@store/Store';
-import ProfilePicker from './ProfilePicker';
 
 const PictureContainer = () => {
   const pictureURL = useStoreState(({ user }) => user.pictureURL);
+
   const initials = useStoreState(
     ({ user }) => `${user.firstName[0]}${user.lastName[0]}`
   );
@@ -27,6 +21,7 @@ export default () => {
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
   const type = useStoreState(({ membership }) => membership.type.name);
   const role = useStoreState(({ membership }) => membership.role);
+
   const fullName = useStoreState(
     ({ user }) => `${user.firstName} ${user.lastName}`
   );
@@ -44,7 +39,7 @@ export default () => {
         </div>
       </div>
 
-      <IoIosArrowForward color="#000" />
+      <IoChevronForwardOutline />
     </button>
   );
 };

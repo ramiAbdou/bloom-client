@@ -1,10 +1,5 @@
-/**
- * @fileoverview Component: IntegrationCard
-
- */
-
 import React, { memo } from 'react';
-import { IoIosCheckmarkCircle } from 'react-icons/io';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
@@ -55,7 +50,7 @@ export default ({
 
       {completed && (
         <div className="s-integrations-connected">
-          <IoIosCheckmarkCircle />
+          <IoCheckmarkCircle />
           <p>Connected</p>
         </div>
       )}

@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { IoIosSearch } from 'react-icons/io';
+import { IoSearch } from 'react-icons/io5';
 
 import Table from '../Table.store';
 
@@ -24,7 +24,7 @@ export default ({ placeholder }) => {
 
   return (
     <div className="c-table-search">
-      <IoIosSearch />
+      <IoSearch />
       <input
         placeholder={placeholder ?? 'Search...'}
         type="text"

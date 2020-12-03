@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoIosCheckmarkCircle } from 'react-icons/io';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import { makeClass } from '@util/util';
 
@@ -11,7 +11,7 @@ export default ({ completed, required, title }: LabelProps) => {
   return (
     <div className={css}>
       <div>
-        {completed && <IoIosCheckmarkCircle />}
+        {completed && <IoCheckmarkCircle />}
         <p>{title}</p>
       </div>
     </div>

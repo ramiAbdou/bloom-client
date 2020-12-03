@@ -1,19 +1,14 @@
-/**
- * @fileoverview Scene: Sidebar
-
- */
-
 import React, { memo } from 'react';
 import {
-  IoIosCalendar,
-  IoIosDocument,
-  IoIosGitBranch,
-  IoIosGlobe,
-  IoIosStats,
-  IoMdAdd,
-  IoMdPeople,
-  IoMdPersonAdd
-} from 'react-icons/io';
+  IoAdd,
+  IoCalendar,
+  IoExtensionPuzzle,
+  IoFolderOpen,
+  IoGlobe,
+  IoPeople,
+  IoPersonAdd,
+  IoStatsChart
+} from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 import { useStoreState } from '@store/Store';
@@ -23,14 +18,14 @@ import Sidebar, { LinkOptions } from './Sidebar.store';
 type IconProps = { to: string };
 
 const Icon = memo(({ to }: IconProps) => {
-  if (to === 'directory') return <IoMdPeople />;
-  if (to === 'events') return <IoIosCalendar />;
-  if (to === 'analytics') return <IoIosStats />;
-  if (to === 'database') return <IoIosGlobe />;
-  if (to === 'applicants') return <IoIosDocument />;
-  if (to === 'integrations') return <IoIosGitBranch />;
-  if (to === 'create-event') return <IoMdAdd />;
-  if (to === 'add-member') return <IoMdPersonAdd />;
+  if (to === 'directory') return <IoPeople />;
+  if (to === 'events') return <IoCalendar />;
+  if (to === 'analytics') return <IoStatsChart />;
+  if (to === 'database') return <IoGlobe />;
+  if (to === 'applicants') return <IoFolderOpen />;
+  if (to === 'integrations') return <IoExtensionPuzzle />;
+  if (to === 'create-event') return <IoAdd />;
+  if (to === 'add-member') return <IoPersonAdd />;
   return null;
 });
 

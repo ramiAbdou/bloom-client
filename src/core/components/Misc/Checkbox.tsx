@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IoMdCheckmark } from 'react-icons/io';
+import { IoCheckmark } from 'react-icons/io5';
 
 import { ClassNameProps, OnClickProps } from '@constants';
 import { makeClass } from '@util/util';
@@ -27,7 +27,7 @@ export default ({ className, selected, onClick }: CheckboxProps) => {
 
   return (
     <div className={css} onClick={onClickCheckbox}>
-      {(selected || isSelected) && <IoMdCheckmark color="#FFF" />}
+      {(selected || isSelected) && <IoCheckmark color="#FFF" />}
     </div>
   );
 };

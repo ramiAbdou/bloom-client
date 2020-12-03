@@ -1,11 +1,6 @@
-/**
- * @fileoverview Component: Export Data Icon
-
- */
-
 import React from 'react';
 import { CSVLink } from 'react-csv';
-import { IoIosExit } from 'react-icons/io';
+import { IoExit } from 'react-icons/io5';
 
 import Table from '@components/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -13,6 +8,7 @@ import DatabaseAction from '../DatabaseAction';
 
 export default () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+
   const filename = useStoreState(
     ({ community }) => `${community.encodedUrlName}.csv`
   );
@@ -37,7 +33,7 @@ export default () => {
       headers={headers}
       onClick={onClick}
     >
-      <DatabaseAction Component={IoIosExit} value="Export Member Data" />
+      <DatabaseAction Component={IoExit} value="Export Member Data" />
     </CSVLink>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
 import { ValueProps } from '@constants';
@@ -75,7 +75,7 @@ const BackButton = () => {
       className="c-table-pagination-arrow"
       onClick={() => page > 0 && setRange(page - 1)}
     >
-      <IoIosArrowBack />
+      <IoChevronBackOutline />
     </Button>
   );
 };
@@ -93,7 +93,7 @@ const NextButton = () => {
       className="c-table-pagination-arrow"
       onClick={() => page < numPages - 1 && setRange(page + 1)}
     >
-      <IoIosArrowForward />
+      <IoChevronForwardOutline />
     </Button>
   );
 };
