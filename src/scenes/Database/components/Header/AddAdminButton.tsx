@@ -152,8 +152,6 @@ export const AddAdminModal = () => {
       });
 
       showToast({ message: `${admins.length} admin(s) added.` });
-      clearMembers();
-
       setTimeout(closeModal, 0);
     }
   };
@@ -161,7 +159,12 @@ export const AddAdminModal = () => {
   const message = getGraphQLError(error);
 
   return (
-    <Modal className="s-database-header-add-modal" id={MODAL_ID} width={750}>
+    <Modal
+      className="s-database-header-add-modal"
+      id={MODAL_ID}
+      width={750}
+      onClose={() => clearMembers()}
+    >
       <h1>Add Admin(s)</h1>
 
       <p>

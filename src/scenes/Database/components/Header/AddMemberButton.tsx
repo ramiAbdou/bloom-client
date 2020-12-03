@@ -149,7 +149,6 @@ export const AddMemberModal = () => {
       if (result.error || !result.data) return;
 
       showToast({ message: `${members.length} members(s) invited.` });
-      clearMembers();
       setTimeout(closeModal, 0);
     }
   };
@@ -157,7 +156,12 @@ export const AddMemberModal = () => {
   const message = getGraphQLError(error);
 
   return (
-    <Modal className="s-database-header-add-modal" id={MODAL_ID} width={750}>
+    <Modal
+      className="s-database-header-add-modal"
+      id={MODAL_ID}
+      width={750}
+      onClose={() => clearMembers()}
+    >
       <h1>Add Member(s)</h1>
 
       <p>
