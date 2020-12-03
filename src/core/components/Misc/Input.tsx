@@ -50,7 +50,7 @@ export default ({
    * color. If we have a placeholder but no value, set the text to be the
    * placeholder.
    */
-  const onClick = () => {
+  const onMouseDown = () => {
     const { current } = ref;
     if (!text && placeholder) setText(placeholder);
     setTimeout(() => current.select(), 0);
@@ -81,8 +81,9 @@ export default ({
       type="text"
       value={text}
       onChange={modifiedOnChange}
-      onClick={onClick}
+      // onClick={onClick}
       onKeyDown={modifiedKeyDown}
+      onMouseDown={onMouseDown}
     />
   );
 };
