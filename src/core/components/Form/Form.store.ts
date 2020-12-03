@@ -25,7 +25,6 @@ export type FormModel = {
   isCompleted: Computed<FormModel, boolean>;
   itemCSS: string; // Represents a class string.
   items: FormItemData[];
-  next: Action<FormModel, string>;
   setSubmitForm: Action<
     FormModel,
     (
@@ -54,7 +53,6 @@ export const formatQuestions = (questions: FormItemData[]) =>
 
       return {
         ...question,
-        isActive: false,
         options,
         type,
         value: value ?? emptyValue
@@ -101,19 +99,6 @@ export const formModel: FormModel = {
   itemCSS: null,
 
   items: [],
-
-  /**
-   * Sets the active element to be the next element in the items list. This
-   * has no real effect if the next element is not a SHORT_TEXT or LONG_TEXT
-   * element.
-   */
-  next: action((state, payload) => {
-    const { items } = state;
-    const index = items.findIndex(({ title }) => title === payload);
-    items[index] = { ...items[index], isActive: false };
-    items[index + 1] = { ...items[index + 1], isActive: true };
-    return { ...state, items };
-  }),
 
   setSubmitForm: action((state, submitForm) => ({ ...state, submitForm })),
 

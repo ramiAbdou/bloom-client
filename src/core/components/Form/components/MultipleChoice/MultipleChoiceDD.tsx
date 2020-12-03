@@ -6,7 +6,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
-import useOnClickOutside from 'use-onclickoutside';
 
 import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
@@ -40,7 +39,7 @@ const AllOptions = () => {
   const { filteredOptions, setSearchString, title } = useMultipleChoiceDD();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const selectOption = (option: string) => {
-    updateItem({ isActive: false, title, value: option });
+    updateItem({ title, value: option });
     setSearchString('');
   };
 
@@ -90,22 +89,14 @@ const Value = ({ value }: ValueProps) => {
 
 const ClickBar = () => {
   const { title, setWidth } = useMultipleChoiceDD();
-  const { isActive, value } = Form.useStoreState(({ getItem }) =>
-    getItem({ title })
-  );
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const toggleActivate = () => updateItem({ isActive: !isActive, title });
+  const { value } = Form.useStoreState(({ getItem }) => getItem({ title }));
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   const width = ref?.current?.offsetWidth;
   useEffect(() => setWidth(width), [width]);
 
   return (
-    <div
-      ref={ref}
-      className="c-form-input c-form-dd-bar"
-      onClick={toggleActivate}
-    >
+    <div ref={ref} className="c-form-input c-form-dd-bar">
       <div>{value && <Value value={value} />}</div>
       <div className="c-form-dd-arrow" />
     </div>
@@ -113,19 +104,14 @@ const ClickBar = () => {
 };
 
 export default ({ options, title }: FormItemData) => {
-  const { isActive } = Form.useStoreState(({ getItem }) => getItem({ title }));
-
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const inactivate = () => updateItem({ isActive: false, title });
-
-  useOnClickOutside(ref, () => isActive && inactivate());
 
   return (
     <MultipleChoiceDDProvider options={options} title={title}>
       <div ref={ref}>
         <ClickBar />
-        {isActive && <OptionContainer />}
+        {/* {isActive && <OptionContainer />} */}
       </div>
     </MultipleChoiceDDProvider>
   );

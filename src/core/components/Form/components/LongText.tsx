@@ -4,31 +4,15 @@
  * @author Rami Abdou
  */
 
-import React, { useEffect, useRef } from 'react';
-import useOnClickOutside from 'use-onclickoutside';
+import React from 'react';
 
 import CSSModifier from '@util/CSSModifier';
 import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
 export default ({ maxCharacters, title }: FormItemData) => {
-  const isActive = Form.useStoreState(
-    ({ getItem }) => getItem({ title }).isActive
-  );
   const value = Form.useStoreState(({ getItem }) => getItem({ title }).value);
-  const next = Form.useStoreActions((store) => store.next);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-
-  const activate = () => updateItem({ isActive: true, title });
-  const inactivate = () => updateItem({ isActive: false, title });
-
-  const textareaRef: React.MutableRefObject<HTMLTextAreaElement> = useRef(null);
-
-  useEffect(() => {
-    if (isActive) textareaRef.current.focus();
-  }, [isActive]);
-
-  useOnClickOutside(textareaRef, () => isActive && inactivate());
 
   const updateText = (text: string) => {
     // If the max characters are specfied and the value is longer than that,
@@ -37,23 +21,15 @@ export default ({ maxCharacters, title }: FormItemData) => {
     updateItem({ title, value: text });
   };
 
-  const onKeyDown = async ({ keyCode }: React.KeyboardEvent<HTMLElement>) => {
-    if (keyCode === 9) next(title);
-  };
-
   const { css } = new CSSModifier()
     .class('c-form-input')
     .class('c-form-input--lg');
 
   return (
     <textarea
-      ref={textareaRef}
       className={css}
       value={value ?? ''}
       onChange={({ target }) => updateText(target.value)}
-      onClick={activate}
-      // If the user presses TAB, inactivate the current form item.
-      onKeyDown={onKeyDown}
     />
   );
 };

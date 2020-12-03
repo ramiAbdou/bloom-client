@@ -7,7 +7,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
-import useOnClickOutside from 'use-onclickoutside';
 
 import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
@@ -43,12 +42,7 @@ const NoResultsMessage = () => (
 );
 
 const AllOptions = () => {
-  const {
-    filteredOptions,
-    options,
-    setSearchString,
-    title
-  } = useDropdownMultiple();
+  const { filteredOptions, setSearchString, title } = useDropdownMultiple();
   const { value } = Form.useStoreState(({ getItem }) => getItem({ title }));
   const updateItem = Form.useStoreActions((store) => store.updateItem);
 
@@ -66,7 +60,6 @@ const AllOptions = () => {
     updateItem({
       // If we've selected all the values available, don't continue to have the
       // option container open. So we set isActive to false.
-      isActive: !isOptionNone && options.length !== result.length,
       title,
       // If the option is a None value and there are other options present, we
       // should remove them.-
@@ -117,7 +110,7 @@ const Values = ({ values }: ValueProps) => {
   ) => {
     e.stopPropagation();
     const updatedValues = [...values.slice(0, index), ...values.slice(++index)];
-    updateItem({ isActive: true, title, value: updatedValues });
+    updateItem({ title, value: updatedValues });
   };
 
   return (
@@ -137,11 +130,11 @@ const Values = ({ values }: ValueProps) => {
 
 const ClickBar = () => {
   const { title, setWidth } = useDropdownMultiple();
-  const { isActive, value: values } = Form.useStoreState(({ getItem }) =>
+  const { value: values } = Form.useStoreState(({ getItem }) =>
     getItem({ title })
   );
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const toggleActivate = () => updateItem({ isActive: !isActive, title });
+  const toggleActivate = () => updateItem({ title });
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   const width = ref?.current?.offsetWidth;
@@ -160,19 +153,13 @@ const ClickBar = () => {
 };
 
 export default ({ options, title }: FormItemData) => {
-  const { isActive } = Form.useStoreState(({ getItem }) => getItem({ title }));
-
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const inactivate = () => updateItem({ isActive: false, title });
-
-  useOnClickOutside(ref, () => isActive && inactivate());
 
   return (
     <DropdownMultipleProvider options={options} title={title}>
       <div ref={ref}>
         <ClickBar />
-        {isActive && <OptionContainer />}
+        {/* {isActive && <OptionContainer />} */}
       </div>
     </DropdownMultipleProvider>
   );

@@ -11,15 +11,8 @@ import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
 export default ({ maxCharacters, title }: FormItemData) => {
-  const isActive = Form.useStoreState(
-    ({ getItem }) => getItem({ title }).isActive
-  );
   const value = Form.useStoreState(({ getItem }) => getItem({ title }).value);
-  const next = Form.useStoreActions((store) => store.next);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-
-  const activate = () => updateItem({ isActive: true, title });
-  const inactivate = () => updateItem({ isActive: false, title });
 
   const updateText = (text: string) => {
     // If the max characters are specfied and the value is longer than that,
@@ -28,15 +21,8 @@ export default ({ maxCharacters, title }: FormItemData) => {
     updateItem({ title, value: text });
   };
 
-  const onKeyDown = (key: string) => key === 'Tab' && next(title);
-
   return (
-    <Input
-      value={value}
-      onChange={({ target }) => updateText(target.value)}
-      onClickOutside={() => isActive && inactivate()}
-      onKeyDown={onKeyDown}
-    />
+    <Input value={value} onChange={({ target }) => updateText(target.value)} />
   );
 };
 

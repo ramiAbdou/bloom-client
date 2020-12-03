@@ -9,7 +9,7 @@ import React, { ReactElement } from 'react';
 
 import Form from '@components/Form/Form.store';
 import { FormItemData } from '@components/Form/Form.types';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass, takeFirst } from '@util/util';
 import LongText from './components/LongText';
 import MultipleChoice from './components/MultipleChoice/MultipleChoice';
 import MultipleChoiceDD from './components/MultipleChoice/MultipleChoiceDD';
@@ -30,27 +30,26 @@ export default ({
 }: FormItemData) => {
   const itemCSS = Form.useStoreState((store) => store.itemCSS);
 
-  const baseProps = { required, title };
-  const optionProps = { ...baseProps, options };
-  const textProps = { ...baseProps, maxCharacters };
+  const baseProps: Partial<FormItemData> = { required, title };
+  const optionProps: Partial<FormItemData> = { ...baseProps, options };
+  const textProps: Partial<FormItemData> = { ...baseProps, maxCharacters };
 
-  let body: ReactElement = null;
+  const body: ReactElement = takeFirst([
+    [type === 'SHORT_TEXT', <ShortText {...textProps} />],
+    [type === 'LONG_TEXT', <LongText {...textProps} />],
+    [type === 'MULTIPLE_SELECT', <MultipleSelect {...optionProps} />],
+    [
+      type === 'MULTIPLE_CHOICE' && options.length >= 5,
+      <MultipleChoiceDD {...optionProps} />
+    ],
+    [type === 'MULTIPLE_CHOICE', <MultipleChoice {...optionProps} />]
+  ]);
 
-  if (type === 'SHORT_TEXT') body = <ShortText {...textProps} />;
-  else if (type === 'LONG_TEXT') body = <LongText {...textProps} />;
-  else if (type === 'MULTIPLE_SELECT')
-    body = <MultipleSelect {...optionProps} />;
-  else if (type === 'MULTIPLE_CHOICE') {
-    if (options.length >= 5) body = <MultipleChoiceDD {...optionProps} />;
-    else body = <MultipleChoice {...optionProps} />;
-  }
-
-  // Either use the custom CSS class or the default CSS, but not both.
-  const { css } = new CSSModifier().addClass(!!itemCSS, itemCSS, 'c-form-item');
+  const css = makeClass([itemCSS, itemCSS, 'c-form-item']);
 
   return (
     <div className={css}>
-      {!title && (
+      {title && (
         <Label completed={completed} required={required} title={title} />
       )}
       {description && <p className="c-form-desc">{description}</p>}

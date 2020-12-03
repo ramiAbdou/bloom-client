@@ -77,6 +77,8 @@ export default () => {
 
   return (
     <>
+      {!!message && <ErrorMessage marginTop={0} message={message} />}
+
       <PrimaryButton
         fill
         large
@@ -87,8 +89,6 @@ export default () => {
         title="Send Login Link"
         onClick={submitForm}
       />
-
-      {!!message && <ErrorMessage message={message} />}
     </>
   );
 };

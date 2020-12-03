@@ -36,7 +36,7 @@ export default ({ options, title }: FormItemData) => {
   const [selectedOption, setSelectedOption] = useState('');
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const selectOption = (option: string) => {
-    updateItem({ isActive: false, title, value: option });
+    updateItem({ title, value: option });
     setSelectedOption(option);
   };
 

@@ -8,7 +8,7 @@ $PREF: 'c-misc';
 
 // ERROR MESSAGE. Has an icon and some text.
 
-.#{$PREF}-error { @extend .flex; margin-top: $sm; }
+.#{$PREF}-error { @extend .flex; margin-bottom: $md; margin-top: $sm; }
 .#{$PREF}-error > p { color: $red; line-height: 20px; margin-top: -2px; }
 .#{$PREF}-error > img {
   height: 18px;

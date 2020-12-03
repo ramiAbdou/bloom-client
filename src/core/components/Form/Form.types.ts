@@ -29,14 +29,12 @@ export type FormQuestion = {
   // These are the only 2 required fields for every question.
   title: string;
   type: QuestionType;
-
-  validate?: (value: string) => any;
 };
 
 export interface FormItemData extends Partial<FormQuestion> {
   errorMessage?: string;
-  isActive?: boolean;
   maxCharacters?: number;
   options?: string[];
   value?: any;
+  validate?: (value: string) => any;
 }
