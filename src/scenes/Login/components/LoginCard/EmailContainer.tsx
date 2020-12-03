@@ -21,7 +21,6 @@ export default () => (
           description:
             'Or continue with your email address to receive a login link.',
           required: true,
-          title: 'Email',
           type: 'SHORT_TEXT',
           validate: (value: string) => validator.isEmail(value),
           value: 'Email'

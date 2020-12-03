@@ -6,7 +6,7 @@
  */
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
@@ -65,6 +65,7 @@ const AllOptions = () => {
       // should remove them.-
       value: result
     });
+
     setSearchString('');
   };
 
@@ -130,9 +131,11 @@ const Values = ({ values }: ValueProps) => {
 
 const ClickBar = () => {
   const { title, setWidth } = useDropdownMultiple();
+
   const { value: values } = Form.useStoreState(({ getItem }) =>
     getItem({ title })
   );
+
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const toggleActivate = () => updateItem({ title });
 
@@ -153,13 +156,14 @@ const ClickBar = () => {
 };
 
 export default ({ options, title }: FormItemData) => {
+  const [isActive, setIsActive] = useState(false);
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
 
   return (
     <DropdownMultipleProvider options={options} title={title}>
-      <div ref={ref}>
+      <div ref={ref} onClick={() => setIsActive(!isActive)}>
         <ClickBar />
-        {/* {isActive && <OptionContainer />} */}
+        {isActive && <OptionContainer />}
       </div>
     </DropdownMultipleProvider>
   );

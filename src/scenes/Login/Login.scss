@@ -54,7 +54,7 @@ $PREF: 's-login';
 
 // ## EMAIL CONTAINER (INPUT FIELD AND SUBMIT BUTTON)
 
-.#{$PREF}-form-item { margin-bottom: $sm; margin-top: $sm; width: 100%; }
+div.#{$PREF}-form-item { margin: $md 0; width: 100%; }
 .#{$PREF}-submit-btn { margin-top: 0; width: 100%; }
 
 // ## CONFIRMATION SCREEN
