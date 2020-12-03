@@ -15,10 +15,10 @@ export default () => (
           category: 'EMAIL',
           description:
             'Or continue with your email address to receive a login link.',
+          placeholder: 'Email',
           required: true,
           type: 'SHORT_TEXT',
-          validate: (value: string) => validator.isEmail(value),
-          value: 'Email'
+          validate: (value: string) => validator.isEmail(value)
         }
       ])
     }}

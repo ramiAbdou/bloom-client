@@ -16,6 +16,7 @@ export default ({
   errorMessage,
   node,
   options,
+  placeholder,
   required,
   title,
   type
@@ -24,10 +25,11 @@ export default ({
 
   const baseProps: Partial<FormItemData> = { required, title };
   const optionProps: Partial<FormItemData> = { ...baseProps, options };
+  const textProps: Partial<FormItemData> = { ...baseProps, placeholder };
 
   const body: ReactElement = takeFirst([
-    [type === 'SHORT_TEXT', <ShortText {...baseProps} />],
-    [type === 'LONG_TEXT', <LongText {...baseProps} />],
+    [type === 'SHORT_TEXT', <ShortText {...textProps} />],
+    [type === 'LONG_TEXT', <LongText {...textProps} />],
     [type === 'MULTIPLE_SELECT', <MultipleSelect {...optionProps} />],
     [
       type === 'MULTIPLE_CHOICE' && options.length >= 5,
