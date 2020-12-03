@@ -1,10 +1,3 @@
-/**
- * @fileoverview Scene: Database
-
- */
-
-import './Database.scss';
-
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 

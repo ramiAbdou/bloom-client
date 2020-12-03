@@ -1,10 +1,3 @@
-/**
- * @fileoverview Scene: PendingApplications
-
- */
-
-import './PendingApplicants.scss';
-
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
@@ -28,6 +21,7 @@ const NoPendingApplicantsMessage = () => (
 
 export default () => {
   const updateEntities = useStoreActions((actions) => actions.updateEntities);
+
   const numApplicants = useStoreState(
     ({ community }) => community?.pendingApplicants?.length
   );

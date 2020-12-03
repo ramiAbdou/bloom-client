@@ -1,10 +1,3 @@
-/**
- * @fileoverview Scene: Home
-
- */
-
-import './Home.scss';
-
 import React from 'react';
 import {
   Redirect,
@@ -29,12 +22,14 @@ import Sidebar from './components/Sidebar/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
+
   const activeEncodedUrlName = useStoreState(
     ({ community }) => community?.encodedUrlName
   );
 
   const isMember: boolean = useStoreState(({ entities }) => {
     const { communities, memberships } = entities;
+
     return Object.values(memberships.byId).some(
       ({ community }) =>
         encodedUrlName === communities.byId[community]?.encodedUrlName

@@ -1,13 +1,3 @@
-/**
- * @fileoverview Component: Modal
- * - Represents a user flow in which they use multiple screens to execute
- * something. Example: When a user wants to edit a prompt answer, a Flow
- * would open with multiple screens.
-
- */
-
-import './Modal.scss';
-
 import { AnimatePresence } from 'framer-motion';
 import React, { useMemo } from 'react';
 

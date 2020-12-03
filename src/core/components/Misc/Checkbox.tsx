@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: Checkbox
-
- */
-
-import './Misc.scss';
-
 import React, { useState } from 'react';
 import { IoMdCheckmark } from 'react-icons/io';
 

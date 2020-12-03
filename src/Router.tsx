@@ -1,11 +1,3 @@
-/**
- * @fileoverview Component: Router
- * - Core routing logic of the entire application. Nested logic should live
- * within each of the high level components. The Home route should have the
- * most nested logic within it.
-
- */
-
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -19,6 +11,11 @@ import LoginRoute from '@components/Router/LoginRoute';
 import ApplicationPage from '@scenes/Application/Application';
 import HomePage from '@scenes/Home/Home';
 
+/**
+ * Core routing logic of the entire application. Nested logic should live
+ * within each of the high level components. The Home route should have the
+ * most nested logic within it.
+ */
 export default () => (
   <Router>
     <Switch>

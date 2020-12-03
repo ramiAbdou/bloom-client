@@ -1,10 +1,3 @@
-/**
- * @fileoverview Scene: Integrations
-
- */
-
-import './Integrations.scss';
-
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 

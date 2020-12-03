@@ -1,13 +1,3 @@
-/**
- * @fileoverview Component: Picker
- * - Modal-like component that executes different actions based on the options.
- * This is similar to the Flow component, except there is only a singular
- * screen.
-
- */
-
-import './Picker.scss';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import React, {
   CSSProperties,
@@ -48,6 +38,7 @@ const Picker = ({
     // If the element doesn't exist, then just close the picker.
     if (!element) {
       closePicker();
+
       return;
     }
 
@@ -85,6 +76,7 @@ const Picker = ({
       bottom: innerHeight - (top + height),
       left: left + width + 8
     };
+
     initial = { ...initial, x: -10 };
     exit = { ...exit, x: 10 };
     animate = { ...animate, x: 0 };

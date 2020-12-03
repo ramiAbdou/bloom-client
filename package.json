@@ -6,8 +6,7 @@
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.ts",
     "postinstall": "pm2 install typescript",
     "dev": "webpack-dev-server --config ./webpack.local.config.ts",
-    "start": "pm2 start server.ts -i max",
-    "stylelint": "stylelint '**/*.scss' --fix"
+    "start": "pm2 start server.ts -i max"
   },
   "engines": {
     "node": "10.13.0"

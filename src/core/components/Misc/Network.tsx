@@ -1,11 +1,3 @@
-/**
- * @fileoverview Component: Network
- * - Network graphic from the Bloom style guide.
-
- */
-
-import './Misc.scss';
-
 import React from 'react';
 
 import { ClassNameProps, StyleProps } from '@constants';

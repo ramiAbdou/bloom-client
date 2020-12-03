@@ -1,10 +1,3 @@
-/**
- * @fileoverview Components: Label
-
- */
-
-import './Form.scss';
-
 import React from 'react';
 import { IoIosCheckmarkCircle } from 'react-icons/io';
 

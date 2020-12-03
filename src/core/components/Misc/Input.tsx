@@ -1,5 +1,3 @@
-import './Misc.scss';
-
 import React, {
   ChangeEvent,
   KeyboardEvent,

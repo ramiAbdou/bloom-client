@@ -11,7 +11,7 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import { APP, LoginError } from '@constants';
 import CSSModifier from '@util/CSSModifier';
 import URLBuilder from '@util/URLBuilder';
-import { google } from '../../images';
+import google from '../../images/google.svg';
 
 /**
  * UTILITY: Returns the login error message based on the cookie.

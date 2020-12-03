@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: Table
-
- */
-
-import './Table.scss';
-
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { Function } from '@constants';
@@ -23,9 +16,11 @@ type TableProps = { onRenameColumn?: Function };
 export default ({ onRenameColumn }: TableProps) => {
   const [height, setHeight] = useState(0);
   const windowWidth = useStoreState(({ screen }) => screen.windowWidth);
+
   const isAllPageSelected = Table.useStoreState(
     (store) => store.isAllPageSelected
   );
+
   const columns = Table.useStoreState((store) => store.columns);
 
   useEffect(() => {

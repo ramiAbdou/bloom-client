@@ -2,10 +2,7 @@
  * @fileoverview Component: Loader
  * - Hexagon-styled loader that is overlayed over the entire page when
  * something is being fetched from our API.
-
  */
-
-import './Loader.scss';
 
 import { motion } from 'framer-motion';
 import React from 'react';

@@ -1,10 +1,3 @@
-/**
- * @fileoverview Components: Form
-
- */
-
-import './Form.scss';
-
 import React, { ReactElement } from 'react';
 
 import Form from '@components/Form/Form.store';

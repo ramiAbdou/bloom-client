@@ -1,10 +1,3 @@
-/**
- * @fileoverview Scene: Login
-
- */
-
-import './Login.scss';
-
 import React from 'react';
 
 import EmailConfirmation from './components/EmailConfirmation';
@@ -13,6 +6,7 @@ import Login from './Login.store';
 
 const LoginContent = () => {
   const linkSent = Login.useStoreState((store) => store.hasLoginLinkSent);
+
   return linkSent ? <EmailConfirmation /> : <LoginCard />;
 };
 

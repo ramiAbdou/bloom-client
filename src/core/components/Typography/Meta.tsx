@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: Meta
-
- */
-
-import './Typography.scss';
-
 import React from 'react';
 
 import { ChildrenProps } from '@constants';

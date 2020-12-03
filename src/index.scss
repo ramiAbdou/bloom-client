@@ -3,6 +3,24 @@
 @import './core/scss/misc';
 @import './core/scss/spacing';
 @import './core/scss/typography';
+@import './core/components/Button/Button.scss';
+@import './core/components/Form/Form.scss';
+@import './core/components/Loader/Loader.scss';
+@import './core/components/Misc/Misc.scss';
+@import './core/components/Modal/Modal.scss';
+@import './core/components/Picker/Picker.scss';
+@import './core/components/Table/Table.scss';
+@import './core/components/Toast/Toasts.scss';
+@import './core/components/Typography/Typography.scss';
+@import './scenes/Application/Application.scss';
+@import './scenes/Database/Database.scss';
+@import './scenes/Database/components/Header/Header.scss';
+@import './scenes/Home/Home.scss';
+@import './scenes/Home/components/CommunityBar/CommunityBar.scss';
+@import './scenes/Home/components/Sidebar/Sidebar.scss';
+@import './scenes/Integrations/Integrations.scss';
+@import './scenes/Login/Login.scss';
+@import './scenes/PendingApplicants/PendingApplicants.scss';
 
 // General elements as well as the application background.
 

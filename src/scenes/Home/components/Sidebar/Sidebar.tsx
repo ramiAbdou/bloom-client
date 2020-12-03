@@ -1,10 +1,3 @@
-/**
- * @fileoverview Scene: Sidebar
-
- */
-
-import './Sidebar.scss';
-
 import React, { useEffect } from 'react';
 
 import Separator from '@components/Misc/Separator';
@@ -17,9 +10,11 @@ import useActiveTo from './useActiveTo';
 const SidebarContent = () => {
   const name = useStoreState(({ community }) => community.name);
   const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
+
   const isAdmin: boolean = useStoreState(({ entities }) => {
     const { byId: byCommunity } = entities.communities;
     const { byId: byMembership } = entities.memberships;
+
     return Object.values(byMembership).some(
       ({ community, role }) => !!role && name === byCommunity[community]?.name
     );

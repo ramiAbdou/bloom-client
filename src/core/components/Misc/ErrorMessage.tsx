@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: ErrorMessage
-
- */
-
-import './Misc.scss';
-
 import { motion } from 'framer-motion';
 import React from 'react';
 

@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: Header
-
- */
-
-import './Header.scss';
-
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -37,6 +30,7 @@ export default () => {
   const isOwner = useStoreState((store) => store.isOwner);
   const loading = Database.useStoreState((store) => store.loading);
   const { pathname } = useHistory().location;
+
   const isMembers =
     pathname.substring(pathname.lastIndexOf('/') + 1) === 'members';
 

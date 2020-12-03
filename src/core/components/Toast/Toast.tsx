@@ -1,12 +1,3 @@
-/**
- * @fileoverview Component: Toasts
- * - Bloom branded toast that slides in from the top of the screen for a few
- * seconds on confirmation of some arbitrary event.
-
- */
-
-import './Toasts.scss';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMutation } from 'graphql-hooks';
 import React, { useEffect, useState } from 'react';
