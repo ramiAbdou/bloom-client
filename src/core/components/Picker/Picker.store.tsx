@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Picker
-
- */
-
 import { Action, action, Computed, computed } from 'easy-peasy';
 
 export type PickerAction = {

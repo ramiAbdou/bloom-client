@@ -1,9 +1,3 @@
-/**
- * @fileoverview Component: ShortText
- * - Input bar that allows for a maximum character limit.
-
- */
-
 import React from 'react';
 
 import Input from '@components/Misc/Input';

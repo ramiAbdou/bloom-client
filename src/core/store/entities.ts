@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Schema
-
- */
-
 import { QuestionCategory, QuestionType } from '@constants';
 
 export type IAdmin = {

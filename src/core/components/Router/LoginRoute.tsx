@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: LoginRoute
-
- */
-
 import { useQuery } from 'graphql-hooks';
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';

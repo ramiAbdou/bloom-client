@@ -1,8 +1,3 @@
-/**
- * @fileoverview GraphQL: Signup
-
- */
-
 import { mutation, query } from 'gql-query-builder';
 
 export const GET_INTEGRATIONS = query({

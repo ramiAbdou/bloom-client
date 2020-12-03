@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Flow
-
- */
-
 import { Action, action } from 'easy-peasy';
 
 import { IdProps } from '@constants';

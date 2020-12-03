@@ -1,11 +1,5 @@
-/**
- * @fileoverview Component: MultipleChoiceDD
- * - Multiple choice case in which there are at least 5 options present.
-
- */
-
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
@@ -38,6 +32,7 @@ const Option = ({ selectOption, option }: OptionProps) => (
 const AllOptions = () => {
   const { filteredOptions, setSearchString, title } = useMultipleChoiceDD();
   const updateItem = Form.useStoreActions((store) => store.updateItem);
+
   const selectOption = (option: string) => {
     updateItem({ title, value: option });
     setSearchString('');
@@ -104,14 +99,13 @@ const ClickBar = () => {
 };
 
 export default ({ options, title }: FormItemData) => {
-  const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
+  const [isActive, setIsActive] = useState(false);
 
   return (
     <MultipleChoiceDDProvider options={options} title={title}>
-      <div ref={ref}>
+      <div onClick={() => setIsActive(!isActive)}>
         <ClickBar />
-        {/* {isActive && <OptionContainer />} */}
+        {isActive && <OptionContainer />}
       </div>
     </MultipleChoiceDDProvider>
   );

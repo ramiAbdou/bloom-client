@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: FlowContainer
- * - This controls the animation of the container of the Flow, which changes
- * for mobile and tablet/desktop.
-
- */
-
 import { motion } from 'framer-motion';
 import React, { useCallback, useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';

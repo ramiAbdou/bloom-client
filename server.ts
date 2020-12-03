@@ -1,7 +1,6 @@
 /**
  * @fileoverview Entry: Server
- * - Entry point of the application in the production environment.
-
+ * Entry point of the application in the production environment.
  */
 
 import express from 'express';

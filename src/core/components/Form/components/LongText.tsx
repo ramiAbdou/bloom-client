@@ -1,9 +1,3 @@
-/**
- * @fileoverview Component: LongText
- * - Input bar that allows for a maximum character limit.
-
- */
-
 import React from 'react';
 
 import Form from '../Form.store';

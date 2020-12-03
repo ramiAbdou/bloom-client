@@ -1,14 +1,11 @@
-/**
- * @fileoverview Component: ModalBackground
- * - The darkish overlay that lays underneath the actual modal. Has a high
- * z-index so any clicks that hit outside of the modal content will hit this
- * background.
-
- */
-
 import { motion } from 'framer-motion';
 import React from 'react';
 
+/**
+ * The darkish overlay that lays underneath the actual modal. Has a high
+ * z-index so any clicks that hit outside of the modal content will hit this
+ * background.
+ */
 export default () => (
   <motion.div
     key="c-modal-ctr"

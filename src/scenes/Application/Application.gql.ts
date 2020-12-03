@@ -1,8 +1,3 @@
-/**
- * @fileoverview GraphQL: Application
-
- */
-
 import { mutation, query } from 'gql-query-builder';
 
 export const GET_MEMBERSHIP_FORM = query({

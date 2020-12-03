@@ -1,8 +1,3 @@
-/**
- * @fileoverview Utility: Constants
-
- */
-
 import { ReactNode } from 'react';
 
 export const isProduction = process.env.NODE_ENV === 'production';

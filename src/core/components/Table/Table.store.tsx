@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Table
-
- */
-
 import {
   Action,
   action,

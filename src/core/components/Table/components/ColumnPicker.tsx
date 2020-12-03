@@ -1,9 +1,3 @@
-/**
- * @fileoverview Scene: ColumnPicker
- * - Controls the ability to log out, manage membership and go to profile.
-
- */
-
 import React, { useState } from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
@@ -28,6 +22,7 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
   const canRename = Table.useStoreState((store) => store.canRename);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
+
   const setSortedColumn = Table.useStoreActions(
     (actions) => actions.setSortedColumn
   );

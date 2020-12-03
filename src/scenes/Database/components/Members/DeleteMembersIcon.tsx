@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: Action Row
-
- */
-
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
@@ -22,9 +17,11 @@ const DeleteMembersModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
+
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
+
   const numMembers = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
   );
@@ -75,6 +72,7 @@ const DeleteMembersModal = () => {
 export default () => {
   const membershipId = useStoreState(({ membership }) => membership.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+
   const selectedSelf = Table.useStoreState(({ selectedRowIds }) =>
     selectedRowIds.includes(membershipId)
   );

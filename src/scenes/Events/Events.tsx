@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: Events
-
- */
-
 import React from 'react';
 
 export default () => {

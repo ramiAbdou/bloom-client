@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: DemoteToAdmin
-
- */
-
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';

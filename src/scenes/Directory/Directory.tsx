@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: Directory
-
- */
-
 import React from 'react';
 
 export default () => {

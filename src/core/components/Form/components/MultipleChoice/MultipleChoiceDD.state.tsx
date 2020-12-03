@@ -1,8 +1,3 @@
-/**
- * @fileoverview State: MultipleChoiceDDState
-
- */
-
 import React, { useContext, useEffect, useState } from 'react';
 
 import { FormItemData } from '@components/Form/Form.types';

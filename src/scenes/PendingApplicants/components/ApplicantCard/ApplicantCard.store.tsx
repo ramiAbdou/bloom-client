@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Applicant
-
- */
-
 import { Computed, computed, createContextStore } from 'easy-peasy';
 import moment from 'moment-timezone';
 

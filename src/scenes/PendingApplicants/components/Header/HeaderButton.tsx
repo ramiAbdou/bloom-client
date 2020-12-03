@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: Header
-
- */
-
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
 

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: Action Row
-
- */
-
 import React from 'react';
 
 import SearchBar from '@components/Table/components/SeachBar';

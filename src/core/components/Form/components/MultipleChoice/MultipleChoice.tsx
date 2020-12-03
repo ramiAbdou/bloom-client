@@ -1,9 +1,3 @@
-/**
- * @fileoverview Component: MultipleChoice
- * - Multiple choice case in which there are less than 5 options present.
-
- */
-
 import React, { useState } from 'react';
 
 import { OnClickProps } from '@constants';

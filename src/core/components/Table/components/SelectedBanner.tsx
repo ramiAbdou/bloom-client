@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: SelectedBanner
-
- */
-
 import React from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
@@ -10,9 +5,11 @@ import Table from '../Table.store';
 
 const BannerButton = () => {
   const numMembers = Table.useStoreState(({ data }) => data.length);
+
   const numFilteredMembers = Table.useStoreState(
     (store) => store.filteredData.length
   );
+
   const toggleAllRows = Table.useStoreActions((store) => store.toggleAllRows);
   const isAllSelected = Table.useStoreState((store) => store.isAllSelected);
 
@@ -28,6 +25,7 @@ const BannerButton = () => {
 
 const BannerMessage = () => {
   const numTotalMembers = Table.useStoreState(({ data }) => data.length);
+
   const numSelectedMembers = Table.useStoreState(
     (store) => store.selectedRowIds.length
   );

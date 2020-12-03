@@ -6,7 +6,6 @@
  * eslint-plugin-react-hooks, which are good for React TS applications.
  * eslint-config-prettier is needed to prevent formatting conflicts between
  * eslint and prettier.
-
  */
 
 module.exports = {

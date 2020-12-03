@@ -1,9 +1,3 @@
-/**
- * @fileoverview Scene: ProfileBar
- * - Controls the ability to log out, manage membership and go to profile.
-
- */
-
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import { useHistory } from 'react-router-dom';

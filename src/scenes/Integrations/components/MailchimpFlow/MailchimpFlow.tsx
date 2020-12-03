@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: Mailchimp Flow
-
- */
-
 import React from 'react';
 
 import Form, { formatQuestions, formModel } from '@components/Form/Form.store';

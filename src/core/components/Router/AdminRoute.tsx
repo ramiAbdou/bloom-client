@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: AdminRoute
-
- */
-
 import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
@@ -17,6 +12,7 @@ import { useStoreState } from '@store/Store';
 export default ({ component, ...rest }: RouteProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
   const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
+
   const isAdmin: boolean = useStoreState(({ entities }) => {
     const { byId: byCommunity } = entities.communities;
     const { byId: byMembership } = entities.memberships;

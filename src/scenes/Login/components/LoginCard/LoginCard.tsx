@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: LoginCard
-
- */
-
 import React from 'react';
 
 import Logo from '@components/Misc/Logo';

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Toast
-
- */
-
 import { Action, action } from 'easy-peasy';
 import { UseClientRequestOptions } from 'graphql-hooks';
 

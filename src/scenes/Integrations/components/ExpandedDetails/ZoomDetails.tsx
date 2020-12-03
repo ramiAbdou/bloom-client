@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: Zoom Details
-
- */
-
 import React from 'react';
 
 import { useStoreState } from '@store/Store';

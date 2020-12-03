@@ -2,7 +2,6 @@
  * @fileoverview Config: Stylelint
  * - Standarized linting for all CSS and SASS files. Most importantly,
  * alphabetical ordering of properties in all CSS classes.
-
  */
 
 module.exports = {

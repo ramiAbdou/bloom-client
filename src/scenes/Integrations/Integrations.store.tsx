@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Integrations
-
- */
-
 import { Action, action, createContextStore } from 'easy-peasy';
 
 export type IntegrationsModal =

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: Mailchimp Details
-
- */
-
 import React from 'react';
 
 import { useStoreState } from '@store/Store';

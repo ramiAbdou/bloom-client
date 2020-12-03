@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: AddMemberButton
-
- */
-
 import { useMutation } from 'graphql-hooks';
 import React, { memo } from 'react';
 

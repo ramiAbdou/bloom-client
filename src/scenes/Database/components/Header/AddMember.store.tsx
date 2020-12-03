@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: AddMember
-
- */
-
 import {
   Action,
   action,

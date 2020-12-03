@@ -1,9 +1,3 @@
-/**
- * @fileoverview Types: Form
- * - Builds interfaces and types for all Form components.
-
- */
-
 import { ReactNode } from 'react';
 
 import { QuestionCategory, QuestionType } from '@constants';

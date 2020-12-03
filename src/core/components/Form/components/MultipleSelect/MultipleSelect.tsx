@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: Dropdown
- * - Dropdown option in a form where a user chooses between different values.
- * Can only select 1 option.
-
- */
-
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 

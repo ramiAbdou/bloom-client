@@ -1,7 +1,3 @@
-/**
- * @fileoverview Store: Application
- */
-
 import { Action, action, createContextStore } from 'easy-peasy';
 
 export type ApplicationModel = {

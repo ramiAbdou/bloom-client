@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Database
-
- */
-
 import { Action, action, createContextStore } from 'easy-peasy';
 
 type DatabaseModel = {

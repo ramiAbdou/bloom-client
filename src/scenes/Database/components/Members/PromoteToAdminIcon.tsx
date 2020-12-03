@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: PromoteToAdmin
-
- */
-
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import { IoArrowUpCircle } from 'react-icons/io5';
@@ -22,9 +17,11 @@ const MODAL_ID = 'CONFIRM_PROMOTE_TO_ADMIN';
 const PromoteToAdminModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
+
   const numMembersPromoted = membershipIds.length;
 
   const { push } = useHistory();
@@ -33,6 +30,7 @@ const PromoteToAdminModal = () => {
   const onPromote = async () => {
     const { error } = await toggleAdmin({ variables: { membershipIds } });
     if (error) return;
+
     showToast({
       message: `${numMembersPromoted} member(s) promoted to admin.`
     });
@@ -63,9 +61,11 @@ const PromoteToAdminModal = () => {
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const membershipId = useStoreState(({ membership }) => membership.id);
+
   const tooManySelected = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
   );
+
   const selfSelected = Table.useStoreState(({ selectedRowIds }) =>
     selectedRowIds.includes(membershipId)
   );

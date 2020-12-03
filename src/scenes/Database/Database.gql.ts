@@ -1,8 +1,3 @@
-/**
- * @fileoverview GraphQL: Database
-
- */
-
 import { mutation, query } from 'gql-query-builder';
 
 export const DELETE_MEMBERSHIPS = mutation({

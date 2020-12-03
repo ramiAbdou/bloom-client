@@ -1,8 +1,3 @@
-/**
- * @fileoverview Utility: General
-
- */
-
 import { APIError } from 'graphql-hooks';
 import moment from 'moment-timezone';
 import { normalize, Schema } from 'normalizr';
@@ -168,5 +163,6 @@ export const uuid = () =>
     const r = (Math.random() * 16) | 0,
       // eslint-disable-next-line no-bitwise
       v = c === 'x' ? r : (r & 0x3) | 0x8;
+
     return v.toString(16);
   });

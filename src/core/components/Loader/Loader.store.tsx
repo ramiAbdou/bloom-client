@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Loader
-
- */
-
 import { Action, action } from 'easy-peasy';
 
 export type LoaderModel = {

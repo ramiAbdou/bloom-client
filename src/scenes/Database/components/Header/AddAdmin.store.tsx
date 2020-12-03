@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: AddAdmin
-
- */
-
 import {
   Action,
   action,

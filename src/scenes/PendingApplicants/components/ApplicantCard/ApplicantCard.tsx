@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: ApplicantCard
-
- */
-
 import React, { memo } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Config: Webpack (Production)
-
- */
-
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';

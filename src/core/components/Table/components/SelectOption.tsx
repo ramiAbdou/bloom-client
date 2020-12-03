@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: Checkbox
-
- */
-
 import React from 'react';
 
 import Checkbox from '@components/Misc/Checkbox';
@@ -13,9 +8,11 @@ export const HeaderSelectOption = () => {
   const isAllPageSelected = Table.useStoreState(
     (state) => state.isAllPageSelected
   );
+
   const toggleAllPageRows = Table.useStoreActions(
     (actions) => actions.toggleAllPageRows
   );
+
   const onClick = () => toggleAllPageRows();
 
   return (

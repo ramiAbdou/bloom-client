@@ -3,7 +3,6 @@
  * - Defines the normalizr schema needed to normalize all of the data based
  * on the relationships of the data. Structures in a way that is very similar
  * to the actual PostgreSQL DB.
-
  */
 
 /* eslint-disable @typescript-eslint/no-use-before-define */

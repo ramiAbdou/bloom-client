@@ -1,8 +1,3 @@
-/**
- * @fileoverview Types: Table
-
- */
-
 import { QuestionCategory, QuestionType } from '@constants';
 
 export type Column = {

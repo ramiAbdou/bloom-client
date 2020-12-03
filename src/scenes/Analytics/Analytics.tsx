@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: Analytics
-
- */
-
 import React from 'react';
 
 export default () => {

@@ -1,8 +1,3 @@
-/**
- * @fileoverview State: DropdownMultiple
-
- */
-
 import React, { useContext, useEffect, useState } from 'react';
 
 import Form from '@components/Form/Form.store';

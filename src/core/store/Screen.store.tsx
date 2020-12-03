@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Screen
-
- */
-
 import { Action, action, Computed, computed } from 'easy-peasy';
 
 type Breakpoint = 'D' | 'T' | 'M';

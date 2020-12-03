@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: DatabaseAction
-
- */
-
 import React, { FC, memo } from 'react';
 
 import Button from '@components/Button/Button';

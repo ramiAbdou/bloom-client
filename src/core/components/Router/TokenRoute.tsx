@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: TokenRoute
-
- */
-
 import { query } from 'gql-query-builder';
 import { useQuery } from 'graphql-hooks';
 import React from 'react';
@@ -21,6 +16,7 @@ type TokenRouteProps = { token: string };
 
 export default ({ token }: TokenRouteProps) => {
   const { push } = useHistory();
+
   const { data, loading } = useQuery(VERIFY_LOGIN_TOKEN, {
     variables: { loginToken: token }
   });

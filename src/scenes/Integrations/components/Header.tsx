@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: Header
-
- */
-
 import React, { memo } from 'react';
 
 import Spinner from '@components/Loader/Spinner';

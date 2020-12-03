@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: Action Row
-
- */
-
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 

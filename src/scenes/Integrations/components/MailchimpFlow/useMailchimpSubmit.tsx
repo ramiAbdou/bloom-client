@@ -1,8 +1,3 @@
-/**
- * @fileoverview Hook: Mailchimp Submit
-
- */
-
 import { UseClientRequestResult, useMutation } from 'graphql-hooks';
 import { useEffect } from 'react';
 

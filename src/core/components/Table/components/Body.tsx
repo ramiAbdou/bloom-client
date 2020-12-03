@@ -1,9 +1,3 @@
-/**
- * @fileoverview Component: Body
- * - Represents the DATA of the table.
-
- */
-
 import moment from 'moment-timezone';
 import React, { ReactNode } from 'react';
 

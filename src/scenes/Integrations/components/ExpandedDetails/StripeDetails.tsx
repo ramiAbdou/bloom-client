@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: Stripe Details
-
- */
-
 import React from 'react';
 
 import { useStoreState } from '@store/Store';

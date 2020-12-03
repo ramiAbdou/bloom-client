@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: Expanded Details
-
- */
-
 import React, { memo, useEffect } from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
