@@ -20,10 +20,6 @@ const MemberTable = () => {
     return community.members?.map((memberId: string) => byId[memberId]);
   });
 
-  const clearSelectedRows = Table.useStoreActions(
-    (actions) => actions.clearSelectedRows
-  );
-
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
   const rows: Row[] = useStoreState(({ entities, community }) => {
@@ -44,7 +40,6 @@ const MemberTable = () => {
   // data if the number of members doesn't change.
   useEffect(() => {
     updateData(rows);
-    clearSelectedRows();
   }, [rows?.length]);
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);

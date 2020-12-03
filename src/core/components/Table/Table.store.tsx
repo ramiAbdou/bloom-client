@@ -47,7 +47,6 @@ const sortByColumn = (
 
 type TableModel = {
   canRename: boolean;
-  clearSelectedRows: Action<TableModel>;
   columns: Column[];
   data: Row[];
   filteredData: Row[];
@@ -73,8 +72,6 @@ type TableModel = {
 
 export const tableModel: TableModel = {
   canRename: true,
-
-  clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
 
   columns: [],
 
@@ -231,7 +228,8 @@ export const tableModel: TableModel = {
   updateData: action((state, data: Row[]) => ({
     ...state,
     data,
-    filteredData: data
+    filteredData: data,
+    selectedRowIds: []
   }))
 };
 

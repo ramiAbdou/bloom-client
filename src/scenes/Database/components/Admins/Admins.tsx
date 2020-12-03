@@ -19,10 +19,6 @@ const AdminTable = () => {
     return community.admins?.map((adminId: string) => byId[adminId]);
   });
 
-  const clearSelectedRows = Table.useStoreActions(
-    (actions) => actions.clearSelectedRows
-  );
-
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
   // Used primarily for the removal of members. This will not update the
@@ -39,7 +35,6 @@ const AdminTable = () => {
     );
 
     updateData(data);
-    clearSelectedRows();
   }, [admins?.length]);
 
   return <TableContent />;
