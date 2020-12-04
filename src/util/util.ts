@@ -119,7 +119,7 @@ export const makeClass = (
 export const takeFirst = (arr: ([boolean, any] | any)[]) => {
   for (let i = 0; i < arr.length; i++) {
     const element = arr[i];
-    if (!Array.isArray(element)) return element;
+    if (!Array.isArray(element) && !!element) return element;
     if (element[0]) return element[1];
   }
 

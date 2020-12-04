@@ -1,5 +1,6 @@
 import { useMutation } from 'graphql-hooks';
 import React, { memo } from 'react';
+import shallowequal from 'shallowequal';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
@@ -10,60 +11,48 @@ import Input from '@components/Misc/Input';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { getGraphQLError, makeClass } from '@util/util';
+import { getGraphQLError, makeClass, takeFirst } from '@util/util';
 import { CREATE_MEMBERSHIPS } from '../../Database.gql';
 import AddMember from './AddMember.store';
 
 const MODAL_ID = 'ADD_MEMBERS';
 
 const AddMemberInput = memo(({ id }: IdProps) => {
+  const isOwner = useStoreState((store) => store.isOwner);
+
   const isShowingErrors = AddMember.useStoreState(
     (store) => store.isShowingErrors
   );
 
-  const admin = AddMember.useStoreState((store) => store.getMember(id)?.admin);
-  const email = AddMember.useStoreState((store) => store.getMember(id)?.email);
-
-  const emailError = AddMember.useStoreState(
-    (store) => store.getMember(id)?.emailError
-  );
-
-  const firstName = AddMember.useStoreState(
-    (store) => store.getMember(id)?.firstName
-  );
-
-  const firstNameError = AddMember.useStoreState(
-    (store) => store.getMember(id)?.firstNameError
-  );
-
-  const lastName = AddMember.useStoreState(
-    (store) => store.getMember(id)?.lastName
-  );
-
-  const lastNameError = AddMember.useStoreState(
-    (store) => store.getMember(id)?.lastNameError
-  );
+  const {
+    admin,
+    email,
+    emailError,
+    firstName,
+    firstNameError,
+    lastName,
+    lastNameError
+  } = AddMember.useStoreState((store) => store.getMember(id), shallowequal);
 
   const updateMember = AddMember.useStoreActions((store) => store.updateMember);
   const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);
-  const isOwner = useStoreState((store) => store.isOwner);
 
   const css = makeClass([
     's-database-header-add-modal-email',
     [emailError, 's-database-header-add-modal-email--error']
   ]);
 
-  let message: string;
-
-  if (
-    (firstNameError && lastNameError) ||
-    (firstNameError && emailError) ||
-    (lastNameError && emailError)
-  )
-    message = 'Please fix the errors with the fields above.';
-  else if (firstNameError) message = firstNameError;
-  else if (lastNameError) message = lastNameError;
-  else if (emailError) message = emailError;
+  const message: string = takeFirst([
+    [
+      (firstNameError && lastNameError) ||
+        (firstNameError && emailError) ||
+        (lastNameError && emailError),
+      'Please fix the errors with the fields above.'
+    ],
+    firstNameError,
+    lastNameError,
+    emailError
+  ]);
 
   return (
     <div className={css}>

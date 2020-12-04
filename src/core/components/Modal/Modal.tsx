@@ -1,5 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import React, { useMemo } from 'react';
+import { createPortal } from 'react-dom';
 
 import {
   ChildrenProps,
@@ -39,12 +40,12 @@ export default ({
   ]);
 
   const css = makeClass([
-    'c-modal-content',
+    'c-modal',
     [confirmation, 'c-modal--confirmation'],
     className
   ]);
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {shouldShowModal && (
         <>
@@ -54,6 +55,7 @@ export default ({
           </ModalContainer>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };

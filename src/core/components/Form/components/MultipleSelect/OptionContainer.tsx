@@ -92,8 +92,6 @@ export default () => {
     (store) => !store.filteredOptions.length
   );
 
-  console.log(isOpen);
-
   return (
     <AnimatePresence>
       {isOpen && (

@@ -9,6 +9,8 @@ import {
 
 import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
+import AddMember from '@scenes/Database/components/Header/AddMember.store';
+import { AddMemberModal } from '@scenes/Database/components/Header/AddMemberButton';
 import CommunityBar from '@scenes/Home/components/CommunityBar/CommunityBar';
 import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
@@ -85,5 +87,9 @@ export default () => (
     </div>
 
     <ProfilePicker />
+
+    <AddMember.Provider>
+      <AddMemberModal />
+    </AddMember.Provider>
   </AuthenticatedCommunityWrapper>
 );

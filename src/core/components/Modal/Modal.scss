@@ -2,7 +2,7 @@ $PREF: 'c-modal';
 
 // ## MODAL BACKGROUND (DARK OPACITY)
 
-.#{$PREF}-ctr {
+.#{$PREF}-bg {
   @extend .full-screen;
 
   backdrop-filter: blur(2px);
@@ -12,7 +12,7 @@ $PREF: 'c-modal';
 
 // ## MODAL CONTAINER
 
-.#{$PREF} {
+.#{$PREF}-ctr {
   background-color: white;
   bottom: calc(-50vh + 50%);
   box-sizing: border-box;
@@ -31,10 +31,10 @@ $PREF: 'c-modal';
 
 // ## MODAL CONTENT
 
-.#{$PREF}-content { max-height: inherit; padding: $md; }
+.#{$PREF} { max-height: inherit; padding: $md; }
 
 // All modals will have an h1 tag, which will be standardized everywhere.
-.#{$PREF}-content > h1 { color: $primary; margin-bottom: $sm; }
+.#{$PREF} > h1 { color: $primary; margin-bottom: $sm; }
 
 // ## CONFIRMATION MODAL
 

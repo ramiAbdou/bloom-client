@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 
 import Separator from '@components/Misc/Separator';
-import { useStoreState } from '@store/Store';
+import AddMemberStore from '@scenes/Database/components/Header/AddMember.store';
+import { AddMemberModal } from '@scenes/Database/components/Header/AddMemberButton';
+import { useStoreActions, useStoreState } from '@store/Store';
 import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';
 import SidebarLink from './SidebarLink';
@@ -10,6 +12,7 @@ import useActiveTo from './useActiveTo';
 const SidebarContent = () => {
   const name = useStoreState(({ community }) => community.name);
   const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isAdmin: boolean = useStoreState(({ entities }) => {
     const { byId: byCommunity } = entities.communities;
@@ -39,11 +42,6 @@ const SidebarContent = () => {
     { title: 'Integrations', to: 'integrations' }
   ];
 
-  const actionLinks: LinkOptions[] = [
-    { title: 'Create Event', to: 'create-event' },
-    { title: 'Add Member', to: 'add-member' }
-  ];
-
   return (
     <div className="s-home-sidebar">
       <h2>{name}</h2>
@@ -69,9 +67,12 @@ const SidebarContent = () => {
         {isDesktop && isAdmin && (
           <div className="s-home-sidebar-section">
             <p>Quick Actions</p>
-            {actionLinks.map((link) => (
-              <SidebarLink key={link.to} {...link} />
-            ))}
+            <SidebarLink title="Create Event" to="create-event" />
+            <SidebarLink
+              title="Add Member"
+              to="add-member"
+              onClick={() => showModal('ADD_MEMBERS')}
+            />
           </div>
         )}
       </div>
@@ -85,5 +86,9 @@ const SidebarContent = () => {
 export default () => (
   <Sidebar.Provider>
     <SidebarContent />
+
+    <AddMemberStore.Provider>
+      <AddMemberModal />
+    </AddMemberStore.Provider>
   </Sidebar.Provider>
 );

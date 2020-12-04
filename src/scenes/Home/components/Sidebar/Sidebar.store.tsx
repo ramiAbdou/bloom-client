@@ -6,7 +6,12 @@ import {
   createContextStore
 } from 'easy-peasy';
 
-export type LinkOptions = { to: string; title: string };
+import { OnClickProps } from '@constants';
+
+export interface LinkOptions extends OnClickProps {
+  to: string;
+  title: string;
+}
 
 type SidebarModel = {
   activeTo: string; // Represents the "to" that is active.

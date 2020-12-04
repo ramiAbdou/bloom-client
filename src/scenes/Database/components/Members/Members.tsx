@@ -10,8 +10,6 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { GET_DATABASE, RENAME_QUESTION } from '../../Database.gql';
 import Database from '../../Database.store';
-import AddMemberStore from '../Header/AddMember.store';
-import { AddMemberModal } from '../Header/AddMemberButton';
 import ActionRow from './ActionRow';
 
 const MemberTable = () => {
@@ -94,15 +92,9 @@ export default () => {
   if (loading || !questions?.length) return null;
 
   return (
-    <>
-      <Table.Provider runtimeModel={{ ...tableModel, columns: questions }}>
-        <ActionRow />
-        <MemberTable />
-      </Table.Provider>
-
-      <AddMemberStore.Provider>
-        <AddMemberModal />
-      </AddMemberStore.Provider>
-    </>
+    <Table.Provider runtimeModel={{ ...tableModel, columns: questions }}>
+      <ActionRow />
+      <MemberTable />
+    </Table.Provider>
   );
 };

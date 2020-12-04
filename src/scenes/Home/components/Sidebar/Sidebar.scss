@@ -1,7 +1,5 @@
 $PREF: 's-home-sidebar';
 
-// ## SIDEBAR
-
 .#{$PREF} {
   @extend .flex-col;
 
@@ -35,6 +33,7 @@ $PREF: 's-home-sidebar';
   border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
   color: black;
+  justify-content: left;
   margin: $xs 0;
   padding: $xs $xxs $xs $sm;
   text-align: left;
