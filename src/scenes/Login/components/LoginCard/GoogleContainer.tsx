@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
 import React from 'react';
+import URLBuilder from 'util/URLBuilder';
 
 import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { APP, LoginError } from '@constants';
-import URLBuilder from '@util/URLBuilder';
 import { makeClass } from '@util/util';
 import google from '../../images/google.svg';
 

@@ -15,7 +15,7 @@
       "@hooks/*": ["core/hooks/*"],
       "@scenes/*": ["scenes/*"],
       "@store/*": ["core/store/*"],
-      "@util/*": ["core/util/*"]
+      "@util/*": ["util/*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,

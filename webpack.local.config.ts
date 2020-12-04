@@ -1,3 +1,4 @@
+import { TsConfigPathsPlugin } from 'awesome-typescript-loader';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -73,14 +74,7 @@ export default {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    alias: {
-      '@components': path.resolve(__dirname, 'src/core/components/'),
-      '@constants': path.resolve(__dirname, 'src/core/constants.ts'),
-      '@hooks': path.resolve(__dirname, 'src/core/hooks/'),
-      '@scenes': path.resolve(__dirname, 'src/scenes/'),
-      '@store': path.resolve(__dirname, 'src/core/store/'),
-      '@util': path.resolve(__dirname, 'src/core/util/')
-    },
-    extensions: ['.ts', '.tsx', '.js', '.scss']
+    extensions: ['.ts', '.tsx', '.js', '.scss'],
+    plugins: [new TsConfigPathsPlugin()]
   }
 };
