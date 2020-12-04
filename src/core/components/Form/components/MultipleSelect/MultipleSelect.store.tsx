@@ -10,7 +10,7 @@ export type MultipleSelectModel = {
   options: string[];
   openOptions: Action<MultipleSelectModel>;
   searchString: string;
-  setFilteredOptions: Action<MultipleSelectModel, string[]>;
+  removeOption: Action<MultipleSelectModel, string[]>;
   setSearchString: Action<MultipleSelectModel, string>;
   setWidth: Action<MultipleSelectModel, number>;
   title: string;
@@ -36,12 +36,17 @@ export const multipleSelectModel: MultipleSelectModel = {
 
   options: [],
 
-  searchString: '',
+  removeOption: action(
+    ({ options, ...state }, nonFilteredValues: string[]) => ({
+      ...state,
+      filteredOptions: options.filter(
+        (option: string) => !nonFilteredValues.includes(option)
+      ),
+      options
+    })
+  ),
 
-  setFilteredOptions: action((state, filteredOptions: string[]) => ({
-    ...state,
-    filteredOptions
-  })),
+  searchString: '',
 
   setSearchString: action(({ options, ...state }, searchString: string) => ({
     ...state,

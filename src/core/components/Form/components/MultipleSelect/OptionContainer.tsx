@@ -37,8 +37,8 @@ const AllOptions = () => {
     (store) => store.filteredOptions
   );
 
-  const setFilteredOptions = MultipleSelect.useStoreActions(
-    (store) => store.setFilteredOptions
+  const removeOption = MultipleSelect.useStoreActions(
+    (store) => store.removeOption
   );
 
   const value = Form.useStoreState(({ getItem }) => getItem({ title }).value);
@@ -67,11 +67,9 @@ const AllOptions = () => {
       value: result
     });
 
-    setFilteredOptions(filteredOptions.filter((element) => element !== option));
+    removeOption(result);
     setSearchString('');
   };
-
-  console.log('HERE');
 
   return (
     <>
@@ -90,11 +88,11 @@ export default () => {
   const isOpen = MultipleSelect.useStoreState((store) => store.isOpen);
   const width = MultipleSelect.useStoreState((store) => store.width);
 
-  console.log(isOpen);
-
   const noOptionsFound = MultipleSelect.useStoreState(
     (store) => !store.filteredOptions.length
   );
+
+  console.log(isOpen);
 
   return (
     <AnimatePresence>

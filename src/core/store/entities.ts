@@ -55,19 +55,17 @@ export type IMembership = {
   community: string;
   id: string;
   role: 'ADMIN' | 'OWNER';
-  type: IMembershipType;
+  type: { name: string };
 };
 
-type IMembershipType = { name: string };
-
-export type UnresolvedApplicantData = { questionId: string; value: string };
-export type ResolvedApplicantData = {
-  question: IMembershipQuestion;
+export type ApplicantData = {
+  question?: IMembershipQuestion;
+  questionId?: string;
   value: string;
 };
 
 export type IPendingApplicant = {
-  applicantData: UnresolvedApplicantData[] | ResolvedApplicantData[];
+  applicantData: ApplicantData[];
   createdAt: string;
   id: string;
 };

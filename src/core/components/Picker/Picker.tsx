@@ -10,6 +10,7 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { makeClass } from '@util/util';
 
 interface PickerProps
   extends ChildrenProps,
@@ -38,7 +39,6 @@ const Picker = ({
     // If the element doesn't exist, then just close the picker.
     if (!element) {
       closePicker();
-
       return;
     }
 
@@ -51,8 +51,9 @@ const Picker = ({
       clientX > offsetLeft + offsetWidth ||
       clientY < offsetTop ||
       clientY > offsetTop + offsetHeight
-    )
+    ) {
       closePicker();
+    }
   });
 
   useEffect(() => {}, [window.innerWidth]);
@@ -93,11 +94,13 @@ const Picker = ({
 
   // ## END: CALCULATE PICKER COORDINATES
 
+  const css = makeClass(['c-picker', [className, className]]);
+
   return (
     <motion.div
       ref={ref}
       animate={animate}
-      className={`c-picker ${className || ''}`}
+      className={css}
       exit={exit}
       initial={initial}
       style={{ ...positionStyle, ...style }}
