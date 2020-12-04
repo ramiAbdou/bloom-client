@@ -10,10 +10,8 @@ export default ({ completed, required, title }: LabelProps) => {
 
   return (
     <div className={css}>
-      <div>
-        {completed && <IoCheckmarkCircle />}
-        <p>{title}</p>
-      </div>
+      {completed && <IoCheckmarkCircle />}
+      <p>{title}</p>
     </div>
   );
 };

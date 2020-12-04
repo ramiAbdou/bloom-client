@@ -222,8 +222,8 @@ td:first-of-type > div { @extend .flex-ac; }
 // Added a div before the name to make it take higher precedence.
 div.#{$PREF}-col-picker { @extend .shadow--2; padding: $sm; }
 .#{$PREF}-col-picker > input {
-  @extend .c-form-input;
-  @extend .c-form-input--gray;
+  @extend .c-misc-input;
+  @extend .c-misc-input--gray;
 
   margin-bottom: $sm;
 }

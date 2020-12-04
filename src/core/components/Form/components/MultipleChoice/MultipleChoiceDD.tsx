@@ -91,7 +91,7 @@ const ClickBar = () => {
   useEffect(() => setWidth(width), [width]);
 
   return (
-    <div ref={ref} className="c-form-input c-form-dd-bar">
+    <div ref={ref} className="c-misc-input c-form-dd-bar">
       <div>{value && <Value value={value} />}</div>
       <div className="c-form-dd-arrow" />
     </div>

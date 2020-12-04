@@ -21,7 +21,7 @@ const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
       <div>
         <div />
       </div>
-      <p className="c-form-choice-txt">{option}</p>
+      <p className="c-misc-tag">{option}</p>
     </button>
   );
 };
