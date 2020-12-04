@@ -1,8 +1,8 @@
 import React from 'react';
 import validator from 'validator';
 
-import FormContent from '@components/Form/components/FormContent';
 import Form, { formatQuestions, formModel } from '@components/Form/Form.store';
+import FormContent from '@components/Form/FormContent';
 import SubmitButton from './SubmitButton';
 
 export default () => (

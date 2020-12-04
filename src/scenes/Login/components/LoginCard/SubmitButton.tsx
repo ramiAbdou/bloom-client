@@ -11,7 +11,7 @@ import { SEND_TEMPORARY_LOGIN_LINK } from '../../Login.gql';
 import Login from '../../Login.store';
 
 /**
- * UTILITY: Returns the login error message based on the cookie.
+ * Returns the login error message based on the cookie.
  */
 const getLoginErrorMessage = (error: LoginError) => {
   if (error === 'USER_NOT_FOUND')
@@ -79,9 +79,7 @@ export default () => {
       {!!message && <ErrorMessage marginTop={0} message={message} />}
 
       <PrimaryButton
-        fill
         large
-        className="s-login-submit-btn"
         disabled={!isCompleted}
         loading={loading}
         loadingText="Sending Link..."

@@ -3,12 +3,12 @@ import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
 import PrimaryButton from '@components/Button/PrimaryButton';
-import FormContent from '@components/Form/components/FormContent';
 import Form, {
   formatQuestions,
   formModel,
   parseValue
 } from '@components/Form/Form.store';
+import FormContent from '@components/Form/FormContent';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';

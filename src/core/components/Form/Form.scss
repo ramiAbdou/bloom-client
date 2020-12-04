@@ -5,7 +5,7 @@ $PREF: 'c-form';
 // ## GENERAL
 
 .#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
-.#{$PREF}-desc { margin-bottom: $sm; }
+.#{$PREF}-desc { margin-bottom: $xs; }
 .#{$PREF}-error { color: $red; margin-top: $xxs; }
 
 // ## LABEL

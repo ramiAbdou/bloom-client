@@ -49,8 +49,7 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
     'c-table-col-picker-button--active'
   ]);
 
-  const onKeyDown = async (key: string) => {
-    if (key !== 'Enter') return;
+  const onEnter = async () => {
     await renameColumn();
     closePicker();
   };
@@ -62,7 +61,7 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
           value={value}
           onChange={({ target }) => setValue(target.value)}
           onClickOutside={renameColumn}
-          onKeyDown={onKeyDown}
+          onEnter={onEnter}
         />
       )}
 

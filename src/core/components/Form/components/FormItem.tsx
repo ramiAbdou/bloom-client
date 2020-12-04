@@ -3,12 +3,12 @@ import React, { ReactElement } from 'react';
 import Form from '@components/Form/Form.store';
 import { FormItemData } from '@components/Form/Form.types';
 import { makeClass, takeFirst } from '@util/util';
-import LongText from './components/LongText';
-import MultipleChoice from './components/MultipleChoice/MultipleChoice';
-import MultipleChoiceDD from './components/MultipleChoice/MultipleChoiceDD';
-import MultipleSelect from './components/MultipleSelect/MultipleSelect';
-import ShortText from './components/ShortText';
-import Label from './Label';
+import Label from '../Label';
+import LongText from './LongText';
+import MultipleChoice from './MultipleChoice/MultipleChoice';
+import MultipleChoiceDD from './MultipleChoice/MultipleChoiceDD';
+import MultipleSelect from './MultipleSelect/MultipleSelect';
+import ShortText from './ShortText';
 
 export default ({
   completed,

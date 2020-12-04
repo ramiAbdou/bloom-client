@@ -17,7 +17,7 @@ interface InputProps extends ValueProps {
   placeholder?: string;
   onClickOutside?: (...args: any) => any;
   onChange: (event: ChangeEvent<HTMLInputElement>) => any;
-  onKeyDown?: (key: string) => any;
+  onEnter?: () => any;
 }
 
 /**
@@ -31,7 +31,7 @@ export default ({
   placeholder,
   onChange,
   onClickOutside,
-  onKeyDown,
+  onEnter,
   value
 }: InputProps) => {
   const [text, setText] = useState<string>(value ?? '');
@@ -43,8 +43,6 @@ export default ({
     if (text === placeholder) setText('');
   });
 
-  // Selects the entire value of the input, which uses the custom highlight
-  // color. If we had a placeholder
   /**
    * Selects the entire value of the input, which uses the custom highlight
    * color. If we have a placeholder but no value, set the text to be the
@@ -62,8 +60,9 @@ export default ({
   };
 
   const modifiedKeyDown = ({ key }: KeyboardEvent<HTMLInputElement>) => {
-    if (key === 'Enter') ref.current.blur();
-    if (onKeyDown) onKeyDown(key);
+    if (key !== 'Enter') return;
+    ref.current.blur();
+    if (onEnter) onEnter();
   };
 
   const css = makeClass([
@@ -81,7 +80,6 @@ export default ({
       type="text"
       value={text}
       onChange={modifiedOnChange}
-      // onClick={onClick}
       onKeyDown={modifiedKeyDown}
       onMouseDown={onMouseDown}
     />
