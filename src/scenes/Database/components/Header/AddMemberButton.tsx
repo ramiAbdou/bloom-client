@@ -1,6 +1,6 @@
+import deepequal from 'fast-deep-equal';
 import { useMutation } from 'graphql-hooks';
 import React, { memo } from 'react';
-import shallowequal from 'shallowequal';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
@@ -32,7 +32,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
     firstNameError,
     lastName,
     lastNameError
-  } = AddMember.useStoreState((store) => store.getMember(id), shallowequal);
+  } = AddMember.useStoreState((store) => store.getMember(id), deepequal);
 
   const updateMember = AddMember.useStoreActions((store) => store.updateMember);
   const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);

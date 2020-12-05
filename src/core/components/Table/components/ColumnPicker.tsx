@@ -1,6 +1,6 @@
+import deepequal from 'fast-deep-equal';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
-import shallowequal from 'shallowequal';
 
 import Button from '@components/Button/Button';
 import Input from '@components/Misc/Input';
@@ -80,7 +80,7 @@ export default memo(({ onRenameColumn }: ColumnPickerProps) => {
     ({ columns }) =>
       columns.find(({ id: columnId }) => columnId === pickerId) ??
       ({} as Column),
-    shallowequal
+    deepequal
   );
 
   useEffect(() => {

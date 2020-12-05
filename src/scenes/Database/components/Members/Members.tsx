@@ -1,6 +1,6 @@
+import deepequal from 'fast-deep-equal';
 import { useMutation, useQuery } from 'graphql-hooks';
 import React, { useCallback, useEffect } from 'react';
-import shallowequal from 'shallowequal';
 
 import TableContent from '@components/Table/Table';
 import Table, { Column, Row, tableModel } from '@components/Table/Table.store';
@@ -17,7 +17,7 @@ const MemberTable = () => {
   const allMembers: IMember[] = useStoreState(({ entities, community }) => {
     const { byId } = entities.members;
     return community.members?.map((memberId: string) => byId[memberId]);
-  });
+  }, deepequal);
 
   const rows: Row[] = useStoreState(({ entities, community }) => {
     const { byId } = entities.members;
@@ -31,7 +31,7 @@ const MemberTable = () => {
 
       return [...acc, result];
     }, []);
-  });
+  }, deepequal);
 
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
@@ -46,20 +46,20 @@ const MemberTable = () => {
 
   const [renameQuestion] = useMutation(RENAME_QUESTION);
 
-  const onRenameColumn = async ({ title, id, version }: Column) => {
+  const onRenameColumn = useCallback(async ({ title, id, version }: Column) => {
     const { error } = await renameQuestion({
       variables: { id, title, version }
     });
 
     if (error) showToast({ message: getGraphQLError(error), type: 'ERROR' });
     else updateColumn({ id, title, version: ++version });
-  };
+  }, []);
 
   useTraceUpdate({ allMembers, rows });
 
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
 
-  return <TableContent />;
+  return <TableContent onRenameColumn={onRenameColumn} />;
 };
 
 export default () => {

@@ -1,6 +1,6 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
-import shallowequal from 'shallowequal';
 
 import Button from '@components/Button/Button';
 import { ValueProps } from '@constants';
@@ -110,7 +110,7 @@ export default () => {
       const numPages = Math.ceil(filteredData.length / 100);
       return getPaginationValues(Array.from(Array(numPages).keys()), page);
     },
-    shallowequal
+    deepequal
   );
 
   return (
