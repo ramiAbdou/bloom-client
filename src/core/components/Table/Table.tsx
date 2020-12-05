@@ -10,14 +10,12 @@ import Table from './Table.store';
 
 type TableProps = { onRenameColumn?: Function };
 
-export default (props: TableProps) => {
+const TableContent = () => {
   const [maxHeight, setMaxHeight] = useState(0);
 
   const isAllPageSelected = Table.useStoreState(
     (store) => store.isAllPageSelected
   );
-
-  const columns = Table.useStoreState((store) => store.columns);
 
   const { innerHeight } = window;
 
@@ -28,16 +26,26 @@ export default (props: TableProps) => {
   }, [isAllPageSelected, innerHeight]);
 
   return (
+    <div id="c-table-ctr" style={{ maxHeight }}>
+      <table className="c-table">
+        <Header />
+        <Body />
+      </table>
+    </div>
+  );
+};
+
+export default (props: TableProps) => {
+  const columns = Table.useStoreState((store) => store.columns);
+
+  const isAllPageSelected = Table.useStoreState(
+    (store) => store.isAllPageSelected
+  );
+
+  return (
     <>
       {isAllPageSelected && <SelectedBanner />}
-
-      <div id="c-table-ctr" style={{ maxHeight }}>
-        <table className="c-table">
-          <Header />
-          <Body />
-        </table>
-      </div>
-
+      <TableContent />
       <Pagination />
 
       {columns.map(({ id, title, version }) => (

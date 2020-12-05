@@ -1,40 +1,57 @@
 import moment from 'moment-timezone';
 import React, { ReactNode } from 'react';
 
+import Checkbox from '@components/Misc/Checkbox';
 import Tag from '@components/Misc/Tag';
-import { ChildrenProps, QuestionType, ValueProps } from '@constants';
-import { makeClass } from '@util/util';
+import { IdProps, QuestionType, ValueProps } from '@constants';
+import { makeClass, takeFirst } from '@util/util';
 import Table, { Row } from '../Table.store';
-import SelectOption from './SelectOption';
 
-interface DataCellProps extends Partial<ChildrenProps>, ValueProps {
+const SelectRowCheckbox = ({ id }: IdProps) => {
+  const isSelected = Table.useStoreState((state) => state.isSelected(id));
+  const toggleRow = Table.useStoreActions((actions) => actions.toggleRow);
+
+  return (
+    <Checkbox
+      className="c-table-select"
+      selected={isSelected}
+      onClick={() => toggleRow(id)}
+    />
+  );
+};
+
+interface DataCellProps extends Row, ValueProps {
+  i: number;
   type: QuestionType;
 }
 
-const DataCell = ({ children, type, value }: DataCellProps) => {
+const DataCell = ({ i, id, type, value }: DataCellProps) => {
+  const select = Table.useStoreState((store) => store.select);
+
   const css = makeClass([
-    [type === 'MULTIPLE_CHOICE', 'c-table-td--multiple-choice'],
-    [type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select'],
-    [['SHORT_TEXT', 'CUSTOM'].includes(type), 'c-table-cell--sm'],
+    [!type || ['SHORT_TEXT', 'CUSTOM'].includes(type), 'c-table-cell--sm'],
     [['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type), 'c-table-cell--md'],
-    [['LONG_TEXT'].includes(type), 'c-table-cell--lg']
+    [['LONG_TEXT'].includes(type), 'c-table-cell--lg'],
+    [type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select']
   ]);
 
-  let content: ReactNode = <p>{value}</p>;
-  if (type === 'MULTIPLE_CHOICE' && value) content = <Tag value={value} />;
-  else if (type === 'MULTIPLE_SELECT')
-    content = (
+  const content: ReactNode = takeFirst([
+    [type === 'MULTIPLE_CHOICE' && value, <Tag value={value} />],
+    [
+      type === 'MULTIPLE_SELECT',
       <>
-        {value?.split(',').map((individualValue: string) => (
-          <Tag key={individualValue} value={individualValue} />
+        {value?.split(',').map((val: string) => (
+          <Tag key={val} value={val} />
         ))}
       </>
-    );
+    ],
+    <p>{value}</p>
+  ]);
 
   return (
     <td className={css}>
       <div>
-        {children}
+        {!i && select && <SelectRowCheckbox id={id} />}
         {content}
       </div>
     </td>
@@ -44,7 +61,6 @@ const DataCell = ({ children, type, value }: DataCellProps) => {
 const DataRow = (row: Row) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(row.id));
   const columns = Table.useStoreState((store) => store.columns);
-  const select = Table.useStoreState((store) => store.select);
 
   const css = makeClass([isSelected, 'c-table-tr--active']);
 
@@ -55,9 +71,13 @@ const DataRow = (row: Row) => {
           category === 'JOINED_ON' ? moment(row[id]).format('M/D/YY') : row[id];
 
         return (
-          <DataCell key={id + row.id} type={type} value={value}>
-            {!i && select && <SelectOption id={row.id} />}
-          </DataCell>
+          <DataCell
+            key={id + row.id}
+            i={i}
+            id={row.id}
+            type={type}
+            value={value}
+          />
         );
       })}
     </tr>

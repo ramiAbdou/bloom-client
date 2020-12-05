@@ -10,6 +10,8 @@ $PREF: 'c-table';
   position: relative;
 }
 
+// ## TABLE CONTENT
+
 .#{$PREF} {
   border-collapse: collapse;
   border-spacing: $xs $xxs;
@@ -19,55 +21,103 @@ $PREF: 'c-table';
   width: max-content;
 }
 
-.#{$PREF}-td--multiple-select > div { @extend .flex-w; }
-
-// ## TABLE ROW (HEADER AND BODY)
+// ## TABLE DATA ROW
 
 tbody > tr {
-  border-bottom: 1px $gray-5 solid;
   cursor: pointer;
 
   @include HOVER {
     box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
     position: relative;
-    transform: scale(1);
+    transform: scale(1); // Required to push to higher stacking context.
     z-index: 10;
   }
 
-  &:last-of-type { border-bottom: none; }
+  &:not(:last-child) { border-bottom: 1px $gray-5 solid; }
 }
 
-.#{$PREF}-tr--active {
-  > td { background-color: $primary-hover; }
+// Applied if the table row is selected.
+tr.#{$PREF}-tr--active { > td { background-color: $primary-hover; } }
+
+// ## TABLE CELL (BOTH TH AND TD)
+
+.#{$PREF}-cell {
+  left: 0;
+  margin: 0;
+  padding: $sm $md $sm $sm;
+  position: sticky;
+  text-align: left;
+
+  &--sm { max-width: $xxl * 3.25; width: $xxl * 3.25; }
+  &--md { max-width: $xxl * 4; width: $xxl * 4; }
+  &--lg { max-width: $xxl * 5; width: $xxl * 5; }
+
+  &:first-child > div { @extend .flex-ac; max-width: 100%; }
+  &:last-child { width: -webkit-fill-available; }
 }
 
-// ## TABLE CELL (HEADER AND CELL)
+// ## TABLE DATA CELL
 
-th,
-td { left: 0; margin: 0; padding: $sm $md $sm $sm; position: sticky; }
+td {
+  @extend .#{$PREF}-cell;
 
-td > div > .c-table-select { z-index: 10; }
+  background-color: white;
+  color: $gray-1;
+  vertical-align: top;
+
+  > div > .c-misc-checkbox { z-index: 10; }
+  > div > p { @include OVERFLOW_ELLIPSES(3); }
+  > div > .c-misc-tag { margin: 0 $xxs $xxs 0; }
+
+  // The first data cell has higher z-index than rest of td cells to have
+  // horizontal scrolling hide the other cells under this first one.
+  &:first-of-type { z-index: 9; }
+
+  &:first-of-type::after {
+    border-right: 1px solid $gray-5;
+    content: '';
+    height: 100%;
+    left: -1px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
+td.#{$PREF}-td--multiple-select > div { @extend .flex-w; }
 
 // ## TABLE HEADER CELL
 
 th {
+  @extend .#{$PREF}-cell;
+
   background-color: $gray-6;
-  box-sizing: border-box;
-  position: sticky;
-  text-align: left;
+  cursor: pointer;
   text-transform: uppercase;
   top: 0;
   vertical-align: middle;
   z-index: 11;
 
   @include HOVER { background-color: $gray-5; cursor: pointer; }
-  
-  > div > .c-table-select {
-    border: 1px $gray-3 solid;
-    display: none;
-    z-index: 12;
+
+  // Header select option should have a darker border and higher z-index.
+  > div > .c-misc-checkbox { border: 1px $gray-3 solid; z-index: 12; }
+
+  // The header title content.
+  > div > p {
+    @extend .meta;
+
+    color: $gray-3;
+
+    @include OVERFLOW_ELLIPSES;
   }
-  &:first-of-type > div > .c-table-select { display: flex; }
+
+  // Caret up or caret down SVG, React controls the displaying of this element.
+  > div > svg { color: $primary; height: 12px; margin-left: $xs; width: 12px; }
+
+  // The first header cell has higher z-index than rest of th cells to have
+  // horizontal scrolling hide the other cells  under this first one.
+  &:first-of-type { z-index: 12; }
 
   // We need to make the border bottom and border right position absolute to
   // achieve the scrolling functionality that we want.
@@ -84,70 +134,16 @@ th {
   }
 }
 
-.c-table-cell {
-  &--sm { max-width: $xxl * 3.25; width: $xxl * 3.25; }
-  &--md { max-width: $xxl * 4; width: $xxl * 4; }
-  &--lg { max-width: $xxl * 5; width: $xxl * 5; }
+th.#{$PREF}-th--sorted {
+  > div { @extend .flex-ac; }
+  > div > p { color: $primary; max-width: 85%; }
 }
 
-// ## TABLE CELL
+// When the picker is showing, we keep the background-color dark.
+th.#{$PREF}-th--picker { background-color: $gray-5; }
 
-td { background-color: white; color: $gray-1; vertical-align: top; }
-
-td > div > .c-misc-tag { margin: 0 $xxs $xxs 0; }
-
-td > div > p { @include OVERFLOW_ELLIPSES(3); }
-
-th > div { @extend .flex-ac; max-width: 100%; }
-
-th > div > p {
-  color: $gray-3 !important;
-
-  @include OVERFLOW_ELLIPSES;
-}
-
-th > div > svg {
-  color: $gray-3;
-  height: 12px !important;
-  margin-left: $xs;
-  visibility: hidden;
-  width: 12px !important;
-}
-
-th.c-table-col--picker { background-color: $gray-5; cursor: pointer; }
-
-th:first-of-type { z-index: 12; }
-
-td:last-of-type,
-th:last-of-type { width: -webkit-fill-available; }
-
-th.c-table-selected-col > div > svg { color: $primary; visibility: visible; }
-
-th.c-table-selected-col > div > p {
-  color: $primary !important;
-  max-width: 85%;
-}
-
-td:first-of-type {
-  z-index: 9;
-
-  &::after {
-    border-right: 1px solid $gray-5;
-    content: '';
-    height: 100%;
-    left: -1px;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-}
-
-th:first-of-type > div,
-td:first-of-type > div { @extend .flex-ac; }
-
-// The actual checkbox. Note that even though we specify the div dimensions to
-// be $sm, because of the border it actually renders as 18px. Update the SVG
-// image accordingly.
+// ## SELECT CHECKBOX - The HTML applied the .c-misc-checkbox class, we don't
+// extend it in here for overriding purposes of the margin and background-color.
 
 .#{$PREF}-select { background-color: white; margin: 0 $lg 0 0; }
 
