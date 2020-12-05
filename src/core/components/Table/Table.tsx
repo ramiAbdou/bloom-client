@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 
 import { Function } from '@constants';
 import Body from './components/Body';
-import ColumnPicker from './components/ColumnPicker';
+import ColumnPicker from './components/ColumnPicker/ColumnPicker';
 import Header from './components/Header';
 import Pagination from './components/Pagination/Pagination';
 import SelectedBanner from './components/SelectedBanner';

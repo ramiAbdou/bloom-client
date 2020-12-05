@@ -2,6 +2,7 @@ import React, {
   ChangeEvent,
   KeyboardEvent,
   MutableRefObject,
+  useEffect,
   useRef,
   useState
 } from 'react';
@@ -44,6 +45,10 @@ export default ({
     if (onClickOutside) await onClickOutside();
     if (text === placeholder) setText('');
   });
+
+  useEffect(() => {
+    if (value !== text) setText(value);
+  }, [value]);
 
   /**
    * Selects the entire value of the input, which uses the custom highlight
