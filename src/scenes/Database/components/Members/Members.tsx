@@ -55,7 +55,6 @@ const MemberTable = () => {
   }, []);
 
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
-
   return <TableContent onRenameColumn={onRenameColumn} />;
 };
 

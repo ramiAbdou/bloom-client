@@ -59,6 +59,53 @@ const sortByColumn = (
     return 0;
   });
 
+type SortImportance = 'EXACT' | 'STARTS_WITH' | 'INCLUDES';
+
+/**
+ * Returns the sort importance of the row depending on whether one of the value
+ * starts with, is exactly or just includes the search string.
+ */
+const getSortImportance = (row: Row, searchString: string): SortImportance =>
+  Object.values(row).reduce((acc: SortImportance, value: string) => {
+    if (acc === 'EXACT') return acc;
+
+    const lowerCaseValue = value?.toLowerCase();
+    if (lowerCaseValue === searchString) return 'EXACT';
+    if (acc === 'INCLUDES' && lowerCaseValue.startsWith(searchString))
+      return 'STARTS_WITH';
+
+    return acc;
+  }, 'INCLUDES');
+
+/**
+ * Returns an array of Rows based
+ *
+ * @param data Rows to filter through.
+ * @param searchString The untrimmed search string to filter by.
+ */
+const filterBySearchString = (data: Row[], searchString: string) => {
+  const lowerCaseSearchString = searchString.toLowerCase().trim();
+
+  return data
+    .filter((row: Row) => {
+      // As long as some values (answers to questions) in the row include
+      // the search string, then it passes through the filter.
+      return Object.values(row).some((value: string) => {
+        const lowerCaseValue = value?.toLowerCase();
+
+        return (
+          !searchString ||
+          (value && lowerCaseValue.includes(lowerCaseSearchString))
+        );
+      });
+    })
+    .sort((a: Row, b: Row) => {
+      const aImportance: SortImportance = getSortImportance(a, searchString);
+      const bImportance: SortImportance = getSortImportance(b, searchString);
+      return aImportance < bImportance ? -1 : 1;
+    });
+};
+
 type TableModel = {
   columns: Column[];
   data: Row[];
@@ -150,20 +197,7 @@ export const tableModel: TableModel = {
   setSearchString: action(({ data, ...state }, searchString) => ({
     ...state,
     data,
-    filteredData: data.filter((row: Row) => {
-      const lowerCaseSearchString = searchString.toLowerCase().trim();
-
-      // As long as some values (answers to questions) in the row include
-      // the search string, then it passes through the filter.
-      return Object.values(row).some((value: string) => {
-        const lowerCaseValue = value?.toLowerCase();
-
-        return (
-          !searchString ||
-          (value && lowerCaseValue.includes(lowerCaseSearchString))
-        );
-      });
-    }),
+    filteredData: filterBySearchString(data, searchString),
     searchString
   })),
 
