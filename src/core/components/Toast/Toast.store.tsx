@@ -22,13 +22,13 @@ export type ToastModel = {
 export const toastModel: ToastModel = {
   dequeueToast: action(({ queue }, id: string) => {
     const index = queue.findIndex(({ id: toastId }) => toastId === id);
-    if (index >= 0) queue.splice(index, 1);
-    return { queue };
+    if (index < 0) return { queue };
+    return { queue: [...queue.slice(0, index), ...queue.slice(index + 1)] };
   }),
 
   queue: [],
 
   showToast: action(({ queue }, toast) => ({
-    queue: [...queue, { id: `${toast.message}-${uuid()}`, ...toast }]
+    queue: [...queue, { id: uuid(), ...toast }]
   }))
 };
