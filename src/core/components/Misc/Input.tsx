@@ -14,6 +14,7 @@ interface InputProps extends ValueProps {
   dark?: boolean;
   error?: boolean;
   gray?: boolean;
+  search?: boolean;
   placeholder?: string;
   onClickOutside?: (...args: any) => any;
   onChange: (event: ChangeEvent<HTMLInputElement>) => any;
@@ -29,6 +30,7 @@ export default ({
   error,
   gray,
   placeholder,
+  search,
   onChange,
   onClickOutside,
   onEnter,
@@ -69,7 +71,8 @@ export default ({
     'c-misc-input',
     [!error && dark, 'c-misc-input--dark'],
     [!error && gray, 'c-misc-input--gray'],
-    [error, 'c-misc-input--error']
+    [error, 'c-misc-input--error'],
+    [search, 'c-misc-input--search']
   ]);
 
   return (

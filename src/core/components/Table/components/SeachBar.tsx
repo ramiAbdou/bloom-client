@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { IoSearch } from 'react-icons/io5';
 
+import SearchBar from '@components/Misc/SearchBar';
 import Table from '../Table.store';
+
+type SearchBarProps = { placeholder?: string };
 
 /**
  * Deep searches through every row in the table, and since most of the rows
  * data values are all strings, no complex logic is needed to search.
  */
-export default ({ placeholder }) => {
+export default ({ placeholder }: SearchBarProps) => {
   const [value, setValue] = useState('');
 
   const setSearchString = Table.useStoreActions(
@@ -20,14 +22,10 @@ export default ({ placeholder }) => {
   }, [value]);
 
   return (
-    <div className="c-table-search">
-      <IoSearch />
-      <input
-        placeholder={placeholder ?? 'Search...'}
-        type="text"
-        value={value}
-        onChange={({ target }) => setValue(target.value)}
-      />
-    </div>
+    <SearchBar
+      placeholder={placeholder}
+      value={value}
+      onChange={({ target }) => setValue(target.value)}
+    />
   );
 };

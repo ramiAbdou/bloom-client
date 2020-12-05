@@ -116,3 +116,19 @@ $PREF: 'c-misc';
     &:focus { background-color: white; }
   }
 }
+
+// ## SEACH BAR - Similar to the input element except contains a search SVG
+// icon, and this bar is rounded and darker gray with no focused state.
+
+.#{$PREF}-search {
+  @extend .flex-ac;
+
+  background-color: $gray-5;
+  border-radius: 20px;
+  color: $gray-3;
+  padding: $xs $sm;
+  width: $xxl * 5;
+}
+
+.#{$PREF}-search > svg { color: $gray-3; margin-right: $xs; }
+.#{$PREF}-search > input { background-color: inherit; width: 100%; }
