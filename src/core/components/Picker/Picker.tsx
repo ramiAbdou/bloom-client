@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { CSSProperties, memo, MutableRefObject, useRef } from 'react';
+import React, { CSSProperties, MutableRefObject, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import useOnClickOutside from 'use-onclickoutside';
 
@@ -103,7 +103,7 @@ const Picker = ({
   );
 };
 
-export default memo(({ children, ...props }: PickerProps) => {
+export default ({ children, ...props }: PickerProps) => {
   const isPickerShowing = useStoreState(({ picker }) =>
     picker.isIdShowing(props.id)
   );
@@ -114,4 +114,4 @@ export default memo(({ children, ...props }: PickerProps) => {
     </AnimatePresence>,
     document.body
   );
-});
+};

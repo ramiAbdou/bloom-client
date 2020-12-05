@@ -112,9 +112,6 @@ th {
     @include OVERFLOW_ELLIPSES;
   }
 
-  // Caret up or caret down SVG, React controls the displaying of this element.
-  > div > svg { color: $primary; height: 12px; margin-left: $xs; width: 12px; }
-
   // The first header cell has higher z-index than rest of th cells to have
   // horizontal scrolling hide the other cells  under this first one.
   &:first-of-type { z-index: 12; }
@@ -137,6 +134,8 @@ th {
 th.#{$PREF}-th--sorted {
   > div { @extend .flex-ac; }
   > div > p { color: $primary; max-width: 85%; }
+  // Caret up or caret down SVG, React controls the displaying of this element.
+  > div > svg { color: $primary; height: 12px; margin-left: $xs; width: 12px; }
 }
 
 // When the picker is showing, we keep the background-color dark.

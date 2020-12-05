@@ -4,7 +4,6 @@ import React, { useCallback, useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
 import Table, { Column, Row, tableModel } from '@components/Table/Table.store';
-import useTraceUpdate from '@hooks/useTraceUpdate';
 import { IMember, IMembershipQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -54,8 +53,6 @@ const MemberTable = () => {
     if (error) showToast({ message: getGraphQLError(error), type: 'ERROR' });
     else updateColumn({ id, title, version: ++version });
   }, []);
-
-  useTraceUpdate({ allMembers, rows });
 
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
 
