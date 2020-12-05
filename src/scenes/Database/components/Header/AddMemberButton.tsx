@@ -142,6 +142,9 @@ export const AddMemberModal = () => {
     }
   };
 
+  const onClose = () => clearMembers();
+  const onClick = () => addEmptyMember();
+
   const message = getGraphQLError(error);
 
   return (
@@ -149,7 +152,7 @@ export const AddMemberModal = () => {
       className="s-database-header-add-modal"
       id={MODAL_ID}
       width={750}
-      onClose={() => clearMembers()}
+      onClose={onClose}
     >
       <h1>Add Member(s)</h1>
 
@@ -163,7 +166,7 @@ export const AddMemberModal = () => {
         <AddMemberInput key={id} id={id} />
       ))}
 
-      <UnderlineButton title="+ Add Another" onClick={() => addEmptyMember()} />
+      <UnderlineButton title="+ Add Another" onClick={onClick} />
       {message && <ErrorMessage message={message} />}
 
       <div>

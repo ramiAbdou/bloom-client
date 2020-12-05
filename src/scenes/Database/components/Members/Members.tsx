@@ -37,7 +37,7 @@ const MemberTable = () => {
   // Used primarily for the removal of members. This will not update the
   // data if the number of members doesn't change.
   useEffect(() => {
-    updateData(rows);
+    if (rows) updateData(rows);
   }, [rows?.length]);
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);
