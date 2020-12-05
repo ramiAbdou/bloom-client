@@ -1,5 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { CSSProperties, MutableRefObject, useRef } from 'react';
+import React, {
+  CSSProperties,
+  MutableRefObject,
+  useEffect,
+  useRef
+} from 'react';
 import { createPortal } from 'react-dom';
 import useOnClickOutside from 'use-onclickoutside';
 
@@ -12,7 +17,7 @@ interface PickerProps
     IdProps,
     ClassNameProps,
     StyleProps {
-  align?: 'RIGHT_BOTTOM' | 'BOTTOM_LEFT';
+  align?: 'RIGHT_BOTTOM' | 'BOTTOM_LEFT' | 'BOTTOM_RIGHT';
 }
 
 const Picker = ({
@@ -25,8 +30,8 @@ const Picker = ({
   const id = useStoreState(({ picker }) => picker.id);
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
 
-  const element: HTMLElement = document.getElementById(id);
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
+  const element: HTMLElement = document.getElementById(id);
 
   // If the click happened within the element that was used to open the
   // Picker, then we don't close the picker.
@@ -51,6 +56,8 @@ const Picker = ({
     }
   });
 
+  useEffect(() => {}, []);
+
   if (!element || id !== PICKER_ID) return null;
 
   // ## START: CALCULATE PICKER COORDINATES AND ANIMATION STYLING
@@ -60,7 +67,7 @@ const Picker = ({
   let initial: any = { opacity: 0.5 };
   let animate: any = { opacity: 1 };
 
-  const { innerHeight } = window;
+  const { innerHeight, innerWidth } = window;
   const { left, top, height, width } = element.getBoundingClientRect();
 
   // ## CASE #1: RIGHT_BOTTOM
@@ -80,6 +87,19 @@ const Picker = ({
 
   if (align === 'BOTTOM_LEFT') {
     positionStyle = { left, top: top + height + 8 };
+    initial = { ...initial, y: -10 };
+    exit = { ...exit, y: 10 };
+    animate = { ...animate, y: 0 };
+  }
+
+  // ## CASE #3: BOTTOM_RIGHT
+
+  if (align === 'BOTTOM_RIGHT') {
+    positionStyle = {
+      right: innerWidth - (left + width),
+      top: top + height + 8
+    };
+
     initial = { ...initial, y: -10 };
     exit = { ...exit, y: 10 };
     animate = { ...animate, y: 0 };

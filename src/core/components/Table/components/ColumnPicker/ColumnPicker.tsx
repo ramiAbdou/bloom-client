@@ -40,8 +40,14 @@ export default ({ onRenameColumn }: ColumnPickerProps) => {
     closePicker();
   };
 
+  const element = document.getElementById(id);
+  const { left, width } = element?.getBoundingClientRect() ?? {};
+
+  const align =
+    window.innerWidth - (left + width) > 240 ? 'BOTTOM_LEFT' : 'BOTTOM_RIGHT';
+
   return (
-    <Picker align="BOTTOM_LEFT" className="c-table-col-picker" id={id}>
+    <Picker align={align} className="c-table-col-picker" id={id}>
       {!!onRenameColumn && (
         <Input
           gray
