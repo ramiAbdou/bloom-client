@@ -7,18 +7,6 @@ export type IAdmin = {
   lastName: string;
 };
 
-export type IMembershipQuestion = {
-  category: QuestionCategory;
-  id: string;
-  inApplicantCard: boolean;
-  order: number;
-  options: string[];
-  required: boolean;
-  title: QuestionType;
-  type: QuestionType;
-  version: number;
-};
-
 export type ICommunity = {
   admins: string[];
   applicationDescription?: string;
@@ -56,6 +44,18 @@ export type IMembership = {
   id: string;
   role: 'ADMIN' | 'OWNER';
   type: { name: string };
+};
+
+export type IMembershipQuestion = {
+  category: QuestionCategory;
+  id: string;
+  inApplicantCard: boolean;
+  order: number;
+  options: string[];
+  required: boolean;
+  title: QuestionType;
+  type: QuestionType;
+  version: number;
 };
 
 export type ApplicantData = {

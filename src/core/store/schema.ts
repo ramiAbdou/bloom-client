@@ -5,9 +5,6 @@
  * to the actual PostgreSQL DB.
  */
 
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { schema } from 'normalizr';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
