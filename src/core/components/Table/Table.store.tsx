@@ -60,7 +60,6 @@ const sortByColumn = (
   });
 
 type TableModel = {
-  canRename: boolean;
   columns: Column[];
   data: Row[];
   filteredData: Row[];
@@ -85,8 +84,6 @@ type TableModel = {
 };
 
 export const tableModel: TableModel = {
-  canRename: true,
-
   columns: [],
 
   data: [],

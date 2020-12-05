@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
@@ -19,7 +19,6 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
   const [value, setValue] = useState<string>(title);
 
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
-  const canRename = Table.useStoreState((store) => store.canRename);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
 
@@ -53,6 +52,8 @@ export default ({ id, onRenameColumn, title, version }: ColumnPickerProps) => {
     await renameColumn();
     closePicker();
   };
+
+  const canRename = useMemo(() => !!onRenameColumn, []);
 
   return (
     <Picker align="BOTTOM_LEFT" className="c-table-col-picker" id={id}>

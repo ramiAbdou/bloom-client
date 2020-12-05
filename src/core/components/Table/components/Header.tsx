@@ -63,14 +63,12 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
 export default () => {
   const columns = Table.useStoreState((store) => store.columns);
   const hasData = Table.useStoreState((store) => !!store.filteredData.length);
-  const canRename = Table.useStoreState((store) => store.canRename);
 
-  const css = makeClass([canRename, 'c-table--rename']);
   const customStyle = !hasData ? { borderBottom: 'none' } : {};
 
   return (
     <thead>
-      <tr className={css} style={customStyle}>
+      <tr style={customStyle}>
         {columns.map((column: Column, i: number) => (
           <HeaderCell key={column.id} i={i} {...column} />
         ))}

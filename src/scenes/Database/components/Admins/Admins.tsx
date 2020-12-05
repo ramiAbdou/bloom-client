@@ -84,12 +84,7 @@ export default () => {
   return (
     <>
       <Table.Provider
-        runtimeModel={{
-          ...tableModel,
-          canRename: false,
-          columns,
-          select: isOwner
-        }}
+        runtimeModel={{ ...tableModel, columns, select: isOwner }}
       >
         <ActionRow />
         <AdminTable />
