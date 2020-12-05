@@ -5,24 +5,9 @@ import React, { useEffect } from 'react';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import { LoginError } from '@constants';
 import { getGraphQLError } from '@util/util';
 import { SEND_TEMPORARY_LOGIN_LINK } from '../../Login.gql';
-import Login from '../../Login.store';
-
-/**
- * Returns the login error message based on the cookie.
- */
-const getLoginErrorMessage = (error: LoginError) => {
-  if (error === 'USER_NOT_FOUND')
-    return `You must apply and be accepted into a commmunity before logging in.`;
-  if (error === 'APPLICATION_REJECTED')
-    return `You must be accepted into a commmunity before logging in.`;
-  if (error === 'APPLICATION_PENDING')
-    return `You have pending membership applications. Once they are accepted, you will be able to log in.`;
-
-  return error;
-};
+import Login, { getLoginErrorMessage, LoginError } from '../../Login.store';
 
 export default () => {
   const setEmail = Login.useStoreActions((actions) => actions.setEmail);

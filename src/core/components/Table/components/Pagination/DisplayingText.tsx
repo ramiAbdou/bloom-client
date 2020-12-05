@@ -3,12 +3,12 @@ import React from 'react';
 import Table from '../../Table.store';
 
 export default () => {
-  const floor = Table.useStoreState((store) => store.range[0] + 1);
-  const numData = Table.useStoreState((store) => store.filteredData.length);
-  const ceiling = numData - floor >= 99 ? floor + 99 : numData;
+  const floor = Table.useStoreState(({ range }) => range[0] + 1);
+  const ceiling = Table.useStoreState(({ range }) => range[1]);
+  const numRows = Table.useStoreState((store) => store.filteredData.length);
 
-  const message = numData
-    ? `Displaying ${floor}-${ceiling} of ${numData} results.`
+  const message = numRows
+    ? `Displaying ${floor}-${ceiling} of ${numRows} results.`
     : 'No results found.';
 
   return <p className="meta">{message}</p>;

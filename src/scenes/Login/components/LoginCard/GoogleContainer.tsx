@@ -4,23 +4,10 @@ import URLBuilder from 'util/URLBuilder';
 
 import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import { APP, LoginError } from '@constants';
+import { APP } from '@constants';
 import { makeClass } from '@util/util';
 import google from '../../images/google.svg';
-
-/**
- * UTILITY: Returns the login error message based on the cookie.
- */
-const getLoginErrorMessage = (error: LoginError) => {
-  if (error === 'USER_NOT_FOUND')
-    return `You must apply and be accepted into a commmunity before logging in.`;
-  if (error === 'APPLICATION_REJECTED')
-    return `You must be accepted into a commmunity before logging in.`;
-  if (error === 'APPLICATION_PENDING')
-    return `You have pending membership applications. Once they are accepted, you will be able to log in.`;
-
-  return error;
-};
+import { getLoginErrorMessage, LoginError } from '../../Login.store';
 
 const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('scope', 'https://www.googleapis.com/auth/userinfo.email')

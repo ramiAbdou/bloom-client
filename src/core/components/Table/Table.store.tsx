@@ -6,8 +6,22 @@ import {
   createContextStore
 } from 'easy-peasy';
 
+import { QuestionCategory, QuestionType } from '@constants';
 import { toggleArrayValue } from '@util/util';
-import { Column, Row } from './Table.types';
+
+export type Column = {
+  category?: QuestionCategory;
+  id: string;
+  type: QuestionType;
+  title: string;
+  version?: number;
+};
+
+// Each row will have a series of random question ID's as well as a unique ID
+// representing the row (ie: Membership ID).
+export interface Row extends Record<string, any> {
+  id: string;
+}
 
 export type SortDirection = 'ASC' | 'DESC';
 
@@ -116,7 +130,11 @@ export const tableModel: TableModel = {
    */
   page: 0,
 
-  range: computed(({ page }) => [page * 100, page * 100 + 100]),
+  range: computed(({ filteredData: { length }, page }) => {
+    const floor = page * 100;
+    const ceiling = length - floor >= 99 ? floor + 100 : length;
+    return [floor, ceiling];
+  }),
 
   searchString: '',
 
@@ -129,7 +147,6 @@ export const tableModel: TableModel = {
     // set to 0 so they start at the top of the page.
     const element = document.getElementById('c-table-ctr');
     element.scroll({ top: 0 });
-
     return { ...state, page };
   }),
 

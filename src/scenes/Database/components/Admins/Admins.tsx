@@ -2,8 +2,7 @@ import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
-import Table, { tableModel } from '@components/Table/Table.store';
-import { Column, Row } from '@components/Table/Table.types';
+import Table, { Column, Row, tableModel } from '@components/Table/Table.store';
 import { IAdmin } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';

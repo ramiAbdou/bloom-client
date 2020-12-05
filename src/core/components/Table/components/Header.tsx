@@ -3,8 +3,7 @@ import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Table from '../Table.store';
-import { Column } from '../Table.types';
+import Table, { Column } from '../Table.store';
 import { HeaderSelectOption } from './SelectOption';
 
 const HeaderCell = ({ type, id, title }: Column) => {

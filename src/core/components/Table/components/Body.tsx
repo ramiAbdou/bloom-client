@@ -4,8 +4,7 @@ import React, { ReactNode } from 'react';
 import Tag from '@components/Misc/Tag';
 import { ChildrenProps, QuestionType, ValueProps } from '@constants';
 import { makeClass } from '@util/util';
-import Table from '../Table.store';
-import { Row } from '../Table.types';
+import Table, { Row } from '../Table.store';
 import SelectOption from './SelectOption';
 
 interface DataCellProps extends Partial<ChildrenProps>, ValueProps {

@@ -26,29 +26,17 @@ export type Function =
 
 export type ChildrenProps = { children: ReactNode };
 export type ClassNameProps = { className?: string };
+export type EncodedUrlNameParams = { encodedUrlName: string };
 export type IdProps = { id: string };
-export type IsShowingProps = { isShowing: boolean };
 export type LoadingProps = { loading: boolean };
 export type OnClickProps = { onClick?: Function };
 export type MessageProps = { message: string };
-export type RefProps = { ref: React.MutableRefObject<any> };
 export type StyleProps = { style?: React.CSSProperties };
 export type ValueProps = { value: any };
 
 /**
- * GENERAL - General constants.
- */
-
-export type LoginError =
-  | 'APPLICATION_PENDING'
-  | 'APPLICATION_REJECTED'
-  | 'USER_NOT_FOUND';
-
-/**
  * FORMS - Handling of all form-related items including custom Enums.
  */
-
-export type EncodedUrlNameParams = { encodedUrlName: string };
 
 export type QuestionType =
   | 'CUSTOM'
