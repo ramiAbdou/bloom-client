@@ -10,6 +10,8 @@ import { useStoreActions } from '@store/Store';
  */
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const onClick = () => closeModal();
+
   return (
     <motion.div
       key="c-modal-bg"
@@ -18,7 +20,7 @@ export default () => {
       exit={{ opacity: 0 }}
       initial={{ opacity: 0 }}
       transition={{ duration: 0.1 }}
-      onClick={() => closeModal()}
+      onClick={onClick}
     />
   );
 };

@@ -78,11 +78,10 @@ const BackButton = () => {
   const page = Table.useStoreState((store) => store.page);
   const setRange = Table.useStoreActions((store) => store.setRange);
 
+  const onClick = () => page > 0 && setRange(page - 1);
+
   return (
-    <Button
-      className="c-table-pagination-chevron"
-      onClick={() => page > 0 && setRange(page - 1)}
-    >
+    <Button className="c-table-pagination-chevron" onClick={onClick}>
       <IoChevronBackOutline />
     </Button>
   );
@@ -96,11 +95,10 @@ const NextButton = () => {
     Math.ceil(filteredData.length / 100)
   );
 
+  const onClick = () => page < numPages - 1 && setRange(page + 1);
+
   return (
-    <Button
-      className="c-table-pagination-chevron"
-      onClick={() => page < numPages - 1 && setRange(page + 1)}
-    >
+    <Button className="c-table-pagination-chevron" onClick={onClick}>
       <IoChevronForwardOutline />
     </Button>
   );

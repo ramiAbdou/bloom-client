@@ -15,11 +15,13 @@ const SelectAllCheckbox = () => {
     (actions) => actions.toggleAllPageRows
   );
 
+  const onClick = () => toggleAllPageRows();
+
   return (
     <Checkbox
       className="c-table-select"
       selected={isAllPageSelected}
-      onClick={() => toggleAllPageRows()}
+      onClick={onClick}
     />
   );
 };
@@ -35,6 +37,8 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
   const isPickerShowing = useStoreState(({ picker }) => picker.isIdShowing(id));
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
 
+  const onClick = () => showPicker(id);
+
   const isSortedColumn = sortedColumnId === id;
 
   const css = makeClass([
@@ -49,7 +53,7 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
   const showCaretDown = isSortedColumn && direction === 'DESC';
 
   return (
-    <th className={css} id={id} onClick={() => showPicker(id)}>
+    <th className={css} id={id} onClick={onClick}>
       <div>
         {!i && select && <SelectAllCheckbox />}
         <p>{title}</p>

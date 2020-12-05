@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, memo } from 'react';
 import { IoSearch } from 'react-icons/io5';
 
 import { ValueProps } from '@constants';
@@ -8,9 +8,11 @@ interface SearchBarProps extends ValueProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => any;
 }
 
-export default ({ placeholder, onChange, value }: SearchBarProps) => (
+const Icon = memo(() => <IoSearch />);
+
+export default memo(({ placeholder, onChange, value }: SearchBarProps) => (
   <div className="c-misc-search">
-    <IoSearch />
+    <Icon />
     <input
       placeholder={placeholder ?? 'Search...'}
       type="text"
@@ -18,4 +20,4 @@ export default ({ placeholder, onChange, value }: SearchBarProps) => (
       onChange={onChange}
     />
   </div>
-);
+));

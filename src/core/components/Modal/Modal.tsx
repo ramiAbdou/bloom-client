@@ -36,7 +36,8 @@ export default ({
 
   const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
     isShowing,
-    id === MODAL_ID
+    id,
+    MODAL_ID
   ]);
 
   const css = makeClass([

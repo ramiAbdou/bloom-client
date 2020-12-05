@@ -1,8 +1,10 @@
 import { useMutation, useQuery } from 'graphql-hooks';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import shallowequal from 'shallowequal';
 
 import TableContent from '@components/Table/Table';
 import Table, { Column, Row, tableModel } from '@components/Table/Table.store';
+import useTraceUpdate from '@hooks/useTraceUpdate';
 import { IMember, IMembershipQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -17,8 +19,6 @@ const MemberTable = () => {
     return community.members?.map((memberId: string) => byId[memberId]);
   });
 
-  const updateData = Table.useStoreActions((actions) => actions.updateData);
-
   const rows: Row[] = useStoreState(({ entities, community }) => {
     const { byId } = entities.members;
     return community.members?.reduce((acc: Row[], id: string) => {
@@ -32,6 +32,8 @@ const MemberTable = () => {
       return [...acc, result];
     }, []);
   });
+
+  const updateData = Table.useStoreActions((actions) => actions.updateData);
 
   // Used primarily for the removal of members. This will not update the
   // data if the number of members doesn't change.
@@ -53,9 +55,11 @@ const MemberTable = () => {
     else updateColumn({ id, title, version: ++version });
   };
 
+  useTraceUpdate({ allMembers, rows });
+
   if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
 
-  return <TableContent onRenameColumn={onRenameColumn} />;
+  return <TableContent />;
 };
 
 export default () => {

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Function } from '@constants';
+import useTraceUpdate from '@hooks/useTraceUpdate';
 import Body from './components/Body';
 import ColumnPicker from './components/ColumnPicker';
 import Header from './components/Header';
@@ -35,28 +36,21 @@ const TableContent = () => {
   );
 };
 
-export default (props: TableProps) => {
-  const columns = Table.useStoreState((store) => store.columns);
-
+export default () => {
   const isAllPageSelected = Table.useStoreState(
     (store) => store.isAllPageSelected
   );
+
+  // const memoizedOnRenameColumn = useCallback(onRenameColumn, []);
+
+  // useTraceUpdate({ memoizedOnRenameColumn });
 
   return (
     <>
       {isAllPageSelected && <SelectedBanner />}
       <TableContent />
       <Pagination />
-
-      {columns.map(({ id, title, version }) => (
-        <ColumnPicker
-          key={id}
-          id={id}
-          title={title}
-          version={version}
-          {...props}
-        />
-      ))}
+      <ColumnPicker />
     </>
   );
 };

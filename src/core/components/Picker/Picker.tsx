@@ -1,11 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, {
-  CSSProperties,
-  MutableRefObject,
-  useEffect,
-  useMemo,
-  useRef
-} from 'react';
+import React, { CSSProperties, memo, MutableRefObject, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
@@ -55,8 +50,6 @@ const Picker = ({
       closePicker();
     }
   });
-
-  useEffect(() => {}, [window.innerWidth]);
 
   if (!element || id !== PICKER_ID) return null;
 
@@ -110,19 +103,15 @@ const Picker = ({
   );
 };
 
-export default (props: PickerProps) => {
-  const { id: PICKER_ID } = props;
-  const id = useStoreState(({ picker }) => picker.id);
-  const isShowing = useStoreState(({ picker }) => picker.isShowing);
-
-  const shouldShowPicker = useMemo(() => isShowing && PICKER_ID === id, [
-    isShowing,
-    id === PICKER_ID
-  ]);
-
-  return (
-    <AnimatePresence>
-      {shouldShowPicker && <Picker {...props} />}
-    </AnimatePresence>
+export default memo(({ children, ...props }: PickerProps) => {
+  const isPickerShowing = useStoreState(({ picker }) =>
+    picker.isIdShowing(props.id)
   );
-};
+
+  return createPortal(
+    <AnimatePresence>
+      {isPickerShowing && <Picker {...props}>{children}</Picker>}
+    </AnimatePresence>,
+    document.body
+  );
+});

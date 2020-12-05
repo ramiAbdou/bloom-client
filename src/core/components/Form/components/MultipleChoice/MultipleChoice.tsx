@@ -38,14 +38,17 @@ export default ({ options, title }: FormItemData) => {
 
   return (
     <>
-      {options.map((option: string) => (
-        <Choice
-          key={option}
-          isSelected={option === selectedOption}
-          option={option}
-          onClick={() => selectOption(option)}
-        />
-      ))}
+      {options.map((option: string) => {
+        const onClick = () => selectOption(option);
+        return (
+          <Choice
+            key={option}
+            isSelected={option === selectedOption}
+            option={option}
+            onClick={onClick}
+          />
+        );
+      })}
     </>
   );
 };

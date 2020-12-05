@@ -11,11 +11,13 @@ const SelectRowCheckbox = ({ id }: IdProps) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(id));
   const toggleRow = Table.useStoreActions((actions) => actions.toggleRow);
 
+  const onClick = () => toggleRow(id);
+
   return (
     <Checkbox
       className="c-table-select"
       selected={isSelected}
-      onClick={() => toggleRow(id)}
+      onClick={onClick}
     />
   );
 };

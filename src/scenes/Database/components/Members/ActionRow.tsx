@@ -9,26 +9,29 @@ import ExportDataIcon from './ExportDataIcon';
 import FilterIcon from './FilterIcon';
 import PromoteToAdminIcon from './PromoteToAdminIcon';
 
-export default () => {
+const IconContainer = () => {
   const isOwner = useStoreState((store) => store.isOwner);
 
   const isAnythingSelected = Table.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  return (
-    <div className="s-database-action-row">
-      <SearchBar placeholder="Search members..." />
+  if (!isAnythingSelected) return null;
 
-      {!isAnythingSelected && <FilterIcon />}
-      {isAnythingSelected && (
-        <div>
-          <CopyEmailsIcon />
-          <ExportDataIcon />
-          {isOwner && <PromoteToAdminIcon />}
-          <DeleteMembersIcon />
-        </div>
-      )}
+  return (
+    <div>
+      <CopyEmailsIcon />
+      <ExportDataIcon />
+      {isOwner && <PromoteToAdminIcon />}
+      <DeleteMembersIcon />
     </div>
   );
 };
+
+export default () => (
+  <div className="s-database-action-row">
+    <SearchBar placeholder="Search members..." />
+    <FilterIcon />
+    <IconContainer />
+  </div>
+);
