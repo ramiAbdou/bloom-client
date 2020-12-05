@@ -11,7 +11,7 @@
     "outDir": "./dist/",
     "paths": {
       "@components/*": ["core/components/*"],
-      "@constants": ["core/constants.ts"],
+      "@constants": ["util/constants.ts"],
       "@hooks/*": ["core/hooks/*"],
       "@scenes/*": ["scenes/*"],
       "@store/*": ["core/store/*"],

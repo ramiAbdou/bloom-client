@@ -1,5 +1,7 @@
 $PREF: 'c-toast';
 
+// ## TOAST CONTAINER
+
 .#{$PREF}-ctr {
   @extend .flex-accol;
 
@@ -10,6 +12,8 @@ $PREF: 'c-toast';
   z-index: 1000;
 }
 
+// ## TOAST
+
 .#{$PREF} {
   @extend .shadow--1;
 
@@ -19,6 +23,8 @@ $PREF: 'c-toast';
   margin-left: auto;
   margin-right: $sm;
   padding: 12px $sm;
+
+  > p { @extend .body--1; color: white; }
 
   &--error { background-color: $red; }
   &--pessimistic { background-color: $gray-1; }
@@ -31,5 +37,3 @@ $PREF: 'c-toast';
     > button:hover { background-color: rgba($color: white, $alpha: 0.1); }
   }
 }
-
-.#{$PREF} > p { @extend .body--1; color: white; }

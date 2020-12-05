@@ -2,6 +2,7 @@ import { Action, action } from 'easy-peasy';
 import { UseClientRequestOptions } from 'graphql-hooks';
 
 import { IdProps, MessageProps } from '@constants';
+import { uuid } from '@util/util';
 
 type ToastType = 'STANDARD' | 'PESSIMISTIC' | 'ERROR';
 
@@ -21,17 +22,13 @@ export type ToastModel = {
 export const toastModel: ToastModel = {
   dequeueToast: action(({ queue }, id: string) => {
     const index = queue.findIndex(({ id: toastId }) => toastId === id);
-    return {
-      queue:
-        index === -1
-          ? queue
-          : [...queue.slice(0, index), ...queue.slice(index + 1)]
-    };
+    if (index >= 0) queue.splice(index, 1);
+    return { queue };
   }),
 
   queue: [],
 
   showToast: action(({ queue }, toast) => ({
-    queue: [...queue, { id: `${toast.message}-${Math.random()}`, ...toast }]
+    queue: [...queue, { id: `${toast.message}-${uuid()}`, ...toast }]
   }))
 };

@@ -15,7 +15,6 @@ type TableProps = { onRenameColumn?: Function };
 
 export default ({ onRenameColumn }: TableProps) => {
   const [height, setHeight] = useState(0);
-  const windowWidth = useStoreState(({ screen }) => screen.windowWidth);
 
   const isAllPageSelected = Table.useStoreState(
     (store) => store.isAllPageSelected
@@ -23,11 +22,13 @@ export default ({ onRenameColumn }: TableProps) => {
 
   const columns = Table.useStoreState((store) => store.columns);
 
+  const { innerHeight } = window;
+
   useEffect(() => {
-    setHeight(
-      TABLE_HEIGHT * (window.innerHeight / 710) - (isAllPageSelected ? 60 : 0)
-    );
-  }, [isAllPageSelected, windowWidth]);
+    // Takes into account both the window's innerHeight and whether or not
+    // there is the selected banner showing.
+    setHeight(60 * 8 * (innerHeight / 710) - (isAllPageSelected ? 60 : 0));
+  }, [isAllPageSelected, innerHeight]);
 
   return (
     <>

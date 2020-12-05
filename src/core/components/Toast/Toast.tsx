@@ -16,24 +16,32 @@ const Toast = ({
   type,
   undo
 }: ToastOptions) => {
+  // Since we have the option to undo the actions within Toasts, we keep track
+  // of that state.
   const [wasUndid, setWasUndid] = useState(false);
+
   const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
 
+  // If the mutationOptionsOnClose, we must call the useMutation hook. To
+  // follow the rules of hooks, we have to pass something in, even if the
+  // mutation query and variables are empty.
   mutationOptionsOnClose = mutationOptionsOnClose ?? ['', {}];
   const [mutation] = useMutation(...mutationOptionsOnClose);
 
   useEffect(() => {
     // We only show the toast for 5 seconds, then we remove it from the DOM.
     const timeout = setTimeout(async () => {
+      // If the mutation string isn't empty, we execute the mutation.
       if (mutationOptionsOnClose[0]) await mutation();
       dequeueToast(id);
     }, 5000);
 
-    (async () => {
-      if (wasUndid) await onUndo();
-    })();
+    if (wasUndid) onUndo();
 
     return () => {
+      // If the Toast was already undid, then in this cleanup function, we
+      // clear the timeout that would've executed the mutation and removed
+      // the toast.
       if (wasUndid) clearTimeout(timeout);
     };
   }, [wasUndid]);
@@ -42,7 +50,7 @@ const Toast = ({
     'c-toast',
     [type === 'ERROR', 'c-toast--error'],
     [type === 'PESSIMISTIC', 'c-toast--pessimistic'],
-    [!!undo, 'c-toast--undo']
+    [undo, 'c-toast--undo']
   ]);
 
   const onUndoClick = () => {
