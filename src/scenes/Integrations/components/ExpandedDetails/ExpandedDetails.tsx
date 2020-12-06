@@ -32,7 +32,11 @@ export default ({ details, logo, name }: ExpandedDetailsProps) => {
   }, []);
 
   return (
-    <Modal id={MODAL_ID} onClose={() => setFlow(null)}>
+    <Modal
+      className="s-integrations-modal"
+      id={MODAL_ID}
+      onClose={() => setFlow(null)}
+    >
       <img className="s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>
 
