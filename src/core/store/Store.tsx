@@ -22,7 +22,7 @@ import { LoaderModel, loaderModel } from '@components/Loader/Loader.store';
 import { ModalModel, modalModel } from '@components/Modal/Modal.store';
 import { PickerModel, pickerModel } from '@components/Picker/Picker.store';
 import { ToastModel, toastModel } from '@components/Toast/Toast.store';
-import { getHueFromRGB, getRGBFromHex, parseEntities } from '@util/util';
+import { parseEntities } from '@util/util';
 import {
   ICommunity,
   IEntities,
@@ -32,6 +32,42 @@ import {
   IUser
 } from './entities';
 import { ScreenModel, screenModel } from './Screen.store';
+
+/**
+ * Returns a 3-tuple represents the R-G-B colors from a hexadecimal color.
+ *
+ * @param hex Hexadecimal color.
+ * @see https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+ */
+const getRGBFromHex = (hex: string): number[] =>
+  hex
+    .replace(
+      /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+      (m, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
+    )
+    .substring(1)
+    .match(/.{2}/g)
+    .map((x) => parseInt(x, 16));
+
+/**
+ * Returns the hue from an RGB 3-tuple.
+ */
+const getHueFromRGB = ([r, g, b]: number[]): number => {
+  const min = Math.min(r, g, b);
+  const max = Math.max(r, g, b);
+  if (max === min) return 0;
+
+  let hue = (max + min) / 2;
+  const diff = max - min;
+
+  if (max === r) hue = (g - b) / diff;
+  if (max === g) hue = (b - r) / diff + 2;
+  if (max === b) hue = (r - g) / diff + 4;
+
+  hue *= 60;
+
+  return hue < 0 ? hue + 360 : Math.round(hue);
+};
 
 type UpdateEntitiesArgs = { data?: any; schema?: Schema<any> };
 
