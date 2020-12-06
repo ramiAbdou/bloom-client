@@ -3,14 +3,12 @@ import { Action, action, createContextStore } from 'easy-peasy';
 import { filterOptions } from '@util/util';
 
 export type MultipleSelectModel = {
-  addOption: Action<MultipleSelectModel, string[]>;
   closeOptions: Action<MultipleSelectModel>;
   filteredOptions: string[];
   isOpen: boolean;
   options: string[];
   openOptions: Action<MultipleSelectModel>;
   searchString: string;
-  removeOption: Action<MultipleSelectModel, string[]>;
   setSearchString: Action<MultipleSelectModel, string>;
   setWidth: Action<MultipleSelectModel, number>;
   title: string;
@@ -18,14 +16,6 @@ export type MultipleSelectModel = {
 };
 
 export const multipleSelectModel: MultipleSelectModel = {
-  addOption: action(({ options, ...state }, nonFilteredValues: string[]) => ({
-    ...state,
-    filteredOptions: options.filter(
-      (option: string) => !nonFilteredValues.includes(option)
-    ),
-    options
-  })),
-
   closeOptions: action((state) => ({ ...state, isOpen: false })),
 
   filteredOptions: [],
@@ -35,16 +25,6 @@ export const multipleSelectModel: MultipleSelectModel = {
   openOptions: action((state) => ({ ...state, isOpen: true })),
 
   options: [],
-
-  removeOption: action(
-    ({ options, ...state }, nonFilteredValues: string[]) => ({
-      ...state,
-      filteredOptions: options.filter(
-        (option: string) => !nonFilteredValues.includes(option)
-      ),
-      options
-    })
-  ),
 
   searchString: '',
 

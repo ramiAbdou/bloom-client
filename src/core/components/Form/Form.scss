@@ -42,10 +42,11 @@ $PREF: 'c-form';
   width: 10px;
 }
 
-// ## DROPDOWN OPTION CONTAINER
+// ## DROPDOWN BAR CONTAINER
 
 // Dropdown bar that user clickes on to open the option container.
 div.#{$PREF}-dd-bar { @extend .flex-acsb; cursor: pointer; }
+
 .#{$PREF}-dd-bar > svg { color: $gray-4; height: $sm; width: $sm; }
 
 // When a user selects an option, it displays in this container.
@@ -58,6 +59,8 @@ button.#{$PREF}-dd-value {
 
   &::after { content: 'x'; margin-left: $xs; }
 }
+
+// ## DROPDOWN OPTION CONTAINER
 
 .#{$PREF}-dd-search { box-sizing: border-box; padding: 8px; width: 100%; }
 
@@ -76,10 +79,13 @@ button.#{$PREF}-dd-value {
 .#{$PREF}-dd-opt-ctr > p {
   @extend .flex-ac;
 
+  color: $gray-3;
   height: $lg;
   margin-left: $xs;
   width: 100%;
 }
+
+// ## DROPDOWN OPTION
 
 .#{$PREF}-dd-opt {
   @extend .flex-ac;

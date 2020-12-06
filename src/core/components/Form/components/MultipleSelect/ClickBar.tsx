@@ -8,16 +8,20 @@ import MultipleSelect from './MultipleSelect.store';
 interface ClickBarValueProps extends OnClickProps, ValueProps {}
 
 const Value = ({ onClick, value }: ClickBarValueProps) => (
-  <button key={value} className="c-misc-tag c-form-dd-value" onClick={onClick}>
+  <button className="c-misc-tag c-form-dd-value" onClick={onClick}>
     {value}
   </button>
 );
 
 const ValueContainer = () => {
+  const isOpen = MultipleSelect.useStoreState((store) => store.isOpen);
   const title = MultipleSelect.useStoreState((store) => store.title);
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const addOption = MultipleSelect.useStoreActions((store) => store.addOption);
   const values = Form.useStoreState(({ getItem }) => getItem({ title }).value);
+  const updateItem = Form.useStoreActions((store) => store.updateItem);
+
+  const openOptions = MultipleSelect.useStoreActions(
+    (store) => store.openOptions
+  );
 
   const deleteValue = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -26,7 +30,7 @@ const ValueContainer = () => {
     e.stopPropagation();
     const updatedValues = values.filter((option: string) => option !== value);
     updateItem({ title, value: updatedValues });
-    addOption(updatedValues);
+    if (!isOpen) openOptions();
   };
 
   return (
@@ -65,7 +69,10 @@ export default () => {
     if (width) setWidth(width);
   }, [width]);
 
-  const onClick = () => (isOpen ? closeOptions() : openOptions());
+  const onClick = () => {
+    if (isOpen) closeOptions();
+    else openOptions();
+  };
 
   return (
     <div ref={ref} className="c-misc-input c-form-dd-bar" onClick={onClick}>

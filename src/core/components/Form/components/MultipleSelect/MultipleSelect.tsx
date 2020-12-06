@@ -9,10 +9,6 @@ import OptionContainer from './OptionContainer';
 const MultipleSelectContent = () => {
   const isOpen = MultipleSelect.useStoreState((store) => store.isOpen);
 
-  const openOptions = MultipleSelect.useStoreActions(
-    (store) => store.openOptions
-  );
-
   const closeOptions = MultipleSelect.useStoreActions(
     (store) => store.closeOptions
   );
@@ -21,9 +17,9 @@ const MultipleSelectContent = () => {
   useOnClickOutside(ref, () => isOpen && closeOptions());
 
   return (
-    <div ref={ref} onClick={() => openOptions()}>
+    <div ref={ref}>
       <ClickBar />
-      <OptionContainer />
+      {isOpen && <OptionContainer />}
     </div>
   );
 };
