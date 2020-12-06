@@ -26,7 +26,7 @@ export default ({
 }: ButtonProps) => {
   // If the button is in it's loading state, it should be disabled.
   const showLoadingState = useLoadingState(loading);
-  disabled = disabled || useLoadingState(loading);
+  disabled = disabled || showLoadingState;
 
   const css = makeClass([
     'c-btn-outline',

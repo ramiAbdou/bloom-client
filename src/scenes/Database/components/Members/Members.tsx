@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
 import Table, { Column, Row, tableModel } from '@components/Table/Table.store';
-import { IMember, IMembershipQuestion } from '@store/entities';
+import { IMembershipQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
@@ -13,11 +13,6 @@ import Database from '../../Database.store';
 import ActionRow from './ActionRow';
 
 const MemberTable = () => {
-  const allMembers: IMember[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.members;
-    return community.members?.map((memberId: string) => byId[memberId]);
-  }, deepequal);
-
   const rows: Row[] = useStoreState(({ entities, community }) => {
     const { byId } = entities.members;
     return community.members?.reduce((acc: Row[], id: string) => {
@@ -54,7 +49,6 @@ const MemberTable = () => {
     else updateColumn({ id, title, version: ++version });
   }, []);
 
-  if (!allMembers.length) return <p>You don't have any members! 🥴</p>;
   return <TableContent onRenameColumn={onRenameColumn} />;
 };
 

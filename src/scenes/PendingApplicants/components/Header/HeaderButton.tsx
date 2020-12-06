@@ -14,7 +14,7 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
   const hasApplicants = !!community.pendingApplicants?.length;
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
-    variables: { membershipIds: community.pendingApplicants, response }
+    variables: { membershipIds: community?.pendingApplicants, response }
   });
 
   const onClick = async () => {
@@ -32,18 +32,23 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
     });
   };
 
-  const baseProps = { disabled: !hasApplicants, onClick };
-
   if (response === 'ACCEPTED')
     return (
       <PrimaryButton
         className="s-applicants-accept-all"
-        {...baseProps}
+        disabled={!hasApplicants}
         title="Accept All"
+        onClick={onClick}
       />
     );
 
-  return <OutlineButton title="Ignore All" {...baseProps} />;
+  return (
+    <OutlineButton
+      disabled={!hasApplicants}
+      title="Ignore All"
+      onClick={onClick}
+    />
+  );
 };
 
 export const AcceptAllButton = () => <HeaderButton response="ACCEPTED" />;
