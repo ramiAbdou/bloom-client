@@ -9,8 +9,8 @@ import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_ADMINS } from '../../Database.gql';
 import Database from '../../Database.store';
-import AddAdminStore from '../Header/AddAdmin.store';
-import { AddAdminModal } from '../Header/AddAdminButton';
+import AddAdminStore from '../AddAdmin/AddAdmin.store';
+import AddAdminModal from '../AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
 const AdminTable = () => {

@@ -14,11 +14,11 @@ export type ModalModel = {
 export const modalModel: ModalModel = {
   closeModal: action((state) => ({
     ...state,
-    id: '',
+    id: null,
     isShowing: false
   })),
 
-  id: '',
+  id: null,
 
   isShowing: false,
 

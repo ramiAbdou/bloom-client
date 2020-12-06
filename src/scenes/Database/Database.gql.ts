@@ -1,5 +1,11 @@
 import { mutation, query } from 'gql-query-builder';
 
+export const CREATE_MEMBERSHIPS = mutation({
+  fields: ['role', { user: ['id', 'firstName', 'lastName', 'email'] }],
+  operation: 'createMemberships',
+  variables: { members: { required: true, type: '[NewMemberInput!]' } }
+}).query;
+
 export const DELETE_MEMBERSHIPS = mutation({
   operation: 'deleteMemberships',
   variables: { membershipIds: { required: true, type: '[String!]' } }
@@ -22,17 +28,6 @@ export const GET_DATABASE = query({
   operation: 'getDatabase'
 }).query;
 
-export const TOGGLE_ADMINS = mutation({
-  operation: 'toggleAdmins',
-  variables: { membershipIds: { required: true, type: '[String!]' } }
-}).query;
-
-export const CREATE_MEMBERSHIPS = mutation({
-  fields: ['role', { user: ['id', 'firstName', 'lastName', 'email'] }],
-  operation: 'createMemberships',
-  variables: { members: { required: true, type: '[NewMemberInput!]' } }
-}).query;
-
 export const RENAME_QUESTION = mutation({
   fields: ['id', 'title'],
   operation: 'renameQuestion',
@@ -41,4 +36,9 @@ export const RENAME_QUESTION = mutation({
     title: { required: true },
     version: { required: true, type: 'Int' }
   }
+}).query;
+
+export const TOGGLE_ADMINS = mutation({
+  operation: 'toggleAdmins',
+  variables: { membershipIds: { required: true, type: '[String!]' } }
 }).query;

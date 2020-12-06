@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
 import Separator from '@components/Misc/Separator';
-import AddMemberStore from '@scenes/Database/components/Header/AddMember.store';
-import { AddMemberModal } from '@scenes/Database/components/Header/AddMemberButton';
+import AddMemberStore from '@scenes/Database/components/AddMember/AddMember.store';
+import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreActions, useStoreState } from '@store/Store';
 import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';

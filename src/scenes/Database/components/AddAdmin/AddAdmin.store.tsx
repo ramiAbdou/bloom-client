@@ -10,7 +10,7 @@ import validator from 'validator';
 import { IdProps } from '@constants';
 import { uuid } from '@util/util';
 
-interface AddAdminData extends IdProps {
+export interface AddAdminData extends IdProps {
   email: string;
   emailError: string;
   firstName: string;
@@ -19,23 +19,27 @@ interface AddAdminData extends IdProps {
   lastNameError: string;
 }
 
-type UpdateMemberArgs = {
+type UpdateAdminArgs = {
   field: 'EMAIL' | 'FIRST_NAME' | 'LAST_NAME';
   id: string;
   value: string;
 };
 
-export type AddMemberModel = {
-  addEmptyMember: Action<AddMemberModel>;
+export type AddAdminModel = {
+  addEmptyMember: Action<AddAdminModel>;
   admins: AddAdminData[];
-  clearMembers: Action<AddMemberModel>;
-  getMember: Computed<AddMemberModel, (id: string) => AddAdminData, {}>;
+  clearMembers: Action<AddAdminModel>;
+  getMember: Computed<AddAdminModel, (id: string) => AddAdminData, {}>;
   isShowingErrors: boolean;
-  showErrors: Action<AddMemberModel>;
-  updateMember: Action<AddMemberModel, UpdateMemberArgs>;
+  showErrors: Action<AddAdminModel>;
+  updateMember: Action<AddAdminModel, UpdateAdminArgs>;
 };
 
-const generateEmptyMember = (): AddAdminData => ({
+/**
+ * Generates an empty admin with no fields filled out. Used when adding
+ * an empty admin as well as clearing admins. Acts as initial state.
+ */
+const generateEmptyAdmin = (): AddAdminData => ({
   email: '',
   emailError: 'This is not a valid email address.',
   firstName: '',
@@ -45,19 +49,28 @@ const generateEmptyMember = (): AddAdminData => ({
   lastNameError: 'Please fill out a last name.'
 });
 
-const addMemberModel: AddMemberModel = {
+/**
+ * Returns true if one of the members has an error with the input.
+ */
+export const doesInputHaveError = (admins: AddAdminData[]) =>
+  admins.some(
+    ({ emailError, firstNameError, lastNameError }) =>
+      emailError || firstNameError || lastNameError
+  );
+
+const addAdminModel: AddAdminModel = {
   addEmptyMember: action(({ admins, ...state }) => ({
     ...state,
-    admins: [...admins, generateEmptyMember()],
+    admins: [...admins, generateEmptyAdmin()],
     isShowingErrors: false
   })),
 
-  admins: [generateEmptyMember()],
+  admins: [generateEmptyAdmin()],
 
   clearMembers: action((state) => {
     return {
       ...state,
-      admins: [generateEmptyMember()],
+      admins: [generateEmptyAdmin()],
       isShowingErrors: false
     };
   }),
@@ -99,6 +112,6 @@ const addMemberModel: AddMemberModel = {
   })
 };
 
-export default createContextStore<AddMemberModel>(addMemberModel, {
+export default createContextStore<AddAdminModel>(addAdminModel, {
   disableImmer: true
 });

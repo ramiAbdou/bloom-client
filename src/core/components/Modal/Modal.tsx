@@ -15,9 +15,9 @@ import ModalBackground from './ModalBackground';
 import ModalContainer from './ModalContainer';
 
 interface ModalProps
-  extends IdProps,
-    ChildrenProps,
+  extends ChildrenProps,
     ClassNameProps,
+    IdProps,
     StyleProps {
   confirmation?: boolean;
   onClose?: Function;

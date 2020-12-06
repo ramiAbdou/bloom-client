@@ -34,6 +34,11 @@ export type MessageProps = { message: string };
 export type StyleProps = { style?: React.CSSProperties };
 export type ValueProps = { value: any };
 
+export enum ModalType {
+  ADD_ADMINS = 'ADD_ADMINS',
+  ADD_MEMBERS = 'ADD_MEMBERS'
+}
+
 /**
  * FORMS - Handling of all form-related items including custom Enums.
  */

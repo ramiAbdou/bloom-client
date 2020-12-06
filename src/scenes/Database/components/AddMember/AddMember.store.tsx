@@ -10,7 +10,7 @@ import validator from 'validator';
 import { IdProps } from '@constants';
 import { uuid } from '@util/util';
 
-interface AddMemberData extends IdProps {
+export interface AddMemberData extends IdProps {
   admin: boolean;
   email: string;
   emailError: string;
@@ -37,6 +37,10 @@ export type AddMemberModel = {
   updateMember: Action<AddMemberModel, UpdateMemberArgs>;
 };
 
+/**
+ * Generates an empty member with no fields filled out. Used when adding
+ * an empty member as wel as clearing members. Acts as initial state.
+ */
 const generateEmptyMember = (): AddMemberData => ({
   admin: false,
   email: '',
@@ -47,6 +51,15 @@ const generateEmptyMember = (): AddMemberData => ({
   lastName: '',
   lastNameError: 'Please fill out a last name.'
 });
+
+/**
+ * Returns true if one of the members has an error with the input.
+ */
+export const doesInputHaveError = (members: AddMemberData[]) =>
+  members.some(
+    ({ emailError, firstNameError, lastNameError }) =>
+      emailError || firstNameError || lastNameError
+  );
 
 const addMemberModel: AddMemberModel = {
   addEmptyMember: action(({ members, ...state }) => ({
