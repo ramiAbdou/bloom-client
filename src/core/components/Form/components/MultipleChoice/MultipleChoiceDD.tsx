@@ -1,112 +1,38 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import useOnClickOutside from 'use-onclickoutside';
 
-import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
-import MultipleChoiceDDProvider, {
-  useMultipleChoiceDD
-} from './MultipleChoiceDD.state';
+import ClickBar from './ClickBar';
+import MultipleChoice, { multipleChoiceModel } from './MultipleChoiceDD.store';
+import OptionContainer from './OptionContainer';
 
-type OptionProps = { selectOption: VoidFunction; option: string };
-type ValueProps = { value?: string };
+const MultipleChoiceDDContent = () => {
+  const isOpen = MultipleChoice.useStoreState((store) => store.isOpen);
 
-const SearchBar = () => {
-  const { searchString, setSearchString } = useMultipleChoiceDD();
-
-  return (
-    <input
-      className="c-form-dd-search"
-      type="text"
-      value={searchString ?? 'Search...'}
-      onChange={({ target }) => setSearchString(target.value)}
-    />
+  const closeOptions = MultipleChoice.useStoreActions(
+    (store) => store.closeOptions
   );
-};
-
-const Option = ({ selectOption, option }: OptionProps) => (
-  <button className="c-form-dd-opt" onClick={selectOption}>
-    <p>{option}</p>
-  </button>
-);
-
-const AllOptions = () => {
-  const { filteredOptions, setSearchString, title } = useMultipleChoiceDD();
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
-
-  const selectOption = (option: string) => {
-    updateItem({ title, value: option });
-    setSearchString('');
-  };
-
-  return (
-    <>
-      {filteredOptions.map((option) => (
-        <Option
-          key={option}
-          option={option}
-          selectOption={() => selectOption(option)}
-        />
-      ))}
-    </>
-  );
-};
-
-const OptionContainer = () => {
-  const { filteredOptions, width } = useMultipleChoiceDD();
-  const noOptionsFound = !filteredOptions.length;
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        className="c-form-dd-opt-ctr"
-        style={{ width: width ?? 0 }}
-        transition={{ duration: 0.25 }}
-      >
-        <SearchBar />
-        {noOptionsFound && <p>No results found.</p>}
-        {!noOptionsFound && <AllOptions />}
-      </motion.div>
-    </AnimatePresence>
-  );
-};
-
-const Value = ({ value }: ValueProps) => {
-  const { title } = useMultipleChoiceDD();
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const clearValue = () => updateItem({ title, value: null });
-
-  return (
-    <button className="c-form-dd-value" onClick={clearValue}>
-      {value}
-    </button>
-  );
-};
-
-const ClickBar = () => {
-  const { title, setWidth } = useMultipleChoiceDD();
-  const { value } = Form.useStoreState(({ getItem }) => getItem({ title }));
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
-  const width = ref?.current?.offsetWidth;
-  useEffect(() => setWidth(width), [width]);
+  useOnClickOutside(ref, () => isOpen && closeOptions());
 
   return (
-    <div ref={ref} className="c-misc-input c-form-dd-bar">
-      <div>{value && <Value value={value} />}</div>
-      <div className="c-form-dd-arrow" />
+    <div ref={ref}>
+      <ClickBar />
+      {isOpen && <OptionContainer />}
     </div>
   );
 };
 
-export default ({ options, title }: FormItemData) => {
-  const [isActive, setIsActive] = useState(false);
-
-  return (
-    <MultipleChoiceDDProvider options={options} title={title}>
-      <div onClick={() => setIsActive(!isActive)}>
-        <ClickBar />
-        {isActive && <OptionContainer />}
-      </div>
-    </MultipleChoiceDDProvider>
-  );
-};
+export default ({ options, title }: FormItemData) => (
+  <MultipleChoice.Provider
+    runtimeModel={{
+      ...multipleChoiceModel,
+      filteredOptions: options,
+      options,
+      title
+    }}
+  >
+    <MultipleChoiceDDContent />
+  </MultipleChoice.Provider>
+);
