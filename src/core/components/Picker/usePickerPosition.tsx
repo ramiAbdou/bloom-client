@@ -25,25 +25,26 @@ export default ({
   const [targetLeft, setTargetLeft] = useState(left);
   const [targetTop, setTargetTop] = useState(top);
 
-  const onScroll = () => {
+  const updatePosition = () => {
     const { left: updatedTargetLeft, top: updatedTargetTop } =
       element?.getBoundingClientRect() ?? {};
 
-    if (updatedTargetLeft && updatedTargetLeft !== targetLeft) {
-      const updatedAlign: PickerAlign = takeFirst([
-        [
-          align === 'BOTTOM_LEFT' &&
-            innerWidth - (updatedTargetLeft + width) <= 240,
-          'BOTTOM_RIGHT'
-        ],
-        [
-          align === 'BOTTOM_RIGHT' &&
-            innerWidth - (updatedTargetLeft + width) > 240,
-          'BOTTOM_LEFT'
-        ]
-      ]);
+    const updatedAlign: PickerAlign = takeFirst([
+      [
+        align === 'BOTTOM_LEFT' &&
+          innerWidth - (updatedTargetLeft + width) <= 240,
+        'BOTTOM_RIGHT'
+      ],
+      [
+        align === 'BOTTOM_RIGHT' &&
+          innerWidth - (updatedTargetLeft + width) > 240,
+        'BOTTOM_LEFT'
+      ]
+    ]);
 
-      if (updatedAlign) setAlign(updatedAlign);
+    if (updatedAlign) setAlign(updatedAlign);
+
+    if (updatedTargetLeft && updatedTargetLeft !== targetLeft) {
       setTargetLeft(updatedTargetLeft);
     }
 
@@ -53,11 +54,15 @@ export default ({
   };
 
   useEffect(() => {
-    if (scrollElement) scrollElement.addEventListener('scroll', onScroll);
+    updatePosition();
+  }, [initialAlign]);
+
+  useEffect(() => {
+    if (scrollElement) scrollElement.addEventListener('scroll', updatePosition);
 
     return () => {
       if (scrollElement) {
-        scrollElement.removeEventListener('scroll', onScroll);
+        scrollElement.removeEventListener('scroll', updatePosition);
       }
     };
   }, [scrollElement]);
