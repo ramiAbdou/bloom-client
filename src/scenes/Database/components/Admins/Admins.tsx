@@ -1,3 +1,4 @@
+import deepequal from 'fast-deep-equal';
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
@@ -16,25 +17,25 @@ const AdminTable = () => {
   const admins: IAdmin[] = useStoreState(({ entities, community }) => {
     const { byId } = entities.admins;
     return community.admins?.map((adminId: string) => byId[adminId]);
-  });
+  }, deepequal);
+
+  const rows: Row[] = admins.reduce(
+    (acc: Row[], { firstName, lastName, email, id }: IAdmin) => {
+      return [
+        ...acc,
+        { Email: email, 'First Name': firstName, 'Last Name': lastName, id }
+      ];
+    },
+    []
+  );
 
   const updateData = Table.useStoreActions((actions) => actions.updateData);
 
   // Used primarily for the removal of members. This will not update the
   // data if the number of members doesn't change.
   useEffect(() => {
-    const data = admins.reduce(
-      (acc: Row[], { firstName, lastName, email, id }: IAdmin) => {
-        return [
-          ...acc,
-          { Email: email, 'First Name': firstName, 'Last Name': lastName, id }
-        ];
-      },
-      []
-    );
-
-    updateData(data);
-  }, [admins?.length]);
+    updateData(rows);
+  }, [rows?.length]);
 
   return <TableContent />;
 };

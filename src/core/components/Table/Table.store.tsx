@@ -169,7 +169,7 @@ export const tableModel: TableModel = {
     isAllSelected || selectedRowIds.includes(rowId)
   ),
 
-  onRenameColumn: () => {},
+  onRenameColumn: null,
 
   /**
    * Represents the page (currently in 100s) that the table is currently
