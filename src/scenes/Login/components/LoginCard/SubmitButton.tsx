@@ -31,6 +31,7 @@ export default () => {
   );
 
   const submitForm = async () => {
+    if (!isCompleted) return;
     const { error: loginError } = await sendTemporaryLoginLink();
 
     // sendTemporaryLoginLink returns a boolean when it's complete, so as long

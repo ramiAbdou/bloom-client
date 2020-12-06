@@ -28,8 +28,11 @@ export type LoginModel = {
 
 const loginModel: LoginModel = {
   email: '',
+
   hasLoginLinkSent: false,
+
   setEmail: action((state, email) => ({ ...state, email })),
+
   setHasLoginLinkSent: action((state, hasLoginLinkSent) => ({
     ...state,
     hasLoginLinkSent

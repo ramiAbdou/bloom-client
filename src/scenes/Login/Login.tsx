@@ -6,7 +6,6 @@ import Login from './Login.store';
 
 const LoginContent = () => {
   const linkSent = Login.useStoreState((store) => store.hasLoginLinkSent);
-
   return linkSent ? <EmailConfirmation /> : <LoginCard />;
 };
 
