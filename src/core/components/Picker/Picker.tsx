@@ -1,30 +1,29 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, {
-  CSSProperties,
-  MutableRefObject,
-  useEffect,
-  useRef
-} from 'react';
+import React, { CSSProperties, MutableRefObject, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
+import { PickerAlign } from './Picker.store';
+import usePickerPosition from './usePickerPosition';
 
 interface PickerProps
   extends ChildrenProps,
     IdProps,
     ClassNameProps,
     StyleProps {
-  align?: 'RIGHT_BOTTOM' | 'BOTTOM_LEFT' | 'BOTTOM_RIGHT';
+  align?: PickerAlign;
+  scrollId?: string;
 }
 
 const Picker = ({
-  align,
+  align: initialAlign,
   className,
   children,
   id: PICKER_ID,
+  scrollId,
   style
 }: PickerProps) => {
   const id = useStoreState(({ picker }) => picker.id);
@@ -32,6 +31,11 @@ const Picker = ({
 
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
   const element: HTMLElement = document.getElementById(id);
+  const { height, width } = element?.getBoundingClientRect() ?? {};
+  const { innerHeight, innerWidth } = window;
+
+  const position = usePickerPosition({ id: PICKER_ID, initialAlign, scrollId });
+  const { align, left, top } = position;
 
   // If the click happened within the element that was used to open the
   // Picker, then we don't close the picker.
@@ -56,8 +60,6 @@ const Picker = ({
     }
   });
 
-  useEffect(() => {}, []);
-
   if (!element || id !== PICKER_ID) return null;
 
   // ## START: CALCULATE PICKER COORDINATES AND ANIMATION STYLING
@@ -66,9 +68,6 @@ const Picker = ({
   let exit: any = {};
   let initial: any = { opacity: 0.5 };
   let animate: any = { opacity: 1 };
-
-  const { innerHeight, innerWidth } = window;
-  const { left, top, height, width } = element.getBoundingClientRect();
 
   // ## CASE #1: RIGHT_BOTTOM
 

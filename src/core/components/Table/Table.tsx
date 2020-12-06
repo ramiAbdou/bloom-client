@@ -8,8 +8,6 @@ import Pagination from './components/Pagination/Pagination';
 import SelectedBanner from './components/SelectedBanner';
 import Table from './Table.store';
 
-type TableProps = { onRenameColumn?: Function };
-
 const TableContent = () => {
   const [maxHeight, setMaxHeight] = useState(0);
 
@@ -35,17 +33,27 @@ const TableContent = () => {
   );
 };
 
+type TableProps = { onRenameColumn?: Function };
+
 export default memo(({ onRenameColumn }: TableProps) => {
   const isAllPageSelected = Table.useStoreState(
     (store) => store.isAllPageSelected
   );
+
+  const setOnRenameColumn = Table.useStoreActions(
+    (store) => store.setOnRenameColumn
+  );
+
+  useEffect(() => {
+    if (onRenameColumn) setOnRenameColumn(onRenameColumn);
+  }, []);
 
   return (
     <>
       {isAllPageSelected && <SelectedBanner />}
       <TableContent />
       <Pagination />
-      <ColumnPicker onRenameColumn={onRenameColumn} />
+      <ColumnPicker />
     </>
   );
 });

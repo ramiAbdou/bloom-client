@@ -3,19 +3,18 @@ import React, { useEffect, useState } from 'react';
 
 import Input from '@components/Misc/Input';
 import Picker from '@components/Picker/Picker';
-import { Function } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Table, { Column } from '../../Table.store';
 import SortAscendingButton from './SortAscendingButton';
 import SortDescendingButton from './SortDescendingButton';
 
-type ColumnPickerProps = { onRenameColumn?: Function };
-
-export default ({ onRenameColumn }: ColumnPickerProps) => {
+export default () => {
   const [value, setValue] = useState<string>('');
 
   const pickerId = useStoreState(({ picker }) => picker.id);
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
+
+  const onRenameColumn = Table.useStoreState((store) => store.onRenameColumn);
 
   const { id, title, version }: Column = Table.useStoreState(
     ({ columns }) =>
@@ -28,7 +27,7 @@ export default ({ onRenameColumn }: ColumnPickerProps) => {
     if (value !== title) setValue(title);
   }, [title]);
 
-  if (!id) return null;
+  if (!id || !value) return null;
 
   const modifiedOnRenameColumn = async () => {
     if (!onRenameColumn || !value || title === value) return;
@@ -40,14 +39,13 @@ export default ({ onRenameColumn }: ColumnPickerProps) => {
     closePicker();
   };
 
-  const element = document.getElementById(id);
-  const { left, width } = element?.getBoundingClientRect() ?? {};
-
-  const align =
-    window.innerWidth - (left + width) > 240 ? 'BOTTOM_LEFT' : 'BOTTOM_RIGHT';
-
   return (
-    <Picker align={align} className="c-table-col-picker" id={id}>
+    <Picker
+      align="BOTTOM_LEFT"
+      className="c-table-col-picker"
+      id={id}
+      scrollId="c-table-ctr"
+    >
       {!!onRenameColumn && (
         <Input
           gray

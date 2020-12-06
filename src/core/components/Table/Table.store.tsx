@@ -6,7 +6,7 @@ import {
   createContextStore
 } from 'easy-peasy';
 
-import { QuestionCategory, QuestionType } from '@constants';
+import { Function, QuestionCategory, QuestionType } from '@constants';
 import { toggleArrayValue } from '@util/util';
 
 export type Column = {
@@ -113,11 +113,13 @@ type TableModel = {
   isAllPageSelected: Computed<TableModel, boolean>;
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
+  onRenameColumn: Function;
   page: number;
   range: Computed<TableModel, [number, number]>;
   searchString: string;
   select: boolean;
   selectedRowIds: string[];
+  setOnRenameColumn: Action<TableModel, Function>;
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
   setSortedColumn: Action<TableModel, [string, SortDirection]>;
@@ -167,6 +169,8 @@ export const tableModel: TableModel = {
     isAllSelected || selectedRowIds.includes(rowId)
   ),
 
+  onRenameColumn: () => {},
+
   /**
    * Represents the page (currently in 100s) that the table is currently
    * paginated on. In other words, 0 represents 1-99, 1 represents 100-199,
@@ -185,6 +189,11 @@ export const tableModel: TableModel = {
   select: true,
 
   selectedRowIds: [],
+
+  setOnRenameColumn: action((state, onRenameColumn) => ({
+    ...state,
+    onRenameColumn
+  })),
 
   setRange: action((state, page) => {
     // When going to a new page, we need to ensure that the scroll position is
