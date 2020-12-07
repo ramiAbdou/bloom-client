@@ -1,5 +1,13 @@
 import React from 'react';
 
+import Header from './components/Header';
+import MemberCardContainer from './components/MemberCard/MemberCard.container';
+
 export default () => {
-  return <h1 className="s-home-header-title">Directory</h1>;
+  return (
+    <div className="s-directory">
+      <Header />
+      <MemberCardContainer />
+    </div>
+  );
 };

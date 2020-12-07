@@ -33,6 +33,10 @@ const Membership = new schema.Entity('memberships', {
 
 const User = new schema.Entity('users', { memberships: [Membership] });
 
+// Handle the circular dependencies in relationships.
+
+Members.define({ user: User });
+
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
 // (ie: ICommunity, IUser, etc).

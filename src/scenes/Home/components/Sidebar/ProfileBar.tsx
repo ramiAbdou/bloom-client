@@ -4,14 +4,14 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const PictureContainer = () => {
-  const pictureURL = useStoreState(({ user }) => user.pictureURL);
+  const pictureUrl = useStoreState(({ user }) => user.pictureUrl);
 
   const initials = useStoreState(
     ({ user }) => `${user.firstName[0]}${user.lastName[0]}`
   );
 
-  if (pictureURL)
-    return <img className="s-home-sidebar-profile__picture" src={pictureURL} />;
+  if (pictureUrl)
+    return <img className="s-home-sidebar-profile__picture" src={pictureUrl} />;
   return <h3 className="s-home-sidebar-profile__picture">{initials}</h3>;
 };
 

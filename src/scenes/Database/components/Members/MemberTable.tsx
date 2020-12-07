@@ -15,8 +15,10 @@ export default () => {
     const { byId } = entities.members;
 
     return community.members?.reduce((acc: Row[], id: string) => {
-      const { allData } = byId[id];
       const result: Row = { id };
+      const { allData } = byId[id];
+
+      if (!allData) return acc;
 
       allData.forEach(({ questionId, value }) => {
         result[questionId] = value;

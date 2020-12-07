@@ -34,12 +34,16 @@ export type IIntegrations = {
 };
 
 export type IMember = {
-  allData: { questionId: string; value: string }[];
+  allData?: { questionId: string; value: string }[];
+  bio: string;
+  cardData?: { questionId: string; value: string }[];
   id: string;
   role?: 'ADMIN' | 'OWNER';
+  user: string;
 };
 
 export type IMembership = {
+  bio: string;
   community: string;
   id: string;
   role: 'ADMIN' | 'OWNER';
@@ -50,6 +54,7 @@ export type IMembershipQuestion = {
   category: QuestionCategory;
   id: string;
   inApplicantCard: boolean;
+  inDirectoryCard: boolean;
   order: number;
   options: string[];
   required: boolean;
@@ -71,11 +76,15 @@ export type IPendingApplicant = {
 };
 
 export type IUser = {
-  firstName: string;
-  lastName: string;
   email: string;
+  facebookUrl: string;
+  firstName: string;
   id: string;
-  pictureURL: string;
+  instagramUrl: string;
+  lastName: string;
+  linkedInUrl: string;
+  pictureUrl: string;
+  twitterUrl: string;
 };
 
 export interface EntityRecord<T> {

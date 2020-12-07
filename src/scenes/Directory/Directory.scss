@@ -1,0 +1,62 @@
+$PREF: 's-directory';
+
+// .#{$PREF} {}
+
+.#{$PREF}-card-ctr {
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  row-gap: $sm;
+};
+
+// ## CARD
+
+button.#{$PREF}-card {
+  @extend .card;
+  @extend .flex-ac;
+  @extend .flex-col;
+  
+
+  grid-column-end: span 2;
+  height: fit-content;
+  padding: 0;
+
+  &:last-of-type { margin-bottom: $lg; }
+  &--empty { height: initial; }
+};
+
+.#{$PREF}-card > div > h1 {
+  @extend .flex-acc;
+
+  background-color: $primary;
+  color: white;
+  font-size: $xxl;
+}
+
+.#{$PREF}-card > div:first-child {
+  position: relative;
+  width: 100%;
+  &::before { content: ''; display: block; padding-top: 100%; }
+}
+
+.#{$PREF}-card > div:first-child > * {
+  border-radius: $xxs $xxs 0 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+// ## CARD CONTENT - Refers to the text within the card (name and highlighted
+// field).
+
+.#{$PREF}-card-content { flex-grow: 1; padding: $sm; }
+.#{$PREF}-card-content > p {
+  @extend .meta;
+
+  color: $gray-2;
+  text-align: center;
+
+  @include OVERFLOW_ELLIPSES;
+}
