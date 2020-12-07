@@ -5,11 +5,13 @@ import {
   computed,
   createContextStore
 } from 'easy-peasy';
+import { FC } from 'react';
 
 import { OnClickProps } from '@constants';
 
 export interface LinkOptions extends OnClickProps {
-  to: string;
+  Icon: FC;
+  to?: string;
   title: string;
 }
 

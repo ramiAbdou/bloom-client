@@ -1,46 +1,64 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import {
+  IoAdd,
+  IoCalendar,
+  IoExtensionPuzzle,
+  IoFolderOpen,
+  IoGlobe,
+  IoPeople,
+  IoPersonAdd,
+  IoStatsChart
+} from 'react-icons/io5';
 
 import Separator from '@components/Misc/Separator';
 import AddMemberStore from '@scenes/Database/components/AddMember/AddMember.store';
 import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreActions, useStoreState } from '@store/Store';
+import LinkSection from './LinkSection';
 import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';
-import SidebarLink from './SidebarLink';
 import useActiveTo from './useActiveTo';
 
 const SidebarContent = () => {
   const name = useStoreState(({ community }) => community.name);
-  const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-
-  const isAdmin: boolean = useStoreState(({ entities }) => {
-    const { byId: byCommunity } = entities.communities;
-    const { byId: byMembership } = entities.memberships;
-
-    return Object.values(byMembership).some(
-      ({ community, role }) => !!role && name === byCommunity[community]?.name
-    );
-  });
-
   const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
+
   const activeTo = useActiveTo();
 
   useEffect(() => {
     setActiveTo(activeTo);
   }, [activeTo]);
 
-  const mainLinks: LinkOptions[] = [
-    { title: 'Directory', to: 'directory' },
-    { title: 'Events', to: 'events' }
-  ];
+  const mainLinks: LinkOptions[] = useMemo(
+    () => [
+      { Icon: IoPeople, title: 'Directory', to: 'directory' },
+      { Icon: IoCalendar, title: 'Events', to: 'events' }
+    ],
+    []
+  );
 
-  const adminLinks: LinkOptions[] = [
-    { title: 'Analytics', to: 'analytics' },
-    { title: 'Member Database', to: 'database' },
-    { title: 'Pending Applicants', to: 'applicants' },
-    { title: 'Integrations', to: 'integrations' }
-  ];
+  const adminLinks: LinkOptions[] = useMemo(
+    () => [
+      { Icon: IoStatsChart, title: 'Analytics', to: 'analytics' },
+      { Icon: IoGlobe, title: 'Member Database', to: 'database' },
+      { Icon: IoFolderOpen, title: 'Pending Applicants', to: 'applicants' },
+      { Icon: IoExtensionPuzzle, title: 'Integrations', to: 'integrations' }
+    ],
+    []
+  );
+
+  const quickLinks: LinkOptions[] = useMemo(
+    () => [
+      { Icon: IoAdd, title: 'Create Event', to: '' },
+      {
+        Icon: IoPersonAdd,
+        onClick: () => showModal('ADD_MEMBERS'),
+        title: 'Add Member'
+      }
+    ],
+    []
+  );
 
   return (
     <div className="s-home-sidebar">
@@ -48,33 +66,9 @@ const SidebarContent = () => {
       <Separator style={{ marginBottom: 12, marginTop: 24 }} />
 
       <div className="s-home-sidebar-section-ctr">
-        <div className="s-home-sidebar-section">
-          <p>Main</p>
-          {mainLinks.map((link) => (
-            <SidebarLink key={link.to} {...link} />
-          ))}
-        </div>
-
-        {isDesktop && isAdmin && (
-          <div className="s-home-sidebar-section">
-            <p>Admin</p>
-            {adminLinks.map((link) => (
-              <SidebarLink key={link.to} {...link} />
-            ))}
-          </div>
-        )}
-
-        {isDesktop && isAdmin && (
-          <div className="s-home-sidebar-section">
-            <p>Quick Actions</p>
-            <SidebarLink title="Create Event" to="create-event" />
-            <SidebarLink
-              title="Add Member"
-              to="add-member"
-              onClick={() => showModal('ADD_MEMBERS')}
-            />
-          </div>
-        )}
+        <LinkSection links={mainLinks} title="Main" />
+        <LinkSection links={adminLinks} title="Admin" />
+        <LinkSection links={quickLinks} title="Quick Actions" />
       </div>
       <div>
         <ProfileBar />

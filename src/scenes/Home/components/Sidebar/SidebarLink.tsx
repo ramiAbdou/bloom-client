@@ -1,14 +1,4 @@
 import React, { memo } from 'react';
-import {
-  IoAdd,
-  IoCalendar,
-  IoExtensionPuzzle,
-  IoFolderOpen,
-  IoGlobe,
-  IoPeople,
-  IoPersonAdd,
-  IoStatsChart
-} from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 import Button from '@components/Button/Button';
@@ -17,51 +7,41 @@ import { useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
 import Sidebar, { LinkOptions } from './Sidebar.store';
 
-type IconProps = { to: string };
-
-const Icon = memo(({ to }: IconProps) => {
-  if (to === 'directory') return <IoPeople />;
-  if (to === 'events') return <IoCalendar />;
-  if (to === 'analytics') return <IoStatsChart />;
-  if (to === 'database') return <IoGlobe />;
-  if (to === 'applicants') return <IoFolderOpen />;
-  if (to === 'integrations') return <IoExtensionPuzzle />;
-  if (to === 'create-event') return <IoAdd />;
-  if (to === 'add-member') return <IoPersonAdd />;
-  return null;
-});
-
 interface SidebarLinkProps extends LinkOptions, OnClickProps {}
 
-export default ({ onClick, to, title }: SidebarLinkProps) => {
-  const isActive = Sidebar.useStoreState((store) => store.isActive(to));
-  const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
-
+/**
+ * Each SidebarLink will either have a to property or onClick property defined.
+ * If onClick is defined, then we don't render a link, we simply render a
+ * Button that opens up a modal.
+ */
+export default memo(({ Icon, onClick, to, title }: SidebarLinkProps) => {
   const encodedUrlName = useStoreState(
     ({ community }) => community.encodedUrlName
   );
+
+  const isActive = Sidebar.useStoreState((store) => store.isActive(to));
+  const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
 
   const css = makeClass([
     's-home-sidebar-link',
     [isActive, 's-home-sidebar-link--active']
   ]);
 
-  if (onClick)
+  if (onClick) {
     return (
-      <Button className="s-home-sidebar-link" onClick={onClick}>
-        <Icon to={to} />
+      <Button className={css} onClick={onClick}>
+        <Icon />
         {title}
       </Button>
     );
+  }
+
+  const onClickLink = () => setActiveTo(to);
 
   return (
-    <Link
-      className={css}
-      to={`/${encodedUrlName}/${to}`}
-      onClick={() => setActiveTo(to)}
-    >
-      <Icon to={to} />
+    <Link className={css} to={`/${encodedUrlName}/${to}`} onClick={onClickLink}>
+      <Icon />
       {title}
     </Link>
   );
-};
+});
