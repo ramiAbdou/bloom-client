@@ -5,11 +5,10 @@ import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
+import { ModalType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { DELETE_MEMBERSHIPS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
-
-const MODAL_ID = 'DELETE_ADMINS';
 
 const DeleteMembersModal = () => {
   const admins = useStoreState(({ community }) => community.admins);
@@ -51,13 +50,15 @@ const DeleteMembersModal = () => {
   };
 
   return (
-    <Modal confirmation id={MODAL_ID}>
+    <Modal confirmation id={ModalType.DELETE_ADMINS}>
       <h1>Remove admin(s)?</h1>
+
       <p>
-        Are you sure you want to remove these member(s)? They will no longer
-        have access to your community and they will not show up in the member
+        Are you sure you want to remove these admin(s)? They will no longer have
+        access to your community and they will not show up in the member
         database.
       </p>
+
       <div>
         <PrimaryButton title="Remove" onClick={onRemove} />
         <OutlineButton title="Cancel" onClick={closeModal} />
@@ -68,13 +69,13 @@ const DeleteMembersModal = () => {
 
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(MODAL_ID);
+  const onClick = () => showModal(ModalType.DELETE_ADMINS);
 
   return (
     <>
       <DeleteMembersModal />
       <DatabaseAction
-        Component={IoTrash}
+        Icon={IoTrash}
         className="s-database-action--delete"
         value="Delete Admin"
         onClick={onClick}

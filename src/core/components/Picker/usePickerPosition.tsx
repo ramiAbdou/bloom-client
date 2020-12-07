@@ -31,8 +31,7 @@ export default ({
 
     const updatedAlign: PickerAlign = takeFirst([
       [
-        align === 'BOTTOM_LEFT' &&
-          innerWidth - (updatedTargetLeft + width) <= 240,
+        align === 'BOTTOM_LEFT' && innerWidth - updatedTargetLeft <= 240,
         'BOTTOM_RIGHT'
       ],
       [

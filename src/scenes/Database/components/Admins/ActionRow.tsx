@@ -6,23 +6,26 @@ import { useStoreState } from '@store/Store';
 import DeleteMembersIcon from './DeleteAdminIcon';
 import PromoteToAdminIcon from './DemoteAdminIcon';
 
-export default () => {
+const IconContainer = () => {
   const isOwner = useStoreState((store) => store.isOwner);
 
   const isAnythingSelected = Table.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  return (
-    <div className="s-database-action-row">
-      <SearchBar placeholder="Search admins..." />
+  if (!isAnythingSelected || !isOwner) return null;
 
-      {isOwner && isAnythingSelected && (
-        <div>
-          <PromoteToAdminIcon />
-          <DeleteMembersIcon />
-        </div>
-      )}
+  return (
+    <div>
+      <PromoteToAdminIcon />
+      <DeleteMembersIcon />
     </div>
   );
 };
+
+export default () => (
+  <div className="s-database-action-row">
+    <SearchBar placeholder="Search admins..." />
+    <IconContainer />
+  </div>
+);

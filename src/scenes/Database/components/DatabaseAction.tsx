@@ -8,19 +8,13 @@ interface DatabaseActionProps
   extends Partial<LoadingProps>,
     Partial<ClassNameProps>,
     OnClickProps {
-  Component: FC;
+  Icon: FC;
   disabled?: boolean;
   value?: string;
 }
 
 export default memo(
-  ({
-    Component,
-    disabled,
-    value,
-    className,
-    ...props
-  }: DatabaseActionProps) => {
+  ({ Icon, disabled, value, className, ...props }: DatabaseActionProps) => {
     const css = makeClass([
       's-database-action',
       [disabled, 's-database-action--disabled'],
@@ -35,7 +29,7 @@ export default memo(
         value={value}
         {...props}
       >
-        <Component />
+        <Icon />
       </Button>
     );
   }

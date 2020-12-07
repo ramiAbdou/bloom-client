@@ -95,7 +95,7 @@ export default memo(
           )}
         </div>
 
-        {isShowingErrors && !!message && (
+        {isShowingErrors && (
           <ErrorMessage marginBottom={16} message={message} />
         )}
       </div>

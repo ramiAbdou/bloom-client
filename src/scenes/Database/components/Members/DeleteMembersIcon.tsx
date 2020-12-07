@@ -5,12 +5,11 @@ import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
+import { ModalType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { DELETE_MEMBERSHIPS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
-
-const MODAL_ID = 'DELETE_MEMBERS';
 
 const DeleteMembersModal = () => {
   const admins = useStoreState(({ community }) => community.admins);
@@ -55,8 +54,8 @@ const DeleteMembersModal = () => {
   };
 
   return (
-    <Modal confirmation id={MODAL_ID}>
-      <h1>Remove member(s)?</h1>
+    <Modal confirmation id={ModalType.DELETE_MEMBERS}>
+      <h1>Remove {numMembers} member(s)?</h1>
       <p>
         Are you sure you want to remove these member(s)? They will no longer
         have access to your community and they will not show up in the member
@@ -73,7 +72,6 @@ const DeleteMembersModal = () => {
 export default () => {
   const isOwner = useStoreState((store) => store.isOwner);
   const membershipId = useStoreState(({ membership }) => membership.id);
-
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const selectedRowIds = Table.useStoreState((store) => store.selectedRowIds);
 
@@ -87,8 +85,6 @@ export default () => {
 
   const selectedSelf: boolean = selectedRowIds.includes(membershipId);
 
-  const onClick = () => showModal(MODAL_ID);
-
   const tooltip: string = takeFirst([
     [selectedSelf, `Can't delete member(s) because you selected yourself.`],
     [
@@ -98,11 +94,13 @@ export default () => {
     'Delete Member(s)'
   ]);
 
+  const onClick = () => showModal(ModalType.DELETE_MEMBERS);
+
   return (
     <>
       <DeleteMembersModal />
       <DatabaseAction
-        Component={IoTrash}
+        Icon={IoTrash}
         className="s-database-action--delete"
         disabled={selectedSelf || notEnoughPermissions}
         value={tooltip}

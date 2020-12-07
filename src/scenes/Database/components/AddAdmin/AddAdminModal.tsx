@@ -116,8 +116,7 @@ export default () => {
       ))}
 
       <UnderlineButton title="+ Add Another" onClick={onClick} />
-
-      {message && <ErrorMessage message={message} />}
+      <ErrorMessage message={message} />
 
       <div>
         <PrimaryButton

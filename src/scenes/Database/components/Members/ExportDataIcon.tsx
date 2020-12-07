@@ -7,18 +7,21 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 
 export default () => {
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
   const filename = useStoreState(
     ({ community }) => `${community.encodedUrlName}.csv`
   );
 
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+
+  // Formatted in a way that CSV Link can properly read it.
   const headers = Table.useStoreState(({ columns }) =>
     columns.map(({ id, title }) => ({ key: id, label: title }))
   );
 
   const data = Table.useStoreState(({ filteredData, selectedRowIds }) =>
     selectedRowIds.map((rowId: string) => {
+      // We return every piece of data in the selected row except for the
+      // ID of the row, which is just the membership ID in this case.
       const { id: _, ...rest } = filteredData.find(({ id }) => id === rowId);
       return rest;
     })
@@ -33,7 +36,7 @@ export default () => {
       headers={headers}
       onClick={onClick}
     >
-      <DatabaseAction Component={IoExit} value="Export Member Data" />
+      <DatabaseAction Icon={IoExit} value="Export Member Data" />
     </CSVLink>
   );
 };

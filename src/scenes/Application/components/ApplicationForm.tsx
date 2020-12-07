@@ -55,7 +55,7 @@ const SubmitButton = () => {
 
   return (
     <>
-      {!!message && <ErrorMessage marginBottom={-24} message={message} />}
+      <ErrorMessage marginBottom={-24} message={message} />
 
       <PrimaryButton
         large

@@ -36,7 +36,7 @@ export default () => {
   return (
     <div className={css}>
       <GoogleButton />
-      {!!message && <ErrorMessage marginBottom={0} message={message} />}
+      <ErrorMessage marginBottom={0} message={message} />
     </div>
   );
 };

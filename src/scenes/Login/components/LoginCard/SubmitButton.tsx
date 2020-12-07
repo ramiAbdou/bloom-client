@@ -62,7 +62,7 @@ export default () => {
 
   return (
     <>
-      {!!message && <ErrorMessage marginTop={0} message={message} />}
+      <ErrorMessage marginTop={0} message={message} />
 
       <PrimaryButton
         large

@@ -4,13 +4,14 @@ import { IoArrowDownCircle } from 'react-icons/io5';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
+import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
+import { ModalType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { getGraphQLError } from '@util/util';
 import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
-
-const MODAL_ID = 'DEMOTE_TO_MEMBER_CONFIRMATION';
 
 const DemoteToMemberModal = () => {
   const admins = useStoreState(({ community }) => community.admins);
@@ -18,9 +19,8 @@ const DemoteToMemberModal = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
-  const numMembersDemoted = adminIds.length;
 
-  const [toggleAdmin, { loading }] = useMutation(TOGGLE_ADMINS);
+  const [toggleAdmin, { error, loading }] = useMutation(TOGGLE_ADMINS);
 
   const onDemote = async () => {
     const { error } = await toggleAdmin({
@@ -29,27 +29,33 @@ const DemoteToMemberModal = () => {
 
     if (error) return;
 
-    // Filter the community members to NOT have the selected members.
+    // Filter the community admins to NOT have the selected admins.
     updateCommunity({
       admins: admins.filter((id: string) => !adminIds.includes(id))
     });
 
     showToast({
-      message: `${numMembersDemoted} admin(s) demoted to member.`,
+      message: `${adminIds.length} admin(s) demoted to member.`,
       type: 'PESSIMISTIC'
     });
 
     setTimeout(() => closeModal(), 0);
   };
 
+  const message = getGraphQLError(error);
+
   return (
-    <Modal confirmation id={MODAL_ID}>
+    <Modal confirmation id={ModalType.DEMOTE_TO_MEMBER}>
       <h1>Demote to member?</h1>
+
       <p>
         Are you sure you want to demote this admin to member? They will be lose
         all admin priviledges, but will remain in the community as a member. You
         can undo this action at any time.
       </p>
+
+      <ErrorMessage message={message} />
+
       <div>
         <PrimaryButton loading={loading} title="Demote" onClick={onDemote} />
         <OutlineButton title="Cancel" onClick={closeModal} />
@@ -65,13 +71,13 @@ export default () => {
     ({ selectedRowIds }) => selectedRowIds.length > 15
   );
 
-  const onClick = () => showModal(MODAL_ID);
+  const onClick = () => showModal(ModalType.DEMOTE_TO_MEMBER);
 
   return (
     <>
       <DemoteToMemberModal />
       <DatabaseAction
-        Component={IoArrowDownCircle}
+        Icon={IoArrowDownCircle}
         className="s-database-action--demote"
         disabled={disabled}
         value="Demote to Member"
