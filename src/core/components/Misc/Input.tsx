@@ -2,8 +2,7 @@ import React, {
   ChangeEvent,
   KeyboardEvent,
   MutableRefObject,
-  useRef,
-  useState
+  useRef
 } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
@@ -36,14 +35,8 @@ export default ({
   onEnter,
   value
 }: InputProps) => {
-  const [text, setText] = useState<string>(value ?? '');
-
   const ref: MutableRefObject<HTMLInputElement> = useRef(null);
-
-  useOnClickOutside(ref, async () => {
-    if (onClickOutside) await onClickOutside();
-    if (text === placeholder) setText('');
-  });
+  useOnClickOutside(ref, async () => onClickOutside && onClickOutside());
 
   /**
    * Selects the entire value of the input, which uses the custom highlight
@@ -52,13 +45,11 @@ export default ({
    */
   const onMouseDown = () => {
     const { current } = ref;
-    if (!text && placeholder) setText(placeholder);
     setTimeout(() => current.select(), 0);
   };
 
   const modifiedOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event);
-    setText(event.target.value);
   };
 
   const modifiedKeyDown = ({ key }: KeyboardEvent<HTMLInputElement>) => {
@@ -81,7 +72,7 @@ export default ({
       className={css}
       placeholder={placeholder ?? ''}
       type="text"
-      value={text}
+      value={value}
       onChange={modifiedOnChange}
       onKeyDown={modifiedKeyDown}
       onMouseDown={onMouseDown}
