@@ -38,16 +38,6 @@ export default ({
   const ref: MutableRefObject<HTMLInputElement> = useRef(null);
   useOnClickOutside(ref, async () => onClickOutside && onClickOutside());
 
-  /**
-   * Selects the entire value of the input, which uses the custom highlight
-   * color. If we have a placeholder but no value, set the text to be the
-   * placeholder.
-   */
-  const onMouseDown = () => {
-    const { current } = ref;
-    setTimeout(() => current.select(), 0);
-  };
-
   const modifiedOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event);
   };
@@ -75,7 +65,6 @@ export default ({
       value={value}
       onChange={modifiedOnChange}
       onKeyDown={modifiedKeyDown}
-      onMouseDown={onMouseDown}
     />
   );
 };

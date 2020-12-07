@@ -40,7 +40,7 @@
   position: relative;
   
   @include HOVER {
-    &::before { opacity: 1; transition-delay: 0.75s; visibility: visible; }
+    &::before { opacity: 1; transition-delay: 0.5s; visibility: visible; }
   }
 
   &::before {
