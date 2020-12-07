@@ -87,7 +87,7 @@ export default () => {
 
   return (
     <Modal
-      className="s-database-header-add-modal"
+      className="s-database-add-modal"
       id={ModalType.ADD_MEMBERS}
       width={750}
       onClose={onClose}

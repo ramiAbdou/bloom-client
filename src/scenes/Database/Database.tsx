@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Admins from './components/Admins/Admins';
-import Header from './components/Header/Header';
+import Header from './components/Header';
 import Members from './components/Members/Members';
 import Database from './Database.store';
 

@@ -41,8 +41,8 @@ export default memo(
     } = member;
 
     const css = makeClass([
-      's-database-header-add-modal-email',
-      [emailError, 's-database-header-add-modal-email--error']
+      's-database-add-modal-email',
+      [emailError, 's-database-add-modal-email--error']
     ]);
 
     const message: string = takeFirst([

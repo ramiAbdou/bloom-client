@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import MultiButton from '@components/Button/MultiButton';
 import Spinner from '@components/Loader/Spinner';
 import { useStoreState } from '@store/Store';
-import Database from '../../Database.store';
-import AddAdminButton from '../AddAdmin/AddAdminButton';
-import AddMemberButton from '../AddMember/AddMemberButton';
+import Database from '../Database.store';
+import AddAdminButton from './AddAdmin/AddAdminButton';
+import AddMemberButton from './AddMember/AddMemberButton';
 
 const MemberAdminButton = () => {
   const { location, push } = useHistory();
