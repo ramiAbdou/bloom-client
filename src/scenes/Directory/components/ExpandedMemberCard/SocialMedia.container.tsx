@@ -13,6 +13,7 @@ import MemberCard from '../MemberCard/MemberCard.store';
 
 export default () => {
   const {
+    email,
     facebookUrl,
     linkedInUrl,
     twitterUrl,
@@ -46,7 +47,9 @@ export default () => {
       )}
 
       <Button className="s-directory-modal-social">
-        <IoMailOutline />
+        <a href={`mailto:${email}`}>
+          <IoMailOutline />
+        </a>
       </Button>
     </div>
   );

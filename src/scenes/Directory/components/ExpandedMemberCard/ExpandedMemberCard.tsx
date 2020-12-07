@@ -38,7 +38,7 @@ export default ({ id }: IdProps) => {
 
       <div className="s-directory-modal-data-ctr">
         {expandedCardData.map(({ title, type, value }) => (
-          <Question title={title} type={type} value={value} />
+          <Question key={title} title={title} type={type} value={value} />
         ))}
       </div>
     </Modal>

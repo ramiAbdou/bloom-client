@@ -48,7 +48,7 @@ export default () => {
 
         <div className="s-directory-card-content">
           <p>
-            {`${firstName} ${lastName}`} <span>{highlightedField ?? ''}</span>{' '}
+            {`${firstName} ${lastName}`} <span>{highlightedField ?? ''}</span>
           </p>
         </div>
       </Button>
