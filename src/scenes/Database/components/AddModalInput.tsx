@@ -63,7 +63,8 @@ export default memo(
           <Input
             dark
             error={isShowingErrors && !!firstNameError}
-            value={firstName || 'First Name'}
+            placeholder="First Name"
+            value={firstName}
             onChange={({ target }) =>
               updateMember({ field: 'FIRST_NAME', id, value: target.value })
             }
@@ -72,7 +73,8 @@ export default memo(
           <Input
             dark
             error={isShowingErrors && !!lastNameError}
-            value={lastName || 'Last Name'}
+            placeholder="Last Name"
+            value={lastName}
             onChange={({ target }) =>
               updateMember({ field: 'LAST_NAME', id, value: target.value })
             }
@@ -81,7 +83,8 @@ export default memo(
           <Input
             dark
             error={isShowingErrors && !!emailError}
-            value={email || 'Email'}
+            placeholder="Email"
+            value={email}
             onChange={({ target }) =>
               updateMember({ field: 'EMAIL', id, value: target.value })
             }
