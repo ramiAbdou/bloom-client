@@ -1,8 +1,4 @@
-@import 'src/index.scss';
-
 $PREF: 's-home-sidebar';
-
-// ## SIDEBAR
 
 .#{$PREF} {
   @extend .flex-col;
@@ -21,7 +17,7 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
 
 .#{$PREF}-section > p {
-  @extend .bold;
+  @extend .sb;
 
   color: $gray-3;
   font-size: 12px;
@@ -32,11 +28,12 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-link {
   @extend .flex-ac;
 
-  background-clip: padding-box;
+  background-clip: padding-box; // Needed to set the border-left color.
   border-left: 3px white solid;
   border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
   color: black;
+  justify-content: left;
   margin: $xs 0;
   padding: $xs $xxs $xs $sm;
   text-align: left;
@@ -46,6 +43,8 @@ $PREF: 's-home-sidebar';
   @include HOVER {
     border-left: 3px rgba($color: $primary-hex, $alpha: 0.1) solid;
   }
+
+  &:last-of-type { margin-bottom: 12px; }
 }
 
 .#{$PREF}-link > svg {
@@ -56,9 +55,9 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-link--active {
-  @extend .bold; 
+  @extend .sb; 
 
-  background-color: rgba($color: $primary-hex, $alpha: 0.1);
+  background-color: $primary-hover;
   border-left: 3px $primary solid;
   color: $primary;
 

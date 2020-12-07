@@ -16,8 +16,8 @@
 // SHADOWS
 
 // Shadow that has the primary color hint in it.
-.shadow--1 { box-shadow: 0 2px 4px 1px hsla($primary-hue, 99%, 17%, 0.1); }
-.shadow--2 { box-shadow: 0 2px 4px 1px hsla($primary-hue, 99%, 17%, 0.15); }
+.shadow--1 { box-shadow: 0 0 4px 2px hsla($primary-hue, 99%, 17%, 0.1); }
+.shadow--2 { box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15); }
 
 // BACKGROUND COLOR
 .primary-bg { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
@@ -37,14 +37,10 @@
 // ## TOOLTIP
 
 .tooltip {
+  position: relative;
+  
   @include HOVER {
-    &::before {
-      height: fit-content;
-      opacity: 1;
-      transition-delay: 0.75s;
-      visibility: visible;
-      width: fit-content;
-    }
+    &::before { opacity: 1; transition-delay: 0.75s; visibility: visible; }
   }
 
   &::before {
@@ -55,35 +51,29 @@
     color: $gray-6;
     content: attr(value);
     display: block;
-    height: 0;
+    height: max-content;
     opacity: 0;
     padding: $xxs $xs;
     position: absolute;
     text-align: center;
-    text-transform: capitalize;
     visibility: hidden;
-    width: 0;
-    z-index: 10;
+    width: max-content;
+    z-index: 100;
   }
 
-  &--bottom {
-    @extend .tooltip;
-
-    &::before {
-      left: 50%;
-      margin-top: $xxs;
-      top: 100%;
-      transform: translateX(-50%);
-    }
+  &:active {
+    &::before { opacity: 0; transition-delay: 0s; visibility: hidden; }
   }
+
+  &--bottom { &::before { margin-top: $xxs; top: 100%; } }
+  &--middle { &::before { left: 50%; transform: translateX(-50%); } }
+  &--right { &::before { left: initial; right: 0; transform: initial; } }
 }
 
 // ## HOVER STATE (DILUTED PRIMARY COLOR)
 
 @mixin PRIMARY_HOVER {
-  @media (hover: hover) {
-    &:hover { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
-  }
+  @media (hover: hover) { &:hover { background-color: $primary-hover; } }
 }
 
 // This back arrow if most often used in a Flow component.
@@ -107,3 +97,22 @@
   border-radius: $sm;
   padding: 12px 12px $md $sm;
 }
+
+// ## TEXT OVERFLOW
+
+@mixin OVERFLOW_ELLIPSES($lines: 1) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// PATH
+
+path { color: inherit; }
+
+// SELECTION BACKGROUND
+
+*::selection { background-color: $primary-hover; }

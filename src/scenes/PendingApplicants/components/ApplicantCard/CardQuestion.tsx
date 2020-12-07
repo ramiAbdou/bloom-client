@@ -1,12 +1,7 @@
-/**
- * @fileoverview Scene: ExpandedCard
- * @author Rami Abdou
- */
-
 import React, { memo } from 'react';
 
 import { QuestionType } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 
 type CardQuestionProps = {
   expanded?: boolean;
@@ -17,13 +12,14 @@ type CardQuestionProps = {
 
 export default memo(
   ({ expanded, question, type, value }: CardQuestionProps) => {
-    const { css } = new CSSModifier()
-      .class('s-applicants-card-question')
-      .addClass(expanded, 's-applicants-expanded-question')
-      .addClass(
+    const css = makeClass([
+      's-applicants-card-question',
+      [expanded, 's-applicants-expanded-question'],
+      [
         ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
         's-applicants-card-question--choice'
-      );
+      ]
+    ]);
 
     return (
       <div className={css}>

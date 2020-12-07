@@ -1,8 +1,13 @@
-@import 'src/index.scss';
-
 $PREF: 's-applicants';
 
-.s-home-header > div > button:first-of-type { margin-right: 12px; }
+// ## HEADER
+
+.#{$PREF}-header { @extend .flex-acsb; }
+.#{$PREF}-header > div:last-of-type { @extend .flex-ac; }
+
+// ## ACCEPT ALL BUTTON
+
+.#{$PREF}-accept-all { margin-right: 12px; }
 
 .#{$PREF} > p { @extend .body--1; }
 
@@ -55,10 +60,10 @@ $PREF: 's-applicants';
 // ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
 
 .#{$PREF}-card-action {
+  @extend .tooltip;
   @extend .tooltip--bottom;
+  @extend .tooltip--middle;
   @extend .react-icon--lg;
-
-  position: relative;
 
   > svg { @extend .react-icon--lg; }
 
@@ -112,5 +117,5 @@ div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
   z-index: 2;
 }
 
-.#{$PREF}-expanded-question > p:first-of-type { @extend .bold; }
+.#{$PREF}-expanded-question > p:first-of-type { @extend .sb; }
 .#{$PREF}-expanded-question:last-of-type { margin-bottom: $md !important; }

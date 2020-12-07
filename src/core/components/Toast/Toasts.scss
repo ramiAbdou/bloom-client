@@ -1,31 +1,39 @@
-@import 'src/index.scss';
-
 $PREF: 'c-toast';
+
+// ## TOAST CONTAINER
 
 .#{$PREF}-ctr {
   @extend .flex-accol;
 
-  left: 50%;
+  bottom: 0;
   position: fixed;
-  top: 0;
-  transform: translateX(-50%);
+  right: 0;
   width: fit-content;
   z-index: 1000;
 }
 
+// ## TOAST
+
 .#{$PREF} {
   @extend .shadow--1;
-  @extend .flex-ac;
 
   background-color: $primary;
   border-radius: $xl;
+  margin-bottom: $sm;
   margin-left: auto;
-  margin-right: auto;
-  margin-top: $xs;
+  margin-right: $sm;
   padding: 12px $sm;
 
-  &--error { background-color: $red; }
-}
+  > p { @extend .body--1; color: white; }
 
-.#{$PREF} > svg { @extend .react-icon--lg; color: white; margin-right: $xs; }
-.#{$PREF} > p { @extend .body--1; color: white; }
+  &--error { background-color: $red; }
+  &--pessimistic { background-color: $gray-1; }
+
+  &--undo {
+    @extend .flex-acsb;
+
+    > p { margin-right: $xs; }
+    > button { color: white; }
+    > button:hover { background-color: rgba($color: white, $alpha: 0.1); }
+  }
+}

@@ -1,14 +1,9 @@
-/**
- * @fileoverview Component: UnderlineButton
- * @author Rami Abdou
- */
-
 import React from 'react';
 
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Button, { ButtonProps } from './Button';
 
 export default ({ className, ...props }: ButtonProps) => {
-  const { css } = new CSSModifier().class('c-btn-underline').class(className);
+  const css = makeClass(['c-btn-underline', className]);
   return <Button className={css} {...props} />;
 };

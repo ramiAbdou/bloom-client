@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Application
- * @author Rami Abdou
- */
-
 import { Action, action, createContextStore } from 'easy-peasy';
 
 export type ApplicationModel = {

@@ -1,34 +1,62 @@
-/**
- * @fileoverview Component: Modal
- * - Represents a user flow in which they use multiple screens to execute
- * something. Example: When a user wants to edit a prompt answer, a Flow
- * would open with multiple screens.
- * @author Rami Abdou
- */
-
-import './Modal.scss';
-
 import { AnimatePresence } from 'framer-motion';
-import React, { memo } from 'react';
+import React, { useMemo } from 'react';
+import { createPortal } from 'react-dom';
 
-import { ChildrenProps, IsShowingProps } from '@constants';
+import {
+  ChildrenProps,
+  ClassNameProps,
+  Function,
+  IdProps,
+  StyleProps
+} from '@constants';
 import { useStoreState } from '@store/Store';
+import { makeClass } from '@util/util';
+import ModalBackground from './ModalBackground';
 import ModalContainer from './ModalContainer';
 
-const CurrentScreen = () => {
-  const currentScreen = useStoreState(({ modal }) => modal.currentScreen);
-  const screens = useStoreState(({ modal }) => modal.screens);
-  return screens.length ? <>{screens[currentScreen]}</> : null;
+interface ModalProps
+  extends ChildrenProps,
+    ClassNameProps,
+    IdProps,
+    StyleProps {
+  confirmation?: boolean;
+  onClose?: Function;
+  width?: number;
+}
+
+export default ({
+  confirmation,
+  children,
+  className,
+  id: MODAL_ID,
+  ...containerProps
+}: ModalProps) => {
+  const isShowing = useStoreState(({ modal }) => modal.isShowing);
+  const id = useStoreState(({ modal }) => modal.id);
+
+  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
+    isShowing,
+    id,
+    MODAL_ID
+  ]);
+
+  const css = makeClass([
+    'c-modal',
+    [confirmation, 'c-modal--confirmation'],
+    className
+  ]);
+
+  return createPortal(
+    <AnimatePresence>
+      {shouldShowModal && (
+        <>
+          <ModalBackground />
+          <ModalContainer {...containerProps}>
+            <div className={css}>{children}</div>
+          </ModalContainer>
+        </>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
 };
-
-interface ModalProps extends IsShowingProps, Partial<ChildrenProps> {}
-
-export default memo(({ children, isShowing }: ModalProps) => (
-  <AnimatePresence>
-    {isShowing && (
-      <ModalContainer>
-        <div className="c-modal-content">{children ?? <CurrentScreen />}</div>
-      </ModalContainer>
-    )}
-  </AnimatePresence>
-));

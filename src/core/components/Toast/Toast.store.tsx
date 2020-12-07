@@ -1,35 +1,34 @@
-/**
- * @fileoverview Store: Toast
- * @author Rami Abdou
- */
+import { Action, action } from 'easy-peasy';
+import { UseClientRequestOptions } from 'graphql-hooks';
 
-import { Action, action, Thunk, thunk } from 'easy-peasy';
+import { IdProps, MessageProps } from '@constants';
+import { uuid } from '@util/util';
 
-import { MessageProps } from '@constants';
+type ToastType = 'STANDARD' | 'PESSIMISTIC' | 'ERROR';
 
-export const ANIMATION_DURATION = 500;
-export interface ToastOptions extends MessageProps {
-  id?: number;
-  isError?: boolean;
-}
-
-interface ShowToastArgs extends MessageProps {
-  isError?: boolean;
+export interface ToastOptions extends Partial<IdProps>, MessageProps {
+  mutationOptionsOnClose?: [string, UseClientRequestOptions<any>];
+  onUndo?: Function;
+  type?: ToastType;
+  undo?: boolean;
 }
 
 export type ToastModel = {
-  dequeueToast: Action<ToastModel>;
-  enqueueToast: Action<ToastModel, ToastOptions>;
+  dequeueToast: Action<ToastModel, string>;
   queue: ToastOptions[];
-  showToast: Thunk<ToastModel, ShowToastArgs>;
+  showToast: Action<ToastModel, ToastOptions>;
 };
 
 export const toastModel: ToastModel = {
-  dequeueToast: action(({ queue: [, ...end] }) => ({ queue: end })),
-  enqueueToast: action(({ queue }, toast) => ({ queue: [...queue, toast] })),
+  dequeueToast: action(({ queue }, id: string) => {
+    const index = queue.findIndex(({ id: toastId }) => toastId === id);
+    if (index < 0) return { queue };
+    return { queue: [...queue.slice(0, index), ...queue.slice(index + 1)] };
+  }),
+
   queue: [],
-  showToast: thunk((actions, toast) => {
-    actions.enqueueToast({ ...toast, id: Math.random() });
-    setTimeout(actions.dequeueToast, 3000 + ANIMATION_DURATION);
-  })
+
+  showToast: action(({ queue }, toast) => ({
+    queue: [...queue, { id: uuid(), ...toast }]
+  }))
 };

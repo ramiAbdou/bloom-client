@@ -1,10 +1,3 @@
-/**
- * @fileoverview Component: CommunityBar
- * @author Rami Abdou
- */
-
-import './CommunityBar.scss';
-
 import React from 'react';
 
 import { useStoreState } from '@store/Store';

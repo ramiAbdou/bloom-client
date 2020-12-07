@@ -2,7 +2,6 @@
  * @fileoverview Config: Stylelint
  * - Standarized linting for all CSS and SASS files. Most importantly,
  * alphabetical ordering of properties in all CSS classes.
- * @author Rami Abdou
  */
 
 module.exports = {
@@ -24,7 +23,7 @@ module.exports = {
         ignore: ['inside-single-line-block']
       }
     ],
-    'declaration-block-single-line-max-declarations': 4,
+    'declaration-block-single-line-max-declarations': 6,
     'font-family-no-missing-generic-family-keyword': null,
     'max-empty-lines': 1,
     'max-line-length': 80,

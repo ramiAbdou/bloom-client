@@ -1,8 +1,3 @@
-/**
- * @fileoverview Component: AuthenticatedRoute
- * @author Rami Abdou
- */
-
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
@@ -20,7 +15,8 @@ import TokenRoute from './TokenRoute';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { loading, data, error } = useQuery(GET_USER);
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+
   const encodedUrlName = useStoreState(
     ({ community }) => community?.encodedUrlName
   );

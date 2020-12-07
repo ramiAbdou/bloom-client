@@ -1,8 +1,3 @@
-/**
- * @fileoverview Scene: ExpandedCard
- * @author Rami Abdou
- */
-
 import React from 'react';
 
 import { AcceptButton, BackButton, IgnoreButton } from './ActionButton';

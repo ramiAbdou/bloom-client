@@ -1,8 +1,3 @@
-/**
- * @fileoverview GraphQL: Application
- * @author Rami Abdou
- */
-
 import { mutation, query } from 'gql-query-builder';
 
 export const GET_MEMBERSHIP_FORM = query({
@@ -31,7 +26,7 @@ export const GET_MEMBERSHIP_FORM = query({
       ]
     }
   ],
-  operation: 'getMembershipForm',
+  operation: 'getApplication',
   variables: { encodedUrlName: { required: true } }
 }).query;
 

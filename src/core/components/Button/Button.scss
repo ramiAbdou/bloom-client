@@ -1,17 +1,13 @@
-@import 'src/index.scss';
-
 $PREF: 'c-btn';
 
 // ## BASIC BUTTON
 
 .#{$PREF} {
-  @extend .btn-txt;
   @extend .flex-acc;
   
-
   border-radius: $xxs;
 
-  @include HOVER { opacity: 0.8; }
+  &:not(.c-btn--no-hover) { @include HOVER { opacity: 0.8; } }
 
   &--fill { width: 100%; }
   &--lg { height: $xl; }
@@ -26,14 +22,16 @@ $PREF: 'c-btn';
 
 .#{$PREF}-disabled {
   color: $gray-3 !important;
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 
-  @include HOVER { opacity: 1; }
+  @include HOVER { opacity: 1 !important; }
 }
 
 // ## PRIMARY BUTTON
 
 .#{$PREF}-primary {
+  @extend .btn-txt;
+
   background-color: $primary;
   border: 1px $primary solid;
   color: $gray-6;
@@ -57,6 +55,8 @@ $PREF: 'c-btn';
 // ## OUTLINE BUTTON
 
 .#{$PREF}-outline {
+  @extend .btn-txt;
+
   background-color: inherit;
   border: 1px $primary solid;
   color: $primary;
@@ -68,10 +68,29 @@ $PREF: 'c-btn';
 // ## UNDERLINE BUTTON
 
 .#{$PREF}-underline {
+  @extend .btn-txt;
+
   color: $primary;
   padding: $xs $sm;
   text-decoration: underline;
   
   @include PRIMARY_HOVER;
-  @include HOVER { border-radius: 10px; }
+  @include HOVER { border-radius: $xs; }
+}
+
+// ## MULTI BUTTON
+
+.#{$PREF}-multi-ctr { @extend .flex-ac; }
+
+.#{$PREF}-multi {
+  @extend .btn-txt;
+  
+  background-color: inherit;
+  border: 1px $primary solid;
+  color: $primary;
+  padding: $xs $sm;
+  
+  &--active { background-color: $primary; color: $gray-6; }
+  &:first-of-type { border-radius: $xxs 0 0 $xxs; }
+  &:last-of-type { border-radius: 0 $xxs $xxs 0; }
 }

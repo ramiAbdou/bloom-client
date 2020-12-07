@@ -1,17 +1,12 @@
-/**
- * @fileoverview Scene: Login
- * @author Rami Abdou
- */
-
 import { motion } from 'framer-motion';
 import React from 'react';
-import { IoIosCheckmarkCircle } from 'react-icons/io';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Login from '../Login.store';
 
 const ConfirmationHeader = () => (
   <div className="s-login-confirmation-header">
-    <IoIosCheckmarkCircle />
+    <IoCheckmarkCircle />
     <h1>Login Link Sent</h1>
   </div>
 );

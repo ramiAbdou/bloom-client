@@ -1,60 +1,26 @@
-/**
- * @fileoverview Store: Flow
- * @author Rami Abdou
- */
-
 import { Action, action } from 'easy-peasy';
-import { ReactNode } from 'react';
 
 import { IdProps } from '@constants';
 
-export interface ShowModalArgs extends IdProps {
-  onClose?: VoidFunction;
-  screens?: ReactNode[];
-}
+export type ShowModalArgs = IdProps;
 
 export type ModalModel = {
   closeModal: Action<ModalModel>;
-  currentScreen: number; // Index of the current screen;
-  goBack: Action<ModalModel>;
-  goForward: Action<ModalModel>;
-  id: string;
+  id: string; // Every modal must have unique identifier to help rendering.
   isShowing: boolean;
-  onClose: VoidFunction;
-  screens: ReactNode[];
-  showModal: Action<ModalModel, ShowModalArgs>;
+  showModal: Action<ModalModel, string>;
 };
 
 export const modalModel: ModalModel = {
   closeModal: action((state) => ({
     ...state,
-    id: '',
+    id: null,
     isShowing: false
   })),
 
-  currentScreen: 0,
-
-  goBack: action((state) => ({
-    ...state,
-    currentScreen: --state.currentScreen
-  })),
-
-  goForward: action((state) => ({
-    ...state,
-    currentScreen: ++state.currentScreen
-  })),
-
-  id: '',
+  id: null,
 
   isShowing: false,
 
-  onClose: () => {},
-
-  screens: [],
-
-  showModal: action((state, modal: ShowModalArgs) => ({
-    ...state,
-    ...modal,
-    isShowing: true
-  }))
+  showModal: action((state, id: string) => ({ ...state, id, isShowing: true }))
 };

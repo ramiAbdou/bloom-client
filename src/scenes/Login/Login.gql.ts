@@ -1,8 +1,3 @@
-/**
- * @fileoverview GraphQL: Login
- * @author Rami Abdou
- */
-
 import { mutation } from 'gql-query-builder';
 
 export const SEND_TEMPORARY_LOGIN_LINK = mutation({

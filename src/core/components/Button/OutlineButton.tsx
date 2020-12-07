@@ -1,12 +1,7 @@
-/**
- * @fileoverview Component: OutlineButton
- * @author Rami Abdou
- */
-
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 import Spinner from '../Loader/Spinner';
 import Button, {
   ButtonLoadingProps,
@@ -33,10 +28,11 @@ export default ({
   const showLoadingState = useLoadingState(loading);
   disabled = disabled || showLoadingState;
 
-  const { css } = new CSSModifier()
-    .class('c-btn-outline')
-    .class(className)
-    .addClass(disabled, 'c-btn-outline--disabled');
+  const css = makeClass([
+    'c-btn-outline',
+    [disabled, 'c-btn-outline--disabled'],
+    className
+  ]);
 
   return (
     <Button className={css} disabled={disabled} {...props}>

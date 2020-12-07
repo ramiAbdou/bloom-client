@@ -1,10 +1,3 @@
-/**
- * @fileoverview Scene: Home
- * @author Rami Abdou
- */
-
-import './Home.scss';
-
 import React from 'react';
 import {
   Redirect,
@@ -16,24 +9,29 @@ import {
 
 import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
+import AddMember from '@scenes/Database/components/AddMember/AddMember.store';
+import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import CommunityBar from '@scenes/Home/components/CommunityBar/CommunityBar';
 import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
+import Database from '../Database/Database';
 import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
-import MemberDatabase from '../MemberDatabase/MemberDatabase';
 import PendingApplicants from '../PendingApplicants/PendingApplicants';
+import ProfilePicker from './components/Sidebar/ProfilePicker';
 import Sidebar from './components/Sidebar/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
+
   const activeEncodedUrlName = useStoreState(
     ({ community }) => community?.encodedUrlName
   );
 
   const isMember: boolean = useStoreState(({ entities }) => {
     const { communities, memberships } = entities;
+
     return Object.values(memberships.byId).some(
       ({ community }) =>
         encodedUrlName === communities.byId[community]?.encodedUrlName
@@ -62,7 +60,7 @@ const HomeContent = () => {
       <Switch>
         <Route component={Directory} path={`${url}/directory`} />
         <Route component={Events} path={`${url}/events`} />
-        <AdminRoute component={MemberDatabase} path={`${url}/database`} />
+        <AdminRoute component={Database} path={`${url}/database`} />
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />
         {!autoAccept && (
@@ -87,5 +85,11 @@ export default () => (
 
       <HomeContent />
     </div>
+
+    <ProfilePicker />
+
+    <AddMember.Provider>
+      <AddMemberModal />
+    </AddMember.Provider>
   </AuthenticatedCommunityWrapper>
 );

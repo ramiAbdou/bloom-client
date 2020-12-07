@@ -1,15 +1,8 @@
-/**
- * @fileoverview Component: Button
- * @author Rami Abdou
- */
-
-import './Button.scss';
-
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import { ChildrenProps, ValueProps } from '@constants';
-import CSSModifier from '@util/CSSModifier';
+import { makeClass } from '@util/util';
 
 export type ButtonProps = {
   className?: string;
@@ -20,6 +13,8 @@ export type ButtonProps = {
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
+  noScale?: boolean;
+  noHover?: boolean;
   onClick?: Function;
   title?: string;
 };
@@ -54,23 +49,37 @@ export default ({
   href,
   fill,
   large,
+  noScale,
+  noHover,
   onClick,
-  title
+  title,
+  ...props
 }: AbstractButtonProps) => {
-  const { css } = new CSSModifier()
-    .class('c-btn')
-    .addClass(!!large, 'c-btn--lg')
-    .addClass(!!fill, 'c-btn--fill')
-    .addClass(!!className, className);
+  const css = makeClass([
+    'c-btn',
+    [disabled, 'c-btn-disabled'],
+    [large, 'c-btn--lg'],
+    [fill, 'c-btn--fill'],
+    [noHover, 'c-btn--no-hover'],
+    className
+  ]);
 
   // The core Bloom button animation, the scaling down!
-  const tapAnimation = !disabled ? { whileTap: { scale: 0.95 } } : {};
+  const tapAnimation =
+    !disabled && !noScale ? { whileTap: { scale: 0.95 } } : {};
+
+  const onAllowedClick = () => {
+    if (disabled) return;
+    if (href) window.open(href);
+    else if (onClick) onClick();
+  };
 
   return (
     <motion.button
       className={css}
-      onClick={() => !disabled && (href ? window.open(href) : onClick())}
+      onClick={onAllowedClick}
       {...tapAnimation}
+      {...props}
     >
       {children ?? title}
     </motion.button>

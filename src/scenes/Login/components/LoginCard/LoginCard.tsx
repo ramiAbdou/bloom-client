@@ -1,11 +1,6 @@
-/**
- * @fileoverview Scene: LoginCard
- * @author Rami Abdou
- */
-
 import React from 'react';
 
-import Logo from '@components/Logo/Logo';
+import Logo from '@components/Misc/Logo';
 import Network from '@components/Misc/Network';
 import Separator from '@components/Misc/Separator';
 import EmailContainer from './EmailContainer';

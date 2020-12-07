@@ -1,8 +1,3 @@
-/**
- * @fileoverview Store: Sidebar
- * @author Rami Abdou
- */
-
 import {
   Action,
   action,
@@ -10,8 +5,15 @@ import {
   computed,
   createContextStore
 } from 'easy-peasy';
+import { FC } from 'react';
 
-export type LinkOptions = { to: string; title: string };
+import { OnClickProps } from '@constants';
+
+export interface LinkOptions extends OnClickProps {
+  Icon: FC;
+  to?: string;
+  title: string;
+}
 
 type SidebarModel = {
   activeTo: string; // Represents the "to" that is active.
@@ -19,15 +21,12 @@ type SidebarModel = {
   setActiveTo: Action<SidebarModel, string>;
 };
 
-export default createContextStore<SidebarModel>(
-  {
-    activeTo: '',
+const model: SidebarModel = {
+  activeTo: null,
 
-    isActive: computed(({ activeTo }) => (to: string) =>
-      activeTo === to || (!activeTo && to === 'directory')
-    ),
+  isActive: computed(({ activeTo }) => (to: string) => activeTo === to),
 
-    setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo }))
-  },
-  { disableImmer: true }
-);
+  setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo }))
+};
+
+export default createContextStore<SidebarModel>(model, { disableImmer: true });

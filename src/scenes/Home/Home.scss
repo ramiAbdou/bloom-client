@@ -1,5 +1,3 @@
-@import 'src/index.scss';
-
 $PREF: 's-home';
 
 // ## HOME
@@ -15,24 +13,30 @@ $PREF: 's-home';
   height: 100%;
   margin-right: $md;
   max-height: 100vh;
-  overflow: hidden;
+
+  @include LTE(1330) { grid-template-columns: repeat(12, 1fr); }
+  @include MT { display: block; margin-left: $md; }
 }
 
 .#{$PREF}-nav {
   @extend .flex;
   @extend .shadow--1;
 
-  grid-column: 1 / 5;
+  grid-column-end: span 4;
   height: 100%;
   position: sticky;
   top: 0;
   width: 100%;
+
+  @include MT { display: none; }
 }
 
 // ## HEADER
 
 // Makes the header consistent across each page. Mainly for loading purposes.
-.#{$PREF}-header, .#{$PREF}-header > div { @extend .flex-acsb; }
+// However, each page should implement their own positioning whether it is
+// grid-based or flex-based.
+
 .#{$PREF}-header {
   background-color: $gray-6;
   padding-bottom: $md;
@@ -40,6 +44,9 @@ $PREF: 's-home';
   top: 0;
   z-index: 11;
 }
+
+// Contains the header's title and the loading spinner to be on same line.
+.#{$PREF}-header > div:first-child { @extend .flex-ac; }
 .#{$PREF}-header-title { margin-right: $sm; }
 
 // ## CONTENT
@@ -49,7 +56,18 @@ $PREF: 's-home';
   grid-column: 5 / -1;
   margin-top: $md;
   max-height: 100vh;
-  overflow: scroll;
 }
 
 .#{$PREF}-content-body { overflow: scroll; }
+
+// .#{$PREF}-header > *:nth-child(2),
+// .#{$PREF}-header > *:nth-child(3) { grid-column-end: span 4; }
+
+// display: grid;
+//   grid-template-columns: repeat(12, 1fr);
+
+// .#{$PREF}-header > div:first-child {
+//   @extend .flex-ac;
+
+//   grid-column-end: span 5;
+// }

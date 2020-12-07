@@ -1,6 +1,4 @@
-@import './breakpoints.scss';
-
-// This essentially imports some CSS classes that create the font-family Muli.
+// This imports some CSS classes that create the font-family Muli.
 // That's why we can use that keyword in multiple places in this file.
 
 @import url('https://fonts.googleapis.com/css2?family=Muli:wght@400;600;700&display=swap');
@@ -25,26 +23,28 @@
 }
 
 .body--1 { @include font-responsive(400, 15px, 24px, 15px, 24px, 15px, 24px); }
-.meta { @include font-responsive(600, 12px, 16px, 12px, 16px, 12px, 16px); }
-.bold { font-weight: 600 !important; }
+.meta { @include font-responsive(600, 13px, 16px, 13px, 16px, 13px, 16px); }
+.sb { font-weight: 600 !important; }
+.bold { font-weight: 700 !important; }
 
 h1 { @include font-responsive(700, 24px, 32px, 24px, 32px, 24px, 32px); }
 h2 { @include font-responsive(700, 20px, 24px, 20px, 24px, 20px, 24px); }
 h3 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
 
+button,
 p,
 a,
+td,
 textarea,
 span,
 input,
 input::placeholder { @extend .body--1; }
 
-input::placeholder { color: $gray-3; }
+input::placeholder,
+th { color: $gray-3; }
 
 .btn-txt {
   text-transform: uppercase;
 
   @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);
 }
-
-button { @extend .body--1; font-weight: 600; }

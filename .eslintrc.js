@@ -6,7 +6,6 @@
  * eslint-plugin-react-hooks, which are good for React TS applications.
  * eslint-config-prettier is needed to prevent formatting conflicts between
  * eslint and prettier.
- * @author Rami Abdou
  */
 
 module.exports = {
@@ -40,6 +39,21 @@ module.exports = {
     'no-param-reassign': 0,
     'no-plusplus': 0, // Allow the plus-plus syntax: i++.
     'one-var': 0,
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: 'multiline-const', next: '*' },
+      { blankLine: 'always', prev: 'multiline-expression', next: '*' },
+      {
+        blankLine: 'always',
+        prev: '*',
+        next: ['function', 'multiline-const', 'multiline-expression']
+      },
+      {
+        blankLine: 'always',
+        prev: ['multiline-const', 'multiline-expression'],
+        next: 'return'
+      }
+    ],
     'react/button-has-type': 0,
     'react/jsx-filename-extension': 0,
     'react/jsx-props-no-spreading': 0,

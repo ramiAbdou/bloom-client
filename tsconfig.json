@@ -11,11 +11,11 @@
     "outDir": "./dist/",
     "paths": {
       "@components/*": ["core/components/*"],
-      "@constants": ["core/constants.ts"],
+      "@constants": ["util/constants.ts"],
       "@hooks/*": ["core/hooks/*"],
       "@scenes/*": ["scenes/*"],
       "@store/*": ["core/store/*"],
-      "@util/*": ["core/util/*"]
+      "@util/*": ["util/*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,

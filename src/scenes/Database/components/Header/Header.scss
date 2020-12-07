@@ -1,0 +1,44 @@
+$PREF: 's-database-header';
+
+// ## HEADER
+
+.#{$PREF} { display: grid; grid-template-columns: repeat(12, 1fr); }
+.#{$PREF} > div:first-child { grid-column-end: span 5; }
+.#{$PREF} > *:nth-child(2) { grid-column-end: span 4; }
+.#{$PREF} > *:nth-child(3) {
+  grid-column-end: span 3;
+  justify-self: end;
+  width: fit-content;
+}
+
+// ## ADD MEMBER MODAL
+
+.#{$PREF}-add-modal > p { margin-bottom: $md; }
+.#{$PREF}-add-modal-email > div:first-of-type {
+  @extend .flex-ac;
+
+  margin-bottom: $sm;
+}
+
+.#{$PREF}-add-modal-email > div:first-of-type > .c-misc-input {
+  margin-right: $xs;
+  width: 30%;
+
+  &:last-of-type { width: 40%; }
+}
+
+// This div wraps the Make Admin checkbox button and text.
+.#{$PREF}-add-modal-email > div > div {
+  @extend .flex-ac;
+
+  margin-left: $sm;
+
+  > p { width: max-content; }
+}
+
+.#{$PREF}-add-modal-email > div > div > .c-misc-checkbox { margin-right: 12px; }
+.#{$PREF}-add-modal > button { margin-bottom: $md; }
+.#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
+.#{$PREF}-add-modal > div:last-of-type > button:first-of-type {
+  margin-right: 12px;
+}

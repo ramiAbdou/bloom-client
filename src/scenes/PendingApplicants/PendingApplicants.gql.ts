@@ -1,8 +1,3 @@
-/**
- * @fileoverview GraphQL: Signup
- * @author Rami Abdou
- */
-
 import { mutation, query } from 'gql-query-builder';
 
 export const GET_PENDING_APPLICATIONS = query({
@@ -17,7 +12,8 @@ export const GET_PENDING_APPLICATIONS = query({
             'inApplicantCard',
             'order',
             'title',
-            'type'
+            'type',
+            'version'
           ]
         }
       ]

@@ -1,0 +1,28 @@
+$PREF: 's-database';
+
+// ## ACTION ROW
+
+.#{$PREF}-action-row { @extend .flex-acsb; margin-bottom: $sm; }
+.#{$PREF}-action-row > div { @extend .flex-ac; }
+
+// ## ACTION
+
+.#{$PREF}-action {
+  @extend .tooltip;
+  @extend .tooltip--bottom;
+  @extend .tooltip--middle;
+
+  background-color: $gray-5;
+  border-radius: 6px;
+  margin-left: $xs;
+  padding: 6px;
+
+  &--demote { &::before { margin-left: -$xxs; } }
+  &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
+  &--delete > svg { color: $red; }
+  &--disabled > svg { color: $gray-3; }
+}
+
+// For all buttons that are not the Promote to Admin button, we set the tooltip
+// to be to the right side of the icon.
+:not(a) > .#{$PREF}-action { &:last-of-type { @extend .tooltip--right; } }

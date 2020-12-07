@@ -1,15 +1,10 @@
-/**
- * @fileoverview Scene: ActionButton
- * @author Rami Abdou
- */
-
 import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import {
-  IoIosCheckmarkCircle,
-  IoIosCloseCircle,
-  IoMdArrowBack
-} from 'react-icons/io';
+  IoCheckmarkCircle,
+  IoChevronBackOutline,
+  IoCloseCircle
+} from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
 import { ICommunity } from '@store/entities';
@@ -22,16 +17,19 @@ export const BackButton = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   return (
     <Button onClick={() => closeModal()}>
-      <IoMdArrowBack className="back-arrow" />
+      <IoChevronBackOutline className="back-arrow" />
     </Button>
   );
 };
 
 export const AcceptButton = () => {
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
-  const community = useStoreState((store) => store.community);
-  const communities = useStoreState(({ entities }) => entities.communities);
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+
+  const applicants = useStoreState(
+    ({ community }) => community.pendingApplicants
+  );
+
+  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
@@ -39,27 +37,12 @@ export const AcceptButton = () => {
   });
 
   const onClick = async () => {
-    const { id, pendingApplicants } = community;
-
     // Call to the server.
     const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
-    updateEntities({
-      updatedState: {
-        communities: {
-          ...communities,
-          byId: {
-            ...communities.byId,
-            [id]: {
-              ...community,
-              pendingApplicants: pendingApplicants.filter(
-                (a: string) => a !== applicantId
-              )
-            }
-          }
-        }
-      }
+    updateCommunity({
+      pendingApplicants: applicants.filter((a: string) => a !== applicantId)
     });
 
     showToast({ message: 'Application accepted.' });
@@ -71,7 +54,7 @@ export const AcceptButton = () => {
       value="Accept"
       onClick={onClick}
     >
-      <IoIosCheckmarkCircle />
+      <IoCheckmarkCircle />
     </Button>
   );
 };
@@ -79,7 +62,7 @@ export const AcceptButton = () => {
 export const IgnoreButton = () => {
   const communities = useStoreState(({ entities }) => entities.communities);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
@@ -88,27 +71,16 @@ export const IgnoreButton = () => {
 
   const onClick = async () => {
     const community: ICommunity = communities.byId[communities.activeId];
-    const { id, pendingApplicants } = community;
+    const { pendingApplicants } = community;
 
     // Call to the server.
     const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
-    updateEntities({
-      updatedState: {
-        communities: {
-          ...communities,
-          byId: {
-            ...communities.byId,
-            [id]: {
-              ...community,
-              pendingApplicants: pendingApplicants.filter(
-                (a: string) => a !== applicantId
-              )
-            }
-          }
-        }
-      }
+    updateCommunity({
+      pendingApplicants: pendingApplicants.filter(
+        (a: string) => a !== applicantId
+      )
     });
 
     showToast({ message: 'Application ignored.' });
@@ -120,7 +92,7 @@ export const IgnoreButton = () => {
       value="Ignore"
       onClick={onClick}
     >
-      <IoIosCloseCircle />
+      <IoCloseCircle />
     </Button>
   );
 };

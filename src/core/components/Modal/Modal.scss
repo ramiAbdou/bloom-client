@@ -1,10 +1,8 @@
-@import 'src/index.scss';
-
 $PREF: 'c-modal';
 
 // ## MODAL BACKGROUND (DARK OPACITY)
 
-.#{$PREF}-ctr {
+.#{$PREF}-bg {
   @extend .full-screen;
 
   backdrop-filter: blur(2px);
@@ -14,7 +12,7 @@ $PREF: 'c-modal';
 
 // ## MODAL CONTAINER
 
-.#{$PREF} {
+.#{$PREF}-ctr {
   background-color: white;
   bottom: calc(-50vh + 50%);
   box-sizing: border-box;
@@ -22,7 +20,7 @@ $PREF: 'c-modal';
   left: calc(-50vw + 50%);
   margin: auto;
   overflow: scroll;
-  position: absolute;
+  position: fixed;
   right: calc(-50vw + 50%);
   top: calc(-50vh + 50%);
   z-index: 1001;
@@ -31,17 +29,15 @@ $PREF: 'c-modal';
   @include TD { border-radius: $xs; max-height: 90vh; width: 550px; }
 }
 
-.#{$PREF}-content { max-height: inherit; padding: $md; }
+// ## MODAL CONTENT
 
-// ## MODAL HEADER
+.#{$PREF} { max-height: inherit; padding: $md; }
 
-.#{$PREF}-header {
-  @extend .flex-acsb;
-  @extend .fill;
+// All modals will have an h1 tag, which will be standardized everywhere.
+.#{$PREF} > h1 { color: $primary; margin-bottom: $sm; }
 
-  background-color: white;
-  height: $lg;
-  left: 0;
-  position: sticky;
-  top: 0;
-}
+// ## CONFIRMATION MODAL
+
+.#{$PREF}--confirmation > p { margin-bottom: $md; }
+.#{$PREF}--confirmation > div { @extend .flex-ac; }
+.#{$PREF}--confirmation > div > button:first-of-type { margin-right: 12px; }

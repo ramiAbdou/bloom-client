@@ -1,17 +1,10 @@
-/**
- * @fileoverview Scene: Integrations
- * @author Rami Abdou
- */
-
-import './Integrations.scss';
-
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
+import URLBuilder from 'util/URLBuilder';
 
 import { APP, isProduction } from '@constants';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import URLBuilder from '@util/URLBuilder';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
 import StripeDetails from './components/ExpandedDetails/StripeDetails';
 import ZoomDetails from './components/ExpandedDetails/ZoomDetails';
@@ -148,7 +141,7 @@ const Cards = () => {
 };
 
 export default () => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions((actions) => actions.updateEntities);
   const { data, loading } = useQuery(GET_INTEGRATIONS);
 
   useEffect(() => {

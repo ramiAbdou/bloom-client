@@ -1,11 +1,6 @@
-/**
- * @fileoverview Component: MembershipForm
- * @author Rami Abdou
- */
-
 import { motion } from 'framer-motion';
 import React from 'react';
-import { IoIosCheckmarkCircle } from 'react-icons/io';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 import { Redirect, useParams } from 'react-router-dom';
 
 import { EncodedUrlNameParams } from '@constants';
@@ -16,7 +11,7 @@ const ConfirmationHeader = () => {
   const autoAccept = useStoreState(({ community }) => community?.autoAccept);
   return (
     <div className="s-signup-confirmation-header">
-      <IoIosCheckmarkCircle />
+      <IoCheckmarkCircle />
       <h1>{autoAccept ? 'Application Accepted' : 'Application Received'}</h1>
     </div>
   );

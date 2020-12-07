@@ -1,10 +1,3 @@
-/**
- * @fileoverview Scene: Login
- * @author Rami Abdou
- */
-
-import './Login.scss';
-
 import React from 'react';
 
 import EmailConfirmation from './components/EmailConfirmation';

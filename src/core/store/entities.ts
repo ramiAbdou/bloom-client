@@ -1,24 +1,15 @@
-/**
- * @fileoverview Store: Schema
- * @author Rami Abdou
- */
-
 import { QuestionCategory, QuestionType } from '@constants';
 
-export type IApplicationQuestion = {
-  category: QuestionCategory;
-  id: string;
-  inApplicantCard: boolean;
-  order: number;
-  options: string[];
-  required: boolean;
-  title: QuestionType;
-  type: QuestionType;
+export type IAdmin = {
+  email: string;
+  firstName: string;
+  id: string; // This is simply the membership ID, not the user ID.
+  lastName: string;
 };
 
 export type ICommunity = {
+  admins: string[];
   applicationDescription?: string;
-  applicationQuestions: string[];
   applicationTitle?: string;
   autoAccept?: boolean;
   encodedUrlName: string;
@@ -26,6 +17,7 @@ export type ICommunity = {
   integrations: string;
   logoUrl: string;
   members: string[];
+  membershipQuestions: string[];
   name: string;
   pendingApplicants: string[];
   primaryColor: string;
@@ -41,23 +33,39 @@ export type IIntegrations = {
   zoomAccountInfo: { email: string; pmi: number; userId: string };
 };
 
+export type IMember = {
+  allData: { questionId: string; value: string }[];
+  id: string;
+  role?: 'ADMIN' | 'OWNER';
+};
+
 export type IMembership = {
   community: string;
   id: string;
   role: 'ADMIN' | 'OWNER';
-  type: IMembershipType;
+  type: { name: string };
 };
 
-type IMembershipType = { name: string };
+export type IMembershipQuestion = {
+  category: QuestionCategory;
+  id: string;
+  inApplicantCard: boolean;
+  order: number;
+  options: string[];
+  required: boolean;
+  title: QuestionType;
+  type: QuestionType;
+  version: number;
+};
 
-export type UnresolvedApplicantData = { questionId: string; value: string };
-export type ResolvedApplicantData = {
-  question: IApplicationQuestion;
+export type ApplicantData = {
+  question?: IMembershipQuestion;
+  questionId?: string;
   value: string;
 };
 
 export type IPendingApplicant = {
-  applicantData: UnresolvedApplicantData[] | ResolvedApplicantData[];
+  applicantData: ApplicantData[];
   createdAt: string;
   id: string;
 };
@@ -77,9 +85,11 @@ export interface EntityRecord<T> {
 }
 
 export type IEntities = {
-  applicationQuestions: EntityRecord<IApplicationQuestion>;
+  admins: EntityRecord<IAdmin>;
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
+  members: EntityRecord<IMember>;
+  membershipQuestions: EntityRecord<IMembershipQuestion>;
   memberships: EntityRecord<IMembership>;
   pendingApplicants: EntityRecord<IPendingApplicant>;
   users: EntityRecord<IUser>;
@@ -87,9 +97,11 @@ export type IEntities = {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
-  applicationQuestions: { allIds: [], byId: {} },
+  admins: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
+  members: { allIds: [], byId: {} },
+  membershipQuestions: { allIds: [], byId: {} },
   memberships: { activeId: null, allIds: [], byId: {} },
   pendingApplicants: { allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
