@@ -1,7 +1,5 @@
 $PREF: 's-directory';
 
-// .#{$PREF} {}
-
 .#{$PREF}-card-ctr {
   column-gap: $sm;
   display: grid;
@@ -18,7 +16,7 @@ button.#{$PREF}-card {
   
 
   grid-column-end: span 2;
-  height: fit-content;
+  height: max-content;
   padding: 0;
 
   &:last-of-type { margin-bottom: $lg; }
@@ -40,7 +38,7 @@ button.#{$PREF}-card {
 }
 
 .#{$PREF}-card > div:first-child > * {
-  border-radius: $xxs $xxs 0 0;
+  border-radius: $xs $xs 0 0;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -51,12 +49,19 @@ button.#{$PREF}-card {
 // ## CARD CONTENT - Refers to the text within the card (name and highlighted
 // field).
 
-.#{$PREF}-card-content { flex-grow: 1; padding: $sm; }
+.#{$PREF}-card-content { height: $xxl; padding: $sm $xs; }
 .#{$PREF}-card-content > p {
+  font-weight: 700;
+  line-height: 20px;
+  max-width: 100%;
+
+  @include OVERFLOW_ELLIPSES(3);
+}
+
+.#{$PREF}-card-content > p > span {
   @extend .meta;
 
   color: $gray-2;
-  text-align: center;
-
-  @include OVERFLOW_ELLIPSES;
+  display: block;
+  margin-top: $xxs;
 }

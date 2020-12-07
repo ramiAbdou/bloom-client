@@ -5,7 +5,7 @@ import Button from '@components/Button/Button';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
-import ExpandedCard from './ExpandedCard';
+import ExpandedMemberCard from '../ExpandedMemberCard/ExpandedMemberCard';
 import MemberCard from './MemberCard.store';
 
 const ProfilePicture = () => {
@@ -16,13 +16,12 @@ const ProfilePicture = () => {
 
   const initials = firstName[0] + lastName[0];
 
-  if (!pictureUrl)
-    return (
-      <div>
-        <h1>{initials}</h1>
-      </div>
-    );
-  return <img src={pictureUrl} />;
+  return (
+    <div>
+      {!pictureUrl && <h1>{initials}</h1>}
+      {pictureUrl && <img src={pictureUrl} />}
+    </div>
+  );
 };
 
 export default () => {
@@ -48,12 +47,13 @@ export default () => {
         <ProfilePicture />
 
         <div className="s-directory-card-content">
-          <h3>{`${firstName} ${lastName}`}</h3>
-          <p>{highlightedField ?? ''}</p>
+          <p>
+            {`${firstName} ${lastName}`} <span>{highlightedField ?? ''}</span>{' '}
+          </p>
         </div>
       </Button>
 
-      <ExpandedCard id={`${ModalType.DIRECTORY_CARD}-${id}`} />
+      <ExpandedMemberCard id={`${ModalType.DIRECTORY_CARD}-${id}`} />
     </>
   );
 };

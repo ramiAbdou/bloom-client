@@ -9,6 +9,7 @@ import MemberCardStore, { MemberCardData } from './MemberCard.store';
 export default () => {
   const members: MemberCardData[] = useStoreState(({ entities }) => {
     const { allIds: allMemberIds, byId: byMemberId } = entities.members;
+    const { byId: byQuestionId } = entities.membershipQuestions;
     const { byId: byUserId } = entities.users;
 
     return allMemberIds.map((memberId: string) => {
@@ -26,6 +27,11 @@ export default () => {
 
       return {
         bio,
+        expandedCardData: cardData.map(({ questionId, ...value }) => ({
+          ...value,
+          title: byQuestionId[questionId]?.title,
+          type: byQuestionId[questionId]?.type
+        })),
         facebookUrl,
         firstName,
         highlightedField: cardData[0]?.value,

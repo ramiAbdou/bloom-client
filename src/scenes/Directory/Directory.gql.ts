@@ -23,6 +23,7 @@ export const GET_DIRECTORY = query({
           user: [
             'id',
             'currentLocation',
+            'email',
             'facebookUrl',
             'firstName',
             'lastName',

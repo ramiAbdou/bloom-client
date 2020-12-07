@@ -22,7 +22,7 @@
   @include M { font-size: $mobile; line-height: $mobile-lh; }
 }
 
-.body--1 { @include font-responsive(400, 15px, 24px, 15px, 24px, 15px, 24px); }
+.body--1 { @include font-responsive(400, 15px, 20px, 15px, 20px, 15px, 20px); }
 .meta { @include font-responsive(600, 13px, 16px, 13px, 16px, 13px, 16px); }
 .sb { font-weight: 600 !important; }
 .bold { font-weight: 700 !important; }
