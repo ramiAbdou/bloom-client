@@ -2,28 +2,6 @@ import { APIError } from 'graphql-hooks';
 import { normalize, Schema } from 'normalizr';
 
 /**
- * Filter a form's options by the given search string.
- */
-export const filterOptions = (
-  options: string[],
-  searchString: string,
-  excludedValues?: string[]
-): string[] => {
-  const lowerCaseSearchString = searchString.toLowerCase();
-
-  const isExcluded = (value: string) =>
-    excludedValues &&
-    excludedValues.some((excludedValue) => value === excludedValue);
-
-  return options.reduce((acc: string[], value: string) => {
-    return !isExcluded(value) &&
-      value.toLowerCase().startsWith(lowerCaseSearchString)
-      ? [...acc, value]
-      : acc;
-  }, []);
-};
-
-/**
  * Returns the GraphQL error from the APIError object returned after a GraphQL
  * query or mutation runs.
  *

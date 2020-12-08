@@ -21,11 +21,14 @@ export default memo(({ placeholder }: SearchBarProps) => {
     return () => clearTimeout(timeout);
   }, [value]);
 
+  const onClear = () => setValue('');
+
   return (
     <SearchBar
       placeholder={placeholder}
       value={value}
       onChange={({ target }) => setValue(target.value)}
+      onClear={onClear}
     />
   );
 });

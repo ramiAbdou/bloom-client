@@ -5,6 +5,7 @@ import {
   computed,
   createContextStore
 } from 'easy-peasy';
+import { matchSorter } from 'match-sorter';
 
 import { Function, QuestionCategory, QuestionType } from '@constants';
 import { toggleArrayValue } from '@util/util';
@@ -58,57 +59,6 @@ const sortByColumn = (
 
     return 0;
   });
-
-type SortImportance = 'EXACT' | 'STARTS_WITH' | 'INCLUDES';
-
-/**
- * Returns the sort importance of the row depending on whether one of the value
- * starts with, is exactly or just includes the search string.
- */
-const getSortImportance = (row: Row, searchString: string): SortImportance => {
-  return Object.values(row).reduce((acc: SortImportance, value: string) => {
-    if (acc === 'EXACT') return acc;
-
-    const lowerCaseValue = value?.toLowerCase();
-    if (!lowerCaseValue) return acc;
-
-    if (lowerCaseValue === searchString) return 'EXACT';
-    if (acc === 'INCLUDES' && lowerCaseValue.startsWith(searchString)) {
-      return 'STARTS_WITH';
-    }
-
-    return acc;
-  }, 'INCLUDES');
-};
-
-/**
- * Returns an array of Rows based
- *
- * @param data Rows to filter through.
- * @param searchString The untrimmed search string to filter by.
- */
-const filterBySearchString = (data: Row[], searchString: string) => {
-  const lowerCaseSearchString = searchString.toLowerCase().trim();
-
-  return data
-    .filter((row: Row) => {
-      // As long as some values (answers to questions) in the row include
-      // the search string, then it passes through the filter.
-      return Object.values(row).some((value: string) => {
-        const lowerCaseValue = value?.toLowerCase();
-
-        return (
-          !searchString ||
-          (value && lowerCaseValue.includes(lowerCaseSearchString))
-        );
-      });
-    })
-    .sort((a: Row, b: Row) => {
-      const aImportance: SortImportance = getSortImportance(a, searchString);
-      const bImportance: SortImportance = getSortImportance(b, searchString);
-      return aImportance < bImportance ? -1 : 1;
-    });
-};
 
 type TableModel = {
   columns: Column[];
@@ -207,10 +157,16 @@ export const tableModel: TableModel = {
     return { ...state, page };
   }),
 
-  setSearchString: action(({ data, ...state }, searchString) => ({
+  setSearchString: action(({ columns, data, ...state }, searchString) => ({
     ...state,
+    columns,
     data,
-    filteredData: filterBySearchString(data, searchString),
+    filteredData: !searchString
+      ? data
+      : matchSorter(data, searchString, {
+          keys: columns.map(({ id }) => id),
+          threshold: matchSorter.rankings.ACRONYM
+        }),
     searchString
   })),
 
@@ -218,14 +174,14 @@ export const tableModel: TableModel = {
    * Sets the sorted column ID and direction of the column to be sorted.
    */
   setSortedColumn: action((state, [id, direction]) => {
-    const { data, filteredData, sortedColumnDirection, sortedColumnId } = state;
+    const { filteredData, sortedColumnDirection, sortedColumnId } = state;
 
     // If the column ID is the same and the direction is the same direction,
     // we should effectively unapply the sorting.
     if (sortedColumnId === id && direction === sortedColumnDirection) {
       return {
         ...state,
-        filteredData: data,
+        filteredData,
         sortedColumnDirection: null,
         sortedColumnId: null
       };

@@ -8,7 +8,7 @@ import { makeClass } from '@util/util';
 interface SearchBarProps extends ValueProps {
   placeholder?: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => any;
-  onClear: () => any;
+  onClear?: () => any;
 }
 
 const Icon = memo(() => <IoSearch />);
