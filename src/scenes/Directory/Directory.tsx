@@ -6,6 +6,7 @@ import { useStoreActions } from '@store/Store';
 import Header from './components/Header';
 import MemberCardContainer from './components/MemberCard/MemberCard.container';
 import { GET_DIRECTORY } from './Directory.gql';
+import DirectoryStore from './Directory.store';
 
 export default () => {
   const updateEntities = useStoreActions((store) => store.updateEntities);
@@ -27,9 +28,11 @@ export default () => {
   }, [data]);
 
   return (
-    <div className="s-directory">
-      <Header loading={loading} />
-      {!loading && <MemberCardContainer />}
-    </div>
+    <DirectoryStore.Provider>
+      <div className="s-directory">
+        <Header loading={loading} />
+        {!loading && <MemberCardContainer />}
+      </div>
+    </DirectoryStore.Provider>
   );
 };

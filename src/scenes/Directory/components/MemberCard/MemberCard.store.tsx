@@ -5,7 +5,7 @@ import { IUser } from '@store/entities';
 
 export interface MemberCardData extends IUser {
   bio: string;
-  expandedCardData: { questionId: string; type: QuestionType; value: string }[];
+  expandedCardData: { title: string; type: QuestionType; value: string }[];
   highlightedValue: string;
 }
 

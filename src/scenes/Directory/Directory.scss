@@ -1,11 +1,15 @@
 $PREF: 's-directory';
 
+.#{$PREF}-header { @extend .s-home-header; @extend .flex-acsb; }
+
 .#{$PREF}-card-ctr {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   overflow: hidden;
 
   &:focus { outline: none; }
+
+  > div { grid-column-end: span 2; }
 };
 
 // ## CARD
@@ -16,7 +20,6 @@ button.#{$PREF}-card {
   @extend .flex-col;
   
 
-  grid-column-end: span 2;
   height: max-content;
   height: 100%;
   padding: 0;

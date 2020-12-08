@@ -4,10 +4,13 @@ import React from 'react';
 
 import { IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
+import Directory from '../../Directory.store';
 import MemberCard from './MemberCard';
 import { MemberCardData } from './MemberCard.store';
 
 export default () => {
+  const searchString = Directory.useStoreState((store) => store.searchString);
+
   const members: MemberCardData[] = useStoreState(({ entities }) => {
     const { allIds: allMemberIds, byId: byMemberId } = entities.members;
     const { byId: byQuestionId } = entities.membershipQuestions;
@@ -15,8 +18,10 @@ export default () => {
 
     if (!allMemberIds?.length) return [];
 
-    return allMemberIds.map((memberId: string) => {
-      const { bio, cardData, id, user }: IMember = byMemberId[memberId];
+    const lowerCaseSearchString = searchString.toLowerCase().trim();
+
+    return allMemberIds.reduce((acc: MemberCardData[], curr: string) => {
+      const { bio, cardData, id, user }: IMember = byMemberId[curr];
 
       const {
         email,
@@ -29,17 +34,16 @@ export default () => {
         twitterUrl
       }: IUser = byUserId[user] ?? ({} as IUser);
 
-      return {
+      const result: MemberCardData = {
         bio,
         email,
-        expandedCardData: cardData.map(({ questionId, ...value }) => ({
-          ...value,
-          title: byQuestionId[questionId]?.title,
-          type: byQuestionId[questionId]?.type
-        })),
+        expandedCardData: cardData.map(({ questionId, ...value }) => {
+          const { title, type } = byQuestionId[questionId] ?? {};
+          return { ...value, title, type };
+        }),
         facebookUrl,
         firstName,
-        highlightedField: cardData[0]?.value,
+        highlightedValue: cardData[0]?.value,
         id,
         instagramUrl,
         lastName,
@@ -47,12 +51,33 @@ export default () => {
         pictureUrl,
         twitterUrl
       };
-    });
+
+      const passedThroughFilter = Object.values(result).some((value: any) => {
+        if (
+          typeof value === 'string' &&
+          value.toLowerCase().includes(lowerCaseSearchString)
+        ) {
+          return true;
+        }
+
+        if (Array.isArray(value)) {
+          return value.some((element: any) =>
+            element?.value?.toLowerCase().includes(lowerCaseSearchString)
+          );
+        }
+
+        return false;
+      });
+
+      return passedThroughFilter ? [...acc, result] : acc;
+    }, []);
   }, deepequal);
 
   return (
     <Masonry
+      key={`${searchString}-${members.length}`}
       className="s-directory-card-ctr"
+      columnCount={6}
       columnGutter={16}
       items={members}
       render={MemberCard}

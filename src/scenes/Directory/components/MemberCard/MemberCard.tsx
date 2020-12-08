@@ -29,7 +29,7 @@ const MemberCardContent = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const {
-    highlightedField,
+    highlightedValue,
     firstName,
     id,
     lastName
@@ -39,7 +39,7 @@ const MemberCardContent = () => {
 
   const css = makeClass([
     's-directory-card',
-    [!highlightedField, 's-directory-card--empty']
+    [!highlightedValue, 's-directory-card--empty']
   ]);
 
   return (
@@ -49,7 +49,7 @@ const MemberCardContent = () => {
 
         <div className="s-directory-card-content">
           <p>
-            {`${firstName} ${lastName}`} <span>{highlightedField ?? ''}</span>
+            {`${firstName} ${lastName}`} <span>{highlightedValue ?? ''}</span>
           </p>
         </div>
       </Button>
@@ -59,11 +59,8 @@ const MemberCardContent = () => {
   );
 };
 
-export default ({ data, index }: RenderComponentProps<MemberCardData>) => {
-  // console.log(index);
-  return (
-    <MemberCard.Provider runtimeModel={{ member: data }}>
-      <MemberCardContent />
-    </MemberCard.Provider>
-  );
-};
+export default ({ data }: RenderComponentProps<MemberCardData>) => (
+  <MemberCard.Provider runtimeModel={{ member: data }}>
+    <MemberCardContent />
+  </MemberCard.Provider>
+);
