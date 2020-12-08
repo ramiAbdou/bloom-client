@@ -1,10 +1,11 @@
 $PREF: 's-directory';
 
 .#{$PREF}-card-ctr {
-  column-gap: $sm;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  row-gap: $sm;
+  overflow: hidden;
+
+  &:focus { outline: none; }
 };
 
 // ## CARD
@@ -17,9 +18,10 @@ button.#{$PREF}-card {
 
   grid-column-end: span 2;
   height: max-content;
+  height: 100%;
   padding: 0;
+  width: 100%;
 
-  &:last-of-type { margin-bottom: $lg; }
   &--empty { height: initial; }
 };
 
@@ -44,6 +46,7 @@ button.#{$PREF}-card {
   position: absolute;
   right: 0;
   top: 0;
+  width: 100%;
 }
 
 // ## CARD CONTENT - Refers to the text within the card (name and highlighted

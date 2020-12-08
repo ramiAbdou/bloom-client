@@ -1,10 +1,11 @@
 import deepequal from 'fast-deep-equal';
+import { Masonry } from 'masonic';
 import React from 'react';
 
 import { IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import MemberCard from './MemberCard';
-import MemberCardStore, { MemberCardData } from './MemberCard.store';
+import { MemberCardData } from './MemberCard.store';
 
 export default () => {
   const members: MemberCardData[] = useStoreState(({ entities }) => {
@@ -48,12 +49,11 @@ export default () => {
   }, deepequal);
 
   return (
-    <div className="s-directory-card-ctr">
-      {members?.slice(0, 12).map((member) => (
-        <MemberCardStore.Provider key={member.id} runtimeModel={{ member }}>
-          <MemberCard />
-        </MemberCardStore.Provider>
-      ))}
-    </div>
+    <Masonry
+      className="s-directory-card-ctr"
+      columnGutter={16}
+      items={members}
+      render={MemberCard}
+    />
   );
 };

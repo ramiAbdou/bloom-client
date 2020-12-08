@@ -1,4 +1,5 @@
 import deepequal from 'fast-deep-equal';
+import { RenderComponentProps } from 'masonic';
 import React from 'react';
 
 import Button from '@components/Button/Button';
@@ -6,7 +7,7 @@ import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
 import ExpandedMemberCard from '../ExpandedMemberCard/ExpandedMemberCard';
-import MemberCard from './MemberCard.store';
+import MemberCard, { MemberCardData } from './MemberCard.store';
 
 const ProfilePicture = () => {
   const { pictureUrl, firstName, lastName } = MemberCard.useStoreState(
@@ -24,7 +25,7 @@ const ProfilePicture = () => {
   );
 };
 
-export default () => {
+const MemberCardContent = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const {
@@ -55,5 +56,14 @@ export default () => {
 
       <ExpandedMemberCard id={`${ModalType.DIRECTORY_CARD}-${id}`} />
     </>
+  );
+};
+
+export default ({ data, index }: RenderComponentProps<MemberCardData>) => {
+  // console.log(index);
+  return (
+    <MemberCard.Provider runtimeModel={{ member: data }}>
+      <MemberCardContent />
+    </MemberCard.Provider>
   );
 };
