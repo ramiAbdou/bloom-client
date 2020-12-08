@@ -5,12 +5,12 @@ import { useLayoutEffect } from 'react';
  */
 export default () => {
   useLayoutEffect(() => {
-    const { overflow } = window.getComputedStyle(document.body);
     document.body.style.overflow = 'hidden';
 
     return () => {
+      console.log('HERE');
       // Re-enable scrolling when component unmounts.
-      document.body.style.overflow = overflow;
+      document.body.style.overflow = 'auto';
     };
   }, []);
 };
