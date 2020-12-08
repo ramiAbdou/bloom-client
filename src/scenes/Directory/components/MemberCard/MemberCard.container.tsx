@@ -81,6 +81,7 @@ export default () => {
       columnCount={6}
       columnGutter={16}
       items={members}
+      overscanBy={5}
       render={MemberCard}
     />
   );

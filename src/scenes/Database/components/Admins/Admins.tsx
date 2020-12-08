@@ -19,6 +19,8 @@ const AdminTable = () => {
     return community.admins?.map((adminId: string) => byId[adminId]);
   }, deepequal);
 
+  console.log(admins);
+
   const rows: Row[] = admins.reduce(
     (acc: Row[], { firstName, lastName, email, id }: IAdmin) => {
       return [

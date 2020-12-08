@@ -1,6 +1,6 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
-import { IoClose } from 'react-icons/io5';
+import { IoClose, IoMail } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
 import { useStoreActions } from '@store/Store';
@@ -41,21 +41,36 @@ const Header = () => {
   );
 };
 
-export default () => {
+const PersonalInformation = () => {
   const {
     bio,
     currentLocation,
+    email,
     firstName,
     lastName
   } = MemberCard.useStoreState((store) => store.member, deepequal);
 
   return (
-    <div className="s-directory-modal-user-ctr">
-      <Header />
+    <div className="s-directory-modal-personal-ctr">
       <h1>{`${firstName} ${lastName}`}</h1>
-      {currentLocation && <p>{currentLocation}</p>}
-      {bio && <p>{bio}</p>}
-      <SocialMedia />
+      {currentLocation && (
+        <p className="s-directory-modal-location">{currentLocation}</p>
+      )}
+      {email && (
+        <Button className="s-directory-modal-email" href={`mailto:${email}`}>
+          <IoMail />
+          <p>{email}</p>
+        </Button>
+      )}
+      {bio && <p className="s-directory-modal-bio">{bio}</p>}
     </div>
   );
 };
+
+export default () => (
+  <div className="s-directory-modal-user-ctr">
+    <Header />
+    <PersonalInformation />
+    <SocialMedia />
+  </div>
+);

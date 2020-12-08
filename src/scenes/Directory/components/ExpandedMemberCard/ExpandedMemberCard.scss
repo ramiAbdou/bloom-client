@@ -30,22 +30,40 @@ $PREF: 's-directory-modal';
 }
 .#{$PREF}-user-ctr-header > :nth-child(2) { justify-self: center; }
 
-.#{$PREF}-user-ctr > h1 { color: black; margin-bottom: $xxs; }
 .#{$PREF}-user-ctr > p { margin-bottom: $sm; text-align: center; }
 
 // Current location of the person.
 .#{$PREF}-user-ctr > p:first-of-type { @extend .meta; color: $gray-2; }
 
+// ### PERSONAL INFORMATION CONTAINER
+
+.#{$PREF}-personal-ctr > h1 { color: black; margin-bottom: $xxs; }
+
+.#{$PREF}-location {
+  @extend .meta;
+
+  color: $gray-2;
+  margin-bottom: $xs;
+  text-align: center;
+}
+
+a.#{$PREF}-email { color: $primary; margin-bottom: $xxs; width: 100%; }
+a.#{$PREF}-email > svg { color: inherit; height: $sm; width: $sm; }
+a.#{$PREF}-email > p { @extend .meta; color: inherit; margin-left: $xxs; }
+
 // ### SOCIAL MEDIA CONTAINER
 
 .#{$PREF}-social-ctr { @extend .flex-ac; }
 .#{$PREF}-social {
+  margin-top: $sm;
+
   @include HOVER { transform: scale(1.1); }
 
   &:not(:last-child) { margin-right: $sm; }
   &--facebook > svg { color: #1877f2; }
   &--linkedin > svg { color: #0a66c2; }
   &--twitter > svg { color: #1da1f2; }
+  &:last-child > a { @extend .flex; }
 }
 
 // ## DATA CONTAINER (NON-USER INFORMATION)

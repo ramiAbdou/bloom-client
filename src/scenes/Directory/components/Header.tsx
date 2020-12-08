@@ -3,10 +3,15 @@ import React, { ChangeEvent, memo, useEffect, useState } from 'react';
 import Spinner from '@components/Loader/Spinner';
 import SearchBar from '@components/Misc/SearchBar';
 import { LoadingProps } from '@constants';
+import { useStoreState } from '@store/Store';
 import Directory from '../Directory.store';
 
 export default memo(({ loading }: LoadingProps) => {
   const [value, setValue] = useState('');
+
+  const numMembers = useStoreState(
+    ({ entities }) => entities.members?.allIds?.length
+  );
 
   const setSearchString = Directory.useStoreActions(
     (store) => store.setSearchString
@@ -28,11 +33,13 @@ export default memo(({ loading }: LoadingProps) => {
         {loading && <Spinner dark />}
       </div>
 
-      <SearchBar
-        placeholder="Search members..."
-        value={value}
-        onChange={onChange}
-      />
+      {!loading && (
+        <SearchBar
+          placeholder={`Search ${numMembers} members...`}
+          value={value}
+          onChange={onChange}
+        />
+      )}
     </div>
   );
 });

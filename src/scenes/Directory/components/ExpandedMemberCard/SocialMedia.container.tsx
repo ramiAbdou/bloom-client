@@ -4,8 +4,7 @@ import {
   IoLogoFacebook,
   IoLogoInstagram,
   IoLogoLinkedin,
-  IoLogoTwitter,
-  IoMailOutline
+  IoLogoTwitter
 } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
@@ -13,7 +12,6 @@ import MemberCard from '../MemberCard/MemberCard.store';
 
 export default () => {
   const {
-    email,
     facebookUrl,
     linkedInUrl,
     twitterUrl,
@@ -45,12 +43,6 @@ export default () => {
           <IoLogoInstagram />
         </Button>
       )}
-
-      <Button className="s-directory-modal-social">
-        <a href={`mailto:${email}`}>
-          <IoMailOutline />
-        </a>
-      </Button>
     </div>
   );
 };

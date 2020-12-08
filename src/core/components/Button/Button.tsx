@@ -33,10 +33,11 @@ export const useLoadingState = (loading: boolean) => {
 
   useEffect(() => {
     if (!loading && showLoadingState) setShowLoadingState(false);
-    else
+    else {
       setTimeout(() => {
         if (loading && !showLoadingState) setShowLoadingState(true);
       }, 100);
+    }
   }, [loading, showLoadingState]);
 
   return showLoadingState;
@@ -68,11 +69,15 @@ export default ({
   const tapAnimation =
     !disabled && !noScale ? { whileTap: { scale: 0.95 } } : {};
 
-  const onAllowedClick = () => {
-    if (disabled) return;
-    if (href) window.open(href);
-    else if (onClick) onClick();
-  };
+  const onAllowedClick = () => !disabled && onClick && onClick();
+
+  if (href) {
+    return (
+      <motion.a className={css} href={href} {...tapAnimation} {...props}>
+        {children ?? title}
+      </motion.a>
+    );
+  }
 
   return (
     <motion.button
