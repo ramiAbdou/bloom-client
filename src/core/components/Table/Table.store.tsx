@@ -157,18 +157,32 @@ export const tableModel: TableModel = {
     return { ...state, page };
   }),
 
-  setSearchString: action(({ columns, data, ...state }, searchString) => ({
-    ...state,
-    columns,
-    data,
-    filteredData: !searchString
-      ? data
-      : matchSorter(data, searchString, {
-          keys: columns.map(({ id }) => id),
-          threshold: matchSorter.rankings.ACRONYM
-        }),
-    searchString
-  })),
+  setSearchString: action(({ columns, data, ...state }, searchString) => {
+    const firstNameColumnId = columns.find(
+      ({ category }) => category === 'FIRST_NAME'
+    )?.id;
+
+    const lastNameColumnId = columns.find(
+      ({ category }) => category === 'LAST_NAME'
+    )?.id;
+
+    return {
+      ...state,
+      columns,
+      data,
+      filteredData: !searchString
+        ? data
+        : matchSorter(data, searchString, {
+            keys: [
+              ...columns.map(({ id }) => id),
+              // Supports search for a fullName of a row.
+              (row: Row) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
+            ],
+            threshold: matchSorter.rankings.ACRONYM
+          }),
+      searchString
+    };
+  }),
 
   /**
    * Sets the sorted column ID and direction of the column to be sorted.
