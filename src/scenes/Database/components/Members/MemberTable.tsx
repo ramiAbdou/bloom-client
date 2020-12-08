@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
 import Table, { Column, Row } from '@components/Table/Table.store';
+import { IMembership } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { RENAME_QUESTION } from '../../Database.gql';
@@ -16,9 +17,9 @@ export default () => {
 
     return community.memberships?.reduce((acc: Row[], id: string) => {
       const result: Row = { id };
-      const { allData } = byId[id];
+      const { allData, status }: IMembership = byId[id];
 
-      if (!allData) return acc;
+      if (['REJECTED', 'PENDING'].includes(status) || !allData) return acc;
 
       allData.forEach(({ questionId, value }) => {
         result[questionId] = value;

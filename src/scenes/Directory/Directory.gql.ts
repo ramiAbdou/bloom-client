@@ -18,6 +18,7 @@ export const GET_DIRECTORY = query({
       memberships: [
         'bio',
         'id',
+        'status',
         { cardData: ['questionId', 'value'] },
         {
           user: [

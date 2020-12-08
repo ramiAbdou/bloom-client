@@ -19,6 +19,7 @@ export const GET_DATABASE = query({
       memberships: [
         'id',
         'role',
+        'status',
         { allData: ['questionId', 'value'] },
         { user: ['id', 'firstName', 'lastName', 'email'] }
       ]

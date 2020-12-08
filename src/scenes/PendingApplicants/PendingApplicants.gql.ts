@@ -22,8 +22,8 @@ export const GET_PENDING_APPLICATIONS = query({
       memberships: [
         'id',
         'createdAt',
-        { applicantData: ['questionId', 'value'] },
-        'status'
+        'status',
+        { applicantData: ['questionId', 'value'] }
       ]
     }
   ],

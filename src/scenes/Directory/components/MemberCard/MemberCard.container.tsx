@@ -20,8 +20,22 @@ export default () => {
 
     const lowerCaseSearchString = searchString.toLowerCase().trim();
 
+    const randomPictures = [
+      'https://pbs.twimg.com/profile_images/1309512858951131138/8UACAdfa_400x400.jpg',
+      'https://pbs.twimg.com/profile_images/1303060784289730560/femQ8Zek_400x400.jpg',
+      'https://pbs.twimg.com/profile_images/1216728758473953281/HY15R6ER_400x400.jpg',
+      'https://pbs.twimg.com/profile_images/1322009883596726272/5lguqewe_400x400.jpg',
+      'https://pbs.twimg.com/profile_images/1285792980872429568/BkcFk2jp_400x400.jpg',
+      'https://pbs.twimg.com/profile_images/1289268330088595456/s-5tN4Oi_400x400.jpg'
+    ];
+
     return allIds?.reduce((acc: MemberCardData[], curr: string) => {
-      const { bio, cardData, id, user }: IMembership = byMembershipId[curr];
+      const { bio, cardData, id, status, user }: IMembership = byMembershipId[
+        curr
+      ];
+
+      console.log('ACCEPTED');
+      if (status !== 'ACCEPTED') return acc;
 
       const {
         email,
@@ -49,7 +63,7 @@ export default () => {
         instagramUrl,
         lastName,
         linkedInUrl,
-        pictureUrl,
+        pictureUrl: randomPictures[Math.round(Math.random() * 6)],
         twitterUrl
       };
 
