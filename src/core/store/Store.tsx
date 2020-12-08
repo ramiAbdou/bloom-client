@@ -100,8 +100,9 @@ export const store = createStore<StoreModel>(
 
       // For every request, we should have a communityId set in the token so
       // we could take advantage of the GQL context and reduce # of args.
-      if (Cookie.get('communityId') !== activeId)
+      if (Cookie.get('communityId') !== activeId) {
         Cookie.set('communityId', activeId);
+      }
 
       const color = result?.primaryColor ?? '#f58023';
 
@@ -191,12 +192,21 @@ export const store = createStore<StoreModel>(
           parseEntities(data, schema),
           // eslint-disable-next-line consistent-return
           (target: any, source: any) => {
+            // console.log(typeof target, typeof source);
+
             if (Array.isArray(target)) {
               const updatedSource = source.filter(
                 (value: any) => !target.includes(value)
               );
 
               return target.concat(updatedSource);
+            }
+
+            if (typeof target === 'object' && typeof source === 'object') {
+              if (target?.id && source?.id && target.id === source.id) {
+                // console.log(source, target);
+                return { ...source, ...target };
+              }
             }
           }
         ) as IEntities

@@ -29,6 +29,7 @@ module.exports = {
         varsIgnorePattern: '_' // Allow underscores not to be treated as vars.
       }
     ],
+    curly: ['error', 'multi-line'],
     'import/newline-after-import': 2,
     'import/prefer-default-export': 0,
     'jsx-a11y/accessible-emoji': 0,

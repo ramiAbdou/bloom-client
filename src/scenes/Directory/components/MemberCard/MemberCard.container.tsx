@@ -37,10 +37,11 @@ export default () => {
       const result: MemberCardData = {
         bio,
         email,
-        expandedCardData: cardData.map(({ questionId, ...value }) => {
-          const { title, type } = byQuestionId[questionId] ?? {};
-          return { ...value, title, type };
-        }),
+        expandedCardData:
+          cardData?.map(({ questionId, ...value }) => {
+            const { title, type } = byQuestionId[questionId] ?? {};
+            return { ...value, title, type };
+          }) ?? [],
         facebookUrl,
         firstName,
         highlightedValue: cardData[0]?.value,
