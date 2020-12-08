@@ -89,18 +89,22 @@ export const makeClass = (
  * @param data Data to normalize.
  * @param schema Schema in which to normalize the data on.
  */
-export const parseEntities = (data: any, schema: Schema<any>) =>
+export const parseEntities = (
+  data: any,
+  schema: Schema<any>,
+  setActiveId?: boolean
+) =>
   Object.entries(normalize(data, schema).entities).reduce(
     (acc: Record<string, any>, [key, value]) => {
+      const activeId = setActiveId
+        ? ['communities', 'memberships', 'users'].includes(key) && {
+            activeId: Object.keys(value)[0]
+          }
+        : {};
+
       return {
         ...acc,
-        [key]: {
-          activeId: ['communities', 'memberships'].includes(key)
-            ? Object.keys(value)[0]
-            : null,
-          allIds: Object.keys(value),
-          byId: value
-        }
+        [key]: { ...activeId, allIds: Object.keys(value), byId: value }
       };
     },
     {}

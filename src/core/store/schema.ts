@@ -9,22 +9,16 @@ import { schema } from 'normalizr';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
-const Admin = new schema.Entity('admins', {});
-
-const MembershipQuestion = new schema.Entity('membershipQuestions', {});
+const Question = new schema.Entity('questions', {});
 
 const Integrations = new schema.Entity('integrations', {});
-
-const Members = new schema.Entity('members', {});
 
 const PendingApplicant = new schema.Entity('pendingApplicants', {});
 
 const Community = new schema.Entity('communities', {
-  admins: [Admin],
   integrations: Integrations,
-  members: [Members],
-  membershipQuestions: [MembershipQuestion],
-  pendingApplicants: [PendingApplicant]
+  pendingApplicants: [PendingApplicant],
+  questions: [Question]
 });
 
 const Membership = new schema.Entity('memberships', {
@@ -35,18 +29,17 @@ const User = new schema.Entity('users', { memberships: [Membership] });
 
 // Handle the circular dependencies in relationships.
 
-Members.define({ user: User });
+Community.define({ memberships: [Membership] });
+Membership.define({ user: User });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
-  ADMIN: Admin,
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
-  MEMBER: Members,
   MEMBERSHIP: Membership,
-  MEMBERSHIP_QUESTION: MembershipQuestion,
+  MEMBERSHIP_QUESTION: Question,
   PENDING_APPLICANT: PendingApplicant,
   USER: User
 };

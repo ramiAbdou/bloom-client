@@ -24,19 +24,20 @@ export default () => {
 
   const applicants: IPendingApplicant[] = useStoreState(
     ({ entities, community }) => {
-      const { byId: byApplicationQuestion } = entities.membershipQuestions;
+      const { byId: byApplicationQuestion } = entities.questions;
       const { byId: byApplicant } = entities.pendingApplicants;
 
       return community.pendingApplicants?.map((applicantId: string) => {
         const applicant = byApplicant[applicantId];
 
-        if (applicant.applicantData[0]?.questionId)
+        if (applicant.applicantData[0]?.questionId) {
           applicant.applicantData = applicant.applicantData.map(
             ({ questionId, value }) => ({
               question: byApplicationQuestion[questionId],
               value
             })
           );
+        }
 
         return applicant;
       });
@@ -51,7 +52,7 @@ export default () => {
     updateEntities({
       data: {
         ...data.getApplicants,
-        membershipQuestions: data.getApplicants.application.questions
+        questions: data.getApplicants.application.questions
       },
       schema: Schema.COMMUNITY
     });

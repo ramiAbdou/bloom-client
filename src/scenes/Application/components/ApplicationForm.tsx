@@ -12,7 +12,7 @@ import FormContent from '@components/Form/FormContent';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { EncodedUrlNameParams } from '@constants';
-import { IMembershipQuestion } from '@store/entities';
+import { IQuestion } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
@@ -50,8 +50,9 @@ const SubmitButton = () => {
 
   const message = getGraphQLError(error);
 
-  if (data && !error && !loading)
+  if (data && !error && !loading) {
     return <Redirect push to={`/${name}/apply/confirmation`} />;
+  }
 
   return (
     <>
@@ -80,11 +81,11 @@ export default () => {
     ({ community }) => community?.applicationDescription
   );
 
-  const questions: IMembershipQuestion[] = useStoreState(
+  const questions: IQuestion[] = useStoreState(
     ({ community, entities }) => {
-      const { byId } = entities.membershipQuestions;
-      if (!community?.membershipQuestions?.length) return [];
-      const { membershipQuestions: result } = community;
+      const { byId } = entities.questions;
+      if (!community?.questions?.length) return [];
+      const { questions: result } = community;
 
       return result.map((id: string) => byId[id]);
     }
@@ -103,7 +104,7 @@ export default () => {
         ...result,
         applicationDescription: result.application.description,
         applicationTitle: result.application.title,
-        membershipQuestions: result.application.questions
+        questions: result.application.questions
       },
       schema: Schema.COMMUNITY
     });

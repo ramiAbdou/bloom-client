@@ -69,7 +69,11 @@ const getHueFromRGB = ([r, g, b]: number[]): number => {
   return hue < 0 ? hue + 360 : Math.round(hue);
 };
 
-type UpdateEntitiesArgs = { data?: any; schema?: Schema<any> };
+type UpdateEntitiesArgs = {
+  data?: any;
+  schema?: Schema<any>;
+  setActiveId?: boolean;
+};
 
 type StoreModel = {
   clearEntities: Action<StoreModel>;
@@ -184,42 +188,41 @@ export const store = createStore<StoreModel>(
      * Main update function that updates all entities (front-end DB). Uses
      * the lodash deep merge function to make the updates.
      */
-    updateEntities: action((state, { data, schema }: UpdateEntitiesArgs) => {
-      return {
-        ...state,
-        entities: mergeWith(
-          state.entities,
-          parseEntities(data, schema),
-          // eslint-disable-next-line consistent-return
-          (target: any, source: any) => {
-            // console.log(typeof target, typeof source);
+    updateEntities: action(
+      (state, { data, schema, setActiveId }: UpdateEntitiesArgs) => {
+        return {
+          ...state,
+          entities: mergeWith(
+            state.entities,
+            parseEntities(data, schema, setActiveId),
+            // eslint-disable-next-line consistent-return
+            (target: any, source: any) => {
+              if (Array.isArray(target) && Array.isArray(source)) {
+                const updatedSource = source.filter(
+                  (value: any) => !target.includes(value)
+                );
 
-            if (Array.isArray(target)) {
-              const updatedSource = source.filter(
-                (value: any) => !target.includes(value)
-              );
+                return target.concat(updatedSource);
+              }
 
-              return target.concat(updatedSource);
-            }
-
-            if (typeof target === 'object' && typeof source === 'object') {
-              if (target?.id && source?.id && target.id === source.id) {
-                // console.log(source, target);
-                return { ...source, ...target };
+              if (typeof target === 'object' && typeof source === 'object') {
+                if (target?.id && source?.id && target.id === source.id) {
+                  return { ...target, ...source };
+                }
               }
             }
-          }
-        ) as IEntities
-      };
-    }),
+          ) as IEntities
+        };
+      }
+    ),
 
     /**
      * There should only be one user queried in the application, and that is
      * the logged-in user.
      */
     user: computed(({ entities }) => {
-      const { allIds, byId } = entities.users;
-      return byId[allIds[0]];
+      const { activeId, byId } = entities.users;
+      return byId[activeId];
     })
   },
   { disableImmer: true }

@@ -8,31 +8,28 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const DemoteToMemberModal = () => {
-  const admins = useStoreState(({ community }) => community.admins);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
-  const [toggleAdmin, { error, loading }] = useMutation(TOGGLE_ADMINS);
+  const [toggleAdmins, { error, loading }] = useMutation(TOGGLE_ADMINS);
 
   const onDemote = async () => {
-    const { error } = await toggleAdmin({
+    const { data, error: runtimeError } = await toggleAdmins({
       variables: { membershipIds: adminIds }
     });
 
-    if (error) return;
+    if (runtimeError) return;
 
     // Filter the community admins to NOT have the selected admins.
-    updateCommunity({
-      admins: admins.filter((id: string) => !adminIds.includes(id))
-    });
+    updateCommunity({ memberships: data?.toggleAdmins });
 
     showToast({
       message: `${adminIds.length} admin(s) demoted to member.`,

@@ -1,14 +1,6 @@
 import { QuestionCategory, QuestionType } from '@constants';
 
-export type IAdmin = {
-  email: string;
-  firstName: string;
-  id: string; // This is simply the membership ID, not the user ID.
-  lastName: string;
-};
-
 export type ICommunity = {
-  admins: string[];
   applicationDescription?: string;
   applicationTitle?: string;
   autoAccept?: boolean;
@@ -16,8 +8,8 @@ export type ICommunity = {
   id: string;
   integrations: string;
   logoUrl: string;
-  members: string[];
-  membershipQuestions: string[];
+  memberships: string[];
+  questions: string[];
   name: string;
   pendingApplicants: string[];
   primaryColor: string;
@@ -43,14 +35,17 @@ export type IMember = {
 };
 
 export type IMembership = {
+  allData?: { questionId: string; value: string }[];
   bio: string;
+  cardData?: { questionId: string; value: string }[];
   community: string;
   id: string;
   role: 'ADMIN' | 'OWNER';
   type: { name: string };
+  user: string;
 };
 
-export type IMembershipQuestion = {
+export type IQuestion = {
   category: QuestionCategory;
   id: string;
   inApplicantCard: boolean;
@@ -64,7 +59,7 @@ export type IMembershipQuestion = {
 };
 
 export type ApplicantData = {
-  question?: IMembershipQuestion;
+  question?: IQuestion;
   questionId?: string;
   value: string;
 };
@@ -94,24 +89,20 @@ export interface EntityRecord<T> {
 }
 
 export type IEntities = {
-  admins: EntityRecord<IAdmin>;
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
-  members: EntityRecord<IMember>;
-  membershipQuestions: EntityRecord<IMembershipQuestion>;
   memberships: EntityRecord<IMembership>;
+  questions: EntityRecord<IQuestion>;
   pendingApplicants: EntityRecord<IPendingApplicant>;
   users: EntityRecord<IUser>;
 };
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
-  admins: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
-  members: { allIds: [], byId: {} },
-  membershipQuestions: { allIds: [], byId: {} },
   memberships: { activeId: null, allIds: [], byId: {} },
   pendingApplicants: { allIds: [], byId: {} },
+  questions: { allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
 };

@@ -12,16 +12,16 @@ export default () => {
   const searchString = Directory.useStoreState((store) => store.searchString);
 
   const members: MemberCardData[] = useStoreState(({ entities }) => {
-    const { allIds: allMemberIds, byId: byMemberId } = entities.members;
-    const { byId: byQuestionId } = entities.membershipQuestions;
+    const { allIds, byId: byMembershipId } = entities.memberships;
+    const { byId: byQuestionId } = entities.questions;
     const { byId: byUserId } = entities.users;
 
-    if (!allMemberIds?.length) return [];
+    if (!allIds?.length) return [];
 
     const lowerCaseSearchString = searchString.toLowerCase().trim();
 
-    return allMemberIds.reduce((acc: MemberCardData[], curr: string) => {
-      const { bio, cardData, id, user }: IMember = byMemberId[curr];
+    return allIds?.reduce((acc: MemberCardData[], curr: string) => {
+      const { bio, cardData, id, user }: IMember = byMembershipId[curr];
 
       const {
         email,

@@ -11,19 +11,18 @@ export const DELETE_MEMBERSHIPS = mutation({
   variables: { membershipIds: { required: true, type: '[String!]' } }
 }).query;
 
-export const GET_ADMINS = query({
-  fields: [
-    'id',
-    { memberships: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] }
-  ],
-  operation: 'getAdmins'
-}).query;
-
 export const GET_DATABASE = query({
   fields: [
     'id',
     { questions: ['category', 'id', 'title', 'type', 'version'] },
-    { memberships: ['id', 'role', { allData: ['questionId', 'value'] }] }
+    {
+      memberships: [
+        'id',
+        'role',
+        { allData: ['questionId', 'value'] },
+        { user: ['id', 'firstName', 'lastName', 'email'] }
+      ]
+    }
   ],
   operation: 'getDatabase'
 }).query;
@@ -39,6 +38,7 @@ export const RENAME_QUESTION = mutation({
 }).query;
 
 export const TOGGLE_ADMINS = mutation({
+  fields: ['id', 'role'],
   operation: 'toggleAdmins',
   variables: { membershipIds: { required: true, type: '[String!]' } }
 }).query;

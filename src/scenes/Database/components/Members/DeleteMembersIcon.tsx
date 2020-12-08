@@ -12,8 +12,7 @@ import { DELETE_MEMBERSHIPS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const DeleteMembersModal = () => {
-  const admins = useStoreState(({ community }) => community.admins);
-  const members = useStoreState(({ community }) => community.members);
+  const memberships = useStoreState(({ community }) => community.memberships);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
@@ -27,13 +26,13 @@ const DeleteMembersModal = () => {
   );
 
   const onRemove = () => {
-    const allAdmins = admins;
-    const allMembers = members;
+    const allMemberships = memberships;
 
     // Filter the community members to NOT have the selected members.
     updateCommunity({
-      admins: admins?.filter((id: string) => !membershipIds.includes(id)),
-      members: members.filter((id: string) => !membershipIds.includes(id))
+      memberships: memberships.filter(
+        (id: string) => !membershipIds.includes(id)
+      )
     });
 
     // After the toast finishes showing, we call the mutation that actually
@@ -45,7 +44,7 @@ const DeleteMembersModal = () => {
         DELETE_MEMBERSHIPS,
         { variables: { membershipIds } }
       ],
-      onUndo: () => updateCommunity({ admins: allAdmins, members: allMembers }),
+      onUndo: () => updateCommunity({ memberships: allMemberships }),
       type: 'PESSIMISTIC',
       undo: true
     });
@@ -77,7 +76,7 @@ export default () => {
 
   const notEnoughPermissions: boolean = useStoreState(({ entities }) => {
     if (isOwner) return false;
-    const { allIds, byId } = entities.members;
+    const { allIds, byId } = entities.memberships;
     const adminIds = allIds.filter((id: string) => !!byId[id].role);
     if (selectedRowIds.some((id: string) => adminIds.includes(id))) return true;
     return false;

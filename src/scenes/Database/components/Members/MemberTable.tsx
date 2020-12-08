@@ -12,9 +12,9 @@ export default () => {
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: Row[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.members;
+    const { byId } = entities.memberships;
 
-    return community.members?.reduce((acc: Row[], id: string) => {
+    return community.memberships?.reduce((acc: Row[], id: string) => {
       const result: Row = { id };
       const { allData } = byId[id];
 

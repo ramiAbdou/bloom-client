@@ -21,7 +21,7 @@ export default () => {
       data: {
         ...result,
         members: result.memberships,
-        membershipQuestions: result.questions
+        questions: result.questions
       },
       schema: Schema.COMMUNITY
     });

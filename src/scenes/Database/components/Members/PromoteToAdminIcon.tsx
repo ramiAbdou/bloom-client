@@ -8,14 +8,14 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const PromoteToAdminModal = () => {
-  const admins = useStoreState(({ community }) => community.admins);
-  const updateCommunity = useStoreActions((store) => store.updateCommunity);
+  const updateEntities = useStoreActions((store) => store.updateEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -24,15 +24,17 @@ const PromoteToAdminModal = () => {
   );
 
   const { push } = useHistory();
-  const [toggleAdmin, { loading }] = useMutation(TOGGLE_ADMINS);
+  const [toggleAdmins, { loading }] = useMutation(TOGGLE_ADMINS);
 
   const onPromote = async () => {
-    const { error } = await toggleAdmin({ variables: { membershipIds } });
-    if (error) return;
+    const result = await toggleAdmins({ variables: { membershipIds } });
+    const data = result?.data?.toggleAdmins;
 
-    // Filter the community admins to NOT have the selected admins.
-    updateCommunity({
-      admins: admins ? [...admins, ...membershipIds] : membershipIds
+    if (!data) return;
+
+    updateEntities({
+      data: { memberships: data },
+      schema: { memberships: [Schema.MEMBERSHIP] }
     });
 
     showToast({
@@ -67,16 +69,11 @@ const PromoteToAdminModal = () => {
 };
 
 export default () => {
-  const admins = useStoreState(({ community }) => community.admins);
   const membershipId = useStoreState(({ membership }) => membership.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const tooManySelected = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
-  );
-
-  const includesAdmins = Table.useStoreState(({ selectedRowIds }) =>
-    admins?.some((adminId: string) => selectedRowIds.includes(adminId))
   );
 
   const selfSelected = Table.useStoreState(({ selectedRowIds }) =>
@@ -86,7 +83,6 @@ export default () => {
   const tooltip: string = takeFirst([
     [tooManySelected, 'Can only promote 15 members admins at a time.'],
     [selfSelected, `Can't promote yourself.`],
-    [includesAdmins, `Can't promote people who are already admins.`],
     'Promote to Admin(s)'
   ]);
 
