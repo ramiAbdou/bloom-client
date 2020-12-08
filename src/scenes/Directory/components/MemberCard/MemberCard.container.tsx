@@ -69,11 +69,13 @@ export default () => {
       ? unSortedResult
       : matchSorter(unSortedResult, searchString, {
           keys: [
+            (item: MemberCardData) => `${item.firstName} ${item.lastName}`,
             'firstName',
             'lastName',
             'email',
             'bio',
-            (item: any) => item.expandedCardData.map(({ title }) => title)
+            (item: MemberCardData) =>
+              item.expandedCardData.map(({ title }) => title)
           ],
           threshold: matchSorter.rankings.ACRONYM
         });
