@@ -13,6 +13,8 @@ export default () => {
     const { byId: byQuestionId } = entities.membershipQuestions;
     const { byId: byUserId } = entities.users;
 
+    if (!allMemberIds?.length) return [];
+
     return allMemberIds.map((memberId: string) => {
       const { bio, cardData, id, user }: IMember = byMemberId[memberId];
 
