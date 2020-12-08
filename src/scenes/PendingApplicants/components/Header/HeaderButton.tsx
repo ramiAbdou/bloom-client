@@ -9,7 +9,7 @@ import { RESPOND_TO_MEMBERSHIPS } from '../../PendingApplicants.gql';
 type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
 
 const HeaderButton = ({ response }: HeaderButtonProps) => {
-  const updateEntity = useStoreActions((actions) => actions.updateEntity);
+  const updateEntity = useStoreActions((store) => store.updateEntity);
 
   const pendingApplicants: string[] = useStoreState(
     ({ community, entities }) => {

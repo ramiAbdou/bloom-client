@@ -65,17 +65,21 @@ type SortImportance = 'EXACT' | 'STARTS_WITH' | 'INCLUDES';
  * Returns the sort importance of the row depending on whether one of the value
  * starts with, is exactly or just includes the search string.
  */
-const getSortImportance = (row: Row, searchString: string): SortImportance =>
-  Object.values(row).reduce((acc: SortImportance, value: string) => {
+const getSortImportance = (row: Row, searchString: string): SortImportance => {
+  return Object.values(row).reduce((acc: SortImportance, value: string) => {
     if (acc === 'EXACT') return acc;
 
     const lowerCaseValue = value?.toLowerCase();
+    if (!lowerCaseValue) return acc;
+
     if (lowerCaseValue === searchString) return 'EXACT';
-    if (acc === 'INCLUDES' && lowerCaseValue.startsWith(searchString))
+    if (acc === 'INCLUDES' && lowerCaseValue.startsWith(searchString)) {
       return 'STARTS_WITH';
+    }
 
     return acc;
   }, 'INCLUDES');
+};
 
 /**
  * Returns an array of Rows based

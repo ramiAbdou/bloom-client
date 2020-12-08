@@ -15,7 +15,7 @@ import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const PromoteToAdminModal = () => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -32,7 +32,7 @@ const PromoteToAdminModal = () => {
 
     if (!data) return;
 
-    updateEntities({
+    storeFromFetch({
       data: { memberships: data },
       schema: { memberships: [Schema.MEMBERSHIP] }
     });

@@ -12,7 +12,7 @@ const SelectAllCheckbox = () => {
   );
 
   const toggleAllPageRows = Table.useStoreActions(
-    (actions) => actions.toggleAllPageRows
+    (store) => store.toggleAllPageRows
   );
 
   const onClick = () => toggleAllPageRows();

@@ -16,7 +16,7 @@ const NoPendingApplicantsMessage = () => (
 );
 
 export default () => {
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
 
   const numApplicants = useStoreState(({ community, entities }) => {
     const { byId } = entities.memberships;
@@ -59,7 +59,7 @@ export default () => {
 
     console.log(result);
 
-    updateEntities({
+    storeFromFetch({
       data: { questions: result.application.questions, ...result },
       schema: Schema.COMMUNITY
     });

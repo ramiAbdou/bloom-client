@@ -11,9 +11,9 @@ import { GET_DATABASE } from './Database.gql';
 import Database from './Database.store';
 
 const FetchDatabase = () => {
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
   const currentLoading = Database.useStoreState((store) => store.loading);
-  const setLoading = Database.useStoreActions((actions) => actions.setLoading);
+  const setLoading = Database.useStoreActions((store) => store.setLoading);
 
   const { data, loading } = useQuery(GET_DATABASE);
 
@@ -29,7 +29,7 @@ const FetchDatabase = () => {
 
     // After fetching the member database, we update both the members AND
     // the membership questions.
-    updateEntities({
+    storeFromFetch({
       data: {
         ...result,
         memberships: result.memberships,

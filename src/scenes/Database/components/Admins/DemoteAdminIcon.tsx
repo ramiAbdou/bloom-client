@@ -16,20 +16,25 @@ import DatabaseAction from '../DatabaseAction';
 const DemoteToMemberModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
+  const updateEntity = useStoreActions((store) => store.updateEntity);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const [toggleAdmins, { error, loading }] = useMutation(TOGGLE_ADMINS);
 
   const onDemote = async () => {
-    const { data, error: runtimeError } = await toggleAdmins({
+    const { error: runtimeError } = await toggleAdmins({
       variables: { membershipIds: adminIds }
     });
 
     if (runtimeError) return;
 
-    // Filter the community admins to NOT have the selected admins.
-    updateCommunity({ memberships: data?.toggleAdmins });
+    adminIds.forEach((adminId: string) => {
+      updateEntity({
+        entityName: 'memberships',
+        id: adminId,
+        updatedData: { role: null }
+      });
+    });
 
     showToast({
       message: `${adminIds.length} admin(s) demoted to member.`,

@@ -30,7 +30,7 @@ export default () => {
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateColumn = Table.useStoreActions((store) => store.updateColumn);
-  const updateData = Table.useStoreActions((actions) => actions.updateData);
+  const updateData = Table.useStoreActions((store) => store.updateData);
 
   const [renameQuestion] = useMutation(RENAME_QUESTION);
 

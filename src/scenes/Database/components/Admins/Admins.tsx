@@ -27,7 +27,16 @@ const AdminTable = () => {
     }, []);
   }, deepequal);
 
-  const updateData = Table.useStoreActions((actions) => actions.updateData);
+  useStoreState(({ entities }) =>
+    console.log(
+      Object.values(entities.memberships.byId).filter(({ role }) => !!role)
+        .length
+    )
+  );
+
+  console.log(rows);
+
+  const updateData = Table.useStoreActions((store) => store.updateData);
 
   // Used primarily for the removal of members. This will not update the
   // data if the number of members doesn't change.

@@ -19,7 +19,7 @@ export default ({ id }: IdProps) => {
   );
 
   const setSortedColumn = Table.useStoreActions(
-    (actions) => actions.setSortedColumn
+    (store) => store.setSortedColumn
   );
 
   const onClick = () => {

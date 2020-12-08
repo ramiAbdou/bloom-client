@@ -15,7 +15,7 @@ import TokenRoute from './TokenRoute';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { loading, data, error } = useQuery(GET_USER);
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
 
   const encodedUrlName = useStoreState(
     ({ community }) => community?.encodedUrlName
@@ -24,7 +24,7 @@ export default ({ component, ...rest }: RouteProps) => {
   useEffect(() => {
     if (!data?.getUser) return;
 
-    updateEntities({
+    storeFromFetch({
       data: data.getUser,
       schema: Schema.USER,
       setActiveId: true

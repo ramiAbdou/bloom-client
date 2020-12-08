@@ -21,7 +21,7 @@ import Application from '../Application.store';
 
 const SubmitButton = () => {
   const storedEmail = Application.useStoreState((store) => store.email);
-  const setEmail = Application.useStoreActions((actions) => actions.setEmail);
+  const setEmail = Application.useStoreActions((store) => store.setEmail);
   const name = useStoreState(({ community }) => community?.encodedUrlName);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
 
@@ -73,7 +73,7 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
   const logoUrl = useStoreState(({ community }) => community?.logoUrl);
   const title = useStoreState(({ community }) => community?.applicationTitle);
 
@@ -97,7 +97,7 @@ export default () => {
     const { getApplication: result } = data || {};
     if (!result) return;
 
-    updateEntities({
+    storeFromFetch({
       data: {
         ...result,
         applicationDescription: result.application.description,

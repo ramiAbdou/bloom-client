@@ -14,7 +14,7 @@ const DeleteMembersModal = () => {
   const memberships = useStoreState(({ community }) => community.memberships);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
+  const updateCommunity = useStoreActions((store) => store.updateCommunity);
 
   const membershipIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds

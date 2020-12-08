@@ -41,7 +41,7 @@ export default () => {
   const communityId = useStoreState(({ community }) => community.id);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
   const admins = AddAdmin.useStoreState((store) => store.admins);
 
   const addEmptyMember = AddAdmin.useStoreActions(
@@ -78,7 +78,7 @@ export default () => {
     // API should return back the updated memberships and we just update the
     // state accordingly with those new admins. To load new data would require
     // a refresh.
-    updateEntities({
+    storeFromFetch({
       data: {
         admins: updatedMemberships
           .filter(({ role }) => !!role)

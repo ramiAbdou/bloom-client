@@ -9,7 +9,7 @@ import Table, { Row } from '../Table.store';
 
 const SelectRowCheckbox = ({ id }: IdProps) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(id));
-  const toggleRow = Table.useStoreActions((actions) => actions.toggleRow);
+  const toggleRow = Table.useStoreActions((store) => store.toggleRow);
 
   const onClick = () => toggleRow(id);
 

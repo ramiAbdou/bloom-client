@@ -20,7 +20,7 @@ export default memo(({ Icon, onClick, to, title }: SidebarLinkProps) => {
   );
 
   const isActive = Sidebar.useStoreState((store) => store.isActive(to));
-  const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
+  const setActiveTo = Sidebar.useStoreActions((store) => store.setActiveTo);
 
   const css = makeClass([
     's-home-sidebar-link',

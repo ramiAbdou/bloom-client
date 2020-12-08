@@ -9,7 +9,7 @@ import { GET_DIRECTORY } from './Directory.gql';
 import DirectoryStore from './Directory.store';
 
 export default () => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
 
   const { data, loading } = useQuery(GET_DIRECTORY);
 
@@ -17,7 +17,7 @@ export default () => {
     const result = data?.getDirectory;
     if (!result) return;
 
-    updateEntities({
+    storeFromFetch({
       data: {
         ...result,
         members: result.memberships,

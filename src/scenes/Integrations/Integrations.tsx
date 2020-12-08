@@ -30,8 +30,9 @@ const IntegrationModal = () => {
   const setFlow = Integrations.useStoreActions((store) => store.setFlow);
 
   useEffect(() => {
-    if (searchParam && searchParam !== flow)
+    if (searchParam && searchParam !== flow) {
       setFlow(`${searchParam.toUpperCase()}_FLOW` as IntegrationsModal);
+    }
   }, []);
 
   // Flow is showing when the modal isShowing is true and there is a populated
@@ -141,15 +142,16 @@ const Cards = () => {
 };
 
 export default () => {
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
   const { data, loading } = useQuery(GET_INTEGRATIONS);
 
   useEffect(() => {
-    if (data?.getIntegrations)
-      updateEntities({
+    if (data?.getIntegrations) {
+      storeFromFetch({
         data: { ...data.getIntegrations },
         schema: Schema.COMMUNITY
       });
+    }
   }, [data]);
 
   return (

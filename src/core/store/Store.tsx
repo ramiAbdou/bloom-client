@@ -96,7 +96,7 @@ type StoreModel = {
   toast: ToastModel;
   updateCommunity: Action<StoreModel, Partial<ICommunity>>;
   updateEntity: Action<StoreModel, UpdateEntityArgs>;
-  updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
+  storeFromFetch: Action<StoreModel, UpdateEntitiesArgs>;
   user: Computed<StoreModel, IUser>;
 };
 
@@ -169,34 +169,11 @@ export const store = createStore<StoreModel>(
 
     screen: screenModel,
 
-    toast: toastModel,
-
-    updateCommunity: action(
-      ({ entities, ...state }, payload: Partial<ICommunity>) => {
-        const { communities } = entities;
-        const { id } = state.community;
-
-        return {
-          ...state,
-          entities: {
-            ...entities,
-            communities: {
-              ...communities,
-              byId: {
-                ...communities.byId,
-                [id]: { ...state.community, ...payload }
-              }
-            }
-          }
-        };
-      }
-    ),
-
     /**
      * Main update function that updates all entities (front-end DB). Uses
      * the lodash deep merge function to make the updates.
      */
-    updateEntities: action(
+    storeFromFetch: action(
       (
         { entities, ...state },
         { data, schema, setActiveId }: UpdateEntitiesArgs
@@ -227,23 +204,48 @@ export const store = createStore<StoreModel>(
       }
     ),
 
+    toast: toastModel,
+
+    updateCommunity: action(
+      ({ entities, ...state }, payload: Partial<ICommunity>) => {
+        const { communities } = entities;
+        const { id } = state.community;
+
+        return {
+          ...state,
+          entities: {
+            ...entities,
+            communities: {
+              ...communities,
+              byId: {
+                ...communities.byId,
+                [id]: { ...state.community, ...payload }
+              }
+            }
+          }
+        };
+      }
+    ),
+
     updateEntity: action(
       (
         { entities, ...state },
         { entityName, id, updatedData }: UpdateEntityArgs
       ) => {
-        const previousEntityData = entities[entityName];
-        const previousEntityById = previousEntityData.byId;
+        const previousEntity = entities[entityName];
+        const previousEntityById = previousEntity.byId;
+
+        console.log(previousEntityById[id], updatedData);
 
         return {
           ...state,
           entities: {
             ...entities,
             [entityName]: {
-              ...previousEntityData,
+              ...previousEntity,
               byId: {
                 ...previousEntityById,
-                [id]: { ...previousEntityById[id], updatedData }
+                [id]: { ...previousEntityById[id], ...updatedData }
               }
             }
           }

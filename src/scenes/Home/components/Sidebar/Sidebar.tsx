@@ -22,7 +22,7 @@ import useActiveTo from './useActiveTo';
 const SidebarContent = () => {
   const name = useStoreState(({ community }) => community.name);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
+  const setActiveTo = Sidebar.useStoreActions((store) => store.setActiveTo);
 
   const activeTo = useActiveTo();
 
