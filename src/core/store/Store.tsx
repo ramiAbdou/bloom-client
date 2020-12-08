@@ -231,8 +231,6 @@ export const store = createStore<StoreModel>(
         const previousEntity = entities[entityName];
         const previousEntityById = previousEntity.byId;
 
-        console.log(previousEntityById[id], updatedData);
-
         return {
           ...state,
           entities: {

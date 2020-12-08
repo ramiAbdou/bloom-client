@@ -27,15 +27,6 @@ const AdminTable = () => {
     }, []);
   }, deepequal);
 
-  useStoreState(({ entities }) =>
-    console.log(
-      Object.values(entities.memberships.byId).filter(({ role }) => !!role)
-        .length
-    )
-  );
-
-  console.log(rows);
-
   const updateData = Table.useStoreActions((store) => store.updateData);
 
   // Used primarily for the removal of members. This will not update the

@@ -57,8 +57,6 @@ export default () => {
     const result = data?.getApplicants;
     if (!result) return;
 
-    console.log(result);
-
     storeFromFetch({
       data: { questions: result.application.questions, ...result },
       schema: Schema.COMMUNITY

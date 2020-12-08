@@ -19,7 +19,6 @@ export const applicantModel: ApplicantModel = {
   ),
 
   data: computed(({ applicant }) => {
-    console.log(applicant);
     return applicant?.applicantData?.filter(
       ({ question }) => question?.inApplicantCard
     );

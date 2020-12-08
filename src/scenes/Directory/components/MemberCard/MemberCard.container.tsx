@@ -34,7 +34,6 @@ export default () => {
         curr
       ];
 
-      console.log('ACCEPTED');
       if (status !== 'ACCEPTED') return acc;
 
       const {
