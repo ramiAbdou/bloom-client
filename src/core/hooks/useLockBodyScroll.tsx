@@ -8,7 +8,6 @@ export default () => {
     document.body.style.overflow = 'hidden';
 
     return () => {
-      console.log('HERE');
       // Re-enable scrolling when component unmounts.
       document.body.style.overflow = 'auto';
     };
