@@ -32,7 +32,6 @@ import {
   IQuestion,
   IUser
 } from './entities';
-import { ScreenModel, screenModel } from './Screen.store';
 
 /**
  * Returns a 3-tuple represents the R-G-B colors from a hexadecimal color.
@@ -92,7 +91,6 @@ type StoreModel = {
   membership: Computed<StoreModel, IMembership>;
   modal: ModalModel;
   picker: PickerModel;
-  screen: ScreenModel;
   toast: ToastModel;
   updateCommunity: Action<StoreModel, Partial<ICommunity>>;
   updateEntity: Action<StoreModel, UpdateEntityArgs>;
@@ -166,8 +164,6 @@ export const store = createStore<StoreModel>(
     modal: modalModel,
 
     picker: pickerModel,
-
-    screen: screenModel,
 
     /**
      * Main update function that updates all entities (front-end DB). Uses

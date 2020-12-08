@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import React, { useCallback, useEffect } from 'react';
 
 import { ChildrenProps } from '@constants';
+import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
-import { useStoreState } from '@store/Store';
 
 interface ModalContainerProps extends ChildrenProps {
   onClose?: Function;
@@ -11,7 +11,7 @@ interface ModalContainerProps extends ChildrenProps {
 }
 
 export default ({ children, onClose, width }: ModalContainerProps) => {
-  const isMobile = useStoreState(({ screen }) => screen.isMobile);
+  const isMobile = useBreakpoint() === 'M';
 
   useLockBodyScroll();
 

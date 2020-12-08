@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 
+import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
 import { LinkOptions } from './Sidebar.store';
@@ -8,7 +9,7 @@ import SidebarLink from './SidebarLink';
 type LinkSectionProps = { links: LinkOptions[]; title: string };
 
 export default memo(({ links, title }: LinkSectionProps) => {
-  const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
+  const isDesktop = useBreakpoint() === 'D';
 
   const isAdmin: boolean = useStoreState(
     ({ community: { name }, entities }) => {
