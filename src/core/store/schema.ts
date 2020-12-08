@@ -9,25 +9,23 @@ import { schema } from 'normalizr';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
-const Question = new schema.Entity('questions', {});
-
+const Community = new schema.Entity('communities', {});
 const Integrations = new schema.Entity('integrations', {});
+const Membership = new schema.Entity('memberships', {});
+const Question = new schema.Entity('questions', {});
+const User = new schema.Entity('users', {});
 
-const Community = new schema.Entity('communities', {
+// Handle the relationships. Using definition like this handles all of the
+// ciruclar dependencies in our code.
+
+Community.define({
   integrations: Integrations,
+  memberships: [Membership],
   questions: [Question]
 });
 
-const Membership = new schema.Entity('memberships', {
-  community: Community
-});
-
-const User = new schema.Entity('users', { memberships: [Membership] });
-
-// Handle the circular dependencies in relationships.
-
-Community.define({ memberships: [Membership] });
-Membership.define({ user: User });
+Membership.define({ community: Community, user: User });
+User.define({ memberships: [Membership] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
