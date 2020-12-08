@@ -32,7 +32,7 @@ export default () => {
         linkedInUrl,
         pictureUrl,
         twitterUrl
-      }: IUser = byUserId[user] ?? ({} as IUser);
+      } = byUserId[user] ?? ({} as IUser);
 
       const result: MemberCardData = {
         bio,
@@ -44,7 +44,7 @@ export default () => {
           }) ?? [],
         facebookUrl,
         firstName,
-        highlightedValue: cardData[0]?.value,
+        highlightedValue: cardData && cardData[0]?.value,
         id,
         instagramUrl,
         lastName,
@@ -76,11 +76,11 @@ export default () => {
 
   return (
     <Masonry
-      key={`${searchString}-${members.length}`}
+      key={`${searchString}-${members?.length}`}
       className="s-directory-card-ctr"
       columnCount={6}
       columnGutter={16}
-      items={members}
+      items={members ?? []}
       overscanBy={5}
       render={MemberCard}
     />

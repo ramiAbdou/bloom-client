@@ -27,8 +27,6 @@ const FetchDatabase = () => {
     const result = data?.getDatabase;
     if (!result) return;
 
-    console.log(result.memberships);
-
     // After fetching the member database, we update both the members AND
     // the membership questions.
     updateEntities({

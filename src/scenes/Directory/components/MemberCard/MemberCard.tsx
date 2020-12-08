@@ -15,10 +15,10 @@ const ProfilePicture = () => {
     deepequal
   );
 
+  const initials = firstName && lastName ? `${firstName[0]}${lastName[0]}` : '';
+
   // pictureUrl =
   //   'https://pbs.twimg.com/profile_images/1303060784289730560/femQ8Zek_400x400.jpg';
-
-  const initials = firstName[0] + lastName[0];
 
   return (
     <div>
