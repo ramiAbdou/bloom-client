@@ -11,7 +11,6 @@ import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
 import AddMember from '@scenes/Database/components/AddMember/AddMember.store';
 import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
-import CommunityBar from '@scenes/Home/components/CommunityBar/CommunityBar';
 import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
 import Database from '../Database/Database';
@@ -78,11 +77,7 @@ const HomeContent = () => {
 export default () => (
   <AuthenticatedCommunityWrapper>
     <div className="s-home">
-      <div className="s-home-nav">
-        <CommunityBar />
-        <Sidebar />
-      </div>
-
+      <Sidebar />
       <HomeContent />
     </div>
 

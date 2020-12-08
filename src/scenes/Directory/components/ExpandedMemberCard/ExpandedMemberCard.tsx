@@ -25,21 +25,29 @@ const Question = ({ title, type, value }) => {
   );
 };
 
-export default ({ id }: IdProps) => {
+const CommunityData = () => {
   const expandedCardData = MemberCard.useStoreState(
     (store) => store.member?.expandedCardData,
     deepequal
   );
 
+  if (!expandedCardData?.length) {
+    return <p>Looks like this user hasn't finished onboarding yet!</p>;
+  }
+
   return (
-    <Modal className="s-directory-modal" id={id}>
-      <UserInformation />
-      <Separator style={{ marginBottom: 24, marginTop: 24 }} />
-      <>
-        {expandedCardData.map(({ title, type, value }) => (
-          <Question key={title} title={title} type={type} value={value} />
-        ))}
-      </>
-    </Modal>
+    <>
+      {expandedCardData.map(({ title, type, value }) => (
+        <Question key={title} title={title} type={type} value={value} />
+      ))}
+    </>
   );
 };
+
+export default ({ id }: IdProps) => (
+  <Modal className="s-directory-modal" id={id}>
+    <UserInformation />
+    <Separator style={{ marginBottom: 24, marginTop: 24 }} />
+    <CommunityData />
+  </Modal>
+);

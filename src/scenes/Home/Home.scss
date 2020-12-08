@@ -12,23 +12,6 @@ $PREF: 's-home';
   box-sizing: border-box;
   height: 100%;
   max-height: 100vh;
-
-  
-
-  // @include LTE(1330) { grid-template-columns: repeat(12, 1fr); }
-  // @include MT { display: block; margin-left: $md; }
-}
-
-.#{$PREF}-nav {
-  @extend .flex;
-  @extend .shadow--1;
-
-  height: 100%;
-  position: fixed;
-  top: 0;
-  width: $xxl * 6;
-
-  @include MT { display: none; }
 }
 
 // ## HEADER

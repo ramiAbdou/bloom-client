@@ -14,6 +14,7 @@ import Separator from '@components/Misc/Separator';
 import AddMemberStore from '@scenes/Database/components/AddMember/AddMember.store';
 import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreActions, useStoreState } from '@store/Store';
+import SidebarCommunityContainer from './Community.container';
 import LinkSection from './LinkSection';
 import ProfileBar from './ProfileBar';
 import Sidebar, { LinkOptions } from './Sidebar.store';
@@ -61,7 +62,7 @@ const SidebarContent = () => {
   );
 
   return (
-    <div className="s-home-sidebar">
+    <div className="s-home-sidebar-main">
       <h2>{name}</h2>
       <Separator style={{ marginBottom: 12, marginTop: 24 }} />
 
@@ -78,11 +79,15 @@ const SidebarContent = () => {
 };
 
 export default () => (
-  <Sidebar.Provider>
-    <SidebarContent />
+  <div className="s-home-sidebar">
+    <SidebarCommunityContainer />
 
-    <AddMemberStore.Provider>
-      <AddMemberModal />
-    </AddMemberStore.Provider>
-  </Sidebar.Provider>
+    <Sidebar.Provider>
+      <SidebarContent />
+
+      <AddMemberStore.Provider>
+        <AddMemberModal />
+      </AddMemberStore.Provider>
+    </Sidebar.Provider>
+  </div>
 );

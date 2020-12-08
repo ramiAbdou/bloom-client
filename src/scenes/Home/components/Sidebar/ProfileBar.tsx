@@ -10,8 +10,10 @@ const PictureContainer = () => {
     ({ user }) => `${user.firstName[0]}${user.lastName[0]}`
   );
 
-  if (pictureUrl)
+  if (pictureUrl) {
     return <img className="s-home-sidebar-profile__picture" src={pictureUrl} />;
+  }
+
   return <h3 className="s-home-sidebar-profile__picture">{initials}</h3>;
 };
 
