@@ -35,11 +35,11 @@ export default ({ id }: IdProps) => {
     <Modal className="s-directory-modal" id={id}>
       <UserInformation />
       <Separator style={{ marginBottom: 24, marginTop: 24 }} />
-      <div className="s-directory-modal-data-ctr">
+      <>
         {expandedCardData.map(({ title, type, value }) => (
           <Question key={title} title={title} type={type} value={value} />
         ))}
-      </div>
+      </>
     </Modal>
   );
 };

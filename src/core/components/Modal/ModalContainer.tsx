@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import React, { useCallback, useEffect } from 'react';
 
 import { ChildrenProps } from '@constants';
+import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { useStoreState } from '@store/Store';
 
 interface ModalContainerProps extends ChildrenProps {
@@ -11,6 +12,9 @@ interface ModalContainerProps extends ChildrenProps {
 
 export default ({ children, onClose, width }: ModalContainerProps) => {
   const isMobile = useStoreState(({ screen }) => screen.isMobile);
+
+  useLockBodyScroll();
+
   const animate = isMobile ? { x: 0 } : { opacity: 1, scale: 1 };
   const exit = isMobile ? { x: 1000 } : { opacity: 0, scale: 0.75 };
   const initial = isMobile ? { x: 1000 } : { opacity: 0.25, scale: 0.5 };

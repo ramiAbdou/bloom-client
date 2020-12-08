@@ -32,11 +32,11 @@ const Header = () => {
 
   return (
     <div className="s-directory-modal-user-ctr-header">
+      <ProfilePicture />
+
       <Button onClick={onClick}>
         <IoClose className="back-arrow" />
       </Button>
-
-      <ProfilePicture />
     </div>
   );
 };
