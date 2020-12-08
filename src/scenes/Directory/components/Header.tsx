@@ -26,6 +26,8 @@ export default memo(({ loading }: LoadingProps) => {
     setValue(target.value);
   };
 
+  const onClear = () => setValue('');
+
   return (
     <div className="s-directory-header">
       <div>
@@ -38,6 +40,7 @@ export default memo(({ loading }: LoadingProps) => {
           placeholder={`Search ${numMemberships} members...`}
           value={value}
           onChange={onChange}
+          onClear={onClear}
         />
       )}
     </div>

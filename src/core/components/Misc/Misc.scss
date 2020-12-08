@@ -131,4 +131,16 @@ $PREF: 'c-misc';
 }
 
 .#{$PREF}-search > svg { color: $gray-3; margin-right: $xs; }
-.#{$PREF}-search > input { background-color: inherit; width: 100%; }
+.#{$PREF}-search > input {
+  background-color: inherit;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.#{$PREF}-search-close {
+  color: $gray-3;
+
+  &--hide { visibility: hidden; }
+
+  > svg { color: $gray-3; }
+}
