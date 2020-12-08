@@ -7,8 +7,7 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
-import { ICommunity } from '@store/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { RESPOND_TO_MEMBERSHIPS } from '../../PendingApplicants.gql';
 import Applicant from './ApplicantCard.store';
 
@@ -23,14 +22,9 @@ export const BackButton = () => {
 };
 
 export const AcceptButton = () => {
-  const applicantId = Applicant.useStoreState((store) => store.applicant.id);
-
-  const applicants = useStoreState(
-    ({ community }) => community.pendingApplicants
-  );
-
-  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
+  const updateEntity = useStoreActions((store) => store.updateEntity);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const applicantId = Applicant.useStoreState((store) => store.applicant.id);
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
     variables: { membershipIds: [applicantId], response: 'ACCEPTED' }
@@ -41,8 +35,10 @@ export const AcceptButton = () => {
     const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
-    updateCommunity({
-      pendingApplicants: applicants.filter((a: string) => a !== applicantId)
+    updateEntity({
+      entityName: 'memberships',
+      id: applicantId,
+      updatedData: { status: 'ACCEPTED' }
     });
 
     showToast({ message: 'Application accepted.' });
@@ -60,27 +56,23 @@ export const AcceptButton = () => {
 };
 
 export const IgnoreButton = () => {
-  const communities = useStoreState(({ entities }) => entities.communities);
-  const applicantId = Applicant.useStoreState((store) => store.applicant.id);
-  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
+  const updateEntity = useStoreActions((store) => store.updateEntity);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const applicantId = Applicant.useStoreState((store) => store.applicant.id);
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
     variables: { membershipIds: [applicantId], response: 'REJECTED' }
   });
 
   const onClick = async () => {
-    const community: ICommunity = communities.byId[communities.activeId];
-    const { pendingApplicants } = community;
-
     // Call to the server.
     const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
-    updateCommunity({
-      pendingApplicants: pendingApplicants.filter(
-        (a: string) => a !== applicantId
-      )
+    updateEntity({
+      entityName: 'memberships',
+      id: applicantId,
+      updatedData: { status: 'REJECTED' }
     });
 
     showToast({ message: 'Application ignored.' });

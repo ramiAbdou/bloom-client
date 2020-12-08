@@ -81,15 +81,13 @@ export default () => {
     ({ community }) => community?.applicationDescription
   );
 
-  const questions: IQuestion[] = useStoreState(
-    ({ community, entities }) => {
-      const { byId } = entities.questions;
-      if (!community?.questions?.length) return [];
-      const { questions: result } = community;
+  const questions: IQuestion[] = useStoreState(({ community, entities }) => {
+    const { byId } = entities.questions;
+    if (!community?.questions?.length) return [];
+    const { questions: result } = community;
 
-      return result.map((id: string) => byId[id]);
-    }
-  );
+    return result.map((id: string) => byId[id]);
+  });
 
   const { data, loading, error } = useQuery(GET_MEMBERSHIP_FORM, {
     variables: { encodedUrlName }
@@ -106,7 +104,8 @@ export default () => {
         applicationTitle: result.application.title,
         questions: result.application.questions
       },
-      schema: Schema.COMMUNITY
+      schema: Schema.COMMUNITY,
+      setActiveId: true
     });
   }, [data]);
 

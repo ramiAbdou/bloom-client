@@ -19,10 +19,11 @@ export const GET_PENDING_APPLICATIONS = query({
       ]
     },
     {
-      pendingApplicants: [
+      memberships: [
         'id',
         'createdAt',
-        { applicantData: ['questionId', 'value'] }
+        { applicantData: ['questionId', 'value'] },
+        'status'
       ]
     }
   ],

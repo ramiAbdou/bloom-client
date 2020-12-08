@@ -13,11 +13,8 @@ const Question = new schema.Entity('questions', {});
 
 const Integrations = new schema.Entity('integrations', {});
 
-const PendingApplicant = new schema.Entity('pendingApplicants', {});
-
 const Community = new schema.Entity('communities', {
   integrations: Integrations,
-  pendingApplicants: [PendingApplicant],
   questions: [Question]
 });
 
@@ -40,6 +37,5 @@ export const Schema = {
   INTEGRATIONS: Integrations,
   MEMBERSHIP: Membership,
   MEMBERSHIP_QUESTION: Question,
-  PENDING_APPLICANT: PendingApplicant,
   USER: User
 };

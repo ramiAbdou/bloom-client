@@ -6,13 +6,17 @@ import { useStoreState } from '@store/Store';
 import { AcceptAllButton, IgnoreAllButton } from './HeaderButton';
 
 export default memo(({ loading }: LoadingProps) => {
-  const title = useStoreState(
-    ({ community }) => {
-      const length = community?.pendingApplicants?.length;
-      return length ? `Pending Applicants (${length})` : 'Pending Applicants';
-    },
-    (prev: string, next: string) => prev === next
-  );
+  const title = useStoreState(({ community, entities }) => {
+    const { byId } = entities.memberships;
+
+    const length = community?.memberships?.filter((membershipId: string) => {
+      return byId[membershipId]?.status === 'PENDING';
+    }).length;
+
+    let result = 'Pending Applicants';
+    if (length) result += ` (${length})`;
+    return result;
+  });
 
   return (
     <div className="s-home-header s-applicants-header">

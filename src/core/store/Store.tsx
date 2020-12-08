@@ -29,6 +29,7 @@ import {
   IIntegrations,
   IMembership,
   initialEntities,
+  IQuestion,
   IUser
 } from './entities';
 import { ScreenModel, screenModel } from './Screen.store';
@@ -69,6 +70,12 @@ const getHueFromRGB = ([r, g, b]: number[]): number => {
   return hue < 0 ? hue + 360 : Math.round(hue);
 };
 
+type UpdateEntityArgs = {
+  id: string;
+  entityName: 'communities' | 'memberships' | 'questions' | 'users';
+  updatedData?: Partial<ICommunity | IMembership | IQuestion | IUser>;
+};
+
 type UpdateEntitiesArgs = {
   data?: any;
   schema?: Schema<any>;
@@ -88,6 +95,7 @@ type StoreModel = {
   screen: ScreenModel;
   toast: ToastModel;
   updateCommunity: Action<StoreModel, Partial<ICommunity>>;
+  updateEntity: Action<StoreModel, UpdateEntityArgs>;
   updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
   user: Computed<StoreModel, IUser>;
 };
@@ -189,11 +197,14 @@ export const store = createStore<StoreModel>(
      * the lodash deep merge function to make the updates.
      */
     updateEntities: action(
-      (state, { data, schema, setActiveId }: UpdateEntitiesArgs) => {
+      (
+        { entities, ...state },
+        { data, schema, setActiveId }: UpdateEntitiesArgs
+      ) => {
         return {
           ...state,
           entities: mergeWith(
-            state.entities,
+            entities,
             parseEntities(data, schema, setActiveId),
             // eslint-disable-next-line consistent-return
             (target: any, source: any) => {
@@ -212,6 +223,30 @@ export const store = createStore<StoreModel>(
               }
             }
           ) as IEntities
+        };
+      }
+    ),
+
+    updateEntity: action(
+      (
+        { entities, ...state },
+        { entityName, id, updatedData }: UpdateEntityArgs
+      ) => {
+        const previousEntityData = entities[entityName];
+        const previousEntityById = previousEntityData.byId;
+
+        return {
+          ...state,
+          entities: {
+            ...entities,
+            [entityName]: {
+              ...previousEntityData,
+              byId: {
+                ...previousEntityById,
+                [id]: { ...previousEntityById[id], updatedData }
+              }
+            }
+          }
         };
       }
     ),

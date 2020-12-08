@@ -9,42 +9,51 @@ import { RESPOND_TO_MEMBERSHIPS } from '../../PendingApplicants.gql';
 type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
 
 const HeaderButton = ({ response }: HeaderButtonProps) => {
-  const community = useStoreState((store) => store.community);
-  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
-  const hasApplicants = !!community.pendingApplicants?.length;
+  const updateEntity = useStoreActions((actions) => actions.updateEntity);
+
+  const pendingApplicants: string[] = useStoreState(
+    ({ community, entities }) => {
+      const { byId } = entities.memberships;
+      return community?.memberships?.filter((membershipId: string) => {
+        return byId[membershipId]?.status === 'PENDING';
+      });
+    }
+  );
 
   const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
-    variables: { membershipIds: community?.pendingApplicants, response }
+    variables: { membershipIds: pendingApplicants, response }
   });
 
   const onClick = async () => {
-    const { pendingApplicants } = community;
-
     // Call to the server.
     const { data } = await respondToMemberships();
     if (!data?.respondToMemberships) return;
 
-    updateCommunity({
-      pendingApplicants: pendingApplicants.filter(
-        (applicantId: string) =>
-          !community.pendingApplicants.includes(applicantId)
-      )
+    pendingApplicants.forEach((id: string) => {
+      updateEntity({
+        entityName: 'memberships',
+        id,
+        updatedData: {
+          status: response === 'ACCEPTED' ? 'ACCEPTED' : 'REJECTED'
+        }
+      });
     });
   };
 
-  if (response === 'ACCEPTED')
+  if (response === 'ACCEPTED') {
     return (
       <PrimaryButton
         className="s-applicants-accept-all"
-        disabled={!hasApplicants}
+        disabled={!pendingApplicants?.length}
         title="Accept All"
         onClick={onClick}
       />
     );
+  }
 
   return (
     <OutlineButton
-      disabled={!hasApplicants}
+      disabled={!pendingApplicants?.length}
       title="Ignore All"
       onClick={onClick}
     />

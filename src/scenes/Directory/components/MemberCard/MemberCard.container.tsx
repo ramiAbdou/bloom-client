@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import { Masonry } from 'masonic';
 import React from 'react';
 
-import { IMember, IUser } from '@store/entities';
+import { IMembership, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import Directory from '../../Directory.store';
 import MemberCard from './MemberCard';
@@ -21,7 +21,7 @@ export default () => {
     const lowerCaseSearchString = searchString.toLowerCase().trim();
 
     return allIds?.reduce((acc: MemberCardData[], curr: string) => {
-      const { bio, cardData, id, user }: IMember = byMembershipId[curr];
+      const { bio, cardData, id, user }: IMembership = byMembershipId[curr];
 
       const {
         email,

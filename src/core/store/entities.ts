@@ -11,7 +11,6 @@ export type ICommunity = {
   memberships: string[];
   questions: string[];
   name: string;
-  pendingApplicants: string[];
   primaryColor: string;
 };
 
@@ -25,23 +24,17 @@ export type IIntegrations = {
   zoomAccountInfo: { email: string; pmi: number; userId: string };
 };
 
-export type IMember = {
-  allData?: { questionId: string; value: string }[];
-  bio: string;
-  cardData?: { questionId: string; value: string }[];
-  id: string;
-  role?: 'ADMIN' | 'OWNER';
-  user: string;
-};
-
 export type IMembership = {
   allData?: { questionId: string; value: string }[];
+  applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
   cardData?: { questionId: string; value: string }[];
   community: string;
+  createdAt: string;
   id: string;
-  role: 'ADMIN' | 'OWNER';
+  role?: 'ADMIN' | 'OWNER';
   type: { name: string };
+  status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
   user: string;
 };
 
@@ -56,18 +49,6 @@ export type IQuestion = {
   title: QuestionType;
   type: QuestionType;
   version: number;
-};
-
-export type ApplicantData = {
-  question?: IQuestion;
-  questionId?: string;
-  value: string;
-};
-
-export type IPendingApplicant = {
-  applicantData: ApplicantData[];
-  createdAt: string;
-  id: string;
 };
 
 export type IUser = {
@@ -93,7 +74,6 @@ export type IEntities = {
   integrations: EntityRecord<IIntegrations>;
   memberships: EntityRecord<IMembership>;
   questions: EntityRecord<IQuestion>;
-  pendingApplicants: EntityRecord<IPendingApplicant>;
   users: EntityRecord<IUser>;
 };
 
@@ -102,7 +82,6 @@ export const initialEntities: IEntities = {
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   memberships: { activeId: null, allIds: [], byId: {} },
-  pendingApplicants: { allIds: [], byId: {} },
   questions: { allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
 };

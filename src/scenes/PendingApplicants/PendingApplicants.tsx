@@ -1,7 +1,7 @@
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
-import { IPendingApplicant } from '@store/entities';
+import { IMembership } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
@@ -18,42 +18,49 @@ const NoPendingApplicantsMessage = () => (
 export default () => {
   const updateEntities = useStoreActions((actions) => actions.updateEntities);
 
-  const numApplicants = useStoreState(
-    ({ community }) => community?.pendingApplicants?.length
-  );
+  const numApplicants = useStoreState(({ community, entities }) => {
+    const { byId } = entities.memberships;
+    return community?.memberships?.filter((membershipId: string) => {
+      return byId[membershipId]?.status === 'PENDING';
+    }).length;
+  });
 
-  const applicants: IPendingApplicant[] = useStoreState(
-    ({ entities, community }) => {
-      const { byId: byApplicationQuestion } = entities.questions;
-      const { byId: byApplicant } = entities.pendingApplicants;
+  const applicants: IMembership[] = useStoreState(({ entities, community }) => {
+    const { byId: byMembership } = entities.memberships;
+    const { byId: byQuestion } = entities.questions;
 
-      return community.pendingApplicants?.map((applicantId: string) => {
-        const applicant = byApplicant[applicantId];
+    return community.memberships?.reduce(
+      (acc: IMembership[], membershipId: string) => {
+        const membership = byMembership[membershipId];
+        if (membership.status !== 'PENDING') return acc;
 
-        if (applicant.applicantData[0]?.questionId) {
-          applicant.applicantData = applicant.applicantData.map(
-            ({ questionId, value }) => ({
-              question: byApplicationQuestion[questionId],
-              value
-            })
-          );
-        }
-
-        return applicant;
-      });
-    }
-  );
+        return [
+          ...acc,
+          {
+            ...membership,
+            applicantData: membership.applicantData.map(
+              ({ questionId, value }) => ({
+                question: byQuestion[questionId],
+                value
+              })
+            )
+          }
+        ];
+      },
+      []
+    );
+  });
 
   const { data, loading } = useQuery(GET_PENDING_APPLICATIONS);
 
   useEffect(() => {
-    if (!data?.getApplicants) return;
+    const result = data?.getApplicants;
+    if (!result) return;
+
+    console.log(result);
 
     updateEntities({
-      data: {
-        ...data.getApplicants,
-        questions: data.getApplicants.application.questions
-      },
+      data: { questions: result.application.questions, ...result },
       schema: Schema.COMMUNITY
     });
   }, [data]);
