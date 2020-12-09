@@ -3,8 +3,8 @@ import React, { memo } from 'react';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
-import { LinkOptions } from './Sidebar.store';
-import SidebarLink from './SidebarLink';
+import { LinkOptions } from '../../Home.store';
+import SidebarLink from './Link';
 
 type LinkSectionProps = { links: LinkOptions[]; title: string };
 

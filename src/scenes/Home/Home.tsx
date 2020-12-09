@@ -18,8 +18,10 @@ import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
 import PendingApplicants from '../PendingApplicants/PendingApplicants';
+import BottomBar from './components/BottomBar/BottomBar';
 import SidebarPicker from './components/Sidebar/Picker';
 import Sidebar from './components/Sidebar/Sidebar';
+import Home from './Home.store';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
@@ -77,8 +79,11 @@ const HomeContent = () => {
 export default () => (
   <AuthenticatedCommunityWrapper>
     <div className="s-home">
-      <Sidebar />
-      <HomeContent />
+      <Home.Provider>
+        <BottomBar />
+        <Sidebar />
+        <HomeContent />
+      </Home.Provider>
     </div>
 
     <SidebarPicker />

@@ -1,0 +1,68 @@
+$PREF: 's-home-bb';
+
+.#{$PREF} {
+  @extend .flex-sb;
+
+  align-items: flex-end;
+  background-color: $gray-6;
+  border-top: 2px $gray-5 solid;
+  bottom: 0;
+  height: $xxl - $xs;
+  left: 0;
+  padding: $xs $md;
+  position: fixed;
+  width: calc(100vw - 48px);
+  z-index: 100;
+
+  @include MT { display: flex; }
+  @include D { display: none; }
+}
+
+.#{$PREF} > div:first-of-type {
+  border-right: 1px $gray-5 solid;
+  padding-right: $sm;
+}
+.#{$PREF} > div:nth-of-type(2) { @extend .flex-c; align-items: flex-end; }
+.#{$PREF} > div:last-of-type { visibility: hidden; }
+
+.#{$PREF}-link {
+  @extend .flex-accol;
+
+  margin: 0 $md;
+
+  &:first-child { margin-left: 0; }
+  &:last-child { margin-right: 0; }
+
+  &--active { > * { color: $primary; } }
+
+  &--community {
+    height: $xl;
+    margin-left: 0;
+    width: $xl;
+
+    > img {
+      @extend .fill;
+
+      border: 1px $primary solid;
+      border-radius: 50%;
+      padding: 1px;
+    }
+  }
+
+  > svg { margin-bottom: $xxs; }
+  > p { @extend .meta; }
+}
+
+// &:first-child {
+//   height: $xl;
+//   margin-left: 0;
+//   width: $xl;
+
+//   > img {
+//     @extend .fill;
+
+//     border: 1px $primary solid;
+//     border-radius: 50%;
+//     padding: 1px;
+//   }
+// }

@@ -14,16 +14,16 @@ import Separator from '@components/Misc/Separator';
 import AddMemberStore from '@scenes/Database/components/AddMember/AddMember.store';
 import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreActions, useStoreState } from '@store/Store';
-import SidebarCommunityContainer from '../Community.container';
+import Home, { LinkOptions } from '../../Home.store';
+import SidebarCommunityContainer from './Community.container';
 import SidebarProfile from './Profile';
 import SidebarSection from './Section';
-import Sidebar, { LinkOptions } from './Sidebar.store';
 import useActiveTo from './useActiveTo';
 
 const SidebarContent = () => {
   const name = useStoreState(({ community }) => community.name);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setActiveTo = Sidebar.useStoreActions((store) => store.setActiveTo);
+  const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);
 
   const activeTo = useActiveTo();
 
@@ -82,13 +82,9 @@ const SidebarContent = () => {
 export default () => (
   <div className="s-home-sidebar">
     <SidebarCommunityContainer />
-
-    <Sidebar.Provider>
-      <SidebarContent />
-
-      <AddMemberStore.Provider>
-        <AddMemberModal />
-      </AddMemberStore.Provider>
-    </Sidebar.Provider>
+    <SidebarContent />
+    <AddMemberStore.Provider>
+      <AddMemberModal />
+    </AddMemberStore.Provider>
   </div>
 );
