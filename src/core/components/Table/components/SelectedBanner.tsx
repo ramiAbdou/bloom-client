@@ -30,14 +30,14 @@ const AllMembersSelected = () => {
   const numTotalMembers = Table.useStoreState(({ data }) => data.length);
   return (
     <p>
-      All <span>{numTotalMembers}</span> members are selected.
+      All <span>{numTotalMembers}</span> rows are selected.
     </p>
   );
 };
 
 const AllMembersOnPageSelected = () => (
   <p>
-    All <span>100</span> members on this page are selected.
+    All <span>100</span> rows on this page are selected.
   </p>
 );
 
