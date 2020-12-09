@@ -47,20 +47,24 @@ export default ({
   href
 }: IntegrationCardProps) => (
   <div className="s-integrations-card">
-    <div className="s-integrations-card-header">
-      <img alt="Company Logo" className="s-integrations-icon" src={logo} />
+    <div>
+      <div className="s-integrations-card-header">
+        <img alt="Company Logo" className="s-integrations-icon" src={logo} />
 
-      {completed && (
-        <div className="s-integrations-connected">
-          <IoCheckmarkCircle />
-          <p>Connected</p>
-        </div>
-      )}
+        {completed && (
+          <div className="s-integrations-connected">
+            <IoCheckmarkCircle />
+            <p>Connected</p>
+          </div>
+        )}
+      </div>
+
+      <h3>{name}</h3>
+      <p>{description}</p>
     </div>
 
-    <h3>{name}</h3>
-    <p>{description}</p>
-
-    <ActionButton completed={completed} href={href} name={name} />
+    <div>
+      <ActionButton completed={completed} href={href} name={name} />
+    </div>
   </div>
 );
