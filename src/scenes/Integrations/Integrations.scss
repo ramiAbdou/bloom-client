@@ -23,7 +23,7 @@ $PREF: 's-integrations';
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax($xxl * 5, 1fr));
   max-width: 100%;
-  padding: 2px 0;
+  padding: $xxs 0;
   row-gap: $md;
 }
 

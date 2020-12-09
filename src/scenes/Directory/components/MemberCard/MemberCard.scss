@@ -3,7 +3,7 @@ $PREF: 's-directory-card';
 .#{$PREF}-ctr {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax($xxl * 3, 1fr));
-  padding: 2px 0;
+  padding: $xxs 0;
 
   &:focus { outline: none; }
 };

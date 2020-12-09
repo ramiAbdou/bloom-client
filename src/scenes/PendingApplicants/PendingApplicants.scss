@@ -26,7 +26,8 @@ $PREF: 's-applicants';
 .#{$PREF}-card-ctr {
   column-gap: $md;
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax($xxl * 7.5, 1fr));
+  padding: $xxs 0;
   row-gap: $md;
 };
 
@@ -36,7 +37,6 @@ $PREF: 's-applicants';
   @extend .card;
   @extend .flex-sb;
 
-  grid-column-end: span 6;
   height: fit-content;
 
   &:last-of-type { margin-bottom: $lg; }
