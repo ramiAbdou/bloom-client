@@ -1,19 +1,24 @@
 $PREF: 's-home-bb';
 
 .#{$PREF} {
-  @extend .flex-sb;
+  @extend .flex-acsb;
 
-  align-items: flex-end;
   background-color: $gray-6;
   border-top: 2px $gray-5 solid;
   bottom: 0;
-  height: $xxl - $xs;
+  height: $xxl - $xxs;
   left: 0;
-  padding: $xs $md;
+  padding: $xxs $md;
   position: fixed;
   width: calc(100vw - 48px);
   z-index: 100;
+  
+  @include M {
+    // justify-content: center;
 
+    // padding: $xxs $xs;
+    // width: calc(100vw - 16px);
+  }
   @include MT { display: flex; }
   @include D { display: none; }
 }
@@ -23,24 +28,33 @@ $PREF: 's-home-bb';
   padding-right: $sm;
 }
 .#{$PREF} > div:nth-of-type(2) { @extend .flex-c; align-items: flex-end; }
-.#{$PREF} > div:last-of-type { visibility: hidden; }
+.#{$PREF} > div:last-of-type {
+  visibility: hidden;
+
+  // @include M { display: none; }
+}
 
 .#{$PREF}-link {
   @extend .flex-accol;
 
-  margin: 0 $md;
+  margin-right: $md;
 
-  @include M { margin: 0 $sm; }
+  @include M {
+    margin-right: $md;
+    &:first-child { margin-right: $sm; }
+  }
 
-  &:first-child { margin-left: 0; }
   &:last-child { margin-right: 0; }
 
+  > * { color: $gray-2; }
   &--active { > * { color: $primary; } }
 
   &--community {
     height: $xl;
     margin-left: 0;
     width: $xl;
+
+    @include M { height: $lg; width: $lg; }
 
     > img {
       @extend .fill;
@@ -51,7 +65,11 @@ $PREF: 's-home-bb';
     }
   }
 
-  > svg { margin-bottom: $xxs; }
+  > svg {
+    margin-bottom: $xxs;
+
+    @include M { margin-bottom: 2px; }
+  }
   > p { @extend .meta; }
 }
 
