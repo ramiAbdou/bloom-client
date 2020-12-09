@@ -15,7 +15,7 @@ export default memo(({ Icon, onClick, separator, text }: PickerAction) => {
   // After the passed-in onClick is executed, close the picker. This component
   // should not be used as a Flow. It is meant to be a one-time action picker.
   const onOptionClick = () => {
-    onClick();
+    if (onClick) onClick();
     setTimeout(closePicker, 0);
   };
 

@@ -1,6 +1,6 @@
 import { useMutation } from 'graphql-hooks';
 import Cookie from 'js-cookie';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
