@@ -1,5 +1,4 @@
 import { Action, action, createContextStore } from 'easy-peasy';
-import { matchSorter } from 'match-sorter';
 
 export type MultipleChoiceModel = {
   closeOptions: Action<MultipleChoiceModel>;
@@ -29,9 +28,9 @@ export const multipleChoiceModel: MultipleChoiceModel = {
 
   setSearchString: action(({ options, ...state }, searchString: string) => ({
     ...state,
-    filteredOptions: matchSorter(options, searchString, {
-      threshold: matchSorter.rankings.ACRONYM
-    }),
+    filteredOptions: options.filter((option: string) =>
+      option?.toLowerCase()?.includes(searchString.toLowerCase())
+    ),
     options,
     searchString
   })),

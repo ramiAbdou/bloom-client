@@ -3,7 +3,7 @@ $PREF: 'c-form';
 // ## GENERAL
 
 .#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
-.#{$PREF}-desc { margin-bottom: $xs; }
+.#{$PREF}-desc { margin-bottom: 12px; }
 .#{$PREF}-error { color: $red; margin-top: $xxs; }
 
 // ## LABEL
@@ -47,10 +47,19 @@ $PREF: 'c-form';
 // Dropdown bar that user clickes on to open the option container.
 div.#{$PREF}-dd-bar { @extend .flex-acsb; cursor: pointer; }
 
-.#{$PREF}-dd-bar > svg { color: $gray-4; height: $sm; width: $sm; }
+// If the container becomes full, still shows arrow at regular size.
+.#{$PREF}-dd-bar > svg {
+  color: $gray-4;
+  height: $sm;
+  overflow: visible;
+  width: $sm;
+}
+
+.#{$PREF}-dd-bar > div { max-width: 100%; overflow: scroll; }
 
 // When a user selects an option, it displays in this container.
 .#{$PREF}-dd-value-ctr { @extend .flex-ac; }
+.#{$PREF}-dd-value-ctr > button.c-misc-tag { overflow: visible; }
 
 // The value that displays is just a tag except with no margin-left and that
 // has an option to delete, shown by the 'x' in the ::after rule.
