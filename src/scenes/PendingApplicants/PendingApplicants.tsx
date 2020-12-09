@@ -68,17 +68,20 @@ export default () => {
   return (
     <div className="s-applicants">
       <Header loading={loading} />
-      {data && !numApplicants && <NoPendingApplicantsMessage />}
 
-      <div className="s-applicants-card-ctr s-home-content">
-        {memoizedApplicants?.map((applicant) => (
-          <Applicant.Provider
-            key={applicant.id}
-            runtimeModel={{ ...applicantModel, applicant }}
-          >
-            <ApplicantCard />
-          </Applicant.Provider>
-        ))}
+      <div className="s-home-content">
+        {data && !numApplicants && <NoPendingApplicantsMessage />}
+
+        <div className="s-applicants-card-ctr">
+          {memoizedApplicants?.map((applicant) => (
+            <Applicant.Provider
+              key={applicant.id}
+              runtimeModel={{ ...applicantModel, applicant }}
+            >
+              <ApplicantCard />
+            </Applicant.Provider>
+          ))}
+        </div>
       </div>
     </div>
   );
