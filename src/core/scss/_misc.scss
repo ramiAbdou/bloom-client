@@ -20,7 +20,7 @@
 .shadow--2 { box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15); }
 
 // BACKGROUND COLOR
-.primary-bg { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
+.primary-bg { background-color: $primary-hover; }
 
 // Used globally for all react-icons.
 .react-icon {

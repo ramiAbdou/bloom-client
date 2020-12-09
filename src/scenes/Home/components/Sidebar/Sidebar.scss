@@ -50,7 +50,6 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-link {
   @extend .flex-ac;
 
-  background-clip: padding-box; // Needed to set the border-left color.
   border-left: 3px white solid;
   border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
@@ -62,8 +61,13 @@ $PREF: 's-home-sidebar';
   width: 95%;
 
   @include PRIMARY_HOVER;
+
+  // To make the border color appear as we want it to, we need to
+  // background-clip it.
+
   @include HOVER {
-    border-left: 3px rgba($color: $primary-hex, $alpha: 0.1) solid;
+    background-clip: padding-box; // Needed to set the border-left color.
+    border-left: 3px $primary-hover solid;
   }
 
   &:last-of-type { margin-bottom: 12px; }

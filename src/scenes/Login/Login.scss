@@ -40,7 +40,7 @@ $PREF: 's-login';
 
   border: 1px $gray-5 solid;
 
-  @include HOVER { background-color: rgba($color: $gray-6, $alpha: 0.35); }
+  @include HOVER { background-color: $gray-6; }
 }
 
 .#{$PREF}-google > a > img {
@@ -75,13 +75,13 @@ div.#{$PREF}-form-item { margin: $md 0; width: 100%; }
 }
 
 .#{$PREF}-confirmation-email {
-  background-color: rgba($color: $green, $alpha: 0.05);
+  @extend .sb;
+
+  background-color: rgba($color: $green, $alpha: 0.1);
   border: 1px $green solid;
   border-radius: $xxs;
   color: $green;
-  margin-bottom: $sm;
-  margin-top: $sm;
-  padding-bottom: 8px;
-  padding-top: 8px;
+  margin: $sm auto;
+  padding: $xs 0;
   text-align: center;
 }
