@@ -14,9 +14,9 @@ import Separator from '@components/Misc/Separator';
 import AddMemberStore from '@scenes/Database/components/AddMember/AddMember.store';
 import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreActions, useStoreState } from '@store/Store';
-import SidebarCommunityContainer from './Community.container';
-import LinkSection from './LinkSection';
-import ProfileBar from './ProfileBar';
+import SidebarCommunityContainer from '../Community.container';
+import SidebarProfile from './Profile';
+import SidebarSection from './Section';
 import Sidebar, { LinkOptions } from './Sidebar.store';
 import useActiveTo from './useActiveTo';
 
@@ -67,12 +67,13 @@ const SidebarContent = () => {
       <Separator style={{ marginBottom: 12, marginTop: 24 }} />
 
       <div className="s-home-sidebar-section-ctr">
-        <LinkSection links={mainLinks} title="Main" />
-        <LinkSection links={adminLinks} title="Admin" />
-        <LinkSection links={quickLinks} title="Quick Actions" />
+        <SidebarSection links={mainLinks} title="Main" />
+        <SidebarSection links={adminLinks} title="Admin" />
+        <SidebarSection links={quickLinks} title="Quick Actions" />
       </div>
+
       <div>
-        <ProfileBar />
+        <SidebarProfile />
       </div>
     </div>
   );

@@ -70,7 +70,7 @@ export default () => {
       <Header loading={loading} />
       {data && !numApplicants && <NoPendingApplicantsMessage />}
 
-      <div className="s-applicants-card-ctr">
+      <div className="s-applicants-card-ctr s-home-content">
         {memoizedApplicants?.map((applicant) => (
           <Applicant.Provider
             key={applicant.id}

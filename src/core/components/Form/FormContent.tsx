@@ -11,7 +11,7 @@ import { FormItemData } from './Form.types';
 export default () => (
   <>
     {Form.useStoreState(({ items }) => items)?.map((props: FormItemData) => (
-      <FormItem key={props.title} {...props} />
+      <FormItem key={props.title ?? props.placeholder} {...props} />
     ))}
   </>
 );

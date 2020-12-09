@@ -16,7 +16,6 @@
 @import './scenes/Directory/Directory.scss';
 @import './scenes/Directory/components/ExpandedMemberCard/ExpandedMemberCard.scss';
 @import './scenes/Home/Home.scss';
-@import './scenes/Home/components/CommunityBar/CommunityBar.scss';
 @import './scenes/Home/components/Sidebar/Sidebar.scss';
 @import './scenes/Integrations/Integrations.scss';
 @import './scenes/Login/Login.scss';
@@ -39,15 +38,6 @@ body { height: 100%; margin: 0; padding: 0; width: 100%; }
   width: 100%;
   z-index: -1;
 }
-
-// Have all the text elements have a margin of 0, since most of the time we
-// want to implement our own margins regardless.
-
-h1,
-h2,
-h3,
-p,
-a { margin: 0; }
 
 button,
 input,

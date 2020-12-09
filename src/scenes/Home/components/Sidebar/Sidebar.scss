@@ -8,6 +8,7 @@ $PREF: 's-home-sidebar';
   position: fixed;
   top: 0;
   width: $xxl * 6;
+  z-index: 12;
 
   @include MT { display: none; }
 }

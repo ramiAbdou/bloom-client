@@ -45,6 +45,10 @@ export enum ModalType {
   PROMOTE_TO_ADMIN = 'PROMOTE_TO_ADMIN'
 }
 
+export enum PickerType {
+  PROFILE = 'PROFILE'
+}
+
 /**
  * FORMS - Handling of all form-related items including custom Enums.
  */

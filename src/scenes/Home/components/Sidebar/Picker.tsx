@@ -1,15 +1,15 @@
 import { useMutation } from 'graphql-hooks';
 import Cookie from 'js-cookie';
 import React from 'react';
+import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import Picker from '@components/Picker/Picker';
 import { PickerAction } from '@components/Picker/Picker.store';
 import PickerOption from '@components/Picker/PickerOption';
+import { PickerType } from '@constants';
 import { LOGOUT } from '@scenes/Home/Home.gql';
 import { useStoreActions } from '@store/Store';
-
-const PICKER_ID = 'PROFILE_PICKER';
 
 export default () => {
   const clearEntities = useStoreActions((store) => store.clearEntities);
@@ -44,13 +44,17 @@ export default () => {
 
   // Show a picker that either allows them to view their profile or log out.
   const actions: PickerAction[] = [
-    { onClick: () => {}, text: 'Manage Membership' },
-    { onClick: () => {}, text: 'Your Profile' },
-    { onClick: onLogout, separator: true, text: 'Log Out' }
+    { Icon: IoCard, onClick: () => {}, text: 'Manage Membership' },
+    { Icon: IoPerson, onClick: () => {}, text: 'Your Profile' },
+    { Icon: IoExit, onClick: onLogout, separator: true, text: 'Log Out' }
   ];
 
   return (
-    <Picker align="RIGHT_BOTTOM" id={PICKER_ID} style={{ marginLeft: 24 }}>
+    <Picker
+      align="RIGHT_BOTTOM"
+      id={PickerType.PROFILE}
+      style={{ marginLeft: 24, minWidth: 270 }}
+    >
       {actions.map((action) => (
         <PickerOption key={action.text} {...action} />
       ))}

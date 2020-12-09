@@ -31,7 +31,9 @@ export default () => {
     <DirectoryStore.Provider>
       <div className="s-directory">
         <Header loading={loading} />
-        {!loading && <MemberCardContainer />}
+        <div className="s-home-content">
+          {!loading && <MemberCardContainer />}
+        </div>
       </div>
     </DirectoryStore.Provider>
   );

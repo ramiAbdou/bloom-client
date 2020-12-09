@@ -22,7 +22,7 @@ $PREF: 's-home';
 
 .#{$PREF}-header {
   background-color: $gray-6;
-  padding: $md 0;
+  padding: $md;
   position: sticky;
   top: 0;
   z-index: 11;
@@ -34,18 +34,12 @@ $PREF: 's-home';
 
 // ## CONTENT
 
-.#{$PREF}-content {
-  box-sizing: border-box;
+.#{$PREF}-content-ctr {
   flex-grow: 1;
-  margin-right: $md;
   max-height: 100vh;
   overflow: visible; // Mainly for the purposes of shadows.
-  
 
-  @include D {
-    margin-left: ($xxl * 6) + $md;
-    max-width: calc(100% - 408px);
-  }
+  @include D { margin-left: ($xxl * 6); max-width: calc(100% - 360px); }
 }
 
-.#{$PREF}-content-body { overflow: scroll; }
+.#{$PREF}-content { margin: 0 $md; }

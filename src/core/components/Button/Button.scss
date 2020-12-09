@@ -2,6 +2,12 @@ $PREF: 'c-btn';
 
 // ## BASIC BUTTON
 
+.btn-txt {
+  text-transform: uppercase;
+
+  @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);
+}
+
 .#{$PREF} {
   @extend .flex-acc;
   

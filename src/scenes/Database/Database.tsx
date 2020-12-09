@@ -49,11 +49,14 @@ export default () => {
     <Database.Provider>
       <FetchDatabase />
       <Header />
-      <Switch>
-        <Route component={Admins} path={`${url}/admins`} />
-        <Route component={Members} path={`${url}/members`} />
-        <Redirect to={`${url}/members`} />
-      </Switch>
+
+      <div className="s-home-content">
+        <Switch>
+          <Route component={Admins} path={`${url}/admins`} />
+          <Route component={Members} path={`${url}/members`} />
+          <Redirect to={`${url}/members`} />
+        </Switch>
+      </div>
     </Database.Provider>
   );
 };

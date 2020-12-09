@@ -18,7 +18,7 @@ import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
 import PendingApplicants from '../PendingApplicants/PendingApplicants';
-import ProfilePicker from './components/Sidebar/ProfilePicker';
+import SidebarPicker from './components/Sidebar/Picker';
 import Sidebar from './components/Sidebar/Sidebar';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
@@ -55,7 +55,7 @@ const HomeContent = () => {
   const autoAccept = useStoreState(({ community }) => community.autoAccept);
 
   return (
-    <div className="s-home-content">
+    <div className="s-home-content-ctr">
       <Switch>
         <Route component={Directory} path={`${url}/directory`} />
         <Route component={Events} path={`${url}/events`} />
@@ -81,7 +81,7 @@ export default () => (
       <HomeContent />
     </div>
 
-    <ProfilePicker />
+    <SidebarPicker />
 
     <AddMember.Provider>
       <AddMemberModal />

@@ -106,7 +106,7 @@ const Picker = ({
 
   // ## END: CALCULATE PICKER COORDINATES
 
-  const css = makeClass(['c-picker', [className, className]]);
+  const css = makeClass(['card', 'c-picker', [className, className]]);
 
   return (
     <motion.div

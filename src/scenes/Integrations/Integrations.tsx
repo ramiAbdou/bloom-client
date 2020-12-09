@@ -157,7 +157,7 @@ export default () => {
   return (
     <Integrations.Provider>
       <Header loading={loading} />
-      {!loading && <Cards />}
+      <div className="s-home-content">{!loading && <Cards />}</div>
       <IntegrationModal />
     </Integrations.Provider>
   );

@@ -57,11 +57,7 @@ a.#{$PREF}-email > p { @extend .meta; color: inherit; margin-left: $xxs; }
 // ## QUESTIONS
 
 .#{$PREF}-question:not(:last-child) { margin-bottom: $sm; }
-.#{$PREF}-question > p:first-of-type {
-  @extend .sb;
-
-  margin-bottom: $xxs;
-}
+.#{$PREF}-question > p:first-of-type { @extend .sb; margin-bottom: $xxs; }
 .#{$PREF}-question > p:last-of-type { color: $primary; }
 .#{$PREF}-question--choice > p:last-child {
   @extend .c-misc-tag;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
+import { PickerType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const PictureContainer = () => {
@@ -17,8 +18,6 @@ const PictureContainer = () => {
   return <h3 className="s-home-sidebar-profile__picture">{initials}</h3>;
 };
 
-const PICKER_ID = 'PROFILE_PICKER';
-
 export default () => {
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
   const type = useStoreState(({ membership }) => membership.type.name);
@@ -28,10 +27,14 @@ export default () => {
     ({ user }) => `${user.firstName} ${user.lastName}`
   );
 
-  const onClick = () => showPicker(PICKER_ID);
+  const onClick = () => showPicker(PickerType.PROFILE);
 
   return (
-    <button className="s-home-sidebar-profile" id={PICKER_ID} onClick={onClick}>
+    <button
+      className="s-home-sidebar-profile"
+      id={PickerType.PROFILE}
+      onClick={onClick}
+    >
       <div>
         <PictureContainer />
 

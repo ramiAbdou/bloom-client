@@ -3,6 +3,16 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Muli:wght@400;600;700&display=swap');
 
+// Have all the text elements have a margin of 0, since most of the time we
+// want to implement our own margins regardless.
+
+h1,
+h2,
+h3,
+h4,
+p,
+a { margin: 0; }
+
 // Returns the CSS font styling for different screen sizes.
 
 @mixin font-responsive(
@@ -22,14 +32,19 @@
   @include M { font-size: $mobile; line-height: $mobile-lh; }
 }
 
-.body--1 { @include font-responsive(400, 15px, 20px, 15px, 20px, 15px, 20px); }
-.meta { @include font-responsive(600, 13px, 16px, 13px, 16px, 13px, 16px); }
-.sb { font-weight: 600 !important; }
-.bold { font-weight: 700 !important; }
-
 h1 { @include font-responsive(700, 24px, 32px, 24px, 32px, 24px, 32px); }
 h2 { @include font-responsive(700, 20px, 24px, 20px, 24px, 20px, 24px); }
 h3 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
+
+h4 {
+  text-transform: uppercase;
+
+  @include font-responsive(700, 14px, 24px, 14px, 24px, 14px, 24px);
+}
+
+.body--1 { @include font-responsive(400, 15px, 20px, 15px, 20px, 15px, 20px); }
+.meta { @include font-responsive(600, 13px, 16px, 13px, 16px, 13px, 16px); }
+.sb { font-weight: 600 !important; }
 
 button,
 p,
@@ -42,9 +57,3 @@ input::placeholder { @extend .body--1; }
 
 input::placeholder,
 th { color: $gray-3; }
-
-.btn-txt {
-  text-transform: uppercase;
-
-  @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);
-}

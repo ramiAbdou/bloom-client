@@ -1,6 +1,8 @@
 import { Action, action, Computed, computed } from 'easy-peasy';
+import { FC } from 'react';
 
 export type PickerAction = {
+  Icon?: FC;
   separator?: boolean;
   onClick: VoidFunction; // Should perform some action.
   text: string;
