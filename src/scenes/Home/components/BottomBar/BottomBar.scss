@@ -30,6 +30,8 @@ $PREF: 's-home-bb';
 
   margin: 0 $md;
 
+  @include M { margin: 0 $sm; }
+
   &:first-child { margin-left: 0; }
   &:last-child { margin-right: 0; }
 
