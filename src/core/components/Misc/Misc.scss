@@ -17,8 +17,7 @@ $PREF: 'c-misc';
 // ## TAG
 
 .#{$PREF}-tag {
-  @extend .primary-bg;
-    
+  background-color: rgba($color: $primary-hex, $alpha: 0.15);
   border-radius: $sm;
   color: black;
   font-size: 13px;
