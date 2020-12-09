@@ -17,7 +17,7 @@ $PREF: 's-integrations';
 
 // ## INTEGRATION CARD
 
-.#{$PREF}-card-ctr { @extend .flex-w; padding: 3px 0; }
+.#{$PREF}-card-ctr { @extend .flex-w; padding: 2px 0; }
 
 .#{$PREF}-card {
   @extend .card;

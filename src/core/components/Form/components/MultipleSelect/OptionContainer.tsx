@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Form from '../../Form.store';
 import MultipleSelect from './MultipleSelect.store';
@@ -42,6 +42,14 @@ const AllOptions = () => {
   const setSearchString = MultipleSelect.useStoreActions(
     (store) => store.setSearchString
   );
+
+  const closeOptions = MultipleSelect.useStoreActions(
+    (store) => store.closeOptions
+  );
+
+  useEffect(() => {
+    if (!filteredOptions.length) closeOptions();
+  }, [filteredOptions.length]);
 
   const selectOption = (option: string) => {
     const wasNonePreviouslySelected = value.some((element: string) =>
