@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 
+import Tag from '@components/Misc/Tag';
 import { QuestionType } from '@constants';
 import { makeClass } from '@util/util';
 
@@ -24,7 +25,7 @@ export default memo(
     return (
       <div className={css}>
         <p>{question}</p>
-        <p>{value ?? 'N/A'}</p>
+        <Tag value={value} />
       </div>
     );
   }

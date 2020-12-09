@@ -89,13 +89,6 @@ $PREF: 's-applicants';
 .#{$PREF}-card-question { margin-bottom: $sm; }
 .#{$PREF}-card-question > p:first-of-type { margin-bottom: $xxs; }
 .#{$PREF}-card-question > p:last-of-type { color: $primary; }
-.#{$PREF}-card-question--choice > p:last-of-type {
-  @extend .primary-bg;
-
-  border-radius: $md;
-  padding: $xxs $xs;
-  width: fit-content;
-}
 
 div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
 

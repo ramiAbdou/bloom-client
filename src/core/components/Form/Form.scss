@@ -34,6 +34,8 @@ $PREF: 'c-form';
   width: $sm;
 }
 
+.#{$PREF}-mc-choice > p.c-misc-tag { margin-left: $xs; }
+
 .#{$PREF}-mc-choice--active > div { border: 2px $primary solid; }
 .#{$PREF}-mc-choice--active > div > div {
   background-color: $primary;
@@ -106,4 +108,4 @@ button.#{$PREF}-dd-value {
   @include HOVER { background-color: $gray-6; }
 }
 
-.#{$PREF}-dd-opt > p { @extend .c-misc-tag; }
+.#{$PREF}-dd-opt > p { @extend .c-misc-tag; margin-left: $xs; }

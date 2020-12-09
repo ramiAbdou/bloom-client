@@ -21,12 +21,14 @@ $PREF: 'c-misc';
   border-radius: $sm;
   color: black;
   font-size: 13px;
-  margin: 0 $xs;
-  padding: 0 6px;
+  margin-right: $xs;
+  padding: 2px 6px;
   text-align: left;
   width: fit-content;
 
   @include OVERFLOW_ELLIPSES;
+
+  &:not(.c-misc-tag:first-of-type) { margin-left: $xs; }
 }
 
 // CHECKBOX
