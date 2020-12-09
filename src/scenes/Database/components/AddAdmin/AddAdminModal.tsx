@@ -9,7 +9,7 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import { Schema } from '@store/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { CREATE_MEMBERSHIPS } from '../../Database.gql';
 import AddModalInput from '../AddModalInput';
@@ -38,7 +38,6 @@ const AddAdminInput = memo(({ id }: IdProps) => {
 });
 
 export default () => {
-  const communityId = useStoreState(({ community }) => community.id);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
@@ -79,13 +78,9 @@ export default () => {
     // state accordingly with those new admins. To load new data would require
     // a refresh.
     storeFromFetch({
-      data: {
-        admins: updatedMemberships
-          .filter(({ role }) => !!role)
-          .map(({ user }) => ({ ...user })),
-        id: communityId
-      },
-      schema: Schema.COMMUNITY
+      communityReferenceColumn: 'memberships',
+      data: { memberships: updatedMemberships },
+      schema: { memberships: [Schema.MEMBERSHIP] }
     });
 
     showToast({ message: `${admins.length} admin(s) added.` });

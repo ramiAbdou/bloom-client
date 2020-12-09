@@ -69,13 +69,21 @@ const getHueFromRGB = ([r, g, b]: number[]): number => {
   return hue < 0 ? hue + 360 : Math.round(hue);
 };
 
+type RemoveReferenceArgs = {
+  entityId?: string;
+  entityName?: 'communities' | 'memberships' | 'questions' | 'users';
+  referenceEntityName: 'communities' | 'memberships' | 'questions' | 'users';
+  referenceId: 'communities' | 'memberships' | 'questions' | 'users';
+};
+
 type UpdateEntityArgs = {
   id: string;
   entityName: 'communities' | 'memberships' | 'questions' | 'users';
   updatedData?: Partial<ICommunity | IMembership | IQuestion | IUser>;
 };
 
-type UpdateEntitiesArgs = {
+type StoreFromFetchArgs = {
+  communityReferenceColumn?: string;
   data?: any;
   schema?: Schema<any>;
   setActiveId?: boolean;
@@ -91,10 +99,11 @@ type StoreModel = {
   membership: Computed<StoreModel, IMembership>;
   modal: ModalModel;
   picker: PickerModel;
+  removeReference: Action<StoreModel, Partial<RemoveReferenceArgs>>;
   toast: ToastModel;
   updateCommunity: Action<StoreModel, Partial<ICommunity>>;
   updateEntity: Action<StoreModel, UpdateEntityArgs>;
-  storeFromFetch: Action<StoreModel, UpdateEntitiesArgs>;
+  storeFromFetch: Action<StoreModel, StoreFromFetchArgs>;
   user: Computed<StoreModel, IUser>;
 };
 
@@ -165,6 +174,44 @@ export const store = createStore<StoreModel>(
 
     picker: pickerModel,
 
+    removeReference: action(
+      (
+        { entities, ...state },
+        {
+          entityName,
+          entityId,
+          referenceEntityName,
+          referenceId
+        }: RemoveReferenceArgs
+      ) => {
+        entityName = entityName ?? 'communities';
+        entityId = entityId ?? entities.communities.activeId;
+
+        const previousEntityRecord = entities[entityName];
+        const previousEntityById = previousEntityRecord.byId;
+        const previousEntity = previousEntityById[entityId];
+
+        return {
+          ...state,
+          entities: {
+            ...entities,
+            [entityName]: {
+              ...previousEntityRecord,
+              byId: {
+                ...previousEntityById,
+                [entityId]: {
+                  ...previousEntity,
+                  [referenceEntityName]: previousEntity[
+                    referenceEntityName
+                  ].filter((id: string) => id !== referenceId)
+                }
+              }
+            }
+          }
+        };
+      }
+    ),
+
     /**
      * Main update function that updates all entities (front-end DB). Uses
      * the lodash deep merge function to make the updates.
@@ -172,13 +219,48 @@ export const store = createStore<StoreModel>(
     storeFromFetch: action(
       (
         { entities, ...state },
-        { data, schema, setActiveId }: UpdateEntitiesArgs
+        {
+          communityReferenceColumn,
+          data,
+          schema,
+          setActiveId
+        }: StoreFromFetchArgs
       ) => {
+        // console.log(data, schema);
+        // console.log(normalize(data, schema));
+        // console.log();
+
+        const {
+          byId: byCommunityId,
+          activeId: activeCommunityId
+        } = entities.communities;
+
+        const activeCommunity = byCommunityId[activeCommunityId];
+        const parsedEntities = parseEntities(data, schema, setActiveId);
+
+        const updatedCommunities = !communityReferenceColumn
+          ? {}
+          : {
+              communities: {
+                ...entities.communities,
+                byId: {
+                  ...byCommunityId,
+                  [activeCommunityId]: {
+                    ...activeCommunity,
+                    [communityReferenceColumn]: [
+                      ...activeCommunity[communityReferenceColumn],
+                      ...parsedEntities[communityReferenceColumn].allIds
+                    ]
+                  }
+                }
+              }
+            };
+
         return {
           ...state,
           entities: mergeWith(
-            entities,
-            parseEntities(data, schema, setActiveId),
+            { ...entities, ...updatedCommunities },
+            parsedEntities,
             // eslint-disable-next-line consistent-return
             (target: any, source: any) => {
               if (Array.isArray(target) && Array.isArray(source)) {

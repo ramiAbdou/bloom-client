@@ -1,7 +1,12 @@
 import { mutation, query } from 'gql-query-builder';
 
 export const CREATE_MEMBERSHIPS = mutation({
-  fields: ['role', { user: ['id', 'firstName', 'lastName', 'email'] }],
+  fields: [
+    'id',
+    'role',
+    'status',
+    { user: ['id', 'firstName', 'lastName', 'email'] }
+  ],
   operation: 'createMemberships',
   variables: { members: { required: true, type: '[NewMemberInput!]' } }
 }).query;
