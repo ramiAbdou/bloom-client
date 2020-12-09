@@ -133,7 +133,7 @@ const Cards = () => {
   ];
 
   return (
-    <div className="flex-w">
+    <div className="s-integrations-card-ctr">
       {integrationData.map((props: IntegrationCardProps) => (
         <IntegrationCard key={props.name} {...props} />
       ))}

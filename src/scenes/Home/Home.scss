@@ -39,6 +39,7 @@ $PREF: 's-home';
   flex-grow: 1;
   margin-right: $md;
   max-height: 100vh;
+  overflow: visible; // Mainly for the purposes of shadows.
   
 
   @include D {
