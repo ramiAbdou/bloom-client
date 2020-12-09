@@ -226,10 +226,6 @@ export const store = createStore<StoreModel>(
           setActiveId
         }: StoreFromFetchArgs
       ) => {
-        // console.log(data, schema);
-        // console.log(normalize(data, schema));
-        // console.log();
-
         const {
           byId: byCommunityId,
           activeId: activeCommunityId

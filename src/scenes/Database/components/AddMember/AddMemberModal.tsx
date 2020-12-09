@@ -8,6 +8,7 @@ import UnderlineButton from '@components/Button/UnderlineButton';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { IdProps, ModalType } from '@constants';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { CREATE_MEMBERSHIPS } from '../../Database.gql';
@@ -43,6 +44,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
 
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const members = AddMember.useStoreState((store) => store.members);
 
@@ -76,6 +78,14 @@ export default () => {
 
     const { createMemberships: updatedMemberships } = result.data || {};
     if (result.error || !updatedMemberships) return;
+
+    console.log(updatedMemberships);
+
+    storeFromFetch({
+      communityReferenceColumn: 'memberships',
+      data: { memberships: updatedMemberships },
+      schema: { memberships: [Schema.MEMBERSHIP] }
+    });
 
     showToast({ message: `${members.length} members(s) invited.` });
     setTimeout(closeModal, 0);
