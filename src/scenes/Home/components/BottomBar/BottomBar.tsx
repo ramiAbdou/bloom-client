@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { IoCalendar, IoPeople, IoPerson } from 'react-icons/io5';
+import { IoCalendar, IoPeople, IoPersonCircle } from 'react-icons/io5';
 
 import { LinkOptions } from '../../Home.store';
 import BottomBarCommunityContainer from './Community.container';
@@ -10,7 +10,7 @@ export default () => {
     () => [
       { Icon: IoPeople, title: 'Directory', to: 'directory' },
       { Icon: IoCalendar, title: 'Events', to: 'events' },
-      { Icon: IoPerson, title: 'Profile', to: '/' }
+      { Icon: IoPersonCircle, title: 'Profile', to: '/' }
     ],
     []
   );
