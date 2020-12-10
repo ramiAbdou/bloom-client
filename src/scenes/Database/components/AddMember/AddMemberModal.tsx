@@ -77,8 +77,6 @@ export default () => {
     const { createMembers: updatedMembers } = result.data || {};
     if (result.error || !updatedMembers) return;
 
-    console.log(updatedMembers);
-
     mergeEntities({
       communityReferenceColumn: 'members',
       data: { members: updatedMembers },
