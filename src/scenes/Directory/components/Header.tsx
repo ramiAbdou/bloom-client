@@ -29,7 +29,7 @@ export default memo(({ loading }: LoadingProps) => {
   const onClear = () => setValue('');
 
   return (
-    <div className="s-directory-header">
+    <div className="s-home-header flex-acsb">
       <div>
         <h1 className="s-home-header-title">Directory</h1>
         {loading && <Spinner dark />}

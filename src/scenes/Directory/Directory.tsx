@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <DirectoryStore.Provider>
-      <div className="s-home-header flex-acsb">
+      <div>
         <Header loading={loading} />
         <div className="s-home-content">
           {!loading && <MemberCardContainer />}
