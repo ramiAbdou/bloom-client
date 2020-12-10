@@ -25,6 +25,7 @@ export default () => {
         const { bio, cardData, id, user }: IMember = byMemberId[curr];
 
         const {
+          currentLocation,
           email,
           facebookUrl,
           firstName,
@@ -37,6 +38,7 @@ export default () => {
 
         return {
           bio,
+          currentLocation,
           email,
           expandedCardData:
             cardData?.map(({ questionId, ...value }) => {

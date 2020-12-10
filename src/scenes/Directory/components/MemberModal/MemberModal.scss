@@ -32,10 +32,10 @@ $PREF: 's-directory-modal';
 
   color: $gray-2;
   margin-bottom: $xs;
-  text-align: center;
+  width: fit-content;
 }
 
-a.#{$PREF}-email { color: $primary; margin-bottom: $xxs; width: fit-content; }
+a.#{$PREF}-email { color: $primary; margin-bottom: 12px; width: fit-content; }
 a.#{$PREF}-email > svg { color: inherit; height: $sm; width: $sm; }
 a.#{$PREF}-email > p { @extend .meta; color: inherit; margin-left: $xxs; }
 

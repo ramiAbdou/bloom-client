@@ -52,6 +52,7 @@ export type IQuestion = {
 };
 
 export type IUser = {
+  currentLocation: string;
   email: string;
   facebookUrl: string;
   firstName: string;

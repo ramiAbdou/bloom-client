@@ -6,7 +6,7 @@ $PREF: 'c-modal';
   @extend .full-screen;
 
   backdrop-filter: blur(2px);
-  background-color: hsla($primary-hue, 5%, 20%, 0.5);
+  background-color: hsl($primary-hue, 5%, 20%);
   z-index: 1000;
 }
 
