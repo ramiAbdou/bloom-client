@@ -184,26 +184,27 @@ export const store = createStore<StoreModel>(
         // update the EntityRecord's with the updated/parsed data, we should
         // also add the references of those data entity ID's to the active
         // community.
-        const updatedCommunities = !communityReferenceColumn
-          ? {}
-          : {
-              communities: {
-                ...entities.communities,
-                byId: {
-                  ...byCommunityId,
-                  [community.id]: {
-                    ...community,
+        const updatedCommunities =
+          !communityReferenceColumn || !community[communityReferenceColumn]
+            ? {}
+            : {
+                communities: {
+                  ...entities.communities,
+                  byId: {
+                    ...byCommunityId,
+                    [community.id]: {
+                      ...community,
 
-                    // References are only stored as ID's, so we just append
-                    // the new ID's to the existing reference ID's.
-                    [communityReferenceColumn]: [
-                      ...community[communityReferenceColumn],
-                      ...parsedEntities[communityReferenceColumn].allIds
-                    ]
+                      // References are only stored as ID's, so we just append
+                      // the new ID's to the existing reference ID's.
+                      [communityReferenceColumn]: [
+                        ...community[communityReferenceColumn],
+                        ...parsedEntities[communityReferenceColumn].allIds
+                      ]
+                    }
                   }
-                }
-              } as EntityRecord<ICommunity>
-            };
+                } as EntityRecord<ICommunity>
+              };
 
         // When there is a conflict in data, we have to resolve it.
         // Specifically in the cases of objects and arrays.
