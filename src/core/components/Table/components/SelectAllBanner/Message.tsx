@@ -23,7 +23,7 @@ export default () => {
   if (numSelectedRows === numFilteredRows) {
     return (
       <p>
-        All <span>{numFilteredRows}</span> rows are selected.
+        All <span>{numFilteredRows}</span> filtered rows are selected.
       </p>
     );
   }
