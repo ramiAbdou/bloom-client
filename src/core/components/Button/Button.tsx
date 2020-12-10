@@ -17,6 +17,7 @@ export type ButtonProps = {
   noHover?: boolean;
   onClick?: Function;
   title?: string;
+  target?: string;
 };
 
 export type ButtonLoadingProps = { loadingText: string };
@@ -54,6 +55,7 @@ export default ({
   noHover,
   onClick,
   title,
+  target,
   ...props
 }: AbstractButtonProps) => {
   const css = makeClass([
@@ -73,7 +75,13 @@ export default ({
 
   if (href) {
     return (
-      <motion.a className={css} href={href} {...tapAnimation} {...props}>
+      <motion.a
+        className={css}
+        href={href}
+        target={target}
+        {...tapAnimation}
+        {...props}
+      >
         {children ?? title}
       </motion.a>
     );

@@ -21,25 +21,41 @@ export default () => {
   return (
     <div className="s-directory-modal-social-ctr">
       {facebookUrl && (
-        <Button className="s-directory-modal-social s-directory-modal-social--facebook">
+        <Button
+          className="s-directory-modal-social s-directory-modal-social--facebook"
+          href={facebookUrl}
+          target="_blank"
+        >
           <IoLogoFacebook />
         </Button>
       )}
 
       {linkedInUrl && (
-        <Button className="s-directory-modal-social s-directory-modal-social--linkedin">
+        <Button
+          className="s-directory-modal-social s-directory-modal-social--linkedin"
+          href={linkedInUrl}
+          target="_blank"
+        >
           <IoLogoLinkedin />
         </Button>
       )}
 
       {twitterUrl && (
-        <Button className="s-directory-modal-social s-directory-modal-social--twitter">
+        <Button
+          className="s-directory-modal-social s-directory-modal-social--twitter"
+          href={twitterUrl}
+          target="_blank"
+        >
           <IoLogoTwitter />
         </Button>
       )}
 
       {instagramUrl && (
-        <Button className="s-directory-modal-social">
+        <Button
+          className="s-directory-modal-social"
+          href={instagramUrl}
+          target="_blank"
+        >
           <IoLogoInstagram />
         </Button>
       )}
