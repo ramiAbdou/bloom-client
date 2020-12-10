@@ -15,7 +15,7 @@ export const GET_DIRECTORY = query({
       ]
     },
     {
-      memberships: [
+      members: [
         'bio',
         'id',
         'status',

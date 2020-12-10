@@ -11,7 +11,7 @@ import { IdProps, ModalType } from '@constants';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-import { CREATE_MEMBERSHIPS } from '../../Database.gql';
+import { CREATE_MEMBERS } from '../../Database.gql';
 import AddModalInput from '../AddModalInput';
 import AddMember, { doesInputHaveError } from './AddMember.store';
 
@@ -55,9 +55,7 @@ export default () => {
   const clearMembers = AddMember.useStoreActions((store) => store.clearMembers);
   const showErrors = AddMember.useStoreActions((store) => store.showErrors);
 
-  const [createMemberships, { error, loading }] = useMutation(
-    CREATE_MEMBERSHIPS
-  );
+  const [createMembers, { error, loading }] = useMutation(CREATE_MEMBERS);
 
   const onAdd = async () => {
     if (doesInputHaveError(members)) {
@@ -65,7 +63,7 @@ export default () => {
       return;
     }
 
-    const result = await createMemberships({
+    const result = await createMembers({
       variables: {
         members: members.map(({ admin, email, firstName, lastName }) => ({
           email,
@@ -76,13 +74,13 @@ export default () => {
       }
     });
 
-    const { createMemberships: updatedMemberships } = result.data || {};
-    if (result.error || !updatedMemberships) return;
+    const { createMembers: updatedMembers } = result.data || {};
+    if (result.error || !updatedMembers) return;
 
     storeFromFetch({
-      communityReferenceColumn: 'memberships',
-      data: { memberships: updatedMemberships },
-      schema: { memberships: [Schema.MEMBERSHIP] }
+      communityReferenceColumn: 'members',
+      data: { members: updatedMembers },
+      schema: { members: [Schema.MEMBER] }
     });
 
     showToast({ message: `${members.length} members(s) invited.` });

@@ -11,11 +11,11 @@ import ActionRow from './ActionRow';
 
 const AdminTable = () => {
   const rows: Row[] = useStoreState(({ entities, community }) => {
-    const { byId: byMembershipId } = entities.memberships;
+    const { byId: byMemberId } = entities.members;
     const { byId: byUserId } = entities.users;
 
-    return community.memberships?.reduce((acc: Row[], membershipId: string) => {
-      const { id, role, user } = byMembershipId[membershipId] ?? {};
+    return community.members?.reduce((acc: Row[], memberId: string) => {
+      const { id, role, user } = byMemberId[memberId] ?? {};
       if (!role || !id || !user) return acc;
 
       const { firstName, lastName, email } = byUserId[user] ?? {};
@@ -43,7 +43,7 @@ export default () => {
   const isOwner = useStoreState((store) => store.isOwner);
 
   const isStoreUpdated = useStoreState(
-    ({ community }) => !!community.memberships?.length
+    ({ community }) => !!community.members?.length
   );
 
   // We typically fetch the question ID from the backend, but here, we are

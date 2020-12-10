@@ -1,10 +1,10 @@
 import { Computed, computed, createContextStore } from 'easy-peasy';
 import moment from 'moment-timezone';
 
-import { IMembership } from '@store/entities';
+import { IMember } from '@store/entities';
 
 type ApplicantModel = {
-  applicant: IMembership;
+  applicant: IMember;
   createdAt: Computed<ApplicantModel, string>;
   data: Computed<ApplicantModel, any>;
   expandedData: Computed<ApplicantModel, any>;

@@ -33,7 +33,7 @@ export default ({ component, ...rest }: RouteProps) => {
 
   const isHome = rest.path === '/';
 
-  // If there are already memberships stored in the Membership state, then we
+  // If there are already members stored in the Member state, then we
   // know that the user is loaded, so show that.
   const token = new URLSearchParams(window.location.search).get('loginToken');
   if (token) return <TokenRoute token={token} />;

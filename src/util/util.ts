@@ -62,7 +62,7 @@ export const makeClass = (
 
 /**
  * Parses the entities using the normalization function, and sets the activeId
- * of the entities if the entity is a communities or memberships.
+ * of the entities if the entity is a communities or members.
  *
  * @param data Data to normalize.
  * @param schema Schema in which to normalize the data on.
@@ -75,7 +75,7 @@ export const parseEntities = (
   Object.entries(normalize(data, schema).entities).reduce(
     (acc: Record<string, any>, [key, value]) => {
       const activeId = setActiveId
-        ? ['communities', 'memberships', 'users'].includes(key) && {
+        ? ['communities', 'members', 'users'].includes(key) && {
             activeId: Object.keys(value)[0]
           }
         : {};

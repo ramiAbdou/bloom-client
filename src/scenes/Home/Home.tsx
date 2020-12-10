@@ -31,9 +31,9 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   );
 
   const isMember: boolean = useStoreState(({ entities }) => {
-    const { communities, memberships } = entities;
+    const { communities, members } = entities;
 
-    return Object.values(memberships.byId).some(
+    return Object.values(members.byId).some(
       ({ community }) =>
         encodedUrlName === communities.byId[community]?.encodedUrlName
     );

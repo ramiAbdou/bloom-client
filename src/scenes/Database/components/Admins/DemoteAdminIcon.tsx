@@ -23,14 +23,14 @@ const DemoteToMemberModal = () => {
 
   const onDemote = async () => {
     const { error: runtimeError } = await toggleAdmins({
-      variables: { membershipIds: adminIds }
+      variables: { memberIds: adminIds }
     });
 
     if (runtimeError) return;
 
     adminIds.forEach((adminId: string) => {
       updateEntity({
-        entityName: 'memberships',
+        entityName: 'members',
         id: adminId,
         updatedData: { role: null }
       });

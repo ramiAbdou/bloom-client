@@ -27,7 +27,7 @@ import {
   ICommunity,
   IEntities,
   IIntegrations,
-  IMembership,
+  IMember,
   initialEntities,
   IQuestion,
   IUser
@@ -71,15 +71,15 @@ const getHueFromRGB = ([r, g, b]: number[]): number => {
 
 type RemoveReferenceArgs = {
   entityId?: string;
-  entityName?: 'communities' | 'memberships' | 'questions' | 'users';
-  referenceEntityName: 'communities' | 'memberships' | 'questions' | 'users';
-  referenceId: 'communities' | 'memberships' | 'questions' | 'users';
+  entityName?: 'communities' | 'members' | 'questions' | 'users';
+  referenceEntityName: 'communities' | 'members' | 'questions' | 'users';
+  referenceId: 'communities' | 'members' | 'questions' | 'users';
 };
 
 type UpdateEntityArgs = {
   id: string;
-  entityName: 'communities' | 'memberships' | 'questions' | 'users';
-  updatedData?: Partial<ICommunity | IMembership | IQuestion | IUser>;
+  entityName: 'communities' | 'members' | 'questions' | 'users';
+  updatedData?: Partial<ICommunity | IMember | IQuestion | IUser>;
 };
 
 type StoreFromFetchArgs = {
@@ -96,7 +96,7 @@ type StoreModel = {
   integrations: Computed<StoreModel, IIntegrations>;
   isOwner: Computed<StoreModel, boolean>;
   loader: LoaderModel;
-  membership: Computed<StoreModel, IMembership>;
+  member: Computed<StoreModel, IMember>;
   modal: ModalModel;
   picker: PickerModel;
   removeReference: Action<StoreModel, Partial<RemoveReferenceArgs>>;
@@ -152,12 +152,12 @@ export const store = createStore<StoreModel>(
       return byId[community?.integrations];
     }),
 
-    isOwner: computed(({ membership }) => membership?.role === 'OWNER'),
+    isOwner: computed(({ member }) => member?.role === 'OWNER'),
 
     loader: loaderModel,
 
-    membership: computed(({ entities }) => {
-      const { activeId, byId } = entities.memberships;
+    member: computed(({ entities }) => {
+      const { activeId, byId } = entities.members;
       const result = byId[activeId];
 
       if (result) {

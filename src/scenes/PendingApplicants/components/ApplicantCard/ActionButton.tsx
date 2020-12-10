@@ -8,7 +8,7 @@ import {
 
 import Button from '@components/Button/Button';
 import { useStoreActions } from '@store/Store';
-import { RESPOND_TO_MEMBERSHIPS } from '../../PendingApplicants.gql';
+import { RESPOND_TO_MEMBERS } from '../../PendingApplicants.gql';
 import Applicant from './ApplicantCard.store';
 
 // In the context of the ExpandedCard, which exits the modal.
@@ -26,17 +26,17 @@ export const AcceptButton = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
 
-  const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
-    variables: { membershipIds: [applicantId], response: 'ACCEPTED' }
+  const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
+    variables: { memberIds: [applicantId], response: 'ACCEPTED' }
   });
 
   const onClick = async () => {
     // Call to the server.
-    const { data } = await respondToMemberships();
-    if (!data?.respondToMemberships) return;
+    const { data } = await respondToMembers();
+    if (!data?.respondToMembers) return;
 
     updateEntity({
-      entityName: 'memberships',
+      entityName: 'members',
       id: applicantId,
       updatedData: { status: 'ACCEPTED' }
     });
@@ -60,17 +60,17 @@ export const IgnoreButton = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
 
-  const [respondToMemberships] = useMutation(RESPOND_TO_MEMBERSHIPS, {
-    variables: { membershipIds: [applicantId], response: 'REJECTED' }
+  const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
+    variables: { memberIds: [applicantId], response: 'REJECTED' }
   });
 
   const onClick = async () => {
     // Call to the server.
-    const { data } = await respondToMemberships();
-    if (!data?.respondToMemberships) return;
+    const { data } = await respondToMembers();
+    if (!data?.respondToMembers) return;
 
     updateEntity({
-      entityName: 'memberships',
+      entityName: 'members',
       id: applicantId,
       updatedData: { status: 'REJECTED' }
     });

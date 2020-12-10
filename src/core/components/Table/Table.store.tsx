@@ -19,7 +19,7 @@ export type Column = {
 };
 
 // Each row will have a series of random question ID's as well as a unique ID
-// representing the row (ie: Membership ID).
+// representing the row (ie: Member ID).
 export interface Row extends Record<string, any> {
   id: string;
 }

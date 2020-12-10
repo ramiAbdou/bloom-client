@@ -16,7 +16,7 @@ const CommunityIcon = ({ borderColor, logoUrl }: CommunityIconProps) => {
 
 export default () => {
   const { activeId, allIds, byId } = useStoreState(({ entities }) => {
-    // const { byId: byMembershipId } = entities.memberships;
+    // const { byId: byMemberId } = entities.members;
     return entities.communities;
   });
 

@@ -8,7 +8,7 @@ export type ICommunity = {
   id: string;
   integrations: string;
   logoUrl: string;
-  memberships: string[];
+  members: string[];
   questions: string[];
   name: string;
   primaryColor: string;
@@ -24,7 +24,7 @@ export type IIntegrations = {
   zoomAccountInfo: { email: string; pmi: number; userId: string };
 };
 
-export type IMembership = {
+export type IMember = {
   allData?: { questionId: string; value: string }[];
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
@@ -72,7 +72,7 @@ export interface EntityRecord<T> {
 export type IEntities = {
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
-  memberships: EntityRecord<IMembership>;
+  members: EntityRecord<IMember>;
   questions: EntityRecord<IQuestion>;
   users: EntityRecord<IUser>;
 };
@@ -81,7 +81,7 @@ export type IEntities = {
 export const initialEntities: IEntities = {
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
-  memberships: { activeId: null, allIds: [], byId: {} },
+  members: { activeId: null, allIds: [], byId: {} },
   questions: { allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
 };

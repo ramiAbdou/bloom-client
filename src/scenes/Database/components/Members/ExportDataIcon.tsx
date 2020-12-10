@@ -21,7 +21,7 @@ export default () => {
   const data = Table.useStoreState(({ filteredData, selectedRowIds }) => {
     return selectedRowIds.map((rowId: string) => {
       // We return every piece of data in the selected row except for the
-      // ID of the row, which is just the membership ID in this case.
+      // ID of the row, which is just the member ID in this case.
       const { id: _, ...rest } = filteredData.find(({ id }) => id === rowId);
       return rest;
     });

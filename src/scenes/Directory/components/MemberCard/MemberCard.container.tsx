@@ -3,7 +3,7 @@ import { Masonry } from 'masonic';
 import { matchSorter } from 'match-sorter';
 import React from 'react';
 
-import { IMembership, IUser } from '@store/entities';
+import { IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import Directory from '../../Directory.store';
 import MemberCard from './MemberCard';
@@ -13,16 +13,16 @@ export default () => {
   const searchString = Directory.useStoreState((store) => store.searchString);
 
   const members: MemberCardData[] = useStoreState(({ entities }) => {
-    const { allIds, byId: byMembershipId } = entities.memberships;
+    const { allIds, byId: byMemberId } = entities.members;
     const { byId: byQuestionId } = entities.questions;
     const { byId: byUserId } = entities.users;
 
     if (!allIds?.length) return [];
 
     const unSortedResult: MemberCardData[] = allIds
-      ?.filter((id: string) => byMembershipId[id]?.status === 'ACCEPTED')
+      ?.filter((id: string) => byMemberId[id]?.status === 'ACCEPTED')
       ?.map((curr: string) => {
-        const { bio, cardData, id, user }: IMembership = byMembershipId[curr];
+        const { bio, cardData, id, user }: IMember = byMemberId[curr];
 
         const {
           email,

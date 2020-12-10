@@ -16,8 +16,8 @@ export default ({ component, ...rest }: RouteProps) => {
 
   const isAdmin: boolean = useStoreState(({ entities }) => {
     const { byId: byCommunity } = entities.communities;
-    const { byId: byMembership } = entities.memberships;
-    return Object.values(byMembership).some(
+    const { byId: byMember } = entities.members;
+    return Object.values(byMember).some(
       ({ community, role }) =>
         !!role && encodedUrlName === byCommunity[community]?.encodedUrlName
     );

@@ -7,8 +7,8 @@ import ApplicationForm from './components/Form';
 
 /**
  * Controls sign-up process and has two different routes:
- * - Membership Application Form
- * - Membership Application Form Confirmation
+ * - Member Application Form
+ * - Member Application Form Confirmation
  */
 export default () => (
   <Application.Provider>

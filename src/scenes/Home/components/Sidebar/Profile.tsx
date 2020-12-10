@@ -20,8 +20,8 @@ const PictureContainer = () => {
 
 export default () => {
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
-  const type = useStoreState(({ membership }) => membership.type.name);
-  const role = useStoreState(({ membership }) => membership.role);
+  const type = useStoreState(({ member }) => member.type.name);
+  const role = useStoreState(({ member }) => member.role);
 
   const fullName = useStoreState(
     ({ user }) => `${user.firstName} ${user.lastName}`

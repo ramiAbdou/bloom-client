@@ -9,8 +9,8 @@ import Directory from '../Directory.store';
 export default memo(({ loading }: LoadingProps) => {
   const [value, setValue] = useState('');
 
-  const numMemberships = useStoreState(
-    ({ entities }) => entities.memberships?.allIds?.length
+  const numMembers = useStoreState(
+    ({ entities }) => entities.members?.allIds?.length
   );
 
   const setSearchString = Directory.useStoreActions(
@@ -37,7 +37,7 @@ export default memo(({ loading }: LoadingProps) => {
 
       {!loading && (
         <SearchBar
-          placeholder={`Search ${numMemberships} members...`}
+          placeholder={`Search ${numMembers} members...`}
           value={value}
           onChange={onChange}
           onClear={onClear}

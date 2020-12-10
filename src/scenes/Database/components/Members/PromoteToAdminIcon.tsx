@@ -19,7 +19,7 @@ const PromoteToAdminModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const membershipIds = Table.useStoreState(
+  const memberIds = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
 
@@ -27,18 +27,18 @@ const PromoteToAdminModal = () => {
   const [toggleAdmins, { loading }] = useMutation(TOGGLE_ADMINS);
 
   const onPromote = async () => {
-    const result = await toggleAdmins({ variables: { membershipIds } });
+    const result = await toggleAdmins({ variables: { memberIds } });
     const data = result?.data?.toggleAdmins;
 
     if (!data) return;
 
     storeFromFetch({
-      data: { memberships: data },
-      schema: { memberships: [Schema.MEMBERSHIP] }
+      data: { members: data },
+      schema: { members: [Schema.MEMBER] }
     });
 
     showToast({
-      message: `${membershipIds.length} member(s) promoted to admin.`
+      message: `${memberIds.length} member(s) promoted to admin.`
     });
 
     setTimeout(closeModal, 0);
@@ -69,7 +69,7 @@ const PromoteToAdminModal = () => {
 };
 
 export default () => {
-  const membershipId = useStoreState(({ membership }) => membership.id);
+  const memberId = useStoreState(({ member }) => member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const tooManySelected = Table.useStoreState(
@@ -77,7 +77,7 @@ export default () => {
   );
 
   const selfSelected = Table.useStoreState(({ selectedRowIds }) =>
-    selectedRowIds.includes(membershipId)
+    selectedRowIds.includes(memberId)
   );
 
   const tooltip: string = takeFirst([

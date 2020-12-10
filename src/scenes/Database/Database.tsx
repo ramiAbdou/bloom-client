@@ -28,11 +28,11 @@ const FetchDatabase = () => {
     if (!result) return;
 
     // After fetching the member database, we update both the members AND
-    // the membership questions.
+    // the member questions.
     storeFromFetch({
       data: {
         ...result,
-        memberships: result.memberships,
+        members: result.members,
         questions: result.questions
       },
       schema: Schema.COMMUNITY

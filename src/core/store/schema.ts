@@ -11,7 +11,7 @@ import { schema } from 'normalizr';
 
 const Community = new schema.Entity('communities', {});
 const Integrations = new schema.Entity('integrations', {});
-const Membership = new schema.Entity('memberships', {});
+const Member = new schema.Entity('members', {});
 const Question = new schema.Entity('questions', {});
 const User = new schema.Entity('users', {});
 
@@ -20,12 +20,12 @@ const User = new schema.Entity('users', {});
 
 Community.define({
   integrations: Integrations,
-  memberships: [Membership],
+  members: [Member],
   questions: [Question]
 });
 
-Membership.define({ community: Community, user: User });
-User.define({ memberships: [Membership] });
+Member.define({ community: Community, user: User });
+User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
@@ -33,7 +33,6 @@ User.define({ memberships: [Membership] });
 export const Schema = {
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
-  MEMBERSHIP: Membership,
-  MEMBERSHIP_QUESTION: Question,
+  MEMBER: Member,
   USER: User
 };

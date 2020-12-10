@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
 import Table, { Column, Row } from '@components/Table/Table.store';
-import { IMembership } from '@store/entities';
+import { IMember } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { RENAME_QUESTION } from '../../Database.gql';
@@ -13,11 +13,11 @@ export default () => {
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: Row[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.memberships;
+    const { byId } = entities.members;
 
-    return community.memberships?.reduce((acc: Row[], id: string) => {
+    return community.members?.reduce((acc: Row[], id: string) => {
       const result: Row = { id };
-      const { allData, status }: IMembership = byId[id];
+      const { allData, status }: IMember = byId[id];
 
       if (['REJECTED', 'PENDING'].includes(status) || !allData) return acc;
 

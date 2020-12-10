@@ -1,19 +1,19 @@
 import { mutation, query } from 'gql-query-builder';
 
-export const CREATE_MEMBERSHIPS = mutation({
+export const CREATE_MEMBERS = mutation({
   fields: [
     'id',
     'role',
     'status',
     { user: ['id', 'firstName', 'lastName', 'email'] }
   ],
-  operation: 'createMemberships',
+  operation: 'createMembers',
   variables: { members: { required: true, type: '[NewMemberInput!]' } }
 }).query;
 
-export const DELETE_MEMBERSHIPS = mutation({
-  operation: 'deleteMemberships',
-  variables: { membershipIds: { required: true, type: '[String!]' } }
+export const DELETE_MEMBERS = mutation({
+  operation: 'deleteMembers',
+  variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
 
 export const GET_DATABASE = query({
@@ -21,7 +21,7 @@ export const GET_DATABASE = query({
     'id',
     { questions: ['category', 'id', 'title', 'type', 'version'] },
     {
-      memberships: [
+      members: [
         'id',
         'role',
         'status',
@@ -46,5 +46,5 @@ export const RENAME_QUESTION = mutation({
 export const TOGGLE_ADMINS = mutation({
   fields: ['id', 'role'],
   operation: 'toggleAdmins',
-  variables: { membershipIds: { required: true, type: '[String!]' } }
+  variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;

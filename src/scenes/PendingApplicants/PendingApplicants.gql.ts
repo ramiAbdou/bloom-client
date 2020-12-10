@@ -19,7 +19,7 @@ export const GET_PENDING_APPLICATIONS = query({
       ]
     },
     {
-      memberships: [
+      members: [
         'id',
         'createdAt',
         'status',
@@ -30,10 +30,10 @@ export const GET_PENDING_APPLICATIONS = query({
   operation: 'getApplicants'
 }).query;
 
-export const RESPOND_TO_MEMBERSHIPS = mutation({
-  operation: 'respondToMemberships',
+export const RESPOND_TO_MEMBERS = mutation({
+  operation: 'respondToMembers',
   variables: {
-    membershipIds: { required: true, type: '[String!]' },
+    memberIds: { required: true, type: '[String!]' },
     response: { required: true }
   }
 }).query;

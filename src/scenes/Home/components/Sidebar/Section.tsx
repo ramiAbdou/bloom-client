@@ -14,9 +14,9 @@ export default memo(({ links, title }: LinkSectionProps) => {
   const isAdmin: boolean = useStoreState(
     ({ community: { name }, entities }) => {
       const { byId: byCommunity } = entities.communities;
-      const { byId: byMembership } = entities.memberships;
+      const { byId: byMember } = entities.members;
 
-      return Object.values(byMembership).some(
+      return Object.values(byMember).some(
         ({ community, role }) => !!role && name === byCommunity[community]?.name
       );
     }

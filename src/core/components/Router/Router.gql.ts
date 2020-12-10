@@ -7,7 +7,7 @@ export const GET_USER = query({
     'firstName',
     'lastName',
     {
-      memberships: [
+      members: [
         {
           community: [
             'id',

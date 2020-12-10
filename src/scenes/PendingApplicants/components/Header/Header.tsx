@@ -7,10 +7,10 @@ import { AcceptAllButton, IgnoreAllButton } from './HeaderButton';
 
 export default memo(({ loading }: LoadingProps) => {
   const title = useStoreState(({ community, entities }) => {
-    const { byId } = entities.memberships;
+    const { byId } = entities.members;
 
-    const length = community?.memberships?.filter((membershipId: string) => {
-      return byId[membershipId]?.status === 'PENDING';
+    const length = community?.members?.filter((memberId: string) => {
+      return byId[memberId]?.status === 'PENDING';
     }).length;
 
     let result = 'Pending Applicants';

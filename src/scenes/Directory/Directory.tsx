@@ -18,10 +18,10 @@ export default () => {
     if (!result) return;
 
     // Destructure the result data.
-    const { memberships, questions } = result;
+    const { members, questions } = result;
 
     storeFromFetch({
-      data: { ...result, members: memberships, questions },
+      data: { ...result, members, questions },
       schema: Schema.COMMUNITY
     });
   }, [data]);

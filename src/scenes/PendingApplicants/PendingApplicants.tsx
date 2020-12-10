@@ -1,7 +1,7 @@
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect, useMemo } from 'react';
 
-import { IMembership } from '@store/entities';
+import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import ApplicantCard from './components/ApplicantCard/ApplicantCard';
@@ -19,26 +19,26 @@ export default () => {
   const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
 
   const numApplicants = useStoreState(({ community, entities }) => {
-    const { byId } = entities.memberships;
-    return community?.memberships?.filter((membershipId: string) => {
-      return byId[membershipId]?.status === 'PENDING';
+    const { byId } = entities.members;
+    return community?.members?.filter((memberId: string) => {
+      return byId[memberId]?.status === 'PENDING';
     }).length;
   });
 
-  const applicants: IMembership[] = useStoreState(({ entities, community }) => {
-    const { byId: byMembership } = entities.memberships;
+  const applicants: IMember[] = useStoreState(({ entities, community }) => {
+    const { byId: byMember } = entities.members;
     const { byId: byQuestion } = entities.questions;
 
-    return community.memberships?.reduce(
-      (acc: IMembership[], membershipId: string) => {
-        const membership = byMembership[membershipId];
-        if (membership.status !== 'PENDING') return acc;
+    return community.members?.reduce(
+      (acc: IMember[], memberId: string) => {
+        const member = byMember[memberId];
+        if (member.status !== 'PENDING') return acc;
 
         return [
           ...acc,
           {
-            ...membership,
-            applicantData: membership.applicantData.map(
+            ...member,
+            applicantData: member.applicantData.map(
               ({ questionId, value }) => ({
                 question: byQuestion[questionId],
                 value
