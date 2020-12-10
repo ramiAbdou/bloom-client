@@ -6,7 +6,7 @@ import Button from '@components/Button/Button';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
-import ExpandedMemberCard from '../ExpandedMemberCard/ExpandedMemberCard';
+import MemberModal from '../MemberModal/MemberModal';
 import MemberCard, { MemberCardData } from './MemberCard.store';
 
 const ProfilePicture = () => {
@@ -16,9 +16,6 @@ const ProfilePicture = () => {
   );
 
   const initials = firstName && lastName ? `${firstName[0]}${lastName[0]}` : '';
-
-  // pictureUrl =
-  //   'https://pbs.twimg.com/profile_images/1303060784289730560/femQ8Zek_400x400.jpg';
 
   return (
     <div>
@@ -57,7 +54,7 @@ const MemberCardContent = () => {
         </div>
       </Button>
 
-      <ExpandedMemberCard id={`${ModalType.DIRECTORY_CARD}-${id}`} />
+      <MemberModal id={`${ModalType.DIRECTORY_CARD}-${id}`} />
     </>
   );
 };

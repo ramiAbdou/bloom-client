@@ -17,19 +17,18 @@ export default () => {
     const result = data?.getDirectory;
     if (!result) return;
 
+    // Destructure the result data.
+    const { memberships, questions } = result;
+
     storeFromFetch({
-      data: {
-        ...result,
-        members: result.memberships,
-        questions: result.questions
-      },
+      data: { ...result, members: memberships, questions },
       schema: Schema.COMMUNITY
     });
   }, [data]);
 
   return (
     <DirectoryStore.Provider>
-      <div className="s-directory">
+      <div className="s-home-header flex-acsb">
         <Header loading={loading} />
         <div className="s-home-content">
           {!loading && <MemberCardContainer />}

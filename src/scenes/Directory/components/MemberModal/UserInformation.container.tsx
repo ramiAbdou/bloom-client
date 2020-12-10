@@ -5,16 +5,13 @@ import { IoClose, IoMail } from 'react-icons/io5';
 import Button from '@components/Button/Button';
 import { useStoreActions } from '@store/Store';
 import MemberCard from '../MemberCard/MemberCard.store';
-import SocialMedia from './SocialMedia.container';
+import SocialMediaContainer from './SocialMedia.container';
 
 const ProfilePicture = () => {
   const { pictureUrl, firstName, lastName } = MemberCard.useStoreState(
     (store) => store.member,
     deepequal
   );
-
-  // pictureUrl =
-  //   'https://pbs.twimg.com/profile_images/1303060784289730560/femQ8Zek_400x400.jpg';
 
   const initials = firstName[0] + lastName[0];
 
@@ -71,6 +68,6 @@ export default () => (
   <div className="s-directory-modal-user-ctr">
     <Header />
     <PersonalInformation />
-    <SocialMedia />
+    <SocialMediaContainer />
   </div>
 );

@@ -6,7 +6,7 @@ import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import { makeClass } from '@util/util';
 import MemberCard from '../MemberCard/MemberCard.store';
-import UserInformation from './UserInformation.container';
+import UserInformationContainer from './UserInformation.container';
 
 const Question = ({ title, type, value }) => {
   const css = makeClass([
@@ -46,7 +46,7 @@ const CommunityData = () => {
 
 export default ({ id }: IdProps) => (
   <Modal className="s-directory-modal" id={id}>
-    <UserInformation />
+    <UserInformationContainer />
     <Separator style={{ marginBottom: 24, marginTop: 24 }} />
     <CommunityData />
   </Modal>
