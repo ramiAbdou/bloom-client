@@ -5,7 +5,7 @@ import Body from './components/Body';
 import ColumnPicker from './components/ColumnPicker/ColumnPicker';
 import Header from './components/Header';
 import Pagination from './components/Pagination/Pagination';
-import SelectedBanner from './components/SelectedBanner';
+import SelectAllBanner from './components/SelectAllBanner';
 import Table from './Table.store';
 
 const TableContent = () => {
@@ -50,7 +50,7 @@ export default memo(({ onRenameColumn }: TableProps) => {
 
   return (
     <>
-      {isAllPageSelected && <SelectedBanner />}
+      {isAllPageSelected && <SelectAllBanner />}
       <TableContent />
       <Pagination />
       <ColumnPicker />

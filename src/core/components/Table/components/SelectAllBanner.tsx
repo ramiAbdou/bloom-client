@@ -18,9 +18,9 @@ const BannerButton = () => {
     [isAllSelected, 'Clear Selection'],
     [
       numMembers === numFilteredMembers,
-      `Select All ${numMembers} Members in Database`
+      `Select All ${numMembers} Rows in Database`
     ],
-    `Select All ${numFilteredMembers} Filtered Members`
+    `Select All ${numFilteredMembers} Filtered Rows`
   ]);
 
   return <UnderlineButton title={title} onClick={toggleAllRows} />;
@@ -35,11 +35,17 @@ const AllMembersSelected = () => {
   );
 };
 
-const AllMembersOnPageSelected = () => (
-  <p>
-    All <span>100</span> rows on this page are selected.
-  </p>
-);
+const AllMembersOnPageSelected = () => {
+  const numRowsSelected = Table.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds.length
+  );
+
+  return (
+    <p>
+      All <span>{numRowsSelected}</span> rows on this page are selected.
+    </p>
+  );
+};
 
 const BannerMessage = () => {
   const allMembersAreSelected = Table.useStoreState(

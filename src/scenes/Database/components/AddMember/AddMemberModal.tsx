@@ -79,8 +79,6 @@ export default () => {
     const { createMemberships: updatedMemberships } = result.data || {};
     if (result.error || !updatedMemberships) return;
 
-    console.log(updatedMemberships);
-
     storeFromFetch({
       communityReferenceColumn: 'memberships',
       data: { memberships: updatedMemberships },
