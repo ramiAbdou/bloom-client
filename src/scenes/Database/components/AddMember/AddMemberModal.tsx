@@ -44,7 +44,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
 
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const members = AddMember.useStoreState((store) => store.members);
 
@@ -77,7 +77,9 @@ export default () => {
     const { createMembers: updatedMembers } = result.data || {};
     if (result.error || !updatedMembers) return;
 
-    storeFromFetch({
+    console.log(updatedMembers);
+
+    mergeEntities({
       communityReferenceColumn: 'members',
       data: { members: updatedMembers },
       schema: { members: [Schema.MEMBER] }

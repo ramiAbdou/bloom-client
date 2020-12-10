@@ -73,7 +73,7 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
   const logoUrl = useStoreState(({ community }) => community?.logoUrl);
   const title = useStoreState(({ community }) => community?.applicationTitle);
 
@@ -97,7 +97,7 @@ export default () => {
     const { getApplication: result } = data || {};
     if (!result) return;
 
-    storeFromFetch({
+    mergeEntities({
       data: {
         ...result,
         applicationDescription: result.application.description,

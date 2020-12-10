@@ -16,7 +16,7 @@ const NoPendingApplicantsMessage = () => (
 );
 
 export default () => {
-  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
 
   const numApplicants = useStoreState(({ community, entities }) => {
     const { byId } = entities.members;
@@ -57,7 +57,7 @@ export default () => {
     const result = data?.getApplicants;
     if (!result) return;
 
-    storeFromFetch({
+    mergeEntities({
       data: { questions: result.application.questions, ...result },
       schema: Schema.COMMUNITY
     });

@@ -22,7 +22,7 @@ export const BackButton = () => {
 };
 
 export const AcceptButton = () => {
-  const updateEntity = useStoreActions((store) => store.updateEntity);
+  const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
 
@@ -35,9 +35,9 @@ export const AcceptButton = () => {
     const { data } = await respondToMembers();
     if (!data?.respondToMembers) return;
 
-    updateEntity({
+    updateEntities({
       entityName: 'members',
-      id: applicantId,
+      ids: [applicantId],
       updatedData: { status: 'ACCEPTED' }
     });
 
@@ -56,7 +56,7 @@ export const AcceptButton = () => {
 };
 
 export const IgnoreButton = () => {
-  const updateEntity = useStoreActions((store) => store.updateEntity);
+  const updateEntities = useStoreActions((store) => store.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
 
@@ -69,9 +69,9 @@ export const IgnoreButton = () => {
     const { data } = await respondToMembers();
     if (!data?.respondToMembers) return;
 
-    updateEntity({
+    updateEntities({
       entityName: 'members',
-      id: applicantId,
+      ids: [applicantId],
       updatedData: { status: 'REJECTED' }
     });
 

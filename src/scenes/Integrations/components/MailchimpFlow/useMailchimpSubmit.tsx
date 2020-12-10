@@ -14,7 +14,7 @@ export default (): UseClientRequestResult<any, object> => {
     ({ integrations }) => integrations?.mailchimpLists ?? []
   );
 
-  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const mailchimpListName = items.find(
@@ -41,7 +41,7 @@ export default (): UseClientRequestResult<any, object> => {
 
       // If the function is successful, update the entities with the new
       // Mailchimp information and close the modal.
-      storeFromFetch({
+      mergeEntities({
         data: { ...data.updateMailchimpListId },
         schema: Schema.INTEGRATIONS
       });

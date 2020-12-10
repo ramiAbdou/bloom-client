@@ -9,7 +9,7 @@ import { GET_DIRECTORY } from './Directory.gql';
 import DirectoryStore from './Directory.store';
 
 export default () => {
-  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
 
   const { data, loading } = useQuery(GET_DIRECTORY);
 
@@ -20,7 +20,7 @@ export default () => {
     // Destructure the result data.
     const { members, questions } = result;
 
-    storeFromFetch({
+    mergeEntities({
       data: { ...result, members, questions },
       schema: Schema.COMMUNITY
     });

@@ -142,12 +142,12 @@ const Cards = () => {
 };
 
 export default () => {
-  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
   const { data, loading } = useQuery(GET_INTEGRATIONS);
 
   useEffect(() => {
     if (data?.getIntegrations) {
-      storeFromFetch({
+      mergeEntities({
         data: { ...data.getIntegrations },
         schema: Schema.COMMUNITY
       });

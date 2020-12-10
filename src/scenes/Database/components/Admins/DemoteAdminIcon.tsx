@@ -8,6 +8,7 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
+import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { TOGGLE_ADMINS } from '../../Database.gql';
@@ -16,24 +17,20 @@ import DatabaseAction from '../DatabaseAction';
 const DemoteToMemberModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const updateEntity = useStoreActions((store) => store.updateEntity);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const [toggleAdmins, { error, loading }] = useMutation(TOGGLE_ADMINS);
 
   const onDemote = async () => {
-    const { error: runtimeError } = await toggleAdmins({
-      variables: { memberIds: adminIds }
-    });
+    const result = await toggleAdmins({ variables: { memberIds: adminIds } });
+    const data = result?.data?.toggleAdmins;
 
-    if (runtimeError) return;
+    if (!data) return;
 
-    adminIds.forEach((adminId: string) => {
-      updateEntity({
-        entityName: 'members',
-        id: adminId,
-        updatedData: { role: null }
-      });
+    mergeEntities({
+      data: { members: data },
+      schema: { members: [Schema.MEMBER] }
     });
 
     showToast({
@@ -41,7 +38,7 @@ const DemoteToMemberModal = () => {
       type: 'PESSIMISTIC'
     });
 
-    setTimeout(() => closeModal(), 0);
+    setTimeout(closeModal, 0);
   };
 
   const message = getGraphQLError(error);

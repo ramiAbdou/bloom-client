@@ -40,7 +40,7 @@ const AddAdminInput = memo(({ id }: IdProps) => {
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
   const admins = AddAdmin.useStoreState((store) => store.admins);
 
   const addEmptyMember = AddAdmin.useStoreActions(
@@ -75,7 +75,7 @@ export default () => {
     // API should return back the updated members and we just update the
     // state accordingly with those new admins. To load new data would require
     // a refresh.
-    storeFromFetch({
+    mergeEntities({
       communityReferenceColumn: 'members',
       data: { members: updatedMembers },
       schema: { members: [Schema.MEMBER] }

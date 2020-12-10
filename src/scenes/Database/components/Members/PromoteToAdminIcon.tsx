@@ -15,13 +15,11 @@ import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const PromoteToAdminModal = () => {
-  const storeFromFetch = useStoreActions((store) => store.storeFromFetch);
+  const mergeEntities = useStoreActions((store) => store.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const memberIds = Table.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const { push } = useHistory();
   const [toggleAdmins, { loading }] = useMutation(TOGGLE_ADMINS);
@@ -32,7 +30,7 @@ const PromoteToAdminModal = () => {
 
     if (!data) return;
 
-    storeFromFetch({
+    mergeEntities({
       data: { members: data },
       schema: { members: [Schema.MEMBER] }
     });

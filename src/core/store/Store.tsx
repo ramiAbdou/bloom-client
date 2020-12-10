@@ -24,6 +24,7 @@ import { PickerModel, pickerModel } from '@components/Picker/Picker.store';
 import { ToastModel, toastModel } from '@components/Toast/Toast.store';
 import { parseEntities } from '@util/util';
 import {
+  EntityRecord,
   ICommunity,
   IEntities,
   IIntegrations,
@@ -69,20 +70,13 @@ const getHueFromRGB = ([r, g, b]: number[]): number => {
   return hue < 0 ? hue + 360 : Math.round(hue);
 };
 
-type RemoveReferenceArgs = {
-  entityId?: string;
-  entityName?: 'communities' | 'members' | 'questions' | 'users';
-  referenceEntityName: 'communities' | 'members' | 'questions' | 'users';
-  referenceId: 'communities' | 'members' | 'questions' | 'users';
-};
-
-type UpdateEntityArgs = {
-  id: string;
+type UpdateEntitiesArgs = {
+  ids: string[];
   entityName: 'communities' | 'members' | 'questions' | 'users';
   updatedData?: Partial<ICommunity | IMember | IQuestion | IUser>;
 };
 
-type StoreFromFetchArgs = {
+type MergeEntitiesArgs = {
   communityReferenceColumn?: string;
   data?: any;
   schema?: Schema<any>;
@@ -97,13 +91,12 @@ type StoreModel = {
   isOwner: Computed<StoreModel, boolean>;
   loader: LoaderModel;
   member: Computed<StoreModel, IMember>;
+  mergeEntities: Action<StoreModel, MergeEntitiesArgs>;
   modal: ModalModel;
   picker: PickerModel;
-  removeReference: Action<StoreModel, Partial<RemoveReferenceArgs>>;
   toast: ToastModel;
   updateCommunity: Action<StoreModel, Partial<ICommunity>>;
-  updateEntity: Action<StoreModel, UpdateEntityArgs>;
-  storeFromFetch: Action<StoreModel, StoreFromFetchArgs>;
+  updateEntities: Action<StoreModel, UpdateEntitiesArgs>;
   user: Computed<StoreModel, IUser>;
 };
 
@@ -170,70 +163,27 @@ export const store = createStore<StoreModel>(
       return result;
     }),
 
-    modal: modalModel,
-
-    picker: pickerModel,
-
-    removeReference: action(
-      (
-        { entities, ...state },
-        {
-          entityName,
-          entityId,
-          referenceEntityName,
-          referenceId
-        }: RemoveReferenceArgs
-      ) => {
-        entityName = entityName ?? 'communities';
-        entityId = entityId ?? entities.communities.activeId;
-
-        const previousEntityRecord = entities[entityName];
-        const previousEntityById = previousEntityRecord.byId;
-        const previousEntity = previousEntityById[entityId];
-
-        return {
-          ...state,
-          entities: {
-            ...entities,
-            [entityName]: {
-              ...previousEntityRecord,
-              byId: {
-                ...previousEntityById,
-                [entityId]: {
-                  ...previousEntity,
-                  [referenceEntityName]: previousEntity[
-                    referenceEntityName
-                  ].filter((id: string) => id !== referenceId)
-                }
-              }
-            }
-          }
-        };
-      }
-    ),
-
     /**
      * Main update function that updates all entities (front-end DB). Uses
      * the lodash deep merge function to make the updates.
      */
-    storeFromFetch: action(
+    mergeEntities: action(
       (
-        { entities, ...state },
+        { community, entities, ...state },
         {
           communityReferenceColumn,
           data,
           schema,
           setActiveId
-        }: StoreFromFetchArgs
+        }: MergeEntitiesArgs
       ) => {
-        const {
-          byId: byCommunityId,
-          activeId: activeCommunityId
-        } = entities.communities;
-
-        const activeCommunity = byCommunityId[activeCommunityId];
+        const { byId: byCommunityId } = entities.communities;
         const parsedEntities = parseEntities(data, schema, setActiveId);
 
+        // If there is a communityReferenceColumn, then not only should we
+        // update the EntityRecord's with the updated/parsed data, we should
+        // also add the references of those data entity ID's to the active
+        // community.
         const updatedCommunities = !communityReferenceColumn
           ? {}
           : {
@@ -241,42 +191,63 @@ export const store = createStore<StoreModel>(
                 ...entities.communities,
                 byId: {
                   ...byCommunityId,
-                  [activeCommunityId]: {
-                    ...activeCommunity,
+                  [community.id]: {
+                    ...community,
+
+                    // References are only stored as ID's, so we just append
+                    // the new ID's to the existing reference ID's.
                     [communityReferenceColumn]: [
-                      ...activeCommunity[communityReferenceColumn],
+                      ...community[communityReferenceColumn],
                       ...parsedEntities[communityReferenceColumn].allIds
                     ]
                   }
                 }
-              }
+              } as EntityRecord<ICommunity>
             };
+
+        // When there is a conflict in data, we have to resolve it.
+        // Specifically in the cases of objects and arrays.
+        // eslint-disable-next-line consistent-return
+        const mergeStrategy = (target: any, source: any) => {
+          if (Array.isArray(target) && Array.isArray(source)) {
+            // Strip away all the duplicate values from the source array
+            // that are already in the target array.
+            const updatedSource = source.filter(
+              (value: any) => !target.includes(value)
+            );
+
+            // Concat the source to the target.
+            return target.concat(updatedSource);
+          }
+
+          // If two objects have the same ID, it means they are the same
+          // entity, so we copy over the new values from the source to the
+          // target.
+          if (
+            typeof target === 'object' &&
+            typeof source === 'object' &&
+            !!target?.id &&
+            target?.id === source?.id
+          ) {
+            return { ...target, ...source };
+          }
+        };
 
         return {
           ...state,
+          community,
           entities: mergeWith(
             { ...entities, ...updatedCommunities },
             parsedEntities,
-            // eslint-disable-next-line consistent-return
-            (target: any, source: any) => {
-              if (Array.isArray(target) && Array.isArray(source)) {
-                const updatedSource = source.filter(
-                  (value: any) => !target.includes(value)
-                );
-
-                return target.concat(updatedSource);
-              }
-
-              if (typeof target === 'object' && typeof source === 'object') {
-                if (target?.id && source?.id && target.id === source.id) {
-                  return { ...target, ...source };
-                }
-              }
-            }
+            mergeStrategy
           ) as IEntities
         };
       }
     ),
+
+    modal: modalModel,
+
+    picker: pickerModel,
 
     toast: toastModel,
 
@@ -301,24 +272,34 @@ export const store = createStore<StoreModel>(
       }
     ),
 
-    updateEntity: action(
+    /**
+     * Updates a specific entity, but does not change any reference values
+     * as it's not needed.
+     */
+    updateEntities: action(
       (
         { entities, ...state },
-        { entityName, id, updatedData }: UpdateEntityArgs
+        { entityName, ids, updatedData }: UpdateEntitiesArgs
       ) => {
-        const previousEntity = entities[entityName];
-        const previousEntityById = previousEntity.byId;
+        const { byId, allIds, activeId } = entities[entityName];
+
+        const updatedById = ids.reduce(
+          (acc: Record<string, any>, id: string) => {
+            return { ...acc, [id]: { ...byId[id], ...updatedData } };
+          },
+          {}
+        );
+
+        // console.
 
         return {
           ...state,
           entities: {
             ...entities,
             [entityName]: {
-              ...previousEntity,
-              byId: {
-                ...previousEntityById,
-                [id]: { ...previousEntityById[id], ...updatedData }
-              }
+              activeId,
+              allIds,
+              byId: { ...byId, ...updatedById }
             }
           }
         };

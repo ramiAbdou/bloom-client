@@ -9,9 +9,9 @@ import { RESPOND_TO_MEMBERS } from '../../PendingApplicants.gql';
 type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
 
 const HeaderButton = ({ response }: HeaderButtonProps) => {
-  const updateEntity = useStoreActions((store) => store.updateEntity);
+  const updateEntities = useStoreActions((store) => store.updateEntities);
 
-  const pendingApplicants: string[] = useStoreState(
+  const pendingApplicantIds: string[] = useStoreState(
     ({ community, entities }) => {
       const { byId } = entities.members;
       return community?.members?.filter((memberId: string) => {
@@ -21,7 +21,7 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
   );
 
   const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
-    variables: { memberIds: pendingApplicants, response }
+    variables: { memberIds: pendingApplicantIds, response }
   });
 
   const onClick = async () => {
@@ -29,14 +29,12 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
     const { data } = await respondToMembers();
     if (!data?.respondToMembers) return;
 
-    pendingApplicants.forEach((id: string) => {
-      updateEntity({
-        entityName: 'members',
-        id,
-        updatedData: {
-          status: response === 'ACCEPTED' ? 'ACCEPTED' : 'REJECTED'
-        }
-      });
+    updateEntities({
+      entityName: 'members',
+      ids: pendingApplicantIds,
+      updatedData: {
+        status: response === 'ACCEPTED' ? 'ACCEPTED' : 'REJECTED'
+      }
     });
   };
 
@@ -44,7 +42,7 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
     return (
       <PrimaryButton
         className="s-applicants-accept-all"
-        disabled={!pendingApplicants?.length}
+        disabled={!pendingApplicantIds?.length}
         title="Accept All"
         onClick={onClick}
       />
@@ -53,7 +51,7 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
 
   return (
     <OutlineButton
-      disabled={!pendingApplicants?.length}
+      disabled={!pendingApplicantIds?.length}
       title="Ignore All"
       onClick={onClick}
     />
