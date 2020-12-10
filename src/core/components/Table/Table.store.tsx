@@ -134,7 +134,10 @@ export const tableModel: TableModel = {
 
   range: computed(({ filteredData: { length }, page }) => {
     const floor = page * 100;
-    const ceiling = length - floor >= 99 ? floor + 100 : length;
+
+    // If the page is the last page, then the filteredData length - floor will
+    // be less than 100, in which case we just show the length as the ceiling.
+    const ceiling = length - floor >= 100 ? floor + 100 : length;
     return [floor, ceiling];
   }),
 
@@ -229,11 +232,11 @@ export const tableModel: TableModel = {
    * Updates the data by setting isSelected to true where the ID of the row
    * matches the ID of the data (row).
    */
-  toggleAllRows: action((state) => ({
+  toggleAllRows: action(({ isAllSelected, filteredData, ...state }) => ({
     ...state,
-    selectedRowIds: !state.isAllSelected
-      ? state.filteredData.map(({ id }) => id)
-      : []
+    filteredData,
+    isAllSelected,
+    selectedRowIds: !isAllSelected ? filteredData.map(({ id }) => id) : []
   })),
 
   /**

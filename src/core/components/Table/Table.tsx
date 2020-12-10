@@ -5,7 +5,7 @@ import Body from './components/Body';
 import ColumnPicker from './components/ColumnPicker/ColumnPicker';
 import Header from './components/Header';
 import Pagination from './components/Pagination/Pagination';
-import SelectAllBanner from './components/SelectAllBanner';
+import SelectAllBanner from './components/SelectAllBanner/SelectAllBanner';
 import Table from './Table.store';
 
 const TableContent = () => {
