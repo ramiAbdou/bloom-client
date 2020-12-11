@@ -5,7 +5,7 @@ import Button from '@components/Button/Button';
 import Checkbox from '@components/Elements/Checkbox';
 import Input from '@components/Elements/Input';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import { IdProps } from '@constants';
+import { Function, IdProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
 import { AddMemberData } from './AddMember/AddMember.store';
 
@@ -16,15 +16,15 @@ interface AddModalInputProps extends IdProps {
   // admin field.
   member: AddMemberData;
 
+  onDelete: Function;
   showAdminCheckbox?: boolean;
-
   toggleAdmin?: any;
-
   updateMember?: any;
 }
 
 export default memo(
   ({
+    onDelete,
     id,
     isShowingErrors,
     member,
@@ -62,7 +62,7 @@ export default memo(
     return (
       <div className={css}>
         <div>
-          <Button>
+          <Button onClick={onDelete}>
             <IoTrash />
           </Button>
 

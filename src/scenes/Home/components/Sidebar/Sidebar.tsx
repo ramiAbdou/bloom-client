@@ -11,8 +11,6 @@ import {
 } from 'react-icons/io5';
 
 import Separator from '@components/Misc/Separator';
-import AddMemberStore from '@scenes/Database/components/AddMember/AddMember.store';
-import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Home, { LinkOptions } from '../../Home.store';
 import SidebarCommunityContainer from './Community.container';
@@ -83,8 +81,5 @@ export default () => (
   <div className="s-home-sidebar">
     <SidebarCommunityContainer />
     <SidebarContent />
-    <AddMemberStore.Provider>
-      <AddMemberModal />
-    </AddMemberStore.Provider>
   </div>
 );

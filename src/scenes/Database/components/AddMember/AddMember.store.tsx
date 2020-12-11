@@ -29,6 +29,7 @@ type UpdateMemberArgs = {
 export type AddMemberModel = {
   addEmptyMember: Action<AddMemberModel>;
   clearMembers: Action<AddMemberModel>;
+  deleteMember: Action<AddMemberModel, string>;
   getMember: Computed<AddMemberModel, (id: string) => AddMemberData, {}>;
   members: AddMemberData[];
   isShowingErrors: boolean;
@@ -56,6 +57,7 @@ const generateEmptyMember = (): AddMemberData => ({
  * Returns true if one of the members has an error with the input.
  */
 export const doesInputHaveError = (members: AddMemberData[]) =>
+  !members.length ||
   members.some(
     ({ emailError, firstNameError, lastNameError }) =>
       emailError || firstNameError || lastNameError
@@ -73,6 +75,13 @@ const addMemberModel: AddMemberModel = {
       ...state,
       isShowingErrors: false,
       members: [generateEmptyMember()]
+    };
+  }),
+
+  deleteMember: action(({ members, ...state }, id: string) => {
+    return {
+      ...state,
+      members: members.filter((member) => member.id !== id)
     };
   }),
 
@@ -97,7 +106,7 @@ const addMemberModel: AddMemberModel = {
     const index = members.findIndex((element) => element.id === id);
     const member = members[index];
 
-    if (field === 'EMAIL')
+    if (field === 'EMAIL') {
       members[index] = {
         ...member,
         email: value,
@@ -105,18 +114,19 @@ const addMemberModel: AddMemberModel = {
           ? ''
           : 'This is not a valid email address.'
       };
-    else if (field === 'FIRST_NAME')
+    } else if (field === 'FIRST_NAME') {
       members[index] = {
         ...member,
         firstName: value,
         firstNameError: value.length ? '' : 'Please fill out a first name.'
       };
-    else
+    } else {
       members[index] = {
         ...member,
         lastName: value,
         lastNameError: value.length ? '' : 'Please fill out a last name.'
       };
+    }
 
     return { ...state, members };
   })

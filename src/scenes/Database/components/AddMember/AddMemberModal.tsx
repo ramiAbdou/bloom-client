@@ -27,6 +27,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
     deepequal
   );
 
+  const deleteMember = AddMember.useStoreActions((store) => store.deleteMember);
   const updateMember = AddMember.useStoreActions((store) => store.updateMember);
   const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);
 
@@ -38,6 +39,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
       showAdminCheckbox={isOwner}
       toggleAdmin={toggleAdmin}
       updateMember={updateMember}
+      onDelete={() => deleteMember(id)}
     />
   );
 });
@@ -89,7 +91,10 @@ export default () => {
 
   const onClose = () => clearMembers();
   const onClick = () => addEmptyMember();
-  const message = getGraphQLError(error);
+
+  const message = !members.length
+    ? 'Must add at least 1 member.'
+    : getGraphQLError(error);
 
   return (
     <Modal
