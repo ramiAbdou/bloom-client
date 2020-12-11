@@ -5,7 +5,7 @@ import QuestionValue from '@components/Elements/QuestionValue';
 import Separator from '@components/Misc/Separator';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
-import MemberCard from '../MemberCard/MemberCard.store';
+import MemberCard from '../Card/Card.store';
 import UserInformationContainer from './UserInformation.container';
 
 const CommunityData = () => {

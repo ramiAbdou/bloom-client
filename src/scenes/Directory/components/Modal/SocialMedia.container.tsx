@@ -8,7 +8,7 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
-import MemberCard from '../MemberCard/MemberCard.store';
+import MemberCard from '../Card/Card.store';
 
 export default () => {
   const {

@@ -3,6 +3,7 @@ $PREF: 's-signup';
 .#{$PREF} {
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: $lg;
 
   @include RESP(margin-bottom, $xl, $lg, $md);
   @include RESP(margin-top, $xl, $lg, $md);
@@ -20,7 +21,7 @@ $PREF: 's-signup';
 
 .#{$PREF} > h1 { margin-bottom: $xs; }
 .#{$PREF} > p { margin-bottom: $lg; }
-.#{$PREF} > button { margin: $xxl 0; width: 100%; }
+.#{$PREF} > button { margin-top: $xxl; width: 100%; }
 
 // ## CONFIRMATION SCREEN
 
@@ -28,7 +29,7 @@ $PREF: 's-signup';
   @extend .flex-acccol;
 
   height: 100%;
-  margin-bottom: $xxl * 2;
+  margin-top: -$xxl * 2;
   width: 100%;
 }
 

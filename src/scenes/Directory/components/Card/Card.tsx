@@ -7,8 +7,8 @@ import ProfilePicture from '@components/Misc/ProfilePicture';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
-import MemberModal from '../MemberModal/MemberModal';
-import MemberCard, { MemberCardData } from './MemberCard.store';
+import MemberModal from '../Modal/Modal';
+import MemberCard, { MemberCardData } from './Card.store';
 
 const MemberCardContent = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);

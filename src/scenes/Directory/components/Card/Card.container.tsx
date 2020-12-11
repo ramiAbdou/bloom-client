@@ -6,10 +6,11 @@ import React from 'react';
 import { IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import Directory from '../../Directory.store';
-import MemberCard from './MemberCard';
-import { MemberCardData } from './MemberCard.store';
+import MemberCard from './Card';
+import { MemberCardData } from './Card.store';
 
 export default () => {
+  const loading = Directory.useStoreState((store) => store.loading);
   const searchString = Directory.useStoreState((store) => store.searchString);
 
   const members: MemberCardData[] = useStoreState(({ db }) => {
@@ -74,14 +75,18 @@ export default () => {
         });
   }, deepequal);
 
+  if (loading) return null;
+
   return (
-    <Masonry
-      key={`${searchString}-${members?.length}`}
-      className="s-directory-card-ctr"
-      columnGutter={16}
-      items={members ?? []}
-      overscanBy={5}
-      render={MemberCard}
-    />
+    <div className="s-home-content">
+      <Masonry
+        key={`${searchString}-${members?.length}`}
+        className="s-directory-card-ctr"
+        columnGutter={16}
+        items={members ?? []}
+        overscanBy={5}
+        render={MemberCard}
+      />
+    </div>
   );
 };

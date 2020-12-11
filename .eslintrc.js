@@ -38,7 +38,7 @@ module.exports = {
     'max-len': ['error'],
 
     // Refers to the entire file.
-    'max-lines': ['error', { max: 300, skipComments: true }]
+    'max-lines': ['error', { max: 300, skipComments: true }],
     'no-param-reassign': 0,
     'no-plusplus': 0, // Allow the plus-plus syntax: i++.
     'one-var': 0,

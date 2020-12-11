@@ -1,17 +1,14 @@
-import React, { ChangeEvent, memo, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
+import HeaderTag from '@components/Elements/HeaderTag';
 import SearchBar from '@components/Elements/SearchBar';
 import Spinner from '@components/Loader/Spinner';
-import { LoadingProps } from '@constants';
 import { useStoreState } from '@store/Store';
 import Directory from '../Directory.store';
 
-export default memo(({ loading }: LoadingProps) => {
+const SearchContainer = () => {
   const [value, setValue] = useState('');
-
-  const numMembers = useStoreState(
-    ({ db }) => db.entities.members?.allIds?.length
-  );
+  const loading = Directory.useStoreState((store) => store.loading);
 
   const setSearchString = Directory.useStoreActions(
     (store) => store.setSearchString
@@ -22,27 +19,43 @@ export default memo(({ loading }: LoadingProps) => {
     return () => clearTimeout(timeout);
   }, [value]);
 
-  const onChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  // Only show if not loading.
+  if (loading) return null;
+
+  const onChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setValue(target.value);
-  };
 
   const onClear = () => setValue('');
 
   return (
-    <div className="s-directory-header">
-      <div>
-        <h1 className="s-home-header-title">Directory</h1>
-        {loading && <Spinner dark />}
-      </div>
+    <SearchBar
+      placeholder="Search members..."
+      value={value}
+      onChange={onChange}
+      onClear={onClear}
+    />
+  );
+};
 
-      {!loading && (
-        <SearchBar
-          placeholder={`Search ${numMembers} members...`}
-          value={value}
-          onChange={onChange}
-          onClear={onClear}
-        />
-      )}
+const HeaderText = () => {
+  const numMembers = useStoreState(
+    ({ db }) => db.entities.members?.allIds?.length
+  );
+
+  const loading = Directory.useStoreState((store) => store.loading);
+
+  return (
+    <div>
+      <h1 className="s-home-header-title">Directory</h1>
+      {!loading && <HeaderTag value={`${numMembers} Members`} />}
+      {loading && <Spinner dark />}
     </div>
   );
-});
+};
+
+export default () => (
+  <div className="s-directory-header">
+    <HeaderText />
+    <SearchContainer />
+  </div>
+);

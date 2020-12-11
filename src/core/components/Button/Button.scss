@@ -16,7 +16,7 @@ $PREF: 'c-btn';
 
   @include HOVER { opacity: 0.8; }
 
-  &:active { transform: scale(0.95); transition: all 0.1s ease-in; }
+  &:active { transform: scale(0.95); transition: all 0.05s ease-in-out; }
 
   &:disabled {
     color: $gray-3;

@@ -21,6 +21,21 @@ $PREF: 'c-misc';
   &:not(.c-misc-tag:first-of-type) { margin-left: $xs; }
 }
 
+// ## HEADER TAG - Similar to the regular Tag component, except it has a very
+// light border, the color is primary and is uppercase. Also less rounded.
+
+.#{$PREF}-tag--header {
+  @extend .meta;
+
+  background-color: $primary-hover;
+  border: 1px rgba($color: $primary-hex, $alpha: 0.15) solid;
+  border-radius: $xxs;
+  color: $primary;
+  font-weight: 700;
+  padding: 6px;
+  text-transform: uppercase;
+}
+
 // CHECKBOX
 
 .#{$PREF}-checkbox {
@@ -89,8 +104,7 @@ $PREF: 'c-misc';
   &--lg {
     height: 96px;
     justify-content: center;
-    padding-bottom: $xxs;
-    padding-top: $xxs;
+    padding: $xs;
     resize: none;
   }
 

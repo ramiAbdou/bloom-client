@@ -3,37 +3,46 @@ import React, { useEffect } from 'react';
 
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
+import MemberCardContainer from './components/Card/Card.container';
 import Header from './components/Header';
-import MemberCardContainer from './components/MemberCard/MemberCard.container';
 import { GET_DIRECTORY } from './Directory.gql';
-import DirectoryStore from './Directory.store';
+import Directory from './Directory.store';
 
-export default () => {
+const useFetchDirectory = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+  const currentLoading = Directory.useStoreState((store) => store.loading);
+  const setLoading = Directory.useStoreActions((store) => store.setLoading);
 
   const { data, loading } = useQuery(GET_DIRECTORY);
 
   useEffect(() => {
-    const result = data?.getDirectory;
-    if (!result) return;
+    if (loading !== currentLoading) setLoading(loading);
+  }, [loading]);
 
-    // Destructure the result data.
-    const { members, questions } = result;
+  useEffect(() => {
+    const { id, members, questions } = data?.getDirectory ?? {};
+    if (!id) return;
 
     mergeEntities({
-      data: { ...result, members, questions },
+      data: { id, members, questions },
       schema: Schema.COMMUNITY
     });
   }, [data]);
+};
+
+const DirectoryContent = () => {
+  useFetchDirectory();
 
   return (
-    <DirectoryStore.Provider>
-      <div>
-        <Header loading={loading} />
-        <div className="s-home-content">
-          {!loading && <MemberCardContainer />}
-        </div>
-      </div>
-    </DirectoryStore.Provider>
+    <div>
+      <Header />
+      <MemberCardContainer />
+    </div>
   );
 };
+
+export default () => (
+  <Directory.Provider>
+    <DirectoryContent />
+  </Directory.Provider>
+);
