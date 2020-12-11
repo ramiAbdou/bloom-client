@@ -10,9 +10,11 @@ import AddAdminModal from '../AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
 const AdminTable = () => {
-  const rows: Row[] = useStoreState(({ entities, community }) => {
-    const { byId: byMemberId } = entities.members;
-    const { byId: byUserId } = entities.users;
+  const rows: Row[] = useStoreState(({ db }) => {
+    const { community } = db;
+    const { members, users } = db.entities;
+    const { byId: byMemberId } = members;
+    const { byId: byUserId } = users;
 
     return community.members?.reduce((acc: Row[], memberId: string) => {
       const { id, role, user } = byMemberId[memberId] ?? {};
@@ -40,10 +42,10 @@ const AdminTable = () => {
 
 export default () => {
   const loading = Database.useStoreState((store) => store.loading);
-  const isOwner = useStoreState((store) => store.isOwner);
+  const isOwner = useStoreState(({ db }) => db.isOwner);
 
   const isStoreUpdated = useStoreState(
-    ({ community }) => !!community.members?.length
+    ({ db }) => !!db.community.members?.length
   );
 
   // We typically fetch the question ID from the backend, but here, we are

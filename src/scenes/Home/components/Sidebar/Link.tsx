@@ -15,9 +15,7 @@ interface SidebarLinkProps extends LinkOptions, OnClickProps {}
  * Button that opens up a modal.
  */
 export default memo(({ Icon, onClick, to, title }: SidebarLinkProps) => {
-  const encodedUrlName = useStoreState(
-    ({ community }) => community.encodedUrlName
-  );
+  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
 
   const isActive = Home.useStoreState((store) => store.isActive(to));
   const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);

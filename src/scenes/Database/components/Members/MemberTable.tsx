@@ -12,8 +12,9 @@ import { RENAME_QUESTION } from '../../Database.gql';
 export default () => {
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
-  const rows: Row[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.members;
+  const rows: Row[] = useStoreState(({ db }) => {
+    const { community } = db;
+    const { byId } = db.entities.members;
 
     return community.members?.reduce((acc: Row[], id: string) => {
       const result: Row = { id };

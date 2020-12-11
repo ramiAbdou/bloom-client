@@ -10,7 +10,7 @@ export default memo(({ loading }: LoadingProps) => {
   const [value, setValue] = useState('');
 
   const numMembers = useStoreState(
-    ({ entities }) => entities.members?.allIds?.length
+    ({ db }) => db.entities.members?.allIds?.length
   );
 
   const setSearchString = Directory.useStoreActions(

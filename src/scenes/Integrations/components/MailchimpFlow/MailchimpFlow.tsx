@@ -1,24 +1,20 @@
+import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import Form, { formatQuestions, formModel } from '@components/Form/Form.store';
 import Modal from '@components/Modal/Modal';
 import { ModalType } from '@constants';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
+import { IIntegrations } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Content from './Content';
 
 export default () => {
-  const isMailchimpAuthenticated = useStoreState(
-    ({ integrations }) => integrations?.isMailchimpAuthenticated
-  );
-
-  const isMailchimpCompleted = useStoreState(
-    ({ integrations }) => !!integrations?.mailchimpListId
-  );
-
-  const options = useStoreState(
-    ({ integrations }) => integrations?.mailchimpLists ?? []
-  );
+  const {
+    isMailchimpAuthenticated,
+    mailchimpListId,
+    mailchimpLists
+  } = useStoreState(({ db }) => db.integrations, deepequal) as IIntegrations;
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
@@ -27,9 +23,11 @@ export default () => {
     showModal(ModalType.MAILCHIMP_FLOW);
   }, []);
 
+  const options = mailchimpLists ?? [];
+
   // This will only be the case if the user loads the page with the query
   // string flow=[name] in the URL without properly going to the backend.
-  if (isMailchimpCompleted || !options.length) return null;
+  if (!!mailchimpListId || !options.length) return null;
 
   return (
     <Modal id={ModalType.MAILCHIMP_FLOW} onClose={() => setFlow(null)}>

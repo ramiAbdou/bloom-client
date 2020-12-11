@@ -8,7 +8,7 @@ import DatabaseAction from '../DatabaseAction';
 
 export default () => {
   const filename = useStoreState(
-    ({ community }) => `${community.encodedUrlName}.csv`
+    ({ db }) => `${db.community.encodedUrlName}.csv`
   );
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);

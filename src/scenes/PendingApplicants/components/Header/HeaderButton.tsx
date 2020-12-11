@@ -9,16 +9,14 @@ import { RESPOND_TO_MEMBERS } from '../../PendingApplicants.gql';
 type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
 
 const HeaderButton = ({ response }: HeaderButtonProps) => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions(({ db }) => db.updateEntities);
 
-  const pendingApplicantIds: string[] = useStoreState(
-    ({ community, entities }) => {
-      const { byId } = entities.members;
-      return community?.members?.filter((memberId: string) => {
-        return byId[memberId]?.status === 'PENDING';
-      });
-    }
-  );
+  const pendingApplicantIds: string[] = useStoreState(({ db }) => {
+    const { byId } = db.entities.members;
+    return db.community?.members?.filter((memberId: string) => {
+      return byId[memberId]?.status === 'PENDING';
+    });
+  });
 
   const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
     variables: { memberIds: pendingApplicantIds, response }

@@ -15,10 +15,9 @@ const CommunityIcon = ({ borderColor, logoUrl }: CommunityIconProps) => {
 };
 
 export default () => {
-  const { activeId, allIds, byId } = useStoreState(({ entities }) => {
-    // const { byId: byMemberId } = entities.members;
-    return entities.communities;
-  });
+  const { activeId, allIds, byId } = useStoreState(
+    ({ db }) => db.entities.communities
+  );
 
   return (
     <div className="s-home-sidebar-community-ctr">

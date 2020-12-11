@@ -15,7 +15,7 @@ import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const PromoteToAdminModal = () => {
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -67,7 +67,7 @@ const PromoteToAdminModal = () => {
 };
 
 export default () => {
-  const memberId = useStoreState(({ member }) => member.id);
+  const memberId = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const tooManySelected = Table.useStoreState(

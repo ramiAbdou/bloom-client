@@ -15,15 +15,14 @@ import TokenRoute from './TokenRoute';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { loading, data, error } = useQuery(GET_USER);
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const encodedUrlName = useStoreState(
-    ({ community }) => community?.encodedUrlName
+    ({ db }) => db.community?.encodedUrlName
   );
 
   useEffect(() => {
     if (!data?.getUser) return;
-    console.log(data.getUser);
 
     mergeEntities({
       data: data.getUser,

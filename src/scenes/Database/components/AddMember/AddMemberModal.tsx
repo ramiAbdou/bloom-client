@@ -16,7 +16,7 @@ import AddModalInput from '../AddModalInput';
 import AddMember, { doesInputHaveError } from './AddMember.store';
 
 const AddMemberInput = memo(({ id }: IdProps) => {
-  const isOwner = useStoreState((store) => store.isOwner);
+  const isOwner = useStoreState(({ db }) => db.isOwner);
 
   const isShowingErrors = AddMember.useStoreState(
     (store) => store.isShowingErrors
@@ -44,7 +44,7 @@ const AddMemberInput = memo(({ id }: IdProps) => {
 
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const members = AddMember.useStoreState((store) => store.members);
 

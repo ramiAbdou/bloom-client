@@ -8,9 +8,9 @@ import ActionRow from './ActionRow';
 import MemberTable from './MemberTable';
 
 export default () => {
-  const questions: IQuestion[] = useStoreState(({ community, entities }) => {
-    const { byId } = entities.questions;
-    return community.questions?.map((id: string) => byId[id]);
+  const questions: IQuestion[] = useStoreState(({ db }) => {
+    const { byId } = db.entities.questions;
+    return db.community.questions?.map((id: string) => byId[id]);
   });
 
   const loading = Database.useStoreState((store) => store.loading);

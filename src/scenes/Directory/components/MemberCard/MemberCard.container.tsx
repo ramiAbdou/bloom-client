@@ -12,10 +12,11 @@ import { MemberCardData } from './MemberCard.store';
 export default () => {
   const searchString = Directory.useStoreState((store) => store.searchString);
 
-  const members: MemberCardData[] = useStoreState(({ entities }) => {
-    const { allIds, byId: byMemberId } = entities.members;
-    const { byId: byQuestionId } = entities.questions;
-    const { byId: byUserId } = entities.users;
+  const members: MemberCardData[] = useStoreState(({ db }) => {
+    const { members: membersEntity, questions, users } = db.entities;
+    const { allIds, byId: byMemberId } = membersEntity;
+    const { byId: byQuestionId } = questions;
+    const { byId: byUserId } = users;
 
     if (!allIds?.length) return [];
 

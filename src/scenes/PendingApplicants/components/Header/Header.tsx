@@ -6,10 +6,10 @@ import { useStoreState } from '@store/Store';
 import { AcceptAllButton, IgnoreAllButton } from './HeaderButton';
 
 export default memo(({ loading }: LoadingProps) => {
-  const title = useStoreState(({ community, entities }) => {
-    const { byId } = entities.members;
+  const title = useStoreState(({ db }) => {
+    const { byId } = db.entities.members;
 
-    const length = community?.members?.filter((memberId: string) => {
+    const length = db.community?.members?.filter((memberId: string) => {
       return byId[memberId]?.status === 'PENDING';
     }).length;
 

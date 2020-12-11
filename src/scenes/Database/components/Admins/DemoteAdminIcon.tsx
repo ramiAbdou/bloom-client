@@ -17,7 +17,7 @@ import DatabaseAction from '../DatabaseAction';
 const DemoteToMemberModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const [toggleAdmins, { error, loading }] = useMutation(TOGGLE_ADMINS);

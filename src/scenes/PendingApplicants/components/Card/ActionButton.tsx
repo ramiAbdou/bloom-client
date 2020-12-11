@@ -22,7 +22,7 @@ export const BackButton = () => {
 };
 
 export const AcceptButton = () => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions(({ db }) => db.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
 
@@ -56,7 +56,7 @@ export const AcceptButton = () => {
 };
 
 export const IgnoreButton = () => {
-  const updateEntities = useStoreActions((store) => store.updateEntities);
+  const updateEntities = useStoreActions(({ db }) => db.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
 

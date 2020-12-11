@@ -11,7 +11,7 @@ import { GET_DATABASE } from './Database.gql';
 import Database from './Database.store';
 
 const FetchDatabase = () => {
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const currentLoading = Database.useStoreState((store) => store.loading);
   const setLoading = Database.useStoreActions((store) => store.setLoading);
 

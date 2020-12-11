@@ -8,7 +8,7 @@ import { useStoreState } from '@store/Store';
 import Application from '../Application.store';
 
 const ConfirmationHeader = () => {
-  const autoAccept = useStoreState(({ community }) => community?.autoAccept);
+  const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
   return (
     <div className="s-signup-confirmation-header">
       <IoCheckmarkCircle />
@@ -19,7 +19,7 @@ const ConfirmationHeader = () => {
 
 const AutoAcceptedContent = () => {
   const email = Application.useStoreState((store) => store.email);
-  const name = useStoreState(({ community }) => community?.name);
+  const name = useStoreState(({ db }) => db.community?.name);
   return (
     <>
       <p>
@@ -35,7 +35,7 @@ const AutoAcceptedContent = () => {
 
 const DefaultContent = () => {
   const email = Application.useStoreState((store) => store.email);
-  const name = useStoreState(({ community }) => community?.name);
+  const name = useStoreState(({ db }) => db.community?.name);
   return (
     <>
       <p>
@@ -51,8 +51,8 @@ const DefaultContent = () => {
 
 const Content = () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const autoAccept = useStoreState(({ community }) => community?.autoAccept);
-  const name = useStoreState(({ community }) => community?.name);
+  const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
+  const name = useStoreState(({ db }) => db.community?.name);
 
   if (!name) return <Redirect to={`/${encodedUrlName}/apply`} />;
   if (!autoAccept) return <AutoAcceptedContent />;

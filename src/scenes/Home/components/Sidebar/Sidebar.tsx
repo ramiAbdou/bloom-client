@@ -21,7 +21,7 @@ import SidebarSection from './Section';
 import useActiveTo from './useActiveTo';
 
 const SidebarContent = () => {
-  const name = useStoreState(({ community }) => community.name);
+  const name = useStoreState(({ db }) => db.community.name);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);
 

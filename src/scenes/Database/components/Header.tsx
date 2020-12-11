@@ -31,7 +31,7 @@ const MemberAdminButton = () => {
  * path is.
  */
 const AddButton = () => {
-  const isOwner = useStoreState((store) => store.isOwner);
+  const isOwner = useStoreState(({ db }) => db.isOwner);
   const { pathname } = useHistory().location;
 
   const isMembers =

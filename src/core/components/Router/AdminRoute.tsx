@@ -14,9 +14,9 @@ export default ({ component, ...rest }: RouteProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
   const isDesktop = useBreakpoint() === 'D';
 
-  const isAdmin: boolean = useStoreState(({ entities }) => {
-    const { byId: byCommunity } = entities.communities;
-    const { byId: byMember } = entities.members;
+  const isAdmin: boolean = useStoreState(({ db }) => {
+    const { byId: byCommunity } = db.entities.communities;
+    const { byId: byMember } = db.entities.members;
     return Object.values(byMember).some(
       ({ community, role }) =>
         !!role && encodedUrlName === byCommunity[community]?.encodedUrlName

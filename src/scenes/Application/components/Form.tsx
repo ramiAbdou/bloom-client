@@ -22,7 +22,7 @@ import Application from '../Application.store';
 const SubmitButton = () => {
   const storedEmail = Application.useStoreState((store) => store.email);
   const setEmail = Application.useStoreActions((store) => store.setEmail);
-  const name = useStoreState(({ community }) => community?.encodedUrlName);
+  const name = useStoreState(({ db }) => db.community?.encodedUrlName);
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
 
   const dataToSubmit = Form.useStoreState(({ items }) =>
@@ -73,18 +73,19 @@ const SubmitButton = () => {
 
 export default () => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
-  const logoUrl = useStoreState(({ community }) => community?.logoUrl);
-  const title = useStoreState(({ community }) => community?.applicationTitle);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+  const logoUrl = useStoreState(({ db }) => db.community?.logoUrl);
+  const title = useStoreState(({ db }) => db.community?.applicationTitle);
 
   const description = useStoreState(
-    ({ community }) => community?.applicationDescription
+    ({ db }) => db.community?.applicationDescription
   );
 
-  const questions: IQuestion[] = useStoreState(({ community, entities }) => {
-    const { byId } = entities.questions;
+  const questions: IQuestion[] = useStoreState(({ db }) => {
+    const { community } = db;
+    const { byId } = db.entities.questions;
     if (!community?.questions?.length) return [];
-    const { questions: result } = community;
+    const { questions: result } = db.community;
 
     return result.map((id: string) => byId[id]);
   });

@@ -16,20 +16,21 @@ const NoPendingApplicantsMessage = () => (
 );
 
 export default () => {
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
-  const numApplicants = useStoreState(({ community, entities }) => {
-    const { byId } = entities.members;
-    return community?.members?.filter((memberId: string) => {
+  const numApplicants = useStoreState(({ db }) => {
+    const { byId } = db.entities.members;
+    return db.community?.members?.filter((memberId: string) => {
       return byId[memberId]?.status === 'PENDING';
     }).length;
   });
 
-  const applicants: IMember[] = useStoreState(({ entities, community }) => {
-    const { byId: byMember } = entities.members;
-    const { byId: byQuestion } = entities.questions;
+  const applicants: IMember[] = useStoreState(({ db }) => {
+    const { members, questions } = db.entities;
+    const { byId: byMember } = members;
+    const { byId: byQuestion } = questions;
 
-    return community.members?.reduce((acc: IMember[], memberId: string) => {
+    return db.community.members?.reduce((acc: IMember[], memberId: string) => {
       const member = byMember[memberId];
       if (member.status !== 'PENDING') return acc;
 

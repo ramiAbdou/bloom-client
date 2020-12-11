@@ -11,16 +11,15 @@ type LinkSectionProps = { links: LinkOptions[]; title: string };
 export default memo(({ links, title }: LinkSectionProps) => {
   const isDesktop = useBreakpoint() === 'D';
 
-  const isAdmin: boolean = useStoreState(
-    ({ community: { name }, entities }) => {
-      const { byId: byCommunity } = entities.communities;
-      const { byId: byMember } = entities.members;
+  const isAdmin: boolean = useStoreState(({ db }) => {
+    const { name } = db.community;
+    const { byId: byCommunity } = db.entities.communities;
+    const { byId: byMember } = db.entities.members;
 
-      return Object.values(byMember).some(
-        ({ community, role }) => !!role && name === byCommunity[community]?.name
-      );
-    }
-  );
+    return Object.values(byMember).some(
+      ({ community, role }) => !!role && name === byCommunity[community]?.name
+    );
+  });
 
   if (['Admin', 'Quick Actions'].includes(title) && (!isDesktop || !isAdmin)) {
     return null;

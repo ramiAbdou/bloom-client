@@ -9,7 +9,7 @@ import { GET_DIRECTORY } from './Directory.gql';
 import DirectoryStore from './Directory.store';
 
 export default () => {
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { data, loading } = useQuery(GET_DIRECTORY);
 

@@ -1,6 +1,6 @@
 import { useMutation } from 'graphql-hooks';
 import Cookie from 'js-cookie';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import { LOGOUT } from '@scenes/Home/Home.gql';
 import { useStoreActions } from '@store/Store';
 
 export default () => {
-  const clearEntities = useStoreActions((store) => store.clearEntities);
+  const clearEntities = useStoreActions(({ db }) => db.clearEntities);
 
   const { push } = useHistory();
   const [logout] = useMutation(LOGOUT);

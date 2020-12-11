@@ -11,10 +11,10 @@ export default (): UseClientRequestResult<any, object> => {
   const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
 
   const options = useStoreState(
-    ({ integrations }) => integrations?.mailchimpLists ?? []
+    ({ db }) => db.integrations?.mailchimpLists ?? []
   );
 
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const mailchimpListName = items.find(

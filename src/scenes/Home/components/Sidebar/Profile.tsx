@@ -5,10 +5,10 @@ import { PickerType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const PictureContainer = () => {
-  const pictureUrl = useStoreState(({ user }) => user.pictureUrl);
+  const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
 
   const initials = useStoreState(
-    ({ user }) => `${user.firstName[0]}${user.lastName[0]}`
+    ({ db }) => `${db.user.firstName[0]}${db.user.lastName[0]}`
   );
 
   if (pictureUrl) {
@@ -20,11 +20,11 @@ const PictureContainer = () => {
 
 export default () => {
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
-  const type = useStoreState(({ member }) => member.type.name);
-  const role = useStoreState(({ member }) => member.role);
+  const type = useStoreState(({ db }) => db.member.type.name);
+  const role = useStoreState(({ db }) => db.member.role);
 
   const fullName = useStoreState(
-    ({ user }) => `${user.firstName} ${user.lastName}`
+    ({ db }) => `${db.user.firstName} ${db.user.lastName}`
   );
 
   const onClick = () => showPicker(PickerType.PROFILE);

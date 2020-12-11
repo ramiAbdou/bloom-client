@@ -40,7 +40,7 @@ const AddAdminInput = memo(({ id }: IdProps) => {
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const mergeEntities = useStoreActions((store) => store.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const admins = AddAdmin.useStoreState((store) => store.admins);
 
   const addEmptyMember = AddAdmin.useStoreActions(

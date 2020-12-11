@@ -12,14 +12,12 @@ import { DELETE_MEMBERS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const DeleteMembersModal = () => {
-  const members = useStoreState(({ community }) => community.members);
+  const members = useStoreState(({ db }) => db.community.members);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const updateCommunity = useStoreActions((store) => store.updateCommunity);
+  const updateCommunity = useStoreActions(({ db }) => db.updateCommunity);
 
-  const memberIds = Table.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const numMembers = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
@@ -30,9 +28,7 @@ const DeleteMembersModal = () => {
 
     // Filter the community members to NOT have the selected members.
     updateCommunity({
-      members: members.filter(
-        (id: string) => !memberIds.includes(id)
-      )
+      members: members.filter((id: string) => !memberIds.includes(id))
     });
 
     // After the toast finishes showing, we call the mutation that actually
@@ -40,10 +36,7 @@ const DeleteMembersModal = () => {
     // that resets the members.
     showToast({
       message: `${numMembers} member(s) removed from the community.`,
-      mutationOptionsOnClose: [
-        DELETE_MEMBERS,
-        { variables: { memberIds } }
-      ],
+      mutationOptionsOnClose: [DELETE_MEMBERS, { variables: { memberIds } }],
       onUndo: () => updateCommunity({ members: allMembers }),
       type: 'PESSIMISTIC',
       undo: true
@@ -69,14 +62,14 @@ const DeleteMembersModal = () => {
 };
 
 export default () => {
-  const isOwner = useStoreState((store) => store.isOwner);
-  const memberId = useStoreState(({ member }) => member.id);
+  const isOwner = useStoreState(({ db }) => db.isOwner);
+  const memberId = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const selectedRowIds = Table.useStoreState((store) => store.selectedRowIds);
 
-  const notEnoughPermissions: boolean = useStoreState(({ entities }) => {
+  const notEnoughPermissions: boolean = useStoreState(({ db }) => {
     if (isOwner) return false;
-    const { allIds, byId } = entities.members;
+    const { allIds, byId } = db.entities.members;
     const adminIds = allIds.filter((id: string) => !!byId[id].role);
     if (selectedRowIds.some((id: string) => adminIds.includes(id))) return true;
     return false;

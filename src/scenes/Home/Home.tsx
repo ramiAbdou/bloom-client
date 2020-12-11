@@ -27,11 +27,11 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
 
   const activeEncodedUrlName = useStoreState(
-    ({ community }) => community?.encodedUrlName
+    ({ db }) => db.community?.encodedUrlName
   );
 
-  const isMember: boolean = useStoreState(({ entities }) => {
-    const { communities, members } = entities;
+  const isMember: boolean = useStoreState(({ db }) => {
+    const { communities, members } = db.entities;
 
     return Object.values(members.byId).some(
       ({ community }) =>
@@ -54,7 +54,7 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
 
 const HomeContent = () => {
   const { url } = useRouteMatch();
-  const autoAccept = useStoreState(({ community }) => community.autoAccept);
+  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
 
   return (
     <div className="s-home-content-ctr">
