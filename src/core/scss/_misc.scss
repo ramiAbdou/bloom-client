@@ -31,7 +31,9 @@
   &--lg { height: 32px; width: 32px; }
 }
 
-// Disables scrollbar display for all elements.
+// Disables scrollbar display for all elements. Not much scrolling needed
+// other than the div.
+body::-webkit-scrollbar,
 div::-webkit-scrollbar { display: none; }
 
 // ## TOOLTIP
@@ -108,11 +110,3 @@ div::-webkit-scrollbar { display: none; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-// PATH
-
-path { color: inherit; }
-
-// SELECTION BACKGROUND
-
-input::selection { background-color: $primary-hover; }

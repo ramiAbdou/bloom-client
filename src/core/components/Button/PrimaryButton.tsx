@@ -35,8 +35,6 @@ export default ({
     className
   ]);
 
-  console.log(disabled);
-
   return (
     <Button className={css} disabled={disabled} {...props}>
       {showLoadingState ? <LoadingState loadingText={loadingText} /> : title}

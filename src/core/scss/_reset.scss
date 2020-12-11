@@ -1,6 +1,12 @@
 
 html,
-body { height: 100%; margin: 0; padding: 0; width: 100%; }
+body {
+  background-color: $gray-6;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
 
 // Acts as a multiplier by the font-size for the line-height. For example,
 // if the h1 tag is 24px, it's line-height will be 24px * 1.33 = 32px.

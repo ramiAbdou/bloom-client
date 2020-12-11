@@ -21,11 +21,9 @@ h1 { font-size: 24px; }
 h2 { font-size: 20px; }
 h3 { font-size: 18px; }
 h4 { font-size: 14px; text-transform: uppercase; }
-
-// .body { font-size: 15px; font-weight: 400; }
-.sb { font-weight: 600 !important; }
-.meta { font-size: 13px; font-weight: 600; }
 .body { font-size: 15px; font-weight: 400; }
+.meta { font-size: 13px; font-weight: 600; }
+.sb { font-weight: 600 !important; }
 
 // For some reason, it's not letting me @extend the .body class, so we just
 // write the declarations again.
@@ -37,4 +35,7 @@ textarea,
 span,
 input { font-size: 15px; font-weight: 400; }
 
-input::placeholder { color: $gray-3; }
+input {
+  &::placeholder { color: $gray-3; }
+  &::selection { background-color: $primary-hover; }
+} 

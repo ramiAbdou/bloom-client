@@ -21,7 +21,6 @@ const App = () => (
   <ClientContext.Provider value={client}>
     <StoreProvider store={store}>
       <IconContext.Provider value={{ className: 'react-icon' }}>
-        <div id="app" />
         <Router />
         <ToastQueue />
       </IconContext.Provider>
