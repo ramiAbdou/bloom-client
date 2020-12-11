@@ -96,15 +96,14 @@ $PREF: 's-home-bb';
 
 .#{$PREF}-dropdown-link {
   @extend .flex-acsb;
-
   
   width: 100%;
 
   &:not(:last-child) { margin-bottom: $sm; }
 
-  > div { @extend .flex-ac; }
+  > .c-btn { @extend .flex-ac; }
 
-  > div > img {
+  > .c-btn > img {
     @extend .fill;
 
     border: 1px $gray-6 solid;
@@ -121,5 +120,5 @@ $PREF: 's-home-bb';
     @include T { height: $md; width: $md; }
   }
 
-  &--active > div > img { border: 1px $primary solid; }
+  &--active > .c-btn > img { border: 1px $primary solid; }
 }

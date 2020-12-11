@@ -31,14 +31,14 @@ const CommunitySelector = ({ id, logoUrl, name }: Partial<ICommunity>) => {
   ]);
 
   return (
-    <Button className={css} onClick={onClick}>
-      <div>
+    <div className={css}>
+      <Button onClick={onClick}>
         <img alt="Community Logo" src={logoUrl} />
         <h3>{name}</h3>
-      </div>
+      </Button>
 
       {isActive && <IoCheckmarkCircle />}
-    </Button>
+    </div>
   );
 };
 
