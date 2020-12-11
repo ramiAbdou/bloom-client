@@ -1,8 +1,9 @@
+@import './core/scss/reset';
 @import './core/scss/breakpoints';
 @import './core/scss/colors';
+@import './core/scss/fonts';
 @import './core/scss/misc';
 @import './core/scss/spacing';
-@import './core/scss/typography';
 @import './core/components/Button/Button.scss';
 @import './core/components/Elements/Elements.scss';
 @import './core/components/Form/Form.scss';
@@ -24,11 +25,6 @@
 @import './scenes/Login/Login.scss';
 @import './scenes/PendingApplicants/PendingApplicants.scss';
 
-// General elements as well as the application background.
-
-html,
-body { height: 100%; margin: 0; padding: 0; width: 100%; }
-
 #root { @extend .flex-col; height: 100%; }
 
 #app {
@@ -41,11 +37,3 @@ body { height: 100%; margin: 0; padding: 0; width: 100%; }
   width: 100%;
   z-index: -1;
 }
-
-button,
-input,
-textarea { border: none; outline: none; }
-
-button { background: none; cursor: pointer; padding: 0; }
-
-a { color: initial; font-family: Muli; text-decoration: none; }

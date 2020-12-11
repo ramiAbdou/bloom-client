@@ -28,7 +28,7 @@ $PREF: 'c-modal';
   z-index: 1001;
 
   @include M { height: 100%; width: 100%; }
-  @include TD { border-radius: $xs; max-height: 90vh; width: 550px; }
+  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
 }
 
 // ## MODAL CONTENT

@@ -3,9 +3,10 @@ $PREF: 'c-btn';
 // ## BASIC BUTTON
 
 .btn-txt {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
   text-transform: uppercase;
-
-  @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);
 }
 
 .#{$PREF} {
