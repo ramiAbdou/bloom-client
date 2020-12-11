@@ -78,7 +78,10 @@ $PREF: 'c-misc';
   padding-right: $xs;
   width: 100%;
 
-  &::placeholder { color: $gray-2; }
+  &::placeholder,
+  &:-moz-placeholder,
+  &::-moz-placeholder { @extend .body--1; color: $gray-2; line-height: revert; }
+
   &::selection { background-color: $primary-hover; }
   &:focus { border: 1px $primary solid; }
   &--error { border: 1px $red solid; }
