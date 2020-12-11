@@ -17,6 +17,8 @@ $PREF: 's-database';
   margin-left: $xs;
   padding: 6px;
 
+  @include HOVER { opacity: 1; }
+
   &--demote { &::before { margin-left: -$xxs; } }
   &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
   &--delete > svg { color: $red; }
@@ -41,13 +43,23 @@ $PREF: 's-database';
 // ## ADD MEMBER MODAL
 
 .#{$PREF}-add-modal > p { margin-bottom: $md; }
-.#{$PREF}-add-modal-email > div:first-of-type {
+
+.#{$PREF}-add-modal-input > div:first-of-type {
   @extend .flex-ac;
 
   margin-bottom: $sm;
 }
 
-.#{$PREF}-add-modal-email > div:first-of-type > .c-misc-input {
+.#{$PREF}-add-modal-input > div:first-of-type > button {
+  margin-right: $xs;
+
+  @include HOVER { > svg { color: $red; } }
+  &:active { > svg { color: $red; } }
+
+  > svg { color: $gray-2; }
+}
+
+.#{$PREF}-add-modal-input > div:first-of-type > .c-misc-input {
   margin-right: $xs;
   width: 30%;
 
@@ -55,7 +67,7 @@ $PREF: 's-database';
 }
 
 // This div wraps the Make Admin checkbox button and text.
-.#{$PREF}-add-modal-email > div > div {
+.#{$PREF}-add-modal-input > div > div {
   @extend .flex-ac;
 
   margin-left: $sm;
@@ -63,7 +75,7 @@ $PREF: 's-database';
   > p { width: max-content; }
 }
 
-.#{$PREF}-add-modal-email > div > div > .c-misc-checkbox { margin-right: 12px; }
+.#{$PREF}-add-modal-input > div > div > .c-misc-checkbox { margin-right: 12px; }
 .#{$PREF}-add-modal > button { margin-bottom: $md; }
 .#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
 .#{$PREF}-add-modal > div:last-of-type > button:first-of-type {

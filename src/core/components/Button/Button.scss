@@ -13,7 +13,16 @@ $PREF: 'c-btn';
   
   border-radius: $xxs;
 
-  &:not(.c-btn--no-hover) { @include HOVER { opacity: 0.8; } }
+  @include HOVER { opacity: 0.8; }
+
+  &:active { transform: scale(0.95); transition: all 0.05s; }
+
+  &:disabled {
+    color: $gray-3;
+    cursor: not-allowed;
+  
+    @include HOVER { opacity: 1; }
+  }
 
   &--fill { width: 100%; }
   &--lg { height: $xl; }
@@ -23,15 +32,6 @@ $PREF: 'c-btn';
 
 .#{$PREF}-loading { @extend .flex-acc; }
 .#{$PREF}-loading > p { @extend .btn-txt; color: $gray-3; margin-right: $sm; }
-
-// ## DISABLED STATE
-
-.#{$PREF}-disabled {
-  color: $gray-3 !important;
-  cursor: not-allowed !important;
-
-  @include HOVER { opacity: 1 !important; }
-}
 
 // ## PRIMARY BUTTON
 
@@ -43,12 +43,7 @@ $PREF: 'c-btn';
   color: $gray-6;
   padding: $xs $sm;
 
-  &--disabled {
-    @extend .#{$PREF}-disabled;
-
-    background-color: $gray-5;
-    border: 1px $gray-5 solid;
-  }
+  &:disabled { background-color: $gray-5; border: 1px $gray-5 solid; }
 
   &--green {
     background-clip: padding-box;
@@ -68,7 +63,7 @@ $PREF: 'c-btn';
   color: $primary;
   padding: $xs $sm;
 
-  &--disabled { @extend .#{$PREF}-disabled; border: none; }
+  &:disabled { border: none; }
 }
 
 // ## UNDERLINE BUTTON
@@ -95,6 +90,7 @@ $PREF: 'c-btn';
   border: 1px $primary solid;
   color: $primary;
   padding: $xs $sm;
+  transform: none;
   
   &--active { background-color: $primary; color: $gray-6; }
   &:first-of-type { border-radius: $xxs 0 0 $xxs; }

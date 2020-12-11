@@ -1,8 +1,10 @@
 import React, { memo } from 'react';
+import { IoTrash } from 'react-icons/io5';
 
+import Button from '@components/Button/Button';
 import Checkbox from '@components/Elements/Checkbox';
-import ErrorMessage from '@components/Misc/ErrorMessage';
 import Input from '@components/Elements/Input';
+import ErrorMessage from '@components/Misc/ErrorMessage';
 import { IdProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
 import { AddMemberData } from './AddMember/AddMember.store';
@@ -41,8 +43,8 @@ export default memo(
     } = member;
 
     const css = makeClass([
-      's-database-add-modal-email',
-      [emailError, 's-database-add-modal-email--error']
+      's-database-add-modal-input',
+      [emailError, 's-database-add-modal-input--error']
     ]);
 
     const message: string = takeFirst([
@@ -60,6 +62,10 @@ export default memo(
     return (
       <div className={css}>
         <div>
+          <Button>
+            <IoTrash />
+          </Button>
+
           <Input
             dark
             error={isShowingErrors && !!firstNameError}

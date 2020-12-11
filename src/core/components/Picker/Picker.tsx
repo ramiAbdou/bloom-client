@@ -117,8 +117,6 @@ const Picker = ({
     animate = { ...animate, y: 0 };
   }
 
-  console.log(positionStyle);
-
   // ## END: CALCULATE PICKER COORDINATES
 
   const css = makeClass(['card', 'c-picker', [className, className]]);

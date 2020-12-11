@@ -31,10 +31,11 @@ export default ({
 
   const css = makeClass([
     'c-btn-primary',
-    [disabled, 'c-btn-primary--disabled'],
     [green, 'c-btn-primary--green'],
     className
   ]);
+
+  console.log(disabled);
 
   return (
     <Button className={css} disabled={disabled} {...props}>

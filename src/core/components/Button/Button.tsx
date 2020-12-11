@@ -4,7 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { ChildrenProps, ValueProps } from '@constants';
 import { makeClass } from '@util/util';
 
-export type ButtonProps = {
+export interface ButtonProps
+  extends Partial<ChildrenProps>,
+    Partial<ValueProps> {
   className?: string;
   disabled?: boolean;
   href?: string;
@@ -13,19 +15,12 @@ export type ButtonProps = {
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
-  noScale?: boolean;
-  noHover?: boolean;
   onClick?: Function;
   title?: string;
   target?: string;
-};
+}
 
 export type ButtonLoadingProps = { loadingText: string };
-
-interface AbstractButtonProps
-  extends Partial<ButtonProps>,
-    Partial<ChildrenProps>,
-    Partial<ValueProps> {}
 
 // This logic (including the local state) ensures that the loading state of
 // a button doesn't show unless the operation takes more than 100ms.
@@ -51,37 +46,23 @@ export default ({
   href,
   fill,
   large,
-  noScale,
-  noHover,
   onClick,
   title,
   target,
   ...props
-}: AbstractButtonProps) => {
+}: ButtonProps) => {
   const css = makeClass([
     'c-btn',
-    [disabled, 'c-btn-disabled'],
     [large, 'c-btn--lg'],
     [fill, 'c-btn--fill'],
-    [noHover, 'c-btn--no-hover'],
     className
   ]);
-
-  // The core Bloom button animation, the scaling down!
-  const tapAnimation =
-    !disabled && !noScale ? { whileTap: { scale: 0.95 } } : {};
 
   const onAllowedClick = () => !disabled && onClick && onClick();
 
   if (href) {
     return (
-      <motion.a
-        className={css}
-        href={href}
-        target={target}
-        {...tapAnimation}
-        {...props}
-      >
+      <motion.a className={css} href={href} target={target} {...props}>
         {children ?? title}
       </motion.a>
     );
@@ -90,8 +71,8 @@ export default ({
   return (
     <motion.button
       className={css}
+      disabled={disabled}
       onClick={onAllowedClick}
-      {...tapAnimation}
       {...props}
     >
       {children ?? title}
