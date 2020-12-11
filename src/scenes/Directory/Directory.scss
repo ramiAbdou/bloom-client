@@ -1,0 +1,12 @@
+
+$PREF: 's-directory';
+
+.#{$PREF}-header {
+  @extend .s-home-header; 
+
+  @include TD { display: flex; justify-content: space-between; }
+  @include M {
+    > div:first-child { margin-bottom: $sm; }
+    > div:last-child { width: 100%; }
+  }
+}

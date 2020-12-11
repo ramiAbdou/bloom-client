@@ -1,5 +1,6 @@
 $PREF: 's-home-bb';
 
+// Only displays if the breakpoint is T or less.
 .#{$PREF} {
   @extend .flex-acsb;
 
