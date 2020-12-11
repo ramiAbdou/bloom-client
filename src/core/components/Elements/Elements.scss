@@ -100,7 +100,7 @@ $PREF: 'c-misc';
     color: black;
 
     &:focus { background-color: white; }
-    &::selection { background-color: initial; }
+    &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
   }
   
   &--dark {
@@ -109,7 +109,7 @@ $PREF: 'c-misc';
     color: $gray-2;
 
     &:focus { background-color: white; }
-    &::selection { background-color: initial; }
+    &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
   }
 }
 
@@ -132,6 +132,8 @@ $PREF: 'c-misc';
   background-color: inherit;
   flex-grow: 1;
   width: 100%;
+
+  &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
 }
 
 .#{$PREF}-search-close {
