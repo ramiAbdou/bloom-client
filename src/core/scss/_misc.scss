@@ -32,7 +32,7 @@
 }
 
 // Disables scrollbar display for all elements.
-*::-webkit-scrollbar { display: none; }
+div::-webkit-scrollbar { display: none; }
 
 // ## TOOLTIP
 
@@ -115,4 +115,4 @@ path { color: inherit; }
 
 // SELECTION BACKGROUND
 
-*::selection { background-color: $primary-hover; }
+input::selection { background-color: $primary-hover; }

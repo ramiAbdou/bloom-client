@@ -9,7 +9,7 @@ $PREF: 's-applicants';
 
 .#{$PREF}-accept-all { margin-right: 12px; }
 
-.#{$PREF} > p { @extend .body--1; }
+.#{$PREF} > p { @extend .body; }
 
 .#{$PREF}-questions > p {
   @extend .meta;

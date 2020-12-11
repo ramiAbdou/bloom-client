@@ -1,18 +1,5 @@
-// This imports some CSS classes that create the font-family Muli.
-// That's why we can use that keyword in multiple places in this file.
-
 @import url('https://fonts.googleapis.com/css2?family=Muli:wght@400;600;700&display=swap');
 
-// Have all the text elements have a margin of 0, since most of the time we
-// want to implement our own margins regardless.
-
-h1,
-h2,
-h3,
-h4,
-p,
-a { margin: 0; }
-
 h1,
 h2,
 h3,
@@ -23,40 +10,31 @@ a,
 td,
 textarea,
 span,
-input,
-input::placeholder { font-family: Muli; }
+input { font-family: Muli; }
 
-// Returns the CSS font styling for different screen sizes.
+h1,
+h2,
+h3,
+h4 { font-weight: 700; } // Bold text for headers.
 
-h1 { font-size: 24px; font-weight: 700; line-height: 32px; }
-h2 { font-size: 20px; font-weight: 700; line-height: 24px; }
-h3 { font-size: 18px; font-weight: 700; line-height: 24px; }
+h1 { font-size: 24px; }
+h2 { font-size: 20px; }
+h3 { font-size: 18px; }
+h4 { font-size: 14px; text-transform: uppercase; }
 
-h4 {
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 24px;
-  text-transform: uppercase;
-}
-
-.body--1 {
-  font-family: Muli;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 20px;
-}
-
-.meta { font-size: 13px; font-weight: 600; line-height: 16px; }
+// .body { font-size: 15px; font-weight: 400; }
 .sb { font-weight: 600 !important; }
+.meta { font-size: 13px; font-weight: 600; }
+.body { font-size: 15px; font-weight: 400; }
 
+// For some reason, it's not letting me @extend the .body class, so we just
+// write the declarations again.
 button,
 p,
 a,
 td,
 textarea,
 span,
-input,
-input::placeholder { font-size: 15px; font-weight: 400; line-height: 20px; }
+input { font-size: 15px; font-weight: 400; }
 
-input::placeholder,
-th { color: $gray-3; }
+input::placeholder { color: $gray-3; }

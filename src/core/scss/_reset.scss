@@ -2,7 +2,9 @@
 html,
 body { height: 100%; margin: 0; padding: 0; width: 100%; }
 
-body { line-height: 1; }
+// Acts as a multiplier by the font-size for the line-height. For example,
+// if the h1 tag is 24px, it's line-height will be 24px * 1.33 = 32px.
+body { line-height: 1.33; }
 
 a { color: initial; text-decoration: none; }
 button { background: none; cursor: pointer; padding: 0; }
@@ -20,8 +22,10 @@ h2,
 h3,
 h4,
 p,
+td,
 textarea,
 ol,
+span,
 ul { margin: 0; padding: 0; }
 
 ol,

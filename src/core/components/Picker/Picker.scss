@@ -17,7 +17,7 @@ $PREF: 'c-picker';
 .#{$PREF}-option {
   @extend .flex-ac;
   @extend .fill;
-  @extend .body--1;
+  @extend .body;
   
   color: $gray-2;
   padding: 12px;

@@ -80,7 +80,7 @@ $PREF: 'c-misc';
 
   &::placeholder,
   &:-moz-placeholder,
-  &::-moz-placeholder { @extend .body--1; color: $gray-2; line-height: revert; }
+  &::-moz-placeholder { @extend .body; color: $gray-2; line-height: revert; }
 
   &::selection { background-color: $primary-hover; }
   &:focus { border: 1px $primary solid; }
