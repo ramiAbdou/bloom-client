@@ -23,6 +23,7 @@ export default ({ component, ...rest }: RouteProps) => {
 
   useEffect(() => {
     if (!data?.getUser) return;
+    console.log(data.getUser);
 
     mergeEntities({
       data: data.getUser,

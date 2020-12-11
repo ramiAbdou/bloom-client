@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
+import QuestionValue from '@components/Misc/QuestionValue';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';
 import Applicant from './ApplicantCard.store';
-import CardQuestion from './CardQuestion';
 import ExpandedCard from './ExpandedCard';
 
 const CardHeader = () => {
@@ -51,13 +51,8 @@ export default memo(() => {
     <div className="s-applicants-card">
       <div>
         <CardHeader />
-        {data.map(({ question, value }) => (
-          <CardQuestion
-            key={question.title}
-            question={question.title}
-            type={question.type}
-            value={value}
-          />
+        {data.map(({ question: { title, type }, value }) => (
+          <QuestionValue key={title} title={title} type={type} value={value} />
         ))}
       </div>
 

@@ -1,29 +1,12 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
+import QuestionValue from '@components/Misc/QuestionValue';
 import Separator from '@components/Misc/Separator';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
-import { makeClass } from '@util/util';
 import MemberCard from '../MemberCard/MemberCard.store';
 import UserInformationContainer from './UserInformation.container';
-
-const Question = ({ title, type, value }) => {
-  const css = makeClass([
-    's-directory-modal-question',
-    [
-      ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
-      's-directory-modal-question--choice'
-    ]
-  ]);
-
-  return (
-    <div className={css}>
-      <p>{title}</p>
-      <p>{value ?? 'N/A'}</p>
-    </div>
-  );
-};
 
 const CommunityData = () => {
   const expandedCardData = MemberCard.useStoreState(
@@ -38,7 +21,13 @@ const CommunityData = () => {
   return (
     <>
       {expandedCardData.map(({ title, type, value }) => (
-        <Question key={title} title={title} type={type} value={value} />
+        <QuestionValue
+          key={title}
+          hideNullValue
+          title={title}
+          type={type}
+          value={value}
+        />
       ))}
     </>
   );

@@ -4,10 +4,10 @@ import React, { useEffect, useMemo } from 'react';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import ApplicantCard from './components/ApplicantCard/ApplicantCard';
+import ApplicantCard from './components/Card/ApplicantCard';
 import Applicant, {
   applicantModel
-} from './components/ApplicantCard/ApplicantCard.store';
+} from './components/Card/ApplicantCard.store';
 import Header from './components/Header/Header';
 import { GET_PENDING_APPLICATIONS } from './PendingApplicants.gql';
 
@@ -29,26 +29,21 @@ export default () => {
     const { byId: byMember } = entities.members;
     const { byId: byQuestion } = entities.questions;
 
-    return community.members?.reduce(
-      (acc: IMember[], memberId: string) => {
-        const member = byMember[memberId];
-        if (member.status !== 'PENDING') return acc;
+    return community.members?.reduce((acc: IMember[], memberId: string) => {
+      const member = byMember[memberId];
+      if (member.status !== 'PENDING') return acc;
 
-        return [
-          ...acc,
-          {
-            ...member,
-            applicantData: member.applicantData.map(
-              ({ questionId, value }) => ({
-                question: byQuestion[questionId],
-                value
-              })
-            )
-          }
-        ];
-      },
-      []
-    );
+      return [
+        ...acc,
+        {
+          ...member,
+          applicantData: member.applicantData.map(({ questionId, value }) => ({
+            question: byQuestion[questionId],
+            value
+          }))
+        }
+      ];
+    }, []);
   });
 
   const { data, loading } = useQuery(GET_PENDING_APPLICATIONS);

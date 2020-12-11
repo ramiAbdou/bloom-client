@@ -1,8 +1,8 @@
 import React from 'react';
 
+import QuestionValue from '@components/Misc/QuestionValue';
 import { AcceptButton, BackButton, IgnoreButton } from './ActionButton';
 import Applicant from './ApplicantCard.store';
-import CardQuestion from './CardQuestion';
 
 const Header = () => {
   const fullName = Applicant.useStoreState((store) => store.fullName);
@@ -27,14 +27,8 @@ export default () => {
     <div className="s-applicants-expanded">
       <Header />
       <div>
-        {data.map(({ question, value }) => (
-          <CardQuestion
-            key={question.title}
-            expanded
-            question={question.title}
-            type={question.type}
-            value={value}
-          />
+        {data.map(({ question: { title, type }, value }) => (
+          <QuestionValue key={title} title={title} type={type} value={value} />
         ))}
       </div>
     </div>

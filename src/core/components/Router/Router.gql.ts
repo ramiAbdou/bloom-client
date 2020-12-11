@@ -6,6 +6,7 @@ export const GET_USER = query({
     'id',
     'firstName',
     'lastName',
+    'pictureUrl',
     {
       members: [
         {
