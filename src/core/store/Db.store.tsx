@@ -6,9 +6,8 @@
 import { Action, action, Computed, computed } from 'easy-peasy';
 import Cookie from 'js-cookie';
 import mergeWith from 'lodash.mergewith';
-import { Schema } from 'normalizr';
+import { Schema, normalize } from 'normalizr';
 
-import { parseEntities } from '@util/util';
 import {
   EntityRecord,
   ICommunity,
@@ -55,6 +54,34 @@ const getHueFromRGB = ([r, g, b]: number[]): number => {
 
   return hue < 0 ? hue + 360 : Math.round(hue);
 };
+
+/**
+ * Parses the entities using the normalization function, and sets the activeId
+ * of the entities if the entity is a communities or members.
+ *
+ * @param data Data to normalize.
+ * @param schema Schema in which to normalize the data on.
+ */
+const parseEntities = (
+  data: any,
+  schema: Schema<any>,
+  setActiveId?: boolean
+) =>
+  Object.entries(normalize(data, schema).entities).reduce(
+    (acc: Record<string, any>, [key, value]) => {
+      const activeId = setActiveId
+        ? ['communities', 'members', 'users'].includes(key) && {
+            activeId: Object.keys(value)[0]
+          }
+        : {};
+
+      return {
+        ...acc,
+        [key]: { ...activeId, allIds: Object.keys(value), byId: value }
+      };
+    },
+    {}
+  );
 
 type UpdateEntitiesArgs = {
   ids: string[];

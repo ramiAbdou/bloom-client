@@ -1,5 +1,4 @@
 import { APIError } from 'graphql-hooks';
-import { normalize, Schema } from 'normalizr';
 
 /**
  * Returns the GraphQL error from the APIError object returned after a GraphQL
@@ -60,33 +59,6 @@ export const makeClass = (
   ) as string).trimLeft();
 };
 
-/**
- * Parses the entities using the normalization function, and sets the activeId
- * of the entities if the entity is a communities or members.
- *
- * @param data Data to normalize.
- * @param schema Schema in which to normalize the data on.
- */
-export const parseEntities = (
-  data: any,
-  schema: Schema<any>,
-  setActiveId?: boolean
-) =>
-  Object.entries(normalize(data, schema).entities).reduce(
-    (acc: Record<string, any>, [key, value]) => {
-      const activeId = setActiveId
-        ? ['communities', 'members', 'users'].includes(key) && {
-            activeId: Object.keys(value)[0]
-          }
-        : {};
-
-      return {
-        ...acc,
-        [key]: { ...activeId, allIds: Object.keys(value), byId: value }
-      };
-    },
-    {}
-  );
 
 /**
  * Returns the first value in which the condition is true.
@@ -101,20 +73,6 @@ export const takeFirst = (arr: ([boolean, any] | any)[]) => {
   return null;
 };
 
-/**
- * Returns the array with either the value appended to the array if the value
- * didn't exist there before, or removes it from the array if it did exist on
- * the array.
- *
- * @param arr Array in which to search for the value.
- * @param value Value to toggle.
- */
-export const toggleArrayValue = (arr: any[], value: any) => {
-  const index = arr.findIndex((val) => val === value);
-  return index < 0
-    ? [...arr, value]
-    : [...arr.slice(0, index), ...arr.slice(index + 1)];
-};
 
 /**
  * Open-source method for generating a uuid without using a 3rd party package.

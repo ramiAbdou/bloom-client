@@ -8,7 +8,6 @@ import {
 import { matchSorter } from 'match-sorter';
 
 import { Function, QuestionCategory, QuestionType } from '@constants';
-import { toggleArrayValue } from '@util/util';
 
 export type Column = {
   category?: QuestionCategory;
@@ -243,10 +242,18 @@ export const tableModel: TableModel = {
    * Updates the data by setting isSelected to true where the ID of the row
    * matches the ID of the data (row).
    */
-  toggleRow: action(({ selectedRowIds, ...state }, rowId: string) => ({
-    ...state,
-    selectedRowIds: toggleArrayValue(selectedRowIds, rowId)
-  })),
+  toggleRow: action(({ selectedRowIds, ...state }, rowId: string) => {
+    const index = selectedRowIds.findIndex((value: string) => value === rowId);
+    return ({
+      ...state,
+      selectedRowIds: index < 0 
+        ? [...selectedRowIds, rowId] 
+        : [
+            ...selectedRowIds.slice(0, index),
+            ...selectedRowIds.slice(index + 1)
+          ]
+    })
+  } ),
 
   updateColumn: action(
     ({ columns, ...state }, updatedColumn: Partial<Column>) => ({
