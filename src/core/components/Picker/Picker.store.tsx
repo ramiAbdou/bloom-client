@@ -8,7 +8,11 @@ export type PickerAction = {
   text: string;
 };
 
-export type PickerAlign = 'RIGHT_BOTTOM' | 'BOTTOM_LEFT' | 'BOTTOM_RIGHT';
+export type PickerAlign =
+  | 'RIGHT_BOTTOM'
+  | 'BOTTOM_LEFT'
+  | 'BOTTOM_RIGHT'
+  | 'TOP_LEFT';
 
 export type PickerModel = {
   closePicker: Action<PickerModel>;

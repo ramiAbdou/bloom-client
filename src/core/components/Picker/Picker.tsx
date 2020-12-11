@@ -104,6 +104,21 @@ const Picker = ({
     animate = { ...animate, y: 0 };
   }
 
+  // ## CASE #4: TOP_LEFT
+
+  if (align === 'TOP_LEFT') {
+    positionStyle = {
+      left: left + width + 8,
+      top: top + height + 8
+    };
+
+    initial = { ...initial, y: 10 };
+    exit = { ...exit, y: 10 };
+    animate = { ...animate, y: 0 };
+  }
+
+  console.log(positionStyle);
+
   // ## END: CALCULATE PICKER COORDINATES
 
   const css = makeClass(['card', 'c-picker', [className, className]]);

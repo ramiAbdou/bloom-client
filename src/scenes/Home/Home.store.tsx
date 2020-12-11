@@ -15,18 +15,27 @@ export interface LinkOptions extends OnClickProps {
   title: string;
 }
 
-type SidebarModel = {
+type HomeModel = {
   activeTo: string; // Represents the "to" that is active.
-  isActive: Computed<SidebarModel, (to: string) => boolean, {}>;
-  setActiveTo: Action<SidebarModel, string>;
+  isActive: Computed<HomeModel, (to: string) => boolean, {}>;
+  isDropdownOpen: boolean;
+  setActiveTo: Action<HomeModel, string>;
+  toggleDropdown: Action<HomeModel>;
 };
 
-const model: SidebarModel = {
+const model: HomeModel = {
   activeTo: null,
 
   isActive: computed(({ activeTo }) => (to: string) => activeTo === to),
 
-  setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo }))
+  isDropdownOpen: false,
+
+  setActiveTo: action((state, activeTo: string) => ({ ...state, activeTo })),
+
+  toggleDropdown: action(({ isDropdownOpen, ...state }) => ({
+    isDropdownOpen: !isDropdownOpen,
+    ...state
+  }))
 };
 
-export default createContextStore<SidebarModel>(model, { disableImmer: true });
+export default createContextStore<HomeModel>(model, { disableImmer: true });

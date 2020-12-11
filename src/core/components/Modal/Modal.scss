@@ -2,6 +2,8 @@ $PREF: 'c-modal';
 
 // ## MODAL BACKGROUND (DARK OPACITY)
 
+// We don't set the opacity since the framer-motion animation takes care of
+// that for us.
 .#{$PREF}-bg {
   @extend .full-screen;
 

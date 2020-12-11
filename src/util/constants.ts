@@ -46,6 +46,7 @@ export enum ModalType {
 }
 
 export enum PickerType {
+  COMMUNITIES = 'COMMUNITIES',
   PROFILE = 'PROFILE'
 }
 

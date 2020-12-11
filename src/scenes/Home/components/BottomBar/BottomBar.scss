@@ -9,17 +9,12 @@ $PREF: 's-home-bb';
   bottom: 0;
   height: $xxl - $xxs;
   left: 0;
-  padding: $xxs $md;
   position: fixed;
   width: calc(100vw - 48px);
   z-index: 100;
-  
-  @include M {
-    // justify-content: center;
 
-    // padding: $xxs $xs;
-    // width: calc(100vw - 16px);
-  }
+  @include RESP(padding, $xxs $md, $xxs $md, $xxs $xs);
+  @include M { justify-content: center; width: calc(100vw - 16px); }
   @include MT { display: flex; }
   @include D { display: none; }
 }
@@ -29,21 +24,19 @@ $PREF: 's-home-bb';
   padding-right: $sm;
 }
 .#{$PREF} > div:nth-of-type(2) { @extend .flex-c; align-items: flex-end; }
-.#{$PREF} > div:last-of-type { visibility: hidden; }
+.#{$PREF} > div:last-of-type {
+  visibility: hidden;
+
+  @include M { display: none; }
+}
 
 .#{$PREF}-link {
   @extend .flex-accol;
 
   margin: $md;
 
-  // @include M {
-  //   margin-right: $md;
-  //   &:first-child { margin-right: $sm; }
-  // }
-
+  @include M { margin: $sm; }
   @include HOVER { > svg { color: $primary; } }
-
-  // &:last-child { margin-right: 0; }
 
   > * { color: $gray-2; }
   &--active { > * { color: $primary; } }
@@ -70,4 +63,32 @@ $PREF: 's-home-bb';
     @include M { margin-bottom: 2px; }
   }
   > p { @extend .meta; }
+}
+
+// ## DROPDOWN - Allows users to switch between communities.
+
+.#{$PREF}-dropdown-bg {
+  @extend .full-screen;
+
+  backdrop-filter: blur(2px);
+  background-color: hsla($primary-hue, 5%, 20%, 0.5);
+  height: calc(100vh - 60px) !important;
+  z-index: 100;
+
+  @include D { display: none; }
+}
+
+.#{$PREF}-dropdown {
+  background-color: $gray-6;
+  border-bottom: 1px $gray-5 solid;
+  border-radius: $sm $sm 0 0;
+  bottom: $xxl;
+  height: fit-content;
+  left: 0;
+  position: fixed;
+  width: 100vw;
+  z-index: 1001;
+
+  @include RESP(padding, $md, $md, $md $xs);
+  @include D { display: none; }
 }
