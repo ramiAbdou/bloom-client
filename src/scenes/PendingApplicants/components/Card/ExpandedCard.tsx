@@ -1,6 +1,6 @@
 import React from 'react';
 
-import QuestionValue from '@components/Misc/QuestionValue';
+import QuestionValue from '@components/Elements/QuestionValue';
 import { AcceptButton, BackButton, IgnoreButton } from './ActionButton';
 import Applicant from './ApplicantCard.store';
 

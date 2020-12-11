@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
-import QuestionValue from '@components/Misc/QuestionValue';
+import QuestionValue from '@components/Elements/QuestionValue';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';

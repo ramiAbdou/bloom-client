@@ -1,19 +1,8 @@
 $PREF: 's-directory-modal';
 
-.#{$PREF}-pic * {
-  border-radius: 50%;
-  height: 96px;
-  margin-bottom: $sm;
-  width: 96px;
-}
+// ## PROFILE PICTURE - 
 
-.#{$PREF}-pic > h1 {
-  @extend .flex-acc;
-
-  background-color: $primary;
-  color: white;
-  font-size: $lg;
-}
+.#{$PREF}-pic { margin-bottom: $xs; }
 
 .#{$PREF}-user-ctr-header { @extend .flex-sb; width: 100%; }
 .#{$PREF}-user-ctr-header > :last-child { height: fit-content; }

@@ -1,8 +1,8 @@
 import React, { memo, ReactNode } from 'react';
 
-import Tag from '@components/Misc/Tag';
 import { QuestionType, ValueProps } from '@constants';
 import { takeFirst } from '@util/util';
+import Tag from './Tag';
 
 interface QuestionValueProps extends ValueProps {
   hideNullValue?: boolean;

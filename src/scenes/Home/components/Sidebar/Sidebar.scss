@@ -141,28 +141,16 @@ $PREF: 's-home-sidebar';
 
 .#{$PREF}-profile > svg { color: $gray-1; }
 
-.#{$PREF}-profile__picture {
-  border-radius: 50%;
-  height: $xl;
-  margin-right: 12px;
-  width: $xl;
-}
-
-h3.#{$PREF}-profile__picture {
-  @extend .flex-acc;
-
-  background-color: $primary;
-  border-radius: 50%;
-  color: white;
-  height: $xl;
-  width: $xl;
-}
-
 .#{$PREF}-profile > div { @extend .flex-ac; }
 
-.#{$PREF}-profile > div > div { @extend .flex-col; align-items: flex-start; }
+.#{$PREF}-profile > div > div:last-child {
+  @extend .flex-col; 
 
-.#{$PREF}-profile > div > div > p:last-of-type {
+  align-items: flex-start;
+  margin-left: $sm;
+}
+
+.#{$PREF}-profile > div > div:last-child > p:last-of-type {
   @extend .meta;
 
   color: $gray-3;

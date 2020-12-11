@@ -3,27 +3,12 @@ import { RenderComponentProps } from 'masonic';
 import React from 'react';
 
 import Button from '@components/Button/Button';
+import ProfilePicture from '@components/Misc/ProfilePicture';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
 import MemberModal from '../MemberModal/MemberModal';
 import MemberCard, { MemberCardData } from './MemberCard.store';
-
-const ProfilePicture = () => {
-  const { pictureUrl, firstName, lastName } = MemberCard.useStoreState(
-    (store) => store.member,
-    deepequal
-  );
-
-  const initials = firstName && lastName ? `${firstName[0]}${lastName[0]}` : '';
-
-  return (
-    <div>
-      {!pictureUrl && <h1>{initials}</h1>}
-      {pictureUrl && <img src={pictureUrl} />}
-    </div>
-  );
-};
 
 const MemberCardContent = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -32,7 +17,8 @@ const MemberCardContent = () => {
     highlightedValue,
     firstName,
     id,
-    lastName
+    lastName,
+    pictureUrl
   } = MemberCard.useStoreState((store) => store.member, deepequal);
 
   const onClick = () => showModal(`${ModalType.DIRECTORY_CARD}-${id}`);
@@ -45,7 +31,12 @@ const MemberCardContent = () => {
   return (
     <>
       <Button className={css} onClick={onClick}>
-        <ProfilePicture />
+        <ProfilePicture
+          firstName={firstName}
+          fontSize={60}
+          lastName={lastName}
+          pictureUrl={pictureUrl}
+        />
 
         <div className="s-directory-card-content">
           <p>

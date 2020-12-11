@@ -1,7 +1,7 @@
 import React, { ChangeEvent, memo, useEffect, useState } from 'react';
 
+import SearchBar from '@components/Elements/SearchBar';
 import Spinner from '@components/Loader/Spinner';
-import SearchBar from '@components/Misc/SearchBar';
 import { LoadingProps } from '@constants';
 import { useStoreState } from '@store/Store';
 import Directory from '../Directory.store';

@@ -1,31 +1,24 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
+import ProfilePicture from '@components/Misc/ProfilePicture';
 import { PickerType } from '@constants';
+import { IUser } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 
-const PictureContainer = () => {
-  const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
-
-  const initials = useStoreState(
-    ({ db }) => `${db.user.firstName[0]}${db.user.lastName[0]}`
-  );
-
-  if (pictureUrl) {
-    return <img className="s-home-sidebar-profile__picture" src={pictureUrl} />;
-  }
-
-  return <h3 className="s-home-sidebar-profile__picture">{initials}</h3>;
-};
-
 export default () => {
-  const showPicker = useStoreActions(({ picker }) => picker.showPicker);
-  const type = useStoreState(({ db }) => db.member.type.name);
-  const role = useStoreState(({ db }) => db.member.role);
+  const {
+    type: { name: type },
+    role
+  } = useStoreState(({ db }) => db.member, deepequal);
 
-  const fullName = useStoreState(
-    ({ db }) => `${db.user.firstName} ${db.user.lastName}`
-  );
+  const { firstName, lastName, pictureUrl } = useStoreState(
+    ({ db }) => db.user,
+    deepequal
+  ) as IUser;
+
+  const showPicker = useStoreActions(({ picker }) => picker.showPicker);
 
   const onClick = () => showPicker(PickerType.PROFILE);
 
@@ -36,10 +29,16 @@ export default () => {
       onClick={onClick}
     >
       <div>
-        <PictureContainer />
+        <ProfilePicture
+          circle
+          firstName={firstName}
+          lastName={lastName}
+          pictureUrl={pictureUrl}
+          size={48}
+        />
 
         <div>
-          <p>{fullName}</p>
+          <p>{`${firstName} ${lastName}`}</p>
           <p>{role?.toLowerCase() ?? type}</p>
         </div>
       </div>

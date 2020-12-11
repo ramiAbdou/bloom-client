@@ -3,33 +3,31 @@ import React from 'react';
 import { IoClose, IoMail } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
+import ProfilePicture from '@components/Misc/ProfilePicture';
 import { useStoreActions } from '@store/Store';
 import MemberCard from '../MemberCard/MemberCard.store';
 import SocialMediaContainer from './SocialMedia.container';
 
-const ProfilePicture = () => {
+const Header = () => {
   const { pictureUrl, firstName, lastName } = MemberCard.useStoreState(
     (store) => store.member,
     deepequal
   );
 
-  const initials = firstName[0] + lastName[0];
-
-  return (
-    <div className="s-directory-modal-pic">
-      {!pictureUrl && <h1>{initials}</h1>}
-      {pictureUrl && <img src={pictureUrl} />}
-    </div>
-  );
-};
-
-const Header = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const onClick = () => closeModal();
 
   return (
     <div className="s-directory-modal-user-ctr-header">
-      <ProfilePicture />
+      <ProfilePicture
+        circle
+        className="s-directory-modal-pic"
+        firstName={firstName}
+        fontSize={36}
+        lastName={lastName}
+        pictureUrl={pictureUrl}
+        size={96}
+      />
 
       <Button onClick={onClick}>
         <IoClose className="back-arrow" />

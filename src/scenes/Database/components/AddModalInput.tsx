@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 
-import Checkbox from '@components/Misc/Checkbox';
+import Checkbox from '@components/Elements/Checkbox';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import Input from '@components/Misc/Input';
+import Input from '@components/Elements/Input';
 import { IdProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
 import { AddMemberData } from './AddMember/AddMember.store';

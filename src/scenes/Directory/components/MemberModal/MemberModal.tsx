@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import QuestionValue from '@components/Misc/QuestionValue';
+import QuestionValue from '@components/Elements/QuestionValue';
 import Separator from '@components/Misc/Separator';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
