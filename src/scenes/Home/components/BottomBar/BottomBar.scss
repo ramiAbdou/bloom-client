@@ -52,7 +52,7 @@ $PREF: 's-home-bb';
       @extend .fill;
 
       border: 1px $primary solid;
-      border-radius: 50%;
+      border-radius: $xs;
       padding: 1px;
     }
   }
@@ -83,12 +83,43 @@ $PREF: 's-home-bb';
   border-bottom: 1px $gray-5 solid;
   border-radius: $sm $sm 0 0;
   bottom: $xxl;
+  box-sizing: border-box;
   height: fit-content;
   left: 0;
   position: fixed;
   width: 100vw;
   z-index: 1001;
 
-  @include RESP(padding, $md, $md, $md $xs);
+  @include RESP(padding, $md, $md, $sm);
   @include D { display: none; }
+}
+
+.#{$PREF}-dropdown-link {
+  @extend .flex-acsb;
+
+  
+  width: 100%;
+
+  &:not(:last-child) { margin-bottom: $sm; }
+
+  > div { @extend .flex-ac; }
+
+  > div > img {
+    @extend .fill;
+
+    border: 1px $gray-6 solid;
+    border-radius: $xs;
+    height: $xl;
+    margin-right: $xs;
+    padding: 1px;
+    width: $xl;
+  }
+
+  > svg {
+    color: $green;
+
+    @include T { height: $md; width: $md; }
+  }
+
+  &--active > div > img { border: 1px $primary solid; }
 }

@@ -16,7 +16,7 @@ export default () => {
   );
 
   return (
-    <div className="s-home-bb">
+    <footer className="s-home-bb">
       <div>
         <BottomBarCommunityContainer />
       </div>
@@ -30,6 +30,6 @@ export default () => {
       <div>
         <BottomBarCommunityContainer />
       </div>
-    </div>
+    </footer>
   );
 };

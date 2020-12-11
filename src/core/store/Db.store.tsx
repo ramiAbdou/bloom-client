@@ -77,6 +77,7 @@ export type DbModel = {
   isOwner: Computed<DbModel, boolean>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
+  updateActiveCommunity: Action<DbModel, string>;
   updateCommunity: Action<DbModel, Partial<ICommunity>>;
   updateEntities: Action<DbModel, UpdateEntitiesArgs>;
   user: Computed<DbModel, IUser>;
@@ -217,6 +218,33 @@ export const dbModel: DbModel = {
           parsedEntities,
           mergeStrategy
         ) as IEntities
+      };
+    }
+  ),
+
+  /**
+   * If a user is a part of multiple communities, this allows a user to switch
+   * between the communities.
+   *
+   * Precondition: The user must be a member of that community in order to
+   * actually join it.
+   */
+  updateActiveCommunity: action(
+    ({ entities, user, ...state }, communityId: string) => {
+      const { byId } = entities.members;
+
+      const memberId = user.members.find(
+        (id: string) => byId[id]?.community === communityId
+      );
+
+      return {
+        ...state,
+        entities: {
+          ...entities,
+          communities: { ...entities.communities, activeId: communityId },
+          members: { ...entities.members, activeId: memberId }
+        },
+        user
       };
     }
   ),

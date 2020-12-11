@@ -60,6 +60,7 @@ export type IUser = {
   instagramUrl: string;
   lastName: string;
   linkedInUrl: string;
+  members?: string[];
   pictureUrl: string;
   twitterUrl: string;
 };
