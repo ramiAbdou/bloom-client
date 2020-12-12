@@ -24,7 +24,7 @@ $PREF: 'c-misc';
 // ## HEADER TAG - Similar to the regular Tag component, except it has a very
 // light border, the color is primary and is uppercase. Also less rounded.
 
-.#{$PREF}-tag--header {
+.#{$PREF}-header-tag {
   @extend .meta;
 
   background-color: $primary-hover;
@@ -34,6 +34,8 @@ $PREF: 'c-misc';
   font-weight: 700;
   padding: 6px;
   text-transform: uppercase;
+
+  &--lg { font-size: 18px; padding: $xxs $xs; }
 }
 
 // CHECKBOX

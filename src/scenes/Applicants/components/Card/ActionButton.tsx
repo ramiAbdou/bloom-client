@@ -8,8 +8,8 @@ import {
 
 import Button from '@components/Button/Button';
 import { useStoreActions } from '@store/Store';
-import { RESPOND_TO_MEMBERS } from '../../PendingApplicants.gql';
-import Applicant from './ApplicantCard.store';
+import { RESPOND_TO_MEMBERS } from '../../Applicants.gql';
+import Applicant from './Card.store';
 
 // In the context of the ExpandedCard, which exits the modal.
 export const BackButton = () => {

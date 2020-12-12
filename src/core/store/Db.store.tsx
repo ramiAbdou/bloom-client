@@ -6,7 +6,7 @@
 import { Action, action, Computed, computed } from 'easy-peasy';
 import Cookie from 'js-cookie';
 import mergeWith from 'lodash.mergewith';
-import { Schema, normalize } from 'normalizr';
+import { normalize, Schema } from 'normalizr';
 
 import {
   EntityRecord,
@@ -62,11 +62,7 @@ const getHueFromRGB = ([r, g, b]: number[]): number => {
  * @param data Data to normalize.
  * @param schema Schema in which to normalize the data on.
  */
-const parseEntities = (
-  data: any,
-  schema: Schema<any>,
-  setActiveId?: boolean
-) =>
+const parseEntities = (data: any, schema: Schema<any>, setActiveId?: boolean) =>
   Object.entries(normalize(data, schema).entities).reduce(
     (acc: Record<string, any>, [key, value]) => {
       const activeId = setActiveId

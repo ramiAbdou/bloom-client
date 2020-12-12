@@ -13,11 +13,11 @@ import AddMember from '@scenes/Database/components/AddMember/AddMember.store';
 import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
+import Applicants from '../Applicants/Applicants';
 import Database from '../Database/Database';
 import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
-import PendingApplicants from '../PendingApplicants/PendingApplicants';
 import BottomBar from './components/BottomBar/BottomBar';
 import SidebarPicker from './components/Sidebar/Picker';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -65,10 +65,7 @@ const HomeContent = () => {
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />
         {!autoAccept && (
-          <AdminRoute
-            component={PendingApplicants}
-            path={`${url}/applicants`}
-          />
+          <AdminRoute component={Applicants} path={`${url}/applicants`} />
         )}
         <Redirect to={`${url}/directory`} />
       </Switch>

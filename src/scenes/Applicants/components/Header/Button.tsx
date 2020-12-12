@@ -4,7 +4,7 @@ import React from 'react';
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { RESPOND_TO_MEMBERS } from '../../PendingApplicants.gql';
+import { RESPOND_TO_MEMBERS } from '../../Applicants.gql';
 
 type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
 

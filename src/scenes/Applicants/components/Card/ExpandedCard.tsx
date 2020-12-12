@@ -2,7 +2,7 @@ import React from 'react';
 
 import QuestionValue from '@components/Elements/QuestionValue';
 import { AcceptButton, BackButton, IgnoreButton } from './ActionButton';
-import Applicant from './ApplicantCard.store';
+import Applicant from './Card.store';
 
 const Header = () => {
   const fullName = Applicant.useStoreState((store) => store.fullName);

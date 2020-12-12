@@ -1,16 +1,15 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-export type DirectoryModel = {
-  loading: boolean;
+import { LoadingModel, loadingModel } from '@store/Loading.store';
+
+export interface DirectoryModel extends LoadingModel {
   searchString: string;
-  setLoading: Action<DirectoryModel, boolean>;
   setSearchString: Action<DirectoryModel, string>;
-};
+}
 
 const model: DirectoryModel = {
-  loading: false,
+  ...loadingModel,
   searchString: '',
-  setLoading: action((state, loading: boolean) => ({ ...state, loading })),
   setSearchString: action((state, searchString) => ({ ...state, searchString }))
 };
 

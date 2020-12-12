@@ -1,3 +1,4 @@
+import deepequal from 'fast-deep-equal';
 import React, { memo } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
@@ -5,12 +6,12 @@ import QuestionValue from '@components/Elements/QuestionValue';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';
-import Applicant from './ApplicantCard.store';
+import Card from './Card.store';
 import ExpandedCard from './ExpandedCard';
 
 const CardHeader = () => {
-  const createdAt = Applicant.useStoreState((store) => store.createdAt);
-  const fullName = Applicant.useStoreState((store) => store.fullName);
+  const createdAt = Card.useStoreState((store) => store.createdAt);
+  const fullName = Card.useStoreState((store) => store.fullName);
 
   return (
     <div className="s-applicants-card-header">
@@ -28,7 +29,7 @@ const CardHeader = () => {
 };
 
 const ExpandButton = memo(() => {
-  const applicantId = Applicant.useStoreState(({ applicant }) => applicant.id);
+  const applicantId = Card.useStoreState(({ applicant }) => applicant.id);
   const MODAL_ID = `EXPANDED_APPLICANT_CARD-${applicantId}`;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal(MODAL_ID);
@@ -44,8 +45,8 @@ const ExpandButton = memo(() => {
   );
 });
 
-export default memo(() => {
-  const data = Applicant.useStoreState((store) => store.data);
+export default () => {
+  const data = Card.useStoreState((store) => store.data, deepequal);
 
   return (
     <div className="s-applicants-card">
@@ -59,4 +60,4 @@ export default memo(() => {
       <ExpandButton />
     </div>
   );
-});
+};
