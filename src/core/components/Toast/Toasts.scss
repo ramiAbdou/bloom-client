@@ -24,7 +24,7 @@ $PREF: 'c-toast';
   margin-right: $sm;
   padding: 12px $sm;
 
-  > p { @extend .body--1; color: white; }
+  > p { @extend .body; color: white; }
 
   &--error { background-color: $red; }
   &--pessimistic { background-color: $gray-1; }

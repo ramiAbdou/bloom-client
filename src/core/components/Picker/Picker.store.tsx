@@ -1,12 +1,18 @@
 import { Action, action, Computed, computed } from 'easy-peasy';
+import { FC } from 'react';
 
 export type PickerAction = {
+  Icon?: FC;
   separator?: boolean;
   onClick: VoidFunction; // Should perform some action.
   text: string;
 };
 
-export type PickerAlign = 'RIGHT_BOTTOM' | 'BOTTOM_LEFT' | 'BOTTOM_RIGHT';
+export type PickerAlign =
+  | 'RIGHT_BOTTOM'
+  | 'BOTTOM_LEFT'
+  | 'BOTTOM_RIGHT'
+  | 'TOP_LEFT';
 
 export type PickerModel = {
   closePicker: Action<PickerModel>;

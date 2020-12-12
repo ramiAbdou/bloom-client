@@ -1,35 +1,35 @@
 import deepequal from 'fast-deep-equal';
-import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
 import Table, { Column, Row, tableModel } from '@components/Table/Table.store';
-import { IAdmin } from '@store/entities';
-import { Schema } from '@store/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_ADMINS } from '../../Database.gql';
+import { useStoreState } from '@store/Store';
 import Database from '../../Database.store';
 import AddAdminStore from '../AddAdmin/AddAdmin.store';
 import AddAdminModal from '../AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
 const AdminTable = () => {
-  const admins: IAdmin[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.admins;
-    return community.admins?.map((adminId: string) => byId[adminId]);
-  }, deepequal);
+  const rows: Row[] = useStoreState(({ db }) => {
+    const { community } = db;
+    const { members, users } = db.entities;
+    const { byId: byMemberId } = members;
+    const { byId: byUserId } = users;
 
-  const rows: Row[] = admins.reduce(
-    (acc: Row[], { firstName, lastName, email, id }: IAdmin) => {
+    return community.members?.reduce((acc: Row[], memberId: string) => {
+      const { id, role, user } = byMemberId[memberId] ?? {};
+      if (!role || !id || !user) return acc;
+
+      const { firstName, lastName, email } = byUserId[user] ?? {};
+
       return [
         ...acc,
         { Email: email, 'First Name': firstName, 'Last Name': lastName, id }
       ];
-    },
-    []
-  );
+    }, []);
+  }, deepequal);
 
-  const updateData = Table.useStoreActions((actions) => actions.updateData);
+  const updateData = Table.useStoreActions((store) => store.updateData);
 
   // Used primarily for the removal of members. This will not update the
   // data if the number of members doesn't change.
@@ -41,36 +41,12 @@ const AdminTable = () => {
 };
 
 export default () => {
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
-  const currentLoading = Database.useStoreState((store) => store.loading);
-  const setLoading = Database.useStoreActions((actions) => actions.setLoading);
-  const isOwner = useStoreState((store) => store.isOwner);
+  const loading = Database.useStoreState((store) => store.loading);
+  const isOwner = useStoreState(({ db }) => db.isOwner);
 
-  const isAdminsLoaded = useStoreState(
-    ({ community }) => !!community.admins?.length
+  const isStoreUpdated = useStoreState(
+    ({ db }) => !!db.community.members?.length
   );
-
-  const { data, loading } = useQuery(GET_ADMINS);
-
-  useEffect(() => {
-    const { getAdmins: result } = data || {};
-    if (!result) return;
-
-    updateEntities({
-      data: {
-        ...result,
-        admins: result.memberships.map(({ id, user }) => {
-          const { id: _, ...rest } = user;
-          return { id, ...rest };
-        })
-      },
-      schema: Schema.COMMUNITY
-    });
-  }, [data]);
-
-  useEffect(() => {
-    if (loading !== currentLoading) setLoading(loading);
-  }, [loading]);
 
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.
@@ -80,7 +56,7 @@ export default () => {
     { id: 'Email', title: 'Email', type: 'SHORT_TEXT' }
   ];
 
-  if (loading || !isAdminsLoaded) return null;
+  if (loading || !isStoreUpdated) return null;
 
   return (
     <>

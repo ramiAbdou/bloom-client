@@ -1,0 +1,18 @@
+
+$PREF: 's-directory';
+
+.#{$PREF}-header {
+  @extend .s-home-header; 
+
+  // If big screen, the search bar is aligned on the top.
+
+  @include TD { display: flex; justify-content: space-between; }
+
+  // Otherwise, we put the search bar on the next line, and separate it from
+  // the header text by 16px.
+
+  @include M {
+    > div:first-child { margin-bottom: $sm; }
+    > div:last-child { width: 100%; }
+  }
+}

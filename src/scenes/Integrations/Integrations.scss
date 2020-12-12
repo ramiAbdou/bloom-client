@@ -15,19 +15,31 @@ $PREF: 's-integrations';
   }
 }
 
-// ## INTEGRATION CARD
+// ## INTEGRATION CARD CONTAINER - Defined in 12 column grid system with the
+// minimum column size being 270px and the max being 1fr.
 
-.#{$PREF}-card {
-  @extend .card;
-
-  background-color: white;
-  margin-bottom: $md;
-  margin-right: $md;
-  width: $xxl * 5;
+.#{$PREF}-card-ctr {
+  column-gap: $md;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($xxl * 5, 1fr));
+  max-width: 100%;
+  padding: $xxs 0;
+  row-gap: $md;
 }
 
-.#{$PREF}-card > h3 { margin-bottom: $xs; }
-.#{$PREF}-card > p { margin-bottom: $sm; }
+// ## INTEGRATION CARD
+
+// Need the .flex-sb so that the action button appears at the end of the card.
+// Only becomes issue when there are originally different heights of the cards.
+.#{$PREF}-card { @extend .card; @extend .flex-sb; }
+
+// The first div child wraps the logo, title, and description.
+.#{$PREF}-card > div:first-child > h3 { margin-bottom: $xs; }
+.#{$PREF}-card > div:first-child > p { margin-bottom: $sm; }
+
+// The last div child wraps the action button.
+.#{$PREF}-card > div:last-child,
+.#{$PREF}-card > div:last-child > button { width: 100%; }
 
 // ## CARD HEADER
 

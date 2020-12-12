@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 
-import SearchBar from '@components/Misc/SearchBar';
+import SearchBar from '@components/Elements/SearchBar';
 import Table from '../Table.store';
 
 type SearchBarProps = { placeholder?: string };
@@ -21,11 +21,14 @@ export default memo(({ placeholder }: SearchBarProps) => {
     return () => clearTimeout(timeout);
   }, [value]);
 
+  const onClear = () => setValue('');
+
   return (
     <SearchBar
       placeholder={placeholder}
       value={value}
       onChange={({ target }) => setValue(target.value)}
+      onClear={onClear}
     />
   );
 });

@@ -1,9 +1,9 @@
 // Controls all of the @media queries based on the window width. Mixin
 // functions allow for setting breakpoints at various widths.
 
-$screen-mobile: 575;
-$screen-tablet: 1024;
-$screen-desktop: 1440;
+$M_SIZE: 575;
+$T_SIZE: 1024;
+$D_SIZE: 1440;
 
 // We need to add the media query to ensure that if the device doesn't support
 // hovering (such as an iPhone), then we shouldn't allow a hover state.
@@ -14,60 +14,36 @@ $screen-desktop: 1440;
 
 // If the size of the screen is less than 575px.
 
-@mixin M {
-  @media (max-width: "#{$screen-mobile}px") {
-    @content;
-  }
-}
+@mixin M { @media (max-width: "#{$M_SIZE}px") { @content; } }
 
 // If the size of the screen is less than 1024px.
 
-@mixin MT {
-  @media (max-width: "#{$screen-tablet}px") {
-    @content;
-  }
-}
+@mixin MT { @media (max-width: "#{$T_SIZE}px") { @content; } }
 
 // If the size of the screen is between 576px and 1024px.
 
 @mixin T {
   @media all
-    and (min-width: "#{$screen-mobile + 1}px")
-    and (max-width: "#{$screen-tablet}px") {
-    @content;
-  }
+    and (min-width: "#{$M_SIZE + 1}px")
+    and (max-width: "#{$T_SIZE}px") { @content; }
 }
 
 // If the size of the screen is at least 576px.
 
-@mixin TD {
-  @media (min-width: "#{$screen-mobile + 1}px") {
-    @content;
-  }
-}
+@mixin TD { @media (min-width: "#{$M_SIZE + 1}px") { @content; } }
 
 // If the size of the screen is at least 1025px...
 
-@mixin D {
-  @media (min-width: "#{$screen-tablet + 1}px") {
-    @content;
-  }
-}
+@mixin D { @media (min-width: "#{$T_SIZE + 1}px") { @content; } }
 
 // If the size of the screen is at least 1441px...
 
-@mixin DD {
-  @media (min-width: "#{$screen-desktop + 1}px") {
-    @content;
-  }
-}
+@mixin DD { @media (min-width: "#{$D_SIZE + 1}px") { @content; } }
 
 // If the device is less than or equal to the given pixels then...
 
 @mixin LTE($window-width) {
-  @media (max-width: "#{$window-width}px") {
-    @content;
-  }
+  @media (max-width: "#{$window-width}px") { @content; }
 }
 
 // Allows for responsive values in a one-line declaration. We set the rule

@@ -1,29 +1,35 @@
 import { mutation, query } from 'gql-query-builder';
 
-export const CREATE_MEMBERSHIPS = mutation({
-  fields: ['role', { user: ['id', 'firstName', 'lastName', 'email'] }],
-  operation: 'createMemberships',
+export const CREATE_MEMBERS = mutation({
+  fields: [
+    'id',
+    'role',
+    'status',
+    { allData: ['questionId', 'value'] },
+    { user: ['id', 'firstName', 'lastName', 'email'] }
+  ],
+  operation: 'createMembers',
   variables: { members: { required: true, type: '[NewMemberInput!]' } }
 }).query;
 
-export const DELETE_MEMBERSHIPS = mutation({
-  operation: 'deleteMemberships',
-  variables: { membershipIds: { required: true, type: '[String!]' } }
-}).query;
-
-export const GET_ADMINS = query({
-  fields: [
-    'id',
-    { memberships: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] }
-  ],
-  operation: 'getAdmins'
+export const DELETE_MEMBERS = mutation({
+  operation: 'deleteMembers',
+  variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
 
 export const GET_DATABASE = query({
   fields: [
     'id',
     { questions: ['category', 'id', 'title', 'type', 'version'] },
-    { memberships: ['id', 'role', { allData: ['questionId', 'value'] }] }
+    {
+      members: [
+        'id',
+        'role',
+        'status',
+        { allData: ['questionId', 'value'] },
+        { user: ['id', 'firstName', 'lastName', 'email'] }
+      ]
+    }
   ],
   operation: 'getDatabase'
 }).query;
@@ -39,6 +45,7 @@ export const RENAME_QUESTION = mutation({
 }).query;
 
 export const TOGGLE_ADMINS = mutation({
+  fields: ['id', 'role'],
   operation: 'toggleAdmins',
-  variables: { membershipIds: { required: true, type: '[String!]' } }
+  variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;

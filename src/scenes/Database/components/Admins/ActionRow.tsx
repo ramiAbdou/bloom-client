@@ -7,7 +7,7 @@ import DeleteMembersIcon from './DeleteAdminIcon';
 import PromoteToAdminIcon from './DemoteAdminIcon';
 
 const IconContainer = () => {
-  const isOwner = useStoreState((store) => store.isOwner);
+  const isOwner = useStoreState(({ db }) => db.isOwner);
 
   const isAnythingSelected = Table.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length

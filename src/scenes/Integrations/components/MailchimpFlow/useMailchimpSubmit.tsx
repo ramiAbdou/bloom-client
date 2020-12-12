@@ -11,10 +11,10 @@ export default (): UseClientRequestResult<any, object> => {
   const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
 
   const options = useStoreState(
-    ({ integrations }) => integrations?.mailchimpLists ?? []
+    ({ db }) => db.integrations?.mailchimpLists ?? []
   );
 
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const mailchimpListName = items.find(
@@ -41,7 +41,7 @@ export default (): UseClientRequestResult<any, object> => {
 
       // If the function is successful, update the entities with the new
       // Mailchimp information and close the modal.
-      updateEntities({
+      mergeEntities({
         data: { ...data.updateMailchimpListId },
         schema: Schema.INTEGRATIONS
       });

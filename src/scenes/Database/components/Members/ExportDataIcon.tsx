@@ -8,7 +8,7 @@ import DatabaseAction from '../DatabaseAction';
 
 export default () => {
   const filename = useStoreState(
-    ({ community }) => `${community.encodedUrlName}.csv`
+    ({ db }) => `${db.community.encodedUrlName}.csv`
   );
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);
@@ -18,20 +18,21 @@ export default () => {
     columns.map(({ id, title }) => ({ key: id, label: title }))
   );
 
-  const data = Table.useStoreState(({ filteredData, selectedRowIds }) =>
-    selectedRowIds.map((rowId: string) => {
+  const data = Table.useStoreState(({ filteredData, selectedRowIds }) => {
+    return selectedRowIds.map((rowId: string) => {
       // We return every piece of data in the selected row except for the
-      // ID of the row, which is just the membership ID in this case.
+      // ID of the row, which is just the member ID in this case.
       const { id: _, ...rest } = filteredData.find(({ id }) => id === rowId);
       return rest;
-    })
-  );
+    });
+  });
 
   const onClick = () => showToast({ message: 'Member(s) data exported.' });
 
   return (
     <CSVLink
       data={data}
+      enclosingCharacter="`"
       filename={filename}
       headers={headers}
       onClick={onClick}

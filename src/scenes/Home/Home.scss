@@ -1,3 +1,4 @@
+
 $PREF: 's-home';
 
 // ## HOME
@@ -5,30 +6,12 @@ $PREF: 's-home';
 // Implements the margin that we're used to seeing. We limit the width to be
 // 1440px.
 .#{$PREF} {
+  @extend .flex-ac;
+
   align-items: flex-start;
   box-sizing: border-box;
-  column-gap: $md;
-  display: grid;
-  grid-template-columns: repeat(16, 1fr);
   height: 100%;
-  margin-right: $md;
   max-height: 100vh;
-
-  @include LTE(1330) { grid-template-columns: repeat(12, 1fr); }
-  @include MT { display: block; margin-left: $md; }
-}
-
-.#{$PREF}-nav {
-  @extend .flex;
-  @extend .shadow--1;
-
-  grid-column-end: span 4;
-  height: 100%;
-  position: sticky;
-  top: 0;
-  width: 100%;
-
-  @include MT { display: none; }
 }
 
 // ## HEADER
@@ -39,7 +22,7 @@ $PREF: 's-home';
 
 .#{$PREF}-header {
   background-color: $gray-6;
-  padding-bottom: $md;
+  padding: $md;
   position: sticky;
   top: 0;
   z-index: 11;
@@ -51,23 +34,12 @@ $PREF: 's-home';
 
 // ## CONTENT
 
-.#{$PREF}-content {
-  box-sizing: border-box;
-  grid-column: 5 / -1;
-  margin-top: $md;
+.#{$PREF}-content-ctr {
+  flex-grow: 1;
   max-height: 100vh;
+  overflow: visible; // Mainly for the purposes of shadows.
+
+  @include D { margin-left: ($xxl * 6); max-width: calc(100% - 360px); }
 }
 
-.#{$PREF}-content-body { overflow: scroll; }
-
-// .#{$PREF}-header > *:nth-child(2),
-// .#{$PREF}-header > *:nth-child(3) { grid-column-end: span 4; }
-
-// display: grid;
-//   grid-template-columns: repeat(12, 1fr);
-
-// .#{$PREF}-header > div:first-child {
-//   @extend .flex-ac;
-
-//   grid-column-end: span 5;
-// }
+.#{$PREF}-content { margin: 0 $md; }

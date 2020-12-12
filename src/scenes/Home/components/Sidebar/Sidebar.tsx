@@ -11,18 +11,17 @@ import {
 } from 'react-icons/io5';
 
 import Separator from '@components/Misc/Separator';
-import AddMemberStore from '@scenes/Database/components/AddMember/AddMember.store';
-import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreActions, useStoreState } from '@store/Store';
-import LinkSection from './LinkSection';
-import ProfileBar from './ProfileBar';
-import Sidebar, { LinkOptions } from './Sidebar.store';
+import Home, { LinkOptions } from '../../Home.store';
+import SidebarCommunityContainer from './Community.container';
+import SidebarProfile from './Profile';
+import SidebarSection from './Section';
 import useActiveTo from './useActiveTo';
 
 const SidebarContent = () => {
-  const name = useStoreState(({ community }) => community.name);
+  const name = useStoreState(({ db }) => db.community.name);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setActiveTo = Sidebar.useStoreActions((actions) => actions.setActiveTo);
+  const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);
 
   const activeTo = useActiveTo();
 
@@ -61,28 +60,26 @@ const SidebarContent = () => {
   );
 
   return (
-    <div className="s-home-sidebar">
+    <div className="s-home-sidebar-main">
       <h2>{name}</h2>
       <Separator style={{ marginBottom: 12, marginTop: 24 }} />
 
       <div className="s-home-sidebar-section-ctr">
-        <LinkSection links={mainLinks} title="Main" />
-        <LinkSection links={adminLinks} title="Admin" />
-        <LinkSection links={quickLinks} title="Quick Actions" />
+        <SidebarSection links={mainLinks} title="Main" />
+        <SidebarSection links={adminLinks} title="Admin" />
+        <SidebarSection links={quickLinks} title="Quick Actions" />
       </div>
+
       <div>
-        <ProfileBar />
+        <SidebarProfile />
       </div>
     </div>
   );
 };
 
 export default () => (
-  <Sidebar.Provider>
+  <div className="s-home-sidebar">
+    <SidebarCommunityContainer />
     <SidebarContent />
-
-    <AddMemberStore.Provider>
-      <AddMemberModal />
-    </AddMemberStore.Provider>
-  </Sidebar.Provider>
+  </div>
 );

@@ -43,6 +43,10 @@ const AllOptions = () => {
     (store) => store.setSearchString
   );
 
+  const closeOptions = MultipleSelect.useStoreActions(
+    (store) => store.closeOptions
+  );
+
   const selectOption = (option: string) => {
     const wasNonePreviouslySelected = value.some((element: string) =>
       ['None', 'None of the Above', 'N/A'].includes(element)
@@ -53,17 +57,21 @@ const AllOptions = () => {
     const result: string[] =
       wasNonePreviouslySelected || isOptionNone ? [option] : [...value, option];
 
-    // const isOptionNone = ['None', 'None of the Above', 'N/A'].includes(option);
-    // const result: string[] = isOptionNone ? [option] : [...value, option];
-
-    updateItem({
-      title,
-      // If the option is a None value and there are other options present, we
-      // should remove them.
-      value: result
-    });
-
+    updateItem({ title, value: result });
     setSearchString('');
+
+    const updatedOptions = filteredOptions.filter(
+      (opt: string) => !result.includes(opt)
+    );
+
+    if (
+      isOptionNone ||
+      !updatedOptions.length ||
+      (updatedOptions.length === 1 &&
+        ['None', 'None of the Above', 'N/A'].includes(updatedOptions[0]))
+    ) {
+      closeOptions();
+    }
   };
 
   return (

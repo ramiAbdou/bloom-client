@@ -1,8 +1,10 @@
+import deepequal from 'fast-deep-equal';
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 import URLBuilder from 'util/URLBuilder';
 
 import { APP, isProduction } from '@constants';
+import { IIntegrations } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
@@ -30,8 +32,9 @@ const IntegrationModal = () => {
   const setFlow = Integrations.useStoreActions((store) => store.setFlow);
 
   useEffect(() => {
-    if (searchParam && searchParam !== flow)
+    if (searchParam && searchParam !== flow) {
       setFlow(`${searchParam.toUpperCase()}_FLOW` as IntegrationsModal);
+    }
   }, []);
 
   // Flow is showing when the modal isShowing is true and there is a populated
@@ -48,30 +51,19 @@ const IntegrationModal = () => {
 // Responsible for fetching and supplying all the data to the children card
 // components to process and render.
 const Cards = () => {
-  const encodedUrlName = useStoreState(
-    ({ community }) => community.encodedUrlName
-  );
+  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
 
-  const isMailchimpAuthenticated = useStoreState(
-    ({ integrations }) => integrations?.isMailchimpAuthenticated
-  );
-
-  const isMailchimpComplete = useStoreState(
-    ({ integrations }) => !!integrations?.mailchimpListId
-  );
-
-  const isStripeAuthenticated = useStoreState(
-    ({ integrations }) => !!integrations?.stripeAccountId
-  );
-
-  const isZoomAuthenticated = useStoreState(
-    ({ integrations }) => !!integrations?.isZoomAuthenticated
-  );
+  const {
+    isMailchimpAuthenticated,
+    mailchimpListId,
+    stripeAccountId,
+    isZoomAuthenticated
+  } = useStoreState(({ db }) => db.integrations, deepequal) as IIntegrations;
 
   const integrationData: IntegrationCardProps[] = [
     // ## MAILCHIMP
     {
-      completed: isMailchimpComplete,
+      completed: !!mailchimpListId,
       description: `Quickly add every new member of the community to your
       Mailchimp listserv.`,
       href:
@@ -87,7 +79,7 @@ const Cards = () => {
 
     // ## STRIPE
     {
-      completed: isStripeAuthenticated,
+      completed: !!stripeAccountId,
       description: 'Collect monthly or yearly dues payments from your members.',
       href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
         .addParam('response_type', 'code')
@@ -132,7 +124,7 @@ const Cards = () => {
   ];
 
   return (
-    <div className="flex-w">
+    <div className="s-integrations-card-ctr">
       {integrationData.map((props: IntegrationCardProps) => (
         <IntegrationCard key={props.name} {...props} />
       ))}
@@ -141,21 +133,22 @@ const Cards = () => {
 };
 
 export default () => {
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const { data, loading } = useQuery(GET_INTEGRATIONS);
 
   useEffect(() => {
-    if (data?.getIntegrations)
-      updateEntities({
+    if (data?.getIntegrations) {
+      mergeEntities({
         data: { ...data.getIntegrations },
         schema: Schema.COMMUNITY
       });
+    }
   }, [data]);
 
   return (
     <Integrations.Provider>
       <Header loading={loading} />
-      {!loading && <Cards />}
+      <div className="s-home-content">{!loading && <Cards />}</div>
       <IntegrationModal />
     </Integrations.Provider>
   );

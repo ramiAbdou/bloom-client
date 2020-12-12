@@ -32,9 +32,9 @@ export const GET_MEMBERSHIP_FORM = query({
 
 export const APPLY_FOR_MEMBERSHIP = mutation({
   fields: ['id'],
-  operation: 'applyForMembership',
+  operation: 'applyForMember',
   variables: {
-    data: { type: '[MembershipDataInput!]!' },
+    data: { type: '[MemberDataInput!]!' },
     email: { required: true },
     encodedUrlName: { required: true }
   }

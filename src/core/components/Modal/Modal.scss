@@ -2,11 +2,13 @@ $PREF: 'c-modal';
 
 // ## MODAL BACKGROUND (DARK OPACITY)
 
+// We don't set the opacity since the framer-motion animation takes care of
+// that for us.
 .#{$PREF}-bg {
   @extend .full-screen;
 
   backdrop-filter: blur(2px);
-  background-color: hsla($primary-hue, 5%, 20%, 0.5);
+  background-color: hsl($primary-hue, 5%, 20%);
   z-index: 1000;
 }
 
@@ -26,7 +28,7 @@ $PREF: 'c-modal';
   z-index: 1001;
 
   @include M { height: 100%; width: 100%; }
-  @include TD { border-radius: $xs; max-height: 90vh; width: 550px; }
+  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
 }
 
 // ## MODAL CONTENT

@@ -13,7 +13,7 @@ const LoginHeader = () => (
       <Logo multiplier={1.25} />
     </div>
 
-    <Network />
+    <Network style={{ height: 151 }} />
   </div>
 );
 

@@ -24,7 +24,6 @@ export default ({ activeIndex, options }: MultiButtonProps) => (
       return (
         <Button
           key={title}
-          noScale
           className={css}
           title={title}
           onClick={onClickButton}

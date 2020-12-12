@@ -87,7 +87,7 @@ const addAdminModel: AddAdminModel = {
     const index = admins.findIndex((element) => element.id === id);
     const member = admins[index];
 
-    if (field === 'EMAIL')
+    if (field === 'EMAIL') {
       admins[index] = {
         ...member,
         email: value,
@@ -95,18 +95,19 @@ const addAdminModel: AddAdminModel = {
           ? ''
           : 'This is not a valid email address.'
       };
-    else if (field === 'FIRST_NAME')
+    } else if (field === 'FIRST_NAME') {
       admins[index] = {
         ...member,
         firstName: value,
         firstNameError: value.length ? '' : 'Please fill out a first name.'
       };
-    else
+    } else {
       admins[index] = {
         ...member,
         lastName: value,
         lastNameError: value.length ? '' : 'Please fill out a last name.'
       };
+    }
 
     return { ...state, admins };
   })

@@ -28,11 +28,7 @@ export default ({
   const showLoadingState = useLoadingState(loading);
   disabled = disabled || showLoadingState;
 
-  const css = makeClass([
-    'c-btn-outline',
-    [disabled, 'c-btn-outline--disabled'],
-    className
-  ]);
+  const css = makeClass(['c-btn-outline', [className, className]]);
 
   return (
     <Button className={css} disabled={disabled} {...props}>

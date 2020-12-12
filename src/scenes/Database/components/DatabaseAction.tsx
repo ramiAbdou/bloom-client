@@ -22,13 +22,7 @@ export default memo(
     ]);
 
     return (
-      <Button
-        noHover
-        className={css}
-        disabled={disabled}
-        value={value}
-        {...props}
-      >
+      <Button className={css} disabled={disabled} value={value} {...props}>
         <Icon />
       </Button>
     );

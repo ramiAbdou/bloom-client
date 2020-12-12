@@ -1,0 +1,168 @@
+// Although we typically follow the pattern of naming the $PREF based on the
+// file name, since we have a lot of elements that already use the c-misc
+// prefix, we keep that here.
+
+$PREF: 'c-misc';
+
+// ## TAG
+
+.#{$PREF}-tag {
+  background-color: rgba($color: $primary-hex, $alpha: 0.15);
+  border-radius: $sm;
+  color: black;
+  font-size: 13px;
+  margin-right: $xxs;
+  padding: 2px 6px;
+  text-align: left;
+  width: fit-content;
+
+  @include OVERFLOW_ELLIPSES;
+
+  &:not(.c-misc-tag:first-of-type) { margin-left: $xs; }
+}
+
+// ## HEADER TAG - Similar to the regular Tag component, except it has a very
+// light border, the color is primary and is uppercase. Also less rounded.
+
+.#{$PREF}-header-tag {
+  @extend .meta;
+
+  background-color: $primary-hover;
+  border: 1px rgba($color: $primary-hex, $alpha: 0.15) solid;
+  border-radius: $xxs;
+  color: $primary;
+  font-weight: 700;
+  padding: 6px;
+  text-transform: uppercase;
+
+  &--lg { font-size: 18px; padding: $xxs $xs; }
+}
+
+// CHECKBOX
+
+.#{$PREF}-checkbox {
+  @extend .flex-acc;
+  
+  background-color: inherit;
+  border: 1px $gray-4 solid;
+  border-radius: $xxs;
+  cursor: pointer;
+  height: $sm + 2;
+  position: relative;
+  stroke-width: 3px;
+  width: $sm + 2;
+
+  @include HOVER { &::before { visibility: visible; } }
+
+  &::before {
+    background-color: $gray-3;
+    border-radius: 50%;
+    content: '';
+    display: block;
+    height: 100%;
+    opacity: 0.1;
+    padding: 10px;
+    position: absolute;
+    transform: scale(1);
+    visibility: hidden;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  &--active {
+    background-color: $primary !important;
+    border: 1px $primary solid !important;
+
+    @include HOVER { &::before { visibility: hidden; } }
+  }
+}
+
+.#{$PREF}-checkbox > svg { height: $sm + 2; stroke-width: 3px; width: $sm + 2; }
+
+// ## INPUT - The main element that all items will use, especially the short
+// text and long text items. We set a special active state for them.
+
+.#{$PREF}-input {
+  @extend .flex-acsb;
+
+  background-color: white;
+  border: 1px $gray-4 solid;
+  border-radius: $xxs;
+  box-sizing: border-box;
+  cursor: text;
+  height: $lg;
+  padding-left: $xs;
+  padding-right: $xs;
+  width: 100%;
+
+  &::placeholder,
+  &:-moz-placeholder,
+  &::-moz-placeholder { @extend .body; color: $gray-2; line-height: revert; }
+
+  &::selection { background-color: $primary-hover; }
+  &:focus { border: 1px $primary solid; }
+  &--error { border: 1px $red solid; }
+
+  &--lg {
+    height: 96px;
+    justify-content: center;
+    padding: $xs;
+    resize: none;
+  }
+
+  &--gray {
+    background-color: $gray-6;
+    border: 1px $gray-4 solid;
+    color: black;
+
+    &:focus { background-color: white; }
+    &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
+  }
+  
+  &--dark {
+    background-color: $gray-5;
+    border: 1px $gray-5 solid;
+    color: $gray-2;
+
+    &:focus { background-color: white; }
+    &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
+  }
+}
+
+// ## SEACH BAR - Similar to the input element except contains a search SVG
+// icon, and this bar is rounded and darker gray with no focused state.
+
+.#{$PREF}-search {
+  @extend .flex-ac;
+
+  background-color: $gray-5;
+  border-radius: 20px;
+  box-sizing: border-box;
+  color: $gray-3;
+  padding: $xs $sm;
+  width: $xxl * 5;
+}
+
+.#{$PREF}-search > svg { color: $gray-3; margin-right: $xs; }
+.#{$PREF}-search > input {
+  background-color: inherit;
+  flex-grow: 1;
+  width: 100%;
+
+  &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
+}
+
+.#{$PREF}-search-close {
+  color: $gray-3;
+
+  &--hide { visibility: hidden; }
+
+  > svg { color: $gray-3; }
+}
+
+// ## QUESTION VALUE - Has a title component and value component.
+
+.#{$PREF}-question:not(:last-child) { margin-bottom: $sm; }
+.#{$PREF}-question > p:first-child { @extend .sb; margin-bottom: $xxs; }
+.#{$PREF}-question > div:last-child { @extend .flex-w; }
+.#{$PREF}-question > div:last-child > p { color: $primary; }

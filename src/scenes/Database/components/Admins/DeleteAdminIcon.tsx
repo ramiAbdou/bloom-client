@@ -7,29 +7,26 @@ import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { DELETE_MEMBERSHIPS } from '../../Database.gql';
+import { DELETE_MEMBERS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const DeleteMembersModal = () => {
-  const admins = useStoreState(({ community }) => community.admins);
-  const members = useStoreState(({ community }) => community.members);
+  const members = useStoreState(({ db }) => db.community.members);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const updateCommunity = useStoreActions((actions) => actions.updateCommunity);
-  const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
+  const updateCommunity = useStoreActions(({ db }) => db.updateCommunity);
+  const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const numMembers = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
   );
 
   const onRemove = () => {
-    const allAdmins = admins;
     const allMembers = members;
 
     // Filter the community members to NOT have the selected members.
     updateCommunity({
-      admins: admins.filter((id: string) => !adminIds.includes(id)),
-      members: members?.filter((id: string) => !adminIds.includes(id))
+      members: members?.filter((id: string) => !memberIds.includes(id))
     });
 
     // After the toast finishes showing, we call the mutation that actually
@@ -37,11 +34,8 @@ const DeleteMembersModal = () => {
     // that resets the members.
     showToast({
       message: `${numMembers} admin(s) removed from the community.`,
-      mutationOptionsOnClose: [
-        DELETE_MEMBERSHIPS,
-        { variables: { membershipIds: adminIds } }
-      ],
-      onUndo: () => updateCommunity({ admins: allAdmins, members: allMembers }),
+      mutationOptionsOnClose: [DELETE_MEMBERS, { variables: { memberIds } }],
+      onUndo: () => updateCommunity({ members: allMembers }),
       type: 'PESSIMISTIC',
       undo: true
     });

@@ -3,9 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useStoreState } from '@store/Store';
 
 export default () => {
-  const encodedUrlName = useStoreState(
-    ({ community }) => community.encodedUrlName
-  );
+  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
 
   const { location } = useHistory();
   const { pathname } = location;

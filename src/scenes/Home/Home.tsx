@@ -11,28 +11,29 @@ import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
 import AddMember from '@scenes/Database/components/AddMember/AddMember.store';
 import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
-import CommunityBar from '@scenes/Home/components/CommunityBar/CommunityBar';
 import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
+import Applicants from '../Applicants/Applicants';
 import Database from '../Database/Database';
 import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
-import PendingApplicants from '../PendingApplicants/PendingApplicants';
-import ProfilePicker from './components/Sidebar/ProfilePicker';
+import BottomBar from './components/BottomBar/BottomBar';
+import SidebarPicker from './components/Sidebar/Picker';
 import Sidebar from './components/Sidebar/Sidebar';
+import Home from './Home.store';
 
 const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
 
   const activeEncodedUrlName = useStoreState(
-    ({ community }) => community?.encodedUrlName
+    ({ db }) => db.community?.encodedUrlName
   );
 
-  const isMember: boolean = useStoreState(({ entities }) => {
-    const { communities, memberships } = entities;
+  const isMember: boolean = useStoreState(({ db }) => {
+    const { communities, members } = db.entities;
 
-    return Object.values(memberships.byId).some(
+    return Object.values(members.byId).some(
       ({ community }) =>
         encodedUrlName === communities.byId[community]?.encodedUrlName
     );
@@ -53,10 +54,10 @@ const AuthenticatedCommunityWrapper = ({ children }: ChildrenProps) => {
 
 const HomeContent = () => {
   const { url } = useRouteMatch();
-  const autoAccept = useStoreState(({ community }) => community.autoAccept);
+  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
 
   return (
-    <div className="s-home-content">
+    <div className="s-home-content-ctr">
       <Switch>
         <Route component={Directory} path={`${url}/directory`} />
         <Route component={Events} path={`${url}/events`} />
@@ -64,10 +65,7 @@ const HomeContent = () => {
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />
         {!autoAccept && (
-          <AdminRoute
-            component={PendingApplicants}
-            path={`${url}/applicants`}
-          />
+          <AdminRoute component={Applicants} path={`${url}/applicants`} />
         )}
         <Redirect to={`${url}/directory`} />
       </Switch>
@@ -78,15 +76,14 @@ const HomeContent = () => {
 export default () => (
   <AuthenticatedCommunityWrapper>
     <div className="s-home">
-      <div className="s-home-nav">
-        <CommunityBar />
+      <Home.Provider>
+        <BottomBar />
         <Sidebar />
-      </div>
-
-      <HomeContent />
+        <HomeContent />
+      </Home.Provider>
     </div>
 
-    <ProfilePicker />
+    <SidebarPicker />
 
     <AddMember.Provider>
       <AddMemberModal />

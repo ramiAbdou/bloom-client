@@ -9,40 +9,30 @@ import { schema } from 'normalizr';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
-const Admin = new schema.Entity('admins', {});
-
-const MembershipQuestion = new schema.Entity('membershipQuestions', {});
-
+const Community = new schema.Entity('communities', {});
 const Integrations = new schema.Entity('integrations', {});
+const Member = new schema.Entity('members', {});
+const Question = new schema.Entity('questions', {});
+const User = new schema.Entity('users', {});
 
-const Members = new schema.Entity('members', {});
+// Handle the relationships. Using definition like this handles all of the
+// ciruclar dependencies in our code.
 
-const PendingApplicant = new schema.Entity('pendingApplicants', {});
-
-const Community = new schema.Entity('communities', {
-  admins: [Admin],
+Community.define({
   integrations: Integrations,
-  members: [Members],
-  membershipQuestions: [MembershipQuestion],
-  pendingApplicants: [PendingApplicant]
+  members: [Member],
+  questions: [Question]
 });
 
-const Membership = new schema.Entity('memberships', {
-  community: Community
-});
-
-const User = new schema.Entity('users', { memberships: [Membership] });
+Member.define({ community: Community, user: User });
+User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
-  ADMIN: Admin,
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
-  MEMBER: Members,
-  MEMBERSHIP: Membership,
-  MEMBERSHIP_QUESTION: MembershipQuestion,
-  PENDING_APPLICANT: PendingApplicant,
+  MEMBER: Member,
   USER: User
 };

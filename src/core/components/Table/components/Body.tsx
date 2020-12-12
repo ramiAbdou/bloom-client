@@ -1,15 +1,15 @@
 import moment from 'moment-timezone';
 import React, { ReactNode } from 'react';
 
-import Checkbox from '@components/Misc/Checkbox';
-import Tag from '@components/Misc/Tag';
+import Checkbox from '@components/Elements/Checkbox';
+import Tag from '@components/Elements/Tag';
 import { IdProps, QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
 import Table, { Row } from '../Table.store';
 
 const SelectRowCheckbox = ({ id }: IdProps) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(id));
-  const toggleRow = Table.useStoreActions((actions) => actions.toggleRow);
+  const toggleRow = Table.useStoreActions((store) => store.toggleRow);
 
   const onClick = () => toggleRow(id);
 

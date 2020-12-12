@@ -1,9 +1,11 @@
 import React, { memo } from 'react';
+import { IoTrash } from 'react-icons/io5';
 
-import Checkbox from '@components/Misc/Checkbox';
+import Button from '@components/Button/Button';
+import Checkbox from '@components/Elements/Checkbox';
+import Input from '@components/Elements/Input';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import Input from '@components/Misc/Input';
-import { IdProps } from '@constants';
+import { Function, IdProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
 import { AddMemberData } from './AddMember/AddMember.store';
 
@@ -14,15 +16,15 @@ interface AddModalInputProps extends IdProps {
   // admin field.
   member: AddMemberData;
 
+  onDelete: Function;
   showAdminCheckbox?: boolean;
-
   toggleAdmin?: any;
-
   updateMember?: any;
 }
 
 export default memo(
   ({
+    onDelete,
     id,
     isShowingErrors,
     member,
@@ -41,8 +43,8 @@ export default memo(
     } = member;
 
     const css = makeClass([
-      's-database-header-add-modal-email',
-      [emailError, 's-database-header-add-modal-email--error']
+      's-database-add-modal-input',
+      [emailError, 's-database-add-modal-input--error']
     ]);
 
     const message: string = takeFirst([
@@ -60,10 +62,15 @@ export default memo(
     return (
       <div className={css}>
         <div>
+          <Button onClick={onDelete}>
+            <IoTrash />
+          </Button>
+
           <Input
             dark
             error={isShowingErrors && !!firstNameError}
-            value={firstName || 'First Name'}
+            placeholder="First Name"
+            value={firstName}
             onChange={({ target }) =>
               updateMember({ field: 'FIRST_NAME', id, value: target.value })
             }
@@ -72,7 +79,8 @@ export default memo(
           <Input
             dark
             error={isShowingErrors && !!lastNameError}
-            value={lastName || 'Last Name'}
+            placeholder="Last Name"
+            value={lastName}
             onChange={({ target }) =>
               updateMember({ field: 'LAST_NAME', id, value: target.value })
             }
@@ -81,7 +89,8 @@ export default memo(
           <Input
             dark
             error={isShowingErrors && !!emailError}
-            value={email || 'Email'}
+            placeholder="Email"
+            value={email}
             onChange={({ target }) =>
               updateMember({ field: 'EMAIL', id, value: target.value })
             }

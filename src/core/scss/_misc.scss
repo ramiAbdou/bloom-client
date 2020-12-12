@@ -20,7 +20,7 @@
 .shadow--2 { box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15); }
 
 // BACKGROUND COLOR
-.primary-bg { background-color: rgba($color: $primary-hex, $alpha: 0.1); }
+.primary-bg { background-color: $primary-hover; }
 
 // Used globally for all react-icons.
 .react-icon {
@@ -31,8 +31,10 @@
   &--lg { height: 32px; width: 32px; }
 }
 
-// Disables scrollbar display for all elements.
-*::-webkit-scrollbar { display: none; }
+// Disables scrollbar display for all elements. Not much scrolling needed
+// other than the div.
+body::-webkit-scrollbar,
+div::-webkit-scrollbar { display: none; }
 
 // ## TOOLTIP
 
@@ -40,7 +42,7 @@
   position: relative;
   
   @include HOVER {
-    &::before { opacity: 1; transition-delay: 0.75s; visibility: visible; }
+    &::before { opacity: 1; transition-delay: 0.5s; visibility: visible; }
   }
 
   &::before {
@@ -108,11 +110,3 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-// PATH
-
-path { color: inherit; }
-
-// SELECTION BACKGROUND
-
-*::selection { background-color: $primary-hover; }

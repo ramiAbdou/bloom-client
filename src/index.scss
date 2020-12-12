@@ -1,9 +1,11 @@
-@import './core/scss/breakpoints';
 @import './core/scss/colors';
+@import './core/scss/reset';
+@import './core/scss/breakpoints';
 @import './core/scss/misc';
 @import './core/scss/spacing';
-@import './core/scss/typography';
+@import './core/scss/_typography';
 @import './core/components/Button/Button.scss';
+@import './core/components/Elements/Elements.scss';
 @import './core/components/Form/Form.scss';
 @import './core/components/Loader/Loader.scss';
 @import './core/components/Misc/Misc.scss';
@@ -12,46 +14,13 @@
 @import './core/components/Table/Table.scss';
 @import './core/components/Toast/Toasts.scss';
 @import './scenes/Application/Application.scss';
+@import './scenes/Applicants/Applicants.scss';
 @import './scenes/Database/Database.scss';
-@import './scenes/Database/components/Header/Header.scss';
+@import './scenes/Directory/Directory.scss';
+@import './scenes/Directory/components/Card/Card.scss';
+@import './scenes/Directory/components/Modal/Modal.scss';
 @import './scenes/Home/Home.scss';
-@import './scenes/Home/components/CommunityBar/CommunityBar.scss';
+@import './scenes/Home/components/BottomBar/BottomBar.scss';
 @import './scenes/Home/components/Sidebar/Sidebar.scss';
 @import './scenes/Integrations/Integrations.scss';
 @import './scenes/Login/Login.scss';
-@import './scenes/PendingApplicants/PendingApplicants.scss';
-
-// General elements as well as the application background.
-
-html,
-body { height: 100%; margin: 0; padding: 0; width: 100%; }
-
-#root { @extend .flex-col; height: 100%; }
-
-#app {
-  background-color: $gray-6;
-  height: 100%;
-  left: 0;
-  overflow-x: hidden;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: -1;
-}
-
-// Have all the text elements have a margin of 0, since most of the time we
-// want to implement our own margins regardless.
-
-h1,
-h2,
-h3,
-p,
-a { margin: 0; }
-
-button,
-input,
-textarea { border: none; outline: none; }
-
-button { background: none; cursor: pointer; padding: 0; }
-
-a { color: initial; font-family: Muli; text-decoration: none; }

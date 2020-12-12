@@ -8,28 +8,35 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { TOGGLE_ADMINS } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const PromoteToAdminModal = () => {
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const membershipIds = Table.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const { push } = useHistory();
-  const [toggleAdmin, { loading }] = useMutation(TOGGLE_ADMINS);
+  const [toggleAdmins, { loading }] = useMutation(TOGGLE_ADMINS);
 
   const onPromote = async () => {
-    const { error } = await toggleAdmin({ variables: { membershipIds } });
-    if (error) return;
+    const result = await toggleAdmins({ variables: { memberIds } });
+    const data = result?.data?.toggleAdmins;
+
+    if (!data) return;
+
+    mergeEntities({
+      data: { members: data },
+      schema: { members: [Schema.MEMBER] }
+    });
 
     showToast({
-      message: `${membershipIds.length} member(s) promoted to admin.`
+      message: `${memberIds.length} member(s) promoted to admin.`
     });
 
     setTimeout(closeModal, 0);
@@ -60,15 +67,15 @@ const PromoteToAdminModal = () => {
 };
 
 export default () => {
+  const memberId = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const membershipId = useStoreState(({ membership }) => membership.id);
 
   const tooManySelected = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
   );
 
   const selfSelected = Table.useStoreState(({ selectedRowIds }) =>
-    selectedRowIds.includes(membershipId)
+    selectedRowIds.includes(memberId)
   );
 
   const tooltip: string = takeFirst([

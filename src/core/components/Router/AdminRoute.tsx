@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
 import { EncodedUrlNameParams } from '@constants';
+import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 
 /**
@@ -11,12 +12,12 @@ import { useStoreState } from '@store/Store';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
-  const isDesktop = useStoreState(({ screen }) => screen.isDesktop);
+  const isDesktop = useBreakpoint() === 'D';
 
-  const isAdmin: boolean = useStoreState(({ entities }) => {
-    const { byId: byCommunity } = entities.communities;
-    const { byId: byMembership } = entities.memberships;
-    return Object.values(byMembership).some(
+  const isAdmin: boolean = useStoreState(({ db }) => {
+    const { byId: byCommunity } = db.entities.communities;
+    const { byId: byMember } = db.entities.members;
+    return Object.values(byMember).some(
       ({ community, role }) =>
         !!role && encodedUrlName === byCommunity[community]?.encodedUrlName
     );

@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 
 import TableContent from '@components/Table/Table';
 import Table, { Column, Row } from '@components/Table/Table.store';
+import { IMember } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { RENAME_QUESTION } from '../../Database.gql';
@@ -11,12 +12,15 @@ import { RENAME_QUESTION } from '../../Database.gql';
 export default () => {
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
-  const rows: Row[] = useStoreState(({ entities, community }) => {
-    const { byId } = entities.members;
+  const rows: Row[] = useStoreState(({ db }) => {
+    const { community } = db;
+    const { byId } = db.entities.members;
 
     return community.members?.reduce((acc: Row[], id: string) => {
-      const { allData } = byId[id];
       const result: Row = { id };
+      const { allData, status }: IMember = byId[id];
+
+      if (['REJECTED', 'PENDING'].includes(status) || !allData) return acc;
 
       allData.forEach(({ questionId, value }) => {
         result[questionId] = value;
@@ -28,7 +32,7 @@ export default () => {
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateColumn = Table.useStoreActions((store) => store.updateColumn);
-  const updateData = Table.useStoreActions((actions) => actions.updateData);
+  const updateData = Table.useStoreActions((store) => store.updateData);
 
   const [renameQuestion] = useMutation(RENAME_QUESTION);
 

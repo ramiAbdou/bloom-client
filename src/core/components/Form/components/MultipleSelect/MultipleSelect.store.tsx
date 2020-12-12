@@ -1,7 +1,5 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-import { filterOptions } from '@util/util';
-
 export type MultipleSelectModel = {
   closeOptions: Action<MultipleSelectModel>;
   filteredOptions: string[];
@@ -30,7 +28,9 @@ export const multipleSelectModel: MultipleSelectModel = {
 
   setSearchString: action(({ options, ...state }, searchString: string) => ({
     ...state,
-    filteredOptions: filterOptions(options, searchString),
+    filteredOptions: options.filter((option: string) =>
+      option?.toLowerCase()?.includes(searchString.toLowerCase())
+    ),
     options,
     searchString
   })),

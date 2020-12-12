@@ -9,9 +9,9 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import { Schema } from '@store/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-import { CREATE_MEMBERSHIPS } from '../../Database.gql';
+import { CREATE_MEMBERS } from '../../Database.gql';
 import AddModalInput from '../AddModalInput';
 import AddAdmin, { doesInputHaveError } from './AddAdmin.store';
 
@@ -33,15 +33,15 @@ const AddAdminInput = memo(({ id }: IdProps) => {
       isShowingErrors={isShowingErrors}
       member={admin}
       updateMember={updateMember}
+      onDelete={() => {}}
     />
   );
 });
 
 export default () => {
-  const communityId = useStoreState(({ community }) => community.id);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const admins = AddAdmin.useStoreState((store) => store.admins);
 
   const addEmptyMember = AddAdmin.useStoreActions(
@@ -51,9 +51,7 @@ export default () => {
   const clearMembers = AddAdmin.useStoreActions((store) => store.clearMembers);
   const showErrors = AddAdmin.useStoreActions((store) => store.showErrors);
 
-  const [createMemberships, { error, loading }] = useMutation(
-    CREATE_MEMBERSHIPS
-  );
+  const [createMembers, { error, loading }] = useMutation(CREATE_MEMBERS);
 
   const onAdd = async () => {
     if (doesInputHaveError(admins)) {
@@ -61,7 +59,7 @@ export default () => {
       return;
     }
 
-    const result = await createMemberships({
+    const result = await createMembers({
       variables: {
         members: admins.map(({ email, firstName, lastName }) => ({
           email,
@@ -72,20 +70,16 @@ export default () => {
       }
     });
 
-    const { createMemberships: updatedMemberships } = result.data || {};
-    if (result.error || !updatedMemberships) return;
+    const { createMembers: updatedMembers } = result.data || {};
+    if (result.error || !updatedMembers) return;
 
-    // API should return back the updated memberships and we just update the
+    // API should return back the updated members and we just update the
     // state accordingly with those new admins. To load new data would require
     // a refresh.
-    updateEntities({
-      data: {
-        admins: updatedMemberships
-          .filter(({ role }) => !!role)
-          .map(({ user }) => ({ ...user })),
-        id: communityId
-      },
-      schema: Schema.COMMUNITY
+    mergeEntities({
+      communityReferenceColumn: 'members',
+      data: { members: updatedMembers },
+      schema: { members: [Schema.MEMBER] }
     });
 
     showToast({ message: `${admins.length} admin(s) added.` });
@@ -98,7 +92,7 @@ export default () => {
 
   return (
     <Modal
-      className="s-database-header-add-modal"
+      className="s-database-add-modal"
       id="ADD_ADMINS"
       width={750}
       onClose={onClose}

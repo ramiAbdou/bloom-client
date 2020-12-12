@@ -1,38 +1,30 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import Form from '@components/Form/Form.store';
 import FormContent from '@components/Form/FormContent';
-import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
-import IntegrationsStore from '../../Integrations.store';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
+  const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const submitForm = Form.useStoreState((store) => store.submitForm);
 
   const { error, loading } = useMailchimpSubmit();
-  const MODAL_ID = 'MAILCHIMP_FLOW';
 
-  useEffect(() => {
-    showModal(MODAL_ID);
-  }, []);
-
-  if (error)
+  if (error) {
     showToast({
       message: 'Failed to submit. Please try again soon.',
       type: 'ERROR'
     });
+  }
 
   return (
-    <Modal id={MODAL_ID} onClose={() => setFlow(null)}>
+    <>
       <img
         alt="Mailchimp Icon"
         className="s-integrations-icon--lg"
@@ -51,6 +43,6 @@ export default () => {
         />
         <OutlineButton title="Cancel" onClick={closeModal} />
       </div>
-    </Modal>
+    </>
   );
 };

@@ -17,6 +17,8 @@ $PREF: 's-database';
   margin-left: $xs;
   padding: 6px;
 
+  @include HOVER { opacity: 1; }
+
   &--demote { &::before { margin-left: -$xxs; } }
   &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
   &--delete > svg { color: $red; }
@@ -26,3 +28,56 @@ $PREF: 's-database';
 // For all buttons that are not the Promote to Admin button, we set the tooltip
 // to be to the right side of the icon.
 :not(a) > .#{$PREF}-action { &:last-of-type { @extend .tooltip--right; } }
+
+// ## HEADER
+
+.#{$PREF}-header { display: grid; grid-template-columns: repeat(12, 1fr); }
+.#{$PREF}-header > div:first-child { grid-column-end: span 5; }
+.#{$PREF}-header > *:nth-child(2) { grid-column-end: span 4; }
+.#{$PREF}-header > *:nth-child(3) {
+  grid-column-end: span 3;
+  justify-self: end;
+  width: fit-content;
+}
+
+// ## ADD MEMBER MODAL
+
+.#{$PREF}-add-modal > p { margin-bottom: $md; }
+
+.#{$PREF}-add-modal-input > div:first-of-type {
+  @extend .flex-ac;
+
+  margin-bottom: $sm;
+}
+
+.#{$PREF}-add-modal-input > div:first-of-type > button {
+  margin-right: $xs;
+
+  @include HOVER { > svg { color: $red; } }
+  &:active { > svg { color: $red; } }
+
+  > svg { color: $gray-2; }
+}
+
+.#{$PREF}-add-modal-input > div:first-of-type > .c-misc-input {
+  margin-right: $xs;
+  width: 30%;
+
+  &:last-of-type { width: 40%; }
+}
+
+// This div wraps the Make Admin checkbox button and text.
+.#{$PREF}-add-modal-input > div > div {
+  @extend .flex-ac;
+
+  margin-left: $sm;
+
+  > p { width: max-content; }
+}
+
+.#{$PREF}-add-modal-input > div > div > .c-misc-checkbox { margin-right: 12px; }
+.#{$PREF}-add-modal > button { margin-bottom: $md; }
+.#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
+.#{$PREF}-add-modal > div:last-of-type > button:first-of-type {
+  margin-right: 12px;
+}

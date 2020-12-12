@@ -15,20 +15,25 @@ import TokenRoute from './TokenRoute';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { loading, data, error } = useQuery(GET_USER);
-  const updateEntities = useStoreActions((actions) => actions.updateEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const encodedUrlName = useStoreState(
-    ({ community }) => community?.encodedUrlName
+    ({ db }) => db.community?.encodedUrlName
   );
 
   useEffect(() => {
     if (!data?.getUser) return;
-    updateEntities({ data: data.getUser, schema: Schema.USER });
+
+    mergeEntities({
+      data: data.getUser,
+      schema: Schema.USER,
+      setActiveId: true
+    });
   }, [data?.getUser]);
 
   const isHome = rest.path === '/';
 
-  // If there are already memberships stored in the Membership state, then we
+  // If there are already members stored in the Member state, then we
   // know that the user is loaded, so show that.
   const token = new URLSearchParams(window.location.search).get('loginToken');
   if (token) return <TokenRoute token={token} />;

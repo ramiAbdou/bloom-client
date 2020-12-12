@@ -92,6 +92,7 @@ th {
   @extend .#{$PREF}-cell;
 
   background-color: $gray-6;
+  color: $gray-3;
   cursor: pointer;
   text-transform: uppercase;
   top: 0;
@@ -153,7 +154,7 @@ th.#{$PREF}-th--picker { background-color: $gray-5; }
 .#{$PREF}-pagination-row { @extend .flex-ac; }
 .#{$PREF}-pagination-num {
   border-radius: 50%;
-  padding: 1px $xs;
+  padding: 2px $xs;
 
   @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.15); }
 

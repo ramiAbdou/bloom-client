@@ -1,50 +1,41 @@
-// This imports some CSS classes that create the font-family Muli.
-// That's why we can use that keyword in multiple places in this file.
-
 @import url('https://fonts.googleapis.com/css2?family=Muli:wght@400;600;700&display=swap');
 
-// Returns the CSS font styling for different screen sizes.
-
-@mixin font-responsive(
-  $weight,
-  $desktop,
-  $desktop-lh,
-  $tablet,
-  $tablet-lh,
-  $mobile,
-  $mobile-lh
-) {
-  font-family: Muli;
-  font-weight: $weight;
-
-  @include D { font-size: $desktop; line-height: $desktop-lh; }
-  @include T { font-size: $tablet; line-height: $tablet-lh; }
-  @include M { font-size: $mobile; line-height: $mobile-lh; }
-}
-
-.body--1 { @include font-responsive(400, 15px, 24px, 15px, 24px, 15px, 24px); }
-.meta { @include font-responsive(600, 13px, 16px, 13px, 16px, 13px, 16px); }
-.sb { font-weight: 600 !important; }
-.bold { font-weight: 700 !important; }
-
-h1 { @include font-responsive(700, 24px, 32px, 24px, 32px, 24px, 32px); }
-h2 { @include font-responsive(700, 20px, 24px, 20px, 24px, 20px, 24px); }
-h3 { @include font-responsive(700, 18px, 24px, 18px, 24px, 18px, 24px); }
-
+h1,
+h2,
+h3,
+h4,
 button,
 p,
 a,
 td,
 textarea,
 span,
-input,
-input::placeholder { @extend .body--1; }
+input { font-family: Muli; }
 
-input::placeholder,
-th { color: $gray-3; }
+h1,
+h2,
+h3,
+h4 { font-weight: 700; } // Bold text for headers.
 
-.btn-txt {
-  text-transform: uppercase;
+h1 { font-size: 24px; }
+h2 { font-size: 20px; }
+h3 { font-size: 18px; }
+h4 { font-size: 14px; text-transform: uppercase; }
+.body { font-size: 15px; font-weight: 400; }
+.meta { font-size: 13px; font-weight: 600; }
+.sb { font-weight: 600 !important; }
 
-  @include font-responsive(700, 13px, 16px, 13px, 16px, 13px, 16px);
-}
+// For some reason, it's not letting me @extend the .body class, so we just
+// write the declarations again.
+button,
+p,
+a,
+td,
+textarea,
+span,
+input { font-size: 15px; font-weight: 400; }
+
+input {
+  &::placeholder { color: $gray-3; }
+  &::selection { background-color: $primary-hover; }
+} 

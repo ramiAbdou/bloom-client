@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { OnClickProps } from '@constants';
 import { makeClass } from '@util/util';
 import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
 
-interface ChoiceProps extends OnClickProps {
-  isSelected: boolean;
-  option: string;
-}
+type ChoiceProps = { title: string; option: string };
 
-const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
+const Choice = ({ option, title }: ChoiceProps) => {
+  const value = Form.useStoreState(
+    ({ items }) => items.find((item) => item.title === title)?.value
+  );
+
+  const updateItem = Form.useStoreActions((store) => store.updateItem);
+
+  const onClick = () => updateItem({ title, value: option });
+
   const css = makeClass([
     'c-form-mc-choice',
-    [isSelected, 'c-form-mc-choice--active']
+    [option === value, 'c-form-mc-choice--active']
   ]);
 
   return (
@@ -27,28 +31,10 @@ const Choice = ({ isSelected, onClick, option }: ChoiceProps) => {
 };
 
 // We use local state to see which option is selected.
-export default ({ options, title }: FormItemData) => {
-  const [selectedOption, setSelectedOption] = useState('');
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
-
-  const selectOption = (option: string) => {
-    updateItem({ title, value: option });
-    setSelectedOption(option);
-  };
-
-  return (
-    <>
-      {options.map((option: string) => {
-        const onClick = () => selectOption(option);
-        return (
-          <Choice
-            key={option}
-            isSelected={option === selectedOption}
-            option={option}
-            onClick={onClick}
-          />
-        );
-      })}
-    </>
-  );
-};
+export default ({ options, title }: FormItemData) => (
+  <>
+    {options.map((option: string) => {
+      return <Choice key={option} option={option} title={title} />;
+    })}
+  </>
+);

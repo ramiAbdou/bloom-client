@@ -10,10 +10,10 @@ import { SEND_TEMPORARY_LOGIN_LINK } from '../../Login.gql';
 import Login, { getLoginErrorMessage, LoginError } from '../../Login.store';
 
 export default () => {
-  const setEmail = Login.useStoreActions((actions) => actions.setEmail);
+  const setEmail = Login.useStoreActions((store) => store.setEmail);
 
   const setHasLoginLinkSent = Login.useStoreActions(
-    (actions) => actions.setHasLoginLinkSent
+    (store) => store.setHasLoginLinkSent
   );
 
   const isCompleted = Form.useStoreState((store) => store.isCompleted);

@@ -1,8 +1,8 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
 export type IntegrationsModal =
-  | 'MAILCHIMP_DETAILS'
   | 'MAILCHIMP_FLOW'
+  | 'MAILCHIMP_DETAILS'
   | 'STRIPE_DETAILS'
   | 'ZAPIER_FLOW'
   | 'ZOOM_DETAILS';

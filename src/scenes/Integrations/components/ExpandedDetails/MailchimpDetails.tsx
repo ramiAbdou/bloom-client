@@ -5,13 +5,8 @@ import mailchimp from '../../images/mailchimp.png';
 import ExpandedDetails, { ExpandedDetailProps } from './ExpandedDetails';
 
 export default () => {
-  const listName = useStoreState(
-    ({ integrations }) => integrations.mailchimpListName
-  );
-
-  const listId = useStoreState(
-    ({ integrations }) => integrations.mailchimpListId
-  );
+  const listName = useStoreState(({ db }) => db.integrations.mailchimpListName);
+  const listId = useStoreState(({ db }) => db.integrations.mailchimpListId);
 
   const details: ExpandedDetailProps[] = [
     { label: 'Audience/List Name', value: listName },

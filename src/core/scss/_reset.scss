@@ -1,0 +1,40 @@
+
+html,
+body {
+  background-color: $gray-6;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
+
+#root { height: 100vh; width: 100vw; }
+
+// Acts as a multiplier by the font-size for the line-height. For example,
+// if the h1 tag is 24px, it's line-height will be 24px * 1.33 = 32px.
+body { line-height: 1.33; }
+
+a { color: initial; text-decoration: none; }
+button { background: none; cursor: pointer; padding: 0; }
+
+button,
+input,
+textarea { border: none; outline: none; }
+
+button,
+body,
+form,
+input,
+h1,
+h2,
+h3,
+h4,
+p,
+td,
+textarea,
+ol,
+span,
+ul { margin: 0; padding: 0; }
+
+ol,
+ul { list-style: none; }

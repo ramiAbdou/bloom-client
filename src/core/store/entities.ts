@@ -1,14 +1,6 @@
 import { QuestionCategory, QuestionType } from '@constants';
 
-export type IAdmin = {
-  email: string;
-  firstName: string;
-  id: string; // This is simply the membership ID, not the user ID.
-  lastName: string;
-};
-
 export type ICommunity = {
-  admins: string[];
   applicationDescription?: string;
   applicationTitle?: string;
   autoAccept?: boolean;
@@ -17,9 +9,8 @@ export type ICommunity = {
   integrations: string;
   logoUrl: string;
   members: string[];
-  membershipQuestions: string[];
+  questions: string[];
   name: string;
-  pendingApplicants: string[];
   primaryColor: string;
 };
 
@@ -34,22 +25,24 @@ export type IIntegrations = {
 };
 
 export type IMember = {
-  allData: { questionId: string; value: string }[];
+  allData?: { questionId: string; value: string }[];
+  applicantData: { question?: IQuestion; questionId?: string; value: string }[];
+  bio: string;
+  cardData?: { questionId: string; value: string }[];
+  community: string;
+  createdAt: string;
   id: string;
   role?: 'ADMIN' | 'OWNER';
-};
-
-export type IMembership = {
-  community: string;
-  id: string;
-  role: 'ADMIN' | 'OWNER';
   type: { name: string };
+  status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
+  user: string;
 };
 
-export type IMembershipQuestion = {
+export type IQuestion = {
   category: QuestionCategory;
   id: string;
   inApplicantCard: boolean;
+  inDirectoryCard: boolean;
   order: number;
   options: string[];
   required: boolean;
@@ -58,24 +51,18 @@ export type IMembershipQuestion = {
   version: number;
 };
 
-export type ApplicantData = {
-  question?: IMembershipQuestion;
-  questionId?: string;
-  value: string;
-};
-
-export type IPendingApplicant = {
-  applicantData: ApplicantData[];
-  createdAt: string;
-  id: string;
-};
-
 export type IUser = {
-  firstName: string;
-  lastName: string;
+  currentLocation: string;
   email: string;
+  facebookUrl: string;
+  firstName: string;
   id: string;
-  pictureURL: string;
+  instagramUrl: string;
+  lastName: string;
+  linkedInUrl: string;
+  members?: string[];
+  pictureUrl: string;
+  twitterUrl: string;
 };
 
 export interface EntityRecord<T> {
@@ -85,24 +72,18 @@ export interface EntityRecord<T> {
 }
 
 export type IEntities = {
-  admins: EntityRecord<IAdmin>;
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
-  membershipQuestions: EntityRecord<IMembershipQuestion>;
-  memberships: EntityRecord<IMembership>;
-  pendingApplicants: EntityRecord<IPendingApplicant>;
+  questions: EntityRecord<IQuestion>;
   users: EntityRecord<IUser>;
 };
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
-  admins: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
-  members: { allIds: [], byId: {} },
-  membershipQuestions: { allIds: [], byId: {} },
-  memberships: { activeId: null, allIds: [], byId: {} },
-  pendingApplicants: { allIds: [], byId: {} },
+  members: { activeId: null, allIds: [], byId: {} },
+  questions: { allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
 };

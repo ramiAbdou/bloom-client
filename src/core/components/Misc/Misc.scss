@@ -2,7 +2,12 @@ $PREF: 'c-misc';
 
 // ## SEPARATOR
 
-.#{$PREF}-sep { border-bottom: 1px $gray-5 solid; width: 100%; }
+.#{$PREF}-sep {
+  border-bottom: 1px $gray-5 solid;
+  width: 100%;
+
+  &--vertical { border-right: 1px $gray-5 solid; height: 100%; }
+}
 
 // ## ERROR MESSAGE - Has an icon and some text.
 
@@ -14,121 +19,14 @@ $PREF: 'c-misc';
 
 .#{$PREF}-logo { height: 18px; width: 75px; }
 
-// ## TAG
+// ## PROFILE PICTURE CONTAINER - Can either be an img tag or if there is
+// no URL provided, an h3 will be rendered.
 
-.#{$PREF}-tag {
-  @extend .primary-bg;
-    
-  border-radius: $sm;
-  color: black;
-  font-size: 13px;
-  margin: 0 $xs;
-  padding: 0 6px;
-  text-align: left;
-  width: fit-content;
-
-  @include OVERFLOW_ELLIPSES;
-}
-
-// CHECKBOX
-
-.#{$PREF}-checkbox {
+.#{$PREF}-profile-picture--circle { border-radius: 50%; }
+.#{$PREF}-profile-picture > * { @extend .fill; border-radius: inherit; }
+.#{$PREF}-profile-picture > h3 {
   @extend .flex-acc;
-  
-  background-color: inherit;
-  border: 1px $gray-4 solid;
-  border-radius: $xxs;
-  cursor: pointer;
-  height: $sm + 2;
-  position: relative;
-  stroke-width: 3px;
-  width: $sm + 2;
 
-  @include HOVER { &::before { visibility: visible; } }
-
-  &::before {
-    background-color: $gray-3;
-    border-radius: 50%;
-    content: '';
-    display: block;
-    height: 100%;
-    opacity: 0.1;
-    padding: 10px;
-    position: absolute;
-    transform: scale(1);
-    visibility: hidden;
-    width: 100%;
-    z-index: 1000;
-  }
-
-  &--active {
-    background-color: $primary !important;
-    border: 1px $primary solid !important;
-
-    @include HOVER { &::before { visibility: hidden; } }
-  }
+  background-color: $primary;
+  color: white;
 }
-
-.#{$PREF}-checkbox > svg { height: $sm + 2; stroke-width: 3px; width: $sm + 2; }
-
-// ## INPUT - The main element that all items will use, especially the short
-// text and long text items. We set a special active state for them.
-
-.#{$PREF}-input {
-  @extend .flex-acsb;
-
-  background-color: white;
-  border: 1px $gray-4 solid;
-  border-radius: $xxs;
-  box-sizing: border-box;
-  cursor: text;
-  height: $lg;
-  padding-left: $xs;
-  padding-right: $xs;
-  width: 100%;
-
-  &::placeholder { color: $gray-2; }
-  &::selection { background-color: $primary-hover; }
-  &:focus { border: 1px $primary solid; }
-  &--error { border: 1px $red solid; }
-
-  &--lg {
-    height: 96px;
-    justify-content: center;
-    padding-bottom: $xxs;
-    padding-top: $xxs;
-    resize: none;
-  }
-
-  &--gray {
-    background-color: $gray-6;
-    border: 1px $gray-4 solid;
-    color: black;
-
-    &:focus { background-color: white; }
-  }
-  
-  &--dark {
-    background-color: $gray-5;
-    border: 1px $gray-5 solid;
-    color: $gray-2;
-
-    &:focus { background-color: white; }
-  }
-}
-
-// ## SEACH BAR - Similar to the input element except contains a search SVG
-// icon, and this bar is rounded and darker gray with no focused state.
-
-.#{$PREF}-search {
-  @extend .flex-ac;
-
-  background-color: $gray-5;
-  border-radius: 20px;
-  color: $gray-3;
-  padding: $xs $sm;
-  width: $xxl * 5;
-}
-
-.#{$PREF}-search > svg { color: $gray-3; margin-right: $xs; }
-.#{$PREF}-search > input { background-color: inherit; width: 100%; }

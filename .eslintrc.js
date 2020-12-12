@@ -20,7 +20,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/interface-name-prefix': 0,
-    '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-unused-vars': [
       2,
@@ -29,6 +28,7 @@ module.exports = {
         varsIgnorePattern: '_' // Allow underscores not to be treated as vars.
       }
     ],
+    curly: ['error', 'multi-line'],
     'import/newline-after-import': 2,
     'import/prefer-default-export': 0,
     'jsx-a11y/accessible-emoji': 0,
@@ -36,6 +36,9 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
     'max-len': ['error'],
+
+    // Refers to the entire file.
+    'max-lines': ['error', { max: 300, skipComments: true }],
     'no-param-reassign': 0,
     'no-plusplus': 0, // Allow the plus-plus syntax: i++.
     'one-var': 0,
