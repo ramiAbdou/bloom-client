@@ -42,4 +42,4 @@ $PREF: 's-home';
   @include D { margin-left: ($xxl * 6); max-width: calc(100% - 360px); }
 }
 
-.#{$PREF}-content { margin: 0 $md; }
+.#{$PREF}-content { margin: 0 $md; padding-bottom: $lg; }

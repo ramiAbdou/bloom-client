@@ -33,7 +33,7 @@ const ChartGraphic = () => {
 
   return (
     <div className="s-analytics-chart-graphic">
-      <ResponsiveContainer height={500}>
+      <ResponsiveContainer height={400}>
         <BarChart
           barSize={16}
           data={data}
