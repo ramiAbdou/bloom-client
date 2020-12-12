@@ -27,22 +27,53 @@ const ChartTitle = () => {
   );
 };
 
+const ChartTooltip = ({ active, label }) => {
+  const data = Chart.useStoreState((store) => store.data);
+  const numResponses = Chart.useStoreState((store) => store.numResponses);
+
+  if (!active || !label) return null;
+
+  const { value } = data.find(({ name }) => name === label);
+  const percentageOfTotal = ((value / numResponses) * 100).toFixed(2);
+
+  return (
+    <div className="s-analytics-chart-tooltip">
+      <p>{label}</p>
+      <p>
+        {value} ({percentageOfTotal}%)
+      </p>
+    </div>
+  );
+};
+
 const ChartGraphic = () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
   const data = Chart.useStoreState((store) => store.data);
 
+  // Allows the chart to be large/not squish and is scrollable.
+  const minWidth = data.length * 16;
+
   return (
     <div className="s-analytics-chart-graphic">
-      <ResponsiveContainer height={360}>
+      <ResponsiveContainer height={360} minWidth={minWidth}>
         <BarChart
           barSize={16}
           data={data}
           margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
         >
           <CartesianGrid vertical={false} />
-          <XAxis dataKey="name" />
+          <XAxis
+            allowDuplicatedCategory={false}
+            dataKey="name"
+            minTickGap={16}
+            tickSize={8}
+          />
           <YAxis />
-          <Tooltip />
+
+          <Tooltip
+            content={(props: any) => <ChartTooltip {...props} />}
+            wrapperStyle={{ visibility: 'visible' }}
+          />
           <Bar dataKey="value" fill={color} />
         </BarChart>
       </ResponsiveContainer>

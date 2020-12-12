@@ -20,4 +20,16 @@ $PREF: 's-analytics-chart';
 // our custom tables.
 
 .#{$PREF}-graphic { box-sizing: border-box; max-width: 100%; overflow: scroll; }
-.#{$PREF}-graphic > div, .#{$PREF}-graphic > div > svg { @extend .fill; }
+.#{$PREF}-tooltip {
+  background-color: $gray-2;
+  border-radius: $xxs;
+  color: white;
+  padding: $xxs $xs;
+  
+  > p { @extend .meta; }
+}
+
+// ## RECHARTS OVERRIDING - In order to properly customize our components,
+// we have to override/extend some of the existing classes.
+
+text.recharts-text { @extend .meta; color: $gray-2; }

@@ -1,5 +1,5 @@
 import deepequal from 'fast-deep-equal';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { QuestionType } from '@constants';
 import { useStoreState } from '@store/Store';
@@ -23,7 +23,7 @@ const useShortTextData = (questionId: string): [ChartData[], number] => {
 
     members.forEach((memberId: string) => {
       const { value } =
-        byMemberId[memberId]?.allData.find(
+        byMemberId[memberId].allData?.find(
           (data) => data.questionId === questionId
         ) ?? {};
 
@@ -55,18 +55,14 @@ const useShortTextData = (questionId: string): [ChartData[], number] => {
 export default () => {
   const questionId = Playground.useStoreState((store) => store.questionId);
 
-  const result = useShortTextData(questionId);
-
-  const [data, numResponses]: [ChartData[], number] = useMemo(() => result, [
+  const [data, numResponses]: [ChartData[], number] = useShortTextData(
     questionId
-  ]);
+  );
 
   const question = useStoreState(
     ({ db }) => db.entities.questions.byId[questionId],
     deepequal
   );
-
-  console.log(data, numResponses);
 
   if (!question || !data.length) return null;
 
