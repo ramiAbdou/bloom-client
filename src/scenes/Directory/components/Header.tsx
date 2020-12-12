@@ -3,7 +3,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import HeaderTag from '@components/Elements/HeaderTag';
 import SearchBar from '@components/Elements/SearchBar';
 import Spinner from '@components/Loader/Spinner';
-import { useStoreState } from '@store/Store';
 import Directory from '../Directory.store';
 
 const SearchContainer = () => {
@@ -38,11 +37,8 @@ const SearchContainer = () => {
 };
 
 const HeaderText = () => {
-  const numMembers = useStoreState(
-    ({ db }) => db.entities.members?.allIds?.length
-  );
-
   const loading = Directory.useStoreState((store) => store.loading);
+  const numMembers = Directory.useStoreState((store) => store.numMembers);
 
   return (
     <div>
