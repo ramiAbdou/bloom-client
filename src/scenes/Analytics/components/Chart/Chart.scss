@@ -4,6 +4,20 @@ $PREF: 's-analytics-chart';
   background-color: hsla($primary-hue, 5%, 88%, 0.4);
   border-radius: $xs;
   padding: $sm;
-
-  > h4 { color: $gray-2; }
 }
+
+.#{$PREF} > div:first-child {
+  @extend .flex-ac;
+
+  margin-bottom: $sm;
+
+  > h4 { color: $gray-2; margin-right: $xs; }
+  > p { border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid; }
+}
+
+// ## GRAPHIC - The actual recharts graph. Has a wrapper container around
+// it, so we can overflow scroll, in a similar fashion to how we implemented
+// our custom tables.
+
+.#{$PREF}-graphic { box-sizing: border-box; max-width: 100%; overflow: scroll; }
+.#{$PREF}-graphic > div, .#{$PREF}-graphic > div > svg { @extend .fill; }

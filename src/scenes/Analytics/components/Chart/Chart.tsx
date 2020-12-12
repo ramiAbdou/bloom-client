@@ -1,49 +1,64 @@
 import React, { useEffect } from 'react';
 import {
+  Bar,
   BarChart,
   CartesianGrid,
-  Legend,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis
 } from 'recharts';
 
+import HeaderTag from '@components/Elements/HeaderTag';
+import Loading from '@store/Loading.store';
+import { useStoreState } from '@store/Store';
 import Chart, { ChartModel } from './Chart.store';
 
 const ChartTitle = () => {
+  const loading = Loading.useStoreState((store) => store.loading);
+  const numResponses = Chart.useStoreState((store) => store.numResponses);
   const title = Chart.useStoreState((store) => store.question?.title);
-  return <h4>{title}</h4>;
-};
-
-const ChartGraphic = () => {
-  const data = Chart.useStoreState((store) => store.data);
 
   return (
-    <BarChart data={data} height={250} width={730}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      {/* <Bar fill="#8884d8" />
-      <Bar fill="#82ca9d" /> */}
-    </BarChart>
+    <div>
+      <h4>{title}</h4>
+      {!loading && <HeaderTag value={`${numResponses} Responses`} />}
+    </div>
   );
 };
 
-const ChartContent = (model: Pick<ChartModel, 'data' | 'question'>) => {
-  const setData = Chart.useStoreActions((store) => store.setData);
-  const setQuestion = Chart.useStoreActions((store) => store.setQuestion);
+const ChartGraphic = () => {
+  const color = useStoreState(({ db }) => db.community.primaryColor);
+  const data = Chart.useStoreState((store) => store.data);
+
+  return (
+    <div className="s-analytics-chart-graphic">
+      <ResponsiveContainer height={500}>
+        <BarChart
+          barSize={16}
+          data={data}
+          margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
+        >
+          <CartesianGrid vertical={false} />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="value" fill={color} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+const ChartContent = (
+  model: Pick<ChartModel, 'data' | 'question' | 'numResponses'>
+) => {
+  const init = Chart.useStoreActions((store) => store.init);
 
   useEffect(() => {
-    const { question } = model ?? {};
-    if (question?.id) setQuestion(question);
-  }, [model?.question?.id]);
-
-  useEffect(() => {
-    const { data } = model ?? {};
-    if (data) setData(data);
-  }, [model?.data]);
+    const { data, question, numResponses } = model ?? {};
+    if (question?.id && data) init({ data, numResponses, question });
+  }, [model]);
 
   return (
     <div className="s-analytics-chart">
@@ -53,7 +68,9 @@ const ChartContent = (model: Pick<ChartModel, 'data' | 'question'>) => {
   );
 };
 
-export default (model: Pick<ChartModel, 'data' | 'question'>) => (
+export default (
+  model: Pick<ChartModel, 'data' | 'question' | 'numResponses'>
+) => (
   <Chart.Provider>
     <ChartContent {...model} />
   </Chart.Provider>

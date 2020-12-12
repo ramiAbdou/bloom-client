@@ -2,24 +2,37 @@ import { Action, action, createContextStore } from 'easy-peasy';
 
 import { IQuestion } from '@store/entities';
 
-type ChartData = { name: string; value: any };
+export type ChartData = { name: string; value: any };
+
+type ChartModelInitArgs = {
+  data: ChartData[];
+  numResponses: number;
+  question: IQuestion;
+};
 
 export type ChartModel = {
   data: ChartData[];
+  init: Action<ChartModel, ChartModelInitArgs>;
+  numResponses: number;
   question: IQuestion;
-  setData: Action<ChartModel, ChartData[]>;
-  setQuestion: Action<ChartModel, IQuestion>;
 };
 
 export default createContextStore<ChartModel>(
   {
     data: [],
-    question: null,
-    setData: action((state, data: ChartData[]) => ({ ...state, data })),
-    setQuestion: action((state, question: IQuestion) => ({
-      ...state,
-      question
-    }))
+
+    init: action(
+      (state, { data, numResponses, question }: ChartModelInitArgs) => ({
+        ...state,
+        data,
+        numResponses,
+        question
+      })
+    ),
+
+    numResponses: 0,
+
+    question: null
   },
   { disableImmer: true }
 );
