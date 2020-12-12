@@ -51,7 +51,7 @@ const ChartGraphic = () => {
   const data = Chart.useStoreState((store) => store.data);
 
   // Allows the chart to be large/not squish and is scrollable.
-  const minWidth = data.length * 16;
+  const minWidth = data.length * 24;
 
   return (
     <div className="s-analytics-chart-graphic">
