@@ -9,9 +9,16 @@ import PlaygroundChart from './Chart';
 import Playground from './Playground.store';
 
 const PlaygroundHeader = () => {
+  // We only want the questions that are meaningful, and things like first/last
+  // name aren't very meaningful.
   const questions = useStoreState(({ db }) => {
     const { byId } = db.entities.questions;
-    return db.community.questions?.map((id: string) => byId[id]);
+    return db.community.questions
+      ?.map((id: string) => byId[id])
+      .filter(
+        ({ category }) =>
+          !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_ON'].includes(category)
+      );
   }, deepequal) as IQuestion[];
 
   const questionId = Playground.useStoreState((store) => store.questionId);
