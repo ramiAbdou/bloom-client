@@ -93,7 +93,7 @@ export default () => {
         Icon={IoArrowUpCircle}
         className="s-database-action--promote"
         disabled={tooManySelected || selfSelected}
-        value={tooltip}
+        tooltip={tooltip}
         onClick={onClick}
       />
     </>

@@ -1,5 +1,5 @@
 import { useMutation } from 'graphql-hooks';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import {
   IoCheckmarkCircle,
   IoChevronBackOutline,
@@ -7,6 +7,7 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
+import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
 import { RESPOND_TO_MEMBERS } from '../../Applicants.gql';
 import Applicant from './Card.store';
@@ -25,6 +26,8 @@ export const AcceptButton = () => {
   const updateEntities = useStoreActions(({ db }) => db.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
+
+  const ref: MutableRefObject<HTMLElement> = useTooltip('Accept');
 
   const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
     variables: { memberIds: [applicantId], response: 'ACCEPTED' }
@@ -45,11 +48,7 @@ export const AcceptButton = () => {
   };
 
   return (
-    <Button
-      className="s-applicants-card-action"
-      value="Accept"
-      onClick={onClick}
-    >
+    <Button ref={ref} className="s-applicants-card-action" onClick={onClick}>
       <IoCheckmarkCircle />
     </Button>
   );
@@ -59,6 +58,8 @@ export const IgnoreButton = () => {
   const updateEntities = useStoreActions(({ db }) => db.updateEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const applicantId = Applicant.useStoreState((store) => store.applicant.id);
+
+  const ref: MutableRefObject<HTMLElement> = useTooltip('Reject');
 
   const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
     variables: { memberIds: [applicantId], response: 'REJECTED' }
@@ -79,11 +80,7 @@ export const IgnoreButton = () => {
   };
 
   return (
-    <Button
-      className="s-applicants-card-action"
-      value="Ignore"
-      onClick={onClick}
-    >
+    <Button ref={ref} className="s-applicants-card-action" onClick={onClick}>
       <IoCloseCircle />
     </Button>
   );

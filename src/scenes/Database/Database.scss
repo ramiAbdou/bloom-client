@@ -8,10 +8,6 @@ $PREF: 's-database';
 // ## ACTION
 
 .#{$PREF}-action {
-  @extend .tooltip;
-  @extend .tooltip--bottom;
-  @extend .tooltip--middle;
-
   background-color: $gray-5;
   border-radius: 6px;
   margin-left: $xs;

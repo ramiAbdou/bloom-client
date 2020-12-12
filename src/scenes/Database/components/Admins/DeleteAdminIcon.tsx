@@ -71,7 +71,7 @@ export default () => {
       <DatabaseAction
         Icon={IoTrash}
         className="s-database-action--delete"
-        value="Delete Admin"
+        tooltip="Delete Admin"
         onClick={onClick}
       />
     </>

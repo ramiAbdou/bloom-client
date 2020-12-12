@@ -1,7 +1,8 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, MutableRefObject } from 'react';
 
 import Button from '@components/Button/Button';
 import { ClassNameProps, LoadingProps, OnClickProps } from '@constants';
+import useTooltip from '@hooks/useTooltip';
 import { makeClass } from '@util/util';
 
 interface DatabaseActionProps
@@ -10,11 +11,13 @@ interface DatabaseActionProps
     OnClickProps {
   Icon: FC;
   disabled?: boolean;
-  value?: string;
+  tooltip?: string;
 }
 
 export default memo(
-  ({ Icon, disabled, value, className, ...props }: DatabaseActionProps) => {
+  ({ Icon, disabled, tooltip, className, ...props }: DatabaseActionProps) => {
+    const ref: MutableRefObject<HTMLElement> = useTooltip(tooltip);
+
     const css = makeClass([
       's-database-action',
       [disabled, 's-database-action--disabled'],
@@ -22,7 +25,7 @@ export default memo(
     ]);
 
     return (
-      <Button className={css} disabled={disabled} value={value} {...props}>
+      <Button ref={ref} className={css} disabled={disabled} {...props}>
         <Icon />
       </Button>
     );

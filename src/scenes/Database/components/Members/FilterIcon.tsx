@@ -10,5 +10,5 @@ export default () => {
   );
 
   if (isAnythingSelected) return null;
-  return <DatabaseAction Icon={IoFilter} value="Filter" />;
+  return <DatabaseAction Icon={IoFilter} tooltip="Filter" />;
 };
