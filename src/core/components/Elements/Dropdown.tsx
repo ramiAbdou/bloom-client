@@ -1,15 +1,20 @@
 import { motion } from 'framer-motion';
-import React, { MutableRefObject, useEffect, useRef } from 'react';
+import React, { memo, MutableRefObject, useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { Function, ValueProps } from '@constants';
-import Dropdown, { dropdownModel } from './Dropdown.store';
+import { Function } from '@constants';
+import Dropdown, { dropdownModel, IDropdownOption } from './Dropdown.store';
 
-type DropdownProps = { onChange: Function; options: string[]; value: string };
-interface DropdownOptionProps
-  extends Pick<DropdownProps, 'onChange'>,
-    ValueProps {}
+type DropdownProps = {
+  activeId: string;
+  onChange: Function;
+  options: IDropdownOption[];
+};
+
+interface DropdownOptionProps extends Pick<DropdownProps, 'onChange'> {
+  value: IDropdownOption;
+}
 
 const DropdownOption = ({ onChange, value }: DropdownOptionProps) => {
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
@@ -19,7 +24,7 @@ const DropdownOption = ({ onChange, value }: DropdownOptionProps) => {
     setIsOpen(false);
   };
 
-  return <div onClick={onClick}>{value}</div>;
+  return <div onClick={onClick}>{value?.title}</div>;
 };
 
 const DropdownOptionContainer = ({
@@ -35,20 +40,23 @@ const DropdownOptionContainer = ({
       initial={{ y: -5 }}
       style={{ minWidth: width ?? 0 }}
     >
-      {options.map((value: string) => (
-        <DropdownOption key={value} value={value} onChange={onChange} />
+      {options.map((value: IDropdownOption) => (
+        <DropdownOption key={value?.id} value={value} onChange={onChange} />
       ))}
     </motion.div>
   );
 };
 
 const DropdownContent = ({
-  value,
+  activeId,
   ...dropdownProps
-}: Pick<DropdownProps, 'onChange' | 'value'>) => {
+}: Pick<DropdownProps, 'onChange' | 'activeId'>) => {
   const isOpen = Dropdown.useStoreState((store) => store.isOpen);
+  const options = Dropdown.useStoreState((store) => store.options);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
   const setWidth = Dropdown.useStoreActions((store) => store.setWidth);
+
+  const title = options.find(({ id }) => id === activeId)?.title;
 
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
   const width = ref?.current?.offsetWidth;
@@ -64,7 +72,7 @@ const DropdownContent = ({
   return (
     <div ref={ref} className="c-misc-dropdown" onClick={onClick}>
       <div>
-        <p>{value}</p>
+        <p>{title}</p>
         <IoCaretDown />
       </div>
 
@@ -73,8 +81,8 @@ const DropdownContent = ({
   );
 };
 
-export default ({ options, ...props }: DropdownProps) => (
+export default memo(({ options, ...props }: DropdownProps) => (
   <Dropdown.Provider runtimeModel={{ ...dropdownModel, options }}>
     <DropdownContent {...props} />
   </Dropdown.Provider>
-);
+));

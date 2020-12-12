@@ -1,8 +1,14 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
+import { IdProps } from '@constants';
+
+export interface IDropdownOption extends Partial<IdProps> {
+  title: string;
+}
+
 export type DropdownModel = {
   isOpen: boolean;
-  options: string[];
+  options: IDropdownOption[];
   setIsOpen: Action<DropdownModel, boolean>;
   setWidth: Action<DropdownModel, number>;
   width: number;

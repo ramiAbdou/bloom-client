@@ -201,6 +201,7 @@ $PREF: 'c-misc';
   overflow: scroll;
   padding: $xs 0;
   position: absolute;
+  z-index: 1;
 
   // The actual options within the container.
   > div {

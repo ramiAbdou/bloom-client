@@ -1,13 +1,16 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
 export interface PlaygroundModel {
-  setTitle: Action<PlaygroundModel, string>;
-  title: string;
+  questionId: string;
+  setQuestionId: Action<PlaygroundModel, string>;
 }
 
 const model: PlaygroundModel = {
-  setTitle: action((state, title: string) => ({ ...state, title })),
-  title: ''
+  questionId: '',
+  setQuestionId: action((state, questionId: string) => ({
+    ...state,
+    questionId
+  }))
 };
 
 export default createContextStore<PlaygroundModel>(model, {

@@ -3,6 +3,7 @@ import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
 import Dropdown from '@components/Elements/Dropdown';
+import { IDropdownOption } from '@components/Elements/Dropdown.store';
 import { IQuestion } from '@store/entities';
 import Loading from '@store/Loading.store';
 import { Schema } from '@store/schema';
@@ -39,28 +40,31 @@ const PlaygroundHeader = () => {
     return db.community.questions?.map((id: string) => byId[id]);
   }, deepequal) as IQuestion[];
 
-  const title = Playground.useStoreState((store) => store.title);
-  const setTitle = Playground.useStoreActions((store) => store.setTitle);
+  const questionId = Playground.useStoreState((store) => store.questionId);
+
+  const setQuestionId = Playground.useStoreActions(
+    (store) => store.setQuestionId
+  );
 
   useFetchQuestions();
 
   useEffect(() => {
     if (!questions?.length) return;
-    const { title: value } = questions[0];
-    if (value !== title && title.length === 0) setTitle(value);
+    const { id } = questions[0];
+    if (id !== questionId && questionId.length === 0) setQuestionId(id);
   }, [questions]);
 
-  if (!title) return null;
+  if (!questionId) return null;
 
-  const onChange = (option: string) => setTitle(option);
+  const onChange = ({ id }: IDropdownOption) => setQuestionId(id);
 
   return (
     <div>
       <h3>Data Playground</h3>
       <p>Choose any piece of data that you'd like to explore.</p>
       <Dropdown
-        options={questions.map((question) => question.title)}
-        value={title}
+        activeId={questionId}
+        options={questions.map(({ title: t, id }) => ({ id, title: t }))}
         onChange={onChange}
       />
     </div>
