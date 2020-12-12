@@ -2,3 +2,13 @@ $PREF: 's-analytics-members';
 
 .#{$PREF} > div { margin-bottom: $md; }
 .#{$PREF} > div:first-child { @extend .flex-ac; }
+
+// ## PLAYGROUND
+
+.#{$PREF}-playground > div:first-child {
+  width: fit-content;
+
+  > h3,
+  > p { margin-bottom: $xs; }
+  // > p { margin-bottom: $xxs; }
+}
