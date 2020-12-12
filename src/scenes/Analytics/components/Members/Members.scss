@@ -1,3 +1,4 @@
 $PREF: 's-analytics-members';
 
-.#{$PREF} > h3 { margin-bottom: $xs; }
+.#{$PREF} > div { margin-bottom: $md; }
+.#{$PREF} > div:first-child { @extend .flex-ac; }

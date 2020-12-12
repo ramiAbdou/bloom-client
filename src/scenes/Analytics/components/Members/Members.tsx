@@ -13,7 +13,7 @@ const AnalyticsSimpleList = () => (
 
 export default () => {
   return (
-    <div>
+    <div className="s-analytics-members">
       <AnalyticsSimpleList />
       <Playground />
     </div>
