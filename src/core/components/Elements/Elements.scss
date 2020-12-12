@@ -178,6 +178,8 @@ $PREF: 'c-misc';
   cursor: pointer;
   height: $lg;
   width: 100%;
+
+  @include OVERFLOW_ELLIPSES;
 }
 
 .#{$PREF}-dropdown > div:first-child {
@@ -186,6 +188,7 @@ $PREF: 'c-misc';
 
   padding: 0 $xs;
 
+  > p { margin-right: $sm; }
   > svg { color: $gray-3; height: $sm; width: $sm; }
 }
 
@@ -194,15 +197,18 @@ $PREF: 'c-misc';
   border-radius: $xxs;
   box-sizing: border-box;
   margin-top: $xxs;
-  padding: $xs;
+  max-height: $xxl * 5;
+  overflow: scroll;
+  padding: $xs 0;
   position: absolute;
 
   // The actual options within the container.
   > div {
-    border-radius: $xxs;
     cursor: pointer;
-    padding: $xs 0;
+    height: $lg;
+    line-height: $lg;
+    padding: 0 $xs;
   
-    @include HOVER { color: black; }
+    @include HOVER { background-color: $gray-6; }
   }
 }

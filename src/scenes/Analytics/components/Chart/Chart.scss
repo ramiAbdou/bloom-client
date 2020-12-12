@@ -1,0 +1,9 @@
+$PREF: 's-analytics-chart';
+
+.#{$PREF} {
+  background-color: hsla($primary-hue, 5%, 88%, 0.4);
+  border-radius: $xs;
+  padding: $sm;
+
+  > h4 { color: $gray-2; }
+}

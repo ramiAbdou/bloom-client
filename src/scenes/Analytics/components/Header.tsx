@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import MultiButton from '@components/Button/MultiButton';
 import Spinner from '@components/Loader/Spinner';
+import Loading from '@store/Loading.store';
 import { takeFirst } from '@util/util';
-import Analytics from '../Analytics.store';
 
 const Navigation = () => {
   const { location, push } = useHistory();
@@ -33,7 +33,7 @@ const Navigation = () => {
 };
 
 const HeaderText = () => {
-  const loading = Analytics.useStoreState((store) => store.loading);
+  const loading = Loading.useStoreState((store) => store.loading);
 
   return (
     <div>

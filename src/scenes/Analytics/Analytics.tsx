@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import Analytics from './Analytics.store';
+import Loading from '@store/Loading.store';
 import AnalyticsDues from './components/Dues/Dues';
 import AnalyticsEvents from './components/Events/Events';
 import AnalyticsHeader from './components/Header';
@@ -11,7 +11,7 @@ export default () => {
   const { url } = useRouteMatch();
 
   return (
-    <Analytics.Provider>
+    <Loading.Provider>
       <AnalyticsHeader />
 
       <div className="s-home-content">
@@ -22,6 +22,6 @@ export default () => {
           <Redirect to={`${url}/members`} />
         </Switch>
       </div>
-    </Analytics.Provider>
+    </Loading.Provider>
   );
 };

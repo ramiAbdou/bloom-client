@@ -6,6 +6,7 @@ $PREF: 's-analytics-members';
 // ## PLAYGROUND
 
 .#{$PREF}-playground > div:first-child {
+  margin-bottom: $sm;
   width: fit-content;
 
   > h3,

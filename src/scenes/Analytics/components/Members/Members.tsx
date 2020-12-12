@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Playground from './Playground';
+import Playground from './Playground/Playground';
 import AnalyticsSimpleActive from './SimpleActive';
 import AnalyticsSimpleTotal from './SimpleTotal';
 

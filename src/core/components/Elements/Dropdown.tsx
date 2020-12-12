@@ -33,7 +33,7 @@ const DropdownOptionContainer = ({
       animate={{ y: 0 }}
       className="c-misc-dropdown-option-ctr"
       initial={{ y: -5 }}
-      style={{ width: width ?? 0 }}
+      style={{ minWidth: width ?? 0 }}
     >
       {options.map((value: string) => (
         <DropdownOption key={value} value={value} onChange={onChange} />
