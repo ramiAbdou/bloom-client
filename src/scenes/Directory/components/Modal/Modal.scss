@@ -1,11 +1,18 @@
 $PREF: 's-directory-modal';
 
+// box-sizing: border-box;
+//   height: fit-content;
+
 // ## PROFILE PICTURE - 
 
 .#{$PREF}-pic { margin-bottom: $xs; }
 
 .#{$PREF}-user-ctr-header { @extend .flex-sb; width: 100%; }
-.#{$PREF}-user-ctr-header > :last-child { height: fit-content; }
+.#{$PREF}-user-ctr-header > :last-child {
+  height: fit-content;
+  position: sticky;
+  top: 0;
+}
 
 .#{$PREF}-user-ctr > p { margin-bottom: $sm; text-align: center; }
 

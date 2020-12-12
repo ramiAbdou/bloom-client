@@ -74,7 +74,7 @@ export default () => {
             'email',
             'bio',
             (item: MemberCardData) =>
-              item.expandedCardData.map(({ title }) => title)
+              item.expandedCardData.map(({ value }) => value)
           ],
           threshold: matchSorter.rankings.ACRONYM
         });

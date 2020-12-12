@@ -163,6 +163,6 @@ $PREF: 'c-misc';
 // ## QUESTION VALUE - Has a title component and value component.
 
 .#{$PREF}-question:not(:last-child) { margin-bottom: $sm; }
-.#{$PREF}-question > p:first-child { @extend .sb; margin-bottom: $xxs; }
+.#{$PREF}-question > p:first-child { @extend .sb; margin-bottom: $xs; }
 .#{$PREF}-question > div:last-child { @extend .flex-w; }
 .#{$PREF}-question > div:last-child > p { color: $primary; }

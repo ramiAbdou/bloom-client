@@ -81,7 +81,7 @@ $PREF: 's-home-bb';
 .#{$PREF}-dropdown {
   background-color: $gray-6;
   border-bottom: 1px $gray-5 solid;
-  border-radius: $sm $sm 0 0;
+  border-radius: $xs $xs 0 0;
   bottom: $xxl;
   box-sizing: border-box;
   height: fit-content;
@@ -90,7 +90,7 @@ $PREF: 's-home-bb';
   width: 100vw;
   z-index: 1001;
 
-  @include RESP(padding, $md, $md, $sm);
+  @include RESP(padding, $md, $sm $md, $xs $sm);
   @include D { display: none; }
 }
 
