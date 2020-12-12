@@ -7,8 +7,8 @@ import AnalyticsSimple from '../Simple';
 export default () => {
   const numMembers = useStoreState(({ db }) => db.community.members?.length);
   const loading = Loading.useStoreState((store) => store.loading);
-
   if (!numMembers || loading) return null;
+
   return (
     <AnalyticsSimple
       label="Total Members"
