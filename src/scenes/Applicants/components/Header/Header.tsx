@@ -21,7 +21,7 @@ export default () => {
     <div className="s-home-header s-applicants-header">
       <div>
         <h1 className="s-home-header-title">Pending Applicants</h1>
-        {!loading && numApplicants && (
+        {!loading && !!numApplicants && (
           <HeaderTag value={`${numApplicants} Total`} />
         )}
         {loading && <Spinner dark />}
