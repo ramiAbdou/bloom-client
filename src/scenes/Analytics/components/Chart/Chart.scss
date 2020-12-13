@@ -1,5 +1,8 @@
 $PREF: 's-analytics-chart';
 
+// ## INNER HEADER - Inlcudes the h4 title as well as the HeaderTag that
+// says number of responses.
+
 .#{$PREF} > div:first-child {
   @extend .flex-ac;
 
@@ -8,18 +11,35 @@ $PREF: 's-analytics-chart';
   > h4 {
     color: $gray-2;
     margin-right: $xs;
-    max-width: 80% !important;
+    max-width: 75% !important; // Limit so that no overflow to 2 lines.
   
     @include OVERFLOW_ELLIPSES;
   }
+
   > p { border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid; }
 }
 
-// ## GRAPHIC - The actual recharts graph. Has a wrapper container around
-// it, so we can overflow scroll, in a similar fashion to how we implemented
-// our custom tables.
+// ## CHART CONTAINER - The actual recharts graph. Has a wrapper container
+// around it, so we can overflow scroll, in a similar fashion to how we
+// implemented our custom tables.
 
-.#{$PREF}-graphic { box-sizing: border-box; max-width: 100%; overflow: scroll; }
+.#{$PREF}-ctr { box-sizing: border-box; max-width: 100%; overflow: scroll; }
+
+.#{$PREF}-pie { box-sizing: border-box; max-width: 100%; overflow: scroll; }
+.#{$PREF}-pie > div > div.recharts-wrapper {
+  @extend .flex-ac;
+
+  flex-direction: row-reverse;
+}
+
+.recharts-legend-wrapper {
+  position: initial;
+
+  > div,
+  > div > div { width: max-content; }
+}
+
+// ## CHART TOOLTIP - Customized tooltip that follows Bloom style guide.
 
 .#{$PREF}-tooltip {
   background-color: $gray-2;
@@ -28,6 +48,17 @@ $PREF: 's-analytics-chart';
   padding: $xxs $xs;
   
   > p { @extend .meta; }
+}
+
+// ## CHART LEGEND - Customized legend that follows Bloom style guide.
+
+.#{$PREF}-legend {
+  @extend .flex-col;
+  
+  > div { @extend .flex-ac; }
+  > div:not(:last-child) { margin-bottom: $xs; }
+  > div > div { border-radius: $xxs; height: $md; width: $md; }
+  > div > p { @extend .meta; margin-left: $xs; }
 }
 
 // ## RECHARTS OVERRIDING - In order to properly customize our components,

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { QuestionType } from '@constants';
 import { IMember } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Chart, { ChartModelInitArgs } from './Chart.store';
+import Chart, { ChartData, ChartModelInitArgs } from './Chart.store';
 
 const useData = (): ChartModelInitArgs => {
   const questionId = Chart.useStoreState((store) => store.question?.id);
@@ -65,9 +65,40 @@ const useData = (): ChartModelInitArgs => {
   return result;
 };
 
+/**
+ * Hook that updates the type of the chart to either bar or line depending
+ * on a few conditions. Only bar and pie are supported here. If we wanted
+ * to use a Line chart, note that this component wouldn't even be called.
+ */
+const usePieOrChart = () => {
+  const chartType = Chart.useStoreState((store) => store.type);
+  const setType = Chart.useStoreActions((store) => store.setType);
+
+  const shouldBePie: boolean = Chart.useStoreState(({ data }) => {
+    if (data?.length && data.length <= 5) return true;
+
+    const totalValues = data.reduce(
+      (acc: number, { value }: ChartData) => acc + value,
+      0
+    );
+
+    const top5Values = data
+      .slice(0, 5)
+      .reduce((acc: number, { value }: ChartData) => acc + value, 0);
+
+    return top5Values / totalValues >= 0.95;
+  });
+
+  useEffect(() => {
+    if (shouldBePie && chartType !== 'pie') setType('pie');
+    else if (!shouldBePie && chartType === 'pie') setType('bar');
+  }, [shouldBePie]);
+};
+
 export default () => {
   const initData = Chart.useStoreActions((store) => store.initData);
   const { data, numResponses } = useData();
+  usePieOrChart();
 
   useEffect(() => {
     if (data && numResponses) initData({ data, numResponses });

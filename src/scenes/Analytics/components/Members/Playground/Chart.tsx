@@ -13,5 +13,5 @@ export default () => {
     deepequal
   );
 
-  return question?.id ? <Chart question={question} /> : null;
+  return question?.id ? <Chart question={question} type="bar" /> : null;
 };

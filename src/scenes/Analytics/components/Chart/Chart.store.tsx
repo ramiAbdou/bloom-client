@@ -4,6 +4,7 @@ import { IQuestion } from '@store/entities';
 
 export type ChartData = { name: string; value: any };
 export type ChartModelInitArgs = { data: ChartData[]; numResponses: number };
+type ChartType = 'bar' | 'line' | 'pie';
 
 export type ChartModel = {
   data: ChartData[];
@@ -13,26 +14,33 @@ export type ChartModel = {
   numResponses: number;
   question: IQuestion;
   setQuestion: Action<ChartModel, IQuestion>;
+  setType: Action<ChartModel, ChartType>;
+  type: ChartType;
 };
 
-export default createContextStore<ChartModel>(
-  {
-    data: [],
+const chartModel: ChartModel = {
+  data: [],
 
-    initData: action((state, { data, numResponses }: ChartModelInitArgs) => ({
-      ...state,
-      data,
-      numResponses
-    })),
+  initData: action((state, { data, numResponses }: ChartModelInitArgs) => ({
+    ...state,
+    data,
+    numResponses
+  })),
 
-    numResponses: 0,
+  numResponses: 0,
 
-    question: null,
+  question: null,
 
-    setQuestion: action((state, question: IQuestion) => ({
-      ...state,
-      question
-    }))
-  },
-  { disableImmer: true }
-);
+  setQuestion: action((state, question: IQuestion) => ({
+    ...state,
+    question
+  })),
+
+  setType: action((state, type: ChartType) => ({ ...state, type })),
+
+  type: 'bar'
+};
+
+export default createContextStore<ChartModel>(chartModel, {
+  disableImmer: true
+});
