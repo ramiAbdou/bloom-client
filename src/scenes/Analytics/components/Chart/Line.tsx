@@ -52,9 +52,12 @@ export default () => {
         <CartesianGrid vertical={false} />
 
         <XAxis
+          tick
           allowDuplicatedCategory={false}
           dataKey="name"
           minTickGap={16}
+          tickCount={4}
+          tickFormatter={(label) => day(label).format('M/D')}
           tickSize={8}
         />
         <YAxis domain={['auto', 'auto']} />
