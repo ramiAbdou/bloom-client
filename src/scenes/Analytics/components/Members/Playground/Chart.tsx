@@ -1,17 +1,11 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import { useStoreState } from '@store/Store';
-import Chart from '../../Chart/Chart';
-import Playground from './Playground.store';
+import ChartContent from '../../Chart/Chart';
+import Chart from '../../Chart/Chart.store';
+import PlaygroundChartContent from './ChartContent';
 
-export default () => {
-  const questionId = Playground.useStoreState((store) => store.questionId);
-
-  const question = useStoreState(
-    ({ db }) => db.entities.questions.byId[questionId],
-    deepequal
-  );
-
-  return question?.id ? <Chart question={question} type="bar" /> : null;
-};
+export default () => (
+  <Chart.Provider>
+    <ChartContent Content={PlaygroundChartContent} />
+  </Chart.Provider>
+);

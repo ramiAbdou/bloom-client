@@ -25,7 +25,7 @@ const COLORS = [
 export default () => {
   const data = Chart.useStoreState((store) => store.data);
 
-  if (!data.length) return null;
+  if (!data?.length) return null;
 
   return (
     <ResponsiveContainer height={360}>

@@ -3,7 +3,7 @@ import { Action, action, createContextStore } from 'easy-peasy';
 import { IQuestion } from '@store/entities';
 
 export type ChartData = { name: string; value: any };
-export type ChartModelInitArgs = { data: ChartData[]; numResponses: number };
+export type ChartModelInitArgs = { data: ChartData[]; numResponses?: number };
 type ChartType = 'bar' | 'line' | 'pie';
 
 export type ChartModel = {
@@ -18,7 +18,7 @@ export type ChartModel = {
   type: ChartType;
 };
 
-const chartModel: ChartModel = {
+export const chartModel: ChartModel = {
   data: [],
 
   initData: action((state, { data, numResponses }: ChartModelInitArgs) => ({

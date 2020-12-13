@@ -21,6 +21,7 @@
     "@types/validator": "^13.1.0",
     "aws-sdk": "^2.780.0",
     "axios": "^0.19.2",
+    "dayjs": "^1.9.7",
     "easy-peasy": "^4.0.1",
     "express": "^4.17.1",
     "fast-deep-equal": "^3.1.3",

@@ -3,6 +3,7 @@ import React from 'react';
 import Playground from './Playground/Playground';
 import AnalyticsSimpleActive from './SimpleActive';
 import AnalyticsSimpleTotal from './SimpleTotal';
+import TimeSeries from './TimeSeries';
 
 const AnalyticsSimpleList = () => (
   <div>
@@ -11,9 +12,16 @@ const AnalyticsSimpleList = () => (
   </div>
 );
 
+const AnalyticsTimeSeriesList = () => (
+  <div>
+    <TimeSeries />
+  </div>
+);
+
 export default () => (
   <div className="s-analytics-members">
     <AnalyticsSimpleList />
+    <AnalyticsTimeSeriesList />
     <Playground />
   </div>
 );

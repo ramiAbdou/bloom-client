@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { FC } from 'react';
 
 import HeaderTag from '@components/Elements/HeaderTag';
-import BarChart from './Bar';
-import Chart, { ChartModel } from './Chart.store';
-import FormatChartData from './FormatData';
-import FormatLongChartData from './FormatLongData';
-import PieChart from './Pie';
+import Chart from './Chart.store';
 
-const ChartTitle = () => {
+const ChartTitle = ({ title: titleProp }: Pick<ChartProps, 'title'>) => {
   const numResponses = Chart.useStoreState((store) => store.numResponses);
-  const title = Chart.useStoreState((store) => store.question?.title);
+
+  const title =
+    Chart.useStoreState((store) => store.question?.title) ?? titleProp;
 
   return (
     <div>
@@ -19,39 +17,11 @@ const ChartTitle = () => {
   );
 };
 
-const ChartContent = ({
-  question,
-  type
-}: Pick<ChartModel, 'question' | 'type'>) => {
-  const questionType = Chart.useStoreState((store) => store.question?.type);
-  const chartType = Chart.useStoreState((store) => store.type);
-  const setQuestion = Chart.useStoreActions((store) => store.setQuestion);
-  const setType = Chart.useStoreActions((store) => store.setType);
+type ChartProps = { Content: FC; title?: string };
 
-  useEffect(() => {
-    if (question?.id) setQuestion(question);
-  }, [question]);
-
-  useEffect(() => {
-    if (questionType === 'LONG_TEXT' && chartType !== 'bar') setType('bar');
-    else if (type === 'line' && chartType !== 'line') setType('line');
-  }, [questionType, type]);
-
-  if (!question?.id) return null;
-
-  return (
-    <div className="s-analytics-chart s-analytics-card">
-      <ChartTitle />
-      {questionType === 'LONG_TEXT' && <FormatLongChartData />}
-      {questionType !== 'LONG_TEXT' && <FormatChartData />}
-      {chartType === 'bar' && <BarChart />}
-      {chartType === 'pie' && <PieChart />}
-    </div>
-  );
-};
-
-export default (model: Pick<ChartModel, 'question' | 'type'>) => (
-  <Chart.Provider>
-    <ChartContent {...model} />
-  </Chart.Provider>
+export default ({ Content, title }: ChartProps) => (
+  <div className="s-analytics-chart s-analytics-card">
+    <ChartTitle title={title} />
+    {Content && <Content />}
+  </div>
 );

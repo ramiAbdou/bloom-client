@@ -17,7 +17,7 @@ export default () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
   const data = Chart.useStoreState((store) => store.data);
 
-  if (!data.length) return null;
+  if (!data?.length) return null;
 
   // Allows the chart to be large/not squish and is scrollable.
   const minWidth = data.length * 24;
