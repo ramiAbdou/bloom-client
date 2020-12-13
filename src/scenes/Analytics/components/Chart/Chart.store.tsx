@@ -3,12 +3,13 @@ import { Action, action, createContextStore } from 'easy-peasy';
 import { IQuestion } from '@store/entities';
 
 export type ChartData = { name: string; value: any };
-
-type ChartModelInitArgs = { data: ChartData[]; numResponses: number };
+export type ChartModelInitArgs = { data: ChartData[]; numResponses: number };
 
 export type ChartModel = {
   data: ChartData[];
   initData: Action<ChartModel, ChartModelInitArgs>;
+
+  // Represents the number of responses that went into the captured data.
   numResponses: number;
   question: IQuestion;
   setQuestion: Action<ChartModel, IQuestion>;

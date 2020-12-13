@@ -1,17 +1,17 @@
 $PREF: 's-analytics-chart';
 
-.#{$PREF} {
-  background-color: hsla($primary-hue, 5%, 88%, 0.4);
-  border-radius: $xs;
-  padding: $sm;
-}
-
 .#{$PREF} > div:first-child {
   @extend .flex-ac;
 
   margin-bottom: $sm;
 
-  > h4 { color: $gray-2; margin-right: $xs; }
+  > h4 {
+    color: $gray-2;
+    margin-right: $xs;
+    max-width: 80% !important;
+  
+    @include OVERFLOW_ELLIPSES;
+  }
   > p { border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid; }
 }
 
@@ -20,6 +20,7 @@ $PREF: 's-analytics-chart';
 // our custom tables.
 
 .#{$PREF}-graphic { box-sizing: border-box; max-width: 100%; overflow: scroll; }
+
 .#{$PREF}-tooltip {
   background-color: $gray-2;
   border-radius: $xxs;

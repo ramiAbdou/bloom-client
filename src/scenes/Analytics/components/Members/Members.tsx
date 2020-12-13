@@ -11,11 +11,9 @@ const AnalyticsSimpleList = () => (
   </div>
 );
 
-export default () => {
-  return (
-    <div className="s-analytics-members">
-      <AnalyticsSimpleList />
-      <Playground />
-    </div>
-  );
-};
+export default () => (
+  <div className="s-analytics-members">
+    <AnalyticsSimpleList />
+    <Playground />
+  </div>
+);

@@ -30,11 +30,9 @@ const NumberContainer = ({
  * Displays a simple number and our statistic, including the percentage of
  * either growth or lack thereof.
  */
-export default ({ label, ...props }: AnalyticsSimpleProps) => {
-  return (
-    <div className="s-analytics-simple">
-      <NumberContainer {...props} />
-      <p>{label}</p>
-    </div>
-  );
-};
+export default ({ label, ...props }: AnalyticsSimpleProps) => (
+  <div className="s-analytics-simple">
+    <NumberContainer {...props} />
+    <p>{label}</p>
+  </div>
+);

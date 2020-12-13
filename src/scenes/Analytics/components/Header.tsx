@@ -6,7 +6,7 @@ import Spinner from '@components/Loader/Spinner';
 import Loading from '@store/Loading.store';
 import { takeFirst } from '@util/util';
 
-const Navigation = () => {
+const HeaderNavigation = () => {
   const { location, push } = useHistory();
   const { pathname } = location;
 
@@ -43,11 +43,9 @@ const HeaderText = () => {
   );
 };
 
-export default () => {
-  return (
-    <div className="s-home-header s-analytics-header">
-      <HeaderText />
-      <Navigation />
-    </div>
-  );
-};
+export default () => (
+  <div className="s-home-header s-analytics-header">
+    <HeaderText />
+    <HeaderNavigation />
+  </div>
+);
