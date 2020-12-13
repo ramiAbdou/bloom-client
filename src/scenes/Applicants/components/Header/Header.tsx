@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeaderTag from '@components/Elements/HeaderTag';
+import HeaderTag from '@components/Element/HeaderTag';
 import Spinner from '@components/Loader/Spinner';
 import { useStoreState } from '@store/Store';
 import Applicants from '../../Applicants.store';

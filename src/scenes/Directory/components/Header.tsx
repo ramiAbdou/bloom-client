@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
-import HeaderTag from '@components/Elements/HeaderTag';
-import SearchBar from '@components/Elements/SearchBar';
+import HeaderTag from '@components/Element/HeaderTag';
+import SearchBar from '@components/Element/SearchBar';
 import Spinner from '@components/Loader/Spinner';
 import Directory from '../Directory.store';
 

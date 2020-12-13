@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import HeaderTag from '@components/Elements/HeaderTag';
+import HeaderTag from '@components/Element/HeaderTag';
 import Chart from './Chart.store';
 
 const ChartTitle = ({ title: titleProp }: Pick<ChartProps, 'title'>) => {

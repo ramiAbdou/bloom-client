@@ -1,14 +1,14 @@
 import React from 'react';
 
+import AnalyticsActiveSimpleCard from './ActiveSimpleCard';
 import Playground from './Playground/Playground';
-import AnalyticsSimpleActive from './SimpleActive';
-import AnalyticsSimpleTotal from './SimpleTotal';
 import TimeSeries from './TimeSeries';
+import AnalyticsTotalSimpleCard from './TotalSimpleCard';
 
 const AnalyticsSimpleList = () => (
   <div>
-    <AnalyticsSimpleTotal />
-    <AnalyticsSimpleActive />
+    <AnalyticsTotalSimpleCard />
+    <AnalyticsActiveSimpleCard />
   </div>
 );
 
