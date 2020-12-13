@@ -35,7 +35,7 @@ const ChartContent = ({
 
   useEffect(() => {
     if (questionType === 'LONG_TEXT' && chartType !== 'bar') setType('bar');
-    else if (type !== chartType) setType(type);
+    else if (type === 'line' && chartType !== 'line') setType('line');
   }, [questionType, type]);
 
   if (!question?.id) return null;

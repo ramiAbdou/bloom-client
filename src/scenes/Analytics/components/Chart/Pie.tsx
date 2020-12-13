@@ -44,7 +44,7 @@ export default () => {
             wrapperStyle={{ position: 'initial', width: 'max-content' }}
           />
 
-          <Pie label animationBegin={0} data={data} dataKey="value">
+          <Pie label animationBegin={0} cx="240" data={data} dataKey="value">
             {data.map((entry, index) => (
               <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
             ))}
