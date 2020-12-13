@@ -70,7 +70,7 @@ const useData = (): ChartModelInitArgs => {
  * on a few conditions. Only bar and pie are supported here. If we wanted
  * to use a Line chart, note that this component wouldn't even be called.
  */
-const usePieOrChart = () => {
+const usePieOrBarChart = () => {
   const chartType = Chart.useStoreState((store) => store.type);
   const setType = Chart.useStoreActions((store) => store.setType);
 
@@ -98,7 +98,7 @@ const usePieOrChart = () => {
 export default () => {
   const initData = Chart.useStoreActions((store) => store.initData);
   const { data, numResponses } = useData();
-  usePieOrChart();
+  usePieOrBarChart();
 
   useEffect(() => {
     if (data && numResponses) initData({ data, numResponses });
