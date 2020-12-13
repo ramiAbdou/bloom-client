@@ -7,12 +7,10 @@ export const GET_INTEGRATIONS = query({
       integrations: [
         'id',
         'isMailchimpAuthenticated',
-        'isZoomAuthenticated',
         'mailchimpListId',
         'mailchimpListName',
         { mailchimpLists: ['id', 'name'] },
-        'stripeAccountId',
-        { zoomAccountInfo: ['email', 'pmi', 'userId'] }
+        'stripeAccountId'
       ]
     }
   ],

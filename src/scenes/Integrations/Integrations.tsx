@@ -9,7 +9,6 @@ import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
 import StripeDetails from './components/ExpandedDetails/StripeDetails';
-import ZoomDetails from './components/ExpandedDetails/ZoomDetails';
 import Header from './components/Header';
 import IntegrationCard, {
   IntegrationCardProps
@@ -18,7 +17,6 @@ import MailchimpFlow from './components/MailchimpFlow/MailchimpFlow';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';
 import zapier from './images/zapier.png';
-import zoom from './images/zoom.svg';
 import { GET_INTEGRATIONS } from './Integrations.gql';
 import Integrations, { IntegrationsModal } from './Integrations.store';
 
@@ -43,7 +41,6 @@ const IntegrationModal = () => {
   if (flow === 'MAILCHIMP_FLOW') return <MailchimpFlow />;
   if (flow === 'MAILCHIMP_DETAILS') return <MailchimpDetails />;
   if (flow === 'STRIPE_DETAILS') return <StripeDetails />;
-  if (flow === 'ZOOM_DETAILS') return <ZoomDetails />;
 
   return null;
 };
@@ -56,8 +53,7 @@ const Cards = () => {
   const {
     isMailchimpAuthenticated,
     mailchimpListId,
-    stripeAccountId,
-    isZoomAuthenticated
+    stripeAccountId
   } = useStoreState(({ db }) => db.integrations, deepequal) as IIntegrations;
 
   const integrationData: IntegrationCardProps[] = [
@@ -99,19 +95,6 @@ const Cards = () => {
         .addParam('state', encodedUrlName).url,
       logo: stripe,
       name: 'Stripe'
-    },
-
-    // ## ZOOM
-    {
-      completed: isZoomAuthenticated,
-      description: 'Host Zoom events with your account in 1-click.',
-      href: new URLBuilder('https://zoom.us/oauth/authorize')
-        .addParam('response_type', 'code')
-        .addParam('client_id', process.env.ZOOM_CLIENT_ID)
-        .addParam('redirect_uri', `${APP.SERVER_URL}/zoom/auth`)
-        .addParam('state', encodedUrlName).url,
-      logo: zoom,
-      name: 'Zoom'
     },
 
     // ## ZAPIER

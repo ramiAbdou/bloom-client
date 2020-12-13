@@ -16,12 +16,10 @@ export type ICommunity = {
 
 export type IIntegrations = {
   isMailchimpAuthenticated: boolean;
-  isZoomAuthenticated: boolean;
   mailchimpLists: { name: string; id: string }[];
   mailchimpListId: string;
   mailchimpListName: string;
   stripeAccountId: string;
-  zoomAccountInfo: { email: string; pmi: number; userId: string };
 };
 
 export type IMember = {
