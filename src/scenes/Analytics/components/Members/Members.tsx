@@ -15,6 +15,7 @@ const AnalyticsSimpleList = () => (
 const AnalyticsTimeSeriesList = () => (
   <div>
     <TimeSeries />
+    <TimeSeries />
   </div>
 );
 
