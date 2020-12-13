@@ -10,7 +10,6 @@ import TimeSeriesChart from './variations/TimeSeries';
 const ChartContent = ({
   data,
   questionId,
-  totalResponses,
   type,
   title
 }: ChartModelInitArgs) => {
@@ -18,7 +17,9 @@ const ChartContent = ({
   const setData = Chart.useStoreActions((store) => store.setData);
 
   useEffect(() => {
-    setData({ data, title, totalResponses, type });
+    // Only time we'll need to update the data is if the title/type are set.
+    if (!title || !type) return;
+    setData({ data, title, type });
   }, [data, title, type]);
 
   return (
