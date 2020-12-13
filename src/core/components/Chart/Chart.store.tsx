@@ -8,7 +8,7 @@ export enum ChartType {
 }
 
 export type ChartModelInitArgs = {
-  data: ChartData[];
+  data?: ChartData[];
   questionId?: string;
   totalResponses?: number;
   title?: string;

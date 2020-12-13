@@ -2,8 +2,8 @@ import React from 'react';
 
 import AnalyticsActiveSimpleCard from './ActiveSimpleCard';
 import Playground from './Playground/Playground';
-import TimeSeries from './TimeSeries';
 import AnalyticsTotalSimpleCard from './TotalSimpleCard';
+import TotalTimeSeries from './TotalTimeSeries';
 
 const AnalyticsSimpleList = () => (
   <div>
@@ -14,8 +14,8 @@ const AnalyticsSimpleList = () => (
 
 const AnalyticsTimeSeriesList = () => (
   <div>
-    <TimeSeries />
-    <TimeSeries />
+    <TotalTimeSeries />
+    <TotalTimeSeries />
   </div>
 );
 

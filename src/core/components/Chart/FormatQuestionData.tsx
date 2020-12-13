@@ -5,7 +5,7 @@ import sw from 'stopword';
 import { QuestionType } from '@constants';
 import { IMember } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Chart, { ChartModelInitArgs } from './Chart.store';
+import Chart, { ChartModelInitArgs, ChartType } from './Chart.store';
 
 const useQuestionData = (): Pick<
   ChartModelInitArgs,
@@ -63,10 +63,9 @@ const useQuestionData = (): Pick<
       totalResponses++;
     });
 
-    const sortedData = Object.entries(record).map(([name, value]) => ({
-      name,
-      value
-    }));
+    const sortedData = Object.entries(record)
+      .map(([name, value]) => ({ name, value }))
+      .sort((a, b) => (a.value < b.value ? 1 : -1));
 
     return {
       data: type === 'LONG_TEXT' ? sortedData.slice(0, 100) : sortedData,
@@ -77,9 +76,44 @@ const useQuestionData = (): Pick<
   return result;
 };
 
-export default () => {
+export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
+  const currentQuestionId = Chart.useStoreState((store) => store.questionId);
+  const currentType = Chart.useStoreState((store) => store.type);
   const setData = Chart.useStoreActions((store) => store.setData);
+  const setQuestionId = Chart.useStoreActions((store) => store.setQuestionId);
+  const setType = Chart.useStoreActions((store) => store.setType);
+
+  const type: QuestionType = useStoreState(
+    ({ db }) => db.entities.questions.byId[questionId]?.type
+  );
+
   const { data, totalResponses } = useQuestionData();
+
+  useEffect(() => {
+    if (questionId !== currentQuestionId) setQuestionId(questionId);
+  }, [questionId]);
+
+  // Controls the type of the chart, based on the type of the question.
+  // - If the question is LONG_TEXT or SHORT_TEXT, the chart should be BAR.
+  // - If the question is MULTIPLE_*, the chart should be PIE.
+  // - If the users wants a time-series, that would be manually specified in
+  // the props when the chart was created, not here.
+  useEffect(() => {
+    if (
+      ['LONG_TEXT', 'SHORT_TEXT'].includes(type) &&
+      currentType !== ChartType.BAR
+    ) {
+      setType(ChartType.BAR);
+      return;
+    }
+
+    if (
+      ['MULTIPLE_SELECT', 'MULTIPLE_CHOICE'].includes(type) &&
+      currentType !== ChartType.PIE
+    ) {
+      setType(ChartType.PIE);
+    }
+  }, [type]);
 
   useEffect(() => {
     if (data && totalResponses) setData({ data, totalResponses });

@@ -1,5 +1,11 @@
 $PREF: 'c-chart';
 
+.#{$PREF} {
+  background-color: hsla($primary-hue, 5%, 88%, 0.4);
+  border-radius: $xs;
+  padding: $sm;
+}
+
 // ## INNER HEADER - Inlcudes the h4 title as well as the HeaderTag that
 // says number of responses.
 
