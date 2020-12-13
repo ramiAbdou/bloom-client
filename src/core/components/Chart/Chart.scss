@@ -1,0 +1,51 @@
+$PREF: 'c-chart';
+
+// ## INNER HEADER - Inlcudes the h4 title as well as the HeaderTag that
+// says number of responses.
+
+.#{$PREF} > div:first-child {
+  @extend .flex-ac;
+
+  margin-bottom: $sm;
+
+  > h4 {
+    color: $gray-2;
+    margin-right: $xs;
+    max-width: 75% !important; // Limit so that no overflow to 2 lines.
+  
+    @include OVERFLOW_ELLIPSES;
+  }
+
+  > p { border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid; }
+}
+
+// ## CHART CONTAINER - The actual recharts graph. Has a wrapper container
+// around it, so we can overflow scroll, in a similar fashion to how we
+// implemented our custom tables.
+
+.#{$PREF}-ctr { box-sizing: border-box; max-width: 100%; overflow: scroll; }
+
+// ## CHART TOOLTIP - Customized tooltip that follows Bloom style guide.
+
+.#{$PREF}-tooltip {
+  background-color: $gray-2;
+  border-radius: $xxs;
+  color: white;
+  padding: $xxs $xs;
+  
+  > p { @extend .meta; }
+}
+
+// ## CHART LEGEND - Customized legend that follows Bloom style guide.
+
+.#{$PREF}-legend-item {
+  @extend .flex-ac;
+  &:not(:last-child) { margin-bottom: $xs; }
+  > div { border-radius: $xxs; height: $md; width: $md; }
+  > p { @extend .meta; margin-left: $xs; }
+}
+
+// ## RECHARTS OVERRIDING - In order to properly customize our components,
+// we have to override/extend some of the existing classes.
+
+text.recharts-text { @extend .meta; color: $gray-2; }
