@@ -25,20 +25,6 @@ $PREF: 's-analytics-chart';
 
 .#{$PREF}-ctr { box-sizing: border-box; max-width: 100%; overflow: scroll; }
 
-.#{$PREF}-pie { box-sizing: border-box; max-width: 100%; overflow: scroll; }
-.#{$PREF}-pie > div > div.recharts-wrapper {
-  @extend .flex-ac;
-
-  flex-direction: row-reverse;
-}
-
-.recharts-legend-wrapper {
-  position: initial;
-
-  > div,
-  > div > div { width: max-content; }
-}
-
 // ## CHART TOOLTIP - Customized tooltip that follows Bloom style guide.
 
 .#{$PREF}-tooltip {
@@ -52,13 +38,11 @@ $PREF: 's-analytics-chart';
 
 // ## CHART LEGEND - Customized legend that follows Bloom style guide.
 
-.#{$PREF}-legend {
-  @extend .flex-col;
-  
-  > div { @extend .flex-ac; }
-  > div:not(:last-child) { margin-bottom: $xs; }
-  > div > div { border-radius: $xxs; height: $md; width: $md; }
-  > div > p { @extend .meta; margin-left: $xs; }
+.#{$PREF}-legend-item {
+  @extend .flex-ac;
+  &:not(:last-child) { margin-bottom: $xs; }
+  > div { border-radius: $xxs; height: $md; width: $md; }
+  > p { @extend .meta; margin-left: $xs; }
 }
 
 // ## RECHARTS OVERRIDING - In order to properly customize our components,
