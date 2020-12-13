@@ -38,6 +38,7 @@ const useFetchDatabase = () => {
 };
 
 const AnalyticsContent = () => {
+  const loading = Loading.useStoreState((store) => store.loading);
   const { url } = useRouteMatch();
   useFetchDatabase();
 
@@ -45,14 +46,16 @@ const AnalyticsContent = () => {
     <>
       <AnalyticsHeader />
 
-      <div className="s-home-content">
-        <Switch>
-          <Route component={AnalyticsDues} path={`${url}/dues`} />
-          <Route component={AnalyticsEvents} path={`${url}/events`} />
-          <Route component={AnalyticsMembers} path={`${url}/members`} />
-          <Redirect to={`${url}/members`} />
-        </Switch>
-      </div>
+      {!loading && (
+        <div className="s-home-content">
+          <Switch>
+            <Route component={AnalyticsDues} path={`${url}/dues`} />
+            <Route component={AnalyticsEvents} path={`${url}/events`} />
+            <Route component={AnalyticsMembers} path={`${url}/members`} />
+            <Redirect to={`${url}/members`} />
+          </Switch>
+        </div>
+      )}
     </>
   );
 };

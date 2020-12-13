@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import HeaderTag from '@components/Elements/HeaderTag';
-import Loading from '@store/Loading.store';
 import BarChart from './Bar';
 import Chart, { ChartModel } from './Chart.store';
 import FormatChartData from './FormatData';
@@ -51,13 +50,8 @@ const ChartContent = ({
   );
 };
 
-export default (model: Pick<ChartModel, 'question' | 'type'>) => {
-  const loading = Loading.useStoreState((store) => store.loading);
-  if (loading) return null;
-
-  return (
-    <Chart.Provider>
-      <ChartContent {...model} />
-    </Chart.Provider>
-  );
-};
+export default (model: Pick<ChartModel, 'question' | 'type'>) => (
+  <Chart.Provider>
+    <ChartContent {...model} />
+  </Chart.Provider>
+);
