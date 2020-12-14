@@ -7,7 +7,7 @@ $PREF: 's-home-sidebar';
   height: 100%;
   position: fixed;
   top: 0;
-  width: $xxl * 6;
+  width: $xxl * 5.5;
   z-index: 12;
 
   @include MT { display: none; }

@@ -3,6 +3,9 @@ $PREF: 'c-chart';
 .#{$PREF} {
   background-color: hsla($primary-hue, 5%, 88%, 0.4);
   border-radius: $xs;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow: scroll;
   padding: $sm;
 }
 
@@ -29,7 +32,7 @@ $PREF: 'c-chart';
 // around it, so we can overflow scroll, in a similar fashion to how we
 // implemented our custom tables.
 
-.#{$PREF}-ctr { box-sizing: border-box; max-width: 100%; overflow: scroll; }
+// .#{$PREF}-ctr { box-sizing: border-box; max-width: 100%; overflow: scroll; }
 
 // ## CHART TOOLTIP - Customized tooltip that follows Bloom style guide.
 

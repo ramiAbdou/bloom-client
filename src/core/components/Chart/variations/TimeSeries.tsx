@@ -44,11 +44,7 @@ export default () => {
 
   return (
     <ResponsiveContainer height={360}>
-      <LineChart
-        data={data}
-        height={300}
-        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
-      >
+      <LineChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <CartesianGrid vertical={false} />
 
         <XAxis

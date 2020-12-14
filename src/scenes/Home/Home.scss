@@ -39,7 +39,7 @@ $PREF: 's-home';
   max-height: 100vh;
   overflow: visible; // Mainly for the purposes of shadows.
 
-  @include D { margin-left: ($xxl * 6); max-width: calc(100% - 360px); }
+  @include D { margin-left: ($xxl * 5.5); max-width: calc(100% - 330px); }
 }
 
 .#{$PREF}-content { margin: 0 $md; padding-bottom: $lg; }
