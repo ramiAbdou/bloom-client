@@ -13,12 +13,12 @@ import ChartLegend from '../components/Legend';
 import ChartTooltip, { ChartTooltipProps } from '../components/Tooltip';
 
 const COLORS = [
-  '#1F78B4',
+  '#40a8c4',
   '#00C49F',
   '#B2DF8A',
   '#FFBB28',
-  '#FF8042',
   '#FB9A99',
+  '#FF8042',
   '#E31A1C'
 ];
 
