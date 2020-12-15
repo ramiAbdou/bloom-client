@@ -1,12 +1,22 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
 type TimeSeriesData = { name: string; value: number };
-type MembersAnalyticsInitArgs = Omit<MembersAnalyticsModel, 'init'>;
+
+type ActiveMembersAnalyticsArgs = Pick<
+  MembersAnalyticsModel,
+  'activeChartData' | 'activeGrowth'
+>;
+
+type TotalMembersAnalyticsArgs = Pick<
+  MembersAnalyticsModel,
+  'totalChartData' | 'totalGrowth'
+>;
 
 type MembersAnalyticsModel = {
   activeChartData: TimeSeriesData[];
   activeGrowth: number;
-  init: Action<MembersAnalyticsModel, MembersAnalyticsInitArgs>;
+  initActive: Action<MembersAnalyticsModel, ActiveMembersAnalyticsArgs>;
+  initTotal: Action<MembersAnalyticsModel, TotalMembersAnalyticsArgs>;
   totalChartData: TimeSeriesData[];
   totalGrowth: number;
 };
@@ -14,13 +24,22 @@ type MembersAnalyticsModel = {
 export default createContextStore<MembersAnalyticsModel>(
   {
     activeChartData: [],
-    activeGrowth: 0,
-    init: action((state, data: MembersAnalyticsInitArgs) => ({
+
+    activeGrowth: null,
+
+    initActive: action((state, data: ActiveMembersAnalyticsArgs) => ({
       ...state,
       ...data
     })),
+
+    initTotal: action((state, data: TotalMembersAnalyticsArgs) => ({
+      ...state,
+      ...data
+    })),
+
     totalChartData: [],
-    totalGrowth: 0
+
+    totalGrowth: null
   },
   { disableImmer: true }
 );

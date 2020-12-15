@@ -1,7 +1,10 @@
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
-import { GET_MEMBER_ANALYTICS } from '../../../Analytics.gql';
+import {
+  GET_ACTIVE_MEMBER_ANALYTICS,
+  GET_TOTAL_MEMBER_ANALYTICS
+} from '../../../Analytics.gql';
 import Members from '../Members.store';
 import ActiveMembersCard from './ActiveMembersCard';
 import ActiveMembersChart from './ActiveMembersChart';
@@ -26,14 +29,23 @@ const AnalyticsTimeSeriesList = () => (
 );
 
 const FetchMemberAnalytics = () => {
-  const init = Members.useStoreActions((store) => store.init);
-  const { data } = useQuery(GET_MEMBER_ANALYTICS);
+  const initActive = Members.useStoreActions((store) => store.initActive);
+  const initTotal = Members.useStoreActions((store) => store.initTotal);
+
+  const { data: activeData } = useQuery(GET_ACTIVE_MEMBER_ANALYTICS);
+  const { data: totalData } = useQuery(GET_TOTAL_MEMBER_ANALYTICS);
 
   useEffect(() => {
-    const result = data?.getMemberAnalytics ?? {};
+    const result = activeData?.getActiveMemberAnalytics ?? {};
     if (!result) return;
-    init(result);
-  }, [data]);
+    initActive(result);
+  }, [activeData]);
+
+  useEffect(() => {
+    const result = totalData?.getTotalMemberAnalytics ?? {};
+    if (!result) return;
+    initTotal(result);
+  }, [totalData]);
 
   return null;
 };

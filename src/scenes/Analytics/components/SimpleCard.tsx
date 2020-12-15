@@ -22,7 +22,6 @@ const NumberContainer = ({
 
   let percentageString = `${percentage}%`;
   if (isPositive) percentageString = `+${percentageString}`;
-  else percentageString = `-${percentageString}`;
 
   return (
     <div>

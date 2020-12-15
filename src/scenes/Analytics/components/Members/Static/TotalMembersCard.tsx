@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { useStoreState } from '@store/Store';
 import AnalyticsSimple from '../../SimpleCard';
 import Members from '../Members.store';
 
 export default () => {
-  const numMembers = useStoreState(({ db }) => db.community.members?.length);
+  const numMembers = Members.useStoreState(({ totalChartData }) => {
+    const { length } = totalChartData;
+    return totalChartData[length - 1]?.value;
+  });
+
   const totalGrowth = Members.useStoreState((store) => store.totalGrowth);
-  if (!numMembers) return null;
+  if (totalGrowth === null) return null;
 
   return (
     <AnalyticsSimple

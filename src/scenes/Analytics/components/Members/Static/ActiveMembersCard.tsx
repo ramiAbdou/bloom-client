@@ -10,7 +10,7 @@ export default () => {
   });
 
   const activeGrowth = Members.useStoreState((store) => store.activeGrowth);
-  if (!numActiveUsers) return null;
+  if (activeGrowth === null) return null;
 
   return (
     <AnalyticsSimple
