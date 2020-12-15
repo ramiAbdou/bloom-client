@@ -1,12 +1,11 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
 type TimeSeriesData = { name: string; value: number };
-type MembersAnalyticsInitArgs = Pick<
-  MembersAnalyticsModel,
-  'totalChartData' | 'totalGrowth'
->;
+type MembersAnalyticsInitArgs = Omit<MembersAnalyticsModel, 'init'>;
 
 type MembersAnalyticsModel = {
+  activeChartData: TimeSeriesData[];
+  activeGrowth: number;
   init: Action<MembersAnalyticsModel, MembersAnalyticsInitArgs>;
   totalChartData: TimeSeriesData[];
   totalGrowth: number;
@@ -14,6 +13,8 @@ type MembersAnalyticsModel = {
 
 export default createContextStore<MembersAnalyticsModel>(
   {
+    activeChartData: [],
+    activeGrowth: 0,
     init: action((state, data: MembersAnalyticsInitArgs) => ({
       ...state,
       ...data

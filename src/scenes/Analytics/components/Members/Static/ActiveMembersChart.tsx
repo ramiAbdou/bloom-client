@@ -5,12 +5,15 @@ import { ChartType } from '@components/Chart/Chart.store';
 import Members from '../Members.store';
 
 export default () => {
-  const totalChartData = Members.useStoreState((store) => store.totalChartData);
-  if (!totalChartData?.length) return null;
+  const activeChartData = Members.useStoreState(
+    (store) => store.activeChartData
+  );
+
+  if (!activeChartData?.length) return null;
 
   return (
     <Chart
-      data={totalChartData}
+      data={activeChartData}
       title="Active Users in Last 30 Days"
       type={ChartType.TIME_SERIES}
     />

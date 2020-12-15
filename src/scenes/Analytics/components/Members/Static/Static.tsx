@@ -30,10 +30,9 @@ const FetchMemberAnalytics = () => {
   const { data } = useQuery(GET_MEMBER_ANALYTICS);
 
   useEffect(() => {
-    const { totalChartData, totalGrowth } = data?.getMemberAnalytics ?? {};
-    if (!totalChartData?.length || totalGrowth === null) return;
-
-    init({ totalChartData, totalGrowth });
+    const result = data?.getMemberAnalytics ?? {};
+    if (!result) return;
+    init(result);
   }, [data]);
 
   return null;
