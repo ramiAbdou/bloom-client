@@ -12,6 +12,7 @@ import {
   YAxis
 } from 'recharts';
 
+import useWindowWidth from '@hooks/useWindowWidth';
 import { useStoreState } from '@store/Store';
 import Chart from '../Chart.store';
 import { ChartTooltipProps } from '../components/Tooltip';
@@ -40,11 +41,12 @@ const LineChartDot = ({ payload, ...props }) => {
 export default () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
   const data = Chart.useStoreState((store) => store.data, deepequal);
+  const windowWidth = useWindowWidth();
 
   if (!data?.length) return null;
 
   return (
-    <ResponsiveContainer height={360}>
+    <ResponsiveContainer height={windowWidth > 1440 ? 360 : 240}>
       <LineChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <CartesianGrid vertical={false} />
 
@@ -57,7 +59,7 @@ export default () => {
           tickFormatter={(label) => day(label).format('M/D')}
           tickSize={8}
         />
-        <YAxis domain={['auto', 'auto']} />
+        <YAxis domain={['auto', 'auto']} width={48} />
         <Tooltip content={({ label }) => <LineChartTooltip label={label} />} />
 
         <Line

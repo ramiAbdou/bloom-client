@@ -33,6 +33,7 @@ export default () => {
         <XAxis
           allowDuplicatedCategory={false}
           dataKey="name"
+          interval="preserveStart"
           minTickGap={16}
           tickSize={8}
         />

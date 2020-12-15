@@ -15,7 +15,9 @@ $PREF: 'c-chart';
 .#{$PREF} > div:first-child {
   @extend .flex-ac;
 
+  left: 0;
   margin-bottom: $sm;
+  position: sticky;
 
   > h4 {
     color: $gray-2;
