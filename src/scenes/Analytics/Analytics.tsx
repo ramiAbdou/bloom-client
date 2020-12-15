@@ -6,10 +6,10 @@ import { GET_DATABASE } from '@scenes/Database/Database.gql';
 import Loading from '@store/Loading.store';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import AnalyticsDues from './components/Dues/Dues';
-import AnalyticsEvents from './components/Events/Events';
+import DuesAnalytics from './components/Dues/Dues';
+import EventsAnalytics from './components/Events/Events';
 import AnalyticsHeader from './components/Header';
-import AnalyticsMembers from './components/Members/Members';
+import MembersAnalytics from './components/Members/Members';
 
 const useFetchDatabase = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
@@ -49,9 +49,9 @@ const AnalyticsContent = () => {
       {!loading && (
         <div className="s-home-content">
           <Switch>
-            <Route component={AnalyticsDues} path={`${url}/dues`} />
-            <Route component={AnalyticsEvents} path={`${url}/events`} />
-            <Route component={AnalyticsMembers} path={`${url}/members`} />
+            <Route component={DuesAnalytics} path={`${url}/dues`} />
+            <Route component={EventsAnalytics} path={`${url}/events`} />
+            <Route component={MembersAnalytics} path={`${url}/members`} />
             <Redirect to={`${url}/members`} />
           </Switch>
         </div>

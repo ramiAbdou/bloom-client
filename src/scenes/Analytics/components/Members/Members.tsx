@@ -1,28 +1,11 @@
 import React from 'react';
 
-import AnalyticsActiveSimpleCard from './ActiveSimpleCard';
-import Playground from './Playground/Playground';
-import AnalyticsTotalSimpleCard from './TotalSimpleCard';
-import TotalTimeSeries from './TotalTimeSeries';
-
-const AnalyticsSimpleList = () => (
-  <div>
-    <AnalyticsTotalSimpleCard />
-    <AnalyticsActiveSimpleCard />
-  </div>
-);
-
-const AnalyticsTimeSeriesList = () => (
-  <div>
-    <TotalTimeSeries />
-    <TotalTimeSeries />
-  </div>
-);
+import PlaygroundAnalytics from './Playground/Playground';
+import StaticMemberAnalytics from './Static/Static';
 
 export default () => (
   <div className="s-analytics-members">
-    <AnalyticsSimpleList />
-    <AnalyticsTimeSeriesList />
-    <Playground />
+    <StaticMemberAnalytics />
+    <PlaygroundAnalytics />
   </div>
 );

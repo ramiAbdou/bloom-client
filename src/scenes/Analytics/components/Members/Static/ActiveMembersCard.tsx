@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import AnalyticsSimple from '../SimpleCard';
+import AnalyticsSimple from '../../SimpleCard';
 
 export default () => {
   const numMembers = useStoreState(({ db }) => db.community.members?.length);
@@ -9,9 +9,9 @@ export default () => {
 
   return (
     <AnalyticsSimple
-      label="Total Members"
+      label="Active Users in Last 30 Days"
       percentage="+8%"
-      value={numMembers}
+      value={115}
     />
   );
 };
