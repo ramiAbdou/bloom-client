@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { GET_MEMBER_ANALYTICS } from '../../../Analytics.gql';
 import Members from '../Members.store';
 import ActiveMembersCard from './ActiveMembersCard';
+import ActiveMembersChart from './ActiveMembersChart';
 import TotalMembersCard from './TotalMembersCard';
 import TotalMembersChart from './TotalMembersChart';
 
@@ -20,7 +21,7 @@ const AnalyticsSimpleList = () => (
 const AnalyticsTimeSeriesList = () => (
   <div>
     <TotalMembersChart />
-    <TotalMembersChart />
+    <ActiveMembersChart />
   </div>
 );
 

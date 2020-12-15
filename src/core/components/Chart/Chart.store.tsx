@@ -1,6 +1,7 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
 export type ChartData = { name: string; value: number };
+
 export enum ChartType {
   BAR = 'BAR',
   PIE = 'PIE',

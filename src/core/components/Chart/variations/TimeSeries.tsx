@@ -1,4 +1,5 @@
 import day from 'dayjs';
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 import {
   CartesianGrid,
@@ -38,7 +39,7 @@ const LineChartDot = ({ payload, ...props }) => {
 
 export default () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
-  const data = Chart.useStoreState((store) => store.data);
+  const data = Chart.useStoreState((store) => store.data, deepequal);
 
   if (!data?.length) return null;
 
