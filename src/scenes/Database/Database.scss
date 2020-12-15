@@ -40,6 +40,10 @@ $PREF: 's-database';
 
 .#{$PREF}-add-modal > p { margin-bottom: $md; }
 
+.#{$PREF}-add-modal-input:only-of-type > div:first-child > button {
+  display: none;
+}
+
 .#{$PREF}-add-modal-input > div:first-of-type {
   @extend .flex-ac;
 
@@ -72,6 +76,9 @@ $PREF: 's-database';
 }
 
 .#{$PREF}-add-modal-input > div > div > .c-misc-checkbox { margin-right: 12px; }
+
+// .#{$PREF}-add-modal-input:only-of-type { visibility: hidden; }
+
 .#{$PREF}-add-modal > button { margin-bottom: $md; }
 .#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
 .#{$PREF}-add-modal > div:last-of-type > button:first-of-type {

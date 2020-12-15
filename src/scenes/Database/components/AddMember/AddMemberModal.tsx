@@ -111,9 +111,11 @@ export default () => {
         can finish filling out their profile.
       </p>
 
-      {members.map(({ id }) => (
-        <AddMemberInput key={id} id={id} />
-      ))}
+      <div>
+        {members.map(({ id }) => (
+          <AddMemberInput key={id} id={id} />
+        ))}
+      </div>
 
       <UnderlineButton title="+ Add Another" onClick={onClick} />
       <ErrorMessage message={message} />
