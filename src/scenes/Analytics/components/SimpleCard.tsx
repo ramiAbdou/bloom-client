@@ -5,23 +5,29 @@ import { makeClass } from '@util/util';
 
 interface AnalyticsSimpleProps extends ValueProps {
   label: string;
-  percentage: string;
+  percentage: number;
 }
 
 const NumberContainer = ({
   percentage,
   value
 }: Partial<AnalyticsSimpleProps>) => {
+  const isPositive = percentage >= 0;
+
   const percentageCss = makeClass([
     's-analytics-simple-percentage',
-    [percentage[0] === '+', 's-analytics-simple-percentage--green'],
-    [percentage[0] === '-', 's-analytics-simple-percentage--red']
+    [isPositive, 's-analytics-simple-percentage--green'],
+    [!isPositive, 's-analytics-simple-percentage--red']
   ]);
+
+  let percentageString = `${percentage}%`;
+  if (isPositive) percentageString = `+${percentageString}`;
+  else percentageString = `-${percentageString}`;
 
   return (
     <div>
       <h1>{value}</h1>
-      <p className={percentageCss}>{percentage}</p>
+      <p className={percentageCss}>{percentageString}</p>
     </div>
   );
 };
