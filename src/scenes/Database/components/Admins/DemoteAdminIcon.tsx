@@ -11,7 +11,7 @@ import { ModalType } from '@constants';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-import { TOGGLE_ADMINS } from '../../Database.gql';
+import { DEMOTE_TO_MEMBER } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const DemoteToMemberModal = () => {
@@ -20,11 +20,11 @@ const DemoteToMemberModal = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
-  const [toggleAdmins, { error, loading }] = useMutation(TOGGLE_ADMINS);
+  const [demoteToMember, { error, loading }] = useMutation(DEMOTE_TO_MEMBER);
 
   const onDemote = async () => {
-    const result = await toggleAdmins({ variables: { memberIds: adminIds } });
-    const data = result?.data?.toggleAdmins;
+    const result = await demoteToMember({ variables: { memberIds: adminIds } });
+    const data = result?.data?.demoteToMember;
 
     if (!data) return;
 

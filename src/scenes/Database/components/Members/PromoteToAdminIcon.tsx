@@ -11,7 +11,7 @@ import { ModalType } from '@constants';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { TOGGLE_ADMINS } from '../../Database.gql';
+import { PROMOTE_TO_ADMIN } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const PromoteToAdminModal = () => {
@@ -22,11 +22,11 @@ const PromoteToAdminModal = () => {
   const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const { push } = useHistory();
-  const [toggleAdmins, { loading }] = useMutation(TOGGLE_ADMINS);
+  const [promoteToAdmin, { loading }] = useMutation(PROMOTE_TO_ADMIN);
 
   const onPromote = async () => {
-    const result = await toggleAdmins({ variables: { memberIds } });
-    const data = result?.data?.toggleAdmins;
+    const result = await promoteToAdmin({ variables: { memberIds } });
+    const data = result?.data?.promoteToAdmin;
 
     if (!data) return;
 

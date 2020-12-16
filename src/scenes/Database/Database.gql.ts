@@ -17,6 +17,12 @@ export const DELETE_MEMBERS = mutation({
   variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
 
+export const DEMOTE_TO_MEMBER = mutation({
+  fields: ['id', 'role'],
+  operation: 'demoteToMember',
+  variables: { memberIds: { required: true, type: '[String!]' } }
+}).query;
+
 export const GET_DATABASE = query({
   fields: [
     'id',
@@ -44,8 +50,8 @@ export const RENAME_QUESTION = mutation({
   }
 }).query;
 
-export const TOGGLE_ADMINS = mutation({
+export const PROMOTE_TO_ADMIN = mutation({
   fields: ['id', 'role'],
-  operation: 'toggleAdmins',
+  operation: 'promoteToAdmin',
   variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
