@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@popmotion/popcorn": "^0.4.4",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.11.0",
     "@types/js-cookie": "^2.2.6",
     "@types/lodash.mergewith": "^4.6.6",
     "@types/react-csv": "^1.1.1",

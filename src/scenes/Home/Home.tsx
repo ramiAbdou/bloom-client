@@ -9,6 +9,7 @@ import {
 
 import AdminRoute from '@components/Router/AdminRoute';
 import { ChildrenProps, EncodedUrlNameParams } from '@constants';
+import DuesModal from '@scenes/Actions/Dues/Dues';
 import AddMember from '@scenes/Database/components/AddMember/AddMember.store';
 import AddMemberModal from '@scenes/Database/components/AddMember/AddMemberModal';
 import { useStoreState } from '@store/Store';
@@ -84,6 +85,7 @@ export default () => (
     </div>
 
     <SidebarPicker />
+    <DuesModal />
 
     <AddMember.Provider>
       <AddMemberModal />

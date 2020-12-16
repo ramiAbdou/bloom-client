@@ -58,7 +58,7 @@ const SidebarContent = () => {
       },
       {
         Icon: IoCard,
-        onClick: () => showModal('ADD_MEMBERS'),
+        onClick: () => showModal('PAY_DUES'),
         title: 'Pay Dues'
       }
     ],
