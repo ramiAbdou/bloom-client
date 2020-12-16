@@ -104,16 +104,7 @@ export const dbModel: DbModel = {
 
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
-    const result = byId[activeId];
-
-    if (result) {
-      // For every request, we should have a communityId set in the token so
-      // we could take advantage of the GQL context and reduce # of args.
-      const { role } = result;
-      if (Cookie.get('role') !== role) Cookie.set('role', role);
-    }
-
-    return result;
+    return byId[activeId];
   }),
 
   /**

@@ -26,7 +26,6 @@ export default () => {
     clearEntities();
 
     Cookie.remove('communityId');
-    Cookie.remove('role');
 
     const { style } = document.documentElement;
     style.setProperty('--primary', '#f58023');

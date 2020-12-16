@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import {
   IoAdd,
   IoCalendar,
+  IoCard,
   IoExtensionPuzzle,
   IoFolderOpen,
   IoGlobe,
@@ -54,6 +55,11 @@ const SidebarContent = () => {
         Icon: IoPersonAdd,
         onClick: () => showModal('ADD_MEMBERS'),
         title: 'Add Member'
+      },
+      {
+        Icon: IoCard,
+        onClick: () => showModal('ADD_MEMBERS'),
+        title: 'Pay Dues'
       }
     ],
     []
