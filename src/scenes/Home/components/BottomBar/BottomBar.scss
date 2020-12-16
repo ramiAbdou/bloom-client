@@ -18,7 +18,10 @@ $PREF: 's-home-bb';
   @include MT { display: flex; }
   @include D { display: none; }
   @include T {
-    .#{$PREF} > div:first-child { border-right: 1px $gray-5 solid; padding-right: $sm; }
+    .#{$PREF} > div:first-child {
+      border-right: 1px $gray-5 solid;
+      padding-right: $sm;
+    }
 
     // We add an extra community icon to the container to acheive centering
     // but we have to hide it from the screen.
