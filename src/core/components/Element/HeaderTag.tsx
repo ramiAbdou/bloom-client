@@ -8,6 +8,8 @@ interface HeaderTagProps extends ValueProps {
 }
 
 export default ({ large, value }: HeaderTagProps) => {
+  if (!value) return null;
+
   const css = makeClass([
     'c-misc-header-tag',
     [large, 'c-misc-header-tag--lg']

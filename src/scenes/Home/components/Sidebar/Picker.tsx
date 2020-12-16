@@ -44,7 +44,7 @@ export default () => {
 
   // Show a picker that either allows them to view their profile or log out.
   const actions: PickerAction[] = [
-    { Icon: IoCard, onClick: () => {}, text: 'Manage Member' },
+    { Icon: IoCard, onClick: () => {}, text: 'Manage Membership' },
     { Icon: IoPerson, onClick: () => {}, text: 'Your Profile' },
     { Icon: IoExit, onClick: onLogout, separator: true, text: 'Log Out' }
   ];

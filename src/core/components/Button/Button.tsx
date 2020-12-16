@@ -1,5 +1,10 @@
 import { motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, {
+  forwardRef,
+  MutableRefObject,
+  useEffect,
+  useState
+} from 'react';
 
 import { ChildrenProps, ValueProps } from '@constants';
 import { makeClass } from '@util/util';
@@ -39,43 +44,49 @@ export const useLoadingState = (loading: boolean) => {
   return showLoadingState;
 };
 
-export default ({
-  className,
-  children,
-  disabled,
-  href,
-  fill,
-  large,
-  onClick,
-  title,
-  target,
-  ...props
-}: ButtonProps) => {
-  const css = makeClass([
-    'c-btn',
-    [large, 'c-btn--lg'],
-    [fill, 'c-btn--fill'],
-    className
-  ]);
+export default forwardRef(
+  (
+    {
+      className,
+      children,
+      disabled,
+      href,
+      fill,
+      large,
+      onClick,
+      title,
+      target,
+      ...props
+    }: ButtonProps,
+    ref: MutableRefObject<any>
+  ) => {
+    const css = makeClass([
+      'c-btn',
+      [large, 'c-btn--lg'],
+      [fill, 'c-btn--fill'],
+      className
+    ]);
 
-  const onAllowedClick = () => !disabled && onClick && onClick();
+    const onAllowedClick = () => !disabled && onClick && onClick();
 
-  if (href) {
+    if (href) {
+      return (
+        <motion.a className={css} href={href} target={target} {...props}>
+          {children ?? title}
+        </motion.a>
+      );
+    }
+
     return (
-      <motion.a className={css} href={href} target={target} {...props}>
+      <motion.button
+        ref={ref}
+        className={css}
+        disabled={disabled}
+        onClick={onAllowedClick}
+        {...props}
+      >
         {children ?? title}
-      </motion.a>
+      </motion.button>
     );
   }
-
-  return (
-    <motion.button
-      className={css}
-      disabled={disabled}
-      onClick={onAllowedClick}
-      {...props}
-    >
-      {children ?? title}
-    </motion.button>
-  );
-};
+);

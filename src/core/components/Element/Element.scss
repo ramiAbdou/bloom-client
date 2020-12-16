@@ -12,7 +12,7 @@ $PREF: 'c-misc';
   color: black;
   font-size: 13px;
   margin-right: $xxs;
-  padding: 2px 6px;
+  padding: $xxs 6px;
   text-align: left;
   width: fit-content;
 
@@ -163,6 +163,53 @@ $PREF: 'c-misc';
 // ## QUESTION VALUE - Has a title component and value component.
 
 .#{$PREF}-question:not(:last-child) { margin-bottom: $sm; }
-.#{$PREF}-question > p:first-child { @extend .sb; margin-bottom: $xxs; }
+.#{$PREF}-question > p:first-child { @extend .sb; margin-bottom: $xs; }
 .#{$PREF}-question > div:last-child { @extend .flex-w; }
 .#{$PREF}-question > div:last-child > p { color: $primary; }
+
+// ## DROPDOWN - The dropdown div only displays the current value, and only
+// when you click on it does the container appear.
+
+.#{$PREF}-dropdown {
+  background-color: $gray-5;
+  background-position-x: calc(100% - 8px);
+  border-radius: $xxs;
+  color: $gray-3;
+  cursor: pointer;
+  height: $lg;
+  width: 100%;
+
+  @include OVERFLOW_ELLIPSES;
+}
+
+.#{$PREF}-dropdown > div:first-child {
+  @extend .flex-acsb;
+  @extend .fill;
+
+  padding: 0 $xs;
+
+  > p { margin-right: $sm; }
+  > svg { color: $gray-3; height: $sm; width: $sm; }
+}
+
+.#{$PREF}-dropdown-option-ctr {
+  background-color: $gray-5;
+  border-radius: $xxs;
+  box-sizing: border-box;
+  margin-top: $xxs;
+  max-height: $xxl * 5;
+  overflow: scroll;
+  padding: $xs 0;
+  position: absolute;
+  z-index: 1;
+
+  // The actual options within the container.
+  > div {
+    cursor: pointer;
+    height: $lg;
+    line-height: $lg;
+    padding: 0 $xs;
+  
+    @include HOVER { background-color: $gray-6; }
+  }
+}

@@ -4,8 +4,8 @@ import React from 'react';
 import { IMember } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import Applicants from '../../Applicants.store';
+import ApplicantCard from './Card';
 import Applicant, { applicantModel } from './Card.store';
-import ApplicantCard from './Card'
 
 export default () => {
   const numApplicants = useStoreState(({ db }) => {

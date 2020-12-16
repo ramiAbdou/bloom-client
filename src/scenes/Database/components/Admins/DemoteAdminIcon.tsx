@@ -79,7 +79,7 @@ export default () => {
         Icon={IoArrowDownCircle}
         className="s-database-action--demote"
         disabled={disabled}
-        value="Demote to Member"
+        tooltip="Demote to Member"
         onClick={onClick}
       />
     </>

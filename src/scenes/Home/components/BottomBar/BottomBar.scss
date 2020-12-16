@@ -13,29 +13,31 @@ $PREF: 's-home-bb';
   width: calc(100vw - 48px);
   z-index: 100;
 
-  @include RESP(padding, $xxs $md, $xxs $md, $xxs $xs);
-  @include M { justify-content: center; width: calc(100vw - 16px); }
+  @include RESP(padding, $xxs $md, $xxs $md, $xxs $md);
+  @include M { width: calc(100vw - $xl); }
   @include MT { display: flex; }
   @include D { display: none; }
+  @include T {
+    .#{$PREF} > div:first-child {
+      border-right: 1px $gray-5 solid;
+      padding-right: $sm;
+    }
+
+    // We add an extra community icon to the container to acheive centering
+    // but we have to hide it from the screen.
+    > div:last-child { visibility: hidden; }
+  }
 }
 
-.#{$PREF} > div:first-of-type {
-  border-right: 1px $gray-5 solid;
-  padding-right: $sm;
-}
+// .#{$PREF} > div:first-child { border-right: 1px $gray-5 solid; }
 .#{$PREF} > div:nth-of-type(2) { @extend .flex-c; align-items: flex-end; }
-.#{$PREF} > div:last-of-type {
-  visibility: hidden;
-
-  @include M { display: none; }
-}
 
 .#{$PREF}-link {
   @extend .flex-accol;
 
   margin: $md;
 
-  @include M { margin: $sm; }
+  @include M { margin: 0; }
   @include HOVER { > svg { color: $primary; } }
 
   > * { color: $gray-2; }
@@ -81,7 +83,7 @@ $PREF: 's-home-bb';
 .#{$PREF}-dropdown {
   background-color: $gray-6;
   border-bottom: 1px $gray-5 solid;
-  border-radius: $sm $sm 0 0;
+  border-radius: $xs $xs 0 0;
   bottom: $xxl;
   box-sizing: border-box;
   height: fit-content;
@@ -90,7 +92,7 @@ $PREF: 's-home-bb';
   width: 100vw;
   z-index: 1001;
 
-  @include RESP(padding, $md, $md, $sm);
+  @include RESP(padding, $md, $sm $md, $xs $sm);
   @include D { display: none; }
 }
 

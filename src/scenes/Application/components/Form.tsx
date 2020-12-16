@@ -41,7 +41,7 @@ const SubmitButton = () => {
     if (email !== storedEmail) setEmail(email);
   }, [email]);
 
-  const [applyForMember, { error, data, loading }] = useMutation(
+  const [applyForMembership, { error, data, loading }] = useMutation(
     APPLY_FOR_MEMBERSHIP,
     {
       variables: { data: dataToSubmit, email, encodedUrlName: name }
@@ -65,7 +65,7 @@ const SubmitButton = () => {
         loading={loading}
         loadingText="Submitting..."
         title="Submit Application"
-        onClick={applyForMember}
+        onClick={applyForMembership}
       />
     </>
   );

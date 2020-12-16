@@ -95,7 +95,7 @@ export default () => {
         Icon={IoTrash}
         className="s-database-action--delete"
         disabled={selectedSelf || notEnoughPermissions}
-        value={tooltip}
+        tooltip={tooltip}
         onClick={onClick}
       />
     </>

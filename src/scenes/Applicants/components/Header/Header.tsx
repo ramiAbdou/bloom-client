@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeaderTag from '@components/Elements/HeaderTag';
+import HeaderTag from '@components/Element/HeaderTag';
 import Spinner from '@components/Loader/Spinner';
 import { useStoreState } from '@store/Store';
 import Applicants from '../../Applicants.store';
@@ -21,7 +21,9 @@ export default () => {
     <div className="s-home-header s-applicants-header">
       <div>
         <h1 className="s-home-header-title">Pending Applicants</h1>
-        {!loading && <HeaderTag large value={numApplicants} />}
+        {!loading && !!numApplicants && (
+          <HeaderTag value={`${numApplicants} Total`} />
+        )}
         {loading && <Spinner dark />}
       </div>
 

@@ -5,7 +5,8 @@
 @import './core/scss/spacing';
 @import './core/scss/_typography';
 @import './core/components/Button/Button.scss';
-@import './core/components/Elements/Elements.scss';
+@import './core/components/Chart/Chart.scss';
+@import './core/components/Element/Element.scss';
 @import './core/components/Form/Form.scss';
 @import './core/components/Loader/Loader.scss';
 @import './core/components/Misc/Misc.scss';
@@ -13,6 +14,8 @@
 @import './core/components/Picker/Picker.scss';
 @import './core/components/Table/Table.scss';
 @import './core/components/Toast/Toasts.scss';
+@import './scenes/Analytics/Analytics.scss';
+@import './scenes/Analytics/components/Members/Members.scss';
 @import './scenes/Application/Application.scss';
 @import './scenes/Applicants/Applicants.scss';
 @import './scenes/Database/Database.scss';

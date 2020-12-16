@@ -4,8 +4,7 @@ export type IntegrationsModal =
   | 'MAILCHIMP_FLOW'
   | 'MAILCHIMP_DETAILS'
   | 'STRIPE_DETAILS'
-  | 'ZAPIER_FLOW'
-  | 'ZOOM_DETAILS';
+  | 'ZAPIER_FLOW';
 
 export type IntegrationsModel = {
   flow: IntegrationsModal;

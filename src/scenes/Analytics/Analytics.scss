@@ -1,0 +1,60 @@
+$PREF: 's-analytics';
+
+// ## CARD
+
+.#{$PREF}-card {
+  background-color: hsla($primary-hue, 5%, 88%, 0.4);
+  border-radius: $xs;
+  padding: $sm;
+}
+
+// ## HEADER
+
+.#{$PREF}-header { display: grid; grid-template-columns: repeat(12, 1fr); }
+.#{$PREF}-header > div:first-child { grid-column-end: span 5; }
+.#{$PREF}-header > *:nth-child(2) { grid-column-end: span 4; }
+
+// ## SIMPLE - Card that displays simple information: value, percentage change
+// and a label.
+
+.#{$PREF}-simple {
+  background-color: hsla($primary-hue, 5%, 88%, 0.4);
+  border-radius: $xs;
+  min-width: $xxl * 4;
+  padding: $sm;
+  position: relative;
+
+  &:not(:last-child) { margin-right: $sm; }
+}
+
+// Wraps the value (number) and the percentage tag.
+.#{$PREF}-simple > div:first-child {
+  @extend .flex-ac;
+
+  margin-bottom: $xxs;
+
+  > h1 { font-size: 32px; margin-right: $xs; }
+}
+
+.#{$PREF}-simple-percentage {
+  @extend .meta;
+
+  border-radius: $sm;
+  padding: 2px 6px;
+
+  &--green {
+    background-color: rgba($color: $green, $alpha: 0.1);
+    color: $green;
+  }
+
+  &--red { background-color: rgba($color: $red, $alpha: 0.1); color: $red; }
+}
+
+// Label of the simple card (etc: TOTAL MEMBERS).
+.#{$PREF}-simple > p {
+  @extend .meta;
+
+  color: $gray-2;
+  font-weight: 700;
+  text-transform: uppercase;
+}

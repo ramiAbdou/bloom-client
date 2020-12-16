@@ -1,6 +1,9 @@
 import './index.scss';
 import '../public/favicon.ico';
 
+// Extend the time-based library for entire app.
+import day from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { StoreProvider } from 'easy-peasy';
 import { ClientContext, GraphQLClient } from 'graphql-hooks';
 import React from 'react';
@@ -11,6 +14,8 @@ import ToastQueue from '@components/Toast/Toast';
 import { APP } from '@constants';
 import { store } from '@store/Store';
 import Router from './Router';
+
+day.extend(utc);
 
 const client = new GraphQLClient({
   fetchOptions: { credentials: 'include' },

@@ -37,7 +37,7 @@ export default () => {
       headers={headers}
       onClick={onClick}
     >
-      <DatabaseAction Icon={IoExit} value="Export Member Data" />
+      <DatabaseAction Icon={IoExit} tooltip="Export Member Data" />
     </CSVLink>
   );
 };

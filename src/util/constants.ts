@@ -32,6 +32,7 @@ export type LoadingProps = { loading: boolean };
 export type OnClickProps = { onClick?: Function };
 export type MessageProps = { message: string };
 export type StyleProps = { style?: React.CSSProperties };
+export type TitleProps = { title?: string };
 export type ValueProps = { value: any };
 
 export enum ModalType {

@@ -60,9 +60,9 @@ const Dropdown = () => {
       <div className="s-home-bb-dropdown-bg" onClick={onBgClick} />
       <motion.div
         key="s-home-bb-dropdown"
-        animate={{ y: 0 }}
+        // animate={{ y: 0 }}
         className="s-home-bb-dropdown"
-        initial={{ y: 10 }}
+        // initial={{ y: 10 }}
       >
         {communities.map((props: ICommunity) => (
           <CommunitySelector key={props.id} {...props} />

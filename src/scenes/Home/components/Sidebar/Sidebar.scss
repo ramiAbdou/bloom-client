@@ -7,7 +7,7 @@ $PREF: 's-home-sidebar';
   height: 100%;
   position: fixed;
   top: 0;
-  width: $xxl * 6;
+  width: $xxl * 5.5;
   z-index: 12;
 
   @include MT { display: none; }
@@ -118,13 +118,13 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-community {
-  border-radius: $xxs;
+  border-radius: $xs;
   height: $xl + $xs;
   padding: 2px;
   width: $xl + $xs;
 }
 
-.#{$PREF}-community > img { @extend .fill; border-radius: 2px; }
+.#{$PREF}-community > img { @extend .fill; border-radius: $xxs; }
 
 // ## PROFILE BAR
 

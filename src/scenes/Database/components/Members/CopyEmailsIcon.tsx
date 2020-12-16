@@ -27,5 +27,7 @@ export default () => {
     showToast({ message: 'Email(s) copied to clipboard.' });
   };
 
-  return <DatabaseAction Icon={IoCopy} value="Copy Email" onClick={onClick} />;
+  return (
+    <DatabaseAction Icon={IoCopy} tooltip="Copy Email" onClick={onClick} />
+  );
 };

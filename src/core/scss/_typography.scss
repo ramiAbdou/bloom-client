@@ -1,16 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Muli:wght@400;600;700&display=swap');
 
+a,
+button,
+div,
 h1,
 h2,
 h3,
 h4,
-button,
+input,
+option,
 p,
-a,
-td,
-textarea,
+select,
 span,
-input { font-family: Muli; }
+td,
+textarea { font-family: Muli; }
 
 h1,
 h2,
@@ -27,13 +30,16 @@ h4 { font-size: 14px; text-transform: uppercase; }
 
 // For some reason, it's not letting me @extend the .body class, so we just
 // write the declarations again.
-button,
-p,
 a,
-td,
-textarea,
+button,
+div,
+input,
+p,
+option,
+select,
 span,
-input { font-size: 15px; font-weight: 400; }
+td,
+textarea { font-size: 15px; font-weight: 400; }
 
 input {
   &::placeholder { color: $gray-3; }

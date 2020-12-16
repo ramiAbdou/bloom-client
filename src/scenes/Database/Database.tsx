@@ -10,7 +10,7 @@ import Members from './components/Members/Members';
 import { GET_DATABASE } from './Database.gql';
 import Database from './Database.store';
 
-const FetchDatabase = () => {
+const useFetchDatabase = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const currentLoading = Database.useStoreState((store) => store.loading);
   const setLoading = Database.useStoreActions((store) => store.setLoading);
@@ -38,16 +38,14 @@ const FetchDatabase = () => {
       schema: Schema.COMMUNITY
     });
   }, [data]);
-
-  return null;
 };
 
-export default () => {
+const DatabaseContent = () => {
   const { url } = useRouteMatch();
+  useFetchDatabase();
 
   return (
-    <Database.Provider>
-      <FetchDatabase />
+    <>
       <Header />
 
       <div className="s-home-content">
@@ -57,6 +55,12 @@ export default () => {
           <Redirect to={`${url}/members`} />
         </Switch>
       </div>
-    </Database.Provider>
+    </>
   );
 };
+
+export default () => (
+  <Database.Provider>
+    <DatabaseContent />
+  </Database.Provider>
+);

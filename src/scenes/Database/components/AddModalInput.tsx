@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
-import Checkbox from '@components/Elements/Checkbox';
-import Input from '@components/Elements/Input';
+import Checkbox from '@components/Element/Checkbox';
+import Input from '@components/Element/Input';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { Function, IdProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';

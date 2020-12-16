@@ -1,4 +1,4 @@
-import { Action, action } from 'easy-peasy';
+import { Action, action, createContextStore } from 'easy-peasy';
 
 export type LoadingModel = {
   loading: boolean;
@@ -9,3 +9,7 @@ export const loadingModel: LoadingModel = {
   loading: false,
   setLoading: action((state, loading: boolean) => ({ ...state, loading }))
 };
+
+export default createContextStore<LoadingModel>(loadingModel, {
+  disableImmer: true
+});
