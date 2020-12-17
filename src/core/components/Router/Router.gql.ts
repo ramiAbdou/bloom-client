@@ -16,7 +16,7 @@ export const GET_USER = query({
             'name',
             'logoUrl',
             'primaryColor',
-            { integrations: ['mailchimpListId'] }
+            { integrations: ['mailchimpListId', 'stripeAccountId'] }
           ]
         },
         'id',

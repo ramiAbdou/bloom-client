@@ -1,6 +1,9 @@
 $PREF: 's-actions-dues';
 
-.#{$PREF} > p:first-of-type { margin-bottom: $sm; }
+.#{$PREF} > p:first-of-type {
+  margin-bottom: $sm;
+  > span { @extend .sb; }
+}
 
 .#{$PREF} > form > div.c-misc-input {
   margin-bottom: $md;

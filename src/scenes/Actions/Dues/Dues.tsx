@@ -4,6 +4,7 @@ import React, { FormEvent, useState } from 'react';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { isProduction, ModalType } from '@constants';
+import { useStoreActions, useStoreState } from '@store/Store';
 import {
   CardElement,
   Elements,
@@ -11,8 +12,8 @@ import {
   useStripe
 } from '@stripe/react-stripe-js';
 import { loadStripe, StripeCardElementOptions } from '@stripe/stripe-js';
-import { getGraphQLError, uuid } from '@util/util';
-import { CHARGE_PAYMENT } from './Dues.gql';
+import { getGraphQLError } from '@util/util';
+import { GET_PAYMENT_CLIENT_SECRET } from './Dues.gql';
 import PayButton from './PayButton';
 
 const options: StripeCardElementOptions = {
@@ -27,38 +28,40 @@ const options: StripeCardElementOptions = {
 };
 
 const DuesModalContent = () => {
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const elements = useElements();
   const stripe = useStripe();
 
-  const [chargePayment, { loading }] = useMutation(CHARGE_PAYMENT);
+  const [getPaymentClientSecret] = useMutation(GET_PAYMENT_CLIENT_SECRET);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      card: elements.getElement(CardElement),
-      type: 'card'
-    });
+    setErrorMessage(null);
+    setLoading(true);
 
-    console.log(paymentMethod);
+    const { data, error } = await getPaymentClientSecret();
 
     if (error) {
-      setErrorMessage(error.message);
+      setErrorMessage(getGraphQLError(error));
+      setLoading(false);
       return;
     }
 
-    const { id } = paymentMethod;
+    const clientSecret: string = data.getPaymentClientSecret;
 
-    const { error: gqlError } = await chargePayment({
-      variables: { id, idempotencyKey: uuid() }
-    });
+    const { error: stripeError } = await stripe.confirmCardPayment(
+      clientSecret,
+      { payment_method: { card: elements.getElement(CardElement) } }
+    );
 
-    if (gqlError) {
-      const message = getGraphQLError(gqlError);
-      setErrorMessage(message);
-    }
+    setLoading(false);
+
+    if (stripeError) setErrorMessage(stripeError.message);
+    else setTimeout(closeModal, 0);
   };
 
   return (
@@ -66,7 +69,7 @@ const DuesModalContent = () => {
       <h1>Pay Dues</h1>
       <p>
         Once you're card is charged, your membership will be valid for 1 year
-        until December 16, 2020.
+        until <span>December 16, 2021</span>.
       </p>
 
       <form onSubmit={onSubmit}>
@@ -80,10 +83,18 @@ const DuesModalContent = () => {
 };
 
 export default () => {
+  const stripeAccount = useStoreState(({ db }) => {
+    const { byId } = db.entities.integrations;
+    return byId[db.community.integrations]?.stripeAccountId;
+  });
+
+  if (!stripeAccount) return null;
+
   const stripePromise = loadStripe(
     isProduction
       ? process.env.STRIPE_PUBLISHABLE_KEY
-      : process.env.STRIPE_TEST_PUBLISHABLE_KEY
+      : process.env.STRIPE_TEST_PUBLISHABLE_KEY,
+    { stripeAccount }
   );
 
   return (

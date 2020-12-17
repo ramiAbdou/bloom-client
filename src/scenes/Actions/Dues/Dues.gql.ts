@@ -1,6 +1,5 @@
 import { mutation } from 'gql-query-builder';
 
-export const CHARGE_PAYMENT = mutation({
-  operation: 'chargePayment',
-  variables: { id: { required: true }, idempotencyKey: { required: true } }
+export const GET_PAYMENT_CLIENT_SECRET = mutation({
+  operation: 'getPaymentClientSecret'
 }).query;
