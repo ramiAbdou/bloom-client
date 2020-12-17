@@ -1,17 +1,20 @@
 import { QuestionCategory, QuestionType } from '@constants';
 
+type IdString = string;
+
 export type ICommunity = {
   applicationDescription?: string;
   applicationTitle?: string;
   autoAccept?: boolean;
   encodedUrlName: string;
-  id: string;
-  integrations: string;
+  id: IdString;
+  integrations: IdString;
   logoUrl: string;
-  members: string[];
-  questions: string[];
+  members: IdString[];
+  questions: IdString[];
   name: string;
   primaryColor: string;
+  types: IdString[];
 };
 
 export type IIntegrations = {
@@ -27,18 +30,26 @@ export type IMember = {
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
   cardData?: { questionId: string; value: string }[];
-  community: string;
+  community: IdString;
   createdAt: string;
-  id: string;
+  id: IdString;
   role?: 'ADMIN' | 'OWNER';
-  type: { name: string };
+  type: IdString;
   status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
-  user: string;
+  user: IdString;
+};
+
+export type IMemberType = {
+  amount: number;
+  id: IdString;
+  isFree: boolean;
+  name: boolean;
+  recurrence: 'MONTHLY' | 'YEARLY';
 };
 
 export type IQuestion = {
   category: QuestionCategory;
-  id: string;
+  id: IdString;
   inApplicantCard: boolean;
   inDirectoryCard: boolean;
   order: number;
@@ -54,11 +65,11 @@ export type IUser = {
   email: string;
   facebookUrl: string;
   firstName: string;
-  id: string;
+  id: IdString;
   instagramUrl: string;
   lastName: string;
   linkedInUrl: string;
-  members?: string[];
+  members?: IdString[];
   pictureUrl: string;
   twitterUrl: string;
 };
@@ -74,6 +85,7 @@ export type IEntities = {
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
   questions: EntityRecord<IQuestion>;
+  types: EntityRecord<IMemberType>;
   users: EntityRecord<IUser>;
 };
 
@@ -83,5 +95,6 @@ export const initialEntities: IEntities = {
   integrations: { allIds: [], byId: {} },
   members: { activeId: null, allIds: [], byId: {} },
   questions: { allIds: [], byId: {} },
+  types: { activeId: null, allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
 };

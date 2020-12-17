@@ -45,8 +45,15 @@ const parseEntities = (data: any, schema: Schema<any>, setActiveId?: boolean) =>
 
 type UpdateEntitiesArgs = {
   ids: string[];
-  entityName: 'communities' | 'members' | 'questions' | 'users';
-  updatedData?: Partial<ICommunity | IMember | IQuestion | IUser>;
+  entityName:
+    | 'communities'
+    | 'integrations'
+    | 'members'
+    | 'questions'
+    | 'users';
+  updatedData?: Partial<
+    ICommunity | IIntegrations | IMember | IQuestion | IUser
+  >;
 };
 
 type MergeEntitiesArgs = {

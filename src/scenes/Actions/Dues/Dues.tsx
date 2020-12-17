@@ -16,6 +16,8 @@ import { loadStripe, StripeCardElementOptions } from '@stripe/stripe-js';
 import { getGraphQLError } from '@util/util';
 import { GET_PAYMENT_CLIENT_SECRET } from './Dues.gql';
 import PayButton from './PayButton';
+import useFetchMemberTypes from './useFetchMemberTypes';
+import useFetchStripeAccount from './useFetchStripeAccount';
 
 const options: StripeCardElementOptions = {
   classes: {
@@ -29,12 +31,20 @@ const options: StripeCardElementOptions = {
 };
 
 const DuesModalContent = () => {
+  console.log('I AM HERE');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
+  const t = useStoreState(({ db }) => {
+    return db.entities.types;
+  });
+
+  console.log(t);
+
+  const isFetchingMemberTypes = useFetchMemberTypes();
   const elements = useElements();
   const stripe = useStripe();
 
@@ -86,13 +96,15 @@ const DuesModalContent = () => {
       </p>
 
       <form onSubmit={onSubmit}>
-        <div className="s-actions-dues-item">
-          <p>Membership Type</p>
-          <div>
-            <p>hello</p>
-            <UnderlineButton title="Change Membership" />
+        {!isFetchingMemberTypes && (
+          <div className="s-actions-dues-item">
+            <p>Membership Type</p>
+            <div>
+              <p>hello</p>
+              <UnderlineButton title="Change Membership" />
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="s-actions-dues-item">
           <p>Credit or Debit Card</p>
@@ -112,6 +124,7 @@ export default () => {
     return byId[db.community.integrations]?.stripeAccountId;
   });
 
+  useFetchStripeAccount();
   if (!stripeAccount) return null;
 
   const stripePromise = loadStripe(

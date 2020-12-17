@@ -22,7 +22,7 @@ export const GET_USER = query({
         'id',
         'role',
         'status',
-        { type: ['name'] }
+        { type: ['id', 'name'] }
       ]
     }
   ],
