@@ -1,6 +1,7 @@
 import { useMutation } from 'graphql-hooks';
 import React, { FormEvent, useState } from 'react';
 
+import UnderlineButton from '@components/Button/UnderlineButton';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { isProduction, ModalType } from '@constants';
@@ -76,13 +77,24 @@ const DuesModalContent = () => {
       <h1>Pay Dues</h1>
       <p>
         Once your card is charged, your membership will be active and will
-        auto-renew on December 16th of every year. We’ll send you email
-        reminders 1 month before any auto-renewal.
+        auto-renew on December 16th of every year. We’ll send you an email
+        reminder 1 month before any auto-renewal.
       </p>
 
       <form onSubmit={onSubmit}>
-        <p className="meta">Payment Information</p>
-        <CardElement options={options} />
+        <div className="s-actions-dues-item">
+          <p>Membership Type</p>
+          <div>
+            <p>hello</p>
+            <UnderlineButton title="Change Membership" />
+          </div>
+        </div>
+
+        <div className="s-actions-dues-item">
+          <p>Credit or Debit Card</p>
+          <CardElement options={options} />
+        </div>
+
         <ErrorMessage message={errorMessage} />
         <PayButton loading={loading} />
       </form>

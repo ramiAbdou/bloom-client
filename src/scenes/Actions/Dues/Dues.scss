@@ -1,20 +1,22 @@
 $PREF: 's-actions-dues';
 
 .#{$PREF} > p:first-of-type {
-  margin-bottom: $sm;
+  margin-bottom: $md;
   > span { @extend .sb; }
 }
 
-.#{$PREF} > form > div.c-misc-input {
+.#{$PREF} > form > .c-btn { width: 100%; }
+
+.#{$PREF}-item {
   margin-bottom: $md;
 
-  > .__PrivateStripeElement { width: 100%; }
+  > p:first-child { @extend .meta--lg; margin-bottom: $xs; }
+
+  > div.c-misc-input {
+    margin-bottom: $md;
+
+    > .__PrivateStripeElement { width: 100%; }
+  }
 }
 
-.#{$PREF} > form > .c-btn { width: 100%; }
-.#{$PREF} > form > p:first-child {
-  @extend .meta;
-
-  color: $gray-2;
-  margin-bottom: $xxs;
-}
+.#{$PREF}-item:first-of-type > div { @extend .flex-acsb; }

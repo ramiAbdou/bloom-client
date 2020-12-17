@@ -79,7 +79,7 @@ $PREF: 'c-btn';
   text-decoration: underline;
   
   @include PRIMARY_HOVER;
-  @include HOVER { border-radius: $xs; }
+  @include HOVER { border-radius: $xxs; }
 }
 
 // ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but

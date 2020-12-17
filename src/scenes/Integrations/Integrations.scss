@@ -58,7 +58,7 @@ $PREF: 's-integrations';
   margin: $xl 0;
 
   &--detail { margin: $md 0; }
-  &--detail > p:last-of-type { @extend .sb; color: $primary; }
+  &--detail > p:last-child { @extend .sb; color: $primary; }
 }
 
 .#{$PREF}-action-ctr { @extend .flex-ac; margin-top: $lg; }
