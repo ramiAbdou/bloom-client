@@ -75,8 +75,9 @@ const DuesModalContent = () => {
     <Modal className="s-actions-dues" id={ModalType.PAY_DUES}>
       <h1>Pay Dues</h1>
       <p>
-        Once you're card is charged, your membership will be valid for 1 year
-        until <span>December 16, 2021</span>.
+        Once your card is charged, your membership will be active and will
+        auto-renew on December 16th of every year. We’ll send you email
+        reminders 1 month before any auto-renewal.
       </p>
 
       <form onSubmit={onSubmit}>

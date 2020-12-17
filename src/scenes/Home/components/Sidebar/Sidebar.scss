@@ -38,14 +38,8 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-section-ctr { height: 100%; }
 .#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
 
-.#{$PREF}-section > p {
-  @extend .sb;
-
-  color: $gray-3;
-  font-size: 12px;
-  margin-left: $sm;
-  text-transform: uppercase;
-}
+// Section heading (ie: MAIN, ADMIN, QUICK ACTIONS).
+.#{$PREF}-section > p { @extend .meta--lg; margin-left: $sm; }
 
 .#{$PREF}-link {
   @extend .flex-ac;

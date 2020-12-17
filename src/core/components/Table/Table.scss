@@ -90,11 +90,10 @@ td.#{$PREF}-td--multiple-select > div { @extend .flex-w; }
 
 th {
   @extend .#{$PREF}-cell;
+  @extend .meta--lg;
 
   background-color: $gray-6;
-  color: $gray-3;
   cursor: pointer;
-  text-transform: uppercase;
   top: 0;
   vertical-align: middle;
   z-index: 11;
