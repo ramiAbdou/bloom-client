@@ -4,7 +4,6 @@
  */
 
 import { Action, action, Computed, computed } from 'easy-peasy';
-import Cookie from 'js-cookie';
 import mergeWith from 'lodash.mergewith';
 import { normalize, Schema } from 'normalizr';
 
@@ -78,17 +77,8 @@ export const dbModel: DbModel = {
     const { activeId, byId } = entities.communities;
     const result: ICommunity = byId[activeId];
 
-    if (!result) return null;
-
-    // For every request, we should have a communityId set in the token so
-    // we could take advantage of the GQL context and reduce # of args.
-    if (Cookie.get('communityId') !== activeId) {
-      Cookie.set('communityId', activeId);
-    }
-
     // Updates the primary color (and gray's accordingly).
-    updateDocumentColors(result?.primaryColor ?? '#f58023');
-
+    if (result) updateDocumentColors(result.primaryColor ?? '#f58023');
     return result;
   }),
 

@@ -1,7 +1,17 @@
 $PREF: 's-actions-dues';
 
 .#{$PREF} > p:first-of-type { margin-bottom: $sm; }
-.#{$PREF} > div { margin-bottom: $sm; }
-.#{$PREF} > .c-btn { width: 100%; }
 
-.#{$PREF} > .c-misc-input > .__PrivateStripeElement { width: 100%; }
+.#{$PREF} > form > div.c-misc-input {
+  margin-bottom: $md;
+
+  > .__PrivateStripeElement { width: 100%; }
+}
+
+.#{$PREF} > form > .c-btn { width: 100%; }
+.#{$PREF} > form > p:first-child {
+  @extend .meta;
+
+  color: $gray-2;
+  margin-bottom: $xxs;
+}

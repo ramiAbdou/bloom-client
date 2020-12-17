@@ -25,8 +25,6 @@ export default () => {
     // primary color.
     clearEntities();
 
-    Cookie.remove('communityId');
-
     const { style } = document.documentElement;
     style.setProperty('--primary', '#f58023');
     style.setProperty('--primary-hex', `245, 128, 35`);
