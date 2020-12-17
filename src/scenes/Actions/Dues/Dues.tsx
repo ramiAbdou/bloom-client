@@ -1,6 +1,6 @@
 import day from 'dayjs';
 import { useMutation } from 'graphql-hooks';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
@@ -17,6 +17,7 @@ import { getGraphQLError } from '@util/util';
 import PayButton from './components/PayButton';
 import DuesTypeOptions from './components/TypeOptions';
 import { GET_PAYMENT_CLIENT_SECRET } from './Dues.gql';
+import Dues from './Dues.store';
 import useFetchStripeAccount from './hooks/useFetchStripeAccount';
 
 const options: StripeCardElementOptions = {
@@ -39,11 +40,23 @@ const DuesModalContent = () => {
     return byId[db.member.type]?.id;
   });
 
+  const currentTypeId: string = Dues.useStoreState(
+    (store) => store.memberTypeId
+  );
+
+  const setMemberTypeId = Dues.useStoreActions(
+    (store) => store.setMemberTypeId
+  );
+
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const elements = useElements();
   const stripe = useStripe();
+
+  useEffect(() => {
+    if (currentTypeId !== memberTypeId) setMemberTypeId(memberTypeId);
+  }, [memberTypeId]);
 
   const [getPaymentClientSecret] = useMutation(GET_PAYMENT_CLIENT_SECRET);
 
@@ -110,12 +123,13 @@ const DuesModalContent = () => {
 };
 
 export default () => {
-  const stripeAccount = useStoreState(({ db }) => {
+  const stripeAccount: string = useStoreState(({ db }) => {
     const { byId } = db.entities.integrations;
     return byId[db.community.integrations]?.stripeAccountId;
   });
 
   useFetchStripeAccount();
+
   if (!stripeAccount) return null;
 
   const stripePromise = loadStripe(
@@ -132,7 +146,9 @@ export default () => {
       }}
       stripe={stripePromise}
     >
-      <DuesModalContent />
+      <Dues.Provider>
+        <DuesModalContent />
+      </Dues.Provider>
     </Elements>
   );
 };

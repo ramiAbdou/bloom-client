@@ -1,12 +1,15 @@
 import deepequal from 'fast-deep-equal';
+import { motion } from 'framer-motion';
 import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
+import Radio from '@components/Element/Radio';
 import { IMemberType } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_MEMBER_TYPES } from '../Dues.gql';
+import Dues from '../Dues.store';
 
 const useFetchMemberTypes = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
@@ -26,19 +29,66 @@ const useFetchMemberTypes = () => {
   return loading;
 };
 
+const TypeOptionList = () => {
+  const allTypes: IMemberType[] = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return db.community.types?.map((id: string) => byId[id]);
+  }, deepequal);
+
+  const currentTypeId = Dues.useStoreState((store) => store.memberTypeId);
+  const isTypeListOpen = Dues.useStoreState((store) => store.isTypeListOpen);
+
+  const setMemberTypeId = Dues.useStoreActions(
+    (store) => store.setMemberTypeId
+  );
+
+  const setIsTypeListOpen = Dues.useStoreActions(
+    (store) => store.setIsTypeListOpen
+  );
+
+  const onSelect = (typeId: any) => {
+    setMemberTypeId(typeId);
+    setIsTypeListOpen(false);
+  };
+
+  if (!isTypeListOpen) return null;
+
+  return (
+    <motion.div animate={{ height: 'max-content' }} initial={{ height: 0 }}>
+      <Radio
+        initialChecked={currentTypeId}
+        name="s-actions-dues"
+        options={allTypes.map(({ amount, id, name, recurrence }) => {
+          const value = `${name}, $${amount}/${recurrence}`
+            .replace('MONTLY', 'mo')
+            .replace('YEARLY', 'yr');
+
+          return { label: value, value: id };
+        })}
+        onSelect={onSelect}
+      />
+    </motion.div>
+  );
+};
+
 export default () => {
-  // const allTypes: IMemberType[] = useStoreState(({ db }) => {
-  //   const { byId } = db.entities.types;
-  //   return db.community.types?.map((id: string) => byId[id]);
-  // }, deepequal);
+  const memberTypeId = Dues.useStoreState((store) => store.memberTypeId);
 
   const currentType: IMemberType = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[db.member.type];
+    return byId[memberTypeId];
   }, deepequal);
+
+  const isTypeListOpen = Dues.useStoreState((store) => store.isTypeListOpen);
+
+  const toggleIsTypeListOpen = Dues.useStoreActions(
+    (store) => store.toggleIsTypeListOpen
+  );
 
   const loading = useFetchMemberTypes();
   if (loading || !currentType) return null;
+
+  const onClick = () => toggleIsTypeListOpen();
 
   const { amount, name, recurrence } = currentType;
 
@@ -50,8 +100,9 @@ export default () => {
     <div className="s-actions-dues-item">
       <p>Membership Type</p>
       <div>
-        <p>{currentTypeString}</p>
-        <UnderlineButton title="Change Membership" />
+        <TypeOptionList />
+        {!isTypeListOpen && <p>{currentTypeString}</p>}
+        <UnderlineButton title="Change Membership" onClick={onClick} />
       </div>
     </div>
   );

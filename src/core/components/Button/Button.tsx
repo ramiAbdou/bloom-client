@@ -82,6 +82,7 @@ export default forwardRef(
         ref={ref}
         className={css}
         disabled={disabled}
+        type="button"
         onClick={onAllowedClick}
         {...props}
       >

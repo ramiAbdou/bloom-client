@@ -218,3 +218,15 @@ $PREF: 'c-misc';
     @include HOVER { background-color: $gray-6; }
   }
 }
+
+// ## RADIO
+
+input[type="radio"] { background-color: $primary; }
+
+.#{$PREF}-radio {
+  @extend .flex-col; 
+  > div { @extend .flex-ac; cursor: pointer; }
+  > div:not(:last-child) { margin-bottom: $xs; }
+  > div > input { height: 20px; margin-right: $xs; width: 20px; }
+  > div > * { cursor: pointer; }
+}
