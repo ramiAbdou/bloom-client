@@ -73,7 +73,11 @@ const DuesModalContent = () => {
   };
 
   return (
-    <Modal className="s-actions-dues" id={ModalType.PAY_DUES}>
+    <Modal
+      className="s-actions-dues"
+      id={ModalType.PAY_DUES}
+      onClose={() => setErrorMessage(null)}
+    >
       <h1>Pay Dues</h1>
       <p>
         Once your card is charged, your membership will be active and will
