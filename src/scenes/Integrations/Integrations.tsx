@@ -90,7 +90,7 @@ const Cards = () => {
           'redirect_uri',
           isProduction
             ? `${APP.SERVER_URL}/stripe/auth`
-            : 'https://2955d8676463.ngrok.io/stripe/auth'
+            : 'https://f4ac21c46a7b.ngrok.io/stripe/auth'
         )
         .addParam('state', encodedUrlName).url,
       logo: stripe,

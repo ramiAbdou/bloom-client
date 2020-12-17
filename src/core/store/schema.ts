@@ -12,7 +12,7 @@ import { schema } from 'normalizr';
 const Community = new schema.Entity('communities', {});
 const Integrations = new schema.Entity('integrations', {});
 const Member = new schema.Entity('members', {});
-const MemberType = new schema.Entity('member_types', {});
+const MemberType = new schema.Entity('types', {});
 const Question = new schema.Entity('questions', {});
 const User = new schema.Entity('users', {});
 

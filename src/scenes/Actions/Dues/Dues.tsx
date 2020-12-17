@@ -31,7 +31,6 @@ const options: StripeCardElementOptions = {
 };
 
 const DuesModalContent = () => {
-  console.log('I AM HERE');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -41,8 +40,6 @@ const DuesModalContent = () => {
   const t = useStoreState(({ db }) => {
     return db.entities.types;
   });
-
-  console.log(t);
 
   const isFetchingMemberTypes = useFetchMemberTypes();
   const elements = useElements();
