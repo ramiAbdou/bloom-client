@@ -1,31 +1,44 @@
 import React from 'react';
 
-type RadioOptionProps = { label: string; value: any };
+type RadioOptionProps = {
+  defaultChecked?: boolean;
+  label: string;
+  onClick: VoidFunction;
+  name: string;
+  value: any;
+};
 
 type RadioProps = {
   initialChecked?: string;
   name: string;
   onSelect?: (value: any) => any;
-  options: RadioOptionProps[];
+  options: Pick<RadioOptionProps, 'label' | 'value'>[];
 };
 
-export default ({ initialChecked, name, onSelect, options }: RadioProps) => {
-  const onClick = (value: any) => onSelect(value);
-
+const RadioOption = ({ label, onClick, value, ...props }: RadioOptionProps) => {
   return (
-    <div className="c-misc-radio">
-      {options.map(({ label, value }) => (
-        <div key={value} onClick={() => onClick(value)}>
-          <input
-            defaultChecked={initialChecked === value}
-            id={value}
-            name={name}
-            type="radio"
-            value={value}
-          />
-          <label htmlFor={value}>{label}</label>
-        </div>
-      ))}
+    <div onClick={onClick}>
+      <input id={value} type="radio" value={value} {...props} />
+      <div>
+        <span />
+      </div>
+      <label htmlFor={value}>{label}</label>
     </div>
   );
 };
+
+export default ({ initialChecked, name, onSelect, options }: RadioProps) => (
+  <div className="c-misc-radio">
+    {options.map(
+      ({ label, value }: Pick<RadioOptionProps, 'label' | 'value'>) => (
+        <RadioOption
+          defaultChecked={initialChecked === value}
+          label={label}
+          name={name}
+          value={value}
+          onClick={() => onSelect(value)}
+        />
+      )
+    )}
+  </div>
+);

@@ -221,12 +221,38 @@ $PREF: 'c-misc';
 
 // ## RADIO
 
-input[type="radio"] { background-color: $primary; }
+input[type="radio"] {
+  cursor: pointer;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  width: 0;
+}
+
+input[type="radio"] ~ div {
+  @extend .flex-acc;
+  
+  border: 2px solid $gray-4;
+  border-radius: 50%;
+  display: inline-block;
+  height: $sm;
+  margin-right: $xs;
+  padding: 2px;
+  width: $sm;
+}
+
+input[type="radio"] ~ div > span { @extend .fill; }
+input[type="radio"]:checked ~ div { border-color: $primary; }
+
+input[type="radio"]:checked ~ div > span {
+  background-color: $primary;
+  border-radius: 50%;
+  display: inline-block;
+}
 
 .#{$PREF}-radio {
   @extend .flex-col; 
   > div { @extend .flex-ac; cursor: pointer; }
   > div:not(:last-child) { margin-bottom: $xs; }
-  > div > input { height: 20px; margin-right: $xs; width: 20px; }
   > div > * { cursor: pointer; }
 }
