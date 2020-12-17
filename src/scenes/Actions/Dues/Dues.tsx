@@ -32,6 +32,8 @@ const DuesModalContent = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+
   const elements = useElements();
   const stripe = useStripe();
 
@@ -60,8 +62,13 @@ const DuesModalContent = () => {
 
     setLoading(false);
 
-    if (stripeError) setErrorMessage(stripeError.message);
-    else setTimeout(closeModal, 0);
+    if (stripeError) {
+      setErrorMessage(stripeError.message);
+      return;
+    }
+
+    showToast({ message: 'Your dues have been paid!' });
+    setTimeout(closeModal, 0);
   };
 
   return (
