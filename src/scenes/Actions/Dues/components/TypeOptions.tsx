@@ -48,13 +48,13 @@ const TypeOptionList = () => {
 
   const onSelect = (typeId: any) => {
     setMemberTypeId(typeId);
-    setIsTypeListOpen(false);
+    setTimeout(() => setIsTypeListOpen(false), 250);
   };
 
   if (!isTypeListOpen) return null;
 
   return (
-    <motion.div animate={{ height: 'max-content' }} initial={{ height: 0 }}>
+    <motion.div animate={{ scaleY: 1 }} initial={{ scaleY: 0 }}>
       <Radio
         initialChecked={currentTypeId}
         name="s-actions-dues"

@@ -32,6 +32,7 @@ export default ({ initialChecked, name, onSelect, options }: RadioProps) => (
     {options.map(
       ({ label, value }: Pick<RadioOptionProps, 'label' | 'value'>) => (
         <RadioOption
+          key={value}
           defaultChecked={initialChecked === value}
           label={label}
           name={name}

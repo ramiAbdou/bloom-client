@@ -1,55 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import PrimaryButton from '@components/Button/PrimaryButton';
 import { LoadingProps } from '@constants';
 import { useStoreState } from '@store/Store';
-import {
-  PaymentRequestButtonElement,
-  useStripe
-} from '@stripe/react-stripe-js';
+import { useStripe } from '@stripe/react-stripe-js';
+import Dues from '../Dues.store';
 
 export default (props: LoadingProps) => {
-  const [paymentRequest, setPaymentRequest] = useState(null);
+  const memberTypeId = Dues.useStoreState((store) => store.memberTypeId);
 
   const amount: number = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[db.member.type]?.amount;
+    return byId[memberTypeId]?.amount;
   });
 
   const stripe = useStripe();
 
-  useEffect(() => {
-    (async () => {
-      if (stripe) {
-        const pr = stripe.paymentRequest({
-          country: 'US',
-          currency: 'usd',
-          requestPayerEmail: true,
-          requestPayerName: true,
-          total: { amount: 1099, label: 'Demo total' }
-        });
-
-        // Check the availability of the Payment Request API.
-        const result = await pr.canMakePayment();
-        if (result) setPaymentRequest(pr);
-      }
-    })();
-  }, [stripe]);
-
   if (amount === null) return null;
-
-  if (paymentRequest) {
-    return <PaymentRequestButtonElement options={{ paymentRequest }} />;
-  }
 
   // Use a traditional checkout form.
   return (
     <PrimaryButton
-      {...props}
       large
+      submit
       disabled={!stripe}
       loadingText="Paying..."
       title={`Pay $${amount}`}
+      {...props}
     />
   );
 };

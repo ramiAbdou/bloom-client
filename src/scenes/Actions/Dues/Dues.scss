@@ -19,4 +19,4 @@ $PREF: 's-actions-dues';
   }
 }
 
-.#{$PREF}-item:first-of-type > div { @extend .flex-sb; align-items: baseline; }
+.#{$PREF}-item:first-of-type > div { @extend .flex-acsb; }

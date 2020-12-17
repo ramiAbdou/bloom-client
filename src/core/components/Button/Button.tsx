@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import React, {
+  ButtonHTMLAttributes,
   forwardRef,
   MutableRefObject,
   useEffect,
@@ -21,8 +22,9 @@ export interface ButtonProps
   loadingText?: string;
   large?: boolean;
   onClick?: Function;
-  title?: string;
+  submit?: boolean;
   target?: string;
+  title?: string;
 }
 
 export type ButtonLoadingProps = { loadingText: string };
@@ -54,6 +56,7 @@ export default forwardRef(
       fill,
       large,
       onClick,
+      submit,
       title,
       target,
       ...props
@@ -82,7 +85,7 @@ export default forwardRef(
         ref={ref}
         className={css}
         disabled={disabled}
-        type="button"
+        type={submit ? 'submit' : 'button'}
         onClick={onAllowedClick}
         {...props}
       >
