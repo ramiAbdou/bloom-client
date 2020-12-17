@@ -1,7 +1,6 @@
 import { useMutation } from 'graphql-hooks';
 import React, { FormEvent, useState } from 'react';
 
-import UnderlineButton from '@components/Button/UnderlineButton';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { isProduction, ModalType } from '@constants';
@@ -14,10 +13,10 @@ import {
 } from '@stripe/react-stripe-js';
 import { loadStripe, StripeCardElementOptions } from '@stripe/stripe-js';
 import { getGraphQLError } from '@util/util';
+import PayButton from './components/PayButton';
+import DuesTypeOptions from './components/TypeOptions';
 import { GET_PAYMENT_CLIENT_SECRET } from './Dues.gql';
-import PayButton from './PayButton';
-import useFetchMemberTypes from './useFetchMemberTypes';
-import useFetchStripeAccount from './useFetchStripeAccount';
+import useFetchStripeAccount from './hooks/useFetchStripeAccount';
 
 const options: StripeCardElementOptions = {
   classes: {
@@ -37,11 +36,6 @@ const DuesModalContent = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const t = useStoreState(({ db }) => {
-    return db.entities.types;
-  });
-
-  const isFetchingMemberTypes = useFetchMemberTypes();
   const elements = useElements();
   const stripe = useStripe();
 
@@ -93,15 +87,7 @@ const DuesModalContent = () => {
       </p>
 
       <form onSubmit={onSubmit}>
-        {!isFetchingMemberTypes && (
-          <div className="s-actions-dues-item">
-            <p>Membership Type</p>
-            <div>
-              <p>hello</p>
-              <UnderlineButton title="Change Membership" />
-            </div>
-          </div>
-        )}
+        <DuesTypeOptions />
 
         <div className="s-actions-dues-item">
           <p>Credit or Debit Card</p>

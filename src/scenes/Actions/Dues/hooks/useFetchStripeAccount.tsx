@@ -2,7 +2,7 @@ import { useQuery } from 'graphql-hooks';
 import { useEffect } from 'react';
 
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_STRIPE_ACCOUNT_ID } from './Dues.gql';
+import { GET_STRIPE_ACCOUNT_ID } from '../Dues.gql';
 
 export default () => {
   const community = useStoreState(({ db }) => db.community);
