@@ -1,3 +1,4 @@
+import day from 'dayjs';
 import { useMutation } from 'graphql-hooks';
 import React, { FormEvent, useState } from 'react';
 
@@ -89,8 +90,8 @@ const DuesModalContent = () => {
       <h1>Pay Dues</h1>
       <p>
         Once your card is charged, your membership will be active and will
-        auto-renew on December 16th of every year. We’ll send you an email
-        reminder 1 month before any auto-renewal.
+        auto-renew on {day().format('MMMM D')} of every year. We’ll send you an
+        email reminder 1 month before any auto-renewal.
       </p>
 
       <form onSubmit={onSubmit}>
