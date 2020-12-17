@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import PrimaryButton from '@components/Button/PrimaryButton';
 import { LoadingProps } from '@constants';
+import { useStoreState } from '@store/Store';
 import {
   PaymentRequestButtonElement,
   useStripe
@@ -9,6 +10,11 @@ import {
 
 export default (props: LoadingProps) => {
   const [paymentRequest, setPaymentRequest] = useState(null);
+
+  const amount: number = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[db.member.type]?.amount;
+  });
 
   const stripe = useStripe();
 
@@ -30,6 +36,8 @@ export default (props: LoadingProps) => {
     })();
   }, [stripe]);
 
+  if (amount === null) return null;
+
   if (paymentRequest) {
     return <PaymentRequestButtonElement options={{ paymentRequest }} />;
   }
@@ -41,7 +49,7 @@ export default (props: LoadingProps) => {
       large
       disabled={!stripe}
       loadingText="Paying..."
-      title="Pay $25"
+      title={`Pay $${amount}`}
     />
   );
 };

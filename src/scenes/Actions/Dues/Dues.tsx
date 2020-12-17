@@ -33,6 +33,11 @@ const DuesModalContent = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const memberTypeId: string = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[db.member.type]?.id;
+  });
+
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -47,7 +52,9 @@ const DuesModalContent = () => {
     setErrorMessage(null);
     setLoading(true);
 
-    const { data, error } = await getPaymentClientSecret();
+    const { data, error } = await getPaymentClientSecret({
+      variables: { memberTypeId }
+    });
 
     if (error) {
       setErrorMessage(getGraphQLError(error));

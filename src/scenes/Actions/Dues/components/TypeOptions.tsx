@@ -27,10 +27,10 @@ const useFetchMemberTypes = () => {
 };
 
 export default () => {
-  const allTypes: IMemberType[] = useStoreState(({ db }) => {
-    const { byId } = db.entities.types;
-    return db.community.types?.map((id: string) => byId[id]);
-  }, deepequal);
+  // const allTypes: IMemberType[] = useStoreState(({ db }) => {
+  //   const { byId } = db.entities.types;
+  //   return db.community.types?.map((id: string) => byId[id]);
+  // }, deepequal);
 
   const currentType: IMemberType = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
