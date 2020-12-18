@@ -1,6 +1,7 @@
 import day from 'dayjs';
 import { useMutation } from 'graphql-hooks';
 import React, { FormEvent, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
@@ -48,7 +49,16 @@ const DuesText = () => {
   });
 
   if (isFree) {
-    return <p>There are no dues to pay for a free membership!</p>;
+    return (
+      <p>
+        There are no dues to pay for a free membership! If you'd like to switch
+        to a free membership, please do that in{' '}
+        <Link style={{ fontWeight: 700 }} to="/manage-membership">
+          Manage Membership
+        </Link>
+        .
+      </p>
+    );
   }
 
   if (recurrence === 'LIFETIME') {
