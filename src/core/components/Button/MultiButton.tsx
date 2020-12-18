@@ -3,10 +3,10 @@ import React from 'react';
 import { makeClass } from '@util/util';
 import Button from './Button';
 
-interface MultiButtonProps {
+type MultiButtonProps = {
   activeIndex?: number;
   options: { onClick: Function; title: string }[];
-}
+};
 
 export default ({ activeIndex, options }: MultiButtonProps) => (
   <div className="c-btn-multi-ctr">
@@ -22,12 +22,9 @@ export default ({ activeIndex, options }: MultiButtonProps) => (
       };
 
       return (
-        <Button
-          key={title}
-          className={css}
-          title={title}
-          onClick={onButtonClick}
-        />
+        <Button key={title} className={css} onClick={onButtonClick}>
+          {title}
+        </Button>
       );
     })}
   </div>
