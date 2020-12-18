@@ -64,6 +64,7 @@ type MergeEntitiesArgs = {
 };
 
 export type DbModel = {
+  canCollectDues: Computed<DbModel, boolean>;
   clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
   entities: IEntities;
@@ -78,6 +79,19 @@ export type DbModel = {
 };
 
 export const dbModel: DbModel = {
+  canCollectDues: computed(({ community, entities }) => {
+    const { byId: byIntegrationsId } = entities.integrations;
+    const { byId: byTypeId } = entities.types;
+
+    const integrations: IIntegrations =
+      byIntegrationsId[community?.integrations];
+
+    return (
+      integrations?.stripeAccountId &&
+      community.types.some((typeId: string) => !byTypeId[typeId]?.isFree)
+    );
+  }),
+
   clearEntities: action((state) => ({ ...state, entities: initialEntities })),
 
   community: computed(({ entities }) => {

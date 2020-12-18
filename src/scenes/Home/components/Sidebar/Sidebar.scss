@@ -101,6 +101,26 @@ button.#{$PREF}-link { &:active { transform: none; } }
 
 .#{$PREF}-action > svg { height: $md; margin-right: $xs; width: $md; }
 
+// ## DUES CONTAINER - Only shows if the user hasn't paid their dues yet.
+
+.#{$PREF}-dues-ctr {
+  box-sizing: border-box;
+  margin-bottom: $sm;
+  padding: 0 $sm;
+  width: 100%;
+}
+
+.#{$PREF}-dues-ctr > div {
+  @extend .flex-ac;
+
+  margin-bottom: $xs;
+
+  > svg { color: $red; margin-right: $xxs; }
+  > p { @extend .meta--lg; color: $red; text-align: center; }
+}
+
+.#{$PREF}-dues-ctr > button { width: 100%; }
+
 // ## COMMUNITY CONTAINER
 
 .#{$PREF}-community-ctr {

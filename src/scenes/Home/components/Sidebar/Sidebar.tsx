@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
 import {
   IoAdd,
+  IoAlertCircleOutline,
   IoCalendar,
-  IoCard,
   IoExtensionPuzzle,
   IoFolderOpen,
   IoGlobe,
@@ -10,17 +10,39 @@ import {
   IoPersonAdd,
   IoStatsChart
 } from 'react-icons/io5';
+import { useHistory } from 'react-router-dom';
 
+import OutlineButton from '@components/Button/OutlineButton';
 import Separator from '@components/Misc/Separator';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Home, { LinkOptions } from '../../Home.store';
 import SidebarCommunityContainer from './Community.container';
 import SidebarProfile from './Profile';
-import SidebarSection from './Section';
-import useActiveTo from './useActiveTo';
+import SidebarSection from './Section/Section';
+
+const useActiveTo = () => {
+  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
+
+  const { location } = useHistory();
+  const { pathname } = location;
+
+  // The index after the / following the community's name.
+  const startIndex =
+    pathname.indexOf(`${encodedUrlName}/`) + encodedUrlName.length + 1;
+
+  // If there is another / in the URL then just go up until then. Otherwise,
+  // take the entire rest of the string.
+  const finalIndex = pathname.includes('/', startIndex)
+    ? pathname.lastIndexOf('/')
+    : pathname.length;
+
+  return pathname.substring(startIndex, finalIndex);
+};
 
 const SidebarContent = () => {
+  const canCollectDues = useStoreState(({ db }) => db.canCollectDues);
   const name = useStoreState(({ db }) => db.community.name);
+  const hasPaid = useStoreState(({ db }) => db.member?.duesStatus === 'ACTIVE');
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);
 
@@ -55,15 +77,12 @@ const SidebarContent = () => {
         Icon: IoPersonAdd,
         onClick: () => showModal('ADD_MEMBERS'),
         title: 'Add Member'
-      },
-      {
-        Icon: IoCard,
-        onClick: () => showModal('PAY_DUES'),
-        title: 'Pay Dues'
       }
     ],
     []
   );
+
+  const onClick = () => showModal('PAY_DUES');
 
   return (
     <div className="s-home-sidebar-main">
@@ -75,6 +94,17 @@ const SidebarContent = () => {
         <SidebarSection links={adminLinks} title="Admin" />
         <SidebarSection links={quickLinks} title="Quick Actions" />
       </div>
+
+      {canCollectDues && !hasPaid && (
+        <div className="s-home-sidebar-dues-ctr">
+          <div>
+            <IoAlertCircleOutline />
+            <p>Dues Status: Inactive</p>
+          </div>
+
+          <OutlineButton title="Pay Dues" onClick={onClick} />
+        </div>
+      )}
 
       <div>
         <SidebarProfile />

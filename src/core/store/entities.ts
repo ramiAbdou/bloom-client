@@ -32,6 +32,7 @@ export type IMember = {
   cardData?: { questionId: string; value: string }[];
   community: IdString;
   createdAt: string;
+  duesStatus: 'ACTIVE' | 'INACTIVE' | 'LAME';
   id: IdString;
   role?: 'ADMIN' | 'OWNER';
   type: IdString;
