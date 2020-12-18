@@ -53,10 +53,8 @@ const PersonalInformation = () => {
       )}
       {email && (
         <a className="s-directory-modal-email" href={`mailto:${email}`}>
-          <Button>
-            <IoMail />
-            <p>{email}</p>
-          </Button>
+          <IoMail />
+          <p>{email}</p>
         </a>
       )}
       {bio && <p className="s-directory-modal-bio">{bio}</p>}

@@ -1,8 +1,5 @@
 $PREF: 's-directory-modal';
 
-// box-sizing: border-box;
-//   height: fit-content;
-
 // ## PROFILE PICTURE - 
 
 .#{$PREF}-pic { margin-bottom: $xs; }
@@ -27,13 +24,23 @@ $PREF: 's-directory-modal';
   @extend .meta;
 
   color: $gray-2;
-  margin-bottom: $xs;
+  margin-bottom: $xxs;
   width: fit-content;
 }
 
-a.#{$PREF}-email { color: $primary; margin-bottom: $sm; width: fit-content; }
-a.#{$PREF}-email > svg { color: inherit; height: $sm; width: $sm; }
-a.#{$PREF}-email > p { @extend .meta; color: inherit; margin-left: $xxs; }
+// ## EMAIL (MAILTO)
+
+a.#{$PREF}-email {
+  @extend .flex-ac;
+
+  color: $primary;
+  margin-bottom: $sm;
+  width: fit-content;
+  &:active { transform: scale(0.9); }
+
+  > svg { color: inherit; height: $sm; margin-right: $xxs; width: $sm; }
+  > p { @extend .meta; color: inherit; }
+}
 
 // ### SOCIAL MEDIA CONTAINER
 
@@ -42,6 +49,7 @@ a.#{$PREF}-email > p { @extend .meta; color: inherit; margin-left: $xxs; }
   margin-top: $sm;
 
   @include HOVER { transform: scale(1.1); }
+  &:active { transform: scale(0.9); }
 
   &:not(:last-child) { margin-right: $sm; }
   &--facebook > svg { color: #1877f2; }
