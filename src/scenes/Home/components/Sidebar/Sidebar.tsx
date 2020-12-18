@@ -95,14 +95,18 @@ const SidebarContent = () => {
         <SidebarSection links={quickLinks} title="Quick Actions" />
       </div>
 
-      {canCollectDues && !hasPaid && (
+      {canCollectDues && (
         <div className="s-home-sidebar-dues-ctr">
-          <div>
-            <IoAlertCircleOutline />
-            <p>Dues Status: Inactive</p>
-          </div>
+          {!hasPaid && (
+            <>
+              <div>
+                <IoAlertCircleOutline />
+                <p>Dues Status: Inactive</p>
+              </div>
 
-          <OutlineButton title="Pay Dues" onClick={onClick} />
+              <OutlineButton title="Pay Dues" onClick={onClick} />
+            </>
+          )}
         </div>
       )}
 
