@@ -6,6 +6,7 @@ export const CREATE_PAYMENT_INTENT = mutation({
 }).query;
 
 export const CONFIRM_PAYMENT_INTENT = mutation({
+  fields: ['id', 'duesStatus', { type: ['id', 'name'] }],
   operation: 'confirmPaymentIntent',
   variables: { paymentIntentId: { required: true } }
 }).query;

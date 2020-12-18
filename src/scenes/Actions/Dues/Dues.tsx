@@ -5,6 +5,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { isProduction, ModalType } from '@constants';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import {
   CardElement,
@@ -48,6 +49,7 @@ const DuesModalContent = () => {
     (store) => store.setMemberTypeId
   );
 
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -93,8 +95,13 @@ const DuesModalContent = () => {
       return;
     }
 
-    await confirmPaymentIntent({
+    const { data: confirmData } = await confirmPaymentIntent({
       variables: { paymentIntentId: paymentIntent.id }
+    });
+
+    mergeEntities({
+      data: confirmData?.confirmPaymentIntent,
+      schema: Schema.MEMBER
     });
 
     showToast({ message: 'Your dues have been paid!' });
