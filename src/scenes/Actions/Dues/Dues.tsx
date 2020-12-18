@@ -32,6 +32,43 @@ const options: StripeCardElementOptions = {
   style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
 };
 
+const DuesText = () => {
+  const currentTypeId: string = Dues.useStoreState(
+    (store) => store.memberTypeId
+  );
+
+  const recurrence = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[currentTypeId]?.recurrence;
+  });
+
+  const isFree = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[currentTypeId]?.isFree;
+  });
+
+  if (isFree) {
+    return <p>There are no dues to pay for a free membership!</p>;
+  }
+
+  if (recurrence === 'LIFETIME') {
+    return (
+      <p>
+        Once your card is charged, you will be an active member for the rest of
+        your life!
+      </p>
+    );
+  }
+
+  return (
+    <p>
+      Once your card is charged, your membership will be active and will
+      auto-renew on {day().format('MMMM D')} of every year. We’ll send you an
+      email reminder 1 month before any auto-renewal.
+    </p>
+  );
+};
+
 const DuesModalContent = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -52,6 +89,11 @@ const DuesModalContent = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+
+  const isFree: boolean = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[currentTypeId]?.isFree;
+  });
 
   const elements = useElements();
   const stripe = useStripe();
@@ -113,19 +155,17 @@ const DuesModalContent = () => {
   return (
     <Modal className="s-actions-dues" id={ModalType.PAY_DUES} onClose={onClose}>
       <h1>Pay Dues</h1>
-      <p>
-        Once your card is charged, your membership will be active and will
-        auto-renew on {day().format('MMMM D')} of every year. We’ll send you an
-        email reminder 1 month before any auto-renewal.
-      </p>
+      <DuesText />
 
       <form onSubmit={onSubmit}>
         <DuesTypeOptions />
 
-        <div className="s-actions-dues-item">
-          <p>Credit or Debit Card</p>
-          <CardElement options={options} />
-        </div>
+        {!isFree && (
+          <div className="s-actions-dues-item">
+            <p>Credit or Debit Card</p>
+            <CardElement options={options} />
+          </div>
+        )}
 
         <ErrorMessage message={errorMessage} />
         <PayButton loading={loading} />

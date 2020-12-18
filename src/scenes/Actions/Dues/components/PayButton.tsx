@@ -1,13 +1,15 @@
 import React from 'react';
 
+import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import { LoadingProps } from '@constants';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { useStripe } from '@stripe/react-stripe-js';
 import Dues from '../Dues.store';
 
 export default (props: LoadingProps) => {
   const memberTypeId = Dues.useStoreState((store) => store.memberTypeId);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const amount: number = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
@@ -17,6 +19,12 @@ export default (props: LoadingProps) => {
   const stripe = useStripe();
 
   if (amount === null || amount === undefined) return null;
+
+  if (amount === 0) {
+    return (
+      <OutlineButton fill large title="Close" onClick={() => closeModal()} />
+    );
+  }
 
   // Use a traditional checkout form.
   return (

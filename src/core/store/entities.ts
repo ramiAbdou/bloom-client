@@ -45,7 +45,7 @@ export type IMemberType = {
   id: IdString;
   isFree: boolean;
   name: boolean;
-  recurrence: 'MONTHLY' | 'YEARLY';
+  recurrence: 'LIFETIME' | 'MONTHLY' | 'YEARLY';
 };
 
 export type IQuestion = {

@@ -48,7 +48,7 @@ const TypeOptionList = () => {
 
   const onSelect = (typeId: any) => {
     setMemberTypeId(typeId);
-    setTimeout(() => setIsTypeListOpen(false), 250);
+    setIsTypeListOpen(false);
   };
 
   if (!isTypeListOpen) return null;
@@ -60,6 +60,7 @@ const TypeOptionList = () => {
         name="s-actions-dues"
         options={allTypes.map(({ amount, id, name, recurrence }) => {
           const value = `${name}, $${amount}/${recurrence}`
+            .replace('LIFETIME', 'life')
             .replace('MONTLY', 'mo')
             .replace('YEARLY', 'yr');
 
@@ -93,7 +94,8 @@ export default () => {
   const { amount, name, recurrence } = currentType;
 
   const currentTypeString = `${name}, $${amount}/${recurrence}`
-    .replace('MONTLY', 'mo')
+    .replace('LIFETIME', 'life')
+    .replace('MONTHLY', 'mo')
     .replace('YEARLY', 'yr');
 
   return (
