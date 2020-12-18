@@ -16,7 +16,7 @@ import { loadStripe, StripeCardElementOptions } from '@stripe/stripe-js';
 import { getGraphQLError } from '@util/util';
 import PayButton from './components/PayButton';
 import DuesTypeOptions from './components/TypeOptions';
-import { GET_PAYMENT_CLIENT_SECRET } from './Dues.gql';
+import { CONFIRM_PAYMENT_INTENT, CREATE_PAYMENT_INTENT } from './Dues.gql';
 import Dues from './Dues.store';
 import useFetchStripeAccount from './hooks/useFetchStripeAccount';
 
@@ -58,7 +58,8 @@ const DuesModalContent = () => {
     if (currentTypeId !== memberTypeId) setMemberTypeId(memberTypeId);
   }, [memberTypeId]);
 
-  const [getPaymentClientSecret] = useMutation(GET_PAYMENT_CLIENT_SECRET);
+  const [createPaymentIntent] = useMutation(CREATE_PAYMENT_INTENT);
+  const [confirmPaymentIntent] = useMutation(CONFIRM_PAYMENT_INTENT);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -66,8 +67,8 @@ const DuesModalContent = () => {
     setErrorMessage(null);
     setLoading(true);
 
-    const { data, error } = await getPaymentClientSecret({
-      variables: { memberTypeId }
+    const { data, error } = await createPaymentIntent({
+      variables: { memberTypeId: currentTypeId }
     });
 
     if (error) {
@@ -76,12 +77,14 @@ const DuesModalContent = () => {
       return;
     }
 
-    const clientSecret: string = data.getPaymentClientSecret;
+    const clientSecret: string = data.createPaymentIntent;
 
-    const { error: stripeError } = await stripe.confirmCardPayment(
-      clientSecret,
-      { payment_method: { card: elements.getElement(CardElement) } }
-    );
+    const {
+      error: stripeError,
+      paymentIntent
+    } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: { card: elements.getElement(CardElement) }
+    });
 
     setLoading(false);
 
@@ -90,16 +93,18 @@ const DuesModalContent = () => {
       return;
     }
 
+    await confirmPaymentIntent({
+      variables: { paymentIntentId: paymentIntent.id }
+    });
+
     showToast({ message: 'Your dues have been paid!' });
     setTimeout(closeModal, 0);
   };
 
+  const onClose = () => setErrorMessage(null);
+
   return (
-    <Modal
-      className="s-actions-dues"
-      id={ModalType.PAY_DUES}
-      onClose={() => setErrorMessage(null)}
-    >
+    <Modal className="s-actions-dues" id={ModalType.PAY_DUES} onClose={onClose}>
       <h1>Pay Dues</h1>
       <p>
         Once your card is charged, your membership will be active and will

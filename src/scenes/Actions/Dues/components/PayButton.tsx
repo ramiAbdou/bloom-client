@@ -16,7 +16,7 @@ export default (props: LoadingProps) => {
 
   const stripe = useStripe();
 
-  if (amount === null) return null;
+  if (amount === null || amount === undefined) return null;
 
   // Use a traditional checkout form.
   return (

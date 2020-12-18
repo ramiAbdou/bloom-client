@@ -132,10 +132,10 @@ export const dbModel: DbModel = {
 
                   // References are only stored as ID's, so we just append
                   // the new ID's to the existing reference ID's.
-                  [communityReferenceColumn]: [
-                    ...(community[communityReferenceColumn] ?? []),
-                    ...parsedEntities[communityReferenceColumn].allIds
-                  ]
+                  [communityReferenceColumn]: mergeWith(
+                    community[communityReferenceColumn] ?? [],
+                    parsedEntities[communityReferenceColumn].allIds
+                  )
                 }
               }
             } as EntityRecord<ICommunity>
