@@ -80,7 +80,6 @@ export default forwardRef(
       >
         {showLoadingState && <LoadingState loadingText={loadingText} />}
         {!showLoadingState && children}
-        {children}
       </button>
     );
   }

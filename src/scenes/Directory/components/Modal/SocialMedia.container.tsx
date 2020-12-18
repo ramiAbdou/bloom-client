@@ -7,7 +7,6 @@ import {
   IoLogoTwitter
 } from 'react-icons/io5';
 
-import Button from '@components/Button/Button';
 import MemberCard from '../Card/Card.store';
 
 export default () => {
@@ -21,43 +20,47 @@ export default () => {
   return (
     <div className="s-directory-modal-social-ctr">
       {facebookUrl && (
-        <Button
+        <a
           className="s-directory-modal-social s-directory-modal-social--facebook"
           href={facebookUrl}
+          rel="noreferrer"
           target="_blank"
         >
           <IoLogoFacebook />
-        </Button>
+        </a>
       )}
 
       {linkedInUrl && (
-        <Button
+        <a
           className="s-directory-modal-social s-directory-modal-social--linkedin"
           href={linkedInUrl}
+          rel="noreferrer"
           target="_blank"
         >
           <IoLogoLinkedin />
-        </Button>
+        </a>
       )}
 
       {twitterUrl && (
-        <Button
+        <a
           className="s-directory-modal-social s-directory-modal-social--twitter"
           href={twitterUrl}
+          rel="noreferrer"
           target="_blank"
         >
           <IoLogoTwitter />
-        </Button>
+        </a>
       )}
 
       {instagramUrl && (
-        <Button
+        <a
           className="s-directory-modal-social"
           href={instagramUrl}
+          rel="noreferrer"
           target="_blank"
         >
           <IoLogoInstagram />
-        </Button>
+        </a>
       )}
     </div>
   );

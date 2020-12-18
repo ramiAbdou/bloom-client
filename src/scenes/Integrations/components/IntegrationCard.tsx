@@ -38,9 +38,9 @@ const ActionButton = memo(
     }
 
     return (
-      <OutlineButton href={href} onClick={onOpenFlow}>
-        {buttonText}
-      </OutlineButton>
+      <a href={href} onClick={onOpenFlow}>
+        <OutlineButton>{buttonText}</OutlineButton>
+      </a>
     );
   }
 );

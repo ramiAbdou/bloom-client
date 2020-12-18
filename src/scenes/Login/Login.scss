@@ -36,8 +36,9 @@ $PREF: 's-login';
 
 .#{$PREF}-google { margin-bottom: $md; &--sm { margin-bottom: $sm; } }
 .#{$PREF}-google > a {
-  @extend .flex-acc;
   @extend .btn-txt;
+  @extend .c-btn;
+  @extend .c-btn--lg;
 
   border: 1px $gray-5 solid;
 

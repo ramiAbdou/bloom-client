@@ -2,7 +2,6 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import URLBuilder from 'util/URLBuilder';
 
-import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { APP } from '@constants';
 import { makeClass } from '@util/util';
@@ -16,10 +15,10 @@ const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('client_id', process.env.GOOGLE_CLIENT_ID);
 
 const GoogleButton = () => (
-  <Button fill large href={url}>
+  <a href={url}>
     <img alt="Google Icon" src={google} />
     Sign In with Google
-  </Button>
+  </a>
 );
 
 export default () => {

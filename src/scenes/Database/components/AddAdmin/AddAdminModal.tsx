@@ -33,6 +33,7 @@ const AddAdminInput = memo(({ id }: IdProps) => {
       isShowingErrors={isShowingErrors}
       member={admin}
       updateMember={updateMember}
+      onDelete={() => null}
     />
   );
 });
