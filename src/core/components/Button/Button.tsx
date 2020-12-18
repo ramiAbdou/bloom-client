@@ -47,6 +47,7 @@ export default forwardRef(
       loading,
       loadingText,
       onClick,
+      type,
       ...props
     }: ButtonProps,
     ref: MutableRefObject<any>
@@ -58,7 +59,7 @@ export default forwardRef(
     const onButtonClick = (
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
-      if (props.type === 'button') event.preventDefault();
+      if (type === 'button') event.preventDefault();
       if (disabled || !onClick) return;
       onClick(null);
     };
@@ -75,6 +76,7 @@ export default forwardRef(
         ref={ref}
         className={css}
         disabled={disabled}
+        type={type ?? 'button'}
         onClick={onButtonClick}
         {...props}
       >
