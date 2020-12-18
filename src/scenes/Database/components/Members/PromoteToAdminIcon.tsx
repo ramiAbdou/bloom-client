@@ -57,9 +57,10 @@ const PromoteToAdminModal = () => {
         <PrimaryButton
           loading={loading}
           loadingText="Promoting..."
-          title="Promote"
           onClick={onPromote}
-        />
+        >
+          Promote
+        </PrimaryButton>
         <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
       </div>
     </Modal>

@@ -38,9 +38,10 @@ export default () => {
         <PrimaryButton
           disabled={!isCompleted}
           loading={loading}
-          title="Finish"
           onClick={submitForm}
-        />
+        >
+          Finish
+        </PrimaryButton>
         <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
       </div>
     </>
