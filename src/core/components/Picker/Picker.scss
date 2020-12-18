@@ -6,6 +6,7 @@ $PREF: 'c-picker';
   @extend .shadow--2;
 
   background-color: white;
+  border-radius: $xs;
   min-width: $xxl * 4;
   padding: $xs 0;
   position: fixed;
@@ -27,8 +28,7 @@ $PREF: 'c-picker';
 
   @include HOVER { background-color: $gray-6; }
 
-  &:first-child { border-radius: $xs $xs 0 0; }
-  &:last-child { border-radius: 0 0 $xs $xs; margin-bottom: 0; }
-
+  &:first-child { border-radius: $xxs $xxs 0 0; }
+  &:last-child { border-radius: 0 0 $xxs $xxs; margin-bottom: 0; }
   > svg { height: 20px; margin-right: $xs; width: 20px; }
 }
