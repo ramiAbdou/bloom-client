@@ -31,15 +31,15 @@ const ActionButton = memo(
 
     if (completed) {
       return (
-        <PrimaryButton green onClick={onSeeDetails}>
+        <PrimaryButton fill green onClick={onSeeDetails}>
           See Details
         </PrimaryButton>
       );
     }
 
     return (
-      <a href={href} onClick={onOpenFlow}>
-        <OutlineButton>{buttonText}</OutlineButton>
+      <a href={href} rel="noreferrer" target="_blank" onClick={onOpenFlow}>
+        <OutlineButton fill>{buttonText}</OutlineButton>
       </a>
     );
   }
