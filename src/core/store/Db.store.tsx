@@ -88,7 +88,7 @@ export const dbModel: DbModel = {
 
     return (
       integrations?.stripeAccountId &&
-      community.types.some((typeId: string) => !byTypeId[typeId]?.isFree)
+      community.types?.some((typeId: string) => !byTypeId[typeId]?.isFree)
     );
   }),
 

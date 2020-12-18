@@ -10,6 +10,7 @@ export const APP = {
   CLIENT_URL: isProduction
     ? process.env.APP_CLIENT_URL
     : 'http://localhost:3000',
+  NGROK_SERVER_URL: process.env.APP_NGROK_SERVER_URL,
   SERVER_URL: isProduction
     ? process.env.APP_SERVER_URL
     : 'http://localhost:8080'
