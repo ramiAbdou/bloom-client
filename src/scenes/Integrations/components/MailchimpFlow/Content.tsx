@@ -2,8 +2,8 @@ import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
+import FormContent from '@components/Form/Content';
 import Form from '@components/Form/Form.store';
-import FormContent from '@components/Form/FormContent';
 import { useStoreActions } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';

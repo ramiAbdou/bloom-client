@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FormItem from './components/FormItem';
+import FormItem from './components/Item';
 import Form from './Form.store';
 import { FormItemData } from './Form.types';
 

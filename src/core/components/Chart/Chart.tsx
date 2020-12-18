@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import Chart, { ChartModelInitArgs, ChartType } from './Chart.store';
 import ChartHeader from './components/Header';
 import FormatQuestionData from './FormatQuestionData';
-import BarChart from './variations/Bar';
-import PieChart from './variations/Pie';
-import TimeSeriesChart from './variations/TimeSeries';
+import BarChart from './variants/Bar';
+import PieChart from './variants/Pie';
+import TimeSeriesChart from './variants/TimeSeries';
 
 const ChartContent = ({
   data,
