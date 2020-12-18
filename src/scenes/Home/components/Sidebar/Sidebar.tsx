@@ -104,7 +104,7 @@ const SidebarContent = () => {
                 <p>Dues Status: Inactive</p>
               </div>
 
-              <OutlineButton title="Pay Dues" onClick={onClick} />
+              <OutlineButton onClick={onClick}>Pay Dues</OutlineButton>
             </>
           )}
         </div>

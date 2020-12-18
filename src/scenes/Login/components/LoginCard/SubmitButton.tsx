@@ -69,9 +69,10 @@ export default () => {
         disabled={!isCompleted}
         loading={loading}
         loadingText="Sending Link..."
-        title="Send Login Link"
         onClick={submitForm}
-      />
+      >
+        Send Login Link
+      </PrimaryButton>
     </>
   );
 };

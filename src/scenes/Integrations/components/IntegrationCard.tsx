@@ -30,11 +30,17 @@ const ActionButton = memo(
       setFlow(`${name.toUpperCase()}_DETAILS` as IntegrationsModal);
 
     if (completed) {
-      return <PrimaryButton green title="See Details" onClick={onSeeDetails} />;
+      return (
+        <PrimaryButton green onClick={onSeeDetails}>
+          See Details
+        </PrimaryButton>
+      );
     }
 
     return (
-      <OutlineButton href={href} title={buttonText} onClick={onOpenFlow} />
+      <OutlineButton href={href} onClick={onOpenFlow}>
+        {buttonText}
+      </OutlineButton>
     );
   }
 );

@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { makeClass } from '@util/util';
-import Button, { ButtonProps } from './Button';
+import Button from './Button';
+import { ButtonProps } from './Button.types';
 
 export default ({ className, ...props }: ButtonProps) => {
   const css = makeClass(['c-btn-underline', className]);

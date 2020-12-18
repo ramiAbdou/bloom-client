@@ -7,5 +7,5 @@ import { useStoreActions } from '@store/Store';
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal(ModalType.ADD_MEMBERS);
-  return <PrimaryButton title="Add Member" onClick={onClick} />;
+  return <PrimaryButton onClick={onClick}>Add Member</PrimaryButton>;
 };

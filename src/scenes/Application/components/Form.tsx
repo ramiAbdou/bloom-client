@@ -64,9 +64,10 @@ const SubmitButton = () => {
         disabled={!isCompleted}
         loading={loading}
         loadingText="Submitting..."
-        title="Submit Application"
-        onClick={applyForMembership}
-      />
+        onClick={() => applyForMembership()}
+      >
+        Submit Application
+      </PrimaryButton>
     </>
   );
 };

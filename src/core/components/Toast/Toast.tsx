@@ -67,7 +67,7 @@ const Toast = ({
       initial={{ x: 150 }}
     >
       <p>{message}</p>
-      {undo && <UnderlineButton title="Undo" onClick={onUndoClick} />}
+      {undo && <UnderlineButton onClick={onUndoClick}>Undo</UnderlineButton>}
     </motion.div>
   );
 };

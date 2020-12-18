@@ -14,27 +14,29 @@ $PREF: 'c-btn';
   
   border-radius: $xxs;
 
-  @include HOVER { opacity: 0.8; }
-
-  &:active { transform: scale(0.95); transition: all 0.05s ease-in-out; }
-
-  &:disabled {
-    color: $gray-3;
-    cursor: not-allowed;
-  
-    @include HOVER { opacity: 1; }
-    
-    &:active { transform: none; transition: none; }
+  &:not(:disabled) {
+    @include HOVER { opacity: 0.8; }
+    &:active { transform: scale(0.95); transition: all 0.05s ease-in-out; }
   }
 
+  &:disabled { color: $gray-3; cursor: not-allowed; }
+
+  // Maps to the "fill" prop passed into the Button component.
   &--fill { width: 100%; }
+
+  // Maps to the "large" prop passed into the Button component.
   &--lg { height: $xl; }
 }
 
-// ## LOADING STATE
+// ## LOADING STATE - Includes the loading text as well as the Spinner.
 
-.#{$PREF}-loading { @extend .flex-acc; }
-.#{$PREF}-loading > p { @extend .btn-txt; color: $gray-3; margin-right: $sm; }
+.#{$PREF}-loading-ctr { @extend .flex-acc; }
+.#{$PREF}-loading-ctr > p {
+  @extend .btn-txt;
+
+  color: $gray-3;
+  margin-right: $sm;
+}
 
 // ## PRIMARY BUTTON
 

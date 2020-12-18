@@ -1,37 +1,20 @@
-import { motion } from 'framer-motion';
 import React, {
-  ButtonHTMLAttributes,
   forwardRef,
   MutableRefObject,
   useEffect,
   useState
 } from 'react';
 
-import { ChildrenProps, ValueProps } from '@constants';
+import Spinner from '@components/Loader/Spinner';
 import { makeClass } from '@util/util';
+import { ButtonProps } from './Button.types';
 
-export interface ButtonProps
-  extends Partial<ChildrenProps>,
-    Partial<ValueProps> {
-  className?: string;
-  disabled?: boolean;
-  href?: string;
-  fill?: boolean;
-  green?: boolean;
-  loading?: boolean;
-  loadingText?: string;
-  large?: boolean;
-  onClick?: Function;
-  submit?: boolean;
-  target?: string;
-  title?: string;
-}
-
-export type ButtonLoadingProps = { loadingText: string };
-
-// This logic (including the local state) ensures that the loading state of
-// a button doesn't show unless the operation takes more than 100ms.
-export const useLoadingState = (loading: boolean) => {
+/**
+ * Returns true if the Button's loading state should be shown, and false
+ * otherwise. Ensures that the loading state of a Button doesn't show unless
+ * the operation takes moer than 100ms.
+ */
+const useLoadingState = (loading: boolean): boolean => {
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
@@ -46,23 +29,40 @@ export const useLoadingState = (loading: boolean) => {
   return showLoadingState;
 };
 
+const LoadingState = ({ loadingText }: Pick<ButtonProps, 'loadingText'>) => (
+  <div className="c-btn-loading-ctr">
+    <p>{loadingText}</p>
+    <Spinner />
+  </div>
+);
+
 export default forwardRef(
   (
     {
       className,
       children,
       disabled,
-      href,
       fill,
       large,
+      loading,
+      loadingText,
       onClick,
-      submit,
-      title,
-      target,
       ...props
     }: ButtonProps,
     ref: MutableRefObject<any>
   ) => {
+    // If the button is in it's loading state, it should be disabled.
+    const showLoadingState = useLoadingState(loading) && !!loadingText;
+    disabled = disabled || showLoadingState;
+
+    const onButtonClick = (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      if (props.type === 'button') event.preventDefault();
+      if (disabled || !onClick) return;
+      onClick(null);
+    };
+
     const css = makeClass([
       'c-btn',
       [large, 'c-btn--lg'],
@@ -70,27 +70,18 @@ export default forwardRef(
       className
     ]);
 
-    const onAllowedClick = () => !disabled && onClick && onClick();
-
-    if (href) {
-      return (
-        <motion.a className={css} href={href} target={target} {...props}>
-          {children ?? title}
-        </motion.a>
-      );
-    }
-
     return (
-      <motion.button
+      <button
         ref={ref}
         className={css}
         disabled={disabled}
-        type={submit ? 'submit' : 'button'}
-        onClick={onAllowedClick}
+        onClick={onButtonClick}
         {...props}
       >
-        {children ?? title}
-      </motion.button>
+        {showLoadingState && <LoadingState loadingText={loadingText} />}
+        {!showLoadingState && children}
+        {children}
+      </button>
     );
   }
 );

@@ -56,8 +56,10 @@ const DemoteToMemberModal = () => {
       <ErrorMessage message={message} />
 
       <div>
-        <PrimaryButton loading={loading} title="Demote" onClick={onDemote} />
-        <OutlineButton title="Cancel" onClick={closeModal} />
+        <PrimaryButton loading={loading} onClick={onDemote}>
+          Demote
+        </PrimaryButton>
+        <OutlineButton onClick={() => closeModal}>Cancel</OutlineButton>
       </div>
     </Modal>
   );

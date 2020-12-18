@@ -54,8 +54,8 @@ const DeleteMembersModal = () => {
       </p>
 
       <div>
-        <PrimaryButton title="Remove" onClick={onRemove} />
-        <OutlineButton title="Cancel" onClick={closeModal} />
+        <PrimaryButton onClick={onRemove}>Remove</PrimaryButton>
+        <OutlineButton onClick={() => closeModal}>Cancel</OutlineButton>
       </div>
     </Modal>
   );

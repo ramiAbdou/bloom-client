@@ -41,7 +41,7 @@ export default () => {
           title="Finish"
           onClick={submitForm}
         />
-        <OutlineButton title="Cancel" onClick={closeModal} />
+        <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
       </div>
     </>
   );

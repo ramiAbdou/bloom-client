@@ -41,18 +41,17 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
       <PrimaryButton
         className="s-applicants-accept-all"
         disabled={!pendingApplicantIds?.length}
-        title="Accept All"
         onClick={onClick}
-      />
+      >
+        Accept All
+      </PrimaryButton>
     );
   }
 
   return (
-    <OutlineButton
-      disabled={!pendingApplicantIds?.length}
-      title="Ignore All"
-      onClick={onClick}
-    />
+    <OutlineButton disabled={!pendingApplicantIds?.length} onClick={onClick}>
+      Ignore All
+    </OutlineButton>
   );
 };
 

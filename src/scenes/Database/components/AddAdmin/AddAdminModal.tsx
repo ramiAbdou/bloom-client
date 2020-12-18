@@ -33,7 +33,6 @@ const AddAdminInput = memo(({ id }: IdProps) => {
       isShowingErrors={isShowingErrors}
       member={admin}
       updateMember={updateMember}
-      onDelete={() => {}}
     />
   );
 });
@@ -109,17 +108,18 @@ export default () => {
         <AddAdminInput key={id} id={id} />
       ))}
 
-      <UnderlineButton title="+ Add Another" onClick={onClick} />
+      <UnderlineButton onClick={onClick}>+ Add Another</UnderlineButton>
       <ErrorMessage message={message} />
 
       <div>
         <PrimaryButton
           loading={loading}
           loadingText="Adding..."
-          title="Add"
           onClick={onAdd}
-        />
-        <OutlineButton title="Cancel" onClick={closeModal} />
+        >
+          Add
+        </PrimaryButton>
+        <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
       </div>
     </Modal>
   );

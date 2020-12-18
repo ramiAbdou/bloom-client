@@ -22,7 +22,9 @@ export default (props: LoadingProps) => {
 
   if (amount === 0) {
     return (
-      <OutlineButton fill large title="Close" onClick={() => closeModal()} />
+      <OutlineButton fill large onClick={() => closeModal()}>
+        Close
+      </OutlineButton>
     );
   }
 
@@ -30,11 +32,12 @@ export default (props: LoadingProps) => {
   return (
     <PrimaryButton
       large
-      submit
       disabled={!stripe}
       loadingText="Paying..."
-      title={`Pay $${amount}`}
+      type="submit"
       {...props}
-    />
+    >
+      Pay ${amount}
+    </PrimaryButton>
   );
 };

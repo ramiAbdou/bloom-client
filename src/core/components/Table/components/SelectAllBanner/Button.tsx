@@ -23,5 +23,7 @@ export default () => {
     `Select All ${numFilteredMembers} Filtered Rows`
   ]);
 
-  return <UnderlineButton title={title} onClick={toggleAllRows} />;
+  return (
+    <UnderlineButton onClick={() => toggleAllRows()}>{title}</UnderlineButton>
+  );
 };

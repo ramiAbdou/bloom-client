@@ -60,7 +60,7 @@ const PromoteToAdminModal = () => {
           title="Promote"
           onClick={onPromote}
         />
-        <OutlineButton title="Cancel" onClick={closeModal} />
+        <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
       </div>
     </Modal>
   );

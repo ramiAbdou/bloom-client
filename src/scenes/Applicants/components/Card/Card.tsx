@@ -40,7 +40,7 @@ const ExpandButton = memo(() => {
         <ExpandedCard />
       </Modal>
 
-      <UnderlineButton title="See Full Application" onClick={onClick} />
+      <UnderlineButton onClick={onClick}>See Full Application</UnderlineButton>
     </>
   );
 });

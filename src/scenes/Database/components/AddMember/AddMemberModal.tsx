@@ -117,17 +117,18 @@ export default () => {
         ))}
       </div>
 
-      <UnderlineButton title="+ Add Another" onClick={onClick} />
+      <UnderlineButton onClick={onClick}>+ Add Another</UnderlineButton>
       <ErrorMessage message={message} />
 
       <div>
         <PrimaryButton
           loading={loading}
           loadingText="Adding..."
-          title="Add"
           onClick={onAdd}
-        />
-        <OutlineButton title="Cancel" onClick={closeModal} />
+        >
+          Add
+        </PrimaryButton>
+        <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
       </div>
     </Modal>
   );

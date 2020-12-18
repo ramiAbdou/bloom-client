@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { makeClass } from '@util/util';
-import Button, { ButtonProps } from './Button';
+import Button from './Button';
 
-interface MultiButtonProps extends ButtonProps {
+interface MultiButtonProps {
   activeIndex?: number;
   options: { onClick: Function; title: string }[];
 }
@@ -16,7 +16,7 @@ export default ({ activeIndex, options }: MultiButtonProps) => (
         [options[activeIndex].title === title, 'c-btn-multi--active']
       ]);
 
-      const onClickButton = () => {
+      const onButtonClick = () => {
         if (onClick) onClick();
         activeIndex = i;
       };
@@ -26,7 +26,7 @@ export default ({ activeIndex, options }: MultiButtonProps) => (
           key={title}
           className={css}
           title={title}
-          onClick={onClickButton}
+          onClick={onButtonClick}
         />
       );
     })}
