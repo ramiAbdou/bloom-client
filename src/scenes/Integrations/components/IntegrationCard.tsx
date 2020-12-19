@@ -37,8 +37,10 @@ const ActionButton = memo(
       );
     }
 
+    const aProps = href ? { href, rel: 'noreferrer', target: '_blank' } : {};
+
     return (
-      <a href={href} rel="noreferrer" target="_blank" onClick={onOpenFlow}>
+      <a onClick={onOpenFlow} {...aProps}>
         <OutlineButton fill>{buttonText}</OutlineButton>
       </a>
     );

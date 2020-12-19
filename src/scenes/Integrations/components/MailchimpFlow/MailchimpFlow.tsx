@@ -12,7 +12,12 @@ import MailchimpFlowContent from './Content';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
 const MailchimpFormContent = () => {
-  const onSubmit = useMailchimpSubmit();
+  const submitMailchimpList = useMailchimpSubmit();
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    submitMailchimpList();
+  };
 
   return (
     <form className="s-integrations-onboarding-form" onSubmit={onSubmit}>

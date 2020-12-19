@@ -24,7 +24,12 @@ export default () => {
       <FormContent />
 
       <div className="s-integrations-action-ctr">
-        <PrimaryButton disabled={!isCompleted} loading={isLoading}>
+        <PrimaryButton
+          disabled={!isCompleted}
+          loading={isLoading}
+          loadingText="Finishing..."
+          type="submit"
+        >
           Finish
         </PrimaryButton>
         <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>

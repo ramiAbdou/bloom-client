@@ -16,15 +16,13 @@ export default (): VoidFunction => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const items = Form.useStoreState((store) => store.items);
+  const selectedMailchimpList: string = Form.useStoreState(
+    ({ items }) => items[items?.length - 1]?.value
+  );
 
   const setIsLoading = Form.useStoreActions((store) => store.setIsLoading);
 
-  const mailchimpListName = items.find(
-    (item) => item.title === 'Step 2: Select Audience/List ID'
-  )?.value;
-
-  const [updateMailchimpListId, { data, error, loading }] = useMutation(
+  const [updateMailchimpListId, { loading }] = useMutation(
     UPDATE_MAILCHIMP_LIST_ID
   );
 
@@ -32,13 +30,27 @@ export default (): VoidFunction => {
   // we need to update the function to contain that updated list name value.
   const result = useCallback(async () => {
     const { id: mailchimpListId } =
-      options.find(({ name }) => name === mailchimpListName) || {};
+      options.find(({ name }) => name === selectedMailchimpList) || {};
 
     if (!mailchimpListId) return;
 
-    await updateMailchimpListId({ variables: { mailchimpListId } });
+    const { data, error } = await updateMailchimpListId({
+      variables: { mailchimpListId }
+    });
 
-    if (error) return;
+    if (error) {
+      // If error message, show a toast error message.
+      const errorMessage = getGraphQLError(error);
+
+      if (errorMessage) {
+        showToast({
+          message: 'Failed to submit. Please try again soon.',
+          type: 'ERROR'
+        });
+      }
+
+      return;
+    }
 
     // If the function is successful, update the entities with the new
     // Mailchimp information and close the modal.
@@ -48,21 +60,11 @@ export default (): VoidFunction => {
     });
 
     closeModal();
-  }, [mailchimpListName]);
+  }, [selectedMailchimpList, options]);
 
   useEffect(() => {
-    setIsLoading(true);
-
-    // If error message, show an error message.
-    const errorMessage = getGraphQLError(error);
-
-    if (errorMessage) {
-      showToast({
-        message: 'Failed to submit. Please try again soon.',
-        type: 'ERROR'
-      });
-    }
-  }, [error, loading]);
+    setIsLoading(loading);
+  }, [loading]);
 
   return result;
 };
