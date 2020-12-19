@@ -236,11 +236,10 @@ input[type="radio"] ~ div {
   
   border: 2px solid $gray-4;
   border-radius: 50%;
-  display: inline-block;
-  height: $sm;
+  height: 12px;
   margin-right: $xs;
   padding: 2px;
-  width: $sm;
+  width: 12px;
 }
 
 input[type="radio"] ~ div > span { @extend .fill; }
@@ -250,6 +249,8 @@ input[type="radio"]:checked ~ div > span {
   background-color: $primary;
   border-radius: 50%;
   display: inline-block;
+  min-height: 12px;
+  min-width: 12px;
 }
 
 .#{$PREF}-radio {

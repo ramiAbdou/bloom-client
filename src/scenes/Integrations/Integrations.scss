@@ -61,7 +61,7 @@ $PREF: 's-integrations';
   &--detail > p:last-child { @extend .sb; color: $primary; }
 }
 
-.#{$PREF}-onboarding-form > div { margin: $xl 0; }
+.#{$PREF}-onboarding-form > .c-form-item { margin: $xl 0; }
 
 .#{$PREF}-action-ctr { @extend .flex-ac; margin-top: $lg; }
 .#{$PREF}-action-ctr > button:first-of-type { margin-right: $xs; }

@@ -10,14 +10,12 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import SubmitButton from './SubmitButton';
 import useSendLoginLink from './useSendLoginLink';
 
-export default () => {
+const EmailFormContent = () => {
   const errorMessage = FormStore.useStoreState((store) => store.errorMessage);
 
   const setErrorMessage = FormStore.useStoreActions(
     (store) => store.setErrorMessage
   );
-
-  const sendLoginLink = useSendLoginLink();
 
   // In the case that the user tries to log in with an expired login link,
   // we want to show the appropriate message.
@@ -30,6 +28,18 @@ export default () => {
     }
   }, [cookie]);
 
+  const sendLoginLink = useSendLoginLink();
+
+  return (
+    <form className="s-login-email-form" onSubmit={sendLoginLink}>
+      <FormContent />
+      <ErrorMessage marginTop={0} message={errorMessage} />
+      <SubmitButton />
+    </form>
+  );
+};
+
+export default () => {
   const questions: FormItemData[] = [
     {
       category: 'EMAIL',
@@ -43,14 +53,8 @@ export default () => {
   ];
 
   return (
-    <Form
-      className="s-login-email-form"
-      questions={questions}
-      onSubmit={sendLoginLink}
-    >
-      <FormContent />
-      <ErrorMessage marginTop={0} message={errorMessage} />
-      <SubmitButton />
+    <Form questions={questions}>
+      <EmailFormContent />
     </Form>
   );
 };

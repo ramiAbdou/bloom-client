@@ -11,6 +11,16 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import MailchimpFlowContent from './Content';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
+const MailchimpFormContent = () => {
+  const onSubmit = useMailchimpSubmit();
+
+  return (
+    <form className="s-integrations-onboarding-form" onSubmit={onSubmit}>
+      <MailchimpFlowContent />
+    </form>
+  );
+};
+
 export default () => {
   const {
     isMailchimpAuthenticated,
@@ -20,8 +30,6 @@ export default () => {
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
-
-  const onSubmit = useMailchimpSubmit();
 
   useEffect(() => {
     showModal(ModalType.MAILCHIMP_FLOW);
@@ -54,12 +62,8 @@ export default () => {
 
   return (
     <Modal id={ModalType.MAILCHIMP_FLOW} onClose={() => setFlow(null)}>
-      <Form
-        className="s-integrations-onboarding-form"
-        questions={questions}
-        onSubmit={onSubmit}
-      >
-        <MailchimpFlowContent />
+      <Form questions={questions}>
+        <MailchimpFormContent />
       </Form>
     </Modal>
   );

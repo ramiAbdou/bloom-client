@@ -9,6 +9,7 @@ export default () => {
 
   return (
     <PrimaryButton
+      fill
       large
       disabled={!isCompleted}
       loading={isLoading}

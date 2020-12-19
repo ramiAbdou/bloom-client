@@ -56,7 +56,7 @@ const TypeOptionList = () => {
   return (
     <motion.div animate={{ scaleY: 1 }} initial={{ scaleY: 0 }}>
       <Radio
-        initialChecked={currentTypeId}
+        defaultChecked={currentTypeId}
         name="s-actions-dues"
         options={allTypes.map(({ amount, id, name, recurrence }) => {
           const value = `${name}, $${amount}/${recurrence}`
