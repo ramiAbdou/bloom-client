@@ -15,12 +15,11 @@ export default (): OnFormSubmit => {
   const [sendTemporaryLoginLink] = useManualQuery(SEND_TEMPORARY_LOGIN_LINK);
 
   return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+    const email = items.find(({ category }) => category === 'EMAIL')?.value;
+
     // Manually set the isLoading variable to true.
     setIsLoading(true);
-
-    const email = items.find(({ category }) => category === 'EMAIL')?.value;
     const { error } = await sendTemporaryLoginLink({ variables: { email } });
-
     setIsLoading(false);
 
     if (error) {

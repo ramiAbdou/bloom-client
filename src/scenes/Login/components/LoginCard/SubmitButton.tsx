@@ -14,6 +14,7 @@ export default () => {
       disabled={!isCompleted}
       loading={isLoading}
       loadingText="Sending..."
+      type="submit"
     >
       Send Login Link
     </PrimaryButton>

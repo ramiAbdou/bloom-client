@@ -8,12 +8,14 @@ import { APIError } from 'graphql-hooks';
  * custom GraphQL error.
  */
 export const getGraphQLError = (error: APIError): string => {
-  if (!error?.graphQLErrors && !error?.fetchError) return null;
+  if (!error) return null;
 
-  return error.fetchError
+  const { fetchError, graphQLErrors, httpError } = error;
+
+  return fetchError || httpError
     ? 'Failed to connect to Bloom servers.'
     : // @ts-ignore b/c the message must exist on the GraphQL error object.
-      error.graphQLErrors[0]?.message;
+      graphQLErrors[0]?.message;
 };
 
 /**
