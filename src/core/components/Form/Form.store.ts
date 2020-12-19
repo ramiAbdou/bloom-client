@@ -5,7 +5,6 @@ import {
   computed,
   createContextStore
 } from 'easy-peasy';
-import { UseClientRequestResult } from 'graphql-hooks';
 
 import { QuestionCategory } from '@constants';
 import { takeFirst } from '@util/util';
@@ -14,19 +13,13 @@ import { FormItemData } from './Form.types';
 type GetItemArgs = { category?: QuestionCategory; title?: string };
 
 export type FormModel = {
+  errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
-  itemCSS: string; // Represents a class string.
+  isLoading: boolean;
   items: FormItemData[];
-  setSubmitForm: Action<
-    FormModel,
-    (
-      ...args: any[]
-    ) => Promise<any> | Promise<UseClientRequestResult<any, object>>
-  >;
-  submitForm: (
-    ...args: any[]
-  ) => Promise<any> | Promise<UseClientRequestResult<any, object>>;
+  setErrorMessage: Action<FormModel, string>;
+  setIsLoading: Action<FormModel, boolean>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
 
@@ -68,13 +61,16 @@ export const parseValue = (value: any) => {
     isArray &&
     value.length === 1 &&
     ['None', 'None of the Above', 'N/A'].includes(value[0])
-  )
+  ) {
     return [];
+  }
 
   return isArray ? value : [value];
 };
 
 export const formModel: FormModel = {
+  errorMessage: null,
+
   getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
     items.find((item) => item.category === category || item.title === title)
   ),
@@ -89,13 +85,19 @@ export const formModel: FormModel = {
       )
   ),
 
-  itemCSS: null,
+  isLoading: false,
 
   items: [],
 
-  setSubmitForm: action((state, submitForm) => ({ ...state, submitForm })),
+  setErrorMessage: action((state, errorMessage: string) => ({
+    ...state,
+    errorMessage
+  })),
 
-  submitForm: () => Promise.resolve(),
+  setIsLoading: action((state, isLoading: boolean) => ({
+    ...state,
+    isLoading
+  })),
 
   updateItem: action((state, payload) => {
     const { items } = state;

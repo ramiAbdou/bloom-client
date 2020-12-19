@@ -36,7 +36,7 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-section-ctr { height: 100%; }
-.#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
+.#{$PREF}-section { margin-top: $sm; &:first-of-type { margin-top: 0; } }
 
 // Section heading (ie: MAIN, ADMIN, QUICK ACTIONS).
 .#{$PREF}-section > p { @extend .meta--lg; margin-left: $sm; }
@@ -63,8 +63,6 @@ $PREF: 's-home-sidebar';
     background-clip: padding-box; // Needed to set the border-left color.
     border-left: 3px $primary-hover solid;
   }
-
-  &:last-of-type { margin-bottom: 12px; }
 }
 
 // Disables the scaling transition that typically happens for custom buttons.

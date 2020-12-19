@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 
-import Form from '@components/Form/Form.store';
 import { FormItemData } from '@components/Form/Form.types';
-import { makeClass, takeFirst } from '@util/util';
+import { takeFirst } from '@util/util';
 import Label from '../Label';
 import LongText from './LongText';
 import MultipleChoice from './MultipleChoice/MultipleChoice';
@@ -21,8 +20,6 @@ export default ({
   title,
   type
 }: FormItemData) => {
-  const itemCSS = Form.useStoreState((store) => store.itemCSS);
-
   const baseProps: Partial<FormItemData> = { required, title };
   const optionProps: Partial<FormItemData> = { ...baseProps, options };
   const textProps: Partial<FormItemData> = { ...baseProps, placeholder };
@@ -38,10 +35,8 @@ export default ({
     [type === 'MULTIPLE_CHOICE', <MultipleChoice {...optionProps} />]
   ]);
 
-  const css = makeClass([itemCSS, itemCSS, 'c-form-item']);
-
   return (
-    <div className={css}>
+    <div className="c-form-item">
       {title && (
         <Label completed={completed} required={required} title={title} />
       )}
