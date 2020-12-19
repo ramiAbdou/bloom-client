@@ -1,55 +1,47 @@
 import { useMutation } from 'graphql-hooks';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import FormStore, { parseValue } from '@components/Form/Form.store';
+import { parseValue } from '@components/Form/Form.store';
+import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
 import { useStoreState } from '@store/Store';
-import { getGraphQLError } from '../../../../util/util';
+import { getGraphQLError } from '@util/util';
 import { APPLY_FOR_MEMBERSHIP } from '../../Application.gql';
 import Application from '../../Application.store';
 
-export default (): VoidFunction => {
+export default (): OnFormSubmit => {
   const name = useStoreState(({ db }) => db.community?.encodedUrlName);
-  const storedEmail = Application.useStoreState((store) => store.email);
   const setEmail = Application.useStoreActions((store) => store.setEmail);
 
-  const dataToSubmit = FormStore.useStoreState(({ items }) =>
-    items.map(({ id, value }) => ({ questionId: id, value: parseValue(value) }))
-  );
-
-  const email = FormStore.useStoreState(
-    ({ items }) =>
-      items.filter(({ category }) => category === 'EMAIL')[0]?.value
-  );
-
-  const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
-
-  const setErrorMessage = FormStore.useStoreActions(
-    (store) => store.setErrorMessage
-  );
-
   const { push } = useHistory();
+  const [applyForMembership] = useMutation(APPLY_FOR_MEMBERSHIP);
 
-  useEffect(() => {
-    if (email !== storedEmail) setEmail(email);
-  }, [email]);
+  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+    const dataToSubmit = items.map(({ id, value }) => ({
+      questionId: id,
+      value: parseValue(value)
+    }));
 
-  const [applyForMembership, result] = useMutation(APPLY_FOR_MEMBERSHIP, {
-    variables: { data: dataToSubmit, email, encodedUrlName: name }
-  });
+    // Set the email so that the confirmation page displays the right email,
+    // and use it for the GraphQL mutation as well.
+    const email = items.find(({ category }) => category === 'EMAIL')?.value;
+    setEmail(email);
 
-  useEffect(() => {
-    const { error, data, loading } = result;
+    // Manually set the isLoading variable to true.
+    setIsLoading(true);
 
-    // Handle the error message by setting the Form's error message.
-    const errorMessage = getGraphQLError(error);
-    if (errorMessage) setErrorMessage(errorMessage);
+    const { data, error } = await applyForMembership({
+      variables: { data: dataToSubmit, email, encodedUrlName: name }
+    });
 
-    // Handle the loading state of the Form.
-    setIsLoading(loading);
+    // Manually reset the isLoading variable to false.
+    setIsLoading(false);
 
-    if (data && !error && !loading) push(`/${name}/apply/confirmation`);
-  }, [result]);
+    if (error) {
+      const errorMessage = getGraphQLError(error);
+      setErrorMessage(errorMessage);
+      return;
+    }
 
-  return () => applyForMembership();
+    if (data) push(`/${name}/apply/confirmation`);
+  };
 };

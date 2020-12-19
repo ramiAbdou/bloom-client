@@ -18,12 +18,16 @@ const useLoadingState = (loading: boolean): boolean => {
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
     if (!loading && showLoadingState) setShowLoadingState(false);
     else {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         if (loading && !showLoadingState) setShowLoadingState(true);
       }, 100);
     }
+
+    return () => clearTimeout(timeout);
   }, [loading, showLoadingState]);
 
   return showLoadingState;

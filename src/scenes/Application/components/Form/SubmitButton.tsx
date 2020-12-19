@@ -1,23 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import PrimaryButton from '@components/Button/PrimaryButton';
-import FormStore from '@components/Form/Form.store';
-import Application from '../../Application.store';
+import Form from '@components/Form/Form.store';
 
 export default () => {
-  const storedEmail = Application.useStoreState((store) => store.email);
-  const setEmail = Application.useStoreActions((store) => store.setEmail);
-  const isCompleted = FormStore.useStoreState((store) => store.isCompleted);
-  const isLoading = FormStore.useStoreState((store) => store.isLoading);
-
-  const email = FormStore.useStoreState(
-    ({ items }) =>
-      items.filter(({ category }) => category === 'EMAIL')[0]?.value
-  );
-
-  useEffect(() => {
-    if (email !== storedEmail) setEmail(email);
-  }, [email]);
+  const isCompleted = Form.useStoreState((store) => store.isCompleted);
+  const isLoading = Form.useStoreState((store) => store.isLoading);
 
   return (
     <PrimaryButton

@@ -244,16 +244,17 @@ export const tableModel: TableModel = {
    */
   toggleRow: action(({ selectedRowIds, ...state }, rowId: string) => {
     const index = selectedRowIds.findIndex((value: string) => value === rowId);
-    return ({
+    return {
       ...state,
-      selectedRowIds: index < 0 
-        ? [...selectedRowIds, rowId] 
-        : [
-            ...selectedRowIds.slice(0, index),
-            ...selectedRowIds.slice(index + 1)
-          ]
-    })
-  } ),
+      selectedRowIds:
+        index < 0
+          ? [...selectedRowIds, rowId]
+          : [
+              ...selectedRowIds.slice(0, index),
+              ...selectedRowIds.slice(index + 1)
+            ]
+    };
+  }),
 
   updateColumn: action(
     ({ columns, ...state }, updatedColumn: Partial<Column>) => ({

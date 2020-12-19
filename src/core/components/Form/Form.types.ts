@@ -1,3 +1,4 @@
+import { ActionCreator } from 'easy-peasy';
 import { ReactNode } from 'react';
 
 import { QuestionCategory, QuestionType } from '@constants';
@@ -32,3 +33,11 @@ export interface FormItemData extends Partial<FormQuestion> {
   value?: any;
   validate?: (value: string) => any;
 }
+
+export type OnFormSubmitArgs = {
+  items: FormItemData[];
+  setErrorMessage: ActionCreator<string>;
+  setIsLoading: ActionCreator<boolean>;
+};
+
+export type OnFormSubmit = (args: OnFormSubmitArgs) => Promise<void>;

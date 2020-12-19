@@ -5,7 +5,7 @@ import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import Database from '../../Database.store';
 import ActionRow from './ActionRow';
-import MemberTable from './MemberTable';
+import MemberTable from './Table';
 
 export default () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {

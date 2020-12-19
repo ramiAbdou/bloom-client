@@ -41,6 +41,7 @@ const LineChartDot = ({ payload, ...props }) => {
 export default () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
   const data = Chart.useStoreState((store) => store.data, deepequal);
+  const interval = Chart.useStoreState((store) => store.interval);
   const windowWidth = useWindowWidth();
 
   if (!data?.length) return null;
@@ -51,11 +52,10 @@ export default () => {
         <CartesianGrid vertical={false} />
 
         <XAxis
-          tick
           allowDuplicatedCategory={false}
           dataKey="name"
-          minTickGap={16}
-          tickCount={4}
+          interval={interval ?? 10}
+          padding={{ left: 4, right: 12 }}
           tickFormatter={(label) => day(label).format('M/D')}
           tickSize={8}
         />

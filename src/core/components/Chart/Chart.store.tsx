@@ -11,6 +11,7 @@ export enum ChartType {
 export type ChartModelInitArgs = {
   data?: ChartData[];
   questionId?: string;
+  interval?: number;
   totalResponses?: number;
   title?: string;
   type?: ChartType;
@@ -24,6 +25,8 @@ export interface ChartModel extends ChartModelInitArgs {
 
 export const chartModel: ChartModel = {
   data: [],
+
+  interval: null,
 
   questionId: null,
 

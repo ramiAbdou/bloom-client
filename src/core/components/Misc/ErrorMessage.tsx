@@ -4,7 +4,7 @@ import { IoAlertCircleOutline } from 'react-icons/io5';
 
 import { MessageProps } from '@constants';
 
-interface ErrorMessageProps extends MessageProps {
+export interface ErrorMessageProps extends MessageProps {
   marginBottom?: number;
   marginTop?: number;
 }

@@ -7,20 +7,15 @@ import BarChart from './variants/Bar';
 import PieChart from './variants/Pie';
 import TimeSeriesChart from './variants/TimeSeries';
 
-const ChartContent = ({
-  data,
-  questionId,
-  type,
-  title
-}: ChartModelInitArgs) => {
+const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
   const chartType = Chart.useStoreState((store) => store.type);
   const setData = Chart.useStoreActions((store) => store.setData);
 
   useEffect(() => {
     // Only time we'll need to update the data is if the title/type are set.
-    if (!title || !type) return;
-    setData({ data, title, type });
-  }, [data, title, type]);
+    if (!data) return;
+    setData(data);
+  }, [data]);
 
   return (
     <>
