@@ -1,59 +1,35 @@
 import { useManualQuery } from 'graphql-hooks';
-import { useCallback, useEffect } from 'react';
 
-import Form from '@components/Form/Form.store';
+import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
 import { getGraphQLError } from '@util/util';
 import { SEND_TEMPORARY_LOGIN_LINK } from '../../Login.gql';
-import Login, { getLoginErrorMessage, LoginError } from '../../Login.store';
+import Login from '../../Login.store';
 
-export default (): VoidFunction => {
+export default (): OnFormSubmit => {
   const setEmail = Login.useStoreActions((store) => store.setEmail);
 
   const setHasLoginLinkSent = Login.useStoreActions(
     (store) => store.setHasLoginLinkSent
   );
 
-  const value: string = Form.useStoreState(
-    ({ getItem }) => getItem({ category: 'EMAIL' })?.value
-  );
+  const [sendTemporaryLoginLink] = useManualQuery(SEND_TEMPORARY_LOGIN_LINK);
 
-  const setIsLoading = Form.useStoreActions((store) => store.setIsLoading);
+  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+    // Manually set the isLoading variable to true.
+    setIsLoading(true);
 
-  const setErrorMessage = Form.useStoreActions(
-    (store) => store.setErrorMessage
-  );
+    const email = items.find(({ category }) => category === 'EMAIL')?.value;
+    const { error } = await sendTemporaryLoginLink({ variables: { email } });
 
-  const [sendTemporaryLoginLink, { error, loading }] = useManualQuery(
-    SEND_TEMPORARY_LOGIN_LINK,
-    {
-      variables: { email: value }
+    setIsLoading(false);
+
+    if (error) {
+      const errorMessage = getGraphQLError(error);
+      setErrorMessage(errorMessage);
+      return;
     }
-  );
 
-  useEffect(() => {
-    setIsLoading(loading);
-
-    // getGraphQLError returns the error code (eg: USER_NOT_FOUND) and
-    // getLoginErrorMessage converts that to a more readable message.
-    const errorMessage = getLoginErrorMessage(
-      getGraphQLError(error) as LoginError
-    );
-
-    if (errorMessage) setErrorMessage(errorMessage);
-  }, [error, loading]);
-
-  // The submit form function houses the updated value of the email, so we
-  // update the function when the value changes.
-  const sendLoginLink = useCallback(async () => {
-    const { error: loginError } = await sendTemporaryLoginLink();
-
-    // sendTemporaryLoginLink returns a boolean when it's complete, so as long
-    // as that is affirmative and there's no errors, we update the Login state.
-    if (!loginError) {
-      setEmail(value);
-      setHasLoginLinkSent(true);
-    }
-  }, [value]);
-
-  return sendLoginLink;
+    setEmail(email);
+    setHasLoginLinkSent(true);
+  };
 };
