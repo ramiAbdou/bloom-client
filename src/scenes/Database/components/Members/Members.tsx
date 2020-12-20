@@ -58,7 +58,7 @@ export default () => {
   };
 
   return (
-    <Table columns={columns} rows={rows} onRenameColumn={onRenameColumn}>
+    <Table select columns={columns} rows={rows} onRenameColumn={onRenameColumn}>
       <ActionRow />
       <TableContent />
     </Table>

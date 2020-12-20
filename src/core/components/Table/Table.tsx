@@ -26,12 +26,10 @@ const UpdateAndRenderTableContent = ({
   return <>{children}</>;
 };
 
-export default ({ columns, onRenameColumn, select, ...props }: TableProps) => {
-  return (
-    <Table.Provider
-      runtimeModel={{ ...tableModel, columns, onRenameColumn, select }}
-    >
-      <UpdateAndRenderTableContent {...props} />
-    </Table.Provider>
-  );
-};
+export default ({ columns, onRenameColumn, select, ...props }: TableProps) => (
+  <Table.Provider
+    runtimeModel={{ ...tableModel, columns, onRenameColumn, select }}
+  >
+    <UpdateAndRenderTableContent {...props} />
+  </Table.Provider>
+);
