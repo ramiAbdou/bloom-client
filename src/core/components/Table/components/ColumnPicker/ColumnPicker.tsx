@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Input from '@components/Element/Input';
 import Picker from '@components/Picker/Picker';
 import { useStoreActions, useStoreState } from '@store/Store';
-import Table, { Column } from '../../Table.store';
+import Table from '../../Table.store';
+import { Column } from '../../Table.types';
 import SortAscendingButton from './SortAscendingButton';
 import SortDescendingButton from './SortDescendingButton';
 
@@ -15,6 +16,7 @@ export default () => {
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
 
   const onRenameColumn = Table.useStoreState((store) => store.onRenameColumn);
+  const updateColumn = Table.useStoreActions((store) => store.updateColumn);
 
   const { id, title, version }: Column = Table.useStoreState(
     ({ columns }) =>
@@ -31,7 +33,11 @@ export default () => {
 
   const modifiedOnRenameColumn = async () => {
     if (!onRenameColumn || !value || title === value) return;
-    await onRenameColumn({ id, title: value, version });
+
+    await onRenameColumn({
+      column: { id, title: value, version },
+      updateColumn
+    });
   };
 
   const onEnter = async () => {

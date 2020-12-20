@@ -1,11 +1,7 @@
 import React from 'react';
 
-import TableContent from '@components/Table/Table';
+// import TableContent from '@components/Table/Table';
 import Table, { tableModel } from '@components/Table/Table.store';
-
-const Content = () => {
-  return <TableContent />;
-};
 
 export default () => {
   return (

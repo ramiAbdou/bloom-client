@@ -5,7 +5,8 @@ import Checkbox from '@components/Element/Checkbox';
 import Tag from '@components/Element/Tag';
 import { IdProps, QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
-import Table, { Row } from '../Table.store';
+import Table from '../Table.store';
+import { Row } from '../Table.types';
 
 const SelectRowCheckbox = ({ id }: IdProps) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(id));

@@ -1,7 +1,8 @@
 import React from 'react';
 import { IoCopy } from 'react-icons/io5';
 
-import Table, { Row } from '@components/Table/Table.store';
+import Table from '@components/Table/Table.store';
+import { Row } from '@components/Table/Table.types';
 import { useStoreActions } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 

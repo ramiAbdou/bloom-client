@@ -1,15 +1,16 @@
 import deepequal from 'fast-deep-equal';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import TableContent from '@components/Table/Table';
-import Table, { Column, Row, tableModel } from '@components/Table/Table.store';
+import TableContent from '@components/Table/Content';
+import Table from '@components/Table/Table';
+import { Column, Row } from '@components/Table/Table.types';
 import { useStoreState } from '@store/Store';
 import Database from '../../Database.store';
 import AddAdminStore from '../AddAdmin/AddAdmin.store';
 import AddAdminModal from '../AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
-const AdminTable = () => {
+export default () => {
   const rows: Row[] = useStoreState(({ db }) => {
     const { community } = db;
     const { members, users } = db.entities;
@@ -29,20 +30,8 @@ const AdminTable = () => {
     }, []);
   }, deepequal);
 
-  const updateData = Table.useStoreActions((store) => store.updateData);
-
-  // Used primarily for the removal of members. This will not update the
-  // data if the number of members doesn't change.
-  useEffect(() => {
-    updateData(rows);
-  }, [rows?.length]);
-
-  return <TableContent />;
-};
-
-export default () => {
-  const loading = Database.useStoreState((store) => store.loading);
   const isOwner = useStoreState(({ db }) => db.isOwner);
+  const loading = Database.useStoreState((store) => store.loading);
 
   const isStoreUpdated = useStoreState(
     ({ db }) => !!db.community.members?.length
@@ -60,12 +49,10 @@ export default () => {
 
   return (
     <>
-      <Table.Provider
-        runtimeModel={{ ...tableModel, columns, select: isOwner }}
-      >
+      <Table columns={columns} rows={rows} select={isOwner}>
         <ActionRow />
-        <AdminTable />
-      </Table.Provider>
+        <TableContent />
+      </Table>
 
       <AddAdminStore.Provider>
         <AddAdminModal />

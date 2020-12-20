@@ -163,11 +163,17 @@ button.#{$PREF}-link { &:active { transform: none; } }
 
   align-items: flex-start;
   margin-left: $sm;
-}
 
-.#{$PREF}-profile > div > div:last-child > p:last-of-type {
-  @extend .meta;
+  > p:first-child {
+    text-align: left;
 
-  color: $gray-3;
-  text-transform: capitalize;
+    @include OVERFLOW_ELLIPSES;
+  }
+
+  > p:last-child {
+    @extend .meta;
+
+    color: $gray-3;
+    text-transform: capitalize;
+  }
 }

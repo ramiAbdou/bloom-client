@@ -4,7 +4,8 @@ import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 import Checkbox from '@components/Element/Checkbox';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Table, { Column } from '../Table.store';
+import Table from '../Table.store';
+import { Column } from '../Table.types';
 
 const SelectAllCheckbox = () => {
   const isAllPageSelected = Table.useStoreState(
