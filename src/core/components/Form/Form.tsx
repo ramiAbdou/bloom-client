@@ -6,7 +6,7 @@ import Form, { formatQuestions, formModel } from './Form.store';
 import { FormItemData, OnFormSubmit } from './Form.types';
 
 interface FormProps extends ChildrenProps, ClassNameProps {
-  questions: FormItemData[];
+  questions?: FormItemData[];
   onSubmit?: OnFormSubmit;
 }
 

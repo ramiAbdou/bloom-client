@@ -2,14 +2,15 @@ import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
-import { LoadingProps } from '@constants';
+import Form from '@components/Form/Form.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { useStripe } from '@stripe/react-stripe-js';
 import Dues from '../Dues.store';
 
-export default (props: LoadingProps) => {
-  const memberTypeId = Dues.useStoreState((store) => store.memberTypeId);
+export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const memberTypeId = Dues.useStoreState((store) => store.memberTypeId);
+  const isLoading = Form.useStoreState((store) => store.isLoading);
 
   const amount: number = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
@@ -33,9 +34,9 @@ export default (props: LoadingProps) => {
     <PrimaryButton
       large
       disabled={!stripe}
+      loading={isLoading}
       loadingText="Paying..."
       type="submit"
-      {...props}
     >
       Pay ${amount}
     </PrimaryButton>

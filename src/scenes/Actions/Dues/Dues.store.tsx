@@ -8,26 +8,27 @@ type DuesModel = {
   toggleIsTypeListOpen: Action<DuesModel>;
 };
 
-export default createContextStore<DuesModel>(
-  {
-    isTypeListOpen: false,
+export const duesModel: DuesModel = {
+  isTypeListOpen: false,
 
-    memberTypeId: null,
+  memberTypeId: null,
 
-    setIsTypeListOpen: action((state, isTypeListOpen: boolean) => ({
-      ...state,
-      isTypeListOpen
-    })),
+  setIsTypeListOpen: action((state, isTypeListOpen: boolean) => ({
+    ...state,
+    isTypeListOpen
+  })),
 
-    setMemberTypeId: action((state, memberTypeId: string) => ({
-      ...state,
-      memberTypeId
-    })),
+  setMemberTypeId: action((state, memberTypeId: string) => ({
+    ...state,
+    memberTypeId
+  })),
 
-    toggleIsTypeListOpen: action(({ isTypeListOpen, ...state }) => ({
-      ...state,
-      isTypeListOpen: !isTypeListOpen
-    }))
-  },
-  { disableImmer: true }
-);
+  toggleIsTypeListOpen: action(({ isTypeListOpen, ...state }) => ({
+    ...state,
+    isTypeListOpen: !isTypeListOpen
+  }))
+};
+
+export default createContextStore<DuesModel>((runtimeModel) => runtimeModel, {
+  disableImmer: true
+});

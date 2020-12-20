@@ -1,26 +1,19 @@
 import day from 'dayjs';
-import { useMutation } from 'graphql-hooks';
-import React, { FormEvent, useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import ErrorMessage from '@components/Misc/ErrorMessage';
+import FormErrorMessage from '@components/Form/components/ErrorMessage';
+import Form from '@components/Form/Form';
 import Modal from '@components/Modal/Modal';
 import { isProduction, ModalType } from '@constants';
-import { Schema } from '@store/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
-import {
-  CardElement,
-  Elements,
-  useElements,
-  useStripe
-} from '@stripe/react-stripe-js';
+import { useStoreState } from '@store/Store';
+import { CardElement, Elements } from '@stripe/react-stripe-js';
 import { loadStripe, StripeCardElementOptions } from '@stripe/stripe-js';
-import { getGraphQLError } from '@util/util';
 import PayButton from './components/PayButton';
 import DuesTypeOptions from './components/TypeOptions';
-import { CONFIRM_PAYMENT_INTENT, CREATE_PAYMENT_INTENT } from './Dues.gql';
-import Dues from './Dues.store';
+import Dues, { duesModel } from './Dues.store';
 import useFetchStripeAccount from './hooks/useFetchStripeAccount';
+import useSubmitPayment from './hooks/useSubmitPayment';
 
 const options: StripeCardElementOptions = {
   classes: {
@@ -80,94 +73,22 @@ const DuesText = () => {
 };
 
 const DuesModalContent = () => {
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  const memberTypeId: string = useStoreState(({ db }) => {
-    const { byId } = db.entities.types;
-    return byId[db.member.type]?.id;
-  });
-
   const currentTypeId: string = Dues.useStoreState(
     (store) => store.memberTypeId
   );
-
-  const setMemberTypeId = Dues.useStoreActions(
-    (store) => store.setMemberTypeId
-  );
-
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const isFree: boolean = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
     return byId[currentTypeId]?.isFree;
   });
 
-  const elements = useElements();
-  const stripe = useStripe();
-
-  useEffect(() => {
-    if (currentTypeId !== memberTypeId) setMemberTypeId(memberTypeId);
-  }, [memberTypeId]);
-
-  const [createPaymentIntent] = useMutation(CREATE_PAYMENT_INTENT);
-  const [confirmPaymentIntent] = useMutation(CONFIRM_PAYMENT_INTENT);
-
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    setErrorMessage(null);
-    setLoading(true);
-
-    const { data, error } = await createPaymentIntent({
-      variables: { memberTypeId: currentTypeId }
-    });
-
-    if (error) {
-      setErrorMessage(getGraphQLError(error));
-      setLoading(false);
-      return;
-    }
-
-    const clientSecret: string = data.createPaymentIntent;
-
-    const {
-      error: stripeError,
-      paymentIntent
-    } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: { card: elements.getElement(CardElement) }
-    });
-
-    setLoading(false);
-
-    if (stripeError) {
-      setErrorMessage(stripeError.message);
-      return;
-    }
-
-    const { data: confirmData } = await confirmPaymentIntent({
-      variables: { paymentIntentId: paymentIntent.id }
-    });
-
-    mergeEntities({
-      data: confirmData?.confirmPaymentIntent,
-      schema: Schema.MEMBER
-    });
-
-    showToast({ message: 'Your dues have been paid!' });
-    setTimeout(closeModal, 0);
-  };
-
-  const onClose = () => setErrorMessage(null);
+  const submitPayment = useSubmitPayment();
 
   return (
-    <Modal className="s-actions-dues" id={ModalType.PAY_DUES} onClose={onClose}>
-      <h1>Pay Dues</h1>
-      <DuesText />
-
-      <form onSubmit={onSubmit}>
+    <Modal id={ModalType.PAY_DUES}>
+      <Form className="s-actions-dues" onSubmit={submitPayment}>
+        <h1>Pay Dues</h1>
+        <DuesText />
         <DuesTypeOptions />
 
         {!isFree && (
@@ -177,9 +98,9 @@ const DuesModalContent = () => {
           </div>
         )}
 
-        <ErrorMessage message={errorMessage} />
-        <PayButton loading={loading} />
-      </form>
+        <FormErrorMessage />
+        <PayButton />
+      </Form>
     </Modal>
   );
 };
@@ -190,9 +111,14 @@ export default () => {
     return byId[db.community.integrations]?.stripeAccountId;
   });
 
+  const memberTypeId: string = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[db.member.type]?.id;
+  });
+
   useFetchStripeAccount();
 
-  if (!stripeAccount) return null;
+  if (!stripeAccount || !memberTypeId) return null;
 
   const stripePromise = loadStripe(
     isProduction
@@ -208,7 +134,7 @@ export default () => {
       }}
       stripe={stripePromise}
     >
-      <Dues.Provider>
+      <Dues.Provider runtimeModel={{ ...duesModel, memberTypeId }}>
         <DuesModalContent />
       </Dues.Provider>
     </Elements>

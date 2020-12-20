@@ -36,7 +36,7 @@ a.#{$PREF}-email {
   color: $primary;
   margin-bottom: $sm;
   width: fit-content;
-  &:active { transform: scale(0.9); transition: transform 0.3s ease-out; }
+  &:active { transform: scale(0.9); transition: transform 0.2s ease-out; }
 
   > svg { color: inherit; height: $sm; margin-right: $xxs; width: $sm; }
   > p { @extend .meta; color: inherit; }

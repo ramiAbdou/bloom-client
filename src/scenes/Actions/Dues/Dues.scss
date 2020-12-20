@@ -5,7 +5,9 @@ $PREF: 's-actions-dues';
   > span { @extend .sb; }
 }
 
-.#{$PREF} > form > .c-btn { width: 100%; }
+.#{$PREF} > h1 { color: $primary; margin-bottom: $sm; }
+
+.#{$PREF} > .c-btn { width: 100%; }
 
 .#{$PREF}-item {
   margin-bottom: $md;
