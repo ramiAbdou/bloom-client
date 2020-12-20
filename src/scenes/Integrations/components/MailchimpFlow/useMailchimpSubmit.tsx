@@ -1,54 +1,37 @@
 import { useMutation } from 'graphql-hooks';
-import { useCallback, useEffect } from 'react';
 
-import Form from '@components/Form/Form.store';
+import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { UPDATE_MAILCHIMP_LIST_ID } from '../../Integrations.gql';
 
-export default (): VoidFunction => {
-  const options = useStoreState(
-    ({ db }) => db.integrations?.mailchimpLists ?? []
-  );
-
+export default (): OnFormSubmit => {
+  const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const selectedMailchimpList: string = Form.useStoreState(
-    ({ items }) => items[items?.length - 1]?.value
-  );
+  const [updateMailchimpListId] = useMutation(UPDATE_MAILCHIMP_LIST_ID);
 
-  const setIsLoading = Form.useStoreActions((store) => store.setIsLoading);
+  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+    const selectedMailchimpList = items[items?.length - 1]?.value;
 
-  const [updateMailchimpListId, { loading }] = useMutation(
-    UPDATE_MAILCHIMP_LIST_ID
-  );
+    const { id: mailchimpListId } = options.find(
+      ({ name }) => name === selectedMailchimpList
+    );
 
-  // When the Mailchimp list name changes (meaning the user selected a list),
-  // we need to update the function to contain that updated list name value.
-  const result = useCallback(async () => {
-    const { id: mailchimpListId } =
-      options.find(({ name }) => name === selectedMailchimpList) || {};
-
-    if (!mailchimpListId) return;
+    setIsLoading(true);
 
     const { data, error } = await updateMailchimpListId({
       variables: { mailchimpListId }
     });
 
+    setIsLoading(false);
+
     if (error) {
       // If error message, show a toast error message.
       const errorMessage = getGraphQLError(error);
-
-      if (errorMessage) {
-        showToast({
-          message: 'Failed to submit. Please try again soon.',
-          type: 'ERROR'
-        });
-      }
-
+      setErrorMessage(errorMessage);
       return;
     }
 
@@ -60,11 +43,5 @@ export default (): VoidFunction => {
     });
 
     closeModal();
-  }, [selectedMailchimpList, options]);
-
-  useEffect(() => {
-    setIsLoading(loading);
-  }, [loading]);
-
-  return result;
+  };
 };

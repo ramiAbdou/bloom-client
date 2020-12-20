@@ -11,21 +11,6 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import MailchimpFlowContent from './Content';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
-const MailchimpFormContent = () => {
-  const submitMailchimpList = useMailchimpSubmit();
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    submitMailchimpList();
-  };
-
-  return (
-    <form className="s-integrations-onboarding-form" onSubmit={onSubmit}>
-      <MailchimpFlowContent />
-    </form>
-  );
-};
-
 export default () => {
   const {
     isMailchimpAuthenticated,
@@ -36,15 +21,15 @@ export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
 
+  const onSubmitMailchimpList = useMailchimpSubmit();
+
   useEffect(() => {
     showModal(ModalType.MAILCHIMP_FLOW);
   }, []);
 
-  const options = mailchimpLists ?? [];
-
   // This will only be the case if the user loads the page with the query
   // string flow=[name] in the URL without properly going to the backend.
-  if (!!mailchimpListId || !options.length) return null;
+  if (!!mailchimpListId || !mailchimpLists?.length) return null;
 
   const questions: FormItemData[] = [
     {
@@ -58,7 +43,7 @@ export default () => {
       description: `Choose the Mailchimp Audience/List that you would like
     new members to automatically be added to upon joining your
     community.`,
-      options: options.map(({ name }) => name),
+      options: mailchimpLists.map(({ name }) => name),
       required: true,
       title: 'Step 2: Select Audience/List ID',
       type: 'MULTIPLE_CHOICE'
@@ -67,8 +52,12 @@ export default () => {
 
   return (
     <Modal id={ModalType.MAILCHIMP_FLOW} onClose={() => setFlow(null)}>
-      <Form questions={questions}>
-        <MailchimpFormContent />
+      <Form
+        className="s-integrations-onboarding-form"
+        questions={questions}
+        onSubmit={onSubmitMailchimpList}
+      >
+        <MailchimpFlowContent />
       </Form>
     </Modal>
   );
