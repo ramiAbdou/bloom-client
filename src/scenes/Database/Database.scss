@@ -13,7 +13,9 @@ $PREF: 's-database';
   margin-left: $xs;
   padding: 6px;
 
-  @include HOVER { opacity: 1; }
+  // !important overrides the normal .c-btn styling for hover state.
+
+  @include HOVER { opacity: 1 !important; }
 
   &--demote { &::before { margin-left: -$xxs; } }
   &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
