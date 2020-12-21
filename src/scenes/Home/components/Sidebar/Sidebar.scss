@@ -164,7 +164,7 @@ button.#{$PREF}-link { &:active { transform: none; } }
   align-items: flex-start;
   margin-left: $sm;
 
-  > p:first-child {
+  > p {
     text-align: left;
 
     @include OVERFLOW_ELLIPSES;

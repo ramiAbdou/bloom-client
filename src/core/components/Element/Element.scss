@@ -244,7 +244,9 @@ input[type="radio"] ~ div {
 }
 
 input[type="radio"] ~ div > span { @extend .fill; }
-input[type="radio"]:checked ~ div { border-color: $primary; }
+
+input[type="radio"]:checked ~ div,
+input[type="radio"]:hover ~ div { border-color: $primary; }
 
 input[type="radio"]:checked ~ div > span {
   background-color: $primary;
