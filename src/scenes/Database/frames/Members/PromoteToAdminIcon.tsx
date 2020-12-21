@@ -12,8 +12,8 @@ import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
+import DatabaseAction from '../../components/DatabaseAction';
 import { PROMOTE_TO_ADMIN, PromoteToAdminArgs } from '../../Database.gql';
-import DatabaseAction from '../DatabaseAction';
 
 const PromoteToAdminModal = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);

@@ -3,12 +3,12 @@ import { useHistory } from 'react-router-dom';
 import { parseValue } from '@components/Form/Form.store';
 import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
 import useMutation from '@hooks/useMutation';
-import { useStoreState } from '@store/Store';
 import {
   APPLY_FOR_MEMBERSHIP,
   ApplyForMembershipArgs
-} from '../../Application.gql';
-import Application from '../../Application.store';
+} from '@scenes/Application/Application.gql';
+import Application from '@scenes/Application/Application.store';
+import { useStoreState } from '@store/Store';
 
 export default (): OnFormSubmit => {
   const name = useStoreState(({ db }) => db.community?.encodedUrlName);

@@ -7,7 +7,7 @@ import Input from '@components/Element/Input';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { Function, IdProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
-import { AddMemberData } from './AddMember/AddMember.store';
+import { AddMemberData } from '../../Actions/AddMember/AddMember.store';
 
 interface AddModalInputProps extends IdProps {
   isShowingErrors: boolean;

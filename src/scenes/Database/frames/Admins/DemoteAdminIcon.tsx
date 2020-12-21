@@ -11,8 +11,8 @@ import useMutation from '@hooks/useMutation';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
+import DatabaseAction from '../../components/DatabaseAction';
 import { DEMOTE_TO_MEMBER, DemoteToAdminArgs } from '../../Database.gql';
-import DatabaseAction from '../DatabaseAction';
 
 const DemoteToMemberModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);

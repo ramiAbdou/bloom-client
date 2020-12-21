@@ -2,7 +2,7 @@ import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
 import Table from '@components/Table/Table.store';
-import DatabaseAction from '../DatabaseAction';
+import DatabaseAction from '../../components/DatabaseAction';
 
 export default () => {
   const isAnythingSelected = Table.useStoreState(

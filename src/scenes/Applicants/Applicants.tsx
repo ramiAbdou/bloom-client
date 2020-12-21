@@ -8,8 +8,8 @@ import {
   GetPendingApplicantsResult
 } from './Applicants.gql';
 import Applicants from './Applicants.store';
-import ApplicantsCardContainer from './components/Card/Card.container';
 import ApplicantsHeader from './components/Header/Header';
+import ApplicantsCardContainer from './containers/Card';
 
 const useFetchApplicants = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);

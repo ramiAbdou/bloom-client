@@ -3,9 +3,12 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { EncodedUrlNameParams } from '@constants';
 import useQuery from '@hooks/useQuery';
+import {
+  GET_APPLICATION,
+  GetApplicationResult
+} from '@scenes/Application/Application.gql';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_APPLICATION, GetApplicationResult } from '../../Application.gql';
 
 export default (): boolean => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);

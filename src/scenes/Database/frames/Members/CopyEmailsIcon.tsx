@@ -4,7 +4,7 @@ import { IoCopy } from 'react-icons/io5';
 import Table from '@components/Table/Table.store';
 import { Row } from '@components/Table/Table.types';
 import { useStoreActions } from '@store/Store';
-import DatabaseAction from '../DatabaseAction';
+import DatabaseAction from '../../components/DatabaseAction';
 
 /**
  * Copies all of the selected members' emails to clipboard, in a

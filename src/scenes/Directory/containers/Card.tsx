@@ -5,18 +5,14 @@ import React, { useEffect } from 'react';
 
 import { IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Directory from '../../Directory.store';
-import MemberCard from './Card';
-import { MemberCardData } from './Card.store';
+import MemberCard from '../components/Card/Card';
+import { MemberCardData } from '../components/Card/Card.store';
+import Directory from '../Directory.store';
 
 export default () => {
   const loading = Directory.useStoreState((store) => store.loading);
   const searchString = Directory.useStoreState((store) => store.searchString);
   const numMembers = Directory.useStoreState((store) => store.numMembers);
-
-  const setNumMembers = Directory.useStoreActions(
-    (store) => store.setNumMembers
-  );
 
   const members: MemberCardData[] = useStoreState(({ db }) => {
     const { members: membersEntity, questions, users } = db.entities;
@@ -79,6 +75,10 @@ export default () => {
           threshold: matchSorter.rankings.ACRONYM
         });
   }, deepequal);
+
+  const setNumMembers = Directory.useStoreActions(
+    (store) => store.setNumMembers
+  );
 
   useEffect(() => {
     const { length } = members ?? [];

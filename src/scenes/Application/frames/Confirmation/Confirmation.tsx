@@ -5,7 +5,7 @@ import { Redirect, useParams } from 'react-router-dom';
 
 import { EncodedUrlNameParams } from '@constants';
 import { useStoreState } from '@store/Store';
-import Application from '../Application.store';
+import Application from '../../Application.store';
 
 const ConfirmationHeader = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);

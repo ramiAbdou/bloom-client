@@ -10,8 +10,8 @@ import { IdProps, ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { CREATE_MEMBERS, CreateMembersArgs } from '../../Database.gql';
-import AddModalInput from '../AddModalInput';
+import { CREATE_MEMBERS, CreateMembersArgs } from '../../Database/Database.gql';
+import AddModalInput from '../../Database/components/AddModalInput';
 import AddMember, { doesInputHaveError } from './AddMember.store';
 
 const AddMemberInput = memo(({ id }: IdProps) => {

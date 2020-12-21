@@ -6,9 +6,9 @@ import Table from '@components/Table/Table';
 import { Column, OnRenameColumn, Row } from '@components/Table/Table.types';
 import useMutation from '@hooks/useMutation';
 import { IMember, IQuestion } from '@store/entities';
+import Loading from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../../Database.gql';
-import Database from '../../Database.store';
 import ActionRow from './ActionRow';
 
 export default () => {
@@ -37,7 +37,7 @@ export default () => {
     return db.community.questions?.map((id: string) => byId[id]);
   });
 
-  const loading = Database.useStoreState((store) => store.loading);
+  const loading = Loading.useStoreState((store) => store.loading);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [renameQuestion] = useMutation<IQuestion, RenameQuestionArgs>({

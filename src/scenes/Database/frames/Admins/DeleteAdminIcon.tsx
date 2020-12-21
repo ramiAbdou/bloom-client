@@ -7,16 +7,14 @@ import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { takeFirst } from '@util/util';
+import DatabaseAction from '../../components/DatabaseAction';
 import { DELETE_MEMBERS } from '../../Database.gql';
-import DatabaseAction from '../DatabaseAction';
 
 const DeleteMembersModal = () => {
   const members = useStoreState(({ db }) => db.community.members);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const updateCommunity = useStoreActions(({ db }) => db.updateCommunity);
-
   const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const numMembers = Table.useStoreState(
@@ -28,14 +26,14 @@ const DeleteMembersModal = () => {
 
     // Filter the community members to NOT have the selected members.
     updateCommunity({
-      members: members.filter((id: string) => !memberIds.includes(id))
+      members: members?.filter((id: string) => !memberIds.includes(id))
     });
 
     // After the toast finishes showing, we call the mutation that actually
     // deletes the members from the community. We supply an undo function
     // that resets the members.
     showToast({
-      message: `${numMembers} member(s) removed from the community.`,
+      message: `${numMembers} admin(s) removed from the community.`,
       mutationOptionsOnClose: [DELETE_MEMBERS, { variables: { memberIds } }],
       onUndo: () => updateCommunity({ members: allMembers }),
       type: 'PESSIMISTIC',
@@ -46,47 +44,26 @@ const DeleteMembersModal = () => {
   };
 
   return (
-    <Modal confirmation id={ModalType.DELETE_MEMBERS}>
-      <h1>Remove {numMembers} member(s)?</h1>
+    <Modal confirmation id={ModalType.DELETE_ADMINS}>
+      <h1>Remove admin(s)?</h1>
+
       <p>
-        Are you sure you want to remove these member(s)? They will no longer
-        have access to your community and they will not show up in the member
+        Are you sure you want to remove these admin(s)? They will no longer have
+        access to your community and they will not show up in the member
         database.
       </p>
+
       <div>
         <PrimaryButton onClick={onRemove}>Remove</PrimaryButton>
-        <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
+        <OutlineButton onClick={() => closeModal}>Cancel</OutlineButton>
       </div>
     </Modal>
   );
 };
 
 export default () => {
-  const isOwner = useStoreState(({ db }) => db.isOwner);
-  const memberId = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const selectedRowIds = Table.useStoreState((store) => store.selectedRowIds);
-
-  const notEnoughPermissions: boolean = useStoreState(({ db }) => {
-    if (isOwner) return false;
-    const { allIds, byId } = db.entities.members;
-    const adminIds = allIds.filter((id: string) => !!byId[id].role);
-    if (selectedRowIds.some((id: string) => adminIds.includes(id))) return true;
-    return false;
-  });
-
-  const selectedSelf: boolean = selectedRowIds.includes(memberId);
-
-  const tooltip: string = takeFirst([
-    [selectedSelf, `Can't delete member(s) because you selected yourself.`],
-    [
-      notEnoughPermissions,
-      `You don't have the permissions to delete other admins.`
-    ],
-    'Delete Member(s)'
-  ]);
-
-  const onClick = () => showModal(ModalType.DELETE_MEMBERS);
+  const onClick = () => showModal(ModalType.DELETE_ADMINS);
 
   return (
     <>
@@ -94,8 +71,7 @@ export default () => {
       <DatabaseAction
         Icon={IoTrash}
         className="s-database-action--delete"
-        disabled={selectedSelf || notEnoughPermissions}
-        tooltip={tooltip}
+        tooltip="Delete Admin"
         onClick={onClick}
       />
     </>

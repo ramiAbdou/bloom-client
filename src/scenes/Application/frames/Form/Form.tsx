@@ -6,9 +6,9 @@ import Form from '@components/Form/Form';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
+import useApplyForMembership from './hooks/useApplyForMembership';
+import useFetchApplication from './hooks/useFetchApplication';
 import SubmitButton from './SubmitButton';
-import useApplyForMembership from './useApplyForMembership';
-import useFetchApplication from './useFetchApplication';
 
 export default () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {

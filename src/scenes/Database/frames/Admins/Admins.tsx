@@ -4,10 +4,10 @@ import React from 'react';
 import TableContent from '@components/Table/Content';
 import Table from '@components/Table/Table';
 import { Column, Row } from '@components/Table/Table.types';
+import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
-import Database from '../../Database.store';
-import AddAdminStore from '../AddAdmin/AddAdmin.store';
-import AddAdminModal from '../AddAdmin/AddAdminModal';
+import AddAdminStore from '../../components/AddAdmin/AddAdmin.store';
+import AddAdminModal from '../../components/AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
 export default () => {
@@ -31,7 +31,7 @@ export default () => {
   }, deepequal);
 
   const isOwner = useStoreState(({ db }) => db.isOwner);
-  const loading = Database.useStoreState((store) => store.loading);
+  const loading = Loading.useStoreState((store) => store.loading);
 
   const isStoreUpdated = useStoreState(
     ({ db }) => !!db.community.members?.length
