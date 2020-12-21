@@ -37,6 +37,9 @@ const DuesModalContent = () => {
 
   const createSubscription = useCreateSubscription();
 
+  // Will be null if the Stripe object hasn't been loaded yet.
+  if (!createSubscription) return null;
+
   return (
     <Modal id={ModalType.PAY_DUES}>
       <Form className="s-actions-dues" onSubmit={createSubscription}>

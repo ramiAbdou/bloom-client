@@ -26,6 +26,8 @@ export default function useCreateSubscription(): OnFormSubmit {
     query: CREATE_SUBSCRIPTION
   });
 
+  if (!stripe) return null;
+
   return async ({ setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
     // Start the submit function by clearing the error message and set the
     // form state to loading.

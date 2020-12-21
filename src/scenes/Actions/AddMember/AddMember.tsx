@@ -1,49 +1,19 @@
-import deepequal from 'fast-deep-equal';
-import React, { memo } from 'react';
+import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
 import UnderlineButton from '@components/Button/UnderlineButton';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
-import { IdProps, ModalType } from '@constants';
+import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { CREATE_MEMBERS, CreateMembersArgs } from '../../Database/Database.gql';
-import AddModalInput from '../../Database/components/AddModalInput';
 import AddMember, { doesInputHaveError } from './AddMember.store';
+import AddMemberInput from './components/Input';
 
-const AddMemberInput = memo(({ id }: IdProps) => {
-  const isOwner = useStoreState(({ db }) => db.isOwner);
-
-  const isShowingErrors = AddMember.useStoreState(
-    (store) => store.isShowingErrors
-  );
-
-  const member = AddMember.useStoreState(
-    (store) => store.getMember(id),
-    deepequal
-  );
-
-  const deleteMember = AddMember.useStoreActions((store) => store.deleteMember);
-  const updateMember = AddMember.useStoreActions((store) => store.updateMember);
-  const toggleAdmin = AddMember.useStoreActions((store) => store.toggleAdmin);
-
-  return (
-    <AddModalInput
-      id={id}
-      isShowingErrors={isShowingErrors}
-      member={member}
-      showAdminCheckbox={isOwner}
-      toggleAdmin={toggleAdmin}
-      updateMember={updateMember}
-      onDelete={() => deleteMember(id)}
-    />
-  );
-});
-
-export default () => {
+const AddMemberContent = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
@@ -131,3 +101,9 @@ export default () => {
     </Modal>
   );
 };
+
+export default () => (
+  <AddMember.Provider>
+    <AddMemberContent />
+  </AddMember.Provider>
+);
