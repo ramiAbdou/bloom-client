@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AnalyticsSimple from '../../SimpleCard';
+import SimpleCard from '@scenes/Analytics/components/SimpleCard';
 import Members from '../Members.store';
 
 export default () => {
@@ -13,7 +13,7 @@ export default () => {
   if (totalGrowth === null) return null;
 
   return (
-    <AnalyticsSimple
+    <SimpleCard
       label="Total Members"
       percentage={totalGrowth}
       value={numMembers}

@@ -6,10 +6,10 @@ import { GET_DATABASE, GetDatabaseResult } from '@scenes/Database/Database.gql';
 import Loading from '@store/Loading.store';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import DuesAnalytics from './components/Dues/Dues';
-import EventsAnalytics from './components/Events/Events';
 import AnalyticsHeader from './components/Header';
-import MembersAnalytics from './components/Members/Members';
+import DuesAnalytics from './pages/Dues/Dues';
+import EventsAnalytics from './pages/Events/Events';
+import MembersAnalytics from './pages/Members/Members';
 
 const useFetchDatabase = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);

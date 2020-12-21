@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 
 import useBreakpoint from '@hooks/useBreakpoint';
+import { LinkOptions } from '@scenes/Home/Home.store';
 import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
-import { LinkOptions } from '../../../Home.store';
 import SidebarLink from './Link';
 
 type LinkSectionProps = { links: LinkOptions[]; title: string };

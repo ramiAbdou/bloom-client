@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AnalyticsSimple from '../../SimpleCard';
+import AnalyticsSimple from '@scenes/Analytics/components/SimpleCard';
 
 export default () => {
   return (

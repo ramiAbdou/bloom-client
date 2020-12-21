@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import Button from '@components/Button/Button';
 import { OnClickProps } from '@constants';
+import Home, { LinkOptions } from '@scenes/Home/Home.store';
 import { useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Home, { LinkOptions } from '../../../Home.store';
 
 interface SidebarLinkProps extends LinkOptions, OnClickProps {}
 

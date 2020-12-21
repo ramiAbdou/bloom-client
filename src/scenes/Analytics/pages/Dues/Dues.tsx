@@ -1,7 +1,7 @@
 import React from 'react';
 
-import StaticDuesAnalytics from './Static/Static';
-import DuesTable from './Table/Table';
+import StaticDuesAnalytics from './components/Static/Static';
+import DuesTable from './components/Table';
 
 export default () => {
   return (
