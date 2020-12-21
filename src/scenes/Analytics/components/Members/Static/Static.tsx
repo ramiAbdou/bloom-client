@@ -1,9 +1,11 @@
-import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
+import useQuery from '@hooks/useQuery';
 import {
   GET_ACTIVE_MEMBER_ANALYTICS,
-  GET_TOTAL_MEMBER_ANALYTICS
+  GET_TOTAL_MEMBER_ANALYTICS,
+  GetActiveMemberAnalyticsResult,
+  GetTotalMemberAnalyticsResult
 } from '../../../Analytics.gql';
 import Members from '../Members.store';
 import ActiveMembersCard from './ActiveMembersCard';
@@ -32,19 +34,22 @@ const FetchMemberAnalytics = () => {
   const initActive = Members.useStoreActions((store) => store.initActive);
   const initTotal = Members.useStoreActions((store) => store.initTotal);
 
-  const { data: activeData } = useQuery(GET_ACTIVE_MEMBER_ANALYTICS);
-  const { data: totalData } = useQuery(GET_TOTAL_MEMBER_ANALYTICS);
+  const { data: activeData } = useQuery<GetActiveMemberAnalyticsResult>({
+    name: 'getActiveMemberAnalytics',
+    query: GET_ACTIVE_MEMBER_ANALYTICS
+  });
+
+  const { data: totalData } = useQuery<GetTotalMemberAnalyticsResult>({
+    name: 'getTotalMemberAnalytics',
+    query: GET_TOTAL_MEMBER_ANALYTICS
+  });
 
   useEffect(() => {
-    const result = activeData?.getActiveMemberAnalytics ?? {};
-    if (!result) return;
-    initActive(result);
+    if (activeData) initActive(activeData);
   }, [activeData]);
 
   useEffect(() => {
-    const result = totalData?.getTotalMemberAnalytics ?? {};
-    if (!result) return;
-    initTotal(result);
+    if (totalData) initTotal(totalData);
   }, [totalData]);
 
   return null;

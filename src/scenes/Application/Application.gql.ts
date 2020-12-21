@@ -1,6 +1,25 @@
 import { mutation, query } from 'gql-query-builder';
 
-export const GET_MEMBERSHIP_FORM = query({
+import { ICommunity } from '@store/entities';
+
+export const APPLY_FOR_MEMBERSHIP = mutation({
+  fields: ['id'],
+  operation: 'applyForMembership',
+  variables: {
+    data: { type: '[MemberDataInput!]!' },
+    email: { required: true },
+    encodedUrlName: { required: true }
+  }
+}).query;
+
+export interface GetApplicationResult extends ICommunity {
+  application: {
+    description: string;
+    title: string;
+  };
+}
+
+export const GET_APPLICATION = query({
   fields: [
     'autoAccept',
     'encodedUrlName',
@@ -28,14 +47,4 @@ export const GET_MEMBERSHIP_FORM = query({
   ],
   operation: 'getApplication',
   variables: { encodedUrlName: { required: true } }
-}).query;
-
-export const APPLY_FOR_MEMBERSHIP = mutation({
-  fields: ['id'],
-  operation: 'applyForMembership',
-  variables: {
-    data: { type: '[MemberDataInput!]!' },
-    email: { required: true },
-    encodedUrlName: { required: true }
-  }
 }).query;

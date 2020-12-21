@@ -1,6 +1,7 @@
-import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
+import useQuery from '@hooks/useQuery';
+import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import MemberCardContainer from './components/Card/Card.container';
@@ -13,21 +14,20 @@ const useFetchDirectory = () => {
   const currentLoading = Directory.useStoreState((store) => store.loading);
   const setLoading = Directory.useStoreActions((store) => store.setLoading);
 
-  const { data, loading } = useQuery(GET_DIRECTORY);
+  const { data: community, loading } = useQuery<ICommunity>({
+    name: 'getDirectory',
+    query: GET_DIRECTORY
+  });
 
   useEffect(() => {
     if (loading !== currentLoading) setLoading(loading);
   }, [loading]);
 
   useEffect(() => {
-    const { id, members, questions } = data?.getDirectory ?? {};
-    if (!id) return;
-
-    mergeEntities({
-      data: { id, members, questions },
-      schema: Schema.COMMUNITY
-    });
-  }, [data]);
+    if (community) {
+      mergeEntities({ data: community, schema: Schema.COMMUNITY });
+    }
+  }, [community]);
 };
 
 const DirectoryContent = () => {

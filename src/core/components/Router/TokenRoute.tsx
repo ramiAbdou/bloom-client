@@ -1,9 +1,9 @@
 import { query } from 'gql-query-builder';
-import { useQuery } from 'graphql-hooks';
 import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
+import useQuery from '@hooks/useQuery';
 
 // We're not exporting this to another file since this is the only place we
 // need it.
@@ -17,11 +17,13 @@ type TokenRouteProps = { token: string };
 export default ({ token }: TokenRouteProps) => {
   const { push } = useHistory();
 
-  const { data, loading } = useQuery(VERIFY_LOGIN_TOKEN, {
+  const { data: isVerified, loading } = useQuery<boolean>({
+    name: 'verifyLoginToken',
+    query: VERIFY_LOGIN_TOKEN,
     variables: { loginToken: token }
   });
 
-  if (data?.verifyLoginToken) {
+  if (isVerified) {
     push(window.location.pathname);
     return null;
   }

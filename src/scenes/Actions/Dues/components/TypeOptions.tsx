@@ -1,10 +1,10 @@
 import deepequal from 'fast-deep-equal';
 import { motion } from 'framer-motion';
-import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
 import Radio from '@components/Element/Radio';
+import useQuery from '@hooks/useQuery';
 import { IMemberType } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -13,18 +13,21 @@ import Dues from '../Dues.store';
 
 const useFetchMemberTypes = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const { data, loading } = useQuery(GET_MEMBER_TYPES);
+
+  const { data: types, loading } = useQuery<IMemberType[]>({
+    name: 'getMemberTypes',
+    query: GET_MEMBER_TYPES
+  });
 
   useEffect(() => {
-    const result = data?.getMemberTypes;
-    if (!result) return;
+    if (!types) return;
 
     mergeEntities({
       communityReferenceColumn: 'types',
-      data: result,
+      data: types,
       schema: [Schema.MEMBER_TYPE]
     });
-  }, [data]);
+  }, [types]);
 
   return loading;
 };

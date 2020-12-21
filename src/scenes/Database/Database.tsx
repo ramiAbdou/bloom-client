@@ -1,7 +1,8 @@
-import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
+import useQuery from '@hooks/useQuery';
+import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import Admins from './components/Admins/Admins';
@@ -15,7 +16,10 @@ const useFetchDatabase = () => {
   const currentLoading = Database.useStoreState((store) => store.loading);
   const setLoading = Database.useStoreActions((store) => store.setLoading);
 
-  const { data, loading } = useQuery(GET_DATABASE);
+  const { data: community, loading } = useQuery<ICommunity>({
+    name: 'getDatabase',
+    query: GET_DATABASE
+  });
 
   useEffect(() => {
     // Since we need to use the loading state in the header, we set the
@@ -24,20 +28,12 @@ const useFetchDatabase = () => {
   }, [loading]);
 
   useEffect(() => {
-    const result = data?.getDatabase;
-    if (!result) return;
+    if (!community) return;
 
     // After fetching the member database, we update both the members AND
     // the member questions.
-    mergeEntities({
-      data: {
-        ...result,
-        members: result.members,
-        questions: result.questions
-      },
-      schema: Schema.COMMUNITY
-    });
-  }, [data]);
+    mergeEntities({ data: community, schema: Schema.COMMUNITY });
+  }, [community]);
 };
 
 const DatabaseContent = () => {

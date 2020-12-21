@@ -1,11 +1,11 @@
-import { useQuery } from 'graphql-hooks';
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { EncodedUrlNameParams } from '@constants';
+import useQuery from '@hooks/useQuery';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_MEMBERSHIP_FORM } from '../../Application.gql';
+import { GET_APPLICATION, GetApplicationResult } from '../../Application.gql';
 
 export default (): boolean => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
@@ -14,29 +14,31 @@ export default (): boolean => {
   const { encodedUrlName } = useParams() as EncodedUrlNameParams;
 
   // Retreive the form from the server.
-  const { data, error, loading } = useQuery(GET_MEMBERSHIP_FORM, {
+  const { data: community, error, loading } = useQuery<
+    GetApplicationResult,
+    EncodedUrlNameParams
+  >({
+    name: 'getApplication',
+    query: GET_APPLICATION,
     variables: { encodedUrlName }
   });
 
   useEffect(() => {
-    const { id, application, ...rest } = data?.getApplication ?? {};
-    if (!id) return;
+    if (!community) return;
 
     // Merge the data into the front-end state.
-    const { description, questions, title } = application;
+    const { description, title } = community.application;
 
     mergeEntities({
       data: {
-        ...rest,
+        ...community,
         applicationDescription: description,
-        applicationTitle: title,
-        id,
-        questions
+        applicationTitle: title
       },
       schema: Schema.COMMUNITY,
       setActiveId: true
     });
-  }, [data]);
+  }, [community]);
 
   useEffect(() => {
     // If there is an error when fetching the application data, then we want to

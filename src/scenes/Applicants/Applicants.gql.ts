@@ -1,5 +1,11 @@
 import { mutation, query } from 'gql-query-builder';
 
+import { ICommunity } from '@store/entities';
+
+export interface GetPendingApplicantsResult extends ICommunity {
+  application: any;
+}
+
 export const GET_PENDING_APPLICATIONS = query({
   fields: [
     'id',

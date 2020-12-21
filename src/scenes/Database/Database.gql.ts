@@ -1,5 +1,7 @@
 import { mutation, query } from 'gql-query-builder';
 
+import { IMember, IQuestion } from '@store/entities';
+
 export const CREATE_MEMBERS = mutation({
   fields: [
     'id',
@@ -22,6 +24,12 @@ export const DEMOTE_TO_MEMBER = mutation({
   operation: 'demoteToMember',
   variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
+
+export interface GetDatabaseResult {
+  id: string;
+  members: IMember;
+  questions: IQuestion[];
+}
 
 export const GET_DATABASE = query({
   fields: [
