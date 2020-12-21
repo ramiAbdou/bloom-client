@@ -26,7 +26,7 @@ const useFetchApplicants = () => {
   }, [loading]);
 
   useEffect(() => {
-    if (community) return;
+    if (!community) return;
 
     mergeEntities({
       data: { ...community, questions: community.application.questions },
