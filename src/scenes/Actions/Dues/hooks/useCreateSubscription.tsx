@@ -10,7 +10,7 @@ import {
 } from '../Dues.gql';
 import Dues from '../Dues.store';
 
-export default (): OnFormSubmit => {
+export default function useCreateSubscription(): OnFormSubmit {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const selectedTypeId = Dues.useStoreState((store) => store.memberTypeId);
@@ -70,4 +70,4 @@ export default (): OnFormSubmit => {
     // Needs to change, to show confirmation screen.
     closeModal();
   };
-};
+}

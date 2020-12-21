@@ -1,36 +1,12 @@
 import deepequal from 'fast-deep-equal';
 import { motion } from 'framer-motion';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import UnderlineButton from '@components/Button/UnderlineButton';
 import Radio from '@components/Element/Radio';
-import useQuery from '@hooks/useQuery';
 import { IMemberType } from '@store/entities';
-import { Schema } from '@store/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_MEMBER_TYPES } from '../Dues.gql';
+import { useStoreState } from '@store/Store';
 import Dues from '../Dues.store';
-
-const useFetchMemberTypes = () => {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-
-  const { data: types, loading } = useQuery<IMemberType[]>({
-    name: 'getMemberTypes',
-    query: GET_MEMBER_TYPES
-  });
-
-  useEffect(() => {
-    if (!types) return;
-
-    mergeEntities({
-      communityReferenceColumn: 'types',
-      data: types,
-      schema: [Schema.MEMBER_TYPE]
-    });
-  }, [types]);
-
-  return loading;
-};
 
 const TypeOptionList = () => {
   const allTypes: IMemberType[] = useStoreState(({ db }) => {
@@ -91,8 +67,7 @@ export default () => {
     (store) => store.toggleIsTypeListOpen
   );
 
-  const loading = useFetchMemberTypes();
-  if (loading || !currentType) return null;
+  if (!currentType) return null;
 
   const onClick = () => toggleIsTypeListOpen();
 

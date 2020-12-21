@@ -20,11 +20,11 @@ export const CREATE_SUBSCRIPTION = mutation({
   }
 }).query;
 
-export const GET_MEMBER_TYPES = query({
-  fields: ['id', 'amount', 'isFree', 'name', 'recurrence'],
-  operation: 'getMemberTypes'
-}).query;
-
-export const GET_STRIPE_ACCOUNT_ID = query({
-  operation: 'getStripeAccountId'
+export const GET_DUES_INFORMATION = query({
+  fields: [
+    'id',
+    { integrations: ['stripeAccountId'] },
+    { types: ['id', 'amount', 'isFree', 'name', 'recurrence'] }
+  ],
+  operation: 'getDuesInformation'
 }).query;
