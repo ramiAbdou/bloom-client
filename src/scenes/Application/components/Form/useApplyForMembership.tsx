@@ -1,11 +1,13 @@
-import { useMutation } from 'graphql-hooks';
 import { useHistory } from 'react-router-dom';
 
 import { parseValue } from '@components/Form/Form.store';
 import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
+import useMutation from '@hooks/useMutation';
 import { useStoreState } from '@store/Store';
-import { getGraphQLError } from '@util/util';
-import { APPLY_FOR_MEMBERSHIP } from '../../Application.gql';
+import {
+  APPLY_FOR_MEMBERSHIP,
+  ApplyForMembershipArgs
+} from '../../Application.gql';
 import Application from '../../Application.store';
 
 export default (): OnFormSubmit => {
@@ -13,7 +15,11 @@ export default (): OnFormSubmit => {
   const setEmail = Application.useStoreActions((store) => store.setEmail);
 
   const { push } = useHistory();
-  const [applyForMembership] = useMutation(APPLY_FOR_MEMBERSHIP);
+
+  const [applyForMembership] = useMutation<any, ApplyForMembershipArgs>({
+    name: 'applyForMembership',
+    query: APPLY_FOR_MEMBERSHIP
+  });
 
   return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
     const dataToSubmit = items.map(({ id, value }) => ({
@@ -30,15 +36,16 @@ export default (): OnFormSubmit => {
     setIsLoading(true);
 
     const { data, error } = await applyForMembership({
-      variables: { data: dataToSubmit, email, encodedUrlName: name }
+      data: dataToSubmit,
+      email,
+      encodedUrlName: name
     });
 
     // Manually reset the isLoading variable to false.
     setIsLoading(false);
 
     if (error) {
-      const errorMessage = getGraphQLError(error);
-      setErrorMessage(errorMessage);
+      setErrorMessage(error);
       return;
     }
 

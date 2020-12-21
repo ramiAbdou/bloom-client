@@ -1,17 +1,21 @@
-import { useMutation } from 'graphql-hooks';
-
 import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
+import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { getGraphQLError } from '@util/util';
-import { UPDATE_MAILCHIMP_LIST_ID } from '../../Integrations.gql';
+import {
+  UPDATE_MAILCHIMP_LIST_ID,
+  UpdateMailchimpListIdArgs
+} from '../../Integrations.gql';
 
 export default (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
-  const [updateMailchimpListId] = useMutation(UPDATE_MAILCHIMP_LIST_ID);
+  const [updateMailchimpListId] = useMutation<any, UpdateMailchimpListIdArgs>({
+    name: 'updateMailchimpListId',
+    query: UPDATE_MAILCHIMP_LIST_ID
+  });
 
   return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
     const selectedMailchimpList = items[items?.length - 1]?.value;
@@ -22,26 +26,20 @@ export default (): OnFormSubmit => {
 
     setIsLoading(true);
 
-    const { data, error } = await updateMailchimpListId({
-      variables: { mailchimpListId }
+    const { data: integrations, error } = await updateMailchimpListId({
+      mailchimpListId
     });
 
     setIsLoading(false);
 
     if (error) {
-      // If error message, show a toast error message.
-      const errorMessage = getGraphQLError(error);
-      setErrorMessage(errorMessage);
+      setErrorMessage(error);
       return;
     }
 
     // If the function is successful, update the entities with the new
     // Mailchimp information and close the modal.
-    mergeEntities({
-      data: { ...data.updateMailchimpListId },
-      schema: Schema.INTEGRATIONS
-    });
-
+    mergeEntities({ data: integrations, schema: Schema.INTEGRATIONS });
     closeModal();
   };
 };

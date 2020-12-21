@@ -1,10 +1,10 @@
-import { useMutation } from 'graphql-hooks';
 import React from 'react';
 
 import OutlineButton from '@components/Button/OutlineButton';
 import PrimaryButton from '@components/Button/PrimaryButton';
+import useMutation from '@hooks/useMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { RESPOND_TO_MEMBERS } from '../../Applicants.gql';
+import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../../Applicants.gql';
 
 type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
 
@@ -18,14 +18,16 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
     });
   });
 
-  const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
+  const [respondToMembers] = useMutation<boolean, RespondToMembersArgs>({
+    name: 'respondToMembers',
+    query: RESPOND_TO_MEMBERS,
     variables: { memberIds: pendingApplicantIds, response }
   });
 
   const onClick = async () => {
     // Call to the server.
-    const { data } = await respondToMembers();
-    if (!data?.respondToMembers) return;
+    const { error } = await respondToMembers();
+    if (error) return;
 
     updateEntities({
       entityName: 'members',

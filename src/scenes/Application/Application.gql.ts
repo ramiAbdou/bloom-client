@@ -2,6 +2,12 @@ import { mutation, query } from 'gql-query-builder';
 
 import { ICommunity } from '@store/entities';
 
+export interface ApplyForMembershipArgs {
+  data: { questionId: string; value: any }[];
+  email: string;
+  encodedUrlName: string;
+}
+
 export const APPLY_FOR_MEMBERSHIP = mutation({
   fields: ['id'],
   operation: 'applyForMembership',
@@ -13,10 +19,7 @@ export const APPLY_FOR_MEMBERSHIP = mutation({
 }).query;
 
 export interface GetApplicationResult extends ICommunity {
-  application: {
-    description: string;
-    title: string;
-  };
+  application: { description: string; title: string };
 }
 
 export const GET_APPLICATION = query({

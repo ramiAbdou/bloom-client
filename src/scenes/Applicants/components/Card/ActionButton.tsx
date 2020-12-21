@@ -1,4 +1,3 @@
-import { useMutation } from 'graphql-hooks';
 import React, { MutableRefObject } from 'react';
 import {
   IoCheckmarkCircle,
@@ -7,9 +6,10 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
+import useMutation from '@hooks/useMutation';
 import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
-import { RESPOND_TO_MEMBERS } from '../../Applicants.gql';
+import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../../Applicants.gql';
 import Applicant from './Card.store';
 
 // In the context of the ExpandedCard, which exits the modal.
@@ -29,14 +29,16 @@ export const AcceptButton = () => {
 
   const ref: MutableRefObject<HTMLElement> = useTooltip('Accept');
 
-  const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
+  const [respondToMembers] = useMutation<boolean, RespondToMembersArgs>({
+    name: 'respondToMembers',
+    query: RESPOND_TO_MEMBERS,
     variables: { memberIds: [applicantId], response: 'ACCEPTED' }
   });
 
   const onClick = async () => {
     // Call to the server.
-    const { data } = await respondToMembers();
-    if (!data?.respondToMembers) return;
+    const { error } = await respondToMembers();
+    if (error) return;
 
     updateEntities({
       entityName: 'members',
@@ -61,14 +63,16 @@ export const IgnoreButton = () => {
 
   const ref: MutableRefObject<HTMLElement> = useTooltip('Reject');
 
-  const [respondToMembers] = useMutation(RESPOND_TO_MEMBERS, {
+  const [respondToMembers] = useMutation<boolean, RespondToMembersArgs>({
+    name: 'respondToMembers',
+    query: RESPOND_TO_MEMBERS,
     variables: { memberIds: [applicantId], response: 'REJECTED' }
   });
 
   const onClick = async () => {
     // Call to the server.
-    const { data } = await respondToMembers();
-    if (!data?.respondToMembers) return;
+    const { error } = await respondToMembers();
+    if (error) return;
 
     updateEntities({
       entityName: 'members',

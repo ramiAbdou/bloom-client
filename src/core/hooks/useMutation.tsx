@@ -17,7 +17,7 @@ function getResult<T>({ data, error, loading, name }): UseMutationResult<T> {
   };
 }
 
-export default function useMutation<T, S>({
+export default function useMutation<T = any, S = any>({
   query,
   name,
   variables: initialVariables

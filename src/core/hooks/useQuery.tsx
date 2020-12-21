@@ -13,7 +13,7 @@ function getResult<T, S>({ data, error, loading, name }): UseQuery<T, S> {
   };
 }
 
-export default function useQuery<T, S = any>({
+export default function useQuery<T = any, S = any>({
   query,
   name,
   variables

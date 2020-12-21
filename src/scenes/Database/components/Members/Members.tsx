@@ -1,14 +1,13 @@
 import deepequal from 'fast-deep-equal';
-import { useMutation } from 'graphql-hooks';
 import React from 'react';
 
 import TableContent from '@components/Table/Content';
 import Table from '@components/Table/Table';
 import { Column, OnRenameColumn, Row } from '@components/Table/Table.types';
-import { IMember } from '@store/entities';
+import useMutation from '@hooks/useMutation';
+import { IMember, IQuestion } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { getGraphQLError } from '@util/util';
-import { RENAME_QUESTION } from '../../Database.gql';
+import { RENAME_QUESTION, RenameQuestionArgs } from '../../Database.gql';
 import Database from '../../Database.store';
 import ActionRow from './ActionRow';
 
@@ -41,7 +40,10 @@ export default () => {
   const loading = Database.useStoreState((store) => store.loading);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const [renameQuestion] = useMutation(RENAME_QUESTION);
+  const [renameQuestion] = useMutation<IQuestion, RenameQuestionArgs>({
+    name: 'renameQuestion',
+    query: RENAME_QUESTION
+  });
 
   if (loading || !columns?.length) return null;
 
@@ -49,11 +51,9 @@ export default () => {
     const { title, id, version } = column;
 
     // We pass in the version to check for race conditions.
-    const { error } = await renameQuestion({
-      variables: { id, title, version }
-    });
+    const { error } = await renameQuestion({ id, title, version });
 
-    if (error) showToast({ message: getGraphQLError(error), type: 'ERROR' });
+    if (error) showToast({ message: error, type: 'ERROR' });
     else updateColumn({ id, title, version: version + 1 });
   };
 

@@ -36,6 +36,11 @@ export const GET_PENDING_APPLICATIONS = query({
   operation: 'getApplicants'
 }).query;
 
+export interface RespondToMembersArgs {
+  memberIds: string[];
+  response: string;
+}
+
 export const RESPOND_TO_MEMBERS = mutation({
   operation: 'respondToMembers',
   variables: {

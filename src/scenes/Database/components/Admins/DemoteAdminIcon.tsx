@@ -1,4 +1,3 @@
-import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
@@ -8,10 +7,11 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
+import useMutation from '@hooks/useMutation';
+import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { getGraphQLError } from '@util/util';
-import { DEMOTE_TO_MEMBER } from '../../Database.gql';
+import { DEMOTE_TO_MEMBER, DemoteToAdminArgs } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const DemoteToMemberModal = () => {
@@ -20,18 +20,16 @@ const DemoteToMemberModal = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
-  const [demoteToMember, { error, loading }] = useMutation(DEMOTE_TO_MEMBER);
+  const [demoteToMember, { error, loading }] = useMutation<
+    IMember[],
+    DemoteToAdminArgs
+  >({ name: 'demoteToMember', query: DEMOTE_TO_MEMBER });
 
   const onDemote = async () => {
-    const result = await demoteToMember({ variables: { memberIds: adminIds } });
-    const data = result?.data?.demoteToMember;
-
+    const { data } = await demoteToMember({ memberIds: adminIds });
     if (!data) return;
 
-    mergeEntities({
-      data: { members: data },
-      schema: { members: [Schema.MEMBER] }
-    });
+    mergeEntities({ data, schema: [Schema.MEMBER] });
 
     showToast({
       message: `${adminIds.length} admin(s) demoted to member.`,
@@ -40,8 +38,6 @@ const DemoteToMemberModal = () => {
 
     setTimeout(closeModal, 0);
   };
-
-  const message = getGraphQLError(error);
 
   return (
     <Modal confirmation id={ModalType.DEMOTE_TO_MEMBER}>
@@ -53,7 +49,7 @@ const DemoteToMemberModal = () => {
         can undo this action at any time.
       </p>
 
-      <ErrorMessage message={message} />
+      <ErrorMessage message={error} />
 
       <div>
         <PrimaryButton loading={loading} onClick={onDemote}>

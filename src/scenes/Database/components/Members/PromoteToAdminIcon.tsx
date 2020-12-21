@@ -1,4 +1,3 @@
-import { useMutation } from 'graphql-hooks';
 import React from 'react';
 import { IoArrowUpCircle } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
@@ -8,10 +7,12 @@ import PrimaryButton from '@components/Button/PrimaryButton';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
+import useMutation from '@hooks/useMutation';
+import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { PROMOTE_TO_ADMIN } from '../../Database.gql';
+import { PROMOTE_TO_ADMIN, PromoteToAdminArgs } from '../../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const PromoteToAdminModal = () => {
@@ -22,18 +23,20 @@ const PromoteToAdminModal = () => {
   const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const { push } = useHistory();
-  const [promoteToAdmin, { loading }] = useMutation(PROMOTE_TO_ADMIN);
+
+  const [promoteToAdmin, { loading }] = useMutation<
+    IMember[],
+    PromoteToAdminArgs
+  >({
+    name: 'promoteToAdmin',
+    query: PROMOTE_TO_ADMIN
+  });
 
   const onPromote = async () => {
-    const result = await promoteToAdmin({ variables: { memberIds } });
-    const data = result?.data?.promoteToAdmin;
-
+    const { data } = await promoteToAdmin({ memberIds });
     if (!data) return;
 
-    mergeEntities({
-      data: { members: data },
-      schema: { members: [Schema.MEMBER] }
-    });
+    mergeEntities({ data, schema: [Schema.MEMBER] });
 
     showToast({
       message: `${memberIds.length} member(s) promoted to admin.`
