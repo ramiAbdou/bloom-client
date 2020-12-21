@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { ChildrenProps } from '@constants';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
@@ -12,18 +12,11 @@ interface ModalContainerProps extends ChildrenProps {
 export default ({ children, onClose, width }: ModalContainerProps) => {
   useLockBodyScroll();
 
-  // We memoize the onClose function so that we don't continuously re-render.
-  // The dep array is empty because the props will be present on component will
-  // mount, which is where the onClose function enters.
-  const memoizedOnClose = useCallback(() => {
-    if (onClose) onClose();
-  }, []);
-
   useEffect(() => {
     return () => {
-      if (memoizedOnClose) memoizedOnClose();
+      if (onClose) onClose();
     };
-  }, [memoizedOnClose]);
+  }, []);
 
   return (
     <motion.div
