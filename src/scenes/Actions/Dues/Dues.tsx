@@ -12,8 +12,8 @@ import { loadStripe, StripeCardElementOptions } from '@stripe/stripe-js';
 import PayButton from './components/PayButton';
 import DuesTypeOptions from './components/TypeOptions';
 import Dues, { duesModel } from './Dues.store';
+import useCreateSubscription from './hooks/useCreateSubscription';
 import useFetchStripeAccount from './hooks/useFetchStripeAccount';
-import useSubmitPayment from './hooks/useSubmitPayment';
 
 const options: StripeCardElementOptions = {
   classes: {
@@ -82,11 +82,11 @@ const DuesModalContent = () => {
     return byId[currentTypeId]?.isFree;
   });
 
-  const submitPayment = useSubmitPayment();
+  const createSubscription = useCreateSubscription();
 
   return (
     <Modal id={ModalType.PAY_DUES}>
-      <Form className="s-actions-dues" onSubmit={submitPayment}>
+      <Form className="s-actions-dues" onSubmit={createSubscription}>
         <h1>Pay Dues</h1>
         <DuesText />
         <DuesTypeOptions />

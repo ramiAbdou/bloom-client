@@ -11,12 +11,17 @@ export default () => {
   const {
     type: { name: type },
     role
-  } = useStoreState(({ db }) => db.member, deepequal);
+  } = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return { ...db.member, type: byTypeId[db.member.type] };
+  }, deepequal);
 
   const { firstName, lastName, pictureUrl } = useStoreState(
     ({ db }) => db.user,
     deepequal
   ) as IUser;
+
+  // useStoreState(({ db }) => console.log() db.member);
 
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
 

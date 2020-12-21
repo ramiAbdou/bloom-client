@@ -14,7 +14,7 @@ export default () => {
 
   const amount: number = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[memberTypeId]?.amount;
+    return byId[memberTypeId]?.amount / 100;
   });
 
   const stripe = useStripe();

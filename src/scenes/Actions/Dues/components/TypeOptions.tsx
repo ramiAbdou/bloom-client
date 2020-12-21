@@ -59,6 +59,8 @@ const TypeOptionList = () => {
         defaultChecked={currentTypeId}
         name="s-actions-dues"
         options={allTypes.map(({ amount, id, name, recurrence }) => {
+          amount /= 100;
+
           const value = `${name}, $${amount}/${recurrence}`
             .replace('LIFETIME', 'life')
             .replace('MONTLY', 'mo')
@@ -91,7 +93,8 @@ export default () => {
 
   const onClick = () => toggleIsTypeListOpen();
 
-  const { amount, name, recurrence } = currentType;
+  const { name, recurrence } = currentType;
+  const amount = currentType.amount / 100;
 
   const currentTypeString = `${name}, $${amount}/${recurrence}`
     .replace('LIFETIME', 'life')

@@ -1,14 +1,12 @@
 import { mutation, query } from 'gql-query-builder';
 
-export const CREATE_PAYMENT_INTENT = mutation({
-  operation: 'createPaymentIntent',
-  variables: { memberTypeId: { required: true } }
-}).query;
-
-export const CONFIRM_PAYMENT_INTENT = mutation({
+export const CREATE_SUBSCRIPTION = mutation({
   fields: ['id', 'duesStatus', { type: ['id', 'name'] }],
-  operation: 'confirmPaymentIntent',
-  variables: { paymentIntentId: { required: true } }
+  operation: 'createSubscription',
+  variables: {
+    memberTypeId: { required: true },
+    paymentMethodId: { required: true }
+  }
 }).query;
 
 export const GET_MEMBER_TYPES = query({
