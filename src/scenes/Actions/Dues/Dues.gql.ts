@@ -1,5 +1,16 @@
 import { mutation, query } from 'gql-query-builder';
 
+export interface CreateSubscriptionArgs {
+  memberTypeId: string;
+  paymentMethodId: string;
+}
+
+export interface CreateSubscriptionResult {
+  id: string;
+  duesStatus: string;
+  type: { id: string; name: string };
+}
+
 export const CREATE_SUBSCRIPTION = mutation({
   fields: ['id', 'duesStatus', { type: ['id', 'name'] }],
   operation: 'createSubscription',

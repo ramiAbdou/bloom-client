@@ -3,6 +3,7 @@ import React from 'react';
 import TableContent from '@components/Table/Content';
 import Table from '@components/Table/Table';
 import { Column, Row } from '@components/Table/Table.types';
+import { uuid } from '@util/util';
 
 export default () => {
   const columns: Column[] = [
@@ -17,67 +18,37 @@ export default () => {
       Email: 'rami@bl.community',
       'First Name': 'Rami',
       'Last Name': 'Abdou',
-      id: '1'
+      id: uuid()
     },
     {
       Email: 'rami@bl.community',
       'First Name': 'Rami',
       'Last Name': 'Abdou',
-      id: '1'
+      id: uuid()
     },
     {
       Email: 'rami@bl.community',
       'First Name': 'Rami',
       'Last Name': 'Abdou',
-      id: '1'
+      id: uuid()
     },
     {
       Email: 'rami@bl.community',
       'First Name': 'Rami',
       'Last Name': 'Abdou',
-      id: '1'
+      id: uuid()
     },
     {
       Email: 'rami@bl.community',
       'First Name': 'Rami',
       'Last Name': 'Abdou',
-      id: '1'
+      id: uuid()
     },
     {
       Email: 'rami@bl.community',
       'First Name': 'Rami',
       'Last Name': 'Abdou',
-      id: '1'
-    },
-    {
-      Email: 'rami@bl.community',
-      'First Name': 'Rami',
-      'Last Name': 'Abdou',
-      id: '1'
-    },
-    {
-      Email: 'rami@bl.community',
-      'First Name': 'Rami',
-      'Last Name': 'Abdou',
-      id: '1'
-    },
-    {
-      Email: 'rami@bl.community',
-      'First Name': 'Rami',
-      'Last Name': 'Abdou',
-      id: '1'
-    },
-    {
-      Email: 'rami@bl.community',
-      'First Name': 'Rami',
-      'Last Name': 'Abdou',
-      id: '1'
-    },
-    {
-      Email: 'rami@bl.community',
-      'First Name': 'Rami',
-      'Last Name': 'Abdou',
-      id: '1'
+      id: uuid()
     }
   ];
 

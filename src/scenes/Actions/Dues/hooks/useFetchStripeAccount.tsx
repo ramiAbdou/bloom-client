@@ -1,6 +1,6 @@
-import { useQuery } from 'graphql-hooks';
 import { useEffect } from 'react';
 
+import useQuery from '@hooks/useQuery';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_STRIPE_ACCOUNT_ID } from '../Dues.gql';
 
@@ -8,10 +8,12 @@ export default () => {
   const community = useStoreState(({ db }) => db.community);
   const updateEntities = useStoreActions(({ db }) => db.updateEntities);
 
-  const { data, loading } = useQuery(GET_STRIPE_ACCOUNT_ID);
+  const { data: stripeAccountId, loading } = useQuery<string>({
+    name: 'getStripeAccountId',
+    query: GET_STRIPE_ACCOUNT_ID
+  });
 
   useEffect(() => {
-    const stripeAccountId = data?.getStripeAccountId;
     if (!stripeAccountId) return;
 
     updateEntities({
@@ -19,7 +21,7 @@ export default () => {
       ids: [community.integrations],
       updatedData: { stripeAccountId }
     });
-  }, [data]);
+  }, [stripeAccountId]);
 
   return loading;
 };
