@@ -1,5 +1,7 @@
 import { mutation, query } from 'gql-query-builder';
 
+import { IMemberType } from '@store/entities';
+
 export interface CreateSubscriptionArgs {
   memberTypeId: string;
   paymentMethodId: string;
@@ -20,10 +22,14 @@ export const CREATE_SUBSCRIPTION = mutation({
   }
 }).query;
 
+export interface GetDuesInformationResult {
+  stripeAccountId: string;
+  types: IMemberType[];
+}
+
 export const GET_DUES_INFORMATION = query({
   fields: [
-    'id',
-    { integrations: ['stripeAccountId'] },
+    'stripeAccountId',
     { types: ['id', 'amount', 'isFree', 'name', 'recurrence'] }
   ],
   operation: 'getDuesInformation'
