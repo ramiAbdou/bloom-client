@@ -1,6 +1,6 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { ICommunity } from '@store/entities';
+import { ICommunity, IQuestion } from '@store/entities';
 
 export interface ApplyForMembershipArgs {
   data: { questionId: string; value: any }[];
@@ -19,7 +19,7 @@ export const APPLY_FOR_MEMBERSHIP = mutation({
 }).query;
 
 export interface GetApplicationResult extends ICommunity {
-  application: { description: string; title: string };
+  application: { description: string; questions: IQuestion[]; title: string };
 }
 
 export const GET_APPLICATION = query({

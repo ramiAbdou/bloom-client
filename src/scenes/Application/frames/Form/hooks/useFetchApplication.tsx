@@ -29,14 +29,17 @@ export default (): boolean => {
   useEffect(() => {
     if (!community) return;
 
+    const { application, ...data } = community;
+
     // Merge the data into the front-end state.
-    const { description, title } = community.application;
+    const { description, questions, title } = application;
 
     mergeEntities({
       data: {
-        ...community,
+        ...data,
         applicationDescription: description,
-        applicationTitle: title
+        applicationTitle: title,
+        questions
       },
       schema: Schema.COMMUNITY,
       setActiveId: true
