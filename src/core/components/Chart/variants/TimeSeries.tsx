@@ -59,7 +59,10 @@ export default () => {
           tickFormatter={(label) => day(label).format('M/D')}
           tickSize={8}
         />
-        <YAxis domain={['auto', 'auto']} width={48} />
+        <YAxis
+          domain={[(dataMin: number) => Math.round(dataMin * 0.8), 'auto']}
+          width={48}
+        />
         <Tooltip content={({ label }) => <LineChartTooltip label={label} />} />
 
         <Line
