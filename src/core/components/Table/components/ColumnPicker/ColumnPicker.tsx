@@ -54,7 +54,7 @@ export default () => {
     >
       {!!onRenameColumn && (
         <Input
-          gray
+          dark
           value={value}
           onChange={({ target }) => setValue(target.value)}
           onClickOutside={modifiedOnRenameColumn}
