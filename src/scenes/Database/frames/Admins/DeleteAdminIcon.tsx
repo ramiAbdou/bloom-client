@@ -1,8 +1,7 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
+import Button from '@components/Button/Button';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
@@ -54,8 +53,12 @@ const DeleteMembersModal = () => {
       </p>
 
       <div>
-        <PrimaryButton onClick={onRemove}>Remove</PrimaryButton>
-        <OutlineButton onClick={() => closeModal}>Cancel</OutlineButton>
+        <Button primary onClick={onRemove}>
+          Remove
+        </Button>
+        <Button outline onClick={() => closeModal}>
+          Cancel
+        </Button>
       </div>
     </Modal>
   );

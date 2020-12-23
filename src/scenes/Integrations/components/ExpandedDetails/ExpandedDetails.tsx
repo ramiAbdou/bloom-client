@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
+import Button from '@components/Button/Button';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import Integrations from '../../Integrations.store';
@@ -45,7 +45,9 @@ export default ({ details, logo, name }: ExpandedDetailsProps) => {
       ))}
 
       <div className="s-integrations-action-ctr">
-        <OutlineButton onClick={() => closeModal()}>Close</OutlineButton>
+        <Button outline onClick={() => closeModal()}>
+          Close
+        </Button>
       </div>
     </Modal>
   );

@@ -49,13 +49,6 @@ $PREF: 'c-btn';
   padding: $xs $sm;
 
   &:disabled { background-color: $gray-5; border: 1px $gray-5 solid; }
-
-  &--green {
-    background-clip: padding-box;
-    background-color: rgba($color: $green, $alpha: 0.1);
-    border: 1px rgba($color: $green, $alpha: 0.1) solid;
-    color: $green;
-  }
 }
 
 // ## OUTLINE BUTTON
@@ -82,6 +75,18 @@ $PREF: 'c-btn';
   
   @include PRIMARY_HOVER;
   @include HOVER { border-radius: $xxs; }
+}
+
+// ## GREEN BUTTON
+
+.#{$PREF}-green {
+  @extend .btn-txt;
+  
+  background-clip: padding-box;
+  background-color: rgba($color: $green, $alpha: 0.1);
+  border: 1px rgba($color: $green, $alpha: 0.1) solid;
+  color: $green;
+  padding: $xs $sm;
 }
 
 // ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but

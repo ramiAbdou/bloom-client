@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
+import Button from '@components/Button/Button';
 import IntegrationsStore, { IntegrationsModal } from '../Integrations.store';
 
 export type IntegrationCardProps = {
@@ -31,9 +30,9 @@ const ActionButton = memo(
 
     if (completed) {
       return (
-        <PrimaryButton fill green onClick={onSeeDetails}>
+        <Button fill green primary onClick={onSeeDetails}>
           See Details
-        </PrimaryButton>
+        </Button>
       );
     }
 
@@ -41,7 +40,9 @@ const ActionButton = memo(
 
     return (
       <a onClick={onOpenFlow} {...aProps}>
-        <OutlineButton fill>{buttonText}</OutlineButton>
+        <Button fill outline>
+          {buttonText}
+        </Button>
       </a>
     );
   }

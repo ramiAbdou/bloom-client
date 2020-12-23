@@ -1,8 +1,6 @@
 import React from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
-import UnderlineButton from '@components/Button/UnderlineButton';
+import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { ModalType } from '@constants';
@@ -85,18 +83,24 @@ const AddMemberContent = () => {
         ))}
       </div>
 
-      <UnderlineButton onClick={onClick}>+ Add Another</UnderlineButton>
+      <Button underline onClick={onClick}>
+        + Add Another
+      </Button>
       <ErrorMessage message={message} />
 
       <div>
-        <PrimaryButton
+        <Button
+          primary
           loading={loading}
           loadingText="Adding..."
           onClick={onAdd}
         >
           Add
-        </PrimaryButton>
-        <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
+        </Button>
+
+        <Button outline onClick={() => closeModal()}>
+          Cancel
+        </Button>
       </div>
     </Modal>
   );

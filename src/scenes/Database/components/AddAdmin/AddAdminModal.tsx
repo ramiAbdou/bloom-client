@@ -1,9 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React, { memo } from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
-import UnderlineButton from '@components/Button/UnderlineButton';
+import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
@@ -111,18 +109,23 @@ export default () => {
         <AddAdminInput key={id} id={id} />
       ))}
 
-      <UnderlineButton onClick={onClick}>+ Add Another</UnderlineButton>
+      <Button underline onClick={onClick}>
+        + Add Another
+      </Button>
       <ErrorMessage message={error} />
 
       <div>
-        <PrimaryButton
+        <Button
+          primary
           loading={loading}
           loadingText="Adding..."
           onClick={onAdd}
         >
           Add
-        </PrimaryButton>
-        <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
+        </Button>
+        <Button outline onClick={() => closeModal()}>
+          Cancel
+        </Button>
       </div>
     </Modal>
   );

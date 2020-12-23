@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import UnderlineButton from '@components/Button/UnderlineButton';
+import Button from '@components/Button/Button';
 import Radio from '@components/Element/Radio';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
@@ -85,7 +85,9 @@ export default () => {
       <div>
         <TypeOptionList />
         {!isTypeListOpen && <p>{currentTypeString}</p>}
-        <UnderlineButton onClick={onClick}>Change Membership</UnderlineButton>
+        <Button underline onClick={onClick}>
+          Change Membership
+        </Button>
       </div>
     </div>
   );

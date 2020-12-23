@@ -1,4 +1,5 @@
 import React, {
+  ButtonHTMLAttributes,
   forwardRef,
   MutableRefObject,
   useEffect,
@@ -7,7 +8,18 @@ import React, {
 
 import Spinner from '@components/Loader/Spinner';
 import { makeClass } from '@util/util';
-import { ButtonProps } from './Button.types';
+
+interface ButtonProps extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
+  href?: string;
+  fill?: boolean;
+  green?: boolean;
+  loading?: boolean;
+  loadingText?: string;
+  large?: boolean;
+  outline?: boolean;
+  primary?: boolean;
+  underline?: boolean;
+}
 
 /**
  * Returns true if the Button's loading state should be shown, and false
@@ -47,11 +59,15 @@ export default forwardRef(
       children,
       disabled,
       fill,
+      green,
       large,
       loading,
       loadingText,
       onClick,
+      outline,
+      primary,
       type,
+      underline,
       ...props
     }: ButtonProps,
     ref: MutableRefObject<any>
@@ -72,6 +88,10 @@ export default forwardRef(
       'c-btn',
       [large, 'c-btn--lg'],
       [fill, 'c-btn--fill'],
+      [primary, 'c-btn-primary'],
+      [outline, 'c-btn-outline'],
+      [underline, 'c-btn-underline'],
+      [green, 'c-btn-green'],
       className
     ]);
 

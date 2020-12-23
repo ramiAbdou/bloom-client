@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PrimaryButton from '@components/Button/PrimaryButton';
+import Button from '@components/Button/Button';
 import Form from '@components/Form/Form.store';
 
 export default () => {
@@ -8,15 +8,16 @@ export default () => {
   const isLoading = Form.useStoreState((store) => store.isLoading);
 
   return (
-    <PrimaryButton
+    <Button
       fill
       large
+      primary
       disabled={!isCompleted}
       loading={isLoading}
       loadingText="Sending..."
       type="submit"
     >
       Send Login Link
-    </PrimaryButton>
+    </Button>
   );
 };

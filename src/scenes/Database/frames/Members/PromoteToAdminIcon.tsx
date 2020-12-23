@@ -2,8 +2,7 @@ import React from 'react';
 import { IoArrowUpCircle } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
+import Button from '@components/Button/Button';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
@@ -57,14 +56,17 @@ const PromoteToAdminModal = () => {
       </p>
 
       <div>
-        <PrimaryButton
+        <Button
+          primary
           loading={loading}
           loadingText="Promoting..."
           onClick={onPromote}
         >
           Promote
-        </PrimaryButton>
-        <OutlineButton onClick={() => closeModal()}>Cancel</OutlineButton>
+        </Button>
+        <Button outline onClick={() => closeModal()}>
+          Cancel
+        </Button>
       </div>
     </Modal>
   );

@@ -1,8 +1,7 @@
 import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
+import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
@@ -52,10 +51,12 @@ const DemoteToMemberModal = () => {
       <ErrorMessage message={error} />
 
       <div>
-        <PrimaryButton loading={loading} onClick={onDemote}>
+        <Button primary loading={loading} onClick={onDemote}>
           Demote
-        </PrimaryButton>
-        <OutlineButton onClick={() => closeModal}>Cancel</OutlineButton>
+        </Button>
+        <Button outline onClick={() => closeModal}>
+          Cancel
+        </Button>
       </div>
     </Modal>
   );

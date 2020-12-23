@@ -1,7 +1,6 @@
 import React from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
+import Button from '@components/Button/Button';
 import useMutation from '@hooks/useMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../../Applicants.gql';
@@ -40,20 +39,21 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
 
   if (response === 'ACCEPTED') {
     return (
-      <PrimaryButton
+      <Button
+        primary
         className="s-applicants-accept-all"
         disabled={!pendingApplicantIds?.length}
         onClick={onClick}
       >
         Accept All
-      </PrimaryButton>
+      </Button>
     );
   }
 
   return (
-    <OutlineButton disabled={!pendingApplicantIds?.length} onClick={onClick}>
+    <Button outline disabled={!pendingApplicantIds?.length} onClick={onClick}>
       Ignore All
-    </OutlineButton>
+    </Button>
   );
 };
 

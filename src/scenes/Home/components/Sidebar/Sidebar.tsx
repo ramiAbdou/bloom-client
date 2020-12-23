@@ -12,7 +12,7 @@ import {
 } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import OutlineButton from '@components/Button/OutlineButton';
+import Button from '@components/Button/Button';
 import Separator from '@components/Misc/Separator';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Home, { LinkOptions } from '../../Home.store';
@@ -104,7 +104,9 @@ const SidebarContent = () => {
                 <p>Dues Status: Inactive</p>
               </div>
 
-              <OutlineButton onClick={onClick}>Pay Dues</OutlineButton>
+              <Button outline onClick={onClick}>
+                Pay Dues
+              </Button>
             </>
           )}
         </div>

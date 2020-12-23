@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import MultiButton from '@components/Button/MultiButton';
+import MultiButton from '@components/Button/Multi';
 import Spinner from '@components/Loader/Spinner';
 import Loading from '@store/Loading.store';
 import { takeFirst } from '@util/util';

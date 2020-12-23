@@ -1,7 +1,6 @@
 import React from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
+import Button from '@components/Button/Button';
 import Form from '@components/Form/Form.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { useStripe } from '@stripe/react-stripe-js';
@@ -23,22 +22,23 @@ export default () => {
 
   if (amount === 0) {
     return (
-      <OutlineButton fill large onClick={() => closeModal()}>
+      <Button fill large outline onClick={() => closeModal()}>
         Close
-      </OutlineButton>
+      </Button>
     );
   }
 
   // Use a traditional checkout form.
   return (
-    <PrimaryButton
+    <Button
       large
+      primary
       disabled={!stripe}
       loading={isLoading}
       loadingText="Paying..."
       type="submit"
     >
       Pay ${amount}
-    </PrimaryButton>
+    </Button>
   );
 };
