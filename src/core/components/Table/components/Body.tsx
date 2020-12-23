@@ -1,8 +1,8 @@
 import moment from 'moment-timezone';
 import React, { ReactNode } from 'react';
 
-import Checkbox from '@components/Element/Checkbox';
-import Tag from '@components/Element/Tag';
+import Checkbox from '@components/Elements/Checkbox';
+import Tag from '@components/Elements/Tag';
 import { IdProps, QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
 import Table from '../Table.store';

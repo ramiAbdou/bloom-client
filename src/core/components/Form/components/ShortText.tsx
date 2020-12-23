@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from '@components/Element/Input';
+import Input from '@components/Elements/Input';
 import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 

@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { memo } from 'react';
 
 import Button from '@components/Button/Button';
-import QuestionValue from '@components/Element/QuestionValue';
+import QuestionValue from '@components/Elements/QuestionValue';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';

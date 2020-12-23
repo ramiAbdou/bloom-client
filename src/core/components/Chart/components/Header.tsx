@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeaderTag from '@components/Element/HeaderTag';
+import HeaderTag from '@components/Elements/HeaderTag';
 import { useStoreState } from '@store/Store';
 import Chart from '../Chart.store';
 

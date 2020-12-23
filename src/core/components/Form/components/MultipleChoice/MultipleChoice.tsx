@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Radio from '@components/Element/Radio';
+import Radio from '@components/Elements/Radio';
 import Form from '../../Form.store';
 import { FormItemData } from '../../Form.types';
 

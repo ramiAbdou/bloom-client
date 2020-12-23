@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React, { useEffect, useState } from 'react';
 
-import Input from '@components/Element/Input';
+import Input from '@components/Elements/Input';
 import Picker from '@components/Picker/Picker';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Table from '../../Table.store';

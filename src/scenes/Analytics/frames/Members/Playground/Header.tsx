@@ -1,8 +1,8 @@
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
-import Dropdown from '@components/Element/Dropdown';
-import { IDropdownOption } from '@components/Element/Dropdown.store';
+import Dropdown from '@components/Elements/Dropdown';
+import { IDropdownOption } from '@components/Elements/Dropdown.store';
 import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import Playground from './Playground.store';
