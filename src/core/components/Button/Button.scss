@@ -61,7 +61,7 @@ $PREF: 'c-btn';
   color: $primary;
   padding: $xs $sm;
 
-  &:disabled { border: none; }
+  &:disabled { border: 1px $gray-3 solid; }
 }
 
 // ## UNDERLINE BUTTON

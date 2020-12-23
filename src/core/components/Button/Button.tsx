@@ -45,10 +45,13 @@ const useLoadingState = (loading: boolean): boolean => {
   return showLoadingState;
 };
 
-const LoadingState = ({ loadingText }: Pick<ButtonProps, 'loadingText'>) => (
+const LoadingState = ({
+  loadingText,
+  outline
+}: Pick<ButtonProps, 'loadingText' | 'outline'>) => (
   <div className="c-btn-loading-ctr">
     <p>{loadingText}</p>
-    <Spinner />
+    <Spinner dark={outline} />
   </div>
 );
 
@@ -104,7 +107,10 @@ export default forwardRef(
         onClick={onButtonClick}
         {...props}
       >
-        {showLoadingState && <LoadingState loadingText={loadingText} />}
+        {showLoadingState && (
+          <LoadingState loadingText={loadingText} outline={outline} />
+        )}
+
         {!showLoadingState && children}
       </button>
     );
