@@ -1,4 +1,4 @@
-import React, { ChangeEvent, memo } from 'react';
+import React, { memo } from 'react';
 import { IoCloseCircle, IoSearch } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
@@ -7,37 +7,34 @@ import { makeClass } from '@util/util';
 
 interface SearchBarProps extends ValueProps {
   placeholder?: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => any;
-  onClear?: () => any;
+  onChange: (value: string) => any;
 }
 
 const Icon = memo(() => <IoSearch />);
 
-const ClearButton = ({ onClear, value }: Partial<SearchBarProps>) => {
+const ClearButton = ({ onChange, value }: Partial<SearchBarProps>) => {
   const css = makeClass([
     'c-misc-search-close',
     [!value, 'c-misc-search-close--hide']
   ]);
 
   return (
-    <Button className={css} onClick={onClear}>
+    <Button className={css} onClick={() => onChange('')}>
       <IoCloseCircle />
     </Button>
   );
 };
 
-export default memo(
-  ({ placeholder, onChange, onClear, value }: SearchBarProps) => (
-    <div className="c-misc-search">
-      <Icon />
-      <input
-        placeholder={placeholder ?? 'Search...'}
-        type="text"
-        value={value}
-        onChange={onChange}
-      />
+export default memo(({ placeholder, onChange, value }: SearchBarProps) => (
+  <div className="c-misc-search">
+    <Icon />
+    <input
+      placeholder={placeholder ?? 'Search...'}
+      type="text"
+      value={value}
+      onChange={({ target }) => onChange(target.value)}
+    />
 
-      {onClear && <ClearButton value={value} onClear={onClear} />}
-    </div>
-  )
-);
+    <ClearButton value={value} onChange={onChange} />
+  </div>
+));

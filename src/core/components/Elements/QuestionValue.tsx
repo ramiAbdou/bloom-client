@@ -32,15 +32,13 @@ const Value = memo(({ type, value }: Partial<QuestionValueProps>) => {
  * Returns a the Question and Answer components that are dependent on the type
  * of the question.
  */
-export default memo(
-  ({ hideNullValue, title, type, value }: QuestionValueProps) => {
-    if (hideNullValue && !value) return null;
+export default ({ hideNullValue, title, type, value }: QuestionValueProps) => {
+  if (hideNullValue && !value) return null;
 
-    return (
-      <div className="c-misc-question">
-        <p>{title}</p>
-        <Value type={type} value={value} />
-      </div>
-    );
-  }
-);
+  return (
+    <div className="c-misc-question">
+      <p>{title}</p>
+      <Value type={type} value={value} />
+    </div>
+  );
+};
