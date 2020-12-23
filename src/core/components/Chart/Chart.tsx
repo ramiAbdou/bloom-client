@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
 import Chart, { ChartModelInitArgs, ChartType } from './Chart.store';
+import FormatQuestionData from './components/FormatQuestionData';
 import ChartHeader from './components/Header';
-import FormatQuestionData from './FormatQuestionData';
 import BarChart from './variants/Bar';
 import PieChart from './variants/Pie';
 import TimeSeriesChart from './variants/TimeSeries';
