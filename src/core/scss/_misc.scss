@@ -112,3 +112,11 @@ div::-webkit-scrollbar { display: none; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+// Storybook override for content.
+.sb-show-main.sb-main-padded {
+  box-sizing: border-box;
+  padding: $sm;
+
+  > #root { width: 100%; }
+}

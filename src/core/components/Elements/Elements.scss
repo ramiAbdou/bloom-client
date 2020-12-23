@@ -34,8 +34,7 @@ $PREF: 'c-misc';
   font-weight: 700;
   padding: 6px;
   text-transform: uppercase;
-
-  &--lg { font-size: 18px; padding: $xxs $xs; }
+  width: fit-content;
 }
 
 // CHECKBOX
@@ -115,19 +114,10 @@ $PREF: 'c-misc';
     resize: none;
   }
 
-  &--gray {
+  &--dark {
     background-color: $gray-6;
     border: 1px $gray-4 solid;
     color: black;
-
-    &:focus { background-color: white; }
-    &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
-  }
-  
-  &--dark {
-    background-color: $gray-5;
-    border: 1px $gray-5 solid;
-    color: $gray-2;
 
     &:focus { background-color: white; }
     &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }

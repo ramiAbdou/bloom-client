@@ -12,8 +12,6 @@ import { makeClass } from '@util/util';
 interface InputProps extends ValueProps {
   dark?: boolean;
   error?: boolean;
-  gray?: boolean;
-  search?: boolean;
   placeholder?: string;
   onClickOutside?: (...args: any) => any;
   onChange: (event: ChangeEvent<HTMLInputElement>) => any;
@@ -27,9 +25,7 @@ interface InputProps extends ValueProps {
 export default ({
   dark,
   error,
-  gray,
   placeholder,
-  search,
   onChange,
   onClickOutside,
   onEnter,
@@ -51,9 +47,7 @@ export default ({
   const css = makeClass([
     'c-misc-input',
     [!error && dark, 'c-misc-input--dark'],
-    [!error && gray, 'c-misc-input--gray'],
-    [error, 'c-misc-input--error'],
-    [search, 'c-misc-input--search']
+    [error, 'c-misc-input--error']
   ]);
 
   return (
