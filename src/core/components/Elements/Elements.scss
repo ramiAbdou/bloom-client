@@ -96,7 +96,7 @@ $PREF: 'c-misc';
 
   &::placeholder,
   &:-moz-placeholder,
-  &::-moz-placeholder { @extend .body; color: $gray-2; line-height: revert; }
+  &::-moz-placeholder { @extend .body; color: $gray-3; line-height: revert; }
 
   &::selection { background-color: $primary-hover; }
 

@@ -30,14 +30,12 @@ export default function useCreateSubscription(): OnFormSubmit {
   if (!stripe) return null;
 
   return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+    const city = items.find(({ title }) => title === 'City').value;
+    const state = items.find(({ title }) => title === 'State').value;
+    const postalCode = items.find(({ title }) => title === 'Zip Code').value;
+
     const nameOnCard = items.find(({ title }) => title === 'Name on Card')
       .value;
-
-    if (!nameOnCard) {
-      setErrorMessage('Please fill out ');
-      setIsLoading(false);
-      return;
-    }
 
     // Start the submit function by clearing the error message and set the
     // form state to loading.
@@ -45,7 +43,12 @@ export default function useCreateSubscription(): OnFormSubmit {
     setIsLoading(true);
 
     const params: Partial<PaymentMethodCreateParams> = nameOnCard
-      ? { billing_details: { name: nameOnCard } }
+      ? {
+          billing_details: {
+            address: { city, postal_code: postalCode, state },
+            name: nameOnCard
+          }
+        }
       : {};
 
     // Create the payment method via the Stripe SDK.

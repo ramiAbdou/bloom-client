@@ -11,7 +11,9 @@ $PREF: 's-actions-dues';
 
 // ## DUES FORM ITEM
 
-.#{$PREF} > .c-form-item, .#{$PREF}-item {
+.#{$PREF}-billing-ctr > .c-form-item,
+.#{$PREF} > .c-form-item, 
+.#{$PREF}-item {
   margin-bottom: $md;
   margin-top: 0;
 
@@ -31,5 +33,9 @@ $PREF: 's-actions-dues';
     > .__PrivateStripeElement { width: 100%; }
   }
 }
+
+// ## DUES ITEM CONTAINER (BILLING ROW)
+.#{$PREF}-billing-ctr { @extend .flex-acsb; }
+.#{$PREF}-billing-ctr > div:not(:last-child) { margin-right: $sm; }
 
 .#{$PREF}-item--type > div { @extend .flex-acsb; }
