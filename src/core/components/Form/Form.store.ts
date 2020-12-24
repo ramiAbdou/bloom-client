@@ -32,15 +32,17 @@ export const formModel: FormModel = {
     return items.find((item) => item.category === category);
   }),
 
-  isCompleted: computed(
-    ({ items }) =>
+  isCompleted: computed(({ items }) => {
+    console.log(items);
+    return (
       items?.length &&
       items.every(
-        ({ completed, node, required, value, validate }: FormItemData) =>
-          (!required || !!value || !!completed || !!node) &&
+        ({ completed, required, value, validate }: FormItemData) =>
+          (!required || !!value || !!completed) &&
           (!validate || validate(value))
       )
-  ),
+    );
+  }),
 
   // Used to ensure that the submit button is disabled.
   isLoading: false,

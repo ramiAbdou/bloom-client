@@ -27,6 +27,7 @@ interface FormItemProps
     Pick<
       FormItemData,
       | 'category'
+      | 'completed'
       | 'description'
       | 'options'
       | 'placeholder'
@@ -40,6 +41,7 @@ interface FormItemProps
 export default ({
   children,
   category,
+  completed,
   description,
   options,
   required,
@@ -56,7 +58,14 @@ export default ({
       [['SHORT_TEXT', 'LONG_TEXT'].includes(type), '']
     ]);
 
-    setItem({ category, title, validate, value: emptyValue });
+    setItem({
+      category,
+      completed,
+      required,
+      title,
+      validate,
+      value: emptyValue
+    });
   }, []);
 
   const baseProps: BaseItemProps = { category, required, title };
@@ -72,7 +81,7 @@ export default ({
       <MultipleChoiceDD {...optionProps} />
     ],
     [type === 'MULTIPLE_CHOICE', <MultipleChoice {...optionProps} />],
-    [children]
+    children
   ]);
 
   return (
