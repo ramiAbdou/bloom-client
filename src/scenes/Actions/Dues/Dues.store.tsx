@@ -2,18 +2,14 @@ import { Action, action, createContextStore } from 'easy-peasy';
 
 type DuesModel = {
   isTypeListOpen: boolean;
-  nameOnCard: string;
   selectedTypeId: string;
   setIsTypeListOpen: Action<DuesModel, boolean>;
   setMemberTypeId: Action<DuesModel, string>;
-  setNameOnCard: Action<DuesModel, string>;
   toggleIsTypeListOpen: Action<DuesModel>;
 };
 
 export const duesModel: DuesModel = {
   isTypeListOpen: false,
-
-  nameOnCard: null,
 
   selectedTypeId: null,
 
@@ -25,11 +21,6 @@ export const duesModel: DuesModel = {
   setMemberTypeId: action((state, selectedTypeId: string) => ({
     ...state,
     selectedTypeId
-  })),
-
-  setNameOnCard: action((state, nameOnCard: string) => ({
-    ...state,
-    nameOnCard
   })),
 
   toggleIsTypeListOpen: action(({ isTypeListOpen, ...state }) => ({

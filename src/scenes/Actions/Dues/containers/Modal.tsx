@@ -30,7 +30,7 @@ export default function ModalContainer({ children }: ChildrenProps) {
         className="s-actions-dues"
         questions={[
           {
-            placeholder: 'Name on Card',
+            placeholder: 'Jane Doe',
             required: true,
             title: 'Name on Card',
             type: 'SHORT_TEXT'
@@ -39,6 +39,12 @@ export default function ModalContainer({ children }: ChildrenProps) {
             node: <CardElement options={options} />,
             required: true,
             title: 'Credit or Debit Card'
+          },
+          {
+            placeholder: '1 Address Drive',
+            required: true,
+            title: 'Billing Address',
+            type: 'SHORT_TEXT'
           }
         ]}
         onSubmit={createSubscription}

@@ -25,16 +25,17 @@ export type FormModel = {
 export const formModel: FormModel = {
   errorMessage: null,
 
-  getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
-    items.find((item) => item.category === category || item.title === title)
-  ),
+  getItem: computed(({ items }) => ({ category, title }: GetItemArgs) => {
+    if (title) return items.find((item) => item.title === title);
+    return items.find((item) => item.category === category);
+  }),
 
   isCompleted: computed(
     ({ items }) =>
       items &&
       items.every(
-        ({ completed, required, value, validate }: FormItemData) =>
-          (!required || !!value || !!completed) &&
+        ({ completed, node, required, value, validate }: FormItemData) =>
+          (!required || !!value || !!completed || !!node) &&
           (!validate || validate(value))
       )
   ),

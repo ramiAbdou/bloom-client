@@ -28,7 +28,6 @@ export type FormQuestion = {
 
 export interface FormItemData extends Partial<FormQuestion> {
   errorMessage?: string;
-  options?: string[];
   placeholder?: string;
   value?: any;
   validate?: (value: string) => any;

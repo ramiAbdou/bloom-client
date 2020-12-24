@@ -3,6 +3,7 @@ import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { PaymentMethodCreateParams } from '@stripe/stripe-js';
 import {
   CREATE_SUBSCRIPTION,
   CreateSubscriptionArgs,
@@ -13,7 +14,6 @@ import Dues from '../Dues.store';
 export default function useCreateSubscription(): OnFormSubmit {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const nameOnCard = Dues.useStoreState((store) => store.nameOnCard);
   const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);
 
   const elements = useElements();
@@ -29,9 +29,12 @@ export default function useCreateSubscription(): OnFormSubmit {
 
   if (!stripe) return null;
 
-  return async ({ setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+    const nameOnCard = items.find(({ title }) => title === 'Name on Card')
+      .value;
+
     if (!nameOnCard) {
-      // setErrorMessage('Please fill out ');
+      setErrorMessage('Please fill out ');
       setIsLoading(false);
       return;
     }
@@ -41,10 +44,14 @@ export default function useCreateSubscription(): OnFormSubmit {
     setErrorMessage(null);
     setIsLoading(true);
 
+    const params: Partial<PaymentMethodCreateParams> = nameOnCard
+      ? { billing_details: { name: nameOnCard } }
+      : {};
+
     // Create the payment method via the Stripe SDK.
     const stripeResult = await stripe.createPaymentMethod({
+      ...params,
       card: elements.getElement(CardElement),
-      // billing_details: {  },
       type: 'card'
     });
 
