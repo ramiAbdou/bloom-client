@@ -9,7 +9,8 @@ import React, {
 import Spinner from '@components/Loader/Spinner';
 import { makeClass } from '@util/util';
 
-interface ButtonProps extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
+export interface ButtonProps
+  extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
   href?: string;
   fill?: boolean;
   green?: boolean;
