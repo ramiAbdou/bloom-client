@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Header from './components/Header';
-import MemberCardContainer from './containers/Card';
+import MemberCardContainer from './containers/CardContainer';
 import Directory from './Directory.store';
 import useFetchDirectory from './hooks/useFetchDirectory';
 
