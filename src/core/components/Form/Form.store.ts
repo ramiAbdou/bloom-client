@@ -16,10 +16,12 @@ export type FormModel = {
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
+  isShowingErrors: boolean;
   items: FormItemData[];
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
   setIsLoading: Action<FormModel, boolean>;
+  showErrors: Action<FormModel>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
 
@@ -46,6 +48,8 @@ export const formModel: FormModel = {
   // Used to ensure that the submit button is disabled.
   isLoading: false,
 
+  isShowingErrors: false,
+
   items: [],
 
   setErrorMessage: action((state, errorMessage: string) => ({
@@ -63,6 +67,16 @@ export const formModel: FormModel = {
     ...state,
     items: [...state.items, item]
   })),
+
+  showErrors: action(({ items, ...state }) => {
+    return {
+      ...state,
+      isShowingErrors: true,
+      items: items.map(({ ...item }: FormItemData) => {
+        return { ...item };
+      })
+    };
+  }),
 
   updateItem: action((state, payload) => {
     const { items } = state;

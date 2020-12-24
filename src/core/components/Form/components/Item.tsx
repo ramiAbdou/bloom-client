@@ -89,7 +89,6 @@ export default ({
       <Label required={required}>{title}</Label>
       <Description>{description}</Description>
       {body}
-      {/* <ErrorMessage marginBottom={0} marginTop={8} message={errorMessage} /> */}
     </div>
   );
 };
