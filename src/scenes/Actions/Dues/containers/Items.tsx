@@ -15,16 +15,12 @@ const options: StripeCardElementOptions = {
   style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
 };
 
-export default () => {
-  return (
-    <>
-      <FormItem required title="Name on Card" type="SHORT_TEXT" />
-
-      <FormItem completed required title="Credit or Debit Card">
-        <CardElement options={options} />
-      </FormItem>
-
-      <FormItem required title="Billing Address" type="SHORT_TEXT" />
-    </>
-  );
-};
+export default () => (
+  <>
+    <FormItem required title="Name on Card" type="SHORT_TEXT" />
+    <FormItem completed required title="Credit or Debit Card">
+      <CardElement options={options} />
+    </FormItem>
+    <FormItem required title="Billing Address" type="SHORT_TEXT" />
+  </>
+);

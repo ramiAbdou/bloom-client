@@ -33,7 +33,6 @@ export const formModel: FormModel = {
   }),
 
   isCompleted: computed(({ items }) => {
-    console.log(items);
     return (
       items?.length &&
       items.every(

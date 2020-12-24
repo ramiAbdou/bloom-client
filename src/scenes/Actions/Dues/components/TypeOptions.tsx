@@ -67,7 +67,9 @@ export default () => {
     (store) => store.toggleIsTypeListOpen
   );
 
-  if (!currentType) return null;
+  // Recurrence will be null if all of the Membership types have yet to be
+  // loaded from the GQL call.
+  if (!currentType?.recurrence) return null;
 
   const onClick = () => toggleIsTypeListOpen();
 
