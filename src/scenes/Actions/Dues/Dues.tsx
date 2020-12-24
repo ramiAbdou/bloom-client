@@ -41,7 +41,7 @@ const DuesModalContent = () => {
   if (!createSubscription) return null;
 
   return (
-    <Modal id={ModalType.PAY_DUES}>
+    <Modal locked id={ModalType.PAY_DUES}>
       <Form className="s-actions-dues" onSubmit={createSubscription}>
         <h1>Pay Dues</h1>
         <DuesDescription />

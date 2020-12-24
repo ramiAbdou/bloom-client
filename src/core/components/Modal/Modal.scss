@@ -8,8 +8,10 @@ $PREF: 'c-modal';
   @extend .full-screen;
 
   backdrop-filter: blur(2px);
-  background-color: hsl($primary-hue, 5%, 20%);
+  background-color: hsla($primary-hue, 5%, 20%, 0.5);
   z-index: 1000;
+
+  &--locked { background-color: hsla($primary-hue, 5%, 20%, 0.95); }
 }
 
 // ## MODAL CONTAINER

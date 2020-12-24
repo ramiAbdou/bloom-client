@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
 import React from 'react';
 
 import { useStoreActions } from '@store/Store';
+import { makeClass } from '@util/util';
 import { ModalProps } from '../Modal.types';
 
 /**
@@ -9,22 +9,9 @@ import { ModalProps } from '../Modal.types';
  * z-index so any clicks that hit outside of the modal content will hit this
  * background.
  */
-export default ({ noClose }: Pick<ModalProps, 'noClose'>) => {
+export default ({ locked }: Pick<ModalProps, 'locked'>) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-
-  const onClick = () => {
-    if (!noClose) closeModal();
-  };
-
-  return (
-    <motion.div
-      key="c-modal-bg"
-      animate={{ opacity: 0.5 }}
-      className="c-modal-bg"
-      exit={{ opacity: 0 }}
-      initial={{ opacity: 0 }}
-      transition={{ duration: 0.1 }}
-      onClick={onClick}
-    />
-  );
+  const onClick = () => !locked && closeModal();
+  const css = makeClass(['c-modal-bg', [locked, 'c-modal-bg--locked']]);
+  return <div key="c-modal-bg" className={css} onClick={onClick} />;
 };

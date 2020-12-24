@@ -12,8 +12,8 @@ export default ({
   confirmation,
   children,
   className,
+  locked,
   id: MODAL_ID,
-  noClose,
   ...containerProps
 }: ModalProps) => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
@@ -35,7 +35,7 @@ export default ({
     <AnimatePresence>
       {shouldShowModal && (
         <>
-          <ModalBackground noClose={noClose} />
+          <ModalBackground locked={locked} />
           <ModalContainer {...containerProps}>
             <div className={css}>{children}</div>
           </ModalContainer>
