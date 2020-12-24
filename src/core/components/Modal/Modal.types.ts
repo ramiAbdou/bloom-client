@@ -12,7 +12,6 @@ export interface ModalProps
     IdProps,
     StyleProps {
   confirmation?: boolean;
-  locked?: boolean;
   onClose?: Function;
   width?: number;
 }

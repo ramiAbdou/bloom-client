@@ -13,16 +13,14 @@ export default ({ children, onClose, width }: ModalContainerProps) => {
   useLockBodyScroll();
 
   useEffect(() => {
-    return () => {
-      if (onClose) onClose();
-    };
+    return () => onClose && onClose();
   }, []);
 
   return (
     <motion.div
       animate={{ opacity: 1, scale: 1 }}
       className="c-modal-ctr"
-      exit={{ opacity: 0, scale: 0.75 }}
+      exit={{ opacity: 0, scale: 0.5 }}
       initial={{ opacity: 0.25, scale: 0.5 }}
       style={width ? { width } : {}}
       transition={{ duration: 0.2 }}

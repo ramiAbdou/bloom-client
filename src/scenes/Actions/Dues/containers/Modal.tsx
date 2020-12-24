@@ -12,7 +12,7 @@ export default function ModalContainer({ children }: ChildrenProps) {
   if (!createSubscription) return null;
 
   return (
-    <Modal locked id={ModalType.PAY_DUES}>
+    <Modal id={ModalType.PAY_DUES}>
       <Form className="s-actions-dues" onSubmit={createSubscription}>
         {children}
       </Form>

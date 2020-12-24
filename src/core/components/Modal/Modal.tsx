@@ -12,7 +12,6 @@ export default ({
   confirmation,
   children,
   className,
-  locked,
   id: MODAL_ID,
   ...containerProps
 }: ModalProps) => {
@@ -35,7 +34,7 @@ export default ({
     <AnimatePresence>
       {shouldShowModal && (
         <>
-          <ModalBackground locked={locked} />
+          <ModalBackground />
           <ModalContainer {...containerProps}>
             <div className={css}>{children}</div>
           </ModalContainer>
