@@ -28,8 +28,6 @@ export default () => {
   const applyForMembership = useApplyForMembership();
   const isFetchingApplication = useFetchApplication();
 
-  console.log(questions);
-
   if (isFetchingApplication) return <FullScreenLoader />;
   if (!questions.length) return null;
 

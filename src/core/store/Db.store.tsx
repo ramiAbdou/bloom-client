@@ -130,8 +130,6 @@ export const dbModel: DbModel = {
       const { byId: byCommunityId } = entities.communities;
       const parsedEntities = parseEntities(data, schema, setActiveId);
 
-      console.log(parsedEntities);
-
       // If there is a communityReferenceColumn, then not only should we
       // update the EntityRecord's with the updated/parsed data, we should
       // also add the references of those data entity ID's to the active

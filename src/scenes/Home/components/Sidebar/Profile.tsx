@@ -21,8 +21,6 @@ export default () => {
     deepequal
   ) as IUser;
 
-  // useStoreState(({ db }) => console.log() db.member);
-
   const showPicker = useStoreActions(({ picker }) => picker.showPicker);
 
   const onClick = () => showPicker(PickerType.PROFILE);
