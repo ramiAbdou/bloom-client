@@ -23,6 +23,7 @@ export type FormModel = {
 };
 
 export const formModel: FormModel = {
+  // Represents the error message for the entire Form, not any one element.
   errorMessage: null,
 
   getItem: computed(({ items }) => ({ category, title }: GetItemArgs) => {
@@ -40,6 +41,7 @@ export const formModel: FormModel = {
       )
   ),
 
+  // Used to ensure that the submit button is disabled.
   isLoading: false,
 
   items: [],
@@ -49,6 +51,7 @@ export const formModel: FormModel = {
     errorMessage
   })),
 
+  // Typically set when a form is submitting an async function.
   setIsLoading: action((state, isLoading: boolean) => ({
     ...state,
     isLoading

@@ -9,7 +9,6 @@ import mailchimp from '../../images/mailchimp.png';
 
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const isLoading = Form.useStoreState((store) => store.isLoading);
 
   return (
     <>
@@ -23,9 +22,7 @@ export default () => {
       <FormContent />
 
       <div className="s-integrations-action-ctr">
-        <SubmitButton loading={isLoading} loadingText="Finishing...">
-          Finish
-        </SubmitButton>
+        <SubmitButton loadingText="Finishing...">Finish</SubmitButton>
 
         <Button outline onClick={() => closeModal()}>
           Cancel
