@@ -14,7 +14,7 @@ interface InputProps extends ValueProps {
   error?: boolean;
   placeholder?: string;
   onClickOutside?: (...args: any) => any;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => any;
+  onChange: (value: string) => any;
   onEnter?: () => any;
 }
 
@@ -35,7 +35,7 @@ export default ({
   useOnClickOutside(ref, async () => onClickOutside && onClickOutside());
 
   const modifiedOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
+    onChange(event.target.value);
   };
 
   const modifiedKeyDown = ({ key }: KeyboardEvent<HTMLInputElement>) => {
@@ -56,7 +56,7 @@ export default ({
       className={css}
       placeholder={placeholder ?? ''}
       type="text"
-      value={value}
+      value={value ?? ''}
       onChange={modifiedOnChange}
       onKeyDown={modifiedKeyDown}
     />

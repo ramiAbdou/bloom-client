@@ -14,7 +14,7 @@ export default ({ placeholder, title }: FormItemData) => {
     <Input
       placeholder={placeholder}
       value={value}
-      onChange={({ target }) => updateText(target.value)}
+      onChange={(val) => updateText(val)}
     />
   );
 };

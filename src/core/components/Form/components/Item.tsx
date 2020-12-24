@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 import { FormItemData } from '@components/Form/Form.types';
 import { takeFirst } from '@util/util';
-import Label from '../Label';
+import Label from './Label';
 import LongText from './LongText';
 import MultipleChoice from './MultipleChoice/MultipleChoice';
 import MultipleChoiceDD from './MultipleChoice/MultipleChoiceDD';

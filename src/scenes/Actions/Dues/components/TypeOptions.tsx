@@ -14,7 +14,7 @@ const TypeOptionList = () => {
     return db.community.types?.map((id: string) => byId[id]);
   }, deepequal);
 
-  const currentTypeId = Dues.useStoreState((store) => store.memberTypeId);
+  const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);
   const isTypeListOpen = Dues.useStoreState((store) => store.isTypeListOpen);
 
   const setMemberTypeId = Dues.useStoreActions(
@@ -35,7 +35,7 @@ const TypeOptionList = () => {
   return (
     <motion.div animate={{ scaleY: 1 }} initial={{ scaleY: 0 }}>
       <Radio
-        defaultChecked={currentTypeId}
+        defaultChecked={selectedTypeId}
         name="s-actions-dues"
         options={allTypes.map(({ amount, id, name, recurrence }) => {
           amount /= 100;
@@ -54,11 +54,11 @@ const TypeOptionList = () => {
 };
 
 export default () => {
-  const memberTypeId = Dues.useStoreState((store) => store.memberTypeId);
+  const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);
 
   const currentType: IMemberType = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[memberTypeId];
+    return byId[selectedTypeId];
   }, deepequal);
 
   const isTypeListOpen = Dues.useStoreState((store) => store.isTypeListOpen);
@@ -80,7 +80,7 @@ export default () => {
     .replace('YEARLY', 'yr');
 
   return (
-    <div className="s-actions-dues-item">
+    <div className="s-actions-dues-item s-actions-dues-item--type">
       <p>Membership Type</p>
       <div>
         <TypeOptionList />

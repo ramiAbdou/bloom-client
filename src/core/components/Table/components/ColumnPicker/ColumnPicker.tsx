@@ -56,7 +56,7 @@ export default () => {
         <Input
           dark
           value={value}
-          onChange={({ target }) => setValue(target.value)}
+          onChange={(val) => setValue(val)}
           onClickOutside={modifiedOnRenameColumn}
           onEnter={onEnter}
         />

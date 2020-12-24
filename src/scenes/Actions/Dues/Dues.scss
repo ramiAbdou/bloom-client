@@ -9,16 +9,27 @@ $PREF: 's-actions-dues';
 
 .#{$PREF} > .c-btn { width: 100%; }
 
-.#{$PREF}-item {
-  margin-bottom: $md;
+// ## DUES FORM ITEM
 
-  > p:first-child { @extend .meta--lg; margin-bottom: $xs; }
+.#{$PREF} > .c-form-item, .#{$PREF}-item {
+  margin-bottom: $md;
+  margin-top: 0;
+
+  > .c-form-label { margin-bottom: 0; }
+
+  > p:first-child,
+  > .c-form-label > p {
+    @extend .meta--lg;
+
+    margin-bottom: $xs;
+  }
 
   > div.c-misc-input {
     margin-bottom: $md;
 
+    // Needed to format the Stripe card element card correctly.
     > .__PrivateStripeElement { width: 100%; }
   }
 }
 
-.#{$PREF}-item:first-of-type > div { @extend .flex-acsb; }
+.#{$PREF}-item--type > div { @extend .flex-acsb; }

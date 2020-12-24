@@ -2,8 +2,9 @@ import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
 import { ChildrenProps, ClassNameProps } from '@constants';
-import Form, { formatQuestions, formModel } from './Form.store';
+import Form, { formModel } from './Form.store';
 import { FormItemData, OnFormSubmit } from './Form.types';
+import { formatQuestions } from './Form.util';
 
 interface FormProps extends ChildrenProps, ClassNameProps {
   questions?: FormItemData[];

@@ -45,7 +45,9 @@ export default function DuesContainer({ children }: ChildrenProps) {
   if (!memberTypeId) return null;
 
   return (
-    <Dues.Provider runtimeModel={{ ...duesModel, memberTypeId }}>
+    <Dues.Provider
+      runtimeModel={{ ...duesModel, selectedTypeId: memberTypeId }}
+    >
       <StripeProvider>{children}</StripeProvider>
     </Dues.Provider>
   );

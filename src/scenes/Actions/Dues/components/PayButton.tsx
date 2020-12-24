@@ -8,12 +8,12 @@ import Dues from '../Dues.store';
 
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const memberTypeId = Dues.useStoreState((store) => store.memberTypeId);
+  const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);
   const isLoading = Form.useStoreState((store) => store.isLoading);
 
   const amount: number = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[memberTypeId]?.amount / 100;
+    return byId[selectedTypeId]?.amount / 100;
   });
 
   const stripe = useStripe();

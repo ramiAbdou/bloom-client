@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FormErrorMessage from '@components/Form/components/ErrorMessage';
+import FormContent from '@components/Form/Content';
 import Form from '@components/Form/Form';
 import Modal from '@components/Modal/Modal';
 import { ModalType } from '@constants';
@@ -26,13 +27,11 @@ const options: StripeCardElementOptions = {
 };
 
 const DuesModalContent = () => {
-  const currentTypeId: string = Dues.useStoreState(
-    (store) => store.memberTypeId
-  );
+  const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);
 
   const isFree: boolean = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[currentTypeId]?.isFree;
+    return byId[selectedTypeId]?.isFree;
   });
 
   const createSubscription = useCreateSubscription();
@@ -42,18 +41,25 @@ const DuesModalContent = () => {
 
   return (
     <Modal locked id={ModalType.PAY_DUES}>
-      <Form className="s-actions-dues" onSubmit={createSubscription}>
+      <Form
+        className="s-actions-dues"
+        questions={[
+          {
+            placeholder: 'Name on Card',
+            title: 'Name on Card',
+            type: 'SHORT_TEXT'
+          },
+          {
+            node: <CardElement options={options} />,
+            title: 'Credit or Debit Card'
+          }
+        ]}
+        onSubmit={createSubscription}
+      >
         <h1>Pay Dues</h1>
         <DuesDescription />
         <DuesTypeOptions />
-
-        {!isFree && (
-          <div className="s-actions-dues-item">
-            <p>Credit or Debit Card</p>
-            <CardElement options={options} />
-          </div>
-        )}
-
+        {!isFree && <FormContent />}
         <FormErrorMessage />
         <PayButton />
       </Form>

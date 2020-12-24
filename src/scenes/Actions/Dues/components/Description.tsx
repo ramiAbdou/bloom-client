@@ -34,18 +34,16 @@ const RecurringPaymentDescription = () => (
  * - Membership is a FREE membership.
  */
 export default function DuesDescription() {
-  const currentTypeId: string = Dues.useStoreState(
-    (store) => store.memberTypeId
-  );
+  const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);
 
   const recurrence = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[currentTypeId]?.recurrence;
+    return byId[selectedTypeId]?.recurrence;
   });
 
   const isFree = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[currentTypeId]?.isFree;
+    return byId[selectedTypeId]?.isFree;
   });
 
   if (isFree) return <FreeDescription />;

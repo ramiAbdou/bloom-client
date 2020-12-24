@@ -71,8 +71,8 @@ export default memo(
             error={isShowingErrors && !!firstNameError}
             placeholder="First Name"
             value={firstName}
-            onChange={({ target }) =>
-              updateMember({ field: 'FIRST_NAME', id, value: target.value })
+            onChange={(value) =>
+              updateMember({ field: 'FIRST_NAME', id, value })
             }
           />
 
@@ -81,8 +81,8 @@ export default memo(
             error={isShowingErrors && !!lastNameError}
             placeholder="Last Name"
             value={lastName}
-            onChange={({ target }) =>
-              updateMember({ field: 'LAST_NAME', id, value: target.value })
+            onChange={(value) =>
+              updateMember({ field: 'LAST_NAME', id, value })
             }
           />
 
@@ -91,9 +91,7 @@ export default memo(
             error={isShowingErrors && !!emailError}
             placeholder="Email"
             value={email}
-            onChange={({ target }) =>
-              updateMember({ field: 'EMAIL', id, value: target.value })
-            }
+            onChange={(value) => updateMember({ field: 'EMAIL', id, value })}
           />
 
           {showAdminCheckbox && (

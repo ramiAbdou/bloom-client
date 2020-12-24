@@ -13,7 +13,8 @@ import Dues from '../Dues.store';
 export default function useCreateSubscription(): OnFormSubmit {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const selectedTypeId = Dues.useStoreState((store) => store.memberTypeId);
+  const nameOnCard = Dues.useStoreState((store) => store.nameOnCard);
+  const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);
 
   const elements = useElements();
   const stripe = useStripe();
@@ -29,6 +30,12 @@ export default function useCreateSubscription(): OnFormSubmit {
   if (!stripe) return null;
 
   return async ({ setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+    if (!nameOnCard) {
+      // setErrorMessage('Please fill out ');
+      setIsLoading(false);
+      return;
+    }
+
     // Start the submit function by clearing the error message and set the
     // form state to loading.
     setErrorMessage(null);
@@ -37,6 +44,7 @@ export default function useCreateSubscription(): OnFormSubmit {
     // Create the payment method via the Stripe SDK.
     const stripeResult = await stripe.createPaymentMethod({
       card: elements.getElement(CardElement),
+      // billing_details: {  },
       type: 'card'
     });
 

@@ -2,25 +2,34 @@ import { Action, action, createContextStore } from 'easy-peasy';
 
 type DuesModel = {
   isTypeListOpen: boolean;
-  memberTypeId: string;
+  nameOnCard: string;
+  selectedTypeId: string;
   setIsTypeListOpen: Action<DuesModel, boolean>;
   setMemberTypeId: Action<DuesModel, string>;
+  setNameOnCard: Action<DuesModel, string>;
   toggleIsTypeListOpen: Action<DuesModel>;
 };
 
 export const duesModel: DuesModel = {
   isTypeListOpen: false,
 
-  memberTypeId: null,
+  nameOnCard: null,
+
+  selectedTypeId: null,
 
   setIsTypeListOpen: action((state, isTypeListOpen: boolean) => ({
     ...state,
     isTypeListOpen
   })),
 
-  setMemberTypeId: action((state, memberTypeId: string) => ({
+  setMemberTypeId: action((state, selectedTypeId: string) => ({
     ...state,
-    memberTypeId
+    selectedTypeId
+  })),
+
+  setNameOnCard: action((state, nameOnCard: string) => ({
+    ...state,
+    nameOnCard
   })),
 
   toggleIsTypeListOpen: action(({ isTypeListOpen, ...state }) => ({
