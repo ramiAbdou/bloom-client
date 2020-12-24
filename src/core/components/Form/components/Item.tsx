@@ -2,12 +2,12 @@ import React, { ReactElement } from 'react';
 
 import { FormItemData } from '@components/Form/Form.types';
 import { takeFirst } from '@util/util';
+import LongText from '../elements/LongText';
+import MultipleChoice from '../elements/MultipleChoice/MultipleChoice';
+import MultipleChoiceDD from '../elements/MultipleChoice/MultipleChoiceDD';
+import MultipleSelect from '../elements/MultipleSelect/MultipleSelect';
+import ShortText from '../elements/ShortText';
 import Label from './Label';
-import LongText from './LongText';
-import MultipleChoice from './MultipleChoice/MultipleChoice';
-import MultipleChoiceDD from './MultipleChoice/MultipleChoiceDD';
-import MultipleSelect from './MultipleSelect/MultipleSelect';
-import ShortText from './ShortText';
 
 export default ({
   completed,
