@@ -3,18 +3,22 @@ $PREF: 'c-form';
 // ## GENERAL
 
 .#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
-.#{$PREF}-desc { margin-bottom: 12px; }
+.#{$PREF}-desc { margin-bottom: $xs; }
 .#{$PREF}-error { color: $red; margin-top: $xxs; }
 
 // ## LABEL
 
-.#{$PREF}-label { @extend .flex-ac; margin-bottom: $xs; width: 100%; }
-.#{$PREF}-label > svg { color: $green; margin-right: $xs; }
-.#{$PREF}-label > p { @extend .sb; }
-.#{$PREF}-label--required > p::after {
-  color: $red;
-  content: '*';
-  margin-left: $xxs;
+.#{$PREF}-label {
+  @extend .flex-ac;
+
+  margin-bottom: $xs;
+  width: 100%;
+
+  > p { @extend .sb; }
+  > svg { color: $green; margin-right: $xs; }
+
+  &--uppercase > p { @extend .meta--lg; }
+  &--required > p::after { color: $red; content: '*'; margin-left: $xxs; }
 }
 
 // ## MULTIPLE CHOICE

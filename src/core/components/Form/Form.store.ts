@@ -18,6 +18,7 @@ export type FormModel = {
   isLoading: boolean;
   items: FormItemData[];
   setErrorMessage: Action<FormModel, string>;
+  setItem: Action<FormModel, Partial<FormItemData>>;
   setIsLoading: Action<FormModel, boolean>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
@@ -33,7 +34,7 @@ export const formModel: FormModel = {
 
   isCompleted: computed(
     ({ items }) =>
-      items &&
+      items?.length &&
       items.every(
         ({ completed, node, required, value, validate }: FormItemData) =>
           (!required || !!value || !!completed || !!node) &&
@@ -55,6 +56,11 @@ export const formModel: FormModel = {
   setIsLoading: action((state, isLoading: boolean) => ({
     ...state,
     isLoading
+  })),
+
+  setItem: action((state, item: Partial<FormItemData>) => ({
+    ...state,
+    items: [...state.items, item]
   })),
 
   updateItem: action((state, payload) => {

@@ -3,20 +3,7 @@ import React from 'react';
 import Form from '@components/Form/Form';
 import Modal from '@components/Modal/Modal';
 import { ChildrenProps, ModalType } from '@constants';
-import { CardElement } from '@stripe/react-stripe-js';
-import { StripeCardElementOptions } from '@stripe/stripe-js';
 import useCreateSubscription from '../hooks/useCreateSubscription';
-
-const options: StripeCardElementOptions = {
-  classes: {
-    base: 'c-misc-input',
-    empty: 'c-misc-input',
-    focus: 'c-misc-input--focus',
-    invalid: 'c-misc-input--error'
-  },
-  iconStyle: 'solid',
-  style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
-};
 
 export default function ModalContainer({ children }: ChildrenProps) {
   const createSubscription = useCreateSubscription();
@@ -26,29 +13,7 @@ export default function ModalContainer({ children }: ChildrenProps) {
 
   return (
     <Modal locked id={ModalType.PAY_DUES}>
-      <Form
-        className="s-actions-dues"
-        questions={[
-          {
-            placeholder: 'Jane Doe',
-            required: true,
-            title: 'Name on Card',
-            type: 'SHORT_TEXT'
-          },
-          {
-            node: <CardElement options={options} />,
-            required: true,
-            title: 'Credit or Debit Card'
-          },
-          {
-            placeholder: '1 Address Drive',
-            required: true,
-            title: 'Billing Address',
-            type: 'SHORT_TEXT'
-          }
-        ]}
-        onSubmit={createSubscription}
-      >
+      <Form className="s-actions-dues" onSubmit={createSubscription}>
         {children}
       </Form>
     </Modal>

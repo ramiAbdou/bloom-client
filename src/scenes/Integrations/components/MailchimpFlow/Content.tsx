@@ -3,7 +3,6 @@ import React from 'react';
 import Button from '@components/Button/Button';
 import SubmitButton from '@components/Form/components/SubmitButton';
 import FormContent from '@components/Form/Content';
-import Form from '@components/Form/Form.store';
 import { useStoreActions } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
 

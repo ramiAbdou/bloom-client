@@ -1,12 +1,12 @@
 import React from 'react';
 
 import FormErrorMessage from '@components/Form/components/ErrorMessage';
-import FormContent from '@components/Form/Content';
 import { useStoreState } from '@store/Store';
 import DuesDescription from './components/Description';
 import PayButton from './components/PayButton';
 import DuesTypeOptions from './components/TypeOptions';
 import DuesContainer from './containers/Dues';
+import FormContent from './containers/FormContent';
 import ModalContainer from './containers/Modal';
 import Dues from './Dues.store';
 import useCreateSubscription from './hooks/useCreateSubscription';

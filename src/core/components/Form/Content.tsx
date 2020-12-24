@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FormItem from './components/Item';
+import DefaultFormItem from './components/DefaultItem';
 import Form from './Form.store';
 import { FormItemData } from './Form.types';
 
@@ -11,7 +11,9 @@ import { FormItemData } from './Form.types';
 export default () => (
   <>
     {Form.useStoreState(({ items }) => items)?.map((props: FormItemData) => {
-      return <FormItem key={props.title ?? props.placeholder} {...props} />;
+      return (
+        <DefaultFormItem key={props.title ?? props.placeholder} {...props} />
+      );
     })}
   </>
 );

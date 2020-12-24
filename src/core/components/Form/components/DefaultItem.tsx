@@ -1,14 +1,13 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 
 import { FormItemData } from '@components/Form/Form.types';
-import { ChildrenProps } from '@constants';
+import ErrorMessage from '@components/Misc/ErrorMessage';
 import { takeFirst } from '@util/util';
 import LongText from '../elements/LongText';
 import MultipleChoice from '../elements/MultipleChoice/MultipleChoice';
 import MultipleChoiceDD from '../elements/MultipleChoice/MultipleChoiceDD';
 import MultipleSelect from '../elements/MultipleSelect/MultipleSelect';
 import ShortText from '../elements/ShortText';
-import Form from '../Form.store';
 import Description from './Description';
 import Label from './Label';
 
@@ -22,43 +21,18 @@ interface TextItemProps
   extends BaseItemProps,
     Pick<FormItemData, 'placeholder'> {}
 
-interface FormItemProps
-  extends ChildrenProps,
-    Pick<
-      FormItemData,
-      | 'category'
-      | 'description'
-      | 'options'
-      | 'placeholder'
-      | 'required'
-      | 'title'
-      | 'type'
-      | 'validate'
-      | 'value'
-    > {}
-
 export default ({
-  children,
   category,
+  completed,
   description,
+  errorMessage,
+  node,
   options,
-  required,
   placeholder,
+  required,
   title,
-  type,
-  validate
-}: FormItemProps) => {
-  const setItem = Form.useStoreActions((store) => store.setItem);
-
-  useEffect(() => {
-    const emptyValue: string | string[] = takeFirst([
-      [type === 'MULTIPLE_SELECT', []],
-      [['SHORT_TEXT', 'LONG_TEXT'].includes(type), '']
-    ]);
-
-    setItem({ category, title, validate, value: emptyValue });
-  }, []);
-
+  type
+}: FormItemData) => {
   const baseProps: BaseItemProps = { category, required, title };
   const optionProps: OptionItemProps = { ...baseProps, options };
   const textProps: TextItemProps = { ...baseProps, placeholder };
@@ -72,15 +46,18 @@ export default ({
       <MultipleChoiceDD {...optionProps} />
     ],
     [type === 'MULTIPLE_CHOICE', <MultipleChoice {...optionProps} />],
-    [children]
+    [node]
   ]);
 
   return (
     <div className="c-form-item">
-      <Label required={required}>{title}</Label>
+      <Label completed={completed} required={required}>
+        {title}
+      </Label>
+
       <Description>{description}</Description>
       {body}
-      {/* <ErrorMessage marginBottom={0} marginTop={8} message={errorMessage} /> */}
+      <ErrorMessage marginBottom={0} marginTop={8} message={errorMessage} />
     </div>
   );
 };

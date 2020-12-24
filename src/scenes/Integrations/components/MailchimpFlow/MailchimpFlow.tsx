@@ -36,8 +36,7 @@ export default () => {
       completed: isMailchimpAuthenticated,
       description: `Log in with your Mailchimp account.`,
       required: true,
-      title: 'Step 1: Authorize Your Mailchimp Account',
-      type: 'CUSTOM'
+      title: 'Step 1: Authorize Your Mailchimp Account'
     },
     {
       description: `Choose the Mailchimp Audience/List that you would like

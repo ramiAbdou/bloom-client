@@ -1,4 +1,3 @@
-import { takeFirst } from '@util/util';
 import { FormItemData } from './Form.types';
 
 /**
@@ -7,22 +6,18 @@ import { FormItemData } from './Form.types';
  *
  * @param questions Questions to format into items.
  */
-export const formatQuestions = (questions: FormItemData[]) =>
-  questions?.map(
-    ({ options, type, value, ...question }: Partial<FormItemData>) => {
-      const emptyValue: string | string[] = takeFirst([
-        [type === 'MULTIPLE_SELECT', []],
-        [['SHORT_TEXT', 'LONG_TEXT'].includes(type), '']
-      ]);
+export const formatQuestions = (questions: FormItemData[]) => {
+  if (!questions) return [];
 
-      return {
-        ...question,
-        options,
-        type,
-        value: value ?? emptyValue
-      };
+  return questions.map(
+    ({ options, type, value, ...question }: Partial<FormItemData>) => {
+      const emptyValue: string | string[] =
+        type === 'MULTIPLE_SELECT' ? [] : '';
+
+      return { ...question, options, type, value: value ?? emptyValue };
     }
-  ) ?? [];
+  );
+};
 
 /**
  * All GraphQL requests with data should have the data be populated in an array,
