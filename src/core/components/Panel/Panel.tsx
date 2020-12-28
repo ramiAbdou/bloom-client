@@ -26,8 +26,8 @@ const Picker = ({
   scrollId,
   style
 }: PickerProps) => {
-  const id = useStoreState(({ picker }) => picker.id);
-  const closePicker = useStoreActions(({ picker }) => picker.closePicker);
+  const id = useStoreState(({ panel }) => panel.id);
+  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
 
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
   const element: HTMLElement = document.getElementById(id);
@@ -136,8 +136,8 @@ const Picker = ({
 };
 
 export default ({ children, ...props }: PickerProps) => {
-  const isPickerShowing = useStoreState(({ picker }) =>
-    picker.isIdShowing(props.id)
+  const isPickerShowing = useStoreState(({ panel }) =>
+    panel.isIdShowing(props.id)
   );
 
   return createPortal(

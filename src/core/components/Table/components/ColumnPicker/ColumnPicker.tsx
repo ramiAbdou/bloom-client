@@ -12,8 +12,8 @@ import SortDescendingButton from './SortDescendingButton';
 export default () => {
   const [value, setValue] = useState<string>('');
 
-  const pickerId = useStoreState(({ picker }) => picker.id);
-  const closePicker = useStoreActions(({ picker }) => picker.closePicker);
+  const pickerId = useStoreState(({ panel }) => panel.id);
+  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
 
   const onRenameColumn = Table.useStoreState((store) => store.onRenameColumn);
   const updateColumn = Table.useStoreActions((store) => store.updateColumn);

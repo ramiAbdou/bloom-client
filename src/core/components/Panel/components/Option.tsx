@@ -10,7 +10,7 @@ import { PanelAction } from '../Panel.types';
  * to use this component.
  */
 export default memo(({ Icon, onClick, separator, text }: PanelAction) => {
-  const closePicker = useStoreActions(({ picker }) => picker.closePicker);
+  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
 
   // After the passed-in onClick is executed, close the picker. This component
   // should not be used as a Flow. It is meant to be a one-time action picker.

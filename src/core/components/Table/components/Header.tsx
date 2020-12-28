@@ -35,8 +35,8 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const select = Table.useStoreState((store) => store.select);
-  const isPickerShowing = useStoreState(({ picker }) => picker.isIdShowing(id));
-  const showPicker = useStoreActions(({ picker }) => picker.showPicker);
+  const isPickerShowing = useStoreState(({ panel }) => panel.isIdShowing(id));
+  const showPicker = useStoreActions(({ panel }) => panel.showPicker);
 
   const onClick = () => showPicker(id);
 

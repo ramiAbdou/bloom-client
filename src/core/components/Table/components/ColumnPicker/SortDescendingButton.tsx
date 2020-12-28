@@ -8,7 +8,7 @@ import { makeClass } from '@util/util';
 import Table from '../../Table.store';
 
 export default ({ id }: IdProps) => {
-  const closePicker = useStoreActions(({ picker }) => picker.closePicker);
+  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
 
   const descendingCSS = Table.useStoreState(
     ({ sortedColumnDirection, sortedColumnId }) =>

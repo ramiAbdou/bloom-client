@@ -21,7 +21,7 @@ export default () => {
     deepequal
   ) as IUser;
 
-  const showPicker = useStoreActions(({ picker }) => picker.showPicker);
+  const showPicker = useStoreActions(({ panel }) => panel.showPicker);
 
   const onClick = () => showPicker(PickerType.PROFILE);
 

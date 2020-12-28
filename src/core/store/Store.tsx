@@ -18,7 +18,7 @@ type StoreModel = {
   db: DbModel;
   loader: LoaderModel;
   modal: ModalModel;
-  picker: PanelModel;
+  panel: PanelModel;
   toast: ToastModel;
 };
 
@@ -27,7 +27,7 @@ export const store = createStore<StoreModel>(
     db: dbModel,
     loader: loaderModel,
     modal: modalModel,
-    picker: panelModel,
+    panel: panelModel,
     toast: toastModel
   },
   { disableImmer: true }
