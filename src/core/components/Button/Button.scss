@@ -79,18 +79,6 @@ $PREF: 'c-btn';
   @include HOVER { border-radius: $xxs; }
 }
 
-// ## GREEN BUTTON
-
-.#{$PREF}-green {
-  @extend .btn-txt;
-  
-  background-clip: padding-box;
-  background-color: rgba($color: $green, $alpha: 0.1);
-  border: 1px rgba($color: $green, $alpha: 0.1) solid;
-  color: $green;
-  padding: $xs $sm;
-}
-
 // ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but
 // not border-left, so we avoid stacking pixels (1px * 2 = 2px). However,
 // the first button will have a border-left.

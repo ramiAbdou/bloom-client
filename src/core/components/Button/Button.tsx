@@ -13,7 +13,6 @@ export interface ButtonProps
   extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
   href?: string;
   fill?: boolean;
-  green?: boolean;
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
@@ -25,7 +24,7 @@ export interface ButtonProps
 /**
  * Returns true if the Button's loading state should be shown, and false
  * otherwise. Ensures that the loading state of a Button doesn't show unless
- * the operation takes moer than 100ms.
+ * the operation takes more than 100ms.
  */
 const useLoadingState = (loading: boolean): boolean => {
   const [showLoadingState, setShowLoadingState] = useState(false);
@@ -63,7 +62,6 @@ export default forwardRef(
       children,
       disabled,
       fill,
-      green,
       large,
       loading,
       loadingText,
@@ -95,7 +93,6 @@ export default forwardRef(
       [primary, 'c-btn-primary'],
       [outline, 'c-btn-outline'],
       [underline, 'c-btn-underline'],
-      [green, 'c-btn-green'],
       className
     ]);
 

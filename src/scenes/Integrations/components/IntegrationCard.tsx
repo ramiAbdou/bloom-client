@@ -30,7 +30,7 @@ const ActionButton = memo(
 
     if (completed) {
       return (
-        <Button fill green onClick={onSeeDetails}>
+        <Button fill outline onClick={onSeeDetails}>
           See Details
         </Button>
       );

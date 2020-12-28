@@ -48,16 +48,6 @@ const UnderlineButtonTemplate = (args) => (
 
 export const UnderlineButton = UnderlineButtonTemplate.bind({});
 
-// ## GREEN BUTTON
-
-const GreenButtonTemplate = (args) => (
-  <Button green {...args}>
-    Green
-  </Button>
-);
-
-export const GreenButton = GreenButtonTemplate.bind({});
-
 export default {
   component: Button,
   parameters: {

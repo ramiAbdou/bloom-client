@@ -67,7 +67,6 @@ export default memo(
           </Button>
 
           <Input
-            dark
             error={isShowingErrors && !!firstNameError}
             placeholder="First Name"
             value={firstName}
@@ -77,7 +76,6 @@ export default memo(
           />
 
           <Input
-            dark
             error={isShowingErrors && !!lastNameError}
             placeholder="Last Name"
             value={lastName}
@@ -87,7 +85,6 @@ export default memo(
           />
 
           <Input
-            dark
             error={isShowingErrors && !!emailError}
             placeholder="Email"
             value={email}
