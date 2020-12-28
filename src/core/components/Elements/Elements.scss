@@ -86,7 +86,7 @@ $PREF: 'c-misc';
   border: 1px $gray-4 solid;
   border-radius: $xxs;
   box-sizing: border-box;
-  color: $gray-1;
+  color: $gray-2;
   cursor: text;
   height: $lg;
   padding-left: $xs;
@@ -100,9 +100,13 @@ $PREF: 'c-misc';
   // Only reason we added this --focus variant is that we can use it in the
   // Stripe elements definition.
   &:focus,
-  &--focus { background-color: white; border: 1px $primary solid; }
-  &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
+  &--focus {
+    background-color: white;
+    border: 1px $primary solid;
+    color: $gray-1;
+  }
 
+  &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
   &--error { border: 1px $red solid; }
 
   &--lg {
