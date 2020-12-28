@@ -120,7 +120,7 @@ $PREF: 'c-misc';
   @extend .flex-ac;
 
   background-color: $gray-5;
-  border-radius: 20px;
+  border-radius: $sl;
   box-sizing: border-box;
   color: $gray-3;
   padding: $xs $sm;
@@ -147,7 +147,7 @@ $PREF: 'c-misc';
 
   &--hide { visibility: hidden; }
 
-  > svg { color: $gray-3; min-height: 20px; min-width: 20px; }
+  > svg { color: $gray-3; min-height: $sl; min-width: $sl; }
 }
 
 // ## QUESTION VALUE - Has a title component and value component.
@@ -222,10 +222,10 @@ input[type="radio"] ~ div {
   background-color: white;
   border: 2px solid $gray-4;
   border-radius: 50%;
-  height: 12px;
+  height: $ss;
   margin-right: $xs;
   padding: 2px;
-  width: 12px;
+  width: $ss;
 }
 
 input[type="radio"] ~ div > span { @extend .fill; }
@@ -237,8 +237,8 @@ input[type="radio"]:checked ~ div > span {
   background-color: $primary;
   border-radius: 50%;
   display: inline-block;
-  min-height: 12px;
-  min-width: 12px;
+  min-height: $ss;
+  min-width: $ss;
 }
 
 .#{$PREF}-radio {

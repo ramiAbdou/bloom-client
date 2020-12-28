@@ -21,7 +21,7 @@ h3,
 h4 { font-weight: 700; } // Bold text for headers.
 
 h1 { font-size: 24px; }
-h2 { font-size: 20px; }
+h2 { font-size: $sl; }
 h3 { font-size: 18px; }
 h4 { font-size: 14px; text-transform: uppercase; }
 .body { font-size: 15px; font-weight: 400; }

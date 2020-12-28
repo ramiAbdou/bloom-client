@@ -145,7 +145,7 @@ button.#{$PREF}-link { &:active { transform: none; } }
 
   box-sizing: border-box;
   margin: $xs 0;
-  padding: $xs 20px $sm $sm;
+  padding: $xs $sl $sm $sm;
   width: 95%;
 }
 

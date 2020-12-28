@@ -78,7 +78,7 @@ $PREF: 's-database';
   > p { width: max-content; }
 }
 
-.#{$PREF}-add-modal-input > div > div > .c-misc-checkbox { margin-right: 12px; }
+.#{$PREF}-add-modal-input > div > div > .c-misc-checkbox { margin-right: $ss; }
 
 // .#{$PREF}-add-modal-input:only-of-type { visibility: hidden; }
 

@@ -133,7 +133,7 @@ th.#{$PREF}-th--sorted {
   > div { @extend .flex-ac; }
   > div > h4 { color: $primary; max-width: 85%; }
   // Caret up or caret down SVG, React controls the displaying of this element.
-  > div > svg { color: $primary; height: 12px; margin-left: $xs; width: 12px; }
+  > div > svg { color: $primary; height: $ss; margin-left: $xs; width: $ss; }
 }
 
 // When the picker is showing, we keep the background-color dark.

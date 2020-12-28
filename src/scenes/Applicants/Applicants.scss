@@ -7,7 +7,7 @@ $PREF: 's-applicants';
 
 // ## ACCEPT ALL BUTTON
 
-.#{$PREF}-accept-all { margin-right: 12px; }
+.#{$PREF}-accept-all { margin-right: $ss; }
 
 .#{$PREF} > p { @extend .body; }
 
@@ -42,7 +42,7 @@ $PREF: 's-applicants';
   &:last-of-type { margin-bottom: $lg; }
 };
 
-.#{$PREF}-card > button { margin: 20px auto 0 auto; }
+.#{$PREF}-card > button { margin: $sl auto 0 auto; }
 
 // ## CARD HEADER
 

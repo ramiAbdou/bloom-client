@@ -22,7 +22,7 @@ $PREF: 'c-picker';
   @extend .body;
   
   color: $gray-2;
-  padding: 12px;
+  padding: $ss;
   text-align: left;
   width: 100%;
 
@@ -30,5 +30,5 @@ $PREF: 'c-picker';
 
   &:first-child { border-radius: $xxs $xxs 0 0; }
   &:last-child { border-radius: 0 0 $xxs $xxs; margin-bottom: 0; }
-  > svg { height: 20px; margin-right: $xs; width: 20px; }
+  > svg { height: $sl; margin-right: $xs; width: $sl; }
 }
