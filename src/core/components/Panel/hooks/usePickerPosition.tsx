@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { IdProps } from '@constants';
 import { takeFirst } from '@util/util';
-import { PickerAlign } from './Picker.store';
+import { PickerAlign } from '../Panel.store';
 
 interface UsePickerPositionProps extends IdProps {
   initialAlign: PickerAlign;

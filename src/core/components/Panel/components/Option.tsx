@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import Separator from '@components/Misc/Separator';
-import { PickerAction } from '@components/Picker/Picker.store';
+import { PickerAction } from '@components/Panel/Panel.store';
 import { useStoreActions } from '@store/Store';
 
 /**
@@ -22,7 +22,7 @@ export default memo(({ Icon, onClick, separator, text }: PickerAction) => {
   return (
     <>
       {separator && <Separator style={{ marginBottom: 8, marginTop: 8 }} />}
-      <button className="c-picker-option" onClick={onOptionClick}>
+      <button className="c-panel-option" onClick={onOptionClick}>
         <Icon />
         {text}
       </button>

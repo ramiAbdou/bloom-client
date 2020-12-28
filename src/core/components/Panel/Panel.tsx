@@ -6,8 +6,8 @@ import useOnClickOutside from 'use-onclickoutside';
 import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import { PickerAlign } from './Picker.store';
-import usePickerPosition from './usePickerPosition';
+import usePickerPosition from './hooks/usePickerPosition';
+import { PickerAlign } from './Panel.store';
 
 interface PickerProps
   extends ChildrenProps,
@@ -119,7 +119,7 @@ const Picker = ({
 
   // ## END: CALCULATE PICKER COORDINATES
 
-  const css = makeClass(['card', 'c-picker', [className, className]]);
+  const css = makeClass(['card', 'c-panel', [className, className]]);
 
   return (
     <motion.div

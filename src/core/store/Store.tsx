@@ -10,7 +10,7 @@ import { createStore, createTypedHooks } from 'easy-peasy';
 
 import { LoaderModel, loaderModel } from '@components/Loader/Loader.store';
 import { ModalModel, modalModel } from '@components/Modal/Modal.store';
-import { PickerModel, pickerModel } from '@components/Picker/Picker.store';
+import { PickerModel, pickerModel } from '@components/Panel/Panel.store';
 import { ToastModel, toastModel } from '@components/Toast/Toast.store';
 import { DbModel, dbModel } from './Db.store';
 
