@@ -24,9 +24,19 @@ h1 { font-size: 24px; }
 h2 { font-size: $sl; }
 h3 { font-size: 18px; }
 h4 { font-size: 14px; text-transform: uppercase; }
-.body { font-size: 15px; font-weight: 400; }
+
+.body {
+  font-size: 15px;
+  font-weight: 400;
+
+  &--bold { font-weight: 700; }
+  &--sm { font-size: 13px; }
+  &--lg { font-size: $sl; }
+}
+
 .sb { font-weight: 600; }
-.display { font-size: 42px; font-weight: 400; }
+
+.display { font-size: 42px; }
 
 .meta {
   font-size: 13px;
@@ -34,10 +44,10 @@ h4 { font-size: 14px; text-transform: uppercase; }
   letter-spacing: 0.25px;
 
   &--lg {
+    @extend .meta;
+
     color: $gray-3;
-    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.25px;
     text-transform: uppercase;
   }
 }

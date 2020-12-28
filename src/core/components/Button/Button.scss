@@ -2,13 +2,6 @@ $PREF: 'c-btn';
 
 // ## BASIC BUTTON
 
-.btn-txt {
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 16px;
-  text-transform: uppercase;
-}
-
 .#{$PREF} {
   @extend .flex-acc;
   
@@ -32,7 +25,7 @@ $PREF: 'c-btn';
 
 .#{$PREF}-loading-ctr { @extend .flex-acc; }
 .#{$PREF}-loading-ctr > p {
-  @extend .btn-txt;
+  @extend .meta--lg;
 
   color: white;
   margin-right: $sm;
@@ -41,7 +34,7 @@ $PREF: 'c-btn';
 // ## PRIMARY BUTTON
 
 .#{$PREF}-primary {
-  @extend .btn-txt;
+  @extend .meta--lg;
 
   background-color: $primary;
   border: 1px $primary solid;
@@ -58,7 +51,7 @@ $PREF: 'c-btn';
 // ## OUTLINE BUTTON
 
 .#{$PREF}-outline {
-  @extend .btn-txt;
+  @extend .meta--lg;
 
   background-color: inherit;
   border: 1px $primary solid;
@@ -69,7 +62,7 @@ $PREF: 'c-btn';
 // ## UNDERLINE BUTTON
 
 .#{$PREF}-underline {
-  @extend .btn-txt;
+  @extend .meta--lg;
 
   color: $primary;
   padding: $xs $sm;
@@ -86,7 +79,7 @@ $PREF: 'c-btn';
 .#{$PREF}-multi-ctr { @extend .flex-ac; }
 
 .#{$PREF}-multi {
-  @extend .btn-txt;
+  @extend .meta--lg;
   
   background-color: inherit;
   border: 1px $primary solid;
