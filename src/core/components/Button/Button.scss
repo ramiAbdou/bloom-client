@@ -48,7 +48,11 @@ $PREF: 'c-btn';
   color: white;
   padding: $xs $sm;
 
-  &:disabled { background-color: $gray-4; border: 1px $gray-4 solid; }
+  &:disabled {
+    background-color: $gray-5;
+    border: 1px $gray-5 solid;
+    color: $gray-3;
+  }
 }
 
 // ## OUTLINE BUTTON
@@ -60,8 +64,6 @@ $PREF: 'c-btn';
   border: 1px $primary solid;
   color: $primary;
   padding: $xs $sm;
-
-  &:disabled { border: 1px $gray-4 solid; color: $gray-4; }
 }
 
 // ## UNDERLINE BUTTON

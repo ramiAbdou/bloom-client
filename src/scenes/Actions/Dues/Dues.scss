@@ -18,7 +18,7 @@ $PREF: 's-actions-dues';
   margin-top: 0;
 
   > h4:first-child,
-  > .c-form-label > h4 { margin-bottom: $xs; }
+  > .c-form-label { margin-bottom: $xs; }
 
   > div.c-misc-input {
     margin-bottom: $md;

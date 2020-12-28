@@ -51,4 +51,4 @@ $PREF: 's-analytics';
 }
 
 // Label of the simple card (etc: TOTAL MEMBERS).
-.#{$PREF}-simple > p { @extend .meta--lg; color: $gray-2; }
+.#{$PREF}-simple > h4 { color: $gray-2; }

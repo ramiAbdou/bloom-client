@@ -25,15 +25,13 @@ $PREF: 'c-misc';
 // light border, the color is primary and is uppercase. Also less rounded.
 
 .#{$PREF}-header-tag {
-  @extend .meta;
+  @extend .meta--lg;
 
   background-color: $primary-hover;
   border: 1px rgba($color: $primary-hex, $alpha: 0.15) solid;
   border-radius: $xxs;
   color: $primary;
-  font-weight: 700;
   padding: 6px;
-  text-transform: uppercase;
   width: fit-content;
 }
 

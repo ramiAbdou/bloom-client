@@ -27,10 +27,12 @@ export default () => {
         {loading && <Spinner dark />}
       </div>
 
-      <div>
-        <AcceptAllButton />
-        <IgnoreAllButton />
-      </div>
+      {!!numApplicants && (
+        <div>
+          <AcceptAllButton />
+          <IgnoreAllButton />
+        </div>
+      )}
     </div>
   );
 };

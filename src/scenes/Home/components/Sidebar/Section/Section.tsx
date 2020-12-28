@@ -27,7 +27,7 @@ export default memo(({ links, title }: LinkSectionProps) => {
 
   return (
     <div className="s-home-sidebar-section">
-      <p>{title}</p>
+      <h4>{title}</h4>
       {links.map((link) => (
         <SidebarLink key={link.to ?? uuid()} {...link} />
       ))}

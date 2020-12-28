@@ -38,6 +38,6 @@ const NumberContainer = ({
 export default ({ label, ...props }: AnalyticsSimpleProps) => (
   <div className="s-analytics-simple">
     <NumberContainer {...props} />
-    <p>{label}</p>
+    <h4>{label}</h4>
   </div>
 );

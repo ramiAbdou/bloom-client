@@ -101,7 +101,7 @@ const SidebarContent = () => {
             <>
               <div>
                 <IoAlertCircleOutline />
-                <p>Dues Status: Inactive</p>
+                <h4>Dues Status: Inactive</h4>
               </div>
 
               <Button outline onClick={onClick}>

@@ -36,10 +36,10 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-section-ctr { height: 100%; }
-.#{$PREF}-section { margin-top: $sm; &:first-of-type { margin-top: 0; } }
+.#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
 
 // Section heading (ie: MAIN, ADMIN, QUICK ACTIONS).
-.#{$PREF}-section > p { @extend .meta--lg; margin-left: $sm; }
+.#{$PREF}-section > h4 { color: $gray-3; margin-left: $sm; }
 
 .#{$PREF}-link {
   @extend .flex-ac;
@@ -114,7 +114,7 @@ button.#{$PREF}-link { &:active { transform: none; } }
   margin-bottom: $xs;
 
   > svg { color: $red; margin-right: $xxs; }
-  > p { @extend .meta--lg; color: $red; text-align: center; }
+  > h4 { color: $red; text-align: center; }
 }
 
 .#{$PREF}-dues-ctr > button { width: 100%; }
