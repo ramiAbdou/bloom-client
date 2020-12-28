@@ -211,7 +211,6 @@ div.#{$PREF}-col-picker { padding: $sm; }
 .#{$PREF}-col-picker > button:first-of-type { margin-bottom: $xs; }
 
 .#{$PREF}-col-picker > button > svg { margin-right: $xs; }
-.#{$PREF}-col-picker > button > p { @extend .body--bold; }
 
 .#{$PREF}-col-picker-button--active > svg,
 .#{$PREF}-col-picker-button--active > p { color: $primary; }
