@@ -17,11 +17,13 @@ export default () => {
         src={mailchimp}
       />
 
-      <h1 style={{ marginBottom: -24 }}>Integrate with Mailchimp</h1>
+      <h1 style={{ marginBottom: -24 }}>Finish Integrating Mailchimp</h1>
       <FormContent />
 
       <div className="s-integrations-action-ctr">
-        <SubmitButton loadingText="Finishing...">Finish</SubmitButton>
+        <SubmitButton fill={false} large={false} loadingText="Finishing...">
+          Finish
+        </SubmitButton>
 
         <Button outline onClick={() => closeModal()}>
           Cancel

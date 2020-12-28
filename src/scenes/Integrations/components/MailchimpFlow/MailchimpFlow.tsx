@@ -12,11 +12,10 @@ import MailchimpFlowContent from './Content';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
 export default () => {
-  const {
-    isMailchimpAuthenticated,
-    mailchimpListId,
-    mailchimpLists
-  } = useStoreState(({ db }) => db.integrations, deepequal) as IIntegrations;
+  const { mailchimpListId, mailchimpLists } = useStoreState(
+    ({ db }) => db.integrations,
+    deepequal
+  ) as IIntegrations;
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
@@ -33,18 +32,12 @@ export default () => {
 
   const questions: FormItemData[] = [
     {
-      completed: isMailchimpAuthenticated,
-      description: `Log in with your Mailchimp account.`,
-      required: true,
-      title: 'Step 1: Authorize Your Mailchimp Account'
-    },
-    {
       description: `Choose the Mailchimp Audience/List that you would like
     new members to automatically be added to upon joining your
     community.`,
       options: mailchimpLists.map(({ name }) => name),
       required: true,
-      title: 'Step 2: Select Audience/List ID',
+      title: 'Select Audience/List ID',
       type: 'MULTIPLE_CHOICE'
     }
   ];

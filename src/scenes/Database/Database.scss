@@ -73,14 +73,12 @@ $PREF: 's-database';
 .#{$PREF}-add-modal-input > div > div {
   @extend .flex-ac;
 
-  margin-left: $sm;
+  margin-left: $ss;
 
   > p { width: max-content; }
 }
 
 .#{$PREF}-add-modal-input > div > div > .c-misc-checkbox { margin-right: $ss; }
-
-// .#{$PREF}-add-modal-input:only-of-type { visibility: hidden; }
 
 .#{$PREF}-add-modal > button { margin-bottom: $md; }
 .#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
