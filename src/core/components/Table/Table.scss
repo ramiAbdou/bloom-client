@@ -151,7 +151,8 @@ th.#{$PREF}-th--picker { background-color: $gray-5; }
 .#{$PREF}-pagination-row { @extend .flex-ac; }
 .#{$PREF}-pagination-num {
   border-radius: 50%;
-  padding: 2px $xs;
+  height: $md;
+  width: $md;
 
   @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.15); }
 
