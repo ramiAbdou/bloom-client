@@ -25,7 +25,7 @@ const NumberContainer = ({
 
   return (
     <div>
-      <h1>{value}</h1>
+      <p>{value}</p>
       <p className={percentageCss}>{percentageString}</p>
     </div>
   );

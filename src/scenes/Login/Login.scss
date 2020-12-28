@@ -46,9 +46,9 @@ $PREF: 's-login';
 }
 
 .#{$PREF}-google > a > img {
-  height: 20px;
+  height: $md;
   margin-right: $xs;
-  width: 20px;
+  width: $md;
 }
 
 // ## EMAIL CONTAINER (INPUT FIELD AND SUBMIT BUTTON)

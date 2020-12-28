@@ -99,7 +99,7 @@ div::-webkit-scrollbar { display: none; }
 
   background-color: white;
   border-radius: $sm;
-  padding: 12px 12px $md $sm;
+  padding: $sm $sm $md $sm;
 }
 
 // ## TEXT OVERFLOW

@@ -26,7 +26,7 @@ $PREF: 'c-picker';
   text-align: left;
   width: 100%;
 
-  @include HOVER { background-color: $gray-6; }
+  @include HOVER { background-color: $primary-hover; }
 
   &:first-child { border-radius: $xxs $xxs 0 0; }
   &:last-child { border-radius: 0 0 $xxs $xxs; margin-bottom: 0; }

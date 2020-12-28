@@ -33,7 +33,7 @@ $PREF: 's-analytics';
 
   margin-bottom: $xxs;
 
-  > h1 { font-size: 32px; margin-right: $xs; }
+  > p:first-child { @extend .display; margin-right: $xs; }
 }
 
 .#{$PREF}-simple-percentage {

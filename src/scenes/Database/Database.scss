@@ -85,5 +85,5 @@ $PREF: 's-database';
 .#{$PREF}-add-modal > button { margin-bottom: $md; }
 .#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
 .#{$PREF}-add-modal > div:last-of-type > button:first-of-type {
-  margin-right: 12px;
+  margin-right: $xs;
 }

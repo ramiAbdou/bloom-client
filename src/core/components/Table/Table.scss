@@ -131,7 +131,7 @@ th {
 
 th.#{$PREF}-th--sorted {
   > div { @extend .flex-ac; }
-  > div > p { color: $primary; max-width: 85%; }
+  > div > h4 { color: $primary; max-width: 85%; }
   // Caret up or caret down SVG, React controls the displaying of this element.
   > div > svg { color: $primary; height: 12px; margin-left: $xs; width: 12px; }
 }
