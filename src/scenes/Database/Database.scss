@@ -9,9 +9,10 @@ $PREF: 's-database';
 
 .#{$PREF}-action {
   background-color: $gray-5;
-  border-radius: 6px;
+  border-radius: $xxs;
+  height: $lg;
   margin-left: $xs;
-  padding: 6px;
+  width: $lg;
 
   // !important overrides the normal .c-btn styling for hover state.
 
