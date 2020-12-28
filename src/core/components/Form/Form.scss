@@ -11,7 +11,7 @@ $PREF: 'c-form';
 .#{$PREF}-label {
   @extend .flex-ac;
 
-  color: black;
+  color: $gray-1;
   margin-bottom: $xs;
   width: 100%;
 

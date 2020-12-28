@@ -18,7 +18,7 @@ $PREF: 's-directory-modal';
 
 // ### PERSONAL INFORMATION CONTAINER
 
-.#{$PREF}-personal-ctr > h1 { color: black; margin-bottom: $xxs; }
+.#{$PREF}-personal-ctr > h1 { color: $gray-1; margin-bottom: $xxs; }
 
 .#{$PREF}-location {
   @extend .meta;

@@ -52,7 +52,7 @@ $PREF: 's-integrations';
 .#{$PREF}-connected > p { @extend .sb; color: $green; }
 
 // ## MODAL (ONBOARDING AND DETAILS)
-.#{$PREF}-modal > h1 { color: black; }
+.#{$PREF}-modal > h1 { color: $gray-1; }
 
 .#{$PREF}-modal-item {
   margin: $xl 0;
