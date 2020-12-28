@@ -103,7 +103,7 @@ th {
   @include HOVER { background-color: $gray-5; cursor: pointer; }
 
   // Header select option should have a darker border and higher z-index.
-  > div > .c-misc-checkbox { border: 1px $gray-3 solid; z-index: 12; }
+  > div > .c-misc-checkbox { border: 1px $gray-2 solid; z-index: 12; }
 
   // The header title content.
   > div > h4 {
@@ -144,7 +144,7 @@ th.#{$PREF}-th--picker { background-color: $gray-5; }
 // ## SELECT CHECKBOX - The HTML applied the .c-misc-checkbox class, we don't
 // extend it in here for overriding purposes of the margin and background-color.
 
-.#{$PREF}-select { background-color: white; margin: 0 $lg 0 0; }
+.#{$PREF}-select { background-color: inherit; margin: 0 $lg 0 0; }
 
 // ## PAGINATION - Controls all of the table pagination by selecting different
 // pages. Also controls the displaying text of which rows are being shown.
