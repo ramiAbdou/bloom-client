@@ -27,6 +27,8 @@ tbody > tr {
   cursor: pointer;
 
   @include HOVER {
+    // Can't extend within an include, so manually write the shadow-2 function.
+
     box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
     position: relative;
     transform: scale(1); // Required to push to higher stacking context.
@@ -154,7 +156,7 @@ th.#{$PREF}-th--picker { background-color: $gray-5; }
   height: $md;
   width: $md;
 
-  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.15); }
+  @include HOVER { background-color: $primary-light; }
 
   &:not(:last-child) { margin-right: $xxs; }
 

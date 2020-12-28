@@ -4,6 +4,7 @@ import { IoCaretDown } from 'react-icons/io5';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { Function } from '@constants';
+import { makeClass } from '@util/util';
 import Dropdown, { dropdownModel, IDropdownOption } from './Dropdown.store';
 
 type DropdownProps = {
@@ -69,8 +70,10 @@ const DropdownContent = ({
 
   const onClick = () => !isOpen && setIsOpen(true);
 
+  const css = makeClass(['c-misc-dropdown', [isOpen, 'c-misc-dropdown--open']]);
+
   return (
-    <div ref={ref} className="c-misc-dropdown" onClick={onClick}>
+    <div ref={ref} className={css} onClick={onClick}>
       <div>
         <p>{title}</p>
         <IoCaretDown />

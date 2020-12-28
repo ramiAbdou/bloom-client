@@ -7,10 +7,11 @@ $PREF: 'c-misc';
 // ## TAG
 
 .#{$PREF}-tag {
-  background-color: rgba($color: $primary-hex, $alpha: 0.15);
+  @extend .body--sm;
+
+  background-color: $primary-light;
   border-radius: $sm;
   color: $gray-1;
-  font-size: 13px;
   margin-right: $xxs;
   padding: $xxs 6px;
   text-align: left;
@@ -41,7 +42,7 @@ $PREF: 'c-misc';
   @extend .flex-acc;
   
   background-color: inherit;
-  border: 1px $gray-4 solid;
+  border: 1px $gray-3 solid;
   border-radius: $xxs;
   cursor: pointer;
   height: $sm + 2;
@@ -161,7 +162,6 @@ $PREF: 'c-misc';
 .#{$PREF}-question:not(:last-child) { margin-bottom: $sm; }
 .#{$PREF}-question > p:first-child { @extend .body--bold; margin-bottom: $xs; }
 .#{$PREF}-question > div:last-child { @extend .flex-w; }
-// .#{$PREF}-question > div:last-child > p { color: $primary; }
 
 // ## DROPDOWN - The dropdown div only displays the current value, and only
 // when you click on it does the container appear.
