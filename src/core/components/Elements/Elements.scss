@@ -89,6 +89,8 @@ $PREF: 'c-misc';
   color: $gray-2;
   cursor: text;
   height: $lg;
+  // padding: 
+
   padding-left: $xs;
   padding-right: $xs;
   width: 100%;
@@ -106,7 +108,7 @@ $PREF: 'c-misc';
     color: $gray-1;
   }
 
-  &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
+  &::selection { background-color: $primary-hover; }
   &--error { border: 1px $red solid; }
 
   &--lg {

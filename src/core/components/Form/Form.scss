@@ -23,17 +23,24 @@ $PREF: 'c-form';
 // ## DROPDOWN BAR CONTAINER
 
 // Dropdown bar that user clickes on to open the option container.
-div.#{$PREF}-dd-bar { @extend .flex-acsb; cursor: pointer; }
+div.#{$PREF}-dd-bar {
+  @extend .flex-acsb;
+  @extend .c-misc-input;
 
-// If the container becomes full, still shows arrow at regular size.
-.#{$PREF}-dd-bar > svg {
-  color: $gray-4;
-  height: $sm;
-  overflow: visible;
-  width: $sm;
+  cursor: pointer;
+
+  > div { max-width: 100%; overflow: scroll; }
+
+  // If the container becomes full, still shows arrow at regular size.
+  > svg { color: $gray-4; height: $sm; overflow: visible; width: $sm; }
+
+  &--open {
+    background-color: white;
+    border: 1px $primary solid;
+
+    > svg { color: $primary; }
+  }
 }
-
-.#{$PREF}-dd-bar > div { max-width: 100%; overflow: scroll; }
 
 // When a user selects an option, it displays in this container.
 .#{$PREF}-dd-value-ctr { @extend .flex-ac; }

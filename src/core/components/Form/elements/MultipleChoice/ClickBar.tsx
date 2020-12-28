@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 
+import { makeClass } from '@util/util';
 import Form from '../../Form.store';
 import MultipleChoice from './MultipleChoiceDD.store';
 
@@ -52,8 +53,10 @@ export default () => {
     else openOptions();
   };
 
+  const css = makeClass(['c-form-dd-bar', [isOpen, 'c-form-dd-bar--open']]);
+
   return (
-    <div ref={ref} className="c-misc-input c-form-dd-bar" onClick={onClick}>
+    <div ref={ref} className={css} onClick={onClick}>
       <div>
         <Value />
       </div>
