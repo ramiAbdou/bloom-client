@@ -13,16 +13,17 @@
   width: 100vw;
 }
 
-// SHADOWS
+// SHADOWS - Has primary color hints within them.
 
-// Shadow that has the primary color hint in it.
 .shadow--1 { box-shadow: 0 0 2px 2px hsla($primary-hue, 99%, 17%, 0.1); }
 .shadow--2 { box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15); }
 
 // BACKGROUND COLOR
+
 .primary-bg { background-color: $primary-hover; }
 
-// Used globally for all react-icons.
+// REACT ICONS - Mostly the Ionicons icons.
+
 .react-icon {
   color: $gray-1;
   height: $md;
@@ -30,11 +31,6 @@
   
   &--lg { height: 32px; width: 32px; }
 }
-
-// Disables scrollbar display for all elements. Not much scrolling needed
-// other than the div.
-body::-webkit-scrollbar,
-div::-webkit-scrollbar { display: none; }
 
 // ## TOOLTIP - All tooltips show up below
 
@@ -102,7 +98,8 @@ div::-webkit-scrollbar { display: none; }
   padding: $sm $sm $md $sm;
 }
 
-// ## TEXT OVERFLOW
+// ## TEXT OVERFLOW - Can specify how many lines we can allow the text to
+// overflow into.
 
 @mixin OVERFLOW_ELLIPSES($lines: 1) {
   -webkit-box-orient: vertical;
@@ -120,3 +117,8 @@ div::-webkit-scrollbar { display: none; }
 
   > #root { width: 100%; }
 }
+
+// Disables scrollbar display for body and div elements. Not much scrolling
+// needed other than the div.
+body::-webkit-scrollbar,
+div::-webkit-scrollbar { display: none; }

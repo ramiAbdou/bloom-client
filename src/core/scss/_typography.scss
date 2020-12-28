@@ -20,8 +20,9 @@ h2,
 h3,
 h4 { font-weight: 700; } // Bold text for headers.
 
+.display { font-size: 42px; }
 h1 { font-size: 24px; }
-h2 { font-size: $sl; }
+h2 { font-size: 20px; }
 h3 { font-size: 18px; }
 h4 { font-size: 14px; text-transform: uppercase; }
 
@@ -33,10 +34,6 @@ h4 { font-size: 14px; text-transform: uppercase; }
   &--sm { font-size: 13px; }
   &--lg { font-size: $sl; }
 }
-
-.sb { font-weight: 600; }
-
-.display { font-size: 42px; }
 
 .meta {
   font-size: 13px;

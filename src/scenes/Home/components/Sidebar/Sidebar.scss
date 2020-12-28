@@ -71,7 +71,7 @@ button.#{$PREF}-link { &:active { transform: none; } }
 .#{$PREF}-link > svg { color: $gray-1; margin-right: $xs; }
 
 .#{$PREF}-link--active {
-  @extend .sb; 
+  @extend .body--bold; 
 
   background-color: $primary-hover;
   border-left: 3px $primary solid;

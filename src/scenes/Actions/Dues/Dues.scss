@@ -2,7 +2,7 @@ $PREF: 's-actions-dues';
 
 .#{$PREF} > p:first-of-type {
   margin-bottom: $md;
-  > span { @extend .sb; }
+  > span { @extend .body--bold; }
 }
 
 .#{$PREF} > h1 { color: $primary; margin-bottom: $sm; }

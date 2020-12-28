@@ -77,7 +77,7 @@ $PREF: 's-login';
 }
 
 .#{$PREF}-confirmation-email {
-  @extend .sb;
+  @extend .body--bold;
 
   background-color: rgba($color: $green, $alpha: 0.1);
   border: 1px $green solid;

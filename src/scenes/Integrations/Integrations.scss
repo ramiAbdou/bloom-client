@@ -49,7 +49,7 @@ $PREF: 's-integrations';
 
 .#{$PREF}-connected { @extend .flex-ac; margin-right: $sm; }
 .#{$PREF}-connected > svg { color: $green; margin-right: $xxs; }
-.#{$PREF}-connected > p { @extend .sb; color: $green; }
+.#{$PREF}-connected > p { @extend .body--bold; color: $green; }
 
 // ## MODAL (ONBOARDING AND DETAILS)
 .#{$PREF}-modal > h1 { color: $gray-1; }
@@ -58,7 +58,7 @@ $PREF: 's-integrations';
   margin: $xl 0;
 
   &--detail { margin: $md 0; }
-  &--detail > p:last-child { @extend .sb; color: $primary; }
+  &--detail > p:last-child { @extend .body--bold; color: $primary; }
 }
 
 .#{$PREF}-onboarding-form > .c-form-item { margin: $xl 0; }
