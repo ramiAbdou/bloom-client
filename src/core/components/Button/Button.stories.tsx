@@ -65,7 +65,9 @@ export default {
       page: () => (
         <>
           <Title />
-          <Description>This is the description!</Description>
+          <Description>
+            This is the description! Primary button is used when x, y, z...
+          </Description>
           <Stories includePrimary title={null} />
         </>
       )

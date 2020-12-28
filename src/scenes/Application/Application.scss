@@ -1,12 +1,17 @@
 $PREF: 's-signup';
 
+.#{$PREF}-ctr {
+  background-color: white;
+
+  @include RESP(padding-bottom, $xl, $lg, $md);
+  @include RESP(padding-top, $xl, $lg, $md);
+}
+
 .#{$PREF} {
   margin-left: auto;
   margin-right: auto;
   padding-bottom: $lg;
 
-  @include RESP(margin-bottom, $xl, $lg, $md);
-  @include RESP(margin-top, $xl, $lg, $md);
   @include RESP(width, 600px, 500px, 90%);
 }
 
@@ -20,7 +25,7 @@ $PREF: 's-signup';
 }
 
 .#{$PREF} > h1 { margin-bottom: $xs; }
-.#{$PREF} > p { margin-bottom: $lg; }
+.#{$PREF} > p { color: $gray-2; margin-bottom: $lg; }
 .#{$PREF} > button { margin-top: $xxl; width: 100%; }
 
 // ## CONFIRMATION SCREEN

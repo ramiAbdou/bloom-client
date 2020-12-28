@@ -83,7 +83,7 @@ export default () => {
 
   return (
     <div className="s-actions-dues-item s-actions-dues-item--type">
-      <p>Membership Type</p>
+      <h4>Membership Type</h4>
       <div>
         <TypeOptionList />
         {!isTypeListOpen && <p>{currentTypeString}</p>}

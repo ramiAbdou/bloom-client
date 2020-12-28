@@ -3,7 +3,7 @@ $PREF: 'c-form';
 // ## GENERAL
 
 .#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
-.#{$PREF}-desc { margin-bottom: $xs; }
+.#{$PREF}-desc { color: $gray-2; margin-bottom: $xs; }
 .#{$PREF}-error { color: $red; margin-top: $xxs; }
 
 // ## LABEL
@@ -11,14 +11,13 @@ $PREF: 'c-form';
 .#{$PREF}-label {
   @extend .flex-ac;
 
+  color: black;
   margin-bottom: $xs;
   width: 100%;
 
-  > p { @extend .sb; }
   > svg { color: $green; margin-right: $xs; }
 
-  &--uppercase > p { @extend .meta--lg; }
-  &--required > p::after { color: $red; content: '*'; margin-left: $xxs; }
+  &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }
 
 // ## MULTIPLE CHOICE

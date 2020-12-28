@@ -84,10 +84,11 @@ $PREF: 'c-misc';
 .#{$PREF}-input {
   @extend .flex-acsb;
 
-  background-color: white;
+  background-color: $gray-6;
   border: 1px $gray-4 solid;
   border-radius: $xxs;
   box-sizing: border-box;
+  color: black;
   cursor: text;
   height: $lg;
   padding-left: $xs;
@@ -98,12 +99,13 @@ $PREF: 'c-misc';
   &:-moz-placeholder,
   &::-moz-placeholder { @extend .body; color: $gray-3; line-height: revert; }
 
-  &::selection { background-color: $primary-hover; }
+  &:focus { background-color: white; border: 1px $primary solid; }
+  &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
 
   // Only reason we added this --focus variant is that we can use it in the
   // Stripe elements definition.
-  &--focus { border: 1px $primary solid; }
-  &:focus { border: 1px $primary solid; }
+  // &--focus { border: 1px $primary solid; }
+  // &:focus { border: 1px $primary solid; }
   
   &--error { border: 1px $red solid; }
 
@@ -114,14 +116,10 @@ $PREF: 'c-misc';
     resize: none;
   }
 
-  &--dark {
-    background-color: $gray-6;
-    border: 1px $gray-4 solid;
-    color: black;
-
-    &:focus { background-color: white; }
-    &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
-  }
+  // &--white {
+  //   background-color: white;
+  //   border: 1px $gray-4 solid;
+  // }
 }
 
 // ## SEACH BAR - Similar to the input element except contains a search SVG

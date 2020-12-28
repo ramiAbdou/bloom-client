@@ -12,14 +12,20 @@ import ApplicationForm from './frames/Form/Form';
  */
 export default () => (
   <Application.Provider>
-    <Switch>
-      <Route exact component={ApplicationForm} path="/:encodedUrlName/apply" />
+    <div className="s-signup-ctr">
+      <Switch>
+        <Route
+          exact
+          component={ApplicationForm}
+          path="/:encodedUrlName/apply"
+        />
 
-      <Route
-        exact
-        component={ApplicationConfirmation}
-        path="/:encodedUrlName/apply/confirmation"
-      />
-    </Switch>
+        <Route
+          exact
+          component={ApplicationConfirmation}
+          path="/:encodedUrlName/apply/confirmation"
+        />
+      </Switch>
+    </div>
   </Application.Provider>
 );

@@ -19,7 +19,7 @@ $PREF: 'c-btn';
     &:active { transform: scale(0.95); transition: transform 0.1s ease-out; }
   }
 
-  &:disabled { color: $gray-3; cursor: not-allowed; }
+  &:disabled { color: white; cursor: not-allowed; }
 
   // Maps to the "fill" prop passed into the Button component.
   &--fill { width: 100%; }
@@ -34,7 +34,7 @@ $PREF: 'c-btn';
 .#{$PREF}-loading-ctr > p {
   @extend .btn-txt;
 
-  color: $gray-3;
+  color: white;
   margin-right: $sm;
 }
 
@@ -45,10 +45,10 @@ $PREF: 'c-btn';
 
   background-color: $primary;
   border: 1px $primary solid;
-  color: $gray-6;
+  color: white;
   padding: $xs $sm;
 
-  &:disabled { background-color: $gray-5; border: 1px $gray-5 solid; }
+  &:disabled { background-color: $gray-4; border: 1px $gray-4 solid; }
 }
 
 // ## OUTLINE BUTTON
@@ -61,7 +61,7 @@ $PREF: 'c-btn';
   color: $primary;
   padding: $xs $sm;
 
-  &:disabled { border: 1px $gray-3 solid; }
+  &:disabled { border: 1px $gray-4 solid; }
 }
 
 // ## UNDERLINE BUTTON
@@ -105,7 +105,7 @@ $PREF: 'c-btn';
   color: $primary;
   padding: $xs $sm;
   
-  &--active { background-color: $primary; color: $gray-6; }
+  &--active { background-color: $primary; color: white; }
 
   &:first-child {
     border-left: 1px $primary solid;
