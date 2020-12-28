@@ -26,7 +26,7 @@ $PREF: 'c-panel';
   text-align: left;
   width: 100%;
 
-  @include HOVER { background-color: $primary-hover; }
+  @include HOVER { background-color: $primary-bg; }
 
   &:first-child { border-radius: $xxs $xxs 0 0; }
   &:last-child { border-radius: 0 0 $xxs $xxs; margin-bottom: 0; }

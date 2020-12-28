@@ -64,5 +64,5 @@ textarea { font-size: 15px; font-weight: 400; }
 
 input {
   &::placeholder { color: $gray-3; }
-  &::selection { background-color: $primary-hover; }
+  &::selection { background-color: $primary-bg; }
 } 

@@ -37,7 +37,7 @@ tbody > tr {
 }
 
 // Applied if the table row is selected.
-tr.#{$PREF}-tr--active { > td { background-color: $primary-hover; } }
+tr.#{$PREF}-tr--active { > td { background-color: $primary-bg; } }
 
 // ## TABLE CELL (BOTH TH AND TD)
 

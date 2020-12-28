@@ -27,7 +27,7 @@ $PREF: 'c-misc';
 .#{$PREF}-header-tag {
   @extend .meta--lg;
 
-  background-color: $primary-hover;
+  background-color: $primary-bg;
   border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid;
   border-radius: $xxs;
   color: $primary;
@@ -108,7 +108,7 @@ $PREF: 'c-misc';
     color: $gray-1;
   }
 
-  &::selection { background-color: $primary-hover; }
+  &::selection { background-color: $primary-bg; }
   &--error { border: 1px $red solid; }
 
   &--lg {

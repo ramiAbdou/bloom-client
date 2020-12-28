@@ -20,7 +20,7 @@
 
 // BACKGROUND COLOR
 
-.primary-bg { background-color: $primary-hover; }
+.primary-bg { background-color: $primary-bg; }
 
 // REACT ICONS - Mostly the Ionicons icons.
 
@@ -73,7 +73,7 @@
 // ## HOVER STATE (DILUTED PRIMARY COLOR)
 
 @mixin PRIMARY_HOVER {
-  @media (hover: hover) { &:hover { background-color: $primary-hover; } }
+  @media (hover: hover) { &:hover { background-color: $primary-bg; } }
 }
 
 // This back arrow if most often used in a Flow component.
