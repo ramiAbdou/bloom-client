@@ -12,7 +12,7 @@ $PREF: 'c-misc';
 // ## ERROR MESSAGE - Has an icon and some text.
 
 .#{$PREF}-error { @extend .flex; margin-bottom: $md; margin-top: $sm; }
-.#{$PREF}-error > p { color: $red; line-height: $sl; margin-top: -2px; }
+.#{$PREF}-error > p { color: $red; margin-top: -2px; }
 .#{$PREF}-error > svg { color: $red; margin: -2px $xxs 0 0; }
 
 // ## BLOOM LOGO

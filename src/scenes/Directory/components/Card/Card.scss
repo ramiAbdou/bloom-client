@@ -54,8 +54,8 @@ button.#{$PREF} {
 
 .#{$PREF}-content { height: $xxl; padding: $sm $xs; }
 .#{$PREF}-content > p {
-  font-weight: 700;
-  line-height: $sl;
+  @extend .body--bold;
+
   max-width: 100%;
 
   @include OVERFLOW_ELLIPSES(3);

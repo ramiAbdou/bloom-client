@@ -190,7 +190,7 @@ th.#{$PREF}-th--picker { background-color: $gray-5; }
 }
 
 .#{$PREF}-banner > p { margin-right: $sm; }
-.#{$PREF}-banner > p > span { font-weight: 700; }
+.#{$PREF}-banner > p > span { @extend .body--bold; }
 
 // ## COLUMN PICKER
 
