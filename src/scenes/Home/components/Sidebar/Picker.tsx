@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import PickerOption from '@components/Panel/components/Option';
 import Picker from '@components/Panel/Panel';
-import { PickerAction } from '@components/Panel/Panel.store';
+import { PanelAction } from '@components/Panel/Panel.types';
 import { PickerType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { LOGOUT } from '@scenes/Home/Home.gql';
@@ -39,7 +39,7 @@ export default () => {
   };
 
   // Show a picker that either allows them to view their profile or log out.
-  const actions: PickerAction[] = [
+  const actions: PanelAction[] = [
     { Icon: IoCard, onClick: () => null, text: 'Manage Membership' },
     { Icon: IoPerson, onClick: () => null, text: 'Your Profile' },
     { Icon: IoExit, onClick: onLogout, separator: true, text: 'Log Out' }

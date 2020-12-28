@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { IdProps } from '@constants';
 import { takeFirst } from '@util/util';
-import { PickerAlign } from '../Panel.store';
+import { PanelAlign } from '../Panel.types';
 
 interface UsePickerPositionProps extends IdProps {
-  initialAlign: PickerAlign;
+  initialAlign: PanelAlign;
   scrollId?: string;
 }
 
-type UsePickerPositionValue = { align: PickerAlign; left: number; top: number };
+type UsePickerPositionValue = { align: PanelAlign; left: number; top: number };
 
 export default ({
   initialAlign,
@@ -21,7 +21,7 @@ export default ({
   const { left, top, width } = element?.getBoundingClientRect() ?? {};
   const { innerWidth } = window;
 
-  const [align, setAlign] = useState<PickerAlign>(initialAlign);
+  const [align, setAlign] = useState<PanelAlign>(initialAlign);
   const [targetLeft, setTargetLeft] = useState(left);
   const [targetTop, setTargetTop] = useState(top);
 
@@ -29,7 +29,7 @@ export default ({
     const { left: updatedTargetLeft, top: updatedTargetTop } =
       element?.getBoundingClientRect() ?? {};
 
-    const updatedAlign: PickerAlign = takeFirst([
+    const updatedAlign: PanelAlign = takeFirst([
       [
         align === 'BOTTOM_LEFT' && innerWidth - updatedTargetLeft <= 300,
         'BOTTOM_RIGHT'

@@ -7,14 +7,14 @@ import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
 import usePickerPosition from './hooks/usePickerPosition';
-import { PickerAlign } from './Panel.store';
+import { PanelAlign } from './Panel.types';
 
 interface PickerProps
   extends ChildrenProps,
     IdProps,
     ClassNameProps,
     StyleProps {
-  align?: PickerAlign;
+  align?: PanelAlign;
   scrollId?: string;
 }
 

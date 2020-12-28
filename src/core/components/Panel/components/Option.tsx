@@ -1,15 +1,15 @@
 import React, { memo } from 'react';
 
 import Separator from '@components/Misc/Separator';
-import { PickerAction } from '@components/Panel/Panel.store';
 import { useStoreActions } from '@store/Store';
+import { PanelAction } from '../Panel.types';
 
 /**
  * Default option selection for the dropdown. Must execute some function on
  * click. Only has text showing. If customization is needed, won't be able
  * to use this component.
  */
-export default memo(({ Icon, onClick, separator, text }: PickerAction) => {
+export default memo(({ Icon, onClick, separator, text }: PanelAction) => {
   const closePicker = useStoreActions(({ picker }) => picker.closePicker);
 
   // After the passed-in onClick is executed, close the picker. This component
