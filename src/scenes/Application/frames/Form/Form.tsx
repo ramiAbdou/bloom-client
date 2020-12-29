@@ -1,14 +1,25 @@
 import React from 'react';
 
+import DefaultFormItem from '@components/Form/components/DefaultItem';
 import FormErrorMessage from '@components/Form/components/ErrorMessage';
-import FormContent from '@components/Form/Content';
 import Form from '@components/Form/Form';
+import FormStore from '@components/Form/Form.store';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import useApplyForMembership from './hooks/useApplyForMembership';
 import useFetchApplication from './hooks/useFetchApplication';
 import SubmitButton from './SubmitButton';
+
+const FormContent = () => (
+  <>
+    {FormStore.useStoreState(({ items }) => items)?.map((props) => {
+      return (
+        <DefaultFormItem key={props.title ?? props.placeholder} {...props} />
+      );
+    })}
+  </>
+);
 
 export default () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {

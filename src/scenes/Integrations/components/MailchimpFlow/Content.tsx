@@ -1,12 +1,18 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button from '@components/Button/Button';
+import FormItem from '@components/Form/components/Item';
 import SubmitButton from '@components/Form/components/SubmitButton';
-import FormContent from '@components/Form/Content';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
 
 export default () => {
+  const mailchimpLists = useStoreState(
+    ({ db }) => db.integrations.mailchimpLists,
+    deepequal
+  );
+
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   return (
@@ -18,7 +24,16 @@ export default () => {
       />
 
       <h1 style={{ marginBottom: -24 }}>Finish Integrating Mailchimp</h1>
-      <FormContent />
+
+      <FormItem
+        required
+        description="Choose the Mailchimp Audience/List that you would like
+          new members to automatically be added to upon joining your
+          community."
+        options={mailchimpLists.map(({ name }) => name)}
+        title="Select Audience/List ID"
+        type="MULTIPLE_CHOICE"
+      />
 
       <div className="s-integrations-action-ctr">
         <SubmitButton fill={false} large={false} loadingText="Finishing...">

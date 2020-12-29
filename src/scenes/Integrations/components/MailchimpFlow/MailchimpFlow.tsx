@@ -2,7 +2,6 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import Form from '@components/Form/Form';
-import { FormItemData } from '@components/Form/Form.types';
 import Modal from '@components/Modal/Modal';
 import { ModalType } from '@constants';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
@@ -30,23 +29,12 @@ export default () => {
   // string flow=[name] in the URL without properly going to the backend.
   if (!!mailchimpListId || !mailchimpLists?.length) return null;
 
-  const questions: FormItemData[] = [
-    {
-      description: `Choose the Mailchimp Audience/List that you would like
-    new members to automatically be added to upon joining your
-    community.`,
-      options: mailchimpLists.map(({ name }) => name),
-      required: true,
-      title: 'Select Audience/List ID',
-      type: 'MULTIPLE_CHOICE'
-    }
-  ];
+  const onClose = () => setFlow(null);
 
   return (
-    <Modal id={ModalType.MAILCHIMP_FLOW} onClose={() => setFlow(null)}>
+    <Modal id={ModalType.MAILCHIMP_FLOW} onClose={onClose}>
       <Form
         className="s-integrations-onboarding-form"
-        questions={questions}
         onSubmit={onSubmitMailchimpList}
       >
         <MailchimpFlowContent />
