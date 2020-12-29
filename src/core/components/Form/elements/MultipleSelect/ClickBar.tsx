@@ -9,7 +9,7 @@ import MultipleSelect from './MultipleSelect.store';
 interface ClickBarValueProps extends OnClickProps, ValueProps {}
 
 const Value = ({ onClick, value }: ClickBarValueProps) => (
-  <button className="c-misc-attr c-form-dd-value" onClick={onClick}>
+  <button className="c-tag-attr c-form-dd-value" onClick={onClick}>
     {value}
   </button>
 );

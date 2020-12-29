@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import { Description, Stories, Title } from '@storybook/addon-docs/blocks';
-import Attr from './Attribute';
+import Attr from '../Tags/Attribute';
+import NTag from '../Tags/NumberTag';
 import CBox from './Checkbox';
 import DDown from './Dropdown/Dropdown';
-import HTag from './HeaderTag';
 import IPut from './Input';
 import QVal from './QuestionValue';
 import RDio from './Radio';
@@ -42,14 +42,14 @@ const DropdownTemplate = (args) => {
 
 export const Dropdown = DropdownTemplate.bind({});
 
-// ## HEADER TAG
+// ## NUMBER TAG
 
-const HeaderTagTemplate = (args) => {
-  return <HTag {...args} />;
+const NumberTagTemplate = (args) => {
+  return <NTag {...args} />;
 };
 
-export const HeaderTag = HeaderTagTemplate.bind({});
-HeaderTag.args = { value: '999 Members' };
+export const NumberTag = NumberTagTemplate.bind({});
+NumberTag.args = { value: '999 Members' };
 
 // ## INPUT
 

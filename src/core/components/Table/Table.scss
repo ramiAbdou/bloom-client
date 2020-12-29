@@ -69,7 +69,7 @@ td {
 
   > div > .c-misc-checkbox { z-index: 10; }
   > div > p { @include OVERFLOW_ELLIPSES(3); }
-  > div > .c-misc-attr { margin: 0 $xxs $xxs 0; }
+  > div > .c-tag-attr { margin: 0 $xxs $xxs 0; }
 
   // The first data cell has higher z-index than rest of td cells to have
   // horizontal scrolling hide the other cells under this first one.

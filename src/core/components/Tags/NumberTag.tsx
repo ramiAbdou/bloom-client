@@ -8,5 +8,5 @@ interface HeaderTagProps extends ValueProps {
 
 export default ({ value }: HeaderTagProps) => {
   if (!value) return null;
-  return <p className="c-misc-header-tag">{value}</p>;
+  return <p className="c-tag-number">{value}</p>;
 };

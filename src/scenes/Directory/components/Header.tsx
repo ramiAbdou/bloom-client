@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import HeaderTag from '@components/Elements/HeaderTag';
 import SearchBar from '@components/Elements/SearchBar';
 import Spinner from '@components/Loader/Spinner';
+import NumberTag from '@components/Tags/NumberTag';
 import Directory from '../Directory.store';
 
 const SearchContainer = () => {
@@ -37,7 +37,7 @@ const HeaderText = () => {
   return (
     <div>
       <h1 className="s-home-header-title">Directory</h1>
-      {!loading && <HeaderTag value={`${numMembers} Members`} />}
+      {!loading && <NumberTag value={`${numMembers} Members`} />}
       {loading && <Spinner dark />}
     </div>
   );

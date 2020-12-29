@@ -2,7 +2,7 @@ import React, { memo, ReactNode } from 'react';
 
 import { QuestionType, ValueProps } from '@constants';
 import { takeFirst } from '@util/util';
-import Attribute from './Attribute';
+import Attribute from '../Tags/Attribute';
 
 interface QuestionValueProps extends ValueProps {
   hideNullValue?: boolean;

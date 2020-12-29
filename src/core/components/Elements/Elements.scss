@@ -4,38 +4,6 @@
 
 $PREF: 'c-misc';
 
-// ## TAG
-
-.#{$PREF}-attr {
-  @extend .body--sm;
-
-  background-color: $primary-light;
-  border-radius: $sm;
-  color: $gray-1;
-  margin-right: $xxs;
-  padding: $xxs 6px;
-  text-align: left;
-  width: fit-content;
-
-  @include OVERFLOW_ELLIPSES;
-
-  &:not(.c-misc-attr:first-of-type) { margin-left: $xs; }
-}
-
-// ## HEADER TAG - Similar to the regular Tag component, except it has a very
-// light border, the color is primary and is uppercase. Also less rounded.
-
-.#{$PREF}-header-tag {
-  @extend .meta--lg;
-
-  background-color: $primary-bg;
-  border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid;
-  border-radius: $xxs;
-  color: $primary;
-  padding: 6px;
-  width: fit-content;
-}
-
 // CHECKBOX
 
 .#{$PREF}-checkbox {

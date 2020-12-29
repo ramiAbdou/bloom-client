@@ -44,7 +44,7 @@ div.#{$PREF}-dd-bar {
 
 // When a user selects an option, it displays in this container.
 .#{$PREF}-dd-value-ctr { @extend .flex-ac; }
-.#{$PREF}-dd-value-ctr > button.c-misc-attr { overflow: visible; }
+.#{$PREF}-dd-value-ctr > button.c-tag-attr { overflow: visible; }
 
 // The value that displays is just a tag except with no margin-left and that
 // has an option to delete, shown by the 'x' in the ::after rule.
@@ -91,4 +91,4 @@ button.#{$PREF}-dd-value {
   @include HOVER { background-color: $gray-6; }
 }
 
-.#{$PREF}-dd-opt > p { @extend .c-misc-attr; margin-left: $xs; }
+.#{$PREF}-dd-opt > p { @extend .c-tag-attr; margin-left: $xs; }
