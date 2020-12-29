@@ -51,7 +51,7 @@ div.#{$PREF}-dd-bar {
 button.#{$PREF}-dd-value {
   margin-left: 0;
 
-  &::after { content: 'x'; margin-left: $xs; }
+  &--cancel::after { content: 'x'; margin-left: $xs; }
 }
 
 // ## DROPDOWN OPTION CONTAINER
