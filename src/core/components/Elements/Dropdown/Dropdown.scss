@@ -38,6 +38,7 @@ $PREF: 'c-misc-dropdown';
   padding-bottom: $xs;
   padding-top: $xs;
   position: absolute; // So that the container doesn't change document flow.
+  z-index: 1;
 }
 
 // No results message.
