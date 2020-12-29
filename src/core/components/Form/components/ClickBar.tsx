@@ -9,7 +9,7 @@ import Form from '../Form.store';
 type ClickBarProps = {
   closeOptions: ActionCreator<void>;
   isOpen: boolean;
-  multiple?: boolean;
+  multiple?: boolean; // True if the element is MultipleSelect.
   title: string;
   openOptions: ActionCreator<void>;
   setWidth: ActionCreator<number>;

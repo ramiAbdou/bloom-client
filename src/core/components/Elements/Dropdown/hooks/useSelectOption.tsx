@@ -1,0 +1,54 @@
+import Dropdown from '../Dropdown.store';
+
+export default function useSelectOption(option: string) {
+  const allFilteredOptions = Dropdown.useStoreState(
+    ({ filteredOptions, value }) => {
+      return filteredOptions.filter((element1: string) => {
+        return !value?.includes(element1);
+      });
+    }
+  );
+
+  const value = Dropdown.useStoreState((store) => store.value);
+  const onSelect = Dropdown.useStoreState((store) => store.onSelect);
+  const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
+
+  const setSearchString = Dropdown.useStoreActions(
+    (store) => store.setSearchString
+  );
+
+  const selectOption = () => {
+    const wasNonePreviouslySelected = value?.some((element) =>
+      ['None', 'None of the Above', 'N/A'].includes(element)
+    );
+
+    const isNoneSelected = ['None', 'None of the Above', 'N/A'].includes(
+      option
+    );
+
+    const result =
+      wasNonePreviouslySelected || isNoneSelected
+        ? [option]
+        : [...value, option];
+
+    console.log(result);
+
+    onSelect(result);
+    setSearchString('');
+
+    const updatedOptions = allFilteredOptions.filter(
+      (opt: string) => !result?.includes(opt)
+    );
+
+    if (
+      isNoneSelected ||
+      !updatedOptions.length ||
+      (updatedOptions.length === 1 &&
+        ['None', 'None of the Above', 'N/A'].includes(updatedOptions[0]))
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  return selectOption;
+}

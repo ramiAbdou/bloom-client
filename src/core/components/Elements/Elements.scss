@@ -10,7 +10,7 @@ $PREF: 'c-misc';
   @extend .flex-acc;
   
   background-color: inherit;
-  border: 1px $gray-3 solid;
+  border: 2px $gray-4 solid;
   border-radius: $xxs;
   cursor: pointer;
   height: $sm + 2;
@@ -156,27 +156,42 @@ $PREF: 'c-misc';
   > svg { color: $gray-3; height: $sm; width: $sm; }
 }
 
-.#{$PREF}-dropdown-option-ctr {
-  background-color: $gray-5;
-  border-radius: $xxs;
-  box-sizing: border-box;
-  margin-top: $xxs;
-  max-height: $xxl * 5;
-  overflow: scroll;
-  padding: $xs 0;
-  position: absolute;
-  z-index: 1;
+// ## DROPDOWN OPTION CONTAINER
 
-  // The actual options within the container.
-  > div {
-    cursor: pointer;
-    height: $lg;
-    line-height: $lg;
-    padding: 0 $xs;
-  
-    @include HOVER { background-color: $gray-6; }
-  }
+.#{$PREF}-dropdown-search { box-sizing: border-box; padding: 8px; width: 100%; }
+
+.#{$PREF}-dropdown-option-ctr {
+  @extend .shadow--1;
+
+  background-color: white;
+  border-radius: $xxs;
+  margin-bottom: $xl; // For when the dropdown is at the bottom of the page.
+  padding-bottom: $xs;
+  padding-top: $xs;
+  position: absolute; // So that the container doesn't change document flow.
 }
+
+// .#{$PREF}-dropdown-option-ctr {
+//   background-color: $gray-5;
+//   border-radius: $xxs;
+//   box-sizing: border-box;
+//   margin-top: $xxs;
+//   max-height: $xxl * 5;
+//   overflow: scroll;
+//   padding: $xs 0;
+//   position: absolute;
+//   z-index: 1;
+
+//   // The actual options within the container.
+//   > div {
+//     cursor: pointer;
+//     height: $lg;
+//     line-height: $lg;
+//     padding: 0 $xs;
+  
+//     @include HOVER { background-color: $gray-6; }
+//   }
+// }
 
 // ## RADIO
 
