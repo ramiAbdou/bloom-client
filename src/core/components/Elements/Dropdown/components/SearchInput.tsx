@@ -15,7 +15,7 @@ export default function SearchInput() {
 
   return (
     <input
-      className="c-form-dd-search"
+      className="c-misc-dropdown-search"
       placeholder="Search..."
       type="text"
       value={searchString}

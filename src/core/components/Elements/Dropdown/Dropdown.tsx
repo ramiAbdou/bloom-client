@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ValueProps } from '@constants';
-import ClickBar from './components/ClickBar/ClickBar';
+import ClickBar from './components/ClickBar';
 import OptionContainer from './containers/Option';
 import DropdownStore, { DropdownModel, dropdownModel } from './Dropdown.store';
 
@@ -30,10 +30,7 @@ export default ({
   options,
   value,
   ...rest
-}: Pick<
-  DropdownModel,
-  'attribute' | 'multiple' | 'options' | 'onUpdate' | 'value'
->) => {
+}: Pick<DropdownModel, 'multiple' | 'options' | 'onUpdate' | 'value'>) => {
   return (
     <DropdownStore.Provider
       runtimeModel={{

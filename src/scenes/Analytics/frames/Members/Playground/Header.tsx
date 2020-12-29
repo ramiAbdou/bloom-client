@@ -33,17 +33,25 @@ export default () => {
 
   if (!questionId) return null;
 
-  // const onChange = ({ id }: IDropdownOption) => setQuestionId(id);
+  const onUpdate = (result: string[]) => {
+    const title = result[0];
+
+    const updatedQuestionId = questions.find(
+      (question) => question.title === title
+    )?.id;
+
+    setQuestionId(updatedQuestionId);
+  };
 
   return (
     <div>
       <h3>Data Playground</h3>
       <p>Choose any piece of data that you'd like to explore.</p>
-      {/* <Dropdown
-        activeId={questionId}
-        options={questions.map(({ title: t, id }) => ({ id, title: t }))}
-        onChange={onChange}
-      /> */}
+      <Dropdown
+        options={questions.map(({ title }) => title)}
+        value={[questions.find(({ id }) => id === questionId)?.title]}
+        onUpdate={onUpdate}
+      />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 
 import { makeClass } from '@util/util';
-import Dropdown from '../../Dropdown.store';
+import Dropdown from '../Dropdown.store';
 
 type ValueProps = { value: string };
 
@@ -24,8 +24,8 @@ const Value = ({ value }: ValueProps) => {
 
   const css = makeClass([
     'c-tag-attr',
-    'c-form-dd-value',
-    [multiple, 'c-form-dd-value--cancel']
+    'c-misc-dropdown-value',
+    [multiple, 'c-misc-dropdown-value--cancel']
   ]);
 
   return (
@@ -40,7 +40,7 @@ const ValueList = () => {
   if (!values?.length) return null;
 
   return (
-    <div className="c-form-dd-value-ctr">
+    <div className="c-misc-dropdown-value-ctr">
       {values.map((value: string) => (
         <Value key={value} value={value} />
       ))}
@@ -62,7 +62,10 @@ export default () => {
 
   const onClick = () => setIsOpen(!isOpen);
 
-  const css = makeClass(['c-form-dd-bar', [isOpen, 'c-form-dd-bar--open']]);
+  const css = makeClass([
+    'c-misc-dropdown-bar',
+    [isOpen, 'c-misc-dropdown-bar--open']
+  ]);
 
   return (
     <div ref={ref} className={css} onClick={onClick}>

@@ -1,7 +1,6 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
 export type DropdownModel = {
-  attribute?: boolean; // Uses attributes if true, uses plain text otherwise.
   filteredOptions: string[];
   isOpen: boolean;
   multiple?: boolean; // True if the dropdown is a multiple select.
@@ -17,8 +16,6 @@ export type DropdownModel = {
 };
 
 export const dropdownModel: DropdownModel = {
-  attribute: false,
-
   filteredOptions: [],
 
   isOpen: false,

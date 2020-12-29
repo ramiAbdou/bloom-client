@@ -131,68 +131,6 @@ $PREF: 'c-misc';
 .#{$PREF}-question > p:first-child { @extend .body--bold; margin-bottom: $xs; }
 .#{$PREF}-question > div:last-child { @extend .flex-w; }
 
-// ## DROPDOWN - The dropdown div only displays the current value, and only
-// when you click on it does the container appear.
-
-.#{$PREF}-dropdown {
-  background-color: $gray-5;
-  background-position-x: calc(100% - 8px);
-  border-radius: $xxs;
-  color: $gray-3;
-  cursor: pointer;
-  height: $lg;
-  width: 100%;
-
-  @include OVERFLOW_ELLIPSES;
-}
-
-.#{$PREF}-dropdown > div:first-child {
-  @extend .flex-acsb;
-  @extend .fill;
-
-  padding: 0 $xs;
-
-  > p { margin-right: $sm; }
-  > svg { color: $gray-3; height: $sm; width: $sm; }
-}
-
-// ## DROPDOWN OPTION CONTAINER
-
-.#{$PREF}-dropdown-search { box-sizing: border-box; padding: 8px; width: 100%; }
-
-.#{$PREF}-dropdown-option-ctr {
-  @extend .shadow--1;
-
-  background-color: white;
-  border-radius: $xxs;
-  margin-bottom: $xl; // For when the dropdown is at the bottom of the page.
-  padding-bottom: $xs;
-  padding-top: $xs;
-  position: absolute; // So that the container doesn't change document flow.
-}
-
-// .#{$PREF}-dropdown-option-ctr {
-//   background-color: $gray-5;
-//   border-radius: $xxs;
-//   box-sizing: border-box;
-//   margin-top: $xxs;
-//   max-height: $xxl * 5;
-//   overflow: scroll;
-//   padding: $xs 0;
-//   position: absolute;
-//   z-index: 1;
-
-//   // The actual options within the container.
-//   > div {
-//     cursor: pointer;
-//     height: $lg;
-//     line-height: $lg;
-//     padding: 0 $xs;
-  
-//     @include HOVER { background-color: $gray-6; }
-//   }
-// }
-
 // ## RADIO
 
 input[type="radio"] {

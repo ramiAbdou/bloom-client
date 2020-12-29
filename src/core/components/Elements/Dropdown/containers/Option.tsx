@@ -26,7 +26,10 @@ export default function OptionContainer() {
   );
 
   return (
-    <div className="c-form-dd-opt-ctr" style={{ width: width ?? 0 }}>
+    <div
+      className="c-misc-dropdown-option-ctr"
+      style={{ minWidth: width ?? 0 }}
+    >
       <SearchInput />
       {noOptionsFound && <p>No results found.</p>}
       {!noOptionsFound && <OptionList />}
