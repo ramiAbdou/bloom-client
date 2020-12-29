@@ -8,8 +8,11 @@ export default ({ options, title }: FormItemData) => {
   const value = Form.useStoreState(({ getItem }) => getItem({ title })?.value);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
 
-  const onSelect = (result: string[]) => updateItem({ title, value: result });
+  const onUpdate = (result: string[]) => updateItem({ title, value: result });
 
   if (!options) return null;
-  return <Dropdown options={options} value={value} onSelect={onSelect} />;
+
+  return (
+    <Dropdown multiple options={options} value={value} onUpdate={onUpdate} />
+  );
 };

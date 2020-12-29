@@ -5,7 +5,7 @@ export type DropdownModel = {
   filteredOptions: string[];
   isOpen: boolean;
   multiple?: boolean; // True if the dropdown is a multiple select.
-  onSelect: (result: string[]) => any;
+  onUpdate: (result: string[]) => any;
   options: string[];
   searchString: string;
   setSearchString: Action<DropdownModel, string>;
@@ -25,7 +25,7 @@ export const dropdownModel: DropdownModel = {
 
   multiple: false,
 
-  onSelect: null,
+  onUpdate: null,
 
   options: [],
 

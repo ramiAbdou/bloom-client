@@ -10,7 +10,7 @@ export default function useSelectOption(option: string) {
   );
 
   const value = Dropdown.useStoreState((store) => store.value);
-  const onSelect = Dropdown.useStoreState((store) => store.onSelect);
+  const onUpdate = Dropdown.useStoreState((store) => store.onUpdate);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
 
   const setSearchString = Dropdown.useStoreActions(
@@ -31,9 +31,7 @@ export default function useSelectOption(option: string) {
         ? [option]
         : [...value, option];
 
-    console.log(result);
-
-    onSelect(result);
+    onUpdate(result);
     setSearchString('');
 
     const updatedOptions = allFilteredOptions.filter(

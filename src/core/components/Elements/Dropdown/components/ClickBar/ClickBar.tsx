@@ -1,64 +1,52 @@
 import React, { useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 
-import Form from '@components/Form/Form.store';
 import { makeClass } from '@util/util';
 import Dropdown from '../../Dropdown.store';
 
-// const Value = ({ multiple, onClick, value }: ClickBarValueProps) => {
-//   const css = makeClass([
-//     'c-tag-attr',
-//     'c-form-dd-value',
-//     [multiple, 'c-form-dd-value--cancel']
-//   ]);
+type ValueProps = { value: string };
 
-//   return (
-//     <button className={css} onClick={onClick}>
-//       {value}
-//     </button>
-//   );
-// };
+const Value = ({ value }: ValueProps) => {
+  const isOpen = Dropdown.useStoreState((store) => store.isOpen);
+  const multiple = Dropdown.useStoreState((store) => store.multiple);
+  const storedValue = Dropdown.useStoreState((store) => store.value);
+  const onUpdate = Dropdown.useStoreState((store) => store.onUpdate);
+  const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
 
-// const ValueContainer = ({
-//   isOpen,
-//   multiple,
-//   openOptions,
-//   title
-// }: ClickBarProps) => {
-//   const values = Form.useStoreState(({ getItem }) => {
-//     const result = getItem({ title }).value;
-//     if (!result) return null;
-//     return Array.isArray(result) ? result : [result];
-//   });
+  const deleteValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    if (!isOpen) setIsOpen(true);
+    if (!multiple) return;
 
-//   const updateItem = Form.useStoreActions((store) => store.updateItem);
+    const updatedValues = storedValue.filter((option) => option !== value);
+    onUpdate(updatedValues);
+  };
 
-//   const deleteValue = (
-//     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-//     value: string
-//   ) => {
-//     if (!isOpen) openOptions();
-//     if (!Array.isArray(values)) return;
-//     e.stopPropagation();
-//     const updatedValues = values.filter((option: string) => option !== value);
-//     updateItem({ title, value: updatedValues });
-//   };
+  const css = makeClass([
+    'c-tag-attr',
+    'c-form-dd-value',
+    [multiple, 'c-form-dd-value--cancel']
+  ]);
 
-//   if (!values?.length) return null;
+  return (
+    <button className={css} type="button" onClick={deleteValue}>
+      {value}
+    </button>
+  );
+};
 
-//   return (
-//     <div className="c-form-dd-value-ctr">
-//       {values.map((value: string) => (
-//         <Value
-//           key={value}
-//           multiple={multiple}
-//           value={value}
-//           onClick={(e) => deleteValue(e, value)}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
+const ValueList = () => {
+  const values = Dropdown.useStoreState((store) => store.value);
+  if (!values?.length) return null;
+
+  return (
+    <div className="c-form-dd-value-ctr">
+      {values.map((value: string) => (
+        <Value key={value} value={value} />
+      ))}
+    </div>
+  );
+};
 
 export default () => {
   const isOpen = Dropdown.useStoreState((store) => store.isOpen);
@@ -78,7 +66,9 @@ export default () => {
 
   return (
     <div ref={ref} className={css} onClick={onClick}>
-      <div>{/* <ValueContainer {...props} /> */}</div>
+      <div>
+        <ValueList />
+      </div>
 
       <IoCaretDown />
     </div>

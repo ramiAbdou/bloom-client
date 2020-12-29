@@ -32,7 +32,7 @@ export default ({
   ...rest
 }: Pick<
   DropdownModel,
-  'attribute' | 'options' | 'multiple' | 'onSelect' | 'value'
+  'attribute' | 'multiple' | 'options' | 'onUpdate' | 'value'
 >) => {
   return (
     <DropdownStore.Provider
