@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FormItemProps } from '../Form.types';
-import { getItemBody } from '../Form.util';
+import useItemBody from '../hooks/useItemBody';
 import Description from './Description';
 import Label from './Label';
 
@@ -15,7 +15,7 @@ export default ({
   title,
   type
 }: FormItemProps) => {
-  const body: React.ReactElement = getItemBody({
+  const body: React.ReactElement = useItemBody({
     category,
     children,
     options,

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { takeFirst } from '@util/util';
 import Form from '../Form.store';
 import { FormItemProps } from '../Form.types';
-import { getItemBody } from '../Form.util';
+import useItemBody from '../hooks/useItemBody';
 import Description from './Description';
 import Label from './Label';
 
@@ -35,7 +35,7 @@ export default ({
     });
   }, []);
 
-  const body: React.ReactElement = getItemBody({
+  const body: React.ReactElement = useItemBody({
     category,
     children,
     options,

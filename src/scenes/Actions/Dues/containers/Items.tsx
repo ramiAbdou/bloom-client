@@ -20,7 +20,7 @@ export default () => (
   <>
     <FormItem required title="Name on Card" type="SHORT_TEXT" />
 
-    <FormItem completed required title="Credit or Debit Card">
+    <FormItem required title="Credit or Debit Card">
       <CardElement options={options} />
     </FormItem>
 
