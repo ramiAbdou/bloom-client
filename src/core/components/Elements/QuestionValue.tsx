@@ -2,7 +2,7 @@ import React, { memo, ReactNode } from 'react';
 
 import { QuestionType, ValueProps } from '@constants';
 import { takeFirst } from '@util/util';
-import Tag from './Tag';
+import Attribute from './Attribute';
 
 interface QuestionValueProps extends ValueProps {
   hideNullValue?: boolean;
@@ -13,12 +13,12 @@ interface QuestionValueProps extends ValueProps {
 const Value = memo(({ type, value }: Partial<QuestionValueProps>) => {
   const body: ReactNode = takeFirst([
     [!value, <p>N/A</p>],
-    [type === 'MULTIPLE_CHOICE', <Tag value={value} />],
+    [type === 'MULTIPLE_CHOICE', <Attribute value={value} />],
     [
       type === 'MULTIPLE_SELECT',
       <>
         {value?.split(',').map((val: string) => (
-          <Tag key={val} value={val?.trim()} />
+          <Attribute key={val} value={val?.trim()} />
         ))}
       </>
     ],

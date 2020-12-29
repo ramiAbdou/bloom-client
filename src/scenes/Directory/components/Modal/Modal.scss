@@ -67,4 +67,4 @@ a.#{$PREF}-email {
   margin-bottom: $xxs;
 }
 .#{$PREF}-question > p:last-of-type { color: $primary; }
-.#{$PREF}-question--choice > p:last-child { @extend .c-misc-tag; }
+.#{$PREF}-question--choice > p:last-child { @extend .c-misc-attr; }

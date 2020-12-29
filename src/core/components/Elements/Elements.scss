@@ -6,7 +6,7 @@ $PREF: 'c-misc';
 
 // ## TAG
 
-.#{$PREF}-tag {
+.#{$PREF}-attr {
   @extend .body--sm;
 
   background-color: $primary-light;
@@ -19,7 +19,7 @@ $PREF: 'c-misc';
 
   @include OVERFLOW_ELLIPSES;
 
-  &:not(.c-misc-tag:first-of-type) { margin-left: $xs; }
+  &:not(.c-misc-attr:first-of-type) { margin-left: $xs; }
 }
 
 // ## HEADER TAG - Similar to the regular Tag component, except it has a very

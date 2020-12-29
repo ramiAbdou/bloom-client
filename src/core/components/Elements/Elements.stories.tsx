@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 import { Description, Stories, Title } from '@storybook/addon-docs/blocks';
+import Attr from './Attribute';
 import CBox from './Checkbox';
-import DDown from './Dropdown';
+import DDown from './Dropdown/Dropdown';
 import HTag from './HeaderTag';
 import IPut from './Input';
 import QVal from './QuestionValue';
 import RDio from './Radio';
 import SBar from './SearchBar';
-import Tg from './Tag';
 
 // ## CHECKBOX
 
@@ -84,19 +84,6 @@ const QuestionValueTemplate = (args) => (
 
 export const QuestionValue = QuestionValueTemplate.bind({});
 
-// QuestionValue.args = {
-//   title: 'School',
-//   type: 'MULTIPLE_CHOICE',
-//   value: 'Cornell University'
-// };
-// QuestionValue.argTypes = { type: { type:  } };
-
-// QuestionValue.parameters = {
-//   type: {
-//     values: ['LONG_TEXT', 'MULTIPLE_CHOICE', 'MULTIPLE_SELECT', 'SHORT_TEXT']
-//   }
-// };
-
 // ## RADIO
 
 const RadioTemplate = (args) => {
@@ -128,7 +115,7 @@ SearchBar.args = { placeholder: 'Search...' };
 
 // ## TAG
 
-const TagTemplate = (args) => <Tg {...args} />;
+const TagTemplate = (args) => <Attr {...args} />;
 
 export const Tag = TagTemplate.bind({});
 Tag.args = { value: 'Cornell University' };

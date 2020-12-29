@@ -24,7 +24,7 @@ const RadioOption = ({ label, onClick, value, ...props }: RadioOptionProps) => {
         <span />
       </div>
 
-      <label className="c-misc-tag" htmlFor={value}>
+      <label className="c-misc-attr" htmlFor={value}>
         {label}
       </label>
     </div>
