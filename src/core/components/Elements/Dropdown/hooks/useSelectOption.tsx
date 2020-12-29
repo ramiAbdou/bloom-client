@@ -9,6 +9,7 @@ export default function useSelectOption(option: string) {
     }
   );
 
+  const multiple = Dropdown.useStoreState((store) => store.multiple);
   const value = Dropdown.useStoreState((store) => store.value);
   const onUpdate = Dropdown.useStoreState((store) => store.onUpdate);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
@@ -27,7 +28,7 @@ export default function useSelectOption(option: string) {
     );
 
     const result =
-      wasNonePreviouslySelected || isNoneSelected
+      !multiple || wasNonePreviouslySelected || isNoneSelected
         ? [option]
         : [...value, option];
 
@@ -39,6 +40,7 @@ export default function useSelectOption(option: string) {
     );
 
     if (
+      !multiple ||
       isNoneSelected ||
       !updatedOptions.length ||
       (updatedOptions.length === 1 &&
