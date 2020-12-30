@@ -22,6 +22,8 @@ $PREF: 's-database';
   &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
   &--delete > svg { color: $red; }
   &--disabled > svg { color: $gray-3; }
+
+  > svg { @extend .react-icon--lg; }
 }
 
 // For all buttons that are not the Promote to Admin button, we set the tooltip
