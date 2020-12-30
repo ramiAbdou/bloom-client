@@ -4,43 +4,6 @@
 
 $PREF: 'c-misc';
 
-// ## SEACH BAR - Similar to the input element except contains a search SVG
-// icon, and this bar is rounded and darker gray with no focused state.
-
-.#{$PREF}-search {
-  @extend .flex-ac;
-
-  background-color: $gray-5;
-  border-radius: $sl;
-  box-sizing: border-box;
-  color: $gray-3;
-  padding: $xs $sm;
-  width: $xxl * 5;
-}
-
-.#{$PREF}-search > svg {
-  color: $gray-3;
-  margin-right: $xs;
-  min-height: $sm;
-  min-width: $sm;
-}
-
-.#{$PREF}-search > input {
-  background-color: inherit;
-  flex-grow: 1;
-  width: 100%;
-
-  &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
-}
-
-.#{$PREF}-search-close {
-  color: $gray-3;
-
-  &--hide { visibility: hidden; }
-
-  > svg { color: $gray-3; min-height: $sl; min-width: $sl; }
-}
-
 // ## QUESTION VALUE - Has a title component and value component.
 
 .#{$PREF}-question:not(:last-child) { margin-bottom: $sm; }

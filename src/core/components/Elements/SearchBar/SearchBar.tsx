@@ -13,13 +13,15 @@ interface SearchBarProps extends ValueProps {
 const Icon = memo(() => <IoSearch />);
 
 const ClearButton = ({ onChange, value }: Partial<SearchBarProps>) => {
+  const onClick = () => onChange('');
+
   const css = makeClass([
     'c-misc-search-close',
-    [!value, 'c-misc-search-close--hide']
+    [!value, 'c-misc-search-close--empty']
   ]);
 
   return (
-    <Button className={css} onClick={() => onChange('')}>
+    <Button className={css} onClick={onClick}>
       <IoCloseCircle />
     </Button>
   );

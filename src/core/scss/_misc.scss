@@ -26,10 +26,13 @@
 
 .react-icon {
   color: $gray-1;
-  height: $md;
-  width: $md;
+  height: $sl;
+  width: $sl;
   
-  &--lg { height: 32px; width: 32px; }
+  &--xs { min-height: $ss; min-width: $ss; }
+  &--sm { min-height: $sm; min-width: $sm; }
+  &--lg { height: $md; width: $md; }
+  &--xl { height: 32px; width: 32px; }
 }
 
 // ## TOOLTIP - All tooltips show up below

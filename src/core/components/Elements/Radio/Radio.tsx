@@ -29,7 +29,7 @@ const RadioOption = ({ label, onClick, value, ...props }: RadioOptionProps) => (
   </div>
 );
 
-export default ({ defaultChecked, name, onSelect, options }: RadioProps) => (
+const Radio = ({ defaultChecked, name, onSelect, options }: RadioProps) => (
   <div className="c-misc-radio">
     {options.map(
       ({ label, value }: Pick<RadioOptionProps, 'label' | 'value'>) => (
@@ -45,3 +45,5 @@ export default ({ defaultChecked, name, onSelect, options }: RadioProps) => (
     )}
   </div>
 );
+
+export default Radio;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import SearchBar from '@components/Elements/SearchBar';
+import SearchBar from '@components/Elements/SearchBar/SearchBar';
 import Spinner from '@components/Loader/Spinner';
 import NumberTag from '@components/Tags/NumberTag';
 import Directory from '../Directory.store';

@@ -16,7 +16,7 @@ interface InputProps extends ValueProps {
  * Resuable and customizable input component. Has three different versions:
  * regular, dark and gray.
  */
-export default ({
+const Input = ({
   error,
   placeholder,
   onChange,
@@ -51,3 +51,5 @@ export default ({
     />
   );
 };
+
+export default Input;

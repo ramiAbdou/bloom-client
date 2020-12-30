@@ -26,7 +26,7 @@ const DropdownContent = ({ value }: ValueProps) => {
   );
 };
 
-export default ({
+const Dropdown = ({
   options,
   value,
   ...rest
@@ -44,3 +44,5 @@ export default ({
     </DropdownStore.Provider>
   );
 };
+
+export default Dropdown;

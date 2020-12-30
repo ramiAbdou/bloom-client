@@ -8,16 +8,12 @@ $PREF: 's-login';
 }
 
 .#{$PREF}-card {
-  @extend .shadow--1;
-  @extend .flex-col;
+  @extend .card;
 
-  background-color: white;
-  border-radius: $xs;
   margin-top: -$xxl;
   max-width: $xxl * 7;
-  overflow: hidden;
+  overflow: hidden; // Needed to hide the overflowed network image.
 
-  @include RESP (padding, $md, $sm, $sm);
   @include M { box-sizing: border-box; width: 90%; }
 }
 

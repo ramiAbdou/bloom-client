@@ -14,7 +14,7 @@ interface CheckboxProps extends ClassNameProps {
   title?: string;
 }
 
-export default ({ className, checked, onChange, title }: CheckboxProps) => {
+const Checkbox = ({ className, checked, onChange, title }: CheckboxProps) => {
   const onCheckboxChange = ({
     target
   }: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,3 +40,5 @@ export default ({ className, checked, onChange, title }: CheckboxProps) => {
     </label>
   );
 };
+
+export default Checkbox;

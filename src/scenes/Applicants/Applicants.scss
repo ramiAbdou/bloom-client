@@ -60,9 +60,9 @@ $PREF: 's-applicants';
 // ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
 
 .#{$PREF}-card-action {
-  @extend .react-icon--lg;
+  @extend .react-icon--xl;
 
-  > svg { @extend .react-icon--lg; }
+  > svg { @extend .react-icon--xl; }
 
   &:first-of-type {
     margin-right: $xxs;
