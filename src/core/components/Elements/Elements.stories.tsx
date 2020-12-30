@@ -7,7 +7,7 @@ import CBox from './Checkbox/Checkbox';
 import DDown from './Dropdown/Dropdown';
 import IPut from './Input/Input';
 import QVal from './QuestionValue';
-import RDio from './Radio';
+import RDio from './Radio/Radio';
 import SBar from './SearchBar';
 
 // ## CHECKBOX

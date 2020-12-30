@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 import Button from '@components/Button/Button';
-import Radio from '@components/Elements/Radio';
+import Radio from '@components/Elements/Radio/Radio';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import Dues from '../Dues.store';

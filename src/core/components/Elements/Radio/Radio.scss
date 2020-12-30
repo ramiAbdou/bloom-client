@@ -1,0 +1,45 @@
+$PREF: 'c-misc-radio';
+
+// ## RADIO
+
+input[type="radio"] {
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  height: $md;
+  opacity: 0;
+  position: absolute;
+  width: $lg;
+}
+
+input[type="radio"] ~ div {
+  @extend .flex-acc;
+  
+  background-color: white;
+  border: 2px solid $gray-4;
+  border-radius: 50%;
+  height: $ss;
+  margin-right: $xs;
+  padding: 2px;
+  width: $ss;
+}
+
+input[type="radio"] ~ div > span { @extend .fill; }
+
+input[type="radio"]:checked ~ div,
+input[type="radio"]:hover ~ div { border-color: $primary; }
+
+input[type="radio"]:checked ~ div > span {
+  background-color: $primary;
+  border-radius: 50%;
+  display: inline-block;
+  min-height: $ss;
+  min-width: $ss;
+}
+
+.#{$PREF} {
+  @extend .flex-col; 
+  > div { @extend .flex-ac; cursor: pointer; width: fit-content; }
+  > div:not(:last-child) { margin-bottom: $xs; }
+  > div > * { cursor: pointer; }
+}
