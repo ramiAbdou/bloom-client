@@ -103,7 +103,8 @@ th {
   @include HOVER { background-color: $gray-5; cursor: pointer; }
 
   // Header select option should have a darker border and higher z-index.
-  > div > .c-misc-checkbox { border: 1px $gray-2 solid; z-index: 12; }
+  > div > .c-misc-checkbox { z-index: 12; }
+  > div > .c-misc-checkbox > span { border: 2px $gray-3 solid; }
 
   // The header title content.
   > div > h4 {

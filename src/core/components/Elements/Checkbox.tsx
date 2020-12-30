@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 import React from 'react';
@@ -15,9 +16,8 @@ export default ({ className, checked, onClick }: CheckboxProps) => {
   const css = makeClass(['c-misc-checkbox', className]);
 
   return (
-    <label className={css}>
-      <input defaultChecked={checked} type="checkbox" onChange={onChange} />
-
+    <label className={css} onClick={(e) => e.stopPropagation()}>
+      <input checked={checked} type="checkbox" onChange={onChange} />
       <span />
       <IoCheckmark color="#FFF" />
     </label>
