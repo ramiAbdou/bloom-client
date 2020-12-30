@@ -13,7 +13,7 @@ export default ({ options, title }: FormItemData) => {
   return (
     <div className="c-misc-checkbox-ctr">
       {options.map((option: string) => {
-        const onClick = () => {
+        const onChange = () => {
           const updatedValue = value?.includes(option)
             ? value.filter((element) => element !== option)
             : [...value, option];
@@ -25,7 +25,7 @@ export default ({ options, title }: FormItemData) => {
           <Checkbox
             checked={value?.includes(option)}
             title={option}
-            onClick={onClick}
+            onChange={onChange}
           />
         );
       })}

@@ -2,6 +2,8 @@ $PREF: 'c-misc-checkbox';
 
 // CHECKBOX
 
+// Container is used if there are multiple checkboxes present (ie: in the Form
+// MultipleSelect component).
 .#{$PREF}-ctr > .#{$PREF}-checkbox { margin-bottom: $xs; }
 
 .#{$PREF} {
@@ -9,64 +11,60 @@ $PREF: 'c-misc-checkbox';
   
   background-color: inherit;
   cursor: pointer;
-  position: relative;
+  position: relative; // Needed for absolute children to work.
 
   @include HOVER { > span { border: 2px $primary solid; } }
 
+  // If no label, the height and width should be 20px.
   &:not(&--label) { height: $sl; width: $sl; }
 
+  // If label, don't specify the exact height and width manually.
   &--label {
     height: fit-content;
-    padding-left: $sl + $xs;
+    padding-left: $sl + $xs; // Needed because of the absolute children.
     width: fit-content;
 
     &:not(:last-child) { margin-bottom: $xs; }
+
+    > span,
+    > svg { margin-top: 2.5px; }
   }
+}
 
-  > input {
-    background-color: inherit;
-    border: 2px $gray-4 solid;
-    cursor: pointer;
-    height: $sm;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    width: $sm;
-  }
+// The actual checkbox element that has the checked attribute.
+.#{$PREF} > input {
+  background-color: inherit;
+  border: 2px $gray-4 solid;
+  cursor: pointer;
+  height: $sl;
+  opacity: 0; // Hide the input.
+  position: absolute;
+  width: $sl;
 
-  // > input { cursor: pointer; height: 0; opacity: 0; width: 0; }
-  > input:checked ~ svg { visibility: visible; }
+  &:checked ~ svg { visibility: visible; }
+  &:checked ~ span { background-color: $primary; border: 2px $primary solid; }
+}
 
-  > input:checked ~ span {
-    background-color: $primary;
-    border: 2px $primary solid;
-  }
+// Controls the border and the $primary background when checked.
+.#{$PREF} > span {
+  background-color: inherit;
+  border: 2px $gray-4 solid;
+  border-radius: $xxs;
+  height: $sm;
+  position: absolute;
+  width: $sm;
+  z-index: 2; // Needs higher z-index so it appears over the input element.
+}
 
-  &--label > span,
-  &--label > svg { margin-top: 2.5px; }
+.#{$PREF} > svg {
+  height: $sl;
+  left: 0;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+  width: $sl;
+  z-index: 2; // Same reason as above.
 
-  > span {
-    background-color: inherit;
-    border: 2px $gray-4 solid;
-    border-radius: $xxs;
-    height: $sm;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: $sm;
-    z-index: 2;
-  }
-
-  > svg {
-    height: $sl;
-    left: 0;
-    position: absolute;
-    top: 0;
-    visibility: hidden;
-    width: $sl;
-    z-index: 2;
-  }
-
-  > svg > path { stroke-width: 48; }
+  // Normal checkbox check looks really thin, so increase from 36 to 48.
+  > path { stroke-width: 48; }
 }

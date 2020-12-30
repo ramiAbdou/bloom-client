@@ -222,6 +222,7 @@ export const tableModel: TableModel = {
    */
   toggleRow: action(({ selectedRowIds, ...state }, rowId: string) => {
     const index = selectedRowIds.findIndex((value: string) => value === rowId);
+
     return {
       ...state,
       selectedRowIds:

@@ -59,7 +59,7 @@ export default memo(
       emailError
     ]);
 
-    const onCheckboxClick = () => toggleAdmin(id);
+    const onChange = () => toggleAdmin(id);
 
     return (
       <div className={css}>
@@ -95,7 +95,7 @@ export default memo(
 
           {showAdminCheckbox && (
             <div>
-              <Checkbox checked={admin} onClick={onCheckboxClick} />
+              <Checkbox checked={admin} onChange={onChange} />
               <p>Make Admin</p>
             </div>
           )}

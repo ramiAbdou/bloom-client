@@ -16,13 +16,13 @@ const SelectAllCheckbox = () => {
     (store) => store.toggleAllPageRows
   );
 
-  const onClick = () => toggleAllPageRows();
+  const onChange = () => toggleAllPageRows();
 
   return (
     <Checkbox
       checked={isAllPageSelected}
       className="c-table-select"
-      onClick={onClick}
+      onChange={onChange}
     />
   );
 };
