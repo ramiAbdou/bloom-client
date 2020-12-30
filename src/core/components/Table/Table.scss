@@ -205,7 +205,7 @@ div.#{$PREF}-col-picker { padding: $sm; }
   @extend .flex-ac;
 
   justify-content: left;
-  padding: $xxs 0;
+  padding: $xs 0;
   width: 100%;
 
   @include PRIMARY_HOVER;
