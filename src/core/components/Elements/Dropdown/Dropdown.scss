@@ -38,7 +38,7 @@ $PREF: 'c-misc-dropdown';
   padding-bottom: $xs;
   padding-top: $xs;
   position: absolute; // So that the container doesn't change document flow.
-  z-index: 1;
+  z-index: 3;
 
   // Wraps the list of options.
   > div { max-height: $xxl * 5; overflow: scroll; }
@@ -69,10 +69,8 @@ $PREF: 'c-misc-dropdown';
 // ## DROPDOWN BAR CONTAINER
 
 // Dropdown bar that user clickes on to open the option container.
+.#{$PREF}-bar { @extend .flex-acsb; @extend .c-misc-input; }
 div.#{$PREF}-bar {
-  @extend .flex-acsb;
-  @extend .c-misc-input;
-
   cursor: pointer;
   max-width: 100%;
 
