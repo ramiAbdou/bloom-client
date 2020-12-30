@@ -44,7 +44,7 @@ const AddMemberContent = () => {
       }))
     });
 
-    const { createMembers: updatedMembers } = result.data || {};
+    const updatedMembers = result.data;
     if (result.error || !updatedMembers) return;
 
     mergeEntities({
