@@ -52,6 +52,8 @@ a.#{$PREF}-email {
   &:active { transform: scale(0.9); }
 
   &:not(:last-child) { margin-right: $sm; }
+
+  > svg { @extend .react-icon--lg; }
   &--facebook > svg { color: #1877f2; }
   &--linkedin > svg { color: #0a66c2; }
   &--twitter > svg { color: #1da1f2; }
