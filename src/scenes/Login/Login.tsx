@@ -1,8 +1,8 @@
 import React from 'react';
 
-import EmailConfirmation from './frames/Confirmation/Confirmation';
-import LoginCard from './frames/LoginCard/LoginCard';
 import Login from './Login.store';
+import EmailConfirmation from './pages/Confirmation/Confirmation';
+import LoginCard from './pages/LoginCard/LoginCard';
 
 const LoginContent = () => {
   const linkSent = Login.useStoreState((store) => store.hasLoginLinkSent);

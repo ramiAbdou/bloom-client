@@ -41,6 +41,7 @@ $PREF: 's-login';
   @extend .c-btn--lg;
 
   border: 1px $gray-5 solid;
+  color: $gray-1;
 
   @include HOVER { background-color: $gray-6; }
 }
