@@ -10,11 +10,11 @@ const OptionList = () => {
   );
 
   return (
-    <>
+    <div>
       {options.map((option: string) => (
         <Option key={option} option={option} />
       ))}
-    </>
+    </div>
   );
 };
 

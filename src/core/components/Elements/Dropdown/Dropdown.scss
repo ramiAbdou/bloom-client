@@ -39,6 +39,9 @@ $PREF: 'c-misc-dropdown';
   padding-top: $xs;
   position: absolute; // So that the container doesn't change document flow.
   z-index: 1;
+
+  // Wraps the list of options.
+  > div { max-height: $xxl * 5; overflow: scroll; }
 }
 
 // No results message.
