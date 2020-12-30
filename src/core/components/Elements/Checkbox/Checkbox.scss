@@ -51,7 +51,9 @@ $PREF: 'c-misc-checkbox';
   border: 2px $gray-4 solid;
   border-radius: $xxs;
   height: $sm;
+  left: 0;
   position: absolute;
+  top: 0;
   width: $sm;
   z-index: 2; // Needs higher z-index so it appears over the input element.
 }
