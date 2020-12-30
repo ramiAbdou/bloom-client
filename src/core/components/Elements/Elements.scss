@@ -4,49 +4,6 @@
 
 $PREF: 'c-misc';
 
-// ## INPUT - The main element that all items will use, especially the short
-// text and long text items. We set a special active state for them.
-
-.#{$PREF}-input {
-  @extend .flex-acsb;
-
-  background-color: $gray-6;
-  border: 1px $gray-4 solid;
-  border-radius: $xxs;
-  box-sizing: border-box;
-  color: $gray-2;
-  cursor: text;
-  height: $lg;
-  // padding: 
-
-  padding-left: $xs;
-  padding-right: $xs;
-  width: 100%;
-
-  &::placeholder,
-  &:-moz-placeholder,
-  &::-moz-placeholder { @extend .body; color: $gray-3; line-height: revert; }
-
-  // Only reason we added this --focus variant is that we can use it in the
-  // Stripe elements definition.
-  &:focus,
-  &--focus {
-    background-color: white;
-    border: 1px $primary solid;
-    color: $gray-1;
-  }
-
-  &::selection { background-color: $primary-bg; }
-  &--error { border: 1px $red solid; }
-
-  &--lg {
-    height: 96px;
-    justify-content: center;
-    padding: $xs;
-    resize: none;
-  }
-}
-
 // ## SEACH BAR - Similar to the input element except contains a search SVG
 // icon, and this bar is rounded and darker gray with no focused state.
 

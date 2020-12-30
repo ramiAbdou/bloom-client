@@ -5,7 +5,7 @@ import Attr from '../Tags/Attribute';
 import NTag from '../Tags/NumberTag';
 import CBox from './Checkbox/Checkbox';
 import DDown from './Dropdown/Dropdown';
-import IPut from './Input';
+import IPut from './Input/Input';
 import QVal from './QuestionValue';
 import RDio from './Radio';
 import SBar from './SearchBar';

@@ -3,7 +3,7 @@ import { IoTrash } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
 import Checkbox from '@components/Elements/Checkbox/Checkbox';
-import Input from '@components/Elements/Input';
+import Input from '@components/Elements/Input/Input';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { Function, IdProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
