@@ -8,10 +8,10 @@ $PREF: 's-login';
 }
 
 .#{$PREF}-card {
+  @extend .shadow--1;
   @extend .flex-col;
 
   background-color: white;
-  border: 1px $gray-5 solid;
   border-radius: $xs;
   margin-top: -$xxl;
   max-width: $xxl * 7;
