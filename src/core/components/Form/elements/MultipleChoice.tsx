@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Radio from '@components/Elements/Radio';
-import Form from '../../Form.store';
-import { FormItemData } from '../../Form.types';
+import Form from '../Form.store';
+import { FormItemData } from '../Form.types';
 
 export default ({ options, title }: FormItemData) => {
   const updateItem = Form.useStoreActions((store) => store.updateItem);

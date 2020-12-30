@@ -2,11 +2,10 @@ import React, { useMemo } from 'react';
 
 import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
+import DropdownItem from '../components/Dropdown';
 import LongText from '../elements/LongText';
-import MultipleChoice from '../elements/MultipleChoice/MultipleChoice';
-import MultipleChoiceDropdown from '../elements/MultipleChoice/MultipleChoiceDropdown';
-import MultipleSelect from '../elements/MultipleSelect/MultipleSelect';
-import MultipleSelectDropdown from '../elements/MultipleSelect/MultipleSelectDropdown';
+import MultipleChoice from '../elements/MultipleChoice';
+import MultipleSelect from '../elements/MultipleSelect';
 import ShortText from '../elements/ShortText';
 import { FormItemData } from '../Form.types';
 
@@ -62,7 +61,7 @@ export default function useItemBody(props: UseItemBodyProps) {
     [type === 'LONG_TEXT', <LongText {...textProps} />],
     [
       type === 'MULTIPLE_SELECT' && options.length >= 5,
-      <MultipleSelectDropdown {...optionProps} />
+      <DropdownItem multiple {...optionProps} />
     ],
     [
       type === 'MULTIPLE_SELECT' && options.length < 5,
@@ -70,7 +69,7 @@ export default function useItemBody(props: UseItemBodyProps) {
     ],
     [
       type === 'MULTIPLE_CHOICE' && options.length >= 5,
-      <MultipleChoiceDropdown {...optionProps} />
+      <DropdownItem {...optionProps} />
     ],
     [
       type === 'MULTIPLE_CHOICE' && options.length < 5,
