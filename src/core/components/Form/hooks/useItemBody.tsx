@@ -4,8 +4,9 @@ import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
 import LongText from '../elements/LongText';
 import MultipleChoice from '../elements/MultipleChoice/MultipleChoice';
-import MultipleChoiceDD from '../elements/MultipleChoice/MultipleChoiceDD';
+import MultipleChoiceDropdown from '../elements/MultipleChoice/MultipleChoiceDropdown';
 import MultipleSelect from '../elements/MultipleSelect/MultipleSelect';
+import MultipleSelectDropdown from '../elements/MultipleSelect/MultipleSelectDropdown';
 import ShortText from '../elements/ShortText';
 import { FormItemData } from '../Form.types';
 
@@ -59,12 +60,22 @@ export default function useItemBody(props: UseItemBodyProps) {
   const body: React.ReactElement = takeFirst([
     [type === 'SHORT_TEXT', <ShortText {...textProps} />],
     [type === 'LONG_TEXT', <LongText {...textProps} />],
-    [type === 'MULTIPLE_SELECT', <MultipleSelect {...optionProps} />],
+    [
+      type === 'MULTIPLE_SELECT' && options.length >= 5,
+      <MultipleSelectDropdown {...optionProps} />
+    ],
+    [
+      type === 'MULTIPLE_SELECT' && options.length < 5,
+      <MultipleSelect {...optionProps} />
+    ],
     [
       type === 'MULTIPLE_CHOICE' && options.length >= 5,
-      <MultipleChoiceDD {...optionProps} />
+      <MultipleChoiceDropdown {...optionProps} />
     ],
-    [type === 'MULTIPLE_CHOICE', <MultipleChoice {...optionProps} />],
+    [
+      type === 'MULTIPLE_CHOICE' && options.length < 5,
+      <MultipleChoice {...optionProps} />
+    ],
     children
   ]);
 

@@ -20,8 +20,8 @@ const SelectAllCheckbox = () => {
 
   return (
     <Checkbox
+      checked={isAllPageSelected}
       className="c-table-select"
-      selected={isAllPageSelected}
       onClick={onClick}
     />
   );

@@ -10,40 +10,50 @@ $PREF: 'c-misc';
   @extend .flex-acc;
   
   background-color: inherit;
-  border: 2px $gray-4 solid;
-  border-radius: $xxs;
   cursor: pointer;
-  height: $sm + 2;
+  height: $sl;
   position: relative;
-  stroke-width: 3px;
-  width: $sm + 2;
+  width: $sl;
 
-  @include HOVER { &::before { visibility: visible; } }
-
-  &::before {
-    background-color: $gray-3;
-    border-radius: 50%;
-    content: '';
-    display: block;
-    height: 100%;
-    opacity: 0.1;
-    padding: 10px;
+  > input {
+    cursor: pointer;
+    height: 0;
+    opacity: 0;
     position: absolute;
-    transform: scale(1);
-    visibility: hidden;
-    width: 100%;
-    z-index: 1000;
+    width: 0;
   }
 
-  &--active {
-    background-color: $primary !important;
-    border: 1px $primary solid !important;
+  > input:checked ~ svg { visibility: visible; }
 
-    @include HOVER { &::before { visibility: hidden; } }
+  > input:checked ~ span {
+    background-color: $primary;
+    border: 2px $primary solid;
+  }
+
+  > span {
+    background-color: inherit;
+    border: 2px $gray-4 solid;
+    border-radius: $xxs;
+    height: $sm;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: $sm;
+    z-index: 2;
+    
+    @include HOVER { border: 2px $primary solid; }
+  }
+
+  > svg {
+    height: $sl;
+    left: 0;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    width: $sl;
+    z-index: 2;
   }
 }
-
-.#{$PREF}-checkbox > svg { height: $sm + 2; stroke-width: 3px; width: $sm + 2; }
 
 // ## INPUT - The main element that all items will use, especially the short
 // text and long text items. We set a special active state for them.

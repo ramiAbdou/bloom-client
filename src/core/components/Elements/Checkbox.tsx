@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 import React from 'react';
 import { IoCheckmark } from 'react-icons/io5';
 
@@ -5,26 +7,19 @@ import { ClassNameProps, OnClickProps } from '@constants';
 import { makeClass } from '@util/util';
 
 interface CheckboxProps extends ClassNameProps, OnClickProps {
-  selected?: boolean;
+  checked?: boolean;
 }
 
-export default ({ className, selected, onClick }: CheckboxProps) => {
-  const onClickHandler = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    event.stopPropagation();
-    if (onClick) onClick();
-  };
-
-  const css = makeClass([
-    'c-misc-checkbox',
-    [selected, 'c-misc-checkbox--active'],
-    className
-  ]);
+export default ({ className, checked, onClick }: CheckboxProps) => {
+  const onChange = () => onClick();
+  const css = makeClass(['c-misc-checkbox', className]);
 
   return (
-    <div className={css} onClick={onClickHandler}>
-      {selected && <IoCheckmark color="#FFF" />}
-    </div>
+    <label className={css}>
+      <input defaultChecked={checked} type="checkbox" onChange={onChange} />
+
+      <span />
+      <IoCheckmark color="#FFF" />
+    </label>
   );
 };

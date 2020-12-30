@@ -71,6 +71,7 @@ div.#{$PREF}-bar {
   @extend .c-misc-input;
 
   cursor: pointer;
+  max-width: 100%;
 
   > div { max-width: 100%; overflow: scroll; }
 

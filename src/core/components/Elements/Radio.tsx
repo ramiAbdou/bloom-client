@@ -15,21 +15,19 @@ type RadioProps = {
   options: Pick<RadioOptionProps, 'label' | 'value'>[];
 };
 
-const RadioOption = ({ label, onClick, value, ...props }: RadioOptionProps) => {
-  return (
-    <div onClick={onClick}>
-      <input id={value} type="radio" value={value} {...props} />
+const RadioOption = ({ label, onClick, value, ...props }: RadioOptionProps) => (
+  <div onClick={onClick}>
+    <input id={value} type="radio" value={value} {...props} />
 
-      <div>
-        <span />
-      </div>
-
-      <label className="c-tag-attr" htmlFor={value}>
-        {label}
-      </label>
+    <div>
+      <span />
     </div>
-  );
-};
+
+    <label className="c-tag-attr" htmlFor={value}>
+      {label}
+    </label>
+  </div>
+);
 
 export default ({ defaultChecked, name, onSelect, options }: RadioProps) => (
   <div className="c-misc-radio">

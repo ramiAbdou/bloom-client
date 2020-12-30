@@ -16,8 +16,8 @@ const SelectRowCheckbox = ({ id }: IdProps) => {
 
   return (
     <Checkbox
+      checked={isSelected}
       className="c-table-select"
-      selected={isSelected}
       onClick={onClick}
     />
   );
