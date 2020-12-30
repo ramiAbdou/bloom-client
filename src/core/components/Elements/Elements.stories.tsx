@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Description, Stories, Title } from '@storybook/addon-docs/blocks';
 import Attr from '../Tags/Attribute';
 import NTag from '../Tags/NumberTag';
-import CBox from './Checkbox';
+import CBox from './Checkbox/Checkbox';
 import DDown from './Dropdown/Dropdown';
 import IPut from './Input';
 import QVal from './QuestionValue';

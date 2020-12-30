@@ -1,0 +1,72 @@
+$PREF: 'c-misc-checkbox';
+
+// CHECKBOX
+
+.#{$PREF}-ctr > .#{$PREF}-checkbox { margin-bottom: $xs; }
+
+.#{$PREF} {
+  @extend .flex-acc;
+  
+  background-color: inherit;
+  cursor: pointer;
+  position: relative;
+
+  @include HOVER { > span { border: 2px $primary solid; } }
+
+  &:not(&--label) { height: $sl; width: $sl; }
+
+  &--label {
+    height: fit-content;
+    padding-left: $sl + $xs;
+    width: fit-content;
+
+    &:not(:last-child) { margin-bottom: $xs; }
+  }
+
+  > input {
+    background-color: inherit;
+    border: 2px $gray-4 solid;
+    cursor: pointer;
+    height: $sm;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: $sm;
+  }
+
+  // > input { cursor: pointer; height: 0; opacity: 0; width: 0; }
+  > input:checked ~ svg { visibility: visible; }
+
+  > input:checked ~ span {
+    background-color: $primary;
+    border: 2px $primary solid;
+  }
+
+  &--label > span,
+  &--label > svg { margin-top: 2.5px; }
+
+  > span {
+    background-color: inherit;
+    border: 2px $gray-4 solid;
+    border-radius: $xxs;
+    height: $sm;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: $sm;
+    z-index: 2;
+  }
+
+  > svg {
+    height: $sl;
+    left: 0;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    width: $sl;
+    z-index: 2;
+  }
+
+  > svg > path { stroke-width: 48; }
+}

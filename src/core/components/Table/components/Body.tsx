@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 import React, { ReactNode } from 'react';
 
-import Checkbox from '@components/Elements/Checkbox';
+import Checkbox from '@components/Elements/Checkbox/Checkbox';
 import Attribute from '@components/Tags/Attribute';
 import { IdProps, QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
