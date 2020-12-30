@@ -1,9 +1,4 @@
-import React, {
-  ChangeEvent,
-  KeyboardEvent,
-  MutableRefObject,
-  useRef
-} from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ValueProps } from '@constants';
@@ -32,11 +27,11 @@ export default ({
   const ref: MutableRefObject<HTMLInputElement> = useRef(null);
   useOnClickOutside(ref, async () => onClickOutside && onClickOutside());
 
-  const modifiedOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const modifiedOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
 
-  const modifiedKeyDown = ({ key }: KeyboardEvent<HTMLInputElement>) => {
+  const modifiedKeyDown = ({ key }: React.KeyboardEvent<HTMLInputElement>) => {
     if (key !== 'Enter') return;
     ref.current.blur();
     if (onEnter) onEnter();
