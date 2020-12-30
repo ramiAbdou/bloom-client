@@ -1,13 +1,12 @@
-import { useMutation } from 'graphql-hooks';
-import Cookie from 'js-cookie';
 import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import Picker from '@components/Picker/Picker';
-import { PickerAction } from '@components/Picker/Picker.store';
-import PickerOption from '@components/Picker/PickerOption';
+import PickerOption from '@components/Panel/components/Option';
+import Picker from '@components/Panel/Panel';
+import { PanelAction } from '@components/Panel/Panel.types';
 import { PickerType } from '@constants';
+import useMutation from '@hooks/useMutation';
 import { LOGOUT } from '@scenes/Home/Home.gql';
 import { useStoreActions } from '@store/Store';
 
@@ -15,7 +14,7 @@ export default () => {
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
 
   const { push } = useHistory();
-  const [logout] = useMutation(LOGOUT);
+  const [logout] = useMutation<boolean>({ name: 'logout', query: LOGOUT });
 
   const onLogout = async () => {
     const { error } = await logout();
@@ -24,9 +23,6 @@ export default () => {
     // Clear the entities that we've fetched and reset the Bloom style guide
     // primary color.
     clearEntities();
-
-    Cookie.remove('communityId');
-    Cookie.remove('role');
 
     const { style } = document.documentElement;
     style.setProperty('--primary', '#f58023');
@@ -43,9 +39,9 @@ export default () => {
   };
 
   // Show a picker that either allows them to view their profile or log out.
-  const actions: PickerAction[] = [
-    { Icon: IoCard, onClick: () => {}, text: 'Manage Membership' },
-    { Icon: IoPerson, onClick: () => {}, text: 'Your Profile' },
+  const actions: PanelAction[] = [
+    { Icon: IoCard, onClick: () => null, text: 'Manage Membership' },
+    { Icon: IoPerson, onClick: () => null, text: 'Your Profile' },
     { Icon: IoExit, onClick: onLogout, separator: true, text: 'Log Out' }
   ];
 

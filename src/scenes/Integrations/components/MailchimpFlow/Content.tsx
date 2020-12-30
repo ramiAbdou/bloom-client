@@ -1,27 +1,19 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
-import Form from '@components/Form/Form.store';
-import FormContent from '@components/Form/FormContent';
-import { useStoreActions } from '@store/Store';
+import Button from '@components/Button/Button';
+import FormItem from '@components/Form/components/Item';
+import SubmitButton from '@components/Form/components/SubmitButton';
+import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
-import useMailchimpSubmit from './useMailchimpSubmit';
 
 export default () => {
+  const mailchimpLists = useStoreState(
+    ({ db }) => db.integrations.mailchimpLists,
+    deepequal
+  );
+
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const isCompleted = Form.useStoreState((store) => store.isCompleted);
-  const submitForm = Form.useStoreState((store) => store.submitForm);
-
-  const { error, loading } = useMailchimpSubmit();
-
-  if (error) {
-    showToast({
-      message: 'Failed to submit. Please try again soon.',
-      type: 'ERROR'
-    });
-  }
 
   return (
     <>
@@ -31,17 +23,26 @@ export default () => {
         src={mailchimp}
       />
 
-      <h1 style={{ marginBottom: -24 }}>Integrate with Mailchimp</h1>
-      <FormContent />
+      <h1 style={{ marginBottom: -24 }}>Finish Integrating Mailchimp</h1>
+
+      <FormItem
+        required
+        description="Choose the Mailchimp Audience/List that you would like
+          new members to automatically be added to upon joining your
+          community."
+        options={mailchimpLists.map(({ name }) => name)}
+        title="Select Audience/List ID"
+        type="MULTIPLE_CHOICE"
+      />
 
       <div className="s-integrations-action-ctr">
-        <PrimaryButton
-          disabled={!isCompleted}
-          loading={loading}
-          title="Finish"
-          onClick={submitForm}
-        />
-        <OutlineButton title="Cancel" onClick={closeModal} />
+        <SubmitButton fill={false} large={false} loadingText="Finishing...">
+          Finish
+        </SubmitButton>
+
+        <Button outline onClick={() => closeModal()}>
+          Cancel
+        </Button>
       </div>
     </>
   );

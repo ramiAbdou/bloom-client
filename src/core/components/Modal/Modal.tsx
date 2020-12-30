@@ -2,27 +2,11 @@ import { AnimatePresence } from 'framer-motion';
 import React, { useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
-import {
-  ChildrenProps,
-  ClassNameProps,
-  Function,
-  IdProps,
-  StyleProps
-} from '@constants';
 import { useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import ModalBackground from './ModalBackground';
-import ModalContainer from './ModalContainer';
-
-interface ModalProps
-  extends ChildrenProps,
-    ClassNameProps,
-    IdProps,
-    StyleProps {
-  confirmation?: boolean;
-  onClose?: Function;
-  width?: number;
-}
+import ModalBackground from './components/Background';
+import ModalContainer from './components/Container';
+import { ModalProps } from './Modal.types';
 
 export default ({
   confirmation,

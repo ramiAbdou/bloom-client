@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import HeaderTag from '@components/Element/HeaderTag';
-import SearchBar from '@components/Element/SearchBar';
+import SearchBar from '@components/Elements/SearchBar';
 import Spinner from '@components/Loader/Spinner';
+import NumberTag from '@components/Tags/NumberTag';
 import Directory from '../Directory.store';
 
 const SearchContainer = () => {
@@ -21,17 +21,11 @@ const SearchContainer = () => {
   // Only show if not loading.
   if (loading) return null;
 
-  const onChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
-    setValue(target.value);
-
-  const onClear = () => setValue('');
-
   return (
     <SearchBar
       placeholder="Search members..."
       value={value}
-      onChange={onChange}
-      onClear={onClear}
+      onChange={setValue}
     />
   );
 };
@@ -43,7 +37,7 @@ const HeaderText = () => {
   return (
     <div>
       <h1 className="s-home-header-title">Directory</h1>
-      {!loading && <HeaderTag value={`${numMembers} Members`} />}
+      {!loading && <NumberTag value={`${numMembers} Members`} />}
       {loading && <Spinner dark />}
     </div>
   );

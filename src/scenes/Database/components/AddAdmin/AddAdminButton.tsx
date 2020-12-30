@@ -1,11 +1,15 @@
 import React from 'react';
 
-import PrimaryButton from '@components/Button/PrimaryButton';
+import Button from '@components/Button/Button';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal(ModalType.ADD_ADMINS);
-  return <PrimaryButton title="Add Admin" onClick={onClick} />;
+  return (
+    <Button primary onClick={onClick}>
+      Add Admin
+    </Button>
+  );
 };

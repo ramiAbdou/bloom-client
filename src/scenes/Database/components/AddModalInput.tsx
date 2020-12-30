@@ -2,12 +2,12 @@ import React, { memo } from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
-import Checkbox from '@components/Element/Checkbox';
-import Input from '@components/Element/Input';
+import Checkbox from '@components/Elements/Checkbox/Checkbox';
+import Input from '@components/Elements/Input';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { Function, IdProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
-import { AddMemberData } from './AddMember/AddMember.store';
+import { AddMemberData } from '../../Actions/AddMember/AddMember.store';
 
 interface AddModalInputProps extends IdProps {
   isShowingErrors: boolean;
@@ -59,6 +59,8 @@ export default memo(
       emailError
     ]);
 
+    const onChange = () => toggleAdmin(id);
+
     return (
       <div className={css}>
         <div>
@@ -67,38 +69,33 @@ export default memo(
           </Button>
 
           <Input
-            dark
             error={isShowingErrors && !!firstNameError}
             placeholder="First Name"
             value={firstName}
-            onChange={({ target }) =>
-              updateMember({ field: 'FIRST_NAME', id, value: target.value })
+            onChange={(value) =>
+              updateMember({ field: 'FIRST_NAME', id, value })
             }
           />
 
           <Input
-            dark
             error={isShowingErrors && !!lastNameError}
             placeholder="Last Name"
             value={lastName}
-            onChange={({ target }) =>
-              updateMember({ field: 'LAST_NAME', id, value: target.value })
+            onChange={(value) =>
+              updateMember({ field: 'LAST_NAME', id, value })
             }
           />
 
           <Input
-            dark
             error={isShowingErrors && !!emailError}
             placeholder="Email"
             value={email}
-            onChange={({ target }) =>
-              updateMember({ field: 'EMAIL', id, value: target.value })
-            }
+            onChange={(value) => updateMember({ field: 'EMAIL', id, value })}
           />
 
           {showAdminCheckbox && (
             <div>
-              <Checkbox selected={admin} onClick={() => toggleAdmin(id)} />
+              <Checkbox checked={admin} onChange={onChange} />
               <p>Make Admin</p>
             </div>
           )}

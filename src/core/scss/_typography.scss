@@ -20,13 +20,34 @@ h2,
 h3,
 h4 { font-weight: 700; } // Bold text for headers.
 
+.display { font-size: 36px; }
 h1 { font-size: 24px; }
 h2 { font-size: 20px; }
 h3 { font-size: 18px; }
 h4 { font-size: 14px; text-transform: uppercase; }
-.body { font-size: 15px; font-weight: 400; }
-.meta { font-size: 13px; font-weight: 600; }
-.sb { font-weight: 600 !important; }
+
+.body {
+  font-size: 15px;
+  font-weight: 400;
+
+  &--bold { font-weight: 700; }
+  &--sm { font-size: 13px; }
+  &--lg { font-size: $sl; }
+}
+
+.meta {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+
+  &--lg {
+    @extend .meta;
+
+    color: $gray-3;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
 
 // For some reason, it's not letting me @extend the .body class, so we just
 // write the declarations again.
@@ -43,5 +64,5 @@ textarea { font-size: 15px; font-weight: 400; }
 
 input {
   &::placeholder { color: $gray-3; }
-  &::selection { background-color: $primary-hover; }
+  &::selection { background-color: $primary-bg; }
 } 

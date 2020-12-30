@@ -5,97 +5,77 @@ import {
   computed,
   createContextStore
 } from 'easy-peasy';
-import { UseClientRequestResult } from 'graphql-hooks';
 
 import { QuestionCategory } from '@constants';
-import { takeFirst } from '@util/util';
 import { FormItemData } from './Form.types';
 
 type GetItemArgs = { category?: QuestionCategory; title?: string };
 
 export type FormModel = {
+  errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
-  itemCSS: string; // Represents a class string.
+  isLoading: boolean;
+  isShowingErrors: boolean;
   items: FormItemData[];
-  setSubmitForm: Action<
-    FormModel,
-    (
-      ...args: any[]
-    ) => Promise<any> | Promise<UseClientRequestResult<any, object>>
-  >;
-  submitForm: (
-    ...args: any[]
-  ) => Promise<any> | Promise<UseClientRequestResult<any, object>>;
+  setErrorMessage: Action<FormModel, string>;
+  setItem: Action<FormModel, Partial<FormItemData>>;
+  setIsLoading: Action<FormModel, boolean>;
+  showErrors: Action<FormModel>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
 };
 
-/**
- * Formats the given questions into valid Form items by adding the additional
- * properties and initializing the values for each question.
- *
- * @param questions Questions to format into items.
- */
-export const formatQuestions = (questions: FormItemData[]) =>
-  questions?.map(
-    ({ options, type, value, ...question }: Partial<FormItemData>) => {
-      const emptyValue: string | string[] = takeFirst([
-        [type === 'MULTIPLE_SELECT', []],
-        [['SHORT_TEXT', 'LONG_TEXT'].includes(type), '']
-      ]);
-
-      return {
-        ...question,
-        options,
-        type,
-        value: value ?? emptyValue
-      };
-    }
-  ) ?? [];
-
-/**
- * All GraphQL requests with data should have the data be populated in an array,
- * even if the question is not MULTIPLE_SELECT. This helps with parsing
- * consistency.
- *
- * This function ensures that all values are returned as arrays.
- */
-export const parseValue = (value: any) => {
-  if (!value) return null;
-
-  const isArray = Array.isArray(value);
-  if (
-    isArray &&
-    value.length === 1 &&
-    ['None', 'None of the Above', 'N/A'].includes(value[0])
-  )
-    return [];
-
-  return isArray ? value : [value];
-};
-
 export const formModel: FormModel = {
-  getItem: computed(({ items }) => ({ category, title }: GetItemArgs) =>
-    items.find((item) => item.category === category || item.title === title)
-  ),
+  // Represents the error message for the entire Form, not any one element.
+  errorMessage: null,
 
-  isCompleted: computed(
-    ({ items }) =>
-      items &&
+  getItem: computed(({ items }) => ({ category, title }: GetItemArgs) => {
+    if (title) return items.find((item) => item.title === title);
+    return items.find((item) => item.category === category);
+  }),
+
+  isCompleted: computed(({ items }) => {
+    return (
+      items?.length &&
       items.every(
-        ({ completed, required, value, validate }: FormItemData) =>
-          (!required || !!value || !!completed) &&
-          (!validate || validate(value))
+        ({ required, value, validate }: FormItemData) =>
+          (!required || !!value) && (!validate || validate(value))
       )
-  ),
+    );
+  }),
 
-  itemCSS: null,
+  // Used to ensure that the submit button is disabled.
+  isLoading: false,
+
+  isShowingErrors: false,
 
   items: [],
 
-  setSubmitForm: action((state, submitForm) => ({ ...state, submitForm })),
+  setErrorMessage: action((state, errorMessage: string) => ({
+    ...state,
+    errorMessage
+  })),
 
-  submitForm: () => Promise.resolve(),
+  // Typically set when a form is submitting an async function.
+  setIsLoading: action((state, isLoading: boolean) => ({
+    ...state,
+    isLoading
+  })),
+
+  setItem: action((state, item: Partial<FormItemData>) => ({
+    ...state,
+    items: [...state.items, item]
+  })),
+
+  showErrors: action(({ items, ...state }) => {
+    return {
+      ...state,
+      isShowingErrors: true,
+      items: items.map(({ ...item }: FormItemData) => {
+        return { ...item };
+      })
+    };
+  }),
 
   updateItem: action((state, payload) => {
     const { items } = state;
@@ -107,6 +87,14 @@ export const formModel: FormModel = {
 };
 
 export default createContextStore<FormModel>(
-  (runtimeModel: FormModel) => runtimeModel,
+  (runtimeModel: FormModel) => ({
+    ...runtimeModel,
+
+    // If there isn't an ID supplied to an item, just make the ID the title.
+    items: runtimeModel.items.map((item: FormItemData) => ({
+      ...item,
+      id: item.id ?? item.title
+    }))
+  }),
   { disableImmer: true }
 );

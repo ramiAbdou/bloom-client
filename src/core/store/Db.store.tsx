@@ -4,7 +4,6 @@
  */
 
 import { Action, action, Computed, computed } from 'easy-peasy';
-import Cookie from 'js-cookie';
 import mergeWith from 'lodash.mergewith';
 import { normalize, Schema } from 'normalizr';
 
@@ -46,8 +45,15 @@ const parseEntities = (data: any, schema: Schema<any>, setActiveId?: boolean) =>
 
 type UpdateEntitiesArgs = {
   ids: string[];
-  entityName: 'communities' | 'members' | 'questions' | 'users';
-  updatedData?: Partial<ICommunity | IMember | IQuestion | IUser>;
+  entityName:
+    | 'communities'
+    | 'integrations'
+    | 'members'
+    | 'questions'
+    | 'users';
+  updatedData?: Partial<
+    ICommunity | IIntegrations | IMember | IQuestion | IUser
+  >;
 };
 
 type MergeEntitiesArgs = {
@@ -58,6 +64,7 @@ type MergeEntitiesArgs = {
 };
 
 export type DbModel = {
+  canCollectDues: Computed<DbModel, boolean>;
   clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
   entities: IEntities;
@@ -72,23 +79,27 @@ export type DbModel = {
 };
 
 export const dbModel: DbModel = {
+  canCollectDues: computed(({ community, entities }) => {
+    const { byId: byIntegrationsId } = entities.integrations;
+    const { byId: byTypeId } = entities.types;
+
+    const integrations: IIntegrations =
+      byIntegrationsId[community?.integrations];
+
+    return (
+      integrations?.stripeAccountId &&
+      community.types?.some((typeId: string) => !byTypeId[typeId]?.isFree)
+    );
+  }),
+
   clearEntities: action((state) => ({ ...state, entities: initialEntities })),
 
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
     const result: ICommunity = byId[activeId];
 
-    if (!result) return null;
-
-    // For every request, we should have a communityId set in the token so
-    // we could take advantage of the GQL context and reduce # of args.
-    if (Cookie.get('communityId') !== activeId) {
-      Cookie.set('communityId', activeId);
-    }
-
     // Updates the primary color (and gray's accordingly).
-    updateDocumentColors(result?.primaryColor ?? '#f58023');
-
+    if (result) updateDocumentColors(result.primaryColor ?? '#f58023');
     return result;
   }),
 
@@ -104,16 +115,7 @@ export const dbModel: DbModel = {
 
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
-    const result = byId[activeId];
-
-    if (result) {
-      // For every request, we should have a communityId set in the token so
-      // we could take advantage of the GQL context and reduce # of args.
-      const { role } = result;
-      if (Cookie.get('role') !== role) Cookie.set('role', role);
-    }
-
-    return result;
+    return byId[activeId];
   }),
 
   /**
@@ -132,27 +134,26 @@ export const dbModel: DbModel = {
       // update the EntityRecord's with the updated/parsed data, we should
       // also add the references of those data entity ID's to the active
       // community.
-      const updatedCommunities =
-        !communityReferenceColumn || !community[communityReferenceColumn]
-          ? {}
-          : {
-              communities: {
-                ...entities.communities,
-                byId: {
-                  ...byCommunityId,
-                  [community.id]: {
-                    ...community,
+      const updatedCommunities = !communityReferenceColumn
+        ? {}
+        : {
+            communities: {
+              ...entities.communities,
+              byId: {
+                ...byCommunityId,
+                [community.id]: {
+                  ...community,
 
-                    // References are only stored as ID's, so we just append
-                    // the new ID's to the existing reference ID's.
-                    [communityReferenceColumn]: [
-                      ...community[communityReferenceColumn],
-                      ...parsedEntities[communityReferenceColumn].allIds
-                    ]
-                  }
+                  // References are only stored as ID's, so we just append
+                  // the new ID's to the existing reference ID's.
+                  [communityReferenceColumn]: mergeWith(
+                    community[communityReferenceColumn] ?? [],
+                    parsedEntities[communityReferenceColumn].allIds
+                  )
                 }
-              } as EntityRecord<ICommunity>
-            };
+              }
+            } as EntityRecord<ICommunity>
+          };
 
       // When there is a conflict in data, we have to resolve it.
       // Specifically in the cases of objects and arrays.

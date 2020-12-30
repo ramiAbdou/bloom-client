@@ -33,7 +33,7 @@ $PREF: 's-analytics';
 
   margin-bottom: $xxs;
 
-  > h1 { font-size: 32px; margin-right: $xs; }
+  > p:first-child { @extend .display; margin-right: $xs; }
 }
 
 .#{$PREF}-simple-percentage {
@@ -51,10 +51,4 @@ $PREF: 's-analytics';
 }
 
 // Label of the simple card (etc: TOTAL MEMBERS).
-.#{$PREF}-simple > p {
-  @extend .meta;
-
-  color: $gray-2;
-  font-weight: 700;
-  text-transform: uppercase;
-}
+.#{$PREF}-simple > h4 { color: $gray-2; }

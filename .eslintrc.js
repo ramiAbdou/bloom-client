@@ -13,7 +13,7 @@ module.exports = {
   plugins: ['simple-import-sort', 'sort-keys-fix', 'react-hooks'],
   overrides: [
     {
-      files: ['*.config.ts'],
+      files: ['*.config.ts', '*.stories.tsx'],
       rules: { 'import/no-extraneous-dependencies': 0 }
     }
   ],

@@ -1,19 +1,14 @@
-import { ReactNode } from 'react';
+import { ActionCreator } from 'easy-peasy';
 
-import { QuestionCategory, QuestionType } from '@constants';
+import { ChildrenProps, QuestionCategory, QuestionType } from '@constants';
 
 export type FormQuestion = {
   category?: QuestionCategory;
-  completed?: boolean;
   description?: string;
 
   // Typically, this is only populated if we are fetching the form questions
   // from the backend, in which case the question has an entity ID.
   id?: string;
-
-  // The option to use a custom node instead of the typical Form components
-  // (ie: ShortText, LongText, etc).
-  node?: ReactNode;
 
   required?: boolean;
 
@@ -27,8 +22,33 @@ export type FormQuestion = {
 
 export interface FormItemData extends Partial<FormQuestion> {
   errorMessage?: string;
-  options?: string[];
   placeholder?: string;
   value?: any;
   validate?: (value: string) => any;
 }
+
+// FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,
+// the rest are either used for state or for something else in the store.
+
+export interface FormItemProps
+  extends ChildrenProps,
+    Pick<
+      FormItemData,
+      | 'category'
+      | 'description'
+      | 'options'
+      | 'placeholder'
+      | 'required'
+      | 'title'
+      | 'type'
+      | 'validate'
+      | 'value'
+    > {}
+
+export type OnFormSubmitArgs = {
+  items: FormItemData[];
+  setErrorMessage: ActionCreator<string>;
+  setIsLoading: ActionCreator<boolean>;
+};
+
+export type OnFormSubmit = (args: OnFormSubmitArgs) => Promise<void>;

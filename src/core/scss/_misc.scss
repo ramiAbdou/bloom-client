@@ -13,28 +13,24 @@
   width: 100vw;
 }
 
-// SHADOWS
+// SHADOWS - Has primary color hints within them.
 
-// Shadow that has the primary color hint in it.
-.shadow--1 { box-shadow: 0 0 4px 2px hsla($primary-hue, 99%, 17%, 0.1); }
+.shadow--1 { box-shadow: 0 0 2px 2px hsla($primary-hue, 99%, 17%, 0.1); }
 .shadow--2 { box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15); }
 
 // BACKGROUND COLOR
-.primary-bg { background-color: $primary-hover; }
 
-// Used globally for all react-icons.
+.primary-bg { background-color: $primary-bg; }
+
+// REACT ICONS - Mostly the Ionicons icons.
+
 .react-icon {
-  color: black;
+  color: $gray-1;
   height: $md;
   width: $md;
   
   &--lg { height: 32px; width: 32px; }
 }
-
-// Disables scrollbar display for all elements. Not much scrolling needed
-// other than the div.
-body::-webkit-scrollbar,
-div::-webkit-scrollbar { display: none; }
 
 // ## TOOLTIP - All tooltips show up below
 
@@ -77,7 +73,7 @@ div::-webkit-scrollbar { display: none; }
 // ## HOVER STATE (DILUTED PRIMARY COLOR)
 
 @mixin PRIMARY_HOVER {
-  @media (hover: hover) { &:hover { background-color: $primary-hover; } }
+  @media (hover: hover) { &:hover { background-color: $primary-bg; } }
 }
 
 // This back arrow if most often used in a Flow component.
@@ -99,10 +95,11 @@ div::-webkit-scrollbar { display: none; }
 
   background-color: white;
   border-radius: $sm;
-  padding: 12px 12px $md $sm;
+  padding: $sm $sm $md $sm;
 }
 
-// ## TEXT OVERFLOW
+// ## TEXT OVERFLOW - Can specify how many lines we can allow the text to
+// overflow into.
 
 @mixin OVERFLOW_ELLIPSES($lines: 1) {
   -webkit-box-orient: vertical;
@@ -112,3 +109,16 @@ div::-webkit-scrollbar { display: none; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+// Storybook override for content.
+.sb-show-main.sb-main-padded {
+  box-sizing: border-box;
+  padding: $sm;
+
+  > #root { width: 100%; }
+}
+
+// Disables scrollbar display for body and div elements. Not much scrolling
+// needed other than the div.
+body::-webkit-scrollbar,
+div::-webkit-scrollbar { display: none; }

@@ -1,10 +1,11 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
-import Checkbox from '@components/Element/Checkbox';
+import Checkbox from '@components/Elements/Checkbox/Checkbox';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Table, { Column } from '../Table.store';
+import Table from '../Table.store';
+import { Column } from '../Table.types';
 
 const SelectAllCheckbox = () => {
   const isAllPageSelected = Table.useStoreState(
@@ -15,13 +16,13 @@ const SelectAllCheckbox = () => {
     (store) => store.toggleAllPageRows
   );
 
-  const onClick = () => toggleAllPageRows();
+  const onChange = () => toggleAllPageRows();
 
   return (
     <Checkbox
+      checked={isAllPageSelected}
       className="c-table-select"
-      selected={isAllPageSelected}
-      onClick={onClick}
+      onChange={onChange}
     />
   );
 };
@@ -34,8 +35,8 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const select = Table.useStoreState((store) => store.select);
-  const isPickerShowing = useStoreState(({ picker }) => picker.isIdShowing(id));
-  const showPicker = useStoreActions(({ picker }) => picker.showPicker);
+  const isPickerShowing = useStoreState(({ panel }) => panel.isIdShowing(id));
+  const showPicker = useStoreActions(({ panel }) => panel.showPicker);
 
   const onClick = () => showPicker(id);
 
@@ -56,7 +57,7 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
     <th className={css} id={id} onClick={onClick}>
       <div>
         {!i && select && <SelectAllCheckbox />}
-        <p>{title}</p>
+        <h4>{title}</h4>
         {showCaretUp && <IoCaretUp />}
         {showCaretDown && <IoCaretDown />}
       </div>

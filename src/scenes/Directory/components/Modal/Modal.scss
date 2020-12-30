@@ -1,8 +1,5 @@
 $PREF: 's-directory-modal';
 
-// box-sizing: border-box;
-//   height: fit-content;
-
 // ## PROFILE PICTURE - 
 
 .#{$PREF}-pic { margin-bottom: $xs; }
@@ -21,19 +18,29 @@ $PREF: 's-directory-modal';
 
 // ### PERSONAL INFORMATION CONTAINER
 
-.#{$PREF}-personal-ctr > h1 { color: black; margin-bottom: $xxs; }
+.#{$PREF}-personal-ctr > h1 { color: $gray-1; margin-bottom: $xxs; }
 
 .#{$PREF}-location {
   @extend .meta;
 
   color: $gray-2;
-  margin-bottom: $xs;
+  margin-bottom: $xxs;
   width: fit-content;
 }
 
-a.#{$PREF}-email { color: $primary; margin-bottom: $sm; width: fit-content; }
-a.#{$PREF}-email > svg { color: inherit; height: $sm; width: $sm; }
-a.#{$PREF}-email > p { @extend .meta; color: inherit; margin-left: $xxs; }
+// ## EMAIL (MAILTO)
+
+a.#{$PREF}-email {
+  @extend .flex-ac;
+
+  color: $primary;
+  margin-bottom: $sm;
+  width: fit-content;
+  &:active { transform: scale(0.9); transition: transform 0.2s ease-out; }
+
+  > svg { color: inherit; height: $sm; margin-right: $xxs; width: $sm; }
+  > p { @extend .meta; color: inherit; }
+}
 
 // ### SOCIAL MEDIA CONTAINER
 
@@ -42,6 +49,7 @@ a.#{$PREF}-email > p { @extend .meta; color: inherit; margin-left: $xxs; }
   margin-top: $sm;
 
   @include HOVER { transform: scale(1.1); }
+  &:active { transform: scale(0.9); }
 
   &:not(:last-child) { margin-right: $sm; }
   &--facebook > svg { color: #1877f2; }
@@ -53,6 +61,10 @@ a.#{$PREF}-email > p { @extend .meta; color: inherit; margin-left: $xxs; }
 // ## QUESTIONS
 
 .#{$PREF}-question:not(:last-child) { margin-bottom: $sm; }
-.#{$PREF}-question > p:first-of-type { @extend .sb; margin-bottom: $xxs; }
+.#{$PREF}-question > p:first-of-type {
+  @extend .body--bold;
+
+  margin-bottom: $xxs;
+}
 .#{$PREF}-question > p:last-of-type { color: $primary; }
-.#{$PREF}-question--choice > p:last-child { @extend .c-misc-tag; }
+.#{$PREF}-question--choice > p:last-child { @extend .c-tag-attr; }

@@ -1,0 +1,4 @@
+$PREF: 's-analytics-dues';
+
+.#{$PREF} > div { margin-bottom: $md; }
+.#{$PREF} > div:first-child { @extend .flex-ac; }

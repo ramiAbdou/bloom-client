@@ -1,8 +1,8 @@
 import deepequal from 'fast-deep-equal';
 import React, { memo } from 'react';
 
-import UnderlineButton from '@components/Button/UnderlineButton';
-import QuestionValue from '@components/Element/QuestionValue';
+import Button from '@components/Button/Button';
+import QuestionValue from '@components/Elements/QuestionValue';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import { AcceptButton, IgnoreButton } from './ActionButton';
@@ -40,7 +40,9 @@ const ExpandButton = memo(() => {
         <ExpandedCard />
       </Modal>
 
-      <UnderlineButton title="See Full Application" onClick={onClick} />
+      <Button underline onClick={onClick}>
+        See Full Application
+      </Button>
     </>
   );
 });

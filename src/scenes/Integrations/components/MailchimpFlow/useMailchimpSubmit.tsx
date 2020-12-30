@@ -1,56 +1,45 @@
-import { UseClientRequestResult, useMutation } from 'graphql-hooks';
-import { useEffect } from 'react';
-
-import Form from '@components/Form/Form.store';
+import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
+import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { UPDATE_MAILCHIMP_LIST_ID } from '../../Integrations.gql';
+import {
+  UPDATE_MAILCHIMP_LIST_ID,
+  UpdateMailchimpListIdArgs
+} from '../../Integrations.gql';
 
-export default (): UseClientRequestResult<any, object> => {
-  const items = Form.useStoreState((store) => store.items);
-  const setSubmitForm = Form.useStoreActions((store) => store.setSubmitForm);
-
-  const options = useStoreState(
-    ({ db }) => db.integrations?.mailchimpLists ?? []
-  );
-
+export default (): OnFormSubmit => {
+  const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
-  const mailchimpListName = items.find(
-    (item) => item.title === 'Step 2: Select Audience/List ID'
-  )?.value;
+  const [updateMailchimpListId] = useMutation<any, UpdateMailchimpListIdArgs>({
+    name: 'updateMailchimpListId',
+    query: UPDATE_MAILCHIMP_LIST_ID
+  });
 
-  const [updateMailchimpListId, result] = useMutation(UPDATE_MAILCHIMP_LIST_ID);
+  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+    const selectedMailchimpList = items[items?.length - 1]?.value;
 
-  // When the Mailchimp list name changes (meaning the user selected a list),
-  // we need to update the submitForm function to contain that updated list
-  // name value.
-  useEffect(() => {
-    const { id: mailchimpListId } =
-      options.find(({ name }) => name === mailchimpListName) || {};
+    const { id: mailchimpListId } = options.find(
+      ({ name }) => name === selectedMailchimpList
+    );
 
-    if (!mailchimpListId) return;
+    setIsLoading(true);
 
-    const onSubmit = async () => {
-      const { data, error: runtimeError } = await updateMailchimpListId({
-        variables: { mailchimpListId }
-      });
+    const { data: integrations, error } = await updateMailchimpListId({
+      mailchimpListId
+    });
 
-      if (runtimeError) return;
+    setIsLoading(false);
 
-      // If the function is successful, update the entities with the new
-      // Mailchimp information and close the modal.
-      mergeEntities({
-        data: { ...data.updateMailchimpListId },
-        schema: Schema.INTEGRATIONS
-      });
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
 
-      closeModal();
-    };
-
-    setSubmitForm(onSubmit);
-  }, [mailchimpListName]);
-
-  return result;
+    // If the function is successful, update the entities with the new
+    // Mailchimp information and close the modal.
+    mergeEntities({ data: integrations, schema: Schema.INTEGRATIONS });
+    closeModal();
+  };
 };

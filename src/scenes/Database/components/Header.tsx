@@ -1,12 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import MultiButton from '@components/Button/MultiButton';
+import MultiButton from '@components/Button/Multi';
 import Spinner from '@components/Loader/Spinner';
+import AddMemberButton from '@scenes/Actions/AddMember/AddMemberButton';
+import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
-import Database from '../Database.store';
 import AddAdminButton from './AddAdmin/AddAdminButton';
-import AddMemberButton from './AddMember/AddMemberButton';
 
 const MemberAdminButton = () => {
   const { location, push } = useHistory();
@@ -43,7 +43,7 @@ const AddButton = () => {
 };
 
 export default () => {
-  const loading = Database.useStoreState((store) => store.loading);
+  const loading = Loading.useStoreState((store) => store.loading);
 
   return (
     <div className="s-home-header s-database-header">

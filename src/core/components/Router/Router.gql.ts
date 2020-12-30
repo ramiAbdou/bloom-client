@@ -9,6 +9,10 @@ export const GET_USER = query({
     'pictureUrl',
     {
       members: [
+        'duesStatus',
+        'id',
+        'role',
+        'status',
         {
           community: [
             'id',
@@ -16,13 +20,11 @@ export const GET_USER = query({
             'name',
             'logoUrl',
             'primaryColor',
-            { integrations: ['mailchimpListId'] }
+            { integrations: ['mailchimpListId', 'stripeAccountId'] },
+            { types: ['id', 'name', 'isFree'] }
           ]
         },
-        'id',
-        'role',
-        'status',
-        { type: ['name'] }
+        { type: ['id', 'name'] }
       ]
     }
   ],

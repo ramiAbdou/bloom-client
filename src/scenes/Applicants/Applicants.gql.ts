@@ -1,5 +1,11 @@
 import { mutation, query } from 'gql-query-builder';
 
+import { ICommunity } from '@store/entities';
+
+export interface GetPendingApplicantsResult extends ICommunity {
+  application: any;
+}
+
 export const GET_PENDING_APPLICATIONS = query({
   fields: [
     'id',
@@ -29,6 +35,11 @@ export const GET_PENDING_APPLICATIONS = query({
   ],
   operation: 'getApplicants'
 }).query;
+
+export interface RespondToMembersArgs {
+  memberIds: string[];
+  response: string;
+}
 
 export const RESPOND_TO_MEMBERS = mutation({
   operation: 'respondToMembers',

@@ -1,23 +1,24 @@
 import moment from 'moment-timezone';
 import React, { ReactNode } from 'react';
 
-import Checkbox from '@components/Element/Checkbox';
-import Tag from '@components/Element/Tag';
+import Checkbox from '@components/Elements/Checkbox/Checkbox';
+import Attribute from '@components/Tags/Attribute';
 import { IdProps, QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
-import Table, { Row } from '../Table.store';
+import Table from '../Table.store';
+import { Row } from '../Table.types';
 
 const SelectRowCheckbox = ({ id }: IdProps) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(id));
   const toggleRow = Table.useStoreActions((store) => store.toggleRow);
 
-  const onClick = () => toggleRow(id);
+  const onChange = () => toggleRow(id);
 
   return (
     <Checkbox
+      checked={isSelected}
       className="c-table-select"
-      selected={isSelected}
-      onClick={onClick}
+      onChange={onChange}
     />
   );
 };
@@ -38,12 +39,12 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
   ]);
 
   const content: ReactNode = takeFirst([
-    [type === 'MULTIPLE_CHOICE' && value, <Tag value={value} />],
+    [type === 'MULTIPLE_CHOICE' && value, <Attribute value={value} />],
     [
       type === 'MULTIPLE_SELECT',
       <>
         {value?.split(',').map((val: string) => (
-          <Tag key={val} value={val} />
+          <Attribute key={val} value={val} />
         ))}
       </>
     ],

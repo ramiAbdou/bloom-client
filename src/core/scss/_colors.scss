@@ -17,7 +17,8 @@
 $primary: var(--primary);
 $primary-hex: var(--primary-hex);
 $primary-hue: var(--primary-hue);
-$primary-hover: hsl($primary-hue, 35%, 93%);
+$primary-bg: hsl($primary-hue, 35%, 93%);
+$primary-light: rgba($color: $primary-hex, $alpha: 0.15);
 $gray-1: var(--gray-1);
 $gray-2: var(--gray-2);
 $gray-3: var(--gray-3);

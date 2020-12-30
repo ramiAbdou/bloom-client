@@ -3,109 +3,19 @@ $PREF: 'c-form';
 // ## GENERAL
 
 .#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
-.#{$PREF}-desc { margin-bottom: 12px; }
+.#{$PREF}-desc { color: $gray-2; margin-bottom: $sm; }
 .#{$PREF}-error { color: $red; margin-top: $xxs; }
 
 // ## LABEL
 
-.#{$PREF}-label { @extend .flex-ac; margin-bottom: $xs; width: 100%; }
-.#{$PREF}-label > svg { color: $green; margin-right: $xs; }
-.#{$PREF}-label > p { @extend .sb; }
-.#{$PREF}-label--required > p::after {
-  color: $red;
-  content: '*';
-  margin-left: $xxs;
-}
-
-// ## MULTIPLE CHOICE
-
-.#{$PREF}-mc-choice { @extend .flex-ac; margin-bottom: 12px; }
-.#{$PREF}-mc-choice:first-of-type { margin-top: $xs; }
-
-// ## MULTIPLE CHOICE CHECKBOX
-
-.#{$PREF}-mc-choice > div {
-  @extend .flex-acc;
-
-  background-color: white;
-  border: 2px solid $gray-4;
-  border-radius: 50%;
-  height: $sm;
-  width: $sm;
-}
-
-.#{$PREF}-mc-choice > p.c-misc-tag { margin-left: $xs; }
-
-.#{$PREF}-mc-choice--active > div { border: 2px $primary solid; }
-.#{$PREF}-mc-choice--active > div > div {
-  background-color: $primary;
-  border-radius: 50%;
-  height: 10px;
-  width: 10px;
-}
-
-// ## DROPDOWN BAR CONTAINER
-
-// Dropdown bar that user clickes on to open the option container.
-div.#{$PREF}-dd-bar { @extend .flex-acsb; cursor: pointer; }
-
-// If the container becomes full, still shows arrow at regular size.
-.#{$PREF}-dd-bar > svg {
-  color: $gray-4;
-  height: $sm;
-  overflow: visible;
-  width: $sm;
-}
-
-.#{$PREF}-dd-bar > div { max-width: 100%; overflow: scroll; }
-
-// When a user selects an option, it displays in this container.
-.#{$PREF}-dd-value-ctr { @extend .flex-ac; }
-.#{$PREF}-dd-value-ctr > button.c-misc-tag { overflow: visible; }
-
-// The value that displays is just a tag except with no margin-left and that
-// has an option to delete, shown by the 'x' in the ::after rule.
-button.#{$PREF}-dd-value {
-  margin-left: 0;
-
-  &::after { content: 'x'; margin-left: $xs; }
-}
-
-// ## DROPDOWN OPTION CONTAINER
-
-.#{$PREF}-dd-search { box-sizing: border-box; padding: 8px; width: 100%; }
-
-.#{$PREF}-dd-opt-ctr {
-  @extend .shadow--1;
-
-  background-color: white;
-  border-radius: $xxs;
-  margin-bottom: $xl; // For when the dropdown is at the bottom of the page.
-  padding-bottom: $xs;
-  padding-top: $xs;
-  position: absolute; // So that the container doesn't change document flow.
-}
-
-// No results message.
-.#{$PREF}-dd-opt-ctr > p {
+.#{$PREF}-label {
   @extend .flex-ac;
 
-  color: $gray-3;
-  height: $lg;
-  margin-left: $xs;
-  width: 100%;
-}
-
-// ## DROPDOWN OPTION
-
-.#{$PREF}-dd-opt {
-  @extend .flex-ac;
-  
-  height: $lg;
-  overflow: hidden;
+  color: $gray-1;
+  margin-bottom: $xs;
   width: 100%;
 
-  @include HOVER { background-color: $gray-6; }
-}
+  > svg { color: $green; margin-right: $xs; }
 
-.#{$PREF}-dd-opt > p { @extend .c-misc-tag; margin-left: $xs; }
+  &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
+}

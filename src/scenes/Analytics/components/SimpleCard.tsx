@@ -25,7 +25,7 @@ const NumberContainer = ({
 
   return (
     <div>
-      <h1>{value}</h1>
+      <p>{value}</p>
       <p className={percentageCss}>{percentageString}</p>
     </div>
   );
@@ -38,6 +38,6 @@ const NumberContainer = ({
 export default ({ label, ...props }: AnalyticsSimpleProps) => (
   <div className="s-analytics-simple">
     <NumberContainer {...props} />
-    <p>{label}</p>
+    <h4>{label}</h4>
   </div>
 );

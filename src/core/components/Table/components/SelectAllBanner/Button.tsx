@@ -1,6 +1,6 @@
 import React from 'react';
 
-import UnderlineButton from '@components/Button/UnderlineButton';
+import Button from '@components/Button/Button';
 import { takeFirst } from '@util/util';
 import Table from '../../Table.store';
 
@@ -23,5 +23,9 @@ export default () => {
     `Select All ${numFilteredMembers} Filtered Rows`
   ]);
 
-  return <UnderlineButton title={title} onClick={toggleAllRows} />;
+  return (
+    <Button underline onClick={() => toggleAllRows()}>
+      {title}
+    </Button>
+  );
 };

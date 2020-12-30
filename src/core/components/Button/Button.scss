@@ -2,84 +2,74 @@ $PREF: 'c-btn';
 
 // ## BASIC BUTTON
 
-.btn-txt {
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 16px;
-  text-transform: uppercase;
-}
-
 .#{$PREF} {
   @extend .flex-acc;
   
   border-radius: $xxs;
 
-  @include HOVER { opacity: 0.8; }
-
-  &:active { transform: scale(0.95); transition: all 0.05s ease-in-out; }
-
-  &:disabled {
-    color: $gray-3;
-    cursor: not-allowed;
-  
-    @include HOVER { opacity: 1; }
-    
-    &:active { transform: none; transition: none; }
+  &:not(:disabled) {
+    @include HOVER { opacity: 0.8; }
+    &:active { transform: scale(0.95); transition: transform 0.1s ease-out; }
   }
 
+  &:disabled { color: white; cursor: not-allowed; }
+
+  // Maps to the "fill" prop passed into the Button component.
   &--fill { width: 100%; }
+
+  // Maps to the "large" prop passed into the Button component.
   &--lg { height: $xl; }
 }
 
-// ## LOADING STATE
+// ## LOADING STATE - Includes the loading text as well as the Spinner.
 
-.#{$PREF}-loading { @extend .flex-acc; }
-.#{$PREF}-loading > p { @extend .btn-txt; color: $gray-3; margin-right: $sm; }
+.#{$PREF}-loading-ctr { @extend .flex-acc; }
+.#{$PREF}-loading-ctr > p {
+  @extend .meta--lg;
+
+  color: white;
+  margin-right: $sm;
+}
 
 // ## PRIMARY BUTTON
 
 .#{$PREF}-primary {
-  @extend .btn-txt;
+  @extend .meta--lg;
 
   background-color: $primary;
   border: 1px $primary solid;
-  color: $gray-6;
+  color: white;
   padding: $xs $sm;
 
-  &:disabled { background-color: $gray-5; border: 1px $gray-5 solid; }
-
-  &--green {
-    background-clip: padding-box;
-    background-color: rgba($color: $green, $alpha: 0.1);
-    border: 1px rgba($color: $green, $alpha: 0.1) solid;
-    color: $green;
+  &:disabled {
+    background-color: $gray-5;
+    border: 1px $gray-5 solid;
+    color: $gray-3;
   }
 }
 
 // ## OUTLINE BUTTON
 
 .#{$PREF}-outline {
-  @extend .btn-txt;
+  @extend .meta--lg;
 
   background-color: inherit;
   border: 1px $primary solid;
   color: $primary;
   padding: $xs $sm;
-
-  &:disabled { border: none; }
 }
 
 // ## UNDERLINE BUTTON
 
 .#{$PREF}-underline {
-  @extend .btn-txt;
+  @extend .meta--lg;
 
   color: $primary;
   padding: $xs $sm;
   text-decoration: underline;
   
   @include PRIMARY_HOVER;
-  @include HOVER { border-radius: $xs; }
+  @include HOVER { border-radius: $xxs; }
 }
 
 // ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but
@@ -89,7 +79,7 @@ $PREF: 'c-btn';
 .#{$PREF}-multi-ctr { @extend .flex-ac; }
 
 .#{$PREF}-multi {
-  @extend .btn-txt;
+  @extend .meta--lg;
   
   background-color: inherit;
   border: 1px $primary solid;
@@ -98,7 +88,7 @@ $PREF: 'c-btn';
   color: $primary;
   padding: $xs $sm;
   
-  &--active { background-color: $primary; color: $gray-6; }
+  &--active { background-color: $primary; color: white; }
 
   &:first-child {
     border-left: 1px $primary solid;

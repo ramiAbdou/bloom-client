@@ -38,14 +38,8 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-section-ctr { height: 100%; }
 .#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
 
-.#{$PREF}-section > p {
-  @extend .sb;
-
-  color: $gray-3;
-  font-size: 12px;
-  margin-left: $sm;
-  text-transform: uppercase;
-}
+// Section heading (ie: MAIN, ADMIN, QUICK ACTIONS).
+.#{$PREF}-section > h4 { color: $gray-3; margin-left: $sm; }
 
 .#{$PREF}-link {
   @extend .flex-ac;
@@ -53,7 +47,7 @@ $PREF: 's-home-sidebar';
   border-left: 3px white solid;
   border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
-  color: black;
+  color: $gray-1;
   justify-content: left;
   margin: $xs 0;
   padding: $xs $xxs $xs $sm;
@@ -67,23 +61,19 @@ $PREF: 's-home-sidebar';
 
   @include HOVER {
     background-clip: padding-box; // Needed to set the border-left color.
-    border-left: 3px $primary-hover solid;
+    border-left: 3px $primary-bg solid;
   }
-
-  &:last-of-type { margin-bottom: 12px; }
 }
 
-.#{$PREF}-link > svg {
-  color: black;
-  height: 20px;
-  margin-right: $xs;
-  width: 20px;
-}
+// Disables the scaling transition that typically happens for custom buttons.
+button.#{$PREF}-link { &:active { transform: none; } }
+
+.#{$PREF}-link > svg { color: $gray-1; margin-right: $xs; }
 
 .#{$PREF}-link--active {
-  @extend .sb; 
+  @extend .body--bold; 
 
-  background-color: $primary-hover;
+  background-color: $primary-bg;
   border-left: 3px $primary solid;
   color: $primary;
 
@@ -103,6 +93,26 @@ $PREF: 's-home-sidebar';
 }
 
 .#{$PREF}-action > svg { height: $md; margin-right: $xs; width: $md; }
+
+// ## DUES CONTAINER - Only shows if the user hasn't paid their dues yet.
+
+.#{$PREF}-dues-ctr {
+  box-sizing: border-box;
+  margin-bottom: $sm;
+  padding: 0 $sm;
+  width: 100%;
+}
+
+.#{$PREF}-dues-ctr > div {
+  @extend .flex-ac;
+
+  margin-bottom: $xs;
+
+  > svg { color: $red; margin-right: $xxs; }
+  > h4 { color: $red; text-align: center; }
+}
+
+.#{$PREF}-dues-ctr > button { width: 100%; }
 
 // ## COMMUNITY CONTAINER
 
@@ -135,7 +145,7 @@ $PREF: 's-home-sidebar';
 
   box-sizing: border-box;
   margin: $xs 0;
-  padding: 12px 20px 12px $sm;
+  padding: $ss $sl $ss $sm;
   width: 95%;
 }
 
@@ -148,11 +158,17 @@ $PREF: 's-home-sidebar';
 
   align-items: flex-start;
   margin-left: $sm;
-}
 
-.#{$PREF}-profile > div > div:last-child > p:last-of-type {
-  @extend .meta;
+  > p {
+    text-align: left;
 
-  color: $gray-3;
-  text-transform: capitalize;
+    @include OVERFLOW_ELLIPSES;
+  }
+
+  > p:last-child {
+    @extend .meta;
+
+    color: $gray-3;
+    text-transform: capitalize;
+  }
 }

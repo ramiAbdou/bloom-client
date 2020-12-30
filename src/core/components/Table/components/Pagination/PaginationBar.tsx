@@ -28,14 +28,15 @@ const getPaginationValues = (
   let middleChunk = [];
 
   if ([0, 1, 2].includes(currIndex)) middleChunk = arr.slice(1, 6);
-  else if (currIndex < initialLength - 3)
+  else if (currIndex < initialLength - 3) {
     middleChunk = arr.slice(currIndex - 2, currIndex + 3);
-  else if (
+  } else if (
     [initialLength - 1, initialLength - 2, initialLength - 3].includes(
       currIndex
     )
-  )
+  ) {
     middleChunk = arr.slice(initialLength - 6, initialLength - 1);
+  }
 
   // The first and last number are always displaying, we just need to find
   // what the middle numbers are.
@@ -48,8 +49,9 @@ const getPaginationValues = (
 
   // If there is a difference greater than 1 between the last and second to
   // last element, insert an ellipses before the last element..
-  if (result[length - 1] - result[length - 2] > 1)
+  if (result[length - 1] - result[length - 2] > 1) {
     result.splice(length - 1, 0, '...');
+  }
 
   return result;
 };

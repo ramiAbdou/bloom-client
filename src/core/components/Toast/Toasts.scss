@@ -22,7 +22,7 @@ $PREF: 'c-toast';
   margin-bottom: $sm;
   margin-left: auto;
   margin-right: $sm;
-  padding: 12px $sm;
+  padding: $xs $sm;
 
   > p { @extend .body; color: white; }
 

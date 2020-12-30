@@ -1,10 +1,10 @@
 import deepequal from 'fast-deep-equal';
-import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 import URLBuilder from 'util/URLBuilder';
 
 import { APP, isProduction } from '@constants';
-import { IIntegrations } from '@store/entities';
+import useQuery from '@hooks/useQuery';
+import { ICommunity, IIntegrations } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
@@ -90,7 +90,7 @@ const Cards = () => {
           'redirect_uri',
           isProduction
             ? `${APP.SERVER_URL}/stripe/auth`
-            : 'https://d00220485baf.ngrok.io/stripe/auth'
+            : `${APP.NGROK_SERVER_URL}/stripe/auth`
         )
         .addParam('state', encodedUrlName).url,
       logo: stripe,
@@ -117,16 +117,17 @@ const Cards = () => {
 
 export default () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const { data, loading } = useQuery(GET_INTEGRATIONS);
+
+  const { data: community, loading } = useQuery<ICommunity>({
+    name: 'getIntegrations',
+    query: GET_INTEGRATIONS
+  });
 
   useEffect(() => {
-    if (data?.getIntegrations) {
-      mergeEntities({
-        data: { ...data.getIntegrations },
-        schema: Schema.COMMUNITY
-      });
+    if (community) {
+      mergeEntities({ data: community, schema: Schema.COMMUNITY });
     }
-  }, [data]);
+  }, [community]);
 
   return (
     <Integrations.Provider>

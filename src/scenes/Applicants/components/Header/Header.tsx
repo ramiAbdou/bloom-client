@@ -1,7 +1,7 @@
 import React from 'react';
 
-import HeaderTag from '@components/Element/HeaderTag';
 import Spinner from '@components/Loader/Spinner';
+import NumberTag from '@components/Tags/NumberTag';
 import { useStoreState } from '@store/Store';
 import Applicants from '../../Applicants.store';
 import { AcceptAllButton, IgnoreAllButton } from './Button';
@@ -22,15 +22,17 @@ export default () => {
       <div>
         <h1 className="s-home-header-title">Pending Applicants</h1>
         {!loading && !!numApplicants && (
-          <HeaderTag value={`${numApplicants} Total`} />
+          <NumberTag value={`${numApplicants} Total`} />
         )}
         {loading && <Spinner dark />}
       </div>
 
-      <div>
-        <AcceptAllButton />
-        <IgnoreAllButton />
-      </div>
+      {!!numApplicants && (
+        <div>
+          <AcceptAllButton />
+          <IgnoreAllButton />
+        </div>
+      )}
     </div>
   );
 };

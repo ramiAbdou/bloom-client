@@ -27,6 +27,8 @@ tbody > tr {
   cursor: pointer;
 
   @include HOVER {
+    // Can't extend within an include, so manually write the shadow-2 function.
+
     box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
     position: relative;
     transform: scale(1); // Required to push to higher stacking context.
@@ -37,7 +39,7 @@ tbody > tr {
 }
 
 // Applied if the table row is selected.
-tr.#{$PREF}-tr--active { > td { background-color: $primary-hover; } }
+tr.#{$PREF}-tr--active { > td { background-color: $primary-bg; } }
 
 // ## TABLE CELL (BOTH TH AND TD)
 
@@ -67,7 +69,7 @@ td {
 
   > div > .c-misc-checkbox { z-index: 10; }
   > div > p { @include OVERFLOW_ELLIPSES(3); }
-  > div > .c-misc-tag { margin: 0 $xxs $xxs 0; }
+  > div > .c-tag-attr { margin: 0 $xxs $xxs 0; }
 
   // The first data cell has higher z-index than rest of td cells to have
   // horizontal scrolling hide the other cells under this first one.
@@ -90,11 +92,10 @@ td.#{$PREF}-td--multiple-select > div { @extend .flex-w; }
 
 th {
   @extend .#{$PREF}-cell;
+  @extend .meta--lg;
 
   background-color: $gray-6;
-  color: $gray-3;
   cursor: pointer;
-  text-transform: uppercase;
   top: 0;
   vertical-align: middle;
   z-index: 11;
@@ -102,12 +103,11 @@ th {
   @include HOVER { background-color: $gray-5; cursor: pointer; }
 
   // Header select option should have a darker border and higher z-index.
-  > div > .c-misc-checkbox { border: 1px $gray-3 solid; z-index: 12; }
+  > div > .c-misc-checkbox { z-index: 12; }
+  > div > .c-misc-checkbox > span { border: 2px $gray-3 solid; }
 
   // The header title content.
-  > div > p {
-    @extend .meta;
-
+  > div > h4 {
     color: $gray-3;
 
     @include OVERFLOW_ELLIPSES;
@@ -134,9 +134,9 @@ th {
 
 th.#{$PREF}-th--sorted {
   > div { @extend .flex-ac; }
-  > div > p { color: $primary; max-width: 85%; }
+  > div > h4 { color: $primary; max-width: 85%; }
   // Caret up or caret down SVG, React controls the displaying of this element.
-  > div > svg { color: $primary; height: 12px; margin-left: $xs; width: 12px; }
+  > div > svg { color: $primary; height: $ss; margin-left: $xs; width: $ss; }
 }
 
 // When the picker is showing, we keep the background-color dark.
@@ -145,7 +145,7 @@ th.#{$PREF}-th--picker { background-color: $gray-5; }
 // ## SELECT CHECKBOX - The HTML applied the .c-misc-checkbox class, we don't
 // extend it in here for overriding purposes of the margin and background-color.
 
-.#{$PREF}-select { background-color: white; margin: 0 $lg 0 0; }
+.#{$PREF}-select { background-color: inherit; margin: 0 $lg 0 0; }
 
 // ## PAGINATION - Controls all of the table pagination by selecting different
 // pages. Also controls the displaying text of which rows are being shown.
@@ -154,9 +154,10 @@ th.#{$PREF}-th--picker { background-color: $gray-5; }
 .#{$PREF}-pagination-row { @extend .flex-ac; }
 .#{$PREF}-pagination-num {
   border-radius: 50%;
-  padding: 2px $xs;
+  height: $md;
+  width: $md;
 
-  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.15); }
+  @include HOVER { background-color: $primary-light; }
 
   &:not(:last-child) { margin-right: $xxs; }
 
@@ -193,7 +194,7 @@ th.#{$PREF}-th--picker { background-color: $gray-5; }
 }
 
 .#{$PREF}-banner > p { margin-right: $sm; }
-.#{$PREF}-banner > p > span { font-weight: 700; }
+.#{$PREF}-banner > p > span { @extend .body--bold; }
 
 // ## COLUMN PICKER
 
@@ -213,7 +214,6 @@ div.#{$PREF}-col-picker { padding: $sm; }
 .#{$PREF}-col-picker > button:first-of-type { margin-bottom: $xs; }
 
 .#{$PREF}-col-picker > button > svg { margin-right: $xs; }
-.#{$PREF}-col-picker > button > p { @extend .sb; }
 
 .#{$PREF}-col-picker-button--active > svg,
 .#{$PREF}-col-picker-button--active > p { color: $primary; }

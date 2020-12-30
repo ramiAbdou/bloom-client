@@ -9,11 +9,14 @@ $PREF: 's-database';
 
 .#{$PREF}-action {
   background-color: $gray-5;
-  border-radius: 6px;
+  border-radius: $xxs;
+  height: $lg;
   margin-left: $xs;
-  padding: 6px;
+  width: $lg;
 
-  @include HOVER { opacity: 1; }
+  // !important overrides the normal .c-btn styling for hover state.
+
+  @include HOVER { opacity: 1 !important; }
 
   &--demote { &::before { margin-left: -$xxs; } }
   &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
@@ -70,17 +73,15 @@ $PREF: 's-database';
 .#{$PREF}-add-modal-input > div > div {
   @extend .flex-ac;
 
-  margin-left: $sm;
+  margin-left: $ss;
 
   > p { width: max-content; }
 }
 
-.#{$PREF}-add-modal-input > div > div > .c-misc-checkbox { margin-right: 12px; }
-
-// .#{$PREF}-add-modal-input:only-of-type { visibility: hidden; }
+.#{$PREF}-add-modal-input > div > div > .c-misc-checkbox { margin-right: $xs; }
 
 .#{$PREF}-add-modal > button { margin-bottom: $md; }
 .#{$PREF}-add-modal > div:last-of-type { @extend .flex-ac; }
 .#{$PREF}-add-modal > div:last-of-type > button:first-of-type {
-  margin-right: 12px;
+  margin-right: $xs;
 }

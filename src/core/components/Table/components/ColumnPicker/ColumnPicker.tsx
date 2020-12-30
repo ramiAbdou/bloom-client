@@ -1,20 +1,22 @@
 import deepequal from 'fast-deep-equal';
 import React, { useEffect, useState } from 'react';
 
-import Input from '@components/Element/Input';
-import Picker from '@components/Picker/Picker';
+import Input from '@components/Elements/Input';
+import Picker from '@components/Panel/Panel';
 import { useStoreActions, useStoreState } from '@store/Store';
-import Table, { Column } from '../../Table.store';
+import Table from '../../Table.store';
+import { Column } from '../../Table.types';
 import SortAscendingButton from './SortAscendingButton';
 import SortDescendingButton from './SortDescendingButton';
 
 export default () => {
   const [value, setValue] = useState<string>('');
 
-  const pickerId = useStoreState(({ picker }) => picker.id);
-  const closePicker = useStoreActions(({ picker }) => picker.closePicker);
+  const pickerId = useStoreState(({ panel }) => panel.id);
+  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
 
   const onRenameColumn = Table.useStoreState((store) => store.onRenameColumn);
+  const updateColumn = Table.useStoreActions((store) => store.updateColumn);
 
   const { id, title, version }: Column = Table.useStoreState(
     ({ columns }) =>
@@ -31,7 +33,11 @@ export default () => {
 
   const modifiedOnRenameColumn = async () => {
     if (!onRenameColumn || !value || title === value) return;
-    await onRenameColumn({ id, title: value, version });
+
+    await onRenameColumn({
+      column: { id, title: value, version },
+      updateColumn
+    });
   };
 
   const onEnter = async () => {
@@ -48,9 +54,8 @@ export default () => {
     >
       {!!onRenameColumn && (
         <Input
-          gray
           value={value}
-          onChange={({ target }) => setValue(target.value)}
+          onChange={(val) => setValue(val)}
           onClickOutside={modifiedOnRenameColumn}
           onEnter={onEnter}
         />

@@ -1,8 +1,9 @@
-import { useQuery } from 'graphql-hooks';
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import FullScreenLoader from '@components/Loader/FullScreenLoader';
+import useQuery from '@hooks/useQuery';
+import { IUser } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_USER } from './Router.gql';
@@ -14,7 +15,11 @@ import TokenRoute from './TokenRoute';
  * the global state with the user.
  */
 export default ({ component, ...rest }: RouteProps) => {
-  const { loading, data, error } = useQuery(GET_USER);
+  const { loading, data: user, error } = useQuery<IUser>({
+    name: 'getUser',
+    query: GET_USER
+  });
+
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const encodedUrlName = useStoreState(
@@ -22,14 +27,14 @@ export default ({ component, ...rest }: RouteProps) => {
   );
 
   useEffect(() => {
-    if (!data?.getUser) return;
+    if (!user) return;
 
     mergeEntities({
-      data: data.getUser,
+      data: user,
       schema: Schema.USER,
       setActiveId: true
     });
-  }, [data?.getUser]);
+  }, [user]);
 
   const isHome = rest.path === '/';
 
@@ -38,7 +43,7 @@ export default ({ component, ...rest }: RouteProps) => {
   const token = new URLSearchParams(window.location.search).get('loginToken');
   if (token) return <TokenRoute token={token} />;
   if (loading) return <FullScreenLoader />;
-  if (error || (data && !data.getUser)) return <Redirect to="/login" />;
+  if (error || !user) return <Redirect to="/login" />;
   if (isHome && encodedUrlName) return <Redirect to={`/${encodedUrlName}`} />;
 
   return <Route exact {...rest} component={component} />;

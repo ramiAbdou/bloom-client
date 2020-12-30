@@ -80,7 +80,10 @@ export default () => {
 
   return (
     <>
-      <Button className="s-home-bb-link--community" onClick={toggleDropdown}>
+      <Button
+        className="s-home-bb-link--community"
+        onClick={() => toggleDropdown()}
+      >
         <img src={logoUrl} />
       </Button>
 

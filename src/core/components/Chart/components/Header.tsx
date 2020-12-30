@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeaderTag from '@components/Element/HeaderTag';
+import NumberTag from '@components/Tags/NumberTag';
 import { useStoreState } from '@store/Store';
 import Chart from '../Chart.store';
 
@@ -16,7 +16,7 @@ export default () => {
   return (
     <div>
       <h4>{currentTitle ?? questionTitle}</h4>
-      {!!totalResponses && <HeaderTag value={`${totalResponses} Responses`} />}
+      {!!totalResponses && <NumberTag value={`${totalResponses} Responses`} />}
     </div>
   );
 };

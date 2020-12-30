@@ -1,0 +1,34 @@
+$PREF: 'c-panel';
+
+.#{$PREF}-ctr { @extend .flex; }
+
+.#{$PREF} {
+  @extend .shadow--2;
+
+  background-color: white;
+  border-radius: $xs;
+  min-width: $xxl * 4;
+  padding: $xs 0;
+  position: fixed;
+  width: max-content;
+  z-index: 100;
+}
+
+// ## PICKER OPTION
+
+.#{$PREF}-option {
+  @extend .flex-ac;
+  @extend .fill;
+  @extend .body;
+  
+  color: $gray-2;
+  padding: $ss;
+  text-align: left;
+  width: 100%;
+
+  @include HOVER { background-color: $primary-bg; }
+
+  &:first-child { border-radius: $xxs $xxs 0 0; }
+  &:last-child { border-radius: 0 0 $xxs $xxs; margin-bottom: 0; }
+  > svg { height: $sl; margin-right: $xs; width: $sl; }
+}

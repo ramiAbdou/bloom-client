@@ -36,8 +36,9 @@ $PREF: 's-login';
 
 .#{$PREF}-google { margin-bottom: $md; &--sm { margin-bottom: $sm; } }
 .#{$PREF}-google > a {
-  @extend .flex-acc;
-  @extend .btn-txt;
+  @extend .meta--lg;
+  @extend .c-btn;
+  @extend .c-btn--lg;
 
   border: 1px $gray-5 solid;
 
@@ -45,14 +46,14 @@ $PREF: 's-login';
 }
 
 .#{$PREF}-google > a > img {
-  height: 20px;
+  height: $md;
   margin-right: $xs;
-  width: 20px;
+  width: $md;
 }
 
 // ## EMAIL CONTAINER (INPUT FIELD AND SUBMIT BUTTON)
 
-div.#{$PREF}-form-item { margin: $md 0; width: 100%; }
+.#{$PREF}-email-form > div { margin: $md 0; width: 100%; }
 
 // ## CONFIRMATION SCREEN
 
@@ -76,7 +77,7 @@ div.#{$PREF}-form-item { margin: $md 0; width: 100%; }
 }
 
 .#{$PREF}-confirmation-email {
-  @extend .sb;
+  @extend .body--bold;
 
   background-color: rgba($color: $green, $alpha: 0.1);
   border: 1px $green solid;

@@ -10,6 +10,7 @@ export const APP = {
   CLIENT_URL: isProduction
     ? process.env.APP_CLIENT_URL
     : 'http://localhost:3000',
+  NGROK_SERVER_URL: process.env.APP_NGROK_SERVER_URL,
   SERVER_URL: isProduction
     ? process.env.APP_SERVER_URL
     : 'http://localhost:8080'
@@ -24,16 +25,16 @@ export type Function =
   | ((...args: any) => void)
   | VoidFunction;
 
-export type ChildrenProps = { children: ReactNode };
+export type ChildrenProps = { children?: ReactNode };
 export type ClassNameProps = { className?: string };
-export type EncodedUrlNameParams = { encodedUrlName: string };
-export type IdProps = { id: string };
-export type LoadingProps = { loading: boolean };
+export type EncodedUrlNameParams = { encodedUrlName?: string };
+export type IdProps = { id?: string };
+export type LoadingProps = { loading?: boolean };
 export type OnClickProps = { onClick?: Function };
-export type MessageProps = { message: string };
+export type MessageProps = { message?: string };
 export type StyleProps = { style?: React.CSSProperties };
 export type TitleProps = { title?: string };
-export type ValueProps = { value: any };
+export type ValueProps = { value?: any };
 
 export enum ModalType {
   ADD_ADMINS = 'ADD_ADMINS',
@@ -43,11 +44,11 @@ export enum ModalType {
   DELETE_MEMBERS = 'DELETE_MEMBERS',
   DEMOTE_TO_MEMBER = 'DEMOTE_TO_MEMBER',
   DIRECTORY_CARD = 'DIRECTORY_CARD',
+  PAY_DUES = 'PAY_DUES',
   PROMOTE_TO_ADMIN = 'PROMOTE_TO_ADMIN'
 }
 
 export enum PickerType {
-  COMMUNITIES = 'COMMUNITIES',
   PROFILE = 'PROFILE'
 }
 

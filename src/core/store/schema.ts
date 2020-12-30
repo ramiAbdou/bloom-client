@@ -12,6 +12,7 @@ import { schema } from 'normalizr';
 const Community = new schema.Entity('communities', {});
 const Integrations = new schema.Entity('integrations', {});
 const Member = new schema.Entity('members', {});
+const MemberType = new schema.Entity('types', {});
 const Question = new schema.Entity('questions', {});
 const User = new schema.Entity('users', {});
 
@@ -21,10 +22,11 @@ const User = new schema.Entity('users', {});
 Community.define({
   integrations: Integrations,
   members: [Member],
-  questions: [Question]
+  questions: [Question],
+  types: [MemberType]
 });
 
-Member.define({ community: Community, user: User });
+Member.define({ community: Community, type: MemberType, user: User });
 User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
@@ -34,5 +36,6 @@ export const Schema = {
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
   MEMBER: Member,
+  MEMBER_TYPE: MemberType,
   USER: User
 };

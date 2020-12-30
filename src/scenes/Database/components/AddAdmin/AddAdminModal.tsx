@@ -1,17 +1,15 @@
 import deepequal from 'fast-deep-equal';
-import { useMutation } from 'graphql-hooks';
 import React, { memo } from 'react';
 
-import OutlineButton from '@components/Button/OutlineButton';
-import PrimaryButton from '@components/Button/PrimaryButton';
-import UnderlineButton from '@components/Button/UnderlineButton';
+import Button from '@components/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
+import useMutation from '@hooks/useMutation';
+import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { getGraphQLError } from '@util/util';
-import { CREATE_MEMBERS } from '../../Database.gql';
+import { CREATE_MEMBERS, CreateMembersArgs } from '../../Database.gql';
 import AddModalInput from '../AddModalInput';
 import AddAdmin, { doesInputHaveError } from './AddAdmin.store';
 
@@ -33,7 +31,7 @@ const AddAdminInput = memo(({ id }: IdProps) => {
       isShowingErrors={isShowingErrors}
       member={admin}
       updateMember={updateMember}
-      onDelete={() => {}}
+      onDelete={() => null}
     />
   );
 });
@@ -51,7 +49,13 @@ export default () => {
   const clearMembers = AddAdmin.useStoreActions((store) => store.clearMembers);
   const showErrors = AddAdmin.useStoreActions((store) => store.showErrors);
 
-  const [createMembers, { error, loading }] = useMutation(CREATE_MEMBERS);
+  const [createMembers, { error, loading }] = useMutation<
+    IMember[],
+    CreateMembersArgs
+  >({
+    name: 'createMembers',
+    query: CREATE_MEMBERS
+  });
 
   const onAdd = async () => {
     if (doesInputHaveError(admins)) {
@@ -59,26 +63,23 @@ export default () => {
       return;
     }
 
-    const result = await createMembers({
-      variables: {
-        members: admins.map(({ email, firstName, lastName }) => ({
-          email,
-          firstName,
-          isAdmin: true,
-          lastName
-        }))
-      }
+    const { data } = await createMembers({
+      members: admins.map(({ email, firstName, lastName }) => ({
+        email,
+        firstName,
+        isAdmin: true,
+        lastName
+      }))
     });
 
-    const { createMembers: updatedMembers } = result.data || {};
-    if (result.error || !updatedMembers) return;
+    if (!data) return;
 
     // API should return back the updated members and we just update the
     // state accordingly with those new admins. To load new data would require
     // a refresh.
     mergeEntities({
       communityReferenceColumn: 'members',
-      data: { members: updatedMembers },
+      data: { members: data },
       schema: { members: [Schema.MEMBER] }
     });
 
@@ -88,7 +89,6 @@ export default () => {
 
   const onClose = () => clearMembers();
   const onClick = () => addEmptyMember();
-  const message = getGraphQLError(error);
 
   return (
     <Modal
@@ -109,17 +109,23 @@ export default () => {
         <AddAdminInput key={id} id={id} />
       ))}
 
-      <UnderlineButton title="+ Add Another" onClick={onClick} />
-      <ErrorMessage message={message} />
+      <Button underline onClick={onClick}>
+        + Add Another
+      </Button>
+      <ErrorMessage message={error} />
 
       <div>
-        <PrimaryButton
+        <Button
+          primary
           loading={loading}
           loadingText="Adding..."
-          title="Add"
           onClick={onAdd}
-        />
-        <OutlineButton title="Cancel" onClick={closeModal} />
+        >
+          Add
+        </Button>
+        <Button outline onClick={() => closeModal()}>
+          Cancel
+        </Button>
       </div>
     </Modal>
   );

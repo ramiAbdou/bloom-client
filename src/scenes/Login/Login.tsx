@@ -1,7 +1,7 @@
 import React from 'react';
 
-import EmailConfirmation from './components/EmailConfirmation';
-import LoginCard from './components/LoginCard/LoginCard';
+import EmailConfirmation from './frames/Confirmation/Confirmation';
+import LoginCard from './frames/LoginCard/LoginCard';
 import Login from './Login.store';
 
 const LoginContent = () => {

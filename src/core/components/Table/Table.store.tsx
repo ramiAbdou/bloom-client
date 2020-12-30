@@ -7,23 +7,7 @@ import {
 } from 'easy-peasy';
 import { matchSorter } from 'match-sorter';
 
-import { Function, QuestionCategory, QuestionType } from '@constants';
-
-export type Column = {
-  category?: QuestionCategory;
-  id: string;
-  type: QuestionType;
-  title: string;
-  version?: number;
-};
-
-// Each row will have a series of random question ID's as well as a unique ID
-// representing the row (ie: Member ID).
-export interface Row extends Record<string, any> {
-  id: string;
-}
-
-export type SortDirection = 'ASC' | 'DESC';
+import { Column, OnRenameColumn, Row, SortDirection } from './Table.types';
 
 /**
  * Sorts the given data by the column ID, either in an ASC or DESC fashion. All
@@ -59,20 +43,19 @@ const sortByColumn = (
     return 0;
   });
 
-type TableModel = {
+export type TableModel = {
   columns: Column[];
   data: Row[];
   filteredData: Row[];
   isAllPageSelected: Computed<TableModel, boolean>;
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
-  onRenameColumn: Function;
+  onRenameColumn: OnRenameColumn;
   page: number;
   range: Computed<TableModel, [number, number]>;
   searchString: string;
   select: boolean;
   selectedRowIds: string[];
-  setOnRenameColumn: Action<TableModel, Function>;
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
   setSortedColumn: Action<TableModel, [string, SortDirection]>;
@@ -145,11 +128,6 @@ export const tableModel: TableModel = {
   select: true,
 
   selectedRowIds: [],
-
-  setOnRenameColumn: action((state, onRenameColumn) => ({
-    ...state,
-    onRenameColumn
-  })),
 
   setRange: action((state, page) => {
     // When going to a new page, we need to ensure that the scroll position is
@@ -244,16 +222,18 @@ export const tableModel: TableModel = {
    */
   toggleRow: action(({ selectedRowIds, ...state }, rowId: string) => {
     const index = selectedRowIds.findIndex((value: string) => value === rowId);
-    return ({
+
+    return {
       ...state,
-      selectedRowIds: index < 0 
-        ? [...selectedRowIds, rowId] 
-        : [
-            ...selectedRowIds.slice(0, index),
-            ...selectedRowIds.slice(index + 1)
-          ]
-    })
-  } ),
+      selectedRowIds:
+        index < 0
+          ? [...selectedRowIds, rowId]
+          : [
+              ...selectedRowIds.slice(0, index),
+              ...selectedRowIds.slice(index + 1)
+            ]
+    };
+  }),
 
   updateColumn: action(
     ({ columns, ...state }, updatedColumn: Partial<Column>) => ({
