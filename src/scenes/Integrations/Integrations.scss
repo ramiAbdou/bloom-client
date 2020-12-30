@@ -31,7 +31,7 @@ $PREF: 's-integrations';
 
 // Need the .flex-sb so that the action button appears at the end of the card.
 // Only becomes issue when there are originally different heights of the cards.
-.#{$PREF}-card { @extend .card; @extend .flex-sb; }
+.#{$PREF}-card { @extend .flex-sb; }
 
 // The first div child wraps the logo, title, and description.
 .#{$PREF}-card > div:first-child > h3 { margin-bottom: $xs; }

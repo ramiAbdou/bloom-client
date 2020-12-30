@@ -90,17 +90,6 @@
   @include PRIMARY_HOVER;
 }
 
-// ## CARD
-
-.card {
-  @extend .flex-col;
-  @extend .shadow--1;
-
-  background-color: white;
-  border-radius: $xs;
-  padding: $sm;
-}
-
 // ## TEXT OVERFLOW - Can specify how many lines we can allow the text to
 // overflow into.
 

@@ -34,12 +34,11 @@ $PREF: 's-applicants';
 // ## CARD
 
 .#{$PREF}-card {
-  @extend .card;
   @extend .flex-sb;
 
   height: fit-content;
 
-  &:last-of-type { margin-bottom: $lg; }
+  &:last-child { margin-bottom: $lg; }
 };
 
 .#{$PREF}-card > button { margin: $sl auto 0 auto; }

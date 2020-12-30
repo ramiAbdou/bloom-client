@@ -8,8 +8,6 @@ $PREF: 's-login';
 }
 
 .#{$PREF}-card {
-  @extend .card;
-
   margin-top: -$xxl;
   max-width: $xxl * 7;
   overflow: hidden; // Needed to hide the overflowed network image.

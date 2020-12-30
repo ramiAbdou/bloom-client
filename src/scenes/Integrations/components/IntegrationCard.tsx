@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Button from '@components/Button/Button';
+import Card from '@components/Elements/Card/Card';
 import IntegrationsStore, { IntegrationsModal } from '../Integrations.store';
 
 export type IntegrationCardProps = {
@@ -55,7 +56,7 @@ export default ({
   description,
   href
 }: IntegrationCardProps) => (
-  <div className="s-integrations-card">
+  <Card className="s-integrations-card">
     <div>
       <div className="s-integrations-card-header">
         <img alt="Company Logo" className="s-integrations-icon" src={logo} />
@@ -75,5 +76,5 @@ export default ({
     <div>
       <ActionButton completed={completed} href={href} name={name} />
     </div>
-  </div>
+  </Card>
 );

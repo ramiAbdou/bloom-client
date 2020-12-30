@@ -12,9 +12,8 @@ $PREF: 's-directory-card';
 // ## CARD
 
 button.#{$PREF} {
-  @extend .card;
-  @extend .flex-accol;
-  @extend .shadow--1;
+  @extend .c-misc-card;
+  @extend .flex-ac;
   
   height: max-content;
   height: 100%;

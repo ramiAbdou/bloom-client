@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Card from '@components/Elements/Card/Card';
 import Login from './Login.store';
 import EmailConfirmation from './pages/Confirmation/Confirmation';
 import LoginCard from './pages/LoginCard/LoginCard';
@@ -12,9 +13,9 @@ const LoginContent = () => {
 export default () => (
   <Login.Provider>
     <div className="s-login-ctr">
-      <div className="s-login-card">
+      <Card className="s-login-card">
         <LoginContent />
-      </div>
+      </Card>
     </div>
   </Login.Provider>
 );
