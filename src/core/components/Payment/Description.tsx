@@ -2,7 +2,6 @@ import day from 'dayjs';
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import ChangePlan from '../../../pages/ChangePlan/ChangePlan.store';
 
 const FreeDescription = () => (
   <p>
@@ -26,11 +25,16 @@ const RecurringPaymentDescription = () => (
   </p>
 );
 
-const ChangePlanDescription = () => {
-  const selectedTypeId = ChangePlan.useStoreState(
-    (store) => store.selectedTypeId
-  );
+type PaymentDescriptionProps = { selectedTypeId: string };
 
+/**
+ * Returns the proper description based on the recurrence the amount of the
+ * membership type. There are 3 cases that DuesDescription handles
+ * - (Standard) Membership requires recurring payment.
+ * - Membership is a LIFETIME membership.
+ * - Membership is a FREE membership.
+ */
+const PaymentDescription = ({ selectedTypeId }: PaymentDescriptionProps) => {
   const recurrence = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
     return byId[selectedTypeId]?.recurrence;
@@ -46,4 +50,4 @@ const ChangePlanDescription = () => {
   return <RecurringPaymentDescription />;
 };
 
-export default ChangePlanDescription;
+export default PaymentDescription;

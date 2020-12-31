@@ -3,11 +3,11 @@ import React from 'react';
 import Label from '@components/Form/components/Label';
 import Form from '@components/Form/Form';
 import Modal from '@components/Modal/Modal';
+import PaymentDescription from '@components/Payment/Description';
 import StripeProvider from '@components/Payment/StripeProvider';
 import { ModalType } from '@constants';
 import { useStoreState } from '@store/Store';
 import ChangePlan from '../../pages/ChangePlan/ChangePlan.store';
-import ChangePlanDescription from './components/Description';
 import PayButton from './components/FinishButton';
 
 const ChangePlanModal = () => {
@@ -24,7 +24,7 @@ const ChangePlanModal = () => {
     <Modal id={ModalType.CHANGE_PLAN}>
       <StripeProvider>
         <h1>Change Membership Plan</h1>
-        <ChangePlanDescription />
+        <PaymentDescription selectedTypeId={selectedTypeId} />
 
         <Form>
           <div className="c-form-item">

@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Modal from '@components/Modal/Modal';
+import PaymentDescription from '@components/Payment/Description';
 import PaymentForm from '@components/Payment/PaymentForm';
 import StripeProvider from '@components/Payment/StripeProvider';
 import { ModalType } from '@constants';
 import { useStoreState } from '@store/Store';
-import DuesDescription from './components/Description';
 import FinishDuesButton from './components/FinishButton';
 import DuesTypeOptions from './components/TypeOptions';
 import DuesContainer from './containers/Dues';
@@ -28,7 +28,7 @@ const DuesModalContent = () => {
   return (
     <Modal className="s-actions-dues" id={ModalType.PAY_DUES}>
       <h1>Pay Dues</h1>
-      <DuesDescription />
+      <PaymentDescription selectedTypeId={selectedTypeId} />
       <DuesTypeOptions />
       <PaymentForm
         SubmitButton={FinishDuesButton}
