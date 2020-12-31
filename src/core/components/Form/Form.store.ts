@@ -86,15 +86,12 @@ export const formModel: FormModel = {
   })
 };
 
-export default createContextStore<FormModel>(
-  (runtimeModel: FormModel) => ({
-    ...runtimeModel,
+export default createContextStore<FormModel>((runtimeModel: FormModel) => ({
+  ...runtimeModel,
 
-    // If there isn't an ID supplied to an item, just make the ID the title.
-    items: runtimeModel.items.map((item: FormItemData) => ({
-      ...item,
-      id: item.id ?? item.title
-    }))
-  }),
-  { disableImmer: true }
-);
+  // If there isn't an ID supplied to an item, just make the ID the title.
+  items: runtimeModel.items.map((item: FormItemData) => ({
+    ...item,
+    id: item.id ?? item.title
+  }))
+}));

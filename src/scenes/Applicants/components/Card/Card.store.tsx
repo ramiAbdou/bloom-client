@@ -41,6 +41,4 @@ export const applicantModel: ApplicantModel = {
   })
 };
 
-export default createContextStore<ApplicantModel>((model) => model, {
-  disableImmer: true
-});
+export default createContextStore<ApplicantModel>((model) => model);

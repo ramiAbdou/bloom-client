@@ -42,6 +42,4 @@ const loginModel: LoginModel = {
   }))
 };
 
-export default createContextStore<LoginModel>(loginModel, {
-  disableImmer: true
-});
+export default createContextStore<LoginModel>(loginModel);

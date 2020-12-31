@@ -113,6 +113,4 @@ const addAdminModel: AddAdminModel = {
   })
 };
 
-export default createContextStore<AddAdminModel>(addAdminModel, {
-  disableImmer: true
-});
+export default createContextStore<AddAdminModel>(addAdminModel);

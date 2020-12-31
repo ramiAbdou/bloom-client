@@ -13,6 +13,4 @@ const model: PlaygroundModel = {
   }))
 };
 
-export default createContextStore<PlaygroundModel>(model, {
-  disableImmer: true
-});
+export default createContextStore<PlaygroundModel>(model);

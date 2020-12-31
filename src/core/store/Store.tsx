@@ -22,16 +22,13 @@ type StoreModel = {
   toast: ToastModel;
 };
 
-export const store = createStore<StoreModel>(
-  {
-    db: dbModel,
-    loader: loaderModel,
-    modal: modalModel,
-    panel: panelModel,
-    toast: toastModel
-  },
-  { disableImmer: true }
-);
+export const store = createStore<StoreModel>({
+  db: dbModel,
+  loader: loaderModel,
+  modal: modalModel,
+  panel: panelModel,
+  toast: toastModel
+});
 
 export const { useStoreActions, useStoreState } = createTypedHooks<
   StoreModel

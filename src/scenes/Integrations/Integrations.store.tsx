@@ -16,6 +16,4 @@ const model: IntegrationsModel = {
   setFlow: action((state, flow) => ({ ...state, flow }))
 };
 
-export default createContextStore<IntegrationsModel>(model, {
-  disableImmer: true
-});
+export default createContextStore<IntegrationsModel>(model);

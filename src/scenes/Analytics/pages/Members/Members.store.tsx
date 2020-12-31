@@ -21,25 +21,22 @@ type MembersAnalyticsModel = {
   totalGrowth: number;
 };
 
-export default createContextStore<MembersAnalyticsModel>(
-  {
-    activeChartData: [],
+export default createContextStore<MembersAnalyticsModel>({
+  activeChartData: [],
 
-    activeGrowth: null,
+  activeGrowth: null,
 
-    initActive: action((state, data: ActiveMembersAnalyticsArgs) => ({
-      ...state,
-      ...data
-    })),
+  initActive: action((state, data: ActiveMembersAnalyticsArgs) => ({
+    ...state,
+    ...data
+  })),
 
-    initTotal: action((state, data: TotalMembersAnalyticsArgs) => ({
-      ...state,
-      ...data
-    })),
+  initTotal: action((state, data: TotalMembersAnalyticsArgs) => ({
+    ...state,
+    ...data
+  })),
 
-    totalChartData: [],
+  totalChartData: [],
 
-    totalGrowth: null
-  },
-  { disableImmer: true }
-);
+  totalGrowth: null
+});

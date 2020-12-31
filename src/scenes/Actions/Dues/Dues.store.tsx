@@ -29,6 +29,4 @@ export const duesModel: DuesModel = {
   }))
 };
 
-export default createContextStore<DuesModel>((runtimeModel) => runtimeModel, {
-  disableImmer: true
-});
+export default createContextStore<DuesModel>((runtimeModel) => runtimeModel);

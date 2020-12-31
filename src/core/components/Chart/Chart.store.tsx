@@ -46,6 +46,4 @@ export const chartModel: ChartModel = {
   type: ChartType.BAR
 };
 
-export default createContextStore<ChartModel>(chartModel, {
-  disableImmer: true
-});
+export default createContextStore<ChartModel>(chartModel);
