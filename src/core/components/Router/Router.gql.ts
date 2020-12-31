@@ -21,10 +21,10 @@ export const GET_USER = query({
             'logoUrl',
             'primaryColor',
             { integrations: ['mailchimpListId', 'stripeAccountId'] },
-            { types: ['id', 'name', 'isFree'] }
+            { types: ['amount', 'id', 'name', 'isFree', 'recurrence'] }
           ]
         },
-        { type: ['id', 'name'] }
+        { type: ['id'] }
       ]
     }
   ],
