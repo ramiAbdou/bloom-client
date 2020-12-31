@@ -10,4 +10,6 @@ const model: ApplicationModel = {
   setEmail: action((state, email) => ({ ...state, email }))
 };
 
-export default createContextStore<ApplicationModel>(model);
+export default createContextStore<ApplicationModel>(model, {
+  disableImmer: true
+});

@@ -132,4 +132,6 @@ const addMemberModel: AddMemberModel = {
   })
 };
 
-export default createContextStore<AddMemberModel>(addMemberModel);
+export default createContextStore<AddMemberModel>(addMemberModel, {
+  disableImmer: true
+});

@@ -20,4 +20,6 @@ const model: DirectoryModel = {
   setSearchString: action((state, searchString) => ({ ...state, searchString }))
 };
 
-export default createContextStore<DirectoryModel>(model);
+export default createContextStore<DirectoryModel>(model, {
+  disableImmer: true
+});

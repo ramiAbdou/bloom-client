@@ -5,7 +5,10 @@ type DatabaseModel = {
   setLoading: Action<DatabaseModel, boolean>;
 };
 
-export default createContextStore<DatabaseModel>({
-  loading: true,
-  setLoading: action((state, loading) => ({ ...state, loading }))
-});
+export default createContextStore<DatabaseModel>(
+  {
+    loading: true,
+    setLoading: action((state, loading) => ({ ...state, loading }))
+  },
+  { disableImmer: true }
+);

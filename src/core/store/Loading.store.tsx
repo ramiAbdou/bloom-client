@@ -10,4 +10,6 @@ export const loadingModel: LoadingModel = {
   setLoading: action((state, loading: boolean) => ({ ...state, loading }))
 };
 
-export default createContextStore<LoadingModel>(loadingModel);
+export default createContextStore<LoadingModel>(loadingModel, {
+  disableImmer: true
+});

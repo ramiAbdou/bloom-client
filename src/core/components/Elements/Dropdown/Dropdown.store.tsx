@@ -49,5 +49,6 @@ export const dropdownModel: DropdownModel = {
 };
 
 export default createContextStore<DropdownModel>(
-  (runtimeModel: DropdownModel) => runtimeModel
+  (runtimeModel: DropdownModel) => runtimeModel,
+  { disableImmer: true }
 );

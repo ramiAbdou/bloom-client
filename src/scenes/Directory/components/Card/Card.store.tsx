@@ -13,4 +13,6 @@ type MemberCardModel = { member: MemberCardData };
 
 export const memberCardModel: MemberCardModel = { member: null };
 
-export default createContextStore<MemberCardModel>((model) => model);
+export default createContextStore<MemberCardModel>((model) => model, {
+  disableImmer: true
+});

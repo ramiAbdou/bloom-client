@@ -38,4 +38,4 @@ const model: HomeModel = {
   }))
 };
 
-export default createContextStore<HomeModel>(model);
+export default createContextStore<HomeModel>(model, { disableImmer: true });

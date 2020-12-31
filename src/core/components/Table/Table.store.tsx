@@ -228,4 +228,6 @@ export const tableModel: TableModel = {
   }))
 };
 
-export default createContextStore<TableModel>((model: TableModel) => model);
+export default createContextStore<TableModel>((model: TableModel) => model, {
+  disableImmer: true
+});

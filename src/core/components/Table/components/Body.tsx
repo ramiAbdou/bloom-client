@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import Checkbox from '@components/Elements/Checkbox/Checkbox';
 import Attribute from '@components/Tags/Attribute';
@@ -38,7 +38,7 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
     [type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select']
   ]);
 
-  const content: ReactNode = takeFirst([
+  const content: React.ReactNode = takeFirst([
     [type === 'MULTIPLE_CHOICE' && value, <Attribute value={value} />],
     [
       type === 'MULTIPLE_SELECT',
