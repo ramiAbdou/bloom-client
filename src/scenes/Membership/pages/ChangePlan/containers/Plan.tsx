@@ -13,7 +13,7 @@ const PlanContainer = () => {
   return (
     <div className="s-membership-plans-card-ctr">
       {types.map((type: IMemberType) => (
-        <PlanCard {...type} />
+        <PlanCard key={type.id} {...type} />
       ))}
     </div>
   );
