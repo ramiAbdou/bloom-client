@@ -63,7 +63,7 @@
     top: 100%;
     visibility: hidden;
     width: max-content;
-    z-index: 100;
+    z-index: 1010;
   }
 
   &:active {
@@ -73,6 +73,7 @@
   &--bottom { &::before { margin-top: $xxs; } }
   &--middle { &::before { left: 50%; transform: translateX(-50%); } }
   &--right { &::before { left: initial; right: 0; transform: initial; } }
+  &--left { &::before { left: 0; } }
 }
 
 // ## HOVER STATE (DILUTED PRIMARY COLOR)

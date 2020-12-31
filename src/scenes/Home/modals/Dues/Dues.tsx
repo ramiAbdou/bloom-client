@@ -6,7 +6,7 @@ import StripeProvider from '@components/Payment/StripeProvider';
 import { ModalType } from '@constants';
 import { useStoreState } from '@store/Store';
 import DuesDescription from './components/Description';
-import PayButton from './components/PayButton';
+import FinishDuesButton from './components/FinishButton';
 import DuesTypeOptions from './components/TypeOptions';
 import DuesContainer from './containers/Dues';
 import Dues from './Dues.store';
@@ -31,7 +31,7 @@ const DuesModalContent = () => {
       <DuesDescription />
       <DuesTypeOptions />
       <PaymentForm
-        SubmitButton={PayButton}
+        SubmitButton={FinishDuesButton}
         hideCardItems={!amount}
         onSubmit={createSubscription}
       />

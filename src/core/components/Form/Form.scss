@@ -16,6 +16,7 @@ $PREF: 'c-form';
   width: 100%;
 
   > svg { color: $green; margin-right: $xs; }
+  > div.c-misc-tip { color: $primary; margin-left: $xxs; }
 
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }

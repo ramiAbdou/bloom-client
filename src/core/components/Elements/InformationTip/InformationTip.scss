@@ -1,0 +1,6 @@
+$PREF: 'c-misc-tip';
+
+// ## INFORMATION TIP
+
+.#{$PREF} { width: fit-content; }
+.#{$PREF} > svg { color: $primary; }
