@@ -1,6 +1,6 @@
 $PREF: 'c-payment';
 
-.#{$PREF} > .c-btn {
+.#{$PREF} > button {
   > svg { @extend .react-icon--sm; color: white; margin-right: $xxs; }
   &:disabled > svg { color: $gray-3; }
 }

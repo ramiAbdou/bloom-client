@@ -27,12 +27,14 @@
 .react-icon {
   color: $gray-1;
   height: $sl;
+  min-height: $sl;
+  min-width: $sl;
   width: $sl;
   
-  &--xs { min-height: $ss; min-width: $ss; }
-  &--sm { min-height: $sm; min-width: $sm; }
-  &--lg { height: $md; width: $md; }
-  &--xl { height: 32px; width: 32px; }
+  &--xs { height: $ss; min-height: $ss; min-width: $ss; width: $ss; }
+  &--sm { height: $sm; min-height: $sm; min-width: $sm; width: $sm; }
+  &--lg { height: $md; min-height: $md; min-width: $md; width: $md; }
+  &--xl { height: 32px; min-height: 32px; min-width: 32px; width: 32px; }
 }
 
 // ## TOOLTIP - All tooltips show up below
