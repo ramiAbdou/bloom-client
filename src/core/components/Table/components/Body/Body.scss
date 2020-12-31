@@ -36,20 +36,22 @@ td {
 
 // ## TABLE DATA ROW
 
-tbody > tr {
-  cursor: pointer;
+tr { &:not(:last-child) { border-bottom: 1px $gray-5 solid; } }
 
-  @include HOVER {
-    // Can't extend within an include, so manually write the shadow-2 function.
+.#{$PREF}-tr {
+  // Applied if the table row is selected.
+  &--active { > td { background-color: $primary-bg; } }
 
-    box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
-    position: relative;
-    transform: scale(1); // Required to push to higher stacking context.
-    z-index: 10;
+  &--clickable {
+    cursor: pointer;
+
+    @include HOVER {
+      // Can't extend within an include, so manually write shadow--2.
+  
+      box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
+      position: relative;
+      transform: scale(1); // Required to push to higher stacking context.
+      z-index: 10;
+    }
   }
-
-  &:not(:last-child) { border-bottom: 1px $gray-5 solid; }
 }
-
-// Applied if the table row is selected.
-tr.#{$PREF}-tr--active { > td { background-color: $primary-bg; } }

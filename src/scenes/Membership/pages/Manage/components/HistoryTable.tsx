@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from '@components/Button/Button';
 import TableContent from '@components/Table/Content';
 import Table from '@components/Table/Table';
 import { Column, Row } from '@components/Table/Table.types';
@@ -14,7 +15,7 @@ const HistoryTable = () => {
       title: 'Membership Plan',
       type: 'MULTIPLE_CHOICE'
     },
-    { id: '', title: '', type: 'SHORT_TEXT' }
+    { hide: true, id: 'Receipt', title: 'Receipt', type: 'CUSTOM' }
   ];
 
   const rows: Row[] = [
@@ -22,6 +23,7 @@ const HistoryTable = () => {
       Amount: '$250.00',
       Date: 'December 22, 2020',
       'Membership Plan': 'Family Member',
+      Receipt: <Button underline>View</Button>,
       id: uuid()
     },
     {

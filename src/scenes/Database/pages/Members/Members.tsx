@@ -60,7 +60,7 @@ export default () => {
   return (
     <Table
       columns={columns}
-      options={{ hasCheckbox: true }}
+      options={{ hasCheckbox: true, isClickable: true }}
       rows={rows}
       onRenameColumn={onRenameColumn}
     >

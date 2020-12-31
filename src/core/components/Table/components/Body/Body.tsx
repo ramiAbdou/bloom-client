@@ -32,11 +32,13 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
     [
       type === 'MULTIPLE_SELECT',
       <>
-        {value?.split(',').map((val: string) => (
-          <Attribute key={val} value={val} />
-        ))}
+        {typeof value === 'string' &&
+          value
+            .split(',')
+            .map((val: string) => <Attribute key={val} value={val} />)}
       </>
     ],
+    [type === 'CUSTOM', value],
     <p>{value}</p>
   ]);
 
@@ -51,10 +53,14 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
 };
 
 const DataRow = (row: Row) => {
+  const isClickable = Table.useStoreState(({ options }) => options.isClickable);
   const isSelected = Table.useStoreState((state) => state.isSelected(row.id));
   const columns = Table.useStoreState((store) => store.columns);
 
-  const css = makeClass([isSelected, 'c-table-tr--active']);
+  const css = makeClass([
+    [isSelected, 'c-table-tr--active'],
+    [isClickable, 'c-table-tr--clickable']
+  ]);
 
   return (
     <tr className={css}>

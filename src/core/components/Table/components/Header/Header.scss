@@ -28,7 +28,6 @@ th {
   // achieve the scrolling functionality that we want.
   &::after {
     border-bottom: 1px solid $gray-5;
-    border-right: 1px solid $gray-5;
     bottom: 0;
     content: '';
     height: 100%;
@@ -37,6 +36,8 @@ th {
     top: 0;
     width: 100%;
   }
+
+  &:not(:last-child)::after { border-right: 1px solid $gray-5; }
 }
 
 .#{$PREF}-th {

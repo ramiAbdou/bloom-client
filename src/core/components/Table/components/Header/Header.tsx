@@ -12,7 +12,7 @@ interface HeaderCellProps extends Column {
   i: number;
 }
 
-const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
+const HeaderCell = ({ hide, i, type, id, title }: HeaderCellProps) => {
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
@@ -44,7 +44,7 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
     <th className={css} id={id} onClick={onClick}>
       <div>
         {!i && hasCheckbox && <SelectAllCheckbox />}
-        <p>{title}</p>
+        {!hide && <p>{title}</p>}
         {showCaretUp && <IoCaretUp />}
         {showCaretDown && <IoCaretDown />}
       </div>

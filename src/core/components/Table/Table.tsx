@@ -36,7 +36,10 @@ export default ({ columns, options, onRenameColumn, ...props }: TableProps) => (
   <Table.Provider
     runtimeModel={{
       ...tableModel,
-      columns,
+      columns: columns.map((column: Column) => ({
+        ...column,
+        id: column.id ?? column.title
+      })),
       onRenameColumn,
       options: { ...initialTableOptions, ...options }
     }}

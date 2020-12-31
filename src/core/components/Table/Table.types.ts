@@ -4,6 +4,7 @@ import { QuestionCategory, QuestionType } from '@constants';
 
 export type Column = {
   category?: QuestionCategory;
+  hide?: boolean;
   id: string;
   type: QuestionType;
   title: string;
@@ -29,6 +30,7 @@ export type TableOptions = {
   alignEndRight?: boolean;
   fixFirstColumn?: boolean;
   hasCheckbox?: boolean;
+  isClickable?: boolean;
   isRenamable?: boolean;
   isSortable?: boolean;
   showCount?: boolean;
@@ -38,6 +40,7 @@ export const initialTableOptions: TableOptions = {
   alignEndRight: false,
   fixFirstColumn: true,
   hasCheckbox: false,
+  isClickable: false,
   isRenamable: false,
   isSortable: true,
   showCount: true
