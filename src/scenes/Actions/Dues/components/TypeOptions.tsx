@@ -82,7 +82,7 @@ export default () => {
     .replace('YEARLY', 'yr');
 
   return (
-    <div className="s-actions-dues-item s-actions-dues-item--type">
+    <div className="c-payment-item s-actions-dues-item--type">
       <h4>Membership Type</h4>
       <div>
         <TypeOptionList />
