@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import AdminRoute from '@components/Router/AdminRoute';
-import AddMemberModal from '@scenes/Actions/AddMember/AddMember';
+import AddMemberModal from '@scenes/Home/modals/AddMember/AddMember';
 import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
 import Applicants from '../Applicants/Applicants';

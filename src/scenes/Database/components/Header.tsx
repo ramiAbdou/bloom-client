@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import MultiButton from '@components/Button/Multi';
 import Spinner from '@components/Loader/Spinner';
-import AddMemberButton from '@scenes/Actions/AddMember/AddMemberButton';
+import AddMemberButton from '@scenes/Home/modals/AddMember/AddMemberButton';
 import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import AddAdminButton from './AddAdmin/AddAdminButton';
