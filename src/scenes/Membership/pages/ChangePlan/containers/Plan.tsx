@@ -1,14 +1,20 @@
 import React from 'react';
 
+import { IMemberType } from '@store/entities';
+import { useStoreState } from '@store/Store';
 import PlanCard from '../components/Plan';
 
 const PlanContainer = () => {
+  const types: IMemberType[] = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return db.community.types.map((typeId: string) => byTypeId[typeId]);
+  });
+
   return (
     <div className="s-membership-plans-card-ctr">
-      <PlanCard />
-      <PlanCard isCurrent />
-      <PlanCard />
-      <PlanCard />
+      {types.map((type: IMemberType) => (
+        <PlanCard {...type} />
+      ))}
     </div>
   );
 };

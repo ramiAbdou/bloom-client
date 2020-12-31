@@ -17,7 +17,7 @@ const UpdatePaymentModal = () => {
           billing date.
         </p>
 
-        <PaymentForm updateCard SubmitButton={UpdatePaymentButton} />
+        <PaymentForm SubmitButton={UpdatePaymentButton} />
       </Modal>
     </StripeProvider>
   );

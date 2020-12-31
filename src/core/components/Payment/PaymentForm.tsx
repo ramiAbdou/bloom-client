@@ -3,6 +3,7 @@ import React from 'react';
 import FormErrorMessage from '@components/Form/components/ErrorMessage';
 import FormItem from '@components/Form/components/Item';
 import Form, { FormProps } from '@components/Form/Form';
+import { ChildrenProps } from '@constants';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 
@@ -18,21 +19,22 @@ const options: StripeCardElementOptions = {
   style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
 };
 
-interface PaymentFormProps extends Pick<FormProps, 'onSubmit'> {
+interface PaymentFormProps extends Pick<FormProps, 'onSubmit'>, ChildrenProps {
   SubmitButton?: React.FC;
   hideCardItems?: boolean;
-  updateCard?: boolean;
 }
 
 const PaymentForm = ({
+  children,
   hideCardItems,
   onSubmit,
-  updateCard,
   SubmitButton
 }: PaymentFormProps) => {
   return (
     <Form className="c-payment" onSubmit={onSubmit}>
-      {(!hideCardItems || updateCard) && (
+      {children}
+
+      {!hideCardItems && (
         <>
           <FormItem required title="Name on Card" type="SHORT_TEXT" />
 
