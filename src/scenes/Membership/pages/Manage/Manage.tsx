@@ -1,8 +1,8 @@
 import React from 'react';
 
-import CurrentPlanCard from './components/CurrentPlan';
 import MembershipHeader from './components/Header';
-import PaymentMethodCard from './components/PaymentMethod';
+import MembershipCardContainer from './containers/Card';
+import PaymentHistoryContainer from './containers/PaymentHistory';
 
 const ManageMembership = () => {
   return (
@@ -10,10 +10,8 @@ const ManageMembership = () => {
       <MembershipHeader />
 
       <div className="s-home-content">
-        <div className="s-membership-manage-card-ctr">
-          <CurrentPlanCard />
-          <PaymentMethodCard />
-        </div>
+        <MembershipCardContainer />
+        <PaymentHistoryContainer />
       </div>
     </>
   );

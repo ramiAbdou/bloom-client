@@ -107,7 +107,9 @@ th {
   > div > .c-misc-checkbox > span { border: 2px $gray-3 solid; }
 
   // The header title content.
-  > div > h4 {
+  > div > p {
+    @extend .meta--lg;
+
     color: $gray-3;
 
     @include OVERFLOW_ELLIPSES;

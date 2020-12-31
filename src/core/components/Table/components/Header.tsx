@@ -57,7 +57,7 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
     <th className={css} id={id} onClick={onClick}>
       <div>
         {!i && select && <SelectAllCheckbox />}
-        <h4>{title}</h4>
+        <p>{title}</p>
         {showCaretUp && <IoCaretUp />}
         {showCaretDown && <IoCaretDown />}
       </div>
