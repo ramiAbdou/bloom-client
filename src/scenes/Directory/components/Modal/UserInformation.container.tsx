@@ -1,38 +1,27 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
-import { IoClose, IoMail } from 'react-icons/io5';
+import { IoMail } from 'react-icons/io5';
 
-import Button from '@components/Button/Button';
 import ProfilePicture from '@components/Misc/ProfilePicture';
-import { useStoreActions } from '@store/Store';
 import MemberCard from '../Card/Card.store';
 import SocialMediaContainer from './SocialMedia.container';
 
-const Header = () => {
+const UserProfilePicture = () => {
   const { pictureUrl, firstName, lastName } = MemberCard.useStoreState(
     (store) => store.member,
     deepequal
   );
 
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const onClick = () => closeModal();
-
   return (
-    <div className="s-directory-modal-user-ctr-header">
-      <ProfilePicture
-        circle
-        className="s-directory-modal-pic"
-        firstName={firstName}
-        fontSize={36}
-        lastName={lastName}
-        pictureUrl={pictureUrl}
-        size={96}
-      />
-
-      <Button onClick={onClick}>
-        <IoClose className="back-arrow" />
-      </Button>
-    </div>
+    <ProfilePicture
+      circle
+      className="s-directory-modal-pic"
+      firstName={firstName}
+      fontSize={36}
+      lastName={lastName}
+      pictureUrl={pictureUrl}
+      size={96}
+    />
   );
 };
 
@@ -64,7 +53,7 @@ const PersonalInformation = () => {
 
 export default () => (
   <div className="s-directory-modal-user-ctr">
-    <Header />
+    <UserProfilePicture />
     <PersonalInformation />
     <SocialMediaContainer />
   </div>
