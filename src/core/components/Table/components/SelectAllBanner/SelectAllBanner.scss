@@ -1,0 +1,16 @@
+$PREF: 'c-table-banner';
+
+// ## SELECT ALL BANNER
+
+.#{$PREF} {
+  @extend .flex-acc;
+
+  flex-direction: row;
+  margin-bottom: $xs;
+  padding: $xs 0;
+
+  > p { margin-right: $sm; }
+  > p > span { @extend .body--bold; }
+}
+
+// div.#{$PREF} { flex-direction: row; }

@@ -1,27 +1,13 @@
 import moment from 'moment-timezone';
 import React from 'react';
 
-import Checkbox from '@components/Elements/Checkbox/Checkbox';
 import Attribute from '@components/Tags/Attribute';
-import { IdProps, QuestionType, ValueProps } from '@constants';
+import { QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
-import Table from '../Table.store';
-import { Row } from '../Table.types';
-
-const SelectRowCheckbox = ({ id }: IdProps) => {
-  const isSelected = Table.useStoreState((state) => state.isSelected(id));
-  const toggleRow = Table.useStoreActions((store) => store.toggleRow);
-
-  const onChange = () => toggleRow(id);
-
-  return (
-    <Checkbox
-      checked={isSelected}
-      className="c-table-select"
-      onChange={onChange}
-    />
-  );
-};
+import Table from '../../Table.store';
+import { Row } from '../../Table.types';
+import { getTableCellClass } from '../../Table.util';
+import SelectRowCheckbox from './SelectRowCheckbox';
 
 interface DataCellProps extends Row, ValueProps {
   i: number;
@@ -31,11 +17,14 @@ interface DataCellProps extends Row, ValueProps {
 const DataCell = ({ i, id, type, value }: DataCellProps) => {
   const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
 
+  const fixFirstColumn = Table.useStoreState(
+    ({ options }) => options.fixFirstColumn
+  );
+
   const css = makeClass([
-    [!type || ['SHORT_TEXT', 'CUSTOM'].includes(type), 'c-table-cell--sm'],
-    [['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type), 'c-table-cell--md'],
-    [['LONG_TEXT'].includes(type), 'c-table-cell--lg'],
-    [type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select']
+    getTableCellClass(type),
+    [type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select'],
+    [fixFirstColumn && i === 0, 'c-table-td--fixed']
   ]);
 
   const content: React.ReactNode = takeFirst([
@@ -87,21 +76,4 @@ const DataRow = (row: Row) => {
   );
 };
 
-export default () => {
-  const filteredData = Table.useStoreState((store) => store.filteredData);
-  const floor = Table.useStoreState((store) => store.range[0]);
-  const ceiling = Table.useStoreState((store) => store.range[1]);
-
-  // Fetching these values forces React to re-render, which in the case of
-  // sorting, we do want to re-render our data.
-  Table.useStoreState((store) => store.sortedColumnId);
-  Table.useStoreState((store) => store.sortedColumnDirection);
-
-  return (
-    <tbody>
-      {filteredData.slice(floor, ceiling).map((row: Row) => (
-        <DataRow key={row.id} {...row} />
-      ))}
-    </tbody>
-  );
-};
+export default DataRow;

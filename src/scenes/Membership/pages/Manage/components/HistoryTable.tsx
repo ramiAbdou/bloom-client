@@ -39,7 +39,11 @@ const HistoryTable = () => {
   ];
 
   return (
-    <Table columns={columns} rows={rows}>
+    <Table
+      columns={columns}
+      options={{ fixFirstColumn: false, isSortable: false, showCount: false }}
+      rows={rows}
+    >
       <TableContent />
     </Table>
   );

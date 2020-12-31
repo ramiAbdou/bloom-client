@@ -1,31 +1,12 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
-import Checkbox from '@components/Elements/Checkbox/Checkbox';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Table from '../Table.store';
-import { Column } from '../Table.types';
-
-const SelectAllCheckbox = () => {
-  const isAllPageSelected = Table.useStoreState(
-    (state) => state.isAllPageSelected
-  );
-
-  const toggleAllPageRows = Table.useStoreActions(
-    (store) => store.toggleAllPageRows
-  );
-
-  const onChange = () => toggleAllPageRows();
-
-  return (
-    <Checkbox
-      checked={isAllPageSelected}
-      className="c-table-select"
-      onChange={onChange}
-    />
-  );
-};
+import Table from '../../Table.store';
+import { Column } from '../../Table.types';
+import { getTableCellClass } from '../../Table.util';
+import SelectAllCheckbox from './SelectAllCheckbox';
 
 interface HeaderCellProps extends Column {
   i: number;
@@ -35,18 +16,24 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
+  const isSortable = Table.useStoreState(({ options }) => options.isSortable);
+
+  const fixFirstColumn = Table.useStoreState(
+    ({ options }) => options.fixFirstColumn
+  );
+
   const isPickerShowing = useStoreState(({ panel }) => panel.isIdShowing(id));
   const showPicker = useStoreActions(({ panel }) => panel.showPicker);
 
-  const onClick = () => showPicker(id);
+  const onClick = () => isSortable && showPicker(id);
 
   const isSortedColumn = sortedColumnId === id;
 
   const css = makeClass([
-    [!type || ['SHORT_TEXT', 'CUSTOM'].includes(type), 'c-table-cell--sm'],
-    [['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type), 'c-table-cell--md'],
-    [['LONG_TEXT'].includes(type), 'c-table-cell--lg'],
+    getTableCellClass(type),
+    [fixFirstColumn && i === 0, 'c-table-th--fixed'],
     [isPickerShowing, 'c-table-th--picker'],
+    [isSortable, 'c-table-th--sortable'],
     [isSortedColumn, 'c-table-th--sorted']
   ]);
 
@@ -65,19 +52,4 @@ const HeaderCell = ({ i, type, id, title }: HeaderCellProps) => {
   );
 };
 
-export default () => {
-  const columns = Table.useStoreState((store) => store.columns);
-  const hasData = Table.useStoreState((store) => !!store.filteredData.length);
-
-  const customStyle = !hasData ? { borderBottom: 'none' } : {};
-
-  return (
-    <thead>
-      <tr style={customStyle}>
-        {columns.map((column: Column, i: number) => (
-          <HeaderCell key={column.id} i={i} {...column} />
-        ))}
-      </tr>
-    </thead>
-  );
-};
+export default HeaderCell;

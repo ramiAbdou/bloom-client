@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import Body from './components/Body';
 import ColumnPicker from './components/ColumnPicker/ColumnPicker';
-import Header from './components/Header';
 import Pagination from './components/Pagination/Pagination';
 import SelectAllBanner from './components/SelectAllBanner/SelectAllBanner';
+import BodyContainer from './containers/Body';
+import HeaderContainer from './containers/Header';
 import Table from './Table.store';
 
 export default () => {
@@ -28,8 +28,8 @@ export default () => {
 
       <div id="c-table-ctr" style={{ maxHeight }}>
         <table className="c-table">
-          <Header />
-          <Body />
+          <HeaderContainer />
+          <BodyContainer />
         </table>
       </div>
 

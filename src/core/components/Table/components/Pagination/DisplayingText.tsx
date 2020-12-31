@@ -6,6 +6,9 @@ export default () => {
   const floor = Table.useStoreState(({ range }) => range[0] + 1);
   const ceiling = Table.useStoreState(({ range }) => range[1]);
   const numRows = Table.useStoreState((store) => store.filteredData.length);
+  const showCount = Table.useStoreState(({ options }) => options.showCount);
+
+  if (!showCount) return null;
 
   const message = numRows
     ? `Displaying ${floor}-${ceiling} of ${numRows} results.`

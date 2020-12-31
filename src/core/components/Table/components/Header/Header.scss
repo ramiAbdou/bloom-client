@@ -1,0 +1,63 @@
+// ## TABLE HEADER CELL
+
+$PREF: 'c-table';
+
+th {
+  @extend .#{$PREF}-cell;
+  @extend .meta--lg;
+
+  background-color: $gray-6;
+  top: 0;
+  vertical-align: middle;
+  z-index: 11;
+
+  // Header select option should have a darker border and higher z-index.
+  > div > .c-misc-checkbox { z-index: 12; }
+  > div > .c-misc-checkbox > span { border: 2px $gray-3 solid; }
+
+  // The header title content.
+  > div > p {
+    @extend .meta--lg;
+
+    color: $gray-3;
+
+    @include OVERFLOW_ELLIPSES;
+  }
+
+  // We need to make the border bottom and border right position absolute to
+  // achieve the scrolling functionality that we want.
+  &::after {
+    border-bottom: 1px solid $gray-5;
+    border-right: 1px solid $gray-5;
+    bottom: 0;
+    content: '';
+    height: 100%;
+    left: -1px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.#{$PREF}-th {
+  // The first header cell has higher z-index than rest of th cells to have
+  // horizontal scrolling hide the other cells under this first one.
+  &--fixed { z-index: 12; }
+
+  // When the picker is showing, we keep the background-color dark.
+  &--picker { background-color: $gray-5; }
+
+  &--sortable {
+    cursor: pointer;
+
+    @include HOVER { background-color: $gray-5; cursor: pointer; }
+  }
+
+  &--sorted {
+    > div { @extend .flex-ac; }
+    > div > p { color: $primary; max-width: 85%; }
+    // Caret up or caret down SVG, React controls the displaying of this
+    // element.
+    > div > svg { color: $primary; height: $ss; margin-left: $xs; width: $ss; }
+  }
+}

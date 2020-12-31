@@ -31,7 +31,7 @@ export type TableOptions = {
   hasCheckbox?: boolean;
   isRenamable?: boolean;
   isSortable?: boolean;
-  showTotalCount?: boolean;
+  showCount?: boolean;
 };
 
 export const initialTableOptions: TableOptions = {
@@ -40,5 +40,5 @@ export const initialTableOptions: TableOptions = {
   hasCheckbox: false,
   isRenamable: false,
   isSortable: true,
-  showTotalCount: true
+  showCount: true
 };

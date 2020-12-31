@@ -1,4 +1,20 @@
+import { QuestionType } from '@constants';
+import { makeClass } from '@util/util';
 import { Row, SortDirection } from './Table.types';
+
+/**
+ * Returns the appropriate class based on the type of the question. Different
+ * classes are size-based (ie: --sm, --md, --lg).
+ *
+ * @param type Question's type (ie: SHORT_TEXT).
+ */
+export const getTableCellClass = (type: QuestionType) => {
+  return makeClass([
+    [!type || ['SHORT_TEXT', 'CUSTOM'].includes(type), 'c-table-cell--sm'],
+    [['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type), 'c-table-cell--md'],
+    [['LONG_TEXT'].includes(type), 'c-table-cell--lg']
+  ]);
+};
 
 /**
  * Sorts the given data by the column ID, either in an ASC or DESC fashion. All

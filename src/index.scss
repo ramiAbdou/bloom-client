@@ -19,6 +19,10 @@
 @import './core/components/Modal/Modal.scss';
 @import './core/components/Panel/Panel.scss';
 @import './core/components/Table/Table.scss';
+@import './core/components/Table/components/Body/Body.scss';
+@import './core/components/Table/components/Header/Header.scss';
+@import './core/components/Table/components/Pagination/Pagination.scss';
+@import './core/components/Table/components/SelectAllBanner/SelectAllBanner.scss';
 @import './core/components/Tags/Tags.scss';
 @import './core/components/Toast/Toast.scss';
 @import './scenes/Actions/Dues/Dues.scss';

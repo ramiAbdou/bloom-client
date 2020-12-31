@@ -13,12 +13,13 @@
 
 import React from 'react';
 
+import Card from '@components/Elements/Card/Card';
 import SelectAllBannerButton from './Button';
 import SelectAllBannerMessage from './Message';
 
 export default () => (
-  <div className="c-table-banner">
+  <Card className="c-table-banner">
     <SelectAllBannerMessage />
     <SelectAllBannerButton />
-  </div>
+  </Card>
 );

@@ -21,26 +21,6 @@ $PREF: 'c-table';
   width: max-content;
 }
 
-// ## TABLE DATA ROW
-
-tbody > tr {
-  cursor: pointer;
-
-  @include HOVER {
-    // Can't extend within an include, so manually write the shadow-2 function.
-
-    box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
-    position: relative;
-    transform: scale(1); // Required to push to higher stacking context.
-    z-index: 10;
-  }
-
-  &:not(:last-child) { border-bottom: 1px $gray-5 solid; }
-}
-
-// Applied if the table row is selected.
-tr.#{$PREF}-tr--active { > td { background-color: $primary-bg; } }
-
 // ## TABLE CELL (BOTH TH AND TD)
 
 .#{$PREF}-cell {
@@ -58,130 +38,10 @@ tr.#{$PREF}-tr--active { > td { background-color: $primary-bg; } }
   &:last-child { width: -webkit-fill-available; }
 }
 
-// ## TABLE DATA CELL
-
-td {
-  @extend .#{$PREF}-cell;
-
-  background-color: white;
-  color: $gray-1;
-  vertical-align: top;
-
-  > div > .c-misc-checkbox { z-index: 10; }
-  > div > p { @include OVERFLOW_ELLIPSES(3); }
-  > div > .c-tag-attr { margin: 0 $xxs $xxs 0; }
-
-  // The first data cell has higher z-index than rest of td cells to have
-  // horizontal scrolling hide the other cells under this first one.
-  &:first-of-type { z-index: 9; }
-
-  &:first-of-type::after {
-    border-right: 1px solid $gray-5;
-    content: '';
-    height: 100%;
-    left: -1px;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-}
-
-td.#{$PREF}-td--multiple-select > div { @extend .flex-w; }
-
-// ## TABLE HEADER CELL
-
-th {
-  @extend .#{$PREF}-cell;
-  @extend .meta--lg;
-
-  background-color: $gray-6;
-  cursor: pointer;
-  top: 0;
-  vertical-align: middle;
-  z-index: 11;
-
-  @include HOVER { background-color: $gray-5; cursor: pointer; }
-
-  // Header select option should have a darker border and higher z-index.
-  > div > .c-misc-checkbox { z-index: 12; }
-  > div > .c-misc-checkbox > span { border: 2px $gray-3 solid; }
-
-  // The header title content.
-  > div > p {
-    @extend .meta--lg;
-
-    color: $gray-3;
-
-    @include OVERFLOW_ELLIPSES;
-  }
-
-  // The first header cell has higher z-index than rest of th cells to have
-  // horizontal scrolling hide the other cells  under this first one.
-  &:first-of-type { z-index: 12; }
-
-  // We need to make the border bottom and border right position absolute to
-  // achieve the scrolling functionality that we want.
-  &::after {
-    border-bottom: 1px solid $gray-5;
-    border-right: 1px solid $gray-5;
-    bottom: 0;
-    content: '';
-    height: 100%;
-    left: -1px;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-}
-
-th.#{$PREF}-th--sorted {
-  > div { @extend .flex-ac; }
-  > div > p { color: $primary; max-width: 85%; }
-  // Caret up or caret down SVG, React controls the displaying of this element.
-  > div > svg { color: $primary; height: $ss; margin-left: $xs; width: $ss; }
-}
-
-// When the picker is showing, we keep the background-color dark.
-th.#{$PREF}-th--picker { background-color: $gray-5; }
-
 // ## SELECT CHECKBOX - The HTML applied the .c-misc-checkbox class, we don't
 // extend it in here for overriding purposes of the margin and background-color.
 
 .#{$PREF}-select { background-color: inherit; margin: 0 $lg 0 0; }
-
-// ## PAGINATION - Controls all of the table pagination by selecting different
-// pages. Also controls the displaying text of which rows are being shown.
-
-.#{$PREF}-pagination-ctr { @extend .flex-acsb; margin-top: $sm; }
-.#{$PREF}-pagination-row { @extend .flex-ac; }
-.#{$PREF}-pagination-num {
-  border-radius: 50%;
-  height: $md;
-  width: $md;
-
-  @include HOVER { background-color: $primary-light; }
-
-  &:not(:last-child) { margin-right: $xxs; }
-
-  &--active {
-    background-color: $primary;
-    color: white;
-
-    @include HOVER { background-color: $primary; color: white; }
-  }
-
-  &--ellipses { @include HOVER { background-color: initial; cursor: default; } }
-}
-
-.#{$PREF}-pagination-chevron {
-  border-radius: 50%;
-  padding: 2px;
-
-  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.15); }
-
-  &:first-child { margin-right: $xs; }
-  &:last-child { margin-left: $xs; }
-}
 
 // ## SELECTED BANNER
 
