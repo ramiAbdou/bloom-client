@@ -28,13 +28,13 @@ const HistoryTable = () => {
     },
     {
       Amount: '$250.00',
-      Date: 'December 22, 2020',
+      Date: 'December 22, 2019',
       'Membership Plan': 'Family Member',
       id: uuid()
     },
     {
       Amount: '$250.00',
-      Date: 'December 22, 2020',
+      Date: 'December 22, 2018',
       'Membership Plan': 'Family Member',
       id: uuid()
     }
