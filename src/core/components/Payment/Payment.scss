@@ -26,3 +26,5 @@ $PREF: 'c-payment';
     > .__PrivateStripeElement { width: 100%; }
   }
 }
+
+.#{$PREF}-item--type > div { @extend .flex-acsb; }

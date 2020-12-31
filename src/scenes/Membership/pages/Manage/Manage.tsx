@@ -3,6 +3,7 @@ import React from 'react';
 import MembershipHeader from './components/Header';
 import MembershipCardContainer from './containers/Card';
 import PaymentHistoryContainer from './containers/PaymentHistory';
+import UpdatePaymentModal from './UpdatePaymentModal/UpdatePaymentModal';
 
 const ManageMembership = () => {
   return (
@@ -13,6 +14,8 @@ const ManageMembership = () => {
         <MembershipCardContainer />
         <PaymentHistoryContainer />
       </div>
+
+      <UpdatePaymentModal />
     </>
   );
 };

@@ -20,13 +20,14 @@ const options: StripeCardElementOptions = {
 };
 
 interface PaymentFormProps extends Pick<FormProps, 'onSubmit'> {
-  amount: number;
+  amount?: number;
+  updateCard?: boolean;
 }
 
-const PaymentForm = ({ amount, onSubmit }: PaymentFormProps) => {
+const PaymentForm = ({ amount, onSubmit, updateCard }: PaymentFormProps) => {
   return (
     <Form className="c-payment" onSubmit={onSubmit}>
-      {!!amount && (
+      {(!!amount || updateCard) && (
         <>
           <FormItem required title="Name on Card" type="SHORT_TEXT" />
 

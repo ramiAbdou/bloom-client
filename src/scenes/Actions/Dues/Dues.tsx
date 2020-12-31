@@ -2,6 +2,7 @@ import React from 'react';
 
 import Modal from '@components/Modal/Modal';
 import PaymentForm from '@components/Payment/PaymentForm';
+import StripeProvider from '@components/Payment/StripeProvider';
 import { ModalType } from '@constants';
 import { useStoreState } from '@store/Store';
 import DuesDescription from './components/Description';
@@ -35,6 +36,8 @@ const DuesModalContent = () => {
 
 export default () => (
   <DuesContainer>
-    <DuesModalContent />
+    <StripeProvider>
+      <DuesModalContent />
+    </StripeProvider>
   </DuesContainer>
 );
