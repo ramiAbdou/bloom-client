@@ -5,7 +5,6 @@ import FormItem from '@components/Form/components/Item';
 import Form, { FormProps } from '@components/Form/Form';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
-import PayButton from './PayButton';
 
 const options: StripeCardElementOptions = {
   classes: {
@@ -20,14 +19,20 @@ const options: StripeCardElementOptions = {
 };
 
 interface PaymentFormProps extends Pick<FormProps, 'onSubmit'> {
-  amount?: number;
+  SubmitButton?: React.FC;
+  hideCardItems?: boolean;
   updateCard?: boolean;
 }
 
-const PaymentForm = ({ amount, onSubmit, updateCard }: PaymentFormProps) => {
+const PaymentForm = ({
+  hideCardItems,
+  onSubmit,
+  updateCard,
+  SubmitButton
+}: PaymentFormProps) => {
   return (
     <Form className="c-payment" onSubmit={onSubmit}>
-      {(!!amount || updateCard) && (
+      {(!hideCardItems || updateCard) && (
         <>
           <FormItem required title="Name on Card" type="SHORT_TEXT" />
 
@@ -63,7 +68,7 @@ const PaymentForm = ({ amount, onSubmit, updateCard }: PaymentFormProps) => {
       )}
 
       <FormErrorMessage />
-      <PayButton amount={amount} />
+      <SubmitButton />
     </Form>
   );
 };

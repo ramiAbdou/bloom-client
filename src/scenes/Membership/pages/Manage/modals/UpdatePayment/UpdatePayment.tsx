@@ -4,6 +4,7 @@ import Modal from '@components/Modal/Modal';
 import PaymentForm from '@components/Payment/PaymentForm';
 import StripeProvider from '@components/Payment/StripeProvider';
 import { ModalType } from '@constants';
+import UpdatePaymentButton from './UpdateButton';
 
 const UpdatePaymentModal = () => {
   return (
@@ -16,7 +17,7 @@ const UpdatePaymentModal = () => {
           billing date.
         </p>
 
-        <PaymentForm updateCard />
+        <PaymentForm updateCard SubmitButton={UpdatePaymentButton} />
       </Modal>
     </StripeProvider>
   );
