@@ -16,7 +16,9 @@ export default () => {
   return (
     <div>
       <h4>{currentTitle ?? questionTitle}</h4>
-      {!!totalResponses && <NumberTag value={`${totalResponses} Responses`} />}
+      {totalResponses !== null && (
+        <NumberTag value={`${totalResponses} Responses`} />
+      )}
     </div>
   );
 };

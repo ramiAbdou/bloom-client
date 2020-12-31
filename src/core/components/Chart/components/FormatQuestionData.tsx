@@ -116,7 +116,9 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
   }, [type]);
 
   useEffect(() => {
-    if (data && totalResponses) setData({ data, totalResponses });
+    if (data !== null && totalResponses !== null) {
+      setData({ data, totalResponses });
+    }
   }, [data, totalResponses]);
 
   return null;

@@ -44,7 +44,7 @@ $PREF: 'c-chart';
   color: white;
   padding: $xxs $xs;
   
-  > p { @extend .meta; }
+  > p { @extend .meta; color: white; }
 }
 
 // ## CHART LEGEND - Customized legend that follows Bloom style guide.

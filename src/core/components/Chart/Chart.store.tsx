@@ -41,7 +41,7 @@ export const chartModel: ChartModel = {
 
   title: null,
 
-  totalResponses: 0,
+  totalResponses: null,
 
   type: ChartType.BAR
 };
