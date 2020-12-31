@@ -1,0 +1,36 @@
+$PREF: 's-membership-plans';
+
+// ## BACK ARROW ICON
+
+.#{$PREF}-header > div > button > svg {
+  @extend .react-icon--xl;
+
+  border-radius: 50%;
+  margin-right: $sm;
+  padding: 2px;
+
+  @include HOVER { background-color: rgba($color: $primary-hex, $alpha: 0.15); }
+}
+
+// ## PLAN CARD
+
+.#{$PREF}-card-ctr {
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, $xxl * 5.5);
+  row-gap: $sm;
+}
+
+.#{$PREF}-card {
+  box-sizing: border-box;
+  min-width: $xxl * 5.5;
+  width: fit-content;
+
+  > h4 { color: $gray-2; margin-bottom: $xs; }
+
+  > p {
+    margin-bottom: $sm;
+    > span:first-child { @extend .display; margin-right: $xxs; }
+    > span:last-child { @extend .meta--lg; color: $gray-2; }
+  }
+}

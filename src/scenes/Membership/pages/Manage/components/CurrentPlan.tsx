@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 import Button from '@components/Button/Button';
 import Card from '@components/Elements/Card/Card';
@@ -17,13 +18,18 @@ const CurrentPlanContent = () => {
 };
 
 const CurrentPlanCard = () => {
+  const { url } = useRouteMatch();
+
   return (
     <Card className="s-membership-manage-card--plan">
       <h4>Current Plan</h4>
       <CurrentPlanContent />
-      <Button fit outline>
-        Change Membership Plan
-      </Button>
+
+      <Link to={`${url}/change-plan`}>
+        <Button fit outline>
+          Change Membership Plan
+        </Button>
+      </Link>
     </Card>
   );
 };

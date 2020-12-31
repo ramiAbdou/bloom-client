@@ -23,7 +23,7 @@ const HistoryTable = () => {
       Amount: '$250.00',
       Date: 'December 22, 2020',
       'Membership Plan': 'Family Member',
-      Receipt: <Button underline>View</Button>,
+      Receipt: <Button underline>Receipt</Button>,
       id: uuid()
     },
     {
