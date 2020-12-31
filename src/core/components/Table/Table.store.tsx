@@ -7,7 +7,14 @@ import {
 } from 'easy-peasy';
 import { matchSorter } from 'match-sorter';
 
-import { Column, OnRenameColumn, Row, SortDirection } from './Table.types';
+import {
+  Column,
+  initialTableOptions,
+  OnRenameColumn,
+  Row,
+  SortDirection,
+  TableOptions
+} from './Table.types';
 import { sortByColumn } from './Table.util';
 
 export type TableModel = {
@@ -18,10 +25,10 @@ export type TableModel = {
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
   onRenameColumn: OnRenameColumn;
+  options: TableOptions;
   page: number;
   range: Computed<TableModel, [number, number]>;
   searchString: string;
-  select: boolean;
   selectedRowIds: string[];
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
@@ -74,6 +81,8 @@ export const tableModel: TableModel = {
 
   onRenameColumn: null,
 
+  options: initialTableOptions,
+
   /**
    * Represents the page (currently in 100s) that the table is currently
    * paginated on. In other words, 0 represents 1-99, 1 represents 100-199,
@@ -91,8 +100,6 @@ export const tableModel: TableModel = {
   }),
 
   searchString: '',
-
-  select: true,
 
   selectedRowIds: [],
 

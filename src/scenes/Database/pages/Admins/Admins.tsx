@@ -49,7 +49,7 @@ export default () => {
 
   return (
     <>
-      <Table columns={columns} rows={rows} select={isOwner}>
+      <Table columns={columns} options={{ hasCheckbox: isOwner }} rows={rows}>
         <ActionRow />
         <TableContent />
       </Table>

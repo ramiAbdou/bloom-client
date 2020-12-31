@@ -39,7 +39,7 @@ const HistoryTable = () => {
   ];
 
   return (
-    <Table columns={columns} rows={rows} select={false}>
+    <Table columns={columns} rows={rows}>
       <TableContent />
     </Table>
   );

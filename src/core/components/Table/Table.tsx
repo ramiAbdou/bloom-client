@@ -2,13 +2,19 @@ import React, { useEffect } from 'react';
 
 import { ChildrenProps } from '@constants';
 import Table, { tableModel } from './Table.store';
-import { Column, OnRenameColumn, Row } from './Table.types';
+import {
+  Column,
+  initialTableOptions,
+  OnRenameColumn,
+  Row,
+  TableOptions
+} from './Table.types';
 
 interface TableProps extends ChildrenProps {
   columns: Column[];
+  options?: TableOptions;
   onRenameColumn?: OnRenameColumn;
   rows: Row[];
-  select?: boolean;
 }
 
 const UpdateAndRenderTableContent = ({
@@ -26,9 +32,14 @@ const UpdateAndRenderTableContent = ({
   return <>{children}</>;
 };
 
-export default ({ columns, onRenameColumn, select, ...props }: TableProps) => (
+export default ({ columns, options, onRenameColumn, ...props }: TableProps) => (
   <Table.Provider
-    runtimeModel={{ ...tableModel, columns, onRenameColumn, select }}
+    runtimeModel={{
+      ...tableModel,
+      columns,
+      onRenameColumn,
+      options: { ...initialTableOptions, ...options }
+    }}
   >
     <UpdateAndRenderTableContent {...props} />
   </Table.Provider>

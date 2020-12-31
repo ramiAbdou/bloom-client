@@ -24,3 +24,21 @@ export type OnRenameColumnArgs = {
 };
 
 export type OnRenameColumn = (args: OnRenameColumnArgs) => Promise<void>;
+
+export type TableOptions = {
+  alignEndRight?: boolean;
+  fixFirstColumn?: boolean;
+  hasCheckbox?: boolean;
+  isRenamable?: boolean;
+  isSortable?: boolean;
+  showTotalCount?: boolean;
+};
+
+export const initialTableOptions: TableOptions = {
+  alignEndRight: false,
+  fixFirstColumn: true,
+  hasCheckbox: false,
+  isRenamable: false,
+  isSortable: true,
+  showTotalCount: true
+};

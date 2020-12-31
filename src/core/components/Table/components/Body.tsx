@@ -29,7 +29,7 @@ interface DataCellProps extends Row, ValueProps {
 }
 
 const DataCell = ({ i, id, type, value }: DataCellProps) => {
-  const select = Table.useStoreState((store) => store.select);
+  const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
 
   const css = makeClass([
     [!type || ['SHORT_TEXT', 'CUSTOM'].includes(type), 'c-table-cell--sm'],
@@ -54,7 +54,7 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
   return (
     <td className={css}>
       <div>
-        {!i && select && <SelectRowCheckbox id={id} />}
+        {!i && hasCheckbox && <SelectRowCheckbox id={id} />}
         {content}
       </div>
     </td>

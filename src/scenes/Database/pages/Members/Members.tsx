@@ -58,7 +58,12 @@ export default () => {
   };
 
   return (
-    <Table select columns={columns} rows={rows} onRenameColumn={onRenameColumn}>
+    <Table
+      columns={columns}
+      options={{ hasCheckbox: true }}
+      rows={rows}
+      onRenameColumn={onRenameColumn}
+    >
       <ActionRow />
       <TableContent />
     </Table>
