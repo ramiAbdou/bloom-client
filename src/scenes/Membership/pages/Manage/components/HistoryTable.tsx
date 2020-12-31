@@ -43,7 +43,12 @@ const HistoryTable = () => {
   return (
     <Table
       columns={columns}
-      options={{ fixFirstColumn: false, isSortable: false, showCount: false }}
+      options={{
+        alignEndRight: true,
+        fixFirstColumn: false,
+        isSortable: false,
+        showCount: false
+      }}
       rows={rows}
     >
       <TableContent />

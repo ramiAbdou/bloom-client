@@ -32,6 +32,8 @@ td {
       width: 100%;
     }
   }
+
+  &--right { > div > *:last-child { margin-left: auto; } }
 }
 
 // ## TABLE DATA ROW

@@ -15,7 +15,15 @@ interface DataCellProps extends Row, ValueProps {
 }
 
 const DataCell = ({ i, id, type, value }: DataCellProps) => {
+  const alignEndRight = Table.useStoreState(
+    ({ options }) => options.alignEndRight
+  );
+
   const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
+
+  const isLastCell = Table.useStoreState(
+    ({ columns }) => i === columns.length - 1
+  );
 
   const fixFirstColumn = Table.useStoreState(
     ({ options }) => options.fixFirstColumn
@@ -24,6 +32,7 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
   const css = makeClass([
     getTableCellClass(type),
     [type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select'],
+    [alignEndRight && isLastCell, 'c-table-td--right'],
     [fixFirstColumn && i === 0, 'c-table-td--fixed']
   ]);
 
