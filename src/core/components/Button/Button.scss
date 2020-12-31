@@ -16,6 +16,7 @@ $PREF: 'c-btn';
 
   // Maps to the "fill" prop passed into the Button component.
   &--fill { width: 100%; }
+  &--fit { width: fit-content; }
 
   // Maps to the "large" prop passed into the Button component.
   &--lg { height: $xl; }

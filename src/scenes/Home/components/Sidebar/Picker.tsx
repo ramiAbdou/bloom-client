@@ -8,9 +8,10 @@ import { PanelAction } from '@components/Panel/Panel.types';
 import { PickerType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { LOGOUT } from '@scenes/Home/Home.gql';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 
 export default () => {
+  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
 
   const { push } = useHistory();
@@ -40,7 +41,11 @@ export default () => {
 
   // Show a picker that either allows them to view their profile or log out.
   const actions: PanelAction[] = [
-    { Icon: IoCard, onClick: () => null, text: 'Manage Membership' },
+    {
+      Icon: IoCard,
+      onClick: () => push(`/${encodedUrlName}/membership`),
+      text: 'Manage Membership'
+    },
     { Icon: IoPerson, onClick: () => null, text: 'Your Profile' },
     { Icon: IoExit, onClick: onLogout, separator: true, text: 'Log Out' }
   ];

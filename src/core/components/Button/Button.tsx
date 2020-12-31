@@ -13,6 +13,7 @@ export interface ButtonProps
   extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
   href?: string;
   fill?: boolean;
+  fit?: boolean;
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
@@ -62,6 +63,7 @@ export default forwardRef(
       children,
       disabled,
       fill,
+      fit,
       large,
       loading,
       loadingText,
@@ -90,6 +92,7 @@ export default forwardRef(
       'c-btn',
       [large, 'c-btn--lg'],
       [fill, 'c-btn--fill'],
+      [fit, 'c-btn--fit'],
       [primary, 'c-btn-primary'],
       [outline, 'c-btn-outline'],
       [underline, 'c-btn-underline'],

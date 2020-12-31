@@ -10,6 +10,7 @@ import Database from '../Database/Database';
 import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
+import Membership from '../Membership/Membership';
 import BottomBar from './components/BottomBar/BottomBar';
 import SidebarPicker from './components/Sidebar/Picker';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -32,6 +33,7 @@ const HomeContent = () => {
         {!autoAccept && (
           <AdminRoute component={Applicants} path={`${url}/applicants`} />
         )}
+        <AdminRoute component={Membership} path={`${url}/membership`} />
         <Redirect to={`${url}/directory`} />
       </Switch>
     </div>
