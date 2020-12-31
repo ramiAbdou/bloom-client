@@ -9,7 +9,7 @@ import MemberCard from '../components/Card/Card';
 import { MemberCardData } from '../components/Card/Card.store';
 import Directory from '../Directory.store';
 
-export default () => {
+const DirectoryCardContainer = () => {
   const loading = Directory.useStoreState((store) => store.loading);
   const searchString = Directory.useStoreState((store) => store.searchString);
   const numMembers = Directory.useStoreState((store) => store.numMembers);
@@ -100,3 +100,5 @@ export default () => {
     </div>
   );
 };
+
+export default DirectoryCardContainer;

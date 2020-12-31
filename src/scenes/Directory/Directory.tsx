@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Header from './components/Header';
-import MemberCardContainer from './containers/CardContainer';
+import DirectoryCardContainer from './containers/Card';
 import Directory from './Directory.store';
 import useFetchDirectory from './hooks/useFetchDirectory';
 
@@ -11,7 +11,7 @@ const DirectoryContent = () => {
   return (
     <div>
       <Header />
-      <MemberCardContainer />
+      <DirectoryCardContainer />
     </div>
   );
 };
