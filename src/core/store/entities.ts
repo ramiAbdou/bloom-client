@@ -42,10 +42,18 @@ export type IMember = {
   duesStatus: 'ACTIVE' | 'INACTIVE' | 'LAME';
   id: IdString;
   paymentMethod: IPaymentMethod;
+  payments: IdString[];
   role?: 'ADMIN' | 'OWNER';
   type: IdString;
   status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
   user: IdString;
+};
+
+export type IMemberPayment = {
+  amount: number;
+  createdAt: string;
+  id: IdString;
+  type: IMemberType;
 };
 
 export type IMemberType = {
