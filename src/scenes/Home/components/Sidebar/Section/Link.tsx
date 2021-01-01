@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import Button from '@components/Button/Button';
-import { OnClickProps } from '@constants';
+import { ModalType, OnClickProps } from '@constants';
 import Home, { LinkOptions } from '@scenes/Home/Home.store';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
 
 interface SidebarLinkProps extends LinkOptions, OnClickProps {}
@@ -15,7 +15,14 @@ interface SidebarLinkProps extends LinkOptions, OnClickProps {}
  * Button that opens up a modal.
  */
 export default memo(({ Icon, onClick, to, title }: SidebarLinkProps) => {
+  const isStripeConnected = useStoreState(({ db }) => {
+    return db.entities.integrations.byId[db.community?.integrations]
+      ?.stripeAccountId;
+  });
+
+  const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
   const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isActive = Home.useStoreState((store) => store.isActive(to));
   const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);
@@ -28,6 +35,17 @@ export default memo(({ Icon, onClick, to, title }: SidebarLinkProps) => {
   if (onClick) {
     return (
       <Button className={css} onClick={onClick}>
+        <Icon />
+        {title}
+      </Button>
+    );
+  }
+
+  if (isStripeConnected && duesStatus !== 'ACTIVE') {
+    const onDuesProtectedClick = () => showModal(ModalType.PAY_DUES);
+
+    return (
+      <Button className={css} onClick={onDuesProtectedClick}>
         <Icon />
         {title}
       </Button>

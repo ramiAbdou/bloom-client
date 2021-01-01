@@ -14,8 +14,8 @@ import Membership from '../Membership/Membership';
 import BottomBar from './components/BottomBar/BottomBar';
 import SidebarPicker from './components/Sidebar/Picker';
 import Sidebar from './components/Sidebar/Sidebar';
-import AuthWrapper from './containers/AuthWrapper';
-import DuesWrapper from './containers/DuesWrapper';
+import AuthWrapper from './hoc/AuthWrapper';
+import DuesWrapper from './hoc/DuesWrapper';
 import Home from './Home.store';
 
 const HomeContent = () => {
