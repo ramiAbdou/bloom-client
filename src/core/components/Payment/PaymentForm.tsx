@@ -38,7 +38,7 @@ const PaymentForm = ({
         <>
           <FormItem required title="Name on Card" type="SHORT_TEXT" />
 
-          <FormItem required title="Credit or Debit Card">
+          <FormItem required value title="Credit or Debit Card">
             <CardElement options={options} />
           </FormItem>
 

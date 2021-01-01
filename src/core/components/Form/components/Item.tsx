@@ -16,7 +16,8 @@ export default ({
   placeholder,
   title,
   type,
-  validate
+  validate,
+  value
 }: FormItemProps) => {
   const setItem = Form.useStoreActions((store) => store.setItem);
 
@@ -31,7 +32,7 @@ export default ({
       required,
       title,
       validate,
-      value: emptyValue
+      value: value ?? emptyValue
     });
   }, []);
 
