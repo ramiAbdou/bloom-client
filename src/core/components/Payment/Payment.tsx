@@ -33,7 +33,11 @@ const PaymentForm = ({
   });
 
   return (
-    <Form className="c-payment" isEmpty={isCardOnFile} onSubmit={onSubmit}>
+    <Form
+      className="c-payment"
+      isEmpty={isCardOnFile && !isCardChanging}
+      onSubmit={onSubmit}
+    >
       {children}
       <CardOnFile isCardChanging={isCardChanging} isFree={isFree} />
       <CardInfoContainer isCardChanging={isCardChanging} isFree={isFree} />

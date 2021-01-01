@@ -1,27 +1,22 @@
 import { useEffect } from 'react';
 
 import useQuery from '@hooks/useQuery';
-import { IPaymentMethod } from '@store/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { IMember } from '@store/entities';
+import { Schema } from '@store/schema';
+import { useStoreActions } from '@store/Store';
 import { GET_PAYMENT_METHOD } from '../Membership.gql';
 
 const usePaymentMethod = () => {
-  const memberId = useStoreState(({ db }) => db.member.id);
-  const updateEntities = useStoreActions(({ db }) => db.updateEntities);
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
-  const result = useQuery<IPaymentMethod>({
-    name: 'getPaymentMethod',
+  const result = useQuery<IMember>({
+    name: 'getMember',
     query: GET_PAYMENT_METHOD
   });
 
   useEffect(() => {
     if (!result?.data) return;
-
-    updateEntities({
-      entityName: 'members',
-      ids: [memberId],
-      updatedData: { paymentMethod: result.data }
-    });
+    mergeEntities({ data: result.data, schema: Schema.MEMBER });
   }, [result.data]);
 
   return result;
