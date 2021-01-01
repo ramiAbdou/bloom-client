@@ -25,6 +25,13 @@ export type IIntegrations = {
   stripeAccountId: string;
 };
 
+export type IPaymentMethod = {
+  brand: string;
+  expirationDate: string;
+  last4: string;
+  zipCode: string;
+};
+
 export type IMember = {
   allData?: { questionId: string; value: string }[];
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
@@ -34,6 +41,7 @@ export type IMember = {
   createdAt: string;
   duesStatus: 'ACTIVE' | 'INACTIVE' | 'LAME';
   id: IdString;
+  paymentMethod: IPaymentMethod;
   role?: 'ADMIN' | 'OWNER';
   type: IdString;
   status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';

@@ -1,11 +1,16 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
+import { LoadingProps } from '@constants';
 import { makeClass } from '@util/util';
 
-type SpinnerProps = { dark?: boolean };
+interface SpinnerProps extends LoadingProps {
+  dark?: boolean;
+}
 
-export default ({ dark }: SpinnerProps) => {
+export default ({ dark, loading }: SpinnerProps) => {
+  if (loading === false) return null;
+
   const css = makeClass(['c-loader-spinner', [dark, 'c-loader-spinner--dark']]);
 
   return (

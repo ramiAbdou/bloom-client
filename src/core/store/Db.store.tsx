@@ -115,7 +115,7 @@ export const dbModel: DbModel = {
 
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
-    return byId[activeId];
+    return byId[activeId] as IMember;
   }),
 
   /**

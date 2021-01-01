@@ -53,7 +53,10 @@ const ChangePlanButton = () => {
 
 const CurrentPlanCard = () => (
   <Card className="s-membership-manage-card--plan">
-    <h4>Current Plan</h4>
+    <div>
+      <h4>Current Plan</h4>
+    </div>
+
     <CurrentPlanContent />
     <ChangePlanButton />
   </Card>

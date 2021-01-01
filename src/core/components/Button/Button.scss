@@ -12,7 +12,7 @@ $PREF: 'c-btn';
     &:active { transform: scale(0.95); transition: transform 0.1s ease-out; }
   }
 
-  &:disabled { color: white; cursor: not-allowed; }
+  &:disabled { cursor: not-allowed; }
 
   // Maps to the "fill" prop passed into the Button component.
   &--fill { width: 100%; }
@@ -28,7 +28,7 @@ $PREF: 'c-btn';
 .#{$PREF}-loading-ctr > p {
   @extend .meta--lg;
 
-  color: white;
+  color: $gray-3;
   margin-right: $sm;
 }
 
