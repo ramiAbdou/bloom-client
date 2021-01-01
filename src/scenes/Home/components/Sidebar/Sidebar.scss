@@ -49,7 +49,7 @@ $PREF: 's-home-sidebar';
   box-sizing: border-box;
   color: $gray-1;
   justify-content: left;
-  margin: $xs 0;
+  margin: $xxs 0;
   padding: $xs $xxs $xs $sm;
   text-align: left;
   width: 95%;
@@ -68,12 +68,7 @@ $PREF: 's-home-sidebar';
 // Disables the scaling transition that typically happens for custom buttons.
 button.#{$PREF}-link { &:active { transform: none; } }
 
-.#{$PREF}-link > svg {
-  @extend .react-icon--lg;
-
-  color: $gray-1;
-  margin-right: $xs;
-}
+.#{$PREF}-link > svg { @extend .react-icon; color: $gray-1; margin-right: $xs; }
 
 .#{$PREF}-link--active {
   @extend .body--bold; 

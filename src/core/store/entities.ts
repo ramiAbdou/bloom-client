@@ -52,6 +52,7 @@ export type IMember = {
 export type IMemberPayment = {
   amount: number;
   createdAt: string;
+  stripeInvoicePdf: string;
   id: IdString;
   type: IMemberType;
 };
@@ -101,6 +102,7 @@ export type IEntities = {
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
+  payments: EntityRecord<IQuestion>;
   questions: EntityRecord<IQuestion>;
   types: EntityRecord<IMemberType>;
   users: EntityRecord<IUser>;
@@ -111,6 +113,7 @@ export const initialEntities: IEntities = {
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { activeId: null, allIds: [], byId: {} },
+  payments: { allIds: [], byId: {} },
   questions: { allIds: [], byId: {} },
   types: { activeId: null, allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
