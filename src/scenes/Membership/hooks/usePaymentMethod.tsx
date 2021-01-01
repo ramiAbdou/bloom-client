@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import useQuery from '@hooks/useQuery';
 import { IPaymentMethod } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_PAYMENT_METHOD } from '../../../Membership.gql';
+import { GET_PAYMENT_METHOD } from '../Membership.gql';
 
 const usePaymentMethod = () => {
   const memberId = useStoreState(({ db }) => db.member.id);

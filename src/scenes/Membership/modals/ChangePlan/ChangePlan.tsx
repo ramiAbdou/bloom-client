@@ -1,57 +1,31 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import Label from '@components/Form/components/Label';
+import Spinner from '@components/Loader/Spinner';
 import Modal from '@components/Modal/Modal';
 import PaymentDescription from '@components/Payment/Description';
-import PaymentForm from '@components/Payment/PaymentForm';
 import StripeProvider from '@components/Payment/StripeProvider';
 import { ModalType } from '@constants';
-import { IMemberType } from '@store/entities';
-import { useStoreState } from '@store/Store';
-import { takeFirst } from '@util/util';
+import usePaymentMethod from '../../hooks/usePaymentMethod';
 import ChangePlan from '../../pages/ChangePlan/ChangePlan.store';
-import PayButton from './components/FinishButton';
+import ChangePlanForm from './components/Form';
 
 const ChangePlanModal = () => {
   const selectedTypeId = ChangePlan.useStoreState(
     (store) => store.selectedTypeId
   );
 
-  const type = useStoreState(({ db }) => {
-    return db.entities.types.byId[selectedTypeId];
-  }, deepequal) as IMemberType;
-
-  if (!type) return null;
-
-  const { amount, isFree, name, recurrence } = type;
-
-  const recurrenceString = takeFirst([
-    [recurrence === 'YEARLY', 'yr'],
-    [recurrence === 'MONTHLY', 'mo'],
-    [recurrence === 'LIFETIME', 'life']
-  ]);
+  const { loading } = usePaymentMethod();
 
   return (
     <Modal id={ModalType.CHANGE_PLAN}>
       <StripeProvider>
-        <h1>Change Membership Plan</h1>
-        <PaymentDescription selectedTypeId={selectedTypeId} />
-        <PaymentForm SubmitButton={PayButton}>
-          <div className="c-form-item">
-            <Label>Membership Type</Label>
-            <p>
-              {name}, ${amount / 100}/{recurrenceString}
-            </p>
-          </div>
+        <div>
+          <h1>Change Membership Plan</h1>
+          <Spinner dark loading={loading} />
+        </div>
 
-          {!isFree && (
-            <div className="c-form-item">
-              <Label>Credit or Debit Card</Label>
-              <p>Mastercard * 3221</p>
-            </div>
-          )}
-        </PaymentForm>
+        <PaymentDescription selectedTypeId={selectedTypeId} />
+        <ChangePlanForm />
       </StripeProvider>
     </Modal>
   );

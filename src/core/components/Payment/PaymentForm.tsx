@@ -19,7 +19,9 @@ const options: StripeCardElementOptions = {
   style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
 };
 
-interface PaymentFormProps extends Pick<FormProps, 'onSubmit'>, ChildrenProps {
+interface PaymentFormProps
+  extends Pick<FormProps, 'isEmpty' | 'onSubmit'>,
+    ChildrenProps {
   SubmitButton?: React.FC;
   hideCardItems?: boolean;
 }
@@ -27,11 +29,12 @@ interface PaymentFormProps extends Pick<FormProps, 'onSubmit'>, ChildrenProps {
 const PaymentForm = ({
   children,
   hideCardItems,
+  isEmpty,
   onSubmit,
   SubmitButton
 }: PaymentFormProps) => {
   return (
-    <Form className="c-payment" onSubmit={onSubmit}>
+    <Form className="c-payment" isEmpty={isEmpty} onSubmit={onSubmit}>
       {children}
 
       {!hideCardItems && (

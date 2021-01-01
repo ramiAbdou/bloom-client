@@ -15,6 +15,7 @@ export type FormModel = {
   errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
+  isEmpty: boolean;
   isLoading: boolean;
   isShowingErrors: boolean;
   items: FormItemData[];
@@ -34,7 +35,9 @@ export const formModel: FormModel = {
     return items.find((item) => item.category === category);
   }),
 
-  isCompleted: computed(({ items }) => {
+  isCompleted: computed(({ isEmpty, items }) => {
+    if (isEmpty) return true;
+
     return (
       items?.length &&
       items.every(
@@ -43,6 +46,8 @@ export const formModel: FormModel = {
       )
     );
   }),
+
+  isEmpty: false,
 
   // Used to ensure that the submit button is disabled.
   isLoading: false,

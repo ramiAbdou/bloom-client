@@ -7,6 +7,7 @@ import { FormItemData, OnFormSubmit } from './Form.types';
 import { formatQuestions } from './Form.util';
 
 export interface FormProps extends ChildrenProps, ClassNameProps {
+  isEmpty?: boolean;
   questions?: FormItemData[];
   onSubmit?: OnFormSubmit;
 }
@@ -37,9 +38,13 @@ const FormContent = ({
   );
 };
 
-export default ({ questions, ...props }: FormProps) => (
+export default ({ questions, isEmpty, ...props }: FormProps) => (
   <Form.Provider
-    runtimeModel={{ ...formModel, items: formatQuestions(questions ?? []) }}
+    runtimeModel={{
+      ...formModel,
+      isEmpty,
+      items: formatQuestions(questions ?? [])
+    }}
   >
     <FormContent {...props} />
   </Form.Provider>

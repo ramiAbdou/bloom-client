@@ -37,6 +37,8 @@ $PREF: 'c-modal';
 
 // All modals will have an h1 tag, which will be standardized everywhere.
 .#{$PREF} > h1 { color: $primary; margin-bottom: $sm; }
+.#{$PREF} > div:first-child { margin-bottom: $sm; }
+.#{$PREF} > div:first-child > h1 { color: $primary; }
 .#{$PREF} > p:first-of-type { margin-bottom: $md; }
 
 // ## CONFIRMATION MODAL
