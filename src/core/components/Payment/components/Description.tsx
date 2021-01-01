@@ -4,10 +4,7 @@ import React from 'react';
 import { useStoreState } from '@store/Store';
 
 const FreeDescription = () => (
-  <p>
-    There are no dues to pay for a free membership! Click "Done" to confirm the
-    Membership switch.
-  </p>
+  <p>There are no dues to pay for a free membership!</p>
 );
 
 const LifetimeDescription = () => (

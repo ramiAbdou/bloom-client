@@ -1,5 +1,5 @@
 import deepequal from 'fast-deep-equal';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { ChildrenProps, ClassNameProps } from '@constants';
 import Form, { formModel } from './Form.store';
@@ -15,11 +15,18 @@ export interface FormProps extends ChildrenProps, ClassNameProps {
 const FormContent = ({
   className,
   children,
+  isEmpty,
   onSubmit
 }: Omit<FormProps, 'questions'>) => {
   const items = Form.useStoreState((store) => store.items, deepequal);
+  const currentIsEmpty = Form.useStoreState((store) => store.isEmpty);
   const setError = Form.useStoreActions((store) => store.setErrorMessage);
+  const setIsEmpty = Form.useStoreActions((store) => store.setIsEmpty);
   const setIsLoading = Form.useStoreActions((store) => store.setIsLoading);
+
+  useEffect(() => {
+    if (currentIsEmpty !== isEmpty) setIsEmpty(isEmpty);
+  }, [isEmpty]);
 
   const onFormSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,13 +45,9 @@ const FormContent = ({
   );
 };
 
-export default ({ questions, isEmpty, ...props }: FormProps) => (
+export default ({ questions, ...props }: FormProps) => (
   <Form.Provider
-    runtimeModel={{
-      ...formModel,
-      isEmpty,
-      items: formatQuestions(questions ?? [])
-    }}
+    runtimeModel={{ ...formModel, items: formatQuestions(questions ?? []) }}
   >
     <FormContent {...props} />
   </Form.Provider>

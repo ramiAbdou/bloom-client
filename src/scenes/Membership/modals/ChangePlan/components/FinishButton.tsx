@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FinishButton from '@components/Payment/FinishButton';
+import FinishButton from '@components/Payment/components/FinishButton';
 import { useStoreState } from '@store/Store';
 import ChangePlan from '../../../pages/ChangePlan/ChangePlan.store';
 

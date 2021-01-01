@@ -21,6 +21,7 @@ export type FormModel = {
   items: FormItemData[];
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
+  setIsEmpty: Action<FormModel, boolean>;
   setIsLoading: Action<FormModel, boolean>;
   showErrors: Action<FormModel>;
   updateItem: Action<FormModel, Partial<FormItemData>>;
@@ -60,6 +61,8 @@ export const formModel: FormModel = {
     ...state,
     errorMessage
   })),
+
+  setIsEmpty: action((state, isEmpty: boolean) => ({ ...state, isEmpty })),
 
   // Typically set when a form is submitting an async function.
   setIsLoading: action((state, isLoading: boolean) => ({

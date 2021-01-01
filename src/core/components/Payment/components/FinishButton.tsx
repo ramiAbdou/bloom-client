@@ -10,7 +10,10 @@ type PayButtonProps = { amount: number };
 const PayButton = ({ amount }: PayButtonProps) => {
   const isLoading = Form.useStoreState((store) => store.isLoading);
   const stripe = useStripe();
+
   if (amount === null || amount === undefined) return null;
+
+  const isFree = amount === 0;
 
   // Use a traditional checkout form.
   return (
@@ -21,8 +24,8 @@ const PayButton = ({ amount }: PayButtonProps) => {
       loading={isLoading}
       loadingText="Paying..."
     >
-      <IoLockClosed />
-      {amount === 0 ? 'Change Membership' : `Finish and Pay $${amount}`}
+      {!isFree && <IoLockClosed />}
+      {isFree ? 'Change Membership' : `Finish and Pay $${amount}`}
     </SubmitButton>
   );
 };

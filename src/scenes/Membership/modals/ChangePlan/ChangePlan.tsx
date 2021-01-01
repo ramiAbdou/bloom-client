@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Spinner from '@components/Loader/Spinner';
+import LoadingHeader from '@components/Elements/LoadingHeader/LoadingHeader';
 import Modal from '@components/Modal/Modal';
-import PaymentDescription from '@components/Payment/Description';
-import StripeProvider from '@components/Payment/StripeProvider';
+import PaymentDescription from '@components/Payment/components/Description';
+import StripeProvider from '@components/Payment/containers/StripeProvider';
 import { ModalType } from '@constants';
 import usePaymentMethod from '../../hooks/usePaymentMethod';
 import ChangePlan from '../../pages/ChangePlan/ChangePlan.store';
@@ -19,11 +19,7 @@ const ChangePlanModal = () => {
   return (
     <Modal id={ModalType.CHANGE_PLAN}>
       <StripeProvider>
-        <div>
-          <h1>Change Membership Plan</h1>
-          <Spinner dark loading={loading} />
-        </div>
-
+        <LoadingHeader loading={loading} title="Change Membership Plan" />
         <PaymentDescription selectedTypeId={selectedTypeId} />
         <ChangePlanForm />
       </StripeProvider>

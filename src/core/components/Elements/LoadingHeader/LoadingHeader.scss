@@ -1,0 +1,7 @@
+$PREF: 'c-loading-header';
+
+.#{$PREF} {
+  @extend .flex-ac;
+
+  > *:first-child { margin-right: $sm; }
+}
