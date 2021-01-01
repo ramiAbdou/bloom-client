@@ -3,9 +3,9 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Loading from '@store/Loading.store';
 import Header from './components/Header';
+import useFetchDatabase from './hooks/useFetchDatabase';
 import Admins from './pages/Admins/Admins';
 import Members from './pages/Members/Members';
-import useFetchDatabase from './hooks/useFetchDatabase';
 
 const DatabaseContent = () => {
   const { url } = useRouteMatch();

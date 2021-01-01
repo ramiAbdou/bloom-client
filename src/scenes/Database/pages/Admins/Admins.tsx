@@ -6,8 +6,8 @@ import Table from '@components/Table/Table';
 import { Column, Row } from '@components/Table/Table.types';
 import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
-import AddAdminStore from '../../components/AddAdmin/AddAdmin.store';
-import AddAdminModal from '../../components/AddAdmin/AddAdminModal';
+import AddAdminStore from '../../modals/AddAdmin/AddAdmin.store';
+import AddAdminModal from '../../modals/AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
 export default () => {

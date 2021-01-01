@@ -9,8 +9,8 @@ import useMutation from '@hooks/useMutation';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
+import AddModalInput from '../../components/AddModalInput';
 import { CREATE_MEMBERS, CreateMembersArgs } from '../../Database.gql';
-import AddModalInput from '../AddModalInput';
 import AddAdmin, { doesInputHaveError } from './AddAdmin.store';
 
 const AddAdminInput = memo(({ id }: IdProps) => {

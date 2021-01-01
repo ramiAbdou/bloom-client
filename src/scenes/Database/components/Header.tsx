@@ -6,7 +6,7 @@ import Spinner from '@components/Loader/Spinner';
 import AddMemberButton from '@scenes/Home/modals/AddMember/AddMemberButton';
 import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
-import AddAdminButton from './AddAdmin/AddAdminButton';
+import AddAdminButton from '../modals/AddAdmin/AddAdminButton';
 
 const MemberAdminButton = () => {
   const { location, push } = useHistory();
