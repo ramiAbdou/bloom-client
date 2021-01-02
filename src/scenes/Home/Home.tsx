@@ -33,7 +33,7 @@ const HomeContent = () => {
         {!autoAccept && (
           <AdminRoute component={Applicants} path={`${url}/applicants`} />
         )}
-        <AdminRoute component={Membership} path={`${url}/membership`} />
+        <Route component={Membership} path={`${url}/membership`} />
         <Redirect to={`${url}/directory`} />
       </Switch>
     </div>

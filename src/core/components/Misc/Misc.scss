@@ -24,6 +24,7 @@ $PREF: 'c-misc';
 
 .#{$PREF}-profile-picture--circle { border-radius: 50%; }
 .#{$PREF}-profile-picture > * { @extend .fill; border-radius: inherit; }
+.#{$PREF}-profile-picture > img { object-fit: cover; }
 .#{$PREF}-profile-picture > h3 {
   @extend .flex-acc;
 
