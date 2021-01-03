@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
@@ -48,4 +48,4 @@ const MainHeader = ({
   );
 };
 
-export default MainHeader;
+export default memo(MainHeader);
