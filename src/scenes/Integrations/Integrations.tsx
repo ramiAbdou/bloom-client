@@ -2,6 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 import URLBuilder from 'util/URLBuilder';
 
+import MainHeader from '@components/Main/Header';
 import { APP, isProduction } from '@constants';
 import useQuery from '@hooks/useQuery';
 import { ICommunity, IIntegrations } from '@store/entities';
@@ -9,7 +10,6 @@ import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
 import StripeDetails from './components/ExpandedDetails/StripeDetails';
-import Header from './components/Header';
 import IntegrationCard, {
   IntegrationCardProps
 } from './components/IntegrationCard';
@@ -131,7 +131,7 @@ export default () => {
 
   return (
     <Integrations.Provider>
-      <Header loading={loading} />
+      <MainHeader loading={loading} title="Integrations" />
       <div className="s-home-content">{!loading && <Cards />}</div>
       <IntegrationModal />
     </Integrations.Provider>

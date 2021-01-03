@@ -2,8 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import MultiButton from '@components/Button/Multi';
-import Spinner from '@components/Loader/Spinner';
-import Loading from '@store/Loading.store';
+import MainHeader from '@components/Main/Header';
 import { takeFirst } from '@util/util';
 
 const HeaderNavigation = () => {
@@ -32,20 +31,8 @@ const HeaderNavigation = () => {
   );
 };
 
-const HeaderText = () => {
-  const loading = Loading.useStoreState((store) => store.loading);
-
-  return (
-    <div>
-      <h1 className="s-home-header-title">Analytics</h1>
-      {loading && <Spinner dark />}
-    </div>
-  );
-};
-
 export default () => (
-  <div className="s-home-header s-analytics-header">
-    <HeaderText />
+  <MainHeader className="s-analytics-header" title="Analytics">
     <HeaderNavigation />
-  </div>
+  </MainHeader>
 );

@@ -1,0 +1,17 @@
+$PREF: 'c-main';
+
+// ## HEADER - Makes the header consistent across each page. Mainly for loading
+// purposes. However, each page should implement their own positioning whether
+// it is grid-based or flex-based.
+
+.#{$PREF}-header {
+  background-color: $gray-6;
+  padding: $md;
+  position: sticky;
+  top: 0;
+  z-index: 11;
+
+  // Contains the header's title and the loading spinner to be on same line.
+  > div:first-child { @extend .flex-ac; }
+  > div:first-child > h1 { margin-right: $sm; }
+}

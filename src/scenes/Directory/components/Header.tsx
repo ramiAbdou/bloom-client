@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import SearchBar from '@components/Elements/SearchBar/SearchBar';
-import Spinner from '@components/Loader/Spinner';
-import NumberTag from '@components/Tags/NumberTag';
+import MainHeader from '@components/Main/Header';
 import Directory from '../Directory.store';
 
 const SearchContainer = () => {
@@ -30,22 +29,20 @@ const SearchContainer = () => {
   );
 };
 
-const HeaderText = () => {
+const DirectoryHeader = () => {
   const loading = Directory.useStoreState((store) => store.loading);
   const numMembers = Directory.useStoreState((store) => store.numMembers);
 
   return (
-    <div>
-      <h1 className="s-home-header-title">Directory</h1>
-      {!loading && <NumberTag value={`${numMembers} Members`} />}
-      {loading && <Spinner dark />}
-    </div>
+    <MainHeader
+      className="s-directory-header"
+      loading={loading}
+      numberTag={`${numMembers} Members`}
+      title="Directory"
+    >
+      <SearchContainer />
+    </MainHeader>
   );
 };
 
-export default () => (
-  <div className="s-directory-header">
-    <HeaderText />
-    <SearchContainer />
-  </div>
-);
+export default DirectoryHeader;
