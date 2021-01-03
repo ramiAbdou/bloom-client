@@ -56,13 +56,15 @@ export default () => {
           dataKey="name"
           interval={interval ?? data.length / 12}
           padding={{ left: 4, right: 12 }}
-          tickFormatter={(label) => day(label).format('M/D')}
+          tickFormatter={(label) => day(label).format('MMM D')}
           tickSize={8}
         />
+
         <YAxis
           domain={[(dataMin: number) => Math.round(dataMin * 0.8), 'auto']}
           width={48}
         />
+
         <Tooltip content={({ label }) => <LineChartTooltip label={label} />} />
 
         <Line
