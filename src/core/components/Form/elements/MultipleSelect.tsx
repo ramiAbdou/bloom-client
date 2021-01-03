@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Checkbox from '@components/Elements/Checkbox/Checkbox';
+import Checkbox from '@atoms/Checkbox';
 import Form from '../Form.store';
 import { FormItemData } from '../Form.types';
 
