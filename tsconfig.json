@@ -28,7 +28,7 @@
     "./src/**/*",
     "./server.ts",
     "webpack.local.config.ts",
-    "webpack.prod.config.ts"
+    "webpack.prod.config.ts",
   ],
   "exclude": ["./node_modules"]
 }

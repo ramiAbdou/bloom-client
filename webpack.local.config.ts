@@ -30,6 +30,10 @@ export default {
         ]
       },
       {
+        test: /\.css$/,
+        use: ['style-loader', 'postcss-loader']
+      },
+      {
         exclude: /node_modules/,
         loader: 'file-loader',
         options: {

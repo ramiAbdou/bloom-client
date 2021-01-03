@@ -23,6 +23,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.18",
     "@types/validator": "^13.1.0",
+    "autoprefixer": "^10.1.0",
     "dayjs": "^1.9.7",
     "easy-peasy": "^4.0.1",
     "express": "^4.17.1",
@@ -37,6 +38,7 @@
     "moment-timezone": "^0.5.31",
     "node-sass": "^4.14.1",
     "normalizr": "^3.6.1",
+    "postcss": "^8.2.2",
     "react": "^16.12.0",
     "react-csv": "^2.0.3",
     "react-dependent-script": "^1.1.2",
@@ -45,6 +47,7 @@
     "react-router-dom": "^5.1.2",
     "recharts": "^1.8.5",
     "stopword": "^1.0.5",
+    "tailwindcss": "^2.0.2",
     "ts-node": "^8.10.2",
     "use-onclickoutside": "^0.3.1",
     "validator": "^13.1.17"
