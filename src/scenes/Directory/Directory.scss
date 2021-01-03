@@ -2,8 +2,6 @@
 $PREF: 's-directory';
 
 .#{$PREF}-header {
-  @extend .s-home-header; 
-
   // If big screen, the search bar is aligned on the top.
 
   @include TD { display: flex; justify-content: space-between; }

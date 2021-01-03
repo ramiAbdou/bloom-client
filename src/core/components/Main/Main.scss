@@ -10,13 +10,9 @@ $PREF: 'c-main';
   position: sticky;
   top: 0;
   z-index: 11;
-
-  // Contains the header's title and the loading spinner to be on same line.
-  > div:first-child { @extend .flex-ac; }
-  > div:first-child > h1 { margin-right: $sm; }
 }
 
-.#{$PREF}-header > div {
+.#{$PREF}-header > div:first-of-type {
   @extend .flex-ac;
 
   > h1 { margin-right: $sm; }

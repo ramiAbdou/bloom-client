@@ -14,24 +14,6 @@ $PREF: 's-home';
   max-height: 100vh;
 }
 
-// ## HEADER
-
-// Makes the header consistent across each page. Mainly for loading purposes.
-// However, each page should implement their own positioning whether it is
-// grid-based or flex-based.
-
-.#{$PREF}-header {
-  background-color: $gray-6;
-  padding: $md;
-  position: sticky;
-  top: 0;
-  z-index: 11;
-}
-
-// Contains the header's title and the loading spinner to be on same line.
-.#{$PREF}-header > div:first-child { @extend .flex-ac; }
-.#{$PREF}-header-title { margin-right: $sm; }
-
 // ## CONTENT
 
 .#{$PREF}-content-ctr {
