@@ -5,8 +5,8 @@ import React, { useEffect } from 'react';
 
 import { IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import MemberCard from './components/Card/Card';
-import { MemberCardData } from './components/Card/Card.store';
+import MemberCard from './molecules/Card';
+import { MemberCardModel } from './stores/Card.store';
 import Directory from './Directory.store';
 
 const DirectoryCardContainer = () => {
@@ -14,7 +14,7 @@ const DirectoryCardContainer = () => {
   const numMembers = Directory.useStoreState((store) => store.numMembers);
   const searchString = Directory.useStoreState((store) => store.searchString);
 
-  const members: MemberCardData[] = useStoreState(({ db }) => {
+  const members: MemberCardModel[] = useStoreState(({ db }) => {
     const { members: membersEntity, questions, users } = db.entities;
     const { allIds, byId: byMemberId } = membersEntity;
     const { byId: byQuestionId } = questions;
@@ -22,7 +22,7 @@ const DirectoryCardContainer = () => {
 
     if (!allIds?.length) return [];
 
-    const unSortedResult: MemberCardData[] = allIds
+    const unSortedResult: MemberCardModel[] = allIds
       ?.filter((id: string) => byMemberId[id]?.status === 'ACCEPTED')
       ?.map((curr: string) => {
         const { bio, cardData, id, user }: IMember = byMemberId[curr];
@@ -64,12 +64,12 @@ const DirectoryCardContainer = () => {
       ? unSortedResult
       : matchSorter(unSortedResult, searchString, {
           keys: [
-            (item: MemberCardData) => `${item.firstName} ${item.lastName}`,
+            (item: MemberCardModel) => `${item.firstName} ${item.lastName}`,
             'firstName',
             'lastName',
             'email',
             'bio',
-            (item: MemberCardData) =>
+            (item: MemberCardModel) =>
               item.expandedCardData.map(({ value }) => value)
           ],
           threshold: matchSorter.rankings.ACRONYM

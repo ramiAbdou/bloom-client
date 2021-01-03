@@ -3,12 +3,12 @@ import React from 'react';
 import { IoMail } from 'react-icons/io5';
 
 import ProfilePicture from '@components/Misc/ProfilePicture';
-import MemberCard from '../Card/Card.store';
+import MemberCard from '../../stores/Card.store';
 import SocialMediaContainer from './SocialMedia';
 
 const MemberProfilePicture = () => {
   const { pictureUrl, firstName, lastName } = MemberCard.useStoreState(
-    (store) => store.member,
+    (store) => store,
     deepequal
   );
 
@@ -26,14 +26,14 @@ const MemberProfilePicture = () => {
 };
 
 const MemberFullName = () => {
-  const firstName = MemberCard.useStoreState(({ member }) => member?.firstName);
-  const lastName = MemberCard.useStoreState(({ member }) => member?.lastName);
+  const firstName = MemberCard.useStoreState((store) => store?.firstName);
+  const lastName = MemberCard.useStoreState((store) => store?.lastName);
   return <h1>{`${firstName} ${lastName}`}</h1>;
 };
 
 const MemberCurrentLocation = () => {
   const currentLocation = MemberCard.useStoreState(
-    ({ member }) => member?.currentLocation
+    (store) => store?.currentLocation
   );
 
   if (!currentLocation) return null;
@@ -41,7 +41,7 @@ const MemberCurrentLocation = () => {
 };
 
 const MemberEmail = () => {
-  const email = MemberCard.useStoreState(({ member }) => member?.email);
+  const email = MemberCard.useStoreState((store) => store?.email);
   if (!email) return null;
 
   return (
@@ -53,7 +53,7 @@ const MemberEmail = () => {
 };
 
 const MemberBio = () => {
-  const bio = MemberCard.useStoreState(({ member }) => member?.bio);
+  const bio = MemberCard.useStoreState((store) => store?.bio);
   if (!bio) return null;
   return <p className="s-directory-modal-bio">{bio}</p>;
 };

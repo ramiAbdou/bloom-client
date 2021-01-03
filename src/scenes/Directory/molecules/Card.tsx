@@ -7,10 +7,26 @@ import ProfilePicture from '@components/Misc/ProfilePicture';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
-import DirectoryCardModal from '../CardModal/CardModal';
-import MemberCard, { MemberCardData } from './Card.store';
+import DirectoryCardModal from '../organisms/CardModal/CardModal';
+import MemberCard, { MemberCardModel } from '../stores/Card.store';
 
-const MemberCardContent = () => {
+const DirectoryCardInformation = () => {
+  const value = MemberCard.useStoreState((store) => store.highlightedValue);
+
+  const fullName = MemberCard.useStoreState(({ firstName, lastName }) => {
+    return `${firstName} ${lastName}`;
+  });
+
+  return (
+    <div className="s-directory-card-content">
+      <p>
+        {fullName} <span>{value ?? ''}</span>
+      </p>
+    </div>
+  );
+};
+
+const DirectoryCardContent = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const {
@@ -19,7 +35,7 @@ const MemberCardContent = () => {
     id,
     lastName,
     pictureUrl
-  } = MemberCard.useStoreState((store) => store.member, deepequal);
+  } = MemberCard.useStoreState((store) => store, deepequal);
 
   const onClick = () => showModal(`${ModalType.DIRECTORY_CARD}-${id}`);
 
@@ -38,11 +54,7 @@ const MemberCardContent = () => {
           pictureUrl={pictureUrl}
         />
 
-        <div className="s-directory-card-content">
-          <p>
-            {`${firstName} ${lastName}`} <span>{highlightedValue ?? ''}</span>
-          </p>
-        </div>
+        <DirectoryCardInformation />
       </Button>
 
       <DirectoryCardModal id={`${ModalType.DIRECTORY_CARD}-${id}`} />
@@ -50,8 +62,10 @@ const MemberCardContent = () => {
   );
 };
 
-export default ({ data }: RenderComponentProps<MemberCardData>) => (
-  <MemberCard.Provider runtimeModel={{ member: data }}>
-    <MemberCardContent />
+const DirectoryCard = ({ data }: RenderComponentProps<MemberCardModel>) => (
+  <MemberCard.Provider runtimeModel={data}>
+    <DirectoryCardContent />
   </MemberCard.Provider>
 );
+
+export default DirectoryCard;

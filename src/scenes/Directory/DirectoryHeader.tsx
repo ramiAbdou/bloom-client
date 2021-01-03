@@ -1,8 +1,8 @@
 import React from 'react';
 
 import MainHeader from '@components/Main/Header';
-import DirectoryHeaderSearchBar from './components/SearchBar';
 import Directory from './Directory.store';
+import DirectoryHeaderSearchBar from './molecules/SearchBar';
 
 const DirectoryHeader = () => {
   const loading = Directory.useStoreState((store) => store.loading);

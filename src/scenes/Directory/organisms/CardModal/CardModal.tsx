@@ -5,12 +5,12 @@ import QuestionValue from '@components/Elements/QuestionValue';
 import Separator from '@components/Misc/Separator';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
-import MemberCard from '../Card/Card.store';
+import DirectoryCard from '../../stores/Card.store';
 import UserInformationContainer from './UserInformation';
 
 const CommunityData = () => {
-  const expandedCardData = MemberCard.useStoreState(
-    (store) => store.member?.expandedCardData,
+  const expandedCardData = DirectoryCard.useStoreState(
+    (store) => store.expandedCardData,
     deepequal
   );
 
