@@ -8,8 +8,6 @@ import ManageMembership from './pages/Manage/Manage';
 const Membership = () => {
   const { url } = useRouteMatch();
 
-  console.log('YEO');
-
   return (
     <>
       <Switch>

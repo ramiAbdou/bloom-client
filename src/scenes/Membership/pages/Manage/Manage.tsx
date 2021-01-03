@@ -1,13 +1,13 @@
 import React from 'react';
 
-import MembershipHeader from './components/Header';
+import MainHeader from '@components/Main/Header';
 import MembershipCardContainer from './containers/Card';
 import PaymentHistoryContainer from './containers/PaymentHistory';
 
 const ManageMembership = () => {
   return (
     <>
-      <MembershipHeader />
+      <MainHeader title="Manage Membership" />
 
       <div className="s-home-content">
         <MembershipCardContainer />

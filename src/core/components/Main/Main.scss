@@ -15,3 +15,21 @@ $PREF: 'c-main';
   > div:first-child { @extend .flex-ac; }
   > div:first-child > h1 { margin-right: $sm; }
 }
+
+.#{$PREF}-header > div {
+  @extend .flex-ac;
+
+  > h1 { margin-right: $sm; }
+
+  > button:first-of-type > svg {
+    @extend .react-icon--xl;
+
+    border-radius: 50%;
+    margin-right: $sm;
+    padding: 2px;
+
+    @include HOVER {
+      background-color: rgba($color: $primary-hex, $alpha: 0.15);
+    }
+  }
+}
