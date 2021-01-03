@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import MainHeader from '@components/Main/Header';
 import { useStoreState } from '@store/Store';
 
 export default () => {
@@ -10,8 +11,8 @@ export default () => {
   if (!isUserActive) return <Redirect to="directory" />;
 
   return (
-    <div>
-      <h1 className="s-home-header-title">Events</h1>
-    </div>
+    <>
+      <MainHeader title="Events" />
+    </>
   );
 };

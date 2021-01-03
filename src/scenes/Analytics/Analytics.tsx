@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
+import MainContent from '@components/Main/Content';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE, GetDatabaseResult } from '@scenes/Database/Database.gql';
 import Loading from '@store/Loading.store';
@@ -42,16 +43,14 @@ const AnalyticsContent = () => {
     <>
       <AnalyticsHeader />
 
-      {!loading && (
-        <div className="s-home-content">
-          <Switch>
-            <Route component={DuesAnalytics} path={`${url}/dues`} />
-            <Route component={EventsAnalytics} path={`${url}/events`} />
-            <Route component={MembersAnalytics} path={`${url}/members`} />
-            <Redirect to={`${url}/members`} />
-          </Switch>
-        </div>
-      )}
+      <MainContent loading={loading}>
+        <Switch>
+          <Route component={DuesAnalytics} path={`${url}/dues`} />
+          <Route component={EventsAnalytics} path={`${url}/events`} />
+          <Route component={MembersAnalytics} path={`${url}/members`} />
+          <Redirect to={`${url}/members`} />
+        </Switch>
+      </MainContent>
     </>
   );
 };

@@ -42,7 +42,7 @@ export default () => {
   if (loading) return null;
 
   return (
-    <div className="s-home-content">
+    <>
       {!numApplicants && <p>There are no pending applicants. 👍</p>}
 
       <div className="s-applicants-card-ctr">
@@ -55,6 +55,6 @@ export default () => {
           </Applicant.Provider>
         ))}
       </div>
-    </div>
+    </>
   );
 };

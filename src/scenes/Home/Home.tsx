@@ -3,7 +3,6 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import AdminRoute from '@components/Router/AdminRoute';
 import AddMemberModal from '@scenes/Home/modals/AddMember/AddMember';
-import { useStoreState } from '@store/Store';
 import Analytics from '../Analytics/Analytics';
 import Applicants from '../Applicants/Applicants';
 import Database from '../Database/Database';
@@ -20,19 +19,16 @@ import Home from './Home.store';
 
 const HomeContent = () => {
   const { url } = useRouteMatch();
-  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
 
   return (
-    <div className="s-home-content-ctr">
+    <div className="s-home">
       <Switch>
         <Route component={Directory} path={`${url}/directory`} />
         <Route component={Events} path={`${url}/events`} />
         <AdminRoute component={Database} path={`${url}/database`} />
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />
-        {!autoAccept && (
-          <AdminRoute component={Applicants} path={`${url}/applicants`} />
-        )}
+        <AdminRoute component={Applicants} path={`${url}/applicants`} />
         <Route component={Membership} path={`${url}/membership`} />
         <Redirect to={`${url}/directory`} />
       </Switch>
@@ -43,7 +39,7 @@ const HomeContent = () => {
 export default () => (
   <AuthWrapper>
     <DuesWrapper>
-      <div className="s-home">
+      <div className="s-home-ctr">
         <Home.Provider>
           <BottomBar />
           <Sidebar />

@@ -2,6 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 import URLBuilder from 'util/URLBuilder';
 
+import MainContent from '@components/Main/Content';
 import MainHeader from '@components/Main/Header';
 import { APP, isProduction } from '@constants';
 import useQuery from '@hooks/useQuery';
@@ -132,7 +133,11 @@ export default () => {
   return (
     <Integrations.Provider>
       <MainHeader loading={loading} title="Integrations" />
-      <div className="s-home-content">{!loading && <Cards />}</div>
+
+      <MainContent loading={loading}>
+        <Cards />
+      </MainContent>
+
       <IntegrationModal />
     </Integrations.Provider>
   );

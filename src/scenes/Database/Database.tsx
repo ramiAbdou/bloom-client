@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
+import MainContent from '@components/Main/Content';
 import Loading from '@store/Loading.store';
 import Header from './components/Header';
 import useFetchDatabase from './hooks/useFetchDatabase';
@@ -15,13 +16,13 @@ const DatabaseContent = () => {
     <>
       <Header />
 
-      <div className="s-home-content">
+      <MainContent>
         <Switch>
           <Route component={Admins} path={`${url}/admins`} />
           <Route component={Members} path={`${url}/members`} />
           <Redirect to={`${url}/members`} />
         </Switch>
-      </div>
+      </MainContent>
     </>
   );
 };

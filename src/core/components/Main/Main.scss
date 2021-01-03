@@ -29,3 +29,5 @@ $PREF: 'c-main';
     }
   }
 }
+
+.#{$PREF}-content { margin: 0 $md; padding: 2px 2px $lg 2px; }

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import MainContent from '@components/Main/Content';
 import MainHeader from '@components/Main/Header';
 import ChangePlanModal from '../../modals/ChangePlan/ChangePlan';
 import ChangePlanStore from './ChangePlan.store';
@@ -10,9 +11,9 @@ const ChangePlan = () => {
     <ChangePlanStore.Provider>
       <MainHeader backButton title="Change Membership Plan" />
 
-      <div className="s-home-content">
+      <MainContent>
         <PlanContainer />
-      </div>
+      </MainContent>
 
       <ChangePlanModal />
     </ChangePlanStore.Provider>

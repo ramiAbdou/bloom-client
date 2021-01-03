@@ -88,16 +88,14 @@ const DirectoryCardContainer = () => {
   if (loading) return null;
 
   return (
-    <div className="s-home-content">
-      <Masonry
-        key={`${searchString}-${members?.length}`}
-        className="s-directory-card-ctr"
-        columnGutter={16}
-        items={members ?? []}
-        overscanBy={5}
-        render={MemberCard}
-      />
-    </div>
+    <Masonry
+      key={`${searchString}-${members?.length}`}
+      className="s-directory-card-ctr"
+      columnGutter={16}
+      items={members ?? []}
+      overscanBy={5}
+      render={MemberCard}
+    />
   );
 };
 

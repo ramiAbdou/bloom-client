@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 
+import MainContent from '@components/Main/Content';
 import useQuery from '@hooks/useQuery';
+import Loading from '@store/Loading.store';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import {
@@ -9,7 +11,6 @@ import {
 } from './Applicants.gql';
 import ApplicantsHeader from './components/Header/Header';
 import ApplicantsCardContainer from './containers/Card';
-import Loading from '@store/Loading.store';
 
 const useFetchApplicants = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
@@ -41,7 +42,10 @@ const ApplicantsContent = () => {
   return (
     <>
       <ApplicantsHeader />
-      <ApplicantsCardContainer />
+
+      <MainContent>
+        <ApplicantsCardContainer />
+      </MainContent>
     </>
   );
 };

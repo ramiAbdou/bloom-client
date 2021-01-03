@@ -1,5 +1,6 @@
 import React from 'react';
 
+import MainContent from '@components/Main/Content';
 import MainHeader from '@components/Main/Header';
 import MembershipCardContainer from './containers/Card';
 import PaymentHistoryContainer from './containers/PaymentHistory';
@@ -9,10 +10,10 @@ const ManageMembership = () => {
     <>
       <MainHeader title="Manage Membership" />
 
-      <div className="s-home-content">
+      <MainContent>
         <MembershipCardContainer />
         <PaymentHistoryContainer />
-      </div>
+      </MainContent>
     </>
   );
 };

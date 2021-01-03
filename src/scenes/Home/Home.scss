@@ -5,7 +5,7 @@ $PREF: 's-home';
 
 // Implements the margin that we're used to seeing. We limit the width to be
 // 1440px.
-.#{$PREF} {
+.#{$PREF}-ctr {
   @extend .flex-ac;
 
   align-items: flex-start;
@@ -16,7 +16,7 @@ $PREF: 's-home';
 
 // ## CONTENT
 
-.#{$PREF}-content-ctr {
+.#{$PREF} {
   flex-grow: 1;
   max-height: 100vh;
   overflow: visible; // Mainly for the purposes of shadows.

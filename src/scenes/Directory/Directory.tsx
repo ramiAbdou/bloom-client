@@ -1,5 +1,6 @@
 import React from 'react';
 
+import MainContent from '@components/Main/Content';
 import Header from './components/Header';
 import DirectoryCardContainer from './containers/Card';
 import Directory from './Directory.store';
@@ -11,7 +12,10 @@ const DirectoryContent = () => {
   return (
     <div>
       <Header />
-      <DirectoryCardContainer />
+
+      <MainContent>
+        <DirectoryCardContainer />
+      </MainContent>
     </div>
   );
 };
