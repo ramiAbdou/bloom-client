@@ -1,9 +1,9 @@
 import React from 'react';
 
 import MainContent from '@components/Main/Content';
-import DirectoryCardContainer from './components/CardContainer';
-import Header from './components/Header';
 import Directory from './Directory.store';
+import DirectoryCardContainer from './DirectoryCardContainer';
+import DirectoryHeader from './DirectoryHeader';
 import useFetchDirectory from './hooks/useFetchDirectory';
 
 const DirectoryContent = () => {
@@ -11,7 +11,7 @@ const DirectoryContent = () => {
 
   return (
     <>
-      <Header />
+      <DirectoryHeader />
 
       <MainContent>
         <DirectoryCardContainer />
