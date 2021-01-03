@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import Card from '@components/Elements/Card/Card';
 import { ModalType } from '@constants';
 import { IMemberType } from '@store/entities';

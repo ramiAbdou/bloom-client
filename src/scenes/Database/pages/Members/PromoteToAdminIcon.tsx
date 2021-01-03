@@ -2,7 +2,7 @@ import React from 'react';
 import { IoArrowUpCircle } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';

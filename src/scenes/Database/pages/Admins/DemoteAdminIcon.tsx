@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';

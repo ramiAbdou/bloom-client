@@ -12,7 +12,7 @@ import {
 } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import Separator from '@components/Misc/Separator';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Home, { LinkOptions } from '../../Home.store';

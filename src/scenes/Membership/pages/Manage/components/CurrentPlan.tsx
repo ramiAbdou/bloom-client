@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import Card from '@components/Elements/Card/Card';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';

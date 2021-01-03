@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { ModalType } from '@constants';

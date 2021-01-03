@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import { ModalType, OnClickProps } from '@constants';
 import Home, { LinkOptions } from '@scenes/Home/Home.store';
 import { useStoreActions, useStoreState } from '@store/Store';

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import Card from '@components/Elements/Card/Card';
 import IntegrationsStore, { IntegrationsModal } from '../Integrations.store';
 

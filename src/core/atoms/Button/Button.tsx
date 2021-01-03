@@ -56,7 +56,7 @@ const LoadingState = ({
   </div>
 );
 
-export default forwardRef(
+const Button = forwardRef(
   (
     {
       className,
@@ -117,3 +117,5 @@ export default forwardRef(
     );
   }
 );
+
+export default Button;

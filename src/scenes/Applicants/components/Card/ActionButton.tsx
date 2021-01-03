@@ -5,7 +5,7 @@ import {
   IoCloseCircle
 } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import useMutation from '@hooks/useMutation';
 import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';

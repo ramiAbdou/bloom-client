@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import { takeFirst } from '@util/util';
 import Table from '../../Table.store';
 

@@ -4,14 +4,14 @@
 @import './core/scss/misc';
 @import './core/scss/spacing';
 @import './core/scss/_typography';
-@import './core/components/Button/Button.scss';
+@import './core/atoms/Button/Button.scss';
+@import './core/atoms/Input/Input.scss';
 @import './core/components/Chart/Chart.scss';
 @import './core/components/Elements/Elements.scss';
 @import './core/components/Elements/Card/Card.scss';
 @import './core/components/Elements/Checkbox/Checkbox.scss';
 @import './core/components/Elements/Dropdown/Dropdown.scss';
 @import './core/components/Elements/InformationTip/InformationTip.scss';
-@import './core/components/Elements/Input/Input.scss';
 @import './core/components/Elements/LoadingHeader/LoadingHeader.scss';
 @import './core/components/Elements/Radio/Radio.scss';
 @import './core/components/Elements/SearchBar/SearchBar.scss';

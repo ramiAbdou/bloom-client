@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import { RenderComponentProps } from 'masonic';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import ProfilePicture from '@components/Misc/ProfilePicture';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';

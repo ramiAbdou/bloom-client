@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
+import Button from '@atoms/Button';
 import { ValueProps } from '@constants';
 import { makeClass, uuid } from '@util/util';
 import Table from '../../Table.store';
