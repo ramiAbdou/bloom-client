@@ -7,14 +7,14 @@ import {
   GET_PENDING_APPLICATIONS,
   GetPendingApplicantsResult
 } from './Applicants.gql';
-import Applicants from './Applicants.store';
 import ApplicantsHeader from './components/Header/Header';
 import ApplicantsCardContainer from './containers/Card';
+import Loading from '@store/Loading.store';
 
 const useFetchApplicants = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const currentLoading = Applicants.useStoreState((store) => store.loading);
-  const setLoading = Applicants.useStoreActions((store) => store.setLoading);
+  const currentLoading = Loading.useStoreState((store) => store.loading);
+  const setLoading = Loading.useStoreActions((store) => store.setLoading);
 
   const { data: community, loading } = useQuery<GetPendingApplicantsResult>({
     name: 'getApplicants',
@@ -47,7 +47,7 @@ const ApplicantsContent = () => {
 };
 
 export default () => (
-  <Applicants.Provider>
+  <Loading.Provider>
     <ApplicantsContent />
-  </Applicants.Provider>
+  </Loading.Provider>
 );

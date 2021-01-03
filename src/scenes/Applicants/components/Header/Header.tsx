@@ -1,12 +1,10 @@
 import React from 'react';
 
-import Spinner from '@components/Loader/Spinner';
-import NumberTag from '@components/Tags/NumberTag';
+import MainHeader from '@components/Main/Header';
 import { useStoreState } from '@store/Store';
-import Applicants from '../../Applicants.store';
 import { AcceptAllButton, IgnoreAllButton } from './Button';
 
-export default () => {
+const ApplicantsHeader = () => {
   const numApplicants: number = useStoreState(({ db }) => {
     const { byId } = db.entities.members;
 
@@ -15,24 +13,18 @@ export default () => {
     }).length;
   });
 
-  const loading = Applicants.useStoreState((store) => store.loading);
+  const numberTag = !!numApplicants && `${numApplicants} Total`;
 
   return (
-    <div className="s-home-header s-applicants-header">
-      <div>
-        <h1 className="s-home-header-title">Pending Applicants</h1>
-        {!loading && !!numApplicants && (
-          <NumberTag value={`${numApplicants} Total`} />
-        )}
-        {loading && <Spinner dark />}
-      </div>
-
+    <MainHeader numberTag={numberTag} title="Pending Applicants">
       {!!numApplicants && (
         <div>
           <AcceptAllButton />
           <IgnoreAllButton />
         </div>
       )}
-    </div>
+    </MainHeader>
   );
 };
+
+export default ApplicantsHeader;

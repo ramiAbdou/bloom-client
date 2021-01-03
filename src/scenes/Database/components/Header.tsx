@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import MultiButton from '@components/Button/Multi';
-import Spinner from '@components/Loader/Spinner';
+import MainHeader from '@components/Main/Header';
 import AddMemberButton from '@scenes/Home/modals/AddMember/AddMemberButton';
 import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
@@ -42,18 +42,19 @@ const AddButton = () => {
   return null;
 };
 
-export default () => {
+const DatabaseHeader = () => {
   const loading = Loading.useStoreState((store) => store.loading);
 
   return (
-    <div className="s-home-header s-database-header">
-      <div>
-        <h1 className="s-home-header-title">Member Database</h1>
-        {loading && <Spinner dark />}
-      </div>
-
+    <MainHeader
+      className="s-database-header"
+      loading={loading}
+      title="Member Database"
+    >
       <MemberAdminButton />
       {!loading && <AddButton />}
-    </div>
+    </MainHeader>
   );
 };
+
+export default DatabaseHeader;
