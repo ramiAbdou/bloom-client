@@ -12,6 +12,17 @@ import { useStoreActions, useStoreState } from '@store/Store';
 
 export default () => {
   const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
+
+  const canManageMembership = useStoreState(({ db }) => {
+    return (
+      db.entities.integrations.byId[db.community.integrations]
+        .stripeAccountId &&
+      db.community.types.some(
+        (typeId) => !db.entities.types.byId[typeId]?.isFree
+      )
+    );
+  });
+
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
 
   const { push } = useHistory();
@@ -41,11 +52,15 @@ export default () => {
 
   // Show a picker that either allows them to view their profile or log out.
   const actions: PanelAction[] = [
-    {
-      Icon: IoCard,
-      onClick: () => push(`/${encodedUrlName}/membership`),
-      text: 'Manage Membership'
-    },
+    ...(canManageMembership
+      ? [
+          {
+            Icon: IoCard,
+            onClick: () => push(`/${encodedUrlName}/membership`),
+            text: 'Manage Membership'
+          }
+        ]
+      : []),
     { Icon: IoPerson, onClick: () => null, text: 'Your Profile' },
     { Icon: IoExit, onClick: onLogout, separator: true, text: 'Log Out' }
   ];

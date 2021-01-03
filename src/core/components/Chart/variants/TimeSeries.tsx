@@ -54,7 +54,7 @@ export default () => {
         <XAxis
           allowDuplicatedCategory={false}
           dataKey="name"
-          interval={interval ?? 10}
+          interval={interval ?? data.length / 12}
           padding={{ left: 4, right: 12 }}
           tickFormatter={(label) => day(label).format('M/D')}
           tickSize={8}
