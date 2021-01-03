@@ -4,7 +4,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { ICommunity } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';

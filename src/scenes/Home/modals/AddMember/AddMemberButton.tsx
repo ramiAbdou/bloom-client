@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 

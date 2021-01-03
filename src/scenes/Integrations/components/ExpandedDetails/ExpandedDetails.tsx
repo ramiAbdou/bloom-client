@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import Integrations from '../../Integrations.store';

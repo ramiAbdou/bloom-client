@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React, { memo } from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';

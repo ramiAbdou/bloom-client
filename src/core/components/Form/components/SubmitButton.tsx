@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@components/Button/Button';
+import Button, { ButtonProps } from '@atoms/Button/Button';
 import Form from '../Form.store';
 
 export default ({

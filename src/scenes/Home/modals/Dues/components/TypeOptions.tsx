@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import Radio from '@components/Elements/Radio/Radio';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import TableContent from '@components/Table/Content';
 import Table from '@components/Table/Table';
 import { Column, Row } from '@components/Table/Table.types';

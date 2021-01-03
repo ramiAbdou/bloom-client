@@ -10,9 +10,11 @@
     "moduleResolution": "node",
     "outDir": "./dist/",
     "paths": {
+      "@atoms/*": ["core/atoms/*"],
       "@components/*": ["core/components/*"],
       "@constants": ["util/constants.ts"],
       "@hooks/*": ["core/hooks/*"],
+      "@molecules/*": ["core/molecules/*"],
       "@scenes/*": ["scenes/*"],
       "@store/*": ["core/store/*"],
       "@util/*": ["util/*"]

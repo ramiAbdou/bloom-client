@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { IoCloseCircle, IoSearch } from 'react-icons/io5';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import { ValueProps } from '@constants';
 import { makeClass } from '@util/util';
 

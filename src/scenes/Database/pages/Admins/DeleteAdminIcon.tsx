@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import Modal from '@components/Modal/Modal';
 import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';

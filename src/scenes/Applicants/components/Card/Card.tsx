@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React, { memo } from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import Card from '@components/Elements/Card/Card';
 import QuestionValue from '@components/Elements/QuestionValue';
 import Modal from '@components/Modal/Modal';

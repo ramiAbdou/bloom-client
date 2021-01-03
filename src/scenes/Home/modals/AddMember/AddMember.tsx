@@ -1,13 +1,16 @@
 import React from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import Modal from '@components/Modal/Modal';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { CREATE_MEMBERS, CreateMembersArgs } from '../../../Database/Database.gql';
+import {
+  CREATE_MEMBERS,
+  CreateMembersArgs
+} from '../../../Database/Database.gql';
 import AddMember, { doesInputHaveError } from './AddMember.store';
 import AddMemberInput from './components/Input';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../../Applicants.gql';

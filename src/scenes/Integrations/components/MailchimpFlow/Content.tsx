@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import Button from '@components/Button/Button';
+import Button from '@atoms/Button/Button';
 import FormItem from '@components/Form/components/Item';
 import SubmitButton from '@components/Form/components/SubmitButton';
 import { useStoreActions, useStoreState } from '@store/Store';
