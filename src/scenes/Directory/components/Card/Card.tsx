@@ -7,7 +7,7 @@ import ProfilePicture from '@components/Misc/ProfilePicture';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
-import MemberModal from '../Modal/Modal';
+import DirectoryCardModal from '../CardModal/CardModal';
 import MemberCard, { MemberCardData } from './Card.store';
 
 const MemberCardContent = () => {
@@ -45,7 +45,7 @@ const MemberCardContent = () => {
         </div>
       </Button>
 
-      <MemberModal id={`${ModalType.DIRECTORY_CARD}-${id}`} />
+      <DirectoryCardModal id={`${ModalType.DIRECTORY_CARD}-${id}`} />
     </>
   );
 };

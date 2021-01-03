@@ -6,7 +6,7 @@ import Separator from '@components/Misc/Separator';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import MemberCard from '../Card/Card.store';
-import UserInformationContainer from './UserInformation.container';
+import UserInformationContainer from './UserInformation';
 
 const CommunityData = () => {
   const expandedCardData = MemberCard.useStoreState(

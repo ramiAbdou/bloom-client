@@ -4,7 +4,7 @@ import SearchBar from '@components/Elements/SearchBar/SearchBar';
 import MainHeader from '@components/Main/Header';
 import Directory from '../Directory.store';
 
-const SearchContainer = () => {
+const DirectoryHeaderSearchBar = () => {
   const [value, setValue] = useState('');
   const loading = Directory.useStoreState((store) => store.loading);
 
@@ -40,7 +40,7 @@ const DirectoryHeader = () => {
       numberTag={`${numMembers} Members`}
       title="Directory"
     >
-      <SearchContainer />
+      <DirectoryHeaderSearchBar />
     </MainHeader>
   );
 };
