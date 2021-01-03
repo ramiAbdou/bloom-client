@@ -7,8 +7,13 @@ import Spinner from '@components/Loader/Spinner';
 import NumberTag from '@components/Tags/NumberTag';
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
 import { makeClass } from '@util/util';
+import Navigation, { NavigationProps } from './Navigation';
 
-interface MainHeaderProps extends ClassNameProps, ChildrenProps, LoadingProps {
+interface MainHeaderProps
+  extends ClassNameProps,
+    ChildrenProps,
+    LoadingProps,
+    NavigationProps {
   backButton?: boolean;
   numberTag?: string;
   title: string;
@@ -25,11 +30,13 @@ const MainHeaderBackButton = () => {
 };
 
 const MainHeader = ({
+  activeIndex,
   backButton,
   children,
   className,
   loading,
   numberTag,
+  options,
   title
 }: MainHeaderProps) => {
   const css = makeClass(['c-main-header', className]);
@@ -43,6 +50,7 @@ const MainHeader = ({
         <Spinner dark loading={loading} />
       </div>
 
+      <Navigation activeIndex={activeIndex} options={options} />
       {children}
     </div>
   );

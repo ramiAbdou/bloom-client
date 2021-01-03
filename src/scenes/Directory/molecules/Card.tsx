@@ -10,7 +10,7 @@ import { makeClass } from '@util/util';
 import DirectoryCardModal from '../organisms/CardModal/CardModal';
 import MemberCard, { MemberCardModel } from '../stores/Card.store';
 
-const DirectoryCardInformation = () => {
+const DirectoryCardInformation: React.FC = () => {
   const value = MemberCard.useStoreState((store) => store.highlightedValue);
 
   const fullName = MemberCard.useStoreState(({ firstName, lastName }) => {
@@ -26,7 +26,7 @@ const DirectoryCardInformation = () => {
   );
 };
 
-const DirectoryCardContent = () => {
+const DirectoryCardContent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const {

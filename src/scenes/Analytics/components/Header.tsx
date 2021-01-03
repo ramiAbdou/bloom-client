@@ -1,11 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import MultiButton from '@components/Button/Multi';
 import MainHeader from '@components/Main/Header';
+import { NavigationOptionProps } from '@components/Main/Navigation';
+import Loading from '@store/Loading.store';
 import { takeFirst } from '@util/util';
 
-const HeaderNavigation = () => {
+export default () => {
+  const loading = Loading.useStoreState((store) => store.loading);
+
   const { location, push } = useHistory();
   const { pathname } = location;
 
@@ -19,20 +22,19 @@ const HeaderNavigation = () => {
 
   if (activeIndex === null) return null;
 
+  const options: NavigationOptionProps[] = [
+    { onClick: () => push('members'), title: 'Members' },
+    { onClick: () => push('dues'), title: 'Dues' },
+    { onClick: () => push('events'), title: 'Events' }
+  ];
+
   return (
-    <MultiButton
+    <MainHeader
       activeIndex={activeIndex}
-      options={[
-        { onClick: () => push('members'), title: 'Members' },
-        { onClick: () => push('dues'), title: 'Dues' },
-        { onClick: () => push('events'), title: 'Events' }
-      ]}
+      className="s-analytics-header"
+      loading={loading}
+      options={options}
+      title="Analytics"
     />
   );
 };
-
-export default () => (
-  <MainHeader className="s-analytics-header" title="Analytics">
-    <HeaderNavigation />
-  </MainHeader>
-);

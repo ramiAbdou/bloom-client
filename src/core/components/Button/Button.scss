@@ -72,32 +72,3 @@ $PREF: 'c-btn';
   @include PRIMARY_HOVER;
   @include HOVER { border-radius: $xxs; }
 }
-
-// ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but
-// not border-left, so we avoid stacking pixels (1px * 2 = 2px). However,
-// the first button will have a border-left.
-
-.#{$PREF}-multi-ctr { @extend .flex-ac; }
-
-.#{$PREF}-multi {
-  @extend .meta--lg;
-  
-  background-color: inherit;
-  border: 1px $primary solid;
-  border-left: none;
-  border-radius: 0;
-  color: $primary;
-  padding: $xs $sm;
-  
-  &--active { background-color: $primary; color: white; }
-
-  &:first-child {
-    border-left: 1px $primary solid;
-    border-radius: $xxs 0 0 $xxs;
-  }
-
-  &:last-child { border-radius: 0 $xxs $xxs 0; }
-
-  // Disables the scaling transition that all buttons typically have.
-  &:active { transform: none; transition: none; }
-}

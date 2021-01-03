@@ -29,6 +29,7 @@ export type ChildrenProps = { children?: ReactNode };
 export type ClassNameProps = { className?: string };
 export type EncodedUrlNameParams = { encodedUrlName?: string };
 export type IdProps = { id?: string };
+export type IsActiveProps = { isActive?: boolean };
 export type LoadingProps = { loading?: boolean };
 export type OnClickProps = { onClick?: Function };
 export type MessageProps = { message?: string };
