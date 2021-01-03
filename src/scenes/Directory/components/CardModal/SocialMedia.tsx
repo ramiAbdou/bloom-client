@@ -9,6 +9,26 @@ import {
 
 import MemberCard from '../Card/Card.store';
 
+interface SocialMediaButtonProps {
+  Icon: React.FC;
+  href: string;
+}
+
+const SocialMediaButton = ({ Icon, href }: SocialMediaButtonProps) => {
+  if (!href) return null;
+
+  return (
+    <a
+      className="s-directory-modal-social"
+      href={href}
+      rel="noreferrer"
+      target="_blank"
+    >
+      <Icon />
+    </a>
+  );
+};
+
 export default () => {
   const {
     facebookUrl,
@@ -19,49 +39,10 @@ export default () => {
 
   return (
     <div className="s-directory-modal-social-ctr">
-      {facebookUrl && (
-        <a
-          className="s-directory-modal-social s-directory-modal-social--facebook"
-          href={facebookUrl}
-          rel="noreferrer"
-          target="_blank"
-        >
-          <IoLogoFacebook />
-        </a>
-      )}
-
-      {linkedInUrl && (
-        <a
-          className="s-directory-modal-social s-directory-modal-social--linkedin"
-          href={linkedInUrl}
-          rel="noreferrer"
-          target="_blank"
-        >
-          <IoLogoLinkedin />
-        </a>
-      )}
-
-      {twitterUrl && (
-        <a
-          className="s-directory-modal-social s-directory-modal-social--twitter"
-          href={twitterUrl}
-          rel="noreferrer"
-          target="_blank"
-        >
-          <IoLogoTwitter />
-        </a>
-      )}
-
-      {instagramUrl && (
-        <a
-          className="s-directory-modal-social"
-          href={instagramUrl}
-          rel="noreferrer"
-          target="_blank"
-        >
-          <IoLogoInstagram />
-        </a>
-      )}
+      <SocialMediaButton Icon={IoLogoFacebook} href={facebookUrl} />
+      <SocialMediaButton Icon={IoLogoLinkedin} href={linkedInUrl} />
+      <SocialMediaButton Icon={IoLogoTwitter} href={twitterUrl} />
+      <SocialMediaButton Icon={IoLogoInstagram} href={instagramUrl} />
     </div>
   );
 };
