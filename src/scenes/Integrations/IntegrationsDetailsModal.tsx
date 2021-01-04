@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
+import QuestionValueList from '@components/Elements/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import Integrations from './Integrations.store';
@@ -12,13 +13,6 @@ type ExpandedDetailsProps = {
   logo: string;
   name: string;
 };
-
-const Detail = ({ label, value }: ExpandedDetailProps) => (
-  <div className="s-integrations-modal-item--detail">
-    <p>{label}</p>
-    <p>{value}</p>
-  </div>
-);
 
 const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
   details,
@@ -44,9 +38,13 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
       <img className="s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>
 
-      {details.map((props) => (
-        <Detail key={props.label} {...props} />
-      ))}
+      <QuestionValueList
+        items={details.map(({ label, value }) => ({
+          title: label,
+          type: 'MULTIPLE_CHOICE',
+          value
+        }))}
+      />
 
       <div className="s-integrations-action-ctr">
         <Button secondary onClick={() => closeModal()}>

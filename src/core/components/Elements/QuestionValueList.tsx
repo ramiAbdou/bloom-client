@@ -1,4 +1,4 @@
-import React, { memo, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import { QuestionType, ValueProps } from '@constants';
 import { takeFirst } from '@util/util';
@@ -17,7 +17,7 @@ interface QuestionValueListProps {
   marginBottom?: number;
 }
 
-const Value = memo(({ type, value }: Partial<QuestionValueItemProps>) => {
+const Value = ({ type, value }: Partial<QuestionValueItemProps>) => {
   const body: ReactNode = takeFirst([
     [!value, <p>N/A</p>],
     [type === 'MULTIPLE_CHOICE', <Attribute showNullValue>{value}</Attribute>],
@@ -35,7 +35,7 @@ const Value = memo(({ type, value }: Partial<QuestionValueItemProps>) => {
   ]);
 
   return <div>{body}</div>;
-});
+};
 
 /**
  * Returns a the Question and Answer components that are dependent on the type
