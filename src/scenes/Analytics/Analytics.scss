@@ -36,19 +36,5 @@ $PREF: 's-analytics';
   > p:first-child { @extend .display; margin-right: $xs; }
 }
 
-.#{$PREF}-simple-percentage {
-  @extend .meta;
-
-  border-radius: $sm;
-  padding: 2px 6px;
-
-  &--green {
-    background-color: rgba($color: $green, $alpha: 0.1);
-    color: $green;
-  }
-
-  &--red { background-color: rgba($color: $red, $alpha: 0.1); color: $red; }
-}
-
 // Label of the simple card (etc: TOTAL MEMBERS).
 .#{$PREF}-simple > h4 { color: $gray-2; }

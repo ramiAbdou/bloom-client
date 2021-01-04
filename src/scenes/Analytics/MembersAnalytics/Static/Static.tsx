@@ -7,7 +7,7 @@ import {
   GetActiveMemberAnalyticsResult,
   GetTotalMemberAnalyticsResult
 } from '@scenes/Analytics/Analytics.gql';
-import Members from '../Members.store';
+import Members from '../MembersAnalytics.store';
 import ActiveMembersCard from './ActiveMembersCard';
 import ActiveMembersChart from './ActiveMembersChart';
 import TotalMembersCard from './TotalMembersCard';

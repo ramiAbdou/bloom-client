@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SimpleCard from '@scenes/Analytics/AnalyticsStatusCard/AnalyticsStatusCard';
-import Members from '../Members.store';
+import Members from '../MembersAnalytics.store';
 
 export default () => {
   const numMembers = Members.useStoreState(({ totalChartData }) => {

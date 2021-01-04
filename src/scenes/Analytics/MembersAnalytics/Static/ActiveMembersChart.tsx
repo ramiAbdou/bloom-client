@@ -2,7 +2,7 @@ import React from 'react';
 
 import Chart from '@components/Chart/Chart';
 import { ChartType } from '@components/Chart/Chart.store';
-import Members from '../Members.store';
+import Members from '../MembersAnalytics.store';
 
 export default () => {
   const activeChartData = Members.useStoreState(
