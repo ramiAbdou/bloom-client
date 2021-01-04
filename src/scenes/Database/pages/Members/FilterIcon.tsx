@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
-import Table from '@components/Table/Table.store';
+import Table from '@organisms/Table/Table.store';
 import DatabaseAction from '../../components/DatabaseAction';
 
 export default () => {

@@ -18,7 +18,7 @@ interface PickerProps
   scrollId?: string;
 }
 
-const Picker = ({
+const Panel = ({
   align: initialAlign,
   className,
   children,
@@ -142,7 +142,7 @@ export default ({ children, ...props }: PickerProps) => {
 
   return createPortal(
     <AnimatePresence>
-      {isPickerShowing && <Picker {...props}>{children}</Picker>}
+      {isPickerShowing && <Panel {...props}>{children}</Panel>}
     </AnimatePresence>,
     document.body
   );

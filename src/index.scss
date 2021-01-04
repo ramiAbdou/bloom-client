@@ -31,16 +31,20 @@
 
 // 
 
-@import './core/components/Table/Table.scss';
-@import './core/components/Table/components/Body/Body.scss';
-@import './core/components/Table/components/Header/Header.scss';
-@import './core/components/Table/components/Pagination/Pagination.scss';
-@import './core/components/Table/components/SelectAllBanner/SelectAllBanner.scss';
-// 
-
 @import './core/organisms/Form/Form.scss';
 @import './core/organisms/Modal/Modal.scss';
 @import './core/organisms/Panel/Panel.scss';
+
+//
+
+@import './core/organisms/Table/Table.scss';
+@import './core/organisms/Table/components/Body/Body.scss';
+@import './core/organisms/Table/components/Header/Header.scss';
+@import './core/organisms/Table/components/Pagination/Pagination.scss';
+@import './core/organisms/Table/components/SelectAllBanner/SelectAllBanner.scss';
+
+//
+
 @import './core/organisms/Toast/Toast.scss';
 
 // 

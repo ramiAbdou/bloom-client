@@ -3,10 +3,10 @@ import { IoArrowUpCircle } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
-import Modal from '@organisms/Modal/Modal';
-import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
+import Modal from '@organisms/Modal/Modal';
+import Table from '@organisms/Table/Table.store';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';

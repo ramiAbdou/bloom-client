@@ -2,9 +2,9 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
-import Modal from '@organisms/Modal/Modal';
-import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
+import Modal from '@organisms/Modal/Modal';
+import Table from '@organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import DatabaseAction from '../../components/DatabaseAction';

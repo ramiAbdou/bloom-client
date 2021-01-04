@@ -2,7 +2,7 @@ import React from 'react';
 import { CSVLink } from 'react-csv';
 import { IoExit } from 'react-icons/io5';
 
-import Table from '@components/Table/Table.store';
+import Table from '@organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import DatabaseAction from '../../components/DatabaseAction';
 

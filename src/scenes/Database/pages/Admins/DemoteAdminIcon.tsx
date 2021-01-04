@@ -3,10 +3,10 @@ import { IoArrowDownCircle } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import Modal from '@organisms/Modal/Modal';
-import Table from '@components/Table/Table.store';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
+import Modal from '@organisms/Modal/Modal';
+import Table from '@organisms/Table/Table.store';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';

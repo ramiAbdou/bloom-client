@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Button from '@atoms/Button';
-import TableContent from '@components/Table/Content';
-import Table from '@components/Table/Table';
-import { Column, Row } from '@components/Table/Table.types';
+import TableContent from '@organisms/Table/Content';
+import Table from '@organisms/Table/Table';
+import { Column, Row } from '@organisms/Table/Table.types';
 import { uuid } from '@util/util';
 
 const HistoryTable = () => {
