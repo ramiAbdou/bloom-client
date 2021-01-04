@@ -3,7 +3,7 @@ import React from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { Redirect, useParams } from 'react-router-dom';
 
-import { EncodedUrlNameParams } from '@constants';
+import { EncodedUrlNameProps } from '@constants';
 import { useStoreState } from '@store/Store';
 import Application from '../../Application.store';
 
@@ -50,7 +50,7 @@ const DefaultContent = () => {
 };
 
 const Content = () => {
-  const { encodedUrlName } = useParams() as EncodedUrlNameParams;
+  const { encodedUrlName } = useParams() as EncodedUrlNameProps;
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
   const name = useStoreState(({ db }) => db.community?.name);
 

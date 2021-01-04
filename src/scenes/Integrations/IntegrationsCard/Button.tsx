@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
 
 import Button from '@atoms/Button';
-import IntegrationsStore, { IntegrationsModal } from '../Integrations.store';
+import IntegrationsStore, {
+  IntegrationsModalType
+} from '../Integrations.store';
 
 export type IntegrationCardProps = {
   completed?: boolean;
@@ -17,7 +19,7 @@ const IntegrationCardButton = memo(
 
     // onClick only executes if href isn't populated, per the Button component.
     const onOpenFlow = () =>
-      setFlow(`${name.toUpperCase()}_FLOW` as IntegrationsModal);
+      setFlow(`${name.toUpperCase()}_FORM` as IntegrationsModalType);
 
     // If the href is present, the user hasn't authenticated anything. Otherwise,
     // it means the user authenticated (logged in), but didn't finish the
@@ -25,7 +27,7 @@ const IntegrationCardButton = memo(
     const buttonText = href ? 'Connect +' : 'Finish Connecting +';
 
     const onSeeDetails = () =>
-      setFlow(`${name.toUpperCase()}_DETAILS` as IntegrationsModal);
+      setFlow(`${name.toUpperCase()}_DETAILS` as IntegrationsModalType);
 
     if (completed) {
       return (

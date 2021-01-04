@@ -1,35 +1,12 @@
 import MainHeader from 'core/templates/Main/Header';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Loading from '@store/Loading.store';
 import MainContent from '@templates/Main/Content';
-import MailchimpDetails from './ExpandedDetails/MailchimpDetails';
-import StripeDetails from './ExpandedDetails/StripeDetails';
-import MailchimpFlow from './MailchimpModal/MailchimpModal';
-import IntegrationsStore, { IntegrationsModal } from './Integrations.store';
+import IntegrationsStore from './Integrations.store';
 import IntegrationsCardContainer from './IntegrationsCardContainer';
+import IntegrationsModal from './IntegrationsModal';
 import useFetchIntegrations from './useFetchIntegrations';
-
-const IntegrationModal = () => {
-  const searchParam = new URLSearchParams(window.location.search).get('flow');
-  const flow = IntegrationsStore.useStoreState((store) => store.flow);
-  const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
-
-  useEffect(() => {
-    if (searchParam && searchParam !== flow) {
-      setFlow(`${searchParam.toUpperCase()}_FLOW` as IntegrationsModal);
-    }
-  }, []);
-
-  // Flow is showing when the modal isShowing is true and there is a populated
-  // value of flow.
-
-  if (flow === 'MAILCHIMP_FLOW') return <MailchimpFlow />;
-  if (flow === 'MAILCHIMP_DETAILS') return <MailchimpDetails />;
-  if (flow === 'STRIPE_DETAILS') return <StripeDetails />;
-
-  return null;
-};
 
 const IntegrationsContent: React.FC = () => {
   useFetchIntegrations();
@@ -42,7 +19,7 @@ const IntegrationsContent: React.FC = () => {
         <IntegrationsCardContainer />
       </MainContent>
 
-      <IntegrationModal />
+      <IntegrationsModal />
     </>
   );
 };

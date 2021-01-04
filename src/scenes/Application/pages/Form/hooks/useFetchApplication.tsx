@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { EncodedUrlNameParams } from '@constants';
+import { EncodedUrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
 import {
   GET_APPLICATION,
@@ -14,12 +14,12 @@ export default (): boolean => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { push } = useHistory();
-  const { encodedUrlName } = useParams() as EncodedUrlNameParams;
+  const { encodedUrlName } = useParams() as EncodedUrlNameProps;
 
   // Retreive the form from the server.
   const { data: community, error, loading } = useQuery<
     GetApplicationResult,
-    EncodedUrlNameParams
+    EncodedUrlNameProps
   >({
     name: 'getApplication',
     query: GET_APPLICATION,

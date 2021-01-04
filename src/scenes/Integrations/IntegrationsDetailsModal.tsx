@@ -1,9 +1,9 @@
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
-import Integrations from '../Integrations.store';
+import Integrations from './Integrations.store';
 
 export type ExpandedDetailProps = { label: string; value: any };
 
@@ -13,14 +13,18 @@ type ExpandedDetailsProps = {
   name: string;
 };
 
-const Detail = memo(({ label, value }: ExpandedDetailProps) => (
+const Detail = ({ label, value }: ExpandedDetailProps) => (
   <div className="s-integrations-modal-item--detail">
     <p>{label}</p>
     <p>{value}</p>
   </div>
-));
+);
 
-export default ({ details, logo, name }: ExpandedDetailsProps) => {
+const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
+  details,
+  logo,
+  name
+}) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setFlow = Integrations.useStoreActions((store) => store.setFlow);
@@ -52,3 +56,5 @@ export default ({ details, logo, name }: ExpandedDetailsProps) => {
     </Modal>
   );
 };
+
+export default IntegrationsDetailsModal;

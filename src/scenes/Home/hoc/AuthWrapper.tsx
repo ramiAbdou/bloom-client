@@ -1,13 +1,13 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
-import { ChildrenProps, EncodedUrlNameParams } from '@constants';
+import { ChildrenProps, EncodedUrlNameProps } from '@constants';
 import { useStoreState } from '@store/Store';
 
 export default function AuthenticatedCommunityWrapper({
   children
 }: ChildrenProps) {
-  const { encodedUrlName } = useParams() as EncodedUrlNameParams;
+  const { encodedUrlName } = useParams() as EncodedUrlNameProps;
 
   const activeEncodedUrlName = useStoreState(
     ({ db }) => db.community?.encodedUrlName

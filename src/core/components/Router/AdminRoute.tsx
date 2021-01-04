@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
-import { EncodedUrlNameParams } from '@constants';
+import { EncodedUrlNameProps } from '@constants';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 
@@ -11,7 +11,7 @@ import { useStoreState } from '@store/Store';
  * the global state with the user.
  */
 export default ({ component, ...rest }: RouteProps) => {
-  const { encodedUrlName } = useParams() as EncodedUrlNameParams;
+  const { encodedUrlName } = useParams() as EncodedUrlNameProps;
   const isDesktop = useBreakpoint() === 'D';
 
   const isAdmin: boolean = useStoreState(({ db }) => {
