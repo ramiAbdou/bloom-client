@@ -4,13 +4,14 @@ import { matchSorter } from 'match-sorter';
 import React, { useEffect } from 'react';
 
 import { IMember, IUser } from '@store/entities';
+import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import Directory from './Directory.store';
 import DirectoryCard from './DirectoryCard/DirectoryCard';
 import { MemberCardModel } from './DirectoryCard/DirectoryCard.store';
 
 const DirectoryCardContainer = () => {
-  const loading = Directory.useStoreState((store) => store.loading);
+  const loading = Loading.useStoreState((store) => store.loading);
   const numMembers = Directory.useStoreState((store) => store.numMembers);
   const searchString = Directory.useStoreState((store) => store.searchString);
 

@@ -26,14 +26,6 @@ const PlaygroundDropdown: React.FC = () => {
     (store) => store.setQuestionId
   );
 
-  useEffect(() => {
-    if (!questions?.length) return;
-    const { id } = questions[0];
-    if (id !== questionId && questionId.length === 0) setQuestionId(id);
-  }, [questions]);
-
-  if (!questionId) return null;
-
   const onUpdate = (result: string[]) => {
     const title = result[0];
 
@@ -53,13 +45,42 @@ const PlaygroundDropdown: React.FC = () => {
   );
 };
 
-const PlaygroundHeader: React.FC = () => (
-  <div>
-    <h3>Data Playground</h3>
-    <p>Choose any piece of data that you'd like to explore.</p>
-    <PlaygroundDropdown />
-  </div>
-);
+const PlaygroundHeader: React.FC = () => {
+  // We only want the questions that are meaningful, and things like first/last
+  // name aren't very meaningful.
+  const initialQuestionId: string = useStoreState(({ db }) => {
+    const { byId } = db.entities.questions;
+
+    return db.community.questions
+      ?.map((id: string) => byId[id])
+      .filter(
+        ({ category }) =>
+          !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_ON'].includes(category)
+      )[0].id;
+  });
+
+  const questionId = Playground.useStoreState((store) => store.questionId);
+
+  const setQuestionId = Playground.useStoreActions(
+    (store) => store.setQuestionId
+  );
+
+  useEffect(() => {
+    if (!questionId && initialQuestionId !== questionId) {
+      setQuestionId(initialQuestionId);
+    }
+  }, [initialQuestionId]);
+
+  if (!questionId) return null;
+
+  return (
+    <div>
+      <h3>Data Playground</h3>
+      <p>Choose any piece of data that you'd like to explore.</p>
+      <PlaygroundDropdown />
+    </div>
+  );
+};
 
 const PlaygroundChart: React.FC = () => {
   const questionId = Playground.useStoreState((store) => store.questionId);

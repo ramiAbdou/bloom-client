@@ -6,9 +6,9 @@ import MainContent from '@templates/Main/Content';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
 import StripeDetails from './components/ExpandedDetails/StripeDetails';
 import MailchimpFlow from './components/MailchimpModal/MailchimpModal';
-import useFetchIntegrations from './useFetchIntegrations';
 import IntegrationsStore, { IntegrationsModal } from './Integrations.store';
 import IntegrationsCardContainer from './IntegrationsCardContainer';
+import useFetchIntegrations from './useFetchIntegrations';
 
 const IntegrationModal = () => {
   const searchParam = new URLSearchParams(window.location.search).get('flow');

@@ -6,21 +6,25 @@ import MembersAnalyticsStore from './MembersAnalytics.store';
 import MembersAnalyticsPlayground from './Playground';
 import MembersAnalyticsTotalMembersCard from './TotalMembersCard';
 import MembersAnalyticsTotalMembersChart from './TotalMembersChart';
-import useFetchMembersAnalytics from './useFetchMembersAnalytics';
+import {
+  useFetchMembersActiveAnalytics,
+  useFetchMembersTotalAnalytics
+} from './useFetchMembersAnalytics';
 
 const MembersAnalyticsContent: React.FC = () => {
-  useFetchMembersAnalytics();
+  const isActiveLoading = useFetchMembersActiveAnalytics();
+  const isTotalLoading = useFetchMembersTotalAnalytics();
 
   return (
     <div className="s-analytics-members">
       <div>
-        <MembersAnalyticsTotalMembersCard />
-        <MembersAnalyticsActiveMembersCard />
+        {!isTotalLoading && <MembersAnalyticsTotalMembersCard />}
+        {!isActiveLoading && <MembersAnalyticsActiveMembersCard />}
       </div>
 
       <div>
-        <MembersAnalyticsTotalMembersChart />
-        <MembersAnalyticsActiveMembersChart />
+        {!isTotalLoading && <MembersAnalyticsTotalMembersChart />}
+        {!isActiveLoading && <MembersAnalyticsActiveMembersChart />}
       </div>
 
       <MembersAnalyticsPlayground />

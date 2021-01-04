@@ -9,10 +9,10 @@ import {
 } from '@scenes/Analytics/Analytics.gql';
 import Members from './MembersAnalytics.store';
 
-const useFetchMembersTotalAnalytics = () => {
+export const useFetchMembersTotalAnalytics = (): boolean => {
   const initTotal = Members.useStoreActions((store) => store.initTotal);
 
-  const { data: totalData } = useQuery<GetTotalMemberAnalyticsResult>({
+  const { data: totalData, loading } = useQuery<GetTotalMemberAnalyticsResult>({
     name: 'getTotalMemberAnalytics',
     query: GET_TOTAL_MEMBER_ANALYTICS
   });
@@ -20,12 +20,16 @@ const useFetchMembersTotalAnalytics = () => {
   useEffect(() => {
     if (totalData) initTotal(totalData);
   }, [totalData]);
+
+  return loading;
 };
 
-const useFetchMembersActiveAnalytics = () => {
+export const useFetchMembersActiveAnalytics = () => {
   const initActive = Members.useStoreActions((store) => store.initActive);
 
-  const { data: activeData } = useQuery<GetActiveMemberAnalyticsResult>({
+  const { data: activeData, loading } = useQuery<
+    GetActiveMemberAnalyticsResult
+  >({
     name: 'getActiveMemberAnalytics',
     query: GET_ACTIVE_MEMBER_ANALYTICS
   });
@@ -33,11 +37,6 @@ const useFetchMembersActiveAnalytics = () => {
   useEffect(() => {
     if (activeData) initActive(activeData);
   }, [activeData]);
-};
 
-const useFetchMembersAnalytics = () => {
-  useFetchMembersTotalAnalytics();
-  useFetchMembersActiveAnalytics();
+  return loading;
 };
-
-export default useFetchMembersAnalytics;

@@ -2,12 +2,12 @@ import React from 'react';
 
 import Loading from '@store/Loading.store';
 import MainContent from '@templates/Main/Content';
-import Directory from './Directory.store';
+import DirectoryStore from './Directory.store';
 import DirectoryCardContainer from './DirectoryCardContainer';
 import DirectoryHeader from './DirectoryHeader';
 import useFetchDirectory from './useFetchDirectory';
 
-const DirectoryContent = () => {
+const DirectoryContent: React.FC = () => {
   useFetchDirectory();
 
   return (
@@ -21,10 +21,12 @@ const DirectoryContent = () => {
   );
 };
 
-export default () => (
+const Directory: React.FC = () => (
   <Loading.Provider>
-    <Directory.Provider>
+    <DirectoryStore.Provider>
       <DirectoryContent />
-    </Directory.Provider>
+    </DirectoryStore.Provider>
   </Loading.Provider>
 );
+
+export default Directory;

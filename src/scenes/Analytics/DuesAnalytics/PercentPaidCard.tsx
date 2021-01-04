@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AnalyticsSimple from '@scenes/Analytics/AnalyticsStatusCard/AnalyticsStatusCard';
+import AnalyticsSimple from '../AnalyticsStatusCard';
 
 const DuesAnalyticsPercentPaidCard: React.FC = () => {
   return (

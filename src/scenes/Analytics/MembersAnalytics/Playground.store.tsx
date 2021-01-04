@@ -6,7 +6,7 @@ export interface PlaygroundModel {
 }
 
 const model: PlaygroundModel = {
-  questionId: '',
+  questionId: null,
   setQuestionId: action((state, questionId: string) => ({
     ...state,
     questionId

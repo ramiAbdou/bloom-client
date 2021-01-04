@@ -9,7 +9,7 @@ const useUpdateLoading = (loading: boolean) => {
   useEffect(() => {
     // Since we need to use the loading state in the header, we set the
     // update the context state accordingly.
-    if (loading !== null && loading !== currentLoading) setLoading(loading);
+    if (loading !== currentLoading) setLoading(loading);
   }, [loading]);
 };
 
