@@ -27,13 +27,14 @@ $PREF: 'c-modal';
   top: calc(-50vh + 50%);
   z-index: 1001;
 
+  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
   @include M {
     bottom: 0;
     height: calc(100vh - 56px);
-    top: initial;
+    margin: 0;
+    top: 100%;
     width: 100%;
   }
-  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
 }
 
 .#{$PREF}-cancel {

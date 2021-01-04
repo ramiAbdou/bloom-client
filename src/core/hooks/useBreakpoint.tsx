@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 type Breakpoint = 'D' | 'T' | 'M';
 
-export default (): Breakpoint => {
+const useBreakpoint = (): Breakpoint => {
   const [breakpoint, setBreakpoint] = useState<Breakpoint>('D');
 
   const onWindowResize = () => {
@@ -22,3 +22,5 @@ export default (): Breakpoint => {
 
   return breakpoint;
 };
+
+export default useBreakpoint;

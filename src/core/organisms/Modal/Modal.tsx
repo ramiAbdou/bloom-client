@@ -1,10 +1,16 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import {
+  AnimatePresence,
+  AnimationProps,
+  motion,
+  MotionProps
+} from 'framer-motion';
 import React, { useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { IoCloseCircle } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { ChildrenProps } from '@constants';
+import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
@@ -47,12 +53,26 @@ const ModalContainer: React.FC = ({
     return () => onClose && onClose();
   }, []);
 
+  const isMobile = useBreakpoint() === 'M';
+
+  const animate: AnimationProps['animate'] = isMobile
+    ? { opacity: 1, top: 'initial' }
+    : { opacity: 1, scale: 1 };
+
+  const exit: AnimationProps['exit'] = isMobile
+    ? { opacity: 0, top: '100%' }
+    : { opacity: 0, scale: 0.5 };
+
+  const initial: MotionProps['initial'] = isMobile
+    ? { opacity: 0.25 }
+    : { opacity: 0.25, scale: 0.5 };
+
   return (
     <motion.div
-      animate={{ opacity: 1, scale: 1 }}
+      animate={animate}
       className="c-modal-ctr"
-      exit={{ opacity: 0, scale: 0.5 }}
-      initial={{ opacity: 0.25, scale: 0.5 }}
+      exit={exit}
+      initial={initial}
       style={width ? { width } : {}}
       transition={{ duration: 0.2 }}
     >
