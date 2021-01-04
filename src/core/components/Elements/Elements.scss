@@ -8,3 +8,6 @@ $PREF: 'c-misc';
 
 .#{$PREF}-question:not(:last-child) { margin-bottom: $md; }
 .#{$PREF}-question > div:last-child { @extend .flex-w; }
+.#{$PREF}-question > div:last-child > p:not(:only-child) {
+  margin-bottom: $xxs;
+}

@@ -34,7 +34,7 @@ const ApplicantsModal: React.FC<IdProps> = ({ id }) => {
 
   const items: QuestionValueItemProps[] = ApplicantsCardStore.useStoreState(
     (store) => {
-      return store.data.map(({ question, value }) => {
+      return store.expandedData.map(({ question, value }) => {
         return { title: question.title, type: question.type, value };
       });
     }
