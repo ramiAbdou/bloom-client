@@ -6,7 +6,7 @@ import Loading from '@store/Loading.store';
 const MainContent: React.FC<ChildrenProps> = ({ children }) => {
   const loading = Loading.useStoreState((store) => store.loading);
   if (loading === null || loading) return null;
-  return <section className="c-main-content">{children}</section>;
+  return <section className="t-main-content">{children}</section>;
 };
 
 export default MainContent;

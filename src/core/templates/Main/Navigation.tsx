@@ -31,7 +31,7 @@ const NavigationButton = ({
   isActive,
   onClick
 }: NavigationButtonProps) => {
-  const css = makeClass(['c-main-multi', [isActive, 'c-main-multi--active']]);
+  const css = makeClass(['t-main-multi', [isActive, 't-main-multi--active']]);
 
   return (
     <button className={css} onClick={onClick}>
@@ -55,7 +55,7 @@ const HeaderNavigation: React.FC<NavigationProps> = ({ options }) => {
   const activeOption: NavigationOptionProps = options[activeIndex];
 
   return (
-    <nav className="c-main-multi-ctr">
+    <nav className="t-main-multi-ctr">
       {options.map(({ title, onClick }: NavigationOptionProps) => {
         const onButtonClick = () => onClick && onClick();
 

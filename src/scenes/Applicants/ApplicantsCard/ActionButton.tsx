@@ -9,8 +9,8 @@ import Button from '@atoms/Button';
 import useMutation from '@hooks/useMutation';
 import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
-import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../../Applicants.gql';
-import Applicant from './Card.store';
+import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../Applicants.gql';
+import Applicant from './ApplicantsCard.store';
 
 // In the context of the ExpandedCard, which exits the modal.
 export const BackButton = () => {

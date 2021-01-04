@@ -6,7 +6,8 @@ import Card from '@components/Elements/Card/Card';
 import QuestionValue from '@components/Elements/QuestionValue';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
-import CardStore from './Card.store';
+import ActionContainer from '@templates/ActionContainer/ActionContainer';
+import CardStore from './ApplicantsCard.store';
 import ExpandedCard from './ExpandedCard';
 
 const CardHeader = () => {
@@ -39,15 +40,15 @@ const ExpandButton = memo(() => {
         <ExpandedCard />
       </Modal>
 
-      <div>
-        <Button fill primary onClick={onClick}>
+      <ActionContainer equal>
+        <Button primary onClick={onClick}>
           Accept
         </Button>
 
-        <Button fill secondary onClick={onClick}>
+        <Button secondary onClick={onClick}>
           Reject
         </Button>
-      </div>
+      </ActionContainer>
     </>
   );
 });

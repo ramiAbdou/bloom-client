@@ -39,7 +39,7 @@ const MainHeader = ({
 }: MainHeaderProps) => {
   const loading = Loading.useStoreState((store) => store.loading);
 
-  const css = makeClass(['c-main-header', className]);
+  const css = makeClass(['t-main-header', className]);
 
   return (
     <div className={css}>

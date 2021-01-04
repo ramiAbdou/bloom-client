@@ -3,7 +3,7 @@ import React from 'react';
 import Loading from '@store/Loading.store';
 import MainContent from '@templates/Main/Content';
 import ApplicantsCardContainer from './ApplicantsCardContainer';
-import ApplicantsHeader from './components/Header/Header';
+import ApplicantsHeader from './ApplicantsHeader/ApplicantsHeader';
 import useFetchApplicants from './useFetchApplicants';
 
 const ApplicantsContent: React.FC = () => {
