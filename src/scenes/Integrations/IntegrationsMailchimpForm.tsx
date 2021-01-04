@@ -2,10 +2,10 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
-import FormItem from '@components/Form/components/Item';
-import SubmitButton from '@components/Form/components/SubmitButton';
-import Form from '@components/Form/Form';
-import Modal from '@components/Modal/Modal';
+import FormItem from '@organisms/Form/components/Item';
+import SubmitButton from '@organisms/Form/components/SubmitButton';
+import Form from '@organisms/Form/Form';
+import Modal from '@organisms/Modal/Modal';
 import { ModalType } from '@constants';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/entities';

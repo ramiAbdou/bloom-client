@@ -10,7 +10,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 
-import ToastQueue from '@components/Toast/Toast';
+import ToastQueue from '@organisms/Toast/Toast';
 import { APP } from '@constants';
 import { store } from '@store/Store';
 import Router from './core/routing/Router';

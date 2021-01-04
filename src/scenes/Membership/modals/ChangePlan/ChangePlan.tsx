@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LoadingHeader from '@components/Elements/LoadingHeader/LoadingHeader';
-import Modal from '@components/Modal/Modal';
+import Modal from '@organisms/Modal/Modal';
 import PaymentDescription from '@components/Payment/components/Description';
 import StripeProvider from '@components/Payment/containers/StripeProvider';
 import { ModalType } from '@constants';

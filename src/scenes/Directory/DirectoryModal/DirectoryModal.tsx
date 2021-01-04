@@ -2,7 +2,7 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import QuestionValueList from '@components/Elements/QuestionValueList';
-import Modal from '@components/Modal/Modal';
+import Modal from '@organisms/Modal/Modal';
 import { IdProps } from '@constants';
 import DirectoryCard from '../DirectoryCard/DirectoryCard.store';
 import UserInformationContainer from './UserInformation';

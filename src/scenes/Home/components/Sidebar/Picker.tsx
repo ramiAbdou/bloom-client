@@ -2,9 +2,9 @@ import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import PickerOption from '@components/Panel/components/Option';
-import Picker from '@components/Panel/Panel';
-import { PanelAction } from '@components/Panel/Panel.types';
+import PickerOption from '@organisms/Panel/components/Option';
+import Picker from '@organisms/Panel/Panel';
+import { PanelAction } from '@organisms/Panel/Panel.types';
 import { PickerType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { LOGOUT } from '@scenes/Home/Home.gql';

@@ -1,6 +1,6 @@
 import { useManualQuery } from 'graphql-hooks';
 
-import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
+import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { getGraphQLError } from '@util/util';
 import { SEND_TEMPORARY_LOGIN_LINK } from '../../Login.gql';
 import Login from '../../Login.store';

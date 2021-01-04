@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Button from '@atoms/Button';
-import { ToastOptions } from '@components/Toast/Toast.store';
+import { ToastOptions } from '@organisms/Toast/Toast.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
 

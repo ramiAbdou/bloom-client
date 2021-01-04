@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 
 import Button from '@atoms/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import Modal from '@components/Modal/Modal';
+import Modal from '@organisms/Modal/Modal';
 import { IdProps } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { IMember } from '@store/entities';

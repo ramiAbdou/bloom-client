@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
-import Modal from '@components/Modal/Modal';
+import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import Integrations from './Integrations.store';
 

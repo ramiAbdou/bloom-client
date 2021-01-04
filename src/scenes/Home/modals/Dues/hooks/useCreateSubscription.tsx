@@ -1,4 +1,4 @@
-import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
+import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';

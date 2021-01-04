@@ -3,7 +3,7 @@ import React from 'react';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@components/Elements/QuestionValueList';
-import Modal from '@components/Modal/Modal';
+import Modal from '@organisms/Modal/Modal';
 import { IdProps } from '@constants';
 import ActionContainer from '@templates/ActionContainer/ActionContainer';
 import ApplicantsCardStore from './ApplicantsCard/ApplicantsCard.store';

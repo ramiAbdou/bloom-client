@@ -15,6 +15,7 @@
       "@constants": ["util/constants.ts"],
       "@hooks/*": ["core/hooks/*"],
       "@molecules/*": ["core/molecules/*"],
+      "@organisms/*": ["core/organisms/*"],
       "@scenes/*": ["scenes/*"],
       "@store/*": ["core/store/*"],
       "@templates/*": ["core/templates/*"],

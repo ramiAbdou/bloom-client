@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 
-import { OnFormSubmit, OnFormSubmitArgs } from '@components/Form/Form.types';
-import { parseValue } from '@components/Form/Form.util';
+import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import { parseValue } from '@organisms/Form/Form.util';
 import useMutation from '@hooks/useMutation';
 import {
   APPLY_FOR_MEMBERSHIP,

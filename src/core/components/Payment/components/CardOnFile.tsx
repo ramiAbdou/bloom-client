@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Label from '@components/Form/components/Label';
+import Label from '@organisms/Form/components/Label';
 import { useStoreState } from '@store/Store';
 import { IsCardChangingProps } from '../Payment.types';
 

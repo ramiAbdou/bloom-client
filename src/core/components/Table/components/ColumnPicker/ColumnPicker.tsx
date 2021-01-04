@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect, useState } from 'react';
 
 import Input from '@atoms/Input';
-import Picker from '@components/Panel/Panel';
+import Picker from '@organisms/Panel/Panel';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Table from '../../Table.store';
 import { Column } from '../../Table.types';

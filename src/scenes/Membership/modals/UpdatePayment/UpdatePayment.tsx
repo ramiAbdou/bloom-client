@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Modal from '@components/Modal/Modal';
+import Modal from '@organisms/Modal/Modal';
 import StripeProvider from '@components/Payment/containers/StripeProvider';
 import PaymentForm from '@components/Payment/Payment';
 import { ModalType } from '@constants';
