@@ -2,7 +2,6 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import { IMember } from '@store/entities';
-import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import ApplicantCard from './ApplicantsCard/ApplicantsCard';
 import Applicant, {
@@ -38,10 +37,6 @@ export default () => {
       ];
     }, []);
   }, deepequal);
-
-  const loading = Loading.useStoreState((store) => store.loading);
-
-  if (loading) return null;
 
   return (
     <>

@@ -1,15 +1,14 @@
 import React from 'react';
 
 import QuestionValue from '@components/Elements/QuestionValue';
-import { AcceptButton, BackButton, IgnoreButton } from './ActionButton';
-import Applicant from './ApplicantsCard.store';
+import { AcceptButton, IgnoreButton } from '../ApplicantsCard/ActionButton';
+import Applicant from '../ApplicantsCard/ApplicantsCard.store';
 
 const Header = () => {
   const fullName = Applicant.useStoreState((store) => store.fullName);
 
   return (
     <div className="s-applicants-card-header s-applicants-expanded-header">
-      <BackButton />
       <h1>{fullName}</h1>
 
       <div>

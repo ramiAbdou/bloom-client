@@ -7,8 +7,8 @@ import QuestionValue from '@components/Elements/QuestionValue';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import ActionContainer from '@templates/ActionContainer/ActionContainer';
+import ExpandedCard from '../ApplicantsModal/ExpandedCard';
 import CardStore from './ApplicantsCard.store';
-import ExpandedCard from './ExpandedCard';
 
 const CardHeader = () => {
   const createdAt = CardStore.useStoreState((store) => store.createdAt);

@@ -1,9 +1,5 @@
 import React, { MutableRefObject } from 'react';
-import {
-  IoCheckmarkCircle,
-  IoChevronBackOutline,
-  IoCloseCircle
-} from 'react-icons/io5';
+import { IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import useMutation from '@hooks/useMutation';
@@ -11,16 +7,6 @@ import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
 import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../Applicants.gql';
 import Applicant from './ApplicantsCard.store';
-
-// In the context of the ExpandedCard, which exits the modal.
-export const BackButton = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  return (
-    <Button onClick={() => closeModal()}>
-      <IoChevronBackOutline className="back-arrow" />
-    </Button>
-  );
-};
 
 export const AcceptButton = () => {
   const updateEntities = useStoreActions(({ db }) => db.updateEntities);
