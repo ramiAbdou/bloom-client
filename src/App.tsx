@@ -1,6 +1,5 @@
 import './index.css';
 import './index.scss';
-import 'tailwindcss/tailwind.css';
 import '../public/favicon.ico';
 
 // Extend the time-based library for entire app.

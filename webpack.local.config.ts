@@ -31,7 +31,7 @@ export default {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'postcss-loader']
+        use: ['style-loader', 'css-loader', 'postcss-loader']
       },
       {
         exclude: /node_modules/,
@@ -78,7 +78,7 @@ export default {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.scss'],
+    extensions: ['.ts', '.tsx', '.js', '.scss', '.css'],
     plugins: [new TsConfigPathsPlugin()]
   }
 };
