@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 import Spinner from '@components/Loader/Spinner';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 export interface ButtonProps
   extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
@@ -27,7 +27,7 @@ export interface ButtonProps
  * otherwise. Ensures that the loading state of a Button doesn't show unless
  * the operation takes more than 100ms.
  */
-const useLoadingState = (loading: boolean): boolean => {
+const useIsLoading = (loading: boolean): boolean => {
   const [showLoadingState, setShowLoadingState] = useState(false);
 
   useEffect(() => {
@@ -46,15 +46,20 @@ const useLoadingState = (loading: boolean): boolean => {
   return showLoadingState;
 };
 
-const LoadingState = ({
+const LoadingContainer = ({
+  loading,
   loadingText,
   secondary
-}: Pick<ButtonProps, 'loadingText' | 'secondary'>) => (
-  <div className="c-btn-loading-ctr">
-    <p>{loadingText}</p>
-    <Spinner dark={secondary} />
-  </div>
-);
+}: Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>) => {
+  if (!loading) return null;
+
+  return (
+    <div className="c-btn-loading-ctr">
+      <p>{loadingText}</p>
+      <Spinner dark={secondary} />
+    </div>
+  );
+};
 
 const Button = forwardRef(
   (
@@ -77,8 +82,8 @@ const Button = forwardRef(
     ref: MutableRefObject<any>
   ) => {
     // If the button is in it's loading state, it should be disabled.
-    const showLoadingState = useLoadingState(loading) && !!loadingText;
-    disabled = disabled || showLoadingState;
+    const showSpinner = useIsLoading(loading) && !!loadingText;
+    disabled = disabled || showSpinner;
 
     const onButtonClick = (
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -88,16 +93,16 @@ const Button = forwardRef(
       onClick(null);
     };
 
-    const css = makeClass([
-      'c-btn',
-      [large, 'c-btn--lg'],
-      [fill, 'c-btn--fill'],
-      [fit, 'c-btn--fit'],
-      [primary, 'c-btn--primary'],
-      [secondary, 'c-btn--secondary'],
-      [tertiary, 'c-btn--tertiary'],
-      className
-    ]);
+    const css = cx({
+      'c-btn': true,
+      'c-btn--fill': fill,
+      'c-btn--fit': fit,
+      'c-btn--lg': large,
+      'c-btn--primary': primary,
+      'c-btn--secondary': secondary,
+      'c-btn--tertiary': tertiary,
+      [className]: className
+    });
 
     return (
       <button
@@ -108,11 +113,13 @@ const Button = forwardRef(
         onClick={onButtonClick}
         {...props}
       >
-        {showLoadingState && (
-          <LoadingState loadingText={loadingText} secondary={secondary} />
-        )}
+        <LoadingContainer
+          loading={showSpinner}
+          loadingText={loadingText}
+          secondary={secondary}
+        />
 
-        {!showLoadingState && children}
+        {!showSpinner && children}
       </button>
     );
   }
