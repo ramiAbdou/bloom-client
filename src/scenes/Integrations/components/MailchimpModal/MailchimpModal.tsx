@@ -7,7 +7,7 @@ import { ModalType } from '@constants';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import useMailchimpSubmit from '../../hooks/useMailchimpSubmit';
+import useMailchimpSubmit from '../../useMailchimpSubmit';
 import MailchimpModalContent from './Content';
 
 export default () => {

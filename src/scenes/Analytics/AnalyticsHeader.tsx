@@ -3,10 +3,7 @@ import { NavigationOptionProps } from 'core/templates/Main/Navigation';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Loading from '@store/Loading.store';
-
 const AnalyticsHeader = () => {
-  const loading = Loading.useStoreState((store) => store.loading);
   const { push } = useHistory();
 
   const options: NavigationOptionProps[] = [
@@ -18,7 +15,6 @@ const AnalyticsHeader = () => {
   return (
     <MainHeader
       className="s-analytics-header"
-      loading={loading}
       options={options}
       title="Analytics"
     />

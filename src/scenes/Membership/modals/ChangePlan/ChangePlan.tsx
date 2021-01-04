@@ -5,8 +5,8 @@ import Modal from '@components/Modal/Modal';
 import PaymentDescription from '@components/Payment/components/Description';
 import StripeProvider from '@components/Payment/containers/StripeProvider';
 import { ModalType } from '@constants';
-import usePaymentMethod from '../../hooks/usePaymentMethod';
 import ChangePlan from '../../pages/ChangePlan/ChangePlan.store';
+import usePaymentMethod from '../../usePaymentMethod';
 import ChangePlanForm from './components/Form';
 
 const ChangePlanModal = () => {

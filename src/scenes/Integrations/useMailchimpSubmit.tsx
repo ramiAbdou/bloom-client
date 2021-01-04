@@ -5,7 +5,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import {
   UPDATE_MAILCHIMP_LIST_ID,
   UpdateMailchimpListIdArgs
-} from '../Integrations.gql';
+} from './Integrations.gql';
 
 export default (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);

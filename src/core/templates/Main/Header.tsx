@@ -5,14 +5,14 @@ import { useHistory } from 'react-router-dom';
 import Button from '@atoms/Button';
 import { NumberTag } from '@atoms/Tags';
 import Spinner from '@components/Loader/Spinner';
-import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
+import { ChildrenProps, ClassNameProps } from '@constants';
+import Loading from '@store/Loading.store';
 import { makeClass } from '@util/util';
 import Navigation, { NavigationProps } from './Navigation';
 
 interface MainHeaderProps
   extends ClassNameProps,
     ChildrenProps,
-    LoadingProps,
     NavigationProps {
   backButton?: boolean;
   numberTag?: string;
@@ -33,11 +33,12 @@ const MainHeader = ({
   backButton,
   children,
   className,
-  loading,
   numberTag,
   options,
   title
 }: MainHeaderProps) => {
+  const loading = Loading.useStoreState((store) => store.loading);
+
   const css = makeClass(['c-main-header', className]);
 
   return (
@@ -50,7 +51,7 @@ const MainHeader = ({
       </div>
 
       <Navigation options={options} />
-      {children}
+      {!loading && children}
     </div>
   );
 };

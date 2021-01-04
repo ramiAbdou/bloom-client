@@ -4,7 +4,7 @@ import useQuery from '@hooks/useQuery';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_PAYMENT_METHOD } from '../Membership.gql';
+import { GET_PAYMENT_METHOD } from './Membership.gql';
 
 const usePaymentMethod = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);

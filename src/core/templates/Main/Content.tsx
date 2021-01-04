@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { ChildrenProps, LoadingProps } from '@constants';
+import { ChildrenProps } from '@constants';
+import Loading from '@store/Loading.store';
 
-interface MainContentProps extends ChildrenProps, LoadingProps {}
-
-const MainContent = ({ children, loading }: MainContentProps) => {
+const MainContent: React.FC<ChildrenProps> = ({ children }) => {
+  const loading = Loading.useStoreState((store) => store.loading);
   if (loading) return null;
   return <section className="c-main-content">{children}</section>;
 };

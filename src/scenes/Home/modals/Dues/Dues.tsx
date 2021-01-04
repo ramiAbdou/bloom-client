@@ -6,7 +6,7 @@ import PaymentDescription from '@components/Payment/components/Description';
 import StripeProvider from '@components/Payment/containers/StripeProvider';
 import PaymentForm from '@components/Payment/Payment';
 import { ModalType } from '@constants';
-import usePaymentMethod from '../../../Membership/hooks/usePaymentMethod';
+import usePaymentMethod from '../../../Membership/usePaymentMethod';
 import FinishDuesButton from './components/FinishButton';
 import DuesTypeOptions from './components/TypeOptions';
 import DuesContainer from './containers/Dues';

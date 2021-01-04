@@ -1,18 +1,19 @@
 import MainHeader from 'core/templates/Main/Header';
 import React, { useEffect } from 'react';
 
+import Loading from '@store/Loading.store';
 import MainContent from '@templates/Main/Content';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
 import StripeDetails from './components/ExpandedDetails/StripeDetails';
 import MailchimpFlow from './components/MailchimpModal/MailchimpModal';
-import useFetchIntegrations from './hooks/useFetchIntegrations';
-import Integrations, { IntegrationsModal } from './Integrations.store';
+import useFetchIntegrations from './useFetchIntegrations';
+import IntegrationsStore, { IntegrationsModal } from './Integrations.store';
 import IntegrationsCardContainer from './IntegrationsCardContainer';
 
 const IntegrationModal = () => {
   const searchParam = new URLSearchParams(window.location.search).get('flow');
-  const flow = Integrations.useStoreState((store) => store.flow);
-  const setFlow = Integrations.useStoreActions((store) => store.setFlow);
+  const flow = IntegrationsStore.useStoreState((store) => store.flow);
+  const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
 
   useEffect(() => {
     if (searchParam && searchParam !== flow) {
@@ -30,18 +31,30 @@ const IntegrationModal = () => {
   return null;
 };
 
-export default () => {
-  const { loading } = useFetchIntegrations();
+const IntegrationsContent: React.FC = () => {
+  useFetchIntegrations();
 
   return (
-    <Integrations.Provider>
-      <MainHeader loading={loading} title="Integrations" />
+    <>
+      <MainHeader title="Integrations" />
 
-      <MainContent loading={loading}>
+      <MainContent>
         <IntegrationsCardContainer />
       </MainContent>
 
       <IntegrationModal />
-    </Integrations.Provider>
+    </>
   );
 };
+
+const Integrations: React.FC = () => {
+  return (
+    <Loading.Provider>
+      <IntegrationsStore.Provider>
+        <IntegrationsContent />
+      </IntegrationsStore.Provider>
+    </Loading.Provider>
+  );
+};
+
+export default Integrations;

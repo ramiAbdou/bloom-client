@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Loading from '@store/Loading.store';
 import MainContent from '@templates/Main/Content';
 import Directory from './Directory.store';
 import DirectoryCardContainer from './DirectoryCardContainer';
@@ -21,7 +22,9 @@ const DirectoryContent = () => {
 };
 
 export default () => (
-  <Directory.Provider>
-    <DirectoryContent />
-  </Directory.Provider>
+  <Loading.Provider>
+    <Directory.Provider>
+      <DirectoryContent />
+    </Directory.Provider>
+  </Loading.Provider>
 );

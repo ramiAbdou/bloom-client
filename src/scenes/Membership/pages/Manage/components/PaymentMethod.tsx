@@ -7,7 +7,7 @@ import Spinner from '@components/Loader/Spinner';
 import { ModalType } from '@constants';
 import { IPaymentMethod } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import usePaymentMethod from '../../../hooks/usePaymentMethod';
+import usePaymentMethod from '../../../usePaymentMethod';
 
 const PaymentMethodContent = () => {
   const paymentMethod: IPaymentMethod = useStoreState(

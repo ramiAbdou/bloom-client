@@ -4,7 +4,7 @@ import Modal from '@components/Modal/Modal';
 import StripeProvider from '@components/Payment/containers/StripeProvider';
 import PaymentForm from '@components/Payment/Payment';
 import { ModalType } from '@constants';
-import useUpdatePaymentMethod from '../../hooks/useUpdatePaymentMethod';
+import useUpdatePaymentMethod from '../../useUpdatePaymentMethod';
 import UpdatePaymentButton from './UpdateButton';
 
 const UpdatePaymentModalContent = () => {

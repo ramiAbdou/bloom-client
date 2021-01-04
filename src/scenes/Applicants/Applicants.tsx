@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 
-import MainContent from '@templates/Main/Content';
 import useQuery from '@hooks/useQuery';
 import Loading from '@store/Loading.store';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
+import MainContent from '@templates/Main/Content';
 import {
   GET_PENDING_APPLICATIONS,
   GetPendingApplicantsResult

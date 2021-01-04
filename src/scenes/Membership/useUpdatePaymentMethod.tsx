@@ -8,7 +8,7 @@ import { PaymentMethodCreateParams } from '@stripe/stripe-js';
 import {
   UPDATE_PAYMENT_METHOD,
   UpdatePaymentMethodArgs
-} from '../Membership.gql';
+} from './Membership.gql';
 
 const useUpdatePaymentMethod = (): OnFormSubmit => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);

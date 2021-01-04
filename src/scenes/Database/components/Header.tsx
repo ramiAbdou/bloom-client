@@ -4,7 +4,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import AddMemberButton from '@scenes/Home/modals/AddMember/AddMemberButton';
-import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import AddAdminButton from '../modals/AddAdmin/AddAdminButton';
 
@@ -25,7 +24,6 @@ const AddButton = () => {
 };
 
 const DatabaseHeader = () => {
-  const loading = Loading.useStoreState((store) => store.loading);
   const { push } = useHistory();
 
   const options: NavigationOptionProps[] = [
@@ -36,11 +34,10 @@ const DatabaseHeader = () => {
   return (
     <MainHeader
       className="s-database-header"
-      loading={loading}
       options={options}
       title="Member Database"
     >
-      {!loading && <AddButton />}
+      <AddButton />
     </MainHeader>
   );
 };
