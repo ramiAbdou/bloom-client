@@ -2,22 +2,31 @@ import React from 'react';
 
 import InformationTip from '@components/Elements/InformationTip/InformationTip';
 import { ChildrenProps } from '@constants';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 interface FormLabelProps extends ChildrenProps {
   required?: boolean;
+  small?: boolean;
   tooltip?: string;
 }
 
-export default ({ children, required, tooltip }: FormLabelProps) => {
+const FormLabel: React.FC<FormLabelProps> = ({
+  children,
+  required,
+  small,
+  tooltip
+}) => {
   if (!children) return null;
 
-  const css = makeClass(['c-form-label', [required, 'c-form-label--required']]);
+  const css = cx({ 'c-form-label': true, 'c-form-label--required': required });
 
   return (
     <div className={css}>
-      <h4>{children}</h4>
+      {small && <h5>{children}</h5>}
+      {!small && <h4>{children}</h4>}
       {tooltip && <InformationTip position="left" tooltip={tooltip} />}
     </div>
   );
 };
+
+export default FormLabel;

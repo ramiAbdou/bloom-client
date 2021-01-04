@@ -3,6 +3,7 @@ import React, { memo, ReactNode } from 'react';
 import { QuestionType, ValueProps } from '@constants';
 import { takeFirst } from '@util/util';
 import Attribute from '../../atoms/Tags/Attribute';
+import FormLabel from '../Form/components/Label';
 
 interface QuestionValueProps extends ValueProps {
   hideNullValue?: boolean;
@@ -39,7 +40,7 @@ export default ({ hideNullValue, title, type, value }: QuestionValueProps) => {
 
   return (
     <div className="c-misc-question">
-      <p>{title}</p>
+      <FormLabel small>{title}</FormLabel>
       <Value type={type} value={value} />
     </div>
   );
