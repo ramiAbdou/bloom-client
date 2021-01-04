@@ -1,8 +1,8 @@
 import React from 'react';
-import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Card from '@components/Elements/Card/Card';
 import IntegrationCardButton from './Button';
+import IntegrationCardContent from './Content';
 
 export type IntegrationCardProps = {
   completed?: boolean;
@@ -12,32 +12,14 @@ export type IntegrationCardProps = {
   href: string;
 };
 
-export default ({
-  completed,
-  logo,
-  name,
-  description,
-  href
-}: IntegrationCardProps) => (
+const IntegrationCard: React.FC<IntegrationCardProps> = (props) => (
   <Card className="s-integrations-card">
-    <div>
-      <div className="s-integrations-card-header">
-        <img alt="Company Logo" className="s-integrations-icon" src={logo} />
-
-        {completed && (
-          <div className="s-integrations-connected">
-            <IoCheckmarkCircle />
-            <p>Connected</p>
-          </div>
-        )}
-      </div>
-
-      <h3>{name}</h3>
-      <p>{description}</p>
-    </div>
+    <IntegrationCardContent {...props} />
 
     <div>
-      <IntegrationCardButton completed={completed} href={href} name={name} />
+      <IntegrationCardButton {...props} />
     </div>
   </Card>
 );
+
+export default IntegrationCard;

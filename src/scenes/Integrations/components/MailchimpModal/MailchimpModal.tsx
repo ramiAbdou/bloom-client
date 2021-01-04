@@ -7,8 +7,8 @@ import { ModalType } from '@constants';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import MailchimpFlowContent from './Content';
-import useMailchimpSubmit from './useMailchimpSubmit';
+import useMailchimpSubmit from '../../hooks/useMailchimpSubmit';
+import MailchimpModalContent from './Content';
 
 export default () => {
   const { mailchimpListId, mailchimpLists } = useStoreState(
@@ -37,7 +37,7 @@ export default () => {
         className="s-integrations-onboarding-form"
         onSubmit={onSubmitMailchimpList}
       >
-        <MailchimpFlowContent />
+        <MailchimpModalContent />
       </Form>
     </Modal>
   );

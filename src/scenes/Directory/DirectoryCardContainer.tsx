@@ -6,8 +6,8 @@ import React, { useEffect } from 'react';
 import { IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import MemberCard from './components/Card/Card';
-import Directory from './Directory.store';
 import { MemberCardModel } from './components/Card/Card.store';
+import Directory from './Directory.store';
 
 const DirectoryCardContainer = () => {
   const loading = Directory.useStoreState((store) => store.loading);

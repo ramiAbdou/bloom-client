@@ -7,7 +7,7 @@ import SubmitButton from '@components/Form/components/SubmitButton';
 import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from '../../images/mailchimp.png';
 
-export default () => {
+const MailchimpModalContent = () => {
   const mailchimpLists = useStoreState(
     ({ db }) => db.integrations.mailchimpLists,
     deepequal
@@ -47,3 +47,5 @@ export default () => {
     </>
   );
 };
+
+export default MailchimpModalContent;
