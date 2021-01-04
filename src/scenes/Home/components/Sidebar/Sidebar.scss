@@ -39,7 +39,7 @@ $PREF: 's-home-sidebar';
 .#{$PREF}-section { margin-top: $md; &:first-of-type { margin-top: 0; } }
 
 // Section heading (ie: MAIN, ADMIN, QUICK ACTIONS).
-.#{$PREF}-section > h4 { color: $gray-3; margin-left: $sm; }
+.#{$PREF}-section > h5 { color: $gray-3; margin-bottom: $xs; margin-left: $sm; }
 
 .#{$PREF}-link {
   @extend .flex-ac;
