@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox';
-import Form from '../Form.store';
-import { FormItemData } from '../Form.types';
+import Form from './Form.store';
+import { FormItemData } from './Form.types';
 
 export default ({ options, title }: FormItemData) => {
   const value = Form.useStoreState(({ getItem }) => getItem({ title })?.value);

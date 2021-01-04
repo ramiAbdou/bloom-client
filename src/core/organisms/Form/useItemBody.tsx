@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 
 import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
-import DropdownItem from '../components/Dropdown';
-import LongText from '../elements/LongText';
-import MultipleChoice from '../elements/MultipleChoice';
-import MultipleSelect from '../elements/MultipleSelect';
-import ShortText from '../elements/ShortText';
-import { FormItemData } from '../Form.types';
+import DropdownItem from './Dropdown';
+import { FormItemData } from './Form.types';
+import LongText from './LongText';
+import MultipleChoice from './MultipleChoice';
+import MultipleSelect from './MultipleSelect';
+import ShortText from './ShortText';
 
 type BaseItemProps = Pick<FormItemData, 'category' | 'required' | 'title'>;
 

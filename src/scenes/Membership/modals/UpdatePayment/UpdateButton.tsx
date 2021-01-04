@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoLockClosed } from 'react-icons/io5';
 
-import SubmitButton from '@organisms/Form/components/SubmitButton';
+import SubmitButton from '@organisms/Form/SubmitButton';
 import Form from '@organisms/Form/Form.store';
 import { useStripe } from '@stripe/react-stripe-js';
 

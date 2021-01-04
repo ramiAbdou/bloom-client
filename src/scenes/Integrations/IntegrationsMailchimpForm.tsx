@@ -2,8 +2,8 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
-import FormItem from '@organisms/Form/components/Item';
-import SubmitButton from '@organisms/Form/components/SubmitButton';
+import FormItem from '@organisms/Form/Item';
+import SubmitButton from '@organisms/Form/SubmitButton';
 import Form from '@organisms/Form/Form';
 import Modal from '@organisms/Modal/Modal';
 import { ModalType } from '@constants';

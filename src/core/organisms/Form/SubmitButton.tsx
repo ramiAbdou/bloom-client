@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button';
-import Form from '../Form.store';
+import Form from './Form.store';
 
 export default ({
   disabled,

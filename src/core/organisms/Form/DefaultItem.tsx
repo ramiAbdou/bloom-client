@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { FormItemProps } from '../Form.types';
-import useItemBody from '../hooks/useItemBody';
+import { FormItemProps } from './Form.types';
+import useItemBody from './useItemBody';
 import Description from './Description';
 import Label from './Label';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ErrorMessage, { ErrorMessageProps } from '@components/Misc/ErrorMessage';
-import Form from '../Form.store';
+import Form from './Form.store';
 
 /**
  * Should only be used as the ErrorMessage of the entire Form, not for any

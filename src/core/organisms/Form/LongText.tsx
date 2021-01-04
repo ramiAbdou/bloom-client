@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Form from '../Form.store';
-import { FormItemData } from '../Form.types';
+import Form from './Form.store';
+import { FormItemData } from './Form.types';
 
 export default ({ title }: FormItemData) => {
   const value = Form.useStoreState(({ getItem }) => getItem({ title }).value);

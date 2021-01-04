@@ -1,7 +1,7 @@
 import React from 'react';
 
-import DefaultFormItem from '@organisms/Form/components/DefaultItem';
-import FormErrorMessage from '@organisms/Form/components/ErrorMessage';
+import DefaultFormItem from '@organisms/Form/DefaultItem';
+import FormErrorMessage from '@organisms/Form/ErrorMessage';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
 import FullScreenLoader from '@components/Loader/FullScreenLoader';

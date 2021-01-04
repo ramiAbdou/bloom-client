@@ -1,8 +1,8 @@
 import React from 'react';
 import validator from 'validator';
 
-import FormErrorMessage from '@organisms/Form/components/ErrorMessage';
-import FormItem from '@organisms/Form/components/Item';
+import FormErrorMessage from '@organisms/Form/ErrorMessage';
+import FormItem from '@organisms/Form/Item';
 import Form from '@organisms/Form/Form';
 import SubmitButton from './SubmitButton';
 import useSendLoginLink from './useSendLoginLink';

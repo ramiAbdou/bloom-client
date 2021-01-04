@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
 import { takeFirst } from '@util/util';
-import Form from '../Form.store';
-import { FormItemProps } from '../Form.types';
-import useItemBody from '../hooks/useItemBody';
+import Form from './Form.store';
+import { FormItemProps } from './Form.types';
+import useItemBody from './useItemBody';
 import Description from './Description';
 import Label from './Label';
 

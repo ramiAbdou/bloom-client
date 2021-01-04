@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import Label from '@organisms/Form/components/Label';
+import Label from '@organisms/Form/Label';
 import PaymentForm from '@components/Payment/Payment';
 import ChangePlan from '@scenes/Membership/pages/ChangePlan/ChangePlan.store';
 import { IMemberType } from '@store/entities';
