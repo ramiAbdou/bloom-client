@@ -16,7 +16,11 @@ const ApplicantsHeader = () => {
   const numberTag = !!numApplicants && `${numApplicants} Total`;
 
   return (
-    <MainHeader numberTag={numberTag} title="Pending Applicants">
+    <MainHeader
+      className="s-applicants-header"
+      numberTag={numberTag}
+      title="Pending Applicants"
+    >
       {!!numApplicants && (
         <div>
           <AcceptAllButton />

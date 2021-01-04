@@ -2,6 +2,7 @@ $PREF: 's-signup';
 
 .#{$PREF}-ctr {
   background-color: white;
+  height: 100vh;
 
   @include RESP(padding-bottom, $xl, $lg, $md);
   @include RESP(padding-top, $xl, $lg, $md);

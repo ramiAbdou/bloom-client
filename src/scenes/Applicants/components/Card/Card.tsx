@@ -41,7 +41,7 @@ const ExpandButton = memo(() => {
         <ExpandedCard />
       </Modal>
 
-      <Button tertiary onClick={onClick}>
+      <Button fill secondary onClick={onClick}>
         See Full Application
       </Button>
     </>
