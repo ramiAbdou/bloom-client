@@ -30,14 +30,4 @@ $PREF: 's-integrations';
 // ## MODAL (ONBOARDING AND DETAILS)
 .#{$PREF}-modal > h1 { color: $gray-1; }
 
-.#{$PREF}-modal-item {
-  margin: $xl 0;
-
-  &--detail { margin: $md 0; }
-  &--detail > p:last-child { @extend .body--bold; color: $primary; }
-}
-
 .#{$PREF}-onboarding-form > .c-form-item { margin: $xl 0; }
-
-.#{$PREF}-action-ctr { @extend .flex-ac; margin-top: $lg; }
-.#{$PREF}-action-ctr > button:first-of-type { margin-right: $xs; }

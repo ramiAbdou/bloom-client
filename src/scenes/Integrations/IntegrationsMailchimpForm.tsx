@@ -2,14 +2,15 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
+import { ModalType } from '@constants';
+import Form from '@organisms/Form/Form';
 import FormItem from '@organisms/Form/Item';
 import SubmitButton from '@organisms/Form/SubmitButton';
-import Form from '@organisms/Form/Form';
 import Modal from '@organisms/Modal/Modal';
-import { ModalType } from '@constants';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import ActionContainer from '@templates/ActionContainer/ActionContainer';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
@@ -18,7 +19,7 @@ const MailchimpModalActionContainer: React.FC = () => {
   const onSecondaryClick = () => closeModal();
 
   return (
-    <div className="s-integrations-action-ctr">
+    <ActionContainer>
       <SubmitButton fill={false} large={false} loadingText="Finishing...">
         Finish
       </SubmitButton>
@@ -26,7 +27,7 @@ const MailchimpModalActionContainer: React.FC = () => {
       <Button secondary onClick={onSecondaryClick}>
         Cancel
       </Button>
-    </div>
+    </ActionContainer>
   );
 };
 

@@ -4,6 +4,7 @@ import Button from '@atoms/Button';
 import QuestionValueList from '@components/Elements/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
+import ActionContainer from '@templates/ActionContainer/ActionContainer';
 import Integrations from './Integrations.store';
 
 export type ExpandedDetailProps = { label: string; value: any };
@@ -44,13 +45,14 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
           type: 'MULTIPLE_CHOICE',
           value
         }))}
+        marginBottom={24}
       />
 
-      <div className="s-integrations-action-ctr">
+      <ActionContainer>
         <Button secondary onClick={() => closeModal()}>
           Close
         </Button>
-      </div>
+      </ActionContainer>
     </Modal>
   );
 };
