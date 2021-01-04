@@ -2,33 +2,28 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import useMutation from '@hooks/useMutation';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../Applicants.gql';
+import { useStoreActions } from '@store/Store';
+import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from './Applicants.gql';
 
-interface RespondAllButtonProps {
+interface ApplicantsRespondButtonProps {
+  applicantIds: string[];
   response: 'ACCEPTED' | 'REJECTED';
 }
 
-const ApplicantsHeaderRespondAllButton: React.FC<RespondAllButtonProps> = ({
+const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
+  applicantIds,
   response
 }) => {
   const updateEntities = useStoreActions(({ db }) => db.updateEntities);
 
-  const pendingApplicantIds: string[] = useStoreState(({ db }) => {
-    const { byId } = db.entities.members;
-    return db.community?.members?.filter((memberId: string) => {
-      return byId[memberId]?.status === 'PENDING';
-    });
-  });
-
   const [respondToMembers] = useMutation<boolean, RespondToMembersArgs>({
     name: 'respondToMembers',
     query: RESPOND_TO_MEMBERS,
-    variables: { memberIds: pendingApplicantIds, response }
+    variables: { memberIds: applicantIds, response }
   });
 
   // If no pending applicants, shouldn't be able to respond to anything.
-  if (!pendingApplicantIds?.length) return null;
+  if (!applicantIds?.length) return null;
 
   const onClick = async () => {
     // Call to the server.
@@ -37,7 +32,7 @@ const ApplicantsHeaderRespondAllButton: React.FC<RespondAllButtonProps> = ({
 
     updateEntities({
       entityName: 'members',
-      ids: pendingApplicantIds,
+      ids: applicantIds,
       updatedData: {
         status: response === 'ACCEPTED' ? 'ACCEPTED' : 'REJECTED'
       }
@@ -55,4 +50,4 @@ const ApplicantsHeaderRespondAllButton: React.FC<RespondAllButtonProps> = ({
   );
 };
 
-export default ApplicantsHeaderRespondAllButton;
+export default ApplicantsRespondButton;

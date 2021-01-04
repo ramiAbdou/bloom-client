@@ -7,7 +7,8 @@ import QuestionValueList, {
 } from '@components/Elements/QuestionValueList';
 import { useStoreActions } from '@store/Store';
 import ActionContainer from '@templates/ActionContainer/ActionContainer';
-import ApplicantsModal from '../ApplicantsModal/ApplicantsModal';
+import ApplicantsModal from '../ApplicantsModal';
+import ApplicantsRespondButton from '../ApplicantsRespondButton';
 import CardStore from './ApplicantsCard.store';
 
 const ApplicantsCardHeader = () => {
@@ -32,6 +33,24 @@ const ApplicantsCardHeader = () => {
   );
 };
 
+const ApplicantsCardActionContainer = () => {
+  const applicantId = CardStore.useStoreState((store) => store.applicant.id);
+
+  return (
+    <ActionContainer equal marginTopAuto>
+      <ApplicantsRespondButton
+        applicantIds={[applicantId]}
+        response="ACCEPTED"
+      />
+
+      <ApplicantsRespondButton
+        applicantIds={[applicantId]}
+        response="REJECTED"
+      />
+    </ActionContainer>
+  );
+};
+
 const ApplicantsCard = () => {
   const items: QuestionValueItemProps[] = CardStore.useStoreState((store) => {
     return store.data.map(({ question, value }) => {
@@ -45,17 +64,7 @@ const ApplicantsCard = () => {
     <Card className="s-applicants-card">
       <ApplicantsCardHeader />
       <QuestionValueList items={items} marginBottom={24} />
-
-      <ActionContainer equal marginTopAuto>
-        <Button primary onClick={() => null}>
-          Accept
-        </Button>
-
-        <Button secondary onClick={() => null}>
-          Reject
-        </Button>
-      </ActionContainer>
-
+      <ApplicantsCardActionContainer />
       <ApplicantsModal id={`EXPANDED_APPLICANT_CARD-${applicantId}`} />
     </Card>
   );
