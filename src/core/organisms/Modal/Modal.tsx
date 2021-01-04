@@ -1,14 +1,55 @@
-import { AnimatePresence } from 'framer-motion';
-import React, { useMemo } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
-import { useStoreState } from '@store/Store';
-import { makeClass } from '@util/util';
-import ModalBackground from './components/Background';
-import ModalContainer from './components/Container';
+import { ChildrenProps } from '@constants';
+import useLockBodyScroll from '@hooks/useLockBodyScroll';
+import { useStoreActions, useStoreState } from '@store/Store';
+import { cx } from '@util/util';
 import { ModalProps } from './Modal.types';
 
-export default ({
+/**
+ * The darkish overlay that lays underneath the actual modal. Has a high
+ * z-index so any clicks that hit outside of the modal content will hit this
+ * background.
+ */
+const ModalBackground: React.FC = () => {
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const onClick = () => closeModal();
+  return <div key="c-modal-bg" className="c-modal-bg" onClick={onClick} />;
+};
+
+interface ModalContainerProps extends ChildrenProps {
+  onClose?: Function;
+  width?: number;
+}
+
+const ModalContainer: React.FC = ({
+  children,
+  onClose,
+  width
+}: ModalContainerProps) => {
+  useLockBodyScroll();
+
+  useEffect(() => {
+    return () => onClose && onClose();
+  }, []);
+
+  return (
+    <motion.div
+      animate={{ opacity: 1, scale: 1 }}
+      className="c-modal-ctr"
+      exit={{ opacity: 0, scale: 0.5 }}
+      initial={{ opacity: 0.25, scale: 0.5 }}
+      style={width ? { width } : {}}
+      transition={{ duration: 0.2 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const Modal: React.FC<ModalProps> = ({
   confirmation,
   children,
   className,
@@ -24,11 +65,11 @@ export default ({
     MODAL_ID
   ]);
 
-  const css = makeClass([
-    'c-modal',
-    [confirmation, 'c-modal--confirmation'],
-    className
-  ]);
+  const css = cx({
+    'c-modal': true,
+    'c-modal--confirmation': confirmation,
+    [className]: className
+  });
 
   return createPortal(
     <AnimatePresence>
@@ -44,3 +85,5 @@ export default ({
     document.body
   );
 };
+
+export default Modal;

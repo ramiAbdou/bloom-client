@@ -42,6 +42,7 @@ $PREF: 'c-modal';
   > .c-loading-header { margin-bottom: $sm; }
   > .c-loading-header > h1 { color: $primary; }
   > p:first-of-type { margin-bottom: $md; }
+  > .c-misc-question-ctr { max-height: 70vh; overflow: scroll; }
 }
 
 // ## CONFIRMATION MODAL

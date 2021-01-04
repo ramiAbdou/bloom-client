@@ -46,12 +46,12 @@ const MainHeader = ({
       <div>
         {backButton && <MainHeaderBackButton />}
         <h1>{title}</h1>
-        {!loading && numberTag && <NumberTag>{numberTag}</NumberTag>}
+        {loading === false && numberTag && <NumberTag>{numberTag}</NumberTag>}
         <Spinner dark loading={loading} />
       </div>
 
       <Navigation options={options} />
-      {!loading && children}
+      {loading === false && children}
     </div>
   );
 };

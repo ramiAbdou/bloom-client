@@ -65,7 +65,7 @@ const QuestionValueList: React.FC<QuestionValueListProps> = ({
   if (!items) return null;
 
   return (
-    <div style={{ marginBottom }}>
+    <div className="c-misc-question-ctr" style={{ marginBottom }}>
       {items.map((item: QuestionValueItemProps) => (
         <QuestionValue
           key={item.title}
