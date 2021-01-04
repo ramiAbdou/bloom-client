@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
+import { IoCloseCircle } from 'react-icons/io5';
 
+import Button from '@atoms/Button';
 import { ChildrenProps } from '@constants';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -17,6 +19,16 @@ const ModalBackground: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const onClick = () => closeModal();
   return <div key="c-modal-bg" className="c-modal-bg" onClick={onClick} />;
+};
+
+const ModalCancel: React.FC = () => {
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const onClick = () => closeModal();
+  return (
+    <Button className="c-modal-cancel" onClick={onClick}>
+      <IoCloseCircle />
+    </Button>
+  );
 };
 
 interface ModalContainerProps extends ChildrenProps {
@@ -76,6 +88,7 @@ const Modal: React.FC<ModalProps> = ({
       {shouldShowModal && (
         <>
           <ModalBackground />
+          <ModalCancel />
           <ModalContainer {...containerProps}>
             <div className={css}>{children}</div>
           </ModalContainer>
