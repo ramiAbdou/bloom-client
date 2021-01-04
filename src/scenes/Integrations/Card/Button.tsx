@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import Button from '@atoms/Button';
-import IntegrationsStore, { IntegrationsModal } from '../../Integrations.store';
+import IntegrationsStore, { IntegrationsModal } from '../Integrations.store';
 
 export type IntegrationCardProps = {
   completed?: boolean;

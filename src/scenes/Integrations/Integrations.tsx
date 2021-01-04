@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 
 import Loading from '@store/Loading.store';
 import MainContent from '@templates/Main/Content';
-import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
-import StripeDetails from './components/ExpandedDetails/StripeDetails';
-import MailchimpFlow from './components/MailchimpModal/MailchimpModal';
+import MailchimpDetails from './ExpandedDetails/MailchimpDetails';
+import StripeDetails from './ExpandedDetails/StripeDetails';
+import MailchimpFlow from './MailchimpModal/MailchimpModal';
 import IntegrationsStore, { IntegrationsModal } from './Integrations.store';
 import IntegrationsCardContainer from './IntegrationsCardContainer';
 import useFetchIntegrations from './useFetchIntegrations';

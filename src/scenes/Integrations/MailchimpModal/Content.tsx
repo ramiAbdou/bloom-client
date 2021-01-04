@@ -5,7 +5,7 @@ import Button from '@atoms/Button';
 import FormItem from '@components/Form/components/Item';
 import SubmitButton from '@components/Form/components/SubmitButton';
 import { useStoreActions, useStoreState } from '@store/Store';
-import mailchimp from '../../images/mailchimp.png';
+import mailchimp from '../images/mailchimp.png';
 
 const MailchimpModalContent = () => {
   const mailchimpLists = useStoreState(

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import stripe from '../../images/stripe.png';
+import stripe from '../images/stripe.png';
 import ExpandedDetails, { ExpandedDetailProps } from './ExpandedDetails';
 
 export default () => {

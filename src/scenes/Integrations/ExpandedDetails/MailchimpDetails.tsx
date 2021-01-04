@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import mailchimp from '../../images/mailchimp.png';
+import mailchimp from '../images/mailchimp.png';
 import ExpandedDetails, { ExpandedDetailProps } from './ExpandedDetails';
 
 export default () => {

@@ -5,7 +5,7 @@ import URLBuilder from 'util/URLBuilder';
 import { APP, isProduction } from '@constants';
 import { IIntegrations } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import IntegrationCard, { IntegrationCardProps } from './components/Card/Card';
+import IntegrationCard, { IntegrationCardProps } from './Card/Card';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';
 import zapier from './images/zapier.png';

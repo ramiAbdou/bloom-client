@@ -3,7 +3,7 @@ import React, { memo, useEffect } from 'react';
 import Button from '@atoms/Button';
 import Modal from '@components/Modal/Modal';
 import { useStoreActions } from '@store/Store';
-import Integrations from '../../Integrations.store';
+import Integrations from '../Integrations.store';
 
 export type ExpandedDetailProps = { label: string; value: any };
 
