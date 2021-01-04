@@ -1,6 +1,8 @@
 import React from 'react';
 
-import QuestionValue from '@components/Elements/QuestionValue';
+import QuestionValueList, {
+  QuestionValueItemProps
+} from '@components/Elements/QuestionValueList';
 import { AcceptButton, IgnoreButton } from '../ApplicantsCard/ActionButton';
 import Applicant from '../ApplicantsCard/ApplicantsCard.store';
 
@@ -19,17 +21,19 @@ const Header = () => {
   );
 };
 
-export default () => {
-  const data = Applicant.useStoreState((store) => store.expandedData);
+const ExpandedCard: React.FC = () => {
+  const items: QuestionValueItemProps[] = Applicant.useStoreState((store) => {
+    return store.data.map(({ question, value }) => {
+      return { title: question.title, type: question.type, value };
+    });
+  });
 
   return (
     <div className="s-applicants-expanded">
       <Header />
-      <div>
-        {data.map(({ question: { title, type }, value }) => (
-          <QuestionValue key={title} title={title} type={type} value={value} />
-        ))}
-      </div>
+      <QuestionValueList items={items} />
     </div>
   );
 };
+
+export default ExpandedCard;

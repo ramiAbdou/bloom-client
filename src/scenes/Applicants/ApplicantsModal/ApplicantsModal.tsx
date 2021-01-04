@@ -1,13 +1,15 @@
 import React from 'react';
 
-const ApplicantsModal: React.FC = () => {
-  return <div>hs</div>;
+import Modal from '@components/Modal/Modal';
+import { IdProps } from '@constants';
+import ExpandedCard from './ExpandedCard';
+
+const ApplicantsModal: React.FC<IdProps> = ({ id }) => {
+  return (
+    <Modal id={id}>
+      <ExpandedCard />
+    </Modal>
+  );
 };
 
 export default ApplicantsModal;
-
-// <DirectoryCardModal id={`${ModalType.DIRECTORY_CARD}-${id}`} />
-
-// <Modal id={MODAL_ID}>
-//      <ExpandedCard />
-// </Modal>

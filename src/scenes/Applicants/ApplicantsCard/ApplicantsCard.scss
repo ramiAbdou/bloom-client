@@ -1,0 +1,63 @@
+$PREF: 's-applicants-card';
+
+// ## APPLICANTS CARD
+
+.#{$PREF} {
+  @extend .flex-sb;
+
+  height: fit-content;
+
+  &:last-child { margin-bottom: $lg; }
+};
+
+.#{$PREF} > div:last-child {
+  @extend .flex-acsb;
+
+  margin: $sl auto 0 auto;
+  width: 100%;
+  > button { width: 50%; }
+  > button:first-child { margin-right: $xxs; }
+  > button:last-child { margin-left: $xxs; }
+}
+
+// ## APPLICANTS CARD HEADER
+
+.#{$PREF}-header {
+  @extend .flex-acsb;
+
+  margin-bottom: $sm;
+
+  > div > p { @extend .meta; color: $gray-3; margin-bottom: $xxs; }
+}
+
+// ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
+
+.#{$PREF}-action {
+  @extend .react-icon--xl;
+
+  > svg { @extend .react-icon--xl; }
+
+  &:first-of-type {
+    margin-right: $xxs;
+
+    > svg {
+      color: $green;
+
+      @include HOVER { color: hsl(150, 80%, 37%); }
+    }
+  }
+
+  &:last-of-type > svg {
+    color: $red;
+
+    @include HOVER { color: hsl(9, 80%, 59%); }
+  }
+}
+
+// ## CARD QUESTION
+
+.#{$PREF}-question { margin-bottom: $sm; }
+.#{$PREF}-question > p:first-of-type { margin-bottom: $xxs; }
+.#{$PREF}-question > p:last-of-type { color: $primary; }
+
+div > .#{$PREF}-question:last-of-type { margin-bottom: 0; }

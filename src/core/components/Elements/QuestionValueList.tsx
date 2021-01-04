@@ -5,13 +5,18 @@ import { takeFirst } from '@util/util';
 import Attribute from '../../atoms/Tags/Attribute';
 import FormLabel from '../Form/components/Label';
 
-interface QuestionValueProps extends ValueProps {
+export interface QuestionValueItemProps extends ValueProps {
   hideNullValue?: boolean;
   title: string;
   type: QuestionType;
 }
 
-const Value = memo(({ type, value }: Partial<QuestionValueProps>) => {
+interface QuestionValueListProps {
+  hideNullValue?: boolean;
+  items: QuestionValueItemProps[];
+}
+
+const Value = memo(({ type, value }: Partial<QuestionValueItemProps>) => {
   const body: ReactNode = takeFirst([
     [!value, <p>N/A</p>],
     [type === 'MULTIPLE_CHOICE', <Attribute showNullValue>{value}</Attribute>],
@@ -35,7 +40,12 @@ const Value = memo(({ type, value }: Partial<QuestionValueProps>) => {
  * Returns a the Question and Answer components that are dependent on the type
  * of the question.
  */
-export default ({ hideNullValue, title, type, value }: QuestionValueProps) => {
+const QuestionValue: React.FC<QuestionValueItemProps> = ({
+  hideNullValue,
+  title,
+  type,
+  value
+}) => {
   if (hideNullValue && !value) return null;
 
   return (
@@ -45,3 +55,24 @@ export default ({ hideNullValue, title, type, value }: QuestionValueProps) => {
     </div>
   );
 };
+
+const QuestionValueList: React.FC<QuestionValueListProps> = ({
+  hideNullValue,
+  items
+}) => {
+  if (!items) return null;
+
+  return (
+    <div>
+      {items.map((item: QuestionValueItemProps) => (
+        <QuestionValue
+          key={item.title}
+          hideNullValue={hideNullValue}
+          {...item}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default QuestionValueList;

@@ -6,7 +6,7 @@ import IPut from '../../atoms/Input/Input';
 import Attr from '../../atoms/Tags/Attribute';
 import NTag from '../../atoms/Tags/NumberTag';
 import DDown from './Dropdown/Dropdown';
-import QVal from './QuestionValue';
+import QVal from './QuestionValueList';
 import RDio from './Radio/Radio';
 import SBar from './SearchBar/SearchBar';
 
