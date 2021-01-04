@@ -13,7 +13,7 @@ import { IconContext } from 'react-icons';
 import ToastQueue from '@components/Toast/Toast';
 import { APP } from '@constants';
 import { store } from '@store/Store';
-import Router from './Router';
+import Router from './core/routing/Router';
 
 day.extend(utc);
 

@@ -1,7 +1,7 @@
+import AdminRoute from 'core/routing/AdminRoute';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import AdminRoute from '@components/Router/AdminRoute';
 import AddMemberModal from '@scenes/Home/modals/AddMember/AddMember';
 import Analytics from '../Analytics/Analytics';
 import Applicants from '../Applicants/Applicants';

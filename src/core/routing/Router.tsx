@@ -1,13 +1,8 @@
+import AuthenticatedRoute from 'core/routing/AuthenticatedRoute';
+import LoginRoute from 'core/routing/LoginRoute';
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch
-} from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-import AuthenticatedRoute from '@components/Router/AuthenticatedRoute';
-import LoginRoute from '@components/Router/LoginRoute';
 import ApplicationPage from '@scenes/Application/Application';
 import HomePage from '@scenes/Home/Home';
 
@@ -16,8 +11,8 @@ import HomePage from '@scenes/Home/Home';
  * within each of the high level components. The Home route should have the
  * most nested logic within it.
  */
-export default () => (
-  <Router>
+const Router: React.FC = () => (
+  <BrowserRouter>
     <Switch>
       <LoginRoute path="/login" />
       <AuthenticatedRoute exact component={HomePage} path="/profile" />
@@ -26,5 +21,7 @@ export default () => (
       <AuthenticatedRoute exact path="/" />
       <Redirect to="/login" />
     </Switch>
-  </Router>
+  </BrowserRouter>
 );
+
+export default Router;
