@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import { Description, Stories, Title } from '@storybook/addon-docs/blocks';
-import IPut from '../../atoms/Input';
+import CBox from '../../atoms/Checkbox/Checkbox';
+import IPut from '../../atoms/Input/Input';
 import Attr from '../Tags/Attribute';
 import NTag from '../Tags/NumberTag';
-import CBox from '../../atoms/Checkbox';
 import DDown from './Dropdown/Dropdown';
 import QVal from './QuestionValue';
 import RDio from './Radio/Radio';

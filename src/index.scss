@@ -4,9 +4,9 @@
 @import './core/scss/misc';
 @import './core/scss/spacing';
 @import './core/scss/_typography';
-@import './core/scss/Button.scss';
-@import './core/scss/Checkbox.scss';
-@import './core/scss/Input.scss';
+@import './core/atoms/Button/Button.scss';
+@import './core/atoms/Checkbox/Checkbox.scss';
+@import './core/atoms/Input/Input.scss';
 @import './core/components/Chart/Chart.scss';
 @import './core/components/Elements/Elements.scss';
 @import './core/components/Elements/Card/Card.scss';
