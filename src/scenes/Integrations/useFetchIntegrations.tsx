@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import useQuery from '@hooks/useQuery';
+import useUpdateLoading from '@hooks/useUpdateLoading';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
@@ -13,10 +14,12 @@ import { GET_INTEGRATIONS } from './Integrations.gql';
 const useFetchIntegrations = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
-  const { data: community } = useQuery<ICommunity>({
+  const { data: community, loading } = useQuery<ICommunity>({
     name: 'getIntegrations',
     query: GET_INTEGRATIONS
   });
+
+  useUpdateLoading(loading);
 
   useEffect(() => {
     if (community) {

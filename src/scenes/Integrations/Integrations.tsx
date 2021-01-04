@@ -24,14 +24,12 @@ const IntegrationsContent: React.FC = () => {
   );
 };
 
-const Integrations: React.FC = () => {
-  return (
-    <Loading.Provider>
-      <IntegrationsStore.Provider>
-        <IntegrationsContent />
-      </IntegrationsStore.Provider>
-    </Loading.Provider>
-  );
-};
+const Integrations: React.FC = () => (
+  <Loading.Provider>
+    <IntegrationsStore.Provider>
+      <IntegrationsContent />
+    </IntegrationsStore.Provider>
+  </Loading.Provider>
+);
 
 export default Integrations;

@@ -6,7 +6,7 @@ export type LoadingModel = {
 };
 
 export const loadingModel: LoadingModel = {
-  loading: false,
+  loading: null,
   setLoading: action((state, loading: boolean) => ({ ...state, loading }))
 };
 
