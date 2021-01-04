@@ -30,7 +30,6 @@ const MainHeaderBackButton = () => {
 };
 
 const MainHeader = ({
-  activeIndex,
   backButton,
   children,
   className,
@@ -50,7 +49,7 @@ const MainHeader = ({
         <Spinner dark loading={loading} />
       </div>
 
-      <Navigation activeIndex={activeIndex} options={options} />
+      <Navigation options={options} />
       {children}
     </div>
   );

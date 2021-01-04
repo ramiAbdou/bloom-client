@@ -26,21 +26,15 @@ const AddButton = () => {
 
 const DatabaseHeader = () => {
   const loading = Loading.useStoreState((store) => store.loading);
-
-  const { location, push } = useHistory();
-  const { pathname } = location;
-
-  const activeIndex =
-    pathname.substring(pathname.lastIndexOf('/') + 1) === 'members' ? 0 : 1;
+  const { push } = useHistory();
 
   const options: NavigationOptionProps[] = [
-    { onClick: () => push('members'), title: 'Members' },
-    { onClick: () => push('admins'), title: 'Admins' }
+    { onClick: () => push('members'), pathname: 'members', title: 'Members' },
+    { onClick: () => push('admins'), pathname: 'admins', title: 'Admins' }
   ];
 
   return (
     <MainHeader
-      activeIndex={activeIndex}
       className="s-database-header"
       loading={loading}
       options={options}

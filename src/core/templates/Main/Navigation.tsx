@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import {
   ChildrenProps,
@@ -11,10 +12,11 @@ import { makeClass } from '@util/util';
 export interface NavigationOptionProps
   extends ChildrenProps,
     OnClickProps,
-    TitleProps {}
+    TitleProps {
+  pathname: string;
+}
 
 export interface NavigationProps {
-  activeIndex?: number;
   options?: NavigationOptionProps[];
 }
 
@@ -38,18 +40,21 @@ const NavigationButton = ({
   );
 };
 
-export default ({ activeIndex, options }: NavigationProps) => {
-  if (activeIndex === null || !options?.length) return null;
+const HeaderNavigation: React.FC<NavigationProps> = ({ options }) => {
+  const { location } = useHistory();
+  const { pathname } = location;
+
+  const page = pathname.substring(pathname.lastIndexOf('/') + 1);
+  const activeIndex = options.findIndex((option) => option.pathname === page);
+
+  if (activeIndex < 0 || !options?.length) return null;
 
   const activeOption: NavigationOptionProps = options[activeIndex];
 
   return (
     <nav className="c-main-multi-ctr">
-      {options.map(({ title, onClick }: NavigationOptionProps, i: number) => {
-        const onButtonClick = () => {
-          if (onClick) onClick();
-          activeIndex = i;
-        };
+      {options.map(({ title, onClick }: NavigationOptionProps) => {
+        const onButtonClick = () => onClick && onClick();
 
         return (
           <NavigationButton
@@ -64,3 +69,5 @@ export default ({ activeIndex, options }: NavigationProps) => {
     </nav>
   );
 };
+
+export default HeaderNavigation;

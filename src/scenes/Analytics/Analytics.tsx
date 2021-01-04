@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import MainContent from '@templates/Main/Content';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE, GetDatabaseResult } from '@scenes/Database/Database.gql';
 import Loading from '@store/Loading.store';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import AnalyticsHeader from './components/Header';
+import MainContent from '@templates/Main/Content';
+import AnalyticsHeader from './AnalyticsHeader';
 import DuesAnalytics from './pages/Dues/Dues';
 import EventsAnalytics from './pages/Events/Events';
 import MembersAnalytics from './pages/Members/Members';
