@@ -27,7 +27,7 @@ $PREF: 'c-modal';
   top: calc(-50vh + 50%);
   z-index: 1001;
 
-  @include M { height: 100%; width: 100%; }
+  @include M { bottom: 0; height: 95%; top: initial; width: 100%; }
   @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
 }
 
