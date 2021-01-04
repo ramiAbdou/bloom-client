@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SimpleCard from '@scenes/Analytics/components/SimpleCard';
+import SimpleCard from '@scenes/Analytics/AnalyticsStatusCard/AnalyticsStatusCard';
 import Members from '../Members.store';
 
 export default () => {

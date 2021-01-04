@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AnalyticsSimple from '@scenes/Analytics/components/SimpleCard';
+import AnalyticsSimple from '@scenes/Analytics/AnalyticsStatusCard/AnalyticsStatusCard';
 
 export default () => {
   const value = 9450;

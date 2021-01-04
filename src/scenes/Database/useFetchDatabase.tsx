@@ -1,27 +1,21 @@
 import { useEffect } from 'react';
 
 import useQuery from '@hooks/useQuery';
+import useUpdateLoading from '@hooks/useUpdateLoading';
+import { GET_DATABASE } from '@scenes/Database/Database.gql';
 import { ICommunity } from '@store/entities';
-import Loading from '@store/Loading.store';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_DATABASE } from '../Database.gql';
 
-export default function useFetchDatabase() {
+const useFetchDatabase = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const currentLoading = Loading.useStoreState((store) => store.loading);
-  const setLoading = Loading.useStoreActions((store) => store.setLoading);
 
   const { data: community, loading } = useQuery<ICommunity>({
     name: 'getDatabase',
     query: GET_DATABASE
   });
 
-  useEffect(() => {
-    // Since we need to use the loading state in the header, we set the
-    // update the context state accordingly.
-    if (loading !== currentLoading) setLoading(loading);
-  }, [loading]);
+  useUpdateLoading(loading);
 
   useEffect(() => {
     if (!community) return;
@@ -30,4 +24,6 @@ export default function useFetchDatabase() {
     // the member questions.
     mergeEntities({ data: community, schema: Schema.COMMUNITY });
   }, [community]);
-}
+};
+
+export default useFetchDatabase;

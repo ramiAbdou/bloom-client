@@ -11,7 +11,9 @@ interface AttributeProps extends ChildrenProps {
 /**
  * Airtable-esque tag that has a faded primary color around some text.
  */
-export default ({ children, showNullValue }: AttributeProps) => {
+const Attribute: React.FC<AttributeProps> = ({ children, showNullValue }) => {
   if (!showNullValue && !children) return null;
   return <p className="c-tag-attr">{children ?? 'N/A'}</p>;
 };
+
+export default Attribute;

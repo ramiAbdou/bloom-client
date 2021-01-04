@@ -1,12 +1,12 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import MainContent from '@templates/Main/Content';
 import Loading from '@store/Loading.store';
+import MainContent from '@templates/Main/Content';
 import Header from './components/Header';
-import useFetchDatabase from './hooks/useFetchDatabase';
 import Admins from './pages/Admins/Admins';
 import Members from './pages/Members/Members';
+import useFetchDatabase from './useFetchDatabase';
 
 const DatabaseContent = () => {
   const { url } = useRouteMatch();
