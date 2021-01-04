@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 import React from 'react';
 
-import Attribute from '@components/Tags/Attribute';
+import Attribute from '@atoms/Tags/Attribute';
 import { QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
 import Table from '../../Table.store';
@@ -37,14 +37,14 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
   ]);
 
   const content: React.ReactNode = takeFirst([
-    [type === 'MULTIPLE_CHOICE' && value, <Attribute value={value} />],
+    [type === 'MULTIPLE_CHOICE', <Attribute>{value}</Attribute>],
     [
       type === 'MULTIPLE_SELECT',
       <>
         {typeof value === 'string' &&
           value
             .split(',')
-            .map((val: string) => <Attribute key={val} value={val} />)}
+            .map((val: string) => <Attribute key={val}>{val}</Attribute>)}
       </>
     ],
     [type === 'CUSTOM', value],

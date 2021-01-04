@@ -4,7 +4,7 @@
 import React from 'react';
 import { IoCheckmark } from 'react-icons/io5';
 
-import Attribute from '@components/Tags/Attribute';
+import Attribute from '@atoms/Tags/Attribute';
 import { ClassNameProps } from '@constants';
 import { makeClass } from '@util/util';
 
@@ -36,7 +36,7 @@ const Checkbox = ({ className, checked, onChange, title }: CheckboxProps) => {
       <input checked={checked} type="checkbox" onChange={onCheckboxChange} />
       <span />
       <IoCheckmark color="#FFF" />
-      {!!title && <Attribute value={title} />}
+      <Attribute showNullValue={false}>{title}</Attribute>
     </label>
   );
 };

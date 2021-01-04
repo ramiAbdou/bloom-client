@@ -3,8 +3,8 @@ import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
+import NumberTag from '@atoms/Tags/NumberTag';
 import Spinner from '@components/Loader/Spinner';
-import NumberTag from '@components/Tags/NumberTag';
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
 import { makeClass } from '@util/util';
 import Navigation, { NavigationProps } from './Navigation';

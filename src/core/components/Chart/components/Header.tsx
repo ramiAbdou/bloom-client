@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NumberTag from '@components/Tags/NumberTag';
+import NumberTag from '@atoms/Tags/NumberTag';
 import { useStoreState } from '@store/Store';
 import Chart from '../Chart.store';
 
