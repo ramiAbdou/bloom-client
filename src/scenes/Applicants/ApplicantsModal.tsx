@@ -34,9 +34,13 @@ const ApplicantsModal: React.FC<IdProps> = ({ id }) => {
 
   const items: QuestionValueItemProps[] = ApplicantsCardStore.useStoreState(
     (store) => {
-      return store.expandedData.map(({ question, value }) => {
-        return { title: question.title, type: question.type, value };
-      });
+      return store.expandedData
+        .filter(({ question }) => {
+          return !['FIRST_NAME', 'LAST_NAME'].includes(question.category);
+        })
+        .map(({ question, value }) => {
+          return { title: question.title, type: question.type, value };
+        });
     }
   );
 
