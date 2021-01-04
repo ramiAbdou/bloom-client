@@ -5,7 +5,7 @@ import Table from '@components/Table/Table';
 import { Column, Row } from '@components/Table/Table.types';
 import { uuid } from '@util/util';
 
-export default () => {
+const MembersPaidTable: React.FC = () => {
   const columns: Column[] = [
     { id: 'First Name', title: 'First Name', type: 'SHORT_TEXT' },
     { id: 'Last Name', title: 'Last Name', type: 'SHORT_TEXT' },
@@ -58,3 +58,5 @@ export default () => {
     </Table>
   );
 };
+
+export default MembersPaidTable;

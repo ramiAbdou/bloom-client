@@ -2,7 +2,7 @@ import React from 'react';
 
 import AnalyticsSimple from '@scenes/Analytics/AnalyticsStatusCard/AnalyticsStatusCard';
 
-export default () => {
+const DuesAnalyticsPercentPaidCard: React.FC = () => {
   return (
     <AnalyticsSimple
       label="Percent of Members Paid"
@@ -11,3 +11,5 @@ export default () => {
     />
   );
 };
+
+export default DuesAnalyticsPercentPaidCard;

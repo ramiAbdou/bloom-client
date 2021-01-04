@@ -1,13 +1,20 @@
 import React from 'react';
 
-import StaticDuesAnalytics from './components/Static/Static';
-import DuesTable from './components/Table';
+import DuesAnalyticsMembersPaidTable from './MembersPaidTable';
+import DuesAnalyticsPercentPaidCard from './PercentPaidCard';
+import DuesAnalyticsTotalCollectedCard from './TotalCollectedCard';
+import DuesAnalyticsTotalCollectedChart from './TotalCollectedChart';
 
-export default () => {
-  return (
-    <div className="s-analytics-dues">
-      <StaticDuesAnalytics />
-      <DuesTable />
+const DuesAnalytics: React.FC = () => (
+  <div className="s-analytics-dues">
+    <div>
+      <DuesAnalyticsTotalCollectedCard />
+      <DuesAnalyticsPercentPaidCard />
     </div>
-  );
-};
+
+    <DuesAnalyticsTotalCollectedChart />
+    <DuesAnalyticsMembersPaidTable />
+  </div>
+);
+
+export default DuesAnalytics;

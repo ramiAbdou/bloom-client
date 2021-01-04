@@ -2,7 +2,7 @@ import React from 'react';
 
 import AnalyticsSimple from '@scenes/Analytics/AnalyticsStatusCard/AnalyticsStatusCard';
 
-export default () => {
+const DuesAnalyticsTotalCollectedCard: React.FC = () => {
   const value = 9450;
 
   return (
@@ -13,3 +13,5 @@ export default () => {
     />
   );
 };
+
+export default DuesAnalyticsTotalCollectedCard;
