@@ -13,7 +13,7 @@ import {
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
-import Separator from '@components/Misc/Separator';
+import Separator from '@atoms/Separator';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Home, { LinkOptions } from '../../Home.store';
 import SidebarCommunityContainer from './Community.container';
@@ -104,7 +104,7 @@ const SidebarContent = () => {
                 <h4>Dues Status: Inactive</h4>
               </div>
 
-              <Button outline onClick={onClick}>
+              <Button secondary onClick={onClick}>
                 Pay Dues
               </Button>
             </>

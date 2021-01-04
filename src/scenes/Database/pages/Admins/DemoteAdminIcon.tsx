@@ -54,7 +54,7 @@ const DemoteToMemberModal = () => {
         <Button primary loading={loading} onClick={onDemote}>
           Demote
         </Button>
-        <Button outline onClick={() => closeModal}>
+        <Button secondary onClick={() => closeModal}>
           Cancel
         </Button>
       </div>

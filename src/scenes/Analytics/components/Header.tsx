@@ -1,8 +1,8 @@
+import MainHeader from 'core/templates/Main/Header';
+import { NavigationOptionProps } from 'core/templates/Main/Navigation';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import MainHeader from '@components/Main/Header';
-import { NavigationOptionProps } from '@components/Main/Navigation';
 import Loading from '@store/Loading.store';
 import { takeFirst } from '@util/util';
 

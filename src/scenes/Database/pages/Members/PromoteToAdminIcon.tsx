@@ -64,7 +64,7 @@ const PromoteToAdminModal = () => {
         >
           Promote
         </Button>
-        <Button outline onClick={() => closeModal()}>
+        <Button secondary onClick={() => closeModal()}>
           Cancel
         </Button>
       </div>

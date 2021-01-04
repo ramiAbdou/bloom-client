@@ -17,6 +17,7 @@
       "@molecules/*": ["core/molecules/*"],
       "@scenes/*": ["scenes/*"],
       "@store/*": ["core/store/*"],
+      "@templates/*": ["core/templates/*"],
       "@util/*": ["util/*"]
     },
     "resolveJsonModule": true,

@@ -51,7 +51,7 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
   }
 
   return (
-    <Button outline disabled={!pendingApplicantIds?.length} onClick={onClick}>
+    <Button secondary disabled={!pendingApplicantIds?.length} onClick={onClick}>
       Ignore All
     </Button>
   );

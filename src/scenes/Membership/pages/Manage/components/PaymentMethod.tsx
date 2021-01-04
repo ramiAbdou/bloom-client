@@ -22,7 +22,7 @@ const PaymentMethodContent = () => {
     return (
       <>
         <p>No payment method added.</p>
-        <Button fit outline onClick={onClick}>
+        <Button fit secondary onClick={onClick}>
           Add Payment Method
         </Button>
       </>
@@ -41,7 +41,7 @@ const PaymentMethodContent = () => {
         Expires: {expirationDate} &bull; ZIP Code: {zipCode}
       </p>
 
-      <Button fit outline onClick={onClick}>
+      <Button fit secondary onClick={onClick}>
         Update Payment Method
       </Button>
     </>

@@ -1,8 +1,8 @@
 import React from 'react';
 
+import Separator from '@atoms/Separator';
 import Logo from '@components/Misc/Logo';
 import Network from '@components/Misc/Network';
-import Separator from '@components/Misc/Separator';
 import EmailContainer from './EmailContainer';
 import GoogleContainer from './GoogleContainer';
 

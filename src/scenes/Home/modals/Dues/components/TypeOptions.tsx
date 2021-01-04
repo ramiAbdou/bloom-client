@@ -87,7 +87,7 @@ export default () => {
       <div>
         <TypeOptionList />
         {!isTypeListOpen && <p>{currentTypeString}</p>}
-        <Button underline onClick={onClick}>
+        <Button tertiary onClick={onClick}>
           Change Membership
         </Button>
       </div>

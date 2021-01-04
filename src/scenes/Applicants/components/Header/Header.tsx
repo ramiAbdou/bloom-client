@@ -1,6 +1,6 @@
+import MainHeader from 'core/templates/Main/Header';
 import React from 'react';
 
-import MainHeader from '@components/Main/Header';
 import { useStoreState } from '@store/Store';
 import { AcceptAllButton, IgnoreAllButton } from './Button';
 

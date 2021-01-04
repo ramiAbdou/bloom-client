@@ -44,7 +44,7 @@ const ChangePlanButton = () => {
 
   return (
     <Link to={`${url}/change-plan`}>
-      <Button fit outline>
+      <Button fit secondary>
         Change Membership Plan
       </Button>
     </Link>

@@ -40,7 +40,7 @@ export default () => {
           Finish
         </SubmitButton>
 
-        <Button outline onClick={() => closeModal()}>
+        <Button secondary onClick={() => closeModal()}>
           Cancel
         </Button>
       </div>

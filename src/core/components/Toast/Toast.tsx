@@ -68,7 +68,7 @@ const Toast = ({
     >
       <p>{message}</p>
       {undo && (
-        <Button underline onClick={onUndoClick}>
+        <Button tertiary onClick={onUndoClick}>
           Undo
         </Button>
       )}

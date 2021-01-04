@@ -1,7 +1,7 @@
+import MainContent from 'core/templates/Main/Content';
+import MainHeader from 'core/templates/Main/Header';
 import React from 'react';
 
-import MainContent from '@components/Main/Content';
-import MainHeader from '@components/Main/Header';
 import ChangePlanModal from '../../modals/ChangePlan/ChangePlan';
 import ChangePlanStore from './ChangePlan.store';
 import PlanContainer from './containers/Plan';

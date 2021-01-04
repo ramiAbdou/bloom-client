@@ -24,7 +24,7 @@ export default () => {
   ]);
 
   return (
-    <Button underline onClick={() => toggleAllRows()}>
+    <Button tertiary onClick={() => toggleAllRows()}>
       {title}
     </Button>
   );

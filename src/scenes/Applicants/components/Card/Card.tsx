@@ -41,7 +41,7 @@ const ExpandButton = memo(() => {
         <ExpandedCard />
       </Modal>
 
-      <Button underline onClick={onClick}>
+      <Button tertiary onClick={onClick}>
         See Full Application
       </Button>
     </>

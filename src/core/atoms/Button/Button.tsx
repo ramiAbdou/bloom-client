@@ -17,9 +17,9 @@ export interface ButtonProps
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
-  outline?: boolean;
+  secondary?: boolean;
   primary?: boolean;
-  underline?: boolean;
+  tertiary?: boolean;
 }
 
 /**
@@ -48,11 +48,11 @@ const useLoadingState = (loading: boolean): boolean => {
 
 const LoadingState = ({
   loadingText,
-  outline
-}: Pick<ButtonProps, 'loadingText' | 'outline'>) => (
+  secondary
+}: Pick<ButtonProps, 'loadingText' | 'secondary'>) => (
   <div className="c-btn-loading-ctr">
     <p>{loadingText}</p>
-    <Spinner dark={outline} />
+    <Spinner dark={secondary} />
   </div>
 );
 
@@ -68,10 +68,10 @@ const Button = forwardRef(
       loading,
       loadingText,
       onClick,
-      outline,
       primary,
+      secondary,
       type,
-      underline,
+      tertiary,
       ...props
     }: ButtonProps,
     ref: MutableRefObject<any>
@@ -93,9 +93,9 @@ const Button = forwardRef(
       [large, 'c-btn--lg'],
       [fill, 'c-btn--fill'],
       [fit, 'c-btn--fit'],
-      [primary, 'c-btn-primary'],
-      [outline, 'c-btn-outline'],
-      [underline, 'c-btn-underline'],
+      [primary, 'c-btn--primary'],
+      [secondary, 'c-btn--secondary'],
+      [tertiary, 'c-btn--tertiary'],
       className
     ]);
 
@@ -109,7 +109,7 @@ const Button = forwardRef(
         {...props}
       >
         {showLoadingState && (
-          <LoadingState loadingText={loadingText} outline={outline} />
+          <LoadingState loadingText={loadingText} secondary={secondary} />
         )}
 
         {!showLoadingState && children}

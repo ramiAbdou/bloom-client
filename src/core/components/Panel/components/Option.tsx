@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import Separator from '@components/Misc/Separator';
+import Separator from '@atoms/Separator';
 import { useStoreActions } from '@store/Store';
 import { PanelAction } from '../Panel.types';
 

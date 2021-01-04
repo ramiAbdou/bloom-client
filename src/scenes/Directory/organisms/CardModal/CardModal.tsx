@@ -1,8 +1,8 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
+import Separator from '@atoms/Separator';
 import QuestionValue from '@components/Elements/QuestionValue';
-import Separator from '@components/Misc/Separator';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
 import DirectoryCard from '../../stores/Card.store';

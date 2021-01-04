@@ -45,7 +45,7 @@ export default ({ details, logo, name }: ExpandedDetailsProps) => {
       ))}
 
       <div className="s-integrations-action-ctr">
-        <Button outline onClick={() => closeModal()}>
+        <Button secondary onClick={() => closeModal()}>
           Close
         </Button>
       </div>

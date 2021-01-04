@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import MainContent from '@components/Main/Content';
+import MainContent from 'core/templates/Main/Content';
 import Loading from '@store/Loading.store';
 import Header from './components/Header';
 import useFetchDatabase from './hooks/useFetchDatabase';

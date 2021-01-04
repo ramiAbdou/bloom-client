@@ -1,9 +1,9 @@
+import MainContent from 'core/templates/Main/Content';
+import MainHeader from 'core/templates/Main/Header';
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 import URLBuilder from 'util/URLBuilder';
 
-import MainContent from '@components/Main/Content';
-import MainHeader from '@components/Main/Header';
 import { APP, isProduction } from '@constants';
 import useQuery from '@hooks/useQuery';
 import { ICommunity, IIntegrations } from '@store/entities';

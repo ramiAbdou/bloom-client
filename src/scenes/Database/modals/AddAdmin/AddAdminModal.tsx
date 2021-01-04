@@ -109,7 +109,7 @@ export default () => {
         <AddAdminInput key={id} id={id} />
       ))}
 
-      <Button underline onClick={onClick}>
+      <Button tertiary onClick={onClick}>
         + Add Another
       </Button>
       <ErrorMessage message={error} />
@@ -123,7 +123,7 @@ export default () => {
         >
           Add
         </Button>
-        <Button outline onClick={() => closeModal()}>
+        <Button secondary onClick={() => closeModal()}>
           Cancel
         </Button>
       </div>

@@ -86,7 +86,7 @@ const AddMemberContent = () => {
         ))}
       </div>
 
-      <Button underline onClick={onClick}>
+      <Button tertiary onClick={onClick}>
         + Add Another
       </Button>
       <ErrorMessage message={message} />
@@ -101,7 +101,7 @@ const AddMemberContent = () => {
           Add
         </Button>
 
-        <Button outline onClick={() => closeModal()}>
+        <Button secondary onClick={() => closeModal()}>
           Cancel
         </Button>
       </div>

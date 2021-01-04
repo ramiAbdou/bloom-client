@@ -21,32 +21,32 @@ PrimaryButton.args = {
   loadingText: 'Loading...'
 };
 
-// ## OUTLINE BUTTON
+// ## SECONDARY BUTTON
 
-const OutlineButtonTemplate = (args) => (
-  <Button outline {...args}>
-    Outline
+const SecondaryButtonTemplate = (args) => (
+  <Button secondary {...args}>
+    Secondary
   </Button>
 );
 
-export const OutlineButton = OutlineButtonTemplate.bind({});
+export const SecondaryButton = SecondaryButtonTemplate.bind({});
 
-OutlineButton.args = {
+SecondaryButton.args = {
   disabled: false,
   fill: false,
   loading: false,
   loadingText: 'Loading...'
 };
 
-// ## UNDERLINE BUTTON
+// ## TERTIARY BUTTON
 
-const UnderlineButtonTemplate = (args) => (
-  <Button underline {...args}>
-    Underline
+const TertiaryButtonTemplate = (args) => (
+  <Button tertiary {...args}>
+    Tertiary
   </Button>
 );
 
-export const UnderlineButton = UnderlineButtonTemplate.bind({});
+export const TertiaryButton = TertiaryButtonTemplate.bind({});
 
 export default {
   component: Button,

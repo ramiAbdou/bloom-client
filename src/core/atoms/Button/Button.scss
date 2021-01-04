@@ -34,7 +34,7 @@ $PREF: 'c-btn';
 
 // ## PRIMARY BUTTON
 
-.#{$PREF}-primary {
+.#{$PREF}--primary {
   @extend .meta--lg;
 
   background-color: $primary;
@@ -49,9 +49,9 @@ $PREF: 'c-btn';
   }
 }
 
-// ## OUTLINE BUTTON
+// ## SECONDARY BUTTON
 
-.#{$PREF}-outline {
+.#{$PREF}--secondary {
   @extend .meta--lg;
 
   background-color: inherit;
@@ -60,9 +60,9 @@ $PREF: 'c-btn';
   padding: $xs $sm;
 }
 
-// ## UNDERLINE BUTTON
+// ## TERTIARY BUTTON
 
-.#{$PREF}-underline {
+.#{$PREF}--tertiary {
   @extend .meta--lg;
 
   color: $primary;

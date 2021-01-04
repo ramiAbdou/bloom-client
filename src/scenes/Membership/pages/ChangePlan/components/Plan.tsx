@@ -43,8 +43,8 @@ const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
       <Button
         fit
         disabled={isCurrent}
-        outline={!isCurrent}
         primary={isCurrent}
+        secondary={!isCurrent}
         onClick={onClick}
       >
         {isCurrent ? 'Current Plan' : 'Change Plan'}

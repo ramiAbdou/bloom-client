@@ -31,7 +31,7 @@ const ActionButton = memo(
 
     if (completed) {
       return (
-        <Button fill outline onClick={onSeeDetails}>
+        <Button fill secondary onClick={onSeeDetails}>
           See Details
         </Button>
       );
@@ -41,7 +41,7 @@ const ActionButton = memo(
 
     return (
       <a onClick={onOpenFlow} {...aProps}>
-        <Button fill outline>
+        <Button fill secondary>
           {buttonText}
         </Button>
       </a>
