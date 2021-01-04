@@ -5,15 +5,18 @@ import { cx } from '@util/util';
 
 interface ActionContainerProps extends ChildrenProps {
   equal?: boolean;
+  marginTopAuto?: boolean;
 }
 
 const ActionContainer: React.FC<ActionContainerProps> = ({
   children,
-  equal
+  equal,
+  marginTopAuto
 }) => {
   const css = cx({
     't-action-ctr': true,
     't-action-ctr--equal': equal,
+    't-action-ctr--margin-top-auto': marginTopAuto,
     't-action-ctr--standard': !equal
   });
 

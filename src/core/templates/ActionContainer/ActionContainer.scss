@@ -14,3 +14,5 @@ $PREF: 't-action-ctr';
   > button:first-child { margin-right: $xxs; }
   > button:last-child { margin-left: $xxs; }
 }
+
+.#{$PREF}--margin-top-auto { margin-top: auto; }

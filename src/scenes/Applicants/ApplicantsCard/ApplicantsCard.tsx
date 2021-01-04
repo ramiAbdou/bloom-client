@@ -1,10 +1,9 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button from '@atoms/Button';
 import Card from '@components/Elements/Card/Card';
 import QuestionValueList, {
-  QuestionValueItemProps,
+  QuestionValueItemProps
 } from '@components/Elements/QuestionValueList';
 import { useStoreActions } from '@store/Store';
 import ActionContainer from '@templates/ActionContainer/ActionContainer';
@@ -45,9 +44,9 @@ const ApplicantsCard = () => {
   return (
     <Card className="s-applicants-card">
       <ApplicantsCardHeader />
-      <QuestionValueList items={items} />
+      <QuestionValueList items={items} marginBottom={24} />
 
-      <ActionContainer equal>
+      <ActionContainer equal marginTopAuto>
         <Button primary onClick={() => null}>
           Accept
         </Button>

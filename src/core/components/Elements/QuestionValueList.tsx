@@ -14,6 +14,7 @@ export interface QuestionValueItemProps extends ValueProps {
 interface QuestionValueListProps {
   hideNullValue?: boolean;
   items: QuestionValueItemProps[];
+  marginBottom?: number;
 }
 
 const Value = memo(({ type, value }: Partial<QuestionValueItemProps>) => {
@@ -58,12 +59,13 @@ const QuestionValue: React.FC<QuestionValueItemProps> = ({
 
 const QuestionValueList: React.FC<QuestionValueListProps> = ({
   hideNullValue,
-  items
+  items,
+  marginBottom
 }) => {
   if (!items) return null;
 
   return (
-    <div>
+    <div style={{ marginBottom }}>
       {items.map((item: QuestionValueItemProps) => (
         <QuestionValue
           key={item.title}
