@@ -7,7 +7,7 @@ import {
   UpdateMailchimpListIdArgs
 } from './Integrations.gql';
 
-export default (): OnFormSubmit => {
+const useMailchimpSubmit = (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
@@ -17,7 +17,11 @@ export default (): OnFormSubmit => {
     query: UPDATE_MAILCHIMP_LIST_ID
   });
 
-  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    items,
+    setErrorMessage,
+    setIsLoading
+  }: OnFormSubmitArgs) => {
     const selectedMailchimpList = items[items?.length - 1]?.value;
 
     const { id: mailchimpListId } = options.find(
@@ -42,4 +46,8 @@ export default (): OnFormSubmit => {
     mergeEntities({ data: integrations, schema: Schema.INTEGRATIONS });
     closeModal();
   };
+
+  return onSubmit;
 };
+
+export default useMailchimpSubmit;

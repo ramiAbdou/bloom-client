@@ -51,7 +51,8 @@ const IntegrationsModal: React.FC = () => {
 
   useEffect(() => {
     if (searchParam && searchParam !== flow) {
-      setFlow(`${searchParam.toUpperCase()}_FLOW` as IntegrationsModalType);
+      // console.log(`${searchParam.toUpperCase()}_FORM`);
+      setFlow(`${searchParam.toUpperCase()}_FORM` as IntegrationsModalType);
     }
   }, []);
 

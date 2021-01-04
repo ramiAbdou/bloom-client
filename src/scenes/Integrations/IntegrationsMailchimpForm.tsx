@@ -13,13 +13,27 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
-const MailchimpModalContent = () => {
-  const mailchimpLists = useStoreState(
-    ({ db }) => db.integrations.mailchimpLists,
-    deepequal
-  );
-
+const MailchimpModalActionContainer: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const onSecondaryClick = () => closeModal();
+
+  return (
+    <div className="s-integrations-action-ctr">
+      <SubmitButton fill={false} large={false} loadingText="Finishing...">
+        Finish
+      </SubmitButton>
+
+      <Button secondary onClick={onSecondaryClick}>
+        Cancel
+      </Button>
+    </div>
+  );
+};
+
+const MailchimpModalContent: React.FC = () => {
+  const mailchimpLists = useStoreState(
+    ({ db }) => db.integrations.mailchimpLists
+  );
 
   return (
     <>
@@ -41,15 +55,7 @@ const MailchimpModalContent = () => {
         type="MULTIPLE_CHOICE"
       />
 
-      <div className="s-integrations-action-ctr">
-        <SubmitButton fill={false} large={false} loadingText="Finishing...">
-          Finish
-        </SubmitButton>
-
-        <Button secondary onClick={() => closeModal()}>
-          Cancel
-        </Button>
-      </div>
+      <MailchimpModalActionContainer />
     </>
   );
 };
@@ -64,30 +70,20 @@ const MailchimpModal: React.FC = () => {
   const flow = IntegrationsStore.useStoreState((store) => store.flow);
   const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
 
-  const onSubmitMailchimpList = useMailchimpSubmit();
+  const onSubmit = useMailchimpSubmit();
+
+  const shouldShowModal: boolean =
+    flow === 'MAILCHIMP_FORM' && !mailchimpListId && !!mailchimpLists?.length;
 
   useEffect(() => {
-    showModal(ModalType.MAILCHIMP_FLOW);
-  }, []);
-
-  // This will only be the case if the user loads the page with the query
-  // string flow=[name] in the URL without properly going to the backend.
-  if (
-    flow !== 'MAILCHIMP_FORM' ||
-    !!mailchimpListId ||
-    !mailchimpLists?.length
-  ) {
-    return null;
-  }
+    if (shouldShowModal) showModal(ModalType.MAILCHIMP_FLOW);
+  }, [shouldShowModal]);
 
   const onClose = () => setFlow(null);
 
   return (
     <Modal id={ModalType.MAILCHIMP_FLOW} onClose={onClose}>
-      <Form
-        className="s-integrations-onboarding-form"
-        onSubmit={onSubmitMailchimpList}
-      >
+      <Form className="s-integrations-onboarding-form" onSubmit={onSubmit}>
         <MailchimpModalContent />
       </Form>
     </Modal>

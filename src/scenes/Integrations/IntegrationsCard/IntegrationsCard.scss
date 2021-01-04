@@ -4,16 +4,19 @@ $PREF: 's-integrations-card';
 
 // Need the .flex-sb so that the action button appears at the end of the card.
 // Only becomes issue when there are originally different heights of the cards.
-.#{$PREF} { @extend .flex-sb; }
+.#{$PREF} {
+  @extend .flex-sb; 
 
-// The first div child wraps the logo, title, and description.
-.#{$PREF} > div:first-child > h3 { margin-bottom: $xs; }
-.#{$PREF} > div:first-child > p { margin-bottom: $sm; }
+  // The first div child wraps the logo, title, and description.
+  > div:first-child > h3 { margin-bottom: $xs; }
+  > div:first-child > p { margin-bottom: $sm; }
+}
 
-// The last div child wraps the action button.
-.#{$PREF} > div:last-child,
-.#{$PREF} > div:last-child > button { width: 100%; }
+// ## INTEGRATION CARD HEADER
 
-// ## CARD HEADER
+.#{$PREF}-header {
+  @extend .flex-acsb;
 
-.#{$PREF}-card-header { @extend .flex-acsb; margin-bottom: $sm; }
+  margin-bottom: $sm;
+  > div:last-child { margin-right: $sm; }
+}

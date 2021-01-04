@@ -27,30 +27,6 @@ $PREF: 's-integrations';
   row-gap: $md;
 }
 
-// ## INTEGRATION CARD
-
-// Need the .flex-sb so that the action button appears at the end of the card.
-// Only becomes issue when there are originally different heights of the cards.
-.#{$PREF}-card { @extend .flex-sb; }
-
-// The first div child wraps the logo, title, and description.
-.#{$PREF}-card > div:first-child > h3 { margin-bottom: $xs; }
-.#{$PREF}-card > div:first-child > p { margin-bottom: $sm; }
-
-// The last div child wraps the action button.
-.#{$PREF}-card > div:last-child,
-.#{$PREF}-card > div:last-child > button { width: 100%; }
-
-// ## CARD HEADER
-
-.#{$PREF}-card-header { @extend .flex-acsb; margin-bottom: $sm; }
-
-// ## CARD CONNECTED (CHECK MARK AND LABEL)
-
-.#{$PREF}-connected { @extend .flex-ac; margin-right: $sm; }
-.#{$PREF}-connected > svg { color: $green; margin-right: $xxs; }
-.#{$PREF}-connected > p { @extend .body--bold; color: $green; }
-
 // ## MODAL (ONBOARDING AND DETAILS)
 .#{$PREF}-modal > h1 { color: $gray-1; }
 

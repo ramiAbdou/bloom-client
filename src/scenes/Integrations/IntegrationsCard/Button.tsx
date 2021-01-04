@@ -6,7 +6,7 @@ import IntegrationsStore, {
 } from '../Integrations.store';
 
 export type IntegrationCardProps = {
-  completed?: boolean;
+  connected?: boolean;
   description: string;
   logo: string;
   name: string;
@@ -14,7 +14,7 @@ export type IntegrationCardProps = {
 };
 
 const IntegrationCardButton = memo(
-  ({ completed, href, name }: Partial<IntegrationCardProps>) => {
+  ({ connected, href, name }: Partial<IntegrationCardProps>) => {
     const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
 
     // onClick only executes if href isn't populated, per the Button component.
@@ -29,7 +29,7 @@ const IntegrationCardButton = memo(
     const onSeeDetails = () =>
       setFlow(`${name.toUpperCase()}_DETAILS` as IntegrationsModalType);
 
-    if (completed) {
+    if (connected) {
       return (
         <Button fill secondary onClick={onSeeDetails}>
           See Details

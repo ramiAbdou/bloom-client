@@ -32,7 +32,7 @@ export const buildIntegrationData = ({
   return [
     // ## MAILCHIMP
     {
-      completed: !!mailchimpListId,
+      connected: !!mailchimpListId,
       description: `Quickly add every new member of the community to your
       Mailchimp listserv.`,
       href:
@@ -48,7 +48,7 @@ export const buildIntegrationData = ({
 
     // ## STRIPE
     {
-      completed: !!stripeAccountId,
+      connected: !!stripeAccountId,
       description: 'Collect monthly or yearly dues payments from your members.',
       href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
         .addParam('response_type', 'code')

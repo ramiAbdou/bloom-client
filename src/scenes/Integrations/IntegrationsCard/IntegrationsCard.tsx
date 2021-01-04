@@ -15,10 +15,7 @@ export type IntegrationCardProps = {
 const IntegrationCard: React.FC<IntegrationCardProps> = (props) => (
   <Card className="s-integrations-card">
     <IntegrationCardContent {...props} />
-
-    <div>
-      <IntegrationCardButton {...props} />
-    </div>
+    <IntegrationCardButton {...props} />
   </Card>
 );
 
