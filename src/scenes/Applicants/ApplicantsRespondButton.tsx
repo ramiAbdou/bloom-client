@@ -3,14 +3,17 @@ import React from 'react';
 import Button from '@atoms/Button';
 import useMutation from '@hooks/useMutation';
 import { useStoreActions } from '@store/Store';
+import { takeFirst } from '@util/util';
 import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from './Applicants.gql';
 
 interface ApplicantsRespondButtonProps {
+  all?: boolean;
   applicantIds: string[];
   response: 'ACCEPTED' | 'REJECTED';
 }
 
 const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
+  all,
   applicantIds,
   response
 }) => {
@@ -39,13 +42,20 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
     });
   };
 
+  const buttonText = takeFirst([
+    [response === 'ACCEPTED' && all, 'Accept All'],
+    [response === 'ACCEPTED', 'Accept'],
+    [response === 'REJECTED' && all, 'Reject All'],
+    [response === 'REJECTED', 'Reject']
+  ]);
+
   return (
     <Button
       primary={response === 'ACCEPTED'}
       secondary={response === 'REJECTED'}
       onClick={onClick}
     >
-      {response === 'ACCEPTED' ? 'Accept All' : 'Reject All'}
+      {buttonText}
     </Button>
   );
 };

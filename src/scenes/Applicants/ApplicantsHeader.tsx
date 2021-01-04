@@ -24,11 +24,13 @@ const ApplicantsHeader = () => {
     >
       <ActionContainer>
         <ApplicantsHeaderRespondAllButton
+          all
           applicantIds={pendingApplicantIds}
           response="ACCEPTED"
         />
 
         <ApplicantsHeaderRespondAllButton
+          all
           applicantIds={pendingApplicantIds}
           response="REJECTED"
         />
