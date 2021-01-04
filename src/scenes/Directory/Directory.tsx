@@ -4,7 +4,7 @@ import MainContent from '@templates/Main/Content';
 import Directory from './Directory.store';
 import DirectoryCardContainer from './DirectoryCardContainer';
 import DirectoryHeader from './DirectoryHeader';
-import useFetchDirectory from './hooks/useFetchDirectory';
+import useFetchDirectory from './useFetchDirectory';
 
 const DirectoryContent = () => {
   useFetchDirectory();

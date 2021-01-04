@@ -3,7 +3,7 @@ import React from 'react';
 import { IoMail } from 'react-icons/io5';
 
 import ProfilePicture from '@components/Misc/ProfilePicture';
-import MemberCard from '../Card/Card.store';
+import MemberCard from '../DirectoryCard/DirectoryCard.store';
 import SocialMediaContainer from './SocialMedia';
 
 const MemberProfilePicture = () => {

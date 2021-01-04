@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import SearchBar from '@components/Elements/SearchBar/SearchBar';
-import Directory from '../Directory.store';
+import Directory from './Directory.store';
 
 const DirectorySearchBar = () => {
   const [value, setValue] = useState('');

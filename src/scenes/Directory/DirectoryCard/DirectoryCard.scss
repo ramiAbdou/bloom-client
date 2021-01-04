@@ -1,0 +1,59 @@
+$PREF: 's-directory-card';
+
+// ## CARD
+
+button.#{$PREF} {
+  @extend .c-misc-card;
+  @extend .flex-ac;
+  
+  height: max-content;
+  height: 100%;
+  padding: 0;
+  width: 100%;
+
+  &--empty { height: initial; }
+};
+
+.#{$PREF} > div > h1 {
+  @extend .flex-acc;
+
+  background-color: $primary;
+  color: white;
+  font-size: $xxl;
+}
+
+.#{$PREF} > div:first-child {
+  position: relative;
+  width: 100%;
+  &::before { content: ''; display: block; padding-top: 100%; }
+}
+
+.#{$PREF} > div:first-child > * {
+  border-radius: $xs $xs 0 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+}
+
+// ## CARD CONTENT - Refers to the text within the card (name and highlighted
+// field).
+
+.#{$PREF}-content { height: $xxl; padding: $sm $xs; }
+.#{$PREF}-content > p {
+  @extend .body--bold;
+
+  max-width: 100%;
+
+  @include OVERFLOW_ELLIPSES(3);
+}
+
+.#{$PREF}-content > p > span {
+  @extend .meta;
+
+  color: $gray-2;
+  display: block;
+  margin-top: $xxs;
+}

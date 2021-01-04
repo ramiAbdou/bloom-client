@@ -4,8 +4,8 @@ import useQuery from '@hooks/useQuery';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_DIRECTORY } from '../Directory.gql';
-import Directory from '../Directory.store';
+import { GET_DIRECTORY } from './Directory.gql';
+import Directory from './Directory.store';
 
 export default function useFetchDirectory() {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);

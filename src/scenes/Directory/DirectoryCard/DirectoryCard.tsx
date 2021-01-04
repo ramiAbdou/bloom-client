@@ -7,8 +7,8 @@ import ProfilePicture from '@components/Misc/ProfilePicture';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
-import MemberCard, { MemberCardModel } from './Card.store';
-import DirectoryCardModal from '../CardModal/CardModal';
+import DirectoryCardModal from '../DirectoryModal/DirectoryModal';
+import MemberCard, { MemberCardModel } from './DirectoryCard.store';
 
 const DirectoryCardInformation: React.FC = () => {
   const value = MemberCard.useStoreState((store) => store.highlightedValue);

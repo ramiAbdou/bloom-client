@@ -5,9 +5,9 @@ import React, { useEffect } from 'react';
 
 import { IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import MemberCard from './components/Card/Card';
-import { MemberCardModel } from './components/Card/Card.store';
 import Directory from './Directory.store';
+import DirectoryCard from './DirectoryCard/DirectoryCard';
+import { MemberCardModel } from './DirectoryCard/DirectoryCard.store';
 
 const DirectoryCardContainer = () => {
   const loading = Directory.useStoreState((store) => store.loading);
@@ -94,7 +94,7 @@ const DirectoryCardContainer = () => {
       columnGutter={16}
       items={members ?? []}
       overscanBy={5}
-      render={MemberCard}
+      render={DirectoryCard}
     />
   );
 };

@@ -1,8 +1,8 @@
 import MainHeader from 'core/templates/Main/Header';
 import React from 'react';
 
-import DirectoryHeaderSearchBar from './components/SearchBar';
 import Directory from './Directory.store';
+import DirectoryHeaderSearchBar from './DirectorySearchBar';
 
 const DirectoryHeader = () => {
   const loading = Directory.useStoreState((store) => store.loading);

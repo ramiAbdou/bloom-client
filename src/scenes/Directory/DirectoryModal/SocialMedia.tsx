@@ -6,7 +6,7 @@ import {
   IoLogoTwitter
 } from 'react-icons/io5';
 
-import DirectoryCard from '../Card/Card.store';
+import DirectoryCard from '../DirectoryCard/DirectoryCard.store';
 
 interface SocialMediaButtonProps {
   Icon: React.FC;
