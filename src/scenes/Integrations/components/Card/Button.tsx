@@ -1,9 +1,7 @@
 import React, { memo } from 'react';
-import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
-import Card from '@components/Elements/Card/Card';
-import IntegrationsStore, { IntegrationsModal } from '../Integrations.store';
+import IntegrationsStore, { IntegrationsModal } from '../../Integrations.store';
 
 export type IntegrationCardProps = {
   completed?: boolean;
@@ -13,7 +11,7 @@ export type IntegrationCardProps = {
   href: string;
 };
 
-const ActionButton = memo(
+const IntegrationCardButton = memo(
   ({ completed, href, name }: Partial<IntegrationCardProps>) => {
     const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
 
@@ -49,32 +47,4 @@ const ActionButton = memo(
   }
 );
 
-export default ({
-  completed,
-  logo,
-  name,
-  description,
-  href
-}: IntegrationCardProps) => (
-  <Card className="s-integrations-card">
-    <div>
-      <div className="s-integrations-card-header">
-        <img alt="Company Logo" className="s-integrations-icon" src={logo} />
-
-        {completed && (
-          <div className="s-integrations-connected">
-            <IoCheckmarkCircle />
-            <p>Connected</p>
-          </div>
-        )}
-      </div>
-
-      <h3>{name}</h3>
-      <p>{description}</p>
-    </div>
-
-    <div>
-      <ActionButton completed={completed} href={href} name={name} />
-    </div>
-  </Card>
-);
+export default IntegrationCardButton;

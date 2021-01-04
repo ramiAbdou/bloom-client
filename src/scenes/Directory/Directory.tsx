@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainContent from 'core/templates/Main/Content';
+import MainContent from '@templates/Main/Content';
 import Directory from './Directory.store';
 import DirectoryCardContainer from './DirectoryCardContainer';
 import DirectoryHeader from './DirectoryHeader';

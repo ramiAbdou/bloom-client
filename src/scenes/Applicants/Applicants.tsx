@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import MainContent from 'core/templates/Main/Content';
+import MainContent from '@templates/Main/Content';
 import useQuery from '@hooks/useQuery';
 import Loading from '@store/Loading.store';
 import { Schema } from '@store/schema';

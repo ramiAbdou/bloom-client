@@ -6,7 +6,7 @@ import { IoCheckmark } from 'react-icons/io5';
 
 import { Attribute } from '@atoms/Tags';
 import { ClassNameProps } from '@constants';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 interface CheckboxProps extends ClassNameProps {
   checked?: boolean;
@@ -25,11 +25,11 @@ const Checkbox = ({ className, checked, onChange, title }: CheckboxProps) => {
     e.stopPropagation();
   };
 
-  const css = makeClass([
-    'c-misc-checkbox',
-    [!!title, 'c-misc-checkbox--label'],
-    className
-  ]);
+  const css = cx({
+    'c-misc-checkbox': true,
+    'c-misc-checkbox--label': title,
+    [className]: className
+  });
 
   return (
     <label className={css} onClick={onLabelClick}>

@@ -1,4 +1,3 @@
-import MainContent from 'core/templates/Main/Content';
 import MainHeader from 'core/templates/Main/Header';
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
@@ -9,11 +8,10 @@ import useQuery from '@hooks/useQuery';
 import { ICommunity, IIntegrations } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import MainContent from '@templates/Main/Content';
+import IntegrationCard, { IntegrationCardProps } from './components/Card/Card';
 import MailchimpDetails from './components/ExpandedDetails/MailchimpDetails';
 import StripeDetails from './components/ExpandedDetails/StripeDetails';
-import IntegrationCard, {
-  IntegrationCardProps
-} from './components/IntegrationCard';
 import MailchimpFlow from './components/MailchimpFlow/MailchimpFlow';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';

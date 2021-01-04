@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import MainContent from 'core/templates/Main/Content';
+import MainContent from '@templates/Main/Content';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE, GetDatabaseResult } from '@scenes/Database/Database.gql';
 import Loading from '@store/Loading.store';

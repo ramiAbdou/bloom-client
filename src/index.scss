@@ -7,6 +7,7 @@
 @import './core/atoms/Button/Button.scss';
 @import './core/atoms/Checkbox/Checkbox.scss';
 @import './core/atoms/Input/Input.scss';
+@import './core/atoms/Tags/Tags.scss';
 @import './core/components/Chart/Chart.scss';
 @import './core/components/Elements/Elements.scss';
 @import './core/components/Elements/Card/Card.scss';
@@ -26,7 +27,6 @@
 @import './core/components/Table/components/Header/Header.scss';
 @import './core/components/Table/components/Pagination/Pagination.scss';
 @import './core/components/Table/components/SelectAllBanner/SelectAllBanner.scss';
-@import './core/components/Tags/Tags.scss';
 @import './core/components/Toast/Toast.scss';
 @import './core/templates/Main/Main.scss';
 @import './scenes/Analytics/Analytics.scss';
@@ -40,6 +40,7 @@
 @import './scenes/Home/components/BottomBar/BottomBar.scss';
 @import './scenes/Home/components/Sidebar/Sidebar.scss';
 @import './scenes/Integrations/Integrations.scss';
+@import './scenes/Integrations/molecules/Card/Card.scss';
 @import './scenes/Login/Login.scss';
 @import './scenes/Membership/pages/ChangePlan/ChangePlan.scss';
 @import './scenes/Membership/pages/Manage/Manage.scss';
