@@ -1,10 +1,12 @@
 import React from 'react';
 
+import Button from '@atoms/Button';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@components/Elements/QuestionValueList';
 import Modal from '@components/Modal/Modal';
 import { IdProps } from '@constants';
+import ActionContainer from '@templates/ActionContainer/ActionContainer';
 import ApplicantsCardStore from '../ApplicantsCard/ApplicantsCard.store';
 
 const ApplicantsModal: React.FC<IdProps> = ({ id }) => {
@@ -20,10 +22,12 @@ const ApplicantsModal: React.FC<IdProps> = ({ id }) => {
 
   return (
     <Modal id={id}>
-      <div className="s-applicants-expanded">
-        <h1>{fullName}</h1>
-        <QuestionValueList items={items} />
-      </div>
+      <h1>{fullName}</h1>
+      <QuestionValueList items={items} marginBottom={24} />
+      <ActionContainer equal>
+        <Button primary>Accept</Button>
+        <Button secondary>Reject</Button>
+      </ActionContainer>
     </Modal>
   );
 };
