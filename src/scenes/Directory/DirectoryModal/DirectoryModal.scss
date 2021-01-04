@@ -11,6 +11,14 @@ $PREF: 's-directory-modal';
   top: 0;
 }
 
+.#{$PREF}-user-ctr {
+  background-color: white;
+  padding-bottom: $sm;
+  position: sticky;
+  top: $md;
+  z-index: 10;
+}
+
 .#{$PREF}-user-ctr > p { margin-bottom: $sm; text-align: center; }
 
 // Current location of the person.

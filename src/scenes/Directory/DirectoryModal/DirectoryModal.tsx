@@ -20,7 +20,7 @@ const CommunityData = () => {
 export default ({ id }: IdProps) => (
   <Modal className="s-directory-modal" id={id}>
     <UserInformationContainer />
-    <Separator style={{ marginBottom: 24, marginTop: 24 }} />
+    <Separator style={{ marginBottom: 24 }} />
     <CommunityData />
   </Modal>
 );

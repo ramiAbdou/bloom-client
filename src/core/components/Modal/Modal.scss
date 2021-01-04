@@ -33,13 +33,16 @@ $PREF: 'c-modal';
 
 // ## MODAL CONTENT
 
-.#{$PREF} { max-height: inherit; padding: $md; }
+.#{$PREF} {
+  max-height: inherit;
+  padding: $md;
 
-// All modals will have an h1 tag, which will be standardized everywhere.
-.#{$PREF} > h1 { color: $primary; margin-bottom: $sm; }
-.#{$PREF} > div:first-child { margin-bottom: $sm; }
-.#{$PREF} > div:first-child > h1 { color: $primary; }
-.#{$PREF} > p:first-of-type { margin-bottom: $md; }
+  // All modals will have an h1 tag, which will be standardized everywhere.
+  > h1 { color: $primary; margin-bottom: $sm; position: sticky; top: $md; }
+  > .c-loading-header { margin-bottom: $sm; }
+  > .c-loading-header > h1 { color: $primary; }
+  > p:first-of-type { margin-bottom: $md; }
+}
 
 // ## CONFIRMATION MODAL
 

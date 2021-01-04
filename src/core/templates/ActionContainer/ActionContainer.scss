@@ -8,6 +8,8 @@ $PREF: 't-action-ctr';
 // exactly 50% of the container.
 
 .#{$PREF}--equal {
+  bottom: $md;
+  position: sticky;
   width: 100%;
 
   > button { width: 50%; }
