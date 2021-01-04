@@ -1,5 +1,6 @@
-
 $PREF: 's-directory';
+
+// ## DIRECTORY HEADER - Contains title, number tag and search bar.
 
 .#{$PREF}-header {
   // If big screen, the search bar is aligned on the top.
@@ -14,6 +15,9 @@ $PREF: 's-directory';
     > div:last-child { width: 100%; }
   }
 }
+
+// ## CARD CONTAINER - Contains masonry component with infinite scrolling of
+// the directory cards.
 
 .#{$PREF}-card-ctr {
   display: grid;
