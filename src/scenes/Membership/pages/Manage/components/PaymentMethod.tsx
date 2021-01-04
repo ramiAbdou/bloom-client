@@ -2,8 +2,8 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button from '@atoms/Button';
+import Spinner from '@atoms/Spinner';
 import Card from '@components/Elements/Card/Card';
-import Spinner from '@components/Loader/Spinner';
 import { ModalType } from '@constants';
 import { IPaymentMethod } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';

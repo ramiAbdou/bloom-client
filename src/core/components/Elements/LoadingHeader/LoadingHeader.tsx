@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Spinner from '@components/Loader/Spinner';
+import Spinner from '@atoms/Spinner';
 import { ChildrenProps, LoadingProps } from '@constants';
 
 interface LoadingHeaderProps extends ChildrenProps, LoadingProps {

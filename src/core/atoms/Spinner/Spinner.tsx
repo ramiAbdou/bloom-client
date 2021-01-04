@@ -2,13 +2,17 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 import { LoadingProps } from '@constants';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 interface SpinnerProps extends LoadingProps {
   dark?: boolean;
 }
 
-export default ({ dark, loading }: SpinnerProps) => {
+/**
+ * Returns the state of the spinner. Adds a 100ms delay in order to show the
+ * spinner so that it doesn't show the spinner for really short time.
+ */
+const useShowSpinner = (loading: boolean): boolean => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   useEffect(() => {
@@ -24,9 +28,14 @@ export default ({ dark, loading }: SpinnerProps) => {
     return () => clearTimeout(timeout);
   }, [loading, showSpinner]);
 
+  return showSpinner;
+};
+
+const Spinner: React.FC<SpinnerProps> = ({ dark, loading }) => {
+  const showSpinner = useShowSpinner(loading);
   if (!showSpinner) return null;
 
-  const css = makeClass(['c-loader-spinner', [dark, 'c-loader-spinner--dark']]);
+  const css = cx({ 'c-loader-spinner': true, 'c-loader-spinner--dark': dark });
 
   return (
     <motion.div
@@ -36,3 +45,5 @@ export default ({ dark, loading }: SpinnerProps) => {
     />
   );
 };
+
+export default Spinner;

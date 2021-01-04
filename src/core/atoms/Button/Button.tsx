@@ -6,7 +6,7 @@ import React, {
   useState
 } from 'react';
 
-import Spinner from '@components/Loader/Spinner';
+import Spinner from '@atoms/Spinner';
 import { cx } from '@util/util';
 
 export interface ButtonProps
