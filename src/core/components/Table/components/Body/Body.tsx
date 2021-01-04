@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 import React from 'react';
 
-import Attribute from '@atoms/Tags/Attribute';
+import { Attribute } from '@atoms/Tags';
 import { QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
 import Table from '../../Table.store';

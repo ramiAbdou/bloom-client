@@ -3,7 +3,7 @@ import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
-import NumberTag from '@atoms/Tags/NumberTag';
+import { NumberTag } from '@atoms/Tags';
 import Spinner from '@components/Loader/Spinner';
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
 import { makeClass } from '@util/util';
@@ -46,7 +46,7 @@ const MainHeader = ({
       <div>
         {backButton && <MainHeaderBackButton />}
         <h1>{title}</h1>
-        {!loading && numberTag && <NumberTag value={numberTag} />}
+        {!loading && numberTag && <NumberTag>{numberTag}</NumberTag>}
         <Spinner dark loading={loading} />
       </div>
 

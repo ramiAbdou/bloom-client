@@ -4,7 +4,7 @@
 import React from 'react';
 import { IoCheckmark } from 'react-icons/io5';
 
-import Attribute from '@atoms/Tags/Attribute';
+import { Attribute } from '@atoms/Tags';
 import { ClassNameProps } from '@constants';
 import { makeClass } from '@util/util';
 

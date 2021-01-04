@@ -45,11 +45,10 @@ export const Dropdown = DropdownTemplate.bind({});
 // ## NUMBER TAG
 
 const NumberTagTemplate = (args) => {
-  return <NTag {...args} />;
+  return <NTag {...args}>999 Members</NTag>;
 };
 
 export const NumberTag = NumberTagTemplate.bind({});
-NumberTag.args = { value: '999 Members' };
 
 // ## INPUT
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NumberTag from '@atoms/Tags/NumberTag';
+import { NumberTag } from '@atoms/Tags';
 import { useStoreState } from '@store/Store';
 import Chart from '../Chart.store';
 
@@ -17,7 +17,7 @@ export default () => {
     <div>
       <h4>{currentTitle ?? questionTitle}</h4>
       {totalResponses !== null && (
-        <NumberTag value={`${totalResponses} Responses`} />
+        <NumberTag>{totalResponses} Responses</NumberTag>
       )}
     </div>
   );
