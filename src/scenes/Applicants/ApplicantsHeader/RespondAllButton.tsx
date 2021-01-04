@@ -5,9 +5,13 @@ import useMutation from '@hooks/useMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from '../Applicants.gql';
 
-type HeaderButtonProps = { response: 'ACCEPTED' | 'REJECTED' };
+interface RespondAllButtonProps {
+  response: 'ACCEPTED' | 'REJECTED';
+}
 
-const HeaderButton = ({ response }: HeaderButtonProps) => {
+const ApplicantsHeaderRespondAllButton: React.FC<RespondAllButtonProps> = ({
+  response
+}) => {
   const updateEntities = useStoreActions(({ db }) => db.updateEntities);
 
   const pendingApplicantIds: string[] = useStoreState(({ db }) => {
@@ -23,6 +27,9 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
     variables: { memberIds: pendingApplicantIds, response }
   });
 
+  // If no pending applicants, shouldn't be able to respond to anything.
+  if (!pendingApplicantIds?.length) return null;
+
   const onClick = async () => {
     // Call to the server.
     const { error } = await respondToMembers();
@@ -37,25 +44,15 @@ const HeaderButton = ({ response }: HeaderButtonProps) => {
     });
   };
 
-  if (response === 'ACCEPTED') {
-    return (
-      <Button
-        primary
-        className="s-applicants-accept-all"
-        disabled={!pendingApplicantIds?.length}
-        onClick={onClick}
-      >
-        Accept All
-      </Button>
-    );
-  }
-
   return (
-    <Button secondary disabled={!pendingApplicantIds?.length} onClick={onClick}>
-      Ignore All
+    <Button
+      primary={response === 'ACCEPTED'}
+      secondary={response === 'REJECTED'}
+      onClick={onClick}
+    >
+      {response === 'ACCEPTED' ? 'Accept All' : 'Reject All'}
     </Button>
   );
 };
 
-export const AcceptAllButton = () => <HeaderButton response="ACCEPTED" />;
-export const IgnoreAllButton = () => <HeaderButton response="REJECTED" />;
+export default ApplicantsHeaderRespondAllButton;

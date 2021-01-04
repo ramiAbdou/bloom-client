@@ -2,6 +2,8 @@ $PREF: 't-action-ctr';
 
 .#{$PREF} { @extend .flex-ac; }
 
+.#{$PREF}--standard { > button:first-child { margin-right: $xs; } }
+
 // ## EQUAL ACTION CONTAINER - Each of the two buttons in the container take
 // exactly 50% of the container.
 

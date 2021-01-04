@@ -2,7 +2,8 @@ import MainHeader from 'core/templates/Main/Header';
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import { AcceptAllButton, IgnoreAllButton } from './Button';
+import ActionContainer from '@templates/ActionContainer/ActionContainer';
+import ApplicantsHeaderRespondAllButton from './RespondAllButton';
 
 const ApplicantsHeader = () => {
   const numApplicants: number = useStoreState(({ db }) => {
@@ -21,12 +22,10 @@ const ApplicantsHeader = () => {
       numberTag={numberTag}
       title="Pending Applicants"
     >
-      {!!numApplicants && (
-        <div>
-          <AcceptAllButton />
-          <IgnoreAllButton />
-        </div>
-      )}
+      <ActionContainer>
+        <ApplicantsHeaderRespondAllButton response="ACCEPTED" />
+        <ApplicantsHeaderRespondAllButton response="REJECTED" />
+      </ActionContainer>
     </MainHeader>
   );
 };
