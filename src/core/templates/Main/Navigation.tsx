@@ -44,6 +44,9 @@ const HeaderNavigation: React.FC<NavigationProps> = ({ options }) => {
   const { location } = useHistory();
   const { pathname } = location;
 
+  // Only show if options are present.
+  if (!options?.length) return null;
+
   const page = pathname.substring(pathname.lastIndexOf('/') + 1);
   const activeIndex = options.findIndex((option) => option.pathname === page);
 
