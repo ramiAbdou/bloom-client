@@ -43,7 +43,7 @@ const SideBarContent = () => {
 
   const quickLinks: LinkOptions[] = useMemo(
     () => [
-      { Icon: IoAdd, title: 'Create Event', to: '' },
+      { Icon: IoAdd, onClick: () => null, title: 'Create Event' },
       {
         Icon: IoPersonAdd,
         onClick: () => showModal('ADD_MEMBERS'),

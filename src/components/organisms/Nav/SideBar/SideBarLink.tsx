@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 
 import { ModalType, OnClickProps } from '@constants';
-import useFinalPath from '@hooks/useFinalPath';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import { LinkOptions } from '../Nav.types';
@@ -47,9 +46,14 @@ const SideBarLink: React.FC<SidebarLinkProps> = (props) => {
       ?.stripeAccountId;
   });
 
+  const encodedUrlName = useStoreState(
+    ({ db }) => db.community?.encodedUrlName
+  );
+
   const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
 
-  const isActive = useFinalPath() === to;
+  const { pathname } = useHistory().location;
+  const isActive = pathname.includes(`${encodedUrlName}/${to}`);
   const { url } = useRouteMatch();
 
   // If onClick is supplied, means it is an action.
