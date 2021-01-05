@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import LoadingHeader from '@components/Elements/LoadingHeader/LoadingHeader';
 import { ModalType } from '@constants';
@@ -6,12 +6,13 @@ import Modal from '@organisms/Modal/Modal';
 import PaymentDescription from '@organisms/Payment/components/Description';
 import StripeProvider from '@organisms/Payment/containers/StripeProvider';
 import PaymentForm from '@organisms/Payment/Payment';
-import usePaymentMethod from '../../Membership/usePaymentMethod';
-import FinishDuesButton from './components/FinishButton';
-import DuesTypeOptions from './components/TypeOptions';
-import DuesContainer from './containers/Dues';
+import usePaymentMethod from '@scenes/Membership/usePaymentMethod';
+import { useStoreActions, useStoreState } from '@store/Store';
 import Dues from './Dues.store';
-import useCreateSubscription from './hooks/useCreateSubscription';
+import DuesModalContainer from './DuesModalContainer';
+import FinishDuesButton from './FinishButton';
+import DuesTypeOptions from './TypeOptions';
+import useCreateSubscription from './useCreateSubscription';
 
 const DuesModalContent = () => {
   const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);
@@ -39,10 +40,24 @@ const DuesModalContent = () => {
   );
 };
 
-export default () => (
-  <DuesContainer>
-    <StripeProvider>
-      <DuesModalContent />
-    </StripeProvider>
-  </DuesContainer>
-);
+const DuesModal: React.FC = () => {
+  // Get the user and see if they've paid their dues or not.
+  const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  const isUserActive = duesStatus === 'ACTIVE';
+
+  useEffect(() => {
+    if (duesStatus && !isUserActive) showModal(ModalType.PAY_DUES);
+  }, [isUserActive]);
+
+  return (
+    <DuesModalContainer>
+      <StripeProvider>
+        <DuesModalContent />
+      </StripeProvider>
+    </DuesModalContainer>
+  );
+};
+
+export default DuesModal;

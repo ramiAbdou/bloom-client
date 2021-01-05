@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import ApplicationPage from '@scenes/Application/Application';
-import HomePage from '@scenes/Home/Home';
+import HomeRouter from './HomeRouter';
 
 /**
  * Core routing logic of the entire application. Nested logic should live
@@ -15,9 +15,8 @@ const Router: React.FC = () => (
   <BrowserRouter>
     <Switch>
       <LoginRoute path="/login" />
-      <AuthenticatedRoute exact component={HomePage} path="/profile" />
       <Route component={ApplicationPage} path="/:encodedUrlName/apply" />
-      <AuthenticatedRoute component={HomePage} path="/:encodedUrlName" />
+      <AuthenticatedRoute component={HomeRouter} path="/:encodedUrlName" />
       <AuthenticatedRoute exact path="/" />
       <Redirect to="/login" />
     </Switch>

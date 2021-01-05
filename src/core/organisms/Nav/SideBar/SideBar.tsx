@@ -14,11 +14,12 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
 import Separator from '@atoms/Separator';
+import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
-import Home, { LinkOptions } from '../Home.store';
+import NavStore, { LinkOptions } from '../Nav.store';
 import SidebarCommunityContainer from './Community.container';
 import SidebarProfile from './Profile';
-import SidebarSection from './Section/Section';
+import SidebarSection from './Section';
 
 const useActiveTo = () => {
   const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
@@ -44,7 +45,7 @@ const SidebarContent = () => {
   const name = useStoreState(({ db }) => db.community.name);
   const hasPaid = useStoreState(({ db }) => db.member?.duesStatus === 'ACTIVE');
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);
+  const setActiveTo = NavStore.useStoreActions((store) => store.setActiveTo);
 
   const activeTo = useActiveTo();
 
@@ -119,9 +120,16 @@ const SidebarContent = () => {
   );
 };
 
-export default () => (
-  <div className="s-home-sidebar">
-    <SidebarCommunityContainer />
-    <SidebarContent />
-  </div>
-);
+const SideBar: React.FC = () => {
+  const isDesktop = useBreakpoint() >= 3;
+  if (!isDesktop) return null;
+
+  return (
+    <div className="s-home-sidebar">
+      <SidebarCommunityContainer />
+      <SidebarContent />
+    </div>
+  );
+};
+
+export default SideBar;

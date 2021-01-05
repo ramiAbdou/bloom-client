@@ -2,11 +2,11 @@ import React, { useMemo } from 'react';
 import { IoCalendar, IoPeople, IoPersonCircle } from 'react-icons/io5';
 
 import useBreakpoint from '@hooks/useBreakpoint';
-import { LinkOptions } from '../Home.store';
+import { LinkOptions } from '../Nav.store';
 import BottomBarCommunityContainer from './Community.container';
 import BottomBarLink from './Link';
 
-const BottomBarMobile = () => {
+const BottomBarMobile: React.FC = () => {
   const mainLinks: LinkOptions[] = useMemo(
     () => [
       { Icon: IoPeople, title: 'Directory', to: 'directory' },
@@ -29,7 +29,7 @@ const BottomBarMobile = () => {
   );
 };
 
-const BottomBarTablet = () => {
+const BottomBarTablet: React.FC = () => {
   const mainLinks: LinkOptions[] = useMemo(
     () => [
       { Icon: IoPeople, title: 'Directory', to: 'directory' },
@@ -58,13 +58,18 @@ const BottomBarTablet = () => {
   );
 };
 
-export default () => {
+const BottomBar: React.FC = () => {
   const isMobile = useBreakpoint() === 1;
+  const isTablet = useBreakpoint() === 2;
+
+  if (!isMobile || !isTablet) return null;
 
   return (
     <footer className="s-home-bb">
       {isMobile && <BottomBarMobile />}
-      {!isMobile && <BottomBarTablet />}
+      {isTablet && <BottomBarTablet />}
     </footer>
   );
 };
+
+export default BottomBar;

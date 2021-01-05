@@ -1,3 +1,4 @@
+import { LOGOUT } from 'core/routing/Router.gql';
 import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +8,6 @@ import useMutation from '@hooks/useMutation';
 import PickerOption from '@organisms/Panel/components/Option';
 import Panel from '@organisms/Panel/Panel';
 import { PanelAction } from '@organisms/Panel/Panel.types';
-import { LOGOUT } from '@scenes/Home/Home.gql';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 export default () => {

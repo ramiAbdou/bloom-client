@@ -1,10 +1,7 @@
-
 $PREF: 's-home';
 
-// ## HOME
+// ## HOME CONTAINER
 
-// Implements the margin that we're used to seeing. We limit the width to be
-// 1440px.
 .#{$PREF}-ctr {
   @extend .flex-ac;
 
@@ -14,7 +11,7 @@ $PREF: 's-home';
   max-height: 100vh;
 }
 
-// ## CONTENT
+// ## HOME
 
 .#{$PREF} {
   flex-grow: 1;
@@ -23,5 +20,3 @@ $PREF: 's-home';
 
   @include D { margin-left: ($xxl * 5.5); max-width: calc(100% - 330px); }
 }
-
-.#{$PREF}-content { margin: 0 $md; padding: 2px 2px $lg 2px; }

@@ -5,12 +5,12 @@ import ErrorMessage from '@components/Misc/ErrorMessage';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Modal from '@organisms/Modal/Modal';
-import { Schema } from '@store/schema';
-import { useStoreActions } from '@store/Store';
 import {
   CREATE_MEMBERS,
   CreateMembersArgs
-} from '../../Database/Database.gql';
+} from '@scenes/Database/Database.gql';
+import { Schema } from '@store/schema';
+import { useStoreActions } from '@store/Store';
 import AddMember, { doesInputHaveError } from './AddMember.store';
 import AddMemberInput from './Input';
 

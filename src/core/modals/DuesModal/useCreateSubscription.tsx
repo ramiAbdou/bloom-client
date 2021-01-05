@@ -1,5 +1,5 @@
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import useMutation from '@hooks/useMutation';
+import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
@@ -8,8 +8,8 @@ import {
   CREATE_SUBSCRIPTION,
   CreateSubscriptionArgs,
   CreateSubscriptionResult
-} from '../Dues.gql';
-import Dues from '../Dues.store';
+} from './Dues.gql';
+import Dues from './Dues.store';
 
 export default function useCreateSubscription(): OnFormSubmit {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);

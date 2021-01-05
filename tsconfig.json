@@ -14,6 +14,7 @@
       "@components/*": ["core/components/*"],
       "@constants": ["util/constants.ts"],
       "@hooks/*": ["core/hooks/*"],
+      "@modals/*": ["core/modals/*"],
       "@molecules/*": ["core/molecules/*"],
       "@organisms/*": ["core/organisms/*"],
       "@scenes/*": ["scenes/*"],

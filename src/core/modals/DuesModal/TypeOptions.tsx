@@ -6,7 +6,7 @@ import Button from '@atoms/Button';
 import Radio from '@components/Elements/Radio/Radio';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Dues from '../Dues.store';
+import Dues from './Dues.store';
 
 const TypeOptionList = () => {
   const allTypes: IMemberType[] = useStoreState(({ db }) => {

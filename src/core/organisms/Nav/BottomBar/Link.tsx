@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Home, { LinkOptions } from '../Home.store';
+import NavStore, { LinkOptions } from '../Nav.store';
 
 /**
  * Each SidebarLink will either have a to property or onClick property defined.
@@ -13,8 +13,8 @@ import Home, { LinkOptions } from '../Home.store';
 export default memo(({ Icon, to, title }: LinkOptions) => {
   const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
 
-  const isActive = Home.useStoreState((store) => store.isActive(to));
-  const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);
+  const isActive = NavStore.useStoreState((store) => store.isActive(to));
+  const setActiveTo = NavStore.useStoreActions((store) => store.setActiveTo);
 
   const css = makeClass([
     's-home-bb-link',

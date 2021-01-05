@@ -5,7 +5,7 @@ import UpdatePaymentModal from './modals/UpdatePayment/UpdatePayment';
 import ChangePlan from './pages/ChangePlan/ChangePlan';
 import ManageMembership from './pages/Manage/Manage';
 
-const Membership = () => {
+const Membership: React.FC = () => {
   const { url } = useRouteMatch();
 
   return (

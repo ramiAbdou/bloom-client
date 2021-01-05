@@ -2,10 +2,10 @@ import React from 'react';
 
 import { ChildrenProps } from '@constants';
 import { useStoreState } from '@store/Store';
-import Dues, { duesModel } from '../Dues.store';
-import useFetchDuesInformation from '../hooks/useFetchDuesInformation';
+import Dues, { duesModel } from './Dues.store';
+import useFetchDuesInformation from './useFetchDuesInformation';
 
-export default function DuesContainer({ children }: ChildrenProps) {
+const DuesModalContainer: React.FC<ChildrenProps> = ({ children }) => {
   const memberTypeId: string = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
     return byId[db.member.type]?.id;
@@ -22,4 +22,6 @@ export default function DuesContainer({ children }: ChildrenProps) {
       {children}
     </Dues.Provider>
   );
-}
+};
+
+export default DuesModalContainer;

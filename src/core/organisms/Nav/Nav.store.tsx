@@ -15,15 +15,15 @@ export interface LinkOptions extends OnClickProps {
   title: string;
 }
 
-type HomeModel = {
+type NavModel = {
   activeTo: string; // Represents the "to" that is active.
-  isActive: Computed<HomeModel, (to: string) => boolean, {}>;
+  isActive: Computed<NavModel, (to: string) => boolean, {}>;
   isDropdownOpen: boolean;
-  setActiveTo: Action<HomeModel, string>;
-  toggleDropdown: Action<HomeModel>;
+  setActiveTo: Action<NavModel, string>;
+  toggleDropdown: Action<NavModel>;
 };
 
-const model: HomeModel = {
+const model: NavModel = {
   activeTo: null,
 
   isActive: computed(({ activeTo }) => (to: string) => activeTo === to),
@@ -38,4 +38,6 @@ const model: HomeModel = {
   }))
 };
 
-export default createContextStore<HomeModel>(model, { disableImmer: true });
+const NavStore = createContextStore<NavModel>(model, { disableImmer: true });
+
+export default NavStore;

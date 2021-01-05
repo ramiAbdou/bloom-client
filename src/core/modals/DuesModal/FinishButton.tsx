@@ -2,7 +2,7 @@ import React from 'react';
 
 import FinishButton from '@organisms/Payment/components/FinishButton';
 import { useStoreState } from '@store/Store';
-import Dues from '../Dues.store';
+import Dues from './Dues.store';
 
 const FinishDuesButton = () => {
   const selectedTypeId = Dues.useStoreState((store) => store.selectedTypeId);

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import useQuery from '@hooks/useQuery';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_DUES_INFORMATION, GetDuesInformationResult } from '../Dues.gql';
+import { GET_DUES_INFORMATION, GetDuesInformationResult } from './Dues.gql';
 
 export default function useFetchDuesInformation(): boolean {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);

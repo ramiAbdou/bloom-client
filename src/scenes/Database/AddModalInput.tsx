@@ -6,8 +6,8 @@ import Checkbox from '@atoms/Checkbox';
 import Input from '@atoms/Input';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { Function, IdProps } from '@constants';
+import { AddMemberData } from '@modals/AddMember/AddMember.store';
 import { makeClass, takeFirst } from '@util/util';
-import { AddMemberData } from '../Home/AddMember/AddMember.store';
 
 interface AddModalInputProps extends IdProps {
   isShowingErrors: boolean;

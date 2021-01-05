@@ -34,6 +34,14 @@
 @import './core/organisms/Chart/Chart.scss';
 @import './core/organisms/Form/Form.scss';
 @import './core/organisms/Modal/Modal.scss';
+
+//
+
+@import './core/organisms/Nav/BottomBar/BottomBar.scss';
+@import './core/organisms/Nav/SideBar/SideBar.scss';
+
+//
+
 @import './core/organisms/Panel/Panel.scss';
 @import './core/organisms/Payment/Payment.scss';
 
@@ -82,8 +90,6 @@
 // 
 
 @import './scenes/Home/Home.scss';
-@import './scenes/Home/BottomBar/BottomBar.scss';
-@import './scenes/Home/Sidebar/Sidebar.scss';
 
 // 
 

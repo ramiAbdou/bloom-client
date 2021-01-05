@@ -27,9 +27,10 @@ export const useFetchMembersTotalAnalytics = (): boolean => {
 export const useFetchMembersActiveAnalytics = () => {
   const initActive = Members.useStoreActions((store) => store.initActive);
 
-  const { data: activeData, loading } = useQuery<
-    GetActiveMemberAnalyticsResult
-  >({
+  const {
+    data: activeData,
+    loading
+  } = useQuery<GetActiveMemberAnalyticsResult>({
     name: 'getActiveMemberAnalytics',
     query: GET_ACTIVE_MEMBER_ANALYTICS
   });
