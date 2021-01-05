@@ -1,8 +1,8 @@
-import MainHeader from 'core/templates/Main/Header';
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
 import ActionContainer from '@templates/ActionContainer/ActionContainer';
+import MainHeader from '@templates/Main/Header';
 import ApplicantsHeaderRespondAllButton from './ApplicantsRespondButton';
 
 const ApplicantsHeader = () => {

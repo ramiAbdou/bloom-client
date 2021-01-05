@@ -1,5 +1,3 @@
-import Logo from 'core/images/Logo/Logo';
-import NetworkIcon from 'core/images/NetworkIcon/NetworkIcon';
 import Cookies from 'js-cookie';
 import React from 'react';
 import URLBuilder from 'util/URLBuilder';
@@ -13,7 +11,9 @@ import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { cx } from '@util/util';
+import BloomLogo from './BloomLogo';
 import google from './images/google.svg';
+import network from './images/network.svg';
 import { LoginError } from './Login.types';
 import { getLoginErrorMessage } from './Login.util';
 import useSendLoginLink from './useSendLoginLink';
@@ -77,10 +77,10 @@ const LoginCardHeader: React.FC = () => (
   <div className="s-login-header">
     <div>
       <p>Welcome to</p>
-      <Logo multiplier={1.25} />
+      <BloomLogo multiplier={1.25} />
     </div>
 
-    <NetworkIcon style={{ height: 151 }} />
+    <img alt="Network Icon" src={network} style={{ height: 151 }} />
   </div>
 );
 

@@ -1,8 +1,8 @@
-import MainHeader from 'core/templates/Main/Header';
 import React from 'react';
 
 import Loading from '@store/Loading.store';
 import MainContent from '@templates/Main/Content';
+import MainHeader from '@templates/Main/Header';
 import IntegrationsStore from './Integrations.store';
 import IntegrationsCardContainer from './IntegrationsCardContainer';
 import IntegrationsModal from './IntegrationsModal';

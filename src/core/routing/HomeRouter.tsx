@@ -7,9 +7,12 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 
-import Loader from '@molecules/Loader/Loader';
 import { EncodedUrlNameProps } from '@constants';
+import AddMemberModal from '@modals/AddMember/AddMember';
 import DuesModal from '@modals/DuesModal/DuesModal';
+import Loader from '@molecules/Loader/Loader';
+import Nav from '@organisms/Nav';
+import SidebarPanel from '@organisms/Nav/SideBar/Picker';
 import Analytics from '@scenes/Analytics/Analytics';
 import Applicants from '@scenes/Applicants/Applicants';
 import Database from '@scenes/Database/Database';
@@ -18,9 +21,6 @@ import Events from '@scenes/Events/Events';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
 import { useStoreState } from '@store/Store';
-import AddMemberModal from '../modals/AddMember/AddMember';
-import Nav from '../organisms/Nav';
-import SidebarPanel from '../organisms/Nav/SideBar/Picker';
 import AdminRoute from './AdminRoute';
 
 const HomeRouterContent: React.FC = () => {

@@ -8,7 +8,6 @@
 
 import { createStore, createTypedHooks } from 'easy-peasy';
 
-import { LoaderModel, loaderModel } from '@molecules/Loader/Loader.store';
 import { ModalModel, modalModel } from '@organisms/Modal/Modal.store';
 import { PanelModel, panelModel } from '@organisms/Panel/Panel.store';
 import { ToastModel, toastModel } from '@organisms/Toast/Toast.store';
@@ -16,7 +15,6 @@ import { DbModel, dbModel } from './Db.store';
 
 type StoreModel = {
   db: DbModel;
-  loader: LoaderModel;
   modal: ModalModel;
   panel: PanelModel;
   toast: ToastModel;
@@ -25,7 +23,6 @@ type StoreModel = {
 export const store = createStore<StoreModel>(
   {
     db: dbModel,
-    loader: loaderModel,
     modal: modalModel,
     panel: panelModel,
     toast: toastModel
