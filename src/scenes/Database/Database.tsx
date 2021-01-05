@@ -4,7 +4,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Loading from '@store/Loading.store';
 import MainContent from '@templates/Main/Content';
 import Admins from './Admins/Admins';
-import Header from './Header';
+import DatabaseHeader from './DatabaseHeader';
 import Members from './Members/Members';
 import useFetchDatabase from './useFetchDatabase';
 
@@ -14,7 +14,7 @@ const DatabaseContent = () => {
 
   return (
     <>
-      <Header />
+      <DatabaseHeader />
 
       <MainContent>
         <Switch>

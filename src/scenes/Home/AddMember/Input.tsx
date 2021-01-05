@@ -4,7 +4,7 @@ import React from 'react';
 import { IdProps } from '@constants';
 import AddModalInput from '@scenes/Database/AddModalInput';
 import { useStoreState } from '@store/Store';
-import AddMember from '../AddMember.store';
+import AddMember from './AddMember.store';
 
 export default function AddMemberInput({ id }: IdProps) {
   const isOwner = useStoreState(({ db }) => db.isOwner);

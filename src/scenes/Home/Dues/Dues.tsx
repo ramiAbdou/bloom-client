@@ -6,7 +6,7 @@ import Modal from '@organisms/Modal/Modal';
 import PaymentDescription from '@organisms/Payment/components/Description';
 import StripeProvider from '@organisms/Payment/containers/StripeProvider';
 import PaymentForm from '@organisms/Payment/Payment';
-import usePaymentMethod from '../../../Membership/usePaymentMethod';
+import usePaymentMethod from '../../Membership/usePaymentMethod';
 import FinishDuesButton from './components/FinishButton';
 import DuesTypeOptions from './components/TypeOptions';
 import DuesContainer from './containers/Dues';

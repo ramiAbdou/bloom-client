@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Home, { LinkOptions } from '../../Home.store';
+import Home, { LinkOptions } from '../Home.store';
 
 /**
  * Each SidebarLink will either have a to property or onClick property defined.

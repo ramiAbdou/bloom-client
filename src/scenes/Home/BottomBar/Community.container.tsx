@@ -9,7 +9,7 @@ import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { ICommunity } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Home from '../../Home.store';
+import Home from '../Home.store';
 
 const CommunitySelector = ({ id, logoUrl, name }: Partial<ICommunity>) => {
   const isActive = useStoreState(({ db }) => db.community.name === name);

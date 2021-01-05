@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { IoCalendar, IoPeople, IoPersonCircle } from 'react-icons/io5';
 
 import useBreakpoint from '@hooks/useBreakpoint';
-import { LinkOptions } from '../../Home.store';
+import { LinkOptions } from '../Home.store';
 import BottomBarCommunityContainer from './Community.container';
 import BottomBarLink from './Link';
 

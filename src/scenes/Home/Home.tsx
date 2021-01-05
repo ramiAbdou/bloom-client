@@ -2,7 +2,7 @@ import AdminRoute from 'core/routing/AdminRoute';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import AddMemberModal from '@scenes/Home/modals/AddMember/AddMember';
+import AddMemberModal from '@scenes/Home/AddMember/AddMember';
 import Analytics from '../Analytics/Analytics';
 import Applicants from '../Applicants/Applicants';
 import Database from '../Database/Database';
@@ -10,12 +10,12 @@ import Directory from '../Directory/Directory';
 import Events from '../Events/Events';
 import Integrations from '../Integrations/Integrations';
 import Membership from '../Membership/Membership';
-import BottomBar from './components/BottomBar/BottomBar';
-import SidebarPicker from './components/Sidebar/Picker';
-import Sidebar from './components/Sidebar/Sidebar';
-import AuthWrapper from './hoc/AuthWrapper';
-import DuesWrapper from './hoc/DuesWrapper';
+import AuthWrapper from './AuthWrapper';
+import BottomBar from './BottomBar/BottomBar';
+import DuesWrapper from './DuesWrapper';
 import Home from './Home.store';
+import SidebarPicker from './Sidebar/Picker';
+import Sidebar from './Sidebar/Sidebar';
 
 const HomeContent = () => {
   const { url } = useRouteMatch();

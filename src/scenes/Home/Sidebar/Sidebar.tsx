@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '@atoms/Button';
 import Separator from '@atoms/Separator';
 import { useStoreActions, useStoreState } from '@store/Store';
-import Home, { LinkOptions } from '../../Home.store';
+import Home, { LinkOptions } from '../Home.store';
 import SidebarCommunityContainer from './Community.container';
 import SidebarProfile from './Profile';
 import SidebarSection from './Section/Section';

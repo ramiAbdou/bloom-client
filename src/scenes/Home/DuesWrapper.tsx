@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { ChildrenProps, ModalType } from '@constants';
-import DuesModal from '@scenes/Home/modals/Dues/Dues';
+import DuesModal from '@scenes/Home/Dues/Dues';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 export default function DuesWrapper({ children }: ChildrenProps) {

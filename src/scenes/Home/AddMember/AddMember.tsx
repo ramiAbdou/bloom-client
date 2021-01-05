@@ -2,17 +2,17 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import Modal from '@organisms/Modal/Modal';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
+import Modal from '@organisms/Modal/Modal';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import {
   CREATE_MEMBERS,
   CreateMembersArgs
-} from '../../../Database/Database.gql';
+} from '../../Database/Database.gql';
 import AddMember, { doesInputHaveError } from './AddMember.store';
-import AddMemberInput from './components/Input';
+import AddMemberInput from './Input';
 
 const AddMemberContent = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
