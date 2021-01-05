@@ -14,13 +14,15 @@ const SidebarPanel: React.FC = () => {
   const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
 
   const canManageMembership = useStoreState(({ db }) => {
-    return (
-      db.entities.integrations.byId[db.community.integrations]
-        .stripeAccountId &&
-      db.community.types.some(
-        (typeId) => !db.entities.types.byId[typeId]?.isFree
-      )
+    const isStripeConnected = !!db.entities.integrations.byId[
+      db.community.integrations
+    ].stripeAccountId;
+
+    const hasPaidMembership = !!db.community.types.some(
+      (typeId) => !db.entities.types.byId[typeId]?.isFree
     );
+
+    return isStripeConnected && hasPaidMembership;
   });
 
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
