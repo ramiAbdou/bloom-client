@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
-import Login from '../../Login.store';
+import Login from '../Login.store';
 
 const ConfirmationHeader = () => (
   <div className="s-login-confirmation-header">

@@ -2,9 +2,9 @@ import React from 'react';
 import validator from 'validator';
 
 import FormErrorMessage from '@organisms/Form/ErrorMessage';
-import FormItem from '@organisms/Form/Item';
 import Form from '@organisms/Form/Form';
-import SubmitButton from './SubmitButton';
+import FormItem from '@organisms/Form/Item';
+import SubmitButton from '@organisms/Form/SubmitButton';
 import useSendLoginLink from './useSendLoginLink';
 
 export default () => {
@@ -22,7 +22,7 @@ export default () => {
       />
 
       <FormErrorMessage marginTop={0} />
-      <SubmitButton />
+      <SubmitButton loadingText="Sending...">Send Login Link</SubmitButton>
     </Form>
   );
 };

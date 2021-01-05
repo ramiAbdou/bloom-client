@@ -5,8 +5,9 @@ import URLBuilder from 'util/URLBuilder';
 import ErrorMessage from '@components/Misc/ErrorMessage';
 import { APP } from '@constants';
 import { makeClass } from '@util/util';
-import google from '../../images/google.svg';
-import { getLoginErrorMessage, LoginError } from '../../Login.store';
+import google from '../images/google.svg';
+import { LoginError } from '../Login.store';
+import { getLoginErrorMessage } from '../Login.util';
 
 const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
   .addParam('scope', 'https://www.googleapis.com/auth/userinfo.email')

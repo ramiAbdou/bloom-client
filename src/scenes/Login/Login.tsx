@@ -1,21 +1,20 @@
 import React from 'react';
 
-import Card from '@components/Elements/Card/Card';
-import Login from './Login.store';
-import EmailConfirmation from './pages/Confirmation/Confirmation';
-import LoginCard from './pages/LoginCard/LoginCard';
+import EmailConfirmation from './Confirmation/Confirmation';
+import LoginStore from './Login.store';
+import LoginCard from './LoginCard/LoginCard';
 
-const LoginContent = () => {
-  const linkSent = Login.useStoreState((store) => store.hasLoginLinkSent);
+const LoginContent: React.FC = () => {
+  const linkSent = LoginStore.useStoreState((store) => store.hasLoginLinkSent);
   return linkSent ? <EmailConfirmation /> : <LoginCard />;
 };
 
-export default () => (
-  <Login.Provider>
+const Login: React.FC = () => (
+  <LoginStore.Provider>
     <div className="s-login-ctr">
-      <Card className="s-login-card">
-        <LoginContent />
-      </Card>
+      <LoginContent />
     </div>
-  </Login.Provider>
+  </LoginStore.Provider>
 );
+
+export default Login;

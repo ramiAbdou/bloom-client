@@ -2,10 +2,10 @@ import { useManualQuery } from 'graphql-hooks';
 
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { getGraphQLError } from '@util/util';
-import { SEND_TEMPORARY_LOGIN_LINK } from '../../Login.gql';
-import Login from '../../Login.store';
+import { SEND_TEMPORARY_LOGIN_LINK } from '../Login.gql';
+import Login from '../Login.store';
 
-export default (): OnFormSubmit => {
+const useSendLoginLink = (): OnFormSubmit => {
   const setEmail = Login.useStoreActions((store) => store.setEmail);
 
   const setHasLoginLinkSent = Login.useStoreActions(
@@ -14,10 +14,13 @@ export default (): OnFormSubmit => {
 
   const [sendTemporaryLoginLink] = useManualQuery(SEND_TEMPORARY_LOGIN_LINK);
 
-  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    items,
+    setErrorMessage,
+    setIsLoading
+  }: OnFormSubmitArgs) => {
     const email = items.find(({ category }) => category === 'EMAIL')?.value;
 
-    // Manually set the isLoading variable to true.
     setIsLoading(true);
     const { error } = await sendTemporaryLoginLink({ variables: { email } });
     setIsLoading(false);
@@ -31,4 +34,8 @@ export default (): OnFormSubmit => {
     setEmail(email);
     setHasLoginLinkSent(true);
   };
+
+  return onSubmit;
 };
+
+export default useSendLoginLink;

@@ -12,12 +12,12 @@ export interface FormProps extends ChildrenProps, ClassNameProps {
   onSubmit?: OnFormSubmit;
 }
 
-const FormContent = ({
+const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
   children,
   isEmpty,
   onSubmit
-}: Omit<FormProps, 'questions'>) => {
+}) => {
   const items = Form.useStoreState((store) => store.items, deepequal);
   const currentIsEmpty = Form.useStoreState((store) => store.isEmpty);
   const setError = Form.useStoreActions((store) => store.setErrorMessage);
