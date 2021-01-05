@@ -2,8 +2,19 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Card from '@components/Elements/Card/Card';
+import ConfirmationScreen from '@molecules/ConfirmationScreen/ConfirmationScreen';
 import LoginCard from './LoginCard/LoginCard';
-import LoginConfirmation from './LoginConfirmation';
+
+const LoginConfirmation: React.FC = () => (
+  <ConfirmationScreen title="Login Link Sent">
+    <p>
+      We just sent you a temporary login link that expires in 5 minutes. If you
+      have any trouble, you can request another login link or login with Google.
+    </p>
+
+    <p>You may now close this page.</p>
+  </ConfirmationScreen>
+);
 
 const LoginContent: React.FC = () => {
   const { url } = useRouteMatch();

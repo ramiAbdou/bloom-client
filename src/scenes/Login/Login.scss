@@ -15,13 +15,16 @@ $PREF: 's-login';
   overflow: hidden; // Needed to hide the overflowed network image.
 
   @include M { box-sizing: border-box; width: 90%; }
+
+  > .m-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+  > form > div { margin: $md 0; }
 }
 
 // ## LOGIN HEADER - Contains the network image as well as welcome message.
 
 .#{$PREF}-header { @extend .flex-acsb; }
 .#{$PREF}-header > div { margin-bottom: $lg; }
-.#{$PREF}-header > div > h3 { @extend .meta; }
+.#{$PREF}-header > div > p { @extend .meta; }
 .#{$PREF}-header > img {
   margin-bottom: $lg;
   opacity: 0.75;
@@ -47,28 +50,5 @@ $PREF: 's-login';
     @include HOVER { background-color: $gray-6; }
   }
 
-  > a > img { height: $md; margin-right: $xs; width: $md; }
-}
-
-// ## EMAIL CONTAINER (INPUT FIELD AND SUBMIT BUTTON)
-
-.#{$PREF}-email-form > div { margin: $md 0; width: 100%; }
-
-// ## LOGIN CONFIRMATION
-
-.#{$PREF}-confirmation > p:first-of-type { margin-bottom: $md; }
-
-.#{$PREF}-confirmation > div {
-  @extend .flex-ac;
-
-  margin-bottom: $sm;
-
-  > h1 { color: $primary; }
-
-  > svg {
-    color: $primary;
-    margin-right: $xs;
-
-    @include SIZE($xxl);
-  }
+  > a > img { height: $sl; margin-right: $xs; width: $sl; }
 }

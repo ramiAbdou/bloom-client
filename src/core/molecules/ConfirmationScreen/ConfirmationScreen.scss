@@ -1,0 +1,10 @@
+$PREF: 'm-confirmation-screen';
+
+.#{$PREF} > div:first-child {
+  @extend .flex-ac;
+
+  margin-bottom: $sm;
+
+  > h1 { color: $primary; }
+  > svg { color: $primary; height: $xl; margin-right: $xs; width: $xl; }
+}

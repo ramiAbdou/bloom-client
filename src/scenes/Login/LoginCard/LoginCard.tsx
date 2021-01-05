@@ -9,7 +9,7 @@ import LoginCardGoogleContainer from './GoogleForm';
 const LoginCardHeader: React.FC = () => (
   <div className="s-login-header">
     <div>
-      <h3>Welcome to</h3>
+      <p>Welcome to</p>
       <Logo multiplier={1.25} />
     </div>
 

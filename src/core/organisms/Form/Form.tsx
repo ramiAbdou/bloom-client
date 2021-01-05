@@ -2,6 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useCallback, useEffect } from 'react';
 
 import { ChildrenProps, ClassNameProps } from '@constants';
+import { cx } from '@util/util';
 import Form, { formModel } from './Form.store';
 import { FormItemData, OnFormSubmit } from './Form.types';
 import { formatQuestions } from './Form.util';
@@ -38,8 +39,10 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     [items]
   );
 
+  const css = cx({ 'c-form': true, [className]: className });
+
   return (
-    <form className={className} onSubmit={onFormSubmit}>
+    <form className={css} onSubmit={onFormSubmit}>
       {children}
     </form>
   );
