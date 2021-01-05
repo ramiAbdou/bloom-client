@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Bloom's Client Web Application",
   "scripts": {
-    "build": "NODE_ENV=production webpack --config ./webpack.prod.config.ts",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.ts",
     "postinstall": "pm2 install typescript",
-    "dev": "webpack-dev-server --config ./webpack.local.config.ts",
+    "dev": "webpack-dev-server --config ./webpack.config.ts",
     "start": "pm2 start server.ts -i max",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"

@@ -30,6 +30,7 @@
   "include": [
     "./src/**/*",
     "./server.ts",
+    "webpack.config.ts",
     "webpack.local.config.ts",
     "webpack.prod.config.ts",
   ],
