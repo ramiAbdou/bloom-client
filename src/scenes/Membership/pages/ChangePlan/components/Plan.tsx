@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button from '@atoms/Button';
-import Card from '@components/Elements/Card/Card';
 import { ModalType } from '@constants';
+import Card from '@molecules/Card/Card';
 import { IMemberType } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';

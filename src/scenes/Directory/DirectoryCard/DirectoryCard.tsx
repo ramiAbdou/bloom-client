@@ -3,7 +3,7 @@ import { RenderComponentProps } from 'masonic';
 import React from 'react';
 
 import Button from '@atoms/Button';
-import ProfilePicture from '@components/Misc/ProfilePicture';
+import ProfilePicture from '@molecules/ProfilePicture';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';

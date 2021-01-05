@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { memo } from 'react';
 
 import Button from '@atoms/Button';
-import ErrorMessage from '@components/Misc/ErrorMessage';
+import ErrorMessage from '@atoms/ErrorMessage';
 import { IdProps } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Modal from '@organisms/Modal/Modal';

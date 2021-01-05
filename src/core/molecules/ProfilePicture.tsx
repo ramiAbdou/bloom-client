@@ -32,8 +32,8 @@ export default ({
   ]);
 
   const css = makeClass([
-    'c-misc-profile-picture',
-    [circle, 'c-misc-profile-picture--circle'],
+    'm-misc-profile-picture',
+    [circle, 'm-misc-profile-picture--circle'],
     [className, className]
   ]);
 

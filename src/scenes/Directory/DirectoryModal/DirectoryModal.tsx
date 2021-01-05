@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Separator from '@atoms/Separator';
-import QuestionValueList from '@components/Elements/QuestionValueList';
-import Modal from '@organisms/Modal/Modal';
 import { IdProps } from '@constants';
+import QuestionValueList from '@molecules/QuestionValueList';
+import Modal from '@organisms/Modal/Modal';
 import DirectoryCard from '../DirectoryCard/DirectoryCard.store';
 import UserInformationContainer from './UserInformation';
 

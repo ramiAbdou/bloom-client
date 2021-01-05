@@ -11,7 +11,7 @@ interface LogoProps extends ClassNameProps, StyleProps {
 const LOGO_HEIGHT = 18;
 const LOGO_WIDTH = 75;
 
-export default ({ className, multiplier }: LogoProps) => {
+const Logo: React.FC<LogoProps> = ({ className, multiplier }) => {
   const css = makeClass(['c-misc-logo', className]);
 
   const style = {
@@ -25,3 +25,5 @@ export default ({ className, multiplier }: LogoProps) => {
     </button>
   );
 };
+
+export default Logo;

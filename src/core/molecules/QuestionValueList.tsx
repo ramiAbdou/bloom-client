@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 
 import { QuestionType, ValueProps } from '@constants';
 import { takeFirst } from '@util/util';
-import Attribute from '../../atoms/Tags/Attribute';
-import FormLabel from '../../organisms/Form/FormLabel';
+import Attribute from '../atoms/Tags/Attribute';
+import FormLabel from '../organisms/Form/FormLabel';
 
 export interface QuestionValueItemProps extends ValueProps {
   hideNullValue?: boolean;
@@ -50,7 +50,7 @@ const QuestionValue: React.FC<QuestionValueItemProps> = ({
   if (hideNullValue && !value) return null;
 
   return (
-    <div className="c-misc-question">
+    <div className="m-misc-question">
       <FormLabel small>{title}</FormLabel>
       <Value type={type} value={value} />
     </div>
@@ -65,7 +65,7 @@ const QuestionValueList: React.FC<QuestionValueListProps> = ({
   if (!items) return null;
 
   return (
-    <div className="c-misc-question-ctr" style={{ marginBottom }}>
+    <div className="m-misc-question-ctr" style={{ marginBottom }}>
       {items.map((item: QuestionValueItemProps) => (
         <QuestionValue
           key={item.title}

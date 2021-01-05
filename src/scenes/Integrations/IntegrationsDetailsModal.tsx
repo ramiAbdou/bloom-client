@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
-import QuestionValueList from '@components/Elements/QuestionValueList';
+import QuestionValueList from '@molecules/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import ActionContainer from '@templates/ActionContainer/ActionContainer';

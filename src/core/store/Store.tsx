@@ -8,7 +8,7 @@
 
 import { createStore, createTypedHooks } from 'easy-peasy';
 
-import { LoaderModel, loaderModel } from '@components/Loader/Loader.store';
+import { LoaderModel, loaderModel } from '@molecules/Loader/Loader.store';
 import { ModalModel, modalModel } from '@organisms/Modal/Modal.store';
 import { PanelModel, panelModel } from '@organisms/Panel/Panel.store';
 import { ToastModel, toastModel } from '@organisms/Toast/Toast.store';
@@ -33,6 +33,7 @@ export const store = createStore<StoreModel>(
   { disableImmer: true }
 );
 
-export const { useStoreActions, useStoreState } = createTypedHooks<
-  StoreModel
->();
+export const {
+  useStoreActions,
+  useStoreState
+} = createTypedHooks<StoreModel>();

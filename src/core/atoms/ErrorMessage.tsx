@@ -9,7 +9,11 @@ export interface ErrorMessageProps extends MessageProps {
   marginTop?: number;
 }
 
-export default ({ marginBottom, marginTop, message }: ErrorMessageProps) => {
+const ErrorMessage: React.FC<ErrorMessageProps> = ({
+  marginBottom,
+  marginTop,
+  message
+}) => {
   if (!message) return null;
 
   return (
@@ -25,3 +29,5 @@ export default ({ marginBottom, marginTop, message }: ErrorMessageProps) => {
     </motion.div>
   );
 };
+
+export default ErrorMessage;

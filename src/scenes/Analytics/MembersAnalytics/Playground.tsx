@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
-import Dropdown from '@components/Elements/Dropdown/Dropdown';
+import Dropdown from '@molecules/Dropdown/Dropdown';
 import Chart from '@organisms/Chart/Chart';
 import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';

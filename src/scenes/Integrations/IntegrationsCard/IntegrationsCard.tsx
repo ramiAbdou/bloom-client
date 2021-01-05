@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Card from '@components/Elements/Card/Card';
+import Card from '@molecules/Card/Card';
 import IntegrationCardButton from './Button';
 import IntegrationCardContent from './Content';
 

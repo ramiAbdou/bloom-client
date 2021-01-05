@@ -1,12 +1,12 @@
+import Logo from 'core/images/Logo/Logo';
+import NetworkIcon from 'core/images/NetworkIcon/NetworkIcon';
 import Cookies from 'js-cookie';
 import React from 'react';
 import URLBuilder from 'util/URLBuilder';
 import validator from 'validator';
 
+import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
-import ErrorMessage from '@components/Misc/ErrorMessage';
-import Logo from '@components/Misc/Logo';
-import Network from '@components/Misc/Network';
 import { APP } from '@constants';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
@@ -80,7 +80,7 @@ const LoginCardHeader: React.FC = () => (
       <Logo multiplier={1.25} />
     </div>
 
-    <Network style={{ height: 151 }} />
+    <NetworkIcon style={{ height: 151 }} />
   </div>
 );
 

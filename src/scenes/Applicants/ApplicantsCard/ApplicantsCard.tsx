@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Button from '@atoms/Button';
-import Card from '@components/Elements/Card/Card';
+import Card from '@molecules/Card/Card';
 import QuestionValueList, {
   QuestionValueItemProps
-} from '@components/Elements/QuestionValueList';
+} from '@molecules/QuestionValueList';
 import { useStoreActions } from '@store/Store';
 import ActionContainer from '@templates/ActionContainer/ActionContainer';
 import ApplicantsModal from '../ApplicantsModal';

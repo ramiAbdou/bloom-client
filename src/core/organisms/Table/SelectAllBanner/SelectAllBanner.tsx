@@ -13,7 +13,7 @@
 
 import React from 'react';
 
-import Card from '@components/Elements/Card/Card';
+import Card from '@molecules/Card/Card';
 import SelectAllBannerButton from './Button';
 import SelectAllBannerMessage from './Message';
 

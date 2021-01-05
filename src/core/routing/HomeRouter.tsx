@@ -7,7 +7,7 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 
-import FullScreenLoader from '@components/Loader/FullScreenLoader';
+import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
 import { EncodedUrlNameProps } from '@constants';
 import DuesModal from '@modals/DuesModal/DuesModal';
 import Analytics from '@scenes/Analytics/Analytics';

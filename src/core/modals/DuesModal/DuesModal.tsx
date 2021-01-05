@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import LoadingHeader from '@components/Elements/LoadingHeader/LoadingHeader';
 import { ModalType } from '@constants';
+import LoadingHeader from '@molecules/LoadingHeader/LoadingHeader';
 import Modal from '@organisms/Modal/Modal';
 import PaymentDescription from '@organisms/Payment/components/Description';
 import StripeProvider from '@organisms/Payment/containers/StripeProvider';

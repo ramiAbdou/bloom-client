@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import Button from '@atoms/Button';
-import Card from '@components/Elements/Card/Card';
+import Card from '@molecules/Card/Card';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';

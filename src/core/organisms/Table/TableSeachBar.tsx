@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import SearchBar from '@components/Elements/SearchBar/SearchBar';
+import SearchBar from '@molecules/SearchBar/SearchBar';
 import Table from './Table.store';
 
 type SearchBarProps = { placeholder?: string };

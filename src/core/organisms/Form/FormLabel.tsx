@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InformationTip from '@components/Elements/InformationTip/InformationTip';
+import InformationTip from '@atoms/InformationTip/InformationTip';
 import { ChildrenProps } from '@constants';
 import { cx } from '@util/util';
 

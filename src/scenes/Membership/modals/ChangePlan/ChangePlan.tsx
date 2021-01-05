@@ -1,10 +1,10 @@
 import React from 'react';
 
-import LoadingHeader from '@components/Elements/LoadingHeader/LoadingHeader';
+import { ModalType } from '@constants';
+import LoadingHeader from '@molecules/LoadingHeader/LoadingHeader';
 import Modal from '@organisms/Modal/Modal';
 import PaymentDescription from '@organisms/Payment/components/Description';
 import StripeProvider from '@organisms/Payment/containers/StripeProvider';
-import { ModalType } from '@constants';
 import ChangePlan from '../../pages/ChangePlan/ChangePlan.store';
 import usePaymentMethod from '../../usePaymentMethod';
 import ChangePlanForm from './components/Form';

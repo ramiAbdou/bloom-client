@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import FullScreenLoader from '@components/Loader/FullScreenLoader';
+import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
 import ApplicationConfirmation from './ApplicationConfirmation';
 import ApplicationForm from './ApplicationForm';
 import useFetchApplication from './useFetchApplication';

@@ -2,8 +2,8 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import useQuery from '@hooks/useQuery';
+import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
 import LoginPage from '@scenes/Login/Login';
 import { IS_LOGGED_IN } from './Router.gql';
 

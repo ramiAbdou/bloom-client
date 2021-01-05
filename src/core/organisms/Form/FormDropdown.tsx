@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Dropdown from '@components/Elements/Dropdown/Dropdown';
+import Dropdown from '@molecules/Dropdown/Dropdown';
 import Form from './Form.store';
 import { FormItemData } from './Form.types';
 

@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { IoMail } from 'react-icons/io5';
 
-import ProfilePicture from '@components/Misc/ProfilePicture';
+import ProfilePicture from '@molecules/ProfilePicture';
 import MemberCard from '../DirectoryCard/DirectoryCard.store';
 import SocialMediaContainer from './SocialMedia';
 

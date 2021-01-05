@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@atoms/Button';
-import ErrorMessage from '@components/Misc/ErrorMessage';
+import ErrorMessage from '@atoms/ErrorMessage';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Modal from '@organisms/Modal/Modal';

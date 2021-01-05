@@ -2,8 +2,8 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
-import ProfilePicture from '@components/Misc/ProfilePicture';
 import { PickerType } from '@constants';
+import ProfilePicture from '@molecules/ProfilePicture';
 import { IUser } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { IdProps } from '@constants';
 import QuestionValueList, {
   QuestionValueItemProps
-} from '@components/Elements/QuestionValueList';
-import { IdProps } from '@constants';
+} from '@molecules/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
 import ActionContainer from '@templates/ActionContainer/ActionContainer';
 import ApplicantsCardStore from './ApplicantsCard/ApplicantsCard.store';

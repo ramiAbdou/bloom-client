@@ -2,8 +2,8 @@ import { query } from 'gql-query-builder';
 import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import FullScreenLoader from '@components/Loader/FullScreenLoader';
 import useQuery from '@hooks/useQuery';
+import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
 
 // We're not exporting this to another file since this is the only place we
 // need it.
