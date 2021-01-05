@@ -1,13 +1,12 @@
 import React from 'react';
 
 import Separator from '@atoms/Separator';
-import Card from '@components/Elements/Card/Card';
 import Logo from '@components/Misc/Logo';
 import Network from '@components/Misc/Network';
-import EmailContainer from './EmailContainer';
-import GoogleContainer from './GoogleContainer';
+import LoginCardEmailForm from './EmailForm';
+import LoginCardGoogleContainer from './GoogleForm';
 
-const LoginHeader: React.FC = () => (
+const LoginCardHeader: React.FC = () => (
   <div className="s-login-header">
     <div>
       <h3>Welcome to</h3>
@@ -19,12 +18,12 @@ const LoginHeader: React.FC = () => (
 );
 
 const LoginCard: React.FC = () => (
-  <Card className="s-login-card">
-    <LoginHeader />
-    <GoogleContainer />
+  <>
+    <LoginCardHeader />
+    <LoginCardGoogleContainer />
     <Separator />
-    <EmailContainer />
-  </Card>
+    <LoginCardEmailForm />
+  </>
 );
 
 export default LoginCard;

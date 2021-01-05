@@ -1,18 +1,23 @@
-import { useManualQuery } from 'graphql-hooks';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
+import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { getGraphQLError } from '@util/util';
-import { SEND_TEMPORARY_LOGIN_LINK } from '../Login.gql';
-import Login from '../Login.store';
+import {
+  SEND_TEMPORARY_LOGIN_LINK,
+  SendTemporaryLoginLinkArgs
+} from '../Login.gql';
 
 const useSendLoginLink = (): OnFormSubmit => {
-  const setEmail = Login.useStoreActions((store) => store.setEmail);
+  const { push } = useHistory();
+  const { url } = useRouteMatch();
 
-  const setHasLoginLinkSent = Login.useStoreActions(
-    (store) => store.setHasLoginLinkSent
-  );
-
-  const [sendTemporaryLoginLink] = useManualQuery(SEND_TEMPORARY_LOGIN_LINK);
+  const [sendTemporaryLoginLink] = useMutation<
+    boolean,
+    SendTemporaryLoginLinkArgs
+  >({
+    name: 'sendTemporaryLoginLink',
+    query: SEND_TEMPORARY_LOGIN_LINK
+  });
 
   const onSubmit = async ({
     items,
@@ -22,17 +27,15 @@ const useSendLoginLink = (): OnFormSubmit => {
     const email = items.find(({ category }) => category === 'EMAIL')?.value;
 
     setIsLoading(true);
-    const { error } = await sendTemporaryLoginLink({ variables: { email } });
+    const { error } = await sendTemporaryLoginLink({ email });
     setIsLoading(false);
 
     if (error) {
-      const errorMessage = getGraphQLError(error);
-      setErrorMessage(errorMessage);
+      setErrorMessage(error);
       return;
     }
 
-    setEmail(email);
-    setHasLoginLinkSent(true);
+    push(`${url}/confirmation`);
   };
 
   return onSubmit;

@@ -1,0 +1,4 @@
+export type LoginError =
+  | 'APPLICATION_PENDING'
+  | 'APPLICATION_REJECTED'
+  | 'USER_NOT_FOUND';

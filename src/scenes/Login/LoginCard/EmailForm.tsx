@@ -7,7 +7,7 @@ import FormItem from '@organisms/Form/Item';
 import SubmitButton from '@organisms/Form/SubmitButton';
 import useSendLoginLink from './useSendLoginLink';
 
-export default () => {
+const LoginCardEmailForm: React.FC = () => {
   const sendLoginLink = useSendLoginLink();
 
   return (
@@ -26,3 +26,5 @@ export default () => {
     </Form>
   );
 };
+
+export default LoginCardEmailForm;

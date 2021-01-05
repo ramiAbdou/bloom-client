@@ -1,4 +1,4 @@
-import { LoginError } from './Login.store';
+import { LoginError } from './Login.types';
 
 /**
  * Returns the login error message based on the cookie.

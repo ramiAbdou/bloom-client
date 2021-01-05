@@ -1,20 +1,34 @@
 import React from 'react';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import EmailConfirmation from './Confirmation/Confirmation';
-import LoginStore from './Login.store';
+import Card from '@components/Elements/Card/Card';
 import LoginCard from './LoginCard/LoginCard';
+import LoginConfirmation from './LoginConfirmation';
 
 const LoginContent: React.FC = () => {
-  const linkSent = LoginStore.useStoreState((store) => store.hasLoginLinkSent);
-  return linkSent ? <EmailConfirmation /> : <LoginCard />;
+  const { url } = useRouteMatch();
+
+  return (
+    <Card className="s-login-card">
+      <Switch>
+        <Route exact component={LoginCard} path={url} />
+
+        <Route
+          exact
+          component={LoginConfirmation}
+          path={`${url}/confirmation`}
+        />
+
+        <Redirect to={url} />
+      </Switch>
+    </Card>
+  );
 };
 
 const Login: React.FC = () => (
-  <LoginStore.Provider>
-    <div className="s-login-ctr">
-      <LoginContent />
-    </div>
-  </LoginStore.Provider>
+  <div className="s-login-ctr">
+    <LoginContent />
+  </div>
 );
 
 export default Login;

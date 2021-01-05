@@ -22,5 +22,5 @@ export default ({ path }: Partial<RouteProps>) => {
   // If there is an error in the GraphQL query, whether the query structure
   // was wrong or there the user wasn't authenticated for the request.
   if (!error && isAuthenticated) return <Redirect to="/" />;
-  return <Route exact component={LoginPage} path={path} />;
+  return <Route component={LoginPage} path={path} />;
 };
