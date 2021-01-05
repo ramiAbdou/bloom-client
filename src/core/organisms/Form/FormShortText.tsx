@@ -2,9 +2,12 @@ import React from 'react';
 
 import Input from '@atoms/Input';
 import Form from './Form.store';
-import { FormItemData } from './Form.types';
+import { FormItemProps } from './Form.types';
 
-export default ({ category, placeholder, title }: FormItemData) => {
+const FormShortText: React.FC<Pick<
+  FormItemProps,
+  'category' | 'placeholder' | 'title'
+>> = ({ category, placeholder, title }) => {
   const value = Form.useStoreState(
     ({ getItem }) => getItem({ category, title })?.value
   );
@@ -20,3 +23,5 @@ export default ({ category, placeholder, title }: FormItemData) => {
     />
   );
 };
+
+export default FormShortText;

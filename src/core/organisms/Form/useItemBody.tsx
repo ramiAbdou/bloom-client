@@ -4,10 +4,10 @@ import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
 import DropdownItem from './Dropdown';
 import { FormItemData } from './Form.types';
-import LongText from './LongText';
+import FormLongText from './FormLongText';
+import FormShortText from './FormShortText';
 import MultipleChoice from './MultipleChoice';
 import MultipleSelect from './MultipleSelect';
-import ShortText from './ShortText';
 
 type BaseItemProps = Pick<FormItemData, 'category' | 'required' | 'title'>;
 
@@ -30,7 +30,7 @@ interface UseItemBodyProps
  * Returns the appropriate Form element (ie: ShortText, LongText) with the
  * appropriate props for the element based on the type and supplied props.
  */
-export default function useItemBody(props: UseItemBodyProps) {
+const useItemBody = (props: UseItemBodyProps) => {
   const {
     category,
     children,
@@ -57,8 +57,8 @@ export default function useItemBody(props: UseItemBodyProps) {
   );
 
   const body: React.ReactElement = takeFirst([
-    [type === 'SHORT_TEXT', <ShortText {...textProps} />],
-    [type === 'LONG_TEXT', <LongText {...textProps} />],
+    [type === 'SHORT_TEXT', <FormShortText {...textProps} />],
+    [type === 'LONG_TEXT', <FormLongText {...textProps} />],
     [
       type === 'MULTIPLE_SELECT' && options.length >= 5,
       <DropdownItem multiple {...optionProps} />
@@ -79,4 +79,6 @@ export default function useItemBody(props: UseItemBodyProps) {
   ]);
 
   return body;
-}
+};
+
+export default useItemBody;
