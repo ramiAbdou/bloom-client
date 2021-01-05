@@ -10,7 +10,7 @@ import Network from '@components/Misc/Network';
 import { APP } from '@constants';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import SubmitButton from '@organisms/Form/FormSubmitButton';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import FormItem from '@organisms/Form/Item';
 import { cx } from '@util/util';
 import google from './images/google.svg';
@@ -65,7 +65,10 @@ const LoginCardEmailForm: React.FC = () => {
       />
 
       <FormErrorMessage marginTop={0} />
-      <SubmitButton loadingText="Sending...">Send Login Link</SubmitButton>
+
+      <FormSubmitButton loadingText="Sending...">
+        Send Login Link
+      </FormSubmitButton>
     </Form>
   );
 };
