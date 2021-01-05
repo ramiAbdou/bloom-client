@@ -1,29 +1,22 @@
-import React, { memo } from 'react';
+import React from 'react';
 
-import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
 import { LinkOptions } from '../Nav.types';
 import SidebarLink from './SideBarLink';
 
-type LinkSectionProps = { links: LinkOptions[]; title: string };
+interface LinkSectionProps {
+  links: LinkOptions[];
+  title: string;
+}
 
-export default memo(({ links, title }: LinkSectionProps) => {
-  const isDesktop = useBreakpoint() >= 3;
+const SideBarSection: React.FC<LinkSectionProps> = ({
+  links,
+  title
+}: LinkSectionProps) => {
+  const isAdmin: boolean = useStoreState(({ db }) => db.isAdmin);
 
-  const isAdmin: boolean = useStoreState(({ db }) => {
-    const { name } = db.community;
-    const { byId: byCommunity } = db.entities.communities;
-    const { byId: byMember } = db.entities.members;
-
-    return Object.values(byMember).some(
-      ({ community, role }) => !!role && name === byCommunity[community]?.name
-    );
-  });
-
-  if (['Admin', 'Quick Actions'].includes(title) && (!isDesktop || !isAdmin)) {
-    return null;
-  }
+  if (['Admin', 'Quick Actions'].includes(title) && !isAdmin) return null;
 
   return (
     <div className="o-side-bar-section">
@@ -33,4 +26,6 @@ export default memo(({ links, title }: LinkSectionProps) => {
       ))}
     </div>
   );
-});
+};
+
+export default SideBarSection;

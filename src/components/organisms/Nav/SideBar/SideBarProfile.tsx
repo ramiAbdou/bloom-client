@@ -28,7 +28,7 @@ const SideBarProfileContent: React.FC = () => {
         size={48}
       />
 
-      <div>
+      <div className="o-side-bar-profile-info">
         <p>{fullName}</p>
         <p>{role?.toLowerCase() ?? memberTypeName}</p>
       </div>
@@ -41,7 +41,7 @@ const SideBarProfile: React.FC = () => {
   const onClick = () => showPicker(PickerType.PROFILE);
 
   return (
-    <div>
+    <div className="o-side-bar-profile-ctr">
       <button
         className="o-side-bar-profile"
         id={PickerType.PROFILE}

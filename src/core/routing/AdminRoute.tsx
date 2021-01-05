@@ -11,17 +11,10 @@ import { useStoreState } from '@store/Store';
  * the global state with the user.
  */
 export default ({ component, ...rest }: RouteProps) => {
+  const isAdmin: boolean = useStoreState(({ db }) => db.isAdmin);
+
   const { encodedUrlName } = useParams() as EncodedUrlNameProps;
   const isDesktop = useBreakpoint() >= 3;
-
-  const isAdmin: boolean = useStoreState(({ db }) => {
-    const { byId: byCommunity } = db.entities.communities;
-    const { byId: byMember } = db.entities.members;
-    return Object.values(byMember).some(
-      ({ community, role }) =>
-        !!role && encodedUrlName === byCommunity[community]?.encodedUrlName
-    );
-  });
 
   if (!isDesktop || !isAdmin) return <Redirect to={`/${encodedUrlName}`} />;
   return <Route exact {...rest} component={component} />;

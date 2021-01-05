@@ -21,7 +21,7 @@ export default memo(({ Icon, onClick, separator, text }: PanelAction) => {
 
   return (
     <>
-      {separator && <Separator style={{ marginBottom: 8, marginTop: 8 }} />}
+      {separator && <Separator margin={8} />}
       <button className="c-panel-option" onClick={onOptionClick}>
         <Icon />
         {text}

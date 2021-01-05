@@ -14,12 +14,12 @@ import Separator from '@atoms/Separator';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LinkOptions } from '../Nav.types';
-import SidebarCommunityContainer from './Community.container';
+import SideBarCommunityList from './SideBarCommunityList';
 import SideBarDuesContent from './SideBarDuesContent';
 import SideBarProfile from './SideBarProfile';
 import SideBarSection from './SideBarSection';
 
-const SidebarContent = () => {
+const SideBarContent = () => {
   const name = useStoreState(({ db }) => db.community.name);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -55,8 +55,8 @@ const SidebarContent = () => {
 
   return (
     <div className="o-side-bar-main">
-      <h2>{name}</h2>
-      <Separator style={{ marginBottom: 12, marginTop: 24 }} />
+      <h3>{name}</h3>
+      <Separator noMargin />
       <SideBarSection links={mainLinks} title="Main" />
       <SideBarSection links={adminLinks} title="Admin" />
       <SideBarSection links={quickLinks} title="Quick Actions" />
@@ -72,8 +72,8 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="o-side-bar">
-      <SidebarCommunityContainer />
-      <SidebarContent />
+      <SideBarCommunityList />
+      <SideBarContent />
     </div>
   );
 };

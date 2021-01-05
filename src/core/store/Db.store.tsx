@@ -69,6 +69,7 @@ export type DbModel = {
   community: Computed<DbModel, ICommunity>;
   entities: IEntities;
   integrations: Computed<DbModel, IIntegrations>;
+  isAdmin: Computed<DbModel, boolean>;
   isOwner: Computed<DbModel, boolean>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
@@ -110,6 +111,10 @@ export const dbModel: DbModel = {
     const { byId } = entities.integrations;
     return byId[byCommunityId[activeId]?.integrations];
   }),
+
+  isAdmin: computed(
+    ({ member, isOwner }) => member?.role === 'ADMIN' || isOwner
+  ),
 
   isOwner: computed(({ member }) => member?.role === 'OWNER'),
 

@@ -96,6 +96,15 @@
 // ## TEXT OVERFLOW - Can specify how many lines we can allow the text to
 // overflow into.
 
+.overflow-ellipses {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @mixin OVERFLOW_ELLIPSES($lines: 1) {
   -webkit-box-orient: vertical;
   display: -webkit-box;
