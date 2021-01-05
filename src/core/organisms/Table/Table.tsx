@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react';
 
 import { ChildrenProps } from '@constants';
-import Table, { tableModel } from './Table.store';
-import {
-  Column,
-  initialTableOptions,
-  OnRenameColumn,
-  Row,
-  TableOptions
-} from './Table.types';
+import TableStore, { tableModel } from './Table.store';
+import { Column, initialTableOptions, Row, TableOptions } from './Table.types';
 
 interface TableProps extends ChildrenProps {
   columns: Column[];
   options?: TableOptions;
-  onRenameColumn?: OnRenameColumn;
   rows: Row[];
 }
 
@@ -21,7 +14,7 @@ const UpdateAndRenderTableContent = ({
   children,
   rows
 }: Pick<TableProps, 'children' | 'rows'>) => {
-  const updateData = Table.useStoreActions((store) => store.updateData);
+  const updateData = TableStore.useStoreActions((store) => store.updateData);
 
   // Used primarily for the removal of rows. This will not update the
   // data if the number of rows doesn't change.
@@ -32,18 +25,23 @@ const UpdateAndRenderTableContent = ({
   return <>{children}</>;
 };
 
-export default ({ columns, options, onRenameColumn, ...props }: TableProps) => (
-  <Table.Provider
+const Table: React.FC<TableProps> = ({
+  columns,
+  options,
+  ...props
+}: TableProps) => (
+  <TableStore.Provider
     runtimeModel={{
       ...tableModel,
       columns: columns.map((column: Column) => ({
         ...column,
         id: column.id ?? column.title
       })),
-      onRenameColumn,
       options: { ...initialTableOptions, ...options }
     }}
   >
     <UpdateAndRenderTableContent {...props} />
-  </Table.Provider>
+  </TableStore.Provider>
 );
+
+export default Table;

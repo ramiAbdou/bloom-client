@@ -15,10 +15,6 @@
 
 // 
 
-@import './core/components/Chart/Chart.scss';
-
-// 
-
 @import './core/components/Elements/Elements.scss';
 @import './core/components/Elements/Card/Card.scss';
 @import './core/components/Elements/Dropdown/Dropdown.scss';
@@ -28,7 +24,6 @@
 @import './core/components/Elements/SearchBar/SearchBar.scss';
 @import './core/components/Loader/Loader.scss';
 @import './core/components/Misc/Misc.scss';
-@import './core/components/Payment/Payment.scss';
 
 //
 
@@ -36,17 +31,19 @@
 
 // 
 
+@import './core/organisms/Chart/Chart.scss';
 @import './core/organisms/Form/Form.scss';
 @import './core/organisms/Modal/Modal.scss';
 @import './core/organisms/Panel/Panel.scss';
+@import './core/organisms/Payment/Payment.scss';
 
 //
 
 @import './core/organisms/Table/Table.scss';
-@import './core/organisms/Table/components/Body/Body.scss';
-@import './core/organisms/Table/components/Header/Header.scss';
-@import './core/organisms/Table/components/Pagination/Pagination.scss';
-@import './core/organisms/Table/components/SelectAllBanner/SelectAllBanner.scss';
+@import './core/organisms/Table/Body/Body.scss';
+@import './core/organisms/Table/Header/Header.scss';
+@import './core/organisms/Table/SelectAllBanner/SelectAllBanner.scss';
+@import './core/organisms/Table/TablePagination/Pagination.scss';
 
 //
 

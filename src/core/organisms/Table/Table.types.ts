@@ -25,6 +25,9 @@ export type OnRenameColumnArgs = {
 };
 
 export type OnRenameColumn = (args: OnRenameColumnArgs) => Promise<void>;
+export interface OnRenameColumnProps {
+  onRenameColumn?: OnRenameColumn;
+}
 
 export type TableOptions = {
   alignEndRight?: boolean;
@@ -45,3 +48,5 @@ export const initialTableOptions: TableOptions = {
   isSortable: true,
   showCount: true
 };
+
+export type PaginationValue = number | '...';

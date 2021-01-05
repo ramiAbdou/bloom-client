@@ -20,3 +20,7 @@ $PREF: 'c-form';
 
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }
+
+// ## INVISIBLE SUBMIT
+
+.#{$PREF}-invisible-submit { display: none; }

@@ -10,7 +10,6 @@ import { matchSorter } from 'match-sorter';
 import {
   Column,
   initialTableOptions,
-  OnRenameColumn,
   Row,
   SortDirection,
   TableOptions
@@ -24,7 +23,6 @@ export type TableModel = {
   isAllPageSelected: Computed<TableModel, boolean>;
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
-  onRenameColumn: OnRenameColumn;
   options: TableOptions;
   page: number;
   range: Computed<TableModel, [number, number]>;
@@ -56,30 +54,32 @@ export const tableModel: TableModel = {
   /**
    * Returns true if all of the filtered data rows are selected.
    */
-  isAllPageSelected: computed(
-    ({ filteredData, range, selectedRowIds }) =>
+  isAllPageSelected: computed(({ filteredData, range, selectedRowIds }) => {
+    return (
       !!selectedRowIds.length &&
       filteredData
         .slice(range[0], range[1])
         .every(({ id: rowId }) => selectedRowIds.includes(rowId))
-  ),
+    );
+  }),
 
   /**
    * Returns true if all of the filtered data rows are selected.
    */
-  isAllSelected: computed(
-    ({ filteredData, selectedRowIds }) =>
+  isAllSelected: computed(({ filteredData, selectedRowIds }) => {
+    return (
       !!selectedRowIds.length && selectedRowIds.length === filteredData.length
-  ),
+    );
+  }),
 
   /**
    * Returns true if all rows are selected.
    */
-  isSelected: computed(({ isAllSelected, selectedRowIds }) => (rowId: string) =>
-    isAllSelected || selectedRowIds.includes(rowId)
+  isSelected: computed(
+    ({ isAllSelected, selectedRowIds }) => (rowId: string) => {
+      return isAllSelected || selectedRowIds.includes(rowId);
+    }
   ),
-
-  onRenameColumn: null,
 
   options: initialTableOptions,
 
@@ -142,14 +142,14 @@ export const tableModel: TableModel = {
    * Sets the sorted column ID and direction of the column to be sorted.
    */
   setSortedColumn: action((state, [id, direction]) => {
-    const { filteredData, sortedColumnDirection, sortedColumnId } = state;
+    const { data, filteredData, sortedColumnDirection, sortedColumnId } = state;
 
     // If the column ID is the same and the direction is the same direction,
     // we should effectively unapply the sorting.
     if (sortedColumnId === id && direction === sortedColumnDirection) {
       return {
         ...state,
-        filteredData,
+        filteredData: data,
         sortedColumnDirection: null,
         sortedColumnId: null
       };
@@ -214,18 +214,14 @@ export const tableModel: TableModel = {
       ...state,
       columns: columns.map((column) => {
         if (column.id !== updatedColumn.id) return column;
-
         return { ...column, ...updatedColumn };
       })
     })
   ),
 
-  updateData: action((state, data: Row[]) => ({
-    ...state,
-    data,
-    filteredData: data,
-    selectedRowIds: []
-  }))
+  updateData: action((state, data: Row[]) => {
+    return { ...state, data, filteredData: data, selectedRowIds: [] };
+  })
 };
 
 export default createContextStore<TableModel>((model: TableModel) => model, {

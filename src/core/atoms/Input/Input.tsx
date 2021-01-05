@@ -1,5 +1,4 @@
-import React, { MutableRefObject, useRef } from 'react';
-import useOnClickOutside from 'use-onclickoutside';
+import React from 'react';
 
 import { ValueProps } from '@constants';
 import { makeClass } from '@util/util';
@@ -7,7 +6,6 @@ import { makeClass } from '@util/util';
 interface InputProps extends ValueProps {
   error?: boolean;
   placeholder?: string;
-  onClickOutside?: (...args: any) => any;
   onChange: (value: string) => any;
 }
 
@@ -15,16 +13,7 @@ interface InputProps extends ValueProps {
  * Resuable and customizable input component. Has three different versions:
  * regular, dark and gray.
  */
-const Input = ({
-  error,
-  placeholder,
-  onChange,
-  onClickOutside,
-  value
-}: InputProps) => {
-  const ref: MutableRefObject<HTMLInputElement> = useRef(null);
-  useOnClickOutside(ref, async () => onClickOutside && onClickOutside());
-
+const Input = ({ error, placeholder, onChange, value }: InputProps) => {
   const modifiedOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
@@ -33,7 +22,6 @@ const Input = ({
 
   return (
     <input
-      ref={ref}
       className={css}
       placeholder={placeholder ?? ''}
       type="text"

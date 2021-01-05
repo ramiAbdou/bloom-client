@@ -1,6 +1,10 @@
 $PREF: 'c-panel';
 
+// ## PANEL CONTAINER
+
 .#{$PREF}-ctr { @extend .flex; }
+
+// ## PANEL CONTAINER
 
 .#{$PREF} {
   @extend .shadow--2;
@@ -14,7 +18,7 @@ $PREF: 'c-panel';
   z-index: 100;
 }
 
-// ## PICKER OPTION
+// ## PANEL OPTION
 
 .#{$PREF}-option {
   @extend .flex-ac;

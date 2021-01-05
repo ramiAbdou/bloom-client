@@ -62,10 +62,9 @@ export default () => {
       columns={columns}
       options={{ hasCheckbox: true, isClickable: true }}
       rows={rows}
-      onRenameColumn={onRenameColumn}
     >
       <ActionRow />
-      <TableContent />
+      <TableContent onRenameColumn={onRenameColumn} />
     </Table>
   );
 };

@@ -53,7 +53,7 @@ const ModalContainer: React.FC = ({
     return () => onClose && onClose();
   }, []);
 
-  const isMobile = useBreakpoint() === 'M';
+  const isMobile = useBreakpoint() === 1;
 
   const animate: AnimationProps['animate'] = isMobile
     ? { opacity: 1, top: 'initial' }

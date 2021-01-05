@@ -12,7 +12,7 @@ import { useStoreState } from '@store/Store';
  */
 export default ({ component, ...rest }: RouteProps) => {
   const { encodedUrlName } = useParams() as EncodedUrlNameProps;
-  const isDesktop = useBreakpoint() === 'D';
+  const isDesktop = useBreakpoint() >= 3;
 
   const isAdmin: boolean = useStoreState(({ db }) => {
     const { byId: byCommunity } = db.entities.communities;

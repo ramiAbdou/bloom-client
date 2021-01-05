@@ -9,7 +9,7 @@ import SidebarLink from './Link';
 type LinkSectionProps = { links: LinkOptions[]; title: string };
 
 export default memo(({ links, title }: LinkSectionProps) => {
-  const isDesktop = useBreakpoint() === 'D';
+  const isDesktop = useBreakpoint() >= 3;
 
   const isAdmin: boolean = useStoreState(({ db }) => {
     const { name } = db.community;

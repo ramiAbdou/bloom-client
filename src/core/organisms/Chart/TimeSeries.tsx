@@ -42,7 +42,7 @@ export default () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
   const data = Chart.useStoreState((store) => store.data, deepequal);
   const interval = Chart.useStoreState((store) => store.interval);
-  const isMonitor = useBreakpoint() === 'DD';
+  const isMonitor = useBreakpoint() === 4;
 
   if (!data?.length) return null;
 

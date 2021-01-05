@@ -62,7 +62,7 @@ $PREF: 'c-table';
 
 // Added a div before the name to make it take higher precedence.
 div.#{$PREF}-col-picker { padding: $sm; }
-.#{$PREF}-col-picker > input { margin-bottom: $sm; }
+.#{$PREF}-col-picker > form { margin-bottom: $sm; }
 .#{$PREF}-col-picker > button {
   @extend .flex-ac;
 
@@ -79,3 +79,8 @@ div.#{$PREF}-col-picker { padding: $sm; }
 
 .#{$PREF}-col-picker-button--active > svg,
 .#{$PREF}-col-picker-button--active > p { color: $primary; }
+
+.#{$PREF}-col-picker > form > .c-form-item {
+  margin-bottom: $sm;
+  margin-top: 0;
+}

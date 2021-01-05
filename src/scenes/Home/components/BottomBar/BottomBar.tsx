@@ -59,7 +59,7 @@ const BottomBarTablet = () => {
 };
 
 export default () => {
-  const isMobile = useBreakpoint() === 'M';
+  const isMobile = useBreakpoint() === 1;
 
   return (
     <footer className="s-home-bb">

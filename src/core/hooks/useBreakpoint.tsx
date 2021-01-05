@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 
-type Breakpoint = 'DD' | 'D' | 'T' | 'M';
+// 1: Mobile
+// 2: Tablet
+// 3: Desktop
+// 4: Monitor
+type Breakpoint = 1 | 2 | 3 | 4;
 
 const useBreakpoint = (): Breakpoint => {
-  const [breakpoint, setBreakpoint] = useState<Breakpoint>('D');
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>(3);
 
   const onWindowResize = () => {
     const { innerWidth } = window;
-    if (innerWidth > 1440) setBreakpoint('DD');
-    else if (innerWidth > 1025) setBreakpoint('D');
-    else if (innerWidth <= 1024 && innerWidth >= 576) setBreakpoint('T');
-    else setBreakpoint('M');
+    if (innerWidth > 1440) setBreakpoint(4);
+    else if (innerWidth > 1025) setBreakpoint(3);
+    else if (innerWidth <= 1024 && innerWidth >= 576) setBreakpoint(2);
+    else setBreakpoint(1);
   };
 
   // Add the window resize event listener.
