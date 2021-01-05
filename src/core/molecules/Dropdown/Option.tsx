@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useSelectOption from '../hooks/useSelectOption';
+import useSelectOption from './useSelectOption';
 
 type OptionProps = { option: string };
 

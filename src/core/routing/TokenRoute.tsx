@@ -3,7 +3,7 @@ import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import useQuery from '@hooks/useQuery';
-import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
+import Loader from '@molecules/Loader/Loader';
 
 // We're not exporting this to another file since this is the only place we
 // need it.
@@ -28,6 +28,6 @@ export default ({ token }: TokenRouteProps) => {
     return null;
   }
 
-  if (loading) return <FullScreenLoader />;
+  if (loading) return <Loader />;
   return <Redirect to="/login" />;
 };

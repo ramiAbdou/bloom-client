@@ -7,26 +7,22 @@
 
 // 
 
-@import './core/atoms/Misc.scss';
 @import './core/atoms/Button/Button.scss';
 @import './core/atoms/Checkbox/Checkbox.scss';
+@import './core/atoms/InformationTip/InformationTip.scss';
 @import './core/atoms/Input/Input.scss';
+@import './core/atoms/Misc.scss';
 @import './core/atoms/Spinner/Spinner.scss';
 @import './core/atoms/Tags/Tags.scss';
 
 // 
 
-@import './core/components/Elements/Elements.scss';
-@import './core/components/Elements/Card/Card.scss';
-@import './core/components/Elements/Dropdown/Dropdown.scss';
-@import './core/components/Elements/InformationTip/InformationTip.scss';
-@import './core/components/Elements/LoadingHeader/LoadingHeader.scss';
-@import './core/components/Elements/Radio/Radio.scss';
-@import './core/components/Elements/SearchBar/SearchBar.scss';
-@import './core/components/Loader/Loader.scss';
-
-//
-
+@import './core/molecules/Card/Card.scss';
+@import './core/molecules/Dropdown/Dropdown.scss';
+@import './core/molecules/LoadingHeader/LoadingHeader.scss';
+@import './core/molecules/Radio/Radio.scss';
+@import './core/molecules/SearchBar/SearchBar.scss';
+@import './core/molecules/Loader/Loader.scss';
 @import './core/molecules/Misc.scss';
 @import './core/molecules/ConfirmationScreen/ConfirmationScreen.scss';
 
@@ -35,27 +31,15 @@
 @import './core/organisms/Chart/Chart.scss';
 @import './core/organisms/Form/Form.scss';
 @import './core/organisms/Modal/Modal.scss';
-
-//
-
 @import './core/organisms/Nav/BottomBar/BottomBar.scss';
 @import './core/organisms/Nav/SideBar/SideBar.scss';
-
-//
-
 @import './core/organisms/Panel/Panel.scss';
 @import './core/organisms/Payment/Payment.scss';
-
-//
-
 @import './core/organisms/Table/Table.scss';
 @import './core/organisms/Table/Body/Body.scss';
 @import './core/organisms/Table/Header/Header.scss';
 @import './core/organisms/Table/SelectAllBanner/SelectAllBanner.scss';
 @import './core/organisms/Table/TablePagination/Pagination.scss';
-
-//
-
 @import './core/organisms/Toast/Toast.scss';
 
 // 

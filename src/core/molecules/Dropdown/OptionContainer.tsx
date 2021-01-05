@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Option from '../components/Option';
-import SearchInput from '../components/SearchInput';
-import Dropdown from '../Dropdown.store';
+import Dropdown from './Dropdown.store';
+import Option from './Option';
+import SearchInput from './SearchInput';
 
 const OptionList = () => {
   const options = Dropdown.useStoreState(({ filteredOptions, value }) =>

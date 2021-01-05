@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
+import Loader from '@molecules/Loader/Loader';
 import useQuery from '@hooks/useQuery';
 import { IUser } from '@store/entities';
 import { Schema } from '@store/schema';
@@ -42,7 +42,7 @@ export default ({ component, ...rest }: RouteProps) => {
   // know that the user is loaded, so show that.
   const token = new URLSearchParams(window.location.search).get('loginToken');
   if (token) return <TokenRoute token={token} />;
-  if (loading) return <FullScreenLoader />;
+  if (loading) return <Loader />;
   if (error || !user) return <Redirect to="/login" />;
   if (isHome && encodedUrlName) return <Redirect to={`/${encodedUrlName}`} />;
 

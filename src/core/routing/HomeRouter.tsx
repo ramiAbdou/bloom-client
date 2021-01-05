@@ -7,7 +7,7 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 
-import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
+import Loader from '@molecules/Loader/Loader';
 import { EncodedUrlNameProps } from '@constants';
 import DuesModal from '@modals/DuesModal/DuesModal';
 import Analytics from '@scenes/Analytics/Analytics';
@@ -60,7 +60,7 @@ const HomeRouter: React.FC = () => {
 
   // If the activeEncodedUrlName hasn't been set yet, that means the community
   // hasn't been loaded in the global state yet, so just wait...
-  if (!activeEncodedUrlName) return <FullScreenLoader />;
+  if (!activeEncodedUrlName) return <Loader />;
 
   // If the user isn't a member of the community who's URL we are currently
   // sitting at, then we redirect them to the first community that they are

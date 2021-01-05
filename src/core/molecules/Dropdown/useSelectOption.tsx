@@ -1,4 +1,4 @@
-import Dropdown from '../Dropdown.store';
+import Dropdown from './Dropdown.store';
 
 export default function useSelectOption(option: string) {
   const allFilteredOptions = Dropdown.useStoreState(

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 
 import { makeClass } from '@util/util';
-import Dropdown from '../Dropdown.store';
+import Dropdown from './Dropdown.store';
 
 type ValueProps = { value: string };
 

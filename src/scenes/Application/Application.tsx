@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
+import Loader from '@molecules/Loader/Loader';
 import ApplicationConfirmation from './ApplicationConfirmation';
 import ApplicationForm from './ApplicationForm';
 import useFetchApplication from './useFetchApplication';
@@ -13,7 +13,7 @@ import useFetchApplication from './useFetchApplication';
  */
 const Application: React.FC = () => {
   const isFetchingApplication = useFetchApplication();
-  if (isFetchingApplication) return <FullScreenLoader />;
+  if (isFetchingApplication) return <Loader />;
 
   return (
     <div className="s-application-ctr">

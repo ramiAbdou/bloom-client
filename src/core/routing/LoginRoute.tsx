@@ -1,9 +1,8 @@
-// import { useQuery } from 'graphql-hooks';
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import useQuery from '@hooks/useQuery';
-import FullScreenLoader from '@molecules/Loader/FullScreenLoader';
+import Loader from '@molecules/Loader/Loader';
 import LoginPage from '@scenes/Login/Login';
 import { IS_LOGGED_IN } from './Router.gql';
 
@@ -18,7 +17,7 @@ export default ({ path }: Partial<RouteProps>) => {
     query: IS_LOGGED_IN
   });
 
-  if (loading) return <FullScreenLoader />;
+  if (loading) return <Loader />;
   // If there is an error in the GraphQL query, whether the query structure
   // was wrong or there the user wasn't authenticated for the request.
   if (!error && isAuthenticated) return <Redirect to="/" />;

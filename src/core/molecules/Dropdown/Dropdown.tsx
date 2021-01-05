@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
 import { ValueProps } from '@constants';
-import ClickBar from './components/ClickBar';
-import OptionContainer from './containers/Option';
+import ClickBar from './ClickBar';
 import DropdownStore, { DropdownModel, dropdownModel } from './Dropdown.store';
+import OptionContainer from './OptionContainer';
 
 const DropdownContent = ({ value }: ValueProps) => {
   const isOpen = DropdownStore.useStoreState((store) => store.isOpen);

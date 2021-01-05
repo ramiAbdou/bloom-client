@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Dropdown from '../Dropdown.store';
+import Dropdown from './Dropdown.store';
 
 export default function SearchInput() {
   const searchString = Dropdown.useStoreState((store) => store.searchString);
