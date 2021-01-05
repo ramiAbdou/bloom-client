@@ -26,6 +26,7 @@ input[type="radio"] ~ div {
 
 input[type="radio"] ~ div > span { @extend .fill; }
 
+input[type="radio"]:focus ~ div,
 input[type="radio"]:checked ~ div,
 input[type="radio"]:hover ~ div { border-color: $primary; }
 

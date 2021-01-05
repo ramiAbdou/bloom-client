@@ -15,6 +15,8 @@ $PREF: 'c-misc-checkbox';
 
   @include HOVER { > span { border: 2px $primary solid; } }
 
+  &:focus { > span { border: 2px $primary solid; } }
+
   // If no label, the height and width should be 20px.
   &:not(&--label) { height: $sl; width: $sl; }
 
