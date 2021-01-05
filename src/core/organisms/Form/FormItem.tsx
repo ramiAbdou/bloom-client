@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import { takeFirst } from '@util/util';
 import Form from './Form.store';
 import { FormItemProps } from './Form.types';
+import Description from './FormDescription';
+import Label from './FormLabel';
 import useItemBody from './useItemBody';
-import Description from './Description';
-import Label from './Label';
 
-export default ({
+const FormItem: React.FC<FormItemProps> = ({
   children,
   category,
   description,
@@ -54,3 +54,5 @@ export default ({
     </div>
   );
 };
+
+export default FormItem;

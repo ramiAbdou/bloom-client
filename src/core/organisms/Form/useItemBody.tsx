@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 
 import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
-import DropdownItem from './Dropdown';
 import { FormItemData } from './Form.types';
+import DropdownItem from './FormDropdown';
 import FormLongText from './FormLongText';
 import FormShortText from './FormShortText';
 import MultipleChoice from './MultipleChoice';

@@ -4,9 +4,9 @@ import React from 'react';
 import { Attribute } from '@atoms/Tags';
 import { QuestionType, ValueProps } from '@constants';
 import { makeClass, takeFirst } from '@util/util';
-import Table from '../../Table.store';
-import { Row } from '../../Table.types';
-import { getTableCellClass } from '../../Table.util';
+import Table from '../Table.store';
+import { Row } from '../Table.types';
+import { getTableCellClass } from '../Table.util';
 import SelectRowCheckbox from './SelectRowCheckbox';
 
 interface DataCellProps extends Row, ValueProps {

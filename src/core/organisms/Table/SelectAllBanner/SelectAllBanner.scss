@@ -12,5 +12,3 @@ $PREF: 'c-table-banner';
   > p { margin-right: $sm; }
   > p > span { @extend .body--bold; }
 }
-
-// div.#{$PREF} { flex-direction: row; }

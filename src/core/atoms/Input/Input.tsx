@@ -9,7 +9,6 @@ interface InputProps extends ValueProps {
   placeholder?: string;
   onClickOutside?: (...args: any) => any;
   onChange: (value: string) => any;
-  onEnter?: () => any;
 }
 
 /**
@@ -21,7 +20,6 @@ const Input = ({
   placeholder,
   onChange,
   onClickOutside,
-  onEnter,
   value
 }: InputProps) => {
   const ref: MutableRefObject<HTMLInputElement> = useRef(null);
@@ -29,12 +27,6 @@ const Input = ({
 
   const modifiedOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
-  };
-
-  const modifiedKeyDown = ({ key }: React.KeyboardEvent<HTMLInputElement>) => {
-    if (key !== 'Enter') return;
-    ref.current.blur();
-    if (onEnter) onEnter();
   };
 
   const css = makeClass(['c-misc-input', [error, 'c-misc-input--error']]);
@@ -47,7 +39,6 @@ const Input = ({
       type="text"
       value={value ?? ''}
       onChange={modifiedOnChange}
-      onKeyDown={modifiedKeyDown}
     />
   );
 };

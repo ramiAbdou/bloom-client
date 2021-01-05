@@ -5,7 +5,7 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 import Button from '@atoms/Button';
 import { ValueProps } from '@constants';
 import { makeClass, uuid } from '@util/util';
-import Table from '../../Table.store';
+import Table from '../Table.store';
 
 type PaginationValue = number | '...';
 

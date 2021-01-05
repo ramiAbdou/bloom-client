@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox';
-import Table from '../../Table.store';
+import Table from '../Table.store';
 
 const SelectAllCheckbox = () => {
   const isAllPageSelected = Table.useStoreState(

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FormItem from '@organisms/Form/Item';
+import FormItem from '@organisms/Form/FormItem';
 import { useStoreState } from '@store/Store';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';

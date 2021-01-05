@@ -1,8 +1,8 @@
 import React from 'react';
 
-import DataRow from '../components/Body/Body';
-import Table from '../Table.store';
-import { Row } from '../Table.types';
+import DataRow from './Body/Body';
+import Table from './Table.store';
+import { Row } from './Table.types';
 
 const BodyContainer = () => {
   const filteredData = Table.useStoreState((store) => store.filteredData);

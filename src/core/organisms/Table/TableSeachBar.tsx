@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import SearchBar from '@components/Elements/SearchBar/SearchBar';
-import Table from '../Table.store';
+import Table from './Table.store';
 
 type SearchBarProps = { placeholder?: string };
 
@@ -9,7 +9,7 @@ type SearchBarProps = { placeholder?: string };
  * Deep searches through every row in the table, and since most of the rows
  * data values are all strings, no complex logic is needed to search.
  */
-export default ({ placeholder }: SearchBarProps) => {
+const TableSearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
   const [value, setValue] = useState('');
 
   const setSearchString = Table.useStoreActions(
@@ -25,3 +25,5 @@ export default ({ placeholder }: SearchBarProps) => {
     <SearchBar placeholder={placeholder} value={value} onChange={setValue} />
   );
 };
+
+export default TableSearchBar;

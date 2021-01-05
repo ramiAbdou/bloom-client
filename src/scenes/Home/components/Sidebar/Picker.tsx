@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { PickerType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import PickerOption from '@organisms/Panel/components/Option';
-import Picker from '@organisms/Panel/Panel';
+import Panel from '@organisms/Panel/Panel';
 import { PanelAction } from '@organisms/Panel/Panel.types';
 import { LOGOUT } from '@scenes/Home/Home.gql';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -66,7 +66,7 @@ export default () => {
   ];
 
   return (
-    <Picker
+    <Panel
       align="RIGHT_BOTTOM"
       id={PickerType.PROFILE}
       style={{ marginLeft: 24, minWidth: 270 }}
@@ -74,6 +74,6 @@ export default () => {
       {actions.map((action) => (
         <PickerOption key={action.text} {...action} />
       ))}
-    </Picker>
+    </Panel>
   );
 };

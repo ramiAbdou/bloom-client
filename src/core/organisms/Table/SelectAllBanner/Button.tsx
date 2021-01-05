@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import { takeFirst } from '@util/util';
-import Table from '../../Table.store';
+import Table from '../Table.store';
 
 export default () => {
   const numMembers = Table.useStoreState(({ data }) => data.length);

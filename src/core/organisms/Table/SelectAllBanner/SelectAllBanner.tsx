@@ -17,9 +17,11 @@ import Card from '@components/Elements/Card/Card';
 import SelectAllBannerButton from './Button';
 import SelectAllBannerMessage from './Message';
 
-export default () => (
+const SelectAllBanner: React.FC = () => (
   <Card className="c-table-banner">
     <SelectAllBannerMessage />
     <SelectAllBannerButton />
   </Card>
 );
+
+export default SelectAllBanner;

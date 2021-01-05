@@ -3,9 +3,9 @@ import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Table from '../../Table.store';
-import { Column } from '../../Table.types';
-import { getTableCellClass } from '../../Table.util';
+import Table from '../Table.store';
+import { Column } from '../Table.types';
+import { getTableCellClass } from '../Table.util';
 import SelectAllCheckbox from './SelectAllCheckbox';
 
 interface HeaderCellProps extends Column {

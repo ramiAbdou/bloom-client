@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SearchBar from '@organisms/Table/components/SeachBar';
 import Table from '@organisms/Table/Table.store';
+import SearchBar from '@organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';
 import CopyEmailsIcon from './CopyEmailsIcon';
 import DeleteMembersIcon from './DeleteMembersIcon';

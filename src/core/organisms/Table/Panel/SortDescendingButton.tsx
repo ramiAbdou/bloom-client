@@ -1,19 +1,19 @@
 import React from 'react';
-import { IoArrowUp } from 'react-icons/io5';
+import { IoArrowDown } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { IdProps } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
-import Table from '../../Table.store';
+import Table from '../Table.store';
 
 export default ({ id }: IdProps) => {
   const closePicker = useStoreActions(({ panel }) => panel.closePicker);
 
-  const ascendingCSS = Table.useStoreState(
+  const descendingCSS = Table.useStoreState(
     ({ sortedColumnDirection, sortedColumnId }) =>
       makeClass([
-        sortedColumnDirection === 'ASC' && sortedColumnId === id,
+        sortedColumnDirection === 'DESC' && sortedColumnId === id,
         'c-table-col-picker-button--active'
       ])
   );
@@ -23,14 +23,14 @@ export default ({ id }: IdProps) => {
   );
 
   const onClick = () => {
-    setSortedColumn([id, 'ASC']);
+    setSortedColumn([id, 'DESC']);
     closePicker();
   };
 
   return (
-    <Button className={ascendingCSS} onClick={onClick}>
-      <IoArrowUp />
-      <p>Sort Ascending</p>
+    <Button className={descendingCSS} onClick={onClick}>
+      <IoArrowDown />
+      <p>Sort Descending</p>
     </Button>
   );
 };

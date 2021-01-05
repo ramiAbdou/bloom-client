@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { QuestionType, ValueProps } from '@constants';
 import { takeFirst } from '@util/util';
 import Attribute from '../../atoms/Tags/Attribute';
-import FormLabel from '../../organisms/Form/Label';
+import FormLabel from '../../organisms/Form/FormLabel';
 
 export interface QuestionValueItemProps extends ValueProps {
   hideNullValue?: boolean;

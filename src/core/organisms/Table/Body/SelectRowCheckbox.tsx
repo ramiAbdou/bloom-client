@@ -2,7 +2,7 @@ import React from 'react';
 
 import Checkbox from '@atoms/Checkbox';
 import { IdProps } from '@constants';
-import Table from '../../Table.store';
+import Table from '../Table.store';
 
 const SelectRowCheckbox = ({ id }: IdProps) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(id));

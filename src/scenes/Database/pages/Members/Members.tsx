@@ -1,10 +1,10 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import TableContent from '@organisms/Table/Content';
+import useMutation from '@hooks/useMutation';
 import Table from '@organisms/Table/Table';
 import { Column, OnRenameColumn, Row } from '@organisms/Table/Table.types';
-import useMutation from '@hooks/useMutation';
+import TableContent from '@organisms/Table/TableContent';
 import { IMember, IQuestion } from '@store/entities';
 import Loading from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';

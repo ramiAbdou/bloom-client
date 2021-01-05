@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Description from './Description';
 import { FormItemProps } from './Form.types';
-import Label from './Label';
+import Description from './FormDescription';
+import Label from './FormLabel';
 import useItemBody from './useItemBody';
 
-export default ({
+const FormDefaultItem: React.FC<FormItemProps> = ({
   children,
   category,
   description,
@@ -14,7 +14,7 @@ export default ({
   required,
   title,
   type
-}: FormItemProps) => {
+}) => {
   const body: React.ReactElement = useItemBody({
     category,
     children,
@@ -33,3 +33,5 @@ export default ({
     </div>
   );
 };
+
+export default FormDefaultItem;

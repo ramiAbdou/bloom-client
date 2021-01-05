@@ -8,7 +8,11 @@ interface FormDropdownProps extends Pick<FormItemData, 'options' | 'title'> {
   multiple?: boolean;
 }
 
-export default ({ multiple, options, title }: FormDropdownProps) => {
+const FormDropdown: React.FC<FormDropdownProps> = ({
+  multiple,
+  options,
+  title
+}) => {
   const value = Form.useStoreState(({ getItem }) => getItem({ title })?.value);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
   const onUpdate = (result: string[]) => updateItem({ title, value: result });
@@ -24,3 +28,5 @@ export default ({ multiple, options, title }: FormDropdownProps) => {
     />
   );
 };
+
+export default FormDropdown;

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import ColumnPicker from './components/ColumnPicker/ColumnPicker';
-import Pagination from './components/Pagination/Pagination';
-import SelectAllBanner from './components/SelectAllBanner/SelectAllBanner';
-import BodyContainer from './containers/Body';
-import HeaderContainer from './containers/Header';
+import ColumnPicker from './Panel/Panel';
+import SelectAllBanner from './SelectAllBanner/SelectAllBanner';
 import Table from './Table.store';
+import BodyContainer from './TableBodyContainer';
+import HeaderContainer from './TableHeaderContainer';
+import Pagination from './TablePagination/Pagination';
 
 export default () => {
   const [maxHeight, setMaxHeight] = useState(0);

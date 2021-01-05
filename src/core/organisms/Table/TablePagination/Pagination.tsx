@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Table from '../../Table.store';
+import Table from '../Table.store';
+import PaginationBar from './PaginationBar';
 
-export default () => {
+const TablePaginationMessage: React.FC = () => {
   const floor = Table.useStoreState(({ range }) => range[0] + 1);
   const ceiling = Table.useStoreState(({ range }) => range[1]);
   const numRows = Table.useStoreState((store) => store.filteredData.length);
@@ -16,3 +17,16 @@ export default () => {
 
   return <p className="meta">{message}</p>;
 };
+
+const TablePagination: React.FC = () => {
+  const numRows = Table.useStoreState((store) => store.filteredData.length);
+
+  return (
+    <div className="c-table-pagination-ctr">
+      <TablePaginationMessage />
+      {numRows >= 100 && <PaginationBar />}
+    </div>
+  );
+};
+
+export default TablePagination;

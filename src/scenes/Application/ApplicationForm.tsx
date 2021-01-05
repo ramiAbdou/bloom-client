@@ -1,8 +1,8 @@
 import React from 'react';
 
-import DefaultFormItem from '@organisms/Form/DefaultItem';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
+import DefaultFormItem from '@organisms/Form/FormDefaultItem';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import { IQuestion } from '@store/entities';

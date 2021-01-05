@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Table from '../../Table.store';
+import Table from '../Table.store';
 
 export default () => {
   const numTotalRows = Table.useStoreState(({ data }) => data.length);

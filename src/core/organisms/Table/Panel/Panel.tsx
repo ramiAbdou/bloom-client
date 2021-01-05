@@ -2,10 +2,12 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect, useState } from 'react';
 
 import Input from '@atoms/Input';
-import Picker from '@organisms/Panel/Panel';
+import Form from '@organisms/Form/Form';
+import FormItem from '@organisms/Form/FormItem';
+import Panel from '@organisms/Panel/Panel';
 import { useStoreActions, useStoreState } from '@store/Store';
-import Table from '../../Table.store';
-import { Column } from '../../Table.types';
+import Table from '../Table.store';
+import { Column } from '../Table.types';
 import SortAscendingButton from './SortAscendingButton';
 import SortDescendingButton from './SortDescendingButton';
 
@@ -46,23 +48,25 @@ export default () => {
   };
 
   return (
-    <Picker
+    <Panel
       align="BOTTOM_LEFT"
       className="c-table-col-picker"
       id={id}
       scrollId="c-table-ctr"
     >
-      {!!onRenameColumn && (
-        <Input
-          value={value}
-          onChange={(val) => setValue(val)}
-          onClickOutside={modifiedOnRenameColumn}
-          onEnter={onEnter}
-        />
-      )}
+      <Form>
+        {!!onRenameColumn && (
+          <Input
+            value={value}
+            onChange={(val) => setValue(val)}
+            onClickOutside={modifiedOnRenameColumn}
+            onEnter={onEnter}
+          />
+        )}
+      </Form>
 
       <SortAscendingButton id={id} />
       <SortDescendingButton id={id} />
-    </Picker>
+    </Panel>
   );
 };

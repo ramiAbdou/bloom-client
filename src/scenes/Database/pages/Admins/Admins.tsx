@@ -1,9 +1,9 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import TableContent from '@organisms/Table/Content';
 import Table from '@organisms/Table/Table';
 import { Column, Row } from '@organisms/Table/Table.types';
+import TableContent from '@organisms/Table/TableContent';
 import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import AddAdminStore from '../../modals/AddAdmin/AddAdmin.store';
