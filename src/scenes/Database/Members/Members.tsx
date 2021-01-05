@@ -8,7 +8,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { IMember, IQuestion } from '@store/entities';
 import Loading from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { RENAME_QUESTION, RenameQuestionArgs } from '../../Database.gql';
+import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import ActionRow from './ActionRow';
 
 export default () => {

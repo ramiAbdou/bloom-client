@@ -6,8 +6,8 @@ import { Column, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
-import AddAdminStore from '../../modals/AddAdmin/AddAdmin.store';
-import AddAdminModal from '../../modals/AddAdmin/AddAdminModal';
+import AddAdminStore from '../AddAdmin/AddAdmin.store';
+import AddAdminModal from '../AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
 export default () => {

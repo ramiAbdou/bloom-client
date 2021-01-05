@@ -3,14 +3,14 @@ import React, { memo } from 'react';
 
 import Button from '@atoms/Button';
 import ErrorMessage from '@components/Misc/ErrorMessage';
-import Modal from '@organisms/Modal/Modal';
 import { IdProps } from '@constants';
 import useMutation from '@hooks/useMutation';
+import Modal from '@organisms/Modal/Modal';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import AddModalInput from '../../components/AddModalInput';
-import { CREATE_MEMBERS, CreateMembersArgs } from '../../Database.gql';
+import AddModalInput from '../AddModalInput';
+import { CREATE_MEMBERS, CreateMembersArgs } from '../Database.gql';
 import AddAdmin, { doesInputHaveError } from './AddAdmin.store';
 
 const AddAdminInput = memo(({ id }: IdProps) => {

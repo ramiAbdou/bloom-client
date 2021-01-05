@@ -4,7 +4,7 @@ import { IoExit } from 'react-icons/io5';
 
 import Table from '@organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import DatabaseAction from '../../components/DatabaseAction';
+import DatabaseAction from '../DatabaseAction';
 
 export default () => {
   const filename = useStoreState(

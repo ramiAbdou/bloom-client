@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import AddMemberButton from '@scenes/Home/modals/AddMember/AddMemberButton';
 import { useStoreState } from '@store/Store';
-import AddAdminButton from '../modals/AddAdmin/AddAdminButton';
+import AddAdminButton from './AddAdmin/AddAdminButton';
 
 /**
  * Either an Add Admin button or Add Member button depending on where the URL
