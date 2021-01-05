@@ -93,6 +93,10 @@ const Button = forwardRef(
       onClick(null);
     };
 
+    // If the type is submit, we shouldn't pass any onClick handler to the
+    // button or else forms won't submit on enter key.
+    const onClickProps = type === 'submit' ? {} : { onClick: onButtonClick };
+
     const css = cx({
       'c-btn': true,
       'c-btn--fill': fill,
@@ -110,7 +114,7 @@ const Button = forwardRef(
         className={css}
         disabled={disabled}
         type={type ?? 'button'}
-        onClick={onButtonClick}
+        {...onClickProps}
         {...props}
       >
         <LoadingContainer

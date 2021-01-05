@@ -74,7 +74,7 @@ export default {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.scss', '.css'],
+    extensions: ['.ts', '.tsx', '.js', '.scss'],
     plugins: [new TsConfigPathsPlugin()]
   }
 };

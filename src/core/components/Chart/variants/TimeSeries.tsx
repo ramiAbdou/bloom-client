@@ -12,7 +12,7 @@ import {
   YAxis
 } from 'recharts';
 
-import useWindowWidth from '@hooks/useWindowWidth';
+import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 import Chart from '../Chart.store';
 import { ChartTooltipProps } from '../components/Tooltip';
@@ -42,12 +42,12 @@ export default () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
   const data = Chart.useStoreState((store) => store.data, deepequal);
   const interval = Chart.useStoreState((store) => store.interval);
-  const windowWidth = useWindowWidth();
+  const isMonitor = useBreakpoint() === 'DD';
 
   if (!data?.length) return null;
 
   return (
-    <ResponsiveContainer height={windowWidth > 1440 ? 360 : 240}>
+    <ResponsiveContainer height={isMonitor ? 360 : 240}>
       <LineChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <CartesianGrid vertical={false} />
 
