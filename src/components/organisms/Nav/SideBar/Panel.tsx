@@ -10,7 +10,7 @@ import Panel from '@organisms/Panel/Panel';
 import { PanelAction } from '@organisms/Panel/Panel.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 
-export default () => {
+const SidebarPanel: React.FC = () => {
   const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
 
   const canManageMembership = useStoreState(({ db }) => {
@@ -77,3 +77,5 @@ export default () => {
     </Panel>
   );
 };
+
+export default SidebarPanel;

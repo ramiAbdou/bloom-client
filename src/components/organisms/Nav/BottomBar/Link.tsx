@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
-import { useStoreState } from '@store/Store';
+import useFinalPath from '@hooks/useFinalPath';
 import { makeClass } from '@util/util';
-import NavStore, { LinkOptions } from '../Nav.store';
+import { LinkOptions } from '../Nav.types';
 
 /**
  * Each SidebarLink will either have a to property or onClick property defined.
@@ -11,20 +11,16 @@ import NavStore, { LinkOptions } from '../Nav.store';
  * Button that opens up a modal.
  */
 export default memo(({ Icon, to, title }: LinkOptions) => {
-  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
-
-  const isActive = NavStore.useStoreState((store) => store.isActive(to));
-  const setActiveTo = NavStore.useStoreActions((store) => store.setActiveTo);
+  const { url } = useRouteMatch();
+  const isActive = useFinalPath() === to;
 
   const css = makeClass([
     's-home-bb-link',
     [isActive, 's-home-bb-link--active']
   ]);
 
-  const onClickLink = () => setActiveTo(to);
-
   return (
-    <Link className={css} to={`/${encodedUrlName}/${to}`} onClick={onClickLink}>
+    <Link className={css} to={`${url}/${to}`}>
       <Icon />
       <p>{title}</p>
     </Link>

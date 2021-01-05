@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   IoAdd,
   IoAlertCircleOutline,
@@ -10,48 +10,21 @@ import {
   IoPersonAdd,
   IoStatsChart
 } from 'react-icons/io5';
-import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
 import Separator from '@atoms/Separator';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
-import NavStore, { LinkOptions } from '../Nav.store';
+import { LinkOptions } from '../Nav.types';
 import SidebarCommunityContainer from './Community.container';
 import SidebarProfile from './Profile';
 import SidebarSection from './Section';
-
-const useActiveTo = () => {
-  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
-
-  const { location } = useHistory();
-  const { pathname } = location;
-
-  // The index after the / following the community's name.
-  const startIndex =
-    pathname.indexOf(`${encodedUrlName}/`) + encodedUrlName.length + 1;
-
-  // If there is another / in the URL then just go up until then. Otherwise,
-  // take the entire rest of the string.
-  const finalIndex = pathname.includes('/', startIndex)
-    ? pathname.lastIndexOf('/')
-    : pathname.length;
-
-  return pathname.substring(startIndex, finalIndex);
-};
 
 const SidebarContent = () => {
   const canCollectDues = useStoreState(({ db }) => db.canCollectDues);
   const name = useStoreState(({ db }) => db.community.name);
   const hasPaid = useStoreState(({ db }) => db.member?.duesStatus === 'ACTIVE');
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setActiveTo = NavStore.useStoreActions((store) => store.setActiveTo);
-
-  const activeTo = useActiveTo();
-
-  useEffect(() => {
-    setActiveTo(activeTo);
-  }, [activeTo]);
 
   const mainLinks: LinkOptions[] = useMemo(
     () => [

@@ -1,16 +1,15 @@
 import React from 'react';
 
 import BottomBar from './BottomBar/BottomBar';
-import NavStore from './Nav.store';
+import SidebarPanel from './SideBar/Panel';
 import SideBar from './SideBar/SideBar';
 
-const Nav: React.FC = () => {
-  return (
-    <NavStore.Provider>
-      <BottomBar />
-      <SideBar />
-    </NavStore.Provider>
-  );
-};
+const Nav: React.FC = () => (
+  <>
+    <BottomBar />
+    <SideBar />
+    <SidebarPanel />
+  </>
+);
 
 export default Nav;

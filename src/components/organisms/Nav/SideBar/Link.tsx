@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 import Button from '@atoms/Button';
 import { ModalType, OnClickProps } from '@constants';
+import useFinalPath from '@hooks/useFinalPath';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
-import Home, { LinkOptions } from '../Nav.store';
+import { LinkOptions } from '../Nav.types';
 
 interface SidebarLinkProps extends LinkOptions, OnClickProps {}
 
@@ -21,11 +22,10 @@ export default memo(({ Icon, onClick, to, title }: SidebarLinkProps) => {
   });
 
   const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
-  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const isActive = Home.useStoreState((store) => store.isActive(to));
-  const setActiveTo = Home.useStoreActions((store) => store.setActiveTo);
+  const isActive = useFinalPath() === to;
+  const { url } = useRouteMatch();
 
   const css = makeClass([
     's-home-sidebar-link',
@@ -52,10 +52,8 @@ export default memo(({ Icon, onClick, to, title }: SidebarLinkProps) => {
     );
   }
 
-  const onClickLink = () => setActiveTo(to);
-
   return (
-    <Link className={css} to={`/${encodedUrlName}/${to}`} onClick={onClickLink}>
+    <Link className={css} to={`${url}/${to}`}>
       <Icon />
       {title}
     </Link>

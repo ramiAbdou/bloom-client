@@ -11,8 +11,7 @@ import { EncodedUrlNameProps } from '@constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import DuesModal from '@modals/DuesModal/DuesModal';
 import Loader from '@molecules/Loader/Loader';
-import Nav from '@organisms/Nav';
-import SidebarPanel from '@organisms/Nav/SideBar/Picker';
+import Nav from '@organisms/Nav/Nav';
 import Analytics from '@scenes/Analytics/Analytics';
 import Applicants from '@scenes/Applicants/Applicants';
 import Database from '@scenes/Database/Database';
@@ -72,7 +71,6 @@ const HomeRouter: React.FC = () => {
     <>
       <Nav />
       <HomeRouterContent />
-      <SidebarPanel />
       <AddMemberModal />
       <DuesModal />
     </>
