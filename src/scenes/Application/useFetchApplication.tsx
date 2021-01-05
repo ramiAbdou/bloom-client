@@ -10,7 +10,7 @@ import {
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 
-export default (): boolean => {
+const useFetchApplication = (): boolean => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { push } = useHistory();
@@ -54,3 +54,5 @@ export default (): boolean => {
 
   return loading;
 };
+
+export default useFetchApplication;

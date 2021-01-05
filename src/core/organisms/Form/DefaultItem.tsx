@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { FormItemProps } from './Form.types';
-import useItemBody from './useItemBody';
 import Description from './Description';
+import { FormItemProps } from './Form.types';
 import Label from './Label';
+import useItemBody from './useItemBody';
 
 export default ({
   children,

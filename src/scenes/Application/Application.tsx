@@ -1,18 +1,22 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Application from './Application.store';
-import ApplicationConfirmation from './pages/Confirmation/Confirmation';
-import ApplicationForm from './pages/Form/Form';
+import FullScreenLoader from '@components/Loader/FullScreenLoader';
+import ApplicationConfirmation from './ApplicationConfirmation';
+import ApplicationForm from './ApplicationForm';
+import useFetchApplication from './useFetchApplication';
 
 /**
  * Controls sign-up process and has two different routes:
  * - Member Application Form
  * - Member Application Form Confirmation
  */
-export default () => (
-  <Application.Provider>
-    <div className="s-signup-ctr">
+const Application: React.FC = () => {
+  const isFetchingApplication = useFetchApplication();
+  if (isFetchingApplication) return <FullScreenLoader />;
+
+  return (
+    <div className="s-application-ctr">
       <Switch>
         <Route
           exact
@@ -27,5 +31,7 @@ export default () => (
         />
       </Switch>
     </div>
-  </Application.Provider>
-);
+  );
+};
+
+export default Application;

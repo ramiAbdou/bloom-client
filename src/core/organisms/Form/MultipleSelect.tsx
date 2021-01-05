@@ -23,6 +23,7 @@ export default ({ options, title }: FormItemData) => {
 
         return (
           <Checkbox
+            key={option}
             checked={value?.includes(option)}
             title={option}
             onChange={onChange}

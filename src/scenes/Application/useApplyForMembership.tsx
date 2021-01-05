@@ -1,27 +1,30 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
+import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
-import useMutation from '@hooks/useMutation';
 import {
   APPLY_FOR_MEMBERSHIP,
   ApplyForMembershipArgs
 } from '@scenes/Application/Application.gql';
-import Application from '@scenes/Application/Application.store';
 import { useStoreState } from '@store/Store';
 
-export default (): OnFormSubmit => {
+const useApplyForMembership = (): OnFormSubmit => {
   const name = useStoreState(({ db }) => db.community?.encodedUrlName);
-  const setEmail = Application.useStoreActions((store) => store.setEmail);
 
   const { push } = useHistory();
+  const { url } = useRouteMatch();
 
   const [applyForMembership] = useMutation<any, ApplyForMembershipArgs>({
     name: 'applyForMembership',
     query: APPLY_FOR_MEMBERSHIP
   });
 
-  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    items,
+    setErrorMessage,
+    setIsLoading
+  }: OnFormSubmitArgs) => {
     const dataToSubmit = items.map(({ id, value }) => ({
       questionId: id,
       value: parseValue(value)
@@ -30,7 +33,6 @@ export default (): OnFormSubmit => {
     // Set the email so that the confirmation page displays the right email,
     // and use it for the GraphQL mutation as well.
     const email = items.find(({ category }) => category === 'EMAIL')?.value;
-    setEmail(email);
 
     // Manually set the isLoading variable to true.
     setIsLoading(true);
@@ -49,6 +51,10 @@ export default (): OnFormSubmit => {
       return;
     }
 
-    if (data) push(`/${name}/apply/confirmation`);
+    if (data) push(`${url}/confirmation`);
   };
+
+  return onSubmit;
 };
+
+export default useApplyForMembership;

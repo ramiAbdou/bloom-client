@@ -1,4 +1,6 @@
-$PREF: 's-signup';
+$PREF: 's-application';
+
+// ## APPLICATION CONTAINER
 
 .#{$PREF}-ctr {
   background-color: white;
@@ -6,7 +8,16 @@ $PREF: 's-signup';
 
   @include RESP(padding-bottom, $xl, $lg, $md);
   @include RESP(padding-top, $xl, $lg, $md);
+
+  > .c-misc-card {
+    margin: auto;
+    max-width: $xxl * 7;
+
+    > .m-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+  }
 }
+
+// ## APPLICATION
 
 .#{$PREF} {
   margin-left: auto;
@@ -15,6 +26,8 @@ $PREF: 's-signup';
 
   @include RESP(width, 600px, 500px, 90%);
 }
+
+// ## APPLICATION COMMUNITY ICON
 
 .#{$PREF} > img {
   border: 2px $primary solid;
@@ -28,60 +41,3 @@ $PREF: 's-signup';
 .#{$PREF} > h1 { margin-bottom: $xs; }
 .#{$PREF} > p { color: $gray-2; margin-bottom: $lg; }
 .#{$PREF} > button { margin-top: $xxl; width: 100%; }
-
-// ## CONFIRMATION SCREEN
-
-.#{$PREF}-confirmation-ctr {
-  @extend .flex-acccol;
-
-  height: 100%;
-  margin-top: -$xxl * 2;
-  width: 100%;
-}
-
-.#{$PREF}-confirmation {
-  @extend .flex-acccol;
-
-  background-color: white;
-  border: 1px $gray-5 solid;
-  border-radius: $xxs;
-  box-shadow: 0 2px 2px rgba($color: $gray-4, $alpha: 0.3);
-  min-width: $xxl * 5;
-  overflow: hidden;
-  padding: $md;
-  width: 400px;
-
-  @include M { width: 320px; }
-}
-
-.#{$PREF}-confirmation > p > span { font-size: 18px; font-weight: 700; }
-.#{$PREF}-confirmation > p { width: 100%; }
-
-// ## CONFIRMATION SCREEN (HEADER)
-
-.#{$PREF}-confirmation-header {
-  @extend .flex-ac;
-  @extend .fill;
-
-  margin-bottom: $sm;
-}
-
-.#{$PREF}-confirmation-header > svg {
-  border-radius: 50%;
-  color: $green;
-  height: $xxl;
-  margin-right: $xs;
-  width: $xxl;
-}
-
-.#{$PREF}-confirmation-email {
-  background-color: rgba($color: $green, $alpha: 0.05);
-  border: 1px $green solid;
-  border-radius: $xxs;
-  color: $green;
-  margin-bottom: $sm;
-  margin-top: $sm;
-  padding-bottom: 8px;
-  padding-top: 8px;
-  text-align: center;
-}
