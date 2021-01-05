@@ -49,6 +49,7 @@ $PREF: 'o-side-bar';
 // ## SIDEBAR SECTION
 
 .#{$PREF}-section {
+  margin-right: $ss;
   margin-top: $md;
 
   > h5 { color: $gray-3; margin: 0 0 $xs $sm; }
@@ -64,6 +65,7 @@ $PREF: 'o-side-bar';
   box-sizing: border-box;
   margin: $xxs $ss $xxs 0;
   padding: $xs $xxs $xs $sm;
+  width: 100%;
 
   @include PRIMARY_HOVER;
 
@@ -95,9 +97,12 @@ $PREF: 'o-side-bar';
 
 .#{$PREF}-dues-ctr {
   box-sizing: border-box;
-  margin: $sm 0;
+  margin-bottom: $sm;
+  margin-top: auto;
   padding: 0 $sm;
   width: 100%;
+
+  > div:first-child { margin-bottom: $xs; }
 }
 
 // ## SIDEBAR PROFILE CONTAINER
@@ -106,6 +111,8 @@ $PREF: 'o-side-bar';
   border-top: 1px $gray-5 solid;
   margin-top: auto;
   padding: $sm $ss $sm 0;
+  
+  &--no-auto { margin-top: initial; }
 }
 
 // ## SIDEBAR PROFILE - Actual button that opens the Panel.

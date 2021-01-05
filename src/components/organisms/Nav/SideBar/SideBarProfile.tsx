@@ -4,6 +4,7 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import { PickerType } from '@constants';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { cx } from '@util/util';
 
 const SideBarProfileContent: React.FC = () => {
   const memberTypeName: string = useStoreState(({ db }) => {
@@ -37,11 +38,20 @@ const SideBarProfileContent: React.FC = () => {
 };
 
 const SideBarProfile: React.FC = () => {
+  const isDuesMessageShowing: boolean = useStoreState(({ db }) => {
+    return db.canCollectDues && db.member?.duesStatus !== 'ACTIVE';
+  });
+
   const showPicker = useStoreActions(({ panel }) => panel.showPicker);
   const onClick = () => showPicker(PickerType.PROFILE);
 
+  const css = cx({
+    'o-side-bar-profile-ctr': true,
+    'o-side-bar-profile-ctr--no-auto': isDuesMessageShowing
+  });
+
   return (
-    <div className="o-side-bar-profile-ctr">
+    <div className={css}>
       <button
         className="o-side-bar-profile"
         id={PickerType.PROFILE}
