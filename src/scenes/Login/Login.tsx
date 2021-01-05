@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Card from '@components/Elements/Card/Card';
 import ConfirmationScreen from '@molecules/ConfirmationScreen/ConfirmationScreen';
-import LoginCard from './LoginCard/LoginCard';
+import LoginCard from './LoginCard';
 
 const LoginConfirmation: React.FC = () => (
   <ConfirmationScreen title="Login Link Sent">

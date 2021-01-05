@@ -5,9 +5,9 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import {
   SEND_TEMPORARY_LOGIN_LINK,
   SendTemporaryLoginLinkArgs
-} from '../Login.gql';
-import { LoginError } from '../Login.types';
-import { getLoginErrorMessage } from '../Login.util';
+} from './Login.gql';
+import { LoginError } from './Login.types';
+import { getLoginErrorMessage } from './Login.util';
 
 const useSendLoginLink = (): OnFormSubmit => {
   const { push } = useHistory();
