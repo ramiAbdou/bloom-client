@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-import CBox from '@atoms/Checkbox/Checkbox';
-import IPut from '@atoms/Input/Input';
-import Attr from '@atoms/Tags/Attribute';
-import NTag from '@atoms/Tags/NumberTag';
-import DDown from '@molecules/Dropdown/Dropdown';
-import QVal from '@molecules/QuestionValueList';
-import RDio from '@molecules/Radio/Radio';
-import SBar from '@molecules/SearchBar/SearchBar';
 import { Description, Stories, Title } from '@storybook/addon-docs/blocks';
+import CBox from './atoms/Checkbox/Checkbox';
+import IPut from './atoms/Input/Input';
+import Attr from './atoms/Tags/Attribute';
+import NTag from './atoms/Tags/NumberTag';
+import DDown from './molecules/Dropdown/Dropdown';
+import QVal from './molecules/QuestionValueList';
+import RDio from './molecules/Radio/Radio';
+import SBar from './molecules/SearchBar/SearchBar';
 
 // ## CHECKBOX
 
