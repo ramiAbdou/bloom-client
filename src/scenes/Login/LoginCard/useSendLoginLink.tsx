@@ -6,6 +6,8 @@ import {
   SEND_TEMPORARY_LOGIN_LINK,
   SendTemporaryLoginLinkArgs
 } from '../Login.gql';
+import { LoginError } from '../Login.types';
+import { getLoginErrorMessage } from '../Login.util';
 
 const useSendLoginLink = (): OnFormSubmit => {
   const { push } = useHistory();
@@ -31,7 +33,7 @@ const useSendLoginLink = (): OnFormSubmit => {
     setIsLoading(false);
 
     if (error) {
-      setErrorMessage(error);
+      setErrorMessage(getLoginErrorMessage(error as LoginError));
       return;
     }
 
