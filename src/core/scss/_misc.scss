@@ -127,3 +127,8 @@ div::-webkit-scrollbar { display: none; }
   min-height: $size;
   min-width: $size;
 }
+
+// Pushes the home content to the right due to the fixed sidebar.
+.home-content {
+  @include D { margin-left: ($xxl * 5.5); max-width: calc(100% - 330px); }
+}

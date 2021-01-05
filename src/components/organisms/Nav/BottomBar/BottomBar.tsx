@@ -62,7 +62,7 @@ const BottomBar: React.FC = () => {
   const isMobile = useBreakpoint() === 1;
   const isTablet = useBreakpoint() === 2;
 
-  if (!isMobile || !isTablet) return null;
+  if (!isMobile && !isTablet) return null;
 
   return (
     <footer className="s-home-bb">

@@ -27,7 +27,7 @@ const HomeRouterContent: React.FC = () => {
   const { url } = useRouteMatch();
 
   return (
-    <div className="s-home">
+    <div className="home-content">
       <Switch>
         <Route component={Directory} path={`${url}/directory`} />
         <Route component={Events} path={`${url}/events`} />
@@ -70,11 +70,8 @@ const HomeRouter: React.FC = () => {
   // If they are a member, just return the requested content.
   return (
     <>
-      <div className="s-home-ctr">
-        <Nav />
-        <HomeRouterContent />
-      </div>
-
+      <Nav />
+      <HomeRouterContent />
       <SidebarPanel />
       <AddMemberModal />
       <DuesModal />
