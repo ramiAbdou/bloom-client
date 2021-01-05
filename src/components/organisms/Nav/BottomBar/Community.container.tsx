@@ -26,8 +26,8 @@ const CommunitySelector = ({ id, logoUrl, name }: Partial<ICommunity>) => {
   };
 
   const css = makeClass([
-    's-home-bb-dropdown-link',
-    [isActive, 's-home-bb-dropdown-link--active']
+    'o-bottom-bar-dropdown-link',
+    [isActive, 'o-bottom-bar-dropdown-link--active']
   ]);
 
   return (
@@ -57,11 +57,11 @@ const Dropdown = () => {
 
   return createPortal(
     <>
-      <div className="s-home-bb-dropdown-bg" onClick={onBgClick} />
+      <div className="o-bottom-bar-dropdown-bg" onClick={onBgClick} />
       <motion.div
-        key="s-home-bb-dropdown"
+        key="o-bottom-bar-dropdown"
         // animate={{ y: 0 }}
-        className="s-home-bb-dropdown"
+        className="o-bottom-bar-dropdown"
         // initial={{ y: 10 }}
       >
         {communities.map((props: ICommunity) => (
@@ -81,7 +81,7 @@ export default () => {
   return (
     <>
       <Button
-        className="s-home-bb-link--community"
+        className="o-bottom-bar-link--community"
         onClick={() => toggleDropdown()}
       >
         <img src={logoUrl} />

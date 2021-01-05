@@ -3,9 +3,9 @@ import { IoCalendar, IoPeople, IoPersonCircle } from 'react-icons/io5';
 
 import useBreakpoint from '@hooks/useBreakpoint';
 import { LinkOptions } from '../Nav.types';
+import BottomBarStore from './BottomBar.store';
 import BottomBarCommunityContainer from './Community.container';
 import BottomBarLink from './Link';
-import BottomBarStore from './BottomBar.store';
 
 const BottomBarMobile: React.FC = () => {
   const mainLinks: LinkOptions[] = useMemo(
@@ -67,7 +67,7 @@ const BottomBar: React.FC = () => {
 
   return (
     <BottomBarStore.Provider>
-      <footer className="s-home-bb">
+      <footer className="o-bottom-bar">
         {isMobile && <BottomBarMobile />}
         {isTablet && <BottomBarTablet />}
       </footer>

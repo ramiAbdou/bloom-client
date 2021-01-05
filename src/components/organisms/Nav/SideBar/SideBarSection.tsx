@@ -4,7 +4,7 @@ import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
 import { LinkOptions } from '../Nav.types';
-import SidebarLink from './Link';
+import SidebarLink from './SideBarLink';
 
 type LinkSectionProps = { links: LinkOptions[]; title: string };
 
@@ -26,7 +26,7 @@ export default memo(({ links, title }: LinkSectionProps) => {
   }
 
   return (
-    <div className="s-home-sidebar-section">
+    <div className="o-side-bar-section">
       <h5>{title}</h5>
       {links.map((link) => (
         <SidebarLink key={link.to ?? uuid()} {...link} />

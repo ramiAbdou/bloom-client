@@ -15,8 +15,8 @@ export default memo(({ Icon, to, title }: LinkOptions) => {
   const isActive = useFinalPath() === to;
 
   const css = makeClass([
-    's-home-bb-link',
-    [isActive, 's-home-bb-link--active']
+    'o-bottom-bar-link',
+    [isActive, 'o-bottom-bar-link--active']
   ]);
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BottomBar from './BottomBar/BottomBar';
-import SidebarPanel from './SideBar/Panel';
+import SidebarPanel from './SideBar/SideBarPanel';
 import SideBar from './SideBar/SideBar';
 
 const Nav: React.FC = () => (

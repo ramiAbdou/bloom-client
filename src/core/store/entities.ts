@@ -61,7 +61,7 @@ export type IMemberType = {
   amount: number;
   id: IdString;
   isFree: boolean;
-  name: boolean;
+  name: string;
   recurrence: 'LIFETIME' | 'MONTHLY' | 'YEARLY';
 };
 

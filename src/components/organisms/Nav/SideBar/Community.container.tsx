@@ -8,7 +8,7 @@ const CommunityIcon = ({ borderColor, logoUrl }: CommunityIconProps) => {
   const customStyle = { border: `2px ${borderColor ?? '#000'} solid` };
 
   return (
-    <button className="s-home-sidebar-community" style={customStyle}>
+    <button className="o-side-bar-community" style={customStyle}>
       <img src={logoUrl} />
     </button>
   );
@@ -20,7 +20,7 @@ export default () => {
   );
 
   return (
-    <div className="s-home-sidebar-community-ctr">
+    <div className="o-side-bar-community-ctr">
       {allIds?.map((communityId: string) => (
         <CommunityIcon
           key={communityId}

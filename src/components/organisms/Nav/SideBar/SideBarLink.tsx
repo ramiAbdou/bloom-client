@@ -28,8 +28,8 @@ export default memo(({ Icon, onClick, to, title }: SidebarLinkProps) => {
   const { url } = useRouteMatch();
 
   const css = makeClass([
-    's-home-sidebar-link',
-    [isActive, 's-home-sidebar-link--active']
+    'o-side-bar-link',
+    [isActive, 'o-side-bar-link--active']
   ]);
 
   if (onClick) {
