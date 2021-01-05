@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NumberTag } from '@atoms/Tags';
 import { useStoreState } from '@store/Store';
-import Chart from '../Chart.store';
+import Chart from './Chart.store';
 
 export default () => {
   const questionId = Chart.useStoreState((store) => store.questionId);

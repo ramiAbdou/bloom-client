@@ -2,8 +2,8 @@ import React from 'react';
 
 import LoadingHeader from '@components/Elements/LoadingHeader/LoadingHeader';
 import Modal from '@organisms/Modal/Modal';
-import PaymentDescription from '@components/Payment/components/Description';
-import StripeProvider from '@components/Payment/containers/StripeProvider';
+import PaymentDescription from '@organisms/Payment/components/Description';
+import StripeProvider from '@organisms/Payment/containers/StripeProvider';
 import { ModalType } from '@constants';
 import ChangePlan from '../../pages/ChangePlan/ChangePlan.store';
 import usePaymentMethod from '../../usePaymentMethod';

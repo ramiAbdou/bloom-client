@@ -1,11 +1,11 @@
 import React from 'react';
 
 import LoadingHeader from '@components/Elements/LoadingHeader/LoadingHeader';
-import Modal from '@organisms/Modal/Modal';
-import PaymentDescription from '@components/Payment/components/Description';
-import StripeProvider from '@components/Payment/containers/StripeProvider';
-import PaymentForm from '@components/Payment/Payment';
 import { ModalType } from '@constants';
+import Modal from '@organisms/Modal/Modal';
+import PaymentDescription from '@organisms/Payment/components/Description';
+import StripeProvider from '@organisms/Payment/containers/StripeProvider';
+import PaymentForm from '@organisms/Payment/Payment';
 import usePaymentMethod from '../../../Membership/usePaymentMethod';
 import FinishDuesButton from './components/FinishButton';
 import DuesTypeOptions from './components/TypeOptions';

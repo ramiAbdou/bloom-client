@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Modal from '@organisms/Modal/Modal';
-import StripeProvider from '@components/Payment/containers/StripeProvider';
-import PaymentForm from '@components/Payment/Payment';
 import { ModalType } from '@constants';
+import Modal from '@organisms/Modal/Modal';
+import StripeProvider from '@organisms/Payment/containers/StripeProvider';
+import PaymentForm from '@organisms/Payment/Payment';
 import useUpdatePaymentMethod from '../../useUpdatePaymentMethod';
 import UpdatePaymentButton from './UpdateButton';
 

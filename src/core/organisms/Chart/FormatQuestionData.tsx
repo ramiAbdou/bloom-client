@@ -5,7 +5,7 @@ import sw from 'stopword';
 import { QuestionType } from '@constants';
 import { IMember } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Chart, { ChartModelInitArgs, ChartType } from '../Chart.store';
+import Chart, { ChartModelInitArgs, ChartType } from './Chart.store';
 
 const useQuestionData = (): Pick<
   ChartModelInitArgs,

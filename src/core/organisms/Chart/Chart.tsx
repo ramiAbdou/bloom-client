@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
+import BarChart from './Bar';
 import Chart, { ChartModelInitArgs, ChartType } from './Chart.store';
-import FormatQuestionData from './components/FormatQuestionData';
-import ChartHeader from './components/Header';
-import BarChart from './variants/Bar';
-import PieChart from './variants/Pie';
-import TimeSeriesChart from './variants/TimeSeries';
+import FormatQuestionData from './FormatQuestionData';
+import ChartHeader from './Header';
+import PieChart from './Pie';
+import TimeSeriesChart from './TimeSeries';
 
 const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
   const chartType = Chart.useStoreState((store) => store.type);

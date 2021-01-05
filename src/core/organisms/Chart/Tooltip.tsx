@@ -1,7 +1,7 @@
 import React from 'react';
 import { TooltipPayload } from 'recharts';
 
-import Chart from '../Chart.store';
+import Chart from './Chart.store';
 
 export type ChartTooltipProps = {
   active?: boolean;

@@ -10,8 +10,8 @@ import {
 } from 'recharts';
 
 import { useStoreState } from '@store/Store';
-import Chart from '../Chart.store';
-import ChartTooltip, { ChartTooltipProps } from '../components/Tooltip';
+import Chart from './Chart.store';
+import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 
 export default () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);

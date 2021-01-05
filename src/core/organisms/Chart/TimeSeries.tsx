@@ -14,8 +14,8 @@ import {
 
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
-import Chart from '../Chart.store';
-import { ChartTooltipProps } from '../components/Tooltip';
+import Chart from './Chart.store';
+import { ChartTooltipProps } from './Tooltip';
 
 const LineChartTooltip = ({ label }: Pick<ChartTooltipProps, 'label'>) => {
   const data = Chart.useStoreState((store) => store.data);

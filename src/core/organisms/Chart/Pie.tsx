@@ -8,9 +8,9 @@ import {
   Tooltip
 } from 'recharts';
 
-import Chart from '../Chart.store';
-import ChartLegend from '../components/Legend';
-import ChartTooltip, { ChartTooltipProps } from '../components/Tooltip';
+import Chart from './Chart.store';
+import ChartLegend from './Legend';
+import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 
 const COLORS = [
   '#40a8c4',
