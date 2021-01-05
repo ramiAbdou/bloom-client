@@ -1,10 +1,10 @@
 import React from 'react';
 import validator from 'validator';
 
-import FormErrorMessage from '@organisms/Form/ErrorMessage';
 import Form from '@organisms/Form/Form';
+import FormErrorMessage from '@organisms/Form/FormErrorMessage';
+import SubmitButton from '@organisms/Form/FormSubmitButton';
 import FormItem from '@organisms/Form/Item';
-import SubmitButton from '@organisms/Form/SubmitButton';
 import useSendLoginLink from './useSendLoginLink';
 
 const LoginCardEmailForm: React.FC = () => {

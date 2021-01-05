@@ -1,10 +1,10 @@
 import React from 'react';
 
 import DefaultFormItem from '@organisms/Form/DefaultItem';
-import FormErrorMessage from '@organisms/Form/ErrorMessage';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
-import SubmitButton from '@organisms/Form/SubmitButton';
+import FormErrorMessage from '@organisms/Form/FormErrorMessage';
+import SubmitButton from '@organisms/Form/FormSubmitButton';
 import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import useApplyForMembership from './useApplyForMembership';

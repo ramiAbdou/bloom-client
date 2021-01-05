@@ -3,7 +3,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button';
 import Form from './Form.store';
 
-export default ({
+const FormSubmitButton: React.FC<ButtonProps> = ({
   disabled,
   fill,
   large,
@@ -26,3 +26,5 @@ export default ({
     />
   );
 };
+
+export default FormSubmitButton;

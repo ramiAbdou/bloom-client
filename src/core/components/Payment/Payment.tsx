@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { ChildrenProps } from '@constants';
-import FormErrorMessage from '@organisms/Form/ErrorMessage';
 import Form, { FormProps } from '@organisms/Form/Form';
+import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import { useStoreState } from '@store/Store';
 import CardOnFile from './components/CardOnFile';
 import CardInfoContainer from './containers/CardInfo';
