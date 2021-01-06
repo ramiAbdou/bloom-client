@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainHeader from '@templates/Main/Header';
+import MainHeader from '@containers/Main/Header';
 import Directory from './Directory.store';
 import DirectoryHeaderSearchBar from './DirectorySearchBar';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Loading from '@store/Loading.store';
-import MainContent from '@templates/Main/Content';
+import MainContent from '@containers/Main/Content';
 import ApplicantsCardContainer from './ApplicantsCardContainer';
 import ApplicantsHeader from './ApplicantsHeader';
 import useFetchApplicants from './useFetchApplicants';

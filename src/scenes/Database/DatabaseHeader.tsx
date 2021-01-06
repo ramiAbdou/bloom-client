@@ -5,7 +5,7 @@ import Button from '@atoms/Button';
 import { ModalType } from '@constants';
 import useFinalPath from '@hooks/useFinalPath';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { MainHeader, NavigationOptionProps } from '@templates/Main';
+import { MainHeader, NavigationOptionProps } from '@containers/Main';
 
 const DatbaseHeaderAddButton: React.FC = () => {
   const isOwner = useStoreState(({ db }) => db.isOwner);

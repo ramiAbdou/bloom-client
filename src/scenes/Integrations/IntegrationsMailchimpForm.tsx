@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
 import { ModalType } from '@constants';
+import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Form from '@organisms/Form/Form';
 import FormItem from '@organisms/Form/FormItem';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
@@ -10,7 +11,6 @@ import Modal from '@organisms/Modal/Modal';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import ActionContainer from '@templates/ActionContainer/ActionContainer';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 

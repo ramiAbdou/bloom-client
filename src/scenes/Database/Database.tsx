@@ -1,8 +1,8 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
+import MainContent from '@containers/Main/Content';
 import Loading from '@store/Loading.store';
-import MainContent from '@templates/Main/Content';
 import Admins from './Admins/Admins';
 import DatabaseHeader from './DatabaseHeader';
 import Members from './Members/Members';

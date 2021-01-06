@@ -12,6 +12,7 @@
     "paths": {
       "@atoms/*": ["components/atoms/*"],
       "@constants": ["util/constants.ts"],
+      "@containers/*": ["components/containers/*"],
       "@hooks/*": ["core/hooks/*"],
       "@images/*": ["components/images/*"],
       "@modals/*": ["components/modals/*"],
@@ -19,7 +20,6 @@
       "@organisms/*": ["components/organisms/*"],
       "@scenes/*": ["scenes/*"],
       "@store/*": ["core/store/*"],
-      "@templates/*": ["components/templates/*"],
       "@util/*": ["util/*"]
     },
     "resolveJsonModule": true,

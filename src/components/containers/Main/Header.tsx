@@ -29,14 +29,14 @@ const MainHeaderBackButton = () => {
   );
 };
 
-const MainHeader = ({
+const MainHeader: React.FC<MainHeaderProps> = ({
   backButton,
   children,
   className,
   numberTag,
   options,
   title
-}: MainHeaderProps) => {
+}) => {
   const loading = Loading.useStoreState((store) => store.loading);
 
   const css = makeClass(['t-main-header', className]);

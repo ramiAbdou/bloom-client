@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import MainHeader from '@templates/Main/Header';
-import { NavigationOptionProps } from '@templates/Main/Navigation';
+import MainHeader from '@containers/Main/Header';
+import { NavigationOptionProps } from '@containers/Main/Navigation';
 
 const AnalyticsHeader = () => {
   const { push } = useHistory();

@@ -4,7 +4,7 @@ import Button from '@atoms/Button';
 import QuestionValueList from '@molecules/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
-import ActionContainer from '@templates/ActionContainer/ActionContainer';
+import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Integrations from './Integrations.store';
 
 export type ExpandedDetailProps = { label: string; value: any };

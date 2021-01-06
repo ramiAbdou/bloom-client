@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import MainContent from '@templates/Main/Content';
+import MainContent from '@containers/Main/Content';
 import useFetchDatabase from '../Database/useFetchDatabase';
 import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
 import EventsAnalytics from './EventsAnalytics/Events';

@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { IdProps } from '@constants';
+import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
-import ActionContainer from '@templates/ActionContainer/ActionContainer';
 import ApplicantsCardStore from './ApplicantsCard/ApplicantsCard.store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
