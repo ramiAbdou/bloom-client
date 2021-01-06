@@ -17,9 +17,14 @@ const useInitPaymentScreen = () => {
   const type = PaymentStore.useStoreState((store) => store.type);
   const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
 
+  const setBackButton = PaymentStore.useStoreActions(
+    (store) => store.setBackButton
+  );
+
   // If the screen was already set, don't set it again.
   if (loading || screen) return;
 
+  if (!isCardOnFile) setBackButton(true);
   if (type === 'UPDATE_PAYMENT_METHOD' || !isCardOnFile) setScreen('CARD_FORM');
   else setScreen('FINISH');
 };

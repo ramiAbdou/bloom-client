@@ -6,7 +6,7 @@ import Table from '@organisms/Table/Table';
 import { Column, OnRenameColumn, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMember, IQuestion } from '@store/entities';
-import Loading from '@store/Loading.store';
+import LoadingStore from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import ActionRow from './ActionRow';
@@ -37,7 +37,7 @@ export default () => {
     return db.community.questions?.map((id: string) => byId[id]);
   });
 
-  const loading = Loading.useStoreState((store) => store.loading);
+  const loading = LoadingStore.useStoreState((store) => store.loading);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [renameQuestion] = useMutation<IQuestion, RenameQuestionArgs>({

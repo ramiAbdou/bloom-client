@@ -6,7 +6,7 @@ import Button from '@atoms/Button';
 import Spinner from '@atoms/Spinner';
 import { NumberTag } from '@atoms/Tags';
 import { ChildrenProps, ClassNameProps } from '@constants';
-import Loading from '@store/Loading.store';
+import LoadingStore from '@store/Loading.store';
 import { makeClass } from '@util/util';
 import Navigation, { NavigationProps } from './Navigation';
 
@@ -37,7 +37,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   options,
   title
 }) => {
-  const loading = Loading.useStoreState((store) => store.loading);
+  const loading = LoadingStore.useStoreState((store) => store.loading);
 
   const css = makeClass(['t-main-header', className]);
 

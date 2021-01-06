@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 
 import { ModalType } from '@constants';
 import Modal from '@organisms/Modal/Modal';
-import Loading from '@store/Loading.store';
+import LoadingStore from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import PaymentStore, { paymentModel } from './Payment.store';
 import PaymentCardScreen from './PaymentCardScreen';
-import PaymentConfirmation from './PaymentConfirmation';
+import PaymentConfirmationScreen from './PaymentConfirmationScreen';
+import PaymentFinishScreen from './PaymentFinishScreen';
 import PaymentHeader from './PaymentHeader';
 import PaymentStripeProvider from './PaymentStripeProvider';
 import useFetchDuesInformation from './useFetchDuesInformation';
@@ -30,7 +31,8 @@ const PaymentModalContent: React.FC = () => {
     <Modal id={modalId}>
       <PaymentHeader />
       <PaymentCardScreen />
-      <PaymentConfirmation />
+      <PaymentConfirmationScreen />
+      <PaymentFinishScreen />
     </Modal>
   );
 };
@@ -56,7 +58,7 @@ const PaymentModal: React.FC = () => {
   if (!memberTypeId) return null;
 
   return (
-    <Loading.Provider>
+    <LoadingStore.Provider>
       <PaymentStore.Provider
         runtimeModel={{ ...paymentModel, selectedTypeId: memberTypeId }}
       >
@@ -64,7 +66,7 @@ const PaymentModal: React.FC = () => {
           <PaymentModalContent />
         </PaymentStripeProvider>
       </PaymentStore.Provider>
-    </Loading.Provider>
+    </LoadingStore.Provider>
   );
 };
 

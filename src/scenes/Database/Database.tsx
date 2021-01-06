@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import MainContent from '@containers/Main/Content';
-import Loading from '@store/Loading.store';
+import LoadingStore from '@store/Loading.store';
 import Admins from './Admins/Admins';
 import DatabaseHeader from './DatabaseHeader';
 import Members from './Members/Members';
@@ -28,7 +28,7 @@ const DatabaseContent = () => {
 };
 
 export default () => (
-  <Loading.Provider>
+  <LoadingStore.Provider>
     <DatabaseContent />
-  </Loading.Provider>
+  </LoadingStore.Provider>
 );

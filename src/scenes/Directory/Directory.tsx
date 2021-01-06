@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Loading from '@store/Loading.store';
 import MainContent from '@containers/Main/Content';
+import LoadingStore from '@store/Loading.store';
 import DirectoryStore from './Directory.store';
 import DirectoryCardContainer from './DirectoryCardContainer';
 import DirectoryHeader from './DirectoryHeader';
@@ -22,11 +22,11 @@ const DirectoryContent: React.FC = () => {
 };
 
 const Directory: React.FC = () => (
-  <Loading.Provider>
+  <LoadingStore.Provider>
     <DirectoryStore.Provider>
       <DirectoryContent />
     </DirectoryStore.Provider>
-  </Loading.Provider>
+  </LoadingStore.Provider>
 );
 
 export default Directory;

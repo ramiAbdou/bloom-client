@@ -4,7 +4,6 @@ import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { PaymentMethodCreateParams } from '@stripe/stripe-js';
 import { UPDATE_PAYMENT_METHOD, UpdatePaymentMethodArgs } from './Payment.gql';
 import PaymentStore from './Payment.store';
 
@@ -43,18 +42,12 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     setErrorMessage(null);
     setIsLoading(true);
 
-    const params: Partial<PaymentMethodCreateParams> = nameOnCard
-      ? {
-          billing_details: {
-            address: { city, postal_code: postalCode, state },
-            name: nameOnCard
-          }
-        }
-      : {};
-
     // Create the payment method via the Stripe SDK.
     const stripeResult = await stripe.createPaymentMethod({
-      ...params,
+      billing_details: {
+        address: { city, postal_code: postalCode, state },
+        name: nameOnCard
+      },
       card: elements.getElement(CardElement),
       type: 'card'
     });

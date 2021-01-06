@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Loading from '@store/Loading.store';
+import LoadingStore from '@store/Loading.store';
 import AnalyticsBody from './AnalyticsBody';
 import AnalyticsHeader from './AnalyticsHeader';
 
 const Analytics: React.FC = () => (
-  <Loading.Provider>
+  <LoadingStore.Provider>
     <AnalyticsHeader />
     <AnalyticsBody />
-  </Loading.Provider>
+  </LoadingStore.Provider>
 );
 
 export default Analytics;

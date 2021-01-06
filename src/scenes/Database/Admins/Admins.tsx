@@ -5,7 +5,7 @@ import AddMemberModal from '@modals/AddMember/AddMember';
 import Table from '@organisms/Table/Table';
 import { Column, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import Loading from '@store/Loading.store';
+import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import ActionRow from './ActionRow';
 
@@ -30,7 +30,7 @@ export default () => {
   }, deepequal);
 
   const isOwner = useStoreState(({ db }) => db.isOwner);
-  const loading = Loading.useStoreState((store) => store.loading);
+  const loading = LoadingStore.useStoreState((store) => store.loading);
 
   const isStoreUpdated = useStoreState(
     ({ db }) => !!db.community.members?.length

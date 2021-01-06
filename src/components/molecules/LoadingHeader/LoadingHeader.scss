@@ -3,5 +3,18 @@ $PREF: 'c-loading-header';
 .#{$PREF} {
   @extend .flex-ac;
 
-  > *:first-child { margin-right: $sm; }
+  > h1,
+  button:first-child { margin-right: $sm; }
+
+  > button:first-child > svg {
+    @extend .react-icon--xl;
+
+    border-radius: 50%;
+    color: $primary;
+    padding: 2px;
+
+    @include HOVER {
+      background-color: rgba($color: $primary-hex, $alpha: 0.15);
+    }
+  }
 }

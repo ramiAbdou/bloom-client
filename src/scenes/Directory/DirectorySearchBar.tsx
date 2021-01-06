@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import SearchBar from '@molecules/SearchBar/SearchBar';
-import Loading from '@store/Loading.store';
+import LoadingStore from '@store/Loading.store';
 import Directory from './Directory.store';
 
 const DirectorySearchBar = () => {
   const [value, setValue] = useState('');
-  const loading = Loading.useStoreState((store) => store.loading);
+  const loading = LoadingStore.useStoreState((store) => store.loading);
 
   const setSearchString = Directory.useStoreActions(
     (store) => store.setSearchString
