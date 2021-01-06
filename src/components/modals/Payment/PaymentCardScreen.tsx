@@ -1,45 +1,53 @@
-import deline from 'deline';
 import React from 'react';
 
-import { takeFirst } from '@util/util';
+import Form from '@organisms/Form/Form';
+import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
+import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
+import LoadingStore from '@store/Loading.store';
 import PaymentStore from './Payment.store';
+import PaymentCardForm from './PaymentCardForm';
+import PaymentContinueButton from './PaymentContinueButton';
+import PaymentFinishButton from './PaymentFinishButton';
+import useUpdatePaymentMethod from './useUpdatePaymentMethod';
 
-const PaymentCardScreenDescription: React.FC = () => {
+const PaymentCardSubmitButton: React.FC = () => {
   const isUpdatingPaymentMethod =
     PaymentStore.useStoreState((store) => store.type) ===
     'UPDATE_PAYMENT_METHOD';
 
-  const description = isUpdatingPaymentMethod
-    ? deline`
-      An update to your current subscription will be reflected on your next
-      billing date.
-    `
-    : deline`
-      We don’t have your payment information yet. Please enter your information
-      to continue to the next step.
-    `;
-
-  return <p>{description}</p>;
+  if (isUpdatingPaymentMethod) return <PaymentFinishButton />;
+  return <PaymentContinueButton />;
 };
 
-const PaymentCardScreenTitle: React.FC = () => {
-  const type = PaymentStore.useStoreState((store) => store.type);
+const PaymentCardScreenContent: React.FC = () => {
+  const loading = LoadingStore.useStoreState((store) => store.loading);
+  if (loading) return null;
 
-  const title = takeFirst([
-    [type === 'CHANGE_PLAN', 'Change Membership Plan'],
-    [type === 'PAY_DUES', 'Pay Dues'],
-    [type === 'UPDATE_PAYMENT_METHOD', 'Update Payment Method']
-  ]);
+  return (
+    <>
+      <ModalContentContainer>
+        <PaymentCardForm />
+      </ModalContentContainer>
 
-  return <h1>{title}</h1>;
+      <PaymentFormErrorMessage />
+      <PaymentCardSubmitButton />
+    </>
+  );
 };
 
 const PaymentCardScreen: React.FC = () => {
+  const loading = LoadingStore.useStoreState((store) => store.loading);
+  const screen = PaymentStore.useStoreState((store) => store.screen);
+
+  const updatePaymentMethod = useUpdatePaymentMethod();
+
+  // Will be null if the Stripe object hasn't been loaded yet.
+  if (screen !== 'CARD_FORM' || !updatePaymentMethod || loading) return null;
+
   return (
-    <div>
-      <PaymentCardScreenTitle />
-      <PaymentCardScreenDescription />
-    </div>
+    <Form className="mo-payment" onSubmit={updatePaymentMethod}>
+      <PaymentCardScreenContent />
+    </Form>
   );
 };
 

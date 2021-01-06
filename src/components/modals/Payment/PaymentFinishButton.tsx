@@ -5,9 +5,14 @@ import Form from '@organisms/Form/Form.store';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 import { useStripe } from '@stripe/react-stripe-js';
+import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';
 
 const PaymentFinishButton: React.FC = () => {
+  const isUpdatingPaymentMethod =
+    PaymentStore.useStoreState((store) => store.type) ===
+    'UPDATE_PAYMENT_METHOD';
+
   const selectedTypeId = PaymentStore.useStoreState(
     (store) => store.selectedTypeId
   );
@@ -24,6 +29,12 @@ const PaymentFinishButton: React.FC = () => {
 
   const isFree = amount === 0;
 
+  const buttonTitle = takeFirst([
+    [isFree, 'Change Membership'],
+    [isUpdatingPaymentMethod, 'Update Payment Method'],
+    `Finish and Pay $${amount}`
+  ]);
+
   // Use a traditional checkout form.
   return (
     <SubmitButton
@@ -33,8 +44,8 @@ const PaymentFinishButton: React.FC = () => {
       loading={isLoading}
       loadingText="Paying..."
     >
-      {!isFree && <IoLockClosed />}
-      {isFree ? 'Change Membership' : `Finish and Pay $${amount}`}
+      {(isUpdatingPaymentMethod || !isFree) && <IoLockClosed />}
+      {buttonTitle}
     </SubmitButton>
   );
 };

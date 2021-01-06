@@ -1,12 +1,23 @@
-import { createContextStore } from 'easy-peasy';
+import { Action, action, createContextStore } from 'easy-peasy';
+
+import { PaymentModalScreen, PaymentModalType } from './Payment.types';
 
 export type PaymentModel = {
+  screen: PaymentModalScreen;
   selectedTypeId: string;
-  type: 'CHANGE_PLAN' | 'PAY_DUES' | 'UPDATE_PAYMENT_METHOD';
+  setScreen: Action<PaymentModel, PaymentModalScreen>;
+  showAutoRenewOption: boolean;
+  type: PaymentModalType;
 };
 
 export const paymentModel: PaymentModel = {
+  screen: null,
   selectedTypeId: null,
+  setScreen: action((store, screen: PaymentModalScreen) => ({
+    ...store,
+    screen
+  })),
+  showAutoRenewOption: false,
   type: 'PAY_DUES'
 };
 

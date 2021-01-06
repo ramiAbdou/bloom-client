@@ -6,10 +6,11 @@ import { useStoreActions } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { PaymentMethodCreateParams } from '@stripe/stripe-js';
 import { UPDATE_PAYMENT_METHOD, UpdatePaymentMethodArgs } from './Payment.gql';
+// import PaymentStore from './Payment.store';
 
 const useUpdatePaymentMethod = (): OnFormSubmit => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+  // const type = PaymentStore.useStoreState((store) => store.type);
 
   const elements = useElements();
   const stripe = useStripe();
@@ -24,7 +25,11 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
   if (!stripe) return null;
 
-  return async ({ items, setErrorMessage, setIsLoading }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    items,
+    setErrorMessage,
+    setIsLoading
+  }: OnFormSubmitArgs) => {
     const city = items.find(({ title }) => title === 'City').value;
     const state = items.find(({ title }) => title === 'State').value;
     const postalCode = items.find(({ title }) => title === 'Zip Code').value;
@@ -77,10 +82,9 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     // Success! Update the member entity just in case the membership type
     // changed or their duesStatus changed.
     mergeEntities({ data: updateData, schema: Schema.MEMBER });
-
-    // Needs to change, to show confirmation screen.
-    closeModal();
   };
+
+  return onSubmit;
 };
 
 export default useUpdatePaymentMethod;

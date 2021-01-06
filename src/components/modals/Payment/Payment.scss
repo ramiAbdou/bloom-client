@@ -4,8 +4,10 @@ $PREF: 'mo-payment';
   bottom: $md;
   position: sticky;
 
-  > svg { @extend .react-icon--sm; color: white; margin-right: $xxs; }
+  > svg { @extend .react-icon; color: white; margin-right: $xxs; }
   &:disabled > svg { color: $gray-3; }
+
+  &--continue > svg { margin: 0 0 0 $xxs; }
 }
 
 // ## BILLING CONTAINER - Row that contains the City, State, and Zip Code.

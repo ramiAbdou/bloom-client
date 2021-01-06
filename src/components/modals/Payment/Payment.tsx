@@ -1,50 +1,34 @@
 import React, { useEffect } from 'react';
 
 import { ModalType } from '@constants';
-import Form from '@organisms/Form/Form';
-import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import Modal from '@organisms/Modal/Modal';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import Loading from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { takeFirst } from '@util/util';
 import PaymentStore, { paymentModel } from './Payment.store';
-import PaymentCardForm from './PaymentCardForm';
-import PaymentFinishButton from './PaymentFinishButton';
+import PaymentCardScreen from './PaymentCardScreen';
 import PaymentHeader from './PaymentHeader';
 import PaymentStripeProvider from './PaymentStripeProvider';
-import useCreateSubscription from './useCreateSubscription';
 import useFetchDuesInformation from './useFetchDuesInformation';
+import useInitPaymentScreen from './useInitPaymentScreen';
 import usePaymentMethod from './usePaymentMethod';
 
-const PaymentModalFormContent: React.FC = () => {
-  const loading = Loading.useStoreState((store) => store.loading);
-  if (loading) return null;
-
-  return (
-    <>
-      <ModalContentContainer>
-        <PaymentCardForm />
-      </ModalContentContainer>
-
-      <PaymentFormErrorMessage />
-      <PaymentFinishButton />
-    </>
-  );
-};
-
 const PaymentModalContent: React.FC = () => {
-  const createSubscription = useCreateSubscription();
-  usePaymentMethod();
+  const type = PaymentStore.useStoreState((store) => store.type);
 
-  // Will be null if the Stripe object hasn't been loaded yet.
-  if (!createSubscription) return null;
+  usePaymentMethod();
+  useInitPaymentScreen();
+
+  const modalId: ModalType = takeFirst([
+    [type === 'PAY_DUES', ModalType.PAY_DUES],
+    [type === 'CHANGE_PLAN', ModalType.CHANGE_PLAN],
+    [type === 'UPDATE_PAYMENT_METHOD', ModalType.UPDATE_PAYMENT_METHOD]
+  ]);
 
   return (
-    <Modal id={ModalType.PAY_DUES}>
+    <Modal id={modalId}>
       <PaymentHeader />
-      <Form className="mo-payment" onSubmit={createSubscription}>
-        <PaymentModalFormContent />
-      </Form>
+      <PaymentCardScreen />
     </Modal>
   );
 };
