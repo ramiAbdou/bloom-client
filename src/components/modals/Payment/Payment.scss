@@ -12,7 +12,6 @@ $PREF: 'mo-payment';
 
 // ## BILLING CONTAINER - Row that contains the City, State, and Zip Code.
 
-.#{$PREF}-billing-ctr { @extend .flex-acsb; }
 .#{$PREF}-billing-ctr > div:not(:last-child) { margin-right: $sm; }
 
 .#{$PREF}-billing-ctr > .c-form-item,
