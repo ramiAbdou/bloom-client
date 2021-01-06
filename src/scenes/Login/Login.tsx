@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import Card from '@molecules/Card/Card';
+import Card from '@containers/Card/Card';
 import ConfirmationScreen from '@molecules/ConfirmationScreen/ConfirmationScreen';
 import LoginCard from './LoginCard';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
-import Card from '@molecules/Card/Card';
+import Card from '@containers/Card/Card';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';

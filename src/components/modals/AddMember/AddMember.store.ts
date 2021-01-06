@@ -12,16 +12,12 @@ type AddMemberModel = {
 
 export const addMemberModel: AddMemberModel = {
   addRow: action((state) => ({ ...state, rows: [...state.rows, uuid()] })),
-
   admin: false,
-
   clearRows: action((state) => ({ ...state, rows: [uuid()] })),
-
   deleteRow: action((state, rowId: string) => ({
     ...state,
     rows: state.rows.filter((id: string) => id !== rowId)
   })),
-
   rows: [uuid()]
 };
 

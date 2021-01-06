@@ -4,7 +4,7 @@ import React from 'react';
 import Button from '@atoms/Button';
 import Spinner from '@atoms/Spinner';
 import { ModalType } from '@constants';
-import Card from '@molecules/Card/Card';
+import Card from '@containers/Card/Card';
 import { IPaymentMethod } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import usePaymentMethod from '../../../usePaymentMethod';

@@ -9,7 +9,7 @@ $PREF: 's-application';
   @include RESP(padding-bottom, $xl, $lg, $md);
   @include RESP(padding-top, $xl, $lg, $md);
 
-  > .c-misc-card {
+  > .t-misc-card {
     margin: auto;
     max-width: $xxl * 7;
 

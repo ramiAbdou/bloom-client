@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
-import Card from '@molecules/Card/Card';
+import Card from '@containers/Card/Card';
 import ConfirmationScreen from '@molecules/ConfirmationScreen/ConfirmationScreen';
 import { useStoreState } from '@store/Store';
 
