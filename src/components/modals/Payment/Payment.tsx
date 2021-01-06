@@ -7,6 +7,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import PaymentStore, { paymentModel } from './Payment.store';
 import PaymentCardScreen from './PaymentCardScreen';
+import PaymentConfirmation from './PaymentConfirmation';
 import PaymentHeader from './PaymentHeader';
 import PaymentStripeProvider from './PaymentStripeProvider';
 import useFetchDuesInformation from './useFetchDuesInformation';
@@ -29,6 +30,7 @@ const PaymentModalContent: React.FC = () => {
     <Modal id={modalId}>
       <PaymentHeader />
       <PaymentCardScreen />
+      <PaymentConfirmation />
     </Modal>
   );
 };
