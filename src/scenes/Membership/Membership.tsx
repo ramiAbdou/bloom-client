@@ -1,11 +1,12 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import UpdatePaymentModal from './modals/UpdatePayment/UpdatePayment';
-import ChangePlan from './pages/ChangePlan/ChangePlan';
-import ManageMembership from './pages/Manage/Manage';
+import PaymentModal from '@modals/Payment/Payment';
+import LoadingStore, { loadingModel } from '@store/Loading.store';
+import ChangePlan from './ChangePlan/ChangePlan';
+import ManageMembership from './Manage/Manage';
 
-const Membership: React.FC = () => {
+const MembershipContent: React.FC = () => {
   const { url } = useRouteMatch();
 
   return (
@@ -13,11 +14,19 @@ const Membership: React.FC = () => {
       <Switch>
         <Route exact component={ManageMembership} path={url} />
         <Route exact component={ChangePlan} path={`${url}/change-plan`} />
+        <Redirect to={url} />
       </Switch>
 
-      <UpdatePaymentModal />
+      <PaymentModal type="CHANGE_PLAN" />
+      <PaymentModal type="UPDATE_PAYMENT_METHOD" />
     </>
   );
 };
+
+const Membership: React.FC = () => (
+  <LoadingStore.Provider runtimeModel={{ ...loadingModel, loading: false }}>
+    <MembershipContent />
+  </LoadingStore.Provider>
+);
 
 export default Membership;

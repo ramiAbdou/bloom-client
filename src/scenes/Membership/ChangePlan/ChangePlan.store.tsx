@@ -14,6 +14,8 @@ const model: ChangePlanModel = {
   }))
 };
 
-export default createContextStore<ChangePlanModel>(model, {
+const ChangePlanStore = createContextStore<ChangePlanModel>(model, {
   disableImmer: true
 });
+
+export default ChangePlanStore;

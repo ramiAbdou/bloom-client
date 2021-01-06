@@ -44,22 +44,24 @@ const ChangePlanButton = () => {
 
   return (
     <Link to={`${url}/change-plan`}>
-      <Button fit secondary>
+      <Button fill secondary>
         Change Membership Plan
       </Button>
     </Link>
   );
 };
 
-const CurrentPlanCard = () => (
-  <Card className="s-membership-manage-card--plan">
-    <div>
-      <h4>Current Plan</h4>
-    </div>
+const CurrentPlanCard: React.FC = () => {
+  return (
+    <Card className="s-membership-manage-card--plan">
+      <div>
+        <h4>Current Plan</h4>
+      </div>
 
-    <CurrentPlanContent />
-    <ChangePlanButton />
-  </Card>
-);
+      <CurrentPlanContent />
+      <ChangePlanButton />
+    </Card>
+  );
+};
 
 export default CurrentPlanCard;

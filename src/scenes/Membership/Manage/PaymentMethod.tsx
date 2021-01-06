@@ -22,7 +22,7 @@ const PaymentMethodContent = () => {
     return (
       <>
         <p>No payment method added.</p>
-        <Button fit secondary onClick={onClick}>
+        <Button fill secondary onClick={onClick}>
           Add Payment Method
         </Button>
       </>
@@ -41,7 +41,7 @@ const PaymentMethodContent = () => {
         Expires: {expirationDate} &bull; ZIP Code: {zipCode}
       </p>
 
-      <Button fit secondary onClick={onClick}>
+      <Button fill secondary onClick={onClick}>
         Update Payment Method
       </Button>
     </>
@@ -49,7 +49,7 @@ const PaymentMethodContent = () => {
 };
 
 const PaymentMethodCard = () => {
-  const loading = usePaymentMethod();
+  const loading = usePaymentMethod(true);
 
   return (
     <Card className="s-membership-manage-card--payment">

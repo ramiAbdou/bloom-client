@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HistoryTable from '../components/HistoryTable';
+import HistoryTable from './HistoryTable';
 
 const PaymentHistoryContainer = () => (
   <div className="s-membership-manage-history-ctr">

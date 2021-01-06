@@ -72,7 +72,7 @@ const HomeRouter: React.FC = () => {
       <Nav />
       <HomeRouterContent />
       <AddMemberModal />
-      <PaymentModal />
+      <PaymentModal type="PAY_DUES" />
     </>
   );
 };

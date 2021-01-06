@@ -2,9 +2,8 @@ import React from 'react';
 
 import MainContent from '@containers/Main/Content';
 import MainHeader from '@containers/Main/Header';
-import ChangePlanModal from '../../modals/ChangePlan/ChangePlan';
 import ChangePlanStore from './ChangePlan.store';
-import PlanContainer from './containers/Plan';
+import PlanContainer from './PlanContainer';
 
 const ChangePlan = () => {
   return (
@@ -14,8 +13,6 @@ const ChangePlan = () => {
       <MainContent>
         <PlanContainer />
       </MainContent>
-
-      <ChangePlanModal />
     </ChangePlanStore.Provider>
   );
 };

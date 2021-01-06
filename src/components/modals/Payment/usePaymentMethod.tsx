@@ -7,7 +7,7 @@ import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { GET_PAYMENT_METHOD } from './Payment.gql';
 
-const usePaymentMethod = () => {
+const usePaymentMethod = (skipGlobalLoadingState?: boolean) => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { data, loading } = useQuery<IMember>({
@@ -15,7 +15,7 @@ const usePaymentMethod = () => {
     query: GET_PAYMENT_METHOD
   });
 
-  useUpdateLoading(loading);
+  useUpdateLoading(skipGlobalLoadingState ? undefined : loading);
 
   useEffect(() => {
     if (!data) return;

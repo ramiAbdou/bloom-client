@@ -14,7 +14,9 @@ const useUpdateLoading = (loading: boolean) => {
   const setLoading = LoadingStore.useStoreActions((store) => store.setLoading);
 
   useEffect(() => {
-    if (loading !== currentLoading) setLoading(loading);
+    if (loading !== undefined && loading !== currentLoading) {
+      setLoading(loading);
+    }
   }, [loading]);
 };
 

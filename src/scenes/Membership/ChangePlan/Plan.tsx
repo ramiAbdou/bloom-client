@@ -6,13 +6,13 @@ import Card from '@containers/Card/Card';
 import { IMemberType } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import ChangePlan from '../ChangePlan.store';
+import ChangePlanStore from './ChangePlan.store';
 
 const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
   const isCurrent = useStoreState(({ db }) => db.member.type === id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const setSelectedTypeId = ChangePlan.useStoreActions(
+  const setSelectedTypeId = ChangePlanStore.useStoreActions(
     (store) => store.setSelectedTypeId
   );
 
@@ -41,7 +41,7 @@ const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
       </p>
 
       <Button
-        fit
+        fill
         disabled={isCurrent}
         primary={isCurrent}
         secondary={!isCurrent}

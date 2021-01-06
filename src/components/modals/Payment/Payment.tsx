@@ -5,7 +5,7 @@ import Modal from '@organisms/Modal/Modal';
 import LoadingStore from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import PaymentStore, { paymentModel } from './Payment.store';
+import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import PaymentCardScreen from './PaymentCardScreen';
 import PaymentConfirmationScreen from './PaymentConfirmationScreen';
 import PaymentFinishScreen from './PaymentFinishScreen';
@@ -37,7 +37,9 @@ const PaymentModalContent: React.FC = () => {
   );
 };
 
-const PaymentModal: React.FC = () => {
+type PaymentModalProps = Pick<PaymentModel, 'type'>;
+
+const PaymentModal: React.FC<PaymentModalProps> = ({ type }) => {
   const memberTypeId: string = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
     return byId[db.member.type]?.id;
@@ -60,7 +62,7 @@ const PaymentModal: React.FC = () => {
   return (
     <LoadingStore.Provider>
       <PaymentStore.Provider
-        runtimeModel={{ ...paymentModel, selectedTypeId: memberTypeId }}
+        runtimeModel={{ ...paymentModel, selectedTypeId: memberTypeId, type }}
       >
         <PaymentStripeProvider>
           <PaymentModalContent />
