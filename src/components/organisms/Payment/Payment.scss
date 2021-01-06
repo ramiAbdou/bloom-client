@@ -1,6 +1,9 @@
 $PREF: 'c-payment';
 
 .#{$PREF}-button {
+  bottom: $md;
+  position: sticky;
+
   > svg { @extend .react-icon--sm; color: white; margin-right: $xxs; }
   &:disabled > svg { color: $gray-3; }
 }
@@ -11,7 +14,7 @@ $PREF: 'c-payment';
 .#{$PREF}-billing-ctr > div:not(:last-child) { margin-right: $sm; }
 
 .#{$PREF}-billing-ctr > .c-form-item,
-.#{$PREF} > .c-form-item, 
+.#{$PREF} > .c-modal-content-ctr > .c-form-item, 
 .#{$PREF}-item {
   margin-bottom: $md;
   margin-top: 0;
@@ -26,5 +29,7 @@ $PREF: 'c-payment';
     > .__PrivateStripeElement { width: 100%; }
   }
 }
+
+.#{$PREF} > .c-modal-content-ctr { margin-bottom: $sm; }
 
 .#{$PREF}-item--type > div { @extend .flex-acsb; }

@@ -10,10 +10,9 @@ export type IntegrationCardProps = {
   href: string;
 };
 
-const IntegrationCardHeader: React.FC<Pick<
-  IntegrationCardProps,
-  'connected' | 'logo'
->> = ({ connected, logo }) => (
+const IntegrationCardHeader: React.FC<
+  Pick<IntegrationCardProps, 'connected' | 'logo'>
+> = ({ connected, logo }) => (
   <div className="s-integrations-card-header">
     <img alt="Company Logo" className="s-integrations-icon" src={logo} />
     {connected && <StatusTag positive>Connected</StatusTag>}

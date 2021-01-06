@@ -3,6 +3,7 @@ import React from 'react';
 import { ChildrenProps } from '@constants';
 import Form, { FormProps } from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
+import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { useStoreState } from '@store/Store';
 import CardOnFile from './components/CardOnFile';
 import CardInfoContainer from './containers/CardInfo';
@@ -39,8 +40,12 @@ const PaymentForm = ({
       onSubmit={onSubmit}
     >
       {children}
-      <CardOnFile isCardChanging={isCardChanging} isFree={isFree} />
-      <CardInfoContainer isCardChanging={isCardChanging} isFree={isFree} />
+
+      <ModalContentContainer>
+        <CardOnFile isCardChanging={isCardChanging} isFree={isFree} />
+        <CardInfoContainer isCardChanging={isCardChanging} isFree={isFree} />
+      </ModalContentContainer>
+
       <FormErrorMessage />
       <SubmitButton />
     </Form>

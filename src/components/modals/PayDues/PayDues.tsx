@@ -11,7 +11,6 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import Dues from './Dues.store';
 import DuesModalContainer from './DuesModalContainer';
 import FinishDuesButton from './FinishButton';
-import DuesTypeOptions from './TypeOptions';
 import useCreateSubscription from './useCreateSubscription';
 
 const DuesModalContent = () => {
@@ -27,7 +26,6 @@ const DuesModalContent = () => {
     <Modal className="s-actions-dues" id={ModalType.PAY_DUES}>
       <LoadingHeader loading={loading} title="Pay Dues" />
       <PaymentDescription selectedTypeId={selectedTypeId} />
-      <DuesTypeOptions />
 
       {!loading && (
         <PaymentForm

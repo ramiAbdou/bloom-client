@@ -46,7 +46,8 @@ $PREF: 'c-modal';
   @include M {
     right: $sm;
     top: $sm;
-    > svg { @include SIZE($md) ; }
+
+    > svg { @include SIZE($md); }
   }
 
   > svg { @extend .react-icon--xl; color: $gray-5; }
@@ -59,9 +60,11 @@ $PREF: 'c-modal';
 .#{$PREF},
 .#{$PREF} > form {
   // All modals will have an h1 tag, which will be standardized everywhere.
-  > h1 { color: $primary; margin-bottom: $sm; position: sticky; top: $md; }
-  > .c-loading-header { margin-bottom: $sm; }
+  > h1,
   > .c-loading-header > h1 { color: $primary; }
+
+  > h1,
+  > .c-loading-header { margin-bottom: $sm; position: sticky; top: $md; }
   > p:first-of-type { margin-bottom: $md; }
   > .c-misc-question-ctr { max-height: 70vh; overflow: scroll; }
 }
@@ -71,3 +74,7 @@ $PREF: 'c-modal';
 .#{$PREF}--confirmation > p { margin-bottom: $md; }
 .#{$PREF}--confirmation > div { @extend .flex-ac; }
 .#{$PREF}--confirmation > div > button:first-of-type { margin-right: $xs; }
+
+// ## MODAL CONTENT CONTAINER
+
+.#{$PREF}-content-ctr { max-height: 70vh; overflow: scroll; }

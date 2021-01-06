@@ -1,6 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
+import Separator from '@atoms/Separator';
 import { IIntegrations } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import { buildIntegrationData } from './Integrations.util';
@@ -26,12 +27,34 @@ const IntegrationsCardContainer: React.FC = () => {
     stripeAccountId
   });
 
+  const disconnectedData: IntegrationCardProps[] = integrationData.filter(
+    ({ connected }) => !connected
+  );
+
+  const connectedData: IntegrationCardProps[] = integrationData.filter(
+    ({ connected }) => connected
+  );
+
   return (
-    <div className="s-integrations-card-ctr">
-      {integrationData.map((props: IntegrationCardProps) => (
-        <IntegrationCard key={props.name} {...props} />
-      ))}
-    </div>
+    <>
+      {!!connectedData.length && (
+        <>
+          <div className="s-integrations-card-ctr">
+            {connectedData.map((props: IntegrationCardProps) => (
+              <IntegrationCard key={props.name} {...props} />
+            ))}
+          </div>
+
+          <Separator margin={24} />
+        </>
+      )}
+
+      <div className="s-integrations-card-ctr">
+        {disconnectedData.map((props: IntegrationCardProps) => (
+          <IntegrationCard key={props.name} {...props} />
+        ))}
+      </div>
+    </>
   );
 };
 

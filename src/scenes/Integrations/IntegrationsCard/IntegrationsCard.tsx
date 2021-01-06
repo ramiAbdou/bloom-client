@@ -5,7 +5,7 @@ import IntegrationCardButton from './Button';
 import IntegrationCardContent from './Content';
 
 export type IntegrationCardProps = {
-  completed?: boolean;
+  connected?: boolean;
   description: string;
   logo: string;
   name: string;
