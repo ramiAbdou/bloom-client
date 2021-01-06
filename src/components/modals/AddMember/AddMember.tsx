@@ -25,7 +25,11 @@ const AddMemberContent: React.FC = () => {
   const onClick = () => addRow();
 
   return (
-    <Modal id={ModalType.ADD_MEMBERS} width={750} onClose={onClose}>
+    <Modal
+      id={admin ? ModalType.ADD_ADMINS : ModalType.ADD_MEMBERS}
+      width={750}
+      onClose={onClose}
+    >
       <Form className="mo-add-member-form" onSubmit={createMembers}>
         <h1>{admin ? 'Add Admin(s)' : 'Add Member(s)'}</h1>
 

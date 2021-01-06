@@ -2,7 +2,12 @@ $PREF: 'c-misc';
 
 // ## SEPARATOR
 
-.#{$PREF}-sep { border-bottom: 1px $gray-5 solid; width: 100%; }
+.#{$PREF}-sep {
+  border: 0;
+  border-bottom: 1px $gray-5 solid;
+  height: 0;
+  width: 100%;
+}
 
 // ## ERROR MESSAGE - Has an icon and some text.
 

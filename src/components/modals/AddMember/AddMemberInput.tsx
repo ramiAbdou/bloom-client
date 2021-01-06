@@ -22,6 +22,7 @@ const AddMemberInputTrashButton: React.FC<IdProps> = ({ id }) => {
 
 const AddMemberInput: React.FC<IdProps> = ({ id }) => {
   const isOwner = useStoreState(({ db }) => db.isOwner);
+  const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   return (
     <div className="mo-add-member-input-ctr">
@@ -53,7 +54,7 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
           validate={(value: string) => validator.isEmail(value)}
         />
 
-        {isOwner && (
+        {isOwner && !admin && (
           <FormItem
             plain
             id={`${id}=CHECKBOX`}

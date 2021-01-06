@@ -49,8 +49,7 @@ $PREF: 'o-side-bar';
 // ## SIDEBAR SECTION
 
 .#{$PREF}-section {
-  margin-right: $ss;
-  margin-top: $md;
+  margin: $sm $ss 0 0;
 
   > h5 { color: $gray-3; margin: 0 0 $xs $sm; }
 }

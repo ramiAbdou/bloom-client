@@ -31,7 +31,7 @@ const Separator: React.FC<SeparatorProps> = ({
     [mBottom !== undefined, mBottom]
   ]);
 
-  return <div className="c-misc-sep" style={{ marginBottom, marginTop }} />;
+  return <hr className="c-misc-sep" style={{ marginBottom, marginTop }} />;
 };
 
 export default Separator;
