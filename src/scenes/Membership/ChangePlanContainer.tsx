@@ -2,7 +2,7 @@ import React from 'react';
 
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import PlanCard from './Plan';
+import PlanCard from './ChangePlanCard';
 
 const PlanContainer = () => {
   const types: IMemberType[] = useStoreState(({ db }) => {

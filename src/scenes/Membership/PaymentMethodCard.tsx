@@ -52,7 +52,7 @@ const PaymentMethodCard = () => {
   const loading = usePaymentMethod(true);
 
   return (
-    <Card className="s-membership-manage-card--payment">
+    <Card className="s-membership-card--payment">
       <div>
         <h4>Payment Method</h4>
         <Spinner dark loading={loading} />

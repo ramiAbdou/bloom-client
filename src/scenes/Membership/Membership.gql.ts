@@ -1,5 +1,7 @@
 import { query } from 'gql-query-builder';
 
+// ## GET PAYMENT HISTORY
+
 export const GET_PAYMENT_HISTORY = query({
   fields: [
     'id',

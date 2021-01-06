@@ -1,11 +1,11 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-type ChangePlanModel = {
+type MembershipModel = {
   selectedTypeId: string;
-  setSelectedTypeId: Action<ChangePlanModel, string>;
+  setSelectedTypeId: Action<MembershipModel, string>;
 };
 
-const model: ChangePlanModel = {
+const model: MembershipModel = {
   selectedTypeId: null,
 
   setSelectedTypeId: action((state, selectedTypeId: string) => ({
@@ -14,8 +14,8 @@ const model: ChangePlanModel = {
   }))
 };
 
-const ChangePlanStore = createContextStore<ChangePlanModel>(model, {
+const MembershipStore = createContextStore<MembershipModel>(model, {
   disableImmer: true
 });
 
-export default ChangePlanStore;
+export default MembershipStore;

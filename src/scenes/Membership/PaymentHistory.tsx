@@ -6,7 +6,7 @@ import { Column, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { uuid } from '@util/util';
 
-const HistoryTable = () => {
+const PaymentHistoryTable: React.FC = () => {
   const columns: Column[] = [
     { id: 'Date', title: 'Date', type: 'SHORT_TEXT' },
     { id: 'Amount', title: 'Amount', type: 'SHORT_TEXT' },
@@ -56,4 +56,11 @@ const HistoryTable = () => {
   );
 };
 
-export default HistoryTable;
+const PaymentHistory: React.FC = () => (
+  <div className="s-membership-history-ctr">
+    <h3>Payment History</h3>
+    <PaymentHistoryTable />
+  </div>
+);
+
+export default PaymentHistory;

@@ -53,7 +53,7 @@ const ChangePlanButton = () => {
 
 const CurrentPlanCard: React.FC = () => {
   return (
-    <Card className="s-membership-manage-card--plan">
+    <Card className="s-membership-card--plan">
       <div>
         <h4>Current Plan</h4>
       </div>

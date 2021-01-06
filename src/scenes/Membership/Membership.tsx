@@ -3,8 +3,9 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import PaymentModal from '@modals/Payment/Payment';
 import LoadingStore, { loadingModel } from '@store/Loading.store';
-import ChangePlan from './ChangePlan/ChangePlan';
-import ManageMembership from './Manage/Manage';
+import ChangePlan from './ChangePlan';
+import ManageMembership from './ManageMembership';
+import MembershipStore from './Membership.store';
 
 const MembershipContent: React.FC = () => {
   const { url } = useRouteMatch();
@@ -25,7 +26,9 @@ const MembershipContent: React.FC = () => {
 
 const Membership: React.FC = () => (
   <LoadingStore.Provider runtimeModel={{ ...loadingModel, loading: false }}>
-    <MembershipContent />
+    <MembershipStore.Provider>
+      <MembershipContent />
+    </MembershipStore.Provider>
   </LoadingStore.Provider>
 );
 

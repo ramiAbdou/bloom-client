@@ -16,10 +16,21 @@ import useInitPaymentScreen from './useInitPaymentScreen';
 import usePaymentMethod from './usePaymentMethod';
 
 const PaymentModalContent: React.FC = () => {
-  const type = PaymentStore.useStoreState((store) => store.type);
-
-  usePaymentMethod();
+  // usePaymentMethod();
   useInitPaymentScreen();
+
+  return (
+    <>
+      <PaymentHeader />
+      <PaymentCardScreen />
+      <PaymentConfirmationScreen />
+      <PaymentFinishScreen />
+    </>
+  );
+};
+
+const PaymentModalContainer: React.FC = () => {
+  const type = PaymentStore.useStoreState((store) => store.type);
 
   const modalId: ModalType = takeFirst([
     [type === 'PAY_DUES', ModalType.PAY_DUES],
@@ -29,10 +40,7 @@ const PaymentModalContent: React.FC = () => {
 
   return (
     <Modal id={modalId}>
-      <PaymentHeader />
-      <PaymentCardScreen />
-      <PaymentConfirmationScreen />
-      <PaymentFinishScreen />
+      <PaymentModalContent />
     </Modal>
   );
 };
@@ -65,7 +73,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ type }) => {
         runtimeModel={{ ...paymentModel, selectedTypeId: memberTypeId, type }}
       >
         <PaymentStripeProvider>
-          <PaymentModalContent />
+          <PaymentModalContainer />
         </PaymentStripeProvider>
       </PaymentStore.Provider>
     </LoadingStore.Provider>
