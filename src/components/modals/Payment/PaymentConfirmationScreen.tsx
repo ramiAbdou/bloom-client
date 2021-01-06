@@ -2,10 +2,12 @@ import deline from 'deline';
 import React from 'react';
 
 import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
+import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';
 
 const PaymentConfirmation: React.FC = () => {
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const screen = PaymentStore.useStoreState((store) => store.screen);
   const type = PaymentStore.useStoreState((store) => store.type);
 
@@ -41,8 +43,10 @@ const PaymentConfirmation: React.FC = () => {
     ]
   ]);
 
+  const onClose = () => closeModal();
+
   return (
-    <ConfirmationScreen title={confirmationTitle}>
+    <ConfirmationScreen closeButton title={confirmationTitle} onClose={onClose}>
       <p>{confirmationDescription}</p>
     </ConfirmationScreen>
   );
