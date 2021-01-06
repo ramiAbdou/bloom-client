@@ -2,26 +2,7 @@ import { mutation, query } from 'gql-query-builder';
 
 import { IMember, IQuestion } from '@store/entities';
 
-export interface CreateMembersArgs {
-  members: {
-    email: string;
-    firstName: string;
-    isAdmin: boolean;
-    lastName: string;
-  }[];
-}
-
-export const CREATE_MEMBERS = mutation({
-  fields: [
-    'id',
-    'role',
-    'status',
-    { allData: ['questionId', 'value'] },
-    { user: ['id', 'firstName', 'lastName', 'email'] }
-  ],
-  operation: 'createMembers',
-  variables: { members: { required: true, type: '[NewMemberInput!]' } }
-}).query;
+// DELETE MEMBERS
 
 export const DELETE_MEMBERS = mutation({
   operation: 'deleteMembers',
@@ -32,11 +13,15 @@ export interface DemoteToAdminArgs {
   memberIds: string[];
 }
 
+// DEMOTE TO MEMBER
+
 export const DEMOTE_TO_MEMBER = mutation({
   fields: ['id', 'role'],
   operation: 'demoteToMember',
   variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
+
+// GET DATABASE
 
 export interface GetDatabaseResult {
   id: string;
@@ -61,6 +46,18 @@ export const GET_DATABASE = query({
   operation: 'getDatabase'
 }).query;
 
+// PROMOTE TO ADMIN
+
+export type PromoteToAdminArgs = DemoteToAdminArgs;
+
+export const PROMOTE_TO_ADMIN = mutation({
+  fields: ['id', 'role'],
+  operation: 'promoteToAdmin',
+  variables: { memberIds: { required: true, type: '[String!]' } }
+}).query;
+
+// RENAME QUESTION
+
 export interface RenameQuestionArgs {
   id: string;
   title: string;
@@ -75,12 +72,4 @@ export const RENAME_QUESTION = mutation({
     title: { required: true },
     version: { required: true, type: 'Int' }
   }
-}).query;
-
-export type PromoteToAdminArgs = DemoteToAdminArgs;
-
-export const PROMOTE_TO_ADMIN = mutation({
-  fields: ['id', 'role'],
-  operation: 'promoteToAdmin',
-  variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;

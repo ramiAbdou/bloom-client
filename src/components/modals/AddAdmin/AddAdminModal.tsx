@@ -9,8 +9,8 @@ import Modal from '@organisms/Modal/Modal';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import AddModalInput from '../AddModalInput';
-import { CREATE_MEMBERS, CreateMembersArgs } from '../Database.gql';
+import { CREATE_MEMBERS, CreateMembersArgs } from '../AddMember/AddMember.gql';
+import AddModalInput from '../AddMember/AddMemberInput';
 import AddAdmin, { doesInputHaveError } from './AddAdmin.store';
 
 const AddAdminInput = memo(({ id }: IdProps) => {

@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import { IdProps } from '@constants';
-import AddModalInput from '@scenes/Database/AddModalInput';
+import AddModalInput from '@modals/AddMember/AddMemberInput';
 import { useStoreState } from '@store/Store';
 import AddMember from './AddMember.store';
 
