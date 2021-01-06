@@ -7,12 +7,14 @@ import FormLabel from '../organisms/Form/FormLabel';
 
 export interface QuestionValueItemProps extends ValueProps {
   hideNullValue?: boolean;
+  large?: boolean;
   title: string;
   type: QuestionType;
 }
 
 interface QuestionValueListProps {
   hideNullValue?: boolean;
+  large?: boolean;
   items: QuestionValueItemProps[];
   marginBottom?: number;
 }
@@ -43,6 +45,7 @@ const Value = ({ type, value }: Partial<QuestionValueItemProps>) => {
  */
 const QuestionValue: React.FC<QuestionValueItemProps> = ({
   hideNullValue,
+  large,
   title,
   type,
   value
@@ -51,27 +54,23 @@ const QuestionValue: React.FC<QuestionValueItemProps> = ({
 
   return (
     <div className="m-misc-question">
-      <FormLabel small>{title}</FormLabel>
+      <FormLabel small={!large}>{title}</FormLabel>
       <Value type={type} value={value} />
     </div>
   );
 };
 
 const QuestionValueList: React.FC<QuestionValueListProps> = ({
-  hideNullValue,
   items,
-  marginBottom
+  marginBottom,
+  ...props
 }) => {
   if (!items) return null;
 
   return (
     <div className="m-misc-question-ctr" style={{ marginBottom }}>
       {items.map((item: QuestionValueItemProps) => (
-        <QuestionValue
-          key={item.title}
-          hideNullValue={hideNullValue}
-          {...item}
-        />
+        <QuestionValue key={item.title} {...item} {...props} />
       ))}
     </div>
   );

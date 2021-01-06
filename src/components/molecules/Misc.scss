@@ -15,8 +15,11 @@ $PREF: 'm-misc';
 
 // ## QUESTION VALUE - Has a title component and value component.
 
-.#{$PREF}-question:not(:last-child) { margin-bottom: $md; }
-.#{$PREF}-question > div:last-child { @extend .flex-w; }
-.#{$PREF}-question > div:last-child > p:not(:only-child) {
-  margin-bottom: $xxs;
+.#{$PREF}-question {
+  &:not(:last-child) { margin-bottom: $md; }
+
+  > div:last-child {
+    @extend .flex-w;
+    > p:not(:only-child) { margin-bottom: $xxs; }
+  }
 }

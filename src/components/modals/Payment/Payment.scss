@@ -31,6 +31,8 @@ $PREF: 'mo-payment';
   }
 }
 
-.#{$PREF} > .c-modal-content-ctr { margin-bottom: $sm; }
+.#{$PREF}-billing-ctr > .c-form-item { margin-bottom: 0; margin-top: 0; }
+
+.#{$PREF} > .c-modal-content-ctr { margin-bottom: $lg; }
 
 .#{$PREF}-item--type > div { @extend .flex-acsb; }
