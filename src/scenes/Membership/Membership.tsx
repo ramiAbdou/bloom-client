@@ -20,7 +20,7 @@ const MembershipContent: React.FC = () => {
       </Switch>
 
       <PaymentModal selectedTypeId={typeId} type="CHANGE_MEMBERSHIP" />
-      <PaymentModal selectedTypeId={typeId} type="UPDATE_PAYMENT_METHOD" />
+      <PaymentModal type="UPDATE_PAYMENT_METHOD" />
     </>
   );
 };

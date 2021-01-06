@@ -14,14 +14,18 @@ import Form from '../../organisms/Form/Form';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
 
-const PaymentFinishScreen: React.FC = () => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
-  const screen = PaymentStore.useStoreState((store) => store.screen);
+const PaymentFinishScreenContent: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
   const isFree: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
     return byTypeId[typeId].isFree;
+  });
+
+  const cardString: string = useStoreState(({ db }) => {
+    const { paymentMethod } = db.member;
+    if (!paymentMethod) return null;
+    return `${paymentMethod.brand} ending in ${paymentMethod.last4}`;
   });
 
   const typeString: string = useStoreState(({ db }) => {
@@ -36,17 +40,39 @@ const PaymentFinishScreen: React.FC = () => {
       .replace('YEARLY', 'yr');
   });
 
-  const cardString: string = useStoreState(({ db }) => {
-    const { paymentMethod } = db.member;
-    if (!paymentMethod) return null;
-    return `${paymentMethod.brand} ending in ${paymentMethod.last4}`;
-  });
-
-  if (screen !== 'FINISH' || loading) return null;
-
   const cardItem: QuestionValueItemProps[] = !isFree
     ? [{ title: 'Credit or Debit Card', type: 'SHORT_TEXT', value: cardString }]
     : [];
+
+  return (
+    <Form className="mo-payment">
+      <ModalContentContainer>
+        <QuestionValueList
+          large
+          items={[
+            {
+              title: 'Membership Type',
+              type: 'MULTIPLE_CHOICE',
+              value: typeString
+            },
+            ...cardItem
+          ]}
+        />
+
+        <Separator margin={24} />
+        <FormItem title="Auto-Renew Membership" type="TOGGLE" />
+      </ModalContentContainer>
+
+      <PaymentFinishButton />
+    </Form>
+  );
+};
+
+const PaymentFinishScreen: React.FC = () => {
+  const loading = LoadingStore.useStoreState((store) => store.loading);
+  const screen = PaymentStore.useStoreState((store) => store.screen);
+
+  if (screen !== 'FINISH' || loading) return null;
 
   return (
     <motion.div
@@ -54,26 +80,7 @@ const PaymentFinishScreen: React.FC = () => {
       initial={{ x: 50 }}
       transition={{ duration: 0.2 }}
     >
-      <Form className="mo-payment">
-        <ModalContentContainer>
-          <QuestionValueList
-            large
-            items={[
-              {
-                title: 'Membership Type',
-                type: 'MULTIPLE_CHOICE',
-                value: typeString
-              },
-              ...cardItem
-            ]}
-          />
-
-          <Separator margin={24} />
-          <FormItem title="Auto-Renew Membership" type="TOGGLE" />
-        </ModalContentContainer>
-
-        <PaymentFinishButton />
-      </Form>
+      <PaymentFinishScreenContent />
     </motion.div>
   );
 };

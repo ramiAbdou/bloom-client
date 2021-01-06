@@ -16,9 +16,11 @@ import useInitPaymentScreen from './useInitPaymentScreen';
 import usePaymentMethod from './usePaymentMethod';
 
 const PaymentModalContent: React.FC = () => {
-  const showPaymentContent = PaymentStore.useStoreState((store) => {
-    return !!store.selectedTypeId && !!store.screen;
-  });
+  const showPaymentContent = PaymentStore.useStoreState(
+    ({ selectedTypeId, screen, type }) => {
+      return type === 'UPDATE_PAYMENT_METHOD' || (!!selectedTypeId && !!screen);
+    }
+  );
 
   usePaymentMethod();
   useInitPaymentScreen();
@@ -82,7 +84,7 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
     if (duesStatus && !isUserActive) showModal(ModalType.PAY_DUES);
   }, [isUserActive]);
 
-  if (!selectedTypeId) return null;
+  if (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId) return null;
 
   return (
     <LoadingStore.Provider>
