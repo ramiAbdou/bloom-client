@@ -7,7 +7,7 @@ import Modal from '@organisms/Modal/Modal';
 import DirectoryCard from '../DirectoryCard/DirectoryCard.store';
 import UserInformationContainer from './UserInformation';
 
-const CommunityData = () => {
+const DirectoryModalData: React.FC = () => {
   const items = DirectoryCard.useStoreState((store) => store.expandedCardData);
 
   if (!items?.length) {
@@ -17,10 +17,12 @@ const CommunityData = () => {
   return <QuestionValueList items={items} />;
 };
 
-export default ({ id }: IdProps) => (
+const DirectoryModal: React.FC<IdProps> = ({ id }) => (
   <Modal className="s-directory-modal" id={id}>
     <UserInformationContainer />
     <Separator marginBottom={24} />
-    <CommunityData />
+    <DirectoryModalData />
   </Modal>
 );
+
+export default DirectoryModal;
