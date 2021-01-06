@@ -15,7 +15,7 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
   return (
     <motion.div
       animate={{ x: 0 }}
-      className="m-confirmation-screen"
+      className="t-confirmation-screen"
       initial={{ x: 50 }}
       transition={{ duration: 0.2 }}
     >

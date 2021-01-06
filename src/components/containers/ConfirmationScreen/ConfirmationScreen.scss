@@ -1,4 +1,6 @@
-$PREF: 'm-confirmation-screen';
+$PREF: 't-confirmation-screen';
+
+// ## CONFIRMATION SCREEN
 
 .#{$PREF} > div:first-child {
   @extend .flex-ac;

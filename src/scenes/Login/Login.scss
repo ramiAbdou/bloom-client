@@ -16,7 +16,7 @@ $PREF: 's-login';
 
   @include M { box-sizing: border-box; width: 90%; }
 
-  > .m-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+  > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
   > form > div { margin: $md 0; }
 }
 

@@ -1,17 +1,21 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
+import Separator from '@atoms/Separator';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
+import FormItem from '@organisms/Form/FormItem';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberType } from '@store/entities';
+import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import Form from '../../organisms/Form/Form';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
 
 const PaymentFinishScreen: React.FC = () => {
+  const loading = LoadingStore.useStoreState((store) => store.loading);
   const screen = PaymentStore.useStoreState((store) => store.screen);
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
@@ -38,7 +42,7 @@ const PaymentFinishScreen: React.FC = () => {
     return `${paymentMethod.brand} ending in ${paymentMethod.last4}`;
   });
 
-  if (screen !== 'FINISH') return null;
+  if (screen !== 'FINISH' || loading) return null;
 
   const cardItem: QuestionValueItemProps[] = !isFree
     ? [{ title: 'Credit or Debit Card', type: 'SHORT_TEXT', value: cardString }]
@@ -63,6 +67,9 @@ const PaymentFinishScreen: React.FC = () => {
               ...cardItem
             ]}
           />
+
+          <Separator margin={24} />
+          <FormItem title="Auto-Renew Membership" type="TOGGLE" />
         </ModalContentContainer>
 
         <PaymentFinishButton />

@@ -3,11 +3,12 @@ import React, { useMemo } from 'react';
 import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
 import { FormItemData } from './Form.types';
-import DropdownItem from './FormDropdown';
+import FormDropdownItem from './FormDropdown';
 import FormLongText from './FormLongText';
-import MultipleSelect from './FormMultipleSelect';
+import FormMultipleSelect from './FormMultipleSelect';
 import FormShortText from './FormShortText';
-import MultipleChoice from './MultipleChoice';
+import FormToggle from './FormToggle';
+import FormMultipleChoice from './MultipleChoice';
 
 type BaseItemProps = Pick<FormItemData, 'category' | 'required' | 'title'>;
 
@@ -70,20 +71,21 @@ const useItemBody = (props: UseItemBodyProps) => {
     [type === 'LONG_TEXT', <FormLongText {...textProps} />],
     [
       type === 'MULTIPLE_SELECT' && options.length >= 5,
-      <DropdownItem multiple {...optionProps} />
+      <FormDropdownItem multiple {...optionProps} />
     ],
     [
       type === 'MULTIPLE_SELECT' && options.length < 5,
-      <MultipleSelect {...optionProps} />
+      <FormMultipleSelect {...optionProps} />
     ],
     [
       type === 'MULTIPLE_CHOICE' && options.length >= 5,
-      <DropdownItem {...optionProps} />
+      <FormDropdownItem {...optionProps} />
     ],
     [
       type === 'MULTIPLE_CHOICE' && options.length < 5,
-      <MultipleChoice {...optionProps} />
+      <FormMultipleChoice {...optionProps} />
     ],
+    [type === 'TOGGLE', <FormToggle {...baseProps} />],
     children
   ]);
 

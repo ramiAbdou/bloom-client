@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
 import Card from '@containers/Card/Card';
-import ConfirmationScreen from '@molecules/ConfirmationScreen/ConfirmationScreen';
+import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import { useStoreState } from '@store/Store';
 
 const ApplicationConfirmationDefaultMessage: React.FC = () => {

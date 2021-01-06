@@ -1,7 +1,7 @@
 import deline from 'deline';
 import React from 'react';
 
-import ConfirmationScreen from '@molecules/ConfirmationScreen/ConfirmationScreen';
+import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';
 

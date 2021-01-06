@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Card from '@containers/Card/Card';
-import ConfirmationScreen from '@molecules/ConfirmationScreen/ConfirmationScreen';
+import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import LoginCard from './LoginCard';
 
 const LoginConfirmation: React.FC = () => (

@@ -64,7 +64,8 @@ export type QuestionType =
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
   | 'MULTIPLE_SELECT'
-  | 'SHORT_TEXT';
+  | 'SHORT_TEXT'
+  | 'TOGGLE';
 
 export type QuestionCategory =
   | 'EMAIL'

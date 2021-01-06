@@ -26,7 +26,8 @@ const FormItem: React.FC<FormItemProps> = ({
   useEffect(() => {
     const emptyValue: string | string[] = takeFirst([
       [type === 'MULTIPLE_SELECT', []],
-      [['SHORT_TEXT', 'LONG_TEXT'].includes(type), '']
+      [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
+      [type === 'TOGGLE', false]
     ]);
 
     setItem({
@@ -59,7 +60,7 @@ const FormItem: React.FC<FormItemProps> = ({
 
   return (
     <div className={css}>
-      <Label required={required}>{title}</Label>
+      {type !== 'TOGGLE' && <Label required={required}>{title}</Label>}
       <Description>{description}</Description>
       {body}
     </div>
