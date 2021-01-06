@@ -10,6 +10,9 @@ export type FormQuestion = {
   // from the backend, in which case the question has an entity ID.
   id?: string;
 
+  // Only used in MULTIPLE_SELECT.
+  plain?: boolean;
+
   required?: boolean;
 
   // Only populated if the type is MUTLIPLE CHOICE or MULTIPLE SELECT.
@@ -36,8 +39,10 @@ export interface FormItemProps
       FormItemData,
       | 'category'
       | 'description'
+      | 'id'
       | 'options'
       | 'placeholder'
+      | 'plain'
       | 'required'
       | 'title'
       | 'type'

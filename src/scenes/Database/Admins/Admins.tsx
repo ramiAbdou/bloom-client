@@ -6,7 +6,6 @@ import { Column, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
-import AddAdminStore from '../../../components/modals/AddAdmin/AddAdmin.store';
 import AddAdminModal from '../../../components/modals/AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
@@ -58,9 +57,7 @@ export default () => {
         <TableContent />
       </Table>
 
-      <AddAdminStore.Provider>
-        <AddAdminModal />
-      </AddAdminStore.Provider>
+      <AddAdminModal />
     </>
   );
 };

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 
 import { ChildrenProps, ClassNameProps } from '@constants';
 import { cx } from '@util/util';
-import Form, { formModel } from './Form.store';
+import FormStore, { formModel } from './Form.store';
 import { FormItemData, OnFormSubmit } from './Form.types';
 import { formatQuestions } from './Form.util';
 
@@ -19,11 +19,11 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   isEmpty,
   onSubmit
 }) => {
-  const items = Form.useStoreState((store) => store.items, deepequal);
-  const currentIsEmpty = Form.useStoreState((store) => store.isEmpty);
-  const setError = Form.useStoreActions((store) => store.setErrorMessage);
-  const setIsEmpty = Form.useStoreActions((store) => store.setIsEmpty);
-  const setIsLoading = Form.useStoreActions((store) => store.setIsLoading);
+  const items = FormStore.useStoreState((store) => store.items, deepequal);
+  const currentIsEmpty = FormStore.useStoreState((store) => store.isEmpty);
+  const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
+  const setIsEmpty = FormStore.useStoreActions((store) => store.setIsEmpty);
+  const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
 
   useEffect(() => {
     if (currentIsEmpty !== isEmpty) setIsEmpty(isEmpty);
@@ -48,10 +48,12 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-export default ({ questions, ...props }: FormProps) => (
-  <Form.Provider
+const Form: React.FC<FormProps> = ({ questions, ...props }: FormProps) => (
+  <FormStore.Provider
     runtimeModel={{ ...formModel, items: formatQuestions(questions ?? []) }}
   >
     <FormContent {...props} />
-  </Form.Provider>
+  </FormStore.Provider>
 );
+
+export default Form;

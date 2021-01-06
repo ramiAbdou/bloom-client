@@ -6,10 +6,12 @@ import {
   createContextStore
 } from 'easy-peasy';
 
-import { QuestionCategory } from '@constants';
 import { FormItemData } from './Form.types';
 
-type GetItemArgs = { category?: QuestionCategory; title?: string };
+type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
+interface UpdateItemArgs extends GetItemArgs {
+  value: any;
+}
 
 export type FormModel = {
   errorMessage: string;
@@ -24,14 +26,15 @@ export type FormModel = {
   setIsEmpty: Action<FormModel, boolean>;
   setIsLoading: Action<FormModel, boolean>;
   showErrors: Action<FormModel>;
-  updateItem: Action<FormModel, Partial<FormItemData>>;
+  updateItem: Action<FormModel, UpdateItemArgs>;
 };
 
 export const formModel: FormModel = {
   // Represents the error message for the entire Form, not any one element.
   errorMessage: null,
 
-  getItem: computed(({ items }) => ({ category, title }: GetItemArgs) => {
+  getItem: computed(({ items }) => ({ category, id, title }: GetItemArgs) => {
+    if (id) return items.find((item) => item.id === id);
     if (title) return items.find((item) => item.title === title);
     return items.find((item) => item.category === category);
   }),
@@ -41,10 +44,9 @@ export const formModel: FormModel = {
 
     return (
       items?.length &&
-      items.every(
-        ({ required, value, validate }: FormItemData) =>
-          (!required || !!value) && (!validate || validate(value))
-      )
+      items.every(({ required, value, validate }: FormItemData) => {
+        return (!required || !!value) && (!validate || validate(value));
+      })
     );
   }),
 
@@ -75,26 +77,30 @@ export const formModel: FormModel = {
     items: [...state.items, item]
   })),
 
-  showErrors: action(({ items, ...state }) => {
-    return {
-      ...state,
-      isShowingErrors: true,
-      items: items.map(({ ...item }: FormItemData) => {
-        return { ...item };
-      })
-    };
+  showErrors: action(({ ...state }) => {
+    return { ...state, isShowingErrors: true };
   }),
 
-  updateItem: action((state, payload) => {
-    const { items } = state;
-    const index = items.findIndex(({ title }) => title === payload.title);
-    items[index] = { ...items[index], ...payload };
+  updateItem: action(
+    (state, { category, id, title, value }: UpdateItemArgs) => {
+      const { items } = state;
 
-    return { ...state, items };
-  })
+      let index: number;
+
+      if (id) index = items.findIndex((item) => item.id === id);
+      else if (title) index = items.findIndex((item) => item.title === title);
+      else if (category) {
+        index = items.findIndex((item) => item.category === category);
+      }
+
+      items[index] = { ...items[index], value };
+
+      return { ...state, items };
+    }
+  )
 };
 
-export default createContextStore<FormModel>(
+const FormStore = createContextStore<FormModel>(
   (runtimeModel: FormModel) => ({
     ...runtimeModel,
 
@@ -106,3 +112,5 @@ export default createContextStore<FormModel>(
   }),
   { disableImmer: true }
 );
+
+export default FormStore;

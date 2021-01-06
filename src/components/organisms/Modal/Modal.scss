@@ -54,10 +54,10 @@ $PREF: 'c-modal';
 
 // ## MODAL CONTENT
 
-.#{$PREF} {
-  max-height: inherit;
-  padding: $md;
+.#{$PREF} { max-height: inherit; padding: $md; }
 
+.#{$PREF},
+.#{$PREF} > form {
   // All modals will have an h1 tag, which will be standardized everywhere.
   > h1 { color: $primary; margin-bottom: $sm; position: sticky; top: $md; }
   > .c-loading-header { margin-bottom: $sm; }

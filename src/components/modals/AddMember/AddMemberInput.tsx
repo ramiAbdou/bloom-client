@@ -1,110 +1,69 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { IoTrash } from 'react-icons/io5';
+import validator from 'validator';
 
 import Button from '@atoms/Button';
-import Checkbox from '@atoms/Checkbox';
-import ErrorMessage from '@atoms/ErrorMessage';
-import Input from '@atoms/Input';
-import { Function, IdProps } from '@constants';
-import { makeClass, takeFirst } from '@util/util';
-import { AddMemberData } from './AddMember.store';
+import { IdProps } from '@constants';
+import Row from '@containers/Row';
+import FormItem from '@organisms/Form/FormItem';
+import { useStoreState } from '@store/Store';
+import AddMemberStore from './AddMember.store';
 
-interface AddModalInputProps extends IdProps {
-  isShowingErrors: boolean;
+const AddMemberInputTrashButton: React.FC<IdProps> = ({ id }) => {
+  const deleteRow = AddMemberStore.useStoreActions((store) => store.deleteRow);
+  const onClick = () => deleteRow(id);
 
-  // We don't include AddAdminData b/c it has everything except the boolean
-  // admin field.
-  member: AddMemberData;
+  return (
+    <Button onClick={onClick}>
+      <IoTrash />
+    </Button>
+  );
+};
 
-  onDelete: Function;
-  showAdminCheckbox?: boolean;
-  toggleAdmin?: any;
-  updateMember?: any;
-}
+const AddMemberInput: React.FC<IdProps> = ({ id }) => {
+  const isOwner = useStoreState(({ db }) => db.isOwner);
 
-export default memo(
-  ({
-    onDelete,
-    id,
-    isShowingErrors,
-    member,
-    showAdminCheckbox,
-    toggleAdmin,
-    updateMember
-  }: AddModalInputProps) => {
-    const {
-      admin,
-      email,
-      emailError,
-      firstName,
-      firstNameError,
-      lastName,
-      lastNameError
-    } = member;
+  return (
+    <div className="mo-add-member-input-ctr">
+      <Row className="mo-add-member-input">
+        <AddMemberInputTrashButton id={id} />
 
-    const css = makeClass([
-      's-database-add-modal-input',
-      [emailError, 's-database-add-modal-input--error']
-    ]);
+        <FormItem
+          required
+          category="FIRST_NAME"
+          id={`${id}=FIRST_NAME`}
+          placeholder="First Name"
+          type="SHORT_TEXT"
+        />
 
-    const message: string = takeFirst([
-      [
-        (firstNameError && lastNameError) ||
-          (firstNameError && emailError) ||
-          (lastNameError && emailError),
-        'Please fix the errors with the fields above.'
-      ],
-      firstNameError,
-      lastNameError,
-      emailError
-    ]);
+        <FormItem
+          required
+          category="LAST_NAME"
+          id={`${id}=LAST_NAME`}
+          placeholder="Last Name"
+          type="SHORT_TEXT"
+        />
 
-    const onChange = () => toggleAdmin(id);
+        <FormItem
+          required
+          category="EMAIL"
+          id={`${id}=EMAIL`}
+          placeholder="Email"
+          type="SHORT_TEXT"
+          validate={(value: string) => validator.isEmail(value)}
+        />
 
-    return (
-      <div className={css}>
-        <div>
-          <Button onClick={onDelete}>
-            <IoTrash />
-          </Button>
-
-          <Input
-            error={isShowingErrors && !!firstNameError}
-            placeholder="First Name"
-            value={firstName}
-            onChange={(value) =>
-              updateMember({ field: 'FIRST_NAME', id, value })
-            }
+        {isOwner && (
+          <FormItem
+            plain
+            id={`${id}=CHECKBOX`}
+            options={['Make Admin']}
+            type="MULTIPLE_SELECT"
           />
-
-          <Input
-            error={isShowingErrors && !!lastNameError}
-            placeholder="Last Name"
-            value={lastName}
-            onChange={(value) =>
-              updateMember({ field: 'LAST_NAME', id, value })
-            }
-          />
-
-          <Input
-            error={isShowingErrors && !!emailError}
-            placeholder="Email"
-            value={email}
-            onChange={(value) => updateMember({ field: 'EMAIL', id, value })}
-          />
-
-          {showAdminCheckbox && (
-            <div>
-              <Checkbox checked={admin} onChange={onChange} />
-              <p>Make Admin</p>
-            </div>
-          )}
-        </div>
-
-        {isShowingErrors && (
-          <ErrorMessage marginBottom={16} message={message} />
         )}
-      </div>
-    );
-  }
-);
+      </Row>
+    </div>
+  );
+};
+
+export default AddMemberInput;

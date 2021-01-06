@@ -5,9 +5,9 @@ import { takeFirst } from '@util/util';
 import { FormItemData } from './Form.types';
 import DropdownItem from './FormDropdown';
 import FormLongText from './FormLongText';
+import MultipleSelect from './FormMultipleSelect';
 import FormShortText from './FormShortText';
 import MultipleChoice from './MultipleChoice';
-import MultipleSelect from './MultipleSelect';
 
 type BaseItemProps = Pick<FormItemData, 'category' | 'required' | 'title'>;
 
@@ -23,7 +23,14 @@ interface UseItemBodyProps
   extends ChildrenProps,
     Pick<
       FormItemData,
-      'category' | 'options' | 'placeholder' | 'required' | 'title' | 'type'
+      | 'category'
+      | 'id'
+      | 'options'
+      | 'placeholder'
+      | 'plain'
+      | 'required'
+      | 'title'
+      | 'type'
     > {}
 
 /**
@@ -34,6 +41,8 @@ const useItemBody = (props: UseItemBodyProps) => {
   const {
     category,
     children,
+    id,
+    plain,
     required,
     title,
     options,
@@ -42,13 +51,13 @@ const useItemBody = (props: UseItemBodyProps) => {
   } = props;
 
   const baseProps: BaseItemProps = useMemo(
-    () => ({ category, required, title }),
-    [category, required, title]
+    () => ({ category, id, required, title }),
+    [category, id, required, title]
   );
 
   const optionProps: OptionItemProps = useMemo(
-    () => ({ ...baseProps, options }),
-    [options]
+    () => ({ ...baseProps, options, plain }),
+    [options, plain]
   );
 
   const textProps: TextItemProps = useMemo(

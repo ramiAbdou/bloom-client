@@ -10,33 +10,38 @@ import { cx } from '@util/util';
 
 interface CheckboxProps extends ClassNameProps {
   checked?: boolean;
+  plain?: boolean;
   onChange: (checked: boolean) => any;
   title?: string;
 }
 
-const Checkbox = ({ className, checked, onChange, title }: CheckboxProps) => {
+const Checkbox: React.FC<CheckboxProps> = ({
+  className,
+  checked,
+  plain,
+  onChange,
+  title
+}) => {
   const onCheckboxChange = ({
     target
   }: React.ChangeEvent<HTMLInputElement>) => {
     onChange(target.checked);
   };
 
-  const onLabelClick = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
-    e.stopPropagation();
-  };
-
   const css = cx({
     'c-misc-checkbox': true,
     'c-misc-checkbox--label': title,
+    'c-misc-checkbox--plain': plain,
     [className]: className
   });
 
   return (
-    <label className={css} onClick={onLabelClick}>
+    <label className={css} onClick={(e) => e.stopPropagation()}>
       <input checked={checked} type="checkbox" onChange={onCheckboxChange} />
       <span />
       <IoCheckmark color="#FFF" />
-      <Attribute showNullValue={false}>{title}</Attribute>
+      {plain && <p>{title}</p>}
+      {!plain && <Attribute showNullValue={false}>{title}</Attribute>}
     </label>
   );
 };

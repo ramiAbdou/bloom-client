@@ -28,8 +28,14 @@ $PREF: 'c-misc-checkbox';
 
     &:not(:last-child) { margin-bottom: $xs; }
 
+    
     > span,
     > svg { margin-top: 2.5px; }
+  }
+
+  &--plain {
+    > span,
+    > svg { margin-top: 0; }
   }
 }
 

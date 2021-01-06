@@ -1,12 +1,14 @@
 import { mutation } from 'gql-query-builder';
 
+interface CreateMemberArgs {
+  email: string;
+  firstName: string;
+  isAdmin: boolean;
+  lastName: string;
+}
+
 export interface CreateMembersArgs {
-  members: {
-    email: string;
-    firstName: string;
-    isAdmin: boolean;
-    lastName: string;
-  }[];
+  members: CreateMemberArgs[];
 }
 
 export const CREATE_MEMBERS = mutation({

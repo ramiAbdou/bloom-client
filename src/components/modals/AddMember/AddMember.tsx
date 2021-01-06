@@ -1,113 +1,69 @@
 import React from 'react';
 
 import Button from '@atoms/Button';
-import ErrorMessage from '@atoms/ErrorMessage';
 import { ModalType } from '@constants';
-import useMutation from '@hooks/useMutation';
+import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Form from '@organisms/Form/Form';
+import FormErrorMessage from '@organisms/Form/FormErrorMessage';
+import SubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
-import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { CREATE_MEMBERS, CreateMembersArgs } from './AddMember.gql';
-import AddMember, { doesInputHaveError } from './AddMember.store';
-import AddMemberInput from './Input';
+import AddMemberStore from './AddMember.store';
+import AddMemberInput from './AddMemberInput';
+import useCreateMembers from './useCreateMembers';
 
-const AddMemberContent = () => {
+const AddMemberContent: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const members = AddMember.useStoreState((store) => store.members);
 
-  const addEmptyMember = AddMember.useStoreActions(
-    (store) => store.addEmptyMember
-  );
+  const rows = AddMemberStore.useStoreState((store) => store.rows);
+  const addRow = AddMemberStore.useStoreActions((store) => store.addRow);
+  const clearRows = AddMemberStore.useStoreActions((store) => store.clearRows);
 
-  const clearMembers = AddMember.useStoreActions((store) => store.clearMembers);
-  const showErrors = AddMember.useStoreActions((store) => store.showErrors);
-
-  const [createMembers, { error, loading }] = useMutation<
-    any,
-    CreateMembersArgs
-  >({ name: 'createMembers', query: CREATE_MEMBERS });
-
-  const onAdd = async () => {
-    if (doesInputHaveError(members)) {
-      showErrors();
-      return;
-    }
-
-    const result = await createMembers({
-      members: members.map(({ admin, email, firstName, lastName }) => ({
-        email,
-        firstName,
-        isAdmin: admin,
-        lastName
-      }))
-    });
-
-    const updatedMembers = result.data;
-    if (result.error || !updatedMembers) return;
-
-    mergeEntities({
-      communityReferenceColumn: 'members',
-      data: { members: updatedMembers },
-      schema: { members: [Schema.MEMBER] }
-    });
-
-    showToast({ message: `${members.length} members(s) invited.` });
-    setTimeout(closeModal, 0);
-  };
-
-  const onClose = () => clearMembers();
-  const onClick = () => addEmptyMember();
-
-  const message = !members.length ? 'Must add at least 1 member.' : error;
+  const createMembers = useCreateMembers();
+  const onClose = () => clearRows();
+  const onClick = () => addRow();
 
   return (
-    <Modal
-      className="s-database-add-modal"
-      id={ModalType.ADD_MEMBERS}
-      width={750}
-      onClose={onClose}
-    >
-      <h1>Add Member(s)</h1>
+    <Modal id={ModalType.ADD_MEMBERS} width={750} onClose={onClose}>
+      <Form className="mo-add-member-form" onSubmit={createMembers}>
+        <h1>Add Member(s)</h1>
 
-      <p>
-        Type in the email address of the member(s) you want to add to the
-        community. We'll send them an email invite with a login link, where they
-        can finish filling out their profile.
-      </p>
+        <p>
+          Type in the email address of the member(s) you want to add to the
+          community. We'll send them an email invite with a login link, where
+          they can finish filling out their profile.
+        </p>
 
-      <div>
-        {members.map(({ id }) => (
-          <AddMemberInput key={id} id={id} />
-        ))}
-      </div>
+        <div>
+          {rows.map((id) => (
+            <AddMemberInput key={id} id={id} />
+          ))}
+        </div>
 
-      <Button tertiary onClick={onClick}>
-        + Add Another
-      </Button>
-      <ErrorMessage message={message} />
-
-      <div>
-        <Button
-          primary
-          loading={loading}
-          loadingText="Adding..."
-          onClick={onAdd}
-        >
-          Add
+        <Button tertiary onClick={onClick}>
+          + Add Another
         </Button>
 
-        <Button secondary onClick={() => closeModal()}>
-          Cancel
-        </Button>
-      </div>
+        <FormErrorMessage />
+
+        <ActionContainer>
+          <SubmitButton fill={false} large={false} loadingText="Adding...">
+            Add
+          </SubmitButton>
+
+          <Button secondary onClick={() => closeModal()}>
+            Cancel
+          </Button>
+        </ActionContainer>
+      </Form>
     </Modal>
   );
 };
 
-export default () => (
-  <AddMember.Provider>
+const AddMemberModal: React.FC = () => (
+  <AddMemberStore.Provider>
     <AddMemberContent />
-  </AddMember.Provider>
+  </AddMemberStore.Provider>
 );
+
+export default AddMemberModal;

@@ -1,53 +1,19 @@
-import deepequal from 'fast-deep-equal';
-import React, { memo } from 'react';
+import React from 'react';
 
 import Button from '@atoms/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
-import { IdProps } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Modal from '@organisms/Modal/Modal';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { CREATE_MEMBERS, CreateMembersArgs } from '../AddMember/AddMember.gql';
-import AddModalInput from '../AddMember/AddMemberInput';
-import AddAdmin, { doesInputHaveError } from './AddAdmin.store';
-
-const AddAdminInput = memo(({ id }: IdProps) => {
-  const isShowingErrors = AddAdmin.useStoreState(
-    (store) => store.isShowingErrors
-  );
-
-  const admin = AddAdmin.useStoreState(
-    (store) => store.getMember(id),
-    deepequal
-  );
-
-  const updateMember = AddAdmin.useStoreActions((store) => store.updateMember);
-
-  return (
-    <AddModalInput
-      id={id}
-      isShowingErrors={isShowingErrors}
-      member={admin}
-      updateMember={updateMember}
-      onDelete={() => null}
-    />
-  );
-});
+import AddMemberInput from '../AddMember/AddMemberInput';
 
 export default () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const admins = AddAdmin.useStoreState((store) => store.admins);
-
-  const addEmptyMember = AddAdmin.useStoreActions(
-    (store) => store.addEmptyMember
-  );
-
-  const clearMembers = AddAdmin.useStoreActions((store) => store.clearMembers);
-  const showErrors = AddAdmin.useStoreActions((store) => store.showErrors);
 
   const [createMembers, { error, loading }] = useMutation<
     IMember[],
@@ -58,45 +24,36 @@ export default () => {
   });
 
   const onAdd = async () => {
-    if (doesInputHaveError(admins)) {
-      showErrors();
-      return;
-    }
-
-    const { data } = await createMembers({
-      members: admins.map(({ email, firstName, lastName }) => ({
-        email,
-        firstName,
-        isAdmin: true,
-        lastName
-      }))
-    });
-
-    if (!data) return;
-
-    // API should return back the updated members and we just update the
-    // state accordingly with those new admins. To load new data would require
-    // a refresh.
-    mergeEntities({
-      communityReferenceColumn: 'members',
-      data: { members: data },
-      schema: { members: [Schema.MEMBER] }
-    });
-
-    showToast({ message: `${admins.length} admin(s) added.` });
-    setTimeout(closeModal, 0);
+    // if (doesInputHaveError(admins)) {
+    //   showErrors();
+    //   return;
+    // }
+    // const { data } = await createMembers({
+    //   members: admins.map(({ email, firstName, lastName }) => ({
+    //     email,
+    //     firstName,
+    //     isAdmin: true,
+    //     lastName
+    //   }))
+    // });
+    // if (!data) return;
+    // // API should return back the updated members and we just update the
+    // // state accordingly with those new admins. To load new data would require
+    // // a refresh.
+    // mergeEntities({
+    //   communityReferenceColumn: 'members',
+    //   data: { members: data },
+    //   schema: { members: [Schema.MEMBER] }
+    // });
+    // showToast({ message: `${admins.length} admin(s) added.` });
+    // setTimeout(closeModal, 0);
   };
 
-  const onClose = () => clearMembers();
-  const onClick = () => addEmptyMember();
+  // const onClose = () => clearMembers();
+  // const onClick = () => addEmptyMember();
 
   return (
-    <Modal
-      className="s-database-add-modal"
-      id="ADD_ADMINS"
-      width={750}
-      onClose={onClose}
-    >
+    <Modal className="mo-add-member" id="ADD_ADMINS" width={750}>
       <h1>Add Admin(s)</h1>
 
       <p>
@@ -105,13 +62,11 @@ export default () => {
         can finish filling out their profile.
       </p>
 
-      {admins.map(({ id }) => (
-        <AddAdminInput key={id} id={id} />
-      ))}
+      {/* {admins.map(({ id }) => (
+        <AddMemberInput key={id} id={id} />
+      ))} */}
 
-      <Button tertiary onClick={onClick}>
-        + Add Another
-      </Button>
+      <Button tertiary>+ Add Another</Button>
       <ErrorMessage message={error} />
 
       <div>

@@ -11,6 +11,8 @@ interface SpinnerProps extends LoadingProps {
 /**
  * Returns the state of the spinner. Adds a 100ms delay in order to show the
  * spinner so that it doesn't show the spinner for really short time.
+ *
+ * If no value was passed in, return true, so it can be shown immediately.
  */
 const useShowSpinner = (loading: boolean): boolean => {
   const [showSpinner, setShowSpinner] = useState(false);
@@ -28,7 +30,7 @@ const useShowSpinner = (loading: boolean): boolean => {
     return () => clearTimeout(timeout);
   }, [loading, showSpinner]);
 
-  return showSpinner;
+  return loading === undefined || showSpinner;
 };
 
 const Spinner: React.FC<SpinnerProps> = ({ dark, loading }) => {
