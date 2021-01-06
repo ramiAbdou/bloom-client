@@ -8,12 +8,14 @@ import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { CREATE_MEMBERS, CreateMembersArgs } from './AddMember.gql';
+import AddMemberStore from './AddMember.store';
 import { MembersAddedRecord } from './AddMember.types';
 
 const useCreateMembers = (): OnFormSubmit => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   const [createMembers] = useMutation<any, CreateMembersArgs>({
     name: 'createMembers',
@@ -27,7 +29,9 @@ const useCreateMembers = (): OnFormSubmit => {
   }: OnFormSubmitArgs) => {
     setIsLoading(true);
 
-    const members: MembersAddedRecord = items.reduce(
+    // In the first pass, format all the values by looking at the item's
+    // category and id.
+    const membersFirstPass: MembersAddedRecord = items.reduce(
       (acc: MembersAddedRecord, { category, id, value }: FormItemData) => {
         const formattedId = id.slice(0, id.indexOf('='));
 
@@ -46,8 +50,14 @@ const useCreateMembers = (): OnFormSubmit => {
       {}
     );
 
+    // In the second pass, set isAdmin to true if the modal is "Add Admin".
+    const members = Object.values(membersFirstPass).map((data) => {
+      if (!admin) return data;
+      return { ...data, isAdmin: true };
+    });
+
     const { error, data: updatedMembers } = await createMembers({
-      members: Object.values(members)
+      members
     });
 
     setIsLoading(false);

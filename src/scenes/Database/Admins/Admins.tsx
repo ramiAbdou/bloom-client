@@ -1,12 +1,12 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
+import AddMemberModal from '@modals/AddMember/AddMember';
 import Table from '@organisms/Table/Table';
 import { Column, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import Loading from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
-import AddAdminModal from '../../../components/modals/AddAdmin/AddAdminModal';
 import ActionRow from './ActionRow';
 
 export default () => {
@@ -57,7 +57,7 @@ export default () => {
         <TableContent />
       </Table>
 
-      <AddAdminModal />
+      <AddMemberModal admin />
     </>
   );
 };

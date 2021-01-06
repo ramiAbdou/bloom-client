@@ -2,15 +2,18 @@ import { Action, action, createContextStore } from 'easy-peasy';
 
 import { uuid } from '@util/util';
 
-type AddMemberModal = {
-  addRow: Action<AddMemberModal>;
-  clearRows: Action<AddMemberModal>;
-  deleteRow: Action<AddMemberModal, string>;
+type AddMemberModel = {
+  addRow: Action<AddMemberModel>;
+  admin?: boolean;
+  clearRows: Action<AddMemberModel>;
+  deleteRow: Action<AddMemberModel, string>;
   rows: string[];
 };
 
-export const model: AddMemberModal = {
+export const addMemberModel: AddMemberModel = {
   addRow: action((state) => ({ ...state, rows: [...state.rows, uuid()] })),
+
+  admin: false,
 
   clearRows: action((state) => ({ ...state, rows: [uuid()] })),
 
@@ -22,8 +25,9 @@ export const model: AddMemberModal = {
   rows: [uuid()]
 };
 
-const AddMemberStore = createContextStore<AddMemberModal>(model, {
-  disableImmer: true
-});
+const AddMemberStore = createContextStore<AddMemberModel>(
+  (runtimeModel) => runtimeModel,
+  { disableImmer: true }
+);
 
 export default AddMemberStore;
