@@ -16,8 +16,14 @@ import useInitPaymentScreen from './useInitPaymentScreen';
 import usePaymentMethod from './usePaymentMethod';
 
 const PaymentModalContent: React.FC = () => {
-  // usePaymentMethod();
+  const showPaymentContent = PaymentStore.useStoreState((store) => {
+    return !!store.selectedTypeId && !!store.screen;
+  });
+
+  usePaymentMethod();
   useInitPaymentScreen();
+
+  if (!showPaymentContent) return null;
 
   return (
     <>
@@ -29,30 +35,41 @@ const PaymentModalContent: React.FC = () => {
   );
 };
 
-const PaymentModalContainer: React.FC = () => {
+const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
+  selectedTypeId
+}) => {
+  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
   const type = PaymentStore.useStoreState((store) => store.type);
+
+  const clearOptions = PaymentStore.useStoreActions(
+    (store) => store.clearOptions
+  );
+
+  const setSelectedTypeId = PaymentStore.useStoreActions(
+    (store) => store.setSelectedTypeId
+  );
+
+  useEffect(() => {
+    if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
+  }, [typeId, selectedTypeId]);
 
   const modalId: ModalType = takeFirst([
     [type === 'PAY_DUES', ModalType.PAY_DUES],
-    [type === 'CHANGE_PLAN', ModalType.CHANGE_PLAN],
+    [type === 'CHANGE_MEMBERSHIP', ModalType.CHANGE_MEMBERSHIP],
     [type === 'UPDATE_PAYMENT_METHOD', ModalType.UPDATE_PAYMENT_METHOD]
   ]);
 
   return (
-    <Modal id={modalId}>
+    <Modal id={modalId} onClose={clearOptions}>
       <PaymentModalContent />
     </Modal>
   );
 };
 
-type PaymentModalProps = Pick<PaymentModel, 'type'>;
-
-const PaymentModal: React.FC<PaymentModalProps> = ({ type }) => {
-  const memberTypeId: string = useStoreState(({ db }) => {
-    const { byId } = db.entities.types;
-    return byId[db.member.type]?.id;
-  });
-
+const PaymentModal: React.FC<Partial<PaymentModel>> = ({
+  selectedTypeId,
+  type
+}) => {
   useFetchDuesInformation();
 
   // Get the user and see if they've paid their dues or not.
@@ -65,15 +82,13 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ type }) => {
     if (duesStatus && !isUserActive) showModal(ModalType.PAY_DUES);
   }, [isUserActive]);
 
-  if (!memberTypeId) return null;
+  if (!selectedTypeId) return null;
 
   return (
     <LoadingStore.Provider>
-      <PaymentStore.Provider
-        runtimeModel={{ ...paymentModel, selectedTypeId: memberTypeId, type }}
-      >
+      <PaymentStore.Provider runtimeModel={{ ...paymentModel, type }}>
         <PaymentStripeProvider>
-          <PaymentModalContainer />
+          <PaymentModalContainer selectedTypeId={selectedTypeId} />
         </PaymentStripeProvider>
       </PaymentStore.Provider>
     </LoadingStore.Provider>

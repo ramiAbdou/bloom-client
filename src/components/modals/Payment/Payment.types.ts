@@ -1,5 +1,5 @@
 export type PaymentModalType =
-  | 'CHANGE_PLAN'
+  | 'CHANGE_MEMBERSHIP'
   | 'PAY_DUES'
   | 'UPDATE_PAYMENT_METHOD';
 

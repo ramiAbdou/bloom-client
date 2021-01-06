@@ -48,6 +48,11 @@ const HomeRouter: React.FC = () => {
     ({ db }) => db.community?.encodedUrlName
   );
 
+  const memberTypeId: string = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[db.member?.type]?.id;
+  });
+
   const isMember: boolean = useStoreState(({ db }) => {
     const { byId: byCommunityId } = db.entities.communities;
     const { byId: byMemberId } = db.entities.members;
@@ -72,7 +77,7 @@ const HomeRouter: React.FC = () => {
       <Nav />
       <HomeRouterContent />
       <AddMemberModal />
-      <PaymentModal type="PAY_DUES" />
+      <PaymentModal selectedTypeId={memberTypeId} type="PAY_DUES" />
     </>
   );
 };

@@ -14,7 +14,7 @@ const PaymentConfirmation: React.FC = () => {
   const confirmationTitle = takeFirst([
     [type === 'PAY_DUES', 'Dues Payment Successful'],
     [type === 'UPDATE_PAYMENT_METHOD', 'Payment Method Updated'],
-    [type === 'CHANGE_PLAN', 'Membership Plan Changed']
+    [type === 'CHANGE_MEMBERSHIP', 'Membership Plan Changed']
   ]);
 
   const confirmationDescription = takeFirst([
@@ -33,7 +33,7 @@ const PaymentConfirmation: React.FC = () => {
       `
     ],
     [
-      type === 'CHANGE_PLAN',
+      type === 'CHANGE_MEMBERSHIP',
       deline`
         Your membership has successfully been changed. Please check your email
         for a confirmation.

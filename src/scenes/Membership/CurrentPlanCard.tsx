@@ -43,7 +43,7 @@ const ChangePlanButton = () => {
   const { url } = useRouteMatch();
 
   return (
-    <Link to={`${url}/change-plan`}>
+    <Link to={`${url}/change`}>
       <Button fill secondary>
         Change Membership Plan
       </Button>

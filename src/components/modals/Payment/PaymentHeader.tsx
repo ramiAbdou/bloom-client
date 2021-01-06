@@ -36,7 +36,7 @@ const PaymentHeader: React.FC = () => {
   const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
 
   const title = takeFirst([
-    [type === 'CHANGE_PLAN', 'Change Membership Plan'],
+    [type === 'CHANGE_MEMBERSHIP', 'Change Membership Plan'],
     [type === 'PAY_DUES', 'Pay Dues'],
     [type === 'UPDATE_PAYMENT_METHOD', 'Update Payment Method']
   ]);

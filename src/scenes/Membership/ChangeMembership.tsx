@@ -4,7 +4,7 @@ import MainContent from '@containers/Main/Content';
 import MainHeader from '@containers/Main/Header';
 import PlanContainer from './ChangePlanContainer';
 
-const ChangePlan = () => {
+const ChangeMembership: React.FC = () => {
   return (
     <>
       <MainHeader backButton title="Change Membership Plan" />
@@ -16,4 +16,4 @@ const ChangePlan = () => {
   );
 };
 
-export default ChangePlan;
+export default ChangeMembership;

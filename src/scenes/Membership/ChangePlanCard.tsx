@@ -17,8 +17,8 @@ const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
   );
 
   const onClick = () => {
-    showModal(ModalType.CHANGE_PLAN);
     setSelectedTypeId(id);
+    showModal(ModalType.CHANGE_MEMBERSHIP);
   };
 
   // Formats the amount with FREE if the amount is 0.
