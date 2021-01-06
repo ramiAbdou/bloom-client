@@ -13,7 +13,7 @@ const UpdatePaymentButton = () => {
   return (
     <SubmitButton
       fill
-      className="c-payment-button"
+      className="mo-payment-button"
       disabled={!stripe}
       loading={isLoading}
       loadingText="Updating..."

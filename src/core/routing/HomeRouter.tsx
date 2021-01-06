@@ -9,7 +9,7 @@ import {
 
 import { EncodedUrlNameProps } from '@constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
-import PayDuesModal from '@modals/PayDues/PayDues';
+import PaymentModal from '@modals/Payment/Payment';
 import Loader from '@molecules/Loader/Loader';
 import Nav from '@organisms/Nav/Nav';
 import Analytics from '@scenes/Analytics/Analytics';
@@ -72,7 +72,7 @@ const HomeRouter: React.FC = () => {
       <Nav />
       <HomeRouterContent />
       <AddMemberModal />
-      <PayDuesModal />
+      <PaymentModal />
     </>
   );
 };

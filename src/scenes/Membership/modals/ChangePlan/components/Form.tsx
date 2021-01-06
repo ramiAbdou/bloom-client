@@ -1,13 +1,13 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import PaymentForm from '@organisms/Payment/Payment';
-import Label from '@organisms/Form/FormLabel';
+// import Label from '@organisms/Form/FormLabel';
+// import PaymentForm from '@organisms/Payment/Payment';
 import ChangePlan from '@scenes/Membership/pages/ChangePlan/ChangePlan.store';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import PayButton from './FinishButton';
+// import PayButton from './FinishButton';
 
 const ChangePlanForm = () => {
   const selectedTypeId = ChangePlan.useStoreState(
@@ -30,14 +30,16 @@ const ChangePlanForm = () => {
 
   const typeString = `${name}, $${amount / 100}/${recurrenceString}`;
 
-  return (
-    <PaymentForm SubmitButton={PayButton} selectedTypeId={selectedTypeId}>
-      <div className="c-form-item">
-        <Label>Membership Type</Label>
-        <p>{typeString}</p>
-      </div>
-    </PaymentForm>
-  );
+  return <p>{typeString}</p>;
+
+  // return (
+  //   <PaymentForm SubmitButton={PayButton} selectedTypeId={selectedTypeId}>
+  //     <div className="c-form-item">
+  //       <Label>Membership Type</Label>
+  //       <p>{typeString}</p>
+  //     </div>
+  //   </PaymentForm>
+  // );
 };
 
 export default ChangePlanForm;

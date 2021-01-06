@@ -4,7 +4,6 @@ import FormItem from '@organisms/Form/FormItem';
 import { useStoreState } from '@store/Store';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
-import { IsCardChangingProps } from '../Payment.types';
 
 const options: StripeCardElementOptions = {
   classes: {
@@ -18,19 +17,12 @@ const options: StripeCardElementOptions = {
   style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
 };
 
-interface CardInfoContainerProps extends IsCardChangingProps {
-  isFree?: boolean;
-}
-
-const CardInfoContainer = ({
-  isCardChanging,
-  isFree
-}: CardInfoContainerProps) => {
+const PaymentCardForm: React.FC = () => {
   const last4 = useStoreState(({ db }) => db.member.paymentMethod?.last4);
 
   // Return null if the card isn't changing AND either the membership is free
   // OR there is already a card on file.
-  if (!isCardChanging && (isFree || !!last4)) return null;
+  if (last4) return null;
 
   return (
     <>
@@ -42,7 +34,7 @@ const CardInfoContainer = ({
 
       <FormItem required title="Billing Address" type="SHORT_TEXT" />
 
-      <div className="c-payment-billing-ctr">
+      <div className="mo-payment-billing-ctr">
         <FormItem
           required
           placeholder="Los Angeles"
@@ -63,4 +55,4 @@ const CardInfoContainer = ({
   );
 };
 
-export default CardInfoContainer;
+export default PaymentCardForm;

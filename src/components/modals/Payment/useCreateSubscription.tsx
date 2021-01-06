@@ -1,28 +1,33 @@
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import useMutation from '@hooks/useMutation';
-import { IMember } from '@store/entities';
+import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { PaymentMethodCreateParams } from '@stripe/stripe-js';
 import {
-  UPDATE_PAYMENT_METHOD,
-  UpdatePaymentMethodArgs
-} from './Membership.gql';
+  CREATE_SUBSCRIPTION,
+  CreateSubscriptionArgs,
+  CreateSubscriptionResult
+} from './Payment.gql';
+import PaymentStore from './Payment.store';
 
-const useUpdatePaymentMethod = (): OnFormSubmit => {
+const useCreateSubscription = (): OnFormSubmit => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+
+  const selectedTypeId = PaymentStore.useStoreState(
+    (store) => store.selectedTypeId
+  );
 
   const elements = useElements();
   const stripe = useStripe();
 
-  const [updatePaymentMethod] = useMutation<
-    Pick<IMember, 'id' | 'paymentMethod'>,
-    UpdatePaymentMethodArgs
+  const [createSubscription] = useMutation<
+    CreateSubscriptionResult,
+    CreateSubscriptionArgs
   >({
-    name: 'updatePaymentMethod',
-    query: UPDATE_PAYMENT_METHOD
+    name: 'createSubscription',
+    query: CREATE_SUBSCRIPTION
   });
 
   if (!stripe) return null;
@@ -67,23 +72,27 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     // Create the actual subscription. Pass the MemberType ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod
     // ID. That will be attached to the customer ID associated with the member.
-    const { data: updateData, error: updateError } = await updatePaymentMethod({
+    const {
+      data: subscriptionData,
+      error: subscriptionError
+    } = await createSubscription({
+      memberTypeId: selectedTypeId,
       paymentMethodId: stripeResult.paymentMethod.id
     });
 
-    if (updateError) {
-      setErrorMessage(updateError);
+    if (subscriptionError) {
+      setErrorMessage(subscriptionError);
       setIsLoading(false);
       return;
     }
 
     // Success! Update the member entity just in case the membership type
     // changed or their duesStatus changed.
-    mergeEntities({ data: updateData, schema: Schema.MEMBER });
+    mergeEntities({ data: subscriptionData, schema: Schema.MEMBER });
 
     // Needs to change, to show confirmation screen.
     closeModal();
   };
 };
 
-export default useUpdatePaymentMethod;
+export default useCreateSubscription;

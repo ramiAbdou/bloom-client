@@ -17,13 +17,11 @@ export type FormModel = {
   errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
-  isEmpty: boolean;
   isLoading: boolean;
   isShowingErrors: boolean;
   items: FormItemData[];
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
-  setIsEmpty: Action<FormModel, boolean>;
   setIsLoading: Action<FormModel, boolean>;
   showErrors: Action<FormModel>;
   updateItem: Action<FormModel, UpdateItemArgs>;
@@ -39,9 +37,7 @@ export const formModel: FormModel = {
     return items.find((item) => item.category === category);
   }),
 
-  isCompleted: computed(({ isEmpty, items }) => {
-    if (isEmpty) return true;
-
+  isCompleted: computed(({ items }) => {
     return (
       items?.length &&
       items.every(({ required, value, validate }: FormItemData) => {
@@ -49,8 +45,6 @@ export const formModel: FormModel = {
       })
     );
   }),
-
-  isEmpty: false,
 
   // Used to ensure that the submit button is disabled.
   isLoading: false,
@@ -63,8 +57,6 @@ export const formModel: FormModel = {
     ...state,
     errorMessage
   })),
-
-  setIsEmpty: action((state, isEmpty: boolean) => ({ ...state, isEmpty })),
 
   // Typically set when a form is submitting an async function.
   setIsLoading: action((state, isLoading: boolean) => ({

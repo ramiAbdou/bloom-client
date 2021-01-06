@@ -1,5 +1,5 @@
 import deepequal from 'fast-deep-equal';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 
 import { ChildrenProps, ClassNameProps } from '@constants';
 import { cx } from '@util/util';
@@ -8,7 +8,6 @@ import { FormItemData, OnFormSubmit } from './Form.types';
 import { formatQuestions } from './Form.util';
 
 export interface FormProps extends ChildrenProps, ClassNameProps {
-  isEmpty?: boolean;
   questions?: FormItemData[];
   onSubmit?: OnFormSubmit;
 }
@@ -16,18 +15,11 @@ export interface FormProps extends ChildrenProps, ClassNameProps {
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
   children,
-  isEmpty,
   onSubmit
 }) => {
   const items = FormStore.useStoreState((store) => store.items, deepequal);
-  const currentIsEmpty = FormStore.useStoreState((store) => store.isEmpty);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
-  const setIsEmpty = FormStore.useStoreActions((store) => store.setIsEmpty);
   const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
-
-  useEffect(() => {
-    if (currentIsEmpty !== isEmpty) setIsEmpty(isEmpty);
-  }, [isEmpty]);
 
   const onFormSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {

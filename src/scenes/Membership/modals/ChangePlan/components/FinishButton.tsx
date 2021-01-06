@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FinishButton from '@organisms/Payment/components/FinishButton';
+import FinishButton from '@modals/Payment/PaymentFinishButton';
 import { useStoreState } from '@store/Store';
 import ChangePlan from '../../../pages/ChangePlan/ChangePlan.store';
 
@@ -17,7 +17,7 @@ const PayButton = () => {
   if (amount === null || amount === undefined) return null;
 
   // Use a traditional checkout form.
-  return <FinishButton amount={amount} />;
+  return <FinishButton />;
 };
 
 export default PayButton;

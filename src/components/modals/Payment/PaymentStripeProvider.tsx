@@ -5,7 +5,7 @@ import { useStoreState } from '@store/Store';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const StripeProvider = ({ children }: ChildrenProps) => {
+const StripeProvider: React.FC<ChildrenProps> = ({ children }) => {
   const stripeAccount: string = useStoreState(({ db }) => {
     const { byId } = db.entities.integrations;
     return byId[db.community.integrations]?.stripeAccountId;

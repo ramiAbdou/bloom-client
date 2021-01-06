@@ -5,9 +5,9 @@ import Button from '@atoms/Button';
 import Spinner from '@atoms/Spinner';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
+import usePaymentMethod from '@modals/Payment/usePaymentMethod';
 import { IPaymentMethod } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import usePaymentMethod from '../../../usePaymentMethod';
 
 const PaymentMethodContent = () => {
   const paymentMethod: IPaymentMethod = useStoreState(
@@ -49,7 +49,7 @@ const PaymentMethodContent = () => {
 };
 
 const PaymentMethodCard = () => {
-  const { loading } = usePaymentMethod();
+  const loading = usePaymentMethod();
 
   return (
     <Card className="s-membership-manage-card--payment">
