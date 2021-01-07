@@ -22,11 +22,14 @@ const TableContentEmptyMessage: React.FC<
 };
 
 const TableContent: React.FC<TableContent> = ({
-  emptyMessage,
+  emptyMessage: eMessage,
   showEmptyTable,
   onRenameColumn
 }) => {
-  const isEmpty = Table.useStoreState((store) => !store.data?.length);
+  const emptyMessage = Table.useStoreState(({ data }) => {
+    if (data?.length || showEmptyTable) return null;
+    return eMessage;
+  });
 
   const isAllPageSelected = Table.useStoreState(
     (store) => store.isAllPageSelected
@@ -36,7 +39,7 @@ const TableContent: React.FC<TableContent> = ({
     <>
       {isAllPageSelected && <TableBanner />}
 
-      {(showEmptyTable !== false || !isEmpty) && (
+      {!emptyMessage && (
         <div id="c-table-ctr">
           <table className="c-table">
             <TableHeaderContainer />

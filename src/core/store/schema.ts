@@ -7,11 +7,28 @@
 
 import { schema } from 'normalizr';
 
+import { takeFirst } from '@util/util';
+
 // ## NORMALIZR SCHEMA DECLARATIONS
 
 const Community = new schema.Entity('communities', {});
 const Integrations = new schema.Entity('integrations', {});
-const Member = new schema.Entity('members', {});
+
+const Member = new schema.Entity(
+  'members',
+  {},
+  {
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.stripeInvoicePdf, { payments: [parent.id] }],
+        {}
+      ]);
+
+      return { ...value, ...processedData };
+    }
+  }
+);
+
 const MemberPayment = new schema.Entity('payments', {});
 const MemberType = new schema.Entity('types', {});
 const Question = new schema.Entity('questions', {});

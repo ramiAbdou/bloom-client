@@ -25,7 +25,7 @@ const PaymentHistoryTable: React.FC = () => {
         type
       }: IMemberPayment = byPaymentId[paymentId];
 
-      const typeName = byTypeId[type];
+      const typeName = byTypeId[type].name;
 
       return {
         Amount: `$${amount / 100}.00`,
