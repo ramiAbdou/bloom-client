@@ -50,13 +50,15 @@ const ApplicationForm: React.FC = () => {
   if (!questions?.length) return null;
 
   return (
-    <Form
-      className="s-application"
-      questions={questions}
-      onSubmit={applyForMembership}
-    >
-      <ApplicationFormContent />
-    </Form>
+    <div className="s-application-ctr">
+      <Form
+        className="s-application"
+        questions={questions}
+        onSubmit={applyForMembership}
+      >
+        <ApplicationFormContent />
+      </Form>
+    </div>
   );
 };
 

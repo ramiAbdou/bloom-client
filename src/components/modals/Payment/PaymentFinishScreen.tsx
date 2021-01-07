@@ -14,6 +14,25 @@ import Form from '../../organisms/Form/Form';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
 
+const PaymentFinishScreenToggle: React.FC = () => {
+  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+
+  const isFree: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[typeId].isFree;
+  });
+
+  if (isFree) return null;
+
+  return (
+    <FormItem
+      description="Next payment will be due on December 20th, 2021."
+      title="Auto-Renew Membership"
+      type="TOGGLE"
+    />
+  );
+};
+
 const PaymentFinishScreenContent: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
@@ -59,12 +78,7 @@ const PaymentFinishScreenContent: React.FC = () => {
         />
 
         <Separator margin={24} />
-
-        <FormItem
-          description="Next payment will be due on December 20th, 2021."
-          title="Auto-Renew Membership"
-          type="TOGGLE"
-        />
+        <PaymentFinishScreenToggle />
       </ModalContentContainer>
 
       <PaymentFinishButton />

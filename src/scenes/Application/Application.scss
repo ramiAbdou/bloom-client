@@ -17,6 +17,22 @@ $PREF: 's-application';
   }
 }
 
+// ## APPLICATION CONFIRMATION CONTAINER
+
+.#{$PREF}-ctr--confirmation {
+  @extend .flex-acccol;
+  @extend .fill;
+
+  @include TD { margin-bottom: $xxl; }
+
+  > .t-misc-card {
+    max-width: $xxl * 7;
+    overflow: hidden;
+    
+    > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+  }
+}
+
 // ## APPLICATION
 
 .#{$PREF} {

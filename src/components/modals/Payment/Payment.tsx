@@ -30,7 +30,6 @@ const PaymentModalContent: React.FC = () => {
 
   return (
     <>
-      <PaymentHeader />
       <PaymentCardScreen />
       <PaymentConfirmationScreen />
       <PaymentFinishScreen />
@@ -64,6 +63,7 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 
   return (
     <Modal id={modalId} onClose={clearOptions}>
+      <PaymentHeader />
       <PaymentModalContent />
     </Modal>
   );

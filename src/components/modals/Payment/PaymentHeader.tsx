@@ -53,6 +53,7 @@ const PaymentHeader: React.FC = () => {
         title={title}
         onBackButtonClick={onBackButtonClick}
       />
+
       <PaymentHeaderDescription />
     </>
   );

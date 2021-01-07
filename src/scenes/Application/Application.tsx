@@ -16,21 +16,15 @@ const Application: React.FC = () => {
   if (isFetchingApplication) return <Loader />;
 
   return (
-    <div className="s-application-ctr">
-      <Switch>
-        <Route
-          exact
-          component={ApplicationForm}
-          path="/:encodedUrlName/apply"
-        />
+    <Switch>
+      <Route exact component={ApplicationForm} path="/:encodedUrlName/apply" />
 
-        <Route
-          exact
-          component={ApplicationConfirmation}
-          path="/:encodedUrlName/apply/confirmation"
-        />
-      </Switch>
-    </div>
+      <Route
+        exact
+        component={ApplicationConfirmation}
+        path="/:encodedUrlName/apply/confirmation"
+      />
+    </Switch>
   );
 };
 

@@ -53,13 +53,15 @@ const ApplicationConfirmation: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
   return (
-    <Card>
-      <ConfirmationScreen
-        title={autoAccept ? 'Application Accepted' : 'Application Received'}
-      >
-        <ApplicationConfirmationContent />
-      </ConfirmationScreen>
-    </Card>
+    <div className="s-application-ctr--confirmation">
+      <Card>
+        <ConfirmationScreen
+          title={autoAccept ? 'Application Accepted' : 'Application Received'}
+        >
+          <ApplicationConfirmationContent />
+        </ConfirmationScreen>
+      </Card>
+    </div>
   );
 };
 
