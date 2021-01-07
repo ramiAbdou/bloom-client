@@ -8,7 +8,7 @@ import { NumberTag } from '@atoms/Tags';
 import { ChildrenProps, ClassNameProps } from '@constants';
 import LoadingStore from '@store/Loading.store';
 import { makeClass } from '@util/util';
-import Navigation, { NavigationProps } from './Navigation';
+import MainNavigation, { NavigationProps } from './MainNavigation';
 
 interface MainHeaderProps
   extends ClassNameProps,
@@ -50,10 +50,10 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         <Spinner dark loading={loading} />
       </div>
 
-      <Navigation options={options} />
+      <MainNavigation options={options} />
       {loading === false && children}
     </div>
   );
 };
 
-export default memo(MainHeader);
+export default MainHeader;

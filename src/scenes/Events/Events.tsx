@@ -1,8 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import MainHeader from '@containers/Main/MainHeader';
 import { useStoreState } from '@store/Store';
-import MainHeader from '@containers/Main/Header';
 
 export default () => {
   const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);

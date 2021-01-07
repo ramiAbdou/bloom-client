@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
-import MainHeader from '@containers/Main/Header';
+import { MainHeader } from '@containers/Main';
 import { useStoreState } from '@store/Store';
 import ApplicantsHeaderRespondAllButton from './ApplicantsRespondButton';
 

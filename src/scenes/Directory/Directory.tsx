@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainContent from '@containers/Main/Content';
+import MainContent from '@containers/Main/MainContent';
 import LoadingStore from '@store/Loading.store';
 import DirectoryStore from './Directory.store';
 import DirectoryCardContainer from './DirectoryCardContainer';

@@ -34,6 +34,8 @@ Member.define({
   user: User
 });
 
+MemberPayment.define({ member: Member, type: MemberType });
+
 User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
@@ -43,6 +45,7 @@ export const Schema = {
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
   MEMBER: Member,
+  MEMBER_PAYMENT: MemberPayment,
   MEMBER_TYPE: MemberType,
   USER: User
 };

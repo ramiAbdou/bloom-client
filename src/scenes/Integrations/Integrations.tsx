@@ -1,7 +1,6 @@
 import React from 'react';
 
-import MainContent from '@containers/Main/Content';
-import MainHeader from '@containers/Main/Header';
+import { MainContent, MainHeader } from '@containers/Main';
 import LoadingStore from '@store/Loading.store';
 import IntegrationsStore from './Integrations.store';
 import IntegrationsCardContainer from './IntegrationsCardContainer';

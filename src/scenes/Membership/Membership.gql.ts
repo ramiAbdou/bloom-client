@@ -4,11 +4,14 @@ import { mutation, query } from 'gql-query-builder';
 
 export const GET_PAYMENT_HISTORY = query({
   fields: [
+    'amount',
+    'createdAt',
     'id',
-    { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
+    'stripeInvoicePdf',
+    { member: ['id'] },
+    { type: ['id'] }
   ],
-  operation: 'getMember',
-  variables: { populate: '[String!]' }
+  operation: 'getPaymentHistory'
 }).query;
 
 // ## UPDATE AUTO RENEW

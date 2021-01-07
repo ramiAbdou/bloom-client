@@ -1,7 +1,7 @@
 import deline from 'deline';
 import React from 'react';
 
-import LoadingHeader from '@molecules/LoadingHeader/LoadingHeader';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import LoadingStore from '@store/Loading.store';
 import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';

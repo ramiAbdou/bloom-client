@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import MainContent from '@containers/Main/Content';
+import { MainContent } from '@containers/Main';
 import LoadingStore from '@store/Loading.store';
 import Admins from './Admins/Admins';
 import DatabaseHeader from './DatabaseHeader';

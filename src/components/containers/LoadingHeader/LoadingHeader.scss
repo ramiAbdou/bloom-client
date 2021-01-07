@@ -4,6 +4,9 @@ $PREF: 'c-loading-header';
   @extend .flex-ac;
 
   > h1,
+  > h2,
+  > h3,
+  > h4,
   button:first-child { margin-right: $sm; }
 
   > button:first-child > svg {

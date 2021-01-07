@@ -55,7 +55,8 @@ export type IMemberPayment = {
   createdAt: string;
   stripeInvoicePdf: string;
   id: IdString;
-  type: IMemberType;
+  member: IdString;
+  type: IdString;
 };
 
 export type IMemberType = {
@@ -103,7 +104,7 @@ export type IEntities = {
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
-  payments: EntityRecord<IQuestion>;
+  payments: EntityRecord<IMemberPayment>;
   questions: EntityRecord<IQuestion>;
   types: EntityRecord<IMemberType>;
   users: EntityRecord<IUser>;
