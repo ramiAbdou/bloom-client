@@ -1,21 +1,28 @@
 $PREF: 's-membership';
 
 .#{$PREF}-card-ctr {
-  @extend .flex-w;
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, $xxl * 5.5);
+  margin-bottom: $lg;
+  row-gap: $sm;
 
-  // column-gap: $sm;
-  // display: grid;
-  // grid-template-columns: repeat(2, $xxl * 5.5);
-  // margin-bottom: $lg;
+  @include LTE(1060) { grid-template-columns: repeat(auto-fill, 100%); }
 }
 
 // ## MANAGE MEMBERSHIP CARD (BASE)
 
 .#{$PREF}-card {
   box-sizing: border-box;
-  margin: 0 $sm $sm 0;
-  min-width: $xxl * 5.5;
-  width: fit-content;
+
+  > h4 { color: $gray-2; margin-bottom: $xs; }
+
+  > p {
+    margin-bottom: $sm;
+
+    > span:first-child { @extend .display; margin-right: $xxs; }
+    > span:last-child { @extend .meta--lg; color: $gray-2; }
+  }
 
   > div:first-child {
     @extend .flex-ac;
@@ -44,34 +51,12 @@ $PREF: 's-membership';
   height: $xxl * 3;
 
   > p:first-of-type { @extend .body--bold; margin-top: auto; }
-  > p:last-of-type { @extend .meta; color: $gray-2; }
+  > p:last-of-type { @extend .meta; color: $gray-2; margin-top: -$sm; }
   > button { margin-top: auto; }
 }
 
 // ## PAYMENT HISTORY
 
 .#{$PREF}-history-ctr {
-  margin-top: $md;
   > h3 { margin-bottom: $sm; }
-}
-
-.#{$PREF}-plans-card-ctr {
-  column-gap: $sm;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, $xxl * 5.5);
-  row-gap: $sm;
-}
-
-.#{$PREF}-plans-card {
-  box-sizing: border-box;
-  min-width: $xxl * 5.5;
-  width: fit-content;
-
-  > h4 { color: $gray-2; margin-bottom: $xs; }
-
-  > p {
-    margin-bottom: $sm;
-    > span:first-child { @extend .display; margin-right: $xxs; }
-    > span:last-child { @extend .meta--lg; color: $gray-2; }
-  }
 }

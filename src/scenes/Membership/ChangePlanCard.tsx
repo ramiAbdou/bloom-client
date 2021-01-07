@@ -2,11 +2,11 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import { ModalType } from '@constants';
-import Card from '@containers/Card/Card';
 import { IMemberType } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import ChangePlanStore from './Membership.store';
+import MembershipCard from './MembershipCard';
 
 const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
   const isCurrent = useStoreState(({ db }) => db.member.type === id);
@@ -32,7 +32,7 @@ const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
   ]);
 
   return (
-    <Card className="s-membership-plans-card">
+    <MembershipCard>
       <h4>{name}</h4>
 
       <p>
@@ -49,7 +49,7 @@ const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
       >
         {isCurrent ? 'Current Plan' : 'Change Plan'}
       </Button>
-    </Card>
+    </MembershipCard>
   );
 };
 

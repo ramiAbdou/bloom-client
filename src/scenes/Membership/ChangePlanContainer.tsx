@@ -3,6 +3,7 @@ import React from 'react';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import PlanCard from './ChangePlanCard';
+import MembershipCardContainer from './MembershipCardContainer';
 
 const PlanContainer = () => {
   const types: IMemberType[] = useStoreState(({ db }) => {
@@ -11,11 +12,11 @@ const PlanContainer = () => {
   });
 
   return (
-    <div className="s-membership-plans-card-ctr">
+    <MembershipCardContainer>
       {types.map((type: IMemberType) => (
         <PlanCard key={type.id} {...type} />
       ))}
-    </div>
+    </MembershipCardContainer>
   );
 };
 

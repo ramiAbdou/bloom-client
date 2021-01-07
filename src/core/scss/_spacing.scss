@@ -11,6 +11,13 @@ $lg: 36px;
 $xl: 48px;
 $xxl: 60px;
 
+// Controls all of the @media queries based on the window width. Mixin
+// functions allow for setting breakpoints at various widths.
+
+$M_SIZE: 575;
+$T_SIZE: 1024;
+$D_SIZE: 1440;
+
 // Flex configurations that are applicable in all settings.
 
 .flex {

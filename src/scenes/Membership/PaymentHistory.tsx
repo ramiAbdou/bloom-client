@@ -56,11 +56,11 @@ const PaymentHistoryTable: React.FC = () => {
   );
 };
 
-const PaymentHistory: React.FC = () => (
+const PaymentOverview: React.FC = () => (
   <div className="s-membership-history-ctr">
-    <h3>Payment History</h3>
+    <h3>Payment Overview</h3>
     <PaymentHistoryTable />
   </div>
 );
 
-export default PaymentHistory;
+export default PaymentOverview;

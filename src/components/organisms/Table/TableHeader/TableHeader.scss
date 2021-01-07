@@ -59,6 +59,6 @@ th {
     > div > p { color: $primary; max-width: 85%; }
     // Caret up or caret down SVG, React controls the displaying of this
     // element.
-    > div > svg { color: $primary; height: $ss; margin-left: $xs; width: $ss; }
+    > div > svg { @extend .react-icon--sm; color: $primary; margin-left: $xs; }
   }
 }

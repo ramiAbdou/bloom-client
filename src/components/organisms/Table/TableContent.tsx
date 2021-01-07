@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import SelectAllBanner from './SelectAllBanner/SelectAllBanner';
 import Table from './Table.store';
 import { OnRenameColumnProps } from './Table.types';
-import BodyContainer from './TableBodyContainer';
-import HeaderContainer from './TableHeaderContainer';
+import TableBanner from './TableBanner/TableBanner';
+import TableBodyContainer from './TableBodyContainer';
+import TableHeaderContainer from './TableHeaderContainer';
 import Pagination from './TablePagination/Pagination';
 import TablePanel from './TablePanel';
 
@@ -25,12 +25,12 @@ const TableContent: React.FC<OnRenameColumnProps> = ({ onRenameColumn }) => {
 
   return (
     <>
-      {isAllPageSelected && <SelectAllBanner />}
+      {isAllPageSelected && <TableBanner />}
 
       <div id="c-table-ctr" style={{ maxHeight }}>
         <table className="c-table">
-          <HeaderContainer />
-          <BodyContainer />
+          <TableHeaderContainer />
+          <TableBodyContainer />
         </table>
       </div>
 

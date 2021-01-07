@@ -1,8 +1,8 @@
 import React from 'react';
 
-import HeaderCell from './Header/Header';
 import Table from './Table.store';
 import { Column } from './Table.types';
+import HeaderCell from './TableHeader/TableHeader';
 
 const HeaderContainer = () => {
   const columns = Table.useStoreState((store) => store.columns);

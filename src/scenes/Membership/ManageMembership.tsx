@@ -3,17 +3,16 @@ import React from 'react';
 import MainContent from '@containers/Main/Content';
 import MainHeader from '@containers/Main/Header';
 import CurrentPlanCard from './CurrentPlanCard';
+import MembershipCardContainer from './MembershipCardContainer';
 import PaymentHistoryContainer from './PaymentHistory';
 import PaymentMethodCard from './PaymentMethodCard';
 
-const MembershipCardContainer: React.FC = () => {
-  return (
-    <div className="s-membership-card-ctr">
-      <CurrentPlanCard />
-      <PaymentMethodCard />
-    </div>
-  );
-};
+const ManageMembershipCardContainer: React.FC = () => (
+  <MembershipCardContainer>
+    <CurrentPlanCard />
+    <PaymentMethodCard />
+  </MembershipCardContainer>
+);
 
 const ManageMembership: React.FC = () => {
   return (
@@ -21,7 +20,7 @@ const ManageMembership: React.FC = () => {
       <MainHeader title="Manage Membership" />
 
       <MainContent>
-        <MembershipCardContainer />
+        <ManageMembershipCardContainer />
         <PaymentHistoryContainer />
       </MainContent>
     </>

@@ -1,9 +1,21 @@
-// Controls all of the @media queries based on the window width. Mixin
-// functions allow for setting breakpoints at various widths.
+@mixin OVERFLOW_ELLIPSES($lines: 1) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-$M_SIZE: 575;
-$T_SIZE: 1024;
-$D_SIZE: 1440;
+// Sets the size of the element to be whatever size is specified. Ensure that
+// the element is EXACTLY and ALWAYS that size.
+
+@mixin SIZE($size) {
+  max-height: $size;
+  max-width: $size;
+  min-height: $size;
+  min-width: $size;
+}
 
 // We need to add the media query to ensure that if the device doesn't support
 // hovering (such as an iPhone), then we shouldn't allow a hover state.

@@ -14,14 +14,14 @@
 import React from 'react';
 
 import Card from '@containers/Card/Card';
-import SelectAllBannerButton from './Button';
-import SelectAllBannerMessage from './Message';
+import TableBannerButton from './Button';
+import TableBannerMessage from './Message';
 
-const SelectAllBanner: React.FC = () => (
+const TableBanner: React.FC = () => (
   <Card className="c-table-banner">
-    <SelectAllBannerMessage />
-    <SelectAllBannerButton />
+    <TableBannerButton />
+    <TableBannerMessage />
   </Card>
 );
 
-export default SelectAllBanner;
+export default TableBanner;

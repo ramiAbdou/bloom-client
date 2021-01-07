@@ -105,15 +105,6 @@
   text-overflow: ellipsis;
 }
 
-@mixin OVERFLOW_ELLIPSES($lines: 1) {
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  -webkit-line-clamp: $lines;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 // Storybook override for content.
 .sb-show-main.sb-main-padded {
   box-sizing: border-box;
@@ -127,16 +118,6 @@
 body::-webkit-scrollbar,
 div::-webkit-scrollbar,
 section::-webkit-scrollbar { display: none; }
-
-// Sets the size of the element to be whatever size is specified. Ensure that
-// the element is EXACTLY and ALWAYS that size.
-
-@mixin SIZE($size) {
-  max-height: $size;
-  max-width: $size;
-  min-height: $size;
-  min-width: $size;
-}
 
 // Pushes the home content to the right due to the fixed sidebar.
 .home-content {
