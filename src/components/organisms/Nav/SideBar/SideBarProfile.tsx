@@ -2,6 +2,7 @@ import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import { PanelType } from '@constants';
+import useActiveRoute from '@hooks/useActiveRoute';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
@@ -43,20 +44,23 @@ const SideBarProfile: React.FC = () => {
   });
 
   const showPicker = useStoreActions(({ panel }) => panel.showPicker);
+  const isActive = useActiveRoute() === 'membership';
+
   const onClick = () => showPicker(PanelType.PROFILE);
 
-  const css = cx({
+  const containerCss = cx({
     'o-side-bar-profile-ctr': true,
     'o-side-bar-profile-ctr--no-auto': isDuesMessageShowing
   });
 
+  const buttonCss = cx({
+    'o-side-bar-profile': true,
+    'o-side-bar-profile--active': isActive
+  });
+
   return (
-    <div className={css}>
-      <button
-        className="o-side-bar-profile"
-        id={PanelType.PROFILE}
-        onClick={onClick}
-      >
+    <div className={containerCss}>
+      <button className={buttonCss} id={PanelType.PROFILE} onClick={onClick}>
         <SideBarProfileContent />
         <IoChevronForwardOutline />
       </button>

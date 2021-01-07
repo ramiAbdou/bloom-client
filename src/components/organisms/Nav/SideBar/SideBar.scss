@@ -110,7 +110,7 @@ $PREF: 'o-side-bar';
 .#{$PREF}-profile-ctr {
   border-top: 1px $gray-5 solid;
   margin-top: auto;
-  padding: $sm $ss $sm 0;
+  padding: $xs $ss $xs 0;
   
   &--no-auto { margin-top: initial; }
 }
@@ -119,10 +119,19 @@ $PREF: 'o-side-bar';
 
 .#{$PREF}-profile {
   @extend .flex-acsb;
-  
+
+  border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
-  padding-left: $sm;
+  padding: $xs 0 $xs $sm;
   width: 100%;
+
+  &--active { background-color: $primary-bg; }
+  &--active > svg { color: $primary; }
+  &--active > div > .#{$PREF}-profile-info > p:first-child {
+    @extend .body--bold;
+
+    color: $primary;
+  }
 
   > div { @extend .flex-ac; }
   > svg { margin-right: $sm; }
