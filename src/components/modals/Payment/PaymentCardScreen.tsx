@@ -28,10 +28,11 @@ const options: StripeCardElementOptions = {
 
 const PaymentCardForm: React.FC = () => {
   const last4 = useStoreState(({ db }) => db.member.paymentMethod?.last4);
+  const type = PaymentStore.useStoreState((store) => store.type);
 
   // Return null if the card isn't changing AND either the membership is free
   // OR there is already a card on file.
-  if (last4) return null;
+  if (last4 && type !== 'UPDATE_PAYMENT_METHOD') return null;
 
   return (
     <>
