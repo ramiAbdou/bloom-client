@@ -22,7 +22,7 @@ const useInitPaymentScreen = () => {
   );
 
   // If the screen was already set, don't set it again.
-  if (loading || screen) return;
+  if (loading !== false || screen) return;
 
   if (!isCardOnFile) setBackButton(true);
   if (type === 'UPDATE_PAYMENT_METHOD' || !isCardOnFile) setScreen('CARD_FORM');

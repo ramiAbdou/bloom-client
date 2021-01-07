@@ -48,7 +48,6 @@ const PaymentFinishScreenContent: React.FC = () => {
     <Form className="mo-payment">
       <ModalContentContainer>
         <QuestionValueList
-          large
           items={[
             {
               title: 'Membership Type',

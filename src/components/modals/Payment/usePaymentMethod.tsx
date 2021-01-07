@@ -18,8 +18,7 @@ const usePaymentMethod = (skipGlobalLoadingState?: boolean) => {
   useUpdateLoading(skipGlobalLoadingState ? undefined : loading);
 
   useEffect(() => {
-    if (!data) return;
-    mergeEntities({ data, schema: Schema.MEMBER });
+    if (data) mergeEntities({ data, schema: Schema.MEMBER });
   }, [data]);
 
   return loading;

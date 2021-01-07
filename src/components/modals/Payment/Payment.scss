@@ -33,6 +33,6 @@ $PREF: 'mo-payment';
 
 .#{$PREF}-billing-ctr > .c-form-item { margin-bottom: 0; margin-top: 0; }
 
-.#{$PREF} > .c-modal-content-ctr { margin-bottom: $lg; }
+.#{$PREF} > .c-modal-content-ctr { margin-bottom: $md; }
 
 .#{$PREF}-item--type > div { @extend .flex-acsb; }
