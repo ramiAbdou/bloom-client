@@ -9,6 +9,7 @@ export const GET_USER = query({
     'pictureUrl',
     {
       members: [
+        'autoRenew',
         'duesStatus',
         'id',
         'role',

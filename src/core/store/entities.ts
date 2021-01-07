@@ -33,6 +33,7 @@ export type IPaymentMethod = {
 };
 
 export type IMember = {
+  autoRenew: boolean;
   allData?: { questionId: string; value: string }[];
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
