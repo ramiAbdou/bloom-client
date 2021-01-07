@@ -4,14 +4,14 @@ import useQuery from '@hooks/useQuery';
 import { IMemberPayment } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_PAYMENT_HISTORY } from './Membership.gql';
+import { GET_DUES_HISTORY } from '../Analytics.gql';
 
-const usePaymentHistory = () => {
+const useFetchDuesHistory = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const result = useQuery<IMemberPayment[]>({
-    name: 'getPaymentHistory',
-    query: GET_PAYMENT_HISTORY
+    name: 'getDuesHistory',
+    query: GET_DUES_HISTORY
   });
 
   const { data } = result;
@@ -23,4 +23,4 @@ const usePaymentHistory = () => {
   return result;
 };
 
-export default usePaymentHistory;
+export default useFetchDuesHistory;

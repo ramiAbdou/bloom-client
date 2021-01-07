@@ -4,7 +4,7 @@ import { MainContent, MainHeader } from '@containers/Main';
 import CurrentPlanCard from './CurrentPlanCard';
 import MembershipCardContainer from './MembershipCardContainer';
 import PaymentMethodCard from './PaymentMethodCard';
-import PaymentHistoryContainer from './PaymentOverview';
+import PaymentOverview from './PaymentOverview';
 
 const ManageMembershipCardContainer: React.FC = () => (
   <MembershipCardContainer>
@@ -20,7 +20,7 @@ const ManageMembership: React.FC = () => {
 
       <MainContent>
         <ManageMembershipCardContainer />
-        <PaymentHistoryContainer />
+        <PaymentOverview />
       </MainContent>
     </>
   );

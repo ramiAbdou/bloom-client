@@ -2,14 +2,13 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button';
+import { MainSection } from '@containers/Main';
 import Table from '@organisms/Table/Table';
 import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment } from '@store/entities';
-import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
-import MainSection from '../../components/containers/Main/MainSection';
 import usePaymentHistory from './usePaymentHistory';
 
 const PaymentHistoryTable: React.FC = () => {
@@ -61,28 +60,23 @@ const PaymentHistoryTable: React.FC = () => {
 
   return (
     <Table columns={columns} options={options} rows={rows}>
-      <TableContent
-        emptyMessage="Looks like you haven't made any payments."
-        showEmptyTable={false}
-      />
+      <TableContent emptyMessage="Looks like you haven't made any payments." />
     </Table>
   );
 };
 
-const PaymentOverviewContent: React.FC = () => {
-  usePaymentHistory();
+const PaymentOverview: React.FC = () => {
+  const { loading } = usePaymentHistory();
 
   return (
-    <MainSection className="s-membership-history-ctr" title="Payment Overview">
+    <MainSection
+      className="s-membership-history-ctr"
+      loading={loading}
+      title="Payment Overview"
+    >
       <PaymentHistoryTable />
     </MainSection>
   );
 };
-
-const PaymentOverview: React.FC = () => (
-  <LoadingStore.Provider>
-    <PaymentOverviewContent />
-  </LoadingStore.Provider>
-);
 
 export default PaymentOverview;

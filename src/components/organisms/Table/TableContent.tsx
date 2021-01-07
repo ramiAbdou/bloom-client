@@ -10,7 +10,6 @@ import TablePanel from './TablePanel';
 
 interface TableContent extends OnRenameColumnProps {
   emptyMessage?: string;
-  showEmptyTable?: boolean;
 }
 
 const TableContentEmptyMessage: React.FC<
@@ -23,11 +22,10 @@ const TableContentEmptyMessage: React.FC<
 
 const TableContent: React.FC<TableContent> = ({
   emptyMessage: eMessage,
-  showEmptyTable,
   onRenameColumn
 }) => {
   const emptyMessage = Table.useStoreState(({ data }) => {
-    if (data?.length || showEmptyTable) return null;
+    if (data?.length) return null;
     return eMessage;
   });
 
