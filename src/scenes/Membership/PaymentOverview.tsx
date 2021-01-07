@@ -61,7 +61,10 @@ const PaymentHistoryTable: React.FC = () => {
 
   return (
     <Table columns={columns} options={options} rows={rows}>
-      <TableContent />
+      <TableContent
+        emptyMessage="Looks like you haven't made any payments."
+        showEmptyTable={false}
+      />
     </Table>
   );
 };

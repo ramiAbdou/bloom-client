@@ -6,6 +6,7 @@ $PREF: 'c-table';
   background-color: white;
   border: 1px $gray-5 solid;
   border-radius: $xs;
+  max-height: 70vh;
   overflow: scroll;
   position: relative;
 }

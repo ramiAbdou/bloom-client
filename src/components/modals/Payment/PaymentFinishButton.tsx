@@ -4,7 +4,6 @@ import { IoLockClosed } from 'react-icons/io5';
 import Form from '@organisms/Form/Form.store';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
-import { useStripe } from '@stripe/react-stripe-js';
 import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';
 
@@ -23,7 +22,6 @@ const PaymentFinishButton: React.FC = () => {
   });
 
   const isLoading = Form.useStoreState((store) => store.isLoading);
-  const stripe = useStripe();
 
   if (amount === null || amount === undefined) return null;
 
@@ -46,7 +44,6 @@ const PaymentFinishButton: React.FC = () => {
     <SubmitButton
       fill
       className="mo-payment-button"
-      disabled={!stripe}
       loading={isLoading}
       loadingText={buttonLoadingText}
     >

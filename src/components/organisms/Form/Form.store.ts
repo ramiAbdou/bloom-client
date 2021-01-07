@@ -39,7 +39,7 @@ export const formModel: FormModel = {
 
   isCompleted: computed(({ items }) => {
     return (
-      items?.length &&
+      !items?.length ||
       items.every(({ required, value, validate }: FormItemData) => {
         return (!required || !!value) && (!validate || validate(value));
       })

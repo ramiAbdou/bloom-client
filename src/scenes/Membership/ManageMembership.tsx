@@ -3,8 +3,8 @@ import React from 'react';
 import { MainContent, MainHeader } from '@containers/Main';
 import CurrentPlanCard from './CurrentPlanCard';
 import MembershipCardContainer from './MembershipCardContainer';
-import PaymentHistoryContainer from './MembershipPaymentOverview';
 import PaymentMethodCard from './PaymentMethodCard';
+import PaymentHistoryContainer from './PaymentOverview';
 
 const ManageMembershipCardContainer: React.FC = () => (
   <MembershipCardContainer>

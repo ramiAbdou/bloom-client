@@ -30,7 +30,15 @@ $PREF: 't-main';
   }
 }
 
+// ## MAIN CONTENT
+
 .#{$PREF}-content { margin: 0 $md; padding: 2px 2px $xl 2px; }
+
+// ## MAIN CONTENT
+
+.#{$PREF}-section {
+  > .c-loading-header { margin-bottom: $sm; }
+}
 
 // ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but
 // not border-left, so we avoid stacking pixels (1px * 2 = 2px). However,

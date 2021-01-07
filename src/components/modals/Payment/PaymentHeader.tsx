@@ -3,6 +3,7 @@ import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import LoadingStore from '@store/Loading.store';
+import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';
 
@@ -10,21 +11,44 @@ const PaymentHeaderDescription: React.FC = () => {
   const loading = LoadingStore.useStoreState((store) => store.loading);
   const screen = PaymentStore.useStoreState((store) => store.screen);
 
+  const selectedTypeId = PaymentStore.useStoreState(
+    (store) => store.selectedTypeId
+  );
+
+  const isFree: boolean = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[selectedTypeId]?.isFree;
+  });
+
   const isUpdatingPaymentMethod =
     PaymentStore.useStoreState((store) => store.type) ===
     'UPDATE_PAYMENT_METHOD';
 
-  const description = isUpdatingPaymentMethod
-    ? deline`
-      An update to your current subscription will be reflected on your next
-      billing date.
-    `
-    : deline`
-      We don’t have your payment information yet. Please enter your information
-      to continue to the next step.
-    `;
+  const description = takeFirst([
+    [
+      isUpdatingPaymentMethod,
+      deline`
+        An update to your current subscription will be reflected on your next
+        billing date.
+      `
+    ],
+    [
+      isFree,
+      deline`
+        Are you sure you want to downgrade your membership? You cannot undo
+        this action.
+      `
+    ],
+    [
+      true,
+      deline`
+        We don’t have your payment information yet. Please enter your
+        information to continue to the next step.
+      `
+    ]
+  ]);
 
-  if (loading || screen !== 'CARD_FORM') return null;
+  if (loading || (screen === 'CARD_FORM' && !isFree)) return null;
   return <p>{description}</p>;
 };
 

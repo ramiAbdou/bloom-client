@@ -6,7 +6,6 @@ import { IMemberType } from '@store/entities';
 
 export interface CreateSubscriptionArgs {
   memberTypeId: string;
-  paymentMethodId: string;
 }
 
 export interface CreateSubscriptionResult {
@@ -18,10 +17,7 @@ export interface CreateSubscriptionResult {
 export const CREATE_SUBSCRIPTION = mutation({
   fields: ['id', 'duesStatus', { type: ['id', 'name'] }],
   operation: 'createSubscription',
-  variables: {
-    memberTypeId: { required: true },
-    paymentMethodId: { required: true }
-  }
+  variables: { memberTypeId: { required: true } }
 }).query;
 
 // ## GET DUES INFORMATION

@@ -13,6 +13,7 @@ import { useStoreState } from '@store/Store';
 import Form from '../../organisms/Form/Form';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
+import useCreateSubscription from './useCreateSubscription';
 
 const PaymentFinishScreenToggle: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
@@ -25,11 +26,15 @@ const PaymentFinishScreenToggle: React.FC = () => {
   if (isFree) return null;
 
   return (
-    <FormItem
-      description="Next payment will be due on December 20th, 2021."
-      title="Auto-Renew Membership"
-      type="TOGGLE"
-    />
+    <>
+      <Separator margin={24} />
+
+      <FormItem
+        description="Next payment will be due on December 20th, 2021."
+        title="Auto-Renew Membership"
+        type="TOGGLE"
+      />
+    </>
   );
 };
 
@@ -59,12 +64,15 @@ const PaymentFinishScreenContent: React.FC = () => {
       .replace('YEARLY', 'yr');
   });
 
+  const createSubscription = useCreateSubscription();
+  if (!createSubscription) return null;
+
   const cardItem: QuestionValueItemProps[] = !isFree
     ? [{ title: 'Credit or Debit Card', type: 'SHORT_TEXT', value: cardString }]
     : [];
 
   return (
-    <Form className="mo-payment">
+    <Form className="mo-payment" onSubmit={createSubscription}>
       <ModalContentContainer>
         <QuestionValueList
           items={[
@@ -77,7 +85,6 @@ const PaymentFinishScreenContent: React.FC = () => {
           ]}
         />
 
-        <Separator margin={24} />
         <PaymentFinishScreenToggle />
       </ModalContentContainer>
 
