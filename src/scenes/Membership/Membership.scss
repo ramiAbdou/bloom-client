@@ -1,16 +1,19 @@
 $PREF: 's-membership';
 
 .#{$PREF}-card-ctr {
-  column-gap: $sm;
-  display: grid;
-  grid-template-columns: repeat(2, $xxl * 5.5);
-  margin-bottom: $lg;
+  @extend .flex-w;
+
+  // column-gap: $sm;
+  // display: grid;
+  // grid-template-columns: repeat(2, $xxl * 5.5);
+  // margin-bottom: $lg;
 }
 
 // ## MANAGE MEMBERSHIP CARD (BASE)
 
 .#{$PREF}-card {
   box-sizing: border-box;
+  margin: 0 $sm $sm 0;
   min-width: $xxl * 5.5;
   width: fit-content;
 
@@ -48,6 +51,7 @@ $PREF: 's-membership';
 // ## PAYMENT HISTORY
 
 .#{$PREF}-history-ctr {
+  margin-top: $md;
   > h3 { margin-bottom: $sm; }
 }
 
