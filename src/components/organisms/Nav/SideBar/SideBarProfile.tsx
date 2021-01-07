@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
-import { PickerType } from '@constants';
+import { PanelType } from '@constants';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
@@ -43,7 +43,7 @@ const SideBarProfile: React.FC = () => {
   });
 
   const showPicker = useStoreActions(({ panel }) => panel.showPicker);
-  const onClick = () => showPicker(PickerType.PROFILE);
+  const onClick = () => showPicker(PanelType.PROFILE);
 
   const css = cx({
     'o-side-bar-profile-ctr': true,
@@ -54,7 +54,7 @@ const SideBarProfile: React.FC = () => {
     <div className={css}>
       <button
         className="o-side-bar-profile"
-        id={PickerType.PROFILE}
+        id={PanelType.PROFILE}
         onClick={onClick}
       >
         <SideBarProfileContent />

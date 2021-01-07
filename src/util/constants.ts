@@ -37,6 +37,10 @@ export type StyleProps = { style?: React.CSSProperties };
 export type TitleProps = { title?: string };
 export type ValueProps = { value?: any };
 
+/**
+ * SYSTEM TYPES - Includes modal, panel and more.
+ */
+
 export enum ModalType {
   ADD_ADMINS = 'ADD_ADMINS',
   ADD_MEMBERS = 'ADD_MEMBERS',
@@ -51,9 +55,20 @@ export enum ModalType {
   UPDATE_PAYMENT_METHOD = 'UPDATE_PAYMENT_METHOD'
 }
 
-export enum PickerType {
+export enum PanelType {
   PROFILE = 'PROFILE'
 }
+
+export type RouteType =
+  | '/'
+  | 'analytics'
+  | 'applicants'
+  | 'database'
+  | 'directory'
+  | 'events'
+  | 'members'
+  | 'membership'
+  | 'integrations';
 
 /**
  * FORMS - Handling of all form-related items including custom Enums.

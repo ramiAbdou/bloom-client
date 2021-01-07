@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { ModalType } from '@constants';
+import useActiveRoute from '@hooks/useActiveRoute';
 import Modal from '@organisms/Modal/Modal';
 import LoadingStore from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -72,6 +73,7 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   selectedTypeId,
   type
 }) => {
+  const route = useActiveRoute();
   useFetchDuesInformation();
 
   // Get the user and see if they've paid their dues or not.
@@ -81,8 +83,10 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const isUserActive = duesStatus === 'ACTIVE';
 
   useEffect(() => {
-    if (duesStatus && !isUserActive) showModal(ModalType.PAY_DUES);
-  }, [isUserActive]);
+    if (duesStatus && !isUserActive && route !== 'membership') {
+      showModal(ModalType.PAY_DUES);
+    }
+  }, [isUserActive, route]);
 
   if (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId) return null;
 

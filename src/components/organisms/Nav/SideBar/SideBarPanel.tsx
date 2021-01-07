@@ -3,7 +3,7 @@ import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import { PickerType } from '@constants';
+import { PanelType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import PickerOption from '@organisms/Panel/components/Option';
 import Panel from '@organisms/Panel/Panel';
@@ -70,7 +70,7 @@ const SidebarPanel: React.FC = () => {
   return (
     <Panel
       align="RIGHT_BOTTOM"
-      id={PickerType.PROFILE}
+      id={PanelType.PROFILE}
       style={{ marginLeft: 24, minWidth: 270 }}
     >
       {actions.map((action) => (

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-import useFinalPath from '@hooks/useFinalPath';
+import useActiveRoute from '@hooks/useActiveRoute';
 import { makeClass } from '@util/util';
 import { LinkOptions } from '../Nav.types';
 
@@ -10,9 +10,9 @@ import { LinkOptions } from '../Nav.types';
  * If onClick is defined, then we don't render a link, we simply render a
  * Button that opens up a modal.
  */
-export default memo(({ Icon, to, title }: LinkOptions) => {
+const BottomBarLink: React.FC<LinkOptions> = ({ Icon, to, title }) => {
   const { url } = useRouteMatch();
-  const isActive = useFinalPath() === to;
+  const isActive = useActiveRoute() === to;
 
   const css = makeClass([
     'o-bottom-bar-link',
@@ -25,4 +25,6 @@ export default memo(({ Icon, to, title }: LinkOptions) => {
       <p>{title}</p>
     </Link>
   );
-});
+};
+
+export default memo(BottomBarLink);
