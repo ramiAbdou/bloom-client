@@ -35,6 +35,12 @@ const PaymentFinishButton: React.FC = () => {
     `Finish and Pay $${amount}`
   ]);
 
+  const buttonLoadingText = takeFirst([
+    [isFree, 'Changing...'],
+    [isUpdatingPaymentMethod, 'Saving...'],
+    `Paying...`
+  ]);
+
   // Use a traditional checkout form.
   return (
     <SubmitButton
@@ -42,7 +48,7 @@ const PaymentFinishButton: React.FC = () => {
       className="mo-payment-button"
       disabled={!stripe}
       loading={isLoading}
-      loadingText="Paying..."
+      loadingText={buttonLoadingText}
     >
       {(isUpdatingPaymentMethod || !isFree) && <IoLockClosed />}
       {buttonTitle}
