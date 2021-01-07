@@ -90,9 +90,15 @@ const CurrentPlanCardActionContainer: React.FC = () => {
 
 const CurrentPlanCardToggle: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member?.autoRenew);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const updateAutoRenew = useUpdateAutoRenew();
-  const onChange = () => updateAutoRenew();
+
+  const onChange = async () => {
+    const { data } = await updateAutoRenew();
+    const statusText = data.autoRenew ? 'on' : 'off';
+    showToast({ message: `Membership auto-renewal turned ${statusText}.` });
+  };
 
   return (
     <Toggle on={autoRenew} title="Auto Renew Membership" onChange={onChange} />
