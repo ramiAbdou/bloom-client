@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { cx, takeFirst } from '@util/util';
 import Form from './Form.store';
 import { FormItemProps } from './Form.types';
-import Description from './FormDescription';
-import Label from './FormLabel';
+import FormDescription from './FormDescription';
+import FormLabel from './FormLabel';
 import useItemBody from './useItemBody';
 
 const FormItem: React.FC<FormItemProps> = ({
@@ -60,9 +60,10 @@ const FormItem: React.FC<FormItemProps> = ({
 
   return (
     <div className={css}>
-      {type !== 'TOGGLE' && <Label required={required}>{title}</Label>}
-      <Description>{description}</Description>
+      {type !== 'TOGGLE' && <FormLabel required={required}>{title}</FormLabel>}
+      {type !== 'TOGGLE' && <FormDescription>{description}</FormDescription>}
       {body}
+      {type === 'TOGGLE' && <FormDescription>{description}</FormDescription>}
     </div>
   );
 };

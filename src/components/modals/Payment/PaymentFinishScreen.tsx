@@ -59,7 +59,12 @@ const PaymentFinishScreenContent: React.FC = () => {
         />
 
         <Separator margin={24} />
-        <FormItem title="Auto-Renew Membership" type="TOGGLE" />
+
+        <FormItem
+          description="Next payment will be due on December 20th, 2021."
+          title="Auto-Renew Membership"
+          type="TOGGLE"
+        />
       </ModalContentContainer>
 
       <PaymentFinishButton />

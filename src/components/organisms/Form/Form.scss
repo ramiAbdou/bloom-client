@@ -3,7 +3,14 @@ $PREF: 'c-form';
 // ## GENERAL
 
 .#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
-.#{$PREF}-desc { color: $gray-2; margin-bottom: $sm; }
+
+.#{$PREF}-desc {
+  color: $gray-2;
+  margin-bottom: $sm;
+
+  &:last-child { @extend .meta; color: $gray-3; margin: $xs 0 0 0; }
+}
+
 .#{$PREF}-error { color: $red; margin-top: $xxs; }
 
 // ## LABEL
