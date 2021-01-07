@@ -6,6 +6,7 @@ import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
+import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import ApplicantsCardStore from './ApplicantsCard/ApplicantsCard.store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
@@ -47,7 +48,11 @@ const ApplicantsModal: React.FC<IdProps> = ({ id }) => {
   return (
     <Modal id={id}>
       <h1>{fullName}</h1>
-      <QuestionValueList items={items} marginBottom={24} />
+
+      <ModalContentContainer>
+        <QuestionValueList items={items} marginBottom={24} />
+      </ModalContentContainer>
+
       <ApplicantsModalActionContainer />
     </Modal>
   );

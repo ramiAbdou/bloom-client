@@ -28,7 +28,6 @@ const LoadingHeader = ({
   loading,
   title
 }: LoadingHeaderProps) => {
-  console.log('HERE');
   return (
     <div className="c-loading-header">
       <LoadingHeaderBackButton onBackButtonClick={onBackButtonClick} />

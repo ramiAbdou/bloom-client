@@ -73,7 +73,9 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   selectedTypeId,
   type
 }) => {
+  const isAdmin = useStoreState(({ db }) => db.isAdmin);
   const route = useActiveRoute();
+
   useFetchDuesInformation();
 
   // Get the user and see if they've paid their dues or not.
@@ -83,7 +85,7 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const isUserActive = duesStatus === 'ACTIVE';
 
   useEffect(() => {
-    if (duesStatus && !isUserActive && route !== 'membership') {
+    if (duesStatus && !isUserActive && !isAdmin && route !== 'membership') {
       showModal(ModalType.PAY_DUES);
     }
   }, [isUserActive, route]);

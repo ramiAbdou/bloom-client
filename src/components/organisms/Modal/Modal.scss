@@ -77,4 +77,9 @@ $PREF: 'c-modal';
 
 // ## MODAL CONTENT CONTAINER
 
-.#{$PREF}-content-ctr { max-height: 70vh; overflow: scroll; }
+.#{$PREF}-content-ctr {
+  max-height: 70vh;
+  overflow: scroll;
+
+  ~ .t-action-ctr--equal { margin-top: $md; }
+}

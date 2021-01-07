@@ -125,7 +125,8 @@
 // Disables scrollbar display for body and div elements. Not much scrolling
 // needed other than the div.
 body::-webkit-scrollbar,
-div::-webkit-scrollbar { display: none; }
+div::-webkit-scrollbar,
+section::-webkit-scrollbar { display: none; }
 
 // Sets the size of the element to be whatever size is specified. Ensure that
 // the element is EXACTLY and ALWAYS that size.
