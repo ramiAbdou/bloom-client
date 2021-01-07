@@ -21,7 +21,7 @@ const PaymentHistoryTable: React.FC = () => {
       const {
         amount,
         createdAt,
-        stripeInvoicePdf,
+        stripeInvoiceUrl,
         type
       }: IMemberPayment = byPaymentId[paymentId];
 
@@ -32,7 +32,7 @@ const PaymentHistoryTable: React.FC = () => {
         Date: day(createdAt).format('MMMM DD, YYYY'),
         'Membership Plan': typeName,
         Receipt: (
-          <Button tertiary href={stripeInvoicePdf}>
+          <Button tertiary href={stripeInvoiceUrl}>
             Receipt
           </Button>
         ),

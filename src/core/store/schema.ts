@@ -20,7 +20,7 @@ const Member = new schema.Entity(
   {
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [!!parent.stripeInvoicePdf, { payments: [parent.id] }],
+        [!!parent.stripeInvoiceUrl, { payments: [parent.id] }],
         {}
       ]);
 

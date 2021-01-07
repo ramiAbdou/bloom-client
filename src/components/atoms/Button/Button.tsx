@@ -69,6 +69,7 @@ const Button = forwardRef(
       disabled,
       fill,
       fit,
+      href,
       large,
       loading,
       loadingText,
@@ -89,8 +90,16 @@ const Button = forwardRef(
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
       if (type === 'button') event.preventDefault();
-      if (disabled || !onClick) return;
-      onClick(null);
+      if (disabled) return;
+      if (onClick) onClick(null);
+
+      if (href) {
+        // If the browser is Safari, just change the location of the current
+        // tab, but if not, open a new window with the URL.
+        if (navigator.vendor === 'Apple Computer, Inc.') {
+          window.location.href = href;
+        } else window.open(href, '_blank');
+      }
     };
 
     const css = cx({

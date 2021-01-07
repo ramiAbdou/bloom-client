@@ -53,7 +53,7 @@ export type IMember = {
 export type IMemberPayment = {
   amount: number;
   createdAt: string;
-  stripeInvoicePdf: string;
+  stripeInvoiceUrl: string;
   id: IdString;
   member: IdString;
   type: IdString;

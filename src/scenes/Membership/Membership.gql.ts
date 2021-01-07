@@ -7,7 +7,7 @@ export const GET_PAYMENT_HISTORY = query({
     'amount',
     'createdAt',
     'id',
-    'stripeInvoicePdf',
+    'stripeInvoiceUrl',
     { member: ['id'] },
     { type: ['id'] }
   ],

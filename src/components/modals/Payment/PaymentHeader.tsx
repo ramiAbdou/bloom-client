@@ -48,7 +48,7 @@ const PaymentHeaderDescription: React.FC = () => {
     ]
   ]);
 
-  if (loading || (screen === 'CARD_FORM' && !isFree)) return null;
+  if (loading || (screen !== 'CARD_FORM' && !isFree)) return null;
   return <p>{description}</p>;
 };
 
