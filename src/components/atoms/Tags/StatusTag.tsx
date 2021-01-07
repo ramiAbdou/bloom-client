@@ -17,7 +17,7 @@ const StatusTag: React.FC<StatusTagProps> = ({ children, positive }) => {
   return (
     <div className={css}>
       <div />
-      <h5>{children}</h5>
+      <h4>{children}</h4>
     </div>
   );
 };

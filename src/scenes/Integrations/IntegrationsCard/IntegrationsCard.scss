@@ -14,9 +14,4 @@ $PREF: 's-integrations-card';
 
 // ## INTEGRATION CARD HEADER
 
-.#{$PREF}-header {
-  @extend .flex-acsb;
-
-  margin-bottom: $sm;
-  > div:last-child { margin-right: $sm; }
-}
+.#{$PREF}-header { @extend .flex-acsb; margin-bottom: $sm; }

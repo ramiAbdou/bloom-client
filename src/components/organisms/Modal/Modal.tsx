@@ -6,7 +6,7 @@ import {
 } from 'framer-motion';
 import React, { useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { IoCloseCircle } from 'react-icons/io5';
+import { IoClose } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { ChildrenProps } from '@constants';
@@ -32,7 +32,7 @@ const ModalCancel: React.FC = () => {
   const onClick = () => closeModal();
   return (
     <Button className="c-modal-cancel" onClick={onClick}>
-      <IoCloseCircle />
+      <IoClose />
     </Button>
   );
 };

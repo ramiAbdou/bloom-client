@@ -67,11 +67,11 @@ $PREF: 'c-tag';
 
   &--positive {
     > div { background-color: $green; }
-    > h5 { color: $green; }
+    > h4 { color: $green; }
   }
 
   &--negative {
     > div { background-color: $red; }
-    > h5 { color: $red; }
+    > h4 { color: $red; }
   }
 }

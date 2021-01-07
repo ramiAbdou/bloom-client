@@ -18,12 +18,13 @@ $PREF: 'c-form';
 .#{$PREF}-label {
   @extend .flex-ac;
 
-  color: $gray-1;
+  color: $gray-2;
   margin-bottom: $xs;
   width: 100%;
 
   > svg { color: $green; margin-right: $xs; }
   > div.c-misc-tip { color: $primary; margin-left: $xxs; }
+  > h4 { color: $gray-2; }
 
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }
