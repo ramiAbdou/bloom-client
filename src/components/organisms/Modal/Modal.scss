@@ -29,6 +29,7 @@ $PREF: 'c-modal';
 
   @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
   @include M {
+    border-radius: $sm $sm 0 0;
     bottom: 0;
     margin: 0;
     max-height: calc(100vh - 56px);

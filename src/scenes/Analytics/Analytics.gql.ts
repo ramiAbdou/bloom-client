@@ -12,6 +12,13 @@ export const GET_ACTIVE_MEMBER_ANALYTICS = query({
   operation: 'getActiveMemberAnalytics'
 }).query;
 
+// ## GET DUES ANALYTICS
+
+export const GET_DUES_ANALYTICS = query({
+  fields: ['name', 'value'],
+  operation: 'getDuesAnalytics'
+}).query;
+
 // ## GET PAYMENTS
 
 export const GET_DUES_HISTORY = query({

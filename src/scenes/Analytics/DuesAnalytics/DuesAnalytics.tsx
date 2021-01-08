@@ -1,9 +1,9 @@
 import React from 'react';
 
+import DuesAnalyticsChart from './DuesAnalyticsChart';
 import DuesAnalyticsHistory from './DuesAnalyticsHistory';
 import DuesAnalyticsPercentPaidCard from './PercentPaidCard';
 import DuesAnalyticsTotalCollectedCard from './TotalCollectedCard';
-import DuesAnalyticsTotalCollectedChart from './TotalCollectedChart';
 
 const DuesAnalytics: React.FC = () => (
   <div className="s-analytics-dues">
@@ -12,7 +12,7 @@ const DuesAnalytics: React.FC = () => (
       <DuesAnalyticsPercentPaidCard />
     </div>
 
-    <DuesAnalyticsTotalCollectedChart />
+    <DuesAnalyticsChart />
     <DuesAnalyticsHistory />
   </div>
 );

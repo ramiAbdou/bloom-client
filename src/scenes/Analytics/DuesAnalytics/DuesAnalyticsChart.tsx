@@ -4,7 +4,7 @@ import React from 'react';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.store';
 
-export default () => {
+const DuesAnalyticsChart: React.FC = () => {
   const data = Array.from(Array(30).keys())
     .map((i: number) => ({
       name: day().subtract(i, 'd').format(),
@@ -21,3 +21,5 @@ export default () => {
     />
   );
 };
+
+export default DuesAnalyticsChart;

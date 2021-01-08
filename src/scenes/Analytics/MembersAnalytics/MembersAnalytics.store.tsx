@@ -1,6 +1,6 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-type TimeSeriesData = { name: string; value: number };
+import { TimeSeriesData } from '../Analytics.types';
 
 type ActiveMembersAnalyticsArgs = Pick<
   MembersAnalyticsModel,

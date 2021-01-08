@@ -2,13 +2,15 @@ import day from 'dayjs';
 import React from 'react';
 
 import MainSection from '@containers/Main/MainSection';
+import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
 import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMember, IMemberPayment, IUser } from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
-import useFetchDuesHistory from './useFetchDuesHistory';
+import { GET_DUES_HISTORY } from '../Analytics.gql';
 
 const DuesAnalyticsHistoryTable: React.FC = () => {
   const rows: Row[] = useStoreState(({ db }) => {
@@ -60,7 +62,11 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 };
 
 const DuesAnalyticsHistory: React.FC = () => {
-  const { loading } = useFetchDuesHistory();
+  const { loading } = useQuery<IMemberPayment[]>({
+    name: 'getDuesHistory',
+    query: GET_DUES_HISTORY,
+    schema: [Schema.MEMBER_PAYMENT]
+  });
 
   return (
     <MainSection loading={loading} title="Dues History">
