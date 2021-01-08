@@ -36,12 +36,10 @@ const IntegrationsModals: React.FC = () => (
 );
 
 const Integrations: React.FC = () => (
-  <LoadingStore.Provider>
-    <IntegrationsStore.Provider>
-      <IntegrationsContent />
-      <IntegrationsModals />
-    </IntegrationsStore.Provider>
-  </LoadingStore.Provider>
+  <IntegrationsStore.Provider>
+    <IntegrationsContent />
+    <IntegrationsModals />
+  </IntegrationsStore.Provider>
 );
 
 export default Integrations;
