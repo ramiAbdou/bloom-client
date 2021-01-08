@@ -5,11 +5,10 @@ import AddMemberModal from '@modals/AddMember/AddMember';
 import Table from '@organisms/Table/Table';
 import { Column, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import ActionRow from './ActionRow';
 
-export default () => {
+const Admins: React.FC = () => {
   const rows: Row[] = useStoreState(({ db }) => {
     const { community } = db;
     const { members, users } = db.entities;
@@ -30,7 +29,6 @@ export default () => {
   }, deepequal);
 
   const isOwner = useStoreState(({ db }) => db.isOwner);
-  const loading = LoadingStore.useStoreState((store) => store.loading);
 
   const isStoreUpdated = useStoreState(
     ({ db }) => !!db.community.members?.length
@@ -44,7 +42,7 @@ export default () => {
     { id: 'Email', title: 'Email', type: 'SHORT_TEXT' }
   ];
 
-  if (loading || !isStoreUpdated) return null;
+  if (!isStoreUpdated) return null;
 
   return (
     <>
@@ -61,3 +59,5 @@ export default () => {
     </>
   );
 };
+
+export default Admins;

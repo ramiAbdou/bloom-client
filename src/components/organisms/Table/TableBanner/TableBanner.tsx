@@ -15,12 +15,12 @@ import React from 'react';
 
 import Card from '@containers/Card/Card';
 import TableBannerButton from './Button';
-import TableBannerMessage from './Message';
+import TableBannerMessage from './TableBannerMessage';
 
 const TableBanner: React.FC = () => (
   <Card className="c-table-banner">
-    <TableBannerButton />
     <TableBannerMessage />
+    <TableBannerButton />
   </Card>
 );
 

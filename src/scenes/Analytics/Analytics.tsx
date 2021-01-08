@@ -14,7 +14,6 @@ import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE } from '@scenes/Database/Database.gql';
 import { ICommunity } from '@store/entities';
-import LoadingStore from '@store/Loading.store';
 import { Schema } from '@store/schema';
 import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
 import EventsAnalytics from './EventsAnalytics/Events';
@@ -39,7 +38,7 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
   );
 };
 
-const AnalyticsContent: React.FC = () => {
+const Analytics: React.FC = () => {
   const { url } = useRouteMatch();
 
   const { loading } = useQuery<ICommunity>({
@@ -59,11 +58,5 @@ const AnalyticsContent: React.FC = () => {
     </MainContent>
   );
 };
-
-const Analytics: React.FC = () => (
-  <LoadingStore.Provider>
-    <AnalyticsContent />
-  </LoadingStore.Provider>
-);
 
 export default Analytics;

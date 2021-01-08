@@ -8,10 +8,9 @@ interface AnalyticsSimpleProps extends ValueProps {
   percentage: number;
 }
 
-const NumberContainer: React.FC<Pick<
-  AnalyticsSimpleProps,
-  'percentage' | 'value'
->> = ({ percentage, value }) => (
+const NumberContainer: React.FC<
+  Pick<AnalyticsSimpleProps, 'percentage' | 'value'>
+> = ({ percentage, value }) => (
   <div>
     <p>{value}</p>
     <Pill percentage={percentage} />
