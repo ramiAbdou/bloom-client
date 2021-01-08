@@ -18,7 +18,7 @@ const ManageMembership: React.FC = () => {
     <>
       <MainHeader title="Manage Membership" />
 
-      <MainContent>
+      <MainContent loading={false}>
         <ManageMembershipCardContainer />
         <PaymentOverview />
       </MainContent>

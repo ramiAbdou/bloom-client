@@ -8,7 +8,7 @@ const ChangeMembership: React.FC = () => {
     <>
       <MainHeader backButton title="Change Membership Plan" />
 
-      <MainContent>
+      <MainContent loading={false}>
         <PlanContainer />
       </MainContent>
     </>
