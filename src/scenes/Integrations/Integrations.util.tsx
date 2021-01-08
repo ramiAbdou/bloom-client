@@ -16,7 +16,9 @@ interface BuildIntegrationDataProps
       IIntegrations,
       'isMailchimpAuthenticated' | 'mailchimpListId' | 'stripeAccountId'
     >,
-    EncodedUrlNameProps {}
+    EncodedUrlNameProps {
+  hasPaidMembership: boolean;
+}
 
 /**
  * Returns an array of data points per integration (ie: Mailchimp, Stripe,
@@ -25,10 +27,39 @@ interface BuildIntegrationDataProps
  */
 export const buildIntegrationData = ({
   encodedUrlName,
+  hasPaidMembership,
   isMailchimpAuthenticated,
   mailchimpListId,
   stripeAccountId
 }: BuildIntegrationDataProps): IntegrationCardProps[] => {
+  const stripeCardProps: IntegrationCardProps[] = hasPaidMembership
+    ? [
+        {
+          connected: !!stripeAccountId,
+          description:
+            'Collect monthly or yearly dues payments from your members.',
+          href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
+            .addParam('response_type', 'code')
+            .addParam(
+              'client_id',
+              isProduction
+                ? process.env.STRIPE_CLIENT_ID
+                : process.env.STRIPE_TEST_CLIENT_ID
+            )
+            .addParam('scope', 'read_write')
+            .addParam(
+              'redirect_uri',
+              isProduction
+                ? `${APP.SERVER_URL}/stripe/auth`
+                : `${APP.NGROK_SERVER_URL}/stripe/auth`
+            )
+            .addParam('state', encodedUrlName).url,
+          logo: stripe,
+          name: 'Stripe'
+        }
+      ]
+    : [];
+
   return [
     // ## MAILCHIMP
     {
@@ -47,28 +78,7 @@ export const buildIntegrationData = ({
     },
 
     // ## STRIPE
-    {
-      connected: !!stripeAccountId,
-      description: 'Collect monthly or yearly dues payments from your members.',
-      href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
-        .addParam('response_type', 'code')
-        .addParam(
-          'client_id',
-          isProduction
-            ? process.env.STRIPE_CLIENT_ID
-            : process.env.STRIPE_TEST_CLIENT_ID
-        )
-        .addParam('scope', 'read_write')
-        .addParam(
-          'redirect_uri',
-          isProduction
-            ? `${APP.SERVER_URL}/stripe/auth`
-            : `${APP.NGROK_SERVER_URL}/stripe/auth`
-        )
-        .addParam('state', encodedUrlName).url,
-      logo: stripe,
-      name: 'Stripe'
-    },
+    ...stripeCardProps,
 
     // ## ZAPIER
     {

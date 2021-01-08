@@ -68,6 +68,7 @@ export type DbModel = {
   clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
   entities: IEntities;
+  hasPaidMembership: Computed<DbModel, boolean>;
   integrations: Computed<DbModel, IIntegrations>;
   isAdmin: Computed<DbModel, boolean>;
   isOwner: Computed<DbModel, boolean>;
@@ -80,17 +81,13 @@ export type DbModel = {
 };
 
 export const dbModel: DbModel = {
-  canCollectDues: computed(({ community, entities }) => {
+  canCollectDues: computed(({ community, entities, hasPaidMembership }) => {
     const { byId: byIntegrationsId } = entities.integrations;
-    const { byId: byTypeId } = entities.types;
 
     const integrations: IIntegrations =
       byIntegrationsId[community?.integrations];
 
-    return (
-      integrations?.stripeAccountId &&
-      community.types?.some((typeId: string) => !byTypeId[typeId]?.isFree)
-    );
+    return hasPaidMembership && !!integrations?.stripeAccountId;
   }),
 
   clearEntities: action((state) => ({ ...state, entities: initialEntities })),
@@ -105,6 +102,13 @@ export const dbModel: DbModel = {
   }),
 
   entities: initialEntities,
+
+  hasPaidMembership: computed(({ community, entities }) => {
+    const { byId: byTypeId } = entities.types;
+    return community?.types?.some(
+      (typeId: string) => !byTypeId[typeId]?.isFree
+    );
+  }),
 
   integrations: computed(({ entities }) => {
     const { activeId, byId: byCommunityId } = entities.communities;

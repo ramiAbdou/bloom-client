@@ -13,6 +13,7 @@ import IntegrationCard, {
 // components to process and render.
 const IntegrationsCardContainer: React.FC = () => {
   const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
+  const hasPaidMembership = useStoreState(({ db }) => db.hasPaidMembership);
 
   const {
     isMailchimpAuthenticated,
@@ -22,6 +23,7 @@ const IntegrationsCardContainer: React.FC = () => {
 
   const integrationData: IntegrationCardProps[] = buildIntegrationData({
     encodedUrlName,
+    hasPaidMembership,
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId
