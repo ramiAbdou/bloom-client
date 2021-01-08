@@ -27,7 +27,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
       const { firstName, lastName, email }: IUser = byUserId[member.user];
 
       return {
-        Amount: amount,
+        Amount: `$${amount / 100}.00`,
         Email: email,
         'First Name': firstName,
         'Last Name': lastName,

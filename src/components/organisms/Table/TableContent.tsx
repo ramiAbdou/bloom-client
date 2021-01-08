@@ -5,7 +5,7 @@ import { OnRenameColumnProps } from './Table.types';
 import TableBanner from './TableBanner/TableBanner';
 import TableBodyContainer from './TableBodyContainer';
 import TableHeaderContainer from './TableHeaderContainer';
-import TablePagination from './TablePagination/Pagination';
+import TablePagination from './TablePagination/TablePagination';
 import TablePanel from './TablePanel';
 
 interface TableContent extends OnRenameColumnProps {
