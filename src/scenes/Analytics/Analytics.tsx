@@ -15,16 +15,23 @@ import useQuery from '@hooks/useQuery';
 import { GET_DATABASE } from '@scenes/Database/Database.gql';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
+import { useStoreState } from '@store/Store';
 import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
 import EventsAnalytics from './EventsAnalytics/Events';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
 
 const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
+  const canCollectDues = useStoreState(({ db }) => db.canCollectDues);
+
   const { push } = useHistory();
+
+  const duesOptions: NavigationOptionProps[] = canCollectDues
+    ? [{ onClick: () => push('dues'), pathname: 'dues', title: 'Dues' }]
+    : [];
 
   const options: NavigationOptionProps[] = [
     { onClick: () => push('members'), pathname: 'members', title: 'Members' },
-    { onClick: () => push('dues'), pathname: 'dues', title: 'Dues' },
+    ...duesOptions,
     { onClick: () => push('events'), pathname: 'events', title: 'Events' }
   ];
 
