@@ -5,7 +5,8 @@ import { useEffect } from 'react';
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 
-type UseQueryArgs<S> = {
+type UseQueryArgs<T, S> = {
+  format?: (data: T) => any;
   name: string;
   query: string;
   schema?: Schema<any>;
@@ -18,20 +19,13 @@ type UseQuery<T, S> = {
   loading: boolean;
 };
 
-function getResult<T, S>({ data, error, loading, name }): UseQuery<T, S> {
-  return {
-    data: data ? (data[name] as T) : (null as T),
-    error: getGraphQLError(error),
-    loading
-  };
-}
-
 export default function useQuery<T = any, S = any>({
+  format,
   query,
   name,
   schema,
   variables
-}: UseQueryArgs<S>): UseQuery<T, S> {
+}: UseQueryArgs<T, S>): UseQuery<T, S> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { data, error, loading } = useGraphQlHooksQuery(
@@ -39,10 +33,17 @@ export default function useQuery<T = any, S = any>({
     variables ? { variables } : {}
   );
 
-  const result = getResult<T, S>({ data, error, loading, name });
+  const result = {
+    data: data ? (data[name] as T) : (null as T),
+    error: getGraphQLError(error),
+    loading
+  };
 
   useEffect(() => {
-    if (result.data && schema) mergeEntities({ data: result.data, schema });
+    if (result.data && schema) {
+      const formattedData = format ? format(result.data) : result.data;
+      mergeEntities({ data: formattedData, schema });
+    }
   }, [result.data, schema]);
 
   return result;

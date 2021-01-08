@@ -1,18 +1,18 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
 import Spinner from '@atoms/Spinner';
 import { NumberTag } from '@atoms/Tags';
-import { ChildrenProps, ClassNameProps } from '@constants';
-import LoadingStore from '@store/Loading.store';
+import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
 import { makeClass } from '@util/util';
 import MainNavigation, { NavigationProps } from './MainNavigation';
 
 interface MainHeaderProps
   extends ClassNameProps,
     ChildrenProps,
+    LoadingProps,
     NavigationProps {
   backButton?: boolean;
   numberTag?: string;
@@ -33,12 +33,11 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   backButton,
   children,
   className,
+  loading,
   numberTag,
   options,
   title
 }) => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
-
   const css = makeClass(['t-main-header', className]);
 
   return (

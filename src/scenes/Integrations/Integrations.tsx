@@ -1,20 +1,27 @@
 import React from 'react';
 
 import { MainContent, MainHeader } from '@containers/Main';
+import useQuery from '@hooks/useQuery';
+import { ICommunity } from '@store/entities';
 import LoadingStore from '@store/Loading.store';
+import { Schema } from '@store/schema';
+import { GET_INTEGRATIONS } from './Integrations.gql';
 import IntegrationsStore from './Integrations.store';
 import IntegrationsCardContainer from './IntegrationsCardContainer';
 import IntegrationsModal from './IntegrationsModal';
-import useFetchIntegrations from './useFetchIntegrations';
 
 const IntegrationsContent: React.FC = () => {
-  useFetchIntegrations();
+  const { loading } = useQuery<ICommunity>({
+    name: 'getIntegrations',
+    query: GET_INTEGRATIONS,
+    schema: Schema.COMMUNITY
+  });
 
   return (
     <>
       <MainHeader title="Integrations" />
 
-      <MainContent>
+      <MainContent loading={loading}>
         <IntegrationsCardContainer />
       </MainContent>
 

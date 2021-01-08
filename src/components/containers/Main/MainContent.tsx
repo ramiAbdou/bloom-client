@@ -1,12 +1,24 @@
 import React from 'react';
 
-import { ChildrenProps } from '@constants';
-import LoadingStore from '@store/Loading.store';
+import { ChildrenProps, LoadingProps } from '@constants';
 
-const MainContent: React.FC<ChildrenProps> = ({ children }) => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
-  if (loading !== false) return null;
-  return <section className="t-main-content">{children}</section>;
+interface MainContentProps extends ChildrenProps, LoadingProps {
+  Header?: React.FC<LoadingProps>;
+}
+
+const MainContent: React.FC<MainContentProps> = ({
+  children,
+  loading,
+  Header
+}) => {
+  return (
+    <>
+      {Header && <Header loading={loading} />}
+      {loading === false && (
+        <section className="t-main-content">{children}</section>
+      )}
+    </>
+  );
 };
 
 export default MainContent;
