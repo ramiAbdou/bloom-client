@@ -49,7 +49,7 @@ const PaymentMethodContent = () => {
 };
 
 const PaymentMethodCard = () => {
-  const loading = usePaymentMethod(true);
+  const loading = usePaymentMethod();
 
   return (
     <Card className="s-membership-card--payment">

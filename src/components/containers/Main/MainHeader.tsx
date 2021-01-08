@@ -9,7 +9,7 @@ import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
 import { makeClass } from '@util/util';
 import MainNavigation, { NavigationProps } from './MainNavigation';
 
-interface MainHeaderProps
+export interface MainHeaderProps
   extends ClassNameProps,
     ChildrenProps,
     LoadingProps,

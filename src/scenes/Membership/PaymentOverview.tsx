@@ -3,13 +3,15 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import { MainSection } from '@containers/Main';
+import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
 import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment } from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
-import usePaymentHistory from './usePaymentHistory';
+import { GET_PAYMENT_HISTORY } from './Membership.gql';
 
 const PaymentHistoryTable: React.FC = () => {
   const rows: Row[] = useStoreState(({ db }) => {
@@ -66,7 +68,11 @@ const PaymentHistoryTable: React.FC = () => {
 };
 
 const PaymentOverview: React.FC = () => {
-  const { loading } = usePaymentHistory();
+  const { loading } = useQuery<IMemberPayment[]>({
+    name: 'getPaymentHistory',
+    query: GET_PAYMENT_HISTORY,
+    schema: [Schema.MEMBER_PAYMENT]
+  });
 
   return (
     <MainSection
