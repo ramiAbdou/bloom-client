@@ -21,17 +21,13 @@ const DatabaseContent = () => {
   });
 
   return (
-    <>
-      <DatabaseHeader />
-
-      <MainContent loading={loading}>
-        <Switch>
-          <Route component={Admins} path={`${url}/admins`} />
-          <Route component={Members} path={`${url}/members`} />
-          <Redirect to={`${url}/members`} />
-        </Switch>
-      </MainContent>
-    </>
+    <MainContent Header={DatabaseHeader} loading={loading}>
+      <Switch>
+        <Route component={Admins} path={`${url}/admins`} />
+        <Route component={Members} path={`${url}/members`} />
+        <Redirect to={`${url}/members`} />
+      </Switch>
+    </MainContent>
   );
 };
 

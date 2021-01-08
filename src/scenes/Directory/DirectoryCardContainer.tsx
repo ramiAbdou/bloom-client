@@ -4,14 +4,12 @@ import { matchSorter } from 'match-sorter';
 import React, { useEffect } from 'react';
 
 import { IMember, IUser } from '@store/entities';
-import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import Directory from './Directory.store';
 import DirectoryCard from './DirectoryCard/DirectoryCard';
 import { MemberCardModel } from './DirectoryCard/DirectoryCard.store';
 
 const DirectoryCardContainer = () => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
   const numMembers = Directory.useStoreState((store) => store.numMembers);
   const searchString = Directory.useStoreState((store) => store.searchString);
 
@@ -85,8 +83,6 @@ const DirectoryCardContainer = () => {
     const { length } = members ?? [];
     if (length !== numMembers) setNumMembers(length);
   }, [members?.length]);
-
-  if (loading) return null;
 
   return (
     <Masonry

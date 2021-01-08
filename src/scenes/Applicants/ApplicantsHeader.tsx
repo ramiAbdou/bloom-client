@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { LoadingProps } from '@constants';
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import { MainHeader } from '@containers/Main';
 import { useStoreState } from '@store/Store';
 import ApplicantsHeaderRespondAllButton from './ApplicantsRespondButton';
 
-const ApplicantsHeader = () => {
+const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const pendingApplicantIds: string[] = useStoreState(({ db }) => {
     const { byId } = db.entities.members;
     return db.community?.members?.filter((memberId: string) => {
@@ -19,6 +20,7 @@ const ApplicantsHeader = () => {
   return (
     <MainHeader
       className="s-applicants-header"
+      loading={loading}
       numberTag={numberTag}
       title="Pending Applicants"
     >

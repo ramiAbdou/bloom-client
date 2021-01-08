@@ -20,13 +20,9 @@ const ApplicantsContent: React.FC = () => {
   });
 
   return (
-    <>
-      <ApplicantsHeader />
-
-      <MainContent loading={loading}>
-        <ApplicantsCardContainer />
-      </MainContent>
-    </>
+    <MainContent Header={ApplicantsHeader} loading={loading}>
+      <ApplicantsCardContainer />
+    </MainContent>
   );
 };
 

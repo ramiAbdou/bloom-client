@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import SearchBar from '@molecules/SearchBar/SearchBar';
-import LoadingStore from '@store/Loading.store';
 import Directory from './Directory.store';
 
 const DirectorySearchBar = () => {
   const [value, setValue] = useState('');
-  const loading = LoadingStore.useStoreState((store) => store.loading);
 
   const setSearchString = Directory.useStoreActions(
     (store) => store.setSearchString
@@ -16,9 +14,6 @@ const DirectorySearchBar = () => {
     const timeout = setTimeout(() => setSearchString(value), 300);
     return () => clearTimeout(timeout);
   }, [value]);
-
-  // Only show if not loading.
-  if (loading) return null;
 
   return (
     <SearchBar

@@ -2,10 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
-import { ModalType } from '@constants';
+import { LoadingProps, ModalType } from '@constants';
+import { MainHeader, NavigationOptionProps } from '@containers/Main';
 import useFinalPath from '@hooks/useFinalPath';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { MainHeader, NavigationOptionProps } from '@containers/Main';
 
 const DatbaseHeaderAddButton: React.FC = () => {
   const isOwner = useStoreState(({ db }) => db.isOwner);
@@ -26,7 +26,7 @@ const DatbaseHeaderAddButton: React.FC = () => {
   );
 };
 
-const DatabaseHeader: React.FC = () => {
+const DatabaseHeader: React.FC<LoadingProps> = ({ loading }) => {
   const { push } = useHistory();
 
   const options: NavigationOptionProps[] = [
@@ -37,6 +37,7 @@ const DatabaseHeader: React.FC = () => {
   return (
     <MainHeader
       className="s-database-header"
+      loading={loading}
       options={options}
       title="Member Database"
     >

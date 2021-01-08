@@ -3,8 +3,8 @@ import { RenderComponentProps } from 'masonic';
 import React from 'react';
 
 import Button from '@atoms/Button';
-import ProfilePicture from '@molecules/ProfilePicture';
 import { ModalType } from '@constants';
+import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions } from '@store/Store';
 import { makeClass } from '@util/util';
 import DirectoryCardModal from '../DirectoryModal/DirectoryModal';
