@@ -5,6 +5,7 @@ import { IMemberType } from '@store/entities';
 // ## CREATE SUBSCRIPTION
 
 export interface CreateSubscriptionArgs {
+  autoRenew?: boolean;
   memberTypeId: string;
 }
 
@@ -17,7 +18,10 @@ export interface CreateSubscriptionResult {
 export const CREATE_SUBSCRIPTION = mutation({
   fields: ['id', 'duesStatus', { type: ['id', 'name'] }],
   operation: 'createSubscription',
-  variables: { memberTypeId: { required: true } }
+  variables: {
+    autoRenew: { required: false, type: 'Boolean' },
+    memberTypeId: { required: true }
+  }
 }).query;
 
 // ## GET DUES INFORMATION
