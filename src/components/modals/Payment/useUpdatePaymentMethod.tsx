@@ -2,13 +2,11 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
-import { useStoreActions } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { UPDATE_PAYMENT_METHOD, UpdatePaymentMethodArgs } from './Payment.gql';
 import PaymentStore from './Payment.store';
 
 const useUpdatePaymentMethod = (): OnFormSubmit => {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const type = PaymentStore.useStoreState((store) => store.type);
   const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
 
@@ -20,7 +18,8 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     UpdatePaymentMethodArgs
   >({
     name: 'updatePaymentMethod',
-    query: UPDATE_PAYMENT_METHOD
+    query: UPDATE_PAYMENT_METHOD,
+    schema: Schema.MEMBER
   });
 
   if (!stripe) return null;
@@ -63,7 +62,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     // Create the actual subscription. Pass the MemberType ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod
     // ID. That will be attached to the customer ID associated with the member.
-    const { data: updateData, error: updateError } = await updatePaymentMethod({
+    const { error: updateError } = await updatePaymentMethod({
       paymentMethodId: stripeResult.paymentMethod.id
     });
 
@@ -75,7 +74,6 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
     // Success! Update the member entity just in case the membership type
     // changed or their duesStatus changed.
-    mergeEntities({ data: updateData, schema: Schema.MEMBER });
     setScreen(type === 'UPDATE_PAYMENT_METHOD' ? 'CONFIRMATION' : 'FINISH');
   };
 

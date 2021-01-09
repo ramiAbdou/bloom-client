@@ -9,14 +9,17 @@ import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import LoadingContainer from '../../containers/Loading/LoadingContainer';
-import { GET_PAYMENT_METHOD } from './Payment.gql';
+import {
+  GET_DUES_INFORMATION,
+  GET_PAYMENT_METHOD,
+  GetDuesInformationResult
+} from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import PaymentCardScreen from './PaymentCardScreen';
 import PaymentConfirmationScreen from './PaymentConfirmationScreen';
 import PaymentFinishScreen from './PaymentFinishScreen';
 import PaymentHeader from './PaymentHeader';
 import PaymentStripeProvider from './PaymentStripeProvider';
-import useFetchDuesInformation from './useFetchDuesInformation';
 import useInitPaymentScreen from './useInitPaymentScreen';
 
 const PaymentModalContent: React.FC = () => {
@@ -85,7 +88,18 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const isAdmin = useStoreState(({ db }) => db.isAdmin);
   const route = useActiveRoute();
 
-  useFetchDuesInformation();
+  const { loading } = useQuery<GetDuesInformationResult>({
+    format: ({ stripeAccountId, types }) => ({
+      integrations: { stripeAccountId },
+      types
+    }),
+    name: 'getDuesInformation',
+    query: GET_DUES_INFORMATION,
+    schema: {
+      integrations: Schema.INTEGRATIONS,
+      types: [Schema.MEMBER_TYPE]
+    }
+  });
 
   // Get the user and see if they've paid their dues or not.
   const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
@@ -94,12 +108,14 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const isUserActive = duesStatus === 'ACTIVE';
 
   useEffect(() => {
-    if (duesStatus && !isUserActive && !isAdmin && route !== 'membership') {
+    if (!isAdmin && route !== 'membership' && duesStatus && !isUserActive) {
       showModal(ModalType.PAY_DUES);
     }
   }, [isUserActive, route]);
 
-  if (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId) return null;
+  if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId)) {
+    return null;
+  }
 
   return (
     <PaymentStore.Provider runtimeModel={{ ...paymentModel, type }}>
