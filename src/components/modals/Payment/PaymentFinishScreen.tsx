@@ -17,12 +17,16 @@ import useCreateSubscription from './useCreateSubscription';
 const PaymentFinishScreenToggle: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
-  const isFree: boolean = useStoreState(({ db }) => {
+  const showToggle: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId].isFree;
+    const isTierFree = byTypeId[typeId].isFree;
+
+    // Don't show toggle if auto renew was already enabled (which is the
+    // default status) or if the type is free.
+    return !db.member.autoRenew && !isTierFree;
   });
 
-  if (isFree) return null;
+  if (!showToggle) return null;
 
   return (
     <>
