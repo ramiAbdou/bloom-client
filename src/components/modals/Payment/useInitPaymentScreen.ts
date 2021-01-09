@@ -1,4 +1,3 @@
-import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
 
@@ -12,7 +11,6 @@ const useInitPaymentScreen = () => {
     return !!paymentMethod?.brand && !!paymentMethod?.last4;
   });
 
-  const loading = LoadingStore.useStoreState((store) => store.loading);
   const screen = PaymentStore.useStoreState((store) => store.screen);
   const type = PaymentStore.useStoreState((store) => store.type);
   const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
@@ -22,7 +20,7 @@ const useInitPaymentScreen = () => {
   );
 
   // If the screen was already set, don't set it again.
-  if (loading !== false || screen) return;
+  if (screen) return;
 
   if (!isCardOnFile) setBackButton(true);
   if (type === 'UPDATE_PAYMENT_METHOD' || !isCardOnFile) setScreen('CARD_FORM');

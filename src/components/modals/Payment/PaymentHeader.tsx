@@ -2,13 +2,11 @@ import deline from 'deline';
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';
 
 const PaymentHeaderDescription: React.FC = () => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
   const screen = PaymentStore.useStoreState((store) => store.screen);
 
   const selectedTypeId = PaymentStore.useStoreState(
@@ -48,12 +46,11 @@ const PaymentHeaderDescription: React.FC = () => {
     ]
   ]);
 
-  if (loading || (screen !== 'CARD_FORM' && !isFree)) return null;
+  if (screen !== 'CARD_FORM' && !isFree) return null;
   return <p>{description}</p>;
 };
 
 const PaymentHeader: React.FC = () => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
   const backButton = PaymentStore.useStoreState((store) => store.backButton);
   const screen = PaymentStore.useStoreState((store) => store.screen);
   const type = PaymentStore.useStoreState((store) => store.type);
@@ -72,11 +69,7 @@ const PaymentHeader: React.FC = () => {
 
   return (
     <>
-      <LoadingHeader
-        loading={loading}
-        title={title}
-        onBackButtonClick={onBackButtonClick}
-      />
+      <LoadingHeader title={title} onBackButtonClick={onBackButtonClick} />
 
       <PaymentHeaderDescription />
     </>

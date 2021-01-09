@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { ModalType } from '@constants';
 import useActiveRoute from '@hooks/useActiveRoute';
 import Modal from '@organisms/Modal/Modal';
-import LoadingStore from '@store/Loading.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
@@ -93,13 +92,11 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   if (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId) return null;
 
   return (
-    <LoadingStore.Provider>
-      <PaymentStore.Provider runtimeModel={{ ...paymentModel, type }}>
-        <PaymentStripeProvider>
-          <PaymentModalContainer selectedTypeId={selectedTypeId} />
-        </PaymentStripeProvider>
-      </PaymentStore.Provider>
-    </LoadingStore.Provider>
+    <PaymentStore.Provider runtimeModel={{ ...paymentModel, type }}>
+      <PaymentStripeProvider>
+        <PaymentModalContainer selectedTypeId={selectedTypeId} />
+      </PaymentStripeProvider>
+    </PaymentStore.Provider>
   );
 };
 

@@ -5,7 +5,6 @@ import Form from '@organisms/Form/Form';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
-import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
@@ -74,34 +73,22 @@ const PaymentCardSubmitButton: React.FC = () => {
   return <PaymentContinueButton />;
 };
 
-const PaymentCardScreenContent: React.FC = () => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
-  if (loading) return null;
+const PaymentCardScreen: React.FC = () => {
+  const screen = PaymentStore.useStoreState((store) => store.screen);
+
+  const updatePaymentMethod = useUpdatePaymentMethod();
+
+  // Will be null if the Stripe object hasn't been loaded yet.
+  if (screen !== 'CARD_FORM' || !updatePaymentMethod) return null;
 
   return (
-    <>
+    <Form className="mo-payment" onSubmit={updatePaymentMethod}>
       <ModalContentContainer>
         <PaymentCardForm />
       </ModalContentContainer>
 
       <PaymentFormErrorMessage />
       <PaymentCardSubmitButton />
-    </>
-  );
-};
-
-const PaymentCardScreen: React.FC = () => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
-  const screen = PaymentStore.useStoreState((store) => store.screen);
-
-  const updatePaymentMethod = useUpdatePaymentMethod();
-
-  // Will be null if the Stripe object hasn't been loaded yet.
-  if (screen !== 'CARD_FORM' || !updatePaymentMethod || loading) return null;
-
-  return (
-    <Form className="mo-payment" onSubmit={updatePaymentMethod}>
-      <PaymentCardScreenContent />
     </Form>
   );
 };

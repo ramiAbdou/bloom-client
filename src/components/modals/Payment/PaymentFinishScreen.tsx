@@ -8,7 +8,6 @@ import QuestionValueList, {
 import FormItem from '@organisms/Form/FormItem';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberType } from '@store/entities';
-import LoadingStore from '@store/Loading.store';
 import { useStoreState } from '@store/Store';
 import Form from '../../organisms/Form/Form';
 import PaymentStore from './Payment.store';
@@ -94,10 +93,9 @@ const PaymentFinishScreenContent: React.FC = () => {
 };
 
 const PaymentFinishScreen: React.FC = () => {
-  const loading = LoadingStore.useStoreState((store) => store.loading);
   const screen = PaymentStore.useStoreState((store) => store.screen);
 
-  if (screen !== 'FINISH' || loading) return null;
+  if (screen !== 'FINISH') return null;
 
   return (
     <motion.div
