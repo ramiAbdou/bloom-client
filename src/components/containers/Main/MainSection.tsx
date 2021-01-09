@@ -7,7 +7,8 @@ import {
   TitleProps
 } from '@constants';
 import { cx } from '@util/util';
-import LoadingHeader from '../LoadingHeader/LoadingHeader';
+import LoadingContainer from '../Loading/LoadingContainer';
+import LoadingHeader from '../Loading/LoadingHeader';
 
 interface MainSectionProps
   extends ClassNameProps,
@@ -17,19 +18,18 @@ interface MainSectionProps
 
 const MainSection: React.FC<MainSectionProps> = ({
   className,
-  children,
   loading,
-  title
+  title,
+  ...props
 }) => {
   const css = cx({ [className]: className, 't-main-section': true });
 
   return (
     <section className={css}>
-      <LoadingHeader loading={loading}>
-        <h3>{title}</h3>
-      </LoadingHeader>
-
-      {loading === false && children}
+      <LoadingContainer
+        {...props}
+        Header={() => <LoadingHeader h3 loading={loading} title={title} />}
+      />
     </section>
   );
 };

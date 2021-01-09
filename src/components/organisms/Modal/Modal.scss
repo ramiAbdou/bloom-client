@@ -64,10 +64,10 @@ $PREF: 'c-modal';
 .#{$PREF} > form {
   // All modals will have an h1 tag, which will be standardized everywhere.
   > h1,
-  > .c-loading-header > h1 { color: $primary; }
+  > .t-loading-header > h1 { color: $primary; }
 
   > h1,
-  > .c-loading-header { margin-bottom: $sm; position: sticky; top: $md; }
+  > .t-loading-header { margin-bottom: $sm; position: sticky; top: $md; }
   > p:first-of-type { margin-bottom: $md; }
   > .c-misc-question-ctr { max-height: 70vh; overflow: scroll; }
 }

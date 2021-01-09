@@ -2,9 +2,14 @@ import React, { useEffect } from 'react';
 
 import { ModalType } from '@constants';
 import useActiveRoute from '@hooks/useActiveRoute';
+import useQuery from '@hooks/useQuery';
 import Modal from '@organisms/Modal/Modal';
+import { IMember } from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
+import LoadingContainer from '../../containers/Loading/LoadingContainer';
+import { GET_PAYMENT_METHOD } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import PaymentCardScreen from './PaymentCardScreen';
 import PaymentConfirmationScreen from './PaymentConfirmationScreen';
@@ -13,7 +18,6 @@ import PaymentHeader from './PaymentHeader';
 import PaymentStripeProvider from './PaymentStripeProvider';
 import useFetchDuesInformation from './useFetchDuesInformation';
 import useInitPaymentScreen from './useInitPaymentScreen';
-import usePaymentMethod from './usePaymentMethod';
 
 const PaymentModalContent: React.FC = () => {
   const showPaymentContent = PaymentStore.useStoreState(
@@ -22,7 +26,6 @@ const PaymentModalContent: React.FC = () => {
     }
   );
 
-  usePaymentMethod();
   useInitPaymentScreen();
 
   if (!showPaymentContent) return null;
@@ -50,6 +53,12 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
     (store) => store.setSelectedTypeId
   );
 
+  const { loading } = useQuery<IMember>({
+    name: 'getMember',
+    query: GET_PAYMENT_METHOD,
+    schema: Schema.MEMBER
+  });
+
   useEffect(() => {
     if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
   }, [typeId, selectedTypeId]);
@@ -62,8 +71,9 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 
   return (
     <Modal id={modalId} onClose={clearOptions}>
-      <PaymentHeader />
-      <PaymentModalContent />
+      <LoadingContainer Header={PaymentHeader} loading={loading}>
+        <PaymentModalContent />
+      </LoadingContainer>
     </Modal>
   );
 };

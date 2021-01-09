@@ -1,7 +1,8 @@
 import deline from 'deline';
 import React from 'react';
 
-import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
+import { LoadingProps } from '@constants';
+import LoadingHeader from '@containers/Loading/LoadingHeader';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';
@@ -50,7 +51,7 @@ const PaymentHeaderDescription: React.FC = () => {
   return <p>{description}</p>;
 };
 
-const PaymentHeader: React.FC = () => {
+const PaymentHeader: React.FC<LoadingProps> = ({ loading }) => {
   const backButton = PaymentStore.useStoreState((store) => store.backButton);
   const screen = PaymentStore.useStoreState((store) => store.screen);
   const type = PaymentStore.useStoreState((store) => store.type);
@@ -64,13 +65,12 @@ const PaymentHeader: React.FC = () => {
     [type === 'UPDATE_PAYMENT_METHOD', 'Update Payment Method']
   ]);
 
-  const onBackButtonClick =
+  const onBack =
     backButton && screen === 'FINISH' ? () => setScreen('CARD_FORM') : null;
 
   return (
     <>
-      <LoadingHeader title={title} onBackButtonClick={onBackButtonClick} />
-
+      <LoadingHeader loading={loading} title={title} onBack={onBack} />
       <PaymentHeaderDescription />
     </>
   );

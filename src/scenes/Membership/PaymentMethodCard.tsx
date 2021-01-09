@@ -5,9 +5,11 @@ import Button from '@atoms/Button';
 import Spinner from '@atoms/Spinner';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
-import usePaymentMethod from '@modals/Payment/usePaymentMethod';
-import { IPaymentMethod } from '@store/entities';
+import useQuery from '@hooks/useQuery';
+import { IMember, IPaymentMethod } from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { GET_PAYMENT_METHOD } from '../../components/modals/Payment/Payment.gql';
 
 const PaymentMethodContent = () => {
   const paymentMethod: IPaymentMethod = useStoreState(
@@ -49,7 +51,11 @@ const PaymentMethodContent = () => {
 };
 
 const PaymentMethodCard = () => {
-  const loading = usePaymentMethod();
+  const { loading } = useQuery<IMember>({
+    name: 'getMember',
+    query: GET_PAYMENT_METHOD,
+    schema: Schema.MEMBER
+  });
 
   return (
     <Card className="s-membership-card--payment">
