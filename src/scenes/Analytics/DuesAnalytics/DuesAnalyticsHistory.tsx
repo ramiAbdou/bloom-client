@@ -12,31 +12,50 @@ import { useStoreState } from '@store/Store';
 import { uuid } from '@util/util';
 import { GET_DUES_HISTORY } from '../Analytics.gql';
 
+interface DuesAnalyticsHistoryTableData {
+  Amount: string;
+  id: string;
+  Email: string;
+  'First Name': string;
+  'Last Name': string;
+  'Paid On': string;
+}
+
 const DuesAnalyticsHistoryTable: React.FC = () => {
   const rows: Row[] = useStoreState(({ db }) => {
     const { byId: byMemberId } = db.entities.members;
     const { byId: byPaymentId } = db.entities.payments;
     const { byId: byUserId } = db.entities.users;
 
-    return db.member.payments?.map((paymentId: string) => {
-      const {
-        amount,
-        createdAt,
-        member: memberId
-      }: IMemberPayment = byPaymentId[paymentId];
+    const result: DuesAnalyticsHistoryTableData[] = db.community.members?.reduce(
+      (acc: DuesAnalyticsHistoryTableData[], memberId: string) => {
+        const member: IMember = byMemberId[memberId];
 
-      const member: IMember = byMemberId[memberId];
-      const { firstName, lastName, email }: IUser = byUserId[member.user];
+        const payments: DuesAnalyticsHistoryTableData[] = member.payments?.map(
+          (paymentId: string) => {
+            const { amount, createdAt }: IMemberPayment = byPaymentId[
+              paymentId
+            ];
 
-      return {
-        Amount: `$${amount / 100}.00`,
-        Email: email,
-        'First Name': firstName,
-        'Last Name': lastName,
-        'Paid On': day(createdAt).format('MMMM DD, YYYY'),
-        id: uuid()
-      };
-    });
+            const { firstName, lastName, email }: IUser = byUserId[member.user];
+
+            return {
+              Amount: `$${amount / 100}.00`,
+              Email: email,
+              'First Name': firstName,
+              'Last Name': lastName,
+              'Paid On': day(createdAt).format('MMMM DD, YYYY'),
+              id: uuid()
+            };
+          }
+        );
+
+        return payments?.length ? [...acc, ...payments] : acc;
+      },
+      []
+    );
+
+    return result;
   });
 
   const columns: Column[] = [
@@ -62,11 +81,13 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 };
 
 const DuesAnalyticsHistory: React.FC = () => {
-  const { loading } = useQuery<IMemberPayment[]>({
+  const { data, loading } = useQuery<IMemberPayment[]>({
     name: 'getDuesHistory',
     query: GET_DUES_HISTORY,
     schema: [Schema.MEMBER_PAYMENT]
   });
+
+  console.log(data);
 
   return (
     <MainSection loading={loading} title="Dues History">
