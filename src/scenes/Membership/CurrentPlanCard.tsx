@@ -112,7 +112,7 @@ const CurrentPlanCardToggle: React.FC = () => {
 };
 
 const CurrentPlanCard: React.FC = () => (
-  <Card className="s-membership-card--plan">
+  <Card className="s-membership-card s-membership-card--plan">
     <CurrentPlanCardHeader />
     <CurrentPlanCardContent />
     <CurrentPlanCardActionContainer />

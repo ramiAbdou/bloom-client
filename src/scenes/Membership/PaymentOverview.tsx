@@ -18,6 +18,8 @@ const PaymentHistoryTable: React.FC = () => {
     const { byId: byPaymentId } = db.entities.payments;
     const { byId: byTypeId } = db.entities.types;
 
+    console.log(db.member.payments);
+
     return db.member.payments?.map((paymentId: string) => {
       const {
         amount,

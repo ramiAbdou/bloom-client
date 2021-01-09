@@ -18,6 +18,24 @@ const Member = new schema.Entity(
   'members',
   {},
   {
+    mergeStrategy: (a, b) => {
+      const aPayments = a.payments;
+      const bPayments = b.payments;
+
+      const hasPayments: boolean = aPayments?.length && bPayments?.length;
+
+      const updatedB = hasPayments
+        ? {
+            ...b,
+            payments: aPayments
+              .filter((value: any) => !bPayments.includes(value))
+              .concat(bPayments)
+          }
+        : b;
+
+      return { ...a, ...updatedB };
+    },
+
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.stripeInvoiceUrl, { payments: [parent.id] }],

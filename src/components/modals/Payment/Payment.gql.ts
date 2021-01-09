@@ -16,7 +16,7 @@ export interface CreateSubscriptionResult {
 }
 
 export const CREATE_SUBSCRIPTION = mutation({
-  fields: ['id', 'duesStatus', { type: ['id', 'name'] }],
+  fields: ['id', 'autoRenew', 'duesStatus', { type: ['id', 'name'] }],
   operation: 'createSubscription',
   variables: {
     autoRenew: { required: false, type: 'Boolean' },

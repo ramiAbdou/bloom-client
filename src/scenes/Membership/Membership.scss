@@ -38,8 +38,7 @@ $PREF: 's-membership';
 // ## CURRENT PLAN CARD
 
 .#{$PREF}-card--plan {
-  @extend .#{$PREF}-card;
-  
+  > p:first-of-type { margin-bottom: 0; }
   > p:first-of-type > span:first-child { @extend .display; margin-right: $xxs; }
   > p:first-of-type > span:last-child { @extend .meta--lg; color: $gray-2; }
   > p:last-of-type { @extend .body--bold; margin-bottom: $sm; }
@@ -48,12 +47,15 @@ $PREF: 's-membership';
 // ## PAYMENT METHOD CARD
 
 .#{$PREF}-card--payment {
-  @extend .#{$PREF}-card;
-
   height: $xxl * 3;
 
-  > p:first-of-type { @extend .body--bold; margin-top: auto; }
-  > p:last-of-type { @extend .meta; color: $gray-2; margin-top: -$sm; }
+  > p:only-of-type { margin-top: auto; }
+
+  > p:not(:only-of-type) {
+    &:first-of-type { @extend .body--bold; margin-top: auto; }
+    &:last-of-type { @extend .meta; color: $gray-2; margin-top: -$sm; }
+  }
+  
   > button { margin-top: auto; }
 }
 

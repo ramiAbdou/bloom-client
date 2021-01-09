@@ -58,7 +58,7 @@ const PaymentMethodCard = () => {
   });
 
   return (
-    <Card className="s-membership-card--payment">
+    <Card className="s-membership-card s-membership-card--payment">
       <div>
         <h4>Payment Method</h4>
         <Spinner dark loading={loading} />
