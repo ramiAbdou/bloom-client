@@ -30,7 +30,8 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
     getTableCellClass(type),
     [type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select'],
     [alignEndRight, 'c-table-td--right'],
-    [fixFirstColumn && i === 0, 'c-table-td--fixed']
+    [fixFirstColumn && i === 0, 'c-table-td--fixed'],
+    [!fixFirstColumn || i, 'c-table-cell--relative']
   ]);
 
   const content: React.ReactNode = takeFirst([

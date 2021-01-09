@@ -34,7 +34,8 @@ const HeaderCell = ({ hide, i, type, id, title }: HeaderCellProps) => {
     [fixFirstColumn && i === 0, 'c-table-th--fixed'],
     [isPickerShowing, 'c-table-th--picker'],
     [isSortable, 'c-table-th--sortable'],
-    [isSortedColumn, 'c-table-th--sorted']
+    [isSortedColumn, 'c-table-th--sorted'],
+    [!fixFirstColumn || i, 'c-table-cell--relative']
   ]);
 
   const showCaretUp = isSortedColumn && direction === 'ASC';

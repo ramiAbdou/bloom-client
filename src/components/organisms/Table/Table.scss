@@ -34,6 +34,7 @@ $PREF: 'c-table';
   &--sm { max-width: $xxl * 3.25; width: $xxl * 3.25; }
   &--md { max-width: $xxl * 4; width: $xxl * 4; }
   &--lg { max-width: $xxl * 5; width: $xxl * 5; }
+  &--relative { position: relative; }
 
   &:first-child > div { @extend .flex-ac; max-width: 100%; }
   &:last-child { width: -webkit-fill-available; }
