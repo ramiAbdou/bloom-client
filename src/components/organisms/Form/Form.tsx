@@ -10,6 +10,7 @@ import { formatQuestions } from './Form.util';
 export interface FormProps extends ChildrenProps, ClassNameProps {
   questions?: FormItemData[];
   onSubmit?: OnFormSubmit;
+  validate?: boolean;
 }
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
@@ -40,9 +41,17 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-const Form: React.FC<FormProps> = ({ questions, ...props }: FormProps) => (
+const Form: React.FC<FormProps> = ({
+  questions,
+  validate,
+  ...props
+}: FormProps) => (
   <FormStore.Provider
-    runtimeModel={{ ...formModel, items: formatQuestions(questions ?? []) }}
+    runtimeModel={{
+      ...formModel,
+      items: formatQuestions(questions ?? []),
+      validate
+    }}
   >
     <FormContent {...props} />
   </FormStore.Provider>

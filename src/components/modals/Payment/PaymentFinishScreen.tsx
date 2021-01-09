@@ -76,7 +76,7 @@ const PaymentFinishScreenContent: React.FC = () => {
     : [];
 
   return (
-    <Form className="mo-payment" onSubmit={createSubscription}>
+    <Form className="mo-payment" validate={false} onSubmit={createSubscription}>
       <ModalContentContainer>
         <QuestionValueList
           items={[

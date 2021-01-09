@@ -25,6 +25,7 @@ export type FormModel = {
   setIsLoading: Action<FormModel, boolean>;
   showErrors: Action<FormModel>;
   updateItem: Action<FormModel, UpdateItemArgs>;
+  validate?: boolean;
 };
 
 export const formModel: FormModel = {
@@ -39,7 +40,7 @@ export const formModel: FormModel = {
 
   isCompleted: computed(({ items }) => {
     return (
-      !items?.length ||
+      !!items?.length &&
       items.every(({ required, value, validate }: FormItemData) => {
         return (!required || !!value) && (!validate || validate(value));
       })
@@ -89,7 +90,9 @@ export const formModel: FormModel = {
 
       return { ...state, items };
     }
-  )
+  ),
+
+  validate: true
 };
 
 const FormStore = createContextStore<FormModel>(
@@ -100,7 +103,9 @@ const FormStore = createContextStore<FormModel>(
     items: runtimeModel.items.map((item: FormItemData) => ({
       ...item,
       id: item.id ?? item.title
-    }))
+    })),
+
+    validate: runtimeModel.validate ?? true
   }),
   { disableImmer: true }
 );
