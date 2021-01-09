@@ -15,7 +15,7 @@ const SideBarDuesContent: React.FC = () => {
 
   return (
     <div className="o-side-bar-dues-ctr">
-      <StatusTag positive={false}>Status: Inactive</StatusTag>
+      <StatusTag positive={false}>Member Status: Inactive</StatusTag>
       <Button fill secondary onClick={onClick}>
         Pay Dues
       </Button>
