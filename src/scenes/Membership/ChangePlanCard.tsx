@@ -5,8 +5,8 @@ import { ModalType } from '@constants';
 import { IMemberType } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
+import Card from '../../components/containers/Card/Card';
 import ChangePlanStore from './Membership.store';
-import MembershipCard from './MembershipCard';
 
 const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
   const isCurrent = useStoreState(({ db }) => db.member.type === id);
@@ -32,7 +32,7 @@ const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
   ]);
 
   return (
-    <MembershipCard>
+    <Card className="s-membership-card">
       <h4>{name}</h4>
 
       <p>
@@ -49,7 +49,7 @@ const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
       >
         {isCurrent ? 'Current Plan' : 'Change Plan'}
       </Button>
-    </MembershipCard>
+    </Card>
   );
 };
 
