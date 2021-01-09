@@ -19,7 +19,7 @@ type UseQuery<T, S> = {
   loading: boolean;
 };
 
-export default function useQuery<T = any, S = any>({
+function useQuery<T = any, S = any>({
   format,
   query,
   name,
@@ -48,3 +48,5 @@ export default function useQuery<T = any, S = any>({
 
   return result;
 }
+
+export default useQuery;

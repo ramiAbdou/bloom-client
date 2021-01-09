@@ -1,48 +1,65 @@
 import { useMutation as useGraphQlHooksMutation } from 'graphql-hooks';
+import { Schema } from 'normalizr';
+import { useEffect } from 'react';
 
+import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 
-type UseMutationArgs<S> = { name: string; query: string; variables?: S };
+type UseMutationArgs<T, S> = {
+  format?: (data: T) => any;
+  name: string;
+  query: string;
+  schema?: Schema<any>;
+  variables?: S;
+};
+
 type UseMutationResult<T> = { data: T; error: string; loading: boolean };
+
 type UseMutation<T, S> = [
   (variables?: S) => Promise<UseMutationResult<T>>,
   UseMutationResult<T>
 ];
 
-function getResult<T>({ data, error, loading, name }): UseMutationResult<T> {
-  return {
-    data: data ? data[name] : (null as T),
-    error: getGraphQLError(error),
-    loading
-  };
-}
-
-export default function useMutation<T = any, S = any>({
+function useMutation<T = any, S = any>({
+  format,
   query,
   name,
+  schema,
   variables: initialVariables
-}: UseMutationArgs<S>): UseMutation<T, S> {
-  const [mutationFn, result] = useGraphQlHooksMutation(
+}: UseMutationArgs<T, S>): UseMutation<T, S> {
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+
+  const [mutationFn, { data, error, loading }] = useGraphQlHooksMutation(
     query,
     initialVariables ? { variables: initialVariables } : {}
   );
 
   const typedMutationFn = async (variables?: S) => {
-    // @ts-ignore until we figure out the correc type.
-    const { data, error, loading } = await mutationFn({
+    const result = await mutationFn({
       variables: variables ?? initialVariables
     });
 
-    return getResult<T>({ data, error, loading, name });
+    return {
+      data: result.data ? (result.data[name] as T) : (null as T),
+      error: getGraphQLError(result.error),
+      loading: result.loading
+    };
   };
 
-  return [
-    typedMutationFn,
-    getResult<T>({
-      data: result.data,
-      error: result.error,
-      loading: result.loading,
-      name
-    })
-  ];
+  const result = {
+    data: data ? (data[name] as T) : (null as T),
+    error: getGraphQLError(error),
+    loading
+  };
+
+  useEffect(() => {
+    if (result.data && schema) {
+      const formattedData = format ? format(result.data) : result.data;
+      mergeEntities({ data: formattedData, schema });
+    }
+  }, [result.data, schema]);
+
+  return [typedMutationFn, result];
 }
+
+export default useMutation;

@@ -9,12 +9,13 @@ import { ModalType } from '@constants';
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row';
+import useMutation from '@hooks/useMutation';
 import Toggle from '@molecules/Toggle/Toggle';
-import { IMemberType } from '@store/entities';
+import { IMember, IMemberType } from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { UPDATE_AUTO_RENEW } from './Membership.gql';
-import useUpdateAutoRenew from './useUpdateAutoRenew';
+import { UPDATE_AUTO_RENEW, UpdateAutoRenewArgs } from './Membership.gql';
 
 const CurrentPlanCardHeader: React.FC = () => {
   const isDuesActive: boolean =
@@ -92,7 +93,12 @@ const CurrentPlanCardToggle: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member?.autoRenew);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const updateAutoRenew = useUpdateAutoRenew();
+  const [updateAutoRenew] = useMutation<IMember, UpdateAutoRenewArgs>({
+    name: 'updateAutoRenew',
+    query: UPDATE_AUTO_RENEW,
+    schema: Schema.MEMBER,
+    variables: { status: !autoRenew }
+  });
 
   const onChange = async () => {
     const { data } = await updateAutoRenew();
