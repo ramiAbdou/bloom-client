@@ -38,7 +38,9 @@ export const formModel: FormModel = {
     return items.find((item) => item.category === category);
   }),
 
-  isCompleted: computed(({ items }) => {
+  isCompleted: computed(({ items, validate: shouldValidate }) => {
+    if (!shouldValidate) return true;
+
     return (
       !!items?.length &&
       items.every(({ required, value, validate }: FormItemData) => {

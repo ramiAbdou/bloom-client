@@ -22,7 +22,7 @@ const LineChartTooltip = ({ label }: Pick<ChartTooltipProps, 'label'>) => {
 
   if (!label) return null;
 
-  const { value } = data.find(({ name }) => name === label);
+  const value = data.find(({ name }) => name === label)?.value;
   label = day(label).format('dddd, MMMM D, YYYY');
 
   return (
