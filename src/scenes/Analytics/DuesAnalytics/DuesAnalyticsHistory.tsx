@@ -81,13 +81,11 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 };
 
 const DuesAnalyticsHistory: React.FC = () => {
-  const { data, loading } = useQuery<IMemberPayment[]>({
+  const { loading } = useQuery<IMemberPayment[]>({
     name: 'getDuesHistory',
     query: GET_DUES_HISTORY,
     schema: [Schema.MEMBER_PAYMENT]
   });
-
-  console.log(data);
 
   return (
     <MainSection loading={loading} title="Dues History">

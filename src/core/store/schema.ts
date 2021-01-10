@@ -33,8 +33,6 @@ const Member = new schema.Entity(
           }
         : b;
 
-      console.log(updatedB);
-
       return { ...a, ...updatedB };
     },
 
