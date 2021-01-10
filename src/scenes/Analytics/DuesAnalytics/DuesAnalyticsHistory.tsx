@@ -17,8 +17,7 @@ interface DuesAnalyticsHistoryTableData {
   Amount: string;
   id: string;
   Email: string;
-  'First Name': string;
-  'Last Name': string;
+  'Full Name': string;
   'Paid On': string;
 }
 
@@ -43,8 +42,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
             return {
               Amount: `$${amount / 100}.00`,
               Email: email,
-              'First Name': firstName,
-              'Last Name': lastName,
+              'Full Name': `${firstName} ${lastName}`,
               'Paid On': day(createdAt).format('MMMM DD, YYYY'),
               id: uuid()
             };
@@ -60,8 +58,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
   });
 
   const columns: Column[] = [
-    { id: 'First Name', title: 'First Name', type: 'SHORT_TEXT' },
-    { id: 'Last Name', title: 'Last Name', type: 'SHORT_TEXT' },
+    { id: 'Full Name', title: 'Full Name', type: 'SHORT_TEXT' },
     { id: 'Email', title: 'Email', type: 'SHORT_TEXT' },
     { id: 'Amount', title: 'Amount', type: 'SHORT_TEXT' },
     { id: 'Paid On', title: 'Paid On', type: 'SHORT_TEXT' }
