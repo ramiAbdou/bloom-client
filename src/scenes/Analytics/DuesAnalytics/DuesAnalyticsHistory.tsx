@@ -6,6 +6,7 @@ import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
 import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
+import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { IMember, IMemberPayment, IUser } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
@@ -69,12 +70,12 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
   const options: TableOptions = {
     alignEndRight: true,
     fixFirstColumn: false,
-    isSortable: false,
-    showCount: false
+    isSortable: false
   };
 
   return (
     <Table columns={columns} options={options} rows={rows}>
+      <TableSearchBar />
       <TableContent emptyMessage="Looks like nobody has paid dues in the last year." />
     </Table>
   );
@@ -88,7 +89,11 @@ const DuesAnalyticsHistory: React.FC = () => {
   });
 
   return (
-    <MainSection loading={loading} title="Dues History">
+    <MainSection
+      className="s-analytics-dues-history"
+      loading={loading}
+      title="Dues History"
+    >
       <DuesAnalyticsHistoryTable />
     </MainSection>
   );
