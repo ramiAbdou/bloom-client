@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
-// import useMutation from '@hooks/useMutation';
+import useQuery from '@hooks/useQuery';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import PaymentModal from '@modals/Payment/Payment';
 import Loader from '@molecules/Loader/Loader';
@@ -21,9 +21,11 @@ import Events from '@scenes/Events/Events';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
 import { ICommunity, IMember } from '@store/entities';
+import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
-// import { CHANGE_COMMUNITY, ChangeCommunityArgs } from './Router.gql';
+import { GET_USER, GetUserArgs, GetUserResult } from './Router.gql';
+import TokenRoute from './TokenRoute';
 
 const HomeRouterContent: React.FC = () => {
   const { url } = useRouteMatch();
@@ -44,17 +46,11 @@ const HomeRouterContent: React.FC = () => {
   );
 };
 
-const HomeRouter: React.FC = () => {
-  const { urlName } = useParams() as UrlNameProps;
+const HomeRouter = () => {
+  const { urlName }: UrlNameProps = useParams();
 
+  const activeCommunityId = useStoreState(({ db }) => db.community?.id);
   const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
-
-  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
-
-  // const [changeCommunity] = useMutation<boolean, ChangeCommunityArgs>({
-  //   name: 'changeCommunity',
-  //   query: CHANGE_COMMUNITY
-  // });
 
   const memberTypeId: string = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
@@ -75,20 +71,30 @@ const HomeRouter: React.FC = () => {
     });
   });
 
-  // useEffect(() => {
-  //   if (isMember && activeEncodedUrlName !== urlName) {
-  //     // changeCommunity({ memberId:  })
-  //     setActiveCommunity({ urlName });
-  //   }
-  // }, [urlName, isMember]);
+  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
-  // console.log(urlName);
-  // console.log(isMember);
-  // console.log(activeEncodedUrlName);
+  const { loading, data, error } = useQuery<GetUserResult, GetUserArgs>({
+    activeId: true,
+    name: 'getUser',
+    query: GET_USER,
+    schema: Schema.USER,
+    variables: { urlName }
+  });
 
-  // If the activeEncodedUrlName hasn't been set yet, that means the community
+  const communityId = data?.activeCommunityId;
+
+  useEffect(() => {
+    if (!communityId) return;
+    if (communityId !== activeCommunityId) setActiveCommunity(communityId);
+  }, [communityId]);
+
+  const token = new URLSearchParams(window.location.search).get('loginToken');
+  if (token) return <TokenRoute token={token} />;
+
+  // If the activeUrlName hasn't been set yet, that means the community
   // hasn't been loaded in the global state yet, so just wait...
-  if (!activeUrlName) return <Loader />;
+  if (error) return <Redirect to="/login" />;
+  if (loading || !activeUrlName) return <Loader />;
 
   // If the user isn't a member of the community who's URL we are currently
   // sitting at, then we redirect them to the first community that they are

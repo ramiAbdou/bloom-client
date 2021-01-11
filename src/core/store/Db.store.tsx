@@ -30,7 +30,7 @@ const parseEntities = (data: any, schema: Schema<any>, setActiveId?: boolean) =>
   Object.entries(normalize(data, schema).entities).reduce(
     (acc: Record<string, any>, [key, value]) => {
       const activeId = setActiveId
-        ? ['communities', 'members', 'users'].includes(key) && {
+        ? ['users'].includes(key) && {
             activeId: Object.keys(value)[0]
           }
         : {};
@@ -48,11 +48,6 @@ interface MergeEntitiesArgs {
   data?: any;
   schema?: Schema<any>;
   setActiveId?: boolean;
-}
-
-interface SetActiveCommunityArgs {
-  communityId?: string;
-  urlName?: string;
 }
 
 interface UpdateEntitiesArgs {
@@ -78,7 +73,7 @@ export type DbModel = {
   isOwner: Computed<DbModel, boolean>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
-  setActiveCommunity: Action<DbModel, SetActiveCommunityArgs>;
+  setActiveCommunity: Action<DbModel, string>;
   updateCommunity: Action<DbModel, Partial<ICommunity>>;
   updateEntities: Action<DbModel, UpdateEntitiesArgs>;
   user: Computed<DbModel, IUser>;
@@ -212,20 +207,10 @@ export const dbModel: DbModel = {
    * actually join it.
    */
   setActiveCommunity: action(
-    (
-      { entities, user, ...state },
-      { communityId, urlName }: SetActiveCommunityArgs
-    ) => {
-      const { byId: byCommunityId } = entities.communities;
+    ({ entities, user, ...state }, communityId: string) => {
       const { byId: byMemberId } = entities.members;
 
-      communityId =
-        communityId ??
-        Object.values(byCommunityId).find(
-          (community) => community.urlName === urlName
-        )?.id;
-
-      const memberId = user.members.find(
+      const memberId: string = user?.members.find(
         (id: string) => byMemberId[id]?.community === communityId
       );
 

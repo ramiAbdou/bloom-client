@@ -19,7 +19,7 @@ const CommunitySelector = ({ id, logoUrl, name }: Partial<ICommunity>) => {
   const toggleDropdown = Home.useStoreActions((store) => store.toggleDropdown);
 
   const onClick = () => {
-    setActiveCommunity({ communityId: id });
+    setActiveCommunity(id);
     setTimeout(toggleDropdown, 0);
   };
 

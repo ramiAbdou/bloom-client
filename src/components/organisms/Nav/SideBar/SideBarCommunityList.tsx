@@ -1,48 +1,35 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import useMutation from '@hooks/useMutation';
 import { ICommunity, IMember } from '@store/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
-import {
-  CHANGE_COMMUNITY,
-  ChangeCommunityArgs
-} from '../../../../core/routing/Router.gql';
+import { useStoreState } from '@store/Store';
+import { cx } from '@util/util';
 
 interface SideBarCommunityIconProps {
-  borderColor: string;
-  urlName: string;
   id: string;
-  memberId: string;
+  isActive?: boolean;
   logoUrl: string;
+  urlName: string;
 }
 
 const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
-  borderColor,
   logoUrl,
   urlName,
   id,
-  memberId
+  isActive
 }) => {
-  const [changeCommunity] = useMutation<boolean, ChangeCommunityArgs>({
-    name: 'changeCommunity',
-    query: CHANGE_COMMUNITY
-  });
-
-  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
+  const communityId = useStoreState(({ db }) => db.community.id);
 
   const { push } = useHistory();
+  const onClick = () => id !== communityId && push(`/${urlName}`);
 
-  const onClick = async () => {
-    await changeCommunity({ memberId });
-    setActiveCommunity({ communityId: id });
-    push(`/${urlName}`);
-  };
-
-  const customStyle = { border: `2px ${borderColor} solid` };
+  const css = cx({
+    'o-side-bar-community': true,
+    'o-side-bar-community--active': isActive
+  });
 
   return (
-    <button style={customStyle} type="button" onClick={onClick}>
+    <button className={css} type="button" onClick={onClick}>
       <img src={logoUrl} />
     </button>
   );
@@ -58,18 +45,14 @@ const SideBarCommunityList: React.FC = () => {
     });
 
     return members.map((member: IMember) => {
-      const { logoUrl, urlName, id, primaryColor }: ICommunity = byCommunityId[
+      const { logoUrl, urlName, id }: ICommunity = byCommunityId[
         member.community
       ];
 
-      // If not active community, border color is just white.
-      const borderColor = activeId === member.community ? primaryColor : '#FFF';
-
       return {
-        borderColor,
         id,
+        isActive: activeId === member.community,
         logoUrl,
-        memberId: member.id,
         urlName
       };
     });

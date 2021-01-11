@@ -35,6 +35,19 @@ $PREF: 'o-side-bar';
   > button > img { @extend .fill; border-radius: $xxs; }
 }
 
+.#{$PREF}-community {
+  border: 2px white solid;
+  border-radius: $xs;
+  height: $xl;
+  margin-bottom: $sm;
+  padding: 2px;
+  width: $xl;
+
+  &--active { border: 2px $primary solid; }
+
+  > img { @extend .fill; border-radius: $xxs; }
+}
+
 // ## SIDEBAR MAIN
 
 .#{$PREF}-main {

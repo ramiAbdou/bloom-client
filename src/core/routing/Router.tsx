@@ -1,4 +1,3 @@
-import AuthenticatedRoute from 'core/routing/AuthenticatedRoute';
 import LoginRoute from 'core/routing/LoginRoute';
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
@@ -15,9 +14,9 @@ const Router: React.FC = () => (
   <BrowserRouter>
     <Switch>
       <LoginRoute path="/login" />
-      <Route exact component={ApplicationPage} path="/:urlName/apply" />
-      <AuthenticatedRoute component={HomeRouter} path="/:urlName" />
-      <AuthenticatedRoute exact path="/" />
+      <Route component={ApplicationPage} path="/:urlName/apply" />
+      <Route component={HomeRouter} path="/:urlName" />
+      <Route exact component={HomeRouter} path="/" />
       <Redirect to="/login" />
     </Switch>
   </BrowserRouter>

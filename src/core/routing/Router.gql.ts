@@ -2,18 +2,11 @@ import { mutation, query } from 'gql-query-builder';
 
 import { IUser } from '@store/entities';
 
-// ## CHANGE COMMUNITY
-
-export interface ChangeCommunityArgs {
-  memberId: string;
-}
-
-export const CHANGE_COMMUNITY = mutation({
-  operation: 'changeCommunity',
-  variables: { memberId: { required: true } }
-}).query;
-
 // ## GET USER
+
+export interface GetUserArgs {
+  urlName: string;
+}
 
 export interface GetUserResult extends IUser {
   activeCommunityId: string;
@@ -49,7 +42,8 @@ export const GET_USER = query({
       ]
     }
   ],
-  operation: 'getUser'
+  operation: 'getUser',
+  variables: { urlName: { required: false } }
 }).query;
 
 // ## IS LOGGED IN
