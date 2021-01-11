@@ -1,12 +1,16 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { ICommunity, IMember } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import useMutation from '../../../../core/hooks/useMutation';
+import { CHANGE_COMMUNITY, ChangeCommunityArgs } from '../Nav.gql';
 
 interface SideBarCommunityIconProps {
   borderColor: string;
   encodedUrlName: string;
   id: string;
+  memberId: string;
   logoUrl: string;
 }
 
@@ -14,15 +18,22 @@ const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
   borderColor,
   logoUrl,
   encodedUrlName,
-  id
+  id,
+  memberId
 }) => {
-  const { push } = useHistory();
+  const [changeCommunity] = useMutation<boolean, ChangeCommunityArgs>({
+    name: 'changeCommunity',
+    query: CHANGE_COMMUNITY
+  });
 
   const updateActiveCommunity = useStoreActions(
     ({ db }) => db.updateActiveCommunity
   );
 
-  const onClick = () => {
+  const { push } = useHistory();
+
+  const onClick = async () => {
+    await changeCommunity({ memberId });
     updateActiveCommunity(id);
     push(`/${encodedUrlName}`);
   };
@@ -38,16 +49,27 @@ const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
 
 const SideBarCommunityList: React.FC = () => {
   const communities: SideBarCommunityIconProps[] = useStoreState(({ db }) => {
-    const { activeId, allIds, byId } = db.entities.communities;
+    const { activeId, byId: byCommunityId } = db.entities.communities;
+    const { byId: byMemberId } = db.entities.members;
 
-    return allIds?.map((communityId: string) => {
-      const { logoUrl, encodedUrlName, id, primaryColor } = byId[communityId];
+    const members: IMember[] = db.user.members?.map((memberId: string) => {
+      return byMemberId[memberId];
+    });
 
-      return {
-        borderColor: activeId === communityId && primaryColor,
+    return members.map((member: IMember) => {
+      const {
+        logoUrl,
         encodedUrlName,
         id,
-        logoUrl
+        primaryColor
+      }: ICommunity = byCommunityId[member.community];
+
+      return {
+        borderColor: activeId === member.community && primaryColor,
+        encodedUrlName,
+        id,
+        logoUrl,
+        memberId: member.id
       };
     });
   });
