@@ -6,7 +6,7 @@ export type ICommunity = {
   applicationDescription?: string;
   applicationTitle?: string;
   autoAccept?: boolean;
-  encodedUrlName: string;
+  urlName: string;
   id: IdString;
   integrations: IdString;
   logoUrl: string;

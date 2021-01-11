@@ -16,9 +16,7 @@ import TokenRoute from './TokenRoute';
 const AuthenticatedRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
   const activeCommunityId = useStoreState(({ db }) => db.community?.id);
 
-  const encodedUrlName = useStoreState(
-    ({ db }) => db.community?.encodedUrlName
-  );
+  const urlName = useStoreState(({ db }) => db.community?.urlName);
 
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
@@ -43,8 +41,8 @@ const AuthenticatedRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
   if (token) return <TokenRoute token={token} />;
   if (loading) return <Loader />;
   if (error || !data) return <Redirect to="/login" />;
-  if (rest.path === '/' && encodedUrlName) {
-    return <Redirect to={`/${encodedUrlName}`} />;
+  if (rest.path === '/' && urlName) {
+    return <Redirect to={`/${urlName}`} />;
   }
 
   return <Route exact {...rest} component={component} />;

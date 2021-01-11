@@ -52,7 +52,7 @@ interface MergeEntitiesArgs {
 
 interface SetActiveCommunityArgs {
   communityId?: string;
-  encodedUrlName?: string;
+  urlName?: string;
 }
 
 interface UpdateEntitiesArgs {
@@ -219,7 +219,7 @@ export const dbModel: DbModel = {
   setActiveCommunity: action(
     (
       { entities, user, ...state },
-      { communityId, encodedUrlName }: SetActiveCommunityArgs
+      { communityId, urlName }: SetActiveCommunityArgs
     ) => {
       const { byId: byCommunityId } = entities.communities;
       const { byId: byMemberId } = entities.members;
@@ -227,7 +227,7 @@ export const dbModel: DbModel = {
       communityId =
         communityId ??
         Object.values(byCommunityId).find(
-          (community) => community.encodedUrlName === encodedUrlName
+          (community) => community.urlName === urlName
         )?.id;
 
       const memberId = user.members.find(

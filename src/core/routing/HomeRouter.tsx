@@ -7,7 +7,7 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 
-import { EncodedUrlNameProps } from '@constants';
+import { UrlNameProps } from '@constants';
 // import useMutation from '@hooks/useMutation';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import PaymentModal from '@modals/Payment/Payment';
@@ -45,11 +45,9 @@ const HomeRouterContent: React.FC = () => {
 };
 
 const HomeRouter: React.FC = () => {
-  const { encodedUrlName } = useParams() as EncodedUrlNameProps;
+  const { urlName } = useParams() as UrlNameProps;
 
-  const activeEncodedUrlName = useStoreState(
-    ({ db }) => db.community?.encodedUrlName
-  );
+  const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
 
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
@@ -73,29 +71,29 @@ const HomeRouter: React.FC = () => {
 
     return members?.some((member) => {
       const community: ICommunity = byCommunityId[member.community];
-      return encodedUrlName === community.encodedUrlName;
+      return urlName === community.urlName;
     });
   });
 
   // useEffect(() => {
-  //   if (isMember && activeEncodedUrlName !== encodedUrlName) {
+  //   if (isMember && activeEncodedUrlName !== urlName) {
   //     // changeCommunity({ memberId:  })
-  //     setActiveCommunity({ encodedUrlName });
+  //     setActiveCommunity({ urlName });
   //   }
-  // }, [encodedUrlName, isMember]);
+  // }, [urlName, isMember]);
 
-  // console.log(encodedUrlName);
+  // console.log(urlName);
   // console.log(isMember);
   // console.log(activeEncodedUrlName);
 
   // If the activeEncodedUrlName hasn't been set yet, that means the community
   // hasn't been loaded in the global state yet, so just wait...
-  if (!activeEncodedUrlName) return <Loader />;
+  if (!activeUrlName) return <Loader />;
 
   // If the user isn't a member of the community who's URL we are currently
   // sitting at, then we redirect them to the first community that they are
   // a member of.
-  if (!isMember) return <Redirect to={`/${activeEncodedUrlName}`} />;
+  if (!isMember) return <Redirect to={`/${activeUrlName}`} />;
 
   // If they are a member, just return the requested content.
   return (

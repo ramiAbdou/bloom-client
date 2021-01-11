@@ -15,8 +15,8 @@ const Router: React.FC = () => (
   <BrowserRouter>
     <Switch>
       <LoginRoute path="/login" />
-      <Route exact component={ApplicationPage} path="/:encodedUrlName/apply" />
-      <AuthenticatedRoute component={HomeRouter} path="/:encodedUrlName" />
+      <Route exact component={ApplicationPage} path="/:urlName/apply" />
+      <AuthenticatedRoute component={HomeRouter} path="/:urlName" />
       <AuthenticatedRoute exact path="/" />
       <Redirect to="/login" />
     </Switch>

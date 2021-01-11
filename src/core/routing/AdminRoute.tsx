@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
-import { EncodedUrlNameProps } from '@constants';
+import { UrlNameProps } from '@constants';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 
@@ -13,9 +13,9 @@ import { useStoreState } from '@store/Store';
 export default ({ component, ...rest }: RouteProps) => {
   const isAdmin: boolean = useStoreState(({ db }) => db.isAdmin);
 
-  const { encodedUrlName } = useParams() as EncodedUrlNameProps;
+  const { urlName } = useParams() as UrlNameProps;
   const isDesktop = useBreakpoint() >= 3;
 
-  if (!isDesktop || !isAdmin) return <Redirect to={`/${encodedUrlName}`} />;
+  if (!isDesktop || !isAdmin) return <Redirect to={`/${urlName}`} />;
   return <Route exact {...rest} component={component} />;
 };

@@ -5,15 +5,13 @@ import { RouteType } from '@constants';
 import { useStoreState } from '@store/Store';
 
 const usePush = (to: RouteType) => {
-  const encodedUrlName = useStoreState(
-    ({ db }) => db.community?.encodedUrlName
-  );
+  const urlName = useStoreState(({ db }) => db.community?.urlName);
 
   const { push } = useHistory();
 
   const result = useCallback(() => {
-    push(`${encodedUrlName}/${to}`);
-  }, [encodedUrlName]);
+    push(`${urlName}/${to}`);
+  }, [urlName]);
 
   return result;
 };

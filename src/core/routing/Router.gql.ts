@@ -37,7 +37,7 @@ export const GET_USER = query({
         {
           community: [
             'id',
-            'encodedUrlName',
+            'urlName',
             'name',
             'logoUrl',
             'primaryColor',

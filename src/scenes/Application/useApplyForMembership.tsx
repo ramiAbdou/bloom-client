@@ -10,7 +10,7 @@ import {
 import { useStoreState } from '@store/Store';
 
 const useApplyForMembership = (): OnFormSubmit => {
-  const name = useStoreState(({ db }) => db.community?.encodedUrlName);
+  const name = useStoreState(({ db }) => db.community?.urlName);
 
   const { push } = useHistory();
   const { url } = useRouteMatch();
@@ -40,7 +40,7 @@ const useApplyForMembership = (): OnFormSubmit => {
     const { data, error } = await applyForMembership({
       data: dataToSubmit,
       email,
-      encodedUrlName: name
+      urlName: name
     });
 
     // Manually reset the isLoading variable to false.

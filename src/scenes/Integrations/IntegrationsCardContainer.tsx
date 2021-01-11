@@ -12,7 +12,7 @@ import IntegrationCard, {
 // Responsible for fetching and supplying all the data to the children card
 // components to process and render.
 const IntegrationsCardContainer: React.FC = () => {
-  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
+  const urlName = useStoreState(({ db }) => db.community.urlName);
   const hasPaidMembership = useStoreState(({ db }) => db.hasPaidMembership);
 
   const {
@@ -22,11 +22,11 @@ const IntegrationsCardContainer: React.FC = () => {
   } = useStoreState(({ db }) => db.integrations, deepequal) as IIntegrations;
 
   const integrationData: IntegrationCardProps[] = buildIntegrationData({
-    encodedUrlName,
     hasPaidMembership,
     isMailchimpAuthenticated,
     mailchimpListId,
-    stripeAccountId
+    stripeAccountId,
+    urlName
   });
 
   const disconnectedData: IntegrationCardProps[] = integrationData.filter(

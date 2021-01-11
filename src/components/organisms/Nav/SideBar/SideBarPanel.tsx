@@ -11,7 +11,7 @@ import { PanelAction } from '@organisms/Panel/Panel.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const SidebarPanel: React.FC = () => {
-  const encodedUrlName = useStoreState(({ db }) => db.community.encodedUrlName);
+  const urlName = useStoreState(({ db }) => db.community.urlName);
 
   const canManageMembership = useStoreState(({ db }) => {
     const isStripeConnected = !!db.entities.integrations.byId[
@@ -58,7 +58,7 @@ const SidebarPanel: React.FC = () => {
       ? [
           {
             Icon: IoCard,
-            onClick: () => push(`/${encodedUrlName}/membership`),
+            onClick: () => push(`/${urlName}/membership`),
             text: 'Manage Membership'
           }
         ]

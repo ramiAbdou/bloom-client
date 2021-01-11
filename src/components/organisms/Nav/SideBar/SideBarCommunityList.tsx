@@ -11,7 +11,7 @@ import {
 
 interface SideBarCommunityIconProps {
   borderColor: string;
-  encodedUrlName: string;
+  urlName: string;
   id: string;
   memberId: string;
   logoUrl: string;
@@ -20,7 +20,7 @@ interface SideBarCommunityIconProps {
 const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
   borderColor,
   logoUrl,
-  encodedUrlName,
+  urlName,
   id,
   memberId
 }) => {
@@ -36,7 +36,7 @@ const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
   const onClick = async () => {
     await changeCommunity({ memberId });
     setActiveCommunity({ communityId: id });
-    push(`/${encodedUrlName}`);
+    push(`/${urlName}`);
   };
 
   const customStyle = { border: `2px ${borderColor} solid` };
@@ -58,22 +58,19 @@ const SideBarCommunityList: React.FC = () => {
     });
 
     return members.map((member: IMember) => {
-      const {
-        logoUrl,
-        encodedUrlName,
-        id,
-        primaryColor
-      }: ICommunity = byCommunityId[member.community];
+      const { logoUrl, urlName, id, primaryColor }: ICommunity = byCommunityId[
+        member.community
+      ];
 
       // If not active community, border color is just white.
       const borderColor = activeId === member.community ? primaryColor : '#FFF';
 
       return {
         borderColor,
-        encodedUrlName,
         id,
         logoUrl,
-        memberId: member.id
+        memberId: member.id,
+        urlName
       };
     });
   });

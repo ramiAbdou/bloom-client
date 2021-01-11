@@ -1,6 +1,6 @@
 import URLBuilder from 'util/URLBuilder';
 
-import { APP, EncodedUrlNameProps, isProduction } from '@constants';
+import { APP, isProduction, UrlNameProps } from '@constants';
 import { IIntegrations } from '../../core/store/entities';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';
@@ -16,7 +16,7 @@ interface BuildIntegrationDataProps
       IIntegrations,
       'isMailchimpAuthenticated' | 'mailchimpListId' | 'stripeAccountId'
     >,
-    EncodedUrlNameProps {
+    UrlNameProps {
   hasPaidMembership: boolean;
 }
 
@@ -26,7 +26,7 @@ interface BuildIntegrationDataProps
  * and description.
  */
 export const buildIntegrationData = ({
-  encodedUrlName,
+  urlName,
   hasPaidMembership,
   isMailchimpAuthenticated,
   mailchimpListId,
@@ -53,7 +53,7 @@ export const buildIntegrationData = ({
                 ? `${APP.SERVER_URL}/stripe/auth`
                 : `${APP.NGROK_SERVER_URL}/stripe/auth`
             )
-            .addParam('state', encodedUrlName).url,
+            .addParam('state', urlName).url,
           logo: stripe,
           name: 'Stripe'
         }
@@ -72,7 +72,7 @@ export const buildIntegrationData = ({
           .addParam('response_type', 'code')
           .addParam('client_id', process.env.MAILCHIMP_CLIENT_ID)
           .addParam('redirect_uri', `${MAILCHIMP_BASE_URI}/mailchimp/auth`)
-          .addParam('state', encodedUrlName).url,
+          .addParam('state', urlName).url,
       logo: mailchimp,
       name: 'Mailchimp'
     },

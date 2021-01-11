@@ -12,12 +12,10 @@ import { useStoreState } from '@store/Store';
  * @example /colorstack/analytics/dues => analytics
  */
 const useActiveRoute = (): RouteType => {
-  const encodedUrlName = useStoreState(
-    ({ db }) => db.community?.encodedUrlName
-  );
+  const urlName = useStoreState(({ db }) => db.community?.urlName);
 
   const { pathname } = useHistory().location;
-  const route = pathname.slice(encodedUrlName?.length + 2);
+  const route = pathname.slice(urlName?.length + 2);
 
   return route.includes('/')
     ? (route.slice(0, route.indexOf('/')) as RouteType)

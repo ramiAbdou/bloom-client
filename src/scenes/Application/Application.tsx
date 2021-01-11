@@ -17,12 +17,12 @@ const Application: React.FC = () => {
 
   return (
     <Switch>
-      <Route exact component={ApplicationForm} path="/:encodedUrlName/apply" />
+      <Route exact component={ApplicationForm} path="/:urlName/apply" />
 
       <Route
         exact
         component={ApplicationConfirmation}
-        path="/:encodedUrlName/apply/confirmation"
+        path="/:urlName/apply/confirmation"
       />
     </Switch>
   );
