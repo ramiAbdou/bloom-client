@@ -42,7 +42,7 @@ const SideBarLinkProtected: React.FC<
 const SideBarLink: React.FC<SidebarLinkProps> = (props) => {
   const { Icon, onClick, to, title } = props;
 
-  const isAdmin = useStoreState(({ db }) => db.isAdmin);
+  const isAdmin = useStoreState(({ db }) => !!db.member.role);
 
   const isStripeConnected = useStoreState(({ db }) => {
     return !!db.entities.integrations.byId[db.community?.integrations]

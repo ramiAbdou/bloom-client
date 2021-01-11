@@ -10,12 +10,17 @@ import { useStoreState } from '@store/Store';
  * token stored in the httpOnly cookies), and if the user exists, we update
  * the global state with the user.
  */
-export default ({ component, ...rest }: RouteProps) => {
-  const isAdmin: boolean = useStoreState(({ db }) => db.isAdmin);
+const AdminRoute: React.FC<RouteProps> = ({
+  component,
+  ...rest
+}: RouteProps) => {
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
 
-  const { urlName } = useParams() as UrlNameProps;
+  const { urlName }: UrlNameProps = useParams();
   const isDesktop = useBreakpoint() >= 3;
 
   if (!isDesktop || !isAdmin) return <Redirect to={`/${urlName}`} />;
   return <Route exact {...rest} component={component} />;
 };
+
+export default AdminRoute;

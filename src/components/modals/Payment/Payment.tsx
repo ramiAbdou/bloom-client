@@ -85,7 +85,7 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   selectedTypeId,
   type
 }) => {
-  const isAdmin = useStoreState(({ db }) => db.isAdmin);
+  const isAdmin = useStoreState(({ db }) => !!db.member.role);
   const route = useActiveRoute();
 
   const { loading } = useQuery<GetDuesInformationResult>({
