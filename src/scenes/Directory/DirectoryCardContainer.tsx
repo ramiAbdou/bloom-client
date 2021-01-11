@@ -21,7 +21,7 @@ const DirectoryCardContainer = () => {
 
     if (!allIds?.length) return [];
 
-    const unSortedResult: MemberCardModel[] = allIds
+    const unSortedResult: MemberCardModel[] = db.community.members
       ?.filter((id: string) => byMemberId[id]?.status === 'ACCEPTED')
       ?.map((curr: string) => {
         const { bio, cardData, id, user }: IMember = byMemberId[curr];

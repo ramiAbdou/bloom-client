@@ -1,20 +1,36 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 
 interface SideBarCommunityIconProps {
-  borderColor?: string;
+  borderColor: string;
+  encodedUrlName: string;
+  id: string;
   logoUrl: string;
 }
 
 const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
   borderColor,
-  logoUrl
+  logoUrl,
+  encodedUrlName,
+  id
 }) => {
+  const { push } = useHistory();
+
+  const updateActiveCommunity = useStoreActions(
+    ({ db }) => db.updateActiveCommunity
+  );
+
+  const onClick = () => {
+    updateActiveCommunity(id);
+    push(`/${encodedUrlName}`);
+  };
+
   const customStyle = { border: `2px ${borderColor ?? '#000'} solid` };
 
   return (
-    <button style={customStyle}>
+    <button style={customStyle} type="button" onClick={onClick}>
       <img src={logoUrl} />
     </button>
   );
@@ -25,8 +41,14 @@ const SideBarCommunityList: React.FC = () => {
     const { activeId, allIds, byId } = db.entities.communities;
 
     return allIds?.map((communityId: string) => {
-      const { logoUrl, primaryColor } = byId[communityId];
-      return { borderColor: activeId === communityId && primaryColor, logoUrl };
+      const { logoUrl, encodedUrlName, id, primaryColor } = byId[communityId];
+
+      return {
+        borderColor: activeId === communityId && primaryColor,
+        encodedUrlName,
+        id,
+        logoUrl
+      };
     });
   });
 
