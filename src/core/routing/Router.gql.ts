@@ -29,11 +29,12 @@ export const GET_USER = query({
         'status',
         {
           community: [
+            'autoAccept',
             'id',
-            'urlName',
-            'name',
             'logoUrl',
+            'name',
             'primaryColor',
+            'urlName',
             { integrations: ['mailchimpListId', 'stripeAccountId'] },
             { types: ['amount', 'id', 'name', 'isFree', 'recurrence'] }
           ]

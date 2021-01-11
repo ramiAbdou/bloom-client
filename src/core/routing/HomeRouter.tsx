@@ -28,6 +28,7 @@ import { GET_USER, GetUserArgs, GetUserResult } from './Router.gql';
 import TokenRoute from './TokenRoute';
 
 const HomeRouterContent: React.FC = () => {
+  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
   const { url } = useRouteMatch();
 
   return (
@@ -38,7 +39,11 @@ const HomeRouterContent: React.FC = () => {
         <AdminRoute component={Database} path={`${url}/database`} />
         <AdminRoute component={Analytics} path={`${url}/analytics`} />
         <AdminRoute component={Integrations} path={`${url}/integrations`} />
-        <AdminRoute component={Applicants} path={`${url}/applicants`} />
+
+        {!autoAccept && (
+          <AdminRoute component={Applicants} path={`${url}/applicants`} />
+        )}
+
         <Route component={Membership} path={`${url}/membership`} />
         <Redirect to={`${url}/directory`} />
       </Switch>

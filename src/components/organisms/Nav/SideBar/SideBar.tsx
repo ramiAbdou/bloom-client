@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   IoAdd,
   IoCalendar,
@@ -20,38 +20,34 @@ import SideBarProfile from './SideBarProfile';
 import SideBarSection from './SideBarSection';
 
 const SideBarContent = () => {
+  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
   const name = useStoreState(({ db }) => db.community.name);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const mainLinks: LinkOptions[] = useMemo(
-    () => [
-      { Icon: IoPeople, title: 'Directory', to: 'directory' },
-      { Icon: IoCalendar, title: 'Events', to: 'events' }
-    ],
-    []
-  );
+  const mainLinks: LinkOptions[] = [
+    { Icon: IoPeople, title: 'Directory', to: 'directory' },
+    { Icon: IoCalendar, title: 'Events', to: 'events' }
+  ];
 
-  const adminLinks: LinkOptions[] = useMemo(
-    () => [
-      { Icon: IoStatsChart, title: 'Analytics', to: 'analytics' },
-      { Icon: IoGlobe, title: 'Member Database', to: 'database' },
-      { Icon: IoFolderOpen, title: 'Pending Applicants', to: 'applicants' },
-      { Icon: IoExtensionPuzzle, title: 'Integrations', to: 'integrations' }
-    ],
-    []
-  );
+  const pendingApplicantsLinks: LinkOptions[] = !autoAccept
+    ? [{ Icon: IoFolderOpen, title: 'Pending Applicants', to: 'applicants' }]
+    : [];
 
-  const quickLinks: LinkOptions[] = useMemo(
-    () => [
-      { Icon: IoAdd, onClick: () => null, title: 'Create Event' },
-      {
-        Icon: IoPersonAdd,
-        onClick: () => showModal('ADD_MEMBERS'),
-        title: 'Add Member'
-      }
-    ],
-    []
-  );
+  const adminLinks: LinkOptions[] = [
+    { Icon: IoStatsChart, title: 'Analytics', to: 'analytics' },
+    { Icon: IoGlobe, title: 'Member Database', to: 'database' },
+    ...pendingApplicantsLinks,
+    { Icon: IoExtensionPuzzle, title: 'Integrations', to: 'integrations' }
+  ];
+
+  const quickLinks: LinkOptions[] = [
+    { Icon: IoAdd, onClick: () => null, title: 'Create Event' },
+    {
+      Icon: IoPersonAdd,
+      onClick: () => showModal('ADD_MEMBERS'),
+      title: 'Add Member'
+    }
+  ];
 
   return (
     <div className="o-side-bar-main">
