@@ -43,7 +43,19 @@ const parseEntities = (data: any, schema: Schema<any>, setActiveId?: boolean) =>
     {}
   );
 
-type UpdateEntitiesArgs = {
+interface MergeEntitiesArgs {
+  communityReferenceColumn?: string;
+  data?: any;
+  schema?: Schema<any>;
+  setActiveId?: boolean;
+}
+
+interface SetActiveCommunityArgs {
+  communityId?: string;
+  encodedUrlName?: string;
+}
+
+interface UpdateEntitiesArgs {
   ids: string[];
   entityName:
     | 'communities'
@@ -54,14 +66,7 @@ type UpdateEntitiesArgs = {
   updatedData?: Partial<
     ICommunity | IIntegrations | IMember | IQuestion | IUser
   >;
-};
-
-type MergeEntitiesArgs = {
-  communityReferenceColumn?: string;
-  data?: any;
-  schema?: Schema<any>;
-  setActiveId?: boolean;
-};
+}
 
 export type DbModel = {
   canCollectDues: Computed<DbModel, boolean>;
@@ -74,7 +79,7 @@ export type DbModel = {
   isOwner: Computed<DbModel, boolean>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
-  updateActiveCommunity: Action<DbModel, string>;
+  setActiveCommunity: Action<DbModel, SetActiveCommunityArgs>;
   updateCommunity: Action<DbModel, Partial<ICommunity>>;
   updateEntities: Action<DbModel, UpdateEntitiesArgs>;
   user: Computed<DbModel, IUser>;
@@ -211,12 +216,22 @@ export const dbModel: DbModel = {
    * Precondition: The user must be a member of that community in order to
    * actually join it.
    */
-  updateActiveCommunity: action(
-    ({ entities, user, ...state }, communityId: string) => {
-      const { byId } = entities.members;
+  setActiveCommunity: action(
+    (
+      { entities, user, ...state },
+      { communityId, encodedUrlName }: SetActiveCommunityArgs
+    ) => {
+      const { byId: byCommunityId } = entities.communities;
+      const { byId: byMemberId } = entities.members;
+
+      communityId =
+        communityId ??
+        Object.values(byCommunityId).find(
+          (community) => community.encodedUrlName === encodedUrlName
+        )?.id;
 
       const memberId = user.members.find(
-        (id: string) => byId[id]?.community === communityId
+        (id: string) => byMemberId[id]?.community === communityId
       );
 
       return {

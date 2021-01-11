@@ -38,8 +38,8 @@ const PlaygroundDropdown: React.FC = () => {
 
   return (
     <Dropdown
-      options={questions.map(({ title }) => title)}
-      value={[questions.find(({ id }) => id === questionId)?.title]}
+      options={questions?.map(({ title }) => title)}
+      value={[questions?.find(({ id }) => id === questionId)?.title]}
       onUpdate={onUpdate}
     />
   );

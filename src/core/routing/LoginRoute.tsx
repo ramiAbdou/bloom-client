@@ -9,7 +9,7 @@ import { IS_LOGGED_IN } from './Router.gql';
 // We need to pass in the path instead of just setting it to /login here, so
 // that the Switch component in the router properly switches.
 
-export default ({ path }: Partial<RouteProps>) => {
+const LoginRoute: React.FC<Pick<RouteProps, 'path'>> = ({ path }) => {
   // Check to see if the user is logged in (if they have tokens stored in the
   // httpOnly cookies), and if so, redirect them to the home page.
   const { error, loading, data: isAuthenticated } = useQuery<boolean>({
@@ -23,3 +23,5 @@ export default ({ path }: Partial<RouteProps>) => {
   if (!error && isAuthenticated) return <Redirect to="/" />;
   return <Route component={LoginPage} path={path} />;
 };
+
+export default LoginRoute;

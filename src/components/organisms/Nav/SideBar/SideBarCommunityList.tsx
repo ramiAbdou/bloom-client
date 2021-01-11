@@ -1,10 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import useMutation from '@hooks/useMutation';
 import { ICommunity, IMember } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import useMutation from '../../../../core/hooks/useMutation';
-import { CHANGE_COMMUNITY, ChangeCommunityArgs } from '../Nav.gql';
+import {
+  CHANGE_COMMUNITY,
+  ChangeCommunityArgs
+} from '../../../../core/routing/Router.gql';
 
 interface SideBarCommunityIconProps {
   borderColor: string;
@@ -26,19 +29,17 @@ const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
     query: CHANGE_COMMUNITY
   });
 
-  const updateActiveCommunity = useStoreActions(
-    ({ db }) => db.updateActiveCommunity
-  );
+  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
   const { push } = useHistory();
 
   const onClick = async () => {
     await changeCommunity({ memberId });
-    updateActiveCommunity(id);
+    setActiveCommunity({ communityId: id });
     push(`/${encodedUrlName}`);
   };
 
-  const customStyle = { border: `2px ${borderColor ?? '#000'} solid` };
+  const customStyle = { border: `2px ${borderColor} solid` };
 
   return (
     <button style={customStyle} type="button" onClick={onClick}>
@@ -64,8 +65,11 @@ const SideBarCommunityList: React.FC = () => {
         primaryColor
       }: ICommunity = byCommunityId[member.community];
 
+      // If not active community, border color is just white.
+      const borderColor = activeId === member.community ? primaryColor : '#FFF';
+
       return {
-        borderColor: activeId === member.community && primaryColor,
+        borderColor,
         encodedUrlName,
         id,
         logoUrl,

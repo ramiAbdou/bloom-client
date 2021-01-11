@@ -14,14 +14,12 @@ import Home from './BottomBar.store';
 const CommunitySelector = ({ id, logoUrl, name }: Partial<ICommunity>) => {
   const isActive = useStoreState(({ db }) => db.community.name === name);
 
-  const updateActiveCommunity = useStoreActions(
-    ({ db }) => db.updateActiveCommunity
-  );
+  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
   const toggleDropdown = Home.useStoreActions((store) => store.toggleDropdown);
 
   const onClick = () => {
-    updateActiveCommunity(id);
+    setActiveCommunity({ communityId: id });
     setTimeout(toggleDropdown, 0);
   };
 
