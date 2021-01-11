@@ -5,6 +5,7 @@ import Separator from '@atoms/Separator';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
+import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberType } from '@store/entities';
@@ -91,7 +92,7 @@ const PaymentFinishScreenContent: React.FC = () => {
 
         <PaymentFinishScreenToggle />
       </ModalContentContainer>
-
+      <PaymentFormErrorMessage />
       <PaymentFinishButton />
     </Form>
   );

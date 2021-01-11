@@ -100,7 +100,8 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
   // the props when the chart was created, not here.
   useEffect(() => {
     if (
-      ['LONG_TEXT', 'SHORT_TEXT'].includes(type) &&
+      (['LONG_TEXT', 'SHORT_TEXT'].includes(type) ||
+        (type === 'MULTIPLE_CHOICE' && data.length >= 8)) &&
       currentType !== ChartType.BAR
     ) {
       setType(ChartType.BAR);
@@ -113,7 +114,7 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
     ) {
       setType(ChartType.PIE);
     }
-  }, [type]);
+  }, [data?.length, type]);
 
   useEffect(() => {
     if (data !== null && totalResponses !== null) {
