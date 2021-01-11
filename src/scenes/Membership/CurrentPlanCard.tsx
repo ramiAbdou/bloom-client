@@ -23,7 +23,7 @@ const CurrentPlanCardHeader: React.FC = () => {
 
   return (
     <Row spaceBetween>
-      <h4>Current Plan</h4>
+      <h3>Current Plan</h3>
       <StatusTag positive={isDuesActive}>
         {isDuesActive ? 'ACTIVE' : 'INACTIVE'}
       </StatusTag>

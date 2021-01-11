@@ -17,7 +17,7 @@ $PREF: 's-membership';
 .#{$PREF}-card {
   box-sizing: border-box;
 
-  > h4 { color: $gray-2; margin-bottom: $xs; }
+  > h3 { color: $gray-2; margin-bottom: $xs; }
 
   > p {
     margin-bottom: $sm;
@@ -31,7 +31,7 @@ $PREF: 's-membership';
 
     margin-bottom: $xs;
     
-    > h4 { color: $gray-2; margin-right: $ss; }
+    > h3 { color: $gray-2; margin-right: $ss; }
   }
 }
 
