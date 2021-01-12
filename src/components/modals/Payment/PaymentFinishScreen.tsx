@@ -13,6 +13,7 @@ import { useStoreState } from '@store/Store';
 import Form from '../../organisms/Form/Form';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
+import useCreateOneTimePayment from './useCreateOneTimePayment';
 import useCreateSubscription from './useCreateSubscription';
 
 const PaymentFinishScreenToggle: React.FC = () => {
@@ -51,6 +52,11 @@ const PaymentFinishScreenContent: React.FC = () => {
     return byTypeId[typeId].isFree;
   });
 
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[typeId].recurrence === 'LIFETIME';
+  });
+
   const cardString: string = useStoreState(({ db }) => {
     const { paymentMethod } = db.member;
     if (!paymentMethod) return null;
@@ -70,14 +76,18 @@ const PaymentFinishScreenContent: React.FC = () => {
   });
 
   const createSubscription = useCreateSubscription();
-  if (!createSubscription) return null;
+  const createOneTimePayment = useCreateOneTimePayment();
 
   const cardItem: QuestionValueItemProps[] = !isFree
     ? [{ title: 'Credit or Debit Card', type: 'SHORT_TEXT', value: cardString }]
     : [];
 
   return (
-    <Form className="mo-payment" validate={false} onSubmit={createSubscription}>
+    <Form
+      className="mo-payment"
+      validate={false}
+      onSubmit={isLifetime ? createOneTimePayment : createSubscription}
+    >
       <ModalContentContainer>
         <QuestionValueList
           items={[

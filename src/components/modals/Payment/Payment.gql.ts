@@ -2,6 +2,24 @@ import { mutation, query } from 'gql-query-builder';
 
 import { IMemberType } from '@store/entities';
 
+// ## CREATE ONE TIME PAYMENT
+
+export interface CreateOneTimePaymentArgs {
+  memberTypeId: string;
+}
+
+export interface CreateOneTimePaymentResult {
+  id: string;
+  // duesStatus: string;
+  // type: { id: string; name: string };
+}
+
+export const CREATE_ONE_TIME_PAYMENT = mutation({
+  fields: ['id', 'autoRenew', 'duesStatus', { type: ['id', 'name'] }],
+  operation: 'createOneTimePayment',
+  variables: { memberTypeId: { required: true } }
+}).query;
+
 // ## CREATE SUBSCRIPTION
 
 export interface CreateSubscriptionArgs {
