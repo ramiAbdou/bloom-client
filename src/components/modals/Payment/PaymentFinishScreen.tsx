@@ -21,11 +21,13 @@ const PaymentFinishScreenToggle: React.FC = () => {
 
   const showToggle: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    const isTierFree = byTypeId[typeId].isFree;
+    const type: IMemberType = byTypeId[typeId];
 
     // Don't show toggle if auto renew was already enabled (which is the
     // default status) or if the type is free.
-    return !db.member.autoRenew && !isTierFree;
+    return (
+      !db.member.autoRenew && !type.isFree && type.recurrence !== 'LIFETIME'
+    );
   });
 
   if (!showToggle) return null;

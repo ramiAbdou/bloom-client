@@ -51,11 +51,21 @@ const PaymentMethodContent = () => {
 };
 
 const PaymentMethodCard = () => {
+  const isDuesActive: boolean =
+    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
+
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[db.member?.type].recurrence === 'LIFETIME';
+  });
+
   const { loading } = useQuery<IMember>({
     name: 'getMember',
     query: GET_PAYMENT_METHOD,
     schema: Schema.MEMBER
   });
+
+  if (isDuesActive && isLifetime) return null;
 
   return (
     <Card className="s-membership-card s-membership-card--payment">

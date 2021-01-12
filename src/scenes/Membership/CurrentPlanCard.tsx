@@ -66,10 +66,17 @@ const CurrentPlanCardActionContainer: React.FC = () => {
   const isDuesActive: boolean =
     useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
 
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[db.member?.type].recurrence === 'LIFETIME';
+  });
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { url } = useRouteMatch();
   const { push } = useHistory();
+
+  if (isDuesActive && isLifetime) return null;
 
   const onPrimaryClick = () => showModal(ModalType.PAY_DUES);
   const onSecondaryClick = () => push(`${url}/change`);
@@ -91,6 +98,15 @@ const CurrentPlanCardActionContainer: React.FC = () => {
 
 const CurrentPlanCardToggle: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member?.autoRenew);
+
+  const isDuesActive: boolean =
+    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
+
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[db.member?.type].recurrence === 'LIFETIME';
+  });
+
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [updateAutoRenew] = useMutation<IMember, UpdateAutoRenewArgs>({
@@ -100,6 +116,8 @@ const CurrentPlanCardToggle: React.FC = () => {
     variables: { status: !autoRenew }
   });
 
+  if (isDuesActive && isLifetime) return null;
+
   const onChange = async () => {
     const { data } = await updateAutoRenew();
     const statusText = data.autoRenew ? 'on' : 'off';
@@ -107,7 +125,14 @@ const CurrentPlanCardToggle: React.FC = () => {
   };
 
   return (
-    <Toggle on={autoRenew} title="Auto Renew Membership" onChange={onChange} />
+    <>
+      <Separator margin={16} />
+      <Toggle
+        on={autoRenew}
+        title="Auto Renew Membership"
+        onChange={onChange}
+      />
+    </>
   );
 };
 
@@ -116,7 +141,6 @@ const CurrentPlanCard: React.FC = () => (
     <CurrentPlanCardHeader />
     <CurrentPlanCardContent />
     <CurrentPlanCardActionContainer />
-    <Separator margin={16} />
     <CurrentPlanCardToggle />
   </Card>
 );
