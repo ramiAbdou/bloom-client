@@ -1,17 +1,20 @@
 import { ActionCreator } from 'easy-peasy';
 
-import { ChildrenProps, QuestionCategory, QuestionType } from '@constants';
+import {
+  ChildrenProps,
+  ClassNameProps,
+  QuestionCategory,
+  QuestionType
+} from '@constants';
 
 export type FormQuestion = {
   category?: QuestionCategory;
+
   description?: string;
 
   // Typically, this is only populated if we are fetching the form questions
   // from the backend, in which case the question has an entity ID.
   id?: string;
-
-  // Only used in MULTIPLE_SELECT.
-  plain?: boolean;
 
   required?: boolean;
 
@@ -20,6 +23,7 @@ export type FormQuestion = {
 
   // These are the only 2 required fields for every question.
   title: string;
+
   type: QuestionType;
 };
 
@@ -27,8 +31,15 @@ export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 
 export interface FormItemData extends Partial<FormQuestion> {
   errorMessage?: string;
+
   placeholder?: string;
+
+  // Only used in MULTIPLE_SELECT. True if checkbox shoudln't have an attribute
+  // tag associated with it.
+  plain?: boolean;
+
   value?: any;
+
   validate?: FormValidate;
 }
 
@@ -51,6 +62,13 @@ export interface FormItemProps
       | 'validate'
       | 'value'
     > {}
+
+export interface FormProps extends ChildrenProps, ClassNameProps {
+  disableValidation?: boolean;
+  questions?: FormItemData[];
+  onSubmit?: OnFormSubmit;
+  validateOnSubmit?: boolean;
+}
 
 export type OnFormSubmitArgs = {
   items: FormItemData[];

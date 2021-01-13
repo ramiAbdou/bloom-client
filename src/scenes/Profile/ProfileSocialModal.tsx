@@ -22,7 +22,7 @@ const ProfileSocialModal: React.FC = () => {
     <Modal id={ModalType.EDIT_SOCIAL_MEDIA}>
       <h1>Edit Social Media</h1>
 
-      <Form onSubmit={updateUser}>
+      <Form validateOnSubmit onSubmit={updateUser}>
         <ModalContentContainer>
           <FormItem
             title="Twitter URL"

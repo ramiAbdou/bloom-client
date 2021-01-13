@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 import { FormItemData } from './Form.types';
 
 /**
@@ -39,4 +41,20 @@ export const parseValue = (value: any) => {
   }
 
   return isArray ? value : [value];
+};
+
+export const validateItem = ({ errorMessage: _, ...item }: FormItemData) => {
+  const { value, validate, type } = item;
+
+  if (!['SHORT_TEXT', 'LONG_TEXT'].includes(type)) return item;
+
+  if (validate === 'IS_URL' && value && !validator.isURL(value)) {
+    return { ...item, errorMessage: 'Value must be a URL.' };
+  }
+
+  return item;
+};
+
+export const validateItems = (items: FormItemData[]) => {
+  return items?.map(validateItem);
 };

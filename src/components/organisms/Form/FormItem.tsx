@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { cx, takeFirst } from '@util/util';
+import ErrorMessage from '../../atoms/ErrorMessage';
 import Form from './Form.store';
 import { FormItemProps } from './Form.types';
 import FormDescription from './FormDescription';
@@ -9,18 +10,22 @@ import useItemBody from './useItemBody';
 
 const FormItem: React.FC<FormItemProps> = ({
   children,
-  category,
   description,
-  id,
   options,
   required,
   placeholder,
   plain,
-  title,
   type,
   validate,
-  value
+  value,
+  ...queryArgs
 }: FormItemProps) => {
+  const { category, title } = queryArgs;
+
+  const errorMessage = Form.useStoreState(
+    ({ getItem }) => getItem(queryArgs)?.errorMessage
+  );
+
   const setItem = Form.useStoreActions((store) => store.setItem);
 
   useEffect(() => {
@@ -31,25 +36,22 @@ const FormItem: React.FC<FormItemProps> = ({
     ]);
 
     setItem({
-      category,
-      id,
       required,
-      title,
+      type,
       validate,
-      value: value ?? emptyValue
+      value: value ?? emptyValue,
+      ...queryArgs
     });
   }, []);
 
   const body: React.ReactElement = useItemBody({
-    category,
     children,
-    id,
     options,
     placeholder,
     plain,
     required,
-    title,
-    type
+    type,
+    ...queryArgs
   });
 
   const css = cx({
@@ -58,12 +60,15 @@ const FormItem: React.FC<FormItemProps> = ({
     'c-form-item--multiple-select': type === 'MULTIPLE_SELECT'
   });
 
+  console.log(errorMessage);
+
   return (
     <div className={css}>
       {type !== 'TOGGLE' && <FormLabel required={required}>{title}</FormLabel>}
       {type !== 'TOGGLE' && <FormDescription>{description}</FormDescription>}
       {body}
       {type === 'TOGGLE' && <FormDescription>{description}</FormDescription>}
+      <ErrorMessage message={errorMessage} />
     </div>
   );
 };

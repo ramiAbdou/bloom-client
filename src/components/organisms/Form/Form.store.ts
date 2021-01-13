@@ -8,6 +8,7 @@ import {
 import validator from 'validator';
 
 import { FormItemData } from './Form.types';
+import { validateItem } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
 interface UpdateItemArgs extends GetItemArgs {
@@ -15,6 +16,7 @@ interface UpdateItemArgs extends GetItemArgs {
 }
 
 export type FormModel = {
+  disableValidation?: boolean;
   errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
@@ -23,13 +25,15 @@ export type FormModel = {
   items: FormItemData[];
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
+  setItemErrorMessages: Action<FormModel, FormItemData[]>;
   setIsLoading: Action<FormModel, boolean>;
-  showErrors: Action<FormModel>;
   updateItem: Action<FormModel, UpdateItemArgs>;
-  validate?: boolean;
+  validateOnSubmit?: boolean;
 };
 
 export const formModel: FormModel = {
+  disableValidation: false,
+
   // Represents the error message for the entire Form, not any one element.
   errorMessage: null,
 
@@ -39,20 +43,28 @@ export const formModel: FormModel = {
     return items.find((item) => item.category === category);
   }),
 
-  isCompleted: computed(({ items, validate: shouldValidate }) => {
-    if (!shouldValidate) return true;
+  /**
+   * Returns true if the form has been completed. This is the case if:
+   * - The form has validation turned off (only for forms without ANY items).
+   * - All items are validated. An item is validated if:
+   *  - Item is not required.
+   *  - Item is required and there is non-empty value.
+   */
+  isCompleted: computed(({ items, disableValidation, validateOnSubmit }) => {
+    if (disableValidation) return true;
+    if (!items?.length) return false;
+    if (items.every(({ value }) => !value)) return false;
+    if (validateOnSubmit) return true;
 
-    return (
-      !!items?.length &&
-      items.every(({ required, value, validate }: FormItemData) => {
-        if (required && !value) return false;
+    console.log('HERE');
 
-        if (validate === 'IS_EMAIL') return validator.isEmail(value);
-        if (validate === 'IS_URL') return validator.isURL(value);
-
-        return true;
-      })
-    );
+    return items.every(({ required, value, validate }: FormItemData) => {
+      if (required && !value) return false;
+      if (validateOnSubmit) return true;
+      if (validate === 'IS_EMAIL') return validator.isEmail(value);
+      if (validate === 'IS_URL') return validator.isURL(value);
+      return true;
+    });
   }),
 
   // Used to ensure that the submit button is disabled.
@@ -78,12 +90,15 @@ export const formModel: FormModel = {
     items: [...state.items, item]
   })),
 
-  showErrors: action(({ ...state }) => {
-    return { ...state, isShowingErrors: true };
+  setItemErrorMessages: action((state, items: FormItemData[]) => {
+    return { ...state, items };
   }),
 
   updateItem: action(
-    (state, { category, id, title, value }: UpdateItemArgs) => {
+    (
+      { validateOnSubmit, ...state },
+      { category, id, title, value }: UpdateItemArgs
+    ) => {
       const { items } = state;
 
       let index: number;
@@ -94,26 +109,31 @@ export const formModel: FormModel = {
         index = items.findIndex((item) => item.category === category);
       }
 
-      items[index] = { ...items[index], value };
+      const updatedItem = { ...items[index], value };
 
-      return { ...state, items };
+      items[index] =
+        validateOnSubmit && !updatedItem.errorMessage
+          ? updatedItem
+          : validateItem(updatedItem);
+
+      return { ...state, items, validateOnSubmit };
     }
   ),
 
-  validate: true
+  validateOnSubmit: false
 };
 
 const FormStore = createContextStore<FormModel>(
   (runtimeModel: FormModel) => ({
     ...runtimeModel,
 
+    disableValidation: runtimeModel.disableValidation,
+
     // If there isn't an ID supplied to an item, just make the ID the title.
     items: runtimeModel.items.map((item: FormItemData) => ({
       ...item,
       id: item.id ?? item.title
-    })),
-
-    validate: runtimeModel.validate ?? true
+    }))
   }),
   { disableImmer: true }
 );
