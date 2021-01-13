@@ -8,14 +8,12 @@ import { ToastOptions } from '@organisms/Toast/Toast.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { makeClass } from '@util/util';
 
-const Toast = ({
+const Toast: React.FC<ToastOptions> = ({
   id,
   message,
   mutationOptionsOnClose,
-  onUndo,
-  type,
-  undo
-}: ToastOptions) => {
+  onUndo
+}) => {
   // Since we have the option to undo the actions within Toasts, we keep track
   // of that state.
   const [wasUndid, setWasUndid] = useState(false);
@@ -46,12 +44,7 @@ const Toast = ({
     };
   }, [wasUndid]);
 
-  const css = makeClass([
-    'c-toast',
-    [type === 'ERROR', 'c-toast--error'],
-    [type === 'PESSIMISTIC', 'c-toast--pessimistic'],
-    [undo, 'c-toast--undo']
-  ]);
+  const css = makeClass(['c-toast', [!!onUndo, 'c-toast--undo']]);
 
   const onUndoClick = () => {
     setWasUndid(true);
@@ -67,7 +60,7 @@ const Toast = ({
       initial={{ x: 150 }}
     >
       <p>{message}</p>
-      {undo && (
+      {onUndo && (
         <Button tertiary onClick={onUndoClick}>
           Undo
         </Button>
@@ -76,7 +69,7 @@ const Toast = ({
   );
 };
 
-export default () => {
+const ToastList: React.FC = () => {
   const queue = useStoreState(({ toast }) => toast.queue);
 
   return createPortal(
@@ -90,3 +83,5 @@ export default () => {
     document.body
   );
 };
+
+export default ToastList;

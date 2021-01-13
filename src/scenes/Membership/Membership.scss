@@ -42,6 +42,7 @@ $PREF: 's-membership';
   > p:first-of-type > span:first-child { @extend .display; margin-right: $xxs; }
   > p:first-of-type > span:last-child { @extend .meta--lg; color: $gray-2; }
   > p:last-of-type { @extend .body--bold; margin-bottom: $sm; }
+  > p:last-child { margin-bottom: 0; }
 }
 
 // ## PAYMENT METHOD CARD

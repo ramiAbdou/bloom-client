@@ -17,7 +17,7 @@ $PREF: 'c-toast';
 .#{$PREF} {
   @extend .shadow--1;
 
-  background-color: $primary;
+  background-color: $gray-1;
   border-radius: $xl;
   margin-bottom: $sm;
   margin-left: auto;
@@ -25,9 +25,6 @@ $PREF: 'c-toast';
   padding: $ss $sm;
 
   > p { @extend .body; color: white; }
-
-  &--error { background-color: $red; }
-  &--pessimistic { background-color: $gray-1; }
 
   &--undo {
     @extend .flex-acsb;

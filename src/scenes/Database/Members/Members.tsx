@@ -6,7 +6,7 @@ import Table from '@organisms/Table/Table';
 import { Column, OnRenameColumn, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMember, IQuestion } from '@store/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import ActionRow from './ActionRow';
 
@@ -36,8 +36,6 @@ export default () => {
     return db.community.questions?.map((id: string) => byId[id]);
   });
 
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
   const [renameQuestion] = useMutation<IQuestion, RenameQuestionArgs>({
     name: 'renameQuestion',
     query: RENAME_QUESTION
@@ -50,9 +48,7 @@ export default () => {
 
     // We pass in the version to check for race conditions.
     const { error } = await renameQuestion({ id, title, version });
-
-    if (error) showToast({ message: error, type: 'ERROR' });
-    else updateColumn({ id, title, version: version + 1 });
+    if (!error) updateColumn({ id, title, version: version + 1 });
   };
 
   return (

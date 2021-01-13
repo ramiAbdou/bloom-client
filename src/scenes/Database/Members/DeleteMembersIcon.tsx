@@ -36,9 +36,7 @@ const DeleteMembersModal = () => {
     showToast({
       message: `${numMembers} member(s) removed from the community.`,
       mutationOptionsOnClose: [DELETE_MEMBERS, { variables: { memberIds } }],
-      onUndo: () => updateCommunity({ members: allMembers }),
-      type: 'PESSIMISTIC',
-      undo: true
+      onUndo: () => updateCommunity({ members: allMembers })
     });
 
     setTimeout(closeModal, 0);

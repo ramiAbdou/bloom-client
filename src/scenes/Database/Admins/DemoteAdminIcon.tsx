@@ -31,8 +31,7 @@ const DemoteToMemberModal = () => {
     mergeEntities({ data, schema: [Schema.MEMBER] });
 
     showToast({
-      message: `${adminIds.length} admin(s) demoted to member.`,
-      type: 'PESSIMISTIC'
+      message: `${adminIds.length} admin(s) demoted to member.`
     });
 
     setTimeout(closeModal, 0);
