@@ -1,0 +1,77 @@
+$PREF: 's-membership';
+
+.#{$PREF}-card-ctr {
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, $xxl * 5.5);
+  margin-bottom: $lg;
+  row-gap: $sm;
+
+  @include LTE(1060) { grid-template-columns: repeat(auto-fill, 100%); }
+  @include T { grid-template-columns: repeat(auto-fill, $xxl * 5.5); }
+  @include LTE(730) { grid-template-columns: repeat(auto-fill, 100%); }
+}
+
+// ## MANAGE MEMBERSHIP CARD (BASE)
+
+.#{$PREF}-card {
+  box-sizing: border-box;
+
+  > h3 { color: $gray-2; margin-bottom: $xs; }
+
+  > p {
+    margin-bottom: $sm;
+
+    > span:first-child { @extend .display; margin-right: $xxs; }
+    > span:last-child { @extend .meta--lg; color: $gray-2; }
+  }
+
+  > div:first-child {
+    @extend .flex-ac;
+
+    margin-bottom: $xs;
+    
+    > h3 { color: $gray-2; margin-right: $ss; }
+  }
+}
+
+// ## CURRENT PLAN CARD
+
+.#{$PREF}-card--plan {
+  > p:first-of-type { margin-bottom: 0; }
+  > p:first-of-type > span:first-child { @extend .display; margin-right: $xxs; }
+  > p:first-of-type > span:last-child { @extend .meta--lg; color: $gray-2; }
+  > p:last-of-type { @extend .body--bold; margin-bottom: $sm; }
+  > p:last-child { margin-bottom: 0; }
+}
+
+// ## PAYMENT METHOD CARD
+
+.#{$PREF}-card--payment {
+  height: $xxl * 3;
+
+  > p:only-of-type { margin-top: auto; }
+
+  > p:not(:only-of-type) {
+    &:first-of-type { @extend .body--bold; margin-top: auto; }
+    &:last-of-type { @extend .meta; color: $gray-2; margin-top: -$sm; }
+  }
+  
+  > button { margin-top: auto; }
+}
+
+// ## PAYMENT HISTORY
+
+.#{$PREF}-overview-ctr { > h3 { margin-bottom: $sm; } }
+
+.#{$PREF}-card--next {
+  margin-bottom: $sm;
+  width: $xxl * 5.5;
+
+  @include LTE(1060) { width: 100%; }
+  @include T { width: $xxl * 5.5; }
+  @include LTE(730) { width: 100%; }
+
+  > h4 { margin-bottom: $xs; }
+  > .flex-ac > p:first-child { @extend .body--bold; }
+}

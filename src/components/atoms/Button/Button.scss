@@ -1,0 +1,74 @@
+$PREF: 'c-btn';
+
+// ## BASIC BUTTON
+
+.#{$PREF} {
+  @extend .flex-acc;
+  
+  border-radius: $xxs;
+
+  &:not(:disabled) {
+    @include HOVER { opacity: 0.8; }
+    &:active { transform: scale(0.95); transition: transform 0.1s ease-out; }
+  }
+
+  &:disabled { cursor: not-allowed; }
+
+  // Maps to the "fill" prop passed into the Button component.
+  &--fill { width: 100%; }
+  &--fit { width: fit-content; }
+
+  // Maps to the "large" prop passed into the Button component.
+  &--lg { height: $xl; }
+}
+
+// ## LOADING STATE - Includes the loading text as well as the Spinner.
+
+.#{$PREF}-loading-ctr { @extend .flex-acc; }
+.#{$PREF}-loading-ctr > p {
+  @extend .meta--lg;
+
+  color: $gray-3;
+  margin-right: $sm;
+}
+
+// ## PRIMARY BUTTON
+
+.#{$PREF}--primary {
+  @extend .meta--lg;
+
+  background-color: $primary;
+  border: 1px $primary solid;
+  color: white;
+  padding: $xs $sm;
+
+  &:disabled {
+    background-color: $gray-5;
+    border: 1px $gray-5 solid;
+    color: $gray-3;
+  }
+}
+
+// ## SECONDARY BUTTON
+
+.#{$PREF}--secondary {
+  @extend .meta--lg;
+
+  background-color: inherit;
+  border: 1px $primary solid;
+  color: $primary;
+  padding: $xs $sm;
+}
+
+// ## TERTIARY BUTTON
+
+.#{$PREF}--tertiary {
+  @extend .meta--lg;
+
+  color: $primary;
+  padding: $xs $sm;
+  text-decoration: underline;
+  
+  @include PRIMARY_HOVER;
+  @include HOVER { border-radius: $xxs; }
+}

@@ -1,0 +1,36 @@
+$PREF: 'mo-add-member';
+
+// ## ADD MEMBER MODAL
+
+.#{$PREF}-form > .c-btn--tertiary { margin-bottom: $md; }
+
+// ## ADD MEMBER INPUT
+
+.#{$PREF}-input-ctr {
+  &:only-of-type > div > button { display: none; }
+}
+
+.#{$PREF}-input {
+  @extend .flex-ac;
+
+  margin-bottom: $sm;
+
+  > button {
+    margin-right: $sm;
+  
+    @include HOVER { > svg { color: $red; } }
+
+    > svg { transition: color 300ms; }
+    &:active { > svg { color: $red; } }
+  }
+
+  > .c-form-item { margin: 0 $xs 0 0; width: 100%; }
+  > .c-form-item:last-child { margin: 0 $xs 0 0; }
+  > .c-form-item--email { margin-right: $sm; }
+  > .c-form-item--multiple-select:last-child { min-width: $xxl * 2; }
+
+  // This div wraps the Make Admin checkbox button and text.
+  > div:last-child { @extend .flex-ac; margin-left: $xs; }
+  > div:last-child > .c-misc-checkbox { margin-right: $xs; }
+  > div:last-child > p { width: max-content; }
+}

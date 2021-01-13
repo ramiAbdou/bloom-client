@@ -3,6 +3,7 @@ import '../public/favicon.ico';
 
 // Extend the time-based library for entire app.
 import day from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utc from 'dayjs/plugin/utc';
 import { StoreProvider } from 'easy-peasy';
 import { ClientContext, GraphQLClient } from 'graphql-hooks';
@@ -10,11 +11,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 
-import ToastQueue from '@components/Toast/Toast';
 import { APP } from '@constants';
+import ToastQueue from '@organisms/Toast/Toast';
 import { store } from '@store/Store';
-import Router from './Router';
+import Router from './core/routing/Router';
 
+day.extend(advancedFormat);
 day.extend(utc);
 
 const client = new GraphQLClient({

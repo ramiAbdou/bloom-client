@@ -7,11 +7,47 @@
 
 import { schema } from 'normalizr';
 
+import { takeFirst } from '@util/util';
+
 // ## NORMALIZR SCHEMA DECLARATIONS
 
 const Community = new schema.Entity('communities', {});
 const Integrations = new schema.Entity('integrations', {});
-const Member = new schema.Entity('members', {});
+
+const Member = new schema.Entity(
+  'members',
+  {},
+  {
+    mergeStrategy: (a, b) => {
+      const aPayments = a.payments;
+      const bPayments = b.payments;
+
+      const hasPayments: boolean = aPayments?.length && bPayments?.length;
+
+      const updatedB = hasPayments
+        ? {
+            ...b,
+            payments: aPayments
+              .filter((value: any) => !bPayments.includes(value))
+              .concat(bPayments)
+          }
+        : b;
+
+      return { ...a, ...updatedB };
+    },
+
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.stripeInvoiceUrl, { payments: [parent.id] }],
+        {}
+      ]);
+
+      return { ...value, ...processedData };
+    }
+  }
+);
+
+const MemberPayment = new schema.Entity('payments', {});
 const MemberType = new schema.Entity('types', {});
 const Question = new schema.Entity('questions', {});
 const User = new schema.Entity('users', {});
@@ -26,7 +62,15 @@ Community.define({
   types: [MemberType]
 });
 
-Member.define({ community: Community, type: MemberType, user: User });
+Member.define({
+  community: Community,
+  payments: [MemberPayment],
+  type: MemberType,
+  user: User
+});
+
+MemberPayment.define({ member: Member, type: MemberType });
+
 User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
@@ -36,6 +80,7 @@ export const Schema = {
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
   MEMBER: Member,
+  MEMBER_PAYMENT: MemberPayment,
   MEMBER_TYPE: MemberType,
   USER: User
 };

@@ -7,23 +7,24 @@ $PREF: 's-login';
   @include TD { margin-bottom: $xxl; }
 }
 
-.#{$PREF}-card {
-  @extend .flex-col;
+// ## LOGIN CARD
 
-  background-color: white;
-  border: 1px $gray-5 solid;
-  border-radius: $xs;
+.#{$PREF}-card {
   margin-top: -$xxl;
   max-width: $xxl * 7;
-  overflow: hidden;
+  overflow: hidden; // Needed to hide the overflowed network image.
 
-  @include RESP (padding, $md, $sm, $sm);
   @include M { box-sizing: border-box; width: 90%; }
+
+  > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+  > form > div { margin: $md 0; }
 }
+
+// ## LOGIN HEADER - Contains the network image as well as welcome message.
 
 .#{$PREF}-header { @extend .flex-acsb; }
 .#{$PREF}-header > div { margin-bottom: $lg; }
-.#{$PREF}-header > div > h3 { @extend .meta; }
+.#{$PREF}-header > div > p { @extend .meta; }
 .#{$PREF}-header > img {
   margin-bottom: $lg;
   opacity: 0.75;
@@ -34,56 +35,20 @@ $PREF: 's-login';
 
 // ## GOOGLE BUTTON
 
-.#{$PREF}-google { margin-bottom: $md; &--sm { margin-bottom: $sm; } }
-.#{$PREF}-google > a {
-  @extend .meta--lg;
-  @extend .c-btn;
-  @extend .c-btn--lg;
+.#{$PREF}-google {
+  margin-bottom: $md;
+  &--sm { margin-bottom: $sm; }
 
-  border: 1px $gray-5 solid;
+  > a {
+    @extend .c-btn;
+    @extend .c-btn--lg;
+    @extend .meta--lg;
 
-  @include HOVER { background-color: $gray-6; }
-}
+    border: 1px $gray-5 solid;
+    color: $gray-1;
 
-.#{$PREF}-google > a > img {
-  height: $md;
-  margin-right: $xs;
-  width: $md;
-}
+    @include HOVER { background-color: $gray-6; }
+  }
 
-// ## EMAIL CONTAINER (INPUT FIELD AND SUBMIT BUTTON)
-
-.#{$PREF}-email-form > div { margin: $md 0; width: 100%; }
-
-// ## CONFIRMATION SCREEN
-
-.#{$PREF}-confirmation { @extend .flex-accol; }
-.#{$PREF}-confirmation > p { width: 100%; }
-.#{$PREF}-confirmation-header {
-  @extend .flex-ac;
-  @extend .fill;
-
-  margin-bottom: $sm;
-}
-
-// ## CONFIRMATION SCREEN (HEADER)
-
-.#{$PREF}-confirmation-header > svg {
-  border-radius: 50%;
-  color: $green;
-  height: $xxl;
-  margin-right: $xs;
-  width: $xxl;
-}
-
-.#{$PREF}-confirmation-email {
-  @extend .body--bold;
-
-  background-color: rgba($color: $green, $alpha: 0.1);
-  border: 1px $green solid;
-  border-radius: $xxs;
-  color: $green;
-  margin: $sm auto;
-  padding: $xs 0;
-  text-align: center;
+  > a > img { height: $sl; margin-right: $xs; width: $sl; }
 }

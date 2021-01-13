@@ -1,0 +1,34 @@
+$PREF: 'c-form';
+
+// ## GENERAL
+
+.#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
+
+.#{$PREF}-desc {
+  color: $gray-2;
+  margin-bottom: $sm;
+
+  &:last-child { @extend .meta; color: $gray-3; margin: $xs 0 0 0; }
+}
+
+.#{$PREF}-error { color: $red; margin-top: $xxs; }
+
+// ## LABEL
+
+.#{$PREF}-label {
+  @extend .flex-ac;
+
+  color: $gray-2;
+  margin-bottom: $xs;
+  width: 100%;
+
+  > svg { color: $green; margin-right: $xs; }
+  > div.c-misc-tip { color: $primary; margin-left: $xxs; }
+  > h4 { color: $gray-2; }
+
+  &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
+}
+
+// ## INVISIBLE SUBMIT
+
+.#{$PREF}-invisible-submit { display: none; }

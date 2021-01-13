@@ -6,7 +6,7 @@ export type ICommunity = {
   applicationDescription?: string;
   applicationTitle?: string;
   autoAccept?: boolean;
-  encodedUrlName: string;
+  urlName: string;
   id: IdString;
   integrations: IdString;
   logoUrl: string;
@@ -25,7 +25,15 @@ export type IIntegrations = {
   stripeAccountId: string;
 };
 
+export type IPaymentMethod = {
+  brand: string;
+  expirationDate: string;
+  last4: string;
+  zipCode: string;
+};
+
 export type IMember = {
+  autoRenew: boolean;
   allData?: { questionId: string; value: string }[];
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
@@ -34,17 +42,28 @@ export type IMember = {
   createdAt: string;
   duesStatus: 'ACTIVE' | 'INACTIVE' | 'LAME';
   id: IdString;
+  paymentMethod: IPaymentMethod;
+  payments: IdString[];
   role?: 'ADMIN' | 'OWNER';
   type: IdString;
   status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
   user: IdString;
 };
 
+export type IMemberPayment = {
+  amount: number;
+  createdAt: string;
+  stripeInvoiceUrl: string;
+  id: IdString;
+  member: IdString;
+  type: IdString;
+};
+
 export type IMemberType = {
   amount: number;
   id: IdString;
   isFree: boolean;
-  name: boolean;
+  name: string;
   recurrence: 'LIFETIME' | 'MONTHLY' | 'YEARLY';
 };
 
@@ -85,6 +104,7 @@ export type IEntities = {
   communities: EntityRecord<ICommunity>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
+  payments: EntityRecord<IMemberPayment>;
   questions: EntityRecord<IQuestion>;
   types: EntityRecord<IMemberType>;
   users: EntityRecord<IUser>;
@@ -95,6 +115,7 @@ export const initialEntities: IEntities = {
   communities: { activeId: null, allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { activeId: null, allIds: [], byId: {} },
+  payments: { allIds: [], byId: {} },
   questions: { allIds: [], byId: {} },
   types: { activeId: null, allIds: [], byId: {} },
   users: { allIds: [], byId: {} }

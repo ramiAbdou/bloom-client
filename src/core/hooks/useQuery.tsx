@@ -1,29 +1,54 @@
 import { useQuery as useGraphQlHooksQuery } from 'graphql-hooks';
+import { Schema } from 'normalizr';
+import { useEffect } from 'react';
 
+import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 
-type UseQueryArgs<S> = { name: string; query: string; variables?: S };
-type UseQuery<T, S> = { data: T; error: string; loading: boolean };
+type UseQueryArgs<T, S> = {
+  activeId?: boolean;
+  format?: (data: T) => any;
+  name: string;
+  query: string;
+  schema?: Schema<any>;
+  variables?: S;
+};
 
-function getResult<T, S>({ data, error, loading, name }): UseQuery<T, S> {
-  return {
+type UseQuery<T, S> = {
+  data: T;
+  error: string;
+  loading: boolean;
+};
+
+function useQuery<T = any, S = any>({
+  activeId,
+  format,
+  query,
+  name,
+  schema,
+  variables
+}: UseQueryArgs<T, S>): UseQuery<T, S> {
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+
+  const { data, error, loading } = useGraphQlHooksQuery(
+    query,
+    variables ? { variables } : {}
+  );
+
+  const result = {
     data: data ? (data[name] as T) : (null as T),
     error: getGraphQLError(error),
     loading
   };
+
+  useEffect(() => {
+    if (result.data && schema) {
+      const formattedData = format ? format(result.data) : result.data;
+      mergeEntities({ data: formattedData, schema, setActiveId: activeId });
+    }
+  }, [result.data, schema]);
+
+  return result;
 }
 
-export default function useQuery<T = any, S = any>({
-  query,
-  name,
-  variables
-}: UseQueryArgs<S>): UseQuery<T, S> {
-  const result = useGraphQlHooksQuery(query, variables ? { variables } : {});
-
-  return getResult<T, S>({
-    data: result.data,
-    error: result.error,
-    loading: result.loading,
-    name
-  });
-}
+export default useQuery;

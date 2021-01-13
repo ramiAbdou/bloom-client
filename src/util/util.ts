@@ -1,6 +1,23 @@
 import { APIError } from 'graphql-hooks';
 
 /**
+ * Returns a string of classes based on the conditional flags set on each of
+ * the class names.
+ *
+ * @param classMap Map of class names to boolean flag (whether to show or not).
+ */
+export const cx = (classMap: Record<string, any>): string => {
+  return Object.entries(classMap).reduce(
+    (acc: string, [className, addClassName]) => {
+      if (!addClassName) return acc;
+      if (acc.length) return `${acc} ${className}`;
+      return className;
+    },
+    ''
+  );
+};
+
+/**
  * Returns the GraphQL error from the APIError object returned after a GraphQL
  * query or mutation runs.
  *

@@ -1,0 +1,25 @@
+$PREF: 'm-misc';
+
+// ## PROFILE PICTURE CONTAINER - Can either be an img tag or if there is
+// no URL provided, an h3 will be rendered.
+
+.#{$PREF}-profile-picture--circle { border-radius: 50%; }
+.#{$PREF}-profile-picture > * { @extend .fill; border-radius: inherit; }
+.#{$PREF}-profile-picture > img { object-fit: cover; }
+.#{$PREF}-profile-picture > h3 {
+  @extend .flex-acc;
+
+  background-color: $primary;
+  color: white;
+}
+
+// ## QUESTION VALUE - Has a title component and value component.
+
+.#{$PREF}-question {
+  &:not(:last-child) { margin-bottom: $md; }
+
+  > div:last-child {
+    @extend .flex-w;
+    > p:not(:only-child) { margin-bottom: $xxs; }
+  }
+}

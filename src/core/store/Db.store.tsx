@@ -30,7 +30,7 @@ const parseEntities = (data: any, schema: Schema<any>, setActiveId?: boolean) =>
   Object.entries(normalize(data, schema).entities).reduce(
     (acc: Record<string, any>, [key, value]) => {
       const activeId = setActiveId
-        ? ['communities', 'members', 'users'].includes(key) && {
+        ? ['users'].includes(key) && {
             activeId: Object.keys(value)[0]
           }
         : {};
@@ -43,7 +43,14 @@ const parseEntities = (data: any, schema: Schema<any>, setActiveId?: boolean) =>
     {}
   );
 
-type UpdateEntitiesArgs = {
+interface MergeEntitiesArgs {
+  communityReferenceColumn?: string;
+  data?: any;
+  schema?: Schema<any>;
+  setActiveId?: boolean;
+}
+
+interface UpdateEntitiesArgs {
   ids: string[];
   entityName:
     | 'communities'
@@ -54,42 +61,32 @@ type UpdateEntitiesArgs = {
   updatedData?: Partial<
     ICommunity | IIntegrations | IMember | IQuestion | IUser
   >;
-};
-
-type MergeEntitiesArgs = {
-  communityReferenceColumn?: string;
-  data?: any;
-  schema?: Schema<any>;
-  setActiveId?: boolean;
-};
+}
 
 export type DbModel = {
   canCollectDues: Computed<DbModel, boolean>;
   clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
   entities: IEntities;
+  hasPaidMembership: Computed<DbModel, boolean>;
   integrations: Computed<DbModel, IIntegrations>;
   isOwner: Computed<DbModel, boolean>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
-  updateActiveCommunity: Action<DbModel, string>;
+  setActiveCommunity: Action<DbModel, string>;
   updateCommunity: Action<DbModel, Partial<ICommunity>>;
   updateEntities: Action<DbModel, UpdateEntitiesArgs>;
   user: Computed<DbModel, IUser>;
 };
 
 export const dbModel: DbModel = {
-  canCollectDues: computed(({ community, entities }) => {
+  canCollectDues: computed(({ community, entities, hasPaidMembership }) => {
     const { byId: byIntegrationsId } = entities.integrations;
-    const { byId: byTypeId } = entities.types;
 
     const integrations: IIntegrations =
       byIntegrationsId[community?.integrations];
 
-    return (
-      integrations?.stripeAccountId &&
-      community.types?.some((typeId: string) => !byTypeId[typeId]?.isFree)
-    );
+    return hasPaidMembership && !!integrations?.stripeAccountId;
   }),
 
   clearEntities: action((state) => ({ ...state, entities: initialEntities })),
@@ -105,6 +102,13 @@ export const dbModel: DbModel = {
 
   entities: initialEntities,
 
+  hasPaidMembership: computed(({ community, entities }) => {
+    const { byId: byTypeId } = entities.types;
+    return community?.types?.some(
+      (typeId: string) => !byTypeId[typeId]?.isFree
+    );
+  }),
+
   integrations: computed(({ entities }) => {
     const { activeId, byId: byCommunityId } = entities.communities;
     const { byId } = entities.integrations;
@@ -115,7 +119,7 @@ export const dbModel: DbModel = {
 
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
-    return byId[activeId];
+    return byId[activeId] as IMember;
   }),
 
   /**
@@ -202,12 +206,12 @@ export const dbModel: DbModel = {
    * Precondition: The user must be a member of that community in order to
    * actually join it.
    */
-  updateActiveCommunity: action(
+  setActiveCommunity: action(
     ({ entities, user, ...state }, communityId: string) => {
-      const { byId } = entities.members;
+      const { byId: byMemberId } = entities.members;
 
-      const memberId = user.members.find(
-        (id: string) => byId[id]?.community === communityId
+      const memberId: string = user?.members.find(
+        (id: string) => byMemberId[id]?.community === communityId
       );
 
       return {

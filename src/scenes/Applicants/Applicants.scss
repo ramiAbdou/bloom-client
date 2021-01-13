@@ -5,22 +5,6 @@ $PREF: 's-applicants';
 .#{$PREF}-header { @extend .flex-acsb; }
 .#{$PREF}-header > div:last-of-type { @extend .flex-ac; }
 
-// ## ACCEPT ALL BUTTON
-
-.#{$PREF}-accept-all { margin-right: $ss; }
-
-.#{$PREF} > p { @extend .body; }
-
-.#{$PREF}-questions > p {
-  @extend .meta;
-
-  margin-right: $sm;
-  width: fit-content;
-}
-
-.#{$PREF}-actions { @extend .flex-ac; margin-bottom: $sm; }
-.#{$PREF}-actions > button { margin-right: $xs; }
-
 // ## CARD CONTAINER
 
 .#{$PREF}-card-ctr {
@@ -30,82 +14,3 @@ $PREF: 's-applicants';
   padding: $xxs 0;
   row-gap: $md;
 };
-
-// ## CARD
-
-.#{$PREF}-card {
-  @extend .card;
-  @extend .flex-sb;
-
-  height: fit-content;
-
-  &:last-of-type { margin-bottom: $lg; }
-};
-
-.#{$PREF}-card > button { margin: $sl auto 0 auto; }
-
-// ## CARD HEADER
-
-.#{$PREF}-card-header { @extend .flex-acsb; padding-bottom: $sm; }
-
-.#{$PREF}-card-header > div > p {
-  @extend .meta;
-
-  color: $gray-3;
-  margin-bottom: $xxs;
-}
-
-.#{$PREF}-card-header > div:last-of-type { @extend .flex-ac; }
-
-// ## CARD ACTION BUTTONS (ACCEPT/IGNORE)
-
-.#{$PREF}-card-action {
-  @extend .react-icon--lg;
-
-  > svg { @extend .react-icon--lg; }
-
-  &:first-of-type {
-    margin-right: $xxs;
-
-    > svg {
-      color: $green;
-
-      @include HOVER { color: hsl(150, 80%, 37%); }
-    }
-  }
-
-  &:last-of-type > svg {
-    color: $red;
-
-    @include HOVER { color: hsl(9, 80%, 59%); }
-  }
-}
-
-// ## CARD QUESTION
-
-.#{$PREF}-card-question { margin-bottom: $sm; }
-.#{$PREF}-card-question > p:first-of-type { margin-bottom: $xxs; }
-.#{$PREF}-card-question > p:last-of-type { color: $primary; }
-
-div > .#{$PREF}-card-question:last-of-type { margin-bottom: 0; }
-
-// ## EXPANDED CARD
-
-.#{$PREF}-expanded {
-  box-sizing: border-box;
-  max-height: inherit;
-  
-  &::-webkit-scrollbar { display: none; }
-}
-
-.#{$PREF}-expanded-header {
-  @extend .flex-acsb;
-
-  background-color: white;
-  position: sticky;
-  top: $md;
-  z-index: 2;
-}
-
-.#{$PREF}-expanded-question > p:first-of-type { @extend .body--bold; }
-.#{$PREF}-expanded-question:last-of-type { margin-bottom: $md !important; }

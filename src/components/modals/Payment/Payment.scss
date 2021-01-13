@@ -1,0 +1,38 @@
+$PREF: 'mo-payment';
+
+.#{$PREF}-button {
+  bottom: $md;
+  position: sticky;
+
+  > svg { @extend .react-icon; color: white; margin-right: $xs; }
+  &:disabled > svg { color: $gray-3; }
+
+  &--continue > svg { margin: 0 0 0 $xs; }
+}
+
+// ## BILLING CONTAINER - Row that contains the City, State, and Zip Code.
+
+.#{$PREF}-billing-ctr > div:not(:last-child) { margin-right: $sm; }
+
+.#{$PREF}-billing-ctr > .c-form-item,
+.#{$PREF} > .c-modal-content-ctr > .c-form-item, 
+.#{$PREF}-item {
+  margin-bottom: $md;
+  margin-top: 0;
+
+  > h4:first-child,
+  > .c-form-label { margin-bottom: $xs; }
+
+  > div.c-misc-input {
+    margin-bottom: $md;
+
+    // Needed to format the Stripe card element card correctly.
+    > .__PrivateStripeElement { width: 100%; }
+  }
+}
+
+.#{$PREF}-billing-ctr > .c-form-item { margin-bottom: 0; margin-top: 0; }
+
+.#{$PREF} > .c-modal-content-ctr { margin-bottom: $md; }
+
+.#{$PREF}-item--type > div { @extend .flex-acsb; }

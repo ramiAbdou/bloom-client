@@ -5,7 +5,7 @@ import { ICommunity, IQuestion } from '@store/entities';
 export interface ApplyForMembershipArgs {
   data: { questionId: string; value: any }[];
   email: string;
-  encodedUrlName: string;
+  urlName: string;
 }
 
 export const APPLY_FOR_MEMBERSHIP = mutation({
@@ -14,7 +14,7 @@ export const APPLY_FOR_MEMBERSHIP = mutation({
   variables: {
     data: { type: '[MemberDataInput!]!' },
     email: { required: true },
-    encodedUrlName: { required: true }
+    urlName: { required: true }
   }
 }).query;
 
@@ -25,7 +25,7 @@ export interface GetApplicationResult extends ICommunity {
 export const GET_APPLICATION = query({
   fields: [
     'autoAccept',
-    'encodedUrlName',
+    'urlName',
     'id',
     'logoUrl',
     'name',
@@ -49,5 +49,5 @@ export const GET_APPLICATION = query({
     }
   ],
   operation: 'getApplication',
-  variables: { encodedUrlName: { required: true } }
+  variables: { urlName: { required: true } }
 }).query;

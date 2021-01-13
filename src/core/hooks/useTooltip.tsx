@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 
-type TooltipPosition = 'middle' | 'right';
+export type TooltipPosition = 'left' | 'middle' | 'right';
 
 export default (
   tooltip: string,
@@ -20,7 +20,8 @@ export default (
 
     if (position === 'middle') {
       element.classList.add('tooltip--middle');
-    } else element.classList.add('tooltip--right');
+    } else if (position === 'right') element.classList.add('tooltip--right');
+    else if (position === 'left') element.classList.add('tooltip--left');
   }, [ref]);
 
   return ref;

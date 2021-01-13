@@ -10,9 +10,14 @@
     "moduleResolution": "node",
     "outDir": "./dist/",
     "paths": {
-      "@components/*": ["core/components/*"],
+      "@atoms/*": ["components/atoms/*"],
       "@constants": ["util/constants.ts"],
+      "@containers/*": ["components/containers/*"],
       "@hooks/*": ["core/hooks/*"],
+      "@images/*": ["components/images/*"],
+      "@modals/*": ["components/modals/*"],
+      "@molecules/*": ["components/molecules/*"],
+      "@organisms/*": ["components/organisms/*"],
       "@scenes/*": ["scenes/*"],
       "@store/*": ["core/store/*"],
       "@util/*": ["util/*"]
@@ -25,8 +30,9 @@
   "include": [
     "./src/**/*",
     "./server.ts",
+    "webpack.config.ts",
     "webpack.local.config.ts",
-    "webpack.prod.config.ts"
+    "webpack.prod.config.ts",
   ],
   "exclude": ["./node_modules"]
 }

@@ -1,8 +1,6 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-import { LoadingModel, loadingModel } from '@store/Loading.store';
-
-export interface DirectoryModel extends LoadingModel {
+export interface DirectoryModel {
   numMembers: number;
   searchString: string;
   setNumMembers: Action<DirectoryModel, number>;
@@ -10,7 +8,6 @@ export interface DirectoryModel extends LoadingModel {
 }
 
 const model: DirectoryModel = {
-  ...loadingModel,
   numMembers: 0,
   searchString: '',
   setNumMembers: action((state, numMembers: number) => ({

@@ -1,0 +1,88 @@
+$PREF: 'c-modal';
+
+// ## MODAL BACKGROUND (DARK OPACITY)
+
+// We don't set the opacity since the framer-motion animation takes care of
+// that for us.
+.#{$PREF}-bg {
+  @extend .full-screen;
+
+  backdrop-filter: blur(2px);
+  background-color: hsla($primary-hue, 5%, 20%, 0.75);
+  z-index: 1000;
+}
+
+// ## MODAL CONTAINER
+
+.#{$PREF}-ctr {
+  background-color: white;
+  bottom: calc(-50vh + 50%);
+  box-sizing: border-box;
+  height: fit-content;
+  left: calc(-50vw + 50%);
+  margin: auto;
+  overflow: scroll;
+  position: fixed;
+  right: calc(-50vw + 50%);
+  top: calc(-50vh + 50%);
+  z-index: 1001;
+
+  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
+  @include M {
+    border-radius: $sm $sm 0 0;
+    bottom: 0;
+    margin: 0;
+    max-height: calc(100vh - 56px);
+    min-height: 1px;
+    min-width: 100vw;
+    top: 100%;
+    width: 100vw;
+  }
+}
+
+.#{$PREF}-cancel {
+  position: fixed;
+  right: $md;
+  top: $md;
+  z-index: 1002;
+
+  @include M {
+    right: $sm;
+    top: $sm;
+
+    > svg { @include SIZE($md); }
+  }
+
+  > svg { @extend .react-icon--xl; color: $gray-5; }
+}
+
+// ## MODAL CONTENT
+
+.#{$PREF} { max-height: inherit; padding: $md; }
+
+.#{$PREF},
+.#{$PREF} > form {
+  // All modals will have an h1 tag, which will be standardized everywhere.
+  > h1,
+  > .t-loading-header > h1 { color: $primary; }
+
+  > h1,
+  > .t-loading-header { margin-bottom: $sm; position: sticky; top: $md; }
+  > p:first-of-type { margin-bottom: $md; }
+  > .c-misc-question-ctr { max-height: 70vh; overflow: scroll; }
+}
+
+// ## CONFIRMATION MODAL
+
+.#{$PREF}--confirmation > p { margin-bottom: $md; }
+.#{$PREF}--confirmation > div { @extend .flex-ac; }
+.#{$PREF}--confirmation > div > button:first-of-type { margin-right: $xs; }
+
+// ## MODAL CONTENT CONTAINER
+
+.#{$PREF}-content-ctr {
+  max-height: 70vh;
+  overflow: scroll;
+
+  ~ .t-action-ctr--equal { margin-top: $md; }
+}

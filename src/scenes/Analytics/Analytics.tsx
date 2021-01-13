@@ -1,63 +1,69 @@
-import React, { useEffect } from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import React from 'react';
+import {
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useRouteMatch
+} from 'react-router-dom';
 
+import { LoadingProps } from '@constants';
+import { MainHeader } from '@containers/Main';
+import MainContent from '@containers/Main/MainContent';
+import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import useQuery from '@hooks/useQuery';
-import { GET_DATABASE, GetDatabaseResult } from '@scenes/Database/Database.gql';
-import Loading from '@store/Loading.store';
+import { GET_DATABASE } from '@scenes/Database/Database.gql';
+import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
-import { useStoreActions } from '@store/Store';
-import AnalyticsHeader from './components/Header';
-import DuesAnalytics from './frames/Dues/Dues';
-import EventsAnalytics from './frames/Events/Events';
-import MembersAnalytics from './frames/Members/Members';
+import { useStoreState } from '@store/Store';
+import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
+import EventsAnalytics from './EventsAnalytics/Events';
+import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
 
-const useFetchDatabase = () => {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const currentLoading = Loading.useStoreState((store) => store.loading);
-  const setLoading = Loading.useStoreActions((store) => store.setLoading);
+const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
+  const canCollectDues = useStoreState(({ db }) => db.canCollectDues);
 
-  const { data: community, loading } = useQuery<GetDatabaseResult>({
-    name: 'getDatabase',
-    query: GET_DATABASE
-  });
+  const { push } = useHistory();
 
-  useEffect(() => {
-    // Since we need to use the loading state in the header, we set the
-    // update the context state accordingly.
-    if (loading !== currentLoading) setLoading(loading);
-  }, [loading]);
+  const duesOptions: NavigationOptionProps[] = canCollectDues
+    ? [{ onClick: () => push('dues'), pathname: 'dues', title: 'Dues' }]
+    : [];
 
-  useEffect(() => {
-    if (!community) return;
-    mergeEntities({ data: community, schema: Schema.COMMUNITY });
-  }, [community]);
-};
-
-const AnalyticsContent = () => {
-  const loading = Loading.useStoreState((store) => store.loading);
-  const { url } = useRouteMatch();
-  useFetchDatabase();
+  const options: NavigationOptionProps[] = [
+    { onClick: () => push('members'), pathname: 'members', title: 'Members' },
+    ...duesOptions,
+    { onClick: () => push('events'), pathname: 'events', title: 'Events' }
+  ];
 
   return (
-    <>
-      <AnalyticsHeader />
-
-      {!loading && (
-        <div className="s-home-content">
-          <Switch>
-            <Route component={DuesAnalytics} path={`${url}/dues`} />
-            <Route component={EventsAnalytics} path={`${url}/events`} />
-            <Route component={MembersAnalytics} path={`${url}/members`} />
-            <Redirect to={`${url}/members`} />
-          </Switch>
-        </div>
-      )}
-    </>
+    <MainHeader
+      className="s-analytics-header"
+      loading={loading}
+      options={options}
+      title="Analytics"
+    />
   );
 };
 
-export default () => (
-  <Loading.Provider>
-    <AnalyticsContent />
-  </Loading.Provider>
-);
+const Analytics: React.FC = () => {
+  const { url } = useRouteMatch();
+
+  const { loading } = useQuery<ICommunity>({
+    name: 'getDatabase',
+    query: GET_DATABASE,
+    schema: Schema.COMMUNITY
+  });
+
+  return (
+    <MainContent Header={AnalyticsHeader} loading={loading}>
+      <Switch>
+        <Route component={DuesAnalytics} path={`${url}/dues`} />
+        <Route component={EventsAnalytics} path={`${url}/events`} />
+        <Route component={MembersAnalytics} path={`${url}/members`} />
+        <Redirect to={`${url}/members`} />
+      </Switch>
+    </MainContent>
+  );
+};
+
+export default Analytics;

@@ -1,0 +1,70 @@
+$PREF: 't-main';
+
+// ## HEADER - Makes the header consistent across each page. Mainly for loading
+// purposes. However, each page should implement their own positioning whether
+// it is grid-based or flex-based.
+
+.#{$PREF}-header {
+  background-color: $gray-6;
+  padding: $md;
+  position: sticky;
+  top: 0;
+  z-index: 11;
+}
+
+.#{$PREF}-header > div:first-of-type {
+  @extend .flex-ac;
+
+  > h1 { margin-right: $sm; }
+
+  > button:first-of-type > svg {
+    @extend .react-icon--xl;
+
+    border-radius: 50%;
+    margin-right: $sm;
+    padding: 2px;
+
+    @include HOVER {
+      background-color: rgba($color: $primary-hex, $alpha: 0.15);
+    }
+  }
+}
+
+// ## MAIN CONTENT
+
+.#{$PREF}-content { margin: 0 $md; padding: 2px 2px $xl 2px; }
+
+// ## MAIN CONTENT
+
+.#{$PREF}-section {
+  > .t-loading-header { margin-bottom: $sm; }
+}
+
+// ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but
+// not border-left, so we avoid stacking pixels (1px * 2 = 2px). However,
+// the first button will have a border-left.
+
+.#{$PREF}-multi-ctr { @extend .flex-ac; }
+
+.#{$PREF}-multi {
+  @extend .meta--lg;
+  
+  background-color: inherit;
+  border: 1px $primary solid;
+  border-left: none;
+  border-radius: 0;
+  color: $primary;
+  padding: $xs $sm;
+  
+  &--active { background-color: $primary; color: white; }
+
+  &:first-child {
+    border-left: 1px $primary solid;
+    border-radius: $xxs 0 0 $xxs;
+  }
+
+  &:last-child { border-radius: 0 $xxs $xxs 0; }
+
+  // Disables the scaling transition that all buttons typically have.
+  &:active { transform: none; transition: none; }
+}

@@ -1,0 +1,88 @@
+$PREF: 'c-table';
+
+// ## TABLE CONTAINER
+
+##{$PREF}-ctr {
+  background-color: white;
+  border: 1px $gray-5 solid;
+  border-radius: $xs;
+  max-height: 70vh;
+  overflow: scroll;
+  position: relative;
+}
+
+// ## TABLE CONTENT
+
+.#{$PREF} {
+  border-collapse: collapse;
+  border-spacing: $xs $xxs;
+  height: fit-content;
+  min-width: 100%;
+  transform: rotateX(0deg);
+  width: max-content;
+}
+
+// ## TABLE CELL (BOTH TH AND TD)
+
+.#{$PREF}-cell {
+  left: 0;
+  margin: 0;
+  padding: $sm $md $sm $sm;
+  position: sticky;
+  text-align: left;
+
+  &--sm { max-width: $xxl * 3.25; width: $xxl * 3.25; }
+  &--md { max-width: $xxl * 4; width: $xxl * 4; }
+  &--lg { max-width: $xxl * 5; width: $xxl * 5; }
+  &--relative { position: relative; }
+
+  &:first-child > div { @extend .flex-ac; max-width: 100%; }
+  &:last-child { width: -webkit-fill-available; }
+}
+
+// ## SELECT CHECKBOX - The HTML applied the .c-misc-checkbox class, we don't
+// extend it in here for overriding purposes of the margin and background-color.
+
+.#{$PREF}-select { background-color: inherit; margin: 0 $lg 0 0; }
+
+// ## SELECTED BANNER
+
+.#{$PREF}-banner {
+  @extend .flex-acc;
+  @extend .shadow--1;
+
+  background-color: white;
+  border-radius: $xs;
+  margin-bottom: $xs;
+  padding: $xs 0;
+}
+
+.#{$PREF}-banner > p { margin-right: $sm; }
+.#{$PREF}-banner > p > span { @extend .body--bold; }
+
+// ## COLUMN PICKER
+
+// Added a div before the name to make it take higher precedence.
+div.#{$PREF}-col-picker { padding: $sm; }
+.#{$PREF}-col-picker > form { margin-bottom: $sm; }
+.#{$PREF}-col-picker > button {
+  @extend .flex-ac;
+
+  justify-content: left;
+  padding: $xs 0;
+  width: 100%;
+
+  @include PRIMARY_HOVER;
+}
+
+.#{$PREF}-col-picker > button:first-of-type { margin-bottom: $xs; }
+
+.#{$PREF}-col-picker > button > svg { margin-right: $xs; }
+
+.#{$PREF}-col-picker-button--active > svg,
+.#{$PREF}-col-picker-button--active > p { color: $primary; }
+
+.#{$PREF}-col-picker > form > .c-form-item {
+  margin-bottom: $sm;
+  margin-top: 0;
+}

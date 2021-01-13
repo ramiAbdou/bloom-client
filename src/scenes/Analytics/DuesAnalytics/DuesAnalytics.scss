@@ -1,0 +1,10 @@
+$PREF: 's-analytics-dues';
+
+.#{$PREF} {
+  > div { margin-bottom: $md; }
+  > div:first-child { @extend .flex-ac; }
+}
+
+.#{$PREF}-history {
+  > .c-misc-search { margin-bottom: $sm; }
+}

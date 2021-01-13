@@ -1,0 +1,12 @@
+$PREF: 't-misc-card';
+
+// ## CARD
+
+.#{$PREF} {
+  @extend .flex-col;
+  @extend .shadow--1;
+
+  background-color: white;
+  border-radius: $xs;
+  padding: $sm;
+}

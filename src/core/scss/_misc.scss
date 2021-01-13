@@ -26,10 +26,15 @@
 
 .react-icon {
   color: $gray-1;
-  height: $md;
-  width: $md;
+  height: $sl;
+  min-height: $sl;
+  min-width: $sl;
+  width: $sl;
   
-  &--lg { height: 32px; width: 32px; }
+  &--xs { height: $ss; min-height: $ss; min-width: $ss; width: $ss; }
+  &--sm { height: $sm; min-height: $sm; min-width: $sm; width: $sm; }
+  &--lg { height: $md; min-height: $md; min-width: $md; width: $md; }
+  &--xl { height: 32px; min-height: 32px; min-width: 32px; width: 32px; }
 }
 
 // ## TOOLTIP - All tooltips show up below
@@ -58,7 +63,7 @@
     top: 100%;
     visibility: hidden;
     width: max-content;
-    z-index: 100;
+    z-index: 1010;
   }
 
   &:active {
@@ -68,6 +73,7 @@
   &--bottom { &::before { margin-top: $xxs; } }
   &--middle { &::before { left: 50%; transform: translateX(-50%); } }
   &--right { &::before { left: initial; right: 0; transform: initial; } }
+  &--left { &::before { left: 0; } }
 }
 
 // ## HOVER STATE (DILUTED PRIMARY COLOR)
@@ -87,24 +93,13 @@
   @include PRIMARY_HOVER;
 }
 
-// ## CARD
-
-.card {
-  @extend .flex-col;
-  @extend .shadow--1;
-
-  background-color: white;
-  border-radius: $sm;
-  padding: $sm $sm $md $sm;
-}
-
 // ## TEXT OVERFLOW - Can specify how many lines we can allow the text to
 // overflow into.
 
-@mixin OVERFLOW_ELLIPSES($lines: 1) {
+.overflow-ellipses {
   -webkit-box-orient: vertical;
   display: -webkit-box;
-  -webkit-line-clamp: $lines;
+  -webkit-line-clamp: 1;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -121,4 +116,10 @@
 // Disables scrollbar display for body and div elements. Not much scrolling
 // needed other than the div.
 body::-webkit-scrollbar,
-div::-webkit-scrollbar { display: none; }
+div::-webkit-scrollbar,
+section::-webkit-scrollbar { display: none; }
+
+// Pushes the home content to the right due to the fixed sidebar.
+.home-content {
+  @include D { margin-left: ($xxl * 5.5); max-width: calc(100% - 330px); }
+}
