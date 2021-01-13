@@ -39,11 +39,22 @@ const ProfilePersonalEmail: React.FC = () => {
   return <MailTo email={email} />;
 };
 
+const ProfilePersonalBio: React.FC = () => {
+  const bio = useStoreState(({ db }) => db.member.bio);
+  if (!bio) return null;
+  return <p>{bio}</p>;
+};
+
 const ProfilePersonalOnboardingContainer: React.FC = () => {
+  const bio = useStoreState(({ db }) => db.member.bio);
+  const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
+
+  if (bio && pictureUrl) return null;
+
   return (
     <Row gap="sm">
-      <Button primary>+ Add Profile Picture</Button>
-      <Button primary>+ Add Bio</Button>
+      {!pictureUrl && <Button primary>+ Add Profile Picture</Button>}
+      {!bio && <Button primary>+ Add Bio</Button>}
     </Row>
   );
 };
@@ -54,6 +65,7 @@ const ProfilePersonalMainContent: React.FC = () => {
       <ProfilePersonalHeader />
       <ProfilePersonalTagList />
       <ProfilePersonalEmail />
+      <ProfilePersonalBio />
       <ProfilePersonalOnboardingContainer />
     </div>
   );

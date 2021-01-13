@@ -22,13 +22,15 @@ $PREF: 's-profile';
 
 // .#{$PREF}-card {}
 
+.#{$PREF}-card--personal,
+.#{$PREF}-card--membership { grid-column-end: span 8; }
+
 // ## PROFILE PERSONAL CARD
 
 .#{$PREF}-card--personal {
   @extend .flex;
 
   flex-direction: row;
-  grid-column-end: span 8;
 
   > div:first-child { margin-right: $md; }
 }
@@ -41,8 +43,15 @@ $PREF: 's-profile';
   > .t-row--gap-sm { margin-bottom: $xs; }
 }
 
+// ## PROFILE MEMBERSHIP CARD
+
+.#{$PREF}-card--membership {
+  > div:first-child { margin-bottom: $sm; }
+}
+
 // ## PROFILE SOCIAL CARD
 
 .#{$PREF}-card--social {
   grid-column-end: span 4;
+  height: fit-content;
 }
