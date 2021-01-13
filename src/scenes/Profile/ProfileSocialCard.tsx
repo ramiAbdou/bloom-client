@@ -70,7 +70,7 @@ const ProfileSocialMediaValue: React.FC<ProfileSocialMediaValueProps> = ({
       {isInstagram && <IoLogoInstagram />}
       {isLinkedIn && <IoLogoLinkedin />}
       {isTwitter && <IoLogoTwitter />}
-      <p className="meta">{url}</p>
+      <p>{url}</p>
     </Row>
   );
 };

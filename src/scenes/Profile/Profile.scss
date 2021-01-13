@@ -10,7 +10,20 @@ $PREF: 's-profile';
   padding-top: $md;
   row-gap: $sm;
 
+  @include LTE(1300) { display: block; }
+  @include T { display: grid; }
+  @include LTE(900) { display: block; }
+
   > div:first-child { grid-column-end: span 8; }
+  > div:first-child > .#{$PREF}-card--social {
+    display: none;
+
+    @include LTE(1300) { display: flex; margin-bottom: $sm; }
+  }
+
+  > .#{$PREF}-card--social {
+    @include LTE(1300) { display: none; }
+  }
 }
 
 // ## PROFILE EDIT BUTTON
@@ -66,6 +79,7 @@ $PREF: 's-profile';
 .#{$PREF}-card--social-logo {
   &:not(:last-child) { margin-bottom: $sm; }
   > svg { @extend .react-icon--lg; margin-right: $xs; }
+  > p { @extend .meta; @extend .overflow-ellipses; }
 
   &--facebook > svg { color: #1877f2; }
   &--linkedin > svg { color: #0a66c2; }

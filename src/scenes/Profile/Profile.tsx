@@ -11,6 +11,7 @@ const ProfileContent: React.FC = () => (
   <MainContent className="s-profile" loading={false}>
     <div>
       <ProfilePersonalCard />
+      <ProfileSocialCard />
       <ProfileMembershipCard />
     </div>
 
