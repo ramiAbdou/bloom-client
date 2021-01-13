@@ -45,7 +45,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       <div>
         {backButton && <MainHeaderBackButton />}
         <h1>{title}</h1>
-        {loading === false && headerTag && <HeaderTag>{HeaderTag}</HeaderTag>}
+        {loading === false && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
         <Spinner dark loading={loading} />
       </div>
 

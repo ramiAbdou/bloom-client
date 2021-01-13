@@ -31,7 +31,14 @@ $PREF: 's-profile';
   grid-column-end: span 8;
 
   > div:first-child { margin-right: $md; }
-  > div:last-child { flex-grow: 1; }
+}
+
+.#{$PREF}-card--personal-main {
+  flex-grow: 1;
+
+  > div:first-child { margin-bottom: $xxs; }
+  > .m-misc-mail-to { margin-bottom: $md; }
+  > .t-row--gap-sm { margin-bottom: $xs; }
 }
 
 // ## PROFILE SOCIAL CARD

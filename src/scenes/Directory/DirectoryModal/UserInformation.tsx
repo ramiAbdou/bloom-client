@@ -1,8 +1,8 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
-import { IoMail } from 'react-icons/io5';
 
 import ProfilePicture from '@molecules/ProfilePicture';
+import MailTo from '../../../components/molecules/MailTo';
 import MemberCard from '../DirectoryCard/DirectoryCard.store';
 import SocialMediaContainer from './SocialMedia';
 
@@ -43,13 +43,7 @@ const MemberCurrentLocation = () => {
 const MemberEmail = () => {
   const email = MemberCard.useStoreState((store) => store?.email);
   if (!email) return null;
-
-  return (
-    <a className="s-directory-modal-email" href={`mailto:${email}`}>
-      <IoMail />
-      <p>{email}</p>
-    </a>
-  );
+  return <MailTo email={email} />;
 };
 
 const MemberBio = () => {
