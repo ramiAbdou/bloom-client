@@ -54,36 +54,44 @@ const ProfilePersonalBio: React.FC = () => {
 const ProfilePersonalOnboardingContainer: React.FC = () => {
   const bio = useStoreState(({ db }) => db.member.bio);
   const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   if (bio && pictureUrl) return null;
 
+  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
+
   return (
     <Row gap="sm">
-      {!pictureUrl && <Button primary>+ Add Profile Picture</Button>}
-      {!bio && <Button primary>+ Add Bio</Button>}
+      {!pictureUrl && (
+        <Button primary onClick={onClick}>
+          + Add Profile Picture
+        </Button>
+      )}
+
+      {!bio && (
+        <Button primary onClick={onClick}>
+          + Add Bio
+        </Button>
+      )}
     </Row>
   );
 };
 
-const ProfilePersonalMainContent: React.FC = () => {
-  return (
-    <div className="s-profile-card--personal-main">
-      <ProfilePersonalHeader />
-      <ProfilePersonalTagList />
-      <ProfilePersonalEmail />
-      <ProfilePersonalBio />
-      <ProfilePersonalOnboardingContainer />
-    </div>
-  );
-};
+const ProfilePersonalMainContent: React.FC = () => (
+  <div className="s-profile-card--personal-main">
+    <ProfilePersonalHeader />
+    <ProfilePersonalTagList />
+    <ProfilePersonalEmail />
+    <ProfilePersonalBio />
+    <ProfilePersonalOnboardingContainer />
+  </div>
+);
 
-const ProfilePersonalCard: React.FC = () => {
-  return (
-    <Card className="s-profile-card--personal">
-      <ProfilePicture circle fontSize={36} size={104} />
-      <ProfilePersonalMainContent />
-    </Card>
-  );
-};
+const ProfilePersonalCard: React.FC = () => (
+  <Card className="s-profile-card--personal">
+    <ProfilePicture circle fontSize={36} size={104} />
+    <ProfilePersonalMainContent />
+  </Card>
+);
 
 export default ProfilePersonalCard;
