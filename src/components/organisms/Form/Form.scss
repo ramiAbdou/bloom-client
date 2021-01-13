@@ -2,7 +2,7 @@ $PREF: 'c-form';
 
 // ## GENERAL
 
-.#{$PREF}-item:not(:last-child) { margin-bottom: $md; }
+.#{$PREF}-item { margin-bottom: $md; }
 
 .#{$PREF}-desc {
   color: $gray-2;
@@ -27,6 +27,12 @@ $PREF: 'c-form';
   > h4 { color: $gray-2; }
 
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
+}
+
+// ## SUBMIT BUTTON
+
+.#{$PREF}-submit {
+  &--sticky { bottom: $md; position: sticky; }
 }
 
 // ## INVISIBLE SUBMIT

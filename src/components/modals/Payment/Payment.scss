@@ -1,9 +1,6 @@
 $PREF: 'mo-payment';
 
 .#{$PREF}-button {
-  bottom: $md;
-  position: sticky;
-
   > svg { @extend .react-icon; color: white; margin-right: $xs; }
   &:disabled > svg { color: $gray-3; }
 
@@ -32,7 +29,4 @@ $PREF: 'mo-payment';
 }
 
 .#{$PREF}-billing-ctr > .c-form-item { margin-bottom: 0; margin-top: 0; }
-
-.#{$PREF} > .c-modal-content-ctr { margin-bottom: $md; }
-
 .#{$PREF}-item--type > div { @extend .flex-acsb; }

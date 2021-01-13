@@ -17,19 +17,15 @@ const ProfilePersonalModal: React.FC = () => {
     <Modal id={ModalType.EDIT_PERSONAL_INFORMATION}>
       <h1>Edit Personal Information</h1>
 
-      <ModalContentContainer>
-        <Form>
+      <Form>
+        <ModalContentContainer>
           <FormItem category="FIRST_NAME" type="SHORT_TEXT" value={firstName} />
           <FormItem category="LAST_NAME" type="SHORT_TEXT" value={lastName} />
           <FormItem id="bio" title="Bio" type="LONG_TEXT" value={bio} />
-          <FormItem id="bio2" title="Bio" type="LONG_TEXT" value={bio} />
-          <FormItem id="bio3" title="Bio" type="LONG_TEXT" value={bio} />
-          <FormItem id="bi4" title="Bio" type="LONG_TEXT" value={bio} />
-          <FormItem id="bi5" title="Bio" type="LONG_TEXT" value={bio} />
+        </ModalContentContainer>
 
-          <FormSubmitButton>Save</FormSubmitButton>
-        </Form>
-      </ModalContentContainer>
+        <FormSubmitButton stickToBottom>Save</FormSubmitButton>
+      </Form>
     </Modal>
   );
 };

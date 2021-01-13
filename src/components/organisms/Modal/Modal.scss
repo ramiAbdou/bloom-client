@@ -81,8 +81,10 @@ $PREF: 'c-modal';
 // ## MODAL CONTENT CONTAINER
 
 .#{$PREF}-content-ctr {
+  margin-bottom: $md;
   max-height: 70vh;
   overflow: scroll;
 
   ~ .t-action-ctr--equal { margin-top: $md; }
+  > .c-form-item:last-child { margin-bottom: 0; }
 }
