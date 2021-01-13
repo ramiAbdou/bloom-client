@@ -36,13 +36,13 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         }
 
         onSubmit({
-          items: validatedItems,
+          items,
           setErrorMessage: setError,
           setIsLoading
         });
       }
     },
-    [items]
+    [items, validateOnSubmit]
   );
 
   const css = cx({ 'c-form': true, [className]: className });

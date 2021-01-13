@@ -45,12 +45,18 @@ $PREF: 's-profile';
   margin-bottom: $sm;
 
   @include M { display: block; }
+  @include TD {
+    > div:first-child { margin-right: $md; }
+    > div:first-child > button { display: none; }
+  }
 
-  > div:first-child { margin-right: $md; }
+  > div:first-child { align-items: flex-start; }
 }
 
 .#{$PREF}-card--personal-main {
   flex-grow: 1;
+
+  @include M { > div:first-child > button { display: none; } }
 
   > div:first-child { margin-bottom: $xxs; }
   > .m-misc-mail-to { margin-bottom: $sm; }

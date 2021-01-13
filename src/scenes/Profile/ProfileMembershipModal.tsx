@@ -9,7 +9,7 @@ import Modal from '@organisms/Modal/Modal';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberData, IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import useUpdateUser from './useUpdateUser';
+import useUpdateMemberData from './useUpdateMemberData';
 
 const ProfileMembershipModal: React.FC = () => {
   const items = useStoreState(({ db }) => {
@@ -20,28 +20,30 @@ const ProfileMembershipModal: React.FC = () => {
       return byDataId[dataId];
     });
 
-    return memberData?.map(({ question: questionId, value }: IMemberData) => {
-      const question: IQuestion = byQuestionId[questionId];
+    return memberData?.map(
+      ({ id, question: questionId, value }: IMemberData) => {
+        const question: IQuestion = byQuestionId[questionId];
 
-      if (
-        question.type === 'MULTIPLE_CHOICE' &&
-        value &&
-        !Array.isArray(value)
-      ) {
-        value = value.split(',');
+        if (
+          question.type === 'MULTIPLE_CHOICE' &&
+          value &&
+          !Array.isArray(value)
+        ) {
+          value = value.split(',');
+        }
+
+        return { ...question, id, value };
       }
-
-      return { ...question, value };
-    });
+    );
   });
 
-  const updateUser = useUpdateUser();
+  const updateMemberData = useUpdateMemberData();
 
   return (
     <Modal id={ModalType.EDIT_MEMBERSHIP_INFORMATION}>
       <h1>Edit Membership Information</h1>
 
-      <Form onSubmit={updateUser}>
+      <Form onSubmit={updateMemberData}>
         <ModalContentContainer>
           {items?.map((item) => {
             return <FormItem key={item.id} {...item} />;

@@ -9,7 +9,7 @@ import useBreakpoint from '@hooks/useBreakpoint';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import MailTo from '../../components/molecules/MailTo';
-import ProfileCardHeader from './ProfileCardHeader';
+import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
   const fullName = useStoreState(({ db }) => {
@@ -88,12 +88,23 @@ const ProfilePersonalMainContent: React.FC = () => (
   </div>
 );
 
-const ProfilePersonalCard: React.FC = () => {
+const ProfilePersonalPictureRow: React.FC = () => {
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMobile = useBreakpoint() === 1;
+  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
 
   return (
-    <Card className="s-profile-card--personal">
+    <Row spaceBetween>
       <ProfilePicture circle fontSize={36} size={isMobile ? 84 : 104} />
+      <ProfileEditButton canEdit onEditClick={onClick} />
+    </Row>
+  );
+};
+
+const ProfilePersonalCard: React.FC = () => {
+  return (
+    <Card className="s-profile-card--personal">
+      <ProfilePersonalPictureRow />
       <ProfilePersonalMainContent />
     </Card>
   );

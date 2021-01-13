@@ -11,7 +11,7 @@ interface ProfileCardHeaderProps {
   title: string;
 }
 
-const ProfileEditButton: React.FC<
+export const ProfileEditButton: React.FC<
   Pick<ProfileCardHeaderProps, 'canEdit' | 'onEditClick'>
 > = ({ canEdit, onEditClick }) => {
   if (!canEdit) return null;

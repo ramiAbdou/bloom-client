@@ -1,6 +1,6 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IMember, IUser } from '@store/entities';
+import { IMember, IMemberData, IUser } from '@store/entities';
 
 // ## GET MEMBER DATA
 
@@ -32,6 +32,18 @@ export const GET_MEMBER_DATA = query({
   ],
   operation: 'getMember',
   variables: { populate: { required: false, type: '[String!]' } }
+}).query;
+
+// ## UPDATE MEMBER DATA
+
+export interface UpdateMemberDataArgs {
+  items: Pick<IMemberData, 'id' | 'value'>[];
+}
+
+export const UPDATE_MEMBER_DATA = mutation({
+  fields: ['id', 'value'],
+  operation: 'updateMemberData',
+  variables: { items: { required: true, type: '[MemberDataArgs!]' } }
 }).query;
 
 // ## UPDATE USER
