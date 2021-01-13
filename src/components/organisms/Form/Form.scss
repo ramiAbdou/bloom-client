@@ -2,7 +2,7 @@ $PREF: 'c-form';
 
 // ## GENERAL
 
-.#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
+.#{$PREF}-item:not(:last-child) { margin-bottom: $md; }
 
 .#{$PREF}-desc {
   color: $gray-2;

@@ -41,6 +41,8 @@ $PREF: 's-application';
   padding-bottom: $lg;
 
   @include RESP(width, 600px, 500px, 90%);
+
+  > .c-form-item { margin-bottom: $lg; }
 }
 
 // ## APPLICATION COMMUNITY ICON

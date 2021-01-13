@@ -2,10 +2,11 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import { HeaderTag } from '@atoms/Tags';
+import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import MailTo from '../../components/molecules/MailTo';
 import ProfileCardHeader from './ProfileCardHeader';
 
@@ -15,7 +16,12 @@ const ProfilePersonalHeader: React.FC = () => {
     return `${firstName} ${lastName}`;
   });
 
-  return <ProfileCardHeader canEdit h2 title={fullName} />;
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
+
+  return (
+    <ProfileCardHeader canEdit h2 title={fullName} onEditClick={onClick} />
+  );
 };
 
 const ProfilePersonalTagList: React.FC = () => {
