@@ -24,23 +24,31 @@ const ProfileSocialModal: React.FC = () => {
 
       <Form onSubmit={updateUser}>
         <ModalContentContainer>
-          <FormItem title="Twitter URL" type="SHORT_TEXT" value={twitterUrl} />
+          <FormItem
+            title="Twitter URL"
+            type="SHORT_TEXT"
+            validate="IS_URL"
+            value={twitterUrl}
+          />
 
           <FormItem
             title="LinkedIn URL"
             type="SHORT_TEXT"
+            validate="IS_URL"
             value={linkedInUrl}
           />
 
           <FormItem
             title="Facebook URL"
             type="SHORT_TEXT"
+            validate="IS_URL"
             value={facebookUrl}
           />
 
           <FormItem
             title="Instagram URL"
             type="SHORT_TEXT"
+            validate="IS_URL"
             value={instagramUrl}
           />
         </ModalContentContainer>

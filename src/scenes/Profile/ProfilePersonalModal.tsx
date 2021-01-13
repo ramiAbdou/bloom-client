@@ -24,6 +24,7 @@ const ProfilePersonalModal: React.FC = () => {
       <Form onSubmit={updateUser}>
         <ModalContentContainer>
           <FormItem
+            required
             category="FIRST_NAME"
             title="First Name"
             type="SHORT_TEXT"
@@ -31,6 +32,7 @@ const ProfilePersonalModal: React.FC = () => {
           />
 
           <FormItem
+            required
             category="LAST_NAME"
             title="Last Name"
             type="SHORT_TEXT"
