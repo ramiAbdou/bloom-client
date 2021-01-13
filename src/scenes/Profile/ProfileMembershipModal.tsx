@@ -7,13 +7,33 @@ import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
+import { IMemberData, IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import useUpdateUser from './useUpdateUser';
 
 const ProfileMembershipModal: React.FC = () => {
-  const bio = useStoreState(({ db }) => db.member.bio);
-  const firstName = useStoreState(({ db }) => db.user.firstName);
-  const lastName = useStoreState(({ db }) => db.user.lastName);
+  const items = useStoreState(({ db }) => {
+    const { byId: byDataId } = db.entities.data;
+    const { byId: byQuestionId } = db.entities.questions;
+
+    const memberData: IMemberData[] = db.member.data?.map((dataId: string) => {
+      return byDataId[dataId];
+    });
+
+    return memberData?.map(({ question: questionId, value }: IMemberData) => {
+      const question: IQuestion = byQuestionId[questionId];
+
+      if (
+        question.type === 'MULTIPLE_CHOICE' &&
+        value &&
+        !Array.isArray(value)
+      ) {
+        value = value.split(',');
+      }
+
+      return { ...question, value };
+    });
+  });
 
   const updateUser = useUpdateUser();
 
@@ -23,23 +43,9 @@ const ProfileMembershipModal: React.FC = () => {
 
       <Form onSubmit={updateUser}>
         <ModalContentContainer>
-          <FormItem
-            required
-            category="FIRST_NAME"
-            title="First Name"
-            type="SHORT_TEXT"
-            value={firstName}
-          />
-
-          <FormItem
-            required
-            category="LAST_NAME"
-            title="Last Name"
-            type="SHORT_TEXT"
-            value={lastName}
-          />
-
-          <FormItem id="bio" title="Bio" type="LONG_TEXT" value={bio} />
+          {items?.map((item) => {
+            return <FormItem key={item.id} {...item} />;
+          })}
         </ModalContentContainer>
 
         <FormErrorMessage />

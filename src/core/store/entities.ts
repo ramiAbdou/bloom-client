@@ -54,7 +54,7 @@ export interface IMember {
 export interface IMemberData {
   id: IdString;
   question: IdString;
-  value: string;
+  value: string | string[];
 }
 
 export interface IMemberPayment {

@@ -39,8 +39,8 @@ export const GET_APPLICATION = query({
             'category',
             'description',
             'id',
-            'required',
             'options',
+            'required',
             'title',
             'type'
           ]

@@ -19,6 +19,7 @@ export const GET_MEMBER_DATA = query({
           question: [
             'id',
             'category',
+            'description',
             'onlyInApplication',
             'options',
             'required',
