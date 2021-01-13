@@ -1,6 +1,5 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
-import validator from 'validator';
 
 import Button from '@atoms/Button';
 import { IdProps } from '@constants';
@@ -51,7 +50,7 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
           id={`${id}=EMAIL`}
           placeholder="Email"
           type="SHORT_TEXT"
-          validate={(value: string) => validator.isEmail(value)}
+          validate="IS_EMAIL"
         />
 
         {isOwner && !admin && (

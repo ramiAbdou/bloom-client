@@ -23,11 +23,13 @@ export type FormQuestion = {
   type: QuestionType;
 };
 
+export type FormValidate = 'IS_EMAIL' | 'IS_URL';
+
 export interface FormItemData extends Partial<FormQuestion> {
   errorMessage?: string;
   placeholder?: string;
   value?: any;
-  validate?: (value: string) => any;
+  validate?: FormValidate;
 }
 
 // FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,

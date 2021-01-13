@@ -23,8 +23,20 @@ const ProfilePersonalModal: React.FC = () => {
 
       <Form onSubmit={updateUser}>
         <ModalContentContainer>
-          <FormItem category="FIRST_NAME" type="SHORT_TEXT" value={firstName} />
-          <FormItem category="LAST_NAME" type="SHORT_TEXT" value={lastName} />
+          <FormItem
+            category="FIRST_NAME"
+            title="First Name"
+            type="SHORT_TEXT"
+            value={firstName}
+          />
+
+          <FormItem
+            category="LAST_NAME"
+            title="Last Name"
+            type="SHORT_TEXT"
+            value={lastName}
+          />
+
           <FormItem id="bio" title="Bio" type="LONG_TEXT" value={bio} />
         </ModalContentContainer>
 

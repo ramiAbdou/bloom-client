@@ -21,15 +21,35 @@ const useUpdateUser = (): OnFormSubmit => {
   }: OnFormSubmitArgs) => {
     setIsLoading(true);
 
+    const bio = items.find(({ id }) => id === 'bio')?.value;
+
+    const facebookUrl = items.find(({ title }) => title === 'Facebook URL')
+      ?.value;
+
     const firstName = items.find(({ category }) => category === 'FIRST_NAME')
+      ?.value;
+
+    const instagramUrl = items.find(({ title }) => title === 'Instagram URL')
       ?.value;
 
     const lastName = items.find(({ category }) => category === 'LAST_NAME')
       ?.value;
 
-    const bio = items.find(({ id }) => id === 'bio')?.value;
+    const linkedInUrl = items.find(({ title }) => title === 'LinkedIn URL')
+      ?.value;
 
-    const { error } = await updateUser({ bio, firstName, lastName });
+    const twitterUrl = items.find(({ title }) => title === 'Twitter URL')
+      ?.value;
+
+    const { error } = await updateUser({
+      bio,
+      facebookUrl,
+      firstName,
+      instagramUrl,
+      lastName,
+      linkedInUrl,
+      twitterUrl
+    });
 
     if (error) {
       setIsLoading(false);

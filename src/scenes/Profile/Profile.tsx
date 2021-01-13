@@ -5,6 +5,7 @@ import ProfileMembershipCard from './ProfileMembershipCard';
 import ProfilePersonalCard from './ProfilePersonalCard';
 import ProfilePersonalModal from './ProfilePersonalModal';
 import ProfileSocialCard from './ProfileSocialCard';
+import ProfileSocialModal from './ProfileSocialModal';
 
 const ProfileContent: React.FC = () => (
   <MainContent className="s-profile" loading={false}>
@@ -18,6 +19,7 @@ const ProfileModals: React.FC = () => {
   return (
     <>
       <ProfilePersonalModal />
+      <ProfileSocialModal />
     </>
   );
 };

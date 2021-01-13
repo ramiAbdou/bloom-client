@@ -23,16 +23,6 @@ const FormItem: React.FC<FormItemProps> = ({
 }: FormItemProps) => {
   const setItem = Form.useStoreActions((store) => store.setItem);
 
-  if (category === 'FIRST_NAME') {
-    title = 'First Name';
-    type = 'SHORT_TEXT';
-  }
-
-  if (category === 'LAST_NAME') {
-    title = 'Last Name';
-    type = 'SHORT_TEXT';
-  }
-
   useEffect(() => {
     const emptyValue: string | string[] = takeFirst([
       [type === 'MULTIPLE_SELECT', []],

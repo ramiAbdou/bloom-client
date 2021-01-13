@@ -5,6 +5,7 @@ import {
   computed,
   createContextStore
 } from 'easy-peasy';
+import validator from 'validator';
 
 import { FormItemData } from './Form.types';
 
@@ -44,7 +45,12 @@ export const formModel: FormModel = {
     return (
       !!items?.length &&
       items.every(({ required, value, validate }: FormItemData) => {
-        return (!required || !!value) && (!validate || validate(value));
+        if (required && !value) return false;
+
+        if (validate === 'IS_EMAIL') return validator.isEmail(value);
+        if (validate === 'IS_URL') return validator.isURL(value);
+
+        return true;
       })
     );
   }),

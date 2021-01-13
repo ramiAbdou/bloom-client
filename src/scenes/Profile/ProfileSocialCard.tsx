@@ -1,8 +1,9 @@
 import React from 'react';
 
 import Button from '@atoms/Button';
+import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import socialMedia from './images/social-media.svg';
 import ProfileCardHeader from './ProfileCardHeader';
 
@@ -11,6 +12,9 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
     const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = db.user;
     return !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
   });
+
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const onClick = () => showModal(ModalType.EDIT_SOCIAL_MEDIA);
 
   if (isSocialLinked) return null;
 
@@ -22,7 +26,9 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
         src={socialMedia}
       />
 
-      <Button primary>+ Link Social Media</Button>
+      <Button primary onClick={onClick}>
+        + Link Social Media
+      </Button>
     </>
   );
 };
