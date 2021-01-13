@@ -32,10 +32,12 @@ const ProfileMembershipContent: React.FC = () => {
       return byDataId[dataId];
     });
 
-    return memberData?.map(({ question: questionId, value }: IMemberData) => {
-      const { title, type }: IQuestion = byQuestionId[questionId];
-      return { title, type, value };
-    });
+    return memberData
+      ?.filter(({ question }) => !byQuestionId[question]?.onlyInApplication)
+      .map(({ question: questionId, value }: IMemberData) => {
+        const { title, type }: IQuestion = byQuestionId[questionId];
+        return { title, type, value };
+      });
   });
 
   return <QuestionValueList items={items} />;

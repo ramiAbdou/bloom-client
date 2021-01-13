@@ -20,8 +20,9 @@ const ProfileMembershipModal: React.FC = () => {
       return byDataId[dataId];
     });
 
-    return memberData?.map(
-      ({ id, question: questionId, value }: IMemberData) => {
+    return memberData
+      ?.filter(({ question }) => !byQuestionId[question]?.onlyInApplication)
+      .map(({ id, question: questionId, value }: IMemberData) => {
         const question: IQuestion = byQuestionId[questionId];
 
         if (
@@ -35,8 +36,7 @@ const ProfileMembershipModal: React.FC = () => {
         }
 
         return { ...question, id, value };
-      }
-    );
+      });
   });
 
   const updateMemberData = useUpdateMemberData();

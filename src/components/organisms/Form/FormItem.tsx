@@ -68,7 +68,7 @@ const FormItem: React.FC<FormItemProps> = ({
       {type !== 'TOGGLE' && <FormDescription>{description}</FormDescription>}
       {body}
       {type === 'TOGGLE' && <FormDescription>{description}</FormDescription>}
-      <ErrorMessage message={errorMessage} />
+      <ErrorMessage marginBottom={16} message={errorMessage} />
     </div>
   );
 };
