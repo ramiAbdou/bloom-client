@@ -21,6 +21,19 @@ const PaymentFinishButton: React.FC = () => {
     return byId[selectedTypeId]?.amount / 100;
   });
 
+  const isLessThanCurrentType = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+
+    const selectedAmount = byId[selectedTypeId]?.amount;
+    const currentAmount = byId[db.member.type]?.amount;
+
+    return (
+      db.member.duesStatus === 'ACTIVE' &&
+      !byId[selectedTypeId]?.isFree &&
+      selectedAmount < currentAmount
+    );
+  });
+
   const isLoading = Form.useStoreState((store) => store.isLoading);
 
   if (amount === null || amount === undefined) return null;
@@ -28,7 +41,7 @@ const PaymentFinishButton: React.FC = () => {
   const isFree = amount === 0;
 
   const buttonTitle = takeFirst([
-    [isFree, 'Change Membership'],
+    [isFree || isLessThanCurrentType, 'Change Membership'],
     [isUpdatingPaymentMethod, 'Update Payment Method'],
     `Finish and Pay $${amount}`
   ]);
