@@ -55,4 +55,6 @@ $PREF: 's-profile';
 .#{$PREF}-card--social {
   grid-column-end: span 4;
   height: fit-content;
+
+  &-empty-img { margin: $md; }
 }
