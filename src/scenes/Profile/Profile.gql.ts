@@ -1,8 +1,39 @@
-import { mutation } from 'gql-query-builder';
+import { mutation, query } from 'gql-query-builder';
 
 import { IMember, IUser } from '@store/entities';
 
-// ## UPDATE AUTO RENEW
+// ## GET MEMBER DATA
+
+export interface GetMemberDataArgs {
+  populate?: string[];
+}
+
+export const GET_MEMBER_DATA = query({
+  fields: [
+    'id',
+    {
+      data: [
+        'id',
+        'value',
+        {
+          question: [
+            'id',
+            'category',
+            'onlyInApplication',
+            'options',
+            'required',
+            'title',
+            'type'
+          ]
+        }
+      ]
+    }
+  ],
+  operation: 'getMember',
+  variables: { populate: { required: false, type: '[String!]' } }
+}).query;
+
+// ## UPDATE USER
 
 export interface UpdateUserArgs {
   bio?: string;

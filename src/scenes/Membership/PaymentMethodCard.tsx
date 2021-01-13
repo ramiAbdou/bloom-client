@@ -2,7 +2,6 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button from '@atoms/Button';
-import Spinner from '@atoms/Spinner';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import useQuery from '@hooks/useQuery';
@@ -68,12 +67,11 @@ const PaymentMethodCard = () => {
   if (isDuesActive && isLifetime) return null;
 
   return (
-    <Card className="s-membership-card s-membership-card--payment">
-      <div>
-        <h3>Payment Method</h3>
-        <Spinner dark loading={loading} />
-      </div>
-
+    <Card
+      className="s-membership-card s-membership-card--payment"
+      loading={loading}
+      title="Payment Method"
+    >
       {!loading && <PaymentMethodContent />}
     </Card>
   );

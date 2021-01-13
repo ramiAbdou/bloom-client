@@ -6,7 +6,7 @@ import Spinner from '@atoms/Spinner';
 import { HeaderTag } from '@atoms/Tags';
 import { LoadingProps } from '@constants';
 
-interface LoadingHeaderProps extends LoadingProps {
+export interface LoadingHeaderProps extends LoadingProps {
   h3?: boolean;
   onBack?: VoidFunction;
   headerTag?: string;

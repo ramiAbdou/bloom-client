@@ -6,13 +6,10 @@ $PREF: 's-profile';
   column-gap: $sm;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  padding: $xxs 0;
   padding-top: $md;
   row-gap: $sm;
 
   @include LTE(1300) { display: block; }
-  @include T { display: grid; }
-  @include LTE(900) { display: block; }
 
   > div:first-child { grid-column-end: span 8; }
   > div:first-child > .#{$PREF}-card--social {
@@ -46,6 +43,8 @@ $PREF: 's-profile';
 
   flex-direction: row;
   margin-bottom: $sm;
+
+  @include M { display: block; }
 
   > div:first-child { margin-right: $md; }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
 import ProfileMembershipCard from './ProfileMembershipCard';
+import ProfileMembershipModal from './ProfileMembershipModal';
 import ProfilePersonalCard from './ProfilePersonalCard';
 import ProfilePersonalModal from './ProfilePersonalModal';
 import ProfileSocialCard from './ProfileSocialCard';
@@ -22,6 +23,7 @@ const ProfileContent: React.FC = () => (
 const ProfileModals: React.FC = () => {
   return (
     <>
+      <ProfileMembershipModal />
       <ProfilePersonalModal />
       <ProfileSocialModal />
     </>

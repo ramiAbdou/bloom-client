@@ -36,7 +36,7 @@ $PREF: 't-main';
 
 .#{$PREF}-content {
   margin: 0 $md;
-  padding: 2px 2px $xl 2px;
+  padding: 2px 2px $xl * 2 2px;
 
   @include M { margin: 0 $sm; }
 }

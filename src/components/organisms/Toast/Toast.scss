@@ -10,6 +10,8 @@ $PREF: 'c-toast';
   right: 0;
   width: fit-content;
   z-index: 1000;
+
+  @include M { bottom: $xl; }
 }
 
 // ## TOAST
