@@ -5,6 +5,7 @@ import { HeaderTag } from '@atoms/Tags';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
+import useBreakpoint from '@hooks/useBreakpoint';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import MailTo from '../../components/molecules/MailTo';
@@ -87,11 +88,15 @@ const ProfilePersonalMainContent: React.FC = () => (
   </div>
 );
 
-const ProfilePersonalCard: React.FC = () => (
-  <Card className="s-profile-card--personal">
-    <ProfilePicture circle fontSize={36} size={104} />
-    <ProfilePersonalMainContent />
-  </Card>
-);
+const ProfilePersonalCard: React.FC = () => {
+  const isMobile = useBreakpoint() === 1;
+
+  return (
+    <Card className="s-profile-card--personal">
+      <ProfilePicture circle fontSize={36} size={isMobile ? 84 : 104} />
+      <ProfilePersonalMainContent />
+    </Card>
+  );
+};
 
 export default ProfilePersonalCard;
