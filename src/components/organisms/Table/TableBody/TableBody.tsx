@@ -73,7 +73,7 @@ const DataRow = (row: Row) => {
     <tr className={css}>
       {columns.map(({ category, id, type }, i: number) => {
         const value =
-          category === 'JOINED_ON' ? moment(row[id]).format('M/D/YY') : row[id];
+          category === 'JOINED_AT' ? moment(row[id]).format('M/D/YY') : row[id];
 
         return (
           <DataCell

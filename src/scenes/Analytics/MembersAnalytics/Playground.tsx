@@ -16,7 +16,7 @@ const PlaygroundDropdown: React.FC = () => {
       ?.map((id: string) => byId[id])
       .filter(
         ({ category }) =>
-          !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_ON'].includes(category)
+          !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(category)
       );
   }, deepequal) as IQuestion[];
 
@@ -55,7 +55,7 @@ const PlaygroundHeader: React.FC = () => {
       ?.map((id: string) => byId[id])
       .filter(
         ({ category }) =>
-          !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_ON'].includes(category)
+          !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(category)
       )[0].id;
   });
 

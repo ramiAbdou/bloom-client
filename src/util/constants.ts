@@ -86,6 +86,6 @@ export type QuestionCategory =
   | 'EMAIL'
   | 'FIRST_NAME'
   | 'GENDER'
-  | 'JOINED_ON'
+  | 'JOINED_AT'
   | 'LAST_NAME'
   | 'MEMBERSHIP_TYPE';
