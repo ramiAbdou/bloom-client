@@ -56,8 +56,6 @@ export const formModel: FormModel = {
     if (items.every(({ value }) => !value)) return false;
     if (validateOnSubmit) return true;
 
-    console.log('HERE');
-
     return items.every(({ required, value, validate }: FormItemData) => {
       if (required && !value) return false;
       if (validateOnSubmit) return true;

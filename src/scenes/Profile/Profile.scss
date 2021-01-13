@@ -6,10 +6,11 @@ $PREF: 's-profile';
   column-gap: $sm;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto auto;
   padding: $xxs 0;
   padding-top: $md;
   row-gap: $sm;
+
+  > div:first-child { grid-column-end: span 8; }
 }
 
 // ## PROFILE EDIT BUTTON
@@ -23,7 +24,7 @@ $PREF: 's-profile';
 // .#{$PREF}-card {}
 
 .#{$PREF}-card--personal,
-.#{$PREF}-card--membership { grid-column-end: span 8; }
+.#{$PREF}-card--membership { grid-column-end: span 8; height: fit-content; }
 
 // ## PROFILE PERSONAL CARD
 
@@ -31,6 +32,7 @@ $PREF: 's-profile';
   @extend .flex;
 
   flex-direction: row;
+  margin-bottom: $sm;
 
   > div:first-child { margin-right: $md; }
 }
@@ -57,4 +59,15 @@ $PREF: 's-profile';
   height: fit-content;
 
   &-empty-img { margin: $md; }
+
+  > div:first-child { margin-bottom: $sm; }
+}
+
+.#{$PREF}-card--social-logo {
+  &:not(:last-child) { margin-bottom: $sm; }
+  > svg { @extend .react-icon--lg; margin-right: $xs; }
+
+  &--facebook > svg { color: #1877f2; }
+  &--linkedin > svg { color: #0a66c2; }
+  &--twitter > svg { color: #1da1f2; }
 }

@@ -50,9 +50,9 @@ const SocialMediaContainer: React.FC = () => {
 
   return (
     <div className="flex-ac">
-      <SocialMediaButton brand="FACEBOOK" href={facebookUrl} />
-      <SocialMediaButton brand="LINKED_IN" href={linkedInUrl} />
       <SocialMediaButton brand="TWITTER" href={twitterUrl} />
+      <SocialMediaButton brand="LINKED_IN" href={linkedInUrl} />
+      <SocialMediaButton brand="FACEBOOK" href={facebookUrl} />
       <SocialMediaButton brand="INSTAGRAM" href={igUrl} />
     </div>
   );

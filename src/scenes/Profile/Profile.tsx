@@ -9,9 +9,12 @@ import ProfileSocialModal from './ProfileSocialModal';
 
 const ProfileContent: React.FC = () => (
   <MainContent className="s-profile" loading={false}>
-    <ProfilePersonalCard />
+    <div>
+      <ProfilePersonalCard />
+      <ProfileMembershipCard />
+    </div>
+
     <ProfileSocialCard />
-    <ProfileMembershipCard />
   </MainContent>
 );
 

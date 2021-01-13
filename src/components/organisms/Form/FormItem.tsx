@@ -60,8 +60,6 @@ const FormItem: React.FC<FormItemProps> = ({
     'c-form-item--multiple-select': type === 'MULTIPLE_SELECT'
   });
 
-  console.log(errorMessage);
-
   return (
     <div className={css}>
       {type !== 'TOGGLE' && <FormLabel required={required}>{title}</FormLabel>}

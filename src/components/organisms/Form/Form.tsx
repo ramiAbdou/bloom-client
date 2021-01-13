@@ -27,14 +27,14 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const validatedItems = validateOnSubmit ? validateItems(items) : items;
-
-      if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
-        setItemErrorMessages(validatedItems);
-        return;
-      }
-
       if (onSubmit) {
+        const validatedItems = validateOnSubmit ? validateItems(items) : items;
+
+        if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
+          setItemErrorMessages(validatedItems);
+          return;
+        }
+
         onSubmit({
           items: validatedItems,
           setErrorMessage: setError,

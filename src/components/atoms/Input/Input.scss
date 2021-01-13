@@ -22,7 +22,7 @@ $PREF: 'c-misc-input';
 
   // Only reason we added this --focus variant is that we can use it in the
   // Stripe elements definition.
-  &:focus,
+  &:focus:not(&--error),
   &--focus {
     background-color: white;
     border: 1px $primary solid;
