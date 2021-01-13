@@ -1,3 +1,4 @@
+import day from 'dayjs';
 import { motion } from 'framer-motion';
 import React from 'react';
 
@@ -5,6 +6,7 @@ import Separator from '@atoms/Separator';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
+import FormStore from '@organisms/Form/Form.store';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
@@ -19,6 +21,10 @@ import useCreateSubscription from './useCreateSubscription';
 const PaymentFinishScreenToggle: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
+  const autoRenew = FormStore.useStoreState(({ getItem }) =>
+    getItem({ id: 'autoRenew' })
+  )?.value;
+
   const showToggle: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
     const type: IMemberType = byTypeId[typeId];
@@ -30,6 +36,22 @@ const PaymentFinishScreenToggle: React.FC = () => {
     );
   });
 
+  const nextPaymentMessage: string = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    const { recurrence }: IMemberType = byTypeId[typeId];
+
+    if (autoRenew) {
+      const nextPaymentDate = day().format('MMMM Do');
+      return `Membership will auto-renew on ${nextPaymentDate} every year.`;
+    }
+
+    const nextPaymentDate = day()
+      .add(1, recurrence === 'YEARLY' ? 'y' : 'month')
+      .format('MMMM D, YYYY');
+
+    return `Next payment will be due on ${nextPaymentDate}.`;
+  });
+
   if (!showToggle) return null;
 
   return (
@@ -38,7 +60,8 @@ const PaymentFinishScreenToggle: React.FC = () => {
 
       <FormItem
         value
-        description="Next payment will be due on December 20th, 2021."
+        description={nextPaymentMessage}
+        id="autoRenew"
         title="Auto-Renew Membership"
         type="TOGGLE"
       />

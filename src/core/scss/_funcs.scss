@@ -54,6 +54,9 @@
 
 // If the device is less than or equal to the given pixels then...
 
+@mixin GTE($window-width) {
+  @media (min-width: "#{$window-width}px") { @content; }
+}
 @mixin LTE($window-width) {
   @media (max-width: "#{$window-width}px") { @content; }
 }

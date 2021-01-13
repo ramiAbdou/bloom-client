@@ -62,6 +62,16 @@ $PREF: 's-membership';
 
 // ## PAYMENT HISTORY
 
-.#{$PREF}-history-ctr {
-  > h3 { margin-bottom: $sm; }
+.#{$PREF}-overview-ctr { > h3 { margin-bottom: $sm; } }
+
+.#{$PREF}-card--next {
+  margin-bottom: $sm;
+  width: $xxl * 5.5;
+
+  @include LTE(1060) { width: 100%; }
+  @include T { width: $xxl * 5.5; }
+  @include LTE(730) { width: 100%; }
+
+  > h4 { margin-bottom: $xs; }
+  > .flex-ac > p:first-child { @extend .body--bold; }
 }
