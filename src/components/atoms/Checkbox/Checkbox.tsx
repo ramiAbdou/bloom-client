@@ -11,7 +11,7 @@ import { cx } from '@util/util';
 interface CheckboxProps extends ClassNameProps {
   checked?: boolean;
   plain?: boolean;
-  onChange: (checked: boolean) => any;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   title?: string;
 }
 
@@ -22,12 +22,6 @@ const Checkbox: React.FC<CheckboxProps> = ({
   onChange,
   title
 }) => {
-  const onCheckboxChange = ({
-    target
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(target.checked);
-  };
-
   const css = cx({
     'c-misc-checkbox': true,
     'c-misc-checkbox--label': title,
@@ -37,7 +31,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <label className={css} onClick={(e) => e.stopPropagation()}>
-      <input checked={checked} type="checkbox" onChange={onCheckboxChange} />
+      <input checked={checked} type="checkbox" onChange={onChange} />
       <span />
       <IoCheckmark color="#FFF" />
       {plain && <p>{title}</p>}

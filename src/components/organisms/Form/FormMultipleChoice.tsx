@@ -4,7 +4,8 @@ import Radio from '@molecules/Radio/Radio';
 import Form from './Form.store';
 import { FormItemData } from './Form.types';
 
-export default ({ options, title }: FormItemData) => {
+const FormMultipleChoice: React.FC<FormItemData> = ({ options, title }) => {
+  const value = Form.useStoreState(({ getItem }) => getItem({ title })?.value);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
 
   return (
@@ -14,7 +15,10 @@ export default ({ options, title }: FormItemData) => {
         label: option,
         value: option
       }))}
-      onSelect={(value) => updateItem({ title, value })}
+      value={value}
+      onSelect={(v) => updateItem({ title, value: v })}
     />
   );
 };
+
+export default FormMultipleChoice;

@@ -25,11 +25,13 @@ const ProfileMembershipModal: React.FC = () => {
         const question: IQuestion = byQuestionId[questionId];
 
         if (
-          question.type === 'MULTIPLE_CHOICE' &&
+          (question.type === 'MULTIPLE_SELECT' ||
+            (question.type === 'MULTIPLE_CHOICE' &&
+              question.options?.length >= 5)) &&
           value &&
           !Array.isArray(value)
         ) {
-          value = value.split(',');
+          value = value ? value.split(',') : [];
         }
 
         return { ...question, id, value };

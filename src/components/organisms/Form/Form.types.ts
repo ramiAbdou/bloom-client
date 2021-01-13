@@ -32,6 +32,8 @@ export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 export interface FormItemData extends Partial<FormQuestion> {
   errorMessage?: string;
 
+  initialValue?: any;
+
   placeholder?: string;
 
   // Only used in MULTIPLE_SELECT. True if checkbox shoudln't have an attribute

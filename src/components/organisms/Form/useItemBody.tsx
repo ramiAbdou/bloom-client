@@ -5,10 +5,10 @@ import { takeFirst } from '@util/util';
 import { FormItemData } from './Form.types';
 import FormDropdownItem from './FormDropdown';
 import FormLongText from './FormLongText';
+import FormMultipleChoice from './FormMultipleChoice';
 import FormMultipleSelect from './FormMultipleSelect';
 import FormShortText from './FormShortText';
 import FormToggle from './FormToggle';
-import FormMultipleChoice from './MultipleChoice';
 
 type BaseItemProps = Pick<FormItemData, 'category' | 'required' | 'title'>;
 
