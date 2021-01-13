@@ -39,8 +39,9 @@ $PREF: 's-profile';
   flex-grow: 1;
 
   > div:first-child { margin-bottom: $xxs; }
-  > .m-misc-mail-to { margin-bottom: $md; }
+  > .m-misc-mail-to { margin-bottom: $sm; }
   > .t-row--gap-sm { margin-bottom: $xs; }
+  > p:not(:last-child) { margin-bottom: $sm; }
 }
 
 // ## PROFILE MEMBERSHIP CARD

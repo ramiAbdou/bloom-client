@@ -44,7 +44,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({
   ]);
 
   return (
-    <div className={css} style={{ height: size, width: size }}>
+    <div className={css} style={{ height: size, minWidth: size, width: size }}>
       {body}
     </div>
   );

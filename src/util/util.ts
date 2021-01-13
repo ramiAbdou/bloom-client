@@ -29,10 +29,11 @@ export const getGraphQLError = (error: APIError): string => {
 
   const { fetchError, graphQLErrors, httpError } = error;
 
-  return fetchError || httpError
-    ? 'Failed to connect to Bloom servers.'
-    : // @ts-ignore b/c the message must exist on the GraphQL error object.
-      graphQLErrors[0]?.message;
+  if (fetchError) return 'Failed to connect to Bloom servers.';
+  if (httpError) return 'Request failed.';
+
+  // @ts-ignore b/c the message must exist on the GraphQL error object.
+  return graphQLErrors[0]?.message;
 };
 
 /**
