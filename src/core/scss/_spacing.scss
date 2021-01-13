@@ -29,6 +29,7 @@ $D_SIZE: 1440;
   &-acccol { @extend .flex-acc; flex-direction: column; }
   &-acsb { @extend .flex-ac; justify-content: space-between; }
   &-ae { @extend .flex; align-items: flex-end; }
+  &-as { @extend .flex; align-items: flex-start; }
   &-c { @extend .flex; justify-content: center; }
   &-col { @extend .flex; flex-direction: column; }
   &-colsb { @extend .flex-col; justify-content: space-between; }

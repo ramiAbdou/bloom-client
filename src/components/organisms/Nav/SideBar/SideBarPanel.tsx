@@ -63,7 +63,11 @@ const SidebarPanel: React.FC = () => {
           }
         ]
       : []),
-    { Icon: IoPerson, onClick: () => null, text: 'Your Profile' },
+    {
+      Icon: IoPerson,
+      onClick: () => push(`/${urlName}/profile`),
+      text: 'Your Profile'
+    },
     { Icon: IoExit, onClick: onLogout, separator: true, text: 'Log Out' }
   ];
 

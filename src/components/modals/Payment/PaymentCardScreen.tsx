@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Row from '@containers/Row';
+import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';

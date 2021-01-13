@@ -1,0 +1,5 @@
+$PREF: 't-row';
+
+.#{$PREF} {
+  &--gap-sm > *:not(:last-child) { margin-right: $xs; }
+}

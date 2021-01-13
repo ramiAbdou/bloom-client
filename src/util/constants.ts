@@ -66,9 +66,10 @@ export type RouteType =
   | 'database'
   | 'directory'
   | 'events'
+  | 'integrations'
   | 'members'
   | 'membership'
-  | 'integrations';
+  | 'profile';
 
 /**
  * FORMS - Handling of all form-related items including custom Enums.

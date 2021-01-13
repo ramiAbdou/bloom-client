@@ -15,13 +15,13 @@ const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
   });
 
   const numApplicants: number = pendingApplicantIds?.length;
-  const numberTag = !!numApplicants && `${numApplicants} Total`;
+  const headerTag = !!numApplicants && `${numApplicants} Total`;
 
   return (
     <MainHeader
       className="s-applicants-header"
+      headerTag={headerTag}
       loading={loading}
-      numberTag={numberTag}
       title="Pending Applicants"
     >
       <ActionContainer>

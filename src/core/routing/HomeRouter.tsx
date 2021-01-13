@@ -20,6 +20,7 @@ import Directory from '@scenes/Directory/Directory';
 import Events from '@scenes/Events/Events';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
+import Profile from '@scenes/Profile/Profile';
 import { ICommunity, IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -45,6 +46,7 @@ const HomeRouterContent: React.FC = () => {
         )}
 
         <Route component={Membership} path={`${url}/membership`} />
+        <Route component={Profile} path={`${url}/profile`} />
         <Redirect to={`${url}/directory`} />
       </Switch>
     </div>

@@ -8,7 +8,7 @@ import StatusTag from '@atoms/Tags/StatusTag';
 import { ModalType } from '@constants';
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Card from '@containers/Card/Card';
-import Row from '@containers/Row';
+import Row from '@containers/Row/Row';
 import useMutation from '@hooks/useMutation';
 import Toggle from '@molecules/Toggle/Toggle';
 import { IMember, IMemberType } from '@store/entities';

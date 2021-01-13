@@ -1,16 +1,23 @@
 import React from 'react';
 
-import { ChildrenProps, LoadingProps } from '@constants';
+import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
+import { cx } from '@util/util';
 import LoadingContainer from '../Loading/LoadingContainer';
 
-interface MainContentProps extends ChildrenProps, LoadingProps {
+interface MainContentProps extends ChildrenProps, ClassNameProps, LoadingProps {
   Header?: React.FC<LoadingProps>;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ children, ...props }) => {
+const MainContent: React.FC<MainContentProps> = ({
+  children,
+  className,
+  ...props
+}) => {
+  const css = cx({ [className]: className, 't-main-content': true });
+
   return (
     <LoadingContainer {...props}>
-      <section className="t-main-content">{children}</section>
+      <section className={css}>{children}</section>
     </LoadingContainer>
   );
 };

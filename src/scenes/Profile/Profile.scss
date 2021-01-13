@@ -1,0 +1,41 @@
+$PREF: 's-profile';
+
+// ## PROFILE
+
+.#{$PREF} {
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto;
+  padding: $xxs 0;
+  padding-top: $md;
+  row-gap: $sm;
+}
+
+// ## PROFILE EDIT BUTTON
+
+.#{$PREF}-edit {
+  > svg { color: $primary; margin-left: $xxs; }
+}
+
+// ## PROFILE CARD
+
+// .#{$PREF}-card {}
+
+// ## PROFILE PERSONAL CARD
+
+.#{$PREF}-card--personal {
+  @extend .flex;
+
+  flex-direction: row;
+  grid-column-end: span 8;
+
+  > div:first-child { margin-right: $md; }
+  > div:last-child { flex-grow: 1; }
+}
+
+// ## PROFILE SOCIAL CARD
+
+.#{$PREF}-card--social {
+  grid-column-end: span 4;
+}

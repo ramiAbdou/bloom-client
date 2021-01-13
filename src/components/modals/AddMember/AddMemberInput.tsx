@@ -4,7 +4,7 @@ import validator from 'validator';
 
 import Button from '@atoms/Button';
 import { IdProps } from '@constants';
-import Row from '@containers/Row';
+import Row from '@containers/Row/Row';
 import FormItem from '@organisms/Form/FormItem';
 import { useStoreState } from '@store/Store';
 import AddMemberStore from './AddMember.store';
