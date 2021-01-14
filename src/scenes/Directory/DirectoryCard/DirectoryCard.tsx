@@ -50,8 +50,8 @@ const DirectoryCardContent: React.FC = () => {
         <ProfilePicture
           firstName={firstName}
           fontSize={60}
+          href={pictureUrl}
           lastName={lastName}
-          pictureUrl={pictureUrl}
         />
 
         <DirectoryCardInformation />

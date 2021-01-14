@@ -21,8 +21,8 @@ const MemberProfilePicture = () => {
       className="s-directory-modal-pic"
       firstName={firstName}
       fontSize={36}
+      href={pictureUrl}
       lastName={lastName}
-      pictureUrl={pictureUrl}
       size={96}
     />
   );

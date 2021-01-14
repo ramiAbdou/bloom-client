@@ -100,7 +100,7 @@ const ProfilePersonalPictureRow: React.FC = () => {
       <ProfilePicture
         circle
         fontSize={36}
-        pictureUrl={pictureUrl}
+        href={pictureUrl}
         size={isMobile ? 84 : 104}
       />
       <ProfileEditButton canEdit onEditClick={onClick} />
