@@ -47,6 +47,7 @@ const Member = new schema.Entity(
   }
 );
 
+const MemberData = new schema.Entity('data', {});
 const MemberPayment = new schema.Entity('payments', {});
 const MemberType = new schema.Entity('types', {});
 const Question = new schema.Entity('questions', {});
@@ -64,13 +65,14 @@ Community.define({
 
 Member.define({
   community: Community,
+  data: [MemberData],
   payments: [MemberPayment],
   type: MemberType,
   user: User
 });
 
+MemberData.define({ question: Question });
 MemberPayment.define({ member: Member, type: MemberType });
-
 User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
@@ -80,6 +82,7 @@ export const Schema = {
   COMMUNITY: Community,
   INTEGRATIONS: Integrations,
   MEMBER: Member,
+  MEMBER_DATA: MemberData,
   MEMBER_PAYMENT: MemberPayment,
   MEMBER_TYPE: MemberType,
   USER: User

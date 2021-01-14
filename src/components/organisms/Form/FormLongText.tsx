@@ -5,13 +5,12 @@ import { FormItemData, FormItemProps } from './Form.types';
 
 const FormLongText: React.FC<
   Pick<FormItemProps, 'category' | 'id' | 'placeholder' | 'title'>
-> = ({ category, id, placeholder, title }: FormItemData) => {
-  const value = Form.useStoreState(
-    ({ getItem }) => getItem({ category, id, title }).value
-  );
-
+> = ({ placeholder, ...queryArgs }: FormItemData) => {
+  const value = Form.useStoreState(({ getItem }) => getItem(queryArgs)?.value);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const updateText = (text: string) => updateItem({ title, value: text });
+
+  const updateText = (text: string) =>
+    updateItem({ ...queryArgs, value: text });
 
   return (
     <textarea

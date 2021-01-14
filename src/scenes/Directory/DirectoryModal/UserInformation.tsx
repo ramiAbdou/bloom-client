@@ -1,8 +1,11 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
-import { IoMail } from 'react-icons/io5';
 
+import { HeaderTag } from '@atoms/Tags';
+import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture';
+import { useStoreState } from '@store/Store';
+import MailTo from '../../../components/molecules/MailTo';
 import MemberCard from '../DirectoryCard/DirectoryCard.store';
 import SocialMediaContainer from './SocialMedia';
 
@@ -18,8 +21,8 @@ const MemberProfilePicture = () => {
       className="s-directory-modal-pic"
       firstName={firstName}
       fontSize={36}
+      href={pictureUrl}
       lastName={lastName}
-      pictureUrl={pictureUrl}
       size={96}
     />
   );
@@ -29,6 +32,23 @@ const MemberFullName = () => {
   const firstName = MemberCard.useStoreState((store) => store?.firstName);
   const lastName = MemberCard.useStoreState((store) => store?.lastName);
   return <h1>{`${firstName} ${lastName}`}</h1>;
+};
+
+const MemberTagList: React.FC = () => {
+  const role = MemberCard.useStoreState((store) => store?.role);
+  const typeId = MemberCard.useStoreState((store) => store?.type);
+
+  const type: string = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[typeId]?.name;
+  });
+
+  return (
+    <Row gap="sm">
+      {role && <HeaderTag>{role}</HeaderTag>}
+      <HeaderTag>{type}</HeaderTag>
+    </Row>
+  );
 };
 
 const MemberCurrentLocation = () => {
@@ -43,13 +63,7 @@ const MemberCurrentLocation = () => {
 const MemberEmail = () => {
   const email = MemberCard.useStoreState((store) => store?.email);
   if (!email) return null;
-
-  return (
-    <a className="s-directory-modal-email" href={`mailto:${email}`}>
-      <IoMail />
-      <p>{email}</p>
-    </a>
-  );
+  return <MailTo email={email} />;
 };
 
 const MemberBio = () => {
@@ -61,6 +75,7 @@ const MemberBio = () => {
 const PersonalInformation = () => (
   <div className="s-directory-modal-personal-ctr">
     <MemberFullName />
+    <MemberTagList />
     <MemberCurrentLocation />
     <MemberEmail />
     <MemberBio />

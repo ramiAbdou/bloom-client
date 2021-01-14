@@ -19,17 +19,12 @@ const OptionList = () => {
 };
 
 export default function OptionContainer() {
-  const width = Dropdown.useStoreState((store) => store.width);
-
   const noOptionsFound = Dropdown.useStoreState(
     (store) => !store.filteredOptions.length
   );
 
   return (
-    <div
-      className="c-misc-dropdown-option-ctr"
-      style={{ minWidth: width ?? 0 }}
-    >
+    <div className="c-misc-dropdown-option-ctr">
       <SearchInput />
       {noOptionsFound && <p>No results found.</p>}
       {!noOptionsFound && <OptionList />}

@@ -22,13 +22,7 @@ const SideBarProfileContent: React.FC = () => {
 
   return (
     <div>
-      <ProfilePicture
-        circle
-        firstName={firstName}
-        lastName={lastName}
-        pictureUrl={pictureUrl}
-        size={48}
-      />
+      <ProfilePicture circle href={pictureUrl} size={48} />
 
       <div className="o-side-bar-profile-info">
         <p>{fullName}</p>
@@ -44,7 +38,8 @@ const SideBarProfile: React.FC = () => {
   });
 
   const showPicker = useStoreActions(({ panel }) => panel.showPicker);
-  const isActive = useActiveRoute() === 'membership';
+  const activeRoute = useActiveRoute();
+  const isActive = ['membership', 'profile'].includes(activeRoute);
 
   const onClick = () => showPicker(PanelType.PROFILE);
 

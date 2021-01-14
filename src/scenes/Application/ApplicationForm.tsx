@@ -1,9 +1,8 @@
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
-import FormStore from '@organisms/Form/Form.store';
-import DefaultFormItem from '@organisms/Form/FormDefaultItem';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
+import FormItem from '@organisms/Form/FormItem';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
@@ -26,36 +25,34 @@ const ApplicationFormHeader: React.FC = () => {
   );
 };
 
-const ApplicationFormContent: React.FC = () => (
-  <>
-    <ApplicationFormHeader />
-
-    {FormStore.useStoreState(({ items }) => items)?.map((props) => (
-      <DefaultFormItem key={props.title ?? props.placeholder} {...props} />
-    ))}
-
-    <FormErrorMessage marginBottom={-24} />
-    <SubmitButton loadingText="Submitting...">Submit Application</SubmitButton>
-  </>
-);
-
-const ApplicationForm: React.FC = () => {
+const ApplicationFormContent: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     const { byId } = db.entities.questions;
     return db.community?.questions?.map((id: string) => byId[id]);
   });
 
-  const applyForMembership = useApplyForMembership();
+  return (
+    <>
+      <ApplicationFormHeader />
 
-  if (!questions?.length) return null;
+      {questions?.map((props) => (
+        <FormItem key={props.id} {...props} />
+      ))}
+
+      <FormErrorMessage marginBottom={-24} />
+      <SubmitButton loadingText="Submitting...">
+        Submit Application
+      </SubmitButton>
+    </>
+  );
+};
+
+const ApplicationForm: React.FC = () => {
+  const applyForMembership = useApplyForMembership();
 
   return (
     <div className="s-application-ctr">
-      <Form
-        className="s-application"
-        questions={questions}
-        onSubmit={applyForMembership}
-      >
+      <Form className="s-application" onSubmit={applyForMembership}>
         <ApplicationFormContent />
       </Form>
     </div>

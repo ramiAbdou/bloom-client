@@ -1,0 +1,97 @@
+$PREF: 's-profile';
+
+// ## PROFILE
+
+.#{$PREF} {
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding-top: $md;
+  row-gap: $sm;
+
+  @include LTE(1300) { display: block; }
+
+  > div:first-child { grid-column-end: span 8; }
+  > div:first-child > .#{$PREF}-card--social {
+    display: none;
+
+    @include LTE(1300) { display: flex; margin-bottom: $sm; }
+  }
+
+  > .#{$PREF}-card--social {
+    @include LTE(1300) { display: none; }
+  }
+}
+
+// ## PROFILE EDIT BUTTON
+
+.#{$PREF}-edit {
+  > svg { color: $primary; margin-left: $xxs; }
+}
+
+// ## PROFILE CARD
+
+// .#{$PREF}-card {}
+
+.#{$PREF}-card--personal,
+.#{$PREF}-card--membership { grid-column-end: span 8; height: fit-content; }
+
+// ## PROFILE PERSONAL CARD
+
+.#{$PREF}-card--personal {
+  @extend .flex;
+
+  flex-direction: row;
+  margin-bottom: $sm;
+
+  @include M { display: block; }
+  @include TD {
+    > div:first-child { margin-right: $md; }
+    > div:first-child > button { display: none; }
+  }
+
+  > div:first-child {
+    align-items: flex-start;
+
+    @include M { margin-bottom: $sm; }
+  }
+}
+
+.#{$PREF}-card--personal-main {
+  flex-grow: 1;
+
+  @include M { > div:first-child > button { display: none; } }
+
+  > div:first-child { margin-bottom: $xxs; }
+  > .m-misc-mail-to { margin-bottom: $sm; }
+  > .t-row--gap-sm:nth-child(2) { margin-bottom: $ss; }
+  > p:not(:last-child) { margin-bottom: $sm; }
+}
+
+// ## PROFILE MEMBERSHIP CARD
+
+.#{$PREF}-card--membership {
+  > div:first-child { margin-bottom: $sm; }
+  > .m-misc-question-ctr:not(:last-child) { margin-bottom: $md; }
+}
+
+// ## PROFILE SOCIAL CARD
+
+.#{$PREF}-card--social {
+  grid-column-end: span 4;
+  height: fit-content;
+
+  &-empty-img { margin: $md; }
+
+  > div:first-child { margin-bottom: $sm; }
+}
+
+.#{$PREF}-card--social-logo {
+  &:not(:last-child) { margin-bottom: $sm; }
+  > svg { @extend .react-icon--lg; margin-right: $xs; }
+  > p { @extend .meta; @extend .overflow-ellipses; }
+
+  &--facebook > svg { color: #1877f2; }
+  &--linkedin > svg { color: #0a66c2; }
+  &--twitter > svg { color: #1da1f2; }
+}

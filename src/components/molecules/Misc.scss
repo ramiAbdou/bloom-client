@@ -23,3 +23,16 @@ $PREF: 'm-misc';
     > p:not(:only-child) { margin-bottom: $xxs; }
   }
 }
+
+// ## MAIL TO - Mail to link that automatically opens email.
+
+.#{$PREF}-mail-to {
+  @extend .flex-ac;
+
+  color: $primary;
+  width: fit-content;
+  &:active { transform: scale(0.9); transition: transform 0.2s ease-out; }
+
+  > svg { color: inherit; height: $sm; margin-right: $xxs; width: $sm; }
+  > p { @extend .meta; color: inherit; }
+}

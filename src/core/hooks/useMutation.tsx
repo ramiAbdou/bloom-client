@@ -1,6 +1,6 @@
 import { useMutation as useGraphQlHooksMutation } from 'graphql-hooks';
 import { Schema } from 'normalizr';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
@@ -52,12 +52,14 @@ function useMutation<T = any, S = any>({
     loading
   };
 
+  const memoizedSchema = useMemo(() => schema, []);
+
   useEffect(() => {
     if (result.data && schema) {
       const formattedData = format ? format(result.data) : result.data;
       mergeEntities({ data: formattedData, schema });
     }
-  }, [result.data, schema]);
+  }, [result.data, memoizedSchema]);
 
   return [typedMutationFn, result];
 }

@@ -6,6 +6,14 @@ import { useEffect, useState } from 'react';
 // 4: Monitor
 type Breakpoint = 1 | 2 | 3 | 4;
 
+/**
+ * Returns the appropriate breakpoint based on window width.
+ *
+ * @example useBreakpoint() => 1 (Mobile)
+ * @example useBreakpoint() => 2 (Tablet)
+ * @example useBreakpoint() => 3 (Desktop)
+ * @example useBreakpoint() => 4 (Monitor)
+ */
 const useBreakpoint = (): Breakpoint => {
   const [breakpoint, setBreakpoint] = useState<Breakpoint>(3);
 

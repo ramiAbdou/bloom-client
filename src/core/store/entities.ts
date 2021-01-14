@@ -2,7 +2,7 @@ import { QuestionCategory, QuestionType } from '@constants';
 
 type IdString = string;
 
-export type ICommunity = {
+export interface ICommunity {
   applicationDescription?: string;
   applicationTitle?: string;
   autoAccept?: boolean;
@@ -15,24 +15,24 @@ export type ICommunity = {
   name: string;
   primaryColor: string;
   types: IdString[];
-};
+}
 
-export type IIntegrations = {
+export interface IIntegrations {
   isMailchimpAuthenticated: boolean;
   mailchimpLists: { name: string; id: string }[];
   mailchimpListId: string;
   mailchimpListName: string;
   stripeAccountId: string;
-};
+}
 
-export type IPaymentMethod = {
+export interface IPaymentMethod {
   brand: string;
   expirationDate: string;
   last4: string;
   zipCode: string;
-};
+}
 
-export type IMember = {
+export interface IMember {
   autoRenew: boolean;
   allData?: { questionId: string; value: string }[];
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
@@ -40,6 +40,7 @@ export type IMember = {
   cardData?: { questionId: string; value: string }[];
   community: IdString;
   createdAt: string;
+  data: IdString[];
   duesStatus: 'ACTIVE' | 'INACTIVE' | 'LAME';
   id: IdString;
   paymentMethod: IPaymentMethod;
@@ -48,39 +49,46 @@ export type IMember = {
   type: IdString;
   status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
   user: IdString;
-};
+}
 
-export type IMemberPayment = {
+export interface IMemberData {
+  id: IdString;
+  question: IdString;
+  value: string | string[];
+}
+
+export interface IMemberPayment {
   amount: number;
   createdAt: string;
   stripeInvoiceUrl: string;
   id: IdString;
   member: IdString;
   type: IdString;
-};
+}
 
-export type IMemberType = {
+export interface IMemberType {
   amount: number;
   id: IdString;
   isFree: boolean;
   name: string;
   recurrence: 'LIFETIME' | 'MONTHLY' | 'YEARLY';
-};
+}
 
-export type IQuestion = {
+export interface IQuestion {
   category: QuestionCategory;
   id: IdString;
   inApplicantCard: boolean;
   inDirectoryCard: boolean;
+  onlyInApplication: boolean;
   order: number;
   options: string[];
   required: boolean;
   title: QuestionType;
   type: QuestionType;
   version: number;
-};
+}
 
-export type IUser = {
+export interface IUser {
   currentLocation: string;
   email: string;
   facebookUrl: string;
@@ -92,7 +100,7 @@ export type IUser = {
   members?: IdString[];
   pictureUrl: string;
   twitterUrl: string;
-};
+}
 
 export interface EntityRecord<T> {
   activeId?: string;
@@ -100,23 +108,25 @@ export interface EntityRecord<T> {
   byId: Record<string, T>;
 }
 
-export type IEntities = {
+export interface IEntities {
   communities: EntityRecord<ICommunity>;
+  data: EntityRecord<IMemberData>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
   payments: EntityRecord<IMemberPayment>;
   questions: EntityRecord<IQuestion>;
   types: EntityRecord<IMemberType>;
   users: EntityRecord<IUser>;
-};
+}
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
   communities: { activeId: null, allIds: [], byId: {} },
+  data: { allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { activeId: null, allIds: [], byId: {} },
   payments: { allIds: [], byId: {} },
   questions: { allIds: [], byId: {} },
-  types: { activeId: null, allIds: [], byId: {} },
+  types: { allIds: [], byId: {} },
   users: { allIds: [], byId: {} }
 };

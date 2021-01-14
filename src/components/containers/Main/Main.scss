@@ -10,6 +10,8 @@ $PREF: 't-main';
   position: sticky;
   top: 0;
   z-index: 11;
+
+  @include M { padding: $sm; }
 }
 
 .#{$PREF}-header > div:first-of-type {
@@ -32,7 +34,12 @@ $PREF: 't-main';
 
 // ## MAIN CONTENT
 
-.#{$PREF}-content { margin: 0 $md; padding: 2px 2px $xl 2px; }
+.#{$PREF}-content {
+  margin: 0 $md;
+  padding: 2px 2px $xl * 2 2px;
+
+  @include M { margin: 0 $sm; }
+}
 
 // ## MAIN CONTENT
 

@@ -49,6 +49,9 @@ export enum ModalType {
   DELETE_MEMBERS = 'DELETE_MEMBERS',
   DEMOTE_TO_MEMBER = 'DEMOTE_TO_MEMBER',
   DIRECTORY_CARD = 'DIRECTORY_CARD',
+  EDIT_MEMBERSHIP_INFORMATION = 'EDIT_MEMBERSHIP_INFORMATION',
+  EDIT_PERSONAL_INFORMATION = 'EDIT_PERSONAL_INFORMATION',
+  EDIT_SOCIAL_MEDIA = 'EDIT_SOCIAL_MEDIA',
   MAILCHIMP_FLOW = 'MAILCHIMP_FLOW',
   PAY_DUES = 'PAY_DUES',
   PROMOTE_TO_ADMIN = 'PROMOTE_TO_ADMIN',
@@ -66,9 +69,10 @@ export type RouteType =
   | 'database'
   | 'directory'
   | 'events'
+  | 'integrations'
   | 'members'
   | 'membership'
-  | 'integrations';
+  | 'profile';
 
 /**
  * FORMS - Handling of all form-related items including custom Enums.
@@ -76,6 +80,7 @@ export type RouteType =
 
 export type QuestionType =
   | 'CUSTOM'
+  | 'IMAGE'
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
   | 'MULTIPLE_SELECT'

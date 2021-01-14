@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
 import Spinner from '@atoms/Spinner';
-import { NumberTag } from '@atoms/Tags';
+import { HeaderTag } from '@atoms/Tags';
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
 import { makeClass } from '@util/util';
 import MainNavigation, { NavigationProps } from './MainNavigation';
@@ -15,7 +15,7 @@ export interface MainHeaderProps
     LoadingProps,
     NavigationProps {
   backButton?: boolean;
-  numberTag?: string;
+  headerTag?: string;
   title: string;
 }
 
@@ -34,7 +34,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   children,
   className,
   loading,
-  numberTag,
+  headerTag,
   options,
   title
 }) => {
@@ -45,7 +45,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       <div>
         {backButton && <MainHeaderBackButton />}
         <h1>{title}</h1>
-        {loading === false && numberTag && <NumberTag>{numberTag}</NumberTag>}
+        {loading === false && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
         <Spinner dark loading={loading} />
       </div>
 

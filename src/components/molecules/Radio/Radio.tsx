@@ -1,49 +1,72 @@
 import React from 'react';
 
-type RadioOptionProps = {
-  defaultChecked?: boolean;
+import { ValueProps } from '@constants';
+
+interface RadioOptionProps extends ValueProps {
+  checked?: boolean;
   label: string;
   onClick: VoidFunction;
   name: string;
-  value: any;
-};
+}
 
-type RadioProps = {
-  defaultChecked?: string;
+interface RadioProps extends ValueProps {
   name: string;
   onSelect?: (value: any) => any;
   options: Pick<RadioOptionProps, 'label' | 'value'>[];
+}
+
+const RadioOption = ({
+  checked,
+  label,
+  onClick,
+  value,
+  name
+}: RadioOptionProps) => {
+  return (
+    <div onClick={onClick}>
+      <input
+        checked={checked}
+        id={value}
+        name={name}
+        type="radio"
+        value={value}
+      />
+
+      <div>
+        <span />
+      </div>
+
+      <label className="c-tag-attr" htmlFor={value}>
+        {label}
+      </label>
+    </div>
+  );
 };
 
-const RadioOption = ({ label, onClick, value, ...props }: RadioOptionProps) => (
-  <div onClick={onClick}>
-    <input id={value} type="radio" value={value} {...props} />
-
-    <div>
-      <span />
+const Radio = ({
+  name,
+  onSelect,
+  options,
+  value: checkedValue
+}: RadioProps) => {
+  return (
+    <div className="c-misc-radio">
+      {options.map(
+        ({ label, value }: Pick<RadioOptionProps, 'label' | 'value'>) => {
+          return (
+            <RadioOption
+              key={value}
+              checked={checkedValue === value}
+              label={label}
+              name={name}
+              value={value}
+              onClick={() => onSelect(value)}
+            />
+          );
+        }
+      )}
     </div>
-
-    <label className="c-tag-attr" htmlFor={value}>
-      {label}
-    </label>
-  </div>
-);
-
-const Radio = ({ defaultChecked, name, onSelect, options }: RadioProps) => (
-  <div className="c-misc-radio">
-    {options.map(
-      ({ label, value }: Pick<RadioOptionProps, 'label' | 'value'>) => (
-        <RadioOption
-          key={value}
-          defaultChecked={defaultChecked === value}
-          label={label}
-          name={name}
-          value={value}
-          onClick={() => onSelect(value)}
-        />
-      )
-    )}
-  </div>
-);
+  );
+};
 
 export default Radio;

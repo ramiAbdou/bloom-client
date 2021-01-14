@@ -24,10 +24,10 @@ $PREF: 'mo-add-member';
     &:active { > svg { color: $red; } }
   }
 
-  > .c-form-item { margin: 0 $xs 0 0; width: 100%; }
-  > .c-form-item:last-child { margin: 0 $xs 0 0; }
-  > .c-form-item--email { margin-right: $sm; }
-  > .c-form-item--multiple-select:last-child { min-width: $xxl * 2; }
+  > .o-form-item { margin: 0 $xs 0 0; width: 100%; }
+  > .o-form-item:last-child { margin: 0 $xs 0 0; }
+  > .o-form-item--email { margin-right: $sm; }
+  > .o-form-item--multiple-select:last-child { min-width: $xxl * 2; }
 
   // This div wraps the Make Admin checkbox button and text.
   > div:last-child { @extend .flex-ac; margin-left: $xs; }

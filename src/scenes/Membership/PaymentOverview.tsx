@@ -4,7 +4,7 @@ import React from 'react';
 import Button from '@atoms/Button';
 import Card from '@containers/Card/Card';
 import { MainSection } from '@containers/Main';
-import RowContainer from '@containers/Row';
+import RowContainer from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
 import { Column, Row, TableOptions } from '@organisms/Table/Table.types';

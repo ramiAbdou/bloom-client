@@ -1,8 +1,23 @@
-$PREF: 'c-form';
+$PREF: 'o-form';
 
 // ## GENERAL
 
-.#{$PREF}-item { margin-bottom: $lg; margin-top: $lg; }
+.#{$PREF}-item {
+  margin-bottom: $md;
+
+  &--image > input { display: none; }
+
+  &--image > button {
+    @extend .flex-acc;
+
+    background-size: cover;
+    border-radius: 50%;
+    height: $xl * 2;
+    width: $xl * 2;
+  }
+
+  &--image > button > svg { @extend .react-icon--xl; color: white; }
+}
 
 .#{$PREF}-desc {
   color: $gray-2;
@@ -27,6 +42,12 @@ $PREF: 'c-form';
   > h4 { color: $gray-2; }
 
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
+}
+
+// ## SUBMIT BUTTON
+
+.#{$PREF}-submit {
+  &--sticky { bottom: $md; position: sticky; }
 }
 
 // ## INVISIBLE SUBMIT

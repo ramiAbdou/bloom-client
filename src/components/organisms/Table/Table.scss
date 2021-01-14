@@ -6,7 +6,7 @@ $PREF: 'c-table';
   background-color: white;
   border: 1px $gray-5 solid;
   border-radius: $xs;
-  max-height: 70vh;
+  max-height: 65vh;
   overflow: scroll;
   position: relative;
 }
@@ -82,7 +82,7 @@ div.#{$PREF}-col-picker { padding: $sm; }
 .#{$PREF}-col-picker-button--active > svg,
 .#{$PREF}-col-picker-button--active > p { color: $primary; }
 
-.#{$PREF}-col-picker > form > .c-form-item {
+.#{$PREF}-col-picker > form > .o-form-item {
   margin-bottom: $sm;
   margin-top: 0;
 }

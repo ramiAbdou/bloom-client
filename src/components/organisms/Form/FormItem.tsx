@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { cx, takeFirst } from '@util/util';
+import ErrorMessage from '../../atoms/ErrorMessage';
 import Form from './Form.store';
 import { FormItemProps } from './Form.types';
 import FormDescription from './FormDescription';
@@ -9,53 +10,58 @@ import useItemBody from './useItemBody';
 
 const FormItem: React.FC<FormItemProps> = ({
   children,
-  category,
   description,
-  id,
   options,
   required,
   placeholder,
   plain,
-  title,
   type,
   validate,
-  value
+  value,
+  ...queryArgs
 }: FormItemProps) => {
+  const { category, title } = queryArgs;
+
+  const errorMessage = Form.useStoreState(
+    ({ getItem }) => getItem(queryArgs)?.errorMessage
+  );
+
   const setItem = Form.useStoreActions((store) => store.setItem);
 
   useEffect(() => {
-    const emptyValue: string | string[] = takeFirst([
-      [type === 'MULTIPLE_SELECT', []],
-      [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
-      [type === 'TOGGLE', false]
-    ]);
+    value =
+      value ??
+      takeFirst([
+        [type === 'MULTIPLE_SELECT', []],
+        [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
+        [type === 'TOGGLE', false]
+      ]);
 
     setItem({
-      category,
-      id,
+      initialValue: value,
       required,
-      title,
+      type,
       validate,
-      value: value ?? emptyValue
+      value,
+      ...queryArgs
     });
   }, []);
 
   const body: React.ReactElement = useItemBody({
-    category,
     children,
-    id,
     options,
     placeholder,
     plain,
     required,
-    title,
-    type
+    type,
+    ...queryArgs
   });
 
   const css = cx({
-    'c-form-item': true,
-    'c-form-item--email': category === 'EMAIL',
-    'c-form-item--multiple-select': type === 'MULTIPLE_SELECT'
+    'o-form-item': true,
+    'o-form-item--email': category === 'EMAIL',
+    'o-form-item--image': type === 'IMAGE',
+    'o-form-item--multiple-select': type === 'MULTIPLE_SELECT'
   });
 
   return (
@@ -64,6 +70,7 @@ const FormItem: React.FC<FormItemProps> = ({
       {type !== 'TOGGLE' && <FormDescription>{description}</FormDescription>}
       {body}
       {type === 'TOGGLE' && <FormDescription>{description}</FormDescription>}
+      <ErrorMessage marginBottom={16} message={errorMessage} />
     </div>
   );
 };

@@ -16,13 +16,18 @@ export const GET_USER = query({
   fields: [
     'activeCommunityId',
     'email',
-    'id',
+    'facebookUrl',
     'firstName',
+    'id',
+    'instagramUrl',
     'lastName',
+    'linkedInUrl',
     'pictureUrl',
+    'twitterUrl',
     {
       members: [
         'autoRenew',
+        'bio',
         'duesStatus',
         'id',
         'role',

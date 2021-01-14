@@ -61,7 +61,7 @@ const LoginCardEmailForm: React.FC = () => {
         description="Or continue with your email address to receive a login link."
         placeholder="Email"
         type="SHORT_TEXT"
-        validate={(value: string) => validator.isEmail(value)}
+        validate="IS_EMAIL"
       />
 
       <FormErrorMessage marginTop={0} />

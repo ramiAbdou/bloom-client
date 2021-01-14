@@ -34,10 +34,11 @@ $PREF: 'c-misc-dropdown';
 
   background-color: white;
   border-radius: $xxs;
-  margin-bottom: $xl; // For when the dropdown is at the bottom of the page.
-  padding-bottom: $xs;
-  padding-top: $xs;
-  position: absolute; // So that the container doesn't change document flow.
+  margin: 0 2px $md 2px;
+  max-height: $xxl * 5;
+  overflow: hidden;
+  padding: $xs 0;
+  position: relative; // So that the container doesn't change document flow.
   z-index: 3;
 
   // Wraps the list of options.

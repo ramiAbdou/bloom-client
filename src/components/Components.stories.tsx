@@ -4,7 +4,7 @@ import { Description, Stories, Title } from '@storybook/addon-docs/blocks';
 import CBox from './atoms/Checkbox/Checkbox';
 import IPut from './atoms/Input/Input';
 import Attr from './atoms/Tags/Attribute';
-import NTag from './atoms/Tags/NumberTag';
+import HTag from './atoms/Tags/HeaderTag';
 import DDown from './molecules/Dropdown/Dropdown';
 import QVal from './molecules/QuestionValueList';
 import RDio from './molecules/Radio/Radio';
@@ -42,13 +42,13 @@ const DropdownTemplate = (args) => {
 
 export const Dropdown = DropdownTemplate.bind({});
 
-// ## NUMBER TAG
+// ## HEADER TAG
 
-const NumberTagTemplate = (args) => {
-  return <NTag {...args}>999 Members</NTag>;
+const HeaderTagTemplate = (args) => {
+  return <HTag {...args}>999 Members</HTag>;
 };
 
-export const NumberTag = NumberTagTemplate.bind({});
+export const HeaderTag = HeaderTagTemplate.bind({});
 
 // ## INPUT
 
