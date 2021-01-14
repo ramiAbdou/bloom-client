@@ -55,6 +55,7 @@ export interface UpdateUserArgs {
   instagramUrl?: string;
   lastName?: string;
   linkedInUrl?: string;
+  pictureUrl?: string;
   twitterUrl?: string;
 }
 
@@ -73,6 +74,7 @@ export const UPDATE_USER = mutation({
         'instagramUrl',
         'lastName',
         'linkedInUrl',
+        'pictureUrl',
         'twitterUrl'
       ]
     },
@@ -86,6 +88,7 @@ export const UPDATE_USER = mutation({
     instagramUrl: { required: false },
     lastName: { required: false },
     linkedInUrl: { required: false },
+    pictureUrl: { required: false },
     twitterUrl: { required: false }
   }
 }).query;

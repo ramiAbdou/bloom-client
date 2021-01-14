@@ -1,6 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { useStoreActions } from '@store/Store';
+import { uploadImage } from '@util/imageUtil';
 import { Schema } from '../../core/store/schema';
 import { UPDATE_USER, UpdateUserArgs, UpdateUserResult } from './Profile.gql';
 
@@ -38,8 +39,26 @@ const useUpdateUser = (): OnFormSubmit => {
     const linkedInUrl = items.find(({ title }) => title === 'LinkedIn URL')
       ?.value;
 
+    const profilePicture = items.find(({ id }) => id === 'profilePicture')
+      ?.value;
+
     const twitterUrl = items.find(({ title }) => title === 'Twitter URL')
       ?.value;
+
+    let pictureUrl: string;
+
+    if (profilePicture) {
+      try {
+        pictureUrl = await uploadImage({
+          base64String: profilePicture,
+          key: 'PROFILE_PICTURE'
+        });
+      } catch {
+        setIsLoading(false);
+        setErrorMessage('Failed to upload image.');
+        return;
+      }
+    }
 
     const { error } = await updateUser({
       bio,
@@ -48,6 +67,7 @@ const useUpdateUser = (): OnFormSubmit => {
       instagramUrl,
       lastName,
       linkedInUrl,
+      pictureUrl,
       twitterUrl
     });
 

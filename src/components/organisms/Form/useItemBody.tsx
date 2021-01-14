@@ -4,13 +4,17 @@ import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
 import { FormItemData } from './Form.types';
 import FormDropdownItem from './FormDropdown';
+import FormImageUpload from './FormImageUpload';
 import FormLongText from './FormLongText';
 import FormMultipleChoice from './FormMultipleChoice';
 import FormMultipleSelect from './FormMultipleSelect';
 import FormShortText from './FormShortText';
 import FormToggle from './FormToggle';
 
-type BaseItemProps = Pick<FormItemData, 'category' | 'required' | 'title'>;
+type BaseItemProps = Pick<
+  FormItemData,
+  'category' | 'id' | 'required' | 'title'
+>;
 
 interface OptionItemProps
   extends BaseItemProps,
@@ -84,7 +88,8 @@ const useItemBody = (props: UseItemBodyProps) => {
       type === 'MULTIPLE_CHOICE' && options.length < 5,
       <FormMultipleChoice {...optionProps} />
     ],
-    [type === 'TOGGLE', <FormToggle {...baseProps} />]
+    [type === 'TOGGLE', <FormToggle {...baseProps} />],
+    [type === 'IMAGE', <FormImageUpload {...baseProps} />]
   ]);
 
   return body;

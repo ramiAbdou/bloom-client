@@ -89,13 +89,20 @@ const ProfilePersonalMainContent: React.FC = () => (
 );
 
 const ProfilePersonalPictureRow: React.FC = () => {
+  const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+
   const isMobile = useBreakpoint() === 1;
   const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
 
   return (
     <Row spaceBetween>
-      <ProfilePicture circle fontSize={36} size={isMobile ? 84 : 104} />
+      <ProfilePicture
+        circle
+        fontSize={36}
+        pictureUrl={pictureUrl}
+        size={isMobile ? 84 : 104}
+      />
       <ProfileEditButton canEdit onEditClick={onClick} />
     </Row>
   );

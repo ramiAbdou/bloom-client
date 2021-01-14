@@ -5,7 +5,6 @@ import ErrorMessage from '../../atoms/ErrorMessage';
 import Form from './Form.store';
 import { FormItemProps } from './Form.types';
 import FormDescription from './FormDescription';
-import FormImageUpload from './FormImageUpload';
 import FormLabel from './FormLabel';
 import useItemBody from './useItemBody';
 
@@ -62,8 +61,6 @@ const FormItem: React.FC<FormItemProps> = ({
     'c-form-item--email': category === 'EMAIL',
     'c-form-item--multiple-select': type === 'MULTIPLE_SELECT'
   });
-
-  if (type === 'IMAGE') return <FormImageUpload />;
 
   return (
     <div className={css}>

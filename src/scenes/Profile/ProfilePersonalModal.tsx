@@ -23,7 +23,7 @@ const ProfilePersonalModal: React.FC = () => {
 
       <Form onSubmit={updateUser}>
         <ModalContentContainer>
-          <FormItem type="IMAGE" />
+          <FormItem id="profilePicture" type="IMAGE" />
 
           <FormItem
             required
