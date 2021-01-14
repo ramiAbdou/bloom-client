@@ -50,7 +50,11 @@ $PREF: 's-profile';
     > div:first-child > button { display: none; }
   }
 
-  > div:first-child { align-items: flex-start; }
+  > div:first-child {
+    align-items: flex-start;
+
+    @include M { margin-bottom: $sm; }
+  }
 }
 
 .#{$PREF}-card--personal-main {

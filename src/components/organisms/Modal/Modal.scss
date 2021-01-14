@@ -69,7 +69,7 @@ $PREF: 'c-modal';
   > h1,
   > .t-loading-header { margin-bottom: $sm; position: sticky; top: $md; }
   > p:first-of-type { margin-bottom: $md; }
-  > .c-misc-question-ctr { max-height: 70vh; overflow: scroll; }
+  > .c-misc-question-ctr { max-height: 65vh; overflow: scroll; }
 }
 
 // ## CONFIRMATION MODAL
@@ -82,7 +82,7 @@ $PREF: 'c-modal';
 
 .#{$PREF}-content-ctr {
   margin-bottom: $md;
-  max-height: 70vh;
+  max-height: 65vh;
   overflow: scroll;
 
   ~ .t-action-ctr--equal { margin-top: $md; }
