@@ -14,7 +14,7 @@ const DirectoryModalData: React.FC = () => {
     return <p>Looks like this user hasn't finished onboarding yet!</p>;
   }
 
-  return <QuestionValueList items={items} />;
+  return <QuestionValueList handleNull="HIDE_ALL" items={items} />;
 };
 
 const DirectoryModal: React.FC<IdProps> = ({ id }) => (

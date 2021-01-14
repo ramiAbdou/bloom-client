@@ -72,7 +72,7 @@ $PREF: 's-profile';
 
 .#{$PREF}-card--membership {
   > div:first-child { margin-bottom: $sm; }
-  > .m-misc-question-ctr { margin-bottom: $md; }
+  > .m-misc-question-ctr:not(:last-child) { margin-bottom: $md; }
 }
 
 // ## PROFILE SOCIAL CARD

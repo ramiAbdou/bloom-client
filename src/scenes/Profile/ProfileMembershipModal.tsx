@@ -39,7 +39,7 @@ const ProfileMembershipModal: React.FC = () => {
         value = value ? value.split(',') : [];
       }
 
-      return { ...question, id: data?.id, value };
+      return { ...question, value };
     });
   });
 

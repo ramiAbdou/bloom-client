@@ -43,7 +43,7 @@ const ProfileMembershipContent: React.FC = () => {
     });
   });
 
-  return <QuestionValueList items={items} />;
+  return <QuestionValueList handleNull="HIDE_VALUE" items={items} />;
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
