@@ -21,8 +21,8 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   const isLoading = Form.useStoreState((store) => store.isLoading);
 
   const css = cx({
-    'o-form-submit--sticky': stickToBottom,
-    [className]: className
+    [className]: className,
+    'o-form-submit--sticky': stickToBottom
   });
 
   return (

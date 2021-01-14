@@ -39,6 +39,7 @@ const FormItem: React.FC<FormItemProps> = ({
 
     setItem({
       initialValue: value,
+      required,
       type,
       validate,
       value,
