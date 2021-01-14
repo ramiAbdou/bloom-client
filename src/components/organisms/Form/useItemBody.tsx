@@ -1,8 +1,12 @@
 import React, { useMemo } from 'react';
 
-import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
-import { FormItemData } from './Form.types';
+import {
+  BaseItemProps,
+  OptionItemProps,
+  TextItemProps,
+  UseItemBodyProps
+} from './Form.types';
 import FormDropdownItem from './FormDropdown';
 import FormImageUpload from './FormImageUpload';
 import FormLongText from './FormLongText';
@@ -10,33 +14,6 @@ import FormMultipleChoice from './FormMultipleChoice';
 import FormMultipleSelect from './FormMultipleSelect';
 import FormShortText from './FormShortText';
 import FormToggle from './FormToggle';
-
-type BaseItemProps = Pick<
-  FormItemData,
-  'category' | 'id' | 'required' | 'title'
->;
-
-interface OptionItemProps
-  extends BaseItemProps,
-    Pick<FormItemData, 'options'> {}
-
-interface TextItemProps
-  extends BaseItemProps,
-    Pick<FormItemData, 'placeholder'> {}
-
-interface UseItemBodyProps
-  extends ChildrenProps,
-    Pick<
-      FormItemData,
-      | 'category'
-      | 'id'
-      | 'options'
-      | 'placeholder'
-      | 'plain'
-      | 'required'
-      | 'title'
-      | 'type'
-    > {}
 
 /**
  * Returns the appropriate Form element (ie: ShortText, LongText) with the

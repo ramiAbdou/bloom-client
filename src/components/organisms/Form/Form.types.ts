@@ -45,6 +45,33 @@ export interface FormItemData extends Partial<FormQuestion> {
   validate?: FormValidate;
 }
 
+export type BaseItemProps = Pick<
+  FormItemData,
+  'category' | 'id' | 'required' | 'title'
+>;
+
+export interface OptionItemProps
+  extends BaseItemProps,
+    Pick<FormItemData, 'options'> {}
+
+export interface TextItemProps
+  extends BaseItemProps,
+    Pick<FormItemData, 'placeholder'> {}
+
+export interface UseItemBodyProps
+  extends ChildrenProps,
+    Pick<
+      FormItemData,
+      | 'category'
+      | 'id'
+      | 'options'
+      | 'placeholder'
+      | 'plain'
+      | 'required'
+      | 'title'
+      | 'type'
+    > {}
+
 // FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,
 // the rest are either used for state or for something else in the store.
 

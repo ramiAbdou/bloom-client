@@ -9,8 +9,9 @@ const FormLongText: React.FC<
   const value = Form.useStoreState(({ getItem }) => getItem(queryArgs)?.value);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
 
-  const updateText = (text: string) =>
+  const updateText = (text: string) => {
     updateItem({ ...queryArgs, value: text });
+  };
 
   return (
     <textarea
