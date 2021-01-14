@@ -10,11 +10,16 @@ import useApplyForMembership from './useApplyForMembership';
 
 const ApplicationFormHeader: React.FC = () => {
   const logoUrl = useStoreState(({ db }) => db.community?.logoUrl);
-  const title = useStoreState(({ db }) => db.community?.applicationTitle);
 
-  const description = useStoreState(
-    ({ db }) => db.community?.applicationDescription
-  );
+  const title = useStoreState(({ db }) => {
+    const { byId: byApplicationId } = db.entities.applications;
+    return byApplicationId[db.community?.application]?.title;
+  });
+
+  const description = useStoreState(({ db }) => {
+    const { byId: byApplicationId } = db.entities.applications;
+    return byApplicationId[db.community?.application]?.description;
+  });
 
   return (
     <>
@@ -27,8 +32,10 @@ const ApplicationFormHeader: React.FC = () => {
 
 const ApplicationFormContent: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
-    const { byId } = db.entities.questions;
-    return db.community?.questions?.map((id: string) => byId[id]);
+    const { byId: byQuestionId } = db.entities.questions;
+    return db.community?.questions
+      ?.map((questionId: string) => byQuestionId[questionId])
+      ?.filter((question: IQuestion) => question.inApplication);
   });
 
   return (

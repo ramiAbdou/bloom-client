@@ -12,6 +12,7 @@ import { takeFirst } from '@util/util';
 // ## NORMALIZR SCHEMA DECLARATIONS
 
 const Community = new schema.Entity('communities', {});
+const CommunityApplication = new schema.Entity('applications', {});
 const Integrations = new schema.Entity('integrations', {});
 
 const Member = new schema.Entity(
@@ -57,6 +58,7 @@ const User = new schema.Entity('users', {});
 // ciruclar dependencies in our code.
 
 Community.define({
+  application: CommunityApplication,
   integrations: Integrations,
   members: [Member],
   questions: [Question],

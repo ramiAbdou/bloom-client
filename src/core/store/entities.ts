@@ -3,8 +3,7 @@ import { QuestionCategory, QuestionType } from '@constants';
 type IdString = string;
 
 export interface ICommunity {
-  applicationDescription?: string;
-  applicationTitle?: string;
+  application?: IdString;
   autoAccept?: boolean;
   urlName: string;
   id: IdString;
@@ -15,6 +14,11 @@ export interface ICommunity {
   name: string;
   primaryColor: string;
   types: IdString[];
+}
+
+export interface ICommunityApplication {
+  description: string;
+  title: string;
 }
 
 export interface IIntegrations {
@@ -77,6 +81,7 @@ export interface IMemberType {
 export interface IQuestion {
   category: QuestionCategory;
   id: IdString;
+  inApplication: boolean;
   inApplicantCard: boolean;
   inDirectoryCard: boolean;
   onlyInApplication: boolean;
@@ -109,6 +114,7 @@ export interface EntityRecord<T> {
 }
 
 export interface IEntities {
+  applications: EntityRecord<ICommunityApplication>;
   communities: EntityRecord<ICommunity>;
   data: EntityRecord<IMemberData>;
   integrations: EntityRecord<IIntegrations>;
@@ -121,6 +127,7 @@ export interface IEntities {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
+  applications: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   data: { allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
