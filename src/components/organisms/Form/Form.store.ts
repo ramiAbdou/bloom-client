@@ -7,7 +7,11 @@ import {
 } from 'easy-peasy';
 import validator from 'validator';
 
-import { FormItemData, FormOptions } from './Form.types';
+import {
+  FormItemData,
+  FormNavigationPageProps,
+  FormOptions
+} from './Form.types';
 import { validateItem } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
@@ -23,10 +27,14 @@ export type FormModel = {
   isShowingErrors: boolean;
   items: FormItemData[];
   options: FormOptions;
+  pageId: string;
+  pages: FormNavigationPageProps[];
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
   setItemErrorMessages: Action<FormModel, FormItemData[]>;
   setIsLoading: Action<FormModel, boolean>;
+  setPageId: Action<FormModel, string>;
+  setPages: Action<FormModel, FormNavigationPageProps[]>;
   updateItem: Action<FormModel, UpdateItemArgs>;
 };
 
@@ -73,6 +81,10 @@ export const formModel: FormModel = {
 
   options: null,
 
+  pageId: null,
+
+  pages: [],
+
   setErrorMessage: action((state, errorMessage: string) => ({
     ...state,
     errorMessage
@@ -92,6 +104,10 @@ export const formModel: FormModel = {
   setItemErrorMessages: action((state, items: FormItemData[]) => {
     return { ...state, items };
   }),
+
+  setPageId: action((state, pageId: string) => ({ ...state, pageId })),
+
+  setPages: action((state, pages) => ({ ...state, pages })),
 
   updateItem: action(
     (state, { category, id, title, value }: UpdateItemArgs) => {

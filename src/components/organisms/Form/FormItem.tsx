@@ -29,13 +29,13 @@ const FormItem: React.FC<FormItemProps> = ({
   const setItem = Form.useStoreActions((store) => store.setItem);
 
   useEffect(() => {
-    value =
-      value ??
-      takeFirst([
-        [type === 'MULTIPLE_SELECT', []],
-        [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
-        [type === 'TOGGLE', false]
-      ]);
+    const emptyValue = takeFirst([
+      [type === 'MULTIPLE_SELECT', []],
+      [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
+      [type === 'TOGGLE', false]
+    ]);
+
+    value = value ?? emptyValue;
 
     setItem({
       initialValue: value,

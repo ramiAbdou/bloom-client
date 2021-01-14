@@ -3,8 +3,10 @@ import { ActionCreator } from 'easy-peasy';
 import {
   ChildrenProps,
   ClassNameProps,
+  IdProps,
   QuestionCategory,
-  QuestionType
+  QuestionType,
+  TitleProps
 } from '@constants';
 
 export type FormQuestion = {
@@ -92,8 +94,14 @@ export interface FormItemProps
       | 'value'
     > {}
 
+export interface FormNavigationPageProps extends IdProps, TitleProps {
+  description?: string;
+  disabled?: boolean;
+}
+
 export interface FormOptions {
   disableValidation?: boolean;
+  multiPage?: boolean;
   validateOnSubmit?: boolean;
 }
 
