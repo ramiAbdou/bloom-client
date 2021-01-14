@@ -33,6 +33,10 @@ export type FormModel = {
   setItem: Action<FormModel, Partial<FormItemData>>;
   setItemErrorMessages: Action<FormModel, FormItemData[]>;
   setIsLoading: Action<FormModel, boolean>;
+  setPageDisabled: Action<
+    FormModel,
+    Pick<FormNavigationPageProps, 'disabled' | 'id'>
+  >;
   setPageId: Action<FormModel, string>;
   setPages: Action<FormModel, FormNavigationPageProps[]>;
   updateItem: Action<FormModel, UpdateItemArgs>;
@@ -115,6 +119,18 @@ export const formModel: FormModel = {
     items
   })),
 
+  setPageDisabled: action(
+    (
+      { pages, ...state },
+      { disabled, id }: Pick<FormNavigationPageProps, 'disabled' | 'id'>
+    ) => {
+      const index = pages.findIndex((page) => page.id === id);
+      pages[index].disabled = disabled;
+      console.log(pages);
+      return { ...state, pages };
+    }
+  ),
+
   setPageId: action((state, pageId: string) => ({ ...state, pageId })),
 
   setPages: action((state, pages) => ({
@@ -149,9 +165,11 @@ export const formModel: FormModel = {
 };
 
 const FormStore = createContextStore<FormModel>(
-  (runtimeModel: FormModel) => ({
+  ({ options, pages, ...runtimeModel }: FormModel) => ({
     ...runtimeModel,
-    options: runtimeModel.options
+    options,
+    pageId: pages[0]?.id,
+    pages: pages.map((page, i) => ({ ...page, disabled: !!i }))
   }),
   { disableImmer: true }
 );

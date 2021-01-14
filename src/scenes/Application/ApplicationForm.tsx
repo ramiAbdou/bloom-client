@@ -27,15 +27,14 @@ const ApplicationForm: React.FC = () => {
       <Form
         className="s-application"
         options={{ multiPage: true }}
+        pages={[
+          { description, id: 'APPLICATION', title },
+          { id: 'SELECT_TYPE', title: 'Membership Selection' },
+          { id: 'CONFIRMATION', title: 'Confirmation' }
+        ]}
         onSubmit={applyForMembership}
       >
-        <FormNavigation
-          pages={[
-            { description, id: 'APPLICATION', title },
-            { id: 'SELECT_TYPE', title: 'Membership Selection' },
-            { id: 'CONFIRMATION', title: 'Confirmation' }
-          ]}
-        />
+        <FormNavigation />
         <ApplicationMembershipPage />
         <ApplicationSelectTypePage />
       </Form>

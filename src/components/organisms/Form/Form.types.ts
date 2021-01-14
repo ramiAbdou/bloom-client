@@ -108,6 +108,7 @@ export interface FormOptions {
 export interface FormProps extends ChildrenProps, ClassNameProps {
   questions?: FormItemData[];
   options?: FormOptions;
+  pages?: FormNavigationPageProps[];
   onSubmit?: OnFormSubmit;
 }
 

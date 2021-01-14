@@ -1,22 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ChildrenProps, IdProps } from '@constants';
 import FormStore from './Form.store';
 
-interface FormPage extends ChildrenProps, IdProps {
+interface FormPageProps extends ChildrenProps, IdProps {
   iconUrl?: string;
 }
 
-const FormPage: React.FC<FormPage> = ({ children, id, iconUrl }) => {
+const FormPage: React.FC<FormPageProps> = ({ children, id, iconUrl }) => {
   const pageId = FormStore.useStoreState((store) => store.pageId);
+  const pages = FormStore.useStoreState((store) => store.pages);
 
-  const page = FormStore.useStoreState(({ pages }) =>
-    pages.find((element) => element.id === id)
+  const currentPageIndex = pages.findIndex((element) => element.id === pageId);
+  const pageIndex = pages.findIndex((element) => element.id === id);
+  const { description, disabled, title } = pages[pageIndex] ?? {};
+
+  const setPageDisabled = FormStore.useStoreActions(
+    (store) => store.setPageDisabled
   );
 
-  if (id !== pageId) return null;
+  const isSamePage = id === pageId;
 
-  const { description, title } = page ?? {};
+  useEffect(() => {
+    if (pageIndex >= 0 && disabled) {
+      setPageDisabled({ disabled: pageIndex > currentPageIndex, id });
+    }
+  }, [disabled, pageIndex, isSamePage]);
+
+  if (!isSamePage) return null;
 
   return (
     <div className="o-form-page">

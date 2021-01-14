@@ -11,11 +11,7 @@ const FormContinueButton: React.FC<ButtonProps> = ({ ...props }) => {
 
   const onClick = () => {
     const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
-    const { disabled, id } = pages[nextIndex];
-
-    // Don't get to next page if it is disabled.
-    if (disabled) return;
-
+    const { id } = pages[nextIndex];
     setPageId(id);
   };
 

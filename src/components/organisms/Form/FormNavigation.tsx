@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import useTooltip from '@hooks/useTooltip';
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { FormNavigationPageProps } from './Form.types';
 
-interface FormNavigationProps {
-  pages?: FormNavigationPageProps[];
-}
+const FormNavigationBar: React.FC<FormNavigationPageProps> = ({ id }) => {
+  const disabled = FormStore.useStoreState(({ pages }) => {
+    return pages.find((page: FormNavigationPageProps) => page.id === id)
+      ?.disabled;
+  });
 
-const FormNavigationBar: React.FC<FormNavigationPageProps> = ({
-  disabled,
-  id,
-  title
-}) => {
+  const title = FormStore.useStoreState(({ pages }) => {
+    return pages.find((page: FormNavigationPageProps) => page.id === id)?.title;
+  });
+
   const setPageId = FormStore.useStoreActions((store) => store.setPageId);
   const ref: React.LegacyRef<any> = useTooltip(title);
 
@@ -26,20 +27,14 @@ const FormNavigationBar: React.FC<FormNavigationPageProps> = ({
   return <div ref={ref} className={css} onClick={onClick} />;
 };
 
-const FormNavigation: React.FC<FormNavigationProps> = ({ pages }) => {
-  const setPages = FormStore.useStoreActions((store) => store.setPages);
-  const formattedPages = pages.map((page, i) => ({ ...page, disabled: !!i }));
-
-  useEffect(() => {
-    if (pages?.length) setPages(pages);
-  }, [pages]);
-
+const FormNavigation: React.FC = () => {
+  const pages = FormStore.useStoreState((store) => store.pages);
   if (!pages?.length) return null;
 
   return (
     <div className="o-form-nav-ctr">
-      {formattedPages.map((page: FormNavigationPageProps) => {
-        return <FormNavigationBar key={page.id} {...page} />;
+      {pages.map(({ id }: FormNavigationPageProps) => {
+        return <FormNavigationBar key={id} id={id} />;
       })}
     </div>
   );

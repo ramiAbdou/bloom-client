@@ -61,8 +61,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-const Form: React.FC<FormProps> = ({ options, ...props }: FormProps) => (
-  <FormStore.Provider runtimeModel={{ ...formModel, options }}>
+const Form: React.FC<FormProps> = ({ options, pages, ...props }: FormProps) => (
+  <FormStore.Provider runtimeModel={{ ...formModel, options, pages }}>
     <FormContent {...props} />
   </FormStore.Provider>
 );
