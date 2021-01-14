@@ -80,6 +80,7 @@ export type RouteType =
 
 export type QuestionType =
   | 'CUSTOM'
+  | 'IMAGE'
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
   | 'MULTIPLE_SELECT'

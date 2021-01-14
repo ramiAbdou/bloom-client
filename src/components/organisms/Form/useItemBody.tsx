@@ -41,7 +41,6 @@ interface UseItemBodyProps
 const useItemBody = (props: UseItemBodyProps) => {
   const {
     category,
-    children,
     id,
     plain,
     required,
@@ -85,8 +84,7 @@ const useItemBody = (props: UseItemBodyProps) => {
       type === 'MULTIPLE_CHOICE' && options.length < 5,
       <FormMultipleChoice {...optionProps} />
     ],
-    [type === 'TOGGLE', <FormToggle {...baseProps} />],
-    children
+    [type === 'TOGGLE', <FormToggle {...baseProps} />]
   ]);
 
   return body;

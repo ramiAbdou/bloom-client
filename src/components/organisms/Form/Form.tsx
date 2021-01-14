@@ -4,7 +4,7 @@ import React, { useCallback } from 'react';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
 import { FormProps } from './Form.types';
-import { formatQuestions, validateItems } from './Form.util';
+import { validateItems } from './Form.util';
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
@@ -56,7 +56,6 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
 
 const Form: React.FC<FormProps> = ({
   disableValidation,
-  questions,
   validateOnSubmit,
   ...props
 }: FormProps) => (
@@ -64,7 +63,6 @@ const Form: React.FC<FormProps> = ({
     runtimeModel={{
       ...formModel,
       disableValidation,
-      items: formatQuestions(questions ?? []),
       validateOnSubmit
     }}
   >

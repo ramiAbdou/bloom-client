@@ -36,6 +36,7 @@ const baseConfig: Configuration = {
       }
     ]
   },
+  node: { fs: 'empty' },
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, '/dist'),

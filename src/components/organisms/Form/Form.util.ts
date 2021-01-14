@@ -3,25 +3,6 @@ import validator from 'validator';
 import { FormItemData } from './Form.types';
 
 /**
- * Formats the given questions into valid Form items by adding the additional
- * properties and initializing the values for each question.
- *
- * @param questions Questions to format into items.
- */
-export const formatQuestions = (questions: FormItemData[]) => {
-  if (!questions) return [];
-
-  return questions.map(
-    ({ options, type, value, ...question }: Partial<FormItemData>) => {
-      const emptyValue: string | string[] =
-        type === 'MULTIPLE_SELECT' ? [] : '';
-
-      return { ...question, options, type, value: value ?? emptyValue };
-    }
-  );
-};
-
-/**
  * All GraphQL requests with data should have the data be populated in an array,
  * even if the question is not MULTIPLE_SELECT. This helps with parsing
  * consistency.
