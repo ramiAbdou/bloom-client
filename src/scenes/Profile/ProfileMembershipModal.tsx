@@ -16,27 +16,31 @@ const ProfileMembershipModal: React.FC = () => {
     const { byId: byDataId } = db.entities.data;
     const { byId: byQuestionId } = db.entities.questions;
 
-    const memberData: IMemberData[] = db.member.data?.map((dataId: string) => {
-      return byDataId[dataId];
+    const questions: IQuestion[] = db.community.questions
+      ?.map((questionId: string) => byQuestionId[questionId])
+      .filter((question: IQuestion) => !question.onlyInApplication)
+      .filter((question: IQuestion) => !question.category);
+
+    return questions?.map((question: IQuestion) => {
+      const { id, options, type } = question;
+
+      const data: IMemberData = Object.values(byDataId).find(
+        (element: IMemberData) => element.question === id
+      );
+
+      let value = data?.value;
+
+      if (
+        (type === 'MULTIPLE_SELECT' ||
+          (type === 'MULTIPLE_CHOICE' && options?.length >= 5)) &&
+        value &&
+        !Array.isArray(value)
+      ) {
+        value = value ? value.split(',') : [];
+      }
+
+      return { ...question, id: data?.id, value };
     });
-
-    return memberData
-      ?.filter(({ question }) => !byQuestionId[question]?.onlyInApplication)
-      .map(({ id, question: questionId, value }: IMemberData) => {
-        const question: IQuestion = byQuestionId[questionId];
-
-        if (
-          (question.type === 'MULTIPLE_SELECT' ||
-            (question.type === 'MULTIPLE_CHOICE' &&
-              question.options?.length >= 5)) &&
-          value &&
-          !Array.isArray(value)
-        ) {
-          value = value ? value.split(',') : [];
-        }
-
-        return { ...question, id, value };
-      });
   });
 
   const updateMemberData = useUpdateMemberData();

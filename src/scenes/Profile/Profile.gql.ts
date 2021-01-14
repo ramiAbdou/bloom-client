@@ -12,11 +12,13 @@ export const GET_MEMBER_DATA = query({
   fields: [
     'id',
     {
-      data: [
+      data: ['id', 'value', { question: ['id'] }]
+    },
+    {
+      community: [
         'id',
-        'value',
         {
-          question: [
+          questions: [
             'id',
             'category',
             'description',

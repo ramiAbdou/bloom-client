@@ -64,7 +64,6 @@ $PREF: 's-profile';
 
   > div:first-child { margin-bottom: $xxs; }
   > .m-misc-mail-to { margin-bottom: $sm; }
-  > .t-row--gap-sm { margin-bottom: $ss; }
   > p:not(:last-child) { margin-bottom: $sm; }
 }
 
@@ -72,6 +71,7 @@ $PREF: 's-profile';
 
 .#{$PREF}-card--membership {
   > div:first-child { margin-bottom: $sm; }
+  > .m-misc-question-ctr { margin-bottom: $md; }
 }
 
 // ## PROFILE SOCIAL CARD

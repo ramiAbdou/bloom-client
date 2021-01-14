@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from '@atoms/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import useQuery from '@hooks/useQuery';
@@ -28,19 +29,36 @@ const ProfileMembershipContent: React.FC = () => {
     const { byId: byDataId } = db.entities.data;
     const { byId: byQuestionId } = db.entities.questions;
 
-    const memberData: IMemberData[] = db.member.data?.map((dataId: string) => {
-      return byDataId[dataId];
-    });
+    const questions: IQuestion[] = db.community.questions
+      ?.map((questionId: string) => byQuestionId[questionId])
+      .filter((question: IQuestion) => !question.onlyInApplication)
+      .filter((question: IQuestion) => !question.category);
 
-    return memberData
-      ?.filter(({ question }) => !byQuestionId[question]?.onlyInApplication)
-      .map(({ question: questionId, value }: IMemberData) => {
-        const { title, type }: IQuestion = byQuestionId[questionId];
-        return { title, type, value };
-      });
+    return questions?.map(({ id, title, type }: IQuestion) => {
+      const data: IMemberData = Object.values(byDataId).find(
+        (element: IMemberData) => element.question === id
+      );
+
+      return { title, type, value: data?.value };
+    });
   });
 
   return <QuestionValueList items={items} />;
+};
+
+const ProfileMembershipOnboardingContainer: React.FC = () => {
+  const showOnboarding = useStoreState(({ db }) => !db.member.data?.length);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  if (!showOnboarding) return null;
+
+  const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
+
+  return (
+    <Button fill primary onClick={onClick}>
+      + Fill Out Membership Information
+    </Button>
+  );
 };
 
 const ProfileMembershipCard: React.FC = () => {
@@ -48,13 +66,14 @@ const ProfileMembershipCard: React.FC = () => {
     name: 'getMember',
     query: GET_MEMBER_DATA,
     schema: Schema.MEMBER,
-    variables: { populate: ['data.question'] }
+    variables: { populate: ['community.questions', 'data.question'] }
   });
 
   return (
     <Card className="s-profile-card--membership">
       <ProfileMembershipHeader />
       <ProfileMembershipContent />
+      <ProfileMembershipOnboardingContainer />
     </Card>
   );
 };
