@@ -12,7 +12,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   onSubmit
 }) => {
   const validateOnSubmit = FormStore.useStoreState(
-    (store) => store.validateOnSubmit
+    (store) => store.options?.validateOnSubmit
   );
 
   const items = FormStore.useStoreState((store) => store.items, deepequal);
@@ -61,18 +61,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-const Form: React.FC<FormProps> = ({
-  disableValidation,
-  validateOnSubmit,
-  ...props
-}: FormProps) => (
-  <FormStore.Provider
-    runtimeModel={{
-      ...formModel,
-      disableValidation,
-      validateOnSubmit
-    }}
-  >
+const Form: React.FC<FormProps> = ({ options, ...props }: FormProps) => (
+  <FormStore.Provider runtimeModel={{ ...formModel, options }}>
     <FormContent {...props} />
   </FormStore.Provider>
 );

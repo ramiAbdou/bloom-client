@@ -65,11 +65,15 @@ export interface FormItemProps
       | 'value'
     > {}
 
-export interface FormProps extends ChildrenProps, ClassNameProps {
+export interface FormOptions {
   disableValidation?: boolean;
-  questions?: FormItemData[];
-  onSubmit?: OnFormSubmit;
   validateOnSubmit?: boolean;
+}
+
+export interface FormProps extends ChildrenProps, ClassNameProps {
+  questions?: FormItemData[];
+  options?: FormOptions;
+  onSubmit?: OnFormSubmit;
 }
 
 export type OnFormSubmitArgs = {

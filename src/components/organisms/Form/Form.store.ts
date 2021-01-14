@@ -7,7 +7,7 @@ import {
 } from 'easy-peasy';
 import validator from 'validator';
 
-import { FormItemData } from './Form.types';
+import { FormItemData, FormOptions } from './Form.types';
 import { validateItem } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
@@ -16,24 +16,21 @@ interface UpdateItemArgs extends GetItemArgs {
 }
 
 export type FormModel = {
-  disableValidation?: boolean;
   errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
   isShowingErrors: boolean;
   items: FormItemData[];
+  options: FormOptions;
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
   setItemErrorMessages: Action<FormModel, FormItemData[]>;
   setIsLoading: Action<FormModel, boolean>;
   updateItem: Action<FormModel, UpdateItemArgs>;
-  validateOnSubmit?: boolean;
 };
 
 export const formModel: FormModel = {
-  disableValidation: false,
-
   // Represents the error message for the entire Form, not any one element.
   errorMessage: null,
 
@@ -50,7 +47,9 @@ export const formModel: FormModel = {
    *  - Item is not required.
    *  - Item is required and there is non-empty value.
    */
-  isCompleted: computed(({ items, disableValidation, validateOnSubmit }) => {
+  isCompleted: computed(({ items, options }) => {
+    const { disableValidation, validateOnSubmit } = options ?? {};
+
     if (disableValidation) return true;
     if (!items?.length) return false;
     if (items.every(({ value }) => !value)) return false;
@@ -71,6 +70,8 @@ export const formModel: FormModel = {
   isShowingErrors: false,
 
   items: [],
+
+  options: null,
 
   setErrorMessage: action((state, errorMessage: string) => ({
     ...state,
@@ -93,11 +94,9 @@ export const formModel: FormModel = {
   }),
 
   updateItem: action(
-    (
-      { validateOnSubmit, ...state },
-      { category, id, title, value }: UpdateItemArgs
-    ) => {
-      const { items } = state;
+    (state, { category, id, title, value }: UpdateItemArgs) => {
+      const { items, options } = state;
+      const { validateOnSubmit } = options ?? {};
 
       let index: number;
 
@@ -116,22 +115,13 @@ export const formModel: FormModel = {
 
       return { ...state, items, validateOnSubmit };
     }
-  ),
-
-  validateOnSubmit: false
+  )
 };
 
 const FormStore = createContextStore<FormModel>(
   (runtimeModel: FormModel) => ({
     ...runtimeModel,
-
-    disableValidation: runtimeModel.disableValidation,
-
-    // If there isn't an ID supplied to an item, just make the ID the title.
-    items: runtimeModel.items.map((item: FormItemData) => ({
-      ...item,
-      id: item.id ?? item.title
-    }))
+    options: runtimeModel.options
   }),
   { disableImmer: true }
 );

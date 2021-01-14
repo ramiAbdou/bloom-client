@@ -109,8 +109,8 @@ const PaymentFinishScreenContent: React.FC = () => {
 
   return (
     <Form
-      disableValidation
       className="mo-payment"
+      options={{ disableValidation: true }}
       onSubmit={isLifetime ? createOneTimePayment : createSubscription}
     >
       <ModalContentContainer>
