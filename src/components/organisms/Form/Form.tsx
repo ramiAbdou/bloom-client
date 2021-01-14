@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
-import { FormProps } from './Form.types';
+import { FormItemData, FormProps } from './Form.types';
 import { validateItems } from './Form.util';
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
@@ -28,7 +28,14 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       event.preventDefault();
 
       if (onSubmit) {
-        const validatedItems = validateOnSubmit ? validateItems(items) : items;
+        let validatedItems: FormItemData[] = validateOnSubmit
+          ? validateItems(items)
+          : items;
+
+        validatedItems = validatedItems.filter(
+          ({ initialValue, value }: FormItemData) =>
+            !deepequal(initialValue, value)
+        );
 
         if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
           setItemErrorMessages(validatedItems);
@@ -36,7 +43,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         }
 
         onSubmit({
-          items,
+          items: validatedItems,
           setErrorMessage: setError,
           setIsLoading
         });
@@ -45,7 +52,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     [items, validateOnSubmit]
   );
 
-  const css = cx({ 'o-form': true, [className]: className });
+  const css = cx({ [className]: className, 'o-form': true });
 
   return (
     <form className={css} onSubmit={onFormSubmit}>
