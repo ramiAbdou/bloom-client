@@ -13,6 +13,7 @@ interface CardProps
 
 const Card: React.FC<CardProps> = ({ children, className, loading, title }) => {
   const css = cx({ [className]: className, 't-misc-card': true });
+
   return (
     <div className={css}>
       {title && <LoadingHeader h3 loading={loading} title={title} />}

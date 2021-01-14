@@ -47,10 +47,10 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const showOnboarding = useStoreState(({ db }) => !db.member.data?.length);
+  const hasData = useStoreState(({ db }) => !!db.member.data?.length);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  if (!showOnboarding) return null;
+  if (hasData) return null;
 
   const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
 
@@ -62,12 +62,14 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  useQuery({
+  const { loading } = useQuery({
     name: 'getMember',
     query: GET_MEMBER_DATA,
     schema: Schema.MEMBER,
     variables: { populate: ['community.questions', 'data.question'] }
   });
+
+  if (loading) return null;
 
   return (
     <Card className="s-profile-card--membership">
