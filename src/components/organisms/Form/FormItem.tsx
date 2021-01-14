@@ -57,9 +57,10 @@ const FormItem: React.FC<FormItemProps> = ({
   });
 
   const css = cx({
-    'c-form-item': true,
-    'c-form-item--email': category === 'EMAIL',
-    'c-form-item--multiple-select': type === 'MULTIPLE_SELECT'
+    'o-form-item': true,
+    'o-form-item--email': category === 'EMAIL',
+    'o-form-item--image': type === 'IMAGE',
+    'o-form-item--multiple-select': type === 'MULTIPLE_SELECT'
   });
 
   return (

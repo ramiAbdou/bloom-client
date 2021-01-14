@@ -14,6 +14,7 @@ const ProfilePersonalModal: React.FC = () => {
   const bio = useStoreState(({ db }) => db.member.bio);
   const firstName = useStoreState(({ db }) => db.user.firstName);
   const lastName = useStoreState(({ db }) => db.user.lastName);
+  const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
 
   const updateUser = useUpdateUser();
 
@@ -23,7 +24,7 @@ const ProfilePersonalModal: React.FC = () => {
 
       <Form onSubmit={updateUser}>
         <ModalContentContainer>
-          <FormItem id="profilePicture" type="IMAGE" />
+          <FormItem id="profilePicture" type="IMAGE" value={pictureUrl} />
 
           <FormItem
             required

@@ -11,14 +11,14 @@ $PREF: 'mo-payment';
 
 .#{$PREF}-billing-ctr > div:not(:last-child) { margin-right: $sm; }
 
-.#{$PREF}-billing-ctr > .c-form-item,
-.#{$PREF} > .c-modal-content-ctr > .c-form-item, 
+.#{$PREF}-billing-ctr > .o-form-item,
+.#{$PREF} > .c-modal-content-ctr > .o-form-item, 
 .#{$PREF}-item {
   margin-bottom: $md;
   margin-top: 0;
 
   > h4:first-child,
-  > .c-form-label { margin-bottom: $xs; }
+  > .o-form-label { margin-bottom: $xs; }
 
   > div.c-misc-input {
     margin-bottom: $md;
@@ -28,5 +28,5 @@ $PREF: 'mo-payment';
   }
 }
 
-.#{$PREF}-billing-ctr > .c-form-item { margin-bottom: 0; margin-top: 0; }
+.#{$PREF}-billing-ctr > .o-form-item { margin-bottom: 0; margin-top: 0; }
 .#{$PREF}-item--type > div { @extend .flex-acsb; }

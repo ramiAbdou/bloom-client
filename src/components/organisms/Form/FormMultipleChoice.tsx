@@ -10,7 +10,7 @@ const FormMultipleChoice: React.FC<FormItemData> = ({ options, title }) => {
 
   return (
     <Radio
-      name={`c-form-mc-${title}`}
+      name={`o-form-mc-${title}`}
       options={options.map((option: string) => ({
         label: option,
         value: option

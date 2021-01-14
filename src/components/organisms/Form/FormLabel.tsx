@@ -16,7 +16,7 @@ const FormLabel: React.FC<FormLabelProps> = ({
 }) => {
   if (!children) return null;
 
-  const css = cx({ 'c-form-label': true, 'c-form-label--required': required });
+  const css = cx({ 'o-form-label': true, 'o-form-label--required': required });
 
   return (
     <div className={css}>
