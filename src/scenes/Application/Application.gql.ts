@@ -40,7 +40,8 @@ export const GET_APPLICATION = query({
         'title',
         'type'
       ]
-    }
+    },
+    { types: ['id', 'isFree'] }
   ],
   operation: 'getApplication',
   variables: { urlName: { required: true } }
