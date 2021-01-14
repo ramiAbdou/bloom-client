@@ -29,7 +29,7 @@ $PREF: 's-directory-modal';
 .#{$PREF}-personal-ctr {
   > h1 { color: $gray-1; margin-bottom: $xxs; }
   > a:not(:last-child) { margin-bottom: $sm; }
-  > .t-row--gap-sm { margin-bottom: $xs; }
+  > .t-row--gap-sm { margin-bottom: $ss; }
 }
 
 .#{$PREF}-location {
