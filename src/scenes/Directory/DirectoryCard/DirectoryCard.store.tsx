@@ -1,9 +1,9 @@
 import { createContextStore } from 'easy-peasy';
 
 import { QuestionType } from '@constants';
-import { IUser } from '@store/entities';
+import { IMember, IUser } from '@store/entities';
 
-export interface MemberCardModel extends IUser {
+export interface MemberCardModel extends Pick<IMember, 'role' | 'type'>, IUser {
   bio: string;
   expandedCardData: { title: string; type: QuestionType; value: string }[];
   highlightedValue: string;

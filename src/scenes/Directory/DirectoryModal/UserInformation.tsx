@@ -1,7 +1,10 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
+import { HeaderTag } from '@atoms/Tags';
+import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture';
+import { useStoreState } from '@store/Store';
 import MailTo from '../../../components/molecules/MailTo';
 import MemberCard from '../DirectoryCard/DirectoryCard.store';
 import SocialMediaContainer from './SocialMedia';
@@ -31,6 +34,23 @@ const MemberFullName = () => {
   return <h1>{`${firstName} ${lastName}`}</h1>;
 };
 
+const MemberTagList: React.FC = () => {
+  const role = MemberCard.useStoreState((store) => store?.role);
+  const typeId = MemberCard.useStoreState((store) => store?.type);
+
+  const type: string = useStoreState(({ db }) => {
+    const { byId } = db.entities.types;
+    return byId[typeId]?.name;
+  });
+
+  return (
+    <Row gap="sm">
+      {role && <HeaderTag>{role}</HeaderTag>}
+      <HeaderTag>{type}</HeaderTag>
+    </Row>
+  );
+};
+
 const MemberCurrentLocation = () => {
   const currentLocation = MemberCard.useStoreState(
     (store) => store?.currentLocation
@@ -55,6 +75,7 @@ const MemberBio = () => {
 const PersonalInformation = () => (
   <div className="s-directory-modal-personal-ctr">
     <MemberFullName />
+    <MemberTagList />
     <MemberCurrentLocation />
     <MemberEmail />
     <MemberBio />

@@ -24,7 +24,14 @@ const DirectoryCardContainer = () => {
     const unSortedResult: MemberCardModel[] = db.community.members
       ?.filter((id: string) => byMemberId[id]?.status === 'ACCEPTED')
       ?.map((curr: string) => {
-        const { bio, cardData, id, user }: IMember = byMemberId[curr];
+        const {
+          bio,
+          cardData,
+          id,
+          role,
+          type: memberType,
+          user
+        }: IMember = byMemberId[curr];
 
         const {
           currentLocation,
@@ -55,7 +62,9 @@ const DirectoryCardContainer = () => {
           lastName,
           linkedInUrl,
           pictureUrl,
-          twitterUrl
+          role,
+          twitterUrl,
+          type: memberType
         };
       });
 
