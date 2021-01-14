@@ -96,18 +96,32 @@ export const formModel: FormModel = {
     isLoading
   })),
 
-  setItem: action((state, item: Partial<FormItemData>) => ({
-    ...state,
-    items: [...state.items, item]
-  })),
+  setItem: action(({ items, ...state }, item: Partial<FormItemData>) => {
+    const isFound = items.find(
+      (element) =>
+        element.category === item.category ||
+        element.id === item.id ||
+        element.title === item.title
+    );
 
-  setItemErrorMessages: action((state, items: FormItemData[]) => {
-    return { ...state, items };
+    return {
+      ...state,
+      items: isFound ? items : [...items, item]
+    };
   }),
+
+  setItemErrorMessages: action((state, items: FormItemData[]) => ({
+    ...state,
+    items
+  })),
 
   setPageId: action((state, pageId: string) => ({ ...state, pageId })),
 
-  setPages: action((state, pages) => ({ ...state, pages })),
+  setPages: action((state, pages) => ({
+    ...state,
+    pageId: pages[0]?.id,
+    pages
+  })),
 
   updateItem: action(
     (state, { category, id, title, value }: UpdateItemArgs) => {

@@ -24,8 +24,15 @@ export const parseValue = (value: any) => {
   return isArray ? value : [value];
 };
 
-export const validateItem = ({ errorMessage: _, ...item }: FormItemData) => {
-  const { value, validate, type } = item;
+export const validateItem = ({
+  errorMessage: _,
+  ...item
+}: FormItemData): FormItemData => {
+  const { required, value, validate, type } = item;
+
+  if (required && !value) {
+    return { ...item, errorMessage: 'Value cannot be empty.' };
+  }
 
   if (!['SHORT_TEXT', 'LONG_TEXT'].includes(type)) return item;
 
@@ -36,6 +43,6 @@ export const validateItem = ({ errorMessage: _, ...item }: FormItemData) => {
   return item;
 };
 
-export const validateItems = (items: FormItemData[]) => {
+export const validateItems = (items: FormItemData[]): FormItemData[] => {
   return items?.map(validateItem);
 };

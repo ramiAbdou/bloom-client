@@ -39,7 +39,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({ pages }) => {
   return (
     <div className="o-form-nav-ctr">
       {formattedPages.map((page: FormNavigationPageProps) => {
-        return <FormNavigationBar {...page} />;
+        return <FormNavigationBar key={page.id} {...page} />;
       })}
     </div>
   );

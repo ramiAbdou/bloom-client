@@ -1,13 +1,17 @@
 import React from 'react';
 
+import FormStore from '@organisms/Form/Form.store';
+import { validateItems } from '@organisms/Form/Form.util';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
-import SubmitButton from '@organisms/Form/FormSubmitButton';
 import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
+import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
 
 const ApplicationMembershipPage: React.FC = () => {
+  const iconUrl = useStoreState(({ db }) => db.community?.logoUrl);
+
   const questions: IQuestion[] = useStoreState(({ db }) => {
     const { byId: byQuestionId } = db.entities.questions;
     return db.community?.questions
@@ -15,17 +19,34 @@ const ApplicationMembershipPage: React.FC = () => {
       ?.filter((question: IQuestion) => question.inApplication);
   });
 
+  const items = FormStore.useStoreState((store) => {
+    return store.items?.filter(({ category, id, title }) => {
+      return !!questions.find(
+        (question: IQuestion) =>
+          question.category === category ||
+          question.id === id ||
+          question.title === title
+      );
+    });
+  });
+
+  const disabled = validateItems(items)?.some(({ errorMessage }) => {
+    return !!errorMessage;
+  });
+
+  if (!questions?.length) return null;
+
   return (
-    <FormPage id="APPLICATION">
+    <FormPage iconUrl={iconUrl} id="APPLICATION">
       {questions?.map((props) => (
         <FormItem key={props.id} {...props} />
       ))}
 
       <FormErrorMessage marginBottom={-24} />
 
-      <SubmitButton loadingText="Submitting...">
-        Submit Application
-      </SubmitButton>
+      <FormContinueButton disabled={disabled}>
+        Next: Choose Membership
+      </FormContinueButton>
     </FormPage>
   );
 };

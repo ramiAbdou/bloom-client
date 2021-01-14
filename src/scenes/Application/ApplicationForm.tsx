@@ -4,6 +4,7 @@ import Form from '@organisms/Form/Form';
 import { useStoreState } from '@store/Store';
 import FormNavigation from '../../components/organisms/Form/FormNavigation';
 import ApplicationMembershipPage from './ApplicationMembershipPage';
+import ApplicationSelectTypePage from './ApplicationSelectTypePage';
 import useApplyForMembership from './useApplyForMembership';
 
 const ApplicationForm: React.FC = () => {
@@ -31,11 +32,12 @@ const ApplicationForm: React.FC = () => {
         <FormNavigation
           pages={[
             { description, id: 'APPLICATION', title },
-            { id: 'SELECT_MEMBERSHIP', title: 'Membership Selection' },
+            { id: 'SELECT_TYPE', title: 'Membership Selection' },
             { id: 'CONFIRMATION', title: 'Confirmation' }
           ]}
         />
         <ApplicationMembershipPage />
+        <ApplicationSelectTypePage />
       </Form>
     </div>
   );

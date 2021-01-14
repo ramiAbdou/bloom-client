@@ -69,15 +69,23 @@ $PREF: 'o-form';
   > div:first-child {
     > h1 { margin-bottom: $xs; }
     > p { color: $gray-2; margin-bottom: $lg; }
+
+    // Community icon for first page.
+    > img {
+      border: 2px $primary solid;
+      border-radius: $xs;
+      height: $xl;
+      margin-bottom: $xs;
+      padding: 2px;
+      width: $xl;
+    }
   }
 }
-
-// .#{$PREF} > h1 { margin-bottom: $xs; }
-// .#{$PREF} > p { color: $gray-2; margin-bottom: $lg; }
 
 // ## FORM SUBMIT BUTTON
 
 .#{$PREF}-submit {
+  &--continue { margin-top: $lg; }
   &--invisible { display: none; }
   &--sticky { bottom: $md; position: sticky; }
 }

@@ -4,6 +4,7 @@ $PREF: 's-application';
 
 .#{$PREF}-ctr {
   background-color: white;
+  box-sizing: border-box;
   min-height: 100vh;
 
   @include RESP(padding-bottom, $xl, $lg, $md);
@@ -38,7 +39,6 @@ $PREF: 's-application';
 .#{$PREF} {
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: $lg;
 
   @include RESP(width, 600px, 500px, 90%);
 
