@@ -19,6 +19,18 @@ export const GET_DUES_ANALYTICS = query({
   operation: 'getDuesAnalytics'
 }).query;
 
+// ## GET TOTAL DUES COLLECTED
+
+export interface GetTotalDuesCollectedResult {
+  amount: number;
+  percentage: number;
+}
+
+export const GET_TOTAL_DUES_COLLECTED = query({
+  fields: ['amount', 'percentage'],
+  operation: 'getTotalDuesCollected'
+}).query;
+
 // ## GET PAYMENTS
 
 export const GET_DUES_HISTORY = query({

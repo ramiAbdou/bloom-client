@@ -99,9 +99,6 @@ const CurrentPlanCardActionContainer: React.FC = () => {
 const CurrentPlanCardToggle: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member?.autoRenew);
 
-  const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
-
   const isLifetime: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
     return byTypeId[db.member?.type].recurrence === 'LIFETIME';
@@ -116,7 +113,7 @@ const CurrentPlanCardToggle: React.FC = () => {
     variables: { status: !autoRenew }
   });
 
-  if (isDuesActive && isLifetime) return null;
+  if (isLifetime) return null;
 
   const onChange = async () => {
     const { data } = await updateAutoRenew();
