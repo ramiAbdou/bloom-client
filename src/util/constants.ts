@@ -88,6 +88,7 @@ export type QuestionType =
   | 'TOGGLE';
 
 export type QuestionCategory =
+  | 'CREDIT_OR_DEBIT_CARD'
   | 'EMAIL'
   | 'FIRST_NAME'
   | 'GENDER'

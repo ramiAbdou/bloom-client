@@ -130,7 +130,10 @@ export const formModel: FormModel = {
     }
   ),
 
-  setPageId: action((state, pageId: string) => ({ ...state, pageId })),
+  setPageId: action((state, pageId: string) => {
+    window.scrollTo({ top: 0 });
+    return { ...state, pageId };
+  }),
 
   setPages: action((state, pages) => ({
     ...state,

@@ -9,21 +9,56 @@ import FormStore from '@organisms/Form/Form.store';
 import { validateItems } from '@organisms/Form/Form.util';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormPage from '@organisms/Form/FormPage';
-import { IQuestion } from '@store/entities';
+import { IMemberType, IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
+import { takeFirst } from '@util/util';
 import InformationCard from '../../components/containers/Card/InformationCard';
 import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
 
 const ApplicationConfirmationMembershipSection: React.FC = () => {
+  const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+  });
+
+  const cardInfo = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ category: 'CREDIT_OR_DEBIT_CARD' })?.value;
+  });
+
+  const description = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+
+    const selectedType: IMemberType = db.community?.types
+      ?.map((typeId: string) => byTypeId[typeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+
+    if (!selectedType) return null;
+
+    const { amount, recurrence } = selectedType;
+
+    // Formats the amount with FREE if the amount is 0.
+    const amountString = amount ? `$${amount / 100}` : 'FREE';
+
+    // Construct string "Per" timespan based on the recurrence.
+    const recurrenceString = takeFirst([
+      [recurrence === 'YEARLY', 'Per Year'],
+      [recurrence === 'MONTHLY', 'Per Month'],
+      [recurrence === 'LIFETIME', 'Lifetime']
+    ]);
+
+    return `${amountString} ${recurrenceString}`;
+  });
+
   return (
     <div className="s-application-confirmation-membership">
-      <h2>Membership & Payment</h2>
+      <h2>{cardInfo ? 'Membership & Payment' : 'Membership Plan'} </h2>
       <Row spaceBetween>
-        <InformationCard description="$125 Per Year" title="General Member" />
-        <InformationCard
-          description="Expires 05/2024"
-          title="Mastercard Ending in 1234"
-        />
+        <InformationCard description={description} title={selectedTypeName} />
+        {cardInfo && (
+          <InformationCard
+            description="Expires 05/2024"
+            title="Mastercard Ending in 1234"
+          />
+        )}
       </Row>
     </div>
   );

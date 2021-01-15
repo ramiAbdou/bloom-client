@@ -69,7 +69,7 @@ const ApplicationSelectTypePage: React.FC = () => {
   // });
 
   const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
-    const isTypeSelected = !!getItem({ id: 'selectType' })?.value;
+    const isTypeSelected = !!getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
     return !isTypeSelected;
   });
 
@@ -78,6 +78,7 @@ const ApplicationSelectTypePage: React.FC = () => {
       <FormItem
         card
         cardOptions={cardOptions}
+        category="MEMBERSHIP_TYPE"
         id="selectType"
         page="SELECT_TYPE"
         type="MULTIPLE_CHOICE"
