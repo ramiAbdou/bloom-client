@@ -56,12 +56,7 @@ const Dropdown = () => {
   return createPortal(
     <>
       <div className="o-bottom-bar-dropdown-bg" onClick={onBgClick} />
-      <motion.div
-        key="o-bottom-bar-dropdown"
-        // animate={{ y: 0 }}
-        className="o-bottom-bar-dropdown"
-        // initial={{ y: 10 }}
-      >
+      <motion.div key="o-bottom-bar-dropdown" className="o-bottom-bar-dropdown">
         {communities.map((props: ICommunity) => (
           <CommunitySelector key={props.id} {...props} />
         ))}
