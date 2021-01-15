@@ -8,28 +8,20 @@ import {
 import AnalyticsSimple from '../AnalyticsStatusCard';
 
 const DuesAnalyticsTotalCollectedCard: React.FC = () => {
-  const value = 9450;
-
   // const initTotal = Members.useStoreActions((store) => store.initTotal);
 
   const { data, loading } = useQuery<GetTotalDuesCollectedResult>({
-    name: 'getTotalMemberAnalytics',
+    name: 'getTotalDuesCollected',
     query: GET_TOTAL_DUES_COLLECTED
   });
 
-  console.log(data);
-
-  // useEffect(() => {
-  //   if (totalData) initTotal(totalData);
-  // }, [totalData]);
-
-  // return loading;
+  if (loading) return null;
 
   return (
     <AnalyticsSimple
       label="Total Dues Collected"
-      percentage={8}
-      value={`$${value.toLocaleString()}`}
+      percentage={data?.percentage}
+      value={`$${data?.amount?.toLocaleString()}`}
     />
   );
 };

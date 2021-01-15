@@ -19,6 +19,25 @@ export const GET_DUES_ANALYTICS = query({
   operation: 'getDuesAnalytics'
 }).query;
 
+// ## GET PAYMENTS
+
+export const GET_PAYMENTS = query({
+  fields: [
+    'id',
+    {
+      payments: [
+        'amount',
+        'createdAt',
+        'id',
+        'stripeInvoiceUrl',
+        { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
+        { type: ['id'] }
+      ]
+    }
+  ],
+  operation: 'getPayments'
+}).query;
+
 // ## GET TOTAL DUES COLLECTED
 
 export interface GetTotalDuesCollectedResult {
@@ -29,20 +48,6 @@ export interface GetTotalDuesCollectedResult {
 export const GET_TOTAL_DUES_COLLECTED = query({
   fields: ['amount', 'percentage'],
   operation: 'getTotalDuesCollected'
-}).query;
-
-// ## GET PAYMENTS
-
-export const GET_DUES_HISTORY = query({
-  fields: [
-    'amount',
-    'createdAt',
-    'id',
-    'stripeInvoiceUrl',
-    { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
-    { type: ['id'] }
-  ],
-  operation: 'getDuesHistory'
 }).query;
 
 // ## GET TOTAL MEMBER ANALYTICS

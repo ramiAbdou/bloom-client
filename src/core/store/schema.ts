@@ -61,6 +61,7 @@ Community.define({
   application: CommunityApplication,
   integrations: Integrations,
   members: [Member],
+  payments: [MemberPayment],
   questions: [Question],
   types: [MemberType]
 });

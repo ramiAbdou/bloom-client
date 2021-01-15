@@ -10,6 +10,7 @@ export interface ICommunity {
   integrations: IdString;
   logoUrl: string;
   members: IdString[];
+  payments: IdString[];
   questions: IdString[];
   name: string;
   primaryColor: string;
