@@ -54,20 +54,6 @@ const ApplicationSelectTypePage: React.FC = () => {
     });
   });
 
-  // const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
-  //   return getItem({ id: 'selectType' })?.value;
-  // });
-
-  // const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-  //   const { byId: byTypeId } = db.entities.types;
-
-  //   const selectedType: IMemberType = db.community?.types
-  //     ?.map((typeId: string) => byTypeId[typeId])
-  //     ?.find((type: IMemberType) => type?.name === selectedTypeName);
-
-  //   return !!selectedType?.amount;
-  // });
-
   const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
     const isTypeSelected = !!getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
     return !isTypeSelected;
@@ -79,7 +65,6 @@ const ApplicationSelectTypePage: React.FC = () => {
         card
         cardOptions={cardOptions}
         category="MEMBERSHIP_TYPE"
-        id="selectType"
         page="SELECT_TYPE"
         type="MULTIPLE_CHOICE"
       />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { IoLockClosed } from 'react-icons/io5';
 
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
@@ -6,14 +7,13 @@ import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
 import FormStore from '@organisms/Form/Form.store';
-import { validateItems } from '@organisms/Form/Form.util';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormPage from '@organisms/Form/FormPage';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IMemberType, IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import InformationCard from '../../components/containers/Card/InformationCard';
-import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
 
 const ApplicationConfirmationMembershipSection: React.FC = () => {
   const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
@@ -72,17 +72,13 @@ const ApplicationConfirmationPage: React.FC = () => {
       ?.filter((question: IQuestion) => question.inApplication);
   });
 
-  const isConfirmationNext = FormStore.useStoreState(
-    ({ pages }) => pages?.length === 2
-  );
+  const cardInfo = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ category: 'CREDIT_OR_DEBIT_CARD' })?.value;
+  });
 
   const applicationItems = FormStore.useStoreState(({ items }) =>
     items?.filter((item) => item.page === 'APPLICATION')
   );
-
-  const disabled = validateItems(questions)?.some(({ errorMessage }) => {
-    return !!errorMessage;
-  });
 
   if (!questions?.length) return null;
 
@@ -97,9 +93,11 @@ const ApplicationConfirmationPage: React.FC = () => {
       <QuestionValueList items={items} marginBottom={24} />
       <ApplicationConfirmationMembershipSection />
       <FormErrorMessage marginBottom={-24} />
-      <FormContinueButton disabled={disabled}>
-        {isConfirmationNext ? 'Next: Confirmation' : 'Next: Choose Membership'}
-      </FormContinueButton>
+
+      <FormSubmitButton>
+        {cardInfo && <IoLockClosed />}
+        {cardInfo ? 'Confirm Payment and Join' : 'Submit Application'}
+      </FormSubmitButton>
     </FormPage>
   );
 };

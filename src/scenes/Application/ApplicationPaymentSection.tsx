@@ -74,7 +74,7 @@ const PaymentCardForm: React.FC = () => {
 
 const ApplicationPaymentSection: React.FC = () => {
   const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ id: 'selectType' })?.value;
+    return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {

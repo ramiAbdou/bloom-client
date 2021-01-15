@@ -7,9 +7,13 @@ import { FormItemData } from './Form.types';
 const FormMultipleChoice: React.FC<FormItemData> = ({
   card,
   cardOptions,
+  category,
   id
 }) => {
-  const value = Form.useStoreState(({ getItem }) => getItem({ id })?.value);
+  const value = Form.useStoreState(
+    ({ getItem }) => getItem({ category })?.value
+  );
+
   const updateItem = Form.useStoreActions((store) => store.updateItem);
 
   return (
@@ -18,7 +22,7 @@ const FormMultipleChoice: React.FC<FormItemData> = ({
       name={`o-form-mc-${id}`}
       options={cardOptions}
       value={value}
-      onSelect={(v) => updateItem({ id, value: v })}
+      onSelect={(v) => updateItem({ category, value: v })}
     />
   );
 };

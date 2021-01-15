@@ -82,6 +82,13 @@ $PREF: 's-application';
 
 .#{$PREF}-confirmation {
   > h2 { margin-bottom: $md; }
+
+  > button:last-child {
+    margin-top: $lg;
+
+    &:disabled > svg { color: $gray-3; }
+    > svg { color: white; margin-left: $xs; }
+  }
 }
 
 .#{$PREF}-confirmation-membership {

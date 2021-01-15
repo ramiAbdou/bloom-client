@@ -23,6 +23,7 @@ const RadioOptionCard: React.FC<RadioOptionProps> = ({
     <Card className={css} onClick={onClick}>
       <div>
         <input
+          readOnly
           checked={checked}
           id={label}
           name={name}
