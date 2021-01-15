@@ -32,8 +32,9 @@ const useCreateMembers = (): OnFormSubmit => {
     // In the first pass, format all the values by looking at the item's
     // category and id.
     const membersFirstPass: MembersAddedRecord = items.reduce(
-      (acc: MembersAddedRecord, { category, id, value }: FormItemData) => {
+      (acc: MembersAddedRecord, { id, value }: FormItemData) => {
         const formattedId = id.slice(0, id.indexOf('='));
+        const category = id.slice(id.indexOf('=') + 1);
 
         const formattedValue = takeFirst([
           [category === 'FIRST_NAME', { firstName: value }],

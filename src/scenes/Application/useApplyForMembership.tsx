@@ -37,8 +37,6 @@ const useApplyForMembership = (): OnFormSubmit => {
       ({ category }) => category === 'CREDIT_OR_DEBIT_CARD'
     )?.value;
 
-    console.log(paymentMethodId);
-
     const dataToSubmit = items
       .filter(({ page }) => page === 'APPLICATION')
       .map(({ category, id, value }) => ({

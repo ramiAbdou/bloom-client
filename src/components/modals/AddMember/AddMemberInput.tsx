@@ -30,7 +30,6 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
 
         <FormItem
           required
-          category="FIRST_NAME"
           id={`${id}=FIRST_NAME`}
           placeholder="First Name"
           type="SHORT_TEXT"
@@ -38,7 +37,6 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
 
         <FormItem
           required
-          category="LAST_NAME"
           id={`${id}=LAST_NAME`}
           placeholder="Last Name"
           type="SHORT_TEXT"
@@ -46,7 +44,6 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
 
         <FormItem
           required
-          category="EMAIL"
           id={`${id}=EMAIL`}
           placeholder="Email"
           type="SHORT_TEXT"

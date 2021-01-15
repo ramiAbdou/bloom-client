@@ -88,13 +88,11 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 };
 
 const DuesAnalyticsHistory: React.FC = () => {
-  const { data, loading } = useQuery<ICommunity>({
+  const { loading } = useQuery<ICommunity>({
     name: 'getPayments',
     query: GET_PAYMENTS,
     schema: Schema.COMMUNITY
   });
-
-  console.log(data);
 
   return (
     <MainSection
