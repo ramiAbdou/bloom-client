@@ -59,3 +59,10 @@ $PREF: 's-application';
 .#{$PREF} > h1 { margin-bottom: $xs; }
 .#{$PREF} > p { color: $gray-2; margin-bottom: $lg; }
 .#{$PREF} > button { margin-top: $xxl; width: 100%; }
+
+.#{$PREF}-type-string {
+  &:not(:last-child) { margin-bottom: $sm; }
+
+  > span:first-child { @extend .display; margin-right: $xxs; }
+  > span:last-child { @extend .meta--lg; color: $gray-2; }
+}

@@ -9,6 +9,8 @@ import FormLabel from './FormLabel';
 import useItemBody from './useItemBody';
 
 const FormItem: React.FC<FormItemProps> = ({
+  card,
+  cardOptions,
   children,
   description,
   options,
@@ -48,6 +50,8 @@ const FormItem: React.FC<FormItemProps> = ({
   }, []);
 
   const body: React.ReactElement = useItemBody({
+    card,
+    cardOptions,
     children,
     options,
     placeholder,

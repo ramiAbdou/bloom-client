@@ -41,7 +41,7 @@ export const GET_APPLICATION = query({
         'type'
       ]
     },
-    { types: ['id', 'isFree'] }
+    { types: ['amount', 'id', 'isFree', 'name', 'recurrence'] }
   ],
   operation: 'getApplication',
   variables: { urlName: { required: true } }

@@ -40,7 +40,31 @@ input[type="radio"]:checked ~ div > span {
 
 .#{$PREF} {
   @extend .flex-col; 
-  > div { @extend .flex-ac; cursor: pointer; width: fit-content; }
+  > div:not(.#{$PREF}-option-card) {
+    @extend .flex-ac;
+
+    cursor: pointer;
+    width: fit-content;
+  }
   > div:not(:last-child) { margin-bottom: $xs; }
   > div > * { cursor: pointer; }
+}
+
+// ## RADIO OPTION CARD
+
+.#{$PREF}-option-card {
+  border: 1px $gray-4 solid;
+  box-shadow: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  flex-direction: row;
+  width: 100%;
+
+  @include HOVER { border: 1px $primary solid; }
+
+  &--active { background-color: $primary-bg; border: 1px $primary solid; }
+
+  > div:last-child {
+    > h4 { color: $gray-2; margin-bottom: $xs; }
+  }
 }

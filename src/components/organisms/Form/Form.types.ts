@@ -8,6 +8,7 @@ import {
   QuestionType,
   TitleProps
 } from '@constants';
+import { RadioOptionProps } from '../../molecules/Radio/Radio.types';
 
 export type FormQuestion = {
   category?: QuestionCategory;
@@ -32,6 +33,13 @@ export type FormQuestion = {
 export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 
 export interface FormItemData extends Partial<FormQuestion> {
+  // Only used in MULTIPLE_CHOICE. True if radio should use card format instead
+  // of regular radio buttons.
+  card?: boolean;
+
+  // Only populated if the type is MUTLIPLE CHOICE or MULTIPLE SELECT.
+  cardOptions?: RadioOptionProps[];
+
   errorMessage?: string;
 
   initialValue?: any;
@@ -54,7 +62,7 @@ export type BaseItemProps = Pick<
 
 export interface OptionItemProps
   extends BaseItemProps,
-    Pick<FormItemData, 'options'> {}
+    Pick<FormItemData, 'options' | 'plain'> {}
 
 export interface TextItemProps
   extends BaseItemProps,
@@ -64,6 +72,8 @@ export interface UseItemBodyProps
   extends ChildrenProps,
     Pick<
       FormItemData,
+      | 'card'
+      | 'cardOptions'
       | 'category'
       | 'id'
       | 'options'
@@ -78,21 +88,9 @@ export interface UseItemBodyProps
 // the rest are either used for state or for something else in the store.
 
 export interface FormItemProps
-  extends ChildrenProps,
-    Pick<
-      FormItemData,
-      | 'category'
-      | 'description'
-      | 'id'
-      | 'options'
-      | 'placeholder'
-      | 'plain'
-      | 'required'
-      | 'title'
-      | 'type'
-      | 'validate'
-      | 'value'
-    > {}
+  extends UseItemBodyProps,
+    ChildrenProps,
+    Pick<FormItemData, 'description' | 'validate' | 'value'> {}
 
 export interface FormNavigationPageProps extends IdProps, TitleProps {
   description?: string;

@@ -1,70 +1,56 @@
 import React from 'react';
 
-import { ValueProps } from '@constants';
+import { RadioOptionProps, RadioProps } from './Radio.types';
+import RadioOptionCard from './RadioOptionCard';
 
-interface RadioOptionProps extends ValueProps {
-  checked?: boolean;
-  label: string;
-  onClick: VoidFunction;
-  name: string;
-}
-
-interface RadioProps extends ValueProps {
-  name: string;
-  onSelect?: (value: any) => any;
-  options: Pick<RadioOptionProps, 'label' | 'value'>[];
-}
-
-const RadioOption = ({
+const RadioOption: React.FC<RadioOptionProps> = ({
   checked,
   label,
-  onClick,
-  value,
+  onSelect,
   name
-}: RadioOptionProps) => {
+}) => {
+  const onClick = () => onSelect(label);
+
   return (
     <div onClick={onClick}>
       <input
         checked={checked}
-        id={value}
+        id={label}
         name={name}
         type="radio"
-        value={value}
+        value={label}
       />
 
       <div>
         <span />
       </div>
 
-      <label className="c-tag-attr" htmlFor={value}>
+      <label className="c-tag-attr" htmlFor={label}>
         {label}
       </label>
     </div>
   );
 };
 
-const Radio = ({
-  name,
-  onSelect,
+const Radio: React.FC<RadioProps> = ({
+  card,
   options,
-  value: checkedValue
-}: RadioProps) => {
+  value: checkedValue,
+  ...radioProps
+}) => {
   return (
     <div className="c-misc-radio">
-      {options.map(
-        ({ label, value }: Pick<RadioOptionProps, 'label' | 'value'>) => {
-          return (
-            <RadioOption
-              key={value}
-              checked={checkedValue === value}
-              label={label}
-              name={name}
-              value={value}
-              onClick={() => onSelect(value)}
-            />
-          );
-        }
-      )}
+      {options.map((optionProps: RadioOptionProps) => {
+        const allProps = {
+          ...optionProps,
+          ...radioProps,
+          checked: checkedValue === optionProps.label,
+          key: optionProps.label
+        };
+
+        if (card) return <RadioOptionCard {...allProps} />;
+        return <RadioOption {...allProps} />;
+      })}
     </div>
   );
 };

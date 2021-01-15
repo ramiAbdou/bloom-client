@@ -48,7 +48,7 @@ const ApplicationForm: React.FC = () => {
         className="s-application"
         options={{ multiPage: true }}
         pages={[
-          { description, id: 'APPLICATION', title },
+          // { description, id: 'APPLICATION', title },
           ...selectTypePages,
           { id: 'CONFIRMATION', title: 'Confirmation' }
         ]}
