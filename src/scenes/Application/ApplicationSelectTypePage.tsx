@@ -1,27 +1,24 @@
 import React from 'react';
 
 import { IdProps } from '@constants';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
-import { IMemberType, IQuestion } from '@store/entities';
+import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-// import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
 import { RadioOptionProps } from '../../components/molecules/Radio/Radio.types';
+import ApplicationPaymentSection from './ApplicationPaymentSection';
 
 const ApplicationSelectTypeCardContent: React.FC<IdProps> = ({ id }) => {
-  const type: IMemberType = useStoreState(({ db }) => {
-    return db.entities.types.byId[id];
+  const amount = useStoreState(({ db }) => {
+    return db.entities.types.byId[id]?.amount;
   });
 
-  console.log(id, type);
+  const recurrence = useStoreState(({ db }) => {
+    return db.entities.types.byId[id]?.recurrence;
+  });
 
-  if (!type) return null;
-
-  console.log('YERRR');
-
-  const { amount, recurrence } = type;
+  if (amount === undefined || recurrence === undefined) return null;
 
   // Formats the amount with FREE if the amount is 0.
   const amountString = amount ? `$${amount / 100}` : 'FREE';
@@ -63,6 +60,8 @@ const ApplicationSelectTypePage: React.FC = () => {
         id="selectType"
         type="MULTIPLE_CHOICE"
       />
+
+      <ApplicationPaymentSection />
       {/* {questions?.map((props) => (
         <FormItem key={props.id} {...props} />
       ))}

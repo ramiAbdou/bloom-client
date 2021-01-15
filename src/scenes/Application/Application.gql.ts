@@ -29,6 +29,7 @@ export const GET_APPLICATION = query({
     'primaryColor',
     'urlName',
     { application: ['title', 'description'] },
+    { integrations: ['stripeAccountId'] },
     {
       questions: [
         'category',

@@ -39,14 +39,17 @@ input[type="radio"]:checked ~ div > span {
 }
 
 .#{$PREF} {
-  @extend .flex-col; 
+  @extend .flex-col;
+
   > div:not(.#{$PREF}-option-card) {
     @extend .flex-ac;
 
     cursor: pointer;
     width: fit-content;
+
+    &:not(:last-child) { margin-bottom: $xs; }
   }
-  > div:not(:last-child) { margin-bottom: $xs; }
+  
   > div > * { cursor: pointer; }
 }
 
@@ -62,6 +65,7 @@ input[type="radio"]:checked ~ div > span {
 
   @include HOVER { border: 1px $primary solid; }
 
+  &:not(:last-child) { margin-bottom: $sm; }
   &--active { background-color: $primary-bg; border: 1px $primary solid; }
 
   > div:last-child {

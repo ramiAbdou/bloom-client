@@ -68,7 +68,7 @@ $PREF: 'o-form';
 .#{$PREF}-page {
   > div:first-child {
     > h1 { margin-bottom: $xs; }
-    > p { color: $gray-2; margin-bottom: $lg; }
+    > p { color: $gray-2; margin-bottom: $md; }
 
     // Community icon for first page.
     > img {
