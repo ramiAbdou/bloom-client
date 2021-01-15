@@ -46,7 +46,7 @@ const TablePanelRenameForm: React.FC<OnRenameColumnProps> = ({
   return (
     <Form onSubmit={onSubmit}>
       <FormItem id="TABLE_COLUMN" type="SHORT_TEXT" value={title} />
-      <input className="o-form-invisible-submit" type="submit" />
+      <FormInvisibleSubmit />
     </Form>
   );
 };
