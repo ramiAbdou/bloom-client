@@ -29,6 +29,7 @@ export type FormModel = {
   options: FormOptions;
   pageId: string;
   pages: FormNavigationPageProps[];
+  removeItems: Action<FormModel, Partial<FormItemData>[]>;
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
   setItemErrorMessages: Action<FormModel, FormItemData[]>;
@@ -88,6 +89,19 @@ export const formModel: FormModel = {
   pageId: null,
 
   pages: [],
+
+  removeItems: action(({ items, ...state }, itemsToRemove) => {
+    items = items.filter((element) => {
+      return itemsToRemove.some(
+        (item) =>
+          (item.category && element.category === item.category) ||
+          (item.id && element.id === item.id) ||
+          (item.title && element.title === item.title)
+      );
+    });
+
+    return { ...state, items };
+  }),
 
   setErrorMessage: action((state, errorMessage: string) => ({
     ...state,

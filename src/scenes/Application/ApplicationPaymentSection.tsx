@@ -26,18 +26,23 @@ const PaymentCardForm: React.FC = () => {
   return (
     <>
       <FormItem
-        required
+        // required
         page="SELECT_TYPE"
         title="Name on Card"
         type="SHORT_TEXT"
       />
 
-      <FormItem required value page="SELECT_TYPE" title="Credit or Debit Card">
+      <FormItem
+        // required
+        value
+        page="SELECT_TYPE"
+        title="Credit or Debit Card"
+      >
         <CardElement options={options} />
       </FormItem>
 
       <FormItem
-        required
+        // required
         page="SELECT_TYPE"
         title="Billing Address"
         type="SHORT_TEXT"
@@ -45,7 +50,7 @@ const PaymentCardForm: React.FC = () => {
 
       <Row spaceBetween className="mo-payment-billing-ctr">
         <FormItem
-          required
+          // required
           page="SELECT_TYPE"
           placeholder="Los Angeles"
           title="City"
@@ -53,7 +58,7 @@ const PaymentCardForm: React.FC = () => {
         />
 
         <FormItem
-          required
+          // required
           page="SELECT_TYPE"
           placeholder="CA"
           title="State"
@@ -61,7 +66,7 @@ const PaymentCardForm: React.FC = () => {
         />
 
         <FormItem
-          required
+          // required
           page="SELECT_TYPE"
           placeholder="00000"
           title="Zip Code"

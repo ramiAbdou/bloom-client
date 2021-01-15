@@ -92,7 +92,7 @@ const ApplicationConfirmationPage: React.FC = () => {
       <h2>Application</h2>
       <QuestionValueList items={items} marginBottom={24} />
       <ApplicationConfirmationMembershipSection />
-      <FormErrorMessage marginBottom={-24} />
+      <FormErrorMessage margin={24} />
 
       <FormSubmitButton>
         {cardInfo && <IoLockClosed />}

@@ -2,7 +2,6 @@ import React from 'react';
 
 import FormStore from '@organisms/Form/Form.store';
 import { validateItems } from '@organisms/Form/Form.util';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
 import { IQuestion } from '@store/entities';
@@ -38,8 +37,6 @@ const ApplicationMembershipPage: React.FC = () => {
       {questions?.map((props) => (
         <FormItem key={props.id} page="APPLICATION" {...props} />
       ))}
-
-      <FormErrorMessage marginBottom={-24} />
 
       <FormContinueButton disabled={disabled}>
         {isConfirmationNext ? 'Next: Confirmation' : 'Next: Choose Membership'}

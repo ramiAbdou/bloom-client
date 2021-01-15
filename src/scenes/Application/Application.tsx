@@ -8,7 +8,7 @@ import { GET_APPLICATION } from '@scenes/Application/Application.gql';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
-import ApplicationConfirmation from './ApplicationConfirmation';
+import ApplicationConfirmationCard from './ApplicationConfirmationCard';
 import ApplicationForm from './ApplicationForm';
 
 /**
@@ -42,7 +42,7 @@ const Application: React.FC = () => {
 
       <Route
         exact
-        component={ApplicationConfirmation}
+        component={ApplicationConfirmationCard}
         path="/:urlName/apply/confirmation"
       />
     </Switch>

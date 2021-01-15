@@ -29,11 +29,11 @@ const ApplicationConfirmationAutoAcceptedMessage: React.FC = () => {
   return (
     <>
       <p>
-        Congratulations, you've been accepted into the <span>{name}</span>
-        community! We just sent a login link to your email.
+        Congratulations, you've been accepted as a member of <span>{name}</span>
+        ! You now have access to this platform.
       </p>
 
-      <Button fill secondary onClick={onClick}>
+      <Button fill large secondary onClick={onClick}>
         Go to Login
       </Button>
     </>
@@ -51,12 +51,13 @@ const ApplicationConfirmationContent: React.FC = () => {
 
 const ApplicationConfirmation: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
+  const name = useStoreState(({ db }) => db.community?.name);
 
   return (
     <div className="s-application-ctr--confirmation">
       <Card>
         <ConfirmationScreen
-          title={autoAccept ? 'Application Accepted' : 'Application Received'}
+          title={autoAccept ? `Welcome to ${name}` : 'Application Received'}
         >
           <ApplicationConfirmationContent />
         </ConfirmationScreen>

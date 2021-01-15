@@ -25,14 +25,11 @@ const useApplyForMembership = (): OnFormSubmit => {
     setErrorMessage,
     setIsLoading
   }: OnFormSubmitArgs) => {
-    console.log('items', items);
-
-    const dataToSubmit = items.map(({ id, value }) => ({
+    const dataToSubmit = items.map(({ category, id, value }) => ({
+      category,
       questionId: id,
       value: parseValue(value)
     }));
-
-    console.log('dataToSubmit', dataToSubmit);
 
     // Set the email so that the confirmation page displays the right email,
     // and use it for the GraphQL mutation as well.
