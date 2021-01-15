@@ -103,9 +103,9 @@ export const formModel: FormModel = {
   setItem: action(({ items, ...state }, item: Partial<FormItemData>) => {
     const isFound = items.find(
       (element) =>
-        element.category === item.category ||
-        element.id === item.id ||
-        element.title === item.title
+        (item.category && element.category === item.category) ||
+        (item.id && element.id === item.id) ||
+        (item.title && element.title === item.title)
     );
 
     return {
@@ -126,7 +126,6 @@ export const formModel: FormModel = {
     ) => {
       const index = pages.findIndex((page) => page.id === id);
       pages[index].disabled = disabled;
-      console.log(pages);
       return { ...state, pages };
     }
   ),

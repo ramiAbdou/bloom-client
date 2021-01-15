@@ -19,22 +19,11 @@ const ApplicationMembershipPage: React.FC = () => {
       ?.filter((question: IQuestion) => question.inApplication);
   });
 
-  const items = FormStore.useStoreState((store) => {
-    return store.items?.filter(({ category, id, title }) => {
-      return !!questions.find(
-        (question: IQuestion) =>
-          question.category === category ||
-          question.id === id ||
-          question.title === title
-      );
-    });
-  });
-
   const isConfirmationNext = FormStore.useStoreState(
     ({ pages }) => pages?.length === 2
   );
 
-  const disabled = validateItems(items)?.some(({ errorMessage }) => {
+  const disabled = validateItems(questions)?.some(({ errorMessage }) => {
     return !!errorMessage;
   });
 
