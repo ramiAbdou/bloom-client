@@ -3,9 +3,10 @@ $PREF: 's-membership';
 .#{$PREF}-card-ctr {
   column-gap: $sm;
   display: grid;
-  grid-template-columns: repeat(auto-fill, $xxl * 5.5);
   margin-bottom: $lg;
   row-gap: $sm;
+
+  @include TD { grid-template-columns: repeat(auto-fill, $xxl * 5.5); }
 }
 
 // ## MANAGE MEMBERSHIP CARD (BASE)

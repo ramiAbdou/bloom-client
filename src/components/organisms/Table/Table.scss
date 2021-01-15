@@ -25,7 +25,6 @@ $PREF: 'c-table';
 // ## TABLE CELL (BOTH TH AND TD)
 
 .#{$PREF}-cell {
-  left: 0;
   margin: 0;
   padding: $sm $md $sm $sm;
   position: sticky;

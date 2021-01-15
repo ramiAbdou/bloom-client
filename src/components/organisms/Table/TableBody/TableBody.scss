@@ -20,6 +20,7 @@ td {
   // The first data cell has higher z-index than rest of td cells to have
   // horizontal scrolling hide the other cells under this first one.
   &--fixed {
+    left: 0;
     z-index: 9;
 
     &::after {
