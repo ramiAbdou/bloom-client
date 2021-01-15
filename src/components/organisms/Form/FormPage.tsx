@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 
-import { ChildrenProps, IdProps } from '@constants';
+import { ChildrenProps, ClassNameProps, IdProps } from '@constants';
+import { cx } from '@util/util';
 import FormStore from './Form.store';
 
-interface FormPageProps extends ChildrenProps, IdProps {
+interface FormPageProps extends ChildrenProps, ClassNameProps, IdProps {
   iconUrl?: string;
 }
 
-const FormPage: React.FC<FormPageProps> = ({ children, id, iconUrl }) => {
+const FormPage: React.FC<FormPageProps> = ({
+  children,
+  className,
+  id,
+  iconUrl
+}) => {
   const pageId = FormStore.useStoreState((store) => store.pageId);
   const pages = FormStore.useStoreState((store) => store.pages);
 
@@ -29,8 +35,10 @@ const FormPage: React.FC<FormPageProps> = ({ children, id, iconUrl }) => {
 
   if (!isSamePage) return null;
 
+  const css = cx({ [className]: className, 'o-form-page': true });
+
   return (
-    <div className="o-form-page">
+    <div className={css}>
       <div>
         {iconUrl && <img src={iconUrl} />}
         <h1>{title}</h1>

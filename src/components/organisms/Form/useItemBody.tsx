@@ -7,7 +7,7 @@ import {
   TextItemProps,
   UseItemBodyProps
 } from './Form.types';
-import FormDropdownItem from './FormDropdown';
+import FormDropdown from './FormDropdown';
 import FormImageUpload from './FormImageUpload';
 import FormLongText from './FormLongText';
 import FormMultipleCardChoice from './FormMultipleCardChoice';
@@ -45,7 +45,7 @@ const useItemBody = (props: UseItemBodyProps) => {
     [type === 'LONG_TEXT', <FormLongText {...textProps} />],
     [
       type === 'MULTIPLE_SELECT' && options.length >= 5,
-      <FormDropdownItem multiple {...optionProps} />
+      <FormDropdown multiple {...optionProps} />
     ],
     [
       type === 'MULTIPLE_SELECT' && options.length < 5,
@@ -61,7 +61,7 @@ const useItemBody = (props: UseItemBodyProps) => {
     ],
     [
       type === 'MULTIPLE_CHOICE' && options?.length >= 5,
-      <FormDropdownItem {...optionProps} />
+      <FormDropdown {...optionProps} />
     ],
     [type === 'TOGGLE', <FormToggle {...baseProps} />],
     [type === 'IMAGE', <FormImageUpload {...baseProps} />],

@@ -77,3 +77,16 @@ $PREF: 's-application';
 
   > .o-form-item > .c-misc-input > .__PrivateStripeElement { width: 100%; }
 }
+
+// ## APPLICATION CONFIRMATION
+
+.#{$PREF}-confirmation {
+  > h2 { margin-bottom: $md; }
+}
+
+.#{$PREF}-confirmation-membership {
+  > h2 { margin-bottom: $md; }
+  > div:last-child > div { width: -webkit-fill-available; }
+  > div:last-child > div:first-child:not(:only-child) { margin-right: $xs; }
+  > div:last-child > div:last-child:not(:only-child) { margin-left: $xs; }
+}

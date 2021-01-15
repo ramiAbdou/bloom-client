@@ -9,16 +9,19 @@ const RadioOption: React.FC<RadioOptionProps> = ({
   onSelect,
   name
 }) => {
-  const onClick = () => onSelect(label);
+  const onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    if (target.checked) onSelect(label);
+  };
 
   return (
-    <div onClick={onClick}>
+    <div>
       <input
         checked={checked}
         id={label}
         name={name}
         type="radio"
         value={label}
+        onChange={onChange}
       />
 
       <div>

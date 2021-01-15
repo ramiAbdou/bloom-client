@@ -6,6 +6,10 @@ import Attribute from '../atoms/Tags/Attribute';
 import FormLabel from '../organisms/Form/FormLabel';
 
 const Value = ({ type, value }: Partial<QuestionValueItemProps>) => {
+  if (type === 'MULTIPLE_CHOICE' && Array.isArray(value) && value?.length) {
+    value = value.toString();
+  }
+
   const body: ReactNode = takeFirst([
     [!value, <p>N/A</p>],
     [type === 'MULTIPLE_CHOICE', <Attribute showNullValue>{value}</Attribute>],
@@ -26,7 +30,7 @@ const Value = ({ type, value }: Partial<QuestionValueItemProps>) => {
 };
 
 export interface QuestionValueItemProps extends ValueProps {
-  handleNull?: 'HIDE_ALL' | 'HIDE_VALUE' | 'MAKE_NA';
+  handleNull?: 'HIDE_ALL' | 'HIDE_VALUE';
   title: string;
   type: QuestionType;
 }
@@ -56,7 +60,6 @@ const QuestionValueListItem: React.FC<QuestionValueItemProps> = ({
 interface QuestionValueListProps
   extends Pick<QuestionValueItemProps, 'handleNull'> {
   items: QuestionValueItemProps[];
-  large?: boolean;
   marginBottom?: number;
 }
 

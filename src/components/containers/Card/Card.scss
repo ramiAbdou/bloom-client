@@ -10,3 +10,15 @@ $PREF: 't-misc-card';
   border-radius: $xs;
   padding: $sm;
 }
+
+// ## INFORMATION CARD
+
+.#{$PREF}--information {
+  background-color: white;
+  border: 1px $gray-4 solid;
+  border-radius: $xxs;
+  padding: $sm;
+
+  > h4 { margin-bottom: $xs; }
+  > p { @extend .meta; }
+}

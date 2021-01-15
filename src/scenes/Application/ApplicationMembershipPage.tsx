@@ -19,11 +19,15 @@ const ApplicationMembershipPage: React.FC = () => {
       ?.filter((question: IQuestion) => question.inApplication);
   });
 
+  const pageItems = FormStore.useStoreState(({ items }) =>
+    items?.filter((item) => item.page === 'APPLICATION')
+  );
+
   const isConfirmationNext = FormStore.useStoreState(
     ({ pages }) => pages?.length === 2
   );
 
-  const disabled = validateItems(questions)?.some(({ errorMessage }) => {
+  const disabled = validateItems(pageItems)?.some(({ errorMessage }) => {
     return !!errorMessage;
   });
 
@@ -32,7 +36,7 @@ const ApplicationMembershipPage: React.FC = () => {
   return (
     <FormPage iconUrl={iconUrl} id="APPLICATION">
       {questions?.map((props) => (
-        <FormItem key={props.id} {...props} />
+        <FormItem key={props.id} page="APPLICATION" {...props} />
       ))}
 
       <FormErrorMessage marginBottom={-24} />
