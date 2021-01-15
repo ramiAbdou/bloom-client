@@ -87,7 +87,7 @@ $PREF: 's-application';
     margin-top: $lg;
 
     &:disabled > svg { color: $gray-3; }
-    > svg { color: white; margin-left: $xs; }
+    > svg { color: white; margin-right: $xs; }
   }
 }
 

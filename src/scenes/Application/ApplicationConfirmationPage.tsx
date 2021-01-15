@@ -55,8 +55,8 @@ const ApplicationConfirmationMembershipSection: React.FC = () => {
         <InformationCard description={description} title={selectedTypeName} />
         {cardInfo && (
           <InformationCard
-            description="Expires 05/2024"
-            title="Mastercard Ending in 1234"
+            description="Expires 4/24"
+            title="Visa Ending in 4242"
           />
         )}
       </Row>
