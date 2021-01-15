@@ -52,8 +52,9 @@ const useCreateMembers = (): OnFormSubmit => {
 
     // In the second pass, set isAdmin to true if the modal is "Add Admin".
     const members = Object.values(membersFirstPass).map((data) => {
-      if (!admin) return data;
-      return { ...data, isAdmin: true };
+      if (admin) data.isAdmin = true;
+      else if (data.isAdmin === undefined) data.isAdmin = false;
+      return data;
     });
 
     const { error, data: updatedMembers } = await createMembers({

@@ -8,7 +8,6 @@ import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
-import PaymentStripeProvider from '../../components/modals/Payment/PaymentStripeProvider';
 
 const options: StripeCardElementOptions = {
   classes: {
@@ -26,15 +25,16 @@ const PaymentCardForm: React.FC = () => {
   return (
     <>
       <FormItem
-        // required
+        required
         page="SELECT_TYPE"
         title="Name on Card"
         type="SHORT_TEXT"
       />
 
       <FormItem
-        // required
+        required
         value
+        category="CREDIT_OR_DEBIT_CARD"
         page="SELECT_TYPE"
         title="Credit or Debit Card"
       >
@@ -42,7 +42,7 @@ const PaymentCardForm: React.FC = () => {
       </FormItem>
 
       <FormItem
-        // required
+        required
         page="SELECT_TYPE"
         title="Billing Address"
         type="SHORT_TEXT"
@@ -50,7 +50,7 @@ const PaymentCardForm: React.FC = () => {
 
       <Row spaceBetween className="mo-payment-billing-ctr">
         <FormItem
-          // required
+          required
           page="SELECT_TYPE"
           placeholder="Los Angeles"
           title="City"
@@ -58,7 +58,7 @@ const PaymentCardForm: React.FC = () => {
         />
 
         <FormItem
-          // required
+          required
           page="SELECT_TYPE"
           placeholder="CA"
           title="State"
@@ -66,7 +66,7 @@ const PaymentCardForm: React.FC = () => {
         />
 
         <FormItem
-          // required
+          required
           page="SELECT_TYPE"
           placeholder="00000"
           title="Zip Code"
@@ -107,9 +107,7 @@ const ApplicationPaymentSection: React.FC = () => {
           in the next step.
         </p>
 
-        <PaymentStripeProvider>
-          <PaymentCardForm />
-        </PaymentStripeProvider>
+        <PaymentCardForm />
       </div>
     </>
   );

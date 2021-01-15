@@ -6,6 +6,7 @@ import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { takeFirst } from '@util/util';
 import { RadioOptionProps } from '../../components/molecules/Radio/Radio.types';
 import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
@@ -54,10 +55,66 @@ const ApplicationSelectTypePage: React.FC = () => {
     });
   });
 
+  const city = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ title: 'City' })?.value;
+  });
+
+  const state = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ title: 'State' })?.value;
+  });
+
+  const postalCode = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ title: 'Zip Code' })?.value;
+  });
+
+  const nameOnCard = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ title: 'Name on Card' })?.value;
+  });
+
+  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+
   const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
     const isTypeSelected = !!getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
     return !isTypeSelected;
   });
+
+  const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+  });
+
+  const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+
+    const selectedType: IMemberType = db.community?.types
+      ?.map((typeId: string) => byTypeId[typeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+
+    return !!selectedType?.amount;
+  });
+
+  const elements = useElements();
+  const stripe = useStripe();
+
+  const onContinue = async () => {
+    if (!isPaidMembershipSelected) return;
+
+    // Create the payment method via the Stripe SDK.
+    const stripeResult = await stripe.createPaymentMethod({
+      billing_details: {
+        address: { city, postal_code: postalCode, state },
+        name: nameOnCard
+      },
+      card: elements.getElement(CardElement),
+      type: 'card'
+    });
+
+    if (!stripeResult.error) {
+      updateItem({
+        category: 'CREDIT_OR_DEBIT_CARD',
+        value: stripeResult.paymentMethod?.id
+      });
+    }
+  };
 
   return (
     <FormPage id="SELECT_TYPE">
@@ -71,7 +128,7 @@ const ApplicationSelectTypePage: React.FC = () => {
 
       <ApplicationPaymentSection />
 
-      <FormContinueButton disabled={disabled}>
+      <FormContinueButton disabled={disabled} onClick={onContinue}>
         Next: Confirmation
       </FormContinueButton>
     </FormPage>

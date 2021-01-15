@@ -5,6 +5,8 @@ import { mutation, query } from 'gql-query-builder';
 export interface ApplyForMembershipArgs {
   data: { questionId: string; value: any }[];
   email: string;
+  memberTypeId?: string;
+  paymentMethodId?: string;
   urlName: string;
 }
 
@@ -14,6 +16,8 @@ export const APPLY_FOR_MEMBERSHIP = mutation({
   variables: {
     data: { type: '[MemberDataInput!]!' },
     email: { required: true },
+    memberTypeId: { required: false },
+    paymentMethodId: { required: false },
     urlName: { required: true }
   }
 }).query;
