@@ -6,8 +6,8 @@ const DuesAnalyticsPercentPaidCard: React.FC = () => {
   return (
     <AnalyticsSimple
       label="Percent of Members Paid"
-      percentage={100}
-      value="1"
+      percentage={130}
+      value="1.3%"
     />
   );
 };
