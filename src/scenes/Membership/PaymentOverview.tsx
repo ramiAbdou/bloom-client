@@ -36,7 +36,7 @@ const PaymentNextDueCard: React.FC = () => {
       <h4>{title}</h4>
 
       <RowContainer spaceBetween>
-        <p>January 1st, 2021</p>
+        <p>January 15th, 2022</p>
         <p>$250.00</p>
       </RowContainer>
     </Card>
