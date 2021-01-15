@@ -15,6 +15,7 @@ const FormItem: React.FC<FormItemProps> = ({
   description,
   options,
   required,
+  page,
   placeholder,
   plain,
   type,
@@ -41,6 +42,7 @@ const FormItem: React.FC<FormItemProps> = ({
 
     setItem({
       initialValue: value,
+      page,
       required,
       type,
       validate,

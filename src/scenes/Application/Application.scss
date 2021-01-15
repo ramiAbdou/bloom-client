@@ -60,9 +60,20 @@ $PREF: 's-application';
 .#{$PREF} > p { color: $gray-2; margin-bottom: $lg; }
 .#{$PREF} > button { margin-top: $xxl; width: 100%; }
 
+// ## APPLICATION TYPE STRING - Used in the type string.
+
 .#{$PREF}-type-string {
   &:not(:last-child) { margin-bottom: $sm; }
 
   > span:first-child { @extend .display; margin-right: $xxs; }
   > span:last-child { @extend .meta--lg; color: $gray-2; }
+}
+
+// ## APPLICATION PAYMENT SECTION
+
+.#{$PREF}-payment-ctr {
+  > h2 { margin-bottom: $xs; }
+  > p { margin-bottom: $md; }
+
+  > .o-form-item > .c-misc-input > .__PrivateStripeElement { width: 100%; }
 }

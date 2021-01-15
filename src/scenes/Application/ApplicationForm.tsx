@@ -8,10 +8,10 @@ import ApplicationSelectTypePage from './ApplicationSelectTypePage';
 import useApplyForMembership from './useApplyForMembership';
 
 const ApplicationForm: React.FC = () => {
-  const description = useStoreState(({ db }) => {
-    const { byId: byApplicationId } = db.entities.applications;
-    return byApplicationId[db.community?.application]?.description;
-  });
+  // const description = useStoreState(({ db }) => {
+  //   const { byId: byApplicationId } = db.entities.applications;
+  //   return byApplicationId[db.community?.application]?.description;
+  // });
 
   const title = useStoreState(({ db }) => {
     const { byId: byApplicationId } = db.entities.applications;

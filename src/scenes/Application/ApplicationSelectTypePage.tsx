@@ -1,12 +1,14 @@
 import React from 'react';
 
 import { IdProps } from '@constants';
+import FormStore from '@organisms/Form/Form.store';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { RadioOptionProps } from '../../components/molecules/Radio/Radio.types';
+import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
 import ApplicationPaymentSection from './ApplicationPaymentSection';
 
 const ApplicationSelectTypeCardContent: React.FC<IdProps> = ({ id }) => {
@@ -52,22 +54,40 @@ const ApplicationSelectTypePage: React.FC = () => {
     });
   });
 
+  // const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
+  //   return getItem({ id: 'selectType' })?.value;
+  // });
+
+  // const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
+  //   const { byId: byTypeId } = db.entities.types;
+
+  //   const selectedType: IMemberType = db.community?.types
+  //     ?.map((typeId: string) => byTypeId[typeId])
+  //     ?.find((type: IMemberType) => type?.name === selectedTypeName);
+
+  //   return !!selectedType?.amount;
+  // });
+
+  const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
+    const isTypeSelected = !!getItem({ id: 'selectType' })?.value;
+    return !isTypeSelected;
+  });
+
   return (
     <FormPage id="SELECT_TYPE">
       <FormItem
         card
         cardOptions={cardOptions}
         id="selectType"
+        page="SELECT_TYPE"
         type="MULTIPLE_CHOICE"
       />
 
       <ApplicationPaymentSection />
-      {/* {questions?.map((props) => (
-        <FormItem key={props.id} {...props} />
-      ))}
 
-      <FormErrorMessage marginBottom={-24} />
-      <FormContinueButton>Next: Choose Membership</FormContinueButton> */}
+      <FormContinueButton disabled={disabled}>
+        Next: Confirmation
+      </FormContinueButton>
     </FormPage>
   );
 };

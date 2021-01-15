@@ -44,6 +44,9 @@ export interface FormItemData extends Partial<FormQuestion> {
 
   initialValue?: any;
 
+  // The page that a form item belongs to.
+  page?: string;
+
   placeholder?: string;
 
   // Only used in MULTIPLE_SELECT. True if checkbox shoudln't have an attribute
@@ -90,7 +93,9 @@ export interface UseItemBodyProps
 export interface FormItemProps
   extends UseItemBodyProps,
     ChildrenProps,
-    Pick<FormItemData, 'description' | 'validate' | 'value'> {}
+    Pick<FormItemData, 'description' | 'validate' | 'value'> {
+  page?: string;
+}
 
 export interface FormNavigationPageProps extends IdProps, TitleProps {
   description?: string;
