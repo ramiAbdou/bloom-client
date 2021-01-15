@@ -30,6 +30,10 @@ const ApplicationMembershipPage: React.FC = () => {
     });
   });
 
+  const isConfirmationNext = FormStore.useStoreState(
+    ({ pages }) => pages?.length === 2
+  );
+
   const disabled = validateItems(items)?.some(({ errorMessage }) => {
     return !!errorMessage;
   });
@@ -45,7 +49,7 @@ const ApplicationMembershipPage: React.FC = () => {
       <FormErrorMessage marginBottom={-24} />
 
       <FormContinueButton disabled={disabled}>
-        Next: Choose Membership
+        {isConfirmationNext ? 'Next: Confirmation' : 'Next: Choose Membership'}
       </FormContinueButton>
     </FormPage>
   );

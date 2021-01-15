@@ -1,10 +1,11 @@
 import React from 'react';
+import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { ButtonProps } from '@atoms/Button/Button';
 import FormStore from './Form.store';
 
-const FormContinueButton: React.FC<ButtonProps> = ({ ...props }) => {
+const FormContinueButton: React.FC<ButtonProps> = ({ children, ...props }) => {
   const pageId = FormStore.useStoreState((store) => store.pageId);
   const pages = FormStore.useStoreState((store) => store.pages);
   const setPageId = FormStore.useStoreActions((store) => store.setPageId);
@@ -23,7 +24,10 @@ const FormContinueButton: React.FC<ButtonProps> = ({ ...props }) => {
       className="o-form-submit--continue"
       onClick={onClick}
       {...props}
-    />
+    >
+      {children}
+      <IoChevronForwardOutline />
+    </Button>
   );
 };
 

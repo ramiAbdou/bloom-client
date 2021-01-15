@@ -33,7 +33,13 @@ const ApplicationForm: React.FC = () => {
   if (!title) return null;
 
   const selectTypePages = showForm
-    ? [{ id: 'SELECT_TYPE', title: 'Membership Selection' }]
+    ? [
+        {
+          description: 'Choose your membership type.',
+          id: 'SELECT_TYPE',
+          title: 'Membership Selection'
+        }
+      ]
     : [];
 
   return (

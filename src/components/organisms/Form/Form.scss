@@ -85,7 +85,13 @@ $PREF: 'o-form';
 // ## FORM SUBMIT BUTTON
 
 .#{$PREF}-submit {
-  &--continue { margin-top: $lg; }
+  &--continue {
+    margin-top: $lg;
+
+    &:disabled > svg { color: $gray-3; }
+    > svg { color: white; margin-left: $xs; }
+  }
+  
   &--invisible { display: none; }
   &--sticky { bottom: $md; position: sticky; }
 }
