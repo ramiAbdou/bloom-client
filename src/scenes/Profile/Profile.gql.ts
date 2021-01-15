@@ -43,7 +43,7 @@ export interface UpdateMemberDataArgs {
 }
 
 export const UPDATE_MEMBER_DATA = mutation({
-  fields: ['id', 'value'],
+  fields: ['id', 'value', { question: ['id'] }],
   operation: 'updateMemberData',
   variables: { items: { required: true, type: '[MemberDataArgs!]' } }
 }).query;
