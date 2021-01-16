@@ -6,7 +6,7 @@ import Button from '@atoms/Button';
 import { ModalType } from '@constants';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions } from '@store/Store';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 import DirectoryCardModal from '../DirectoryModal/DirectoryModal';
 import MemberCard, { MemberCardModel } from './DirectoryCard.store';
 
@@ -39,10 +39,9 @@ const DirectoryCardContent: React.FC = () => {
 
   const onClick = () => showModal(`${ModalType.DIRECTORY_CARD}-${id}`);
 
-  const css = makeClass([
-    's-directory-card',
-    [!highlightedValue, 's-directory-card--empty']
-  ]);
+  const css = cx('s-directory-card', {
+    's-directory-card--empty': !highlightedValue
+  });
 
   return (
     <>

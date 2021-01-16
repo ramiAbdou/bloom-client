@@ -1,5 +1,5 @@
 import { QuestionType } from '@constants';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 import { PaginationValue, Row, SortDirection } from './Table.types';
 
 /**
@@ -56,11 +56,11 @@ export const getPaginationValues = (
  * @param type Question's type (ie: SHORT_TEXT).
  */
 export const getTableCellClass = (type: QuestionType) => {
-  return makeClass([
-    [!type || ['SHORT_TEXT', 'CUSTOM'].includes(type), 'c-table-cell--sm'],
-    [['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type), 'c-table-cell--md'],
-    [['LONG_TEXT'].includes(type), 'c-table-cell--lg']
-  ]);
+  return cx('', {
+    'c-table-cell--lg': ['LONG_TEXT'].includes(type),
+    'c-table-cell--md': ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
+    'c-table-cell--sm': !type || ['SHORT_TEXT', 'CUSTOM'].includes(type)
+  });
 };
 
 /**

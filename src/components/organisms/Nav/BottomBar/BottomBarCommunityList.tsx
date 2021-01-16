@@ -8,7 +8,7 @@ import Button from '@atoms/Button';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { ICommunity } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 import Home from './BottomBar.store';
 
 const CommunitySelector = ({ id, logoUrl, name }: Partial<ICommunity>) => {
@@ -23,10 +23,9 @@ const CommunitySelector = ({ id, logoUrl, name }: Partial<ICommunity>) => {
     setTimeout(toggleDropdown, 0);
   };
 
-  const css = makeClass([
-    'o-bottom-bar-dropdown-link',
-    [isActive, 'o-bottom-bar-dropdown-link--active']
-  ]);
+  const css = cx('o-bottom-bar-dropdown-link', {
+    'o-bottom-bar-dropdown-link--active': isActive
+  });
 
   return (
     <div className={css}>

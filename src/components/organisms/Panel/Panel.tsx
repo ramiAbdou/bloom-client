@@ -5,7 +5,7 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 import usePickerPosition from './hooks/usePickerPosition';
 import { PanelAlign } from './Panel.types';
 
@@ -119,7 +119,7 @@ const Panel = ({
 
   // ## END: CALCULATE PICKER COORDINATES
 
-  const css = makeClass(['card', 'c-panel', [className, className]]);
+  const css = cx('card c-panel', { [className]: className });
 
   return (
     <motion.div

@@ -3,7 +3,7 @@ import React, { FC, memo, MutableRefObject } from 'react';
 import Button from '@atoms/Button';
 import { ClassNameProps, LoadingProps, OnClickProps } from '@constants';
 import useTooltip from '@hooks/useTooltip';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 interface DatabaseActionProps
   extends Partial<LoadingProps>,
@@ -18,11 +18,10 @@ export default memo(
   ({ Icon, disabled, tooltip, className, ...props }: DatabaseActionProps) => {
     const ref: MutableRefObject<HTMLElement> = useTooltip(tooltip);
 
-    const css = makeClass([
-      's-database-action',
-      [disabled, 's-database-action--disabled'],
-      className
-    ]);
+    const css = cx('s-database-action', {
+      's-database-action--disabled': disabled,
+      [className]: className;
+    });
 
     return (
       <Button ref={ref} className={css} disabled={disabled} {...props}>

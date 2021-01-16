@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ValueProps } from '@constants';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 interface InputProps extends ValueProps {
   error?: boolean;
@@ -18,7 +18,7 @@ const Input = ({ error, placeholder, onChange, value }: InputProps) => {
     onChange(event.target.value);
   };
 
-  const css = makeClass(['c-misc-input', [error, 'c-misc-input--error']]);
+  const css = cx('c-misc-input', { 'c-misc-input--error': error });
 
   return (
     <input

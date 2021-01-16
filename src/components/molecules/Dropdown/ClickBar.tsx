@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 import Dropdown from './Dropdown.store';
 
 type ValueProps = { value: string };
@@ -22,11 +22,9 @@ const Value = ({ value }: ValueProps) => {
     onUpdate(updatedValues);
   };
 
-  const css = makeClass([
-    'c-tag-attr',
-    'c-misc-dropdown-value',
-    [multiple, 'c-misc-dropdown-value--cancel']
-  ]);
+  const css = cx('c-tag-attr c-misc-dropdown-value', {
+    'c-misc-dropdown-value--cancel': multiple
+  });
 
   return (
     <button className={css} type="button" onClick={deleteValue}>
@@ -62,10 +60,9 @@ export default () => {
 
   const onClick = () => setIsOpen(!isOpen);
 
-  const css = makeClass([
-    'c-misc-dropdown-bar',
-    [isOpen, 'c-misc-dropdown-bar--open']
-  ]);
+  const css = cx('c-misc-dropdown-bar', {
+    'c-misc-dropdown-bar--open': isOpen
+  });
 
   return (
     <div ref={ref} className={css} onClick={onClick}>

@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Attribute } from '@atoms/Tags';
 import { QuestionType, ValueProps } from '@constants';
-import { makeClass, takeFirst } from '@util/util';
+import { cx, takeFirst } from '@util/util';
 import Table from '../Table.store';
 import { Row } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
@@ -26,12 +26,11 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
     ({ options }) => options.fixFirstColumn
   );
 
-  const css = makeClass([
-    getTableCellClass(type),
-    [type === 'MULTIPLE_SELECT', 'c-table-td--multiple-select'],
-    [alignEndRight, 'c-table-td--right'],
-    [fixFirstColumn && i === 0, 'c-table-td--fixed']
-  ]);
+  const css = cx(getTableCellClass(type), {
+    'c-table-td--fixed': fixFirstColumn && i === 0,
+    'c-table-td--multiple-select': type === 'MULTIPLE_SELECT',
+    'c-table-td--right': alignEndRight
+  });
 
   const content: React.ReactNode = takeFirst([
     [type === 'MULTIPLE_CHOICE', <Attribute>{value}</Attribute>],
@@ -63,10 +62,10 @@ const DataRow = (row: Row) => {
   const isSelected = Table.useStoreState((state) => state.isSelected(row.id));
   const columns = Table.useStoreState((store) => store.columns);
 
-  const css = makeClass([
-    [isSelected, 'c-table-tr--active'],
-    [isClickable, 'c-table-tr--clickable']
-  ]);
+  const css = cx('', {
+    'c-table-tr--active': isSelected,
+    'c-table-tr--clickable': isClickable
+  });
 
   return (
     <tr className={css}>

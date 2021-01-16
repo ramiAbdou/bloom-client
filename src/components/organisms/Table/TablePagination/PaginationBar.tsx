@@ -4,7 +4,7 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { ValueProps } from '@constants';
-import { makeClass, uuid } from '@util/util';
+import { cx, uuid } from '@util/util';
 import Table from '../Table.store';
 import { PaginationValue } from '../Table.types';
 import { getPaginationValues } from '../Table.util';
@@ -16,11 +16,10 @@ const PaginationNumber = ({ value }: ValueProps) => {
   const isEllipses = value === '...';
   const onClick = () => !isEllipses && setRange(value);
 
-  const css = makeClass([
-    'c-table-pagination-num',
-    [page === value, 'c-table-pagination-num--active'],
-    [isEllipses, 'c-table-pagination-num--ellipses']
-  ]);
+  const css = cx('c-table-pagination-num', {
+    'c-table-pagination-num--active': page === value,
+    'c-table-pagination-num--ellipses': isEllipses
+  });
 
   return (
     <Button key={value} className={css} onClick={onClick}>

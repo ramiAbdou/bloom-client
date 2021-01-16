@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import Button from '@atoms/Button';
 import { ToastOptions } from '@organisms/Toast/Toast.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 const Toast: React.FC<ToastOptions> = ({
   id,
@@ -44,7 +44,7 @@ const Toast: React.FC<ToastOptions> = ({
     };
   }, [wasUndid]);
 
-  const css = makeClass(['c-toast', [!!onUndo, 'c-toast--undo']]);
+  const css = cx('c-toast', { 'c-toast--undo': !!onUndo });
 
   const onUndoClick = () => {
     setWasUndid(true);

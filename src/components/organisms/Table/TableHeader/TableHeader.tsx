@@ -2,7 +2,7 @@ import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
 import { useStoreActions, useStoreState } from '@store/Store';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 import Table from '../Table.store';
 import { Column } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
@@ -29,13 +29,12 @@ const HeaderCell = ({ hide, i, type, id, title }: HeaderCellProps) => {
 
   const isSortedColumn = sortedColumnId === id;
 
-  const css = makeClass([
-    getTableCellClass(type),
-    [fixFirstColumn && i === 0, 'c-table-th--fixed'],
-    [isPickerShowing, 'c-table-th--picker'],
-    [isSortable, 'c-table-th--sortable'],
-    [isSortedColumn, 'c-table-th--sorted']
-  ]);
+  const css = cx(getTableCellClass(type), {
+    'c-table-th--fixed': fixFirstColumn && i === 0,
+    'c-table-th--picker': isPickerShowing,
+    'c-table-th--sortable': isSortable,
+    'c-table-th--sorted': isSortedColumn
+  });
 
   const showCaretUp = isSortedColumn && direction === 'ASC';
   const showCaretDown = isSortedColumn && direction === 'DESC';
