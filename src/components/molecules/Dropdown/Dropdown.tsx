@@ -26,11 +26,9 @@ const DropdownContent = ({ value }: ValueProps) => {
   );
 };
 
-const Dropdown = ({
-  options,
-  value,
-  ...rest
-}: Pick<DropdownModel, 'multiple' | 'options' | 'onUpdate' | 'value'>) => {
+const Dropdown: React.FC<
+  Pick<DropdownModel, 'multiple' | 'options' | 'onUpdate' | 'value'>
+> = ({ options, value, ...rest }) => {
   return (
     <DropdownStore.Provider
       runtimeModel={{

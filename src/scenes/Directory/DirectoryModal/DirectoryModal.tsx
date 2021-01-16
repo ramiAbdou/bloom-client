@@ -27,17 +27,19 @@ const DirectoryModalData: React.FC = () => {
     });
   });
 
-  if (!items?.length) {
-    return <p>Looks like this user hasn't finished onboarding yet!</p>;
-  }
+  if (items.every(({ value }) => value === undefined)) return null;
 
-  return <QuestionValueList handleNull="HIDE_ALL" items={items} />;
+  return (
+    <>
+      <Separator marginBottom={24} />
+      <QuestionValueList handleNull="HIDE_ALL" items={items} />
+    </>
+  );
 };
 
 const DirectoryModal: React.FC<IdProps> = ({ id }) => (
   <Modal className="s-directory-modal" id={id}>
     <UserInformationContainer />
-    <Separator marginBottom={24} />
     <DirectoryModalData />
   </Modal>
 );
