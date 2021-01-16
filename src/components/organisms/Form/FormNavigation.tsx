@@ -29,7 +29,7 @@ const FormNavigationBar: React.FC<FormNavigationPageProps> = ({ id }) => {
 
 const FormNavigation: React.FC = () => {
   const pages = FormStore.useStoreState((store) => store.pages);
-  if (!pages?.length) return null;
+  if (pages?.length === 1) return null;
 
   return (
     <div className="o-form-nav-ctr">

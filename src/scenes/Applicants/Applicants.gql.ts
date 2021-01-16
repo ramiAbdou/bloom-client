@@ -10,19 +10,15 @@ export const GET_PENDING_APPLICATIONS = query({
   fields: [
     'id',
     {
-      application: [
-        {
-          questions: [
-            'category',
-            'id',
-            'inApplicantCard',
-            'inApplication',
-            'order',
-            'title',
-            'type',
-            'version'
-          ]
-        }
+      questions: [
+        'category',
+        'id',
+        'inApplicantCard',
+        'inApplication',
+        'order',
+        'title',
+        'type',
+        'version'
       ]
     },
     {

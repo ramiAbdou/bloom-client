@@ -12,7 +12,6 @@ import ApplicantsHeader from './ApplicantsHeader';
 
 const Applicants: React.FC = () => {
   const { loading } = useQuery<GetPendingApplicantsResult>({
-    format: (data) => ({ ...data, questions: data.application.questions }),
     name: 'getApplicants',
     query: GET_PENDING_APPLICATIONS,
     schema: Schema.COMMUNITY
