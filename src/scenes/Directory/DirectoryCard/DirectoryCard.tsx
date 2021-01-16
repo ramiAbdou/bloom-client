@@ -16,11 +16,11 @@ const DirectoryCardInformation: React.FC = () => {
   const value = useStoreState(({ db }) => {
     const { byId: byQuestionId } = db.entities.questions;
 
-    const questionId = db.community.questions.find((id) => {
+    const questionId = db.community.questions?.find((id) => {
       return byQuestionId[id]?.inDirectoryCard;
     });
 
-    return data.find(({ question }) => question === questionId)?.value;
+    return data?.find(({ question }) => question === questionId)?.value;
   });
 
   const fullName = MemberCard.useStoreState(({ firstName, lastName }) => {

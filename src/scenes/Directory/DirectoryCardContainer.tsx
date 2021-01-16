@@ -19,14 +19,14 @@ const DirectoryCardContainer = () => {
     const { byId: byQuestionId } = db.entities.questions;
     const { byId: byUserId } = db.entities.users;
 
-    if (!db.community.members?.length) return [];
+    if (!db.community?.members?.length) return [];
 
     const unSortedResult = db.community.members
       ?.map((memberId: string) => {
         const member: IMember = byMemberId[memberId];
 
         const data: IMemberData[] = member.data
-          .map((dataId) => byDataId[dataId])
+          ?.map((dataId) => byDataId[dataId])
           ?.filter(
             (point: IMemberData) =>
               byQuestionId[point.question]?.inExpandedDirectoryCard
