@@ -6,7 +6,7 @@ import { uuid } from '@util/util';
 
 export interface ToastOptions extends Partial<IdProps>, MessageProps {
   mutationOptionsOnClose?: [string, UseClientRequestOptions<any>];
-  onUndo?: Function;
+  onUndo?: VoidFunction;
 }
 
 export type ToastModel = {

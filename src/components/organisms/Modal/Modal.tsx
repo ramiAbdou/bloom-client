@@ -38,7 +38,7 @@ const ModalCancel: React.FC = () => {
 };
 
 interface ModalContainerProps extends ChildrenProps {
-  onClose?: Function;
+  onClose?: VoidFunction;
   width?: number;
 }
 

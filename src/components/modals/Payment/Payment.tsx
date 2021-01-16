@@ -66,6 +66,8 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
     if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
   }, [typeId, selectedTypeId]);
 
+  const onClose = () => clearOptions();
+
   const modalId: ModalType = takeFirst([
     [type === 'PAY_DUES', ModalType.PAY_DUES],
     [type === 'CHANGE_MEMBERSHIP', ModalType.CHANGE_MEMBERSHIP],
@@ -73,7 +75,7 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   ]);
 
   return (
-    <Modal id={modalId} onClose={clearOptions}>
+    <Modal id={modalId} onClose={onClose}>
       <LoadingContainer Header={PaymentHeader} loading={loading}>
         <PaymentModalContent />
       </LoadingContainer>
