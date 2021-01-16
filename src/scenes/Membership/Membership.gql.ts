@@ -1,8 +1,8 @@
 import { mutation, query } from 'gql-query-builder';
 
-// ## GET PAYMENT HISTORY
+// ## GET MEMBER PAYMENTS
 
-export const GET_PAYMENT_HISTORY = query({
+export const GET_MEMBER_PAYMENTS = query({
   fields: [
     'amount',
     'createdAt',
@@ -11,7 +11,7 @@ export const GET_PAYMENT_HISTORY = query({
     { member: ['id'] },
     { type: ['id'] }
   ],
-  operation: 'getPaymentHistory'
+  operation: 'getMemberPayments'
 }).query;
 
 // ## UPDATE AUTO RENEW

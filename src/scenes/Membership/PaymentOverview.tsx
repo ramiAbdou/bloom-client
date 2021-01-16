@@ -13,7 +13,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import { GET_PAYMENT_HISTORY } from './Membership.gql';
+import { GET_MEMBER_PAYMENTS } from './Membership.gql';
 
 const PaymentNextDueCard: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member.autoRenew);
@@ -99,8 +99,8 @@ const PaymentHistoryTable: React.FC = () => {
 
 const PaymentOverview: React.FC = () => {
   const { loading } = useQuery<IMemberPayment[]>({
-    name: 'getPaymentHistory',
-    query: GET_PAYMENT_HISTORY,
+    name: 'getMemberPayments',
+    query: GET_MEMBER_PAYMENTS,
     schema: [Schema.MEMBER_PAYMENT]
   });
 
