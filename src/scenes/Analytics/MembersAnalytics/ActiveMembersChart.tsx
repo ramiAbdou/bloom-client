@@ -2,7 +2,7 @@ import React from 'react';
 
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
-import { ChartType } from '@organisms/Chart/Chart.store';
+import { ChartType } from '@organisms/Chart/Chart.types';
 import { GET_ACTIVE_MEMBERS_SERIES } from '../Analytics.gql';
 
 const ActiveMembersChart: React.FC = () => {

@@ -5,7 +5,7 @@ import { ValueProps } from '@constants';
 
 interface AnalyticsSimpleProps extends ValueProps {
   label: string;
-  percentage: number;
+  percentage?: number;
 }
 
 const NumberContainer: React.FC<

@@ -1,6 +1,12 @@
 import { query } from 'gql-query-builder';
 
-// ## GET ACTIVE GROWTH
+// ## GET ACTIVE DUES GROWTH
+
+export const GET_ACTIVE_DUES_GROWTH = query({
+  operation: 'getActiveDuesGrowth'
+}).query;
+
+// ## GET ACTIVE MEMBERS GROWTH
 
 export const GET_ACTIVE_MEMBERS_GROWTH = query({
   operation: 'getActiveMembersGrowth'
@@ -9,13 +15,6 @@ export const GET_ACTIVE_MEMBERS_GROWTH = query({
 export const GET_ACTIVE_MEMBERS_SERIES = query({
   fields: ['name', 'value'],
   operation: 'getActiveMembersSeries'
-}).query;
-
-// ## GET DUES ANALYTICS
-
-export const GET_DUES_ANALYTICS = query({
-  fields: ['name', 'value'],
-  operation: 'getDuesAnalytics'
 }).query;
 
 // ## GET PAYMENTS
@@ -48,7 +47,7 @@ export const GET_TOTAL_DUES_SERIES = query({
   operation: 'getTotalDuesSeries'
 }).query;
 
-// ## GET TOTAL GROWTH
+// ## GET TOTAL MEMBERS GROWTH
 
 export const GET_TOTAL_MEMBERS_GROWTH = query({
   operation: 'getTotalMembersGrowth'

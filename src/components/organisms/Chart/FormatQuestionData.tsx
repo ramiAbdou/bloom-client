@@ -11,7 +11,8 @@ import {
   IUser
 } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Chart, { ChartModelInitArgs, ChartType } from './Chart.store';
+import Chart from './Chart.store';
+import { ChartModelInitArgs, ChartType } from './Chart.types';
 
 const useQuestionData = (): Pick<
   ChartModelInitArgs,

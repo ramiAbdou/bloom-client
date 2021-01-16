@@ -7,6 +7,8 @@ interface PillProps {
 }
 
 const Pill: React.FC<PillProps> = ({ percentage }) => {
+  if (percentage === undefined) return null;
+
   const isPositive = percentage >= 0;
 
   const css = cx('c-tag-pill', {
