@@ -2,11 +2,13 @@ import { query } from 'gql-query-builder';
 
 // ## GET ACTIVE GROWTH
 
-export const GET_ACTIVE_GROWTH = query({ operation: 'getActiveGrowth' }).query;
+export const GET_ACTIVE_MEMBERS_GROWTH = query({
+  operation: 'getActiveMembersGrowth'
+}).query;
 
-export const GET_ACTIVE_GROWTH_SERIES = query({
+export const GET_ACTIVE_MEMBERS_SERIES = query({
   fields: ['name', 'value'],
-  operation: 'getActiveGrowthSeries'
+  operation: 'getActiveMembersSeries'
 }).query;
 
 // ## GET DUES ANALYTICS
@@ -49,9 +51,11 @@ export const GET_TOTAL_DUES_COLLECTED = query({
 
 // ## GET TOTAL GROWTH
 
-export const GET_TOTAL_GROWTH = query({ operation: 'getTotalGrowth' }).query;
+export const GET_TOTAL_MEMBERS_GROWTH = query({
+  operation: 'getTotalMembersGrowth'
+}).query;
 
-export const GET_TOTAL_GROWTH_SERIES = query({
+export const GET_TOTAL_MEMBERS_SERIES = query({
   fields: ['name', 'value'],
-  operation: 'getTotalGrowthSeries'
+  operation: 'getTotalMembersSeries'
 }).query;

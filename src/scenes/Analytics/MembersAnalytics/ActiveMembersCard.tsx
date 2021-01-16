@@ -1,13 +1,13 @@
 import React from 'react';
 
 import useQuery from '@hooks/useQuery';
-import { GET_ACTIVE_GROWTH } from '../Analytics.gql';
+import { GET_ACTIVE_MEMBERS_GROWTH } from '../Analytics.gql';
 import AnalyticsSimple from '../AnalyticsStatusCard';
 
 const ActiveMembersCard: React.FC = () => {
   const { data, loading } = useQuery({
-    name: 'getActiveGrowth',
-    query: GET_ACTIVE_GROWTH
+    name: 'getActiveMembersGrowth',
+    query: GET_ACTIVE_MEMBERS_GROWTH
   });
 
   if (loading) return null;
