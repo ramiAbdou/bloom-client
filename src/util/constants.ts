@@ -95,7 +95,7 @@ export type QuestionCategory =
  * MISC - Other miscelleaneous types.
  */
 
-export interface TimeSeriesData {
+export interface TimeSeriesResult {
   name: string;
   value: number;
 }

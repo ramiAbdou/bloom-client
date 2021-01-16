@@ -1,4 +1,4 @@
-export interface TimeSeriesData {
+export interface TimeSeriesResult {
   name: string;
   value: number;
 }

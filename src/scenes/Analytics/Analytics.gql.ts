@@ -37,16 +37,15 @@ export const GET_PAYMENTS = query({
   operation: 'getPayments'
 }).query;
 
-// ## GET TOTAL DUES COLLECTED
+// ## GET TOTAL DUES GROWTH
 
-export interface GetTotalDuesCollectedResult {
-  amount: number;
-  percentage: number;
-}
+export const GET_TOTAL_DUES_GROWTH = query({
+  operation: 'getTotalDuesGrowth'
+}).query;
 
-export const GET_TOTAL_DUES_COLLECTED = query({
-  fields: ['amount', 'percentage'],
-  operation: 'getTotalDuesCollected'
+export const GET_TOTAL_DUES_SERIES = query({
+  fields: ['name', 'value'],
+  operation: 'getTotalDuesSeries'
 }).query;
 
 // ## GET TOTAL GROWTH

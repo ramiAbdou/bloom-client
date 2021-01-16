@@ -1,18 +1,13 @@
 import React from 'react';
 
 import useQuery from '@hooks/useQuery';
-import {
-  GET_TOTAL_DUES_COLLECTED,
-  GetTotalDuesCollectedResult
-} from '../Analytics.gql';
+import { GET_TOTAL_DUES_GROWTH } from '../Analytics.gql';
 import AnalyticsSimple from '../AnalyticsStatusCard';
 
 const DuesAnalyticsTotalCollectedCard: React.FC = () => {
-  // const initTotal = Members.useStoreActions((store) => store.initTotal);
-
-  const { data, loading } = useQuery<GetTotalDuesCollectedResult>({
-    name: 'getTotalDuesCollected',
-    query: GET_TOTAL_DUES_COLLECTED
+  const { data, loading } = useQuery<number[]>({
+    name: 'getTotalDuesGrowth',
+    query: GET_TOTAL_DUES_GROWTH
   });
 
   if (loading) return null;
@@ -20,8 +15,8 @@ const DuesAnalyticsTotalCollectedCard: React.FC = () => {
   return (
     <AnalyticsSimple
       label="Total Dues Collected"
-      percentage={data?.percentage}
-      value={`$${data?.amount?.toLocaleString()}`}
+      percentage={data[1]}
+      value={`$${data[0]}`}
     />
   );
 };
