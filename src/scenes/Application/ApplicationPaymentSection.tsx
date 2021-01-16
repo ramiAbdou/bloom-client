@@ -2,11 +2,13 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
+import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
 import FormStore from '@organisms/Form/Form.store';
+import FormContinueButton from '@organisms/Form/FormContinueButton';
 import FormItem from '@organisms/Form/FormItem';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import { CardElement } from '@stripe/react-stripe-js';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 
 const options: StripeCardElementOptions = {
@@ -77,7 +79,7 @@ const PaymentCardForm: React.FC = () => {
   );
 };
 
-const ApplicationPaymentSection: React.FC = () => {
+const ApplicationPaymentSectionContent: React.FC = () => {
   const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
     return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
   });
@@ -91,6 +93,51 @@ const ApplicationPaymentSection: React.FC = () => {
 
     return !!selectedType?.amount;
   });
+
+  const elements = useElements();
+  const stripe = useStripe();
+
+  const city = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ title: 'City' })?.value;
+  });
+
+  const state = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ title: 'State' })?.value;
+  });
+
+  const postalCode = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ title: 'Zip Code' })?.value;
+  });
+
+  const nameOnCard = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ title: 'Name on Card' })?.value;
+  });
+
+  const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
+    const isTypeSelected = !!getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+    return !isTypeSelected;
+  });
+
+  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+
+  const onContinue = async () => {
+    // Create the payment method via the Stripe SDK.
+    const stripeResult = await stripe.createPaymentMethod({
+      billing_details: {
+        address: { city, postal_code: postalCode, state },
+        name: nameOnCard
+      },
+      card: elements.getElement(CardElement),
+      type: 'card'
+    });
+
+    if (!stripeResult.error) {
+      updateItem({
+        category: 'CREDIT_OR_DEBIT_CARD',
+        value: stripeResult.paymentMethod?.id
+      });
+    }
+  };
 
   if (!isPaidMembershipSelected) return null;
 
@@ -109,7 +156,35 @@ const ApplicationPaymentSection: React.FC = () => {
 
         <PaymentCardForm />
       </div>
+
+      <FormContinueButton disabled={disabled} onClick={onContinue}>
+        Next: Confirmation
+      </FormContinueButton>
     </>
+  );
+};
+
+const ApplicationPaymentSection: React.FC = () => {
+  const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+  });
+
+  const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+
+    const selectedType: IMemberType = db.community?.types
+      ?.map((typeId: string) => byTypeId[typeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+
+    return !!selectedType?.amount;
+  });
+
+  if (!isPaidMembershipSelected) return null;
+
+  return (
+    <PaymentStripeProvider>
+      <ApplicationPaymentSectionContent />
+    </PaymentStripeProvider>
   );
 };
 

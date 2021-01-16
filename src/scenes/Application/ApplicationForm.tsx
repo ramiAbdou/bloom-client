@@ -2,14 +2,13 @@ import React from 'react';
 
 import Form from '@organisms/Form/Form';
 import { useStoreState } from '@store/Store';
-import PaymentStripeProvider from '../../components/modals/Payment/PaymentStripeProvider';
 import FormNavigation from '../../components/organisms/Form/FormNavigation';
 import ApplicationConfirmationPage from './ApplicationConfirmationPage';
 import ApplicationMembershipPage from './ApplicationMembershipPage';
 import ApplicationSelectTypePage from './ApplicationSelectTypePage';
 import useApplyForMembership from './useApplyForMembership';
 
-const ApplicationFormContent: React.FC = () => {
+const ApplicationForm: React.FC = () => {
   const description = useStoreState(({ db }) => {
     const { byId: byApplicationId } = db.entities.applications;
     return byApplicationId[db.community?.application]?.description;
@@ -64,21 +63,6 @@ const ApplicationFormContent: React.FC = () => {
         <ApplicationConfirmationPage />
       </Form>
     </div>
-  );
-};
-
-const ApplicationForm: React.FC = () => {
-  const title = useStoreState(({ db }) => {
-    const { byId: byApplicationId } = db.entities.applications;
-    return byApplicationId[db.community?.application]?.title;
-  });
-
-  if (!title) return null;
-
-  return (
-    <PaymentStripeProvider>
-      <ApplicationFormContent />
-    </PaymentStripeProvider>
   );
 };
 
