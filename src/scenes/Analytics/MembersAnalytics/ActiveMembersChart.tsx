@@ -1,19 +1,21 @@
 import React from 'react';
 
+import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.store';
-import Members from './MembersAnalytics.store';
+import { GET_ACTIVE_GROWTH_SERIES } from '../Analytics.gql';
 
 export default () => {
-  const activeChartData = Members.useStoreState(
-    (store) => store.activeChartData
-  );
+  const { data, loading } = useQuery({
+    name: 'getActiveGrowthSeries',
+    query: GET_ACTIVE_GROWTH_SERIES
+  });
 
-  if (!activeChartData?.length) return null;
+  if (loading) return null;
 
   return (
     <Chart
-      data={activeChartData}
+      data={data}
       title="Active Users in Last 30 Days"
       type={ChartType.TIME_SERIES}
     />

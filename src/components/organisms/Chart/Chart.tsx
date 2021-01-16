@@ -13,8 +13,7 @@ const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
 
   useEffect(() => {
     // Only time we'll need to update the data is if the title/type are set.
-    if (!data) return;
-    setData(data);
+    if (data) setData(data);
   }, [data]);
 
   return (

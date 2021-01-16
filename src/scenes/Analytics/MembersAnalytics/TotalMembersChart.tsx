@@ -1,18 +1,22 @@
 import React from 'react';
 
+import { TimeSeriesData } from '@constants';
+import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.store';
-import Members from './MembersAnalytics.store';
+import { GET_TOTAL_GROWTH_SERIES } from '../Analytics.gql';
 
-export default () => {
-  const totalChartData = Members.useStoreState((store) => store.totalChartData);
-  if (!totalChartData?.length) return null;
+const TotalMembersChart: React.FC = () => {
+  const { data, loading } = useQuery<TimeSeriesData[]>({
+    name: 'getTotalGrowthSeries',
+    query: GET_TOTAL_GROWTH_SERIES
+  });
+
+  if (loading) return null;
 
   return (
-    <Chart
-      data={totalChartData}
-      title="Total Members"
-      type={ChartType.TIME_SERIES}
-    />
+    <Chart data={data} title="Total Members" type={ChartType.TIME_SERIES} />
   );
 };
+
+export default TotalMembersChart;

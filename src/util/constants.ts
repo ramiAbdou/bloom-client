@@ -90,3 +90,12 @@ export type QuestionCategory =
   | 'JOINED_AT'
   | 'LAST_NAME'
   | 'MEMBERSHIP_TYPE';
+
+/**
+ * MISC - Other miscelleaneous types.
+ */
+
+export interface TimeSeriesData {
+  name: string;
+  value: number;
+}

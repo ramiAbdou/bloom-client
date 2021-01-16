@@ -1,15 +1,12 @@
 import { query } from 'gql-query-builder';
 
-// ## GET ACTIVE MEMBER ANALYTICS
+// ## GET ACTIVE GROWTH
 
-export interface GetActiveMemberAnalyticsResult {
-  activeChartData: { name: string; value: number }[];
-  activeGrowth: number;
-}
+export const GET_ACTIVE_GROWTH = query({ operation: 'getActiveGrowth' }).query;
 
-export const GET_ACTIVE_MEMBER_ANALYTICS = query({
-  fields: ['activeGrowth', { activeChartData: ['name', 'value'] }],
-  operation: 'getActiveMemberAnalytics'
+export const GET_ACTIVE_GROWTH_SERIES = query({
+  fields: ['name', 'value'],
+  operation: 'getActiveGrowthSeries'
 }).query;
 
 // ## GET DUES ANALYTICS
@@ -50,14 +47,11 @@ export const GET_TOTAL_DUES_COLLECTED = query({
   operation: 'getTotalDuesCollected'
 }).query;
 
-// ## GET TOTAL MEMBER ANALYTICS
+// ## GET TOTAL GROWTH
 
-export interface GetTotalMemberAnalyticsResult {
-  totalChartData: { name: string; value: number }[];
-  totalGrowth: number;
-}
+export const GET_TOTAL_GROWTH = query({ operation: 'getTotalGrowth' }).query;
 
-export const GET_TOTAL_MEMBER_ANALYTICS = query({
-  fields: ['totalGrowth', { totalChartData: ['name', 'value'] }],
-  operation: 'getTotalMemberAnalytics'
+export const GET_TOTAL_GROWTH_SERIES = query({
+  fields: ['name', 'value'],
+  operation: 'getTotalGrowthSeries'
 }).query;

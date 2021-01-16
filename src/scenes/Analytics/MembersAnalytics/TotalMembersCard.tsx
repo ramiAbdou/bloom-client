@@ -1,22 +1,20 @@
 import React from 'react';
 
+import useQuery from '@hooks/useQuery';
+import { GET_TOTAL_GROWTH } from '../Analytics.gql';
 import SimpleCard from '../AnalyticsStatusCard';
-import Members from './MembersAnalytics.store';
 
-export default () => {
-  const numMembers = Members.useStoreState(({ totalChartData }) => {
-    const { length } = totalChartData;
-    return totalChartData[length - 1]?.value;
+const TotalMembersCard: React.FC = () => {
+  const { data, loading } = useQuery({
+    name: 'getTotalGrowth',
+    query: GET_TOTAL_GROWTH
   });
 
-  const totalGrowth = Members.useStoreState((store) => store.totalGrowth);
-  if (totalGrowth === null) return null;
+  if (loading) return null;
 
   return (
-    <SimpleCard
-      label="Total Members"
-      percentage={totalGrowth}
-      value={numMembers}
-    />
+    <SimpleCard label="Total Members" percentage={data[1]} value={data[0]} />
   );
 };
+
+export default TotalMembersCard;
