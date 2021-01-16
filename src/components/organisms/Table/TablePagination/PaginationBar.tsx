@@ -1,10 +1,11 @@
 import deepequal from 'fast-deep-equal';
+import { nanoid } from 'nanoid';
 import React from 'react';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { ValueProps } from '@constants';
-import { cx, uuid } from '@util/util';
+import { cx } from '@util/util';
 import Table from '../Table.store';
 import { PaginationValue } from '../Table.types';
 import { getPaginationValues } from '../Table.util';
@@ -72,7 +73,7 @@ export default () => {
       <BackButton />
 
       {nums.map((value: any) => (
-        <PaginationNumber key={uuid()} value={value} />
+        <PaginationNumber key={nanoid()} value={value} />
       ))}
 
       <NextButton />

@@ -19,8 +19,8 @@ export default memo(
     const ref: MutableRefObject<HTMLElement> = useTooltip(tooltip);
 
     const css = cx('s-database-action', {
-      's-database-action--disabled': disabled,
-      [className]: className;
+      [className]: className,
+      's-database-action--disabled': disabled
     });
 
     return (

@@ -1,4 +1,5 @@
 import day from 'dayjs';
+import { nanoid } from 'nanoid';
 import React from 'react';
 
 import Button from '@atoms/Button';
@@ -12,7 +13,6 @@ import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import { uuid } from '@util/util';
 import { GET_PAYMENT_HISTORY } from './Membership.gql';
 
 const PaymentNextDueCard: React.FC = () => {
@@ -67,7 +67,7 @@ const PaymentHistoryTable: React.FC = () => {
             Receipt
           </Button>
         ),
-        id: uuid()
+        id: nanoid()
       };
     });
   });

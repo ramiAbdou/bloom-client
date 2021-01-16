@@ -1,4 +1,5 @@
 import day from 'dayjs';
+import { nanoid } from 'nanoid';
 import React from 'react';
 
 import MainSection from '@containers/Main/MainSection';
@@ -10,7 +11,6 @@ import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { ICommunity, IMember, IMemberPayment, IUser } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import { uuid } from '@util/util';
 import { GET_PAYMENTS } from '../Analytics.gql';
 
 interface DuesAnalyticsHistoryTableData {
@@ -48,7 +48,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
               'Full Name': `${firstName} ${lastName}`,
               'Membership Plan': typeName,
               'Paid On': day(createdAt).format('MMMM DD, YYYY @ h:mm A'),
-              id: uuid()
+              id: nanoid()
             };
           }
         );

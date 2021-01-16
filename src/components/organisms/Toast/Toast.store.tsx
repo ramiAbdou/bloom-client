@@ -1,8 +1,8 @@
 import { Action, action } from 'easy-peasy';
 import { UseClientRequestOptions } from 'graphql-hooks';
+import { nanoid } from 'nanoid';
 
 import { IdProps, MessageProps } from '@constants';
-import { uuid } from '@util/util';
 
 export interface ToastOptions extends Partial<IdProps>, MessageProps {
   mutationOptionsOnClose?: [string, UseClientRequestOptions<any>];
@@ -25,6 +25,6 @@ export const toastModel: ToastModel = {
   queue: [],
 
   showToast: action(({ queue }, toast) => ({
-    queue: [...queue, { id: uuid(), ...toast }]
+    queue: [...queue, { id: nanoid(), ...toast }]
   }))
 };

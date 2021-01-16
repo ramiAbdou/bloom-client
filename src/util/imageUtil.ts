@@ -1,8 +1,8 @@
 import aws from 'aws-sdk';
 import Jimp from 'jimp';
+import { nanoid } from 'nanoid';
 
 import { isProduction } from '@constants';
-import { uuid } from './util';
 
 const endpoint = `${process.env.DIGITAL_OCEAN_REGION}.digitaloceanspaces.com`;
 const cdnEndpoint = `${process.env.DIGITAL_OCEAN_REGION}.cdn.digitaloceanspaces.com`;
@@ -51,7 +51,7 @@ export const uploadImage = async ({
   const image: Jimp = (await Jimp.read(base64String)).cover(400, 400);
   const resizedBuffer = await image.getBufferAsync(Jimp.MIME_PNG);
 
-  key = `${key}-${uuid()}`;
+  key = `${key}-${nanoid()}`;
 
   const options: aws.S3.PutObjectRequest = {
     ACL: 'public-read',
