@@ -20,7 +20,7 @@ const Card: React.FC<CardProps> = ({
   onClick,
   title
 }) => {
-  const css = cx({ [className]: className, 't-misc-card': true });
+  const css = cx('t-misc-card', { [className]: className });
 
   return (
     <div className={css} onClick={onClick}>

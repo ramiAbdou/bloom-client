@@ -63,8 +63,7 @@ const FormItem: React.FC<FormItemProps> = ({
     ...queryArgs
   });
 
-  const css = cx({
-    'o-form-item': true,
+  const css = cx('o-form-item', {
     'o-form-item--email': category === 'EMAIL',
     'o-form-item--image': type === 'IMAGE',
     'o-form-item--multiple-select': type === 'MULTIPLE_SELECT'

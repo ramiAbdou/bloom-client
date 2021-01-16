@@ -43,13 +43,11 @@ const SideBarProfile: React.FC = () => {
 
   const onClick = () => showPicker(PanelType.PROFILE);
 
-  const containerCss = cx({
-    'o-side-bar-profile-ctr': true,
+  const containerCss = cx('o-side-bar-profile-ctr', {
     'o-side-bar-profile-ctr--no-auto': isDuesMessageShowing
   });
 
-  const buttonCss = cx({
-    'o-side-bar-profile': true,
+  const buttonCss = cx('o-side-bar-profile', {
     'o-side-bar-profile--active': isActive
   });
 

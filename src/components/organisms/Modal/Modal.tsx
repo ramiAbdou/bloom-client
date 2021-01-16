@@ -97,8 +97,7 @@ const Modal: React.FC<ModalProps> = ({
     MODAL_ID
   ]);
 
-  const css = cx({
-    'c-modal': true,
+  const css = cx('c-modal', {
     'c-modal--confirmation': confirmation,
     [className]: className
   });

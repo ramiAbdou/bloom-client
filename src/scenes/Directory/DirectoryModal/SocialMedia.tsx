@@ -25,8 +25,7 @@ const SocialMediaButton: React.FC<SocialMediaButtonProps> = ({
   const isLinkedIn = brand === 'LINKED_IN';
   const isTwitter = brand === 'TWITTER';
 
-  const css = cx({
-    's-directory-modal-social': true,
+  const css = cx('s-directory-modal-social', {
     's-directory-modal-social--facebook': isFacebook,
     's-directory-modal-social--linkedin': isLinkedIn,
     's-directory-modal-social--twitter': isTwitter

@@ -102,8 +102,7 @@ const Button = forwardRef(
       }
     };
 
-    const css = cx({
-      'c-btn': true,
+    const css = cx('c-btn', {
       'c-btn--fill': fill,
       'c-btn--fit': fit,
       'c-btn--lg': large,

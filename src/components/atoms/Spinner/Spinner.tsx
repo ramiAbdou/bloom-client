@@ -37,7 +37,7 @@ const Spinner: React.FC<SpinnerProps> = ({ dark, loading }) => {
   const showSpinner = useShowSpinner(loading);
   if (!showSpinner) return null;
 
-  const css = cx({ 'c-spinner': true, 'c-spinner--dark': dark });
+  const css = cx('c-spinner', { 'c-spinner--dark': dark });
 
   return (
     <motion.div

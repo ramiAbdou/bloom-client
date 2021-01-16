@@ -6,14 +6,17 @@ import { APIError } from 'graphql-hooks';
  *
  * @param classMap Map of class names to boolean flag (whether to show or not).
  */
-export const cx = (classMap: Record<string, any>): string => {
+export const cx = (
+  baseClass: string,
+  classMap: Record<string, any>
+): string => {
   return Object.entries(classMap).reduce(
     (acc: string, [className, addClassName]) => {
       if (!addClassName) return acc;
       if (acc.length) return `${acc} ${className}`;
       return className;
     },
-    ''
+    baseClass ?? ''
   );
 };
 

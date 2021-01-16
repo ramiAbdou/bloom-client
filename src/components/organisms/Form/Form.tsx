@@ -52,7 +52,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     [items, validateOnSubmit]
   );
 
-  const css = cx({ [className]: className, 'o-form': true });
+  const css = cx('o-form', { [className]: className });
 
   return (
     <form className={css} onSubmit={onFormSubmit}>

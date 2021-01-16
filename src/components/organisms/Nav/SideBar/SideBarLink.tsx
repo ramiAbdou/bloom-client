@@ -67,8 +67,7 @@ const SideBarLink: React.FC<SidebarLinkProps> = (props) => {
     return <SideBarLinkProtected {...props} />;
   }
 
-  const css = cx({
-    'o-side-bar-link': true,
+  const css = cx('o-side-bar-link', {
     'o-side-bar-link--active': isActive
   });
 

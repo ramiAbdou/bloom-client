@@ -13,7 +13,7 @@ const MainContent: React.FC<MainContentProps> = ({
   className,
   ...props
 }) => {
-  const css = cx({ [className]: className, 't-main-content': true });
+  const css = cx('t-main-content', { [className]: className });
 
   return (
     <LoadingContainer {...props}>

@@ -9,7 +9,7 @@ interface ToggleProps extends TitleProps {
 }
 
 const Toggle: React.FC<ToggleProps> = ({ on, onChange, title }) => {
-  const css = cx({ 'm-toggle': true, 'm-toggle--on': on });
+  const css = cx('m-toggle', { 'm-toggle--on': on });
 
   return (
     <div className={css}>

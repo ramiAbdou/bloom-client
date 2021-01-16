@@ -35,7 +35,7 @@ const FormPage: React.FC<FormPageProps> = ({
 
   if (!isSamePage) return null;
 
-  const css = cx({ [className]: className, 'o-form-page': true });
+  const css = cx('o-form-page', { [className]: className });
 
   return (
     <div className={css}>

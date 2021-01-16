@@ -22,7 +22,7 @@ const FormNavigationBar: React.FC<FormNavigationPageProps> = ({ id }) => {
     if (!disabled) setPageId(id);
   };
 
-  const css = cx({ 'o-form-nav': true, 'o-form-nav--disabled': disabled });
+  const css = cx('o-form-nav', { 'o-form-nav--disabled': disabled });
 
   return <div ref={ref} className={css} onClick={onClick} />;
 };

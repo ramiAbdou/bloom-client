@@ -9,8 +9,7 @@ interface PillProps {
 const Pill: React.FC<PillProps> = ({ percentage }) => {
   const isPositive = percentage >= 0;
 
-  const css = cx({
-    'c-tag-pill': true,
+  const css = cx('c-tag-pill', {
     'c-tag-pill--negative': !isPositive,
     'c-tag-pill--positive': isPositive
   });

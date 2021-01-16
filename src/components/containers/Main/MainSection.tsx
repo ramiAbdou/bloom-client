@@ -22,7 +22,7 @@ const MainSection: React.FC<MainSectionProps> = ({
   title,
   ...props
 }) => {
-  const css = cx({ [className]: className, 't-main-section': true });
+  const css = cx('t-main-section', { [className]: className });
 
   return (
     <section className={css}>
