@@ -1,4 +1,3 @@
-import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
@@ -18,7 +17,7 @@ const PlaygroundDropdown: React.FC = () => {
         ({ category }) =>
           !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(category)
       );
-  }, deepequal) as IQuestion[];
+  }) as IQuestion[];
 
   const questionId = Playground.useStoreState((store) => store.questionId);
 

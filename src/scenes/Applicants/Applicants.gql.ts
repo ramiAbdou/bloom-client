@@ -16,6 +16,7 @@ export const GET_PENDING_APPLICATIONS = query({
             'category',
             'id',
             'inApplicantCard',
+            'inApplication',
             'order',
             'title',
             'type',

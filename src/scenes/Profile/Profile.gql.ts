@@ -11,9 +11,7 @@ export interface GetMemberDataArgs {
 export const GET_MEMBER_DATA = query({
   fields: [
     'id',
-    {
-      data: ['id', 'value', { question: ['id'] }]
-    },
+    { data: ['id', 'value', { question: ['id'] }] },
     {
       community: [
         'id',

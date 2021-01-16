@@ -5,13 +5,23 @@ import React from 'react';
 import Button from '@atoms/Button';
 import { ModalType } from '@constants';
 import ProfilePicture from '@molecules/ProfilePicture';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import DirectoryCardModal from '../DirectoryModal/DirectoryModal';
 import MemberCard, { MemberCardModel } from './DirectoryCard.store';
 
 const DirectoryCardInformation: React.FC = () => {
-  const value = MemberCard.useStoreState((store) => store.highlightedValue);
+  const data = MemberCard.useStoreState((store) => store.data);
+
+  const value = useStoreState(({ db }) => {
+    const { byId: byQuestionId } = db.entities.questions;
+
+    const questionId = db.community.questions.find((id) => {
+      return byQuestionId[id]?.inDirectoryCard;
+    });
+
+    return data.find(({ question }) => question === questionId)?.value;
+  });
 
   const fullName = MemberCard.useStoreState(({ firstName, lastName }) => {
     return `${firstName} ${lastName}`;

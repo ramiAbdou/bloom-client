@@ -36,10 +36,12 @@ export const GET_DATABASE = query({
     {
       members: [
         'id',
+        'joinedAt',
         'role',
         'status',
-        { allData: ['questionId', 'value'] },
-        { user: ['id', 'firstName', 'lastName', 'email'] }
+        { data: ['id', 'value', { question: ['id'] }] },
+        { type: ['id', 'name'] },
+        { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
       ]
     }
   ],

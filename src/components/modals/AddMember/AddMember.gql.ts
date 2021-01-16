@@ -16,7 +16,6 @@ export const CREATE_MEMBERS = mutation({
     'id',
     'role',
     'status',
-    { allData: ['questionId', 'value'] },
     { user: ['id', 'firstName', 'lastName', 'email'] }
   ],
   operation: 'createMembers',

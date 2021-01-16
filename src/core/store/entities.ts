@@ -39,15 +39,14 @@ export interface IPaymentMethod {
 
 export interface IMember {
   autoRenew: boolean;
-  allData?: { questionId: string; value: string }[];
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
-  cardData?: { questionId: string; value: string }[];
   community: IdString;
   createdAt: string;
   data: IdString[];
   duesStatus: 'ACTIVE' | 'INACTIVE' | 'LAME';
   id: IdString;
+  joinedAt: string;
   paymentMethod: IPaymentMethod;
   payments: IdString[];
   role?: 'ADMIN' | 'OWNER';
@@ -85,6 +84,7 @@ export interface IQuestion {
   inApplication: boolean;
   inApplicantCard: boolean;
   inDirectoryCard: boolean;
+  inExpandedDirectoryCard: boolean;
   onlyInApplication: boolean;
   order: number;
   options: string[];
@@ -99,6 +99,7 @@ export interface IUser {
   email: string;
   facebookUrl: string;
   firstName: string;
+  gender?: 'Male' | 'Female' | 'Non-Binary' | 'Prefer Not to Say';
   id: IdString;
   instagramUrl: string;
   lastName: string;
