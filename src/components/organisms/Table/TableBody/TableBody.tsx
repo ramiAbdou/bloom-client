@@ -2,6 +2,7 @@ import moment from 'moment-timezone';
 import React from 'react';
 
 import { Attribute } from '@atoms/Tags';
+import Pill from '@atoms/Tags/Pill';
 import { QuestionType, ValueProps } from '@constants';
 import { cx, takeFirst } from '@util/util';
 import Table from '../Table.store';
@@ -34,10 +35,10 @@ const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
 
   const content: React.ReactNode = takeFirst([
     [
-      type === 'MULTIPLE_CHOICE' && typeof value === 'string',
-      <Attribute>{value}</Attribute>
+      category === 'DUES_STATUS',
+      <Pill positive={value === 'Active'}>{value}</Pill>
     ],
-    [type === 'MULTIPLE_CHOICE', value],
+    [type === 'MULTIPLE_CHOICE', <Attribute>{value}</Attribute>],
     [
       type === 'MULTIPLE_SELECT',
       <>

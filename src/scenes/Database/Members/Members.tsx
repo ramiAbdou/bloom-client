@@ -55,9 +55,7 @@ export default () => {
               duesStatus.charAt(0).toUpperCase() +
               duesStatus.slice(1).toLowerCase();
 
-            result[questionId] = (
-              <Pill positive={duesStatus === 'ACTIVE'}>{duesStatusString}</Pill>
-            );
+            result[questionId] = duesStatusString;
           } else {
             const d = member.data.find((dataId: string) => {
               const data: IMemberData = byDataId[dataId];
