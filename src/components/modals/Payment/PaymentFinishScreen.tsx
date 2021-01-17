@@ -15,7 +15,7 @@ import { useStoreState } from '@store/Store';
 import Form from '../../organisms/Form/Form';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
-import useCreateOneTimePayment from './useCreateOneTimePayment';
+import useCreateSinglePayment from './useCreateSinglePayment';
 import useCreateSubscription from './useCreateSubscription';
 
 const PaymentFinishScreenToggle: React.FC = () => {
@@ -101,7 +101,7 @@ const PaymentFinishScreenContent: React.FC = () => {
   });
 
   const createSubscription = useCreateSubscription();
-  const createOneTimePayment = useCreateOneTimePayment();
+  const createSinglePayment = useCreateSinglePayment();
 
   const cardItem: QuestionValueItemProps[] = !isFree
     ? [{ title: 'Credit or Debit Card', type: 'SHORT_TEXT', value: cardString }]
@@ -111,7 +111,7 @@ const PaymentFinishScreenContent: React.FC = () => {
     <Form
       className="mo-payment"
       options={{ disableValidation: true }}
-      onSubmit={isLifetime ? createOneTimePayment : createSubscription}
+      onSubmit={isLifetime ? createSinglePayment : createSubscription}
     >
       <ModalContentContainer>
         <QuestionValueList

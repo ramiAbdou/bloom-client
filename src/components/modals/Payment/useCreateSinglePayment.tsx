@@ -2,11 +2,7 @@ import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { Schema } from '@store/schema';
-import {
-  CREATE_ONE_TIME_PAYMENT,
-  CreateOneTimePaymentArgs,
-  CreateOneTimePaymentResult
-} from './Payment.gql';
+import { CREATE_SINGLE_PAYMENT, CreateSinglePaymentArgs } from './Payment.gql';
 import PaymentStore from './Payment.store';
 
 const useCreateOneTimePayment = (): OnFormSubmit => {
@@ -18,12 +14,9 @@ const useCreateOneTimePayment = (): OnFormSubmit => {
 
   const pushToMembership = usePush('membership');
 
-  const [createOneTimePayment] = useMutation<
-    CreateOneTimePaymentResult,
-    CreateOneTimePaymentArgs
-  >({
-    name: 'createOneTimePayment',
-    query: CREATE_ONE_TIME_PAYMENT,
+  const [createSinglePayment] = useMutation<any, CreateSinglePaymentArgs>({
+    name: 'createSinglePayment',
+    query: CREATE_SINGLE_PAYMENT,
     schema: Schema.MEMBER
   });
 
@@ -36,7 +29,7 @@ const useCreateOneTimePayment = (): OnFormSubmit => {
     setErrorMessage(null);
     setIsLoading(true);
 
-    const { error } = await createOneTimePayment({ memberTypeId });
+    const { error } = await createSinglePayment({ memberTypeId });
     setIsLoading(false);
 
     if (error) {

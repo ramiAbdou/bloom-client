@@ -1,20 +1,14 @@
 import { mutation, query } from 'gql-query-builder';
 
-// ## CREATE ONE TIME PAYMENT
+// ## CREATE SINGLE PAYMENT
 
-export interface CreateOneTimePaymentArgs {
+export interface CreateSinglePaymentArgs {
   memberTypeId: string;
 }
 
-export interface CreateOneTimePaymentResult {
-  id: string;
-  // duesStatus: string;
-  // type: { id: string; name: string };
-}
-
-export const CREATE_ONE_TIME_PAYMENT = mutation({
+export const CREATE_SINGLE_PAYMENT = mutation({
   fields: ['id', 'autoRenew', 'duesStatus', { type: ['id', 'name'] }],
-  operation: 'createOneTimePayment',
+  operation: 'createSinglePayment',
   variables: { memberTypeId: { required: true } }
 }).query;
 
