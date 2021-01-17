@@ -45,16 +45,6 @@ export const GET_PAYMENT_INTEGRATIONS = query({
   operation: 'getIntegrations'
 }).query;
 
-// ## GET PAYMENT METHOD
-
-export const GET_PAYMENT_METHOD = query({
-  fields: [
-    'id',
-    { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
-  ],
-  operation: 'getMember'
-}).query;
-
 // ## UPDATE PAYMENT METHOD
 
 export interface UpdatePaymentMethodArgs {

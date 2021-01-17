@@ -44,6 +44,7 @@ export const GET_USER = query({
             { types: ['amount', 'id', 'name', 'isFree', 'recurrence'] }
           ]
         },
+        { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] },
         { type: ['id'] }
       ]
     }
