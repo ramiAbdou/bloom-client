@@ -4,12 +4,12 @@ import { ModalType } from '@constants';
 import useActiveRoute from '@hooks/useActiveRoute';
 import useQuery from '@hooks/useQuery';
 import Modal from '@organisms/Modal/Modal';
-import { ICommunity, IMember } from '@store/entities';
+import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import LoadingContainer from '../../containers/Loading/LoadingContainer';
-import { GET_PAYMENT_INTEGRATIONS, GET_PAYMENT_METHOD } from './Payment.gql';
+import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import PaymentCardScreen from './PaymentCardScreen';
 import PaymentConfirmationScreen from './PaymentConfirmationScreen';
@@ -52,12 +52,6 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
     (store) => store.setSelectedTypeId
   );
 
-  const { loading } = useQuery<IMember>({
-    name: 'getMember',
-    query: GET_PAYMENT_METHOD,
-    schema: Schema.MEMBER
-  });
-
   useEffect(() => {
     if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
   }, [typeId, selectedTypeId]);
@@ -72,7 +66,7 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 
   return (
     <Modal id={modalId} onClose={onClose}>
-      <LoadingContainer Header={PaymentHeader} loading={loading}>
+      <LoadingContainer Header={PaymentHeader} loading={false}>
         <PaymentModalContent />
       </LoadingContainer>
     </Modal>

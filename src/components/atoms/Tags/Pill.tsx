@@ -11,6 +11,8 @@ interface PillProps extends ChildrenProps {
 const Pill: React.FC<PillProps> = ({ children, percentage, positive }) => {
   const isPositive = positive ?? percentage >= 0;
 
+  if (percentage === undefined && positive === undefined) return null;
+
   // If positive, add the "+" character, but otherwise TS will automatically
   // add a "-" character.
   const value = takeFirst([

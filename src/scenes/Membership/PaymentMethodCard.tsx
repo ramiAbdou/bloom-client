@@ -60,6 +60,7 @@ const PaymentMethodCard = () => {
   return (
     <Card
       className="s-membership-card s-membership-card--payment"
+      loading={false}
       title="Payment Method"
     >
       <PaymentMethodContent />
