@@ -2,10 +2,13 @@ import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { Schema } from '@store/schema';
-import { CREATE_SINGLE_PAYMENT, CreateSinglePaymentArgs } from './Payment.gql';
+import {
+  CREATE_LIFETIME_PAYMENT,
+  CreateLifetimePaymentArgs
+} from './Payment.gql';
 import PaymentStore from './Payment.store';
 
-const useCreateOneTimePayment = (): OnFormSubmit => {
+const useCreateLifetimePayment = (): OnFormSubmit => {
   const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
 
   const memberTypeId = PaymentStore.useStoreState(
@@ -14,9 +17,9 @@ const useCreateOneTimePayment = (): OnFormSubmit => {
 
   const pushToMembership = usePush('membership');
 
-  const [createSinglePayment] = useMutation<any, CreateSinglePaymentArgs>({
-    name: 'createSinglePayment',
-    query: CREATE_SINGLE_PAYMENT,
+  const [createSinglePayment] = useMutation<any, CreateLifetimePaymentArgs>({
+    name: 'createLifetimePayment',
+    query: CREATE_LIFETIME_PAYMENT,
     schema: Schema.MEMBER
   });
 
@@ -44,4 +47,4 @@ const useCreateOneTimePayment = (): OnFormSubmit => {
   return onSubmit;
 };
 
-export default useCreateOneTimePayment;
+export default useCreateLifetimePayment;
