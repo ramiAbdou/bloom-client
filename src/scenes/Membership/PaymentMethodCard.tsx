@@ -51,7 +51,7 @@ const PaymentMethodContent = () => {
 
 const PaymentMethodCard = () => {
   const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
+    useStoreState(({ db }) => db.member?.duesStatus) === 'Active';
 
   const isLifetime: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;

@@ -28,7 +28,7 @@ const PaymentHeaderDescription: React.FC = () => {
     const currentAmount = byId[db.member.type]?.amount;
 
     return (
-      db.member.duesStatus === 'ACTIVE' &&
+      db.member.duesStatus === 'Active' &&
       !isFree &&
       selectedAmount < currentAmount
     );

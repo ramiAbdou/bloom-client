@@ -19,13 +19,13 @@ import { UPDATE_AUTO_RENEW, UpdateAutoRenewArgs } from './Membership.gql';
 
 const CurrentPlanCardHeader: React.FC = () => {
   const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
+    useStoreState(({ db }) => db.member?.duesStatus) === 'Active';
 
   return (
     <Row spaceBetween>
       <h3>Current Plan</h3>
       <StatusTag positive={isDuesActive}>
-        {isDuesActive ? 'ACTIVE' : 'INACTIVE'}
+        {isDuesActive ? 'Active' : 'Inactive'}
       </StatusTag>
     </Row>
   );
@@ -64,7 +64,7 @@ const CurrentPlanCardContent: React.FC = () => {
 
 const CurrentPlanCardActionContainer: React.FC = () => {
   const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
+    useStoreState(({ db }) => db.member?.duesStatus) === 'Active';
 
   const isLifetime: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;

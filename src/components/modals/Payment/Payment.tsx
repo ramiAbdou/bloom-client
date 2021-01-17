@@ -96,7 +96,7 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const isUserActive = duesStatus === 'ACTIVE';
+  const isUserActive = duesStatus === 'Active';
 
   useEffect(() => {
     if (!isAdmin && route !== 'membership' && duesStatus && !isUserActive) {

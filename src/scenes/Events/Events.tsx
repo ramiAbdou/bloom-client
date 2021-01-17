@@ -6,7 +6,7 @@ import { useStoreState } from '@store/Store';
 
 const Events: React.FC = () => {
   const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
-  const isUserActive = duesStatus === 'ACTIVE';
+  const isUserActive = duesStatus === 'Active';
 
   if (!isUserActive) return <Redirect to="directory" />;
 

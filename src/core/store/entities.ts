@@ -44,7 +44,7 @@ export interface IMember {
   community: IdString;
   createdAt: string;
   data: IdString[];
-  duesStatus: 'ACTIVE' | 'INACTIVE' | 'LAME';
+  duesStatus: 'Active' | 'Inactive';
   id: IdString;
   joinedAt: string;
   paymentMethod: IPaymentMethod;

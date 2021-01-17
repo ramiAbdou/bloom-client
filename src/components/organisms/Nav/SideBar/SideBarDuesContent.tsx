@@ -6,7 +6,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 
 const SideBarDuesContent: React.FC = () => {
   const canCollectDues = useStoreState(({ db }) => db.canCollectDues);
-  const hasPaid = useStoreState(({ db }) => db.member?.duesStatus === 'ACTIVE');
+  const hasPaid = useStoreState(({ db }) => db.member?.duesStatus === 'Active');
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   if (!canCollectDues || hasPaid) return null;

@@ -60,7 +60,7 @@ const SideBarLink: React.FC<SidebarLinkProps> = (props) => {
   // If member hasn't paid their dues, don't let them go to any route.
   if (
     isStripeConnected &&
-    duesStatus !== 'ACTIVE' &&
+    duesStatus !== 'Active' &&
     !isAdmin &&
     to !== 'directory'
   ) {

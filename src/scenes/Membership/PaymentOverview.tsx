@@ -19,7 +19,7 @@ const PaymentNextDueCard: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member.autoRenew);
 
   const isDuesActive = useStoreState(
-    ({ db }) => db.member.duesStatus === 'ACTIVE'
+    ({ db }) => db.member.duesStatus === 'Active'
   );
 
   const isLifetime: boolean = useStoreState(({ db }) => {
