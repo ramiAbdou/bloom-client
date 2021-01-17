@@ -7,7 +7,7 @@ import {
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { CREATE_MEMBERS, CreateMembersArgs } from './AddMember.gql';
+import { ADD_MEMBERS, AddMembersArgs } from './AddMember.gql';
 import AddMemberStore from './AddMember.store';
 
 type MembersAddedRecord = Record<
@@ -21,9 +21,9 @@ const useCreateMembers = (): OnFormSubmit => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
-  const [createMembers] = useMutation<any, CreateMembersArgs>({
-    name: 'createMembers',
-    query: CREATE_MEMBERS
+  const [addMembers] = useMutation<any, AddMembersArgs>({
+    name: 'addMembers',
+    query: ADD_MEMBERS
   });
 
   const onSubmit = async ({
@@ -62,7 +62,7 @@ const useCreateMembers = (): OnFormSubmit => {
       return data;
     });
 
-    const { error, data: updatedMembers } = await createMembers({
+    const { error, data: updatedMembers } = await addMembers({
       members
     });
 

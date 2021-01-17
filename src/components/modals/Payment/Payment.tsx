@@ -4,16 +4,12 @@ import { ModalType } from '@constants';
 import useActiveRoute from '@hooks/useActiveRoute';
 import useQuery from '@hooks/useQuery';
 import Modal from '@organisms/Modal/Modal';
-import { IMember } from '@store/entities';
+import { ICommunity, IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import LoadingContainer from '../../containers/Loading/LoadingContainer';
-import {
-  GET_DUES_INFORMATION,
-  GET_PAYMENT_METHOD,
-  GetDuesInformationResult
-} from './Payment.gql';
+import { GET_PAYMENT_INTEGRATIONS, GET_PAYMENT_METHOD } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import PaymentCardScreen from './PaymentCardScreen';
 import PaymentConfirmationScreen from './PaymentConfirmationScreen';
@@ -90,17 +86,10 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
   const route = useActiveRoute();
 
-  const { loading } = useQuery<GetDuesInformationResult>({
-    format: ({ stripeAccountId, types }) => ({
-      integrations: { stripeAccountId },
-      types
-    }),
-    name: 'getDuesInformation',
-    query: GET_DUES_INFORMATION,
-    schema: {
-      integrations: Schema.INTEGRATIONS,
-      types: [Schema.MEMBER_TYPE]
-    }
+  const { loading } = useQuery<ICommunity>({
+    name: 'getIntegrations',
+    query: GET_PAYMENT_INTEGRATIONS,
+    schema: Schema.COMMUNITY
   });
 
   // Get the user and see if they've paid their dues or not.

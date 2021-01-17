@@ -13,7 +13,7 @@ import AddMemberStore, {
   addMemberModel
 } from './AddMember.store';
 import AddMemberInput from './AddMemberInput';
-import useCreateMembers from './useCreateMembers';
+import useAddMembers from './useAddMembers';
 
 const AddMemberContent: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
@@ -23,7 +23,7 @@ const AddMemberContent: React.FC = () => {
   const addRow = AddMemberStore.useStoreActions((store) => store.addRow);
   const clearRows = AddMemberStore.useStoreActions((store) => store.clearRows);
 
-  const createMembers = useCreateMembers();
+  const addMembers = useAddMembers();
   const onClose = () => clearRows();
   const onPrimaryClick = () => addRow();
   const onSecondaryClick = () => closeModal();
@@ -34,7 +34,7 @@ const AddMemberContent: React.FC = () => {
       width={750}
       onClose={onClose}
     >
-      <Form className="mo-add-member-form" onSubmit={createMembers}>
+      <Form className="mo-add-member-form" onSubmit={addMembers}>
         <h1>{admin ? 'Add Admin(s)' : 'Add Member(s)'}</h1>
 
         <p>

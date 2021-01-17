@@ -1,7 +1,5 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IMemberType } from '@store/entities';
-
 // ## CREATE ONE TIME PAYMENT
 
 export interface CreateOneTimePaymentArgs {
@@ -42,19 +40,15 @@ export const CREATE_SUBSCRIPTION = mutation({
   }
 }).query;
 
-// ## GET DUES INFORMATION
+// ## GET PAYMENT INTEGRATIONS
 
-export interface GetDuesInformationResult {
-  stripeAccountId: string;
-  types: IMemberType[];
-}
-
-export const GET_DUES_INFORMATION = query({
+export const GET_PAYMENT_INTEGRATIONS = query({
   fields: [
-    'stripeAccountId',
+    'id',
+    { integrations: ['id', 'stripeAccountId'] },
     { types: ['id', 'amount', 'isFree', 'name', 'recurrence'] }
   ],
-  operation: 'getDuesInformation'
+  operation: 'getIntegrations'
 }).query;
 
 // ## GET PAYMENT METHOD
