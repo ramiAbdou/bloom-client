@@ -30,7 +30,7 @@ const useShowSpinner = (loading: boolean): boolean => {
     return () => clearTimeout(timeout);
   }, [loading, showSpinner]);
 
-  return loading === undefined || showSpinner;
+  return showSpinner;
 };
 
 const Spinner: React.FC<SpinnerProps> = ({ dark, loading }) => {
