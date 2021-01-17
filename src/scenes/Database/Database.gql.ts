@@ -32,10 +32,12 @@ export interface GetDatabaseResult {
 export const GET_DATABASE = query({
   fields: [
     'id',
+    { integrations: ['id', 'stripeAccountId'] },
     { questions: ['category', 'id', 'title', 'type', 'version'] },
     {
       members: [
         'id',
+        'duesStatus',
         'joinedAt',
         'role',
         'status',

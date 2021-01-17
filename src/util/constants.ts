@@ -84,6 +84,7 @@ export type QuestionType =
 
 export type QuestionCategory =
   | 'CREDIT_OR_DEBIT_CARD'
+  | 'DUES_STATUS'
   | 'EMAIL'
   | 'FIRST_NAME'
   | 'GENDER'

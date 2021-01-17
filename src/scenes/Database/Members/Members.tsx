@@ -1,11 +1,13 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
+import Pill from '@atoms/Tags/Pill';
 import useMutation from '@hooks/useMutation';
 import Table from '@organisms/Table/Table';
 import { Column, OnRenameColumn, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import {
+  IIntegrations,
   IMember,
   IMemberData,
   IMemberType,
@@ -27,7 +29,9 @@ export default () => {
     const { byId: byUserId } = db.entities.users;
 
     return db.community.members?.reduce((acc: Row[], memberId: string) => {
-      const { joinedAt, id, ...member }: IMember = byMemberId[memberId];
+      const { duesStatus, joinedAt, id, ...member }: IMember = byMemberId[
+        memberId
+      ];
 
       const user: IUser = byUserId[member.user];
       const { email, firstName, gender, lastName } = user;
@@ -46,6 +50,14 @@ export default () => {
           else if (category === 'MEMBERSHIP_TYPE') {
             const type: IMemberType = byTypeId[member.type];
             result[questionId] = type.name;
+          } else if (category === 'DUES_STATUS') {
+            const duesStatusString =
+              duesStatus.charAt(0).toUpperCase() +
+              duesStatus.slice(1).toLowerCase();
+
+            result[questionId] = (
+              <Pill positive={duesStatus === 'ACTIVE'}>{duesStatusString}</Pill>
+            );
           } else {
             const d = member.data.find((dataId: string) => {
               const data: IMemberData = byDataId[dataId];
@@ -65,8 +77,24 @@ export default () => {
   }, deepequal);
 
   const columns: Column[] = useStoreState(({ db }) => {
-    const { byId } = db.entities.questions;
-    return db.community.questions?.map((id: string) => byId[id]);
+    const { byId: byIntegrationsId } = db.entities.integrations;
+    const { byId: byQuestionId } = db.entities.questions;
+
+    const integrations: IIntegrations =
+      byIntegrationsId[db.community?.integrations];
+
+    return db.community.questions
+      ?.map((id: string) => byQuestionId[id])
+      ?.filter((question: IQuestion) => {
+        if (
+          question.category === 'DUES_STATUS' &&
+          !integrations.stripeAccountId
+        ) {
+          return false;
+        }
+
+        return true;
+      });
   });
 
   const [renameQuestion] = useMutation<IQuestion, RenameQuestionArgs>({

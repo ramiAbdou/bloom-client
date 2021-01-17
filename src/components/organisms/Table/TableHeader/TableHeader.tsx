@@ -12,7 +12,14 @@ interface HeaderCellProps extends Column {
   i: number;
 }
 
-const HeaderCell = ({ hide, i, type, id, title }: HeaderCellProps) => {
+const HeaderCell = ({
+  category,
+  hide,
+  i,
+  type,
+  id,
+  title
+}: HeaderCellProps) => {
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
@@ -29,7 +36,7 @@ const HeaderCell = ({ hide, i, type, id, title }: HeaderCellProps) => {
 
   const isSortedColumn = sortedColumnId === id;
 
-  const css = cx(getTableCellClass(type), {
+  const css = cx(getTableCellClass({ category, type }), {
     'c-table-th--fixed': fixFirstColumn && i === 0,
     'c-table-th--picker': isPickerShowing,
     'c-table-th--sortable': isSortable,

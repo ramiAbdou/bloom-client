@@ -14,7 +14,7 @@ interface DataCellProps extends Row, ValueProps {
   type: QuestionType;
 }
 
-const DataCell = ({ i, id, type, value }: DataCellProps) => {
+const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
   const alignEndRight = Table.useStoreState(({ columns, options }) => {
     const isLastCell = i === columns.length - 1;
     return options.alignEndRight && isLastCell;
@@ -26,14 +26,18 @@ const DataCell = ({ i, id, type, value }: DataCellProps) => {
     ({ options }) => options.fixFirstColumn
   );
 
-  const css = cx(getTableCellClass(type), {
+  const css = cx(getTableCellClass({ category, type }), {
     'c-table-td--fixed': fixFirstColumn && i === 0,
     'c-table-td--multiple-select': type === 'MULTIPLE_SELECT',
     'c-table-td--right': alignEndRight
   });
 
   const content: React.ReactNode = takeFirst([
-    [type === 'MULTIPLE_CHOICE', <Attribute>{value}</Attribute>],
+    [
+      type === 'MULTIPLE_CHOICE' && typeof value === 'string',
+      <Attribute>{value}</Attribute>
+    ],
+    [type === 'MULTIPLE_CHOICE', value],
     [
       type === 'MULTIPLE_SELECT',
       <>
@@ -76,6 +80,7 @@ const DataRow = (row: Row) => {
         return (
           <DataCell
             key={id + row.id}
+            category={category}
             i={i}
             id={row.id}
             type={type}
