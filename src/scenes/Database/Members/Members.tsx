@@ -53,7 +53,7 @@ export default () => {
               return question.id === questionId;
             });
 
-            result[questionId] = byDataId[d].value;
+            result[questionId] = byDataId[d]?.value;
           }
           return result;
         },

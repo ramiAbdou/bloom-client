@@ -1,13 +1,13 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 import { nanoid } from 'nanoid';
 
-type AddMemberModel = {
+export interface AddMemberModel {
   addRow: Action<AddMemberModel>;
   admin?: boolean;
   clearRows: Action<AddMemberModel>;
   deleteRow: Action<AddMemberModel, string>;
   rows: string[];
-};
+}
 
 export const addMemberModel: AddMemberModel = {
   addRow: action((state) => ({ ...state, rows: [...state.rows, nanoid()] })),

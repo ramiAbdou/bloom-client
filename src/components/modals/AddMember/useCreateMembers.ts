@@ -9,7 +9,11 @@ import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { CREATE_MEMBERS, CreateMembersArgs } from './AddMember.gql';
 import AddMemberStore from './AddMember.store';
-import { MembersAddedRecord } from './AddMember.types';
+
+type MembersAddedRecord = Record<
+  string,
+  { email: string; isAdmin: boolean; firstName: string; lastName: string }
+>;
 
 const useCreateMembers = (): OnFormSubmit => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
