@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 
 import { ChildrenProps, ClassNameProps, IdProps } from '@constants';
+import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 
@@ -18,15 +19,14 @@ const FormPage: React.FC<FormPageProps> = ({
   const pageId = FormStore.useStoreState((store) => store.pageId);
   const pages = FormStore.useStoreState((store) => store.pages);
 
-  const currentPageIndex = pages.findIndex((element) => element.id === pageId);
-  const pageIndex = pages.findIndex((element) => element.id === id);
-  const { description, disabled, title } = pages[pageIndex] ?? {};
-
   const setPageDisabled = FormStore.useStoreActions(
     (store) => store.setPageDisabled
   );
 
+  const currentPageIndex = pages.findIndex((element) => element.id === pageId);
+  const pageIndex = pages.findIndex((element) => element.id === id);
   const isSamePage = id === pageId;
+  const { description, disabled, title } = pages[pageIndex] ?? {};
 
   useEffect(() => {
     if (pageIndex >= 0 && disabled) {
@@ -37,6 +37,14 @@ const FormPage: React.FC<FormPageProps> = ({
   if (!isSamePage) return null;
 
   const css = cx('o-form-page', { [className]: className });
+
+  if (id === 'CONFIRMATION') {
+    return (
+      <ConfirmationScreen closeButton title={title}>
+        <p>{description}</p>
+      </ConfirmationScreen>
+    );
+  }
 
   return (
     <motion.div

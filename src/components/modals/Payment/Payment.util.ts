@@ -39,6 +39,17 @@ const updateCardScreen: FormNavigationPageProps[] = [
   }
 ];
 
+const updateCardConfirmationScreen: FormNavigationPageProps[] = [
+  {
+    description: deline`
+      Your card on file has been updated, and you may now use this card to pay
+      dues. We sent you a confirmation email!
+    `,
+    id: 'CONFIRMATION',
+    title: 'Payment Method Updated'
+  }
+];
+
 // ## FINISH SCREENS
 
 const changeMembershipScreen: FormNavigationPageProps[] = [
@@ -59,6 +70,17 @@ const changeToFreeMembershipScreen: FormNavigationPageProps[] = [
   }
 ];
 
+const changeMembershipConfirmationScreen: FormNavigationPageProps[] = [
+  {
+    description: deline`
+      Your membership has successfully been changed. Please check your email
+      for a confirmation.
+    `,
+    id: 'CONFIRMATION',
+    title: 'Membership Plan Changed'
+  }
+];
+
 const finishDuesScreen: FormNavigationPageProps[] = [
   {
     description: deline`
@@ -69,9 +91,16 @@ const finishDuesScreen: FormNavigationPageProps[] = [
   }
 ];
 
-// ## CONFIRMATION SCREEN
-
-const confirmationScreen: FormNavigationPageProps[] = [{ id: 'CONFIRMATION' }];
+const payDuesConfirmationScreen: FormNavigationPageProps[] = [
+  {
+    description: deline`
+      Your dues have been paid successfully! Please check your email
+      for a receipt.
+    `,
+    id: 'CONFIRMATION',
+    title: 'Dues Payment Successful'
+  }
+];
 
 /**
  * Returns an array of the payment screens that should be shown to the user
@@ -92,7 +121,7 @@ export const getPaymentPages = ({
   if (type === 'UPDATE_PAYMENT_METHOD') {
     return [
       ...(isCardOnFile ? updateCardScreen : addCardScreen),
-      ...confirmationScreen
+      ...updateCardConfirmationScreen
     ];
   }
 
@@ -100,7 +129,7 @@ export const getPaymentPages = ({
     return [
       ...(!isCardOnFile ? addCardScreen : []),
       ...finishDuesScreen,
-      ...confirmationScreen
+      ...payDuesConfirmationScreen
     ];
   }
 
@@ -108,7 +137,7 @@ export const getPaymentPages = ({
     return [
       ...(!isCardOnFile ? addCardScreen : []),
       ...(isFree ? changeToFreeMembershipScreen : changeMembershipScreen),
-      ...confirmationScreen
+      ...changeMembershipConfirmationScreen
     ];
   }
 

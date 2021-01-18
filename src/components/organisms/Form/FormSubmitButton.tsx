@@ -1,11 +1,18 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button';
+import { cx } from '@util/util';
 import Form from './Form.store';
 
-const FormSubmitButton: React.FC<ButtonProps> = ({
+interface FormSubmitButtonProps extends ButtonProps {
+  invisible?: boolean;
+}
+
+const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
+  className,
   disabled,
   fill,
+  invisible,
   large,
   loadingText,
   ...props
@@ -13,9 +20,15 @@ const FormSubmitButton: React.FC<ButtonProps> = ({
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const isLoading = Form.useStoreState((store) => store.isLoading);
 
+  const css = cx('', {
+    [className]: className,
+    'o-form-submit--invisible': invisible
+  });
+
   return (
     <Button
       primary
+      className={css}
       disabled={disabled || !isCompleted}
       fill={fill ?? true}
       large={large ?? true}

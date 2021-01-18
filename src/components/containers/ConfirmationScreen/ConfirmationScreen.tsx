@@ -4,16 +4,19 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { ChildrenProps } from '@constants';
+import { useStoreActions } from '@store/Store';
 
 interface ConfirmationScreenProps extends ChildrenProps {
   closeButton?: boolean;
-  onClose?: VoidFunction;
   title: string;
 }
 
 const ConfirmationScreenCloseButton: React.FC<
-  Pick<ConfirmationScreenProps, 'closeButton' | 'onClose'>
-> = ({ closeButton, onClose }) => {
+  Pick<ConfirmationScreenProps, 'closeButton'>
+> = ({ closeButton }) => {
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const onClose = () => closeModal();
+
   if (!closeButton) return null;
 
   return (
@@ -26,7 +29,6 @@ const ConfirmationScreenCloseButton: React.FC<
 const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
   closeButton,
   children,
-  onClose,
   title
 }) => {
   return (
@@ -43,10 +45,7 @@ const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({
 
       {children}
 
-      <ConfirmationScreenCloseButton
-        closeButton={closeButton}
-        onClose={onClose}
-      />
+      <ConfirmationScreenCloseButton closeButton={closeButton} />
     </motion.div>
   );
 };
