@@ -119,7 +119,6 @@ export type OnFormSubmitArgs = {
   items: FormItemData[];
   goToNextPage: ActionCreator;
   setErrorMessage: ActionCreator<string>;
-  setIsLoading: ActionCreator<boolean>;
 };
 
 export type OnFormSubmit = (args: OnFormSubmitArgs) => Promise<void>;

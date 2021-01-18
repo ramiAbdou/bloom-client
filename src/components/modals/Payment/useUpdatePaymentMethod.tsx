@@ -23,8 +23,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
   const onSubmit = async ({
     goToNextPage,
     items,
-    setErrorMessage,
-    setIsLoading
+    setErrorMessage
   }: OnFormSubmitArgs) => {
     const line1 = items.find(({ title }) => title === 'Billing Address').value;
     const city = items.find(({ title }) => title === 'City').value;
@@ -33,11 +32,6 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
     const nameOnCard = items.find(({ title }) => title === 'Name on Card')
       .value;
-
-    // Start the submit function by clearing the error message and set the
-    // form state to loading.
-    setErrorMessage(null);
-    setIsLoading(true);
 
     // Create the payment method via the Stripe SDK.
     const stripeResult = await stripe.createPaymentMethod({
@@ -53,7 +47,6 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     // show that error message.
     if (stripeResult.error) {
       setErrorMessage(stripeResult.error.message);
-      setIsLoading(false);
       return;
     }
 
@@ -68,7 +61,6 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
     if (updateError) {
       setErrorMessage(updateError);
-      setIsLoading(false);
       return;
     }
 

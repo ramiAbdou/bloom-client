@@ -26,13 +26,7 @@ const useCreateMembers = (): OnFormSubmit => {
     query: ADD_MEMBERS
   });
 
-  const onSubmit = async ({
-    items,
-    setErrorMessage,
-    setIsLoading
-  }: OnFormSubmitArgs) => {
-    setIsLoading(true);
-
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     // In the first pass, format all the values by looking at the item's
     // category and id.
     const membersFirstPass: MembersAddedRecord = items.reduce(
@@ -65,8 +59,6 @@ const useCreateMembers = (): OnFormSubmit => {
     const { error, data: updatedMembers } = await addMembers({
       members
     });
-
-    setIsLoading(false);
 
     if (error) {
       setErrorMessage(error);

@@ -31,7 +31,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   }, [pages]);
 
   const onFormSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
+    async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
       if (onSubmit) {
@@ -49,12 +49,17 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
           return;
         }
 
-        onSubmit({
+        setError(null);
+        setIsLoading(true);
+
+        await onSubmit({
           goToNextPage,
           items: validatedItems,
           setErrorMessage: setError,
           setIsLoading
         });
+
+        setIsLoading(false);
       }
     },
     [items, validateOnSubmit]

@@ -23,16 +23,9 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
 
   const onSubmit = async ({
     goToNextPage,
-    setErrorMessage,
-    setIsLoading
+    setErrorMessage
   }: OnFormSubmitArgs) => {
-    // Start the submit function by clearing the error message and set the
-    // form state to loading.
-    setErrorMessage(null);
-    setIsLoading(true);
-
     const { error } = await createSinglePayment({ memberTypeId });
-    setIsLoading(false);
 
     if (error) {
       setErrorMessage(error);

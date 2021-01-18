@@ -28,14 +28,8 @@ const useCreateSubscription = (): OnFormSubmit => {
   const onSubmit = async ({
     goToNextPage,
     items,
-    setErrorMessage,
-    setIsLoading
+    setErrorMessage
   }: OnFormSubmitArgs) => {
-    // Start the submit function by clearing the error message and set the
-    // form state to loading.
-    setErrorMessage(null);
-    setIsLoading(true);
-
     const autoRenew = items.find(({ type }) => type === 'TOGGLE')?.value;
 
     // Create the actual subscription. Pass the MemberType ID to know what
@@ -48,7 +42,6 @@ const useCreateSubscription = (): OnFormSubmit => {
 
     if (error) {
       setErrorMessage(error);
-      setIsLoading(false);
       return;
     }
 

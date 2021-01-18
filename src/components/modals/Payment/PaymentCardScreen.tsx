@@ -99,7 +99,6 @@ const PaymentCardContinueButton: React.FC = () => {
     (store) => store.setErrorMessage
   );
 
-  const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
   const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
 
   if (isUpdatingPaymentMethod) return <PaymentFinishButton />;
@@ -108,8 +107,7 @@ const PaymentCardContinueButton: React.FC = () => {
     updatePaymentMethod({
       goToNextPage,
       items: pageItems,
-      setErrorMessage,
-      setIsLoading
+      setErrorMessage
     });
 
   return (

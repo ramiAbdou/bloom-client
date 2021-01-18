@@ -25,14 +25,7 @@ const useApplyForMembership = (): OnFormSubmit => {
     query: APPLY_FOR_MEMBERSHIP
   });
 
-  const onSubmit = async ({
-    items,
-    setErrorMessage,
-    setIsLoading
-  }: OnFormSubmitArgs) => {
-    // Manually set the isLoading variable to true.
-    setIsLoading(true);
-
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const paymentMethodId = items.find(
       ({ category }) => category === 'CREDIT_OR_DEBIT_CARD'
     )?.value;
@@ -62,9 +55,6 @@ const useApplyForMembership = (): OnFormSubmit => {
       paymentMethodId,
       urlName: name
     });
-
-    // Manually reset the isLoading variable to false.
-    setIsLoading(false);
 
     if (error) {
       setErrorMessage(error);
