@@ -33,13 +33,14 @@ const PaymentFinishButton: React.FC = () => {
 
   const buttonTitle = takeFirst([
     [type === 'UPDATE_PAYMENT_METHOD', 'Update Payment Method'],
-    [!amount || isLessThanCurrentType, 'Change Membership'],
+    [isLessThanCurrentType, 'Downgrade Membership'],
+    [!amount, 'Change Membership'],
     `Finish and Pay $${amount}`
   ]);
 
   const buttonLoadingText = takeFirst([
     [type === 'UPDATE_PAYMENT_METHOD', 'Saving...'],
-    [!amount, 'Changing...'],
+    [!amount || isLessThanCurrentType, 'Changing...'],
     `Paying...`
   ]);
 
