@@ -16,6 +16,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 
   const items = FormStore.useStoreState((store) => store.items, deepequal);
+  const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
   const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
 
@@ -43,6 +44,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         }
 
         onSubmit({
+          goToNextPage,
           items: validatedItems,
           setErrorMessage: setError,
           setIsLoading

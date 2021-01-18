@@ -28,7 +28,10 @@ const FormNavigationBar: React.FC<FormNavigationPageProps> = ({ id }) => {
 };
 
 const FormNavigation: React.FC = () => {
-  const pages = FormStore.useStoreState((store) => store.pages);
+  const pages = FormStore.useStoreState((store) =>
+    store.pages.filter(({ id }) => id !== 'CONFIRMATION')
+  );
+
   if (pages?.length === 1) return null;
 
   return (

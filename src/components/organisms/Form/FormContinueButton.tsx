@@ -7,13 +7,16 @@ import FormStore from './Form.store';
 
 const FormContinueButton: React.FC<ButtonProps> = ({
   children,
+  disabled,
   onClick,
   ...props
 }) => {
   const [loading, setLoading] = useState(false);
-  const pageId = FormStore.useStoreState((store) => store.pageId);
-  const pages = FormStore.useStoreState((store) => store.pages);
-  const setPageId = FormStore.useStoreActions((store) => store.setPageId);
+  const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
+
+  const isPageCompleted = FormStore.useStoreState(
+    (store) => store.isPageCompleted
+  );
 
   const onContinue = async () => {
     if (onClick) {
@@ -22,9 +25,7 @@ const FormContinueButton: React.FC<ButtonProps> = ({
       setLoading(false);
     }
 
-    const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
-    const { id } = pages[nextIndex];
-    setPageId(id);
+    goToNextPage();
   };
 
   return (
@@ -33,6 +34,7 @@ const FormContinueButton: React.FC<ButtonProps> = ({
       large
       primary
       className="o-form-submit--continue"
+      disabled={disabled || !isPageCompleted}
       loading={loading}
       onClick={onContinue}
       {...props}

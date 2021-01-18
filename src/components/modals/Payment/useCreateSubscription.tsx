@@ -10,8 +10,6 @@ import {
 import PaymentStore from './Payment.store';
 
 const useCreateSubscription = (): OnFormSubmit => {
-  const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
-
   const selectedTypeId = PaymentStore.useStoreState(
     (store) => store.selectedTypeId
   );
@@ -28,6 +26,7 @@ const useCreateSubscription = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({
+    goToNextPage,
     items,
     setErrorMessage,
     setIsLoading
@@ -53,7 +52,7 @@ const useCreateSubscription = (): OnFormSubmit => {
       return;
     }
 
-    setScreen('CONFIRMATION');
+    goToNextPage();
     pushToMembership();
   };
 

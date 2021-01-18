@@ -1,15 +1,16 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import Form from '@organisms/Form/Form';
+import FormStore from '@organisms/Form/Form.store';
+import FormContinueButton from '@organisms/Form/FormContinueButton';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
+import FormPage from '@organisms/Form/FormPage';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { useStoreState } from '@store/Store';
-import { CardElement } from '@stripe/react-stripe-js';
+import { CardElement, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import PaymentStore from './Payment.store';
-import PaymentContinueButton from './PaymentContinueButton';
 import PaymentFinishButton from './PaymentFinishButton';
 import useUpdatePaymentMethod from './useUpdatePaymentMethod';
 
@@ -34,63 +35,101 @@ const PaymentCardForm: React.FC = () => {
   if (last4 && type !== 'UPDATE_PAYMENT_METHOD') return null;
 
   return (
-    <>
-      <FormItem required title="Name on Card" type="SHORT_TEXT" />
+    <ModalContentContainer>
+      <FormItem
+        required
+        page="CARD_FORM"
+        title="Name on Card"
+        type="SHORT_TEXT"
+      />
 
-      <FormItem required value title="Credit or Debit Card">
+      <FormItem required value page="CARD_FORM" title="Credit or Debit Card">
         <CardElement options={options} />
       </FormItem>
 
-      <FormItem required title="Billing Address" type="SHORT_TEXT" />
+      <FormItem
+        required
+        page="CARD_FORM"
+        title="Billing Address"
+        type="SHORT_TEXT"
+      />
 
       <Row spaceBetween className="mo-payment-billing-ctr">
         <FormItem
           required
+          page="CARD_FORM"
           placeholder="Los Angeles"
           title="City"
           type="SHORT_TEXT"
         />
 
-        <FormItem required placeholder="CA" title="State" type="SHORT_TEXT" />
+        <FormItem
+          required
+          page="CARD_FORM"
+          placeholder="CA"
+          title="State"
+          type="SHORT_TEXT"
+        />
 
         <FormItem
           required
+          page="CARD_FORM"
           placeholder="00000"
           title="Zip Code"
           type="SHORT_TEXT"
         />
       </Row>
-    </>
+    </ModalContentContainer>
   );
 };
 
-const PaymentCardSubmitButton: React.FC = () => {
+const PaymentCardContinueButton: React.FC = () => {
   const isUpdatingPaymentMethod =
     PaymentStore.useStoreState((store) => store.type) ===
     'UPDATE_PAYMENT_METHOD';
 
-  if (isUpdatingPaymentMethod) return <PaymentFinishButton />;
-  return <PaymentContinueButton />;
-};
-
-const PaymentCardScreen: React.FC = () => {
-  const screen = PaymentStore.useStoreState((store) => store.screen);
-
   const updatePaymentMethod = useUpdatePaymentMethod();
+  const stripe = useStripe();
 
-  // Will be null if the Stripe object hasn't been loaded yet.
-  if (screen !== 'CARD_FORM' || !updatePaymentMethod) return null;
+  const pageItems = FormStore.useStoreState((store) =>
+    store.items.filter(({ page }) => page === store.pageId)
+  );
+
+  const setErrorMessage = FormStore.useStoreActions(
+    (store) => store.setErrorMessage
+  );
+
+  const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
+  const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
+
+  if (isUpdatingPaymentMethod) return <PaymentFinishButton />;
+
+  const onClick = () =>
+    updatePaymentMethod({
+      goToNextPage,
+      items: pageItems,
+      setErrorMessage,
+      setIsLoading
+    });
 
   return (
-    <Form className="mo-payment" onSubmit={updatePaymentMethod}>
-      <ModalContentContainer>
-        <PaymentCardForm />
-      </ModalContentContainer>
-
-      <PaymentFormErrorMessage />
-      <PaymentCardSubmitButton />
-    </Form>
+    <FormContinueButton
+      className="mo-payment-button mo-payment-button--continue"
+      disabled={!stripe}
+      loadingText="Continuing..."
+      onClick={onClick}
+    >
+      Continue
+    </FormContinueButton>
   );
 };
+
+const PaymentCardScreen: React.FC = () => (
+  <FormPage id="CARD_FORM">
+    <PaymentCardForm />
+    <PaymentFormErrorMessage />
+    <PaymentCardContinueButton />
+  </FormPage>
+);
 
 export default PaymentCardScreen;

@@ -3,7 +3,7 @@ import React from 'react';
 import Form from '@organisms/Form/Form';
 import { useStoreState } from '@store/Store';
 import FormNavigation from '../../components/organisms/Form/FormNavigation';
-import ApplicationConfirmationPage from './ApplicationConfirmationPage';
+import ApplicationConfirmationPage from './ApplicationFinishPage';
 import ApplicationMembershipPage from './ApplicationMembershipPage';
 import ApplicationSelectTypePage from './ApplicationSelectTypePage';
 import useApplyForMembership from './useApplyForMembership';
@@ -43,7 +43,7 @@ const ApplicationForm: React.FC = () => {
         {
           description:
             'You’re almost done! Just review this information to make sure we got everything right.',
-          id: 'CONFIRMATION',
+          id: 'FINISH',
           title: 'Confirmation'
         }
       ]

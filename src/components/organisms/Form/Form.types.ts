@@ -117,6 +117,7 @@ export interface FormProps extends ChildrenProps, ClassNameProps {
 
 export type OnFormSubmitArgs = {
   items: FormItemData[];
+  goToNextPage: ActionCreator;
   setErrorMessage: ActionCreator<string>;
   setIsLoading: ActionCreator<boolean>;
 };

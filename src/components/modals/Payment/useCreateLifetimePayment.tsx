@@ -9,8 +9,6 @@ import {
 import PaymentStore from './Payment.store';
 
 const useCreateLifetimePayment = (): OnFormSubmit => {
-  const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
-
   const memberTypeId = PaymentStore.useStoreState(
     (store) => store.selectedTypeId
   );
@@ -24,6 +22,7 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({
+    goToNextPage,
     setErrorMessage,
     setIsLoading
   }: OnFormSubmitArgs) => {
@@ -40,7 +39,7 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
       return;
     }
 
-    setScreen('CONFIRMATION');
+    goToNextPage();
     pushToMembership();
   };
 

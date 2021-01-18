@@ -59,6 +59,20 @@ const ApplicationSelectTypePage: React.FC = () => {
     return !isTypeSelected;
   });
 
+  const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
+    return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+  });
+
+  const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+
+    const selectedType: IMemberType = db.community?.types
+      ?.map((typeId: string) => byTypeId[typeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+
+    return !!selectedType?.amount;
+  });
+
   return (
     <FormPage id="SELECT_TYPE">
       <FormItem
@@ -71,9 +85,11 @@ const ApplicationSelectTypePage: React.FC = () => {
 
       <ApplicationPaymentSection />
 
-      <FormContinueButton disabled={disabled}>
-        Next: Confirmation
-      </FormContinueButton>
+      {!isPaidMembershipSelected && (
+        <FormContinueButton disabled={disabled}>
+          Next: Confirmation
+        </FormContinueButton>
+      )}
     </FormPage>
   );
 };

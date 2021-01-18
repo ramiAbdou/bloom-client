@@ -3,20 +3,18 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
-import QuestionValueList, {
-  QuestionValueItemProps
-} from '@molecules/QuestionValueList';
+import Row from '@containers/Row/Row';
 import FormStore from '@organisms/Form/Form.store';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
+import FormPage from '@organisms/Form/FormPage';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Form from '../../organisms/Form/Form';
+import { takeFirst } from '@util/util';
+import InformationCard from '../../containers/Card/InformationCard';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
-import useCreateLifetimePayment from './useCreateLifetimePayment';
-import useCreateSubscription from './useCreateSubscription';
 
 const PaymentFinishScreenToggle: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
@@ -62,6 +60,7 @@ const PaymentFinishScreenToggle: React.FC = () => {
         value
         description={nextPaymentMessage}
         id="autoRenew"
+        page="FINISH"
         title="Auto-Renew Membership"
         type="TOGGLE"
       />
@@ -77,68 +76,60 @@ const PaymentFinishScreenContent: React.FC = () => {
     return byTypeId[typeId].isFree;
   });
 
-  const isLifetime: boolean = useStoreState(({ db }) => {
+  const selectedTypeName: string = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId].recurrence === 'LIFETIME';
+    return byTypeId[typeId].name;
   });
 
-  const cardString: string = useStoreState(({ db }) => {
-    const { paymentMethod } = db.member;
-    if (!paymentMethod) return null;
-    return `${paymentMethod.brand} ending in ${paymentMethod.last4}`;
-  });
+  const brand = useStoreState(({ db }) => db.member.paymentMethod?.brand);
+  const last4 = useStoreState(({ db }) => db.member.paymentMethod?.last4);
 
-  const typeString: string = useStoreState(({ db }) => {
+  const expirationDate = useStoreState(
+    ({ db }) => db.member.paymentMethod?.expirationDate
+  );
+
+  const description = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    const { amount, name, recurrence }: IMemberType = byTypeId[typeId];
 
-    const amountString = amount ? amount / 100 : 'FREE';
+    const selectedType: IMemberType = byTypeId[typeId];
 
-    return `${name}, $${amountString}/${recurrence}`
-      .replace('LIFETIME', 'life')
-      .replace('MONTLY', 'mo')
-      .replace('YEARLY', 'yr');
+    const { amount, recurrence } = selectedType;
+
+    // Formats the amount with FREE if the amount is 0.
+    const amountString = amount ? `$${amount / 100}` : 'FREE';
+
+    // Construct string "Per" timespan based on the recurrence.
+    const recurrenceString = takeFirst([
+      [recurrence === 'YEARLY', 'Per Year'],
+      [recurrence === 'MONTHLY', 'Per Month'],
+      [recurrence === 'LIFETIME', 'Lifetime']
+    ]);
+
+    return `${amountString} ${recurrenceString}`;
   });
-
-  const createSubscription = useCreateSubscription();
-  const createLifetimePayment = useCreateLifetimePayment();
-
-  const cardItem: QuestionValueItemProps[] = !isFree
-    ? [{ title: 'Credit or Debit Card', type: 'SHORT_TEXT', value: cardString }]
-    : [];
 
   return (
-    <Form
-      className="mo-payment"
-      options={{ disableValidation: true }}
-      onSubmit={isLifetime ? createLifetimePayment : createSubscription}
-    >
+    <>
       <ModalContentContainer>
-        <QuestionValueList
-          items={[
-            {
-              title: 'Membership Type',
-              type: 'MULTIPLE_CHOICE',
-              value: typeString
-            },
-            ...cardItem
-          ]}
-        />
+        <Row>
+          <InformationCard description={description} title={selectedTypeName} />
+          <InformationCard
+            description={`Expires ${expirationDate}`}
+            show={!!last4 && !isFree}
+            title={`${brand} Ending in ${last4}`}
+          />
+        </Row>
 
         <PaymentFinishScreenToggle />
       </ModalContentContainer>
       <PaymentFormErrorMessage />
       <PaymentFinishButton />
-    </Form>
+    </>
   );
 };
 
-const PaymentFinishScreen: React.FC = () => {
-  const screen = PaymentStore.useStoreState((store) => store.screen);
-
-  if (screen !== 'FINISH') return null;
-
-  return (
+const PaymentFinishScreen: React.FC = () => (
+  <FormPage id="FINISH">
     <motion.div
       animate={{ x: 0 }}
       initial={{ x: 50 }}
@@ -146,7 +137,7 @@ const PaymentFinishScreen: React.FC = () => {
     >
       <PaymentFinishScreenContent />
     </motion.div>
-  );
-};
+  </FormPage>
+);
 
 export default PaymentFinishScreen;

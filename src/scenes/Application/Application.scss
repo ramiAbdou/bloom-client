@@ -91,9 +91,4 @@ $PREF: 's-application';
   }
 }
 
-.#{$PREF}-confirmation-membership {
-  > h2 { margin-bottom: $md; }
-  > div:last-child > div { width: -webkit-fill-available; }
-  > div:last-child > div:first-child:not(:only-child) { margin-right: $xs; }
-  > div:last-child > div:last-child:not(:only-child) { margin-left: $xs; }
-}
+.#{$PREF}-confirmation-membership > h2 { margin-bottom: $md; }

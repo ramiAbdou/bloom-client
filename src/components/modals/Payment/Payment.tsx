@@ -3,29 +3,28 @@ import React, { useEffect } from 'react';
 import { ModalType } from '@constants';
 import useActiveRoute from '@hooks/useActiveRoute';
 import useQuery from '@hooks/useQuery';
+import FormNavigation from '@organisms/Form/FormNavigation';
 import Modal from '@organisms/Modal/Modal';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { takeFirst } from '@util/util';
-import LoadingContainer from '../../containers/Loading/LoadingContainer';
+import Form from '../../organisms/Form/Form';
 import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
+import { getPaymentPages } from './Payment.util';
 import PaymentCardScreen from './PaymentCardScreen';
 import PaymentConfirmationScreen from './PaymentConfirmationScreen';
 import PaymentFinishScreen from './PaymentFinishScreen';
-import PaymentHeader from './PaymentHeader';
 import PaymentStripeProvider from './PaymentStripeProvider';
-import useInitPaymentScreen from './useInitPaymentScreen';
+import useCreateLifetimePayment from './useCreateLifetimePayment';
+import useCreateSubscription from './useCreateSubscription';
 
 const PaymentModalContent: React.FC = () => {
   const showPaymentContent = PaymentStore.useStoreState(
-    ({ selectedTypeId, screen, type }) => {
-      return type === 'UPDATE_PAYMENT_METHOD' || (!!selectedTypeId && !!screen);
+    ({ selectedTypeId, type }) => {
+      return type === 'UPDATE_PAYMENT_METHOD' || !!selectedTypeId;
     }
   );
-
-  useInitPaymentScreen();
 
   if (!showPaymentContent) return null;
 
@@ -52,23 +51,35 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
     (store) => store.setSelectedTypeId
   );
 
+  const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
+
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[typeId]?.recurrence === 'LIFETIME';
+  });
+
   useEffect(() => {
     if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
   }, [typeId, selectedTypeId]);
 
   const onClose = () => clearOptions();
 
-  const modalId: ModalType = takeFirst([
-    [type === 'PAY_DUES', ModalType.PAY_DUES],
-    [type === 'CHANGE_MEMBERSHIP', ModalType.CHANGE_MEMBERSHIP],
-    [type === 'UPDATE_PAYMENT_METHOD', ModalType.UPDATE_PAYMENT_METHOD]
-  ]);
+  const createSubscription = useCreateSubscription();
+  const createLifetimePayment = useCreateLifetimePayment();
+
+  const pages = getPaymentPages({ isCardOnFile, type });
 
   return (
-    <Modal id={modalId} onClose={onClose}>
-      <LoadingContainer Header={PaymentHeader} loading={false}>
+    <Modal id={type} onClose={onClose}>
+      <Form
+        className="mo-payment"
+        options={{ multiPage: true }}
+        pages={pages}
+        onSubmit={isLifetime ? createLifetimePayment : createSubscription}
+      >
+        <FormNavigation />
         <PaymentModalContent />
-      </LoadingContainer>
+      </Form>
     </Modal>
   );
 };

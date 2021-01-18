@@ -4,14 +4,12 @@ import React from 'react';
 import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
+import FormPage from '../../organisms/Form/FormPage';
 import PaymentStore from './Payment.store';
 
 const PaymentConfirmation: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const screen = PaymentStore.useStoreState((store) => store.screen);
   const type = PaymentStore.useStoreState((store) => store.type);
-
-  if (screen !== 'CONFIRMATION') return null;
 
   const confirmationTitle = takeFirst([
     [type === 'PAY_DUES', 'Dues Payment Successful'],
@@ -46,9 +44,15 @@ const PaymentConfirmation: React.FC = () => {
   const onClose = () => closeModal();
 
   return (
-    <ConfirmationScreen closeButton title={confirmationTitle} onClose={onClose}>
-      <p>{confirmationDescription}</p>
-    </ConfirmationScreen>
+    <FormPage id="CONFIRMATION">
+      <ConfirmationScreen
+        closeButton
+        title={confirmationTitle}
+        onClose={onClose}
+      >
+        <p>{confirmationDescription}</p>
+      </ConfirmationScreen>
+    </FormPage>
   );
 };
 

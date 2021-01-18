@@ -12,7 +12,7 @@ import {
   FormNavigationPageProps,
   FormOptions
 } from './Form.types';
-import { validateItem } from './Form.util';
+import { validateItem, validateItems } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
 interface UpdateItemArgs extends GetItemArgs {
@@ -22,8 +22,10 @@ interface UpdateItemArgs extends GetItemArgs {
 export type FormModel = {
   errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
+  goToNextPage: Action<FormModel>;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
+  isPageCompleted: Computed<FormModel, boolean>;
   isShowingErrors: boolean;
   items: FormItemData[];
   options: FormOptions;
@@ -53,6 +55,13 @@ export const formModel: FormModel = {
     return items.find((item) => item.category === category);
   }),
 
+  goToNextPage: action(({ pages, pageId, ...state }) => {
+    const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
+    const { id } = pages[nextIndex];
+    window.scrollTo({ top: 0 });
+    return { ...state, pageId: id, pages };
+  }),
+
   /**
    * Returns true if the form has been completed. This is the case if:
    * - The form has validation turned off (only for forms without ANY items).
@@ -79,6 +88,15 @@ export const formModel: FormModel = {
 
   // Used to ensure that the submit button is disabled.
   isLoading: false,
+
+  isPageCompleted: computed(({ items, pageId }) => {
+    const pageItems = items?.filter((item) => item.page === pageId);
+    if (!pageItems?.length) return true;
+
+    return validateItems(pageItems)?.every(({ errorMessage }) => {
+      return !errorMessage;
+    });
+  }),
 
   isShowingErrors: false,
 

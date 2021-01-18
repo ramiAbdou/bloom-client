@@ -15,7 +15,7 @@ import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import InformationCard from '../../components/containers/Card/InformationCard';
 
-const ApplicationConfirmationMembershipSection: React.FC = () => {
+const ApplicationFinishMembershipSection: React.FC = () => {
   const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
     return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
   });
@@ -64,7 +64,7 @@ const ApplicationConfirmationMembershipSection: React.FC = () => {
   );
 };
 
-const ApplicationConfirmationPage: React.FC = () => {
+const ApplicationFinishPage: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     const { byId: byQuestionId } = db.entities.questions;
     return db.community?.questions
@@ -87,11 +87,11 @@ const ApplicationConfirmationPage: React.FC = () => {
   );
 
   return (
-    <FormPage className="s-application-confirmation" id="CONFIRMATION">
+    <FormPage className="s-application-confirmation" id="FINISH">
       <Separator marginBottom={24} marginTop={0} />
       <h2>Application</h2>
       <QuestionValueList items={items} marginBottom={24} />
-      <ApplicationConfirmationMembershipSection />
+      <ApplicationFinishMembershipSection />
       <FormErrorMessage marginBottom={24} marginTop={24} />
 
       <FormSubmitButton>
@@ -102,4 +102,4 @@ const ApplicationConfirmationPage: React.FC = () => {
   );
 };
 
-export default ApplicationConfirmationPage;
+export default ApplicationFinishPage;

@@ -22,3 +22,10 @@ $PREF: 't-misc-card';
   > h4 { margin-bottom: $xs; }
   > p { @extend .meta; }
 }
+
+.flex-ac > .#{$PREF}--information {
+  width: -webkit-fill-available;
+
+  &:first-child:not(:only-child) { margin-right: $xs; }
+  &:last-child:not(:only-child) { margin-left: $xs; }
+}
