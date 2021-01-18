@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
@@ -25,26 +27,25 @@ const useCreateSubscription = (): OnFormSubmit => {
     schema: Schema.MEMBER
   });
 
-  const onSubmit = async ({
-    goToNextPage,
-    items,
-    setErrorMessage
-  }: OnFormSubmitArgs) => {
-    const autoRenew = items.find(({ type }) => type === 'TOGGLE')?.value;
+  const onSubmit = useCallback(
+    async ({ goToNextPage, items, setErrorMessage }: OnFormSubmitArgs) => {
+      const autoRenew = items.find(({ type }) => type === 'TOGGLE')?.value;
 
-    // Create the actual subscription. Pass the MemberType ID to know what
-    // Stripe price ID to look up, as well as the newly created IPaymentMethod
-    // ID. That will be attached to the customer ID associated with the member.
-    const { error } = await createSubscription({ autoRenew, memberTypeId });
+      // Create the actual subscription. Pass the MemberType ID to know what
+      // Stripe price ID to look up, as well as the newly created IPaymentMethod
+      // ID. That will be attached to the customer ID associated with the member.
+      const { error } = await createSubscription({ autoRenew, memberTypeId });
 
-    if (error) {
-      setErrorMessage(error);
-      return;
-    }
+      if (error) {
+        setErrorMessage(error);
+        return;
+      }
 
-    goToNextPage();
-    pushToMembership();
-  };
+      goToNextPage();
+      pushToMembership();
+    },
+    [memberTypeId]
+  );
 
   return memberTypeId ? onSubmit : null;
 };

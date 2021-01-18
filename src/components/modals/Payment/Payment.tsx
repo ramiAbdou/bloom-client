@@ -10,6 +10,7 @@ import Modal from '@organisms/Modal/Modal';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { takeFirst } from '@util/util';
 import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { getPaymentPages } from './Payment.util';
@@ -18,6 +19,7 @@ import PaymentFinishScreen from './PaymentFinishScreen';
 import PaymentStripeProvider from './PaymentStripeProvider';
 import useCreateLifetimePayment from './useCreateLifetimePayment';
 import useCreateSubscription from './useCreateSubscription';
+import useUpdatePaymentMethod from './useUpdatePaymentMethod';
 
 const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   selectedTypeId
@@ -51,8 +53,15 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 
   const createSubscription = useCreateSubscription();
   const createLifetimePayment = useCreateLifetimePayment();
+  const updatePaymentMethod = useUpdatePaymentMethod();
 
-  if (!createSubscription || !createLifetimePayment) return null;
+  const onSubmit = takeFirst([
+    [type === 'UPDATE_PAYMENT_METHOD', updatePaymentMethod],
+    [isLifetime, createLifetimePayment],
+    [!isLifetime, createSubscription]
+  ]);
+
+  if (!onSubmit) return null;
 
   const onClose = () => clearOptions();
   const pages = getPaymentPages({ isCardOnFile, isFree, type });
@@ -66,7 +75,7 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
           multiPage: true
         }}
         pages={pages}
-        onSubmit={isLifetime ? createLifetimePayment : createSubscription}
+        onSubmit={onSubmit}
       >
         <FormNavigation />
         <PaymentCardScreen />

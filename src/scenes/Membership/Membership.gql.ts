@@ -14,6 +14,18 @@ export const GET_MEMBER_PAYMENTS = query({
   operation: 'getMemberPayments'
 }).query;
 
+// ## GET UPCOMING PAYMENT
+
+export interface GetUpcomingPaymentResult {
+  amount: number;
+  nextPaymentDate: string;
+}
+
+export const GET_UPCOMING_PAYMENT = query({
+  fields: ['amount', 'nextPaymentDate'],
+  operation: 'getUpcomingPayment'
+}).query;
+
 // ## UPDATE AUTO RENEW
 
 export interface UpdateAutoRenewArgs {

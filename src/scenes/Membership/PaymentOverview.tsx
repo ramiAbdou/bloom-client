@@ -13,31 +13,34 @@ import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import { GET_MEMBER_PAYMENTS } from './Membership.gql';
+import {
+  GET_MEMBER_PAYMENTS,
+  GET_UPCOMING_PAYMENT,
+  GetUpcomingPaymentResult
+} from './Membership.gql';
 
 const PaymentNextDueCard: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member.autoRenew);
 
-  const isDuesActive = useStoreState(
-    ({ db }) => db.member.duesStatus === 'Active'
-  );
-
-  const isLifetime: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return byTypeId[db.member?.type].recurrence === 'LIFETIME';
+  const { data, loading } = useQuery<GetUpcomingPaymentResult>({
+    name: 'getUpcomingPayment',
+    query: GET_UPCOMING_PAYMENT
   });
 
-  if (isLifetime || !isDuesActive) return null;
+  const { amount, nextPaymentDate } = data ?? {};
 
-  const title = autoRenew ? 'Next Scheduled Payment' : 'Next Payment Due';
+  if (loading || !amount) return null;
 
   return (
-    <Card className="s-membership-card s-membership-card--next">
-      <h4>{title}</h4>
+    <Card
+      className="s-membership-card s-membership-card--next"
+      loading={loading}
+    >
+      <h4>{autoRenew ? 'Next Scheduled Payment' : 'Next Payment Due'}</h4>
 
       <RowContainer spaceBetween>
-        <p>January 15th, 2022</p>
-        <p>$250.00</p>
+        <p>{day(nextPaymentDate).format('MMMM D, YYYY')}</p>
+        <p>${amount.toFixed(2)}</p>
       </RowContainer>
     </Card>
   );
@@ -59,7 +62,7 @@ const PaymentHistoryTable: React.FC = () => {
       const typeName = byTypeId[type].name;
 
       return {
-        Amount: `$${amount / 100}.00`,
+        Amount: `$${(amount / 100).toFixed(2)}`,
         Date: day(createdAt).format('MMMM DD, YYYY'),
         'Membership Plan': typeName,
         Receipt: (

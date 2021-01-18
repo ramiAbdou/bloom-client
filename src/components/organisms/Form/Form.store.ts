@@ -58,7 +58,6 @@ export const formModel: FormModel = {
   goToNextPage: action(({ pages, pageId, ...state }) => {
     const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
     const { id } = pages[nextIndex];
-    console.log(pages, nextIndex, id);
     window.scrollTo({ top: 0 });
     return { ...state, pageId: id, pages };
   }),
