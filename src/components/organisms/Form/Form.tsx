@@ -1,5 +1,5 @@
 import deepequal from 'fast-deep-equal';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
@@ -9,7 +9,8 @@ import { validateItems } from './Form.util';
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
   children,
-  onSubmit
+  onSubmit,
+  pages
 }) => {
   const validateOnSubmit = FormStore.useStoreState(
     (store) => store.options?.validateOnSubmit
@@ -19,10 +20,15 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
   const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
+  const setPages = FormStore.useStoreActions((store) => store.setPages);
 
   const setItemErrorMessages = FormStore.useStoreActions(
     (store) => store.setItemErrorMessages
   );
+
+  useEffect(() => {
+    if (pages) setPages(pages);
+  }, [pages]);
 
   const onFormSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
@@ -63,8 +69,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-const Form: React.FC<FormProps> = ({ options, pages, ...props }: FormProps) => (
-  <FormStore.Provider runtimeModel={{ ...formModel, options, pages }}>
+const Form: React.FC<FormProps> = ({ options, ...props }: FormProps) => (
+  <FormStore.Provider runtimeModel={{ ...formModel, options }}>
     <FormContent {...props} />
   </FormStore.Provider>
 );

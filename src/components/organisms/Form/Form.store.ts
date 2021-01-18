@@ -199,11 +199,9 @@ export const formModel: FormModel = {
 };
 
 const FormStore = createContextStore<FormModel>(
-  ({ options, pages, ...runtimeModel }: FormModel) => ({
+  ({ options, ...runtimeModel }: FormModel) => ({
     ...runtimeModel,
-    options,
-    pageId: pages?.length && pages[0]?.id,
-    pages: pages?.map((page, i) => ({ ...page, disabled: !!i }))
+    options
   }),
   { disableImmer: true }
 );

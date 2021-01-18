@@ -46,7 +46,7 @@ const ProfilePersonalModal: React.FC = () => {
         </ModalContentContainer>
 
         <FormErrorMessage />
-        <FormSubmitButton stickToBottom>Save</FormSubmitButton>
+        <FormSubmitButton>Save</FormSubmitButton>
       </Form>
     </Modal>
   );

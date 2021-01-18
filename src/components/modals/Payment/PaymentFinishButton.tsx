@@ -56,7 +56,6 @@ const PaymentFinishButton: React.FC = () => {
   return (
     <SubmitButton
       fill
-      stickToBottom
       className="mo-payment-button"
       loading={isLoading}
       loadingText={buttonLoadingText}

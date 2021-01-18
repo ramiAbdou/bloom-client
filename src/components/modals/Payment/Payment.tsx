@@ -53,6 +53,11 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 
   const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
 
+  const isFree: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[typeId]?.isFree;
+  });
+
   const isLifetime: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
     return byTypeId[typeId]?.recurrence === 'LIFETIME';
@@ -67,7 +72,7 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   const createSubscription = useCreateSubscription();
   const createLifetimePayment = useCreateLifetimePayment();
 
-  const pages = getPaymentPages({ isCardOnFile, type });
+  const pages = getPaymentPages({ isCardOnFile, isFree, type });
 
   return (
     <Modal id={type} onClose={onClose}>

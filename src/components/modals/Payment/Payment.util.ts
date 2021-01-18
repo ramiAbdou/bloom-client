@@ -26,6 +26,17 @@ const addCardScreen: FormNavigationPageProps[] = [
 
 const changeMembershipScreen: FormNavigationPageProps[] = [
   {
+    description: deline`
+      Please review this information to make sure we got everything right.
+    `,
+    id: 'FINISH',
+    title: 'Change Membership Plan'
+  }
+];
+
+const changeToFreeMembershipScreen: FormNavigationPageProps[] = [
+  {
+    description: `Are you sure you want to downgrade your membership?`,
     id: 'FINISH',
     title: 'Change Membership Plan'
   }
@@ -88,7 +99,7 @@ export const getPaymentPages = ({
   if (type === 'CHANGE_MEMBERSHIP') {
     return [
       ...(!isCardOnFile ? addCardScreen : []),
-      ...changeMembershipScreen,
+      ...(isFree ? changeToFreeMembershipScreen : changeMembershipScreen),
       ...confirmationScreen
     ];
   }
