@@ -21,8 +21,7 @@ const addCardScreen: FormNavigationPageProps[] = [
     `,
     id: 'CARD_FORM',
     title: 'Update Payment Method'
-  },
-  { id: 'CONFIRMATION' }
+  }
 ];
 
 const changeMembershipScreen: FormNavigationPageProps[] = [
@@ -34,6 +33,9 @@ const changeMembershipScreen: FormNavigationPageProps[] = [
 
 const finishDuesScreen: FormNavigationPageProps[] = [
   {
+    description: deline`
+      Please review this information to make sure we got everything right.
+    `,
     id: 'FINISH',
     title: 'Pay Dues'
   }
@@ -47,8 +49,7 @@ const updateCardScreen: FormNavigationPageProps[] = [
     `,
     id: 'CARD_FORM',
     title: 'Update Payment Method'
-  },
-  { id: 'CONFIRMATION' }
+  }
 ];
 
 const confirmationScreen: FormNavigationPageProps[] = [{ id: 'CONFIRMATION' }];

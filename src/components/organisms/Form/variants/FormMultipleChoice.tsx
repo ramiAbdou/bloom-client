@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Radio from '@molecules/Radio/Radio';
-import Form from './Form.store';
-import { FormItemData } from './Form.types';
+import Form from '../Form.store';
+import { FormItemData } from '../Form.types';
 
 const FormMultipleChoice: React.FC<FormItemData> = ({ options, title }) => {
   const value = Form.useStoreState(({ getItem }) => getItem({ title })?.value);

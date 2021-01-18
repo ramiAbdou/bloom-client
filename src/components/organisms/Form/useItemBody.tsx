@@ -7,14 +7,14 @@ import {
   TextItemProps,
   UseItemBodyProps
 } from './Form.types';
-import FormDropdown from './FormDropdown';
-import FormImageUpload from './FormImageUpload';
-import FormLongText from './FormLongText';
-import FormMultipleCardChoice from './FormMultipleCardChoice';
-import FormMultipleChoice from './FormMultipleChoice';
-import FormMultipleSelect from './FormMultipleSelect';
-import FormShortText from './FormShortText';
-import FormToggle from './FormToggle';
+import FormDropdown from './variants/FormDropdown';
+import FormImageUpload from './variants/FormImageUpload';
+import FormLongText from './variants/FormLongText';
+import FormMultipleCardChoice from './variants/FormMultipleCardChoice';
+import FormMultipleChoice from './variants/FormMultipleChoice';
+import FormMultipleSelect from './variants/FormMultipleSelect';
+import FormShortText from './variants/FormShortText';
+import FormToggle from './variants/FormToggle';
 
 /**
  * Returns the appropriate Form element (ie: ShortText, LongText) with the

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Form from './Form.store';
-import { FormItemData, FormItemProps } from './Form.types';
+import Form from '../Form.store';
+import { FormItemData, FormItemProps } from '../Form.types';
 
 const FormLongText: React.FC<
   Pick<FormItemProps, 'category' | 'id' | 'placeholder' | 'title'>
