@@ -1,5 +1,4 @@
 import day from 'dayjs';
-import { motion } from 'framer-motion';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
@@ -11,9 +10,9 @@ import FormPage from '@organisms/Form/FormPage';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import { takeFirst } from '@util/util';
 import InformationCard from '../../containers/Card/InformationCard';
 import PaymentStore from './Payment.store';
+import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
 
 const PaymentFinishScreenToggle: React.FC = () => {
@@ -73,12 +72,17 @@ const PaymentFinishScreenContent: React.FC = () => {
 
   const isFree: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId].isFree;
+    return byTypeId[typeId]?.isFree;
+  });
+
+  const typeDescription: string = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return getTypeDescription(byTypeId[typeId]);
   });
 
   const selectedTypeName: string = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId].name;
+    return byTypeId[typeId]?.name;
   });
 
   const brand = useStoreState(({ db }) => db.member.paymentMethod?.brand);
@@ -88,31 +92,15 @@ const PaymentFinishScreenContent: React.FC = () => {
     ({ db }) => db.member.paymentMethod?.expirationDate
   );
 
-  const description = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-
-    const selectedType: IMemberType = byTypeId[typeId];
-
-    const { amount, recurrence } = selectedType;
-
-    // Formats the amount with FREE if the amount is 0.
-    const amountString = amount ? `$${amount / 100}` : 'FREE';
-
-    // Construct string "Per" timespan based on the recurrence.
-    const recurrenceString = takeFirst([
-      [recurrence === 'YEARLY', 'Per Year'],
-      [recurrence === 'MONTHLY', 'Per Month'],
-      [recurrence === 'LIFETIME', 'Lifetime']
-    ]);
-
-    return `${amountString} ${recurrenceString}`;
-  });
-
   return (
     <>
       <ModalContentContainer>
         <Row>
-          <InformationCard description={description} title={selectedTypeName} />
+          <InformationCard
+            description={typeDescription}
+            title={selectedTypeName}
+          />
+
           <InformationCard
             description={`Expires ${expirationDate}`}
             show={!!last4 && !isFree}
@@ -130,13 +118,7 @@ const PaymentFinishScreenContent: React.FC = () => {
 
 const PaymentFinishScreen: React.FC = () => (
   <FormPage id="FINISH">
-    <motion.div
-      animate={{ x: 0 }}
-      initial={{ x: 50 }}
-      transition={{ duration: 0.2 }}
-    >
-      <PaymentFinishScreenContent />
-    </motion.div>
+    <PaymentFinishScreenContent />
   </FormPage>
 );
 

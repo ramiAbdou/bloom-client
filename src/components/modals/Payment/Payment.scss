@@ -1,5 +1,7 @@
 $PREF: 'mo-payment';
 
+// ## PAYMENT BUTTON
+
 .#{$PREF}-button {
   > svg { @extend .react-icon; color: white; margin-right: $xs; }
   &:disabled > svg { color: $gray-3; }

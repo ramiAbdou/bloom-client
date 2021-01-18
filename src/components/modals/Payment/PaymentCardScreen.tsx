@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import FormStore from '@organisms/Form/Form.store';
 import FormContinueButton from '@organisms/Form/FormContinueButton';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
@@ -84,38 +83,19 @@ const PaymentCardForm: React.FC = () => {
 };
 
 const PaymentCardContinueButton: React.FC = () => {
-  const isUpdatingPaymentMethod =
-    PaymentStore.useStoreState((store) => store.type) ===
-    'UPDATE_PAYMENT_METHOD';
+  const type = PaymentStore.useStoreState((store) => store.type);
 
   const updatePaymentMethod = useUpdatePaymentMethod();
   const stripe = useStripe();
 
-  const pageItems = FormStore.useStoreState((store) =>
-    store.items.filter(({ page }) => page === store.pageId)
-  );
-
-  const setErrorMessage = FormStore.useStoreActions(
-    (store) => store.setErrorMessage
-  );
-
-  const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
-
-  if (isUpdatingPaymentMethod) return <PaymentFinishButton />;
-
-  const onClick = () =>
-    updatePaymentMethod({
-      goToNextPage,
-      items: pageItems,
-      setErrorMessage
-    });
+  if (type === 'UPDATE_PAYMENT_METHOD') return <PaymentFinishButton />;
 
   return (
     <FormContinueButton
       className="mo-payment-button mo-payment-button--continue"
       disabled={!stripe}
       loadingText="Continuing..."
-      onClick={onClick}
+      onContinue={updatePaymentMethod}
     >
       Continue
     </FormContinueButton>

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 
 import { ChildrenProps, ClassNameProps, IdProps } from '@constants';
@@ -38,7 +39,12 @@ const FormPage: React.FC<FormPageProps> = ({
   const css = cx('o-form-page', { [className]: className });
 
   return (
-    <div className={css}>
+    <motion.div
+      animate={{ x: 0 }}
+      className={css}
+      initial={{ x: 50 }}
+      transition={{ duration: 0.2 }}
+    >
       <div>
         {iconUrl && <img src={iconUrl} />}
         <h1>{title}</h1>
@@ -46,7 +52,7 @@ const FormPage: React.FC<FormPageProps> = ({
       </div>
 
       {children}
-    </div>
+    </motion.div>
   );
 };
 

@@ -18,9 +18,7 @@ const FormNavigationBar: React.FC<FormNavigationPageProps> = ({ id }) => {
   const setPageId = FormStore.useStoreActions((store) => store.setPageId);
   const ref: React.LegacyRef<any> = useTooltip(title);
 
-  const onClick = () => {
-    if (!disabled) setPageId(id);
-  };
+  const onClick = () => !disabled && setPageId(id);
 
   const css = cx('o-form-nav', { 'o-form-nav--disabled': disabled });
 
@@ -28,11 +26,13 @@ const FormNavigationBar: React.FC<FormNavigationPageProps> = ({ id }) => {
 };
 
 const FormNavigation: React.FC = () => {
+  const pageId = FormStore.useStoreState((store) => store.pageId);
+
   const pages = FormStore.useStoreState((store) =>
     store.pages.filter(({ id }) => id !== 'CONFIRMATION')
   );
 
-  if (pages?.length === 1) return null;
+  if (pageId === 'CONFIRMATION' || pages?.length === 1) return null;
 
   return (
     <div className="o-form-nav-ctr">

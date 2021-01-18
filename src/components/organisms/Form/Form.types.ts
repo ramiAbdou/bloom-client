@@ -105,7 +105,6 @@ export interface FormNavigationPageProps extends IdProps, TitleProps {
 export interface FormOptions {
   disableValidation?: boolean;
   multiPage?: boolean;
-  validateOnSubmit?: boolean;
 }
 
 export interface FormProps extends ChildrenProps, ClassNameProps {

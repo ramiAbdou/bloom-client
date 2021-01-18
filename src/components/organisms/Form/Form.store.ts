@@ -70,16 +70,14 @@ export const formModel: FormModel = {
    *  - Item is required and there is non-empty value.
    */
   isCompleted: computed(({ items, options }) => {
-    const { disableValidation, validateOnSubmit } = options ?? {};
+    const { disableValidation } = options ?? {};
 
     if (disableValidation) return true;
     if (!items?.length) return false;
     if (items.every(({ value }) => !value)) return false;
-    if (validateOnSubmit) return true;
 
     return items.every(({ required, value, validate }: FormItemData) => {
       if (required && !value) return false;
-      if (validateOnSubmit) return true;
       if (validate === 'IS_EMAIL') return validator.isEmail(value);
       if (validate === 'IS_URL') return validator.isURL(value);
       return true;
@@ -170,13 +168,12 @@ export const formModel: FormModel = {
   setPages: action((state, pages) => ({
     ...state,
     pageId: pages[0]?.id,
-    pages
+    pages: pages.map((page, i: number) => ({ ...page, disabled: !!i }))
   })),
 
   updateItem: action(
     (state, { category, id, title, value }: UpdateItemArgs) => {
-      const { items, options } = state;
-      const { validateOnSubmit } = options ?? {};
+      const { items } = state;
 
       let index: number;
 
@@ -187,13 +184,9 @@ export const formModel: FormModel = {
       }
 
       const updatedItem = { ...items[index], value };
+      items[index] = validateItem(updatedItem);
 
-      items[index] =
-        validateOnSubmit && !updatedItem.errorMessage
-          ? updatedItem
-          : validateItem(updatedItem);
-
-      return { ...state, items, validateOnSubmit };
+      return { ...state, items };
     }
   )
 };

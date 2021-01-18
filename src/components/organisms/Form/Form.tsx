@@ -12,10 +12,6 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   onSubmit,
   pages
 }) => {
-  const validateOnSubmit = FormStore.useStoreState(
-    (store) => store.options?.validateOnSubmit
-  );
-
   const items = FormStore.useStoreState((store) => store.items, deepequal);
   const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
@@ -33,36 +29,30 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   const onFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+      if (!onSubmit) return;
 
-      if (onSubmit) {
-        let validatedItems: FormItemData[] = validateOnSubmit
-          ? validateItems(items)
-          : items;
+      const validatedItems: FormItemData[] = validateItems(items).filter(
+        ({ initialValue, value }: FormItemData) =>
+          !deepequal(initialValue, value)
+      );
 
-        validatedItems = validatedItems.filter(
-          ({ initialValue, value }: FormItemData) =>
-            !deepequal(initialValue, value)
-        );
-
-        if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
-          setItemErrorMessages(validatedItems);
-          return;
-        }
-
-        setError(null);
-        setIsLoading(true);
-
-        await onSubmit({
-          goToNextPage,
-          items: validatedItems,
-          setErrorMessage: setError,
-          setIsLoading
-        });
-
-        setIsLoading(false);
+      if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
+        setItemErrorMessages(validatedItems);
+        return;
       }
+
+      setError(null);
+      setIsLoading(true);
+
+      await onSubmit({
+        goToNextPage,
+        items: validatedItems,
+        setErrorMessage: setError
+      });
+
+      setIsLoading(false);
     },
-    [items, validateOnSubmit]
+    [items]
   );
 
   const css = cx('o-form', { [className]: className });

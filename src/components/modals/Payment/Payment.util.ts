@@ -1,6 +1,8 @@
 import deline from 'deline';
 
 import { FormNavigationPageProps } from '@organisms/Form/Form.types';
+import { IMemberType } from '@store/entities';
+import { takeFirst } from '@util/util';
 
 export type PaymentModalType =
   | 'CHANGE_MEMBERSHIP'
@@ -13,6 +15,8 @@ interface GetPaymentScreensArgs {
   type: PaymentModalType;
 }
 
+// ## CARD FORM SCREENS
+
 const addCardScreen: FormNavigationPageProps[] = [
   {
     description: deline`
@@ -23,6 +27,19 @@ const addCardScreen: FormNavigationPageProps[] = [
     title: 'Update Payment Method'
   }
 ];
+
+const updateCardScreen: FormNavigationPageProps[] = [
+  {
+    description: deline`
+      An update to your current subscription will be reflected on your
+      next billing date.  
+    `,
+    id: 'CARD_FORM',
+    title: 'Update Payment Method'
+  }
+];
+
+// ## FINISH SCREENS
 
 const changeMembershipScreen: FormNavigationPageProps[] = [
   {
@@ -52,16 +69,7 @@ const finishDuesScreen: FormNavigationPageProps[] = [
   }
 ];
 
-const updateCardScreen: FormNavigationPageProps[] = [
-  {
-    description: deline`
-      An update to your current subscription will be reflected on your
-      next billing date.  
-    `,
-    id: 'CARD_FORM',
-    title: 'Update Payment Method'
-  }
-];
+// ## CONFIRMATION SCREEN
 
 const confirmationScreen: FormNavigationPageProps[] = [{ id: 'CONFIRMATION' }];
 
@@ -105,4 +113,27 @@ export const getPaymentPages = ({
   }
 
   return [];
+};
+
+/**
+ * Returns the type description based on the amount, recurrence and such.
+ *
+ * @example getTypeDescription(args) => FREE Per Month
+ * @example getTypeDescription(args) => $20 Per Year
+ * @example getTypeDescription(args) => $325 Lifetime
+ */
+export const getTypeDescription = (type: IMemberType) => {
+  const { amount, recurrence } = type;
+
+  // Formats the amount with FREE if the amount is 0.
+  const amountString = amount ? `$${amount / 100}` : 'FREE';
+
+  // Construct string "Per" timespan based on the recurrence.
+  const recurrenceString = takeFirst([
+    [recurrence === 'YEARLY', 'Per Year'],
+    [recurrence === 'MONTHLY', 'Per Month'],
+    [recurrence === 'LIFETIME', 'Lifetime']
+  ]);
+
+  return `${amountString} ${recurrenceString}`;
 };
