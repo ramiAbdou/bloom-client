@@ -36,7 +36,7 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
     pushToMembership();
   };
 
-  return onSubmit;
+  return memberTypeId ? onSubmit : null;
 };
 
 export default useCreateLifetimePayment;

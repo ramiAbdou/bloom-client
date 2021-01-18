@@ -21,6 +21,7 @@ const FormContinueButton: React.FC<FormContinueButtonProps> = ({
   const [loading, setLoading] = useState(false);
 
   const items = FormStore.useStoreState((store) => store.items, deepequal);
+  const pageId = FormStore.useStoreState((store) => store.pageId);
   const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
 
@@ -28,35 +29,29 @@ const FormContinueButton: React.FC<FormContinueButtonProps> = ({
     (store) => store.setItemErrorMessages
   );
 
-  const onButtonContinue = useCallback(
-    async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      if (!onContinue) return;
+  const onButtonContinue = useCallback(async () => {
+    if (!onContinue) return;
 
-      const validatedItems: FormItemData[] = validateItems(items).filter(
-        ({ initialValue, value }: FormItemData) =>
-          !deepequal(initialValue, value)
-      );
+    const validatedItems: FormItemData[] = validateItems(items).filter(
+      ({ initialValue, value }: FormItemData) => !deepequal(initialValue, value)
+    );
 
-      if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
-        setItemErrorMessages(validatedItems);
-        return;
-      }
+    if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
+      setItemErrorMessages(validatedItems);
+      return;
+    }
 
-      setError(null);
-      setLoading(true);
+    setError(null);
+    setLoading(true);
 
-      await onContinue({
-        goToNextPage: null,
-        items: validatedItems,
-        setErrorMessage: setError
-      });
+    await onContinue({
+      goToNextPage,
+      items: validatedItems,
+      setErrorMessage: setError
+    });
 
-      setLoading(false);
-      goToNextPage();
-    },
-    [items]
-  );
+    setLoading(false);
+  }, [items, pageId]);
 
   const isPageCompleted = FormStore.useStoreState(
     (store) => store.isPageCompleted
@@ -70,7 +65,6 @@ const FormContinueButton: React.FC<FormContinueButtonProps> = ({
       className="o-form-submit--continue"
       disabled={disabled || !isPageCompleted}
       loading={loading}
-      // @ts-ignore b/c we don't care if it is async.
       onClick={onButtonContinue}
       {...props}
     >

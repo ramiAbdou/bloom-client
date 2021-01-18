@@ -19,6 +19,8 @@ const FormPage: React.FC<FormPageProps> = ({
   const pageId = FormStore.useStoreState((store) => store.pageId);
   const pages = FormStore.useStoreState((store) => store.pages);
 
+  console.log('PAGE_ID', id, pageId);
+
   const setPageDisabled = FormStore.useStoreActions(
     (store) => store.setPageDisabled
   );

@@ -20,8 +20,6 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const isLoading = Form.useStoreState((store) => store.isLoading);
 
-  console.log(isCompleted);
-
   const css = cx('', {
     [className]: className,
     'o-form-submit--invisible': invisible

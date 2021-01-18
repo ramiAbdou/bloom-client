@@ -46,7 +46,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     pushToMembership();
   };
 
-  return onSubmit;
+  return memberTypeId ? onSubmit : null;
 };
 
 export default useCreateSubscription;

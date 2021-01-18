@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 import { ModalType } from '@constants';
 import useActiveRoute from '@hooks/useActiveRoute';
 import useQuery from '@hooks/useQuery';
+import Form from '@organisms/Form/Form';
 import FormNavigation from '@organisms/Form/FormNavigation';
 import FormPage from '@organisms/Form/FormPage';
 import Modal from '@organisms/Modal/Modal';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import Form from '../../organisms/Form/Form';
 import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { getPaymentPages } from './Payment.util';
@@ -49,11 +49,12 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
     if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
   }, [typeId, selectedTypeId]);
 
-  const onClose = () => clearOptions();
-
   const createSubscription = useCreateSubscription();
   const createLifetimePayment = useCreateLifetimePayment();
 
+  if (!createSubscription || !createLifetimePayment) return null;
+
+  const onClose = () => clearOptions();
   const pages = getPaymentPages({ isCardOnFile, isFree, type });
 
   return (

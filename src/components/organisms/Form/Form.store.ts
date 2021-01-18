@@ -58,6 +58,7 @@ export const formModel: FormModel = {
   goToNextPage: action(({ pages, pageId, ...state }) => {
     const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
     const { id } = pages[nextIndex];
+    console.log(pages, nextIndex, id);
     window.scrollTo({ top: 0 });
     return { ...state, pageId: id, pages };
   }),
@@ -165,9 +166,9 @@ export const formModel: FormModel = {
     return { ...state, pageId };
   }),
 
-  setPages: action((state, pages) => ({
+  setPages: action(({ pageId, ...state }, pages) => ({
     ...state,
-    pageId: pages[0]?.id,
+    pageId: pageId ?? pages[0]?.id,
     pages: pages.map((page, i: number) => ({ ...page, disabled: !!i }))
   })),
 
