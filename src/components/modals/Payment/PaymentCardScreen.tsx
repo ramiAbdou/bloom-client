@@ -6,7 +6,6 @@ import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
-import { useStoreState } from '@store/Store';
 import { CardElement, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import PaymentStore from './Payment.store';
@@ -25,62 +24,53 @@ const options: StripeCardElementOptions = {
   style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
 };
 
-const PaymentCardForm: React.FC = () => {
-  const last4 = useStoreState(({ db }) => db.member.paymentMethod?.last4);
-  const type = PaymentStore.useStoreState((store) => store.type);
+const PaymentCardForm: React.FC = () => (
+  <ModalContentContainer>
+    <FormItem
+      required
+      page="CARD_FORM"
+      title="Name on Card"
+      type="SHORT_TEXT"
+    />
 
-  // Return null if the card isn't changing AND either the membership is free
-  // OR there is already a card on file.
-  if (last4 && type !== 'UPDATE_PAYMENT_METHOD') return null;
+    <FormItem required value page="CARD_FORM" title="Credit or Debit Card">
+      <CardElement options={options} />
+    </FormItem>
 
-  return (
-    <ModalContentContainer>
+    <FormItem
+      required
+      page="CARD_FORM"
+      title="Billing Address"
+      type="SHORT_TEXT"
+    />
+
+    <Row spaceBetween className="mo-payment-billing-ctr">
       <FormItem
         required
         page="CARD_FORM"
-        title="Name on Card"
+        placeholder="Los Angeles"
+        title="City"
         type="SHORT_TEXT"
       />
-
-      <FormItem required value page="CARD_FORM" title="Credit or Debit Card">
-        <CardElement options={options} />
-      </FormItem>
 
       <FormItem
         required
         page="CARD_FORM"
-        title="Billing Address"
+        placeholder="CA"
+        title="State"
         type="SHORT_TEXT"
       />
 
-      <Row spaceBetween className="mo-payment-billing-ctr">
-        <FormItem
-          required
-          page="CARD_FORM"
-          placeholder="Los Angeles"
-          title="City"
-          type="SHORT_TEXT"
-        />
-
-        <FormItem
-          required
-          page="CARD_FORM"
-          placeholder="CA"
-          title="State"
-          type="SHORT_TEXT"
-        />
-
-        <FormItem
-          required
-          page="CARD_FORM"
-          placeholder="00000"
-          title="Zip Code"
-          type="SHORT_TEXT"
-        />
-      </Row>
-    </ModalContentContainer>
-  );
-};
+      <FormItem
+        required
+        page="CARD_FORM"
+        placeholder="00000"
+        title="Zip Code"
+        type="SHORT_TEXT"
+      />
+    </Row>
+  </ModalContentContainer>
+);
 
 const PaymentCardContinueButton: React.FC = () => {
   const type = PaymentStore.useStoreState((store) => store.type);

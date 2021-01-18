@@ -60,7 +60,10 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
     <Modal id={type} onClose={onClose}>
       <Form
         className="mo-payment"
-        options={{ disableValidation: true, multiPage: true }}
+        options={{
+          disableValidation: type !== 'UPDATE_PAYMENT_METHOD',
+          multiPage: true
+        }}
         pages={pages}
         onSubmit={isLifetime ? createLifetimePayment : createSubscription}
       >
