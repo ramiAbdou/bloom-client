@@ -37,7 +37,6 @@ const PaymentFinishButton: React.FC = () => {
 
   const buttonTitle = takeFirst([
     [type === 'UPDATE_PAYMENT_METHOD', 'Update Payment Method'],
-    [isLessThanCurrentType, 'Downgrade Membership'],
     [!amount, 'Change Membership'],
     `Finish and Pay $${amount}`
   ]);
