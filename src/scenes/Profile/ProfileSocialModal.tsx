@@ -6,7 +6,6 @@ import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { useStoreState } from '@store/Store';
 import useUpdateUser from './useUpdateUser';
 
@@ -23,35 +22,33 @@ const ProfileSocialModal: React.FC = () => {
       <h1>Edit Social Media</h1>
 
       <Form onSubmit={updateUser}>
-        <ModalContentContainer>
-          <FormItem
-            title="Twitter URL"
-            type="SHORT_TEXT"
-            validate="IS_URL"
-            value={twitterUrl}
-          />
+        <FormItem
+          title="Twitter URL"
+          type="SHORT_TEXT"
+          validate="IS_URL"
+          value={twitterUrl}
+        />
 
-          <FormItem
-            title="LinkedIn URL"
-            type="SHORT_TEXT"
-            validate="IS_URL"
-            value={linkedInUrl}
-          />
+        <FormItem
+          title="LinkedIn URL"
+          type="SHORT_TEXT"
+          validate="IS_URL"
+          value={linkedInUrl}
+        />
 
-          <FormItem
-            title="Facebook URL"
-            type="SHORT_TEXT"
-            validate="IS_URL"
-            value={facebookUrl}
-          />
+        <FormItem
+          title="Facebook URL"
+          type="SHORT_TEXT"
+          validate="IS_URL"
+          value={facebookUrl}
+        />
 
-          <FormItem
-            title="Instagram URL"
-            type="SHORT_TEXT"
-            validate="IS_URL"
-            value={instagramUrl}
-          />
-        </ModalContentContainer>
+        <FormItem
+          title="Instagram URL"
+          type="SHORT_TEXT"
+          validate="IS_URL"
+          value={instagramUrl}
+        />
 
         <FormErrorMessage />
         <FormSubmitButton>Save</FormSubmitButton>

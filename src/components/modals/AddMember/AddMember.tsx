@@ -31,7 +31,7 @@ const AddMemberContent: React.FC = () => {
   return (
     <Modal
       id={admin ? ModalType.ADD_ADMINS : ModalType.ADD_MEMBERS}
-      width={750}
+      options={{ width: 750 }}
       onClose={onClose}
     >
       <Form className="mo-add-member-form" onSubmit={addMembers}>

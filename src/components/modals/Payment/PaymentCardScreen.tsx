@@ -5,7 +5,6 @@ import FormContinueButton from '@organisms/Form/FormContinueButton';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { CardElement, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import PaymentStore from './Payment.store';
@@ -25,7 +24,7 @@ const options: StripeCardElementOptions = {
 };
 
 const PaymentCardForm: React.FC = () => (
-  <ModalContentContainer>
+  <>
     <FormItem
       required
       pageId="CARD_FORM"
@@ -69,7 +68,7 @@ const PaymentCardForm: React.FC = () => (
         type="SHORT_TEXT"
       />
     </Row>
-  </ModalContentContainer>
+  </>
 );
 
 const PaymentCardContinueButton: React.FC = () => {

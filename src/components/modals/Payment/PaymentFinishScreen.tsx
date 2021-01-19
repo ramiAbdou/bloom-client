@@ -8,7 +8,6 @@ import FormStore from '@organisms/Form/Form.store';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import InformationCard from '../../containers/Card/InformationCard';
@@ -96,22 +95,20 @@ const PaymentFinishScreenContent: React.FC = () => {
 
   return (
     <>
-      <ModalContentContainer>
-        <Row>
-          <InformationCard
-            description={typeDescription}
-            title={selectedTypeName}
-          />
+      <Row>
+        <InformationCard
+          description={typeDescription}
+          title={selectedTypeName}
+        />
 
-          <InformationCard
-            description={`Expires ${expirationDate}`}
-            show={!!last4 && !isFree}
-            title={`${brand} Ending in ${last4}`}
-          />
-        </Row>
+        <InformationCard
+          description={`Expires ${expirationDate}`}
+          show={!!last4 && !isFree}
+          title={`${brand} Ending in ${last4}`}
+        />
+      </Row>
 
-        <PaymentFinishScreenToggle />
-      </ModalContentContainer>
+      <PaymentFinishScreenToggle />
       <PaymentFormErrorMessage />
       <PaymentFinishButton />
     </>

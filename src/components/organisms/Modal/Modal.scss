@@ -21,14 +21,15 @@ $PREF: 'c-modal';
   height: fit-content;
   left: calc(-50vw + 50%);
   margin: auto;
-  overflow: hidden;
+  overflow: scroll;
   position: fixed;
   right: calc(-50vw + 50%);
   top: calc(-50vh + 50%);
   z-index: 1001;
 
-  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
-  @include M {
+  &--modal { border-radius: $xs; max-height: 90%; width: 550px; }
+  
+  &--sheet {
     border-radius: $sm $sm 0 0;
     bottom: 0;
     margin: 0;
@@ -67,7 +68,7 @@ $PREF: 'c-modal';
   > .t-loading-header > h1 { color: $primary; }
 
   > h1,
-  > .t-loading-header { margin-bottom: $sm; position: sticky; top: $md; }
+  > .t-loading-header { margin-bottom: $sm; }
   > p:first-of-type { margin-bottom: $md; }
   > .c-misc-question-ctr { max-height: 65vh; overflow: scroll; }
 }

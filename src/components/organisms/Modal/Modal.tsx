@@ -9,7 +9,6 @@ import { createPortal } from 'react-dom';
 import { IoClose } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
-import { ChildrenProps } from '@constants';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -37,16 +36,12 @@ const ModalCancel: React.FC = () => {
   );
 };
 
-interface ModalContainerProps extends ChildrenProps {
-  onClose?: VoidFunction;
-  width?: number;
-}
-
 const ModalContainer: React.FC = ({
   children,
   onClose,
-  width
-}: ModalContainerProps) => {
+  options
+}: Pick<ModalProps, 'children' | 'onClose' | 'options'>) => {
+  const { sheet, width } = options ?? {};
   useLockBodyScroll();
 
   useEffect(() => {
@@ -55,22 +50,28 @@ const ModalContainer: React.FC = ({
 
   const isMobile = useBreakpoint() === 1;
 
-  const animate: AnimationProps['animate'] = isMobile
-    ? { opacity: 1, top: 'initial' }
-    : { opacity: 1, scale: 1 };
+  const animate: AnimationProps['animate'] =
+    sheet ?? isMobile
+      ? { opacity: 1, top: 'initial' }
+      : { opacity: 1, scale: 1 };
 
-  const exit: AnimationProps['exit'] = isMobile
-    ? { opacity: 0, top: '100%' }
-    : { opacity: 0, scale: 0.5 };
+  const exit: AnimationProps['exit'] =
+    sheet ?? isMobile
+      ? { opacity: 0, top: '100%' }
+      : { opacity: 0, scale: 0.5 };
 
-  const initial: MotionProps['initial'] = isMobile
-    ? { opacity: 0.25 }
-    : { opacity: 0.25, scale: 0.5 };
+  const initial: MotionProps['initial'] =
+    sheet ?? isMobile ? { opacity: 0.25 } : { opacity: 0.25, scale: 0.5 };
+
+  const css = cx('c-modal-ctr', {
+    'c-modal-ctr--modal': !sheet && !isMobile,
+    'c-modal-ctr--sheet': sheet ?? isMobile
+  });
 
   return (
     <motion.div
       animate={animate}
-      className="c-modal-ctr"
+      className={css}
       exit={exit}
       initial={initial}
       style={width ? { width } : {}}
@@ -82,12 +83,12 @@ const ModalContainer: React.FC = ({
 };
 
 const Modal: React.FC<ModalProps> = ({
-  confirmation,
   children,
   className,
   id: MODAL_ID,
   ...containerProps
 }: ModalProps) => {
+  const { confirmation } = containerProps?.options ?? {};
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const id = useStoreState(({ modal }) => modal.id);
 

@@ -41,7 +41,7 @@ const DeleteMembersModal = () => {
   };
 
   return (
-    <Modal confirmation id={ModalType.DELETE_ADMINS}>
+    <Modal id={ModalType.DELETE_ADMINS} options={{ confirmation: true }}>
       <h1>Remove admin(s)?</h1>
 
       <p>

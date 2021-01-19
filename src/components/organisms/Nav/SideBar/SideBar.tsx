@@ -11,6 +11,7 @@ import {
 } from 'react-icons/io5';
 
 import Separator from '@atoms/Separator';
+import { ModalType } from '@constants';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LinkOptions } from '../Nav.types';
@@ -41,10 +42,14 @@ const SideBarContent = () => {
   ];
 
   const quickLinks: LinkOptions[] = [
-    { Icon: IoAdd, onClick: () => null, title: 'Create Event' },
+    {
+      Icon: IoAdd,
+      onClick: () => showModal(ModalType.CREATE_EVENT),
+      title: 'Create Event'
+    },
     {
       Icon: IoPersonAdd,
-      onClick: () => showModal('ADD_MEMBERS'),
+      onClick: () => showModal(ModalType.ADD_MEMBERS),
       title: 'Add Member'
     }
   ];

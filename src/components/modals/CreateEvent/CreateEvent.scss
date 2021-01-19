@@ -1,0 +1,15 @@
+$PREF: 'mo-create-event';
+
+// ## CREATE EVENT
+
+.#{$PREF} > .o-form:first-child {
+  margin: 0 auto;
+  width: $xxl * 10;
+}
+
+// ## CREATE EVENT ROW
+
+.#{$PREF}-row {
+  > div:first-child { flex: 2; }
+  > div:last-child { flex: 1; }
+}

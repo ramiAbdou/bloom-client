@@ -48,6 +48,10 @@ $PREF: 'o-form';
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }
 
+// ## FORM SECTION HEADER
+
+.#{$PREF}-section-header { margin-bottom: $md; }
+
 // ## FORM NAVIGATION
 
 .#{$PREF}-nav-ctr { @extend .flex-acsb; margin-bottom: $md; }

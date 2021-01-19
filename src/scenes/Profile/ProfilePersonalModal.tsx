@@ -6,7 +6,6 @@ import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { useStoreState } from '@store/Store';
 import useUpdateUser from './useUpdateUser';
 
@@ -23,27 +22,25 @@ const ProfilePersonalModal: React.FC = () => {
       <h1>Edit Personal Information</h1>
 
       <Form onSubmit={updateUser}>
-        <ModalContentContainer>
-          <FormItem id="profilePicture" type="IMAGE" value={pictureUrl} />
+        <FormItem id="profilePicture" type="IMAGE" value={pictureUrl} />
 
-          <FormItem
-            required
-            category="FIRST_NAME"
-            title="First Name"
-            type="SHORT_TEXT"
-            value={firstName}
-          />
+        <FormItem
+          required
+          category="FIRST_NAME"
+          title="First Name"
+          type="SHORT_TEXT"
+          value={firstName}
+        />
 
-          <FormItem
-            required
-            category="LAST_NAME"
-            title="Last Name"
-            type="SHORT_TEXT"
-            value={lastName}
-          />
+        <FormItem
+          required
+          category="LAST_NAME"
+          title="Last Name"
+          type="SHORT_TEXT"
+          value={lastName}
+        />
 
-          <FormItem id="bio" title="Bio" type="LONG_TEXT" value={bio} />
-        </ModalContentContainer>
+        <FormItem id="bio" title="Bio" type="LONG_TEXT" value={bio} />
 
         <FormErrorMessage />
         <FormSubmitButton>Save</FormSubmitButton>

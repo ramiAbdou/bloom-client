@@ -6,7 +6,6 @@ import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberData, IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import useUpdateMemberData from './useUpdateMemberData';
@@ -50,11 +49,9 @@ const ProfileMembershipModal: React.FC = () => {
       <h1>Edit Membership Information</h1>
 
       <Form onSubmit={updateMemberData}>
-        <ModalContentContainer>
-          {items?.map((item) => {
-            return <FormItem key={item.id} {...item} />;
-          })}
-        </ModalContentContainer>
+        {items?.map((item) => {
+          return <FormItem key={item.id} {...item} />;
+        })}
 
         <FormErrorMessage />
         <FormSubmitButton>Save</FormSubmitButton>

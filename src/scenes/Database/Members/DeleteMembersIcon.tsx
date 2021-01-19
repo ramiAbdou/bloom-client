@@ -43,7 +43,7 @@ const DeleteMembersModal = () => {
   };
 
   return (
-    <Modal confirmation id={ModalType.DELETE_MEMBERS}>
+    <Modal id={ModalType.DELETE_MEMBERS} options={{ confirmation: true }}>
       <h1>Remove {numMembers} member(s)?</h1>
       <p>
         Are you sure you want to remove these member(s)? They will no longer

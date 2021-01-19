@@ -10,6 +10,7 @@ import {
 import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
 import AddMemberModal from '@modals/AddMember/AddMember';
+import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import PaymentModal from '@modals/Payment/Payment';
 import Loader from '@molecules/Loader/Loader';
 import Nav from '@organisms/Nav/Nav';
@@ -114,6 +115,7 @@ const HomeRouter = () => {
       <Nav />
       <HomeRouterContent />
       <AddMemberModal />
+      <CreateEventModal />
       <PaymentModal selectedTypeId={memberTypeId} type="PAY_DUES" />
     </>
   );

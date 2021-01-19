@@ -47,7 +47,11 @@ const PromoteToAdminModal = () => {
   const onClose = () => push('admins');
 
   return (
-    <Modal confirmation id={ModalType.PROMOTE_TO_ADMIN} onClose={onClose}>
+    <Modal
+      id={ModalType.PROMOTE_TO_ADMIN}
+      options={{ confirmation: true }}
+      onClose={onClose}
+    >
       <h1>Promote to admin?</h1>
 
       <p>

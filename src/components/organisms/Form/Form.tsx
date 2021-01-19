@@ -54,7 +54,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
 
       setIsLoading(false);
     },
-    [items, ...onSubmitDeps]
+    [items, ...(onSubmitDeps || [])]
   );
 
   const css = cx('o-form', { [className]: className });

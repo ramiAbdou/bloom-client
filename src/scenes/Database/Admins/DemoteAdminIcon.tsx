@@ -38,7 +38,7 @@ const DemoteToMemberModal = () => {
   };
 
   return (
-    <Modal confirmation id={ModalType.DEMOTE_TO_MEMBER}>
+    <Modal id={ModalType.DEMOTE_TO_MEMBER} options={{ confirmation: true }}>
       <h1>Demote to member?</h1>
 
       <p>
