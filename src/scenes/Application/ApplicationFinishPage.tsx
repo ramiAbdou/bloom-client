@@ -24,6 +24,16 @@ const ApplicationFinishMembershipSection: React.FC = () => {
     return getItem({ category: 'CREDIT_OR_DEBIT_CARD' })?.value;
   });
 
+  const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+
+    const selectedType: IMemberType = db.community?.types
+      ?.map((typeId: string) => byTypeId[typeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+
+    return !!selectedType?.amount;
+  });
+
   const description = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
 
@@ -58,7 +68,7 @@ const ApplicationFinishMembershipSection: React.FC = () => {
 
         <InformationCard
           description={`Expires ${expirationDate}`}
-          show={!!last4}
+          show={!!isPaidMembershipSelected && !!last4}
           title={`${brand} Ending in ${last4}`}
         />
       </Row>
