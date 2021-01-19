@@ -100,6 +100,7 @@ export interface FormItemProps
 export interface FormNavigationPageProps extends IdProps, TitleProps {
   description?: string;
   disabled?: boolean;
+  disableValidation?: boolean;
 }
 
 export interface FormOptions {

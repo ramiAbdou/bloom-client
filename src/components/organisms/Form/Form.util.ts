@@ -2,6 +2,25 @@ import validator from 'validator';
 
 import { FormItemData } from './Form.types';
 
+interface GetFormItemArgs
+  extends Pick<FormItemData, 'category' | 'id' | 'title'> {
+  items: FormItemData[];
+}
+
+/**
+ * Returns the form item based on the query arguments (ie: category).
+ */
+export const getFormItem = ({
+  category,
+  id,
+  items,
+  title
+}: GetFormItemArgs) => {
+  if (id) return items.find((item) => item.id === id);
+  if (title) return items.find((item) => item.title === title);
+  return items.find((item) => item.category === category);
+};
+
 /**
  * All GraphQL requests with data should have the data be populated in an array,
  * even if the question is not MULTIPLE_SELECT. This helps with parsing
@@ -24,10 +43,19 @@ export const parseValue = (value: any) => {
   return isArray ? value : [value];
 };
 
-export const validateItem = ({
-  errorMessage: _,
-  ...item
-}: FormItemData): FormItemData => {
+/**
+ * Returns the validated form item including the errorMessage in the
+ * FormItemData. If the item is validated, the item doesn't change.
+ *
+ * @example validateItem({ id: '1', required: true, value: null }) => (
+ *  {
+ *    errorMessage: 'Value cannot be empty.',
+ *    id: '1',
+ *    required: true,
+ *    value: null
+ * })
+ */
+export const validateItem = (item: FormItemData): FormItemData => {
   const { required, value, validate, type } = item;
 
   if (required && !value) {
@@ -41,8 +69,4 @@ export const validateItem = ({
   }
 
   return item;
-};
-
-export const validateItems = (items: FormItemData[]): FormItemData[] => {
-  return items?.map(validateItem);
 };

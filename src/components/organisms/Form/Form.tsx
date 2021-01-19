@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
 import { FormItemData, FormProps } from './Form.types';
-import { validateItems } from './Form.util';
+import { validateItem } from './Form.util';
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
@@ -31,10 +31,11 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       event.preventDefault();
       if (!onSubmit) return;
 
-      const validatedItems: FormItemData[] = validateItems(items).filter(
-        ({ initialValue, value }: FormItemData) =>
-          !deepequal(initialValue, value)
-      );
+      const validatedItems: FormItemData[] = items
+        ?.map(validateItem)
+        ?.filter(({ initialValue, value }: FormItemData) => {
+          return !deepequal(initialValue, value);
+        });
 
       if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
         setItemErrorMessages(validatedItems);

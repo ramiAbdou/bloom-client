@@ -5,7 +5,7 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import Button from '@atoms/Button';
 import { ButtonProps } from '@atoms/Button/Button';
 import { FormItemData, OnFormSubmit } from '@organisms/Form/Form.types';
-import { validateItems } from '@organisms/Form/Form.util';
+import { validateItem } from '@organisms/Form/Form.util';
 import FormStore from './Form.store';
 
 interface FormContinueButtonProps extends ButtonProps {
@@ -30,11 +30,11 @@ const FormContinueButton: React.FC<FormContinueButtonProps> = ({
   );
 
   const onButtonContinue = useCallback(async () => {
-    if (!onContinue) return;
-
-    const validatedItems: FormItemData[] = validateItems(items).filter(
-      ({ initialValue, value }: FormItemData) => !deepequal(initialValue, value)
-    );
+    const validatedItems: FormItemData[] = items
+      ?.map(validateItem)
+      ?.filter(({ initialValue, value }: FormItemData) => {
+        return !deepequal(initialValue, value);
+      });
 
     if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
       setItemErrorMessages(validatedItems);
@@ -44,13 +44,16 @@ const FormContinueButton: React.FC<FormContinueButtonProps> = ({
     setError(null);
     setLoading(true);
 
-    await onContinue({
-      goToNextPage,
-      items: validatedItems,
-      setErrorMessage: setError
-    });
+    if (onContinue) {
+      await onContinue({
+        goToNextPage,
+        items: validatedItems,
+        setErrorMessage: setError
+      });
+    }
 
     setLoading(false);
+    goToNextPage();
   }, [items, pageId]);
 
   const isPageCompleted = FormStore.useStoreState(

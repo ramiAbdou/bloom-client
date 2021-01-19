@@ -1,7 +1,6 @@
 import React from 'react';
 
 import FormStore from '@organisms/Form/Form.store';
-import { validateItems } from '@organisms/Form/Form.util';
 import FormContinueButton from '@organisms/Form/FormContinueButton';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
@@ -10,29 +9,19 @@ import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
 
 const ApplicationMembershipPageButton: React.FC = () => {
-  const isSoloPage = FormStore.useStoreState(
-    ({ pages }) => pages?.length === 1
+  const numPages = FormStore.useStoreState(({ pages }) => pages?.length);
+
+  const isPageCompleted = FormStore.useStoreState(
+    (store) => store.isPageCompleted
   );
 
-  const pageItems = FormStore.useStoreState(({ items }) =>
-    items?.filter((item) => item.page === 'APPLICATION')
-  );
-
-  const isConfirmationNext = FormStore.useStoreState(
-    ({ pages }) => pages?.length === 2
-  );
-
-  const disabled = validateItems(pageItems)?.some(({ errorMessage }) => {
-    return !!errorMessage;
-  });
-
-  if (isSoloPage) {
+  if (numPages === 1) {
     return <FormSubmitButton>Submit Application</FormSubmitButton>;
   }
 
   return (
-    <FormContinueButton disabled={disabled}>
-      {isConfirmationNext ? 'Next: Confirmation' : 'Next: Choose Membership'}
+    <FormContinueButton disabled={!isPageCompleted}>
+      {numPages === 2 ? 'Next: Confirmation' : 'Next: Choose Membership'}
     </FormContinueButton>
   );
 };

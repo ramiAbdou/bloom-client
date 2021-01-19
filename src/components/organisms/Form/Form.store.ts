@@ -12,7 +12,7 @@ import {
   FormNavigationPageProps,
   FormOptions
 } from './Form.types';
-import { validateItem, validateItems } from './Form.util';
+import { getFormItem, validateItem } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
 interface UpdateItemArgs extends GetItemArgs {
@@ -49,16 +49,14 @@ export const formModel: FormModel = {
   // Represents the error message for the entire Form, not any one element.
   errorMessage: null,
 
-  getItem: computed(({ items }) => ({ category, id, title }: GetItemArgs) => {
-    if (id) return items.find((item) => item.id === id);
-    if (title) return items.find((item) => item.title === title);
-    return items.find((item) => item.category === category);
+  getItem: computed(({ items }) => (args: GetItemArgs) => {
+    return getFormItem({ ...args, items });
   }),
 
   goToNextPage: action(({ pages, pageId, ...state }) => {
+    window.scrollTo({ top: 0 });
     const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
     const { id } = pages[nextIndex];
-    window.scrollTo({ top: 0 });
     return { ...state, pageId: id, pages };
   }),
 
@@ -87,13 +85,20 @@ export const formModel: FormModel = {
   // Used to ensure that the submit button is disabled.
   isLoading: false,
 
-  isPageCompleted: computed(({ items, pageId }) => {
-    const pageItems = items?.filter((item) => item.page === pageId);
-    if (!pageItems?.length) return true;
+  isPageCompleted: computed(({ items, pageId, pages }) => {
+    const page: FormNavigationPageProps = pages.find((p) => p.id === pageId);
+    if (page?.disableValidation) return true;
 
-    return validateItems(pageItems)?.every(({ errorMessage }) => {
-      return !errorMessage;
-    });
+    const validatedPageItems = items
+      ?.filter((item) => item.page === pageId)
+      ?.map(validateItem);
+
+    return (
+      validatedPageItems?.length &&
+      validatedPageItems.every(({ errorMessage }) => {
+        return !errorMessage;
+      })
+    );
   }),
 
   isShowingErrors: false,

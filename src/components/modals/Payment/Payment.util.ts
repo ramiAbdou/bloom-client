@@ -57,6 +57,7 @@ const changeMembershipScreen: FormNavigationPageProps[] = [
     description: deline`
       Please review this information to make sure we got everything right.
     `,
+    disableValidation: true,
     id: 'FINISH',
     title: 'Change Membership Plan'
   }
@@ -65,6 +66,7 @@ const changeMembershipScreen: FormNavigationPageProps[] = [
 const changeToFreeMembershipScreen: FormNavigationPageProps[] = [
   {
     description: `Are you sure you want to downgrade your membership?`,
+    disableValidation: true,
     id: 'FINISH',
     title: 'Change Membership Plan'
   }
@@ -76,6 +78,7 @@ const changeMembershipConfirmationScreen: FormNavigationPageProps[] = [
       Your membership has successfully been changed. Please check your email
       for a confirmation.
     `,
+    disableValidation: true,
     id: 'CONFIRMATION',
     title: 'Membership Plan Changed'
   }
@@ -86,6 +89,7 @@ const finishDuesScreen: FormNavigationPageProps[] = [
     description: deline`
       Please review this information to make sure we got everything right.
     `,
+    disableValidation: true,
     id: 'FINISH',
     title: 'Pay Dues'
   }
@@ -97,6 +101,7 @@ const payDuesConfirmationScreen: FormNavigationPageProps[] = [
       Your dues have been paid successfully! Please check your email
       for a receipt.
     `,
+    disableValidation: true,
     id: 'CONFIRMATION',
     title: 'Dues Payment Successful'
   }
