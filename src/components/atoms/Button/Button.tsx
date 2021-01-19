@@ -15,6 +15,7 @@ export interface ButtonProps
   secondary?: boolean;
   primary?: boolean;
   tertiary?: boolean;
+  white?: boolean;
 }
 
 const LoadingContainer = ({
@@ -55,6 +56,7 @@ const Button = forwardRef(
       secondary,
       type,
       tertiary,
+      white,
       ...props
     }: ButtonProps,
     ref: React.MutableRefObject<any>
@@ -86,6 +88,7 @@ const Button = forwardRef(
       'c-btn--primary': primary,
       'c-btn--secondary': secondary,
       'c-btn--tertiary': tertiary,
+      'c-btn--white': white,
       [className]: className
     });
 

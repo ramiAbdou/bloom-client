@@ -1,14 +1,17 @@
 import React, { useRef } from 'react';
-import { IoCamera } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from '../Form.store';
 import { FormItemProps } from '../Form.types';
 
-const FormImageUpload: React.FC<Pick<FormItemProps, 'id'>> = (queryArgs) => {
+const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
+  args
+) => {
+  const { id, title } = args;
+
   const selectedImage = FormStore.useStoreState(
-    ({ getItem }) => getItem(queryArgs)?.value
+    ({ getItem }) => getItem(args)?.value
   );
 
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
@@ -21,24 +24,20 @@ const FormImageUpload: React.FC<Pick<FormItemProps, 'id'>> = (queryArgs) => {
   const onChange = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const base64String = await convertImageToBase64({
       content: target.files[0],
-      dims: [400, 400]
+      dims: [600, 300]
     });
 
-    updateItem({ ...queryArgs, value: base64String });
+    updateItem({ id, value: base64String });
   };
 
   // The background blend creates the overlay effect. Makes the background
   // darker so that white <Camera /> component shows clearly.
   const backgroundStyle: React.CSSProperties = selectedImage
-    ? {
-        backgroundBlendMode: 'multiply',
-        backgroundColor: 'var(--gray-4)',
-        backgroundImage: `url(${selectedImage})`
-      }
-    : { backgroundColor: 'var(--gray-4)' };
+    ? { backgroundImage: `url(${selectedImage})` }
+    : {};
 
   return (
-    <>
+    <div className="o-form-item--cover-image" style={backgroundStyle}>
       <input
         ref={ref}
         accept=".png, .jpg, .jpeg"
@@ -46,11 +45,11 @@ const FormImageUpload: React.FC<Pick<FormItemProps, 'id'>> = (queryArgs) => {
         onChange={onChange}
       />
 
-      <Button style={backgroundStyle} onClick={openFileUploader}>
-        <IoCamera />
+      <Button secondary white onClick={openFileUploader}>
+        {title}
       </Button>
-    </>
+    </div>
   );
 };
 
-export default FormImageUpload;
+export default FormCoverImageUpload;

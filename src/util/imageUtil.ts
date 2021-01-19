@@ -22,14 +22,22 @@ const s3 = new aws.S3({
     : process.env.DIGITAL_OCEAN_TEST_SECRET
 });
 
+interface ConvertImageToBase64Args {
+  content: BlobPart;
+  dims?: number[];
+}
+
 /**
  * Returns the base 64 string from the image content.
  * @param {BufferSource | Blob | string} imageContent Image to convert.
  */
-export const convertImageToBase64 = async (imageContent: BlobPart) => {
-  const arrBuffer: ArrayBuffer = await new Blob([imageContent]).arrayBuffer();
+export const convertImageToBase64 = async ({
+  content,
+  dims
+}: ConvertImageToBase64Args): Promise<string> => {
+  const arrBuffer: ArrayBuffer = await new Blob([content]).arrayBuffer();
   const buffer: Buffer = Buffer.from(arrBuffer);
-  const image: Jimp = await Jimp.read(buffer);
+  const image: Jimp = (await Jimp.read(buffer)).cover(dims[0], dims[1]);
   return image.getBase64Async(Jimp.MIME_PNG);
 };
 
@@ -48,14 +56,11 @@ export const uploadImage = async ({
   base64String,
   key
 }: UploadImageArgs): Promise<string> => {
-  const image: Jimp = (await Jimp.read(base64String)).cover(400, 400);
-  const resizedBuffer = await image.getBufferAsync(Jimp.MIME_PNG);
-
   key = `${key}-${nanoid()}`;
 
   const options: aws.S3.PutObjectRequest = {
     ACL: 'public-read',
-    Body: resizedBuffer,
+    Body: base64String,
     Bucket: bucketName,
     Key: key
   };

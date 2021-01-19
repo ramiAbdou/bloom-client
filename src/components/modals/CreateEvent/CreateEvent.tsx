@@ -16,18 +16,41 @@ const CreateEvent: React.FC = () => {
       options={{ sheet: true }}
     >
       <Form>
+        <FormItem title="Change Cover Photo" type="COVER_IMAGE" />
         <FormSectionHeader>Event Details</FormSectionHeader>
         <FormItem title="Event Description" type="LONG_TEXT" />
         <FormItem title="Event Link" type="SHORT_TEXT" validate="IS_URL" />
 
         <Row align="end" className="mo-create-event-row" gap="sm">
-          <FormItem title="Start Time" type="SHORT_TEXT" validate="IS_URL" />
-          <FormItem id="START_TIME" type="SHORT_TEXT" validate="IS_URL" />
+          <FormItem
+            placeholder="January 10, 2021"
+            title="Start Time"
+            type="SHORT_TEXT"
+            validate="IS_URL"
+          />
+
+          <FormItem
+            id="START_TIME"
+            placeholder="2:00 PM"
+            type="SHORT_TEXT"
+            validate="IS_URL"
+          />
         </Row>
 
         <Row align="end" className="mo-create-event-row" gap="sm">
-          <FormItem title="End Time" type="SHORT_TEXT" validate="IS_URL" />
-          <FormItem id="END_TIME" type="SHORT_TEXT" validate="IS_URL" />
+          <FormItem
+            placeholder="January 10, 2021"
+            title="End Time"
+            type="SHORT_TEXT"
+            validate="IS_URL"
+          />
+
+          <FormItem
+            id="END_TIME"
+            placeholder="3:00 PM"
+            type="SHORT_TEXT"
+            validate="IS_URL"
+          />
         </Row>
 
         <FormSectionHeader>Privacy Settings</FormSectionHeader>

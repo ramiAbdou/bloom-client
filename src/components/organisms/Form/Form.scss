@@ -4,7 +4,28 @@ $PREF: 'o-form';
 
 .#{$PREF}-item { margin-bottom: $md; }
 
-// ## FORM IMAGE UPLOAD ITEM 
+// ## FORM COVER IMAGE UPLOAD 
+
+.#{$PREF}-item--cover-image {
+  @extend .flex-col;
+
+  background-blend-mode: multiply;
+  background-color: $gray-5;
+  background-size: cover;
+  border-radius: $xs;
+  box-sizing: border-box;
+  height: 300px;
+  justify-content: flex-end;
+  padding: $sm;
+  width: 100%;
+
+  @include MT { height: initial; padding-top: 50%; }
+
+  > button { width: fit-content; }
+  > input { display: none; }
+}
+
+// ## FORM IMAGE UPLOAD 
 
 .#{$PREF}-item--image {
   > input { display: none; }

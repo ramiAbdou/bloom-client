@@ -3,8 +3,11 @@ $PREF: 'mo-create-event';
 // ## CREATE EVENT
 
 .#{$PREF} > .o-form:first-child {
+  box-sizing: border-box;
   margin: 0 auto;
   width: $xxl * 10;
+
+  @include MT { width: 90%; }
 }
 
 // ## CREATE EVENT ROW

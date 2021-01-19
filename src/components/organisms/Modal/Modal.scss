@@ -27,7 +27,14 @@ $PREF: 'c-modal';
   top: calc(-50vh + 50%);
   z-index: 1001;
 
-  &--modal { border-radius: $xs; max-height: 90%; width: 550px; }
+  &--modal {
+    border-radius: $xs;
+    max-height: 90%;
+    width: 550px;
+
+    ~ .#{$PREF}-cancel { right: $md; top: $md; }
+    ~ .#{$PREF}-cancel > svg { @include SIZE($md); }
+  }
   
   &--sheet {
     border-radius: $sm $sm 0 0;
@@ -38,24 +45,14 @@ $PREF: 'c-modal';
     min-width: 100vw;
     top: 100%;
     width: 100vw;
+
+    ~ .#{$PREF}-cancel { right: $sm; top: $sm; }
+    ~ .#{$PREF}-cancel > svg { @include SIZE($md); }
   }
 }
 
-.#{$PREF}-cancel {
-  position: fixed;
-  right: $md;
-  top: $md;
-  z-index: 1002;
-
-  @include M {
-    right: $sm;
-    top: $sm;
-
-    > svg { @include SIZE($md); }
-  }
-
-  > svg { @extend .react-icon--xl; color: $gray-5; }
-}
+.#{$PREF}-cancel { position: fixed; z-index: 1002; }
+.#{$PREF}-cancel > svg { @extend .react-icon--xl; color: $gray-5; }
 
 // ## MODAL CONTENT
 
@@ -71,6 +68,7 @@ $PREF: 'c-modal';
   > .t-loading-header { margin-bottom: $sm; }
   > p:first-of-type { margin-bottom: $md; }
   > .c-misc-question-ctr { max-height: 65vh; overflow: scroll; }
+  > .o-form-page > button:last-child { margin-top: $md; }
 }
 
 // ## CONFIRMATION MODAL

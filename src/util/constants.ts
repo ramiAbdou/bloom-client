@@ -75,6 +75,7 @@ export type RouteType =
  */
 
 export type QuestionType =
+  | 'COVER_IMAGE'
   | 'CUSTOM'
   | 'IMAGE'
   | 'LONG_TEXT'

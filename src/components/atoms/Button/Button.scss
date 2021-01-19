@@ -7,19 +7,17 @@ $PREF: 'c-btn';
   
   border-radius: $xxs;
 
-  &:not(:disabled) {
+  &:not(:disabled, &--white) {
     @include HOVER { opacity: 0.8; }
     &:active { transform: scale(0.95); transition: transform 0.1s ease-out; }
   }
 
   &:disabled { cursor: not-allowed; }
 
-  // Maps to the "fill" prop passed into the Button component.
   &--fill { width: 100%; }
   &--fit { width: fit-content; }
-
-  // Maps to the "large" prop passed into the Button component.
   &--lg { height: $xl; }
+  &--white { background-color: white; }
 }
 
 // ## LOADING STATE - Includes the loading text as well as the Spinner.
@@ -54,10 +52,12 @@ $PREF: 'c-btn';
 .#{$PREF}--secondary {
   @extend .meta--lg;
 
-  background-color: inherit;
+  
   border: 1px $primary solid;
   color: $primary;
   padding: $xs $sm;
+
+  &:not(.c-btn--white) { background-color: inherit; }
 }
 
 // ## TERTIARY BUTTON

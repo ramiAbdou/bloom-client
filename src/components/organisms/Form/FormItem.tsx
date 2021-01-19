@@ -71,7 +71,9 @@ const FormItem: React.FC<FormItemProps> = ({
 
   return (
     <div className={css}>
-      {type !== 'TOGGLE' && <FormLabel required={required}>{title}</FormLabel>}
+      {type !== 'TOGGLE' && type !== 'COVER_IMAGE' && (
+        <FormLabel required={required}>{title}</FormLabel>
+      )}
       {type !== 'TOGGLE' && <FormDescription>{description}</FormDescription>}
       {body}
       {type === 'TOGGLE' && <FormDescription>{description}</FormDescription>}

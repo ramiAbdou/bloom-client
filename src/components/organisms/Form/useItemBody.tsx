@@ -7,6 +7,7 @@ import {
   TextItemProps,
   UseItemBodyProps
 } from './Form.types';
+import FormCoverImageUpload from './variants/FormCoverImageUpload';
 import FormDropdown from './variants/FormDropdown';
 import FormImageUpload from './variants/FormImageUpload';
 import FormLongText from './variants/FormLongText';
@@ -65,6 +66,7 @@ const useItemBody = (props: UseItemBodyProps) => {
     ],
     [type === 'TOGGLE', <FormToggle {...baseProps} />],
     [type === 'IMAGE', <FormImageUpload {...baseProps} />],
+    [type === 'COVER_IMAGE', <FormCoverImageUpload {...baseProps} />],
     [children, children]
   ]);
 
