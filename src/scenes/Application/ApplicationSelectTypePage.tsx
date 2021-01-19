@@ -94,7 +94,6 @@ const ApplicationSelectTypePage: React.FC = () => {
   return (
     <FormPage id="SELECT_TYPE">
       <FormItem
-        card
         cardOptions={cardOptions}
         category="MEMBERSHIP_TYPE"
         pageId="SELECT_TYPE"

@@ -37,7 +37,11 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
     : {};
 
   return (
-    <div className="o-form-item--cover-image" style={backgroundStyle}>
+    <button
+      className="o-form-item--cover-image"
+      style={backgroundStyle}
+      onClick={openFileUploader}
+    >
       <input
         ref={ref}
         accept=".png, .jpg, .jpeg"
@@ -45,10 +49,17 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
         onChange={onChange}
       />
 
+      {!selectedImage && (
+        <p>
+          For best results, upload image with an aspect ratio of 2:1
+          (width:height).
+        </p>
+      )}
+
       <Button secondary white onClick={openFileUploader}>
         {title}
       </Button>
-    </div>
+    </button>
   );
 };
 

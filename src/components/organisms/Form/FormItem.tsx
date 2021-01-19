@@ -9,9 +9,9 @@ import FormLabel from './FormLabel';
 import useItemBody from './useItemBody';
 
 const FormItem: React.FC<FormItemProps> = ({
-  card,
   cardOptions,
   children,
+  className,
   description,
   options,
   required,
@@ -52,7 +52,6 @@ const FormItem: React.FC<FormItemProps> = ({
   }, []);
 
   const body: React.ReactElement = useItemBody({
-    card,
     cardOptions,
     children,
     options,
@@ -64,6 +63,7 @@ const FormItem: React.FC<FormItemProps> = ({
   });
 
   const css = cx('o-form-item', {
+    [className]: className,
     'o-form-item--email': category === 'EMAIL',
     'o-form-item--image': type === 'IMAGE',
     'o-form-item--multiple-select': type === 'MULTIPLE_SELECT'

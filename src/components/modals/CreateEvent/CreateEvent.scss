@@ -7,7 +7,7 @@ $PREF: 'mo-create-event';
   margin: 0 auto;
   width: $xxl * 10;
 
-  @include MT { width: 90%; }
+  @include MT { width: 100%; }
 }
 
 // ## CREATE EVENT ROW
@@ -15,4 +15,9 @@ $PREF: 'mo-create-event';
 .#{$PREF}-row {
   > div:first-child { flex: 2; }
   > div:last-child { flex: 1; }
+}
+
+.#{$PREF}-privacy-item {
+  > div { flex-direction: row; }
+  > div > div:first-child { margin: 0 $xs 0 0; }
 }

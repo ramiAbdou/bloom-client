@@ -11,7 +11,6 @@ import FormCoverImageUpload from './variants/FormCoverImageUpload';
 import FormDropdown from './variants/FormDropdown';
 import FormImageUpload from './variants/FormImageUpload';
 import FormLongText from './variants/FormLongText';
-import FormMultipleCardChoice from './variants/FormMultipleCardChoice';
 import FormMultipleChoice from './variants/FormMultipleChoice';
 import FormMultipleSelect from './variants/FormMultipleSelect';
 import FormShortText from './variants/FormShortText';
@@ -24,7 +23,6 @@ import FormToggle from './variants/FormToggle';
 const useItemBody = (props: UseItemBodyProps) => {
   const {
     category,
-    card,
     cardOptions,
     children,
     id,
@@ -37,9 +35,14 @@ const useItemBody = (props: UseItemBodyProps) => {
   } = props;
 
   const baseProps: BaseItemProps = { category, id, required, title };
-  const optionProps: OptionItemProps = { ...baseProps, options, plain };
-  const cardOptionProps = { ...baseProps, card, cardOptions };
   const textProps: TextItemProps = { ...baseProps, placeholder };
+
+  const optionProps: OptionItemProps = {
+    ...baseProps,
+    cardOptions,
+    options,
+    plain
+  };
 
   const body: React.ReactElement = takeFirst([
     [type === 'SHORT_TEXT', <FormShortText {...textProps} />],
@@ -53,11 +56,7 @@ const useItemBody = (props: UseItemBodyProps) => {
       <FormMultipleSelect {...optionProps} />
     ],
     [
-      type === 'MULTIPLE_CHOICE' && card,
-      <FormMultipleCardChoice {...cardOptionProps} />
-    ],
-    [
-      type === 'MULTIPLE_CHOICE' && options?.length < 5,
+      type === 'MULTIPLE_CHOICE' && (options?.length < 5 || cardOptions),
       <FormMultipleChoice {...optionProps} />
     ],
     [

@@ -10,8 +10,9 @@ $PREF: 'o-form';
   @extend .flex-col;
 
   background-blend-mode: multiply;
-  background-color: $gray-5;
+  background-color: white;
   background-size: cover;
+  border: 1px $primary dashed;
   border-radius: $xs;
   box-sizing: border-box;
   height: 300px;
@@ -21,7 +22,7 @@ $PREF: 'o-form';
 
   @include MT { height: initial; padding-top: 50%; }
 
-  > button { width: fit-content; }
+  > button { margin-top: $sm; width: fit-content; }
   > input { display: none; }
 }
 

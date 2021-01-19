@@ -33,12 +33,10 @@ export type FormQuestion = {
 export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 
 export interface FormItemData extends Partial<FormQuestion> {
-  // Only used in MULTIPLE_CHOICE. True if radio should use card format instead
-  // of regular radio buttons.
-  card?: boolean;
-
   // Only populated if the type is MUTLIPLE CHOICE or MULTIPLE SELECT.
   cardOptions?: RadioOptionProps[];
+
+  className?: string;
 
   errorMessage?: string;
 
@@ -65,7 +63,7 @@ export type BaseItemProps = Pick<
 
 export interface OptionItemProps
   extends BaseItemProps,
-    Pick<FormItemData, 'options' | 'plain'> {}
+    Pick<FormItemData, 'cardOptions' | 'options' | 'plain'> {}
 
 export interface TextItemProps
   extends BaseItemProps,
@@ -75,7 +73,6 @@ export interface UseItemBodyProps
   extends ChildrenProps,
     Pick<
       FormItemData,
-      | 'card'
       | 'cardOptions'
       | 'category'
       | 'id'
@@ -93,7 +90,10 @@ export interface UseItemBodyProps
 export interface FormItemProps
   extends UseItemBodyProps,
     ChildrenProps,
-    Pick<FormItemData, 'description' | 'pageId' | 'validate' | 'value'> {}
+    Pick<
+      FormItemData,
+      'className' | 'description' | 'pageId' | 'validate' | 'value'
+    > {}
 
 export interface FormNavigationPageProps extends IdProps, TitleProps {
   description?: string;

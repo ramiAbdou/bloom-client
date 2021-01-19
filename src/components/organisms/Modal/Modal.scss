@@ -56,7 +56,7 @@ $PREF: 'c-modal';
 
 // ## MODAL CONTENT
 
-.#{$PREF} { max-height: inherit; padding: $md; }
+.#{$PREF} { padding: $md; }
 
 .#{$PREF},
 .#{$PREF} > form {
