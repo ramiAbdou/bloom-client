@@ -10,7 +10,7 @@ const usePush = (to: RouteType) => {
   const { push } = useHistory();
 
   const result = useCallback(() => {
-    push(`${urlName}/${to}`);
+    push(`/${urlName}/${to}`);
   }, [urlName]);
 
   return result;

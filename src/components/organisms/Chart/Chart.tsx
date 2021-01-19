@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 
 import BarChart from './Bar';
-import Chart, { ChartModelInitArgs, ChartType } from './Chart.store';
+import ChartStore, { chartModel } from './Chart.store';
+import { ChartModelInitArgs, ChartType } from './Chart.types';
 import FormatQuestionData from './FormatQuestionData';
 import ChartHeader from './Header';
 import PieChart from './Pie';
 import TimeSeriesChart from './TimeSeries';
 
 const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
-  const chartType = Chart.useStoreState((store) => store.type);
-  const setData = Chart.useStoreActions((store) => store.setData);
+  const chartType = ChartStore.useStoreState((store) => store.type);
+  const setData = ChartStore.useStoreActions((store) => store.setData);
 
   useEffect(() => {
     // Only time we'll need to update the data is if the title/type are set.
-    if (!data) return;
-    setData(data);
+    if (data) setData(data);
   }, [data]);
 
   return (
@@ -27,11 +27,13 @@ const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
   );
 };
 
-export default (args: ChartModelInitArgs) => (
-  <Chart.Provider>
+const Chart: React.FC<ChartModelInitArgs> = ({ options, ...args }) => (
+  <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
     <div className="c-chart">
       <ChartHeader />
       <ChartContent {...args} />
     </div>
-  </Chart.Provider>
+  </ChartStore.Provider>
 );
+
+export default Chart;

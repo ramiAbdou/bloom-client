@@ -3,42 +3,74 @@ import React, { useEffect } from 'react';
 import { ModalType } from '@constants';
 import useActiveRoute from '@hooks/useActiveRoute';
 import useQuery from '@hooks/useQuery';
+import Form from '@organisms/Form/Form';
+import FormNavigation from '@organisms/Form/FormNavigation';
+import FormPage from '@organisms/Form/FormPage';
 import Modal from '@organisms/Modal/Modal';
-import { IMember } from '@store/entities';
+import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import LoadingContainer from '../../containers/Loading/LoadingContainer';
-import {
-  GET_DUES_INFORMATION,
-  GET_PAYMENT_METHOD,
-  GetDuesInformationResult
-} from './Payment.gql';
+import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
+import { getPaymentPages } from './Payment.util';
 import PaymentCardScreen from './PaymentCardScreen';
-import PaymentConfirmationScreen from './PaymentConfirmationScreen';
 import PaymentFinishScreen from './PaymentFinishScreen';
-import PaymentHeader from './PaymentHeader';
 import PaymentStripeProvider from './PaymentStripeProvider';
-import useInitPaymentScreen from './useInitPaymentScreen';
+import useCreateLifetimePayment from './useCreateLifetimePayment';
+import useCreateSubscription from './useCreateSubscription';
+import useUpdatePaymentMethod from './useUpdatePaymentMethod';
 
-const PaymentModalContent: React.FC = () => {
-  const showPaymentContent = PaymentStore.useStoreState(
-    ({ selectedTypeId, screen, type }) => {
-      return type === 'UPDATE_PAYMENT_METHOD' || (!!selectedTypeId && !!screen);
-    }
+const PaymentForm: React.FC<Partial<PaymentModel>> = () => {
+  const prorationDate = PaymentStore.useStoreState(
+    (store) => store.changeProrationDate
   );
 
-  useInitPaymentScreen();
+  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const type = PaymentStore.useStoreState((store) => store.type);
 
-  if (!showPaymentContent) return null;
+  const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
+
+  const isFree: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[typeId]?.isFree;
+  });
+
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[typeId]?.recurrence === 'LIFETIME';
+  });
+
+  const createSubscription = useCreateSubscription();
+  const createLifetimePayment = useCreateLifetimePayment();
+  const updatePaymentMethod = useUpdatePaymentMethod();
+
+  const onSubmit = takeFirst([
+    [type === 'UPDATE_PAYMENT_METHOD', updatePaymentMethod],
+    [isLifetime, createLifetimePayment],
+    [!isLifetime, createSubscription]
+  ]);
+
+  if (!onSubmit) return null;
+
+  const pages = getPaymentPages({ isCardOnFile, isFree, type });
 
   return (
-    <>
+    <Form
+      className="mo-payment"
+      options={{
+        disableValidation: type !== 'UPDATE_PAYMENT_METHOD',
+        multiPage: true
+      }}
+      pages={pages}
+      onSubmit={onSubmit}
+      onSubmitDeps={[prorationDate, typeId]}
+    >
+      <FormNavigation />
       <PaymentCardScreen />
-      <PaymentConfirmationScreen />
       <PaymentFinishScreen />
-    </>
+      <FormPage id="CONFIRMATION" />
+    </Form>
   );
 };
 
@@ -56,27 +88,15 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
     (store) => store.setSelectedTypeId
   );
 
-  const { loading } = useQuery<IMember>({
-    name: 'getMember',
-    query: GET_PAYMENT_METHOD,
-    schema: Schema.MEMBER
-  });
-
   useEffect(() => {
     if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
   }, [typeId, selectedTypeId]);
 
-  const modalId: ModalType = takeFirst([
-    [type === 'PAY_DUES', ModalType.PAY_DUES],
-    [type === 'CHANGE_MEMBERSHIP', ModalType.CHANGE_MEMBERSHIP],
-    [type === 'UPDATE_PAYMENT_METHOD', ModalType.UPDATE_PAYMENT_METHOD]
-  ]);
+  const onClose = () => clearOptions();
 
   return (
-    <Modal id={modalId} onClose={clearOptions}>
-      <LoadingContainer Header={PaymentHeader} loading={loading}>
-        <PaymentModalContent />
-      </LoadingContainer>
+    <Modal id={type} onClose={onClose}>
+      <PaymentForm />
     </Modal>
   );
 };
@@ -88,24 +108,17 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
   const route = useActiveRoute();
 
-  const { loading } = useQuery<GetDuesInformationResult>({
-    format: ({ stripeAccountId, types }) => ({
-      integrations: { stripeAccountId },
-      types
-    }),
-    name: 'getDuesInformation',
-    query: GET_DUES_INFORMATION,
-    schema: {
-      integrations: Schema.INTEGRATIONS,
-      types: [Schema.MEMBER_TYPE]
-    }
+  const { loading } = useQuery<ICommunity>({
+    name: 'getIntegrations',
+    query: GET_PAYMENT_INTEGRATIONS,
+    schema: Schema.COMMUNITY
   });
 
   // Get the user and see if they've paid their dues or not.
   const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const isUserActive = duesStatus === 'ACTIVE';
+  const isUserActive = duesStatus === 'Active';
 
   useEffect(() => {
     if (!isAdmin && route !== 'membership' && duesStatus && !isUserActive) {

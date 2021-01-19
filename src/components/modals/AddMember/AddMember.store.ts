@@ -1,24 +1,23 @@
 import { Action, action, createContextStore } from 'easy-peasy';
+import { nanoid } from 'nanoid';
 
-import { uuid } from '@util/util';
-
-type AddMemberModel = {
+export interface AddMemberModel {
   addRow: Action<AddMemberModel>;
   admin?: boolean;
   clearRows: Action<AddMemberModel>;
   deleteRow: Action<AddMemberModel, string>;
   rows: string[];
-};
+}
 
 export const addMemberModel: AddMemberModel = {
-  addRow: action((state) => ({ ...state, rows: [...state.rows, uuid()] })),
+  addRow: action((state) => ({ ...state, rows: [...state.rows, nanoid()] })),
   admin: false,
-  clearRows: action((state) => ({ ...state, rows: [uuid()] })),
+  clearRows: action((state) => ({ ...state, rows: [nanoid()] })),
   deleteRow: action((state, rowId: string) => ({
     ...state,
     rows: state.rows.filter((id: string) => id !== rowId)
   })),
-  rows: [uuid()]
+  rows: [nanoid()]
 };
 
 const AddMemberStore = createContextStore<AddMemberModel>(

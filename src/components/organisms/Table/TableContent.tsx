@@ -46,7 +46,7 @@ const TableContent: React.FC<TableContent> = ({
         </div>
       )}
 
-      <TablePagination />
+      {!emptyMessage && <TablePagination />}
       <TableContentEmptyMessage emptyMessage={emptyMessage} />
       <TablePanel onRenameColumn={onRenameColumn} />
     </>

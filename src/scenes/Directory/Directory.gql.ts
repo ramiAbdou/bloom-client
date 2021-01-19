@@ -20,12 +20,11 @@ export const GET_DIRECTORY = query({
         'id',
         'role',
         'status',
-        { cardData: ['questionId', 'value'] },
+        { data: ['id', 'value', { question: ['id'] }] },
         { type: ['id', 'name'] },
         {
           user: [
             'id',
-            'currentLocation',
             'email',
             'facebookUrl',
             'firstName',

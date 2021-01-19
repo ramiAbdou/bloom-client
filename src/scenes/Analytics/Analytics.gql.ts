@@ -1,46 +1,59 @@
 import { query } from 'gql-query-builder';
 
-// ## GET ACTIVE MEMBER ANALYTICS
+// ## GET ACTIVE DUES GROWTH
 
-export interface GetActiveMemberAnalyticsResult {
-  activeChartData: { name: string; value: number }[];
-  activeGrowth: number;
-}
-
-export const GET_ACTIVE_MEMBER_ANALYTICS = query({
-  fields: ['activeGrowth', { activeChartData: ['name', 'value'] }],
-  operation: 'getActiveMemberAnalytics'
+export const GET_ACTIVE_DUES_GROWTH = query({
+  operation: 'getActiveDuesGrowth'
 }).query;
 
-// ## GET DUES ANALYTICS
+// ## GET ACTIVE MEMBERS GROWTH
 
-export const GET_DUES_ANALYTICS = query({
+export const GET_ACTIVE_MEMBERS_GROWTH = query({
+  operation: 'getActiveMembersGrowth'
+}).query;
+
+export const GET_ACTIVE_MEMBERS_SERIES = query({
   fields: ['name', 'value'],
-  operation: 'getDuesAnalytics'
+  operation: 'getActiveMembersSeries'
 }).query;
 
 // ## GET PAYMENTS
 
-export const GET_DUES_HISTORY = query({
+export const GET_PAYMENTS = query({
   fields: [
-    'amount',
-    'createdAt',
     'id',
-    'stripeInvoiceUrl',
-    { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
-    { type: ['id'] }
+    {
+      payments: [
+        'amount',
+        'createdAt',
+        'id',
+        'stripeInvoiceUrl',
+        { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
+        { type: ['id'] }
+      ]
+    }
   ],
-  operation: 'getDuesHistory'
+  operation: 'getPayments'
 }).query;
 
-// ## GET TOTAL MEMBER ANALYTICS
+// ## GET TOTAL DUES GROWTH
 
-export interface GetTotalMemberAnalyticsResult {
-  totalChartData: { name: string; value: number }[];
-  totalGrowth: number;
-}
+export const GET_TOTAL_DUES_GROWTH = query({
+  operation: 'getTotalDuesGrowth'
+}).query;
 
-export const GET_TOTAL_MEMBER_ANALYTICS = query({
-  fields: ['totalGrowth', { totalChartData: ['name', 'value'] }],
-  operation: 'getTotalMemberAnalytics'
+export const GET_TOTAL_DUES_SERIES = query({
+  fields: ['name', 'value'],
+  operation: 'getTotalDuesSeries'
+}).query;
+
+// ## GET TOTAL MEMBERS GROWTH
+
+export const GET_TOTAL_MEMBERS_GROWTH = query({
+  operation: 'getTotalMembersGrowth'
+}).query;
+
+export const GET_TOTAL_MEMBERS_SERIES = query({
+  fields: ['name', 'value'],
+  operation: 'getTotalMembersSeries'
 }).query;

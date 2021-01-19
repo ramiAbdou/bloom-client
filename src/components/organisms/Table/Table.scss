@@ -25,16 +25,15 @@ $PREF: 'c-table';
 // ## TABLE CELL (BOTH TH AND TD)
 
 .#{$PREF}-cell {
-  left: 0;
   margin: 0;
   padding: $sm $md $sm $sm;
   position: sticky;
   text-align: left;
 
+  &--xs { max-width: $xxl * 2.5; width: $xxl * 2.5; }
   &--sm { max-width: $xxl * 3.25; width: $xxl * 3.25; }
   &--md { max-width: $xxl * 4; width: $xxl * 4; }
   &--lg { max-width: $xxl * 5; width: $xxl * 5; }
-  &--relative { position: relative; }
 
   &:first-child > div { @extend .flex-ac; max-width: 100%; }
   &:last-child { width: -webkit-fill-available; }

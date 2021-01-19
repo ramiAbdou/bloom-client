@@ -34,7 +34,7 @@ const SideBarProfileContent: React.FC = () => {
 
 const SideBarProfile: React.FC = () => {
   const isDuesMessageShowing: boolean = useStoreState(({ db }) => {
-    return db.canCollectDues && db.member?.duesStatus !== 'ACTIVE';
+    return db.canCollectDues && db.member?.duesStatus !== 'Active';
   });
 
   const showPicker = useStoreActions(({ panel }) => panel.showPicker);
@@ -43,13 +43,11 @@ const SideBarProfile: React.FC = () => {
 
   const onClick = () => showPicker(PanelType.PROFILE);
 
-  const containerCss = cx({
-    'o-side-bar-profile-ctr': true,
+  const containerCss = cx('o-side-bar-profile-ctr', {
     'o-side-bar-profile-ctr--no-auto': isDuesMessageShowing
   });
 
-  const buttonCss = cx({
-    'o-side-bar-profile': true,
+  const buttonCss = cx('o-side-bar-profile', {
     'o-side-bar-profile--active': isActive
   });
 

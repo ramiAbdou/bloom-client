@@ -1,4 +1,5 @@
 import day from 'dayjs';
+import { nanoid } from 'nanoid';
 import React from 'react';
 
 import MainSection from '@containers/Main/MainSection';
@@ -7,11 +8,10 @@ import Table from '@organisms/Table/Table';
 import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
-import { IMember, IMemberPayment, IUser } from '@store/entities';
+import { ICommunity, IMember, IMemberPayment, IUser } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import { uuid } from '@util/util';
-import { GET_DUES_HISTORY } from '../Analytics.gql';
+import { GET_PAYMENTS } from '../Analytics.gql';
 
 interface DuesAnalyticsHistoryTableData {
   Amount: string;
@@ -25,6 +25,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
   const rows: Row[] = useStoreState(({ db }) => {
     const { byId: byMemberId } = db.entities.members;
     const { byId: byPaymentId } = db.entities.payments;
+    const { byId: byTypeId } = db.entities.types;
     const { byId: byUserId } = db.entities.users;
 
     const result: DuesAnalyticsHistoryTableData[] = db.community.members?.reduce(
@@ -33,18 +34,21 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 
         const payments: DuesAnalyticsHistoryTableData[] = member.payments?.map(
           (paymentId: string) => {
-            const { amount, createdAt }: IMemberPayment = byPaymentId[
+            const { amount, createdAt, type }: IMemberPayment = byPaymentId[
               paymentId
             ];
+
+            const typeName = byTypeId[type].name;
 
             const { firstName, lastName, email }: IUser = byUserId[member.user];
 
             return {
-              Amount: `$${amount / 100}.00`,
+              Amount: `$${(amount / 100).toFixed(2)}`,
               Email: email,
               'Full Name': `${firstName} ${lastName}`,
-              'Paid On': day(createdAt).format('MMMM DD, YYYY'),
-              id: uuid()
+              'Membership Plan': typeName,
+              'Paid On': day(createdAt).format('MMMM DD, YYYY @ h:mm A'),
+              id: nanoid()
             };
           }
         );
@@ -61,6 +65,11 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
     { id: 'Full Name', title: 'Full Name', type: 'SHORT_TEXT' },
     { id: 'Email', title: 'Email', type: 'SHORT_TEXT' },
     { id: 'Amount', title: 'Amount', type: 'SHORT_TEXT' },
+    {
+      id: 'Membership Plan',
+      title: 'Membership Plan',
+      type: 'MULTIPLE_CHOICE'
+    },
     { id: 'Paid On', title: 'Paid On', type: 'SHORT_TEXT' }
   ];
 
@@ -79,11 +88,13 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 };
 
 const DuesAnalyticsHistory: React.FC = () => {
-  const { loading } = useQuery<IMemberPayment[]>({
-    name: 'getDuesHistory',
-    query: GET_DUES_HISTORY,
-    schema: [Schema.MEMBER_PAYMENT]
+  const { data, loading } = useQuery<ICommunity>({
+    name: 'getPayments',
+    query: GET_PAYMENTS,
+    schema: Schema.COMMUNITY
   });
+
+  if (!data?.payments?.length) return null;
 
   return (
     <MainSection

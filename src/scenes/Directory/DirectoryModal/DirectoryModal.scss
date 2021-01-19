@@ -13,10 +13,11 @@ $PREF: 's-directory-modal';
 
 .#{$PREF}-user-ctr {
   background-color: white;
-  padding-bottom: $sm;
   position: sticky;
   top: $md;
   z-index: 10;
+
+  &:not(:last-child) { margin-bottom: $sm; }
 }
 
 .#{$PREF}-user-ctr > p { margin-bottom: $sm; text-align: center; }

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Input from '@atoms/Input';
-import Form from './Form.store';
-import { FormItemProps } from './Form.types';
+import Form from '../Form.store';
+import { FormItemProps } from '../Form.types';
 
 const FormShortText: React.FC<
   Pick<FormItemProps, 'category' | 'id' | 'placeholder' | 'title'>

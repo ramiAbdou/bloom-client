@@ -1,24 +1,32 @@
 import React from 'react';
 
-import { cx } from '@util/util';
+import { ChildrenProps } from '@constants';
+import { cx, takeFirst } from '@util/util';
 
-interface PillProps {
-  percentage: number;
+interface PillProps extends ChildrenProps {
+  percentage?: number;
+  positive?: boolean;
 }
 
-const Pill: React.FC<PillProps> = ({ percentage }) => {
-  const isPositive = percentage >= 0;
+const Pill: React.FC<PillProps> = ({ children, percentage, positive }) => {
+  const isPositive = positive ?? percentage >= 0;
 
-  const css = cx({
-    'c-tag-pill': true,
+  if (percentage === undefined && positive === undefined) return null;
+
+  // If positive, add the "+" character, but otherwise TS will automatically
+  // add a "-" character.
+  const value = takeFirst([
+    [percentage === undefined, children],
+    [percentage && isPositive, `+${percentage}%`],
+    [percentage && !isPositive, `${percentage}%`]
+  ]);
+
+  const css = cx('c-tag-pill', {
     'c-tag-pill--negative': !isPositive,
     'c-tag-pill--positive': isPositive
   });
 
-  // If positive, add the "+" character, but otherwise TS will automatically
-  // add a "-" character.
-  const percentageString = isPositive ? `+${percentage}%` : `${percentage}%`;
-  return <p className={css}>{percentageString}</p>;
+  return <p className={css}>{value}</p>;
 };
 
 export default Pill;

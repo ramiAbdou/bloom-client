@@ -1,22 +1,14 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IMemberType } from '@store/entities';
+// ## CREATE SINGLE PAYMENT
 
-// ## CREATE ONE TIME PAYMENT
-
-export interface CreateOneTimePaymentArgs {
+export interface CreateLifetimePaymentArgs {
   memberTypeId: string;
 }
 
-export interface CreateOneTimePaymentResult {
-  id: string;
-  // duesStatus: string;
-  // type: { id: string; name: string };
-}
-
-export const CREATE_ONE_TIME_PAYMENT = mutation({
+export const CREATE_LIFETIME_PAYMENT = mutation({
   fields: ['id', 'autoRenew', 'duesStatus', { type: ['id', 'name'] }],
-  operation: 'createOneTimePayment',
+  operation: 'createLifetimePayment',
   variables: { memberTypeId: { required: true } }
 }).query;
 
@@ -25,6 +17,7 @@ export const CREATE_ONE_TIME_PAYMENT = mutation({
 export interface CreateSubscriptionArgs {
   autoRenew?: boolean;
   memberTypeId: string;
+  prorationDate?: number;
 }
 
 export interface CreateSubscriptionResult {
@@ -42,29 +35,23 @@ export const CREATE_SUBSCRIPTION = mutation({
   }
 }).query;
 
-// ## GET DUES INFORMATION
+// ## GET CHANGE PREVIEW
 
-export interface GetDuesInformationResult {
-  stripeAccountId: string;
-  types: IMemberType[];
-}
-
-export const GET_DUES_INFORMATION = query({
-  fields: [
-    'stripeAccountId',
-    { types: ['id', 'amount', 'isFree', 'name', 'recurrence'] }
-  ],
-  operation: 'getDuesInformation'
+export const GET_CHANGE_PREVIEW = query({
+  fields: ['amount', 'prorationDate'],
+  operation: 'getChangePreview',
+  variables: { memberTypeId: { required: true } }
 }).query;
 
-// ## GET PAYMENT METHOD
+// ## GET PAYMENT INTEGRATIONS
 
-export const GET_PAYMENT_METHOD = query({
+export const GET_PAYMENT_INTEGRATIONS = query({
   fields: [
     'id',
-    { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
+    { integrations: ['id', 'stripeAccountId'] },
+    { types: ['id', 'amount', 'isFree', 'name', 'recurrence'] }
   ],
-  operation: 'getMember'
+  operation: 'getIntegrations'
 }).query;
 
 // ## UPDATE PAYMENT METHOD

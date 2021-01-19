@@ -3,18 +3,23 @@ import { QuestionCategory, QuestionType } from '@constants';
 type IdString = string;
 
 export interface ICommunity {
-  applicationDescription?: string;
-  applicationTitle?: string;
+  application?: IdString;
   autoAccept?: boolean;
   urlName: string;
   id: IdString;
   integrations: IdString;
   logoUrl: string;
   members: IdString[];
+  payments: IdString[];
   questions: IdString[];
   name: string;
   primaryColor: string;
   types: IdString[];
+}
+
+export interface ICommunityApplication {
+  description: string;
+  title: string;
 }
 
 export interface IIntegrations {
@@ -34,15 +39,14 @@ export interface IPaymentMethod {
 
 export interface IMember {
   autoRenew: boolean;
-  allData?: { questionId: string; value: string }[];
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
-  cardData?: { questionId: string; value: string }[];
   community: IdString;
   createdAt: string;
   data: IdString[];
-  duesStatus: 'ACTIVE' | 'INACTIVE' | 'LAME';
+  duesStatus: 'Active' | 'Inactive';
   id: IdString;
+  joinedAt: string;
   paymentMethod: IPaymentMethod;
   payments: IdString[];
   role?: 'ADMIN' | 'OWNER';
@@ -77,8 +81,10 @@ export interface IMemberType {
 export interface IQuestion {
   category: QuestionCategory;
   id: IdString;
+  inApplication: boolean;
   inApplicantCard: boolean;
   inDirectoryCard: boolean;
+  inExpandedDirectoryCard: boolean;
   onlyInApplication: boolean;
   order: number;
   options: string[];
@@ -93,6 +99,7 @@ export interface IUser {
   email: string;
   facebookUrl: string;
   firstName: string;
+  gender?: 'Male' | 'Female' | 'Non-Binary' | 'Prefer Not to Say';
   id: IdString;
   instagramUrl: string;
   lastName: string;
@@ -109,6 +116,7 @@ export interface EntityRecord<T> {
 }
 
 export interface IEntities {
+  applications: EntityRecord<ICommunityApplication>;
   communities: EntityRecord<ICommunity>;
   data: EntityRecord<IMemberData>;
   integrations: EntityRecord<IIntegrations>;
@@ -121,6 +129,7 @@ export interface IEntities {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
+  applications: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   data: { allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },

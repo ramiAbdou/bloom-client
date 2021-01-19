@@ -1,5 +1,7 @@
 $PREF: 'mo-payment';
 
+// ## PAYMENT BUTTON
+
 .#{$PREF}-button {
   > svg { @extend .react-icon; color: white; margin-right: $xs; }
   &:disabled > svg { color: $gray-3; }
@@ -19,14 +21,9 @@ $PREF: 'mo-payment';
 
   > h4:first-child,
   > .o-form-label { margin-bottom: $xs; }
-
-  > div.c-misc-input {
-    margin-bottom: $md;
-
-    // Needed to format the Stripe card element card correctly.
-    > .__PrivateStripeElement { width: 100%; }
-  }
 }
+
+.c-misc-input > .__PrivateStripeElement { width: 100%; }
 
 .#{$PREF}-billing-ctr > .o-form-item { margin-bottom: 0; margin-top: 0; }
 .#{$PREF}-item--type > div { @extend .flex-acsb; }

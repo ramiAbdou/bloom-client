@@ -4,9 +4,9 @@ import React from 'react';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmit } from '@organisms/Form/Form.types';
 import FormItem from '@organisms/Form/FormItem';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Panel from '@organisms/Panel/Panel';
 import { useStoreActions, useStoreState } from '@store/Store';
-import FormInvisibleSubmit from '../Form/FormInvisibleSubmit';
 import Table from './Table.store';
 import { Column, OnRenameColumnProps } from './Table.types';
 import TableSortButton from './TableSortButton';
@@ -46,7 +46,7 @@ const TablePanelRenameForm: React.FC<OnRenameColumnProps> = ({
   return (
     <Form onSubmit={onSubmit}>
       <FormItem id="TABLE_COLUMN" type="SHORT_TEXT" value={title} />
-      <FormInvisibleSubmit />
+      <FormSubmitButton invisible />
     </Form>
   );
 };

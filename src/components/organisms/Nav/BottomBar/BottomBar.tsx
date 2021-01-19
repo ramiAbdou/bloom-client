@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { IoCalendar, IoPeople, IoPersonCircle } from 'react-icons/io5';
 
 import useBreakpoint from '@hooks/useBreakpoint';
@@ -8,14 +8,11 @@ import BottomBarCommunityContainer from './BottomBarCommunityList';
 import BottomBarLink from './BottomBarLink';
 
 const BottomBarMobile: React.FC = () => {
-  const mainLinks: LinkOptions[] = useMemo(
-    () => [
-      { Icon: IoPeople, title: 'Directory', to: 'directory' },
-      { Icon: IoCalendar, title: 'Events', to: 'events' },
-      { Icon: IoPersonCircle, title: 'Profile', to: '/' }
-    ],
-    []
-  );
+  const mainLinks: LinkOptions[] = [
+    { Icon: IoPeople, title: 'Directory', to: 'directory' },
+    { Icon: IoCalendar, title: 'Events', to: 'events' },
+    { Icon: IoPersonCircle, title: 'Profile', to: 'profile' }
+  ];
 
   return (
     <>
@@ -31,14 +28,11 @@ const BottomBarMobile: React.FC = () => {
 };
 
 const BottomBarTablet: React.FC = () => {
-  const mainLinks: LinkOptions[] = useMemo(
-    () => [
-      { Icon: IoPeople, title: 'Directory', to: 'directory' },
-      { Icon: IoCalendar, title: 'Events', to: 'events' },
-      { Icon: IoPersonCircle, title: 'Profile', to: '/' }
-    ],
-    []
-  );
+  const mainLinks: LinkOptions[] = [
+    { Icon: IoPeople, title: 'Directory', to: 'directory' },
+    { Icon: IoCalendar, title: 'Events', to: 'events' },
+    { Icon: IoPersonCircle, title: 'Profile', to: 'profile' }
+  ];
 
   return (
     <>

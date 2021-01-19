@@ -3,7 +3,7 @@ import { Masonry } from 'masonic';
 import { matchSorter } from 'match-sorter';
 import React, { useEffect } from 'react';
 
-import { IMember, IUser } from '@store/entities';
+import { IMember, IMemberData } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import Directory from './Directory.store';
 import DirectoryCard from './DirectoryCard/DirectoryCard';
@@ -14,71 +14,38 @@ const DirectoryCardContainer = () => {
   const searchString = Directory.useStoreState((store) => store.searchString);
 
   const members: MemberCardModel[] = useStoreState(({ db }) => {
-    const { members: membersEntity, questions, users } = db.entities;
-    const { allIds, byId: byMemberId } = membersEntity;
-    const { byId: byQuestionId } = questions;
-    const { byId: byUserId } = users;
+    const { byId: byDataId } = db.entities.data;
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byQuestionId } = db.entities.questions;
+    const { byId: byUserId } = db.entities.users;
 
-    if (!allIds?.length) return [];
+    if (!db.community?.members?.length) return [];
 
-    const unSortedResult: MemberCardModel[] = db.community.members
-      ?.filter((id: string) => byMemberId[id]?.status === 'ACCEPTED')
-      ?.map((curr: string) => {
-        const {
-          bio,
-          cardData,
-          id,
-          role,
-          type: memberType,
-          user
-        }: IMember = byMemberId[curr];
+    const unSortedResult = db.community.members
+      ?.map((memberId: string) => {
+        const member: IMember = byMemberId[memberId];
 
-        const {
-          currentLocation,
-          email,
-          facebookUrl,
-          firstName,
-          lastName,
-          instagramUrl,
-          linkedInUrl,
-          pictureUrl,
-          twitterUrl
-        } = byUserId[user] ?? ({} as IUser);
+        const data: IMemberData[] = member.data
+          ?.map((dataId) => byDataId[dataId])
+          ?.filter(
+            (point: IMemberData) =>
+              byQuestionId[point.question]?.inExpandedDirectoryCard
+          );
 
-        return {
-          bio,
-          currentLocation,
-          email,
-          expandedCardData:
-            cardData?.map(({ questionId, ...value }) => {
-              const { title, type } = byQuestionId[questionId] ?? {};
-              return { ...value, title, type };
-            }) ?? [],
-          facebookUrl,
-          firstName,
-          highlightedValue: cardData && cardData[0]?.value,
-          id,
-          instagramUrl,
-          lastName,
-          linkedInUrl,
-          pictureUrl,
-          role,
-          twitterUrl,
-          type: memberType
-        };
-      });
+        return { ...member, ...byUserId[member.user], data };
+      })
+      ?.filter((member) => member?.status === 'ACCEPTED');
 
     return !searchString
       ? unSortedResult
       : matchSorter(unSortedResult, searchString, {
           keys: [
-            (item: MemberCardModel) => `${item.firstName} ${item.lastName}`,
+            (item) => `${item.firstName} ${item.lastName}`,
             'firstName',
             'lastName',
             'email',
             'bio',
-            (item: MemberCardModel) =>
-              item.expandedCardData.map(({ value }) => value)
+            (item) => item.data.map(({ value }) => value.toString())
           ],
           threshold: matchSorter.rankings.ACRONYM
         });

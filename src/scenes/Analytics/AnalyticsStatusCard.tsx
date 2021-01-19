@@ -5,7 +5,7 @@ import { ValueProps } from '@constants';
 
 interface AnalyticsSimpleProps extends ValueProps {
   label: string;
-  percentage: number;
+  percentage?: number;
 }
 
 const NumberContainer: React.FC<
@@ -21,9 +21,16 @@ const NumberContainer: React.FC<
  * Displays a simple number and our statistic, including the percentage of
  * either growth or lack thereof.
  */
-export default ({ label, ...props }: AnalyticsSimpleProps) => (
-  <div className="s-analytics-simple">
-    <NumberContainer {...props} />
-    <h4>{label}</h4>
-  </div>
-);
+const AnalyticsStatusCard: React.FC<AnalyticsSimpleProps> = ({
+  label,
+  ...props
+}) => {
+  return (
+    <div className="s-analytics-simple">
+      <NumberContainer {...props} />
+      <h4>{label}</h4>
+    </div>
+  );
+};
+
+export default AnalyticsStatusCard;

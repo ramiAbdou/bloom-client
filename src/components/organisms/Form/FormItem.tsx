@@ -9,10 +9,13 @@ import FormLabel from './FormLabel';
 import useItemBody from './useItemBody';
 
 const FormItem: React.FC<FormItemProps> = ({
+  card,
+  cardOptions,
   children,
   description,
   options,
   required,
+  pageId,
   placeholder,
   plain,
   type,
@@ -29,16 +32,17 @@ const FormItem: React.FC<FormItemProps> = ({
   const setItem = Form.useStoreActions((store) => store.setItem);
 
   useEffect(() => {
-    value =
-      value ??
-      takeFirst([
-        [type === 'MULTIPLE_SELECT', []],
-        [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
-        [type === 'TOGGLE', false]
-      ]);
+    const emptyValue = takeFirst([
+      [type === 'MULTIPLE_SELECT', []],
+      [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
+      [type === 'TOGGLE', false]
+    ]);
+
+    value = value ?? emptyValue;
 
     setItem({
       initialValue: value,
+      pageId,
       required,
       type,
       validate,
@@ -48,6 +52,8 @@ const FormItem: React.FC<FormItemProps> = ({
   }, []);
 
   const body: React.ReactElement = useItemBody({
+    card,
+    cardOptions,
     children,
     options,
     placeholder,
@@ -57,8 +63,7 @@ const FormItem: React.FC<FormItemProps> = ({
     ...queryArgs
   });
 
-  const css = cx({
-    'o-form-item': true,
+  const css = cx('o-form-item', {
     'o-form-item--email': category === 'EMAIL',
     'o-form-item--image': type === 'IMAGE',
     'o-form-item--multiple-select': type === 'MULTIPLE_SELECT'

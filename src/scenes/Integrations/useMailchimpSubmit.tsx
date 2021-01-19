@@ -1,5 +1,5 @@
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import useMutation from '@hooks/useMutation';
+import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import {
@@ -17,24 +17,16 @@ const useMailchimpSubmit = (): OnFormSubmit => {
     query: UPDATE_MAILCHIMP_LIST_ID
   });
 
-  const onSubmit = async ({
-    items,
-    setErrorMessage,
-    setIsLoading
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const selectedMailchimpList = items[items?.length - 1]?.value;
 
     const { id: mailchimpListId } = options.find(
       ({ name }) => name === selectedMailchimpList
     );
 
-    setIsLoading(true);
-
     const { data: integrations, error } = await updateMailchimpListId({
       mailchimpListId
     });
-
-    setIsLoading(false);
 
     if (error) {
       setErrorMessage(error);

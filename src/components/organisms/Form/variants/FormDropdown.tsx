@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
-import Form from './Form.store';
-import { FormItemData } from './Form.types';
+import Form from '../Form.store';
+import { FormItemData } from '../Form.types';
 
 interface FormDropdownProps extends Pick<FormItemData, 'options' | 'title'> {
   multiple?: boolean;

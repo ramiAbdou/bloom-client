@@ -13,8 +13,7 @@ const ActionContainer: React.FC<ActionContainerProps> = ({
   equal,
   marginTopAuto
 }) => {
-  const css = cx({
-    't-action-ctr': true,
+  const css = cx('t-action-ctr', {
     't-action-ctr--equal': equal,
     't-action-ctr--margin-top-auto': marginTopAuto,
     't-action-ctr--standard': !equal

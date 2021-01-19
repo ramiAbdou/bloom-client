@@ -8,9 +8,12 @@ import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
-import AddMemberStore, { addMemberModel } from './AddMember.store';
+import AddMemberStore, {
+  AddMemberModel,
+  addMemberModel
+} from './AddMember.store';
 import AddMemberInput from './AddMemberInput';
-import useCreateMembers from './useCreateMembers';
+import useAddMembers from './useAddMembers';
 
 const AddMemberContent: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
@@ -20,9 +23,10 @@ const AddMemberContent: React.FC = () => {
   const addRow = AddMemberStore.useStoreActions((store) => store.addRow);
   const clearRows = AddMemberStore.useStoreActions((store) => store.clearRows);
 
-  const createMembers = useCreateMembers();
+  const addMembers = useAddMembers();
   const onClose = () => clearRows();
-  const onClick = () => addRow();
+  const onPrimaryClick = () => addRow();
+  const onSecondaryClick = () => closeModal();
 
   return (
     <Modal
@@ -30,7 +34,7 @@ const AddMemberContent: React.FC = () => {
       width={750}
       onClose={onClose}
     >
-      <Form className="mo-add-member-form" onSubmit={createMembers}>
+      <Form className="mo-add-member-form" onSubmit={addMembers}>
         <h1>{admin ? 'Add Admin(s)' : 'Add Member(s)'}</h1>
 
         <p>
@@ -45,7 +49,7 @@ const AddMemberContent: React.FC = () => {
           ))}
         </div>
 
-        <Button tertiary onClick={onClick}>
+        <Button tertiary onClick={onPrimaryClick}>
           + Add Another
         </Button>
 
@@ -56,7 +60,7 @@ const AddMemberContent: React.FC = () => {
             Add
           </SubmitButton>
 
-          <Button secondary onClick={() => closeModal()}>
+          <Button secondary onClick={onSecondaryClick}>
             Cancel
           </Button>
         </ActionContainer>
@@ -65,11 +69,7 @@ const AddMemberContent: React.FC = () => {
   );
 };
 
-interface AddMemberModalProps {
-  admin?: boolean;
-}
-
-const AddMemberModal: React.FC<AddMemberModalProps> = ({ admin }) => (
+const AddMemberModal: React.FC<Pick<AddMemberModel, 'admin'>> = ({ admin }) => (
   <AddMemberStore.Provider runtimeModel={{ ...addMemberModel, admin }}>
     <AddMemberContent />
   </AddMemberStore.Provider>

@@ -6,7 +6,7 @@ import Button from '@atoms/Button';
 import Spinner from '@atoms/Spinner';
 import { HeaderTag } from '@atoms/Tags';
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 import MainNavigation, { NavigationProps } from './MainNavigation';
 
 export interface MainHeaderProps
@@ -38,7 +38,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   options,
   title
 }) => {
-  const css = makeClass(['t-main-header', className]);
+  const css = cx('t-main-header', { [className]: className });
 
   return (
     <div className={css}>

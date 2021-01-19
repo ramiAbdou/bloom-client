@@ -14,7 +14,7 @@ interface SpinnerProps extends LoadingProps {
  *
  * If no value was passed in, return true, so it can be shown immediately.
  */
-const useShowSpinner = (loading: boolean): boolean => {
+export const useShowSpinner = (loading: boolean): boolean => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   useEffect(() => {
@@ -30,14 +30,14 @@ const useShowSpinner = (loading: boolean): boolean => {
     return () => clearTimeout(timeout);
   }, [loading, showSpinner]);
 
-  return loading === undefined || showSpinner;
+  return showSpinner;
 };
 
 const Spinner: React.FC<SpinnerProps> = ({ dark, loading }) => {
   const showSpinner = useShowSpinner(loading);
   if (!showSpinner) return null;
 
-  const css = cx({ 'c-spinner': true, 'c-spinner--dark': dark });
+  const css = cx('c-spinner', { 'c-spinner--dark': dark });
 
   return (
     <motion.div

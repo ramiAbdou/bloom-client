@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import useActiveRoute from '@hooks/useActiveRoute';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 import { LinkOptions } from '../Nav.types';
 
 /**
@@ -14,10 +14,9 @@ const BottomBarLink: React.FC<LinkOptions> = ({ Icon, to, title }) => {
   const { url } = useRouteMatch();
   const isActive = useActiveRoute() === to;
 
-  const css = makeClass([
-    'o-bottom-bar-link',
-    [isActive, 'o-bottom-bar-link--active']
-  ]);
+  const css = cx('o-bottom-bar-link', {
+    'o-bottom-bar-link--active': isActive
+  });
 
   return (
     <Link className={css} to={`${url}/${to}`}>

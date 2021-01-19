@@ -4,6 +4,7 @@ $PREF: 's-application';
 
 .#{$PREF}-ctr {
   background-color: white;
+  box-sizing: border-box;
   min-height: 100vh;
 
   @include RESP(padding-bottom, $xl, $lg, $md);
@@ -38,7 +39,6 @@ $PREF: 's-application';
 .#{$PREF} {
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: $lg;
 
   @include RESP(width, 600px, 500px, 90%);
 
@@ -59,3 +59,36 @@ $PREF: 's-application';
 .#{$PREF} > h1 { margin-bottom: $xs; }
 .#{$PREF} > p { color: $gray-2; margin-bottom: $lg; }
 .#{$PREF} > button { margin-top: $xxl; width: 100%; }
+
+// ## APPLICATION TYPE STRING - Used in the type string.
+
+.#{$PREF}-type-string {
+  &:not(:last-child) { margin-bottom: $sm; }
+
+  > span:first-child { @extend .display; margin-right: $xxs; }
+  > span:last-child { @extend .meta--lg; color: $gray-2; }
+}
+
+// ## APPLICATION PAYMENT SECTION
+
+.#{$PREF}-payment-ctr {
+  > h2 { margin-bottom: $xs; }
+  > p { margin-bottom: $md; }
+
+  > .o-form-item > .c-misc-input > .__PrivateStripeElement { width: 100%; }
+}
+
+// ## APPLICATION CONFIRMATION
+
+.#{$PREF}-confirmation {
+  > h2 { margin-bottom: $md; }
+
+  > button:last-child {
+    margin-top: $lg;
+
+    &:disabled > svg { color: $gray-3; }
+    > svg { color: white; margin-right: $xs; }
+  }
+}
+
+.#{$PREF}-confirmation-membership > h2 { margin-bottom: $md; }

@@ -40,6 +40,7 @@ $PREF: 'c-tag';
 
   border-radius: $sm;
   padding: 2px 6px;
+  width: fit-content;
 
   &--positive {
     background-color: rgba($color: $green, $alpha: 0.1);

@@ -3,7 +3,7 @@ import { IoCloseCircle, IoSearch } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { ValueProps } from '@constants';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 interface SearchBarProps extends ValueProps {
   placeholder?: string;
@@ -15,10 +15,9 @@ const Icon = memo(() => <IoSearch />);
 const ClearButton = ({ onChange, value }: Partial<SearchBarProps>) => {
   const onClick = () => onChange('');
 
-  const css = makeClass([
-    'c-misc-search-close',
-    [!value, 'c-misc-search-close--empty']
-  ]);
+  const css = cx('c-misc-search-close', {
+    'c-misc-search-close--empty': !value
+  });
 
   return (
     <Button className={css} onClick={onClick}>

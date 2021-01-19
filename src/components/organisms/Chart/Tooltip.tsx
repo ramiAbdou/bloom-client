@@ -20,7 +20,11 @@ export default ({ active, label, payload }: ChartTooltipProps) => {
 
   label = label ?? payload[0]?.name;
   const { value } = data.find(({ name }) => name === label);
-  const percentageOfTotal = ((value / totalResponses) * 100).toFixed(2);
+
+  const percentageOfTotal = (
+    ((value as number) / totalResponses) *
+    100
+  ).toFixed(2);
 
   return (
     <div className="c-chart-tooltip">

@@ -30,7 +30,7 @@ const TableSortButton: React.FC<TableSortButtonProps> = ({ direction, id }) => {
     closePicker();
   };
 
-  const css = cx({ 'c-table-col-picker-button--active': isSorted });
+  const css = cx('', { 'c-table-col-picker-button--active': isSorted });
   const isAscending = direction === 'ASC';
 
   return (

@@ -1,24 +1,25 @@
 import React from 'react';
 import { IoLockClosed } from 'react-icons/io5';
 
-import Form from '@organisms/Form/Form.store';
-import SubmitButton from '@organisms/Form/FormSubmitButton';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import PaymentStore from './Payment.store';
 
 const PaymentFinishButton: React.FC = () => {
-  const isUpdatingPaymentMethod =
-    PaymentStore.useStoreState((store) => store.type) ===
-    'UPDATE_PAYMENT_METHOD';
+  const type = PaymentStore.useStoreState((store) => store.type);
 
   const selectedTypeId = PaymentStore.useStoreState(
     (store) => store.selectedTypeId
   );
 
+  const changeAmount = PaymentStore.useStoreState(
+    (store) => store.changeAmount
+  );
+
   const amount: number = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[selectedTypeId]?.amount / 100;
+    return changeAmount ?? byId[selectedTypeId]?.amount / 100;
   });
 
   const isLessThanCurrentType = useStoreState(({ db }) => {
@@ -28,42 +29,34 @@ const PaymentFinishButton: React.FC = () => {
     const currentAmount = byId[db.member.type]?.amount;
 
     return (
-      db.member.duesStatus === 'ACTIVE' &&
+      db.member.duesStatus === 'Active' &&
       !byId[selectedTypeId]?.isFree &&
       selectedAmount < currentAmount
     );
   });
 
-  const isLoading = Form.useStoreState((store) => store.isLoading);
-
-  if (amount === null || amount === undefined) return null;
-
-  const isFree = amount === 0;
-
   const buttonTitle = takeFirst([
-    [isFree || isLessThanCurrentType, 'Change Membership'],
-    [isUpdatingPaymentMethod, 'Update Payment Method'],
+    [type === 'UPDATE_PAYMENT_METHOD', 'Update Payment Method'],
+    [!amount, 'Change Membership'],
     `Finish and Pay $${amount}`
   ]);
 
   const buttonLoadingText = takeFirst([
-    [isFree, 'Changing...'],
-    [isUpdatingPaymentMethod, 'Saving...'],
+    [type === 'UPDATE_PAYMENT_METHOD', 'Saving...'],
+    [!amount || isLessThanCurrentType, 'Changing...'],
     `Paying...`
   ]);
 
   // Use a traditional checkout form.
   return (
-    <SubmitButton
+    <FormSubmitButton
       fill
-      stickToBottom
       className="mo-payment-button"
-      loading={isLoading}
       loadingText={buttonLoadingText}
     >
-      {(isUpdatingPaymentMethod || !isFree) && <IoLockClosed />}
+      {(type === 'UPDATE_PAYMENT_METHOD' || !!amount) && <IoLockClosed />}
       {buttonTitle}
-    </SubmitButton>
+    </FormSubmitButton>
   );
 };
 

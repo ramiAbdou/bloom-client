@@ -10,9 +10,11 @@ import {
 import PaymentStore from './Payment.store';
 
 const useCreateSubscription = (): OnFormSubmit => {
-  const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
+  const prorationDate = PaymentStore.useStoreState(
+    (store) => store.changeProrationDate
+  );
 
-  const selectedTypeId = PaymentStore.useStoreState(
+  const memberTypeId = PaymentStore.useStoreState(
     (store) => store.selectedTypeId
   );
 
@@ -28,15 +30,10 @@ const useCreateSubscription = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({
+    goToNextPage,
     items,
-    setErrorMessage,
-    setIsLoading
+    setErrorMessage
   }: OnFormSubmitArgs) => {
-    // Start the submit function by clearing the error message and set the
-    // form state to loading.
-    setErrorMessage(null);
-    setIsLoading(true);
-
     const autoRenew = items.find(({ type }) => type === 'TOGGLE')?.value;
 
     // Create the actual subscription. Pass the MemberType ID to know what
@@ -44,16 +41,16 @@ const useCreateSubscription = (): OnFormSubmit => {
     // ID. That will be attached to the customer ID associated with the member.
     const { error } = await createSubscription({
       autoRenew,
-      memberTypeId: selectedTypeId
+      memberTypeId,
+      prorationDate
     });
 
     if (error) {
       setErrorMessage(error);
-      setIsLoading(false);
       return;
     }
 
-    setScreen('CONFIRMATION');
+    goToNextPage();
     pushToMembership();
   };
 

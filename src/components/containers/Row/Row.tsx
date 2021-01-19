@@ -14,9 +14,8 @@ const Row: React.FC<RowProps> = ({
   gap,
   spaceBetween
 }) => {
-  const css = cx({
+  const css = cx('flex-ac', {
     [className]: className,
-    'flex-ac': true,
     'flex-sb': spaceBetween,
     't-row--gap-sm': gap === 'sm'
   });

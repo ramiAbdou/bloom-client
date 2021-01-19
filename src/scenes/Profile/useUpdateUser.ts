@@ -15,13 +15,7 @@ const useUpdateUser = (): OnFormSubmit => {
     schema: { member: Schema.MEMBER, user: Schema.USER }
   });
 
-  const onSubmit = async ({
-    items,
-    setErrorMessage,
-    setIsLoading
-  }: OnFormSubmitArgs) => {
-    setIsLoading(true);
-
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const bio = items.find(({ id }) => id === 'bio')?.value;
 
     const facebookUrl = items.find(({ title }) => title === 'Facebook URL')
@@ -54,7 +48,6 @@ const useUpdateUser = (): OnFormSubmit => {
           key: 'PROFILE_PICTURE'
         });
       } catch {
-        setIsLoading(false);
         setErrorMessage('Failed to upload image.');
         return;
       }
@@ -72,12 +65,10 @@ const useUpdateUser = (): OnFormSubmit => {
     });
 
     if (error) {
-      setIsLoading(false);
       setErrorMessage(error);
       return;
     }
 
-    setIsLoading(false);
     showToast({ message: 'Personal information updated.' });
     closeModal();
   };

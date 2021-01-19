@@ -60,15 +60,14 @@ const SideBarLink: React.FC<SidebarLinkProps> = (props) => {
   // If member hasn't paid their dues, don't let them go to any route.
   if (
     isStripeConnected &&
-    duesStatus !== 'ACTIVE' &&
+    duesStatus !== 'Active' &&
     !isAdmin &&
     to !== 'directory'
   ) {
     return <SideBarLinkProtected {...props} />;
   }
 
-  const css = cx({
-    'o-side-bar-link': true,
+  const css = cx('o-side-bar-link', {
     'o-side-bar-link--active': isActive
   });
 

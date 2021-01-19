@@ -7,9 +7,13 @@ import {
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { CREATE_MEMBERS, CreateMembersArgs } from './AddMember.gql';
+import { ADD_MEMBERS, AddMembersArgs } from './AddMember.gql';
 import AddMemberStore from './AddMember.store';
-import { MembersAddedRecord } from './AddMember.types';
+
+type MembersAddedRecord = Record<
+  string,
+  { email: string; isAdmin: boolean; firstName: string; lastName: string }
+>;
 
 const useCreateMembers = (): OnFormSubmit => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
@@ -17,23 +21,18 @@ const useCreateMembers = (): OnFormSubmit => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
-  const [createMembers] = useMutation<any, CreateMembersArgs>({
-    name: 'createMembers',
-    query: CREATE_MEMBERS
+  const [addMembers] = useMutation<any, AddMembersArgs>({
+    name: 'addMembers',
+    query: ADD_MEMBERS
   });
 
-  const onSubmit = async ({
-    items,
-    setErrorMessage,
-    setIsLoading
-  }: OnFormSubmitArgs) => {
-    setIsLoading(true);
-
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     // In the first pass, format all the values by looking at the item's
     // category and id.
     const membersFirstPass: MembersAddedRecord = items.reduce(
-      (acc: MembersAddedRecord, { category, id, value }: FormItemData) => {
+      (acc: MembersAddedRecord, { id, value }: FormItemData) => {
         const formattedId = id.slice(0, id.indexOf('='));
+        const category = id.slice(id.indexOf('=') + 1);
 
         const formattedValue = takeFirst([
           [category === 'FIRST_NAME', { firstName: value }],
@@ -52,15 +51,14 @@ const useCreateMembers = (): OnFormSubmit => {
 
     // In the second pass, set isAdmin to true if the modal is "Add Admin".
     const members = Object.values(membersFirstPass).map((data) => {
-      if (!admin) return data;
-      return { ...data, isAdmin: true };
+      if (admin) data.isAdmin = true;
+      else if (data.isAdmin === undefined) data.isAdmin = false;
+      return data;
     });
 
-    const { error, data: updatedMembers } = await createMembers({
+    const { error, data: updatedMembers } = await addMembers({
       members
     });
-
-    setIsLoading(false);
 
     if (error) {
       setErrorMessage(error);

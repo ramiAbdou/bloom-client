@@ -1,17 +1,17 @@
 import React from 'react';
 
+import useQuery from '@hooks/useQuery';
+import { GET_TOTAL_DUES_GROWTH } from '../Analytics.gql';
 import AnalyticsSimple from '../AnalyticsStatusCard';
 
 const DuesAnalyticsTotalCollectedCard: React.FC = () => {
-  const value = 9450;
+  const { data, loading } = useQuery<number>({
+    name: 'getTotalDuesGrowth',
+    query: GET_TOTAL_DUES_GROWTH
+  });
 
-  return (
-    <AnalyticsSimple
-      label="Total Dues Collected"
-      percentage={8}
-      value={`$${value.toLocaleString()}`}
-    />
-  );
+  if (loading) return null;
+  return <AnalyticsSimple label="Total Dues Collected" value={`$${data}`} />;
 };
 
 export default DuesAnalyticsTotalCollectedCard;

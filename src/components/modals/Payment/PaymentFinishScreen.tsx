@@ -1,22 +1,21 @@
 import day from 'dayjs';
-import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Separator from '@atoms/Separator';
-import QuestionValueList, {
-  QuestionValueItemProps
-} from '@molecules/QuestionValueList';
+import Row from '@containers/Row/Row';
+import useQuery from '@hooks/useQuery';
 import FormStore from '@organisms/Form/Form.store';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
+import FormPage from '@organisms/Form/FormPage';
 import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Form from '../../organisms/Form/Form';
+import InformationCard from '../../containers/Card/InformationCard';
+import { GET_CHANGE_PREVIEW } from './Payment.gql';
 import PaymentStore from './Payment.store';
+import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
-import useCreateOneTimePayment from './useCreateOneTimePayment';
-import useCreateSubscription from './useCreateSubscription';
 
 const PaymentFinishScreenToggle: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
@@ -62,6 +61,7 @@ const PaymentFinishScreenToggle: React.FC = () => {
         value
         description={nextPaymentMessage}
         id="autoRenew"
+        pageId="FINISH"
         title="Auto-Renew Membership"
         type="TOGGLE"
       />
@@ -74,78 +74,76 @@ const PaymentFinishScreenContent: React.FC = () => {
 
   const isFree: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId].isFree;
+    return byTypeId[typeId]?.isFree;
   });
 
-  const isLifetime: boolean = useStoreState(({ db }) => {
+  const typeDescription: string = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId].recurrence === 'LIFETIME';
+    return getTypeDescription(byTypeId[typeId]);
   });
 
-  const cardString: string = useStoreState(({ db }) => {
-    const { paymentMethod } = db.member;
-    if (!paymentMethod) return null;
-    return `${paymentMethod.brand} ending in ${paymentMethod.last4}`;
-  });
-
-  const typeString: string = useStoreState(({ db }) => {
+  const selectedTypeName: string = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
-    const { amount, name, recurrence }: IMemberType = byTypeId[typeId];
-
-    const amountString = amount ? amount / 100 : 'FREE';
-
-    return `${name}, $${amountString}/${recurrence}`
-      .replace('LIFETIME', 'life')
-      .replace('MONTLY', 'mo')
-      .replace('YEARLY', 'yr');
+    return byTypeId[typeId]?.name;
   });
 
-  const createSubscription = useCreateSubscription();
-  const createOneTimePayment = useCreateOneTimePayment();
+  const brand = useStoreState(({ db }) => db.member.paymentMethod?.brand);
+  const last4 = useStoreState(({ db }) => db.member.paymentMethod?.last4);
 
-  const cardItem: QuestionValueItemProps[] = !isFree
-    ? [{ title: 'Credit or Debit Card', type: 'SHORT_TEXT', value: cardString }]
-    : [];
+  const expirationDate = useStoreState(
+    ({ db }) => db.member.paymentMethod?.expirationDate
+  );
 
   return (
-    <Form
-      disableValidation
-      className="mo-payment"
-      onSubmit={isLifetime ? createOneTimePayment : createSubscription}
-    >
+    <>
       <ModalContentContainer>
-        <QuestionValueList
-          items={[
-            {
-              title: 'Membership Type',
-              type: 'MULTIPLE_CHOICE',
-              value: typeString
-            },
-            ...cardItem
-          ]}
-        />
+        <Row>
+          <InformationCard
+            description={typeDescription}
+            title={selectedTypeName}
+          />
+
+          <InformationCard
+            description={`Expires ${expirationDate}`}
+            show={!!last4 && !isFree}
+            title={`${brand} Ending in ${last4}`}
+          />
+        </Row>
 
         <PaymentFinishScreenToggle />
       </ModalContentContainer>
       <PaymentFormErrorMessage />
       <PaymentFinishButton />
-    </Form>
+    </>
   );
 };
 
 const PaymentFinishScreen: React.FC = () => {
-  const screen = PaymentStore.useStoreState((store) => store.screen);
+  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
-  if (screen !== 'FINISH') return null;
+  const setChangeData = PaymentStore.useStoreActions(
+    (store) => store.setChangeData
+  );
+
+  const { data, loading } = useQuery({
+    name: 'getChangePreview',
+    query: GET_CHANGE_PREVIEW,
+    variables: { memberTypeId: typeId }
+  });
+
+  useEffect(() => {
+    if (data) {
+      setChangeData({
+        changeAmount: data?.amount,
+        changeProrationDate: data?.prorationDate
+      });
+    }
+  }, [data]);
 
   return (
-    <motion.div
-      animate={{ x: 0 }}
-      initial={{ x: 50 }}
-      transition={{ duration: 0.2 }}
-    >
+    <FormPage id="FINISH" loading={loading}>
       <PaymentFinishScreenContent />
-    </motion.div>
+    </FormPage>
   );
 };
 

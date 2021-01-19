@@ -5,24 +5,24 @@ import { cx } from '@util/util';
 import Form from './Form.store';
 
 interface FormSubmitButtonProps extends ButtonProps {
-  stickToBottom?: boolean;
+  invisible?: boolean;
 }
 
 const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   className,
   disabled,
   fill,
+  invisible,
   large,
   loadingText,
-  stickToBottom,
   ...props
 }) => {
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const isLoading = Form.useStoreState((store) => store.isLoading);
 
-  const css = cx({
+  const css = cx('', {
     [className]: className,
-    'o-form-submit--sticky': stickToBottom
+    'o-form-submit--invisible': invisible
   });
 
   return (

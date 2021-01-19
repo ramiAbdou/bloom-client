@@ -1,39 +1,41 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-import { PaymentModalScreen, PaymentModalType } from './Payment.types';
+import { PaymentModalType } from './Payment.util';
+
+interface SetChangeDataArgs {
+  changeAmount: number;
+  changeProrationDate: number;
+}
 
 export type PaymentModel = {
-  backButton: boolean;
+  changeAmount: number;
+  changeProrationDate: number;
   clearOptions: Action<PaymentModel>;
-  screen: PaymentModalScreen;
   selectedTypeId: string;
-  setBackButton: Action<PaymentModel, boolean>;
-  setScreen: Action<PaymentModel, PaymentModalScreen>;
+  setChangeData: Action<PaymentModel, SetChangeDataArgs>;
   setSelectedTypeId: Action<PaymentModel, string>;
   type: PaymentModalType;
 };
 
 export const paymentModel: PaymentModel = {
-  backButton: false,
+  changeAmount: null,
+
+  changeProrationDate: null,
 
   clearOptions: action((store) => ({
     ...store,
+    changeAmount: null,
+    changeProrationDate: null,
     screen: null,
     selectedTypeId: null
   })),
 
-  screen: null,
-
   selectedTypeId: null,
 
-  setBackButton: action((store, backButton: boolean) => ({
+  setChangeData: action((store, args) => ({
     ...store,
-    backButton
-  })),
-
-  setScreen: action((store, screen: PaymentModalScreen) => ({
-    ...store,
-    screen
+    changeAmount: args?.changeAmount,
+    changeProrationDate: args?.changeProrationDate
   })),
 
   setSelectedTypeId: action((store, selectedTypeId: string) => ({

@@ -23,8 +23,7 @@ const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
   const { push } = useHistory();
   const onClick = () => id !== communityId && push(`/${urlName}`);
 
-  const css = cx({
-    'o-side-bar-community': true,
+  const css = cx('o-side-bar-community', {
     'o-side-bar-community--active': isActive
   });
 

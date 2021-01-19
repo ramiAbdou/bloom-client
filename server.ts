@@ -10,5 +10,5 @@ const app = express();
 const pathToBuild = path.join(__dirname, 'dist');
 
 app.use('/', express.static(pathToBuild));
-app.get('/*', (req, res) => res.sendFile(`${pathToBuild}/index.html`));
+app.get('/*', (_, res) => res.sendFile(`${pathToBuild}/index.html`));
 app.listen(3000);

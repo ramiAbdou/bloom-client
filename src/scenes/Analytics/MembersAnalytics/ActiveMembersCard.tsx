@@ -1,22 +1,24 @@
 import React from 'react';
 
+import useQuery from '@hooks/useQuery';
+import { GET_ACTIVE_MEMBERS_GROWTH } from '../Analytics.gql';
 import AnalyticsSimple from '../AnalyticsStatusCard';
-import Members from './MembersAnalytics.store';
 
-export default () => {
-  const numActiveUsers = Members.useStoreState(({ activeChartData }) => {
-    const { length } = activeChartData;
-    return activeChartData[length - 1]?.value;
+const ActiveMembersCard: React.FC = () => {
+  const { data, loading } = useQuery({
+    name: 'getActiveMembersGrowth',
+    query: GET_ACTIVE_MEMBERS_GROWTH
   });
 
-  const activeGrowth = Members.useStoreState((store) => store.activeGrowth);
-  if (activeGrowth === null) return null;
+  if (loading) return null;
 
   return (
     <AnalyticsSimple
       label="Active Users in Last 30 Days"
-      percentage={activeGrowth}
-      value={numActiveUsers}
+      percentage={data[1]}
+      value={data[0]}
     />
   );
 };
+
+export default ActiveMembersCard;

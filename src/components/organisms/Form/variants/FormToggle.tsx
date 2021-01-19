@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Toggle from '@molecules/Toggle/Toggle';
-import Form from './Form.store';
-import { FormItemProps } from './Form.types';
+import Form from '../Form.store';
+import { FormItemProps } from '../Form.types';
 
 const FormToggle: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (props) => {
   const value = Form.useStoreState(({ getItem }) => getItem(props)?.value);

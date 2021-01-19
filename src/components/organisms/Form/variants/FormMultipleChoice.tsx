@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Radio from '@molecules/Radio/Radio';
-import Form from './Form.store';
-import { FormItemData } from './Form.types';
+import Form from '../Form.store';
+import { FormItemData } from '../Form.types';
 
 const FormMultipleChoice: React.FC<FormItemData> = ({ options, title }) => {
   const value = Form.useStoreState(({ getItem }) => getItem({ title })?.value);
@@ -11,10 +11,7 @@ const FormMultipleChoice: React.FC<FormItemData> = ({ options, title }) => {
   return (
     <Radio
       name={`o-form-mc-${title}`}
-      options={options.map((option: string) => ({
-        label: option,
-        value: option
-      }))}
+      options={options.map((option: string) => ({ label: option }))}
       value={value}
       onSelect={(v) => updateItem({ title, value: v })}
     />

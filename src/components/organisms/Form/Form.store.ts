@@ -7,8 +7,12 @@ import {
 } from 'easy-peasy';
 import validator from 'validator';
 
-import { FormItemData } from './Form.types';
-import { validateItem } from './Form.util';
+import {
+  FormItemData,
+  FormNavigationPageProps,
+  FormOptions
+} from './Form.types';
+import { getFormItem, getFormItemIndex, validateItem } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
 interface UpdateItemArgs extends GetItemArgs {
@@ -16,31 +20,44 @@ interface UpdateItemArgs extends GetItemArgs {
 }
 
 export type FormModel = {
-  disableValidation?: boolean;
   errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
+  goToNextPage: Action<FormModel>;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
+  isPageCompleted: Computed<FormModel, boolean>;
   isShowingErrors: boolean;
   items: FormItemData[];
+  options: FormOptions;
+  pageId: string;
+  pages: FormNavigationPageProps[];
+  removeItems: Action<FormModel, Partial<FormItemData>[]>;
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
   setItemErrorMessages: Action<FormModel, FormItemData[]>;
   setIsLoading: Action<FormModel, boolean>;
+  setPageDisabled: Action<
+    FormModel,
+    Pick<FormNavigationPageProps, 'disabled' | 'id'>
+  >;
+  setPageId: Action<FormModel, string>;
+  setPages: Action<FormModel, FormNavigationPageProps[]>;
   updateItem: Action<FormModel, UpdateItemArgs>;
-  validateOnSubmit?: boolean;
 };
 
 export const formModel: FormModel = {
-  disableValidation: false,
-
   // Represents the error message for the entire Form, not any one element.
   errorMessage: null,
 
-  getItem: computed(({ items }) => ({ category, id, title }: GetItemArgs) => {
-    if (id) return items.find((item) => item.id === id);
-    if (title) return items.find((item) => item.title === title);
-    return items.find((item) => item.category === category);
+  getItem: computed(({ items }) => (args: GetItemArgs) => {
+    return getFormItem({ ...args, items });
+  }),
+
+  goToNextPage: action(({ pages, pageId, ...state }) => {
+    window.scrollTo({ top: 0 });
+    const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
+    const { id } = pages[nextIndex];
+    return { ...state, pageId: id, pages };
   }),
 
   /**
@@ -50,15 +67,15 @@ export const formModel: FormModel = {
    *  - Item is not required.
    *  - Item is required and there is non-empty value.
    */
-  isCompleted: computed(({ items, disableValidation, validateOnSubmit }) => {
+  isCompleted: computed(({ items, options }) => {
+    const { disableValidation } = options ?? {};
+
     if (disableValidation) return true;
     if (!items?.length) return false;
     if (items.every(({ value }) => !value)) return false;
-    if (validateOnSubmit) return true;
 
     return items.every(({ required, value, validate }: FormItemData) => {
       if (required && !value) return false;
-      if (validateOnSubmit) return true;
       if (validate === 'IS_EMAIL') return validator.isEmail(value);
       if (validate === 'IS_URL') return validator.isURL(value);
       return true;
@@ -68,9 +85,51 @@ export const formModel: FormModel = {
   // Used to ensure that the submit button is disabled.
   isLoading: false,
 
+  /**
+   * Returns true if all items on the page have been validated. Follows all
+   * the rules from isCompleted.
+   */
+  isPageCompleted: computed(({ items, pageId, pages }) => {
+    const page: FormNavigationPageProps = pages.find((p) => p.id === pageId);
+    if (page?.disableValidation) return true;
+
+    const validatedPageItems = items
+      ?.filter((item) => item.pageId === pageId)
+      ?.map(validateItem);
+
+    return (
+      validatedPageItems?.length &&
+      validatedPageItems.every(({ errorMessage }) => {
+        return !errorMessage;
+      })
+    );
+  }),
+
   isShowingErrors: false,
 
   items: [],
+
+  options: null,
+
+  pageId: null,
+
+  pages: [],
+
+  /**
+   * Removes all the items from the array of items.
+   */
+  removeItems: action(({ items, ...state }, itemsToRemove) => {
+    items = items.filter((item: FormItemData) => {
+      const isItemInRemoveList = !!getFormItem({
+        items: itemsToRemove,
+        ...item
+      });
+
+      return !isItemInRemoveList;
+    });
+
+    return { ...state, items };
+  }),
 
   setErrorMessage: action((state, errorMessage: string) => ({
     ...state,
@@ -83,55 +142,62 @@ export const formModel: FormModel = {
     isLoading
   })),
 
-  setItem: action((state, item: Partial<FormItemData>) => ({
-    ...state,
-    items: [...state.items, item]
-  })),
+  setItem: action(({ items, ...state }, item: Partial<FormItemData>) => {
+    const isFound = getFormItem({ items, ...item });
 
-  setItemErrorMessages: action((state, items: FormItemData[]) => {
-    return { ...state, items };
+    return {
+      ...state,
+      items: isFound ? items : [...items, item]
+    };
   }),
 
-  updateItem: action(
+  setItemErrorMessages: action((state, items: FormItemData[]) => ({
+    ...state,
+    items
+  })),
+
+  setPageDisabled: action(
     (
-      { validateOnSubmit, ...state },
-      { category, id, title, value }: UpdateItemArgs
+      { pages, ...state },
+      { disabled, id }: Pick<FormNavigationPageProps, 'disabled' | 'id'>
     ) => {
-      const { items } = state;
-
-      let index: number;
-
-      if (id) index = items.findIndex((item) => item.id === id);
-      else if (title) index = items.findIndex((item) => item.title === title);
-      else if (category) {
-        index = items.findIndex((item) => item.category === category);
-      }
-
-      const updatedItem = { ...items[index], value };
-
-      items[index] =
-        validateOnSubmit && !updatedItem.errorMessage
-          ? updatedItem
-          : validateItem(updatedItem);
-
-      return { ...state, items, validateOnSubmit };
+      const index = pages.findIndex((page) => page.id === id);
+      pages[index].disabled = disabled;
+      return { ...state, pages };
     }
   ),
 
-  validateOnSubmit: false
+  setPageId: action((state, pageId: string) => {
+    window.scrollTo({ top: 0 });
+    return { ...state, pageId };
+  }),
+
+  setPages: action(({ pageId, ...state }, pages) => ({
+    ...state,
+    pageId: pageId ?? pages[0]?.id,
+    pages: pages.map((page, i: number) => ({ ...page, disabled: !!i }))
+  })),
+
+  /**
+   * Updates the form item value based on the query arguments.
+   *
+   * Also validates the item in the process in case there is an error. In
+   * effect, creates a "dirty" form value validation process.
+   */
+  updateItem: action(
+    ({ items, ...state }, { value, ...args }: UpdateItemArgs) => {
+      const index: number = getFormItemIndex({ items, ...args });
+      const updatedItem = { ...items[index], value };
+      items[index] = validateItem(updatedItem);
+      return { ...state, items };
+    }
+  )
 };
 
 const FormStore = createContextStore<FormModel>(
-  (runtimeModel: FormModel) => ({
+  ({ options, ...runtimeModel }: FormModel) => ({
     ...runtimeModel,
-
-    disableValidation: runtimeModel.disableValidation,
-
-    // If there isn't an ID supplied to an item, just make the ID the title.
-    items: runtimeModel.items.map((item: FormItemData) => ({
-      ...item,
-      id: item.id ?? item.title
-    }))
+    options
   }),
   { disableImmer: true }
 );

@@ -2,6 +2,39 @@ import validator from 'validator';
 
 import { FormItemData } from './Form.types';
 
+interface GetFormItemArgs
+  extends Pick<FormItemData, 'category' | 'id' | 'title'> {
+  items: FormItemData[];
+}
+
+/**
+ * Returns the form item based on the query arguments (ie: category).
+ */
+export const getFormItem = ({
+  category,
+  id,
+  items,
+  title
+}: GetFormItemArgs) => {
+  if (id) return items.find((item) => item.id === id);
+  if (title) return items.find((item) => item.title === title);
+  return items.find((item) => item.category === category);
+};
+
+/**
+ * Returns the form item index based on the query arguments (ie: category).
+ */
+export const getFormItemIndex = ({
+  category,
+  id,
+  items,
+  title
+}: GetFormItemArgs) => {
+  if (id) return items.findIndex((item) => item.id === id);
+  if (title) return items.findIndex((item) => item.title === title);
+  return items.findIndex((item) => item.category === category);
+};
+
 /**
  * All GraphQL requests with data should have the data be populated in an array,
  * even if the question is not MULTIPLE_SELECT. This helps with parsing
@@ -24,8 +57,27 @@ export const parseValue = (value: any) => {
   return isArray ? value : [value];
 };
 
-export const validateItem = ({ errorMessage: _, ...item }: FormItemData) => {
-  const { value, validate, type } = item;
+/**
+ * Returns the validated form item including the errorMessage in the
+ * FormItemData. If the item is validated, the item doesn't change.
+ *
+ * @example validateItem({ id: '1', required: true, value: null }) => (
+ *  {
+ *    errorMessage: 'Value cannot be empty.',
+ *    id: '1',
+ *    required: true,
+ *    value: null
+ * })
+ */
+export const validateItem = ({
+  errorMessage: _,
+  ...item
+}: FormItemData): FormItemData => {
+  const { required, value, validate, type } = item;
+
+  if (required && !value) {
+    return { ...item, errorMessage: 'Value cannot be empty.' };
+  }
 
   if (!['SHORT_TEXT', 'LONG_TEXT'].includes(type)) return item;
 
@@ -34,8 +86,4 @@ export const validateItem = ({ errorMessage: _, ...item }: FormItemData) => {
   }
 
   return item;
-};
-
-export const validateItems = (items: FormItemData[]) => {
-  return items?.map(validateItem);
 };

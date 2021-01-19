@@ -1,13 +1,8 @@
-/**
- * @fileoverview DB Store
- * - Acts a client-side DB in which normalized entities live.
- */
-
 import { Action, action, Computed, computed } from 'easy-peasy';
 import mergeWith from 'lodash.mergewith';
 import { normalize, Schema } from 'normalizr';
 
-import { updateDocumentColors } from '@util/util';
+import { updateDocumentColors } from '@util/colorUtil';
 import {
   EntityRecord,
   ICommunity,

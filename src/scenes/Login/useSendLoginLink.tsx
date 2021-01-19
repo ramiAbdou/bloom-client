@@ -21,16 +21,9 @@ const useSendLoginLink = (): OnFormSubmit => {
     query: SEND_TEMPORARY_LOGIN_LINK
   });
 
-  const onSubmit = async ({
-    items,
-    setErrorMessage,
-    setIsLoading
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const email = items.find(({ category }) => category === 'EMAIL')?.value;
-
-    setIsLoading(true);
     const { error } = await sendTemporaryLoginLink({ email });
-    setIsLoading(false);
 
     if (error) {
       setErrorMessage(getLoginErrorMessage(error as LoginError));

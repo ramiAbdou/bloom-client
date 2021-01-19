@@ -1,23 +1,27 @@
 $PREF: 'o-form';
 
-// ## GENERAL
+// ## FORM ITEM
 
-.#{$PREF}-item {
-  margin-bottom: $md;
+.#{$PREF}-item { margin-bottom: $md; }
 
-  &--image > input { display: none; }
+// ## FORM IMAGE UPLOAD ITEM 
 
-  &--image > button {
+.#{$PREF}-item--image {
+  > input { display: none; }
+
+  > button {
     @extend .flex-acc;
-
+  
     background-size: cover;
     border-radius: 50%;
     height: $xl * 2;
     width: $xl * 2;
   }
 
-  &--image > button > svg { @extend .react-icon--xl; color: white; }
+  > button > svg { @extend .react-icon--xl; color: white; }
 }
+
+// ## FORM DESCRIPTION
 
 .#{$PREF}-desc {
   color: $gray-2;
@@ -28,7 +32,7 @@ $PREF: 'o-form';
 
 .#{$PREF}-error { color: $red; margin-top: $xxs; }
 
-// ## LABEL
+// ## FORM LABEL
 
 .#{$PREF}-label {
   @extend .flex-ac;
@@ -44,12 +48,51 @@ $PREF: 'o-form';
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }
 
-// ## SUBMIT BUTTON
+// ## FORM NAVIGATION
 
-.#{$PREF}-submit {
-  &--sticky { bottom: $md; position: sticky; }
+.#{$PREF}-nav-ctr { @extend .flex-acsb; margin-bottom: $md; }
+
+.#{$PREF}-nav {
+  background-color: $primary;
+  border-radius: $xs;
+  cursor: pointer;
+  height: $xs;
+  width: -webkit-fill-available;
+
+  &:not(:last-child) { margin-right: $ss; }
+  &--disabled { background-color: $gray-5; cursor: default; }
 }
 
-// ## INVISIBLE SUBMIT
+// ## FORM PAGE
 
-.#{$PREF}-invisible-submit { display: none; }
+.#{$PREF}-page {
+  > div:first-child {
+    > .t-loading-header { margin-bottom: $xs; }
+    > .t-loading-header > h1 { color: $primary; }
+    > p { color: $gray-2; margin-bottom: $md; }
+
+    // Community icon for first page.
+    > img {
+      border: 2px $primary solid;
+      border-radius: $xs;
+      height: $xl;
+      margin-bottom: $xs;
+      padding: 2px;
+      width: $xl;
+    }
+  }
+}
+
+// ## FORM SUBMIT BUTTON
+
+.#{$PREF}-submit {
+  &--continue {
+    margin-top: $lg;
+
+    &:disabled > svg { color: $gray-3; }
+    > svg { color: white; margin-left: $xs; }
+  }
+  
+  &--invisible { display: none; }
+  &--sticky { bottom: $md; position: sticky; }
+}

@@ -3,9 +3,12 @@ import { ActionCreator } from 'easy-peasy';
 import {
   ChildrenProps,
   ClassNameProps,
+  IdProps,
   QuestionCategory,
-  QuestionType
+  QuestionType,
+  TitleProps
 } from '@constants';
+import { RadioOptionProps } from '../../molecules/Radio/Radio.types';
 
 export type FormQuestion = {
   category?: QuestionCategory;
@@ -30,9 +33,19 @@ export type FormQuestion = {
 export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 
 export interface FormItemData extends Partial<FormQuestion> {
+  // Only used in MULTIPLE_CHOICE. True if radio should use card format instead
+  // of regular radio buttons.
+  card?: boolean;
+
+  // Only populated if the type is MUTLIPLE CHOICE or MULTIPLE SELECT.
+  cardOptions?: RadioOptionProps[];
+
   errorMessage?: string;
 
   initialValue?: any;
+
+  // The page that a form item belongs to.
+  pageId?: string;
 
   placeholder?: string;
 
@@ -45,15 +58,26 @@ export interface FormItemData extends Partial<FormQuestion> {
   validate?: FormValidate;
 }
 
-// FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,
-// the rest are either used for state or for something else in the store.
+export type BaseItemProps = Pick<
+  FormItemData,
+  'category' | 'id' | 'required' | 'title'
+>;
 
-export interface FormItemProps
+export interface OptionItemProps
+  extends BaseItemProps,
+    Pick<FormItemData, 'options' | 'plain'> {}
+
+export interface TextItemProps
+  extends BaseItemProps,
+    Pick<FormItemData, 'placeholder'> {}
+
+export interface UseItemBodyProps
   extends ChildrenProps,
     Pick<
       FormItemData,
+      | 'card'
+      | 'cardOptions'
       | 'category'
-      | 'description'
       | 'id'
       | 'options'
       | 'placeholder'
@@ -61,21 +85,39 @@ export interface FormItemProps
       | 'required'
       | 'title'
       | 'type'
-      | 'validate'
-      | 'value'
     > {}
 
-export interface FormProps extends ChildrenProps, ClassNameProps {
+// FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,
+// the rest are either used for state or for something else in the store.
+
+export interface FormItemProps
+  extends UseItemBodyProps,
+    ChildrenProps,
+    Pick<FormItemData, 'description' | 'pageId' | 'validate' | 'value'> {}
+
+export interface FormNavigationPageProps extends IdProps, TitleProps {
+  description?: string;
+  disabled?: boolean;
   disableValidation?: boolean;
+}
+
+export interface FormOptions {
+  disableValidation?: boolean;
+  multiPage?: boolean;
+}
+
+export interface FormProps extends ChildrenProps, ClassNameProps {
   questions?: FormItemData[];
+  options?: FormOptions;
+  pages?: FormNavigationPageProps[];
   onSubmit?: OnFormSubmit;
-  validateOnSubmit?: boolean;
+  onSubmitDeps?: any[];
 }
 
 export type OnFormSubmitArgs = {
   items: FormItemData[];
+  goToNextPage: ActionCreator;
   setErrorMessage: ActionCreator<string>;
-  setIsLoading: ActionCreator<boolean>;
 };
 
 export type OnFormSubmit = (args: OnFormSubmitArgs) => Promise<void>;

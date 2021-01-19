@@ -1,10 +1,12 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { ICommunity, IQuestion } from '@store/entities';
+// ## APPLY FOR MEMBERSHIP
 
 export interface ApplyForMembershipArgs {
   data: { questionId: string; value: any }[];
   email: string;
+  memberTypeId?: string;
+  paymentMethodId?: string;
   urlName: string;
 }
 
@@ -14,39 +16,37 @@ export const APPLY_FOR_MEMBERSHIP = mutation({
   variables: {
     data: { type: '[MemberDataInput!]!' },
     email: { required: true },
+    memberTypeId: { required: false },
+    paymentMethodId: { required: false },
     urlName: { required: true }
   }
 }).query;
 
-export interface GetApplicationResult extends ICommunity {
-  application: { description: string; questions: IQuestion[]; title: string };
-}
+// ## GET APPLICATION
 
 export const GET_APPLICATION = query({
   fields: [
     'autoAccept',
-    'urlName',
     'id',
     'logoUrl',
     'name',
     'primaryColor',
+    'urlName',
+    { application: ['title', 'description'] },
+    { integrations: ['stripeAccountId'] },
     {
-      application: [
-        'title',
+      questions: [
+        'category',
         'description',
-        {
-          questions: [
-            'category',
-            'description',
-            'id',
-            'options',
-            'required',
-            'title',
-            'type'
-          ]
-        }
+        'id',
+        'inApplication',
+        'options',
+        'required',
+        'title',
+        'type'
       ]
-    }
+    },
+    { types: ['amount', 'id', 'isFree', 'name', 'recurrence'] }
   ],
   operation: 'getApplication',
   variables: { urlName: { required: true } }

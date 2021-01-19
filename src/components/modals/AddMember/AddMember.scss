@@ -16,7 +16,7 @@ $PREF: 'mo-add-member';
   margin-bottom: $sm;
 
   > button {
-    margin-right: $sm;
+    margin-right: $ss;
   
     @include HOVER { > svg { color: $red; } }
 
@@ -24,7 +24,13 @@ $PREF: 'mo-add-member';
     &:active { > svg { color: $red; } }
   }
 
-  > .o-form-item { margin: 0 $xs 0 0; width: 100%; }
+  > .o-form-item { margin: 0 $xs 0 0; }
+
+  > .o-form-item:nth-of-type(1),
+  > .o-form-item:nth-of-type(2) { flex: 1; }
+  > .o-form-item:nth-of-type(3) { flex: 1.25; }
+  > .o-form-item:nth-of-type(3):not(:last-child) { margin-right: $sm; }
+
   > .o-form-item:last-child { margin: 0 $xs 0 0; }
   > .o-form-item--email { margin-right: $sm; }
   > .o-form-item--multiple-select:last-child { min-width: $xxl * 2; }

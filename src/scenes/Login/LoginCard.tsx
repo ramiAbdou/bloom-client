@@ -40,7 +40,7 @@ const LoginCardGoogleContainer: React.FC = () => {
   // get shown again.
   if (cookie) Cookies.remove('LOGIN_ERROR');
 
-  const css = cx({ 's-login-google': true, 's-login-google--sm': message });
+  const css = cx('s-login-google', { 's-login-google--sm': message });
 
   return (
     <div className={css}>

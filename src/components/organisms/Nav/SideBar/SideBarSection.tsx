@@ -1,7 +1,7 @@
+import { nanoid } from 'nanoid';
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import { uuid } from '@util/util';
 import { LinkOptions } from '../Nav.types';
 import SidebarLink from './SideBarLink';
 
@@ -22,7 +22,7 @@ const SideBarSection: React.FC<LinkSectionProps> = ({
     <div className="o-side-bar-section">
       <h5>{title}</h5>
       {links.map((link) => (
-        <SidebarLink key={link.to ?? uuid()} {...link} />
+        <SidebarLink key={link.to ?? nanoid()} {...link} />
       ))}
     </div>
   );

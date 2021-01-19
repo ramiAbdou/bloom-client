@@ -7,7 +7,7 @@ import {
   OnClickProps,
   TitleProps
 } from '@constants';
-import { makeClass } from '@util/util';
+import { cx } from '@util/util';
 
 export interface NavigationOptionProps
   extends ChildrenProps,
@@ -31,7 +31,7 @@ const NavigationButton = ({
   isActive,
   onClick
 }: NavigationButtonProps) => {
-  const css = makeClass(['t-main-multi', [isActive, 't-main-multi--active']]);
+  const css = cx('t-main-multi', { 't-main-multi--active': isActive });
 
   return (
     <button className={css} onClick={onClick}>

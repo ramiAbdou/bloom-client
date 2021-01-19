@@ -1,42 +1,20 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import { ChildrenProps } from '@constants';
 import { takeFirst } from '@util/util';
-import { FormItemData } from './Form.types';
-import FormDropdownItem from './FormDropdown';
-import FormImageUpload from './FormImageUpload';
-import FormLongText from './FormLongText';
-import FormMultipleChoice from './FormMultipleChoice';
-import FormMultipleSelect from './FormMultipleSelect';
-import FormShortText from './FormShortText';
-import FormToggle from './FormToggle';
-
-type BaseItemProps = Pick<
-  FormItemData,
-  'category' | 'id' | 'required' | 'title'
->;
-
-interface OptionItemProps
-  extends BaseItemProps,
-    Pick<FormItemData, 'options'> {}
-
-interface TextItemProps
-  extends BaseItemProps,
-    Pick<FormItemData, 'placeholder'> {}
-
-interface UseItemBodyProps
-  extends ChildrenProps,
-    Pick<
-      FormItemData,
-      | 'category'
-      | 'id'
-      | 'options'
-      | 'placeholder'
-      | 'plain'
-      | 'required'
-      | 'title'
-      | 'type'
-    > {}
+import {
+  BaseItemProps,
+  OptionItemProps,
+  TextItemProps,
+  UseItemBodyProps
+} from './Form.types';
+import FormDropdown from './variants/FormDropdown';
+import FormImageUpload from './variants/FormImageUpload';
+import FormLongText from './variants/FormLongText';
+import FormMultipleCardChoice from './variants/FormMultipleCardChoice';
+import FormMultipleChoice from './variants/FormMultipleChoice';
+import FormMultipleSelect from './variants/FormMultipleSelect';
+import FormShortText from './variants/FormShortText';
+import FormToggle from './variants/FormToggle';
 
 /**
  * Returns the appropriate Form element (ie: ShortText, LongText) with the
@@ -45,6 +23,9 @@ interface UseItemBodyProps
 const useItemBody = (props: UseItemBodyProps) => {
   const {
     category,
+    card,
+    cardOptions,
+    children,
     id,
     plain,
     required,
@@ -54,42 +35,37 @@ const useItemBody = (props: UseItemBodyProps) => {
     type
   } = props;
 
-  const baseProps: BaseItemProps = useMemo(
-    () => ({ category, id, required, title }),
-    [category, id, required, title]
-  );
-
-  const optionProps: OptionItemProps = useMemo(
-    () => ({ ...baseProps, options, plain }),
-    [options, plain]
-  );
-
-  const textProps: TextItemProps = useMemo(
-    () => ({ ...baseProps, placeholder }),
-    [placeholder]
-  );
+  const baseProps: BaseItemProps = { category, id, required, title };
+  const optionProps: OptionItemProps = { ...baseProps, options, plain };
+  const cardOptionProps = { ...baseProps, card, cardOptions };
+  const textProps: TextItemProps = { ...baseProps, placeholder };
 
   const body: React.ReactElement = takeFirst([
     [type === 'SHORT_TEXT', <FormShortText {...textProps} />],
     [type === 'LONG_TEXT', <FormLongText {...textProps} />],
     [
       type === 'MULTIPLE_SELECT' && options.length >= 5,
-      <FormDropdownItem multiple {...optionProps} />
+      <FormDropdown multiple {...optionProps} />
     ],
     [
       type === 'MULTIPLE_SELECT' && options.length < 5,
       <FormMultipleSelect {...optionProps} />
     ],
     [
-      type === 'MULTIPLE_CHOICE' && options.length >= 5,
-      <FormDropdownItem {...optionProps} />
+      type === 'MULTIPLE_CHOICE' && card,
+      <FormMultipleCardChoice {...cardOptionProps} />
     ],
     [
-      type === 'MULTIPLE_CHOICE' && options.length < 5,
+      type === 'MULTIPLE_CHOICE' && options?.length < 5,
       <FormMultipleChoice {...optionProps} />
     ],
+    [
+      type === 'MULTIPLE_CHOICE' && options?.length >= 5,
+      <FormDropdown {...optionProps} />
+    ],
     [type === 'TOGGLE', <FormToggle {...baseProps} />],
-    [type === 'IMAGE', <FormImageUpload {...baseProps} />]
+    [type === 'IMAGE', <FormImageUpload {...baseProps} />],
+    [children, children]
   ]);
 
   return body;

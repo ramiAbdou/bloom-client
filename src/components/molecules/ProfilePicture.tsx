@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ClassNameProps } from '@constants';
 import { useStoreState } from '@store/Store';
-import { makeClass, takeFirst } from '@util/util';
+import { cx, takeFirst } from '@util/util';
 
 interface ProfilePictureProps extends ClassNameProps {
   circle?: boolean;
@@ -35,11 +35,10 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({
     <h3 style={{ fontSize }}>{initials}</h3>
   ]);
 
-  const css = makeClass([
-    'm-misc-profile-picture',
-    [circle, 'm-misc-profile-picture--circle'],
-    [className, className]
-  ]);
+  const css = cx('m-misc-profile-picture', {
+    [className]: className,
+    'm-misc-profile-picture--circle': circle
+  });
 
   return (
     <div className={css} style={{ height: size, minWidth: size, width: size }}>

@@ -4,12 +4,8 @@ import { IMember } from '@store/entities';
 import { Schema } from '@store/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { UPDATE_PAYMENT_METHOD, UpdatePaymentMethodArgs } from './Payment.gql';
-import PaymentStore from './Payment.store';
 
 const useUpdatePaymentMethod = (): OnFormSubmit => {
-  const type = PaymentStore.useStoreState((store) => store.type);
-  const setScreen = PaymentStore.useStoreActions((store) => store.setScreen);
-
   const elements = useElements();
   const stripe = useStripe();
 
@@ -25,10 +21,11 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
   if (!stripe) return null;
 
   const onSubmit = async ({
+    goToNextPage,
     items,
-    setErrorMessage,
-    setIsLoading
+    setErrorMessage
   }: OnFormSubmitArgs) => {
+    const line1 = items.find(({ title }) => title === 'Billing Address').value;
     const city = items.find(({ title }) => title === 'City').value;
     const state = items.find(({ title }) => title === 'State').value;
     const postalCode = items.find(({ title }) => title === 'Zip Code').value;
@@ -36,15 +33,10 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     const nameOnCard = items.find(({ title }) => title === 'Name on Card')
       .value;
 
-    // Start the submit function by clearing the error message and set the
-    // form state to loading.
-    setErrorMessage(null);
-    setIsLoading(true);
-
     // Create the payment method via the Stripe SDK.
     const stripeResult = await stripe.createPaymentMethod({
       billing_details: {
-        address: { city, postal_code: postalCode, state },
+        address: { city, line1, postal_code: postalCode, state },
         name: nameOnCard
       },
       card: elements.getElement(CardElement),
@@ -55,7 +47,6 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     // show that error message.
     if (stripeResult.error) {
       setErrorMessage(stripeResult.error.message);
-      setIsLoading(false);
       return;
     }
 
@@ -68,13 +59,12 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
     if (updateError) {
       setErrorMessage(updateError);
-      setIsLoading(false);
       return;
     }
 
     // Success! Update the member entity just in case the membership type
     // changed or their duesStatus changed.
-    setScreen(type === 'UPDATE_PAYMENT_METHOD' ? 'CONFIRMATION' : 'FINISH');
+    goToNextPage();
   };
 
   return onSubmit;

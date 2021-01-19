@@ -8,8 +8,7 @@ interface StatusTagProps extends ChildrenProps {
 }
 
 const StatusTag: React.FC<StatusTagProps> = ({ children, positive }) => {
-  const css = cx({
-    'c-tag-status': true,
+  const css = cx('c-tag-status', {
     'c-tag-status--negative': !positive,
     'c-tag-status--positive': positive
   });

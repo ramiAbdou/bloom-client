@@ -3,9 +3,16 @@ import { useEffect } from 'react';
 import sw from 'stopword';
 
 import { QuestionType } from '@constants';
-import { IMember } from '@store/entities';
+import {
+  IMember,
+  IMemberData,
+  IMemberType,
+  IQuestion,
+  IUser
+} from '@store/entities';
 import { useStoreState } from '@store/Store';
-import Chart, { ChartModelInitArgs, ChartType } from './Chart.store';
+import Chart from './Chart.store';
+import { ChartModelInitArgs, ChartType } from './Chart.types';
 
 const useQuestionData = (): Pick<
   ChartModelInitArgs,
@@ -13,7 +20,7 @@ const useQuestionData = (): Pick<
 > => {
   const questionId = Chart.useStoreState((store) => store.questionId);
 
-  const type: QuestionType = useStoreState(
+  const questionType: QuestionType = useStoreState(
     ({ db }) => db.entities.questions.byId[questionId]?.type
   );
 
@@ -21,24 +28,46 @@ const useQuestionData = (): Pick<
   // were valid for the question (not null).
   const result: ChartModelInitArgs = useStoreState(({ db }) => {
     const record: Record<string, number> = {};
+
+    const { byId: byDataId } = db.entities.data;
     const { byId: byMemberId } = db.entities.members;
+    const { byId: byQuestionId } = db.entities.questions;
+    const { byId: byTypeId } = db.entities.types;
+    const { byId: byUserId } = db.entities.users;
+
     const { members } = db.community;
 
     // If the community doesn't have members loaded yet,
     if (!members?.length || !questionId) return { data: [], totalResponses: 0 };
 
+    const { category }: IQuestion = byQuestionId[questionId];
+
     // Initialize a counter for the number of meaningful responses.
     let totalResponses = 0;
 
     members.forEach((memberId: string) => {
-      const { value } =
-        (byMemberId[memberId] as IMember).allData?.find(
-          ({ questionId: id }) => id === questionId
-        ) ?? {};
+      const member: IMember = byMemberId[memberId];
+      const type: IMemberType = byTypeId[member.type];
+      const user: IUser = byUserId[member.user];
+
+      let value;
+
+      if (category === 'MEMBERSHIP_TYPE') value = type.name;
+      else if (category === 'GENDER') value = user.gender;
+      else if (category === 'DUES_STATUS') value = member.duesStatus;
+      else {
+        const d = member.data.find((dataId: string) => {
+          const data: IMemberData = byDataId[dataId];
+          const question: IQuestion = byQuestionId[data.question];
+          return question.id === questionId;
+        });
+
+        value = byDataId[d]?.value;
+      }
 
       if (!value) return;
 
-      if (type === 'LONG_TEXT') {
+      if (questionType === 'LONG_TEXT') {
         // We use stopwords to remove all of the common English words (ie: the).
         const wordArray: string[] = sw.removeStopwords(value.trim().split(' '));
 
@@ -47,7 +76,7 @@ const useQuestionData = (): Pick<
           if (record[word]) record[word]++;
           else record[word] = 1;
         });
-      } else if (type === 'MULTIPLE_SELECT') {
+      } else if (questionType === 'MULTIPLE_SELECT') {
         value.split(',').forEach((element: string) => {
           // If for whatever reason the splitted array returns a value that
           // is empty (has happened before), don't add it, just go to next.
@@ -68,7 +97,8 @@ const useQuestionData = (): Pick<
       .sort((a, b) => (a.value < b.value ? 1 : -1));
 
     return {
-      data: type === 'LONG_TEXT' ? sortedData.slice(0, 100) : sortedData,
+      data:
+        questionType === 'LONG_TEXT' ? sortedData.slice(0, 100) : sortedData,
       totalResponses
     };
   }, deepequal);

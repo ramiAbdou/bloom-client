@@ -1,59 +1,66 @@
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormItem from '@organisms/Form/FormItem';
-import SubmitButton from '@organisms/Form/FormSubmitButton';
-import { IQuestion } from '@store/entities';
 import { useStoreState } from '@store/Store';
+import FormNavigation from '../../components/organisms/Form/FormNavigation';
+import ApplicationConfirmationPage from './ApplicationFinishPage';
+import ApplicationMembershipPage from './ApplicationMembershipPage';
+import ApplicationSelectTypePage from './ApplicationSelectTypePage';
 import useApplyForMembership from './useApplyForMembership';
 
-const ApplicationFormHeader: React.FC = () => {
-  const logoUrl = useStoreState(({ db }) => db.community?.logoUrl);
-  const title = useStoreState(({ db }) => db.community?.applicationTitle);
-
-  const description = useStoreState(
-    ({ db }) => db.community?.applicationDescription
-  );
-
-  return (
-    <>
-      <img src={logoUrl} />
-      <h1>{title}</h1>
-      <p>{description}</p>
-    </>
-  );
-};
-
-const ApplicationFormContent: React.FC = () => {
-  const questions: IQuestion[] = useStoreState(({ db }) => {
-    const { byId } = db.entities.questions;
-    return db.community?.questions?.map((id: string) => byId[id]);
+const ApplicationForm: React.FC = () => {
+  const description = useStoreState(({ db }) => {
+    const { byId: byApplicationId } = db.entities.applications;
+    return byApplicationId[db.community?.application]?.description;
   });
 
-  return (
-    <>
-      <ApplicationFormHeader />
+  const title = useStoreState(({ db }) => {
+    const { byId: byApplicationId } = db.entities.applications;
+    return byApplicationId[db.community?.application]?.title;
+  });
 
-      {questions?.map((props) => (
-        <FormItem key={props.id} {...props} />
-      ))}
+  const showForm: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    const types = db.community?.types;
 
-      <FormErrorMessage marginBottom={-24} />
-      <SubmitButton loadingText="Submitting...">
-        Submit Application
-      </SubmitButton>
-    </>
-  );
-};
+    const isMoreThanOneType = types?.length > 1;
+    const isFirstTypePaid = !!types && !byTypeId[types[0]]?.isFree;
 
-const ApplicationForm: React.FC = () => {
+    return isMoreThanOneType || isFirstTypePaid;
+  });
+
   const applyForMembership = useApplyForMembership();
+
+  if (!title) return null;
+
+  const selectTypePages = showForm
+    ? [
+        {
+          description: 'Choose your membership type.',
+          id: 'SELECT_TYPE',
+          title: 'Membership Selection'
+        },
+        {
+          description:
+            'You’re almost done! Just review this information to make sure we got everything right.',
+          id: 'FINISH',
+          title: 'Confirmation'
+        }
+      ]
+    : [];
 
   return (
     <div className="s-application-ctr">
-      <Form className="s-application" onSubmit={applyForMembership}>
-        <ApplicationFormContent />
+      <Form
+        className="s-application"
+        options={{ multiPage: true }}
+        pages={[{ description, id: 'APPLICATION', title }, ...selectTypePages]}
+        onSubmit={applyForMembership}
+      >
+        <FormNavigation />
+        <ApplicationMembershipPage />
+        <ApplicationSelectTypePage />
+        <ApplicationConfirmationPage />
       </Form>
     </div>
   );

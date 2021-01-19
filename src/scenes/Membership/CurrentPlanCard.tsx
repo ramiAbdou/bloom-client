@@ -19,13 +19,13 @@ import { UPDATE_AUTO_RENEW, UpdateAutoRenewArgs } from './Membership.gql';
 
 const CurrentPlanCardHeader: React.FC = () => {
   const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
+    useStoreState(({ db }) => db.member?.duesStatus) === 'Active';
 
   return (
     <Row spaceBetween>
       <h3>Current Plan</h3>
       <StatusTag positive={isDuesActive}>
-        {isDuesActive ? 'ACTIVE' : 'INACTIVE'}
+        {isDuesActive ? 'Active' : 'Inactive'}
       </StatusTag>
     </Row>
   );
@@ -64,7 +64,7 @@ const CurrentPlanCardContent: React.FC = () => {
 
 const CurrentPlanCardActionContainer: React.FC = () => {
   const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
+    useStoreState(({ db }) => db.member?.duesStatus) === 'Active';
 
   const isLifetime: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
@@ -99,9 +99,6 @@ const CurrentPlanCardActionContainer: React.FC = () => {
 const CurrentPlanCardToggle: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member?.autoRenew);
 
-  const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'ACTIVE';
-
   const isLifetime: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
     return byTypeId[db.member?.type].recurrence === 'LIFETIME';
@@ -116,7 +113,7 @@ const CurrentPlanCardToggle: React.FC = () => {
     variables: { status: !autoRenew }
   });
 
-  if (isDuesActive && isLifetime) return null;
+  if (isLifetime) return null;
 
   const onChange = async () => {
     const { data } = await updateAutoRenew();

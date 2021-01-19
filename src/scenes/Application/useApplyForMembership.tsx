@@ -12,6 +12,11 @@ import { useStoreState } from '@store/Store';
 const useApplyForMembership = (): OnFormSubmit => {
   const name = useStoreState(({ db }) => db.community?.urlName);
 
+  const types = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return db.community?.types?.map((typeId: string) => byTypeId[typeId]);
+  });
+
   const { push } = useHistory();
   const { url } = useRouteMatch();
 
@@ -20,31 +25,36 @@ const useApplyForMembership = (): OnFormSubmit => {
     query: APPLY_FOR_MEMBERSHIP
   });
 
-  const onSubmit = async ({
-    items,
-    setErrorMessage,
-    setIsLoading
-  }: OnFormSubmitArgs) => {
-    const dataToSubmit = items.map(({ id, value }) => ({
-      questionId: id,
-      value: parseValue(value)
-    }));
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+    const paymentMethodId = items.find(
+      ({ category }) => category === 'CREDIT_OR_DEBIT_CARD'
+    )?.value;
+
+    const dataToSubmit = items
+      .filter(({ pageId }) => pageId === 'APPLICATION')
+      .map(({ category, id, value }) => ({
+        category,
+        questionId: id,
+        value: parseValue(value)
+      }));
 
     // Set the email so that the confirmation page displays the right email,
     // and use it for the GraphQL mutation as well.
     const email = items.find(({ category }) => category === 'EMAIL')?.value;
 
-    // Manually set the isLoading variable to true.
-    setIsLoading(true);
+    const typeName = items.find(
+      ({ category }) => category === 'MEMBERSHIP_TYPE'
+    )?.value;
+
+    const memberTypeId = types.find((type) => type.name === typeName)?.id;
 
     const { data, error } = await applyForMembership({
       data: dataToSubmit,
       email,
+      memberTypeId,
+      paymentMethodId,
       urlName: name
     });
-
-    // Manually reset the isLoading variable to false.
-    setIsLoading(false);
 
     if (error) {
       setErrorMessage(error);

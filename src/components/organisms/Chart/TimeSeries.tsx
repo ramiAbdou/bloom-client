@@ -14,15 +14,17 @@ import {
 
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
-import Chart from './Chart.store';
+import ChartStore from './Chart.store';
 import { ChartTooltipProps } from './Tooltip';
 
 const LineChartTooltip = ({ label }: Pick<ChartTooltipProps, 'label'>) => {
-  const data = Chart.useStoreState((store) => store.data);
+  const data = ChartStore.useStoreState((store) => store.data);
+  const format = ChartStore.useStoreState(({ options }) => options?.format);
 
   if (!label) return null;
 
-  const value = data.find(({ name }) => name === label)?.value;
+  let value = data.find(({ name }) => name === label)?.value;
+  value = format === 'MONEY' ? `$${(value as number) / 100}` : value;
   label = day(label).format('dddd, MMMM D, YYYY');
 
   return (
@@ -40,8 +42,9 @@ const LineChartDot = ({ payload, ...props }) => {
 
 export default () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
-  const data = Chart.useStoreState((store) => store.data, deepequal);
-  const interval = Chart.useStoreState((store) => store.interval);
+  const data = ChartStore.useStoreState((store) => store.data, deepequal);
+  const interval = ChartStore.useStoreState((store) => store.interval);
+  const format = ChartStore.useStoreState(({ options }) => options?.format);
   const isMonitor = useBreakpoint() === 4;
 
   if (!data?.length) return null;
@@ -62,6 +65,9 @@ export default () => {
 
         <YAxis
           domain={[(dataMin: number) => Math.round(dataMin * 0.8), 'auto']}
+          tickFormatter={(value) => {
+            return format === 'MONEY' ? `$${value / 100}` : value;
+          }}
           width={48}
         />
 
