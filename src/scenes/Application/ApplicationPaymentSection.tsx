@@ -122,7 +122,7 @@ const ApplicationPaymentSectionContent: React.FC = () => {
 
   const onContinue = async () => {
     // Create the payment method via the Stripe SDK.
-    const stripeResult = await stripe.createPaymentMethod({
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
       billing_details: {
         address: { city, postal_code: postalCode, state },
         name: nameOnCard
@@ -131,12 +131,21 @@ const ApplicationPaymentSectionContent: React.FC = () => {
       type: 'card'
     });
 
-    if (!stripeResult.error) {
-      updateItem({
-        category: 'CREDIT_OR_DEBIT_CARD',
-        value: stripeResult.paymentMethod?.id
-      });
-    }
+    if (error) return;
+
+    const brand = paymentMethod?.card?.brand;
+    const last4 = paymentMethod?.card?.last4;
+    const expirationMonth = paymentMethod?.card?.exp_month;
+    const expirationYear = paymentMethod?.card?.exp_year;
+
+    updateItem({
+      category: 'CREDIT_OR_DEBIT_CARD',
+      value: {
+        brand: brand.charAt(0).toUpperCase() + brand.slice(1).toLowerCase(),
+        expirationDate: `${expirationMonth}/${expirationYear}`,
+        last4
+      }
+    });
   };
 
   if (!isPaidMembershipSelected) return null;

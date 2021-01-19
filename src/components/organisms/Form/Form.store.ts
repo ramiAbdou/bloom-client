@@ -12,7 +12,7 @@ import {
   FormNavigationPageProps,
   FormOptions
 } from './Form.types';
-import { getFormItem, validateItem } from './Form.util';
+import { getFormItem, getFormItemIndex, validateItem } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
 interface UpdateItemArgs extends GetItemArgs {
@@ -85,6 +85,10 @@ export const formModel: FormModel = {
   // Used to ensure that the submit button is disabled.
   isLoading: false,
 
+  /**
+   * Returns true if all items on the page have been validated. Follows all
+   * the rules from isCompleted.
+   */
   isPageCompleted: computed(({ items, pageId, pages }) => {
     const page: FormNavigationPageProps = pages.find((p) => p.id === pageId);
     if (page?.disableValidation) return true;
@@ -111,14 +115,17 @@ export const formModel: FormModel = {
 
   pages: [],
 
+  /**
+   * Removes all the items from the array of items.
+   */
   removeItems: action(({ items, ...state }, itemsToRemove) => {
-    items = items.filter((element) => {
-      return itemsToRemove.some(
-        (item) =>
-          (item.category && element.category === item.category) ||
-          (item.id && element.id === item.id) ||
-          (item.title && element.title === item.title)
-      );
+    items = items.filter((item: FormItemData) => {
+      const isItemInRemoveList = !!getFormItem({
+        items: itemsToRemove,
+        ...item
+      });
+
+      return !isItemInRemoveList;
     });
 
     return { ...state, items };
@@ -136,12 +143,7 @@ export const formModel: FormModel = {
   })),
 
   setItem: action(({ items, ...state }, item: Partial<FormItemData>) => {
-    const isFound = items.find(
-      (element) =>
-        (item.category && element.category === item.category) ||
-        (item.id && element.id === item.id) ||
-        (item.title && element.title === item.title)
-    );
+    const isFound = getFormItem({ items, ...item });
 
     return {
       ...state,
@@ -176,21 +178,17 @@ export const formModel: FormModel = {
     pages: pages.map((page, i: number) => ({ ...page, disabled: !!i }))
   })),
 
+  /**
+   * Updates the form item value based on the query arguments.
+   *
+   * Also validates the item in the process in case there is an error. In
+   * effect, creates a "dirty" form value validation process.
+   */
   updateItem: action(
-    (state, { category, id, title, value }: UpdateItemArgs) => {
-      const { items } = state;
-
-      let index: number;
-
-      if (id) index = items.findIndex((item) => item.id === id);
-      else if (title) index = items.findIndex((item) => item.title === title);
-      else if (category) {
-        index = items.findIndex((item) => item.category === category);
-      }
-
+    ({ items, ...state }, { value, ...args }: UpdateItemArgs) => {
+      const index: number = getFormItemIndex({ items, ...args });
       const updatedItem = { ...items[index], value };
       items[index] = validateItem(updatedItem);
-
       return { ...state, items };
     }
   )

@@ -48,17 +48,19 @@ const ApplicationFinishMembershipSection: React.FC = () => {
     return `${amountString} ${recurrenceString}`;
   });
 
+  const { brand, expirationDate, last4 } = cardInfo ?? {};
+
   return (
     <div className="s-application-confirmation-membership">
       <h2>{cardInfo ? 'Membership & Payment' : 'Membership Plan'} </h2>
       <Row spaceBetween>
         <InformationCard description={description} title={selectedTypeName} />
-        {cardInfo && (
-          <InformationCard
-            description="Expires 4/24"
-            title="Visa Ending in 4242"
-          />
-        )}
+
+        <InformationCard
+          description={`Expires ${expirationDate}`}
+          show={!!last4}
+          title={`${brand} Ending in ${last4}`}
+        />
       </Row>
     </div>
   );
@@ -73,7 +75,7 @@ const ApplicationFinishPage: React.FC = () => {
   });
 
   const cardInfo = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ category: 'CREDIT_OR_DEBIT_CARD' })?.value;
+    return getItem({ category: 'CREDIT_OR_DEBIT_CARD' })?.value?.last4;
   });
 
   const applicationItems = FormStore.useStoreState(({ items }) =>

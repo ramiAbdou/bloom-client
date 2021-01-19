@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { IdProps } from '@constants';
 import FormStore from '@organisms/Form/Form.store';
@@ -9,6 +9,7 @@ import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { RadioOptionProps } from '../../components/molecules/Radio/Radio.types';
 import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
+import usePrevious from '../../core/hooks/usePrevious';
 import ApplicationPaymentSection from './ApplicationPaymentSection';
 
 const ApplicationSelectTypeCardContent: React.FC<IdProps> = ({ id }) => {
@@ -63,6 +64,8 @@ const ApplicationSelectTypePage: React.FC = () => {
     return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
   });
 
+  const removeItems = FormStore.useStoreActions((store) => store.removeItems);
+
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
 
@@ -72,6 +75,21 @@ const ApplicationSelectTypePage: React.FC = () => {
 
     return !!selectedType?.amount;
   });
+
+  const wasPaidMembershipSelected = usePrevious(isPaidMembershipSelected);
+
+  useEffect(() => {
+    if (wasPaidMembershipSelected && !isPaidMembershipSelected) {
+      removeItems([
+        { title: 'Name on Card' },
+        { category: 'CREDIT_OR_DEBIT_CARD' },
+        { title: 'Billing Address' },
+        { title: 'City' },
+        { title: 'State' },
+        { title: 'Zip Code' }
+      ]);
+    }
+  }, [isPaidMembershipSelected]);
 
   return (
     <FormPage id="SELECT_TYPE">

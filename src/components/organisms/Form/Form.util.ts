@@ -22,6 +22,20 @@ export const getFormItem = ({
 };
 
 /**
+ * Returns the form item index based on the query arguments (ie: category).
+ */
+export const getFormItemIndex = ({
+  category,
+  id,
+  items,
+  title
+}: GetFormItemArgs) => {
+  if (id) return items.findIndex((item) => item.id === id);
+  if (title) return items.findIndex((item) => item.title === title);
+  return items.findIndex((item) => item.category === category);
+};
+
+/**
  * All GraphQL requests with data should have the data be populated in an array,
  * even if the question is not MULTIPLE_SELECT. This helps with parsing
  * consistency.
@@ -55,7 +69,10 @@ export const parseValue = (value: any) => {
  *    value: null
  * })
  */
-export const validateItem = (item: FormItemData): FormItemData => {
+export const validateItem = ({
+  errorMessage: _,
+  ...item
+}: FormItemData): FormItemData => {
   const { required, value, validate, type } = item;
 
   if (required && !value) {
