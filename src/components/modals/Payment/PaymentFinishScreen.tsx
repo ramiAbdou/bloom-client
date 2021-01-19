@@ -1,8 +1,9 @@
 import day from 'dayjs';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
+import useQuery from '@hooks/useQuery';
 import FormStore from '@organisms/Form/Form.store';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
@@ -11,6 +12,7 @@ import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMemberType } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import InformationCard from '../../containers/Card/InformationCard';
+import { GET_CHANGE_PREVIEW } from './Payment.gql';
 import PaymentStore from './Payment.store';
 import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
@@ -116,10 +118,33 @@ const PaymentFinishScreenContent: React.FC = () => {
   );
 };
 
-const PaymentFinishScreen: React.FC = () => (
-  <FormPage id="FINISH">
-    <PaymentFinishScreenContent />
-  </FormPage>
-);
+const PaymentFinishScreen: React.FC = () => {
+  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+
+  const setChangeData = PaymentStore.useStoreActions(
+    (store) => store.setChangeData
+  );
+
+  const { data, loading } = useQuery({
+    name: 'getChangePreview',
+    query: GET_CHANGE_PREVIEW,
+    variables: { memberTypeId: typeId }
+  });
+
+  useEffect(() => {
+    if (data) {
+      setChangeData({
+        changeAmount: data?.amount,
+        changeProrationDate: data?.prorationDate
+      });
+    }
+  }, [data]);
+
+  return (
+    <FormPage id="FINISH" loading={loading}>
+      <PaymentFinishScreenContent />
+    </FormPage>
+  );
+};
 
 export default PaymentFinishScreen;

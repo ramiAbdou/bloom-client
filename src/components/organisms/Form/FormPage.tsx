@@ -1,12 +1,22 @@
 import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 
-import { ChildrenProps, ClassNameProps, IdProps } from '@constants';
+import {
+  ChildrenProps,
+  ClassNameProps,
+  IdProps,
+  LoadingProps
+} from '@constants';
 import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import { cx } from '@util/util';
+import LoadingHeader from '../../containers/Loading/LoadingHeader';
 import FormStore from './Form.store';
 
-interface FormPageProps extends ChildrenProps, ClassNameProps, IdProps {
+interface FormPageProps
+  extends ChildrenProps,
+    ClassNameProps,
+    IdProps,
+    LoadingProps {
   iconUrl?: string;
 }
 
@@ -14,7 +24,8 @@ const FormPage: React.FC<FormPageProps> = ({
   children,
   className,
   id,
-  iconUrl
+  iconUrl,
+  loading
 }) => {
   const pageId = FormStore.useStoreState((store) => store.pageId);
   const pages = FormStore.useStoreState((store) => store.pages);
@@ -55,11 +66,11 @@ const FormPage: React.FC<FormPageProps> = ({
     >
       <div>
         {iconUrl && <img src={iconUrl} />}
-        <h1>{title}</h1>
+        <LoadingHeader loading={loading} title={title} />
         <p>{description}</p>
       </div>
 
-      {children}
+      {!loading && children}
     </motion.div>
   );
 };

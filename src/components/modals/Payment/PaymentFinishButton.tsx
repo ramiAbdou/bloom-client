@@ -13,9 +13,13 @@ const PaymentFinishButton: React.FC = () => {
     (store) => store.selectedTypeId
   );
 
+  const changeAmount = PaymentStore.useStoreState(
+    (store) => store.changeAmount
+  );
+
   const amount: number = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
-    return byId[selectedTypeId]?.amount / 100;
+    return changeAmount ?? byId[selectedTypeId]?.amount / 100;
   });
 
   const isLessThanCurrentType = useStoreState(({ db }) => {

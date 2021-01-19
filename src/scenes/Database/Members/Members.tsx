@@ -1,7 +1,6 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import Pill from '@atoms/Tags/Pill';
 import useMutation from '@hooks/useMutation';
 import Table from '@organisms/Table/Table';
 import { Column, OnRenameColumn, Row } from '@organisms/Table/Table.types';
@@ -36,7 +35,7 @@ export default () => {
       const user: IUser = byUserId[member.user];
       const { email, firstName, gender, lastName } = user;
 
-      if (['REJECTED', 'PENDING'].includes(member.status)) return acc;
+      if (member.status !== 'ACCEPTED') return acc;
 
       const row: Row = db.community?.questions.reduce(
         (result: Row, questionId: string) => {
@@ -52,8 +51,8 @@ export default () => {
             result[questionId] = type.name;
           } else if (category === 'DUES_STATUS') {
             const duesStatusString =
-              duesStatus.charAt(0).toUpperCase() +
-              duesStatus.slice(1).toLowerCase();
+              duesStatus?.charAt(0).toUpperCase() +
+              duesStatus?.slice(1).toLowerCase();
 
             result[questionId] = duesStatusString;
           } else {

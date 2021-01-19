@@ -17,6 +17,7 @@ export const CREATE_LIFETIME_PAYMENT = mutation({
 export interface CreateSubscriptionArgs {
   autoRenew?: boolean;
   memberTypeId: string;
+  prorationDate?: number;
 }
 
 export interface CreateSubscriptionResult {
@@ -32,6 +33,14 @@ export const CREATE_SUBSCRIPTION = mutation({
     autoRenew: { required: false, type: 'Boolean' },
     memberTypeId: { required: true }
   }
+}).query;
+
+// ## GET CHANGE PREVIEW
+
+export const GET_CHANGE_PREVIEW = query({
+  fields: ['amount', 'prorationDate'],
+  operation: 'getChangePreview',
+  variables: { memberTypeId: { required: true } }
 }).query;
 
 // ## GET PAYMENT INTEGRATIONS

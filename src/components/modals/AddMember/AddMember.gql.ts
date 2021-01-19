@@ -19,5 +19,5 @@ export const ADD_MEMBERS = mutation({
     { user: ['id', 'firstName', 'lastName', 'email'] }
   ],
   operation: 'addMembers',
-  variables: { members: { required: true, type: '[NewMemberInput!]' } }
+  variables: { members: { required: true, type: '[AddMemberInput!]' } }
 }).query;

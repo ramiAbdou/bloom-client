@@ -1,16 +1,11 @@
-import React, {
-  ButtonHTMLAttributes,
-  forwardRef,
-  MutableRefObject,
-  useEffect,
-  useState
-} from 'react';
+import { motion } from 'framer-motion';
+import React, { forwardRef } from 'react';
 
-import Spinner from '@atoms/Spinner';
 import { cx } from '@util/util';
+import { useShowSpinner } from '../Spinner/Spinner';
 
 export interface ButtonProps
-  extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
+  extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>> {
   href?: string;
   fill?: boolean;
   fit?: boolean;
@@ -22,30 +17,6 @@ export interface ButtonProps
   tertiary?: boolean;
 }
 
-/**
- * Returns true if the Button's loading state should be shown, and false
- * otherwise. Ensures that the loading state of a Button doesn't show unless
- * the operation takes more than 100ms.
- */
-const useIsLoading = (loading: boolean): boolean => {
-  const [showLoadingState, setShowLoadingState] = useState(false);
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (!loading && showLoadingState) setShowLoadingState(false);
-    else {
-      timeout = setTimeout(() => {
-        if (loading && !showLoadingState) setShowLoadingState(true);
-      }, 100);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [loading, showLoadingState]);
-
-  return showLoadingState;
-};
-
 const LoadingContainer = ({
   loading,
   loadingText,
@@ -53,10 +24,16 @@ const LoadingContainer = ({
 }: Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>) => {
   if (!loading) return null;
 
+  const css = cx('c-spinner', { 'c-spinner--dark': secondary });
+
   return (
     <div className="c-btn-loading-ctr">
       <p>{loadingText}</p>
-      <Spinner dark={secondary} />
+      <motion.div
+        animate={{ rotate: 360 }}
+        className={css}
+        transition={{ duration: 0.75, ease: 'linear', loop: Infinity }}
+      />
     </div>
   );
 };
@@ -80,10 +57,10 @@ const Button = forwardRef(
       tertiary,
       ...props
     }: ButtonProps,
-    ref: MutableRefObject<any>
+    ref: React.MutableRefObject<any>
   ) => {
     // If the button is in it's loading state, it should be disabled.
-    const showSpinner = useIsLoading(loading) && !!loadingText;
+    const showSpinner: boolean = useShowSpinner(loading) && !!loadingText;
     disabled = disabled || showSpinner;
 
     const onButtonClick = (

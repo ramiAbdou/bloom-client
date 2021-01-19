@@ -12,6 +12,12 @@ import {
 import PaymentStore from './Payment.store';
 
 const useCreateSubscription = (): OnFormSubmit => {
+  const prorationDate = PaymentStore.useStoreState(
+    (store) => store.changeProrationDate
+  );
+
+  console.log(prorationDate);
+
   const memberTypeId = PaymentStore.useStoreState(
     (store) => store.selectedTypeId
   );
@@ -34,7 +40,11 @@ const useCreateSubscription = (): OnFormSubmit => {
       // Create the actual subscription. Pass the MemberType ID to know what
       // Stripe price ID to look up, as well as the newly created IPaymentMethod
       // ID. That will be attached to the customer ID associated with the member.
-      const { error } = await createSubscription({ autoRenew, memberTypeId });
+      const { error } = await createSubscription({
+        autoRenew,
+        memberTypeId,
+        prorationDate
+      });
 
       if (error) {
         setErrorMessage(error);
@@ -44,7 +54,7 @@ const useCreateSubscription = (): OnFormSubmit => {
       goToNextPage();
       pushToMembership();
     },
-    [memberTypeId]
+    [memberTypeId, prorationDate]
   );
 
   return memberTypeId ? onSubmit : null;
