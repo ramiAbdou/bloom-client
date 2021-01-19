@@ -4,12 +4,12 @@ import { IoAlertCircleOutline } from 'react-icons/io5';
 
 import { ChildrenProps } from '@constants';
 
-export interface ErrorMessageProps extends ChildrenProps {
+export interface WarningMessageProps extends ChildrenProps {
   marginBottom?: number;
   marginTop?: number;
 }
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({
+const WarningMessage: React.FC<WarningMessageProps> = ({
   children,
   marginBottom,
   marginTop
@@ -19,7 +19,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
   return (
     <motion.div
       animate={{ opacity: 1 }}
-      className="c-misc-error"
+      className="c-misc-warning"
       initial={{ opacity: 0 }}
       style={{ marginBottom, marginTop }}
       transition={{ duration: 0.2 }}
@@ -30,4 +30,4 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
   );
 };
 
-export default ErrorMessage;
+export default WarningMessage;

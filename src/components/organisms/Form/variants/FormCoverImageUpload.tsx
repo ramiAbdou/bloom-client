@@ -22,8 +22,10 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
   const openFileUploader = () => ref.current.click();
 
   const onChange = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    const file = target.files[0];
+
     const base64String = await convertImageToBase64({
-      content: target.files[0],
+      content: file,
       dims: [600, 300]
     });
 

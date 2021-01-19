@@ -15,6 +15,12 @@ $PREF: 'c-misc';
 .#{$PREF}-error > p { color: $red; margin-top: -2px; }
 .#{$PREF}-error > svg { color: $red; margin: -2px $xxs 0 0; }
 
+// ## WARNING MESSAGE - Has an icon and some text.
+
+.#{$PREF}-warning { @extend .flex; margin-bottom: $md; margin-top: $sm; }
+.#{$PREF}-warning > p { color: $gray-2; margin-top: -2px; }
+.#{$PREF}-warning > svg { color: $gray-2; margin: -2px $xxs 0 0; }
+
 // ## BLOOM LOGO
 
 .#{$PREF}-logo { height: 18px; width: 75px; }

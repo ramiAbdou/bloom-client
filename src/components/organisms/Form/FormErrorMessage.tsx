@@ -11,7 +11,7 @@ const FormErrorMessage: React.FC<Omit<ErrorMessageProps, 'message'>> = (
   props
 ) => {
   const errorMessage = Form.useStoreState((store) => store.errorMessage);
-  return <ErrorMessage message={errorMessage} {...props} />;
+  return <ErrorMessage {...props}>{errorMessage}</ErrorMessage>;
 };
 
 export default FormErrorMessage;

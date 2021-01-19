@@ -17,6 +17,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   loadingText,
   ...props
 }) => {
+  Form.useStoreState((store) => console.log(store.items));
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
   const isLoading = Form.useStoreState((store) => store.isLoading);
 

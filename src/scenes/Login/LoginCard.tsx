@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
 import React from 'react';
 import URLBuilder from 'util/URLBuilder';
-import validator from 'validator';
 
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
@@ -45,7 +44,7 @@ const LoginCardGoogleContainer: React.FC = () => {
   return (
     <div className={css}>
       <LoginCardGoogleButton />
-      <ErrorMessage marginBottom={0} message={message} />
+      <ErrorMessage marginBottom={0}>{message}</ErrorMessage>
     </div>
   );
 };

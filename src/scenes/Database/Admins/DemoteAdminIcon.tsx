@@ -2,7 +2,6 @@ import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
-import ErrorMessage from '@atoms/ErrorMessage';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Modal from '@organisms/Modal/Modal';
@@ -19,7 +18,7 @@ const DemoteToMemberModal = () => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
-  const [demoteToMember, { error, loading }] = useMutation<
+  const [demoteToMember, { loading }] = useMutation<
     IMember[],
     DemoteToAdminArgs
   >({ name: 'demoteToMember', query: DEMOTE_TO_MEMBER });
@@ -46,8 +45,6 @@ const DemoteToMemberModal = () => {
         all admin priviledges, but will remain in the community as a member. You
         can undo this action at any time.
       </p>
-
-      <ErrorMessage message={error} />
 
       <div>
         <Button primary loading={loading} onClick={onDemote}>

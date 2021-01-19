@@ -67,7 +67,6 @@ const CreateEvent: React.FC = () => {
           className="mo-create-event-privacy-item"
           id="PRIVACY_SETTINGS"
           type="MULTIPLE_CHOICE"
-          validate="IS_URL"
         />
 
         <FormSubmitButton>Create Event</FormSubmitButton>
