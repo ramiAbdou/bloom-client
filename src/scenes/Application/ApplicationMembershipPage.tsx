@@ -41,7 +41,7 @@ const ApplicationMembershipPage: React.FC = () => {
   return (
     <FormPage iconUrl={iconUrl} id="APPLICATION">
       {questions?.map((props) => (
-        <FormItem key={props.id} page="APPLICATION" {...props} />
+        <FormItem key={props.id} pageId="APPLICATION" {...props} />
       ))}
 
       <ApplicationMembershipPageButton />

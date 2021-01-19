@@ -28,7 +28,7 @@ const PaymentCardForm: React.FC = () => {
     <>
       <FormItem
         required
-        page="SELECT_TYPE"
+        pageId="SELECT_TYPE"
         title="Name on Card"
         type="SHORT_TEXT"
       />
@@ -37,7 +37,7 @@ const PaymentCardForm: React.FC = () => {
         required
         value
         category="CREDIT_OR_DEBIT_CARD"
-        page="SELECT_TYPE"
+        pageId="SELECT_TYPE"
         title="Credit or Debit Card"
       >
         <CardElement options={options} />
@@ -45,7 +45,7 @@ const PaymentCardForm: React.FC = () => {
 
       <FormItem
         required
-        page="SELECT_TYPE"
+        pageId="SELECT_TYPE"
         title="Billing Address"
         type="SHORT_TEXT"
       />
@@ -53,7 +53,7 @@ const PaymentCardForm: React.FC = () => {
       <Row spaceBetween className="mo-payment-billing-ctr">
         <FormItem
           required
-          page="SELECT_TYPE"
+          pageId="SELECT_TYPE"
           placeholder="Los Angeles"
           title="City"
           type="SHORT_TEXT"
@@ -61,7 +61,7 @@ const PaymentCardForm: React.FC = () => {
 
         <FormItem
           required
-          page="SELECT_TYPE"
+          pageId="SELECT_TYPE"
           placeholder="CA"
           title="State"
           type="SHORT_TEXT"
@@ -69,7 +69,7 @@ const PaymentCardForm: React.FC = () => {
 
         <FormItem
           required
-          page="SELECT_TYPE"
+          pageId="SELECT_TYPE"
           placeholder="00000"
           title="Zip Code"
           type="SHORT_TEXT"

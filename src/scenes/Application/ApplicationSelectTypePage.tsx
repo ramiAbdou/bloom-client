@@ -97,7 +97,7 @@ const ApplicationSelectTypePage: React.FC = () => {
         card
         cardOptions={cardOptions}
         category="MEMBERSHIP_TYPE"
-        page="SELECT_TYPE"
+        pageId="SELECT_TYPE"
         type="MULTIPLE_CHOICE"
       />
 

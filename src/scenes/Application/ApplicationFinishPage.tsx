@@ -89,7 +89,7 @@ const ApplicationFinishPage: React.FC = () => {
   });
 
   const applicationItems = FormStore.useStoreState(({ items }) =>
-    items?.filter((item) => item.page === 'APPLICATION')
+    items?.filter((item) => item.pageId === 'APPLICATION')
   );
 
   if (!questions?.length) return null;

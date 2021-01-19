@@ -94,7 +94,7 @@ export const formModel: FormModel = {
     if (page?.disableValidation) return true;
 
     const validatedPageItems = items
-      ?.filter((item) => item.page === pageId)
+      ?.filter((item) => item.pageId === pageId)
       ?.map(validateItem);
 
     return (

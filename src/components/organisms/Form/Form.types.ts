@@ -45,7 +45,7 @@ export interface FormItemData extends Partial<FormQuestion> {
   initialValue?: any;
 
   // The page that a form item belongs to.
-  page?: string;
+  pageId?: string;
 
   placeholder?: string;
 
@@ -93,9 +93,7 @@ export interface UseItemBodyProps
 export interface FormItemProps
   extends UseItemBodyProps,
     ChildrenProps,
-    Pick<FormItemData, 'description' | 'validate' | 'value'> {
-  page?: string;
-}
+    Pick<FormItemData, 'description' | 'pageId' | 'validate' | 'value'> {}
 
 export interface FormNavigationPageProps extends IdProps, TitleProps {
   description?: string;
