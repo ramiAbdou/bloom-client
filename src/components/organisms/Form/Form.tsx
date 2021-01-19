@@ -10,6 +10,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
   children,
   onSubmit,
+  onSubmitDeps,
   pages
 }) => {
   const items = FormStore.useStoreState((store) => store.items, deepequal);
@@ -53,7 +54,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
 
       setIsLoading(false);
     },
-    [items]
+    [items, ...onSubmitDeps]
   );
 
   const css = cx('o-form', { [className]: className });

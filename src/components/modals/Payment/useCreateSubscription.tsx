@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
@@ -16,8 +14,6 @@ const useCreateSubscription = (): OnFormSubmit => {
     (store) => store.changeProrationDate
   );
 
-  console.log(prorationDate);
-
   const memberTypeId = PaymentStore.useStoreState(
     (store) => store.selectedTypeId
   );
@@ -33,31 +29,32 @@ const useCreateSubscription = (): OnFormSubmit => {
     schema: Schema.MEMBER
   });
 
-  const onSubmit = useCallback(
-    async ({ goToNextPage, items, setErrorMessage }: OnFormSubmitArgs) => {
-      const autoRenew = items.find(({ type }) => type === 'TOGGLE')?.value;
+  const onSubmit = async ({
+    goToNextPage,
+    items,
+    setErrorMessage
+  }: OnFormSubmitArgs) => {
+    const autoRenew = items.find(({ type }) => type === 'TOGGLE')?.value;
 
-      // Create the actual subscription. Pass the MemberType ID to know what
-      // Stripe price ID to look up, as well as the newly created IPaymentMethod
-      // ID. That will be attached to the customer ID associated with the member.
-      const { error } = await createSubscription({
-        autoRenew,
-        memberTypeId,
-        prorationDate
-      });
+    // Create the actual subscription. Pass the MemberType ID to know what
+    // Stripe price ID to look up, as well as the newly created IPaymentMethod
+    // ID. That will be attached to the customer ID associated with the member.
+    const { error } = await createSubscription({
+      autoRenew,
+      memberTypeId,
+      prorationDate
+    });
 
-      if (error) {
-        setErrorMessage(error);
-        return;
-      }
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
 
-      goToNextPage();
-      pushToMembership();
-    },
-    [memberTypeId, prorationDate]
-  );
+    goToNextPage();
+    pushToMembership();
+  };
 
-  return memberTypeId ? onSubmit : null;
+  return onSubmit;
 };
 
 export default useCreateSubscription;

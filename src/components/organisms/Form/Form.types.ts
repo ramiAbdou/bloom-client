@@ -111,6 +111,7 @@ export interface FormProps extends ChildrenProps, ClassNameProps {
   options?: FormOptions;
   pages?: FormNavigationPageProps[];
   onSubmit?: OnFormSubmit;
+  onSubmitDeps?: any[];
 }
 
 export type OnFormSubmitArgs = {

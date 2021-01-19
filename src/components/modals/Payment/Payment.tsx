@@ -21,6 +21,59 @@ import useCreateLifetimePayment from './useCreateLifetimePayment';
 import useCreateSubscription from './useCreateSubscription';
 import useUpdatePaymentMethod from './useUpdatePaymentMethod';
 
+const PaymentForm: React.FC<Partial<PaymentModel>> = () => {
+  const prorationDate = PaymentStore.useStoreState(
+    (store) => store.changeProrationDate
+  );
+
+  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const type = PaymentStore.useStoreState((store) => store.type);
+
+  const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
+
+  const isFree: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[typeId]?.isFree;
+  });
+
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    return byTypeId[typeId]?.recurrence === 'LIFETIME';
+  });
+
+  const createSubscription = useCreateSubscription();
+  const createLifetimePayment = useCreateLifetimePayment();
+  const updatePaymentMethod = useUpdatePaymentMethod();
+
+  const onSubmit = takeFirst([
+    [type === 'UPDATE_PAYMENT_METHOD', updatePaymentMethod],
+    [isLifetime, createLifetimePayment],
+    [!isLifetime, createSubscription]
+  ]);
+
+  if (!onSubmit) return null;
+
+  const pages = getPaymentPages({ isCardOnFile, isFree, type });
+
+  return (
+    <Form
+      className="mo-payment"
+      options={{
+        disableValidation: type !== 'UPDATE_PAYMENT_METHOD',
+        multiPage: true
+      }}
+      pages={pages}
+      onSubmit={onSubmit}
+      onSubmitDeps={[prorationDate, typeId]}
+    >
+      <FormNavigation />
+      <PaymentCardScreen />
+      <PaymentFinishScreen />
+      <FormPage id="CONFIRMATION" />
+    </Form>
+  );
+};
+
 const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   selectedTypeId
 }) => {
@@ -35,53 +88,15 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
     (store) => store.setSelectedTypeId
   );
 
-  const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
-
-  const isFree: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId]?.isFree;
-  });
-
-  const isLifetime: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId]?.recurrence === 'LIFETIME';
-  });
-
   useEffect(() => {
     if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
   }, [typeId, selectedTypeId]);
 
-  const createSubscription = useCreateSubscription();
-  const createLifetimePayment = useCreateLifetimePayment();
-  const updatePaymentMethod = useUpdatePaymentMethod();
-
-  const onSubmit = takeFirst([
-    [type === 'UPDATE_PAYMENT_METHOD', updatePaymentMethod],
-    [isLifetime, createLifetimePayment],
-    [!isLifetime, createSubscription]
-  ]);
-
-  if (!onSubmit) return null;
-
   const onClose = () => clearOptions();
-  const pages = getPaymentPages({ isCardOnFile, isFree, type });
 
   return (
     <Modal id={type} onClose={onClose}>
-      <Form
-        className="mo-payment"
-        options={{
-          disableValidation: type !== 'UPDATE_PAYMENT_METHOD',
-          multiPage: true
-        }}
-        pages={pages}
-        onSubmit={onSubmit}
-      >
-        <FormNavigation />
-        <PaymentCardScreen />
-        <PaymentFinishScreen />
-        <FormPage id="CONFIRMATION" />
-      </Form>
+      <PaymentForm />
     </Modal>
   );
 };
