@@ -15,7 +15,7 @@ type UseMutationArgs<T, S> = {
 
 type UseMutationResult<T> = { data: T; error: string; loading: boolean };
 
-type UseMutation<T, S> = [
+export type UseMutation<T, S> = [
   (variables?: S) => Promise<UseMutationResult<T>>,
   UseMutationResult<T>
 ];

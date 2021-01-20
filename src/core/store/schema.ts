@@ -13,6 +13,7 @@ import { takeFirst } from '@util/util';
 
 const Community = new schema.Entity('communities', {});
 const CommunityApplication = new schema.Entity('applications', {});
+const Event = new schema.Entity('events', {});
 const Integrations = new schema.Entity('integrations', {});
 
 const Member = new schema.Entity(
@@ -59,6 +60,7 @@ const User = new schema.Entity('users', {});
 
 Community.define({
   application: CommunityApplication,
+  events: [Event],
   integrations: Integrations,
   members: [Member],
   payments: [MemberPayment],
@@ -83,6 +85,7 @@ User.define({ members: [Member] });
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
   COMMUNITY: Community,
+  EVENT: Event,
   INTEGRATIONS: Integrations,
   MEMBER: Member,
   MEMBER_DATA: MemberData,

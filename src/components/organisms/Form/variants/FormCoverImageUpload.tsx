@@ -39,7 +39,7 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
     : {};
 
   return (
-    <button
+    <div
       className="o-form-item--cover-image"
       style={backgroundStyle}
       onClick={openFileUploader}
@@ -61,7 +61,7 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
       <Button secondary white onClick={openFileUploader}>
         {title}
       </Button>
-    </button>
+    </div>
   );
 };
 

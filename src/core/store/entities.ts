@@ -22,6 +22,17 @@ export interface ICommunityApplication {
   title: string;
 }
 
+export interface IEvent {
+  description: string;
+  endTime: string;
+  id: IdString;
+  imageUrl?: string;
+  private: boolean;
+  startTime: string;
+  title: string;
+  videoUrl: string;
+}
+
 export interface IIntegrations {
   isMailchimpAuthenticated: boolean;
   mailchimpLists: { name: string; id: string }[];
@@ -119,6 +130,7 @@ export interface IEntities {
   applications: EntityRecord<ICommunityApplication>;
   communities: EntityRecord<ICommunity>;
   data: EntityRecord<IMemberData>;
+  events: EntityRecord<IEvent>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
   payments: EntityRecord<IMemberPayment>;
@@ -132,6 +144,7 @@ export const initialEntities: IEntities = {
   applications: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   data: { allIds: [], byId: {} },
+  events: { allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { activeId: null, allIds: [], byId: {} },
   payments: { allIds: [], byId: {} },

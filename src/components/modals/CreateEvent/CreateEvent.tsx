@@ -7,21 +7,39 @@ import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import FormSectionHeader from '../../organisms/Form/FormSectionHeader';
+import useCreateEvent from './useCreateEvent';
 
 const CreateEvent: React.FC = () => {
+  const createEvent = useCreateEvent();
+
   return (
     <Modal
       className="mo-create-event"
       id={ModalType.CREATE_EVENT}
       options={{ sheet: true }}
     >
-      <Form>
+      <Form onSubmit={createEvent}>
         <FormItem title="Change Cover Photo" type="COVER_IMAGE" />
-        <FormSectionHeader>Event Details</FormSectionHeader>
-        <FormItem required title="Event Description" type="LONG_TEXT" />
 
         <FormItem
           required
+          id="EVENT_NAME"
+          title="Event Name"
+          type="SHORT_TEXT"
+        />
+
+        <FormSectionHeader>Event Details</FormSectionHeader>
+
+        <FormItem
+          required
+          id="EVENT_DESCRIPTION"
+          title="Event Description"
+          type="LONG_TEXT"
+        />
+
+        <FormItem
+          required
+          id="VIDEO_URL"
           title="Event Link"
           type="SHORT_TEXT"
           validate="IS_URL"
@@ -67,6 +85,7 @@ const CreateEvent: React.FC = () => {
           className="mo-create-event-privacy-item"
           id="PRIVACY_SETTINGS"
           type="MULTIPLE_CHOICE"
+          value="Private Event"
         />
 
         <FormSubmitButton>Create Event</FormSubmitButton>
