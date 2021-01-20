@@ -52,3 +52,7 @@ $PREF: 's-events';
   > h5 { margin-bottom: $xxs; }
   > button:last-child { margin-top: $sm; }
 }
+
+// ## UPCOMING EVENTS SECTION
+
+.#{$PREF}-upcoming > .c-misc-search { margin-bottom: $md; }

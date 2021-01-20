@@ -78,6 +78,7 @@ export type QuestionType =
   | 'COVER_IMAGE'
   | 'CUSTOM'
   | 'IMAGE'
+  | 'LARGE_TITLE'
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
   | 'MULTIPLE_SELECT'

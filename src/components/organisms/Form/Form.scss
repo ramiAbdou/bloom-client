@@ -4,46 +4,6 @@ $PREF: 'o-form';
 
 .#{$PREF}-item { margin-bottom: $md; }
 
-// ## FORM COVER IMAGE UPLOAD 
-
-.#{$PREF}-item--cover-image {
-  @extend .flex-col;
-
-  background-blend-mode: multiply;
-  background-color: white;
-  background-size: cover;
-  border: 1px $primary dashed;
-  border-radius: $xs;
-  box-sizing: border-box;
-  cursor: pointer;
-  height: 300px;
-  justify-content: flex-end;
-  padding: $sm;
-  width: 100%;
-
-  @include MT { height: initial; padding-top: 50%; }
-
-  > button { margin-top: $sm; width: fit-content; }
-  > input { display: none; }
-}
-
-// ## FORM IMAGE UPLOAD 
-
-.#{$PREF}-item--image {
-  > input { display: none; }
-
-  > button {
-    @extend .flex-acc;
-  
-    background-size: cover;
-    border-radius: 50%;
-    height: $xl * 2;
-    width: $xl * 2;
-  }
-
-  > button > svg { @extend .react-icon--xl; color: white; }
-}
-
 // ## FORM DESCRIPTION
 
 .#{$PREF}-desc {
@@ -122,4 +82,57 @@ $PREF: 'o-form';
   
   &--invisible { display: none; }
   &--sticky { bottom: $md; position: sticky; }
+}
+
+// ## FORM COVER IMAGE UPLOAD 
+
+.#{$PREF}-item--cover-image {
+  @extend .flex-col;
+
+  background-blend-mode: multiply;
+  background-color: white;
+  background-size: cover;
+  border: 1px $primary dashed;
+  border-radius: $xs;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 300px;
+  justify-content: flex-end;
+  padding: $sm;
+  width: 100%;
+
+  @include MT { height: initial; padding-top: 50%; }
+
+  > button { margin-top: $sm; width: fit-content; }
+  > input { display: none; }
+}
+
+// ## FORM IMAGE UPLOAD 
+
+.#{$PREF}-item--image {
+  > input { display: none; }
+
+  > button {
+    @extend .flex-acc;
+  
+    background-size: cover;
+    border-radius: 50%;
+    height: $xl * 2;
+    width: $xl * 2;
+  }
+
+  > button > svg { @extend .react-icon--xl; color: white; }
+}
+
+// ## FORM LARGE TITLE
+
+.#{$PREF}-item--large-title {
+  border: none;
+  font-size: 24px;
+  font-weight: 700;
+  resize: none;
+  width: 100%;
+
+  &:not(&--error):focus ~ hr { border-bottom: 1px $primary solid; }
+  &--error ~ hr { border-bottom: 1px $red solid; }
 }

@@ -10,6 +10,7 @@ import {
 import FormCoverImageUpload from './variants/FormCoverImageUpload';
 import FormDropdown from './variants/FormDropdown';
 import FormImageUpload from './variants/FormImageUpload';
+import FormLargeTitle from './variants/FormLargeTitle';
 import FormLongText from './variants/FormLongText';
 import FormMultipleChoice from './variants/FormMultipleChoice';
 import FormMultipleSelect from './variants/FormMultipleSelect';
@@ -66,6 +67,7 @@ const useItemBody = (props: UseItemBodyProps) => {
     [type === 'TOGGLE', <FormToggle {...baseProps} />],
     [type === 'IMAGE', <FormImageUpload {...baseProps} />],
     [type === 'COVER_IMAGE', <FormCoverImageUpload {...baseProps} />],
+    [type === 'LARGE_TITLE', <FormLargeTitle {...textProps} />],
     [children, children]
   ]);
 

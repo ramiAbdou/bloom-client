@@ -1,4 +1,5 @@
 import day from 'dayjs';
+import { RenderComponentProps } from 'masonic';
 import React from 'react';
 
 import Button from '@atoms/Button';
@@ -39,9 +40,9 @@ const EventsCardContent: React.FC = () => {
   );
 };
 
-const EventsCard: React.FC<IEvent> = (event) => {
+const EventsCard: React.FC<RenderComponentProps<IEvent>> = ({ data }) => {
   return (
-    <EventCardStore.Provider runtimeModel={event}>
+    <EventCardStore.Provider runtimeModel={data}>
       <Card className="s-events-card" onClick={() => null}>
         <EventsCardBackground />
         <EventsCardContent />

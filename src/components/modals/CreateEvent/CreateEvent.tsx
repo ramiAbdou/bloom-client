@@ -24,8 +24,9 @@ const CreateEvent: React.FC = () => {
         <FormItem
           required
           id="EVENT_NAME"
+          placeholder="New Event"
           title="Event Name"
-          type="SHORT_TEXT"
+          type="LARGE_TITLE"
         />
 
         <FormSectionHeader>Event Details</FormSectionHeader>
