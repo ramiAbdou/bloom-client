@@ -3,20 +3,20 @@ import React from 'react';
 import { LoadingProps } from '@constants';
 import { MainContent, MainHeader } from '@containers/Main';
 import useQuery from '@hooks/useQuery';
+import ListStore from '@organisms/List/List.store';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { GET_DIRECTORY } from './Directory.gql';
-import DirectoryStore from './Directory.store';
 import DirectoryCardContainer from './DirectoryCardContainer';
 import DirectoryHeaderSearchBar from './DirectorySearchBar';
 
 const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const numMembers = DirectoryStore.useStoreState((store) => store.numMembers);
+  const numResults = ListStore.useStoreState((store) => store.numResults);
 
   return (
     <MainHeader
       className="s-directory-header"
-      headerTag={`${numMembers} Members`}
+      headerTag={`${numResults} Members`}
       loading={loading}
       title="Directory"
     >
@@ -25,7 +25,7 @@ const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
   );
 };
 
-const DirectoryContent: React.FC = () => {
+const Directory: React.FC = () => {
   const { loading } = useQuery<ICommunity>({
     name: 'getDirectory',
     query: GET_DIRECTORY,
@@ -33,16 +33,12 @@ const DirectoryContent: React.FC = () => {
   });
 
   return (
-    <MainContent Header={DirectoryHeader} loading={loading}>
-      <DirectoryCardContainer />
-    </MainContent>
+    <ListStore.Provider>
+      <MainContent Header={DirectoryHeader} loading={loading}>
+        <DirectoryCardContainer />
+      </MainContent>
+    </ListStore.Provider>
   );
 };
-
-const Directory: React.FC = () => (
-  <DirectoryStore.Provider>
-    <DirectoryContent />
-  </DirectoryStore.Provider>
-);
 
 export default Directory;
