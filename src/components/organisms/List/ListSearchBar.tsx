@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import SearchBar from '@molecules/SearchBar/SearchBar';
-import ListStore from '@organisms/List/List.store';
+import SearchBar, { SearchBarProps } from '@molecules/SearchBar/SearchBar';
+import ListStore from './List.store';
 
-const DirectorySearchBar = () => {
+const ListSearchBar: React.FC<Pick<SearchBarProps, 'placeholder'>> = ({
+  placeholder
+}) => {
   const [value, setValue] = useState('');
 
   const setSearchString = ListStore.useStoreActions(
@@ -16,12 +18,8 @@ const DirectorySearchBar = () => {
   }, [value]);
 
   return (
-    <SearchBar
-      placeholder="Search members..."
-      value={value}
-      onChange={setValue}
-    />
+    <SearchBar placeholder={placeholder} value={value} onChange={setValue} />
   );
 };
 
-export default DirectorySearchBar;
+export default ListSearchBar;

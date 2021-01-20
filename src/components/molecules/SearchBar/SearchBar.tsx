@@ -5,7 +5,7 @@ import Button from '@atoms/Button';
 import { ValueProps } from '@constants';
 import { cx } from '@util/util';
 
-interface SearchBarProps extends ValueProps {
+export interface SearchBarProps extends ValueProps {
   placeholder?: string;
   onChange: (value: string) => any;
 }

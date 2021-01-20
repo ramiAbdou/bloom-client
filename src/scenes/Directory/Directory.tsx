@@ -4,11 +4,11 @@ import { LoadingProps } from '@constants';
 import { MainContent, MainHeader } from '@containers/Main';
 import useQuery from '@hooks/useQuery';
 import ListStore from '@organisms/List/List.store';
+import ListSearchBar from '@organisms/List/ListSearchBar';
 import { ICommunity } from '@store/entities';
 import { Schema } from '@store/schema';
 import { GET_DIRECTORY } from './Directory.gql';
 import DirectoryCardContainer from './DirectoryCardContainer';
-import DirectoryHeaderSearchBar from './DirectorySearchBar';
 
 const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
   const numResults = ListStore.useStoreState((store) => store.numResults);
@@ -20,7 +20,7 @@ const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
       loading={loading}
       title="Directory"
     >
-      <DirectoryHeaderSearchBar />
+      <ListSearchBar />
     </MainHeader>
   );
 };
