@@ -5,7 +5,7 @@ type IdString = string;
 export interface ICommunity {
   application?: IdString;
   autoAccept?: boolean;
-  urlName: string;
+  events?: IdString[];
   id: IdString;
   integrations: IdString;
   logoUrl: string;
@@ -15,6 +15,7 @@ export interface ICommunity {
   name: string;
   primaryColor: string;
   types: IdString[];
+  urlName: string;
 }
 
 export interface ICommunityApplication {

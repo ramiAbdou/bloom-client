@@ -56,17 +56,20 @@ export const uploadImage = async ({
   base64String,
   key
 }: UploadImageArgs): Promise<string> => {
-  key = `${key}-${nanoid()}`;
+  const image: Jimp = await Jimp.read(base64String);
+  const buffer = await image.getBufferAsync(Jimp.MIME_PNG);
+
+  const bucketKey = `${key}-${nanoid()}`;
 
   const options: aws.S3.PutObjectRequest = {
     ACL: 'public-read',
-    Body: base64String,
+    Body: buffer,
     Bucket: bucketName,
-    Key: key
+    Key: bucketKey
   };
 
   await s3.putObject(options).promise();
 
-  const imageUrl = `https://${bucketName}.${cdnEndpoint}/${key}`;
+  const imageUrl = `https://${bucketName}.${cdnEndpoint}/${bucketKey}`;
   return imageUrl;
 };

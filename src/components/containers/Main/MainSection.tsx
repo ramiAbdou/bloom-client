@@ -28,7 +28,7 @@ const MainSection: React.FC<MainSectionProps> = ({
     <section className={css}>
       <LoadingContainer
         {...props}
-        Header={() => <LoadingHeader h3 loading={loading} title={title} />}
+        Header={() => <LoadingHeader h2 loading={loading} title={title} />}
       />
     </section>
   );

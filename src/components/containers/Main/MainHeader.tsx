@@ -50,7 +50,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       </div>
 
       <MainNavigation options={options} />
-      {loading === false && children}
+      {!loading && children}
     </div>
   );
 };

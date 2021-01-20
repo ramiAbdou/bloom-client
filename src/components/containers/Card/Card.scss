@@ -9,6 +9,8 @@ $PREF: 't-misc-card';
   background-color: white;
   border-radius: $xs;
   padding: $sm;
+
+  &--clickable { cursor: pointer; }
 }
 
 // ## INFORMATION CARD

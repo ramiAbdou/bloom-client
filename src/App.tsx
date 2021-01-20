@@ -4,6 +4,7 @@ import '../public/favicon.ico';
 // Extend the time-based library for entire app.
 import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
+import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { StoreProvider } from 'easy-peasy';
 import { ClientContext, GraphQLClient } from 'graphql-hooks';
@@ -17,6 +18,7 @@ import { store } from '@store/Store';
 import Router from './core/routing/Router';
 
 day.extend(advancedFormat);
+day.extend(timezone);
 day.extend(utc);
 
 const client = new GraphQLClient({
