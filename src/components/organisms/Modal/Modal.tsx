@@ -29,6 +29,7 @@ const ModalBackground: React.FC = () => {
 const ModalCancel: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const onClick = () => closeModal();
+
   return (
     <Button className="c-modal-cancel" onClick={onClick}>
       <IoClose />
@@ -108,10 +109,10 @@ const Modal: React.FC<ModalProps> = ({
       {shouldShowModal && (
         <>
           <ModalBackground />
-          <ModalCancel />
           <ModalContainer {...containerProps}>
             <div className={css}>{children}</div>
           </ModalContainer>
+          <ModalCancel />
         </>
       )}
     </AnimatePresence>,
