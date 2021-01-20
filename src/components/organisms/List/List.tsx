@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import ListStore from './List.store';
 
 interface ListProps<T> extends MasonryProps<T> {
+  emptyMessage?: string;
   items: T[];
   options?: MatchSorterOptions<T>;
 }

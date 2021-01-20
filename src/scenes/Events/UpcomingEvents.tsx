@@ -19,7 +19,8 @@ const UpcomingEventsContent: React.FC = () => {
 
   return (
     <>
-      <ListSearchBar placeholder="Search events..." />
+      {!!events?.length && <ListSearchBar placeholder="Search events..." />}
+      {!events?.length && <p>Looks like there are no upcoming events.</p>}
 
       <List
         className="s-events-card-ctr"

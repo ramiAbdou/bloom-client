@@ -4,9 +4,12 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import Card from '@containers/Card/Card';
+import useMutation from '@hooks/useMutation';
 import { IEvent } from '@store/entities';
+import { Schema } from '@store/schema';
 import { takeFirst } from '@util/util';
 import EventCardStore from './EventCard.store';
+import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
 
 const EventsCardBackground: React.FC = () => {
   const imageUrl = EventCardStore.useStoreState((event) => event.imageUrl);
@@ -20,8 +23,19 @@ const EventsCardBackground: React.FC = () => {
 };
 
 const EventsCardButton: React.FC = () => {
+  const eventId = EventCardStore.useStoreState((event) => event.id);
+
+  const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
+    name: 'createEventGuest',
+    query: CREATE_EVENT_GUEST,
+    schema: Schema.MEMBER,
+    variables: { eventId }
+  });
+
+  const onClick = () => createEventGuest();
+
   return (
-    <Button fill primary>
+    <Button fill primary onClick={onClick}>
       RSVP
     </Button>
   );
