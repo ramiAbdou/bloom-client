@@ -28,6 +28,7 @@ export type IsActiveProps = { isActive?: boolean };
 export type LoadingProps = { loading?: boolean };
 export type OnClickProps = { onClick?: VoidFunction };
 export type MessageProps = { message?: string };
+export type ShowProps = { show?: boolean };
 export type StyleProps = { style?: React.CSSProperties };
 export type TitleProps = { title?: string };
 export type ValueProps = { value?: any };

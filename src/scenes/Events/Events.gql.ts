@@ -26,9 +26,17 @@ export const GET_EVENTS = query({
         'private',
         'startTime',
         'title',
-        'videoUrl'
+        'videoUrl',
+        { guests: ['id'] }
       ]
     }
   ],
   operation: 'getEvents'
+}).query;
+
+// ## GET MEMBER UPCOMING EVENTS
+
+export const GET_MEMBER_UPCOMING_EVENTS = query({
+  fields: ['id', { event: ['id'] }, { member: ['id'] }],
+  operation: 'getMemberUpcomingEvents'
 }).query;

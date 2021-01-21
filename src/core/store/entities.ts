@@ -33,6 +33,7 @@ export interface IEvent {
   community?: IdString;
   description: string;
   endTime: string;
+  guests: IdString[];
   id: IdString;
   imageUrl?: string;
   private: boolean;
@@ -53,6 +54,11 @@ export interface IEventGuest {
   id: IdString;
   member: IdString;
 }
+
+export const isEventGuest = (data: any): data is IEventGuest => {
+  const { event, id, member } = (data as IEventGuest) ?? {};
+  return !!event && !!id && !!member;
+};
 
 // ## INTEGRATIONS
 
@@ -81,6 +87,7 @@ export interface IMember {
   createdAt: string;
   data: IdString[];
   duesStatus: 'Active' | 'Inactive';
+  guests: IdString[];
   id: IdString;
   joinedAt: string;
   paymentMethod: IPaymentMethod;

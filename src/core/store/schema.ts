@@ -8,7 +8,7 @@
 import { schema } from 'normalizr';
 
 import { takeFirst } from '@util/util';
-import { isEvent, isMemberPayment } from './entities';
+import { isEvent, isEventGuest, isMemberPayment } from './entities';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
@@ -28,7 +28,22 @@ const Community = new schema.Entity(
 );
 
 const CommunityApplication = new schema.Entity('applications', {});
-const Event = new schema.Entity('events', {});
+
+const Event = new schema.Entity(
+  'events',
+  {},
+  {
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [isEventGuest(parent), { guests: [parent.id] }],
+        {}
+      ]);
+
+      return { ...value, ...processedData };
+    }
+  }
+);
+
 const EventGuest = new schema.Entity('guests', {});
 const Integrations = new schema.Entity('integrations', {});
 
@@ -39,6 +54,7 @@ const Member = new schema.Entity(
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [isEvent(parent), { events: [parent.id] }],
+        [isEventGuest(parent), { guests: [parent.id] }],
         [isMemberPayment(parent), { payments: [parent.id] }],
         {}
       ]);
@@ -68,6 +84,7 @@ Community.define({
 });
 
 Event.define({ community: Community, guests: [EventGuest] });
+EventGuest.define({ event: Event, member: Member });
 
 Member.define({
   community: Community,

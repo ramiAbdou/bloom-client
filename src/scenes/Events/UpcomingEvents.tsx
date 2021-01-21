@@ -10,11 +10,19 @@ import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { GET_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
+import YourUpcomingEvents from './YourUpcomingEvents';
 
 const UpcomingEventsContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventsId } = db.entities.events;
-    return db.community?.events?.map((eventId: string) => byEventsId[eventId]);
+
+    return db.community?.events
+      ?.map((eventId: string) => byEventsId[eventId])
+      ?.filter((event: IEvent) => {
+        return !event.guests.some((guestId: string) =>
+          new Set(db.member.guests).has(guestId)
+        );
+      });
   });
 
   return (
@@ -41,15 +49,19 @@ const UpcomingEvents: React.FC = () => {
   });
 
   return (
-    <ListStore.Provider>
-      <MainSection
-        className="s-events-upcoming"
-        loading={loading}
-        title="Upcoming Events"
-      >
-        <UpcomingEventsContent />
-      </MainSection>
-    </ListStore.Provider>
+    <>
+      <YourUpcomingEvents />
+
+      <ListStore.Provider>
+        <MainSection
+          className="s-events-upcoming"
+          loading={loading}
+          title="Upcoming Events"
+        >
+          <UpcomingEventsContent />
+        </MainSection>
+      </ListStore.Provider>
+    </>
   );
 };
 
