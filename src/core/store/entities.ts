@@ -2,6 +2,8 @@ import { QuestionCategory, QuestionType } from '@constants';
 
 type IdString = string;
 
+// ## COMMUNITY
+
 export interface ICommunity {
   application?: IdString;
   autoAccept?: boolean;
@@ -18,12 +20,17 @@ export interface ICommunity {
   urlName: string;
 }
 
+// ## COMMUNITY APPLICATION
+
 export interface ICommunityApplication {
   description: string;
   title: string;
 }
 
+// ## EVENT
+
 export interface IEvent {
+  community?: IdString;
   description: string;
   endTime: string;
   id: IdString;
@@ -34,6 +41,21 @@ export interface IEvent {
   videoUrl: string;
 }
 
+export const isEvent = (data: any): data is IEvent => {
+  const { endTime, startTime, videoUrl } = (data as IEvent) ?? {};
+  return !!endTime && !!startTime && !!videoUrl;
+};
+
+// ## EVENT GUEST
+
+export interface IEventGuest {
+  event: IdString;
+  id: IdString;
+  member: IdString;
+}
+
+// ## INTEGRATIONS
+
 export interface IIntegrations {
   isMailchimpAuthenticated: boolean;
   mailchimpLists: { name: string; id: string }[];
@@ -41,6 +63,8 @@ export interface IIntegrations {
   mailchimpListName: string;
   stripeAccountId: string;
 }
+
+// ## MEMBER
 
 export interface IPaymentMethod {
   brand: string;
@@ -67,11 +91,15 @@ export interface IMember {
   user: IdString;
 }
 
+// ## MEMBER DATA
+
 export interface IMemberData {
   id: IdString;
   question: IdString;
   value: string | string[];
 }
+
+// ## MEMBER PAYMENT
 
 export interface IMemberPayment {
   amount: number;
@@ -82,6 +110,13 @@ export interface IMemberPayment {
   type: IdString;
 }
 
+export const isMemberPayment = (data: any): data is IMemberPayment => {
+  const { stripeInvoiceUrl } = (data as IMemberPayment) ?? {};
+  return !!stripeInvoiceUrl;
+};
+
+// ## MEMBER TYPE
+
 export interface IMemberType {
   amount: number;
   id: IdString;
@@ -89,6 +124,8 @@ export interface IMemberType {
   name: string;
   recurrence: 'LIFETIME' | 'MONTHLY' | 'YEARLY';
 }
+
+// ## QUESTION
 
 export interface IQuestion {
   category: QuestionCategory;
@@ -105,6 +142,8 @@ export interface IQuestion {
   type: QuestionType;
   version: number;
 }
+
+// ## USER
 
 export interface IUser {
   currentLocation: string;
@@ -132,6 +171,7 @@ export interface IEntities {
   communities: EntityRecord<ICommunity>;
   data: EntityRecord<IMemberData>;
   events: EntityRecord<IEvent>;
+  guests: EntityRecord<IEventGuest>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
   payments: EntityRecord<IMemberPayment>;
@@ -146,10 +186,11 @@ export const initialEntities: IEntities = {
   communities: { activeId: null, allIds: [], byId: {} },
   data: { allIds: [], byId: {} },
   events: { allIds: [], byId: {} },
+  guests: { allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { activeId: null, allIds: [], byId: {} },
   payments: { allIds: [], byId: {} },
   questions: { allIds: [], byId: {} },
   types: { allIds: [], byId: {} },
-  users: { allIds: [], byId: {} }
+  users: { activeId: null, allIds: [], byId: {} }
 };

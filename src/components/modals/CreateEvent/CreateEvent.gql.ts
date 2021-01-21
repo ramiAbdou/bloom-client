@@ -3,7 +3,14 @@ import { mutation } from 'gql-query-builder';
 // ## CREATE EVENT
 
 export const CREATE_EVENT = mutation({
-  fields: ['id'],
+  fields: [
+    'endTime',
+    'id',
+    'startTime',
+    'title',
+    'videoUrl',
+    { community: ['id'] }
+  ],
   operation: 'createEvent',
   variables: {
     description: { required: true },

@@ -21,12 +21,7 @@ type StoreModel = {
 };
 
 export const store = createStore<StoreModel>(
-  {
-    db: dbModel,
-    modal: modalModel,
-    panel: panelModel,
-    toast: toastModel
-  },
+  { db: dbModel, modal: modalModel, panel: panelModel, toast: toastModel },
   { disableImmer: true }
 );
 

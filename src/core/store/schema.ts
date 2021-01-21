@@ -8,39 +8,38 @@
 import { schema } from 'normalizr';
 
 import { takeFirst } from '@util/util';
+import { isEvent, isMemberPayment } from './entities';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
-const Community = new schema.Entity('communities', {});
+const Community = new schema.Entity(
+  'communities',
+  {},
+  {
+    processStrategy: (community, parent) => {
+      const processedData = takeFirst([
+        [isEvent(parent), { events: [parent.id] }],
+        {}
+      ]);
+
+      return { ...community, ...processedData };
+    }
+  }
+);
+
 const CommunityApplication = new schema.Entity('applications', {});
 const Event = new schema.Entity('events', {});
+const EventGuest = new schema.Entity('guests', {});
 const Integrations = new schema.Entity('integrations', {});
 
 const Member = new schema.Entity(
   'members',
   {},
   {
-    mergeStrategy: (a, b) => {
-      const aPayments = a.payments;
-      const bPayments = b.payments;
-
-      const hasPayments: boolean = aPayments?.length && bPayments?.length;
-
-      const updatedB = hasPayments
-        ? {
-            ...b,
-            payments: aPayments
-              .filter((value: any) => !bPayments.includes(value))
-              .concat(bPayments)
-          }
-        : b;
-
-      return { ...a, ...updatedB };
-    },
-
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [!!parent.stripeInvoiceUrl, { payments: [parent.id] }],
+        [isEvent(parent), { events: [parent.id] }],
+        [isMemberPayment(parent), { payments: [parent.id] }],
         {}
       ]);
 
@@ -55,7 +54,7 @@ const MemberType = new schema.Entity('types', {});
 const Question = new schema.Entity('questions', {});
 const User = new schema.Entity('users', {});
 
-// Handle the relationships. Using definition like this handles all of the
+// ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.
 
 Community.define({
@@ -68,9 +67,12 @@ Community.define({
   types: [MemberType]
 });
 
+Event.define({ community: Community, guests: [EventGuest] });
+
 Member.define({
   community: Community,
   data: [MemberData],
+  guests: [EventGuest],
   payments: [MemberPayment],
   type: MemberType,
   user: User
@@ -86,6 +88,7 @@ User.define({ members: [Member] });
 export const Schema = {
   COMMUNITY: Community,
   EVENT: Event,
+  EVENT_GUEST: EventGuest,
   INTEGRATIONS: Integrations,
   MEMBER: Member,
   MEMBER_DATA: MemberData,

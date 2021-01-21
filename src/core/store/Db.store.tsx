@@ -1,10 +1,9 @@
+import deepmerge from 'deepmerge';
 import { Action, action, Computed, computed } from 'easy-peasy';
-import mergeWith from 'lodash.mergewith';
 import { normalize, Schema } from 'normalizr';
 
 import { updateDocumentColors } from '@util/colorUtil';
 import {
-  EntityRecord,
   ICommunity,
   IEntities,
   IIntegrations,
@@ -13,30 +12,6 @@ import {
   IQuestion,
   IUser
 } from './entities';
-
-/**
- * Parses the entities using the normalization function, and sets the activeId
- * of the entities if the entity is a communities or members.
- *
- * @param data Data to normalize.
- * @param schema Schema in which to normalize the data on.
- */
-const parseEntities = (data: any, schema: Schema<any>, setActiveId?: boolean) =>
-  Object.entries(normalize(data, schema).entities).reduce(
-    (acc: Record<string, any>, [key, value]) => {
-      const activeId = setActiveId
-        ? ['users'].includes(key) && {
-            activeId: Object.keys(value)[0]
-          }
-        : {};
-
-      return {
-        ...acc,
-        [key]: { ...activeId, allIds: Object.keys(value), byId: value }
-      };
-    },
-    {}
-  );
 
 interface MergeEntitiesArgs {
   communityReferenceColumn?: string;
@@ -122,74 +97,32 @@ export const dbModel: DbModel = {
    * the lodash deep merge function to make the updates.
    */
   mergeEntities: action(
-    (
-      { community, entities, ...state },
-      { communityReferenceColumn, data, schema, setActiveId }: MergeEntitiesArgs
-    ) => {
-      const { byId: byCommunityId } = entities.communities;
-      const parsedEntities = parseEntities(data, schema, setActiveId);
+    (state, { data, schema, setActiveId }: MergeEntitiesArgs) => {
+      const parsedEntities = Object.entries(
+        normalize(data, schema).entities
+      ).reduce((acc: Record<string, any>, [key, value]) => {
+        const activeId = setActiveId
+          ? ['users'].includes(key) && { activeId: Object.keys(value)[0] }
+          : {};
 
-      // If there is a communityReferenceColumn, then not only should we
-      // update the EntityRecord's with the updated/parsed data, we should
-      // also add the references of those data entity ID's to the active
-      // community.
-      const updatedCommunities = !communityReferenceColumn
-        ? {}
-        : {
-            communities: {
-              ...entities.communities,
-              byId: {
-                ...byCommunityId,
-                [community.id]: {
-                  ...community,
-
-                  // References are only stored as ID's, so we just append
-                  // the new ID's to the existing reference ID's.
-                  [communityReferenceColumn]: mergeWith(
-                    community[communityReferenceColumn] ?? [],
-                    parsedEntities[communityReferenceColumn].allIds
-                  )
-                }
-              }
-            } as EntityRecord<ICommunity>
-          };
-
-      // When there is a conflict in data, we have to resolve it.
-      // Specifically in the cases of objects and arrays.
-      // eslint-disable-next-line consistent-return
-      const mergeStrategy = (target: any, source: any) => {
-        if (Array.isArray(target) && Array.isArray(source)) {
-          // Strip away all the duplicate values from the source array
-          // that are already in the target array.
-          const updatedSource = source.filter(
-            (value: any) => !target.includes(value)
-          );
-
-          // Concat the source to the target.
-          return target.concat(updatedSource);
-        }
-
-        // If two objects have the same ID, it means they are the same
-        // entity, so we copy over the new values from the source to the
-        // target.
-        if (
-          typeof target === 'object' &&
-          typeof source === 'object' &&
-          !!target?.id &&
-          target?.id === source?.id
-        ) {
-          return { ...target, ...source };
-        }
-      };
+        return {
+          ...acc,
+          [key]: { ...activeId, allIds: Object.keys(value), byId: value }
+        };
+      }, {});
 
       return {
         ...state,
-        community,
-        entities: mergeWith(
-          { ...entities, ...updatedCommunities },
-          parsedEntities,
-          mergeStrategy
-        ) as IEntities
+        entities: deepmerge(state.entities, parsedEntities, {
+          arrayMerge: (target: any[], source: any[]) => {
+            const updatedSource = source.filter(
+              (value: any) => !target.includes(value)
+            );
+
+            // Concat the source to the target.
+            return target.concat(updatedSource);
+          }
+        }) as IEntities
       };
     }
   ),

@@ -9,7 +9,7 @@ export interface ListModel {
 
 const model: ListModel = {
   numResults: 0,
-  searchString: '',
+  searchString: null,
   setNumResults: action((state, numResults: number) => ({
     ...state,
     numResults
