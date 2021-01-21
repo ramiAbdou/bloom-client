@@ -12,7 +12,6 @@ const IndividualEventHeaderContent: React.FC = () => {
 
   const eventUrl = EventStore.useStoreState((event) => event.eventUrl);
   const guests = EventStore.useStoreState((event) => event.guests);
-
   const isPrivate = EventStore.useStoreState((event) => event.private);
   const title = EventStore.useStoreState((event) => event.title);
 

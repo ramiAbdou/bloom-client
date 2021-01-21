@@ -1,10 +1,64 @@
 import React from 'react';
 
-const IndividualEventGuestList: React.FC = () => {
+import Card from '@containers/Card/Card';
+import Row from '@containers/Row/Row';
+import ProfilePicture from '@molecules/ProfilePicture';
+import { IUser } from '@store/entities';
+import EventStore from '../Event.store';
+
+const IndividualEventGuest: React.FC<
+  Pick<IUser, 'firstName' | 'lastName' | 'pictureUrl'>
+> = (props) => {
+  const { firstName, lastName, pictureUrl } = props;
+  const fullName = `${firstName} ${lastName}`;
+
   return (
-    <div>
-      <div />
-    </div>
+    <Row className="s-events-individual-guest">
+      <ProfilePicture
+        circle
+        fontSize={16}
+        href={pictureUrl}
+        size={36}
+        {...props}
+      />
+      <p className="body--bold">{fullName}</p>
+    </Row>
+  );
+};
+
+const IndividualEventGuestListContent: React.FC = () => {
+  const guests = EventStore.useStoreState((event) => {
+    return event.guests;
+  });
+
+  const numGuests = guests?.length;
+
+  return (
+    <>
+      {!numGuests && <p>No guests have RSVP'd yet.</p>}
+
+      <div>
+        <IndividualEventGuest
+          firstName="Rami"
+          lastName="Abdou"
+          pictureUrl={null}
+        />
+      </div>
+    </>
+  );
+};
+
+const IndividualEventGuestList: React.FC = () => {
+  const numGuests = EventStore.useStoreState((event) => event.guests?.length);
+
+  return (
+    <Card
+      className="s-events-individual-card"
+      headerTag={numGuests ? `${numGuests} Going` : null}
+      title="Guest List"
+    >
+      <IndividualEventGuestListContent />
+    </Card>
   );
 };
 

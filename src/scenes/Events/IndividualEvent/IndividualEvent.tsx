@@ -7,6 +7,8 @@ import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import EventStore from '../Event.store';
 import { GET_EVENT, GetEventArgs } from '../Events.gql';
+import IndividualEventAbout from './IndividualEventAbout';
+import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventHeader from './IndividualEventHeader';
 
 interface EventIdProps {
@@ -30,6 +32,11 @@ const IndividualEvent: React.FC = () => {
     <EventStore.Provider runtimeModel={event}>
       <div className="s-events-individual">
         <IndividualEventHeader />
+
+        <div className="s-events-individual-grid">
+          <IndividualEventAbout />
+          <IndividualEventGuestList />
+        </div>
       </div>
     </EventStore.Provider>
   );

@@ -12,7 +12,10 @@ $PREF: 's-events-individual';
   column-gap: $sm;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  padding: $md 0;
+  padding: $md;
+
+  > *:first-child { grid-column-end: span 7; }
+  > *:last-child { grid-column-end: span 5; }
 }
 
 // ## INDIVIDUAL EVENT HEADER
@@ -21,12 +24,10 @@ $PREF: 's-events-individual';
   @extend .#{$PREF}-grid;
 
   background-color: white;
-  padding: $md;
 
   > div:first-child {
     background-color: $gray-5;
     border-radius: $xs;
-    grid-column-end: span 7;
     position: relative;
     width: 100%;
     &::before { content: ''; display: block; padding-top: 50%; }
@@ -50,10 +51,18 @@ $PREF: 's-events-individual';
 .#{$PREF}-header-content {
   @extend .flex-col;
 
-  grid-column-end: span 5;
   > div:first-child { margin-bottom: $md; margin-top: auto; }
   > div:first-child > h1 { margin-bottom: $xs; }
   > div:first-child > h4 { margin-bottom: $sm; }
 
   > .t-action-ctr { margin-top: auto; }
 }
+
+// // ## INDIVIDUAL EVENT CARD - Refers to the about card and the guest list
+// // card.
+
+.#{$PREF}-card {
+  > .t-loading-header:first-child { margin-bottom: $sm; }
+}
+
+.#{$PREF}-guest > *:first-child { margin-right: $xs; }

@@ -9,13 +9,14 @@ import { cx } from '@util/util';
 interface CardProps
   extends ChildrenProps,
     ClassNameProps,
-    Pick<LoadingHeaderProps, 'loading' | 'title'> {
+    Pick<LoadingHeaderProps, 'headerTag' | 'loading' | 'title'> {
   onClick?: VoidFunction;
 }
 
 const Card: React.FC<CardProps> = ({
   children,
   className,
+  headerTag,
   loading,
   onClick,
   title
@@ -27,7 +28,15 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div className={css} onClick={onClick}>
-      {title && <LoadingHeader h3 loading={loading} title={title} />}
+      {title && (
+        <LoadingHeader
+          h3
+          headerTag={headerTag}
+          loading={loading}
+          title={title}
+        />
+      )}
+
       {!loading && children}
     </div>
   );

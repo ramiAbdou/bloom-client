@@ -40,7 +40,7 @@ const LoadingHeader: React.FC<LoadingHeaderProps> = ({
       {!h2 && !h3 && <h1>{title}</h1>}
       {h2 && <h2>{title}</h2>}
       {h3 && <h3>{title}</h3>}
-      {loading === false && headerTag && <HeaderTag>{HeaderTag}</HeaderTag>}
+      {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
       <Spinner dark loading={loading} />
     </div>
   );

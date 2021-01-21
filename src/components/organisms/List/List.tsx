@@ -39,6 +39,7 @@ function List<T>({ items, options, render, ...props }: ListProps<T>) {
       items={sortedItems ?? []}
       overscanBy={5}
       render={render}
+      style={{ outline: 'none' }}
       {...props}
     />
   );
