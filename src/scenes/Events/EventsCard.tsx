@@ -1,6 +1,7 @@
 import day from 'dayjs';
 import { RenderComponentProps } from 'masonic';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button';
 import { ShowProps } from '@constants';
@@ -10,11 +11,11 @@ import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
-import EventCardStore from './EventCard.store';
+import EventStore from './Event.store';
 import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
 
 const EventsCardBackground: React.FC = () => {
-  const imageUrl = EventCardStore.useStoreState((event) => event.imageUrl);
+  const imageUrl = EventStore.useStoreState((event) => event.imageUrl);
 
   const body = takeFirst([
     [imageUrl, <img alt="Profile Avatar" src={imageUrl} />],
@@ -25,7 +26,7 @@ const EventsCardBackground: React.FC = () => {
 };
 
 const EventsCardRSVPButton: React.FC<ShowProps> = ({ show }) => {
-  const eventId = EventCardStore.useStoreState((event) => event.id);
+  const eventId = EventStore.useStoreState((event) => event.id);
 
   const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
     name: 'createEventGuest',
@@ -36,7 +37,10 @@ const EventsCardRSVPButton: React.FC<ShowProps> = ({ show }) => {
 
   if (!show) return null;
 
-  const onClick = () => createEventGuest();
+  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    createEventGuest();
+  };
 
   return (
     <Button fill primary onClick={onClick}>
@@ -46,13 +50,14 @@ const EventsCardRSVPButton: React.FC<ShowProps> = ({ show }) => {
 };
 
 const EventsCardShareLinkButton: React.FC<ShowProps> = ({ show }) => {
-  const videoUrl = EventCardStore.useStoreState((event) => event.videoUrl);
+  const eventUrl = EventStore.useStoreState((event) => event.eventUrl);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   if (!show) return null;
 
-  const onClick = () => {
-    navigator.clipboard.writeText(videoUrl);
+  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(eventUrl);
     showToast({ message: 'Event link copied to clipboard.' });
   };
 
@@ -66,8 +71,8 @@ const EventsCardShareLinkButton: React.FC<ShowProps> = ({ show }) => {
 const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
   guest
 }) => {
-  const startTime = EventCardStore.useStoreState((event) => event.startTime);
-  const title = EventCardStore.useStoreState((event) => event.title);
+  const startTime = EventStore.useStoreState((event) => event.startTime);
+  const title = EventStore.useStoreState((event) => event.title);
   const formattedStartTime = day(startTime).format('ddd, MMM D @ hA z');
 
   return (
@@ -85,13 +90,16 @@ interface EventsCardProps extends RenderComponentProps<IEvent> {
 }
 
 const EventsCard: React.FC<EventsCardProps> = ({ data, guest }) => {
+  const { push } = useHistory();
+  const onClick = () => push(data?.id);
+
   return (
-    <EventCardStore.Provider runtimeModel={data}>
-      <Card className="s-events-card" onClick={() => null}>
+    <EventStore.Provider runtimeModel={data}>
+      <Card className="s-events-card" onClick={onClick}>
         <EventsCardBackground />
         <EventsCardContent guest={guest} />
       </Card>
-    </EventCardStore.Provider>
+    </EventStore.Provider>
   );
 };
 

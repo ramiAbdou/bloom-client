@@ -33,6 +33,7 @@ export interface IEvent {
   community?: IdString;
   description: string;
   endTime: string;
+  eventUrl: string;
   guests: IdString[];
   id: IdString;
   imageUrl?: string;

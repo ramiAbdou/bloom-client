@@ -1,5 +1,6 @@
 import React from 'react';
 
+import MainContent from '@containers/Main/MainContent';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
@@ -10,6 +11,7 @@ import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { GET_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
+import EventsHeader from './EventsHeader';
 import YourUpcomingEvents from './YourUpcomingEvents';
 
 const UpcomingEventsContent: React.FC = () => {
@@ -49,7 +51,7 @@ const UpcomingEvents: React.FC = () => {
   });
 
   return (
-    <>
+    <MainContent Header={EventsHeader}>
       <YourUpcomingEvents />
 
       <ListStore.Provider>
@@ -61,7 +63,7 @@ const UpcomingEvents: React.FC = () => {
           <UpcomingEventsContent />
         </MainSection>
       </ListStore.Provider>
-    </>
+    </MainContent>
   );
 };
 

@@ -12,6 +12,29 @@ export const CREATE_EVENT_GUEST = mutation({
   variables: { eventId: { required: true } }
 }).query;
 
+// ## GET EVENT
+
+export interface GetEventArgs {
+  eventId: string;
+}
+
+export const GET_EVENT = query({
+  fields: [
+    'description',
+    'endTime',
+    'eventUrl',
+    'id',
+    'imageUrl',
+    'private',
+    'startTime',
+    'title',
+    'videoUrl',
+    { guests: ['id', { member: ['id'] }] }
+  ],
+  operation: 'getEvent',
+  variables: { eventId: { required: true } }
+}).query;
+
 // ## GET EVENTS
 
 export const GET_EVENTS = query({
@@ -21,6 +44,7 @@ export const GET_EVENTS = query({
       events: [
         'description',
         'endTime',
+        'eventUrl',
         'id',
         'imageUrl',
         'private',

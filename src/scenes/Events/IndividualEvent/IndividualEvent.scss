@@ -1,0 +1,59 @@
+$PREF: 's-events-individual';
+
+// ## INDIVIDUAL EVENT
+
+.#{$PREF} {
+  padding: 0;
+}
+
+// ## INDIVIDUAL EVENT GRID
+
+.#{$PREF}-grid {
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding: $md 0;
+}
+
+// ## INDIVIDUAL EVENT HEADER
+
+.#{$PREF}-header {
+  @extend .#{$PREF}-grid;
+
+  background-color: white;
+  padding: $md;
+
+  > div:first-child {
+    background-color: $gray-5;
+    border-radius: $xs;
+    grid-column-end: span 7;
+    position: relative;
+    width: 100%;
+    &::before { content: ''; display: block; padding-top: 50%; }
+
+    > * {
+      background-color: $gray-5;
+      border-radius: $xs;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+    }
+  }
+}
+
+// ## INDIVIDUAL EVENT HEADER CONTENT - Contains basic information such as
+// date, title, and actions for the event.
+
+.#{$PREF}-header-content {
+  @extend .flex-col;
+
+  grid-column-end: span 5;
+  > div:first-child { margin-bottom: $md; margin-top: auto; }
+  > div:first-child > h1 { margin-bottom: $xs; }
+  > div:first-child > h4 { margin-bottom: $sm; }
+
+  > .t-action-ctr { margin-top: auto; }
+}

@@ -12,7 +12,10 @@ const useCreateEvent = (): OnFormSubmit => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const [createEvent] = useMutation<IEvent, Omit<IEvent, 'guests' | 'id'>>({
+  const [createEvent] = useMutation<
+    IEvent,
+    Omit<IEvent, 'eventUrl' | 'guests' | 'id'>
+  >({
     name: 'createEvent',
     query: CREATE_EVENT,
     schema: Schema.EVENT
@@ -53,7 +56,7 @@ const useCreateEvent = (): OnFormSubmit => {
       }
     }
 
-    const args: Omit<IEvent, 'guests' | 'id'> = {
+    const args: Omit<IEvent, 'eventUrl' | 'guests' | 'id'> = {
       description: items.find(({ id }) => id === 'EVENT_DESCRIPTION')?.value,
       endTime,
       imageUrl,

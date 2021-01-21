@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
 
+import { ShowProps } from '@constants';
 import { cx } from '@util/util';
 import { useShowSpinner } from '../Spinner/Spinner';
 
 export interface ButtonProps
-  extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>> {
+  extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>>,
+    ShowProps {
   href?: string;
   fill?: boolean;
   fit?: boolean;
@@ -54,6 +56,7 @@ const Button = forwardRef(
       onClick,
       primary,
       secondary,
+      show,
       type,
       tertiary,
       white,
@@ -65,12 +68,14 @@ const Button = forwardRef(
     const showSpinner: boolean = useShowSpinner(loading) && !!loadingText;
     disabled = disabled || showSpinner;
 
+    if (show === false) return null;
+
     const onButtonClick = (
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
       if (type === 'button') event.preventDefault();
       if (disabled) return;
-      if (onClick) onClick(null);
+      if (onClick) onClick(event);
 
       if (href) {
         // If the browser is Safari, just change the location of the current
