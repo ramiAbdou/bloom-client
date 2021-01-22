@@ -5,14 +5,14 @@ import URLBuilder from 'util/URLBuilder';
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
 import { APP } from '@constants';
+import BloomLogo from '@images/bloom.svg';
+import GoogleLogo from '@images/google.svg';
+import NetworkIcon from '@images/network.svg';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { cx } from '@util/util';
-import BloomLogo from './images/bloom.svg';
-import GoogleLogo from './images/google.svg';
-import NetworkIcon from './images/network.svg';
 import { LoginError } from './Login.types';
 import { getLoginErrorMessage } from './Login.util';
 import useSendLoginLink from './useSendLoginLink';
@@ -79,7 +79,7 @@ const LoginCardHeader: React.FC = () => (
       <BloomLogo style={{ height: 18 * 1.25, width: 75 * 1.25 }} />
     </div>
 
-    <NetworkIcon style={{ height: 151 }} />
+    <NetworkIcon stroke="#f58023" style={{ height: 151, opacity: 0.2 }} />
   </div>
 );
 

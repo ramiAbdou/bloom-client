@@ -6,15 +6,17 @@ import Button from '@atoms/Button';
 import { HeaderTag } from '@atoms/Tags';
 import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
+import Network from '@images/network.svg';
 import { useStoreActions, useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
-import Network from './network.svg';
 
 const IndividualEventHeaderBackground: React.FC = () => {
+  const primaryColor = useStoreState(({ db }) => db.community.primaryColor);
+
   return (
     <div>
       <div />
-      <Network />
+      <Network stroke={primaryColor} />
       <Network />
     </div>
   );
