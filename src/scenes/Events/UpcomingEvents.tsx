@@ -21,7 +21,7 @@ const UpcomingEventsContent: React.FC = () => {
     return db.community?.events
       ?.map((eventId: string) => byEventsId[eventId])
       ?.filter((event: IEvent) => {
-        return !event.guests.some((guestId: string) =>
+        return !event.guests?.some((guestId: string) =>
           new Set(db.member.guests).has(guestId)
         );
       });

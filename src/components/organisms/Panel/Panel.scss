@@ -12,10 +12,12 @@ $PREF: 'c-panel';
   background-color: white;
   border-radius: $xs;
   min-width: $xxl * 4;
-  padding: $xs;
+  padding: $sm;
   position: fixed;
   width: max-content;
   z-index: 100;
+
+  &--lg { min-width: $xxl * 5; }
 }
 
 // ## PANEL OPTION

@@ -1,3 +1,4 @@
+import day from 'dayjs';
 import React from 'react';
 import { IoCreateOutline } from 'react-icons/io5';
 
@@ -11,6 +12,11 @@ import IndividualEventActions from './IndividualEventActions';
 const IndividualEventHeaderDateContainer: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const eventId = useStoreState(({ db }) => db.event?.id);
+
+  const hasPast = useStoreState(({ db }) => {
+    return day.utc().isAfter(db.event.startTime);
+  });
+
   const onClick = () => showModal(`${ModalType.CREATE_EVENT}-${eventId}`);
 
   return (
@@ -20,7 +26,7 @@ const IndividualEventHeaderDateContainer: React.FC = () => {
         <p className="meta">11:00 AM - 12:30 PM EST</p>
       </div>
 
-      <Button tertiary onClick={onClick}>
+      <Button tertiary show={!hasPast} onClick={onClick}>
         Edit
         <IoCreateOutline />
       </Button>

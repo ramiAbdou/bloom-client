@@ -56,6 +56,7 @@ export enum ModalType {
 }
 
 export enum PanelType {
+  ADD_RECORDING_LINK = 'ADD_RECORDING_LINK',
   PROFILE = 'PROFILE'
 }
 

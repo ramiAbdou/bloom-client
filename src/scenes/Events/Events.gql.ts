@@ -64,3 +64,11 @@ export const GET_MEMBER_UPCOMING_EVENTS = query({
   fields: ['id', { event: ['id'] }, { member: ['id'] }],
   operation: 'getMemberUpcomingEvents'
 }).query;
+
+// ## UPDATE RECORDING LINK
+
+export const UPDATE_RECORDING_LINK = mutation({
+  fields: ['id', 'recordingUrl'],
+  operation: 'updateRecordingLink',
+  variables: { id: { required: true }, recordingUrl: { required: true } }
+}).query;

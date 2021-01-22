@@ -37,9 +37,12 @@ export interface IEvent {
   guests: IdString[];
   id: IdString;
   imageUrl?: string;
+  past?: boolean;
   private: boolean;
+  recordingUrl?: string;
   startTime: string;
   title: string;
+  upcoming?: boolean;
   videoUrl: string;
 }
 

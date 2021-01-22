@@ -42,8 +42,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
       videoUrl: items.find(({ id }) => id === 'VIDEO_URL')?.value
     };
 
-    const { data } = await updateEvent(args);
-    console.log(data);
+    await updateEvent(args);
     showToast({ message: 'Event updated.' });
     closeModal();
   };

@@ -11,6 +11,7 @@ import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAnalytics from './IndividualEventAnalytics';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventHeader from './IndividualEventHeader';
+import IndividualEventPanel from './IndividualEventPanel';
 
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
@@ -44,6 +45,7 @@ const IndividualEvent: React.FC = () => {
         <IndividualEventAnalytics />
       </div>
 
+      <IndividualEventPanel id={eventId} />
       <CreateEventModal id={eventId} />
     </>
   );

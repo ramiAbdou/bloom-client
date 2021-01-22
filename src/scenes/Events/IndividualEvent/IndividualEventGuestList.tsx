@@ -3,7 +3,7 @@ import React from 'react';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture';
-import { IUser } from '@store/entities';
+import { IEventGuest, IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventGuest: React.FC<
@@ -27,19 +27,25 @@ const IndividualEventGuest: React.FC<
 };
 
 const IndividualEventGuestListContent: React.FC = () => {
-  const guests = useStoreState(({ db }) => db.event?.guests);
-  const numGuests = guests?.length;
+  const users: IUser[] = useStoreState(({ db }) => {
+    const { byId: byGuestsId } = db.entities.guests;
+    const { byId: byMembersId } = db.entities.members;
+    const { byId: byUsersId } = db.entities.users;
+
+    return db.event?.guests
+      ?.map((guestId: string) => byGuestsId[guestId])
+      ?.map((guest: IEventGuest) => byMembersId[guest.member])
+      ?.map((member: IMember) => byUsersId[member.user]);
+  });
 
   return (
     <>
-      {!numGuests && <p>No guests have RSVP'd yet.</p>}
+      {!users?.length && <p>No guests have RSVP'd yet.</p>}
 
       <div>
-        <IndividualEventGuest
-          firstName="Rami"
-          lastName="Abdou"
-          pictureUrl={null}
-        />
+        {users.map((user: IUser) => {
+          return <IndividualEventGuest {...user} />;
+        })}
       </div>
     </>
   );

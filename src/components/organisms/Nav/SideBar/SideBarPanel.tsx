@@ -75,7 +75,7 @@ const SidebarPanel: React.FC = () => {
     <Panel
       align="RIGHT_BOTTOM"
       id={PanelType.PROFILE}
-      style={{ marginLeft: 24, minWidth: 270 }}
+      style={{ marginLeft: 24, minWidth: 270, padding: 8 }}
     >
       {actions.map((action) => (
         <PanelOption key={action.text} {...action} />

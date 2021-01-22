@@ -16,6 +16,7 @@ export interface PanelProps
     StyleProps {
   align?: PanelAlign;
   scrollId?: string;
+  size?: 'md' | 'lg';
 }
 
 const PanelContent = ({
@@ -24,6 +25,7 @@ const PanelContent = ({
   children,
   id: panelId,
   scrollId,
+  size,
   style
 }: PanelProps) => {
   const id = useStoreState(({ panel }) => panel.id);
@@ -119,7 +121,10 @@ const PanelContent = ({
 
   // ## END: CALCULATE PICKER COORDINATES
 
-  const css = cx('card c-panel', { [className]: className });
+  const css = cx('card c-panel', {
+    'c-panel--lg': size === 'lg',
+    [className]: className
+  });
 
   return (
     <motion.div
