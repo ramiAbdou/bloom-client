@@ -2,16 +2,17 @@ import deepmerge from 'deepmerge';
 import { Action, action, Computed, computed } from 'easy-peasy';
 import { normalize, Schema } from 'normalizr';
 
-import { updateDocumentColors } from '@util/colorUtil';
 import {
   ICommunity,
   IEntities,
+  IEvent,
   IIntegrations,
   IMember,
   initialEntities,
   IQuestion,
   IUser
-} from './entities';
+} from '@store/entities';
+import { updateDocumentColors } from '@util/colorUtil';
 
 interface MergeEntitiesArgs {
   communityReferenceColumn?: string;
@@ -38,12 +39,14 @@ export type DbModel = {
   clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
   entities: IEntities;
+  event: Computed<DbModel, IEvent>;
   hasPaidMembership: Computed<DbModel, boolean>;
   integrations: Computed<DbModel, IIntegrations>;
   isOwner: Computed<DbModel, boolean>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
   setActiveCommunity: Action<DbModel, string>;
+  setActiveEvent: Action<DbModel, string>;
   updateCommunity: Action<DbModel, Partial<ICommunity>>;
   updateEntities: Action<DbModel, UpdateEntitiesArgs>;
   user: Computed<DbModel, IUser>;
@@ -72,6 +75,11 @@ export const dbModel: DbModel = {
 
   entities: initialEntities,
 
+  event: computed(({ entities }) => {
+    const { activeId, byId } = entities.events;
+    return byId[activeId];
+  }),
+
   hasPaidMembership: computed(({ community, entities }) => {
     const { byId: byTypeId } = entities.types;
     return community?.types?.some(
@@ -98,35 +106,20 @@ export const dbModel: DbModel = {
    */
   mergeEntities: action(
     (state, { data, schema, setActiveId }: MergeEntitiesArgs) => {
-      console.log('data', data);
+      const normalizedEntities = normalize(data, schema).entities;
 
-      const parsedEntities = Object.entries(
-        normalize(data, schema).entities
-      ).reduce((acc: Record<string, any>, [key, value]) => {
-        const activeId = setActiveId
-          ? ['users'].includes(key) && { activeId: Object.keys(value)[0] }
-          : {};
+      const parsedEntities = Object.entries(normalizedEntities).reduce(
+        (acc: Record<string, any>, [key, value]) => {
+          const activeId = setActiveId
+            ? ['users'].includes(key) && { activeId: Object.keys(value)[0] }
+            : {};
 
-        return {
-          ...acc,
-          [key]: { ...activeId, allIds: Object.keys(value), byId: value }
-        };
-      }, {});
-
-      console.log('parsedData', parsedEntities);
-
-      console.log(
-        'mergedData',
-        deepmerge(state.entities, parsedEntities, {
-          arrayMerge: (target: any[], source: any[]) => {
-            const updatedSource = source.filter(
-              (value: any) => !target.includes(value)
-            );
-
-            // Concat the source to the target.
-            return target.concat(updatedSource);
-          }
-        })
+          return {
+            ...acc,
+            [key]: { ...activeId, allIds: Object.keys(value), byId: value }
+          };
+        },
+        {}
       );
 
       return {
@@ -171,6 +164,16 @@ export const dbModel: DbModel = {
       };
     }
   ),
+
+  setActiveEvent: action(({ entities, ...state }, eventId: string) => {
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        events: { ...entities.events, activeId: eventId }
+      }
+    };
+  }),
 
   updateCommunity: action(
     ({ community, entities, ...state }, payload: Partial<ICommunity>) => {

@@ -1,12 +1,10 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import { EventIdProps } from '../Events.types';
 
 const IndividualEventGuest: React.FC<
   Pick<IUser, 'firstName' | 'lastName' | 'pictureUrl'>
@@ -29,12 +27,7 @@ const IndividualEventGuest: React.FC<
 };
 
 const IndividualEventGuestListContent: React.FC = () => {
-  const { eventId } = useParams() as EventIdProps;
-
-  const guests = useStoreState(
-    ({ db }) => db.entities.events.byId[eventId]?.guests
-  );
-
+  const guests = useStoreState(({ db }) => db.event?.guests);
   const numGuests = guests?.length;
 
   return (
@@ -53,11 +46,7 @@ const IndividualEventGuestListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const { eventId } = useParams() as EventIdProps;
-
-  const numGuests = useStoreState(
-    ({ db }) => db.entities.events.byId[eventId]?.guests?.length
-  );
+  const numGuests = useStoreState(({ db }) => db.event?.guests?.length);
 
   return (
     <Card

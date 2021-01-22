@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import useQuery from '@hooks/useQuery';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_EVENT, GetEventArgs } from '../Events.gql';
-import { EventIdProps } from '../Events.types';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAnalytics from './IndividualEventAnalytics';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventHeader from './IndividualEventHeader';
 
 const IndividualEvent: React.FC = () => {
-  const { eventId } = useParams() as EventIdProps;
-  const event = useStoreState(({ db }) => db.entities.events.byId[eventId]);
+  const { eventId } = useParams() as { eventId: string };
+
+  const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
+  const setActiveEvent = useStoreActions(({ db }) => db.setActiveEvent);
 
   useQuery<IEvent, GetEventArgs>({
     name: 'getEvent',
@@ -24,7 +25,11 @@ const IndividualEvent: React.FC = () => {
     variables: { eventId }
   });
 
-  if (!event) return null;
+  useEffect(() => {
+    if (eventId) setActiveEvent(eventId);
+  }, [eventId]);
+
+  if (!isEventActive) return null;
 
   return (
     <>
@@ -39,7 +44,7 @@ const IndividualEvent: React.FC = () => {
         <IndividualEventAnalytics />
       </div>
 
-      <CreateEventModal id={event.id} />
+      <CreateEventModal id={eventId} />
     </>
   );
 };

@@ -193,7 +193,7 @@ export const initialEntities: IEntities = {
   applications: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   data: { allIds: [], byId: {} },
-  events: { allIds: [], byId: {} },
+  events: { activeId: null, allIds: [], byId: {} },
   guests: { allIds: [], byId: {} },
   integrations: { allIds: [], byId: {} },
   members: { activeId: null, allIds: [], byId: {} },
