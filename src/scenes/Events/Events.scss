@@ -50,6 +50,7 @@ $PREF: 's-events';
   width: 100%;
 
   > h5 { margin-bottom: $xxs; }
+  &--now > h5 { color: $primary; }
 
   > h3 {
     margin-bottom: $sm;

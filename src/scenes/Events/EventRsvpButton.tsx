@@ -3,13 +3,12 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button';
 import useMutation from '@hooks/useMutation';
+import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
 
-interface EventRsvpButtonProps extends ButtonProps {
-  endTime: string;
-}
+interface EventRsvpButtonProps extends ButtonProps, Pick<IEvent, 'endTime'> {}
 
 const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   endTime,

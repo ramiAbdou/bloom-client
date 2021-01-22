@@ -2,20 +2,21 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button';
+import { IEvent } from '@store/entities';
 import { useStoreActions } from '@store/Store';
 
-interface EventShareButtonProps extends ButtonProps {
-  endTime: string;
-}
+interface EventShareButtonProps
+  extends ButtonProps,
+    Pick<IEvent, 'startTime'> {}
 
 const EventShareButton: React.FC<EventShareButtonProps> = ({
-  endTime,
   href,
   show,
+  startTime,
   ...props
 }) => {
+  const isUpcoming = day.utc().isBefore(day.utc(startTime));
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const hasPast: boolean = day.utc().isAfter(day.utc(endTime));
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
@@ -27,7 +28,7 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     <Button
       fill
       secondary
-      show={!hasPast && show !== false}
+      show={isUpcoming && show !== false}
       onClick={onClick}
       {...props}
     >

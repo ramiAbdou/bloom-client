@@ -4,8 +4,9 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button';
 import { PanelType } from '@constants';
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
-import { IEventGuest } from '@store/entities';
+import { IEvent, IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import EventJoinButton from '../EventJoinButton';
 import EventRsvpButton from '../EventRsvpButton';
 import EventShareButton from '../EventShareButton';
 import EventViewRecordingButton from '../EventViewRecordingButton';
@@ -41,6 +42,7 @@ const IndividualEventActions: React.FC = () => {
   const eventUrl = useStoreState(({ db }) => db.event?.eventUrl);
   const guests = useStoreState(({ db }) => db.event?.guests);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
+  const startTime = useStoreState(({ db }) => db.event?.startTime);
 
   const hasPast: boolean = useStoreState(({ db }) => {
     return day.utc().isAfter(db.event.endTime);
@@ -58,10 +60,16 @@ const IndividualEventActions: React.FC = () => {
       ?.some((guest: IEventGuest) => guest.member === db.member.id);
   });
 
+  const timeProps: Pick<IEvent, 'endTime' | 'startTime'> = {
+    endTime,
+    startTime
+  };
+
   return (
     <ActionContainer equal={!isGoing && isUpcoming}>
       <EventRsvpButton large endTime={endTime} show={!isGoing && isUpcoming} />
-      <EventShareButton large endTime={endTime} href={eventUrl} />
+      <EventJoinButton large {...timeProps} />
+      <EventShareButton large href={eventUrl} startTime={startTime} />
       <EventViewRecordingButton large href={recordingUrl} show={!isAdmin} />
       <IndividualEventAddRecordingButton show={hasPast && isAdmin} />
     </ActionContainer>
