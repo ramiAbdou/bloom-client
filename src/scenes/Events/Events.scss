@@ -50,7 +50,14 @@ $PREF: 's-events';
   width: 100%;
 
   > h5 { margin-bottom: $xxs; }
-  > button:last-child { margin-top: $sm; }
+
+  > h3 {
+    margin-bottom: $sm;
+
+    @include OVERFLOW_ELLIPSES(2);
+  }
+  
+  > button:last-child { margin-top: auto; }
 }
 
 // ## UPCOMING EVENTS SECTION

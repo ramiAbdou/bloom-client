@@ -24,7 +24,9 @@ const IndividualEventHeaderBackground: React.FC = () => {
 
 const IndividualEventHeaderDateContainer: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
+  const endTime = useStoreState(({ db }) => db.event?.endTime);
   const eventId = useStoreState(({ db }) => db.event?.id);
+  const startTime = useStoreState(({ db }) => db.event?.startTime);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const hasPast = useStoreState(({ db }) => {
@@ -32,12 +34,15 @@ const IndividualEventHeaderDateContainer: React.FC = () => {
   });
 
   const onClick = () => showModal(`${ModalType.CREATE_EVENT}-${eventId}`);
+  const startDay = day(startTime).format('dddd, MMMM Do');
+  const startHour = day(startTime).format('h:mm A');
+  const endHour = day(endTime).format('h:mm A z');
 
   return (
     <Row spaceBetween className="s-events-individual-header-date">
       <div>
-        <h4>Saturday, January 21st</h4>
-        <p className="meta">11:00 AM - 12:30 PM EST</p>
+        <h4>{startDay}</h4>
+        <p className="meta">{`${startHour} - ${endHour}`}</p>
       </div>
 
       <Button tertiary show={!hasPast && isAdmin} onClick={onClick}>
