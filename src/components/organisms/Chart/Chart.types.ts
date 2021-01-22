@@ -1,3 +1,5 @@
+import { ShowProps } from '@constants';
+
 export type ChartData = { name: string; value: number | string };
 
 export interface ChartOptions {
@@ -10,7 +12,7 @@ export enum ChartType {
   TIME_SERIES = 'TIME_SERIES'
 }
 
-export type ChartModelInitArgs = {
+export interface ChartModelInitArgs extends ShowProps {
   data?: ChartData[];
   options?: ChartOptions;
   questionId?: string;
@@ -18,4 +20,4 @@ export type ChartModelInitArgs = {
   totalResponses?: number;
   title?: string;
   type?: ChartType;
-};
+}

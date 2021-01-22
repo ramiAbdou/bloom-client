@@ -8,6 +8,7 @@ import { useStoreState } from '@store/Store';
 import EventStore from '../Event.store';
 import { GET_EVENT, GetEventArgs } from '../Events.gql';
 import IndividualEventAbout from './IndividualEventAbout';
+import IndividualEventAnalytics from './IndividualEventAnalytics';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventHeader from './IndividualEventHeader';
 
@@ -37,6 +38,8 @@ const IndividualEvent: React.FC = () => {
           <IndividualEventAbout />
           <IndividualEventGuestList />
         </div>
+
+        <IndividualEventAnalytics />
       </div>
     </EventStore.Provider>
   );

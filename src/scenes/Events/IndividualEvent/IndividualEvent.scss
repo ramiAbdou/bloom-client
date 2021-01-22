@@ -62,7 +62,14 @@ $PREF: 's-events-individual';
 // // card.
 
 .#{$PREF}-card {
+  height: fit-content;
   > .t-loading-header:first-child { margin-bottom: $sm; }
 }
 
+// // ## INDIVIDUAL EVENT GUEST - In the guest list.
+
 .#{$PREF}-guest > *:first-child { margin-right: $xs; }
+
+// // ## INDIVIDUAL EVENT ANALYTICS
+
+.#{$PREF}-analytics { padding: $md; }

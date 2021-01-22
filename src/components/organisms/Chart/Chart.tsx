@@ -27,13 +27,17 @@ const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
   );
 };
 
-const Chart: React.FC<ChartModelInitArgs> = ({ options, ...args }) => (
-  <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
-    <div className="c-chart">
-      <ChartHeader />
-      <ChartContent {...args} />
-    </div>
-  </ChartStore.Provider>
-);
+const Chart: React.FC<ChartModelInitArgs> = ({ options, show, ...args }) => {
+  if (show === false) return null;
+
+  return (
+    <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
+      <div className="c-chart">
+        <ChartHeader />
+        <ChartContent {...args} />
+      </div>
+    </ChartStore.Provider>
+  );
+};
 
 export default Chart;
