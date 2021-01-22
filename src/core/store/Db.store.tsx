@@ -98,6 +98,8 @@ export const dbModel: DbModel = {
    */
   mergeEntities: action(
     (state, { data, schema, setActiveId }: MergeEntitiesArgs) => {
+      console.log('data', data);
+
       const parsedEntities = Object.entries(
         normalize(data, schema).entities
       ).reduce((acc: Record<string, any>, [key, value]) => {
@@ -110,6 +112,22 @@ export const dbModel: DbModel = {
           [key]: { ...activeId, allIds: Object.keys(value), byId: value }
         };
       }, {});
+
+      console.log('parsedData', parsedEntities);
+
+      console.log(
+        'mergedData',
+        deepmerge(state.entities, parsedEntities, {
+          arrayMerge: (target: any[], source: any[]) => {
+            const updatedSource = source.filter(
+              (value: any) => !target.includes(value)
+            );
+
+            // Concat the source to the target.
+            return target.concat(updatedSource);
+          }
+        })
+      );
 
       return {
         ...state,

@@ -1,17 +1,39 @@
 import React from 'react';
 import { IoCreateOutline } from 'react-icons/io5';
+import { useParams } from 'react-router-dom';
 
 import Button from '@atoms/Button';
 import { HeaderTag } from '@atoms/Tags';
+import { ModalType } from '@constants';
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Row from '@containers/Row/Row';
 import { IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import EventStore from '../Event.store';
 
+const IndividualEventHeaderDateContainer: React.FC = () => {
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const eventId = EventStore.useStoreState((event) => event.id);
+
+  const onClick = () => showModal(`${ModalType.CREATE_EVENT}-${eventId}`);
+
+  return (
+    <Row spaceBetween className="s-events-individual-header-date">
+      <div>
+        <h4>Saturday, January 21st</h4>
+        <p className="meta">11:00 AM - 12:30 PM EST</p>
+      </div>
+
+      <Button tertiary onClick={onClick}>
+        Edit
+        <IoCreateOutline />
+      </Button>
+    </Row>
+  );
+};
+
 const IndividualEventHeaderContent: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-
   const eventUrl = EventStore.useStoreState((event) => event.eventUrl);
   const guests = EventStore.useStoreState((event) => event.guests);
   const isPrivate = EventStore.useStoreState((event) => event.private);
@@ -33,14 +55,7 @@ const IndividualEventHeaderContent: React.FC = () => {
   return (
     <div className="s-events-individual-header-content">
       <div>
-        <Row spaceBetween>
-          <h4>Sat, Jan 21st, 11:00 AM - 12:30 PM EST</h4>
-          <Button tertiary>
-            Edit
-            <IoCreateOutline />
-          </Button>
-        </Row>
-
+        <IndividualEventHeaderDateContainer />
         <h1>{title}</h1>
         <HeaderTag>{isPrivate ? 'Members Only' : 'Open to All'} </HeaderTag>
       </div>

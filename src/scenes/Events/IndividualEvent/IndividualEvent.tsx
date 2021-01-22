@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import useQuery from '@hooks/useQuery';
+import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
@@ -41,6 +42,8 @@ const IndividualEvent: React.FC = () => {
 
         <IndividualEventAnalytics />
       </div>
+
+      <CreateEventModal id={event.id} />
     </EventStore.Provider>
   );
 };

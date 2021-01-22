@@ -33,7 +33,7 @@ $PREF: 's-events-individual';
     &::before { content: ''; display: block; padding-top: 50%; }
 
     > * {
-      background-color: $gray-5;
+      background-color: $primary-bg;
       border-radius: $xs;
       bottom: 0;
       left: 0;
@@ -53,9 +53,15 @@ $PREF: 's-events-individual';
 
   > div:first-child { margin-bottom: $md; margin-top: auto; }
   > div:first-child > h1 { margin-bottom: $xs; }
-  > div:first-child > .flex-ac { margin-bottom: $sm; }
+  > div:first-child > .flex-ac { margin-bottom: $md; }
 
   > .t-action-ctr { margin-top: auto; }
+}
+
+.#{$PREF}-header-date {
+  align-items: baseline;
+  > div:first-child > h4:first-child { margin-bottom: $xxs; }
+  > div:first-child > h4:last-child { color: $gray-2; }
 }
 
 // // ## INDIVIDUAL EVENT CARD - Refers to the about card and the guest list
