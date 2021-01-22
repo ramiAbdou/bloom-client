@@ -25,7 +25,7 @@ $PREF: 's-login';
 .#{$PREF}-header { @extend .flex-acsb; }
 .#{$PREF}-header > div { margin-bottom: $lg; }
 .#{$PREF}-header > div > p { @extend .meta; }
-.#{$PREF}-header > img {
+.#{$PREF}-header > svg {
   margin-bottom: $lg;
   opacity: 0.75;
 
@@ -50,5 +50,5 @@ $PREF: 's-login';
     @include HOVER { background-color: $gray-6; }
   }
 
-  > a > img { height: $sl; margin-right: $xs; width: $sl; }
+  > a > svg { margin-right: $xs; }
 }

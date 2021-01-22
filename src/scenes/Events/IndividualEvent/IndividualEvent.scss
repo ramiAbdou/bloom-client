@@ -28,13 +28,13 @@ $PREF: 's-events-individual';
   > div:first-child {
     background-color: $gray-5;
     border-radius: $xs;
+    overflow: hidden;
     position: relative;
     width: 100%;
+
     &::before { content: ''; display: block; padding-top: 50%; }
 
     > * {
-      background-color: $primary-bg;
-      border-radius: $xs;
       bottom: 0;
       left: 0;
       position: absolute;
@@ -42,6 +42,11 @@ $PREF: 's-events-individual';
       top: 0;
       width: 100%;
     }
+
+    > *:first-child { background-color: $primary-bg; border-radius: $xs; }
+    > svg { opacity: 0.15; stroke: $primary; transform: scale(1.5); }
+    > svg:first-of-type { margin-right: 5%; z-index: 10; }
+    > svg:last-of-type { margin-left: 50%; top: initial; z-index: 10; }
   }
 }
 

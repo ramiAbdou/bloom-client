@@ -1,28 +1,28 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import loader1 from './images/loader-1.svg';
-import loader2 from './images/loader-2.svg';
-import loader3 from './images/loader-3.svg';
-import loader4 from './images/loader-4.svg';
-import loader5 from './images/loader-5.svg';
+import Loader1 from './images/loader-1.svg';
+import Loader2 from './images/loader-2.svg';
+import Loader3 from './images/loader-3.svg';
+import Loader4 from './images/loader-4.svg';
+import Loader5 from './images/loader-5.svg';
 
-type LoaderColumnProps = { images: { delay: number; img: any }[] };
+type LoaderColumnProps = { images: { delay: number; Loader: React.FC }[] };
 
 // Each loader column has a delay before it appears. This creates the effect
 // of something being loaded.
 
 const LoaderColumn = ({ images }: LoaderColumnProps) => (
   <div>
-    {images.map(({ img, delay }) => (
-      <motion.img
+    {images.map(({ Loader, delay }) => (
+      <motion.div
         key={delay}
-        alt="Loading Hexagon"
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
-        src={img}
         transition={{ delay, duration: 1, yoyo: Infinity }}
-      />
+      >
+        <Loader />
+      </motion.div>
     ))}
   </div>
 );
@@ -38,23 +38,23 @@ export default () => (
     <div className="c-loader">
       <LoaderColumn
         images={[
-          { delay: DELAY * (5 / 7), img: loader2 },
-          { delay: DELAY * (4 / 7), img: loader4 }
+          { Loader: Loader2, delay: DELAY * (5 / 7) },
+          { Loader: Loader4, delay: DELAY * (4 / 7) }
         ]}
       />
 
       <LoaderColumn
         images={[
-          { delay: 0, img: loader1 },
-          { delay: DELAY * (6 / 7), img: loader3 },
-          { delay: DELAY * (3 / 7), img: loader5 }
+          { Loader: Loader1, delay: 0 },
+          { Loader: Loader3, delay: DELAY * (6 / 7) },
+          { Loader: Loader5, delay: DELAY * (3 / 7) }
         ]}
       />
 
       <LoaderColumn
         images={[
-          { delay: DELAY * (1 / 7), img: loader2 },
-          { delay: DELAY * (2 / 7), img: loader4 }
+          { Loader: Loader2, delay: DELAY * (1 / 7) },
+          { Loader: Loader4, delay: DELAY * (2 / 7) }
         ]}
       />
     </div>

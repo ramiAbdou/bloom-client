@@ -8,6 +8,17 @@ import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import { useStoreActions, useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
+import Network from './network.svg';
+
+const IndividualEventHeaderBackground: React.FC = () => {
+  return (
+    <div>
+      <div />
+      <Network />
+      <Network />
+    </div>
+  );
+};
 
 const IndividualEventHeaderDateContainer: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -54,9 +65,7 @@ const IndividualEventHeaderContent: React.FC = () => {
 const IndividualEventHeader: React.FC = () => {
   return (
     <div className="s-events-individual-header">
-      <div>
-        <div />
-      </div>
+      <IndividualEventHeaderBackground />
       <IndividualEventHeaderContent />
     </div>
   );

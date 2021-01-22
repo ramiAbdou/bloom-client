@@ -64,6 +64,7 @@
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.1.11",
     "@storybook/theming": "^6.1.11",
+    "@svgr/webpack": "^5.5.0",
     "@types/copy-webpack-plugin": "^5.0.1",
     "@types/deline": "^1.0.1",
     "@types/dotenv-webpack": "^3.0.0",

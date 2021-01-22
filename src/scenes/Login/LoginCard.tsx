@@ -10,9 +10,9 @@ import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { cx } from '@util/util';
-import BloomLogo from './BloomLogo';
-import google from './images/google.svg';
-import network from './images/network.svg';
+import BloomLogo from './images/bloom.svg';
+import GoogleLogo from './images/google.svg';
+import NetworkIcon from './images/network.svg';
 import { LoginError } from './Login.types';
 import { getLoginErrorMessage } from './Login.util';
 import useSendLoginLink from './useSendLoginLink';
@@ -25,7 +25,7 @@ const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
 
 const LoginCardGoogleButton: React.FC = () => (
   <a href={url}>
-    <img alt="Google Icon" src={google} />
+    <GoogleLogo style={{ height: 20, width: 20 }} />
     Sign In with Google
   </a>
 );
@@ -76,10 +76,10 @@ const LoginCardHeader: React.FC = () => (
   <div className="s-login-header">
     <div>
       <p>Welcome to</p>
-      <BloomLogo multiplier={1.25} />
+      <BloomLogo style={{ height: 18 * 1.25, width: 75 * 1.25 }} />
     </div>
 
-    <img alt="Network Icon" src={network} style={{ height: 151 }} />
+    <NetworkIcon style={{ height: 151 }} />
   </div>
 );
 
