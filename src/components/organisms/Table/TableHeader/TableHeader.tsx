@@ -38,7 +38,7 @@ const HeaderCell = ({
 
   const css = cx(getTableCellClass({ category, type }), {
     'c-table-th--fixed': fixFirstColumn && i === 0,
-    'c-table-th--picker': isPickerShowing,
+    'c-table-th--panel': isPickerShowing,
     'c-table-th--sortable': isSortable,
     'c-table-th--sorted': isSortedColumn
   });

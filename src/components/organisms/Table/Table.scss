@@ -62,9 +62,9 @@ $PREF: 'c-table';
 // ## COLUMN PICKER
 
 // Added a div before the name to make it take higher precedence.
-div.#{$PREF}-col-picker { padding: $sm; }
-.#{$PREF}-col-picker > form { margin-bottom: $sm; }
-.#{$PREF}-col-picker > button {
+div.#{$PREF}-col-panel { padding: $sm; }
+.#{$PREF}-col-panel > form { margin-bottom: $sm; }
+.#{$PREF}-col-panel > button {
   @extend .flex-ac;
 
   justify-content: left;
@@ -74,14 +74,14 @@ div.#{$PREF}-col-picker { padding: $sm; }
   @include PRIMARY_HOVER;
 }
 
-.#{$PREF}-col-picker > button:first-of-type { margin-bottom: $xs; }
+.#{$PREF}-col-panel > button:first-of-type { margin-bottom: $xs; }
 
-.#{$PREF}-col-picker > button > svg { margin-right: $xs; }
+.#{$PREF}-col-panel > button > svg { margin-right: $xs; }
 
-.#{$PREF}-col-picker-button--active > svg,
-.#{$PREF}-col-picker-button--active > p { color: $primary; }
+.#{$PREF}-col-panel-button--active > svg,
+.#{$PREF}-col-panel-button--active > p { color: $primary; }
 
-.#{$PREF}-col-picker > form > .o-form-item {
+.#{$PREF}-col-panel > form > .o-form-item {
   margin-bottom: $sm;
   margin-top: 0;
 }

@@ -4,10 +4,9 @@ import { IoCreateOutline } from 'react-icons/io5';
 import Button from '@atoms/Button';
 import { HeaderTag } from '@atoms/Tags';
 import { ModalType } from '@constants';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Row from '@containers/Row/Row';
-import { IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import IndividualEventActions from './IndividualEventActions';
 
 const IndividualEventHeaderDateContainer: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -30,25 +29,8 @@ const IndividualEventHeaderDateContainer: React.FC = () => {
 };
 
 const IndividualEventHeaderContent: React.FC = () => {
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
-  const eventUrl = useStoreState(({ db }) => db.event?.eventUrl);
-  const guests = useStoreState(({ db }) => db.event?.guests);
   const isPrivate = useStoreState(({ db }) => db.event?.private);
   const title = useStoreState(({ db }) => db.event?.title);
-
-  const isGoing: boolean = useStoreState(({ db }) => {
-    const { byId: byGuestsId } = db.entities.guests;
-
-    return guests
-      ?.map((guestId: string) => byGuestsId[guestId])
-      ?.some((guest: IEventGuest) => guest.member === db.member.id);
-  });
-
-  const onShareClick = () => {
-    navigator.clipboard.writeText(eventUrl);
-    showToast({ message: 'Event link copied to clipboard.' });
-  };
 
   return (
     <div className="s-events-individual-header-content">
@@ -58,14 +40,7 @@ const IndividualEventHeaderContent: React.FC = () => {
         <HeaderTag>{isPrivate ? 'Members Only' : 'Open to All'} </HeaderTag>
       </div>
 
-      <ActionContainer equal={!isGoing}>
-        <Button fill large primary show={!isGoing}>
-          RSVP
-        </Button>
-        <Button fill large secondary onClick={onShareClick}>
-          Share Event
-        </Button>
-      </ActionContainer>
+      <IndividualEventActions />
     </div>
   );
 };

@@ -15,7 +15,7 @@ const TablePanelRenameForm: React.FC<OnRenameColumnProps> = ({
   onRenameColumn
 }) => {
   const panelId = useStoreState(({ panel }) => panel.id);
-  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
   const { id, title, version }: Column = Table.useStoreState(
     ({ columns }) =>
@@ -38,7 +38,7 @@ const TablePanelRenameForm: React.FC<OnRenameColumnProps> = ({
       updateColumn
     });
 
-    closePicker();
+    closePanel();
   };
 
   if (!onRenameColumn) return null;
@@ -65,7 +65,7 @@ const TablePanel: React.FC<OnRenameColumnProps> = ({ onRenameColumn }) => {
   return (
     <Panel
       align="BOTTOM_LEFT"
-      className="c-table-col-picker"
+      className="c-table-col-panel"
       id={panelId}
       scrollId="c-table-ctr"
     >

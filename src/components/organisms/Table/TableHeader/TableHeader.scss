@@ -46,7 +46,7 @@ th {
   &--fixed { left: 0; z-index: 12; }
 
   // When the picker is showing, we keep the background-color dark.
-  &--picker { background-color: $gray-5; }
+  &--panel { background-color: $gray-5; }
 
   &--sortable {
     cursor: pointer;

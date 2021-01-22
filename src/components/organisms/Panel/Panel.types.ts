@@ -2,7 +2,6 @@ import { FC } from 'react';
 
 export type PanelAction = {
   Icon?: FC;
-  separator?: boolean;
   onClick: VoidFunction; // Should perform some action.
   text: string;
 };

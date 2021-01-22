@@ -27,7 +27,7 @@ const Panel = ({
   style
 }: PickerProps) => {
   const id = useStoreState(({ panel }) => panel.id);
-  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
   const element: HTMLElement = document.getElementById(id);
@@ -42,7 +42,7 @@ const Panel = ({
   useOnClickOutside(ref, (event) => {
     // If the element doesn't exist, then just close the picker.
     if (!element) {
-      closePicker();
+      closePanel();
       return;
     }
 
@@ -56,7 +56,7 @@ const Panel = ({
       clientY < offsetTop ||
       clientY > offsetTop + offsetHeight
     ) {
-      closePicker();
+      closePanel();
     }
   });
 

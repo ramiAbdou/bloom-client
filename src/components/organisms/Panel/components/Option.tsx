@@ -1,6 +1,5 @@
-import React, { memo } from 'react';
+import React from 'react';
 
-import Separator from '@atoms/Separator';
 import { useStoreActions } from '@store/Store';
 import { PanelAction } from '../Panel.types';
 
@@ -9,23 +8,22 @@ import { PanelAction } from '../Panel.types';
  * click. Only has text showing. If customization is needed, won't be able
  * to use this component.
  */
-export default memo(({ Icon, onClick, separator, text }: PanelAction) => {
-  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
+const PanelOption = ({ Icon, onClick, text }: PanelAction) => {
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
   // After the passed-in onClick is executed, close the picker. This component
   // should not be used as a Flow. It is meant to be a one-time action picker.
   const onOptionClick = () => {
     if (onClick) onClick();
-    setTimeout(closePicker, 0);
+    setTimeout(closePanel, 0);
   };
 
   return (
-    <>
-      {separator && <Separator margin={8} />}
-      <button className="c-panel-option" onClick={onOptionClick}>
-        <Icon />
-        {text}
-      </button>
-    </>
+    <button className="c-panel-option" onClick={onOptionClick}>
+      <Icon />
+      {text}
+    </button>
   );
-});
+};
+
+export default PanelOption;

@@ -1,7 +1,7 @@
 import { Action, action, Computed, computed } from 'easy-peasy';
 
 export type PanelModel = {
-  closePicker: Action<PanelModel>;
+  closePanel: Action<PanelModel>;
   id: string;
   isIdShowing: Computed<PanelModel, (id: string) => boolean, {}>;
   isShowing: boolean;
@@ -9,7 +9,7 @@ export type PanelModel = {
 };
 
 export const panelModel: PanelModel = {
-  closePicker: action((state) => ({ ...state, id: '', isShowing: false })),
+  closePanel: action((state) => ({ ...state, id: '', isShowing: false })),
 
   id: '',
 

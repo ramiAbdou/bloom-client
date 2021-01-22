@@ -12,7 +12,7 @@ $PREF: 'c-panel';
   background-color: white;
   border-radius: $xs;
   min-width: $xxl * 4;
-  padding: $xs 0;
+  padding: $xs;
   position: fixed;
   width: max-content;
   z-index: 100;
@@ -25,14 +25,13 @@ $PREF: 'c-panel';
   @extend .fill;
   @extend .body;
   
+  border-radius: $xxs;
   color: $gray-2;
-  padding: $ss;
+  padding: $ss $xs;
   text-align: left;
   width: 100%;
 
   @include HOVER { background-color: $primary-bg; }
 
-  &:first-child { border-radius: $xxs $xxs 0 0; }
-  &:last-child { border-radius: 0 0 $xxs $xxs; margin-bottom: 0; }
   > svg { height: $sl; margin-right: $xs; width: $sl; }
 }
