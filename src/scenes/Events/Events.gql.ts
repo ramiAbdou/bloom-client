@@ -40,6 +40,7 @@ export const GET_EVENT = query({
     'private',
     'recordingUrl',
     'startTime',
+    'summary',
     'title',
     'videoUrl',
     {
@@ -73,6 +74,7 @@ export const GET_EVENTS = query({
         'private',
         'recordingUrl',
         'startTime',
+        'summary',
         'title',
         'videoUrl',
         {

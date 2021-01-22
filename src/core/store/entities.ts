@@ -42,6 +42,7 @@ export interface IEvent {
   private: boolean;
   recordingUrl?: string;
   startTime: string;
+  summary: string;
   title: string;
   upcoming?: boolean;
   videoUrl: string;

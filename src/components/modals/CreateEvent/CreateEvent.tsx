@@ -82,8 +82,6 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
           value={event?.title}
         />
 
-        <FormSectionHeader>Event Details</FormSectionHeader>
-
         <FormItem
           required
           id="EVENT_DESCRIPTION"
@@ -91,6 +89,15 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
           type="LONG_TEXT"
           value={event?.description}
         />
+
+        <FormItem
+          id="EVENT_SUMMARY"
+          title="1-Sentence Summary"
+          type="SHORT_TEXT"
+          value={event?.summary}
+        />
+
+        <FormSectionHeader>Event Details</FormSectionHeader>
 
         <FormItem
           required

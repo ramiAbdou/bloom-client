@@ -43,7 +43,7 @@ const IndividualEventGuestListContent: React.FC = () => {
       {!users?.length && <p>No guests have RSVP'd yet.</p>}
 
       <div>
-        {users.map((user: IUser) => {
+        {users?.map((user: IUser) => {
           return <IndividualEventGuest key={user.id} {...user} />;
         })}
       </div>

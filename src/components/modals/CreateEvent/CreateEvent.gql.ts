@@ -18,6 +18,7 @@ export const CREATE_EVENT = mutation({
     imageUrl: { required: false },
     private: { required: false, type: 'Boolean' },
     startTime: { required: true },
+    summary: { required: false },
     title: { required: true },
     videoUrl: { required: true }
   }

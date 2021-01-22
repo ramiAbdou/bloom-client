@@ -38,6 +38,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
       private:
         items.find(({ id }) => id === 'PRIVACY_SETTINGS')?.value ===
         'Members Only',
+      summary: items.find(({ id }) => id === 'EVENT_SUMMARY')?.value,
       title: items.find(({ id }) => id === 'EVENT_NAME')?.value,
       videoUrl: items.find(({ id }) => id === 'VIDEO_URL')?.value
     };

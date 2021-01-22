@@ -55,6 +55,7 @@ const IndividualEventHeaderDateContainer: React.FC = () => {
 
 const IndividualEventHeaderContent: React.FC = () => {
   const isPrivate = useStoreState(({ db }) => db.event?.private);
+  const summary = useStoreState(({ db }) => db.event?.summary);
   const title = useStoreState(({ db }) => db.event?.title);
 
   return (
@@ -62,6 +63,7 @@ const IndividualEventHeaderContent: React.FC = () => {
       <div>
         <IndividualEventHeaderDateContainer />
         <h1>{title}</h1>
+        <p>{summary}</p>
         <HeaderTag>{isPrivate ? 'Members Only' : 'Open to All'} </HeaderTag>
       </div>
 

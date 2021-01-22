@@ -64,6 +64,7 @@ const useCreateEvent = (): OnFormSubmit => {
         items.find(({ id }) => id === 'PRIVACY_SETTINGS')?.value ===
         'Private Event',
       startTime,
+      summary: items.find(({ id }) => id === 'EVENT_SUMMARY')?.value,
       title: items.find(({ id }) => id === 'EVENT_NAME')?.value,
       videoUrl: items.find(({ id }) => id === 'VIDEO_URL')?.value
     };
