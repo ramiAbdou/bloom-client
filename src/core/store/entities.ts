@@ -30,6 +30,7 @@ export interface ICommunityApplication {
 // ## EVENT
 
 export interface IEvent {
+  attendees: IdString[];
   community?: IdString;
   description: string;
   endTime: string;
@@ -46,10 +47,13 @@ export interface IEvent {
   videoUrl: string;
 }
 
-export const isEvent = (data: any): data is IEvent => {
-  const { endTime, startTime, videoUrl } = (data as IEvent) ?? {};
-  return !!endTime && !!startTime && !!videoUrl;
-};
+// ## EVENT ATTENDEE
+
+export interface IEventAttendee {
+  event: IdString;
+  id: IdString;
+  member: IdString;
+}
 
 // ## EVENT GUEST
 
@@ -58,11 +62,6 @@ export interface IEventGuest {
   id: IdString;
   member: IdString;
 }
-
-export const isEventGuest = (data: any): data is IEventGuest => {
-  const { event, id, member } = (data as IEventGuest) ?? {};
-  return !!event && !!id && !!member;
-};
 
 // ## INTEGRATIONS
 
@@ -120,11 +119,6 @@ export interface IMemberPayment {
   member: IdString;
   type: IdString;
 }
-
-export const isMemberPayment = (data: any): data is IMemberPayment => {
-  const { stripeInvoiceUrl } = (data as IMemberPayment) ?? {};
-  return !!stripeInvoiceUrl;
-};
 
 // ## MEMBER TYPE
 

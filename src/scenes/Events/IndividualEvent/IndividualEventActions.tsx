@@ -40,9 +40,11 @@ const IndividualEventActions: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
   const endTime = useStoreState(({ db }) => db.event?.endTime);
   const eventUrl = useStoreState(({ db }) => db.event?.eventUrl);
+  const eventId = useStoreState(({ db }) => db.event?.id);
   const guests = useStoreState(({ db }) => db.event?.guests);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const startTime = useStoreState(({ db }) => db.event?.startTime);
+  const videoUrl = useStoreState(({ db }) => db.event?.videoUrl);
 
   const hasPast: boolean = useStoreState(({ db }) => {
     return day.utc().isAfter(db.event.endTime);
@@ -67,8 +69,13 @@ const IndividualEventActions: React.FC = () => {
 
   return (
     <ActionContainer equal={!isGoing && isUpcoming}>
-      <EventRsvpButton large endTime={endTime} show={!isGoing && isUpcoming} />
-      <EventJoinButton large {...timeProps} />
+      <EventRsvpButton large show={!isGoing && isUpcoming} {...timeProps} />
+      <EventJoinButton
+        large
+        eventId={eventId}
+        videoUrl={videoUrl}
+        {...timeProps}
+      />
       <EventShareButton large href={eventUrl} startTime={startTime} />
       <EventViewRecordingButton large href={recordingUrl} show={!isAdmin} />
       <IndividualEventAddRecordingButton show={hasPast && isAdmin} />

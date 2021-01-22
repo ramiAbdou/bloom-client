@@ -8,7 +8,6 @@
 import { schema } from 'normalizr';
 
 import { takeFirst } from '@util/util';
-import { isEvent, isEventGuest, isMemberPayment } from './entities';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
@@ -18,7 +17,7 @@ const Community = new schema.Entity(
   {
     processStrategy: (community, parent) => {
       const processedData = takeFirst([
-        [isEvent(parent), { events: [parent.id] }],
+        [!!parent.eventId, { events: [parent.id] }],
         {}
       ]);
 
@@ -35,16 +34,28 @@ const Event = new schema.Entity(
   {
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [isEventGuest(parent), { guests: [parent.id] }],
+        [!!parent.attendeeId, { guests: [parent.id] }],
+        [!!parent.guestId, { guests: [parent.id] }],
         {}
       ]);
 
-      return { ...value, ...processedData };
+      return { ...value, ...processedData, eventId: value.id };
     }
   }
 );
 
-const EventGuest = new schema.Entity('guests', {});
+const EventAttendee = new schema.Entity(
+  'attendees',
+  {},
+  { processStrategy: (value) => ({ ...value, attendeeId: value.id }) }
+);
+
+const EventGuest = new schema.Entity(
+  'guests',
+  {},
+  { processStrategy: (value) => ({ ...value, guestId: value.id }) }
+);
+
 const Integrations = new schema.Entity('integrations', {});
 
 const Member = new schema.Entity(
@@ -53,9 +64,9 @@ const Member = new schema.Entity(
   {
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [isEvent(parent), { events: [parent.id] }],
-        [isEventGuest(parent), { guests: [parent.id] }],
-        [isMemberPayment(parent), { payments: [parent.id] }],
+        [!!parent.eventId, { events: [parent.id] }],
+        [!!parent.guestId, { guests: [parent.id] }],
+        [!!parent.paymentId, { payments: [parent.id] }],
         {}
       ]);
 
@@ -65,7 +76,13 @@ const Member = new schema.Entity(
 );
 
 const MemberData = new schema.Entity('data', {});
-const MemberPayment = new schema.Entity('payments', {});
+
+const MemberPayment = new schema.Entity(
+  'payments',
+  {},
+  { processStrategy: (value) => ({ ...value, paymentId: value.id }) }
+);
+
 const MemberType = new schema.Entity('types', {});
 const Question = new schema.Entity('questions', {});
 const User = new schema.Entity('users', {});
@@ -83,7 +100,13 @@ Community.define({
   types: [MemberType]
 });
 
-Event.define({ community: Community, guests: [EventGuest] });
+Event.define({
+  attendees: [EventAttendee],
+  community: Community,
+  guests: [EventGuest]
+});
+
+EventAttendee.define({ event: Event, member: Member });
 EventGuest.define({ event: Event, member: Member });
 
 Member.define({
@@ -105,6 +128,7 @@ User.define({ members: [Member] });
 export const Schema = {
   COMMUNITY: Community,
   EVENT: Event,
+  EVENT_ATTENDEE: EventAttendee,
   EVENT_GUEST: EventGuest,
   INTEGRATIONS: Integrations,
   MEMBER: Member,

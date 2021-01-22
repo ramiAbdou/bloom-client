@@ -8,15 +8,15 @@ import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
 
-interface EventRsvpButtonProps extends ButtonProps, Pick<IEvent, 'endTime'> {}
+interface EventRsvpButtonProps extends ButtonProps, Pick<IEvent, 'startTime'> {}
 
 const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
-  endTime,
   show,
+  startTime,
   ...props
 }) => {
   const eventId = useStoreState(({ db }) => db.event?.id);
-  const canRsvp = day.utc().isBefore(day.utc(endTime));
+  const canRsvp = day.utc().isBefore(day.utc(startTime));
 
   const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
     name: 'createEventGuest',

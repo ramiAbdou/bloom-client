@@ -28,9 +28,11 @@ const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
 }) => {
   const endTime = EventStore.useStoreState((event) => event.endTime);
   const eventUrl = EventStore.useStoreState((event) => event.eventUrl);
+  const eventId = EventStore.useStoreState((event) => event.id);
   const recordingUrl = EventStore.useStoreState((event) => event.recordingUrl);
   const startTime = EventStore.useStoreState((event) => event.startTime);
   const title = EventStore.useStoreState((event) => event.title);
+  const videoUrl = EventStore.useStoreState((event) => event.videoUrl);
 
   const timeProps: Pick<IEvent, 'endTime' | 'startTime'> = {
     endTime,
@@ -54,7 +56,7 @@ const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
       <h5>{formattedStartTime}</h5>
       <h3>{title}</h3>
       <EventRsvpButton show={!guest} {...timeProps} />
-      <EventJoinButton {...timeProps} />
+      <EventJoinButton eventId={eventId} videoUrl={videoUrl} {...timeProps} />
       <EventShareButton
         href={eventUrl}
         show={!!guest && !isHappeningNow}

@@ -14,7 +14,7 @@ const useCreateEvent = (): OnFormSubmit => {
 
   const [createEvent] = useMutation<
     IEvent,
-    Omit<IEvent, 'eventUrl' | 'guests' | 'id'>
+    Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>
   >({
     name: 'createEvent',
     query: CREATE_EVENT,
@@ -56,7 +56,7 @@ const useCreateEvent = (): OnFormSubmit => {
       }
     }
 
-    const args: Omit<IEvent, 'eventUrl' | 'guests' | 'id'> = {
+    const args: Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'> = {
       description: items.find(({ id }) => id === 'EVENT_DESCRIPTION')?.value,
       endTime,
       imageUrl,

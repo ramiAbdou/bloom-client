@@ -13,7 +13,6 @@ import { useStoreState } from '@store/Store';
 import { GET_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
 import EventsHeader from './EventsHeader';
-import YourUpcomingEvents from './YourUpcomingEvents';
 
 const PastEventsContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
@@ -32,7 +31,7 @@ const PastEventsContent: React.FC = () => {
   return (
     <>
       {!!events?.length && <ListSearchBar placeholder="Search events..." />}
-      {!events?.length && <p>Looks like there are no upcoming events.</p>}
+      {!events?.length && <p>Looks like there are no past events.</p>}
 
       <List
         className="s-events-card-ctr"
@@ -54,8 +53,6 @@ const PastEvents: React.FC = () => {
 
   return (
     <MainContent Header={EventsHeader}>
-      <YourUpcomingEvents />
-
       <ListStore.Provider>
         <MainSection
           className="s-events-upcoming"

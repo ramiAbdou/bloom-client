@@ -1,5 +1,17 @@
 import { mutation, query } from 'gql-query-builder';
 
+// ## CREATE EVENT ATTENDEE
+
+export interface CreateEventAttendeeArgs {
+  eventId: string;
+}
+
+export const CREATE_EVENT_ATTENDEE = mutation({
+  fields: ['id', { event: ['id'] }, { member: ['id'] }],
+  operation: 'createEventAttendee',
+  variables: { eventId: { required: true } }
+}).query;
+
 // ## CREATE EVENT GUEST
 
 export interface CreateEventGuestArgs {

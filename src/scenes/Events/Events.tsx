@@ -10,9 +10,9 @@ const Events: React.FC = () => {
 
   return (
     <Switch>
-      <Route component={UpcomingEvents} path={`${url}/upcoming`} />
-      <Route component={PastEvents} path={`${url}/past`} />
-      <Route component={IndividualEvent} path={`${url}/:eventId`} />
+      <Route exact component={UpcomingEvents} path={`${url}/upcoming`} />
+      <Route exact component={PastEvents} path={`${url}/past`} />
+      <Route exact component={IndividualEvent} path={`${url}/:eventId`} />
       <Redirect to={`${url}/upcoming`} />
     </Switch>
   );
