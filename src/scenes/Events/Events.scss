@@ -29,9 +29,9 @@ $PREF: 's-events';
   width: 100%;
   &::before { content: ''; display: block; padding-top: 50%; }
 
-  > div { background-color: $gray-5; }
+  > div { background-color: $primary-bg; }
 
-  > * {
+  > *:first-child {
     border-radius: $xs $xs 0 0;
     bottom: 0;
     left: 0;

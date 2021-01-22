@@ -6,6 +6,8 @@ import { PanelType } from '@constants';
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import { IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import EventRsvpButton from '../EventRsvpButton';
+import EventShareButton from '../EventShareButton';
 
 const IndividualEventAddRecordingButton: React.FC<Partial<ButtonProps>> = (
   props
@@ -24,33 +26,6 @@ const IndividualEventAddRecordingButton: React.FC<Partial<ButtonProps>> = (
   );
 };
 
-const IndividualEventRSVPButton: React.FC<Partial<ButtonProps>> = (props) => {
-  // const showPanel = useStoreActions(({ panel }) => panel.showPanel);
-  // const onClick = () => {};
-
-  return (
-    <Button fill large primary {...props}>
-      RSVP
-    </Button>
-  );
-};
-
-const IndividualEventShareButton: React.FC<Partial<ButtonProps>> = (props) => {
-  const eventUrl = useStoreState(({ db }) => db.event?.eventUrl);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
-  const onClick = () => {
-    navigator.clipboard.writeText(eventUrl);
-    showToast({ message: 'Event link copied to clipboard.' });
-  };
-
-  return (
-    <Button fill large secondary onClick={onClick} {...props}>
-      Share Event
-    </Button>
-  );
-};
-
 /**
  * Returns action container that contains either of the following options:
  * - RSVP and Share Event (Before Event)
@@ -61,6 +36,8 @@ const IndividualEventShareButton: React.FC<Partial<ButtonProps>> = (props) => {
  */
 const IndividualEventActions: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
+  const endTime = useStoreState(({ db }) => db.event?.endTime);
+  const eventUrl = useStoreState(({ db }) => db.event?.eventUrl);
   const guests = useStoreState(({ db }) => db.event?.guests);
 
   const hasPast: boolean = useStoreState(({ db }) => {
@@ -81,9 +58,9 @@ const IndividualEventActions: React.FC = () => {
 
   return (
     <ActionContainer equal={!isGoing && isUpcoming}>
-      <IndividualEventRSVPButton show={!isGoing && isUpcoming} />
+      <EventRsvpButton large show={!isGoing && isUpcoming} />
+      <EventShareButton endTime={endTime} href={eventUrl} />
       <IndividualEventAddRecordingButton show={hasPast && isAdmin} />
-      <IndividualEventShareButton show={!hasPast} />
     </ActionContainer>
   );
 };
