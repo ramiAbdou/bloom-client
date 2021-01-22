@@ -27,13 +27,22 @@ export const CREATE_EVENT = mutation({
 // ## UPDATE EVENT
 
 export const UPDATE_EVENT = mutation({
-  fields: ['description', 'id', 'imageUrl', 'private', 'title', 'videoUrl'],
+  fields: [
+    'description',
+    'id',
+    'imageUrl',
+    'private',
+    'summary',
+    'title',
+    'videoUrl'
+  ],
   operation: 'updateEvent',
   variables: {
     description: { required: false },
     id: { required: true },
     imageUrl: { required: false },
     private: { required: false, type: 'Boolean' },
+    summary: { required: false },
     title: { required: false },
     videoUrl: { required: false }
   }

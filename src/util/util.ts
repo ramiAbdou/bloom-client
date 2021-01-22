@@ -1,5 +1,7 @@
 import { APIError } from 'graphql-hooks';
 
+import { BaseEntity } from '../core/store/entities';
+
 /**
  * Returns a string of classes based on the conditional flags set on each of
  * the class names.
@@ -37,6 +39,16 @@ export const getGraphQLError = (error: APIError): string => {
 
   // @ts-ignore b/c the message must exist on the GraphQL error object.
   return graphQLErrors[0]?.message;
+};
+
+/**
+ * Returns the array in descending order based on the createdAt.
+ *
+ * @example sortByDescendingCreatedAt({ createdAt: 1 }, { createdAt: 2 }) => 1
+ * @example sortByDescendingCreatedAt({ createdAt: 10 }, { createdAt: 1 }) => -1
+ */
+export const sortByDescendingCreatedAt = (a: BaseEntity, b: BaseEntity) => {
+  return Number(a.createdAt > b.createdAt) ? -1 : 1;
 };
 
 /**

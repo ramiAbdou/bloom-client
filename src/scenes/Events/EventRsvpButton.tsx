@@ -18,12 +18,14 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   const eventId = useStoreState(({ db }) => db.event?.id);
   const canRsvp = day.utc().isBefore(day.utc(startTime));
 
-  const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
+  const [createEventGuest, { data }] = useMutation<any, CreateEventGuestArgs>({
     name: 'createEventGuest',
     query: CREATE_EVENT_GUEST,
     schema: Schema.EVENT_GUEST,
     variables: { eventId }
   });
+
+  console.log(data);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();

@@ -5,6 +5,7 @@ import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { IEventGuest, IMember, IUser } from '@store/entities';
 import { useStoreState } from '@store/Store';
+import { sortByDescendingCreatedAt } from '@util/util';
 
 const IndividualEventGuest: React.FC<
   Pick<IUser, 'firstName' | 'lastName' | 'pictureUrl'>
@@ -34,6 +35,7 @@ const IndividualEventGuestListContent: React.FC = () => {
 
     return db.event?.guests
       ?.map((guestId: string) => byGuestsId[guestId])
+      ?.sort(sortByDescendingCreatedAt)
       ?.map((guest: IEventGuest) => byMembersId[guest.member])
       ?.map((member: IMember) => byUsersId[member.user]);
   });
@@ -44,7 +46,7 @@ const IndividualEventGuestListContent: React.FC = () => {
 
       <div>
         {users?.map((user: IUser) => {
-          return <IndividualEventGuest key={user.id} {...user} />;
+          return <IndividualEventGuest key={user?.id} {...user} />;
         })}
       </div>
     </>

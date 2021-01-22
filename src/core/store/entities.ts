@@ -2,6 +2,11 @@ import { QuestionCategory, QuestionType } from '@constants';
 
 type IdString = string;
 
+export interface BaseEntity {
+  createdAt: IdString;
+  id: IdString;
+}
+
 // ## COMMUNITY
 
 export interface ICommunity {
@@ -58,9 +63,8 @@ export interface IEventAttendee {
 
 // ## EVENT GUEST
 
-export interface IEventGuest {
+export interface IEventGuest extends BaseEntity {
   event: IdString;
-  id: IdString;
   member: IdString;
 }
 

@@ -46,6 +46,7 @@ button.#{$PREF} {
   @extend .body--bold;
 
   max-width: 100%;
+  text-align: center;
 
   @include OVERFLOW_ELLIPSES(3);
 }

@@ -19,7 +19,11 @@ export interface CreateEventGuestArgs {
 }
 
 export const CREATE_EVENT_GUEST = mutation({
-  fields: ['id', { event: ['id'] }, { member: ['id'] }],
+  fields: [
+    'id',
+    { event: ['id'] },
+    { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
+  ],
   operation: 'createEventGuest',
   variables: { eventId: { required: true } }
 }).query;
@@ -45,6 +49,7 @@ export const GET_EVENT = query({
     'videoUrl',
     {
       guests: [
+        'createdAt',
         'id',
         {
           member: [
