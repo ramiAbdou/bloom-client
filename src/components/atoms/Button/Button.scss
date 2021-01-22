@@ -71,4 +71,6 @@ $PREF: 'c-btn';
   
   @include PRIMARY_HOVER;
   @include HOVER { border-radius: $xxs; }
+
+  > svg { color: $primary; margin-left: $xs; }
 }

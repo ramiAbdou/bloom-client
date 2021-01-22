@@ -5,16 +5,19 @@ import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
+import { useStoreState } from '@store/Store';
 import { GET_TOTAL_DUES_SERIES } from '../../Analytics/Analytics.gql';
 import { TimeSeriesResult } from '../../Analytics/Analytics.types';
 
 const IndividualEventAnalytics: React.FC = () => {
+  const isAdmin = useStoreState(({ db }) => db.member.role === 'ADMIN');
+
   const { data, loading } = useQuery<TimeSeriesResult[]>({
     name: 'getTotalDuesSeries',
     query: GET_TOTAL_DUES_SERIES
   });
 
-  if (loading || data?.every(({ value }) => !value)) return null;
+  if (!isAdmin) return null;
 
   return (
     <div className="s-events-individual-analytics">

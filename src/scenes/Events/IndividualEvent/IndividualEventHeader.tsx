@@ -1,8 +1,10 @@
 import React from 'react';
+import { IoCreateOutline } from 'react-icons/io5';
 
 import Button from '@atoms/Button';
 import { HeaderTag } from '@atoms/Tags';
 import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Row from '@containers/Row/Row';
 import { IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import EventStore from '../Event.store';
@@ -31,7 +33,13 @@ const IndividualEventHeaderContent: React.FC = () => {
   return (
     <div className="s-events-individual-header-content">
       <div>
-        <h4>Sat, Jan 21st, 11:00 AM - 12:30 PM EST</h4>
+        <Row spaceBetween>
+          <h4>Sat, Jan 21st, 11:00 AM - 12:30 PM EST</h4>
+          <Button tertiary>
+            Edit
+            <IoCreateOutline />
+          </Button>
+        </Row>
 
         <h1>{title}</h1>
         <HeaderTag>{isPrivate ? 'Members Only' : 'Open to All'} </HeaderTag>

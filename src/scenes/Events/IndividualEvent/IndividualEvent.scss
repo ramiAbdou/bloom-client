@@ -53,7 +53,7 @@ $PREF: 's-events-individual';
 
   > div:first-child { margin-bottom: $md; margin-top: auto; }
   > div:first-child > h1 { margin-bottom: $xs; }
-  > div:first-child > h4 { margin-bottom: $sm; }
+  > div:first-child > .flex-ac { margin-bottom: $sm; }
 
   > .t-action-ctr { margin-top: auto; }
 }
