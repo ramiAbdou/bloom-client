@@ -37,11 +37,11 @@ const SideBarProfile: React.FC = () => {
     return db.canCollectDues && db.member?.duesStatus !== 'Active';
   });
 
-  const showPicker = useStoreActions(({ panel }) => panel.showPicker);
+  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
   const activeRoute = useActiveRoute();
   const isActive = ['membership', 'profile'].includes(activeRoute);
 
-  const onClick = () => showPicker(PanelType.PROFILE);
+  const onClick = () => showPanel(PanelType.PROFILE);
 
   const containerCss = cx('o-side-bar-profile-ctr', {
     'o-side-bar-profile-ctr--no-auto': isDuesMessageShowing

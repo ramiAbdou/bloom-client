@@ -29,16 +29,16 @@ const HeaderCell = ({
     ({ options }) => options.fixFirstColumn
   );
 
-  const isPickerShowing = useStoreState(({ panel }) => panel.isIdShowing(id));
-  const showPicker = useStoreActions(({ panel }) => panel.showPicker);
+  const isPanelShowing = useStoreState(({ panel }) => panel.isIdShowing(id));
+  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const onClick = () => isSortable && showPicker(id);
+  const onClick = () => isSortable && showPanel(id);
 
   const isSortedColumn = sortedColumnId === id;
 
   const css = cx(getTableCellClass({ category, type }), {
     'c-table-th--fixed': fixFirstColumn && i === 0,
-    'c-table-th--panel': isPickerShowing,
+    'c-table-th--panel': isPanelShowing,
     'c-table-th--sortable': isSortable,
     'c-table-th--sorted': isSortedColumn
   });

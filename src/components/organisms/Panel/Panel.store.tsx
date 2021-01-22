@@ -5,7 +5,7 @@ export type PanelModel = {
   id: string;
   isIdShowing: Computed<PanelModel, (id: string) => boolean, {}>;
   isShowing: boolean;
-  showPicker: Action<PanelModel, string>;
+  showPanel: Action<PanelModel, string>;
 };
 
 export const panelModel: PanelModel = {
@@ -13,11 +13,11 @@ export const panelModel: PanelModel = {
 
   id: '',
 
-  isIdShowing: computed(({ id, isShowing }) => (PICKER_ID: string) =>
-    isShowing && id === PICKER_ID
+  isIdShowing: computed(({ id, isShowing }) => (panelId: string) =>
+    isShowing && id === panelId
   ),
 
   isShowing: false,
 
-  showPicker: action((state, id: string) => ({ ...state, id, isShowing: true }))
+  showPanel: action((state, id: string) => ({ ...state, id, isShowing: true }))
 };

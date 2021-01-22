@@ -5,9 +5,9 @@ import { useHistory } from 'react-router-dom';
 
 import { PanelType } from '@constants';
 import useMutation from '@hooks/useMutation';
-import PickerOption from '@organisms/Panel/components/Option';
 import Panel from '@organisms/Panel/Panel';
 import { PanelAction } from '@organisms/Panel/Panel.types';
+import PanelOption from '@organisms/Panel/PanelOption';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const SidebarPanel: React.FC = () => {
@@ -52,7 +52,7 @@ const SidebarPanel: React.FC = () => {
     push('/login');
   };
 
-  // Show a picker that either allows them to view their profile or log out.
+  // Show a panel that either allows them to view their profile or log out.
   const actions: PanelAction[] = [
     ...(canManageMembership
       ? [
@@ -78,7 +78,7 @@ const SidebarPanel: React.FC = () => {
       style={{ marginLeft: 24, minWidth: 270 }}
     >
       {actions.map((action) => (
-        <PickerOption key={action.text} {...action} />
+        <PanelOption key={action.text} {...action} />
       ))}
     </Panel>
   );

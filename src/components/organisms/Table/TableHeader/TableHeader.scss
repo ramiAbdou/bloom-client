@@ -45,7 +45,7 @@ th {
   // horizontal scrolling hide the other cells under this first one.
   &--fixed { left: 0; z-index: 12; }
 
-  // When the picker is showing, we keep the background-color dark.
+  // When the panel is showing, we keep the background-color dark.
   &--panel { background-color: $gray-5; }
 
   &--sortable {

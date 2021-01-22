@@ -6,10 +6,10 @@ import useOnClickOutside from 'use-onclickoutside';
 import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import usePickerPosition from './hooks/usePickerPosition';
+import usePanelPosition from './hooks/usePickerPosition';
 import { PanelAlign } from './Panel.types';
 
-interface PickerProps
+export interface PanelProps
   extends ChildrenProps,
     IdProps,
     ClassNameProps,
@@ -18,14 +18,14 @@ interface PickerProps
   scrollId?: string;
 }
 
-const Panel = ({
+const PanelContent = ({
   align: initialAlign,
   className,
   children,
-  id: PICKER_ID,
+  id: panelId,
   scrollId,
   style
-}: PickerProps) => {
+}: PanelProps) => {
   const id = useStoreState(({ panel }) => panel.id);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
@@ -34,13 +34,13 @@ const Panel = ({
   const { height, width } = element?.getBoundingClientRect() ?? {};
   const { innerHeight, innerWidth } = window;
 
-  const position = usePickerPosition({ id: PICKER_ID, initialAlign, scrollId });
+  const position = usePanelPosition({ id: panelId, initialAlign, scrollId });
   const { align, left, top } = position;
 
   // If the click happened within the element that was used to open the
-  // Picker, then we don't close the picker.
+  // Picker, then we don't close the panel.
   useOnClickOutside(ref, (event) => {
-    // If the element doesn't exist, then just close the picker.
+    // If the element doesn't exist, then just close the panel.
     if (!element) {
       closePanel();
       return;
@@ -60,7 +60,7 @@ const Panel = ({
     }
   });
 
-  if (!element || id !== PICKER_ID) return null;
+  if (!element || id !== panelId) return null;
 
   // ## START: CALCULATE PICKER COORDINATES AND ANIMATION STYLING
 
@@ -135,15 +135,17 @@ const Panel = ({
   );
 };
 
-export default ({ children, ...props }: PickerProps) => {
-  const isPickerShowing = useStoreState(({ panel }) =>
+const Panel: React.FC<PanelProps> = ({ children, ...props }) => {
+  const isPanelShowing = useStoreState(({ panel }) =>
     panel.isIdShowing(props.id)
   );
 
   return createPortal(
     <AnimatePresence>
-      {isPickerShowing && <Panel {...props}>{children}</Panel>}
+      {isPanelShowing && <PanelContent {...props}>{children}</PanelContent>}
     </AnimatePresence>,
     document.body
   );
 };
+
+export default Panel;

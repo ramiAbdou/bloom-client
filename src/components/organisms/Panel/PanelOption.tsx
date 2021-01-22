@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useStoreActions } from '@store/Store';
-import { PanelAction } from '../Panel.types';
+import { PanelAction } from './Panel.types';
 
 /**
  * Default option selection for the dropdown. Must execute some function on
@@ -11,8 +11,8 @@ import { PanelAction } from '../Panel.types';
 const PanelOption = ({ Icon, onClick, text }: PanelAction) => {
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  // After the passed-in onClick is executed, close the picker. This component
-  // should not be used as a Flow. It is meant to be a one-time action picker.
+  // After the passed-in onClick is executed, close the panel. This component
+  // should not be used as a Flow. It is meant to be a one-time action panel.
   const onOptionClick = () => {
     if (onClick) onClick();
     setTimeout(closePanel, 0);

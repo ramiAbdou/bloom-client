@@ -59,7 +59,7 @@ $PREF: 'c-table';
 .#{$PREF}-banner > p { margin-right: $sm; }
 .#{$PREF}-banner > p > span { @extend .body--bold; }
 
-// ## COLUMN PICKER
+// ## COLUMN PANEL
 
 // Added a div before the name to make it take higher precedence.
 div.#{$PREF}-col-panel { padding: $sm; }
