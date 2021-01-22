@@ -9,7 +9,7 @@ import Card from '@containers/Card/Card';
 import useMutation from '@hooks/useMutation';
 import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import EventStore from './Event.store';
 import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
@@ -26,7 +26,11 @@ const EventsCardBackground: React.FC = () => {
 };
 
 const EventsCardRSVPButton: React.FC<ShowProps> = ({ show }) => {
-  const eventId = EventStore.useStoreState((event) => event.id);
+  const eventId = useStoreState(({ db }) => db.event?.id);
+
+  const canRsvp = useStoreState(({ db }) => {
+    return day.utc().isBefore(db.event?.endTime);
+  });
 
   const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
     name: 'createEventGuest',
@@ -43,8 +47,18 @@ const EventsCardRSVPButton: React.FC<ShowProps> = ({ show }) => {
   };
 
   return (
-    <Button fill primary onClick={onClick}>
+    <Button fill primary show={canRsvp} onClick={onClick}>
       RSVP
+    </Button>
+  );
+};
+
+const EventsCardViewRecordingButton: React.FC = () => {
+  const recordingUrl = EventStore.useStoreState((event) => event?.recordingUrl);
+
+  return (
+    <Button fill secondary href={recordingUrl} show={!!recordingUrl}>
+      View Recording
     </Button>
   );
 };
@@ -81,6 +95,7 @@ const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
       <h3>{title}</h3>
       <EventsCardRSVPButton show={!guest} />
       <EventsCardShareLinkButton show={guest} />
+      <EventsCardViewRecordingButton />
     </div>
   );
 };
