@@ -7,12 +7,17 @@ import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
 
-const EventRsvpButton: React.FC<ButtonProps> = ({ show, ...props }) => {
-  const eventId = useStoreState(({ db }) => db.event?.id);
+interface EventRsvpButtonProps extends ButtonProps {
+  endTime: string;
+}
 
-  const canRsvp = useStoreState(({ db }) => {
-    return day.utc().isBefore(db.event?.endTime);
-  });
+const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
+  endTime,
+  show,
+  ...props
+}) => {
+  const eventId = useStoreState(({ db }) => db.event?.id);
+  const canRsvp = day.utc().isBefore(day.utc(endTime));
 
   const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
     name: 'createEventGuest',

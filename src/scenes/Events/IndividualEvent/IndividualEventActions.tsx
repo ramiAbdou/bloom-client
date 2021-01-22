@@ -60,8 +60,8 @@ const IndividualEventActions: React.FC = () => {
 
   return (
     <ActionContainer equal={!isGoing && isUpcoming}>
-      <EventRsvpButton large show={!isGoing && isUpcoming} />
-      <EventShareButton endTime={endTime} href={eventUrl} />
+      <EventRsvpButton large endTime={endTime} show={!isGoing && isUpcoming} />
+      <EventShareButton large endTime={endTime} href={eventUrl} />
       <EventViewRecordingButton large href={recordingUrl} show={!isAdmin} />
       <IndividualEventAddRecordingButton show={hasPast && isAdmin} />
     </ActionContainer>

@@ -44,7 +44,7 @@ const IndividualEventGuestListContent: React.FC = () => {
 
       <div>
         {users.map((user: IUser) => {
-          return <IndividualEventGuest {...user} />;
+          return <IndividualEventGuest key={user.id} {...user} />;
         })}
       </div>
     </>

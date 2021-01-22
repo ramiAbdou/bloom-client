@@ -37,8 +37,8 @@ const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
     <div className="s-events-card-content">
       <h5>{formattedStartTime}</h5>
       <h3>{title}</h3>
-      <EventRsvpButton show={!guest} />
-      <EventShareButton endTime={endTime} href={eventUrl} show={guest} />
+      <EventRsvpButton endTime={endTime} show={!guest} />
+      <EventShareButton endTime={endTime} href={eventUrl} show={!!guest} />
       <EventViewRecordingButton href={recordingUrl} />
     </div>
   );

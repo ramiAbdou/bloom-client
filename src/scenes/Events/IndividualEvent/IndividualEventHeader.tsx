@@ -23,8 +23,9 @@ const IndividualEventHeaderBackground: React.FC = () => {
 };
 
 const IndividualEventHeaderDateContainer: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const isAdmin = useStoreState(({ db }) => !!db.member.role);
   const eventId = useStoreState(({ db }) => db.event?.id);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const hasPast = useStoreState(({ db }) => {
     return day.utc().isAfter(db.event.startTime);
@@ -39,7 +40,7 @@ const IndividualEventHeaderDateContainer: React.FC = () => {
         <p className="meta">11:00 AM - 12:30 PM EST</p>
       </div>
 
-      <Button tertiary show={!hasPast} onClick={onClick}>
+      <Button tertiary show={!hasPast && isAdmin} onClick={onClick}>
         Edit
         <IoCreateOutline />
       </Button>

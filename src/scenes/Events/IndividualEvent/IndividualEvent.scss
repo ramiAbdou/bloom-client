@@ -79,7 +79,10 @@ $PREF: 's-events-individual';
 
 // // ## INDIVIDUAL EVENT GUEST - In the guest list.
 
-.#{$PREF}-guest > *:first-child { margin-right: $xs; }
+.#{$PREF}-guest {
+  &:not(:last-child) { margin-bottom: $ss; }
+  > *:first-child { margin-right: $ss; }
+}
 
 // // ## INDIVIDUAL EVENT ANALYTICS
 

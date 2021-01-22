@@ -5,14 +5,15 @@ import Button from '@atoms/Button';
 import { LoadingProps, ModalType } from '@constants';
 import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 
 const CreateEventButton: React.FC = () => {
+  const isAdmin = useStoreState(({ db }) => !!db.member.role);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal(ModalType.CREATE_EVENT);
 
   return (
-    <Button primary onClick={onClick}>
+    <Button primary show={isAdmin} onClick={onClick}>
       Create Event
     </Button>
   );

@@ -30,7 +30,17 @@ export const GET_EVENT = query({
     'startTime',
     'title',
     'videoUrl',
-    { guests: ['id', { member: ['id'] }] }
+    {
+      guests: [
+        'id',
+        {
+          member: [
+            'id',
+            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+          ]
+        }
+      ]
+    }
   ],
   operation: 'getEvent',
   variables: { eventId: { required: true } }
@@ -53,7 +63,17 @@ export const GET_EVENTS = query({
         'startTime',
         'title',
         'videoUrl',
-        { guests: ['id'] }
+        {
+          guests: [
+            'id',
+            {
+              member: [
+                'id',
+                { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+              ]
+            }
+          ]
+        }
       ]
     }
   ],
