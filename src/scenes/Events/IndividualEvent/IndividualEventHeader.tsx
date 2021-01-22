@@ -1,3 +1,4 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { IoCreateOutline } from 'react-icons/io5';
 import { useParams } from 'react-router-dom';
@@ -9,12 +10,11 @@ import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Row from '@containers/Row/Row';
 import { IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import EventStore from '../Event.store';
+import { EventIdProps } from '../Events.types';
 
 const IndividualEventHeaderDateContainer: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const eventId = EventStore.useStoreState((event) => event.id);
-
+  const { eventId } = useParams() as EventIdProps;
   const onClick = () => showModal(`${ModalType.CREATE_EVENT}-${eventId}`);
 
   return (
@@ -33,11 +33,15 @@ const IndividualEventHeaderDateContainer: React.FC = () => {
 };
 
 const IndividualEventHeaderContent: React.FC = () => {
+  const { eventId } = useParams() as EventIdProps;
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const eventUrl = EventStore.useStoreState((event) => event.eventUrl);
-  const guests = EventStore.useStoreState((event) => event.guests);
-  const isPrivate = EventStore.useStoreState((event) => event.private);
-  const title = EventStore.useStoreState((event) => event.title);
+
+  const event = useStoreState(
+    ({ db }) => db.entities.events.byId[eventId],
+    deepequal
+  );
+
+  const { eventUrl, guests, private: isPrivate, title } = event;
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const { byId: byGuestsId } = db.entities.guests;

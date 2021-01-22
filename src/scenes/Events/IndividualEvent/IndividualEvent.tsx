@@ -6,16 +6,12 @@ import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import EventStore from '../Event.store';
 import { GET_EVENT, GetEventArgs } from '../Events.gql';
+import { EventIdProps } from '../Events.types';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAnalytics from './IndividualEventAnalytics';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventHeader from './IndividualEventHeader';
-
-interface EventIdProps {
-  eventId: string;
-}
 
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as EventIdProps;
@@ -31,7 +27,7 @@ const IndividualEvent: React.FC = () => {
   if (!event) return null;
 
   return (
-    <EventStore.Provider runtimeModel={event}>
+    <>
       <div className="s-events-individual">
         <IndividualEventHeader />
 
@@ -44,7 +40,7 @@ const IndividualEvent: React.FC = () => {
       </div>
 
       <CreateEventModal id={event.id} />
-    </EventStore.Provider>
+    </>
   );
 };
 
