@@ -8,6 +8,7 @@ import { IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import EventRsvpButton from '../EventRsvpButton';
 import EventShareButton from '../EventShareButton';
+import EventViewRecordingButton from '../EventViewRecordingButton';
 
 const IndividualEventAddRecordingButton: React.FC<Partial<ButtonProps>> = (
   props
@@ -39,6 +40,7 @@ const IndividualEventActions: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
   const eventUrl = useStoreState(({ db }) => db.event?.eventUrl);
   const guests = useStoreState(({ db }) => db.event?.guests);
+  const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
 
   const hasPast: boolean = useStoreState(({ db }) => {
     return day.utc().isAfter(db.event.endTime);
@@ -60,6 +62,7 @@ const IndividualEventActions: React.FC = () => {
     <ActionContainer equal={!isGoing && isUpcoming}>
       <EventRsvpButton large show={!isGoing && isUpcoming} />
       <EventShareButton endTime={endTime} href={eventUrl} />
+      <EventViewRecordingButton large href={recordingUrl} show={!isAdmin} />
       <IndividualEventAddRecordingButton show={hasPast && isAdmin} />
     </ActionContainer>
   );

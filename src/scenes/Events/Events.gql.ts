@@ -26,6 +26,7 @@ export const GET_EVENT = query({
     'id',
     'imageUrl',
     'private',
+    'recordingUrl',
     'startTime',
     'title',
     'videoUrl',
