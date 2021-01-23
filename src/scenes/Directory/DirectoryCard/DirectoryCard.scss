@@ -3,7 +3,6 @@ $PREF: 's-directory-card';
 // ## CARD
 
 button.#{$PREF} {
-  @extend .t-misc-card;
   @extend .flex-ac;
   
   height: max-content;

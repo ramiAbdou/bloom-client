@@ -2,8 +2,8 @@ import deepequal from 'fast-deep-equal';
 import { RenderComponentProps } from 'masonic';
 import React from 'react';
 
-import Button from '@atoms/Button';
 import { ModalType } from '@constants';
+import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
@@ -54,26 +54,23 @@ const DirectoryCardContent: React.FC = () => {
   });
 
   return (
-    <>
-      <Button className={css} onClick={onClick}>
-        <ProfilePicture
-          firstName={firstName}
-          fontSize={60}
-          href={pictureUrl}
-          lastName={lastName}
-        />
+    <Card noPadding className={css} onClick={onClick}>
+      <ProfilePicture
+        firstName={firstName}
+        fontSize={60}
+        href={pictureUrl}
+        lastName={lastName}
+      />
 
-        <DirectoryCardInformation />
-      </Button>
-
-      <DirectoryCardModal id={`${ModalType.DIRECTORY_CARD}-${id}`} />
-    </>
+      <DirectoryCardInformation />
+    </Card>
   );
 };
 
 const DirectoryCard = ({ data }: RenderComponentProps<MemberCardModel>) => (
   <MemberCard.Provider runtimeModel={data}>
     <DirectoryCardContent />
+    <DirectoryCardModal id={`${ModalType.DIRECTORY_CARD}-${data.id}`} />
   </MemberCard.Provider>
 );
 

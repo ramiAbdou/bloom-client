@@ -1,20 +1,16 @@
 import React from 'react';
 
+import AspectRatio from '@containers/AspectRatio/AspectRatio';
 import Network from '@images/network.svg';
-import { useStoreState } from '@store/Store';
 import IndividualEventMain from './IndividualEventMain';
 
-const IndividualEventHeaderBackground: React.FC = () => {
-  const primaryColor = useStoreState(({ db }) => db.community.primaryColor);
-
-  return (
-    <div>
-      <div />
-      <Network stroke={primaryColor} />
-      <Network />
-    </div>
-  );
-};
+const IndividualEventHeaderBackground: React.FC = () => (
+  <AspectRatio ratio={2}>
+    <div />
+    <Network />
+    <Network />
+  </AspectRatio>
+);
 
 const IndividualEventHeader: React.FC = () => {
   return (

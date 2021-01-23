@@ -8,8 +8,8 @@ $PREF: 't-misc-card';
 
   background-color: white;
   border-radius: $xs;
-  padding: $sm;
 
+  &:not(&--no-padding) { padding: $sm; }
   &--clickable { cursor: pointer; }
 }
 

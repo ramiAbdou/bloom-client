@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from '@atoms/Button';
 import { ChildrenProps, ClassNameProps } from '@constants';
 import LoadingHeader, {
   LoadingHeaderProps
@@ -10,6 +11,7 @@ interface CardProps
   extends ChildrenProps,
     ClassNameProps,
     Pick<LoadingHeaderProps, 'headerTag' | 'loading' | 'title'> {
+  noPadding?: boolean;
   onClick?: VoidFunction;
 }
 
@@ -18,16 +20,18 @@ const Card: React.FC<CardProps> = ({
   className,
   headerTag,
   loading,
+  noPadding,
   onClick,
   title
 }) => {
   const css = cx('t-misc-card', {
     [className]: className,
-    't-misc-card--clickable': !!onClick
+    't-misc-card--clickable': !!onClick,
+    't-misc-card--no-padding': noPadding
   });
 
-  return (
-    <div className={css} onClick={onClick}>
+  const body = (
+    <>
       {title && (
         <LoadingHeader
           h3
@@ -36,8 +40,17 @@ const Card: React.FC<CardProps> = ({
           title={title}
         />
       )}
-
       {!loading && children}
+    </>
+  );
+
+  return onClick ? (
+    <Button className={css} onClick={onClick}>
+      {body}
+    </Button>
+  ) : (
+    <div className={css} onClick={onClick}>
+      {body}
     </div>
   );
 };

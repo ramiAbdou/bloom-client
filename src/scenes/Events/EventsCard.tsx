@@ -3,9 +3,10 @@ import { RenderComponentProps } from 'masonic';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import AspectRatio from '@containers/AspectRatio/AspectRatio';
 import Card from '@containers/Card/Card';
 import { IEvent } from '@store/entities';
-import { cx, takeFirst } from '@util/util';
+import { cx } from '@util/util';
 import EventStore from './Event.store';
 import EventJoinButton from './EventJoinButton';
 import EventRsvpButton from './EventRsvpButton';
@@ -15,12 +16,12 @@ import EventViewRecordingButton from './EventViewRecordingButton';
 const EventsCardBackground: React.FC = () => {
   const imageUrl = EventStore.useStoreState((event) => event.imageUrl);
 
-  const body = takeFirst([
-    [imageUrl, <img alt="Profile Avatar" src={imageUrl} />],
-    [!imageUrl, <div />]
-  ]);
-
-  return <div className="s-events-card-bg">{body}</div>;
+  return (
+    <AspectRatio className="s-events-card-bg" ratio={2}>
+      {imageUrl && <img alt="Profile Avatar" src={imageUrl} />}
+      {!imageUrl && <div />}
+    </AspectRatio>
+  );
 };
 
 const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
@@ -77,7 +78,7 @@ const EventsCard: React.FC<EventsCardProps> = ({ data, guest }) => {
 
   return (
     <EventStore.Provider runtimeModel={data}>
-      <Card className="s-events-card" onClick={onClick}>
+      <Card noPadding className="s-events-card" onClick={onClick}>
         <EventsCardBackground />
         <EventsCardContent guest={guest} />
       </Card>

@@ -18,7 +18,7 @@ const Row: React.FC<RowProps> = ({
   marginTopAuto,
   spaceBetween
 }) => {
-  const css = cx('flex-ac', {
+  const css = cx('flex-ac t-row', {
     [className]: className,
     'flex-ac': !align,
     'flex-ae': align === 'end',

@@ -30,7 +30,7 @@ function List<T>({ items, options, render, ...props }: ListProps<T>) {
     if (length !== numResults) setNumResults(length);
   }, [sortedItems?.length]);
 
-  if (!sortedItems?.length) return null;
+  if (!numResults) return null;
 
   return (
     <Masonry

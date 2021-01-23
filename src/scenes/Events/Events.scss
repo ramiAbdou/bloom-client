@@ -25,21 +25,8 @@ $PREF: 's-events';
 // ## EVENTS CARD BACKGROUND
 
 .#{$PREF}-card-bg {
-  position: relative;
-  width: 100%;
-  &::before { content: ''; display: block; padding-top: 50%; }
-
   > div { background-color: $primary-bg; }
-
-  > *:first-child {
-    border-radius: $xs $xs 0 0;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
-  }
+  > *:first-child { border-radius: $xs $xs 0 0; }
 }
 
 // ## EVENTS CARD CONTENT
