@@ -22,11 +22,10 @@ const YourUpcomingEventsContent: React.FC = () => {
 
   return (
     <List
+      Item={(props) => <EventsCard guest {...props} />}
       className="s-events-card-ctr"
-      columnWidth={300}
       items={events}
       options={{ keys: ['title'] }}
-      render={(props) => <EventsCard guest {...props} />}
     />
   );
 };

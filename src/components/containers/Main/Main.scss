@@ -44,6 +44,7 @@ $PREF: 't-main';
 // ## MAIN CONTENT
 
 .#{$PREF}-section {
+  margin-bottom: $md;
   > .t-loading-header { margin-bottom: $sm; }
 }
 

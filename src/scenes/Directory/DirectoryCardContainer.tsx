@@ -1,9 +1,9 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import List from '@organisms/List/List';
 import { IMember, IMemberData } from '@store/entities';
 import { useStoreState } from '@store/Store';
+import MasonryList from '../../components/organisms/List/MasonryList';
 import DirectoryCard from './DirectoryCard/DirectoryCard';
 import { MemberCardModel } from './DirectoryCard/DirectoryCard.store';
 
@@ -33,7 +33,7 @@ const DirectoryCardContainer = () => {
   }, deepequal);
 
   return (
-    <List
+    <MasonryList
       className="s-directory-card-ctr"
       items={members}
       options={{

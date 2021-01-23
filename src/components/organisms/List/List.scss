@@ -1,0 +1,10 @@
+$PREF: 'o-list';
+
+// ## LIST
+
+.#{$PREF} {
+  column-gap: $sm;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 360px);
+  row-gap: $sm;
+}

@@ -1,5 +1,4 @@
 import day from 'dayjs';
-import { RenderComponentProps } from 'masonic';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -57,18 +56,18 @@ const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
   );
 };
 
-interface EventsCardProps extends RenderComponentProps<IEvent> {
+interface EventsCardProps extends IEvent {
   guest?: boolean;
 }
 
-const EventsCard: React.FC<EventsCardProps> = ({ data, guest }) => {
+const EventsCard: React.FC<EventsCardProps> = ({ guest, ...event }) => {
   const { push } = useHistory();
-  const onClick = () => push(data?.id);
+  const onClick = () => push(event?.id);
 
   return (
-    <EventStore.Provider runtimeModel={data}>
+    <EventStore.Provider runtimeModel={event}>
       <Card noPadding className="s-events-card" onClick={onClick}>
-        <EventsAspectBackground imageUrl={data.imageUrl} />
+        <EventsAspectBackground imageUrl={event.imageUrl} />
         <EventsCardContent guest={guest} />
       </Card>
     </EventStore.Provider>

@@ -35,11 +35,10 @@ const EventsUpcomingContent: React.FC = () => {
       {!events?.length && <p>Looks like there are no upcoming events.</p>}
 
       <List
+        Item={EventsCard}
         className="s-events-card-ctr"
-        columnWidth={300}
         items={events}
         options={{ keys: ['title'] }}
-        render={EventsCard}
       />
     </>
   );

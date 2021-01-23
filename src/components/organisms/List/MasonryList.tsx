@@ -1,10 +1,16 @@
+import { Masonry } from 'masonic';
 import { matchSorter } from 'match-sorter';
 import React, { useEffect } from 'react';
 
 import ListStore from './List.store';
-import { ListProps } from './List.types';
+import { MasonryListProps } from './List.types';
 
-function List<T>({ emptyMessage, Item, items, options }: ListProps<T>) {
+function MasonryList<T>({
+  emptyMessage,
+  items,
+  options,
+  ...props
+}: MasonryListProps<T>) {
   const numResults = ListStore.useStoreState((store) => store.numResults);
   const searchString = ListStore.useStoreState((store) => store.searchString);
 
@@ -19,21 +25,23 @@ function List<T>({ emptyMessage, Item, items, options }: ListProps<T>) {
       })
     : items;
 
-  const { length } = sortedItems ?? [];
-
   useEffect(() => {
+    const { length } = sortedItems ?? [];
     if (length !== numResults) setNumResults(length);
-  }, [length]);
+  }, [sortedItems?.length]);
 
   if (!numResults) return <p>{emptyMessage}</p>;
 
   return (
-    <div className="o-list">
-      {sortedItems.map((value) => {
-        return <Item {...value} />;
-      })}
-    </div>
+    <Masonry
+      key={`${searchString}-${numResults}`}
+      columnGutter={16}
+      items={items}
+      overscanBy={5}
+      style={{ outline: 'none' }}
+      {...props}
+    />
   );
 }
 
-export default List;
+export default MasonryList;

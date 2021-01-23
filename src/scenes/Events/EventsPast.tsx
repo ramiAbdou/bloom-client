@@ -34,11 +34,10 @@ const EventsPastContent: React.FC = () => {
       {!events?.length && <p>Looks like there are no past events.</p>}
 
       <List
+        Item={EventsCard}
         className="s-events-card-ctr"
-        columnWidth={300}
         items={events}
         options={{ keys: ['title'] }}
-        render={EventsCard}
       />
     </>
   );
