@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button from '@atoms/Button';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Card from '@containers/Card/Card';
+import Row from '@containers/Row/Row';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
@@ -37,7 +37,7 @@ const ApplicantsCardActionContainer = () => {
   const applicantId = CardStore.useStoreState((store) => store.applicant.id);
 
   return (
-    <ActionContainer equal marginTopAuto>
+    <Row equal marginTopAuto>
       <ApplicantsRespondButton
         applicantIds={[applicantId]}
         response="ACCEPTED"
@@ -47,7 +47,7 @@ const ApplicantsCardActionContainer = () => {
         applicantIds={[applicantId]}
         response="REJECTED"
       />
-    </ActionContainer>
+    </Row>
   );
 };
 

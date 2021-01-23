@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IdProps } from '@constants';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Row from '@containers/Row/Row';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
@@ -16,7 +16,7 @@ const ApplicantsModalActionContainer: React.FC = () => {
   );
 
   return (
-    <ActionContainer equal>
+    <Row equal>
       <ApplicantsRespondButton
         applicantIds={[applicantId]}
         response="ACCEPTED"
@@ -26,7 +26,7 @@ const ApplicantsModalActionContainer: React.FC = () => {
         applicantIds={[applicantId]}
         response="REJECTED"
       />
-    </ActionContainer>
+    </Row>
   );
 };
 

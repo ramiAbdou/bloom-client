@@ -27,7 +27,7 @@ export default ({ active, label, payload }: ChartTooltipProps) => {
   ).toFixed(2);
 
   return (
-    <div className="c-chart-tooltip">
+    <div className="o-chart-tooltip">
       <p>{label}</p>
       <p>
         {value} ({percentageOfTotal}%)

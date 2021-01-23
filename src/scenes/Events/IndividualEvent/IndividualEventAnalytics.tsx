@@ -6,16 +6,20 @@ import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { useStoreState } from '@store/Store';
-import { GET_TOTAL_DUES_SERIES } from '../../Analytics/Analytics.gql';
 import { TimeSeriesResult } from '../../Analytics/Analytics.types';
+import { GET_EVENT_GUEST_SERIES, GetEventArgs } from '../Events.gql';
 
 const IndividualEventAnalytics: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => db.member.role === 'ADMIN');
+  const eventId = useStoreState(({ db }) => db.event?.id);
+  const isAdmin = useStoreState(({ db }) => !!db.member.role);
 
-  const { data, loading } = useQuery<TimeSeriesResult[]>({
-    name: 'getTotalDuesSeries',
-    query: GET_TOTAL_DUES_SERIES
+  const { data, loading } = useQuery<TimeSeriesResult[], GetEventArgs>({
+    name: 'getEventGuestSeries',
+    query: GET_EVENT_GUEST_SERIES,
+    variables: { eventId }
   });
+
+  console.log(data);
 
   if (!isAdmin) return null;
 
@@ -27,7 +31,8 @@ const IndividualEventAnalytics: React.FC = () => {
         <Chart
           data={data}
           interval={2}
-          show={!loading && data?.some(({ value }) => value)}
+          options={{ format: 'HOUR' }}
+          show={!loading}
           title="RSVP's Collected"
           type={ChartType.TIME_SERIES}
         />

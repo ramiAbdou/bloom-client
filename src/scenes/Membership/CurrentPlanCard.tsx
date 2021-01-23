@@ -6,7 +6,6 @@ import Button from '@atoms/Button';
 import Separator from '@atoms/Separator';
 import StatusTag from '@atoms/Tags/StatusTag';
 import { ModalType } from '@constants';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import useMutation from '@hooks/useMutation';
@@ -82,7 +81,7 @@ const CurrentPlanCardActionContainer: React.FC = () => {
   const onSecondaryClick = () => push(`${url}/change`);
 
   return (
-    <ActionContainer equal={!isDuesActive}>
+    <Row equal={!isDuesActive}>
       {!isDuesActive && (
         <Button primary onClick={onPrimaryClick}>
           Pay Dues
@@ -92,7 +91,7 @@ const CurrentPlanCardActionContainer: React.FC = () => {
       <Button fill secondary onClick={onSecondaryClick}>
         Change Plan
       </Button>
-    </ActionContainer>
+    </Row>
   );
 };
 

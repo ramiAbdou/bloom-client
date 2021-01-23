@@ -16,7 +16,7 @@ import useUpdateEvent from './useUpdateEvent';
 const CreateEventTimeItems: React.FC<IdProps> = () => {
   return (
     <>
-      <Row align="end" className="mo-create-event-row" gap="sm">
+      <Row align="end" className="mo-create-event-row">
         <FormItem
           required
           placeholder="January 10, 2021"
@@ -32,7 +32,7 @@ const CreateEventTimeItems: React.FC<IdProps> = () => {
         />
       </Row>
 
-      <Row align="end" className="mo-create-event-row" gap="sm">
+      <Row align="end" className="mo-create-event-row">
         <FormItem
           required
           placeholder="January 10, 2021"

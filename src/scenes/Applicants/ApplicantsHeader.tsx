@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { LoadingProps } from '@constants';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
 import { MainHeader } from '@containers/Main';
+import Row from '@containers/Row/Row';
 import { useStoreState } from '@store/Store';
 import ApplicantsHeaderRespondAllButton from './ApplicantsRespondButton';
 
@@ -24,7 +24,7 @@ const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
       loading={loading}
       title="Pending Applicants"
     >
-      <ActionContainer>
+      <Row>
         <ApplicantsHeaderRespondAllButton
           all
           applicantIds={pendingApplicantIds}
@@ -36,7 +36,7 @@ const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
           applicantIds={pendingApplicantIds}
           response="REJECTED"
         />
-      </ActionContainer>
+      </Row>
     </MainHeader>
   );
 };

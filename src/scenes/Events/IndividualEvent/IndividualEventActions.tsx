@@ -3,7 +3,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button';
 import { PanelType } from '@constants';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Row from '@containers/Row/Row';
 import { IEvent, IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import EventJoinButton from '../EventJoinButton';
@@ -68,7 +68,7 @@ const IndividualEventActions: React.FC = () => {
   };
 
   return (
-    <ActionContainer equal={!isGoing && isUpcoming}>
+    <Row marginTopAuto equal={!isGoing && isUpcoming}>
       <EventRsvpButton large show={!isGoing && isUpcoming} {...timeProps} />
       <EventJoinButton
         large
@@ -79,7 +79,7 @@ const IndividualEventActions: React.FC = () => {
       <EventShareButton large href={eventUrl} startTime={startTime} />
       <EventViewRecordingButton large href={recordingUrl} show={!isAdmin} />
       <IndividualEventAddRecordingButton show={hasPast && isAdmin} />
-    </ActionContainer>
+    </Row>
   );
 };
 

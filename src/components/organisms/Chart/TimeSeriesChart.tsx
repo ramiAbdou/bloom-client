@@ -14,35 +14,48 @@ import {
 
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
+import { takeFirst } from '@util/util';
 import ChartStore from './Chart.store';
 import { ChartTooltipProps } from './Tooltip';
 
-const LineChartTooltip = ({ label }: Pick<ChartTooltipProps, 'label'>) => {
+const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
+  label
+}) => {
   const data = ChartStore.useStoreState((store) => store.data);
   const format = ChartStore.useStoreState(({ options }) => options?.format);
 
   if (!label) return null;
 
-  let value = data.find(({ name }) => name === label)?.value;
-  value = format === 'MONEY' ? `$${(value as number) / 100}` : value;
-  label = day(label).format('dddd, MMMM D, YYYY');
+  const value = data.find(({ name }) => name === label)?.value;
+
+  const formattedLabel: string = takeFirst([
+    [format === 'HOUR', day(label).format('dddd, MMMM D @ h:mm A')],
+    [true, day(label).format('dddd, MMMM D, YYYY')]
+  ]);
+
+  const formattedValue: string = takeFirst([
+    [format === 'MONEY', `$${(value as number) / 100}`],
+    [true, value]
+  ]);
 
   return (
-    <div className="c-chart-tooltip">
-      <p>{label}</p>
-      <p>{value}</p>
+    <div className="o-chart-tooltip">
+      <p>{formattedLabel}</p>
+      <p>{formattedValue}</p>
     </div>
   );
 };
 
-const LineChartDot = ({ payload, ...props }) => {
+const TimeSeriesDot: React.FC<any> = ({ payload, ...props }) => {
   if (!payload || day(payload.name).get('date') !== 1) return null;
   return <Dot r={8} {...props} />;
 };
 
-export default () => {
+const TimeSeriesChart: React.FC = () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
+
   const data = ChartStore.useStoreState((store) => store.data, deepequal);
+
   const interval = ChartStore.useStoreState((store) => store.interval);
   const format = ChartStore.useStoreState(({ options }) => options?.format);
   const isMonitor = useBreakpoint() === 4;
@@ -57,9 +70,14 @@ export default () => {
         <XAxis
           allowDuplicatedCategory={false}
           dataKey="name"
+          // interval="preserveEnd"
           interval={interval ?? data.length / 12}
           padding={{ left: 4, right: 12 }}
-          tickFormatter={(label) => day(label).format('MMM D')}
+          tickFormatter={(label) => {
+            return format === 'HOUR'
+              ? day(label).format('MMM D, h A')
+              : day(label).format('MMM D');
+          }}
           tickSize={8}
         />
 
@@ -76,7 +94,7 @@ export default () => {
         <Line
           activeDot={{ r: 8 }}
           dataKey="value"
-          dot={(props) => <LineChartDot {...props} />}
+          dot={(props) => <TimeSeriesDot {...props} />}
           stroke={color}
           type="monotone"
         />
@@ -84,3 +102,5 @@ export default () => {
     </ResponsiveContainer>
   );
 };
+
+export default TimeSeriesChart;

@@ -64,6 +64,14 @@ export const GET_EVENT = query({
   variables: { eventId: { required: true } }
 }).query;
 
+// ## GET EVENT GUEST SERIES
+
+export const GET_EVENT_GUEST_SERIES = query({
+  fields: ['name', 'value'],
+  operation: 'getEventGuestSeries',
+  variables: { eventId: { required: true } }
+}).query;
+
 // ## GET EVENTS
 
 export const GET_EVENTS = query({

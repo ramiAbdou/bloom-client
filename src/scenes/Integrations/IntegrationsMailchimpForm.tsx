@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
 import { ModalType } from '@constants';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormItem from '@organisms/Form/FormItem';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
@@ -19,7 +19,7 @@ const MailchimpModalActionContainer: React.FC = () => {
   const onSecondaryClick = () => closeModal();
 
   return (
-    <ActionContainer>
+    <Row>
       <SubmitButton fill={false} large={false} loadingText="Finishing...">
         Finish
       </SubmitButton>
@@ -27,7 +27,7 @@ const MailchimpModalActionContainer: React.FC = () => {
       <Button secondary onClick={onSecondaryClick}>
         Cancel
       </Button>
-    </ActionContainer>
+    </Row>
   );
 };
 

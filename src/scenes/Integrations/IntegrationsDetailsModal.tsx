@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
@@ -48,11 +48,11 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
         marginBottom={24}
       />
 
-      <ActionContainer>
+      <Row>
         <Button secondary onClick={() => closeModal()}>
           Close
         </Button>
-      </ActionContainer>
+      </Row>
     </Modal>
   );
 };

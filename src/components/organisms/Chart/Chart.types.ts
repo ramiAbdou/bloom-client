@@ -3,7 +3,7 @@ import { ShowProps } from '@constants';
 export type ChartData = { name: string; value: number | string };
 
 export interface ChartOptions {
-  format?: 'MONEY';
+  format?: 'HOUR' | 'MONEY';
 }
 
 export enum ChartType {
@@ -14,9 +14,9 @@ export enum ChartType {
 
 export interface ChartModelInitArgs extends ShowProps {
   data?: ChartData[];
+  interval?: number;
   options?: ChartOptions;
   questionId?: string;
-  interval?: number;
   totalResponses?: number;
   title?: string;
   type?: ChartType;

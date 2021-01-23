@@ -44,7 +44,7 @@ const MemberTagList: React.FC = () => {
   });
 
   return (
-    <Row gap="sm">
+    <Row>
       {role && <HeaderTag>{role}</HeaderTag>}
       <HeaderTag>{type}</HeaderTag>
     </Row>

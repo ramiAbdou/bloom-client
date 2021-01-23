@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button';
 import { ModalType } from '@constants';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
@@ -55,7 +55,7 @@ const AddMemberContent: React.FC = () => {
 
         <FormErrorMessage />
 
-        <ActionContainer>
+        <Row>
           <SubmitButton fill={false} large={false} loadingText="Adding...">
             Add
           </SubmitButton>
@@ -63,7 +63,7 @@ const AddMemberContent: React.FC = () => {
           <Button secondary onClick={onSecondaryClick}>
             Cancel
           </Button>
-        </ActionContainer>
+        </Row>
       </Form>
     </Modal>
   );

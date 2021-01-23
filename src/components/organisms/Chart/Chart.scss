@@ -1,4 +1,4 @@
-$PREF: 'c-chart';
+$PREF: 'o-chart';
 
 .#{$PREF} {
   background-color: hsla($primary-hue, 5%, 88%, 0.4);
@@ -51,6 +51,7 @@ $PREF: 'c-chart';
 
 .#{$PREF}-legend-item {
   @extend .flex-ac;
+  
   &:not(:last-child) { margin-bottom: $xs; }
   > div { border-radius: $xxs; height: $md; width: $md; }
   > p { @extend .meta; margin-left: $xs; }

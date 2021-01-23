@@ -36,7 +36,7 @@ function List<T>({ items, options, render, ...props }: ListProps<T>) {
     <Masonry
       key={`${searchString}-${numResults}`}
       columnGutter={16}
-      items={sortedItems ?? []}
+      items={sortedItems}
       overscanBy={5}
       render={render}
       style={{ outline: 'none' }}

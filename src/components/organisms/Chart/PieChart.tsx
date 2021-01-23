@@ -2,15 +2,17 @@ import React from 'react';
 import {
   Cell,
   Legend,
+  LegendPayload,
   Pie,
-  PieChart,
+  PieChart as RechartsPieChart,
   ResponsiveContainer,
   Tooltip
 } from 'recharts';
 
 import Chart from './Chart.store';
-import ChartLegend from './Legend';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
+
+// Pie chart colors for all of the different options.
 
 const COLORS = [
   '#40a8c4',
@@ -22,17 +24,32 @@ const COLORS = [
   '#E31A1C'
 ];
 
-export default () => {
+interface PieChartLegendProps {
+  payload?: LegendPayload[];
+}
+
+const PieChartLegend: React.FC<PieChartLegendProps> = ({ payload }) => (
+  <>
+    {payload.map(({ color, value }: LegendPayload) => (
+      <div key={value} className="o-chart-legend-item">
+        <div style={{ backgroundColor: color }} />
+        <p>{value}</p>
+      </div>
+    ))}
+  </>
+);
+
+const PieChart: React.FC = () => {
   const data = Chart.useStoreState((store) => store.data);
 
   if (!data?.length) return null;
 
   return (
     <ResponsiveContainer height={360}>
-      <PieChart margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
+      <RechartsPieChart margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <Legend
           align="left"
-          content={(props: any) => <ChartLegend {...props} />}
+          content={(props: any) => <PieChartLegend {...props} />}
           layout="vertical"
           verticalAlign="middle"
         />
@@ -46,7 +63,9 @@ export default () => {
         <Tooltip
           content={(props: ChartTooltipProps) => <ChartTooltip {...props} />}
         />
-      </PieChart>
+      </RechartsPieChart>
     </ResponsiveContainer>
   );
 };
+
+export default PieChart;
