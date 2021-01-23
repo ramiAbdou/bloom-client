@@ -59,7 +59,6 @@ const Button = forwardRef(
       show,
       type,
       tertiary,
-      white,
       ...props
     }: ButtonProps,
     ref: React.MutableRefObject<any>
@@ -93,7 +92,6 @@ const Button = forwardRef(
       'c-btn--primary': primary,
       'c-btn--secondary': secondary,
       'c-btn--tertiary': tertiary,
-      'c-btn--white': white,
       [className]: className
     });
 

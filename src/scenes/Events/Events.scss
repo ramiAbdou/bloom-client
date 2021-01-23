@@ -22,6 +22,31 @@ $PREF: 's-events';
   padding: 0;
 }
 
+// ## EVENTS ASPECT BACKGROUND
+
+.#{$PREF}-aspect-bg {
+  border-radius: $xs;
+  overflow: hidden;
+
+  > *:first-child { background-color: $primary-bg; border-radius: $xs; }
+
+  > svg {
+    height: auto;
+    opacity: 0.15;
+    stroke: $primary;
+    transform: scale(1.75);
+
+    &:first-of-type { margin-right: 5%; z-index: 10; }
+
+    &:last-of-type {
+      margin-bottom: -10%;
+      margin-left: 50%;
+      top: initial;
+      z-index: 10;
+    }
+  }
+}
+
 // ## EVENTS CARD BACKGROUND
 
 .#{$PREF}-card-bg {

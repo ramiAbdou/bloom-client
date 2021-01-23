@@ -95,7 +95,6 @@ $PREF: 'o-form';
   border: 1px $primary dashed;
   border-radius: $xs;
   box-sizing: border-box;
-  cursor: pointer;
   height: 300px;
   justify-content: flex-end;
   padding: $sm;
@@ -103,7 +102,14 @@ $PREF: 'o-form';
 
   @include MT { height: initial; padding-top: 50%; }
 
-  > button { margin-top: $sm; width: fit-content; }
+  > .c-btn--secondary {
+    background-color: white;
+    margin-top: $sm;
+    position: sticky;
+    width: fit-content;
+    z-index: 11;
+  }
+
   > input { display: none; }
 }
 

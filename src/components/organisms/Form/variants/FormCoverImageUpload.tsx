@@ -1,19 +1,15 @@
 import React, { useRef } from 'react';
 
 import Button from '@atoms/Button';
+import AspectRatio from '@containers/AspectRatio/AspectRatio';
 import { convertImageToBase64 } from '@util/imageUtil';
+import EventsAspectBackground from '../../../../scenes/Events/EventsAspectBackground';
 import FormStore from '../Form.store';
 import { FormItemProps } from '../Form.types';
 
-const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
-  args
-) => {
-  const { id, title } = args;
-
-  const selectedImage = FormStore.useStoreState(
-    ({ getItem }) => getItem(args)?.value
-  );
-
+const FormCoverImageUploadContent: React.FC<
+  Pick<FormItemProps, 'id' | 'title'>
+> = ({ id, title }) => {
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
@@ -32,18 +28,8 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
     updateItem({ id, value: base64String });
   };
 
-  // The background blend creates the overlay effect. Makes the background
-  // darker so that white <Camera /> component shows clearly.
-  const backgroundStyle: React.CSSProperties = selectedImage
-    ? { backgroundImage: `url(${selectedImage})` }
-    : {};
-
   return (
-    <div
-      className="o-form-item--cover-image"
-      style={backgroundStyle}
-      onClick={openFileUploader}
-    >
+    <>
       <input
         ref={ref}
         accept=".png, .jpg, .jpeg"
@@ -51,17 +37,38 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
         onChange={onChange}
       />
 
-      {!selectedImage && (
-        <p>
-          For best results, upload image with an aspect ratio of 2:1
-          (width:height).
-        </p>
-      )}
-
       <Button secondary white onClick={openFileUploader}>
         {title}
       </Button>
-    </div>
+    </>
+  );
+};
+
+const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
+  args
+) => {
+  const selectedImage = FormStore.useStoreState(
+    ({ getItem }) => getItem(args)?.value
+  );
+
+  // The background blend creates the overlay effect. Makes the background
+  // darker so that white <Camera /> component shows clearly.
+  // const backgroundStyle: React.CSSProperties = selectedImage
+  //   ? { backgroundImage: `url(${selectedImage})` }
+  //   : {};
+
+  return selectedImage ? (
+    <AspectRatio
+      className="o-form-item--cover-image"
+      ratio={2}
+      // style={backgroundStyle}
+    >
+      <FormCoverImageUploadContent {...args} />
+    </AspectRatio>
+  ) : (
+    <EventsAspectBackground className="o-form-item--cover-image">
+      <FormCoverImageUploadContent {...args} />
+    </EventsAspectBackground>
   );
 };
 
