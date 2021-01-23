@@ -14,6 +14,10 @@ $PREF: 's-events-individual';
   grid-template-columns: repeat(12, 1fr);
   padding: $md;
 
+  @include LTE(1300) { display: block; }
+  @include T { display: grid; }
+  @include LTE(900) { display: block; }
+
   > *:first-child { grid-column-end: span 7; }
   > *:last-child { grid-column-end: span 5; }
 }
@@ -56,7 +60,14 @@ $PREF: 's-events-individual';
 .#{$PREF}-header-content {
   @extend .flex-col;
 
-  > div:first-child { margin-bottom: $md; margin-top: auto; }
+  > div:first-child {
+    margin-bottom: $md;
+    margin-top: auto;
+
+    @include LTE(1300) { margin-top: $md; }
+    @include T { margin-top: auto; }
+    @include LTE(900) { margin-top: $md; }
+  }
 
   > div:first-child > h1 { margin-bottom: $xxs; }
   > div:first-child > .c-tag-number { margin-top: $xs; }
@@ -76,6 +87,14 @@ $PREF: 's-events-individual';
 
 .#{$PREF}-card {
   height: fit-content;
+
+  &:not(:last-child) {
+    @include LTE(1300) { margin-bottom: $md; }
+    @include T { margin-bottom: initial; }
+    @include LTE(900) { margin-bottom: $md; }
+  }
+  
+
   > .t-loading-header:first-child { margin-bottom: $sm; }
 }
 
