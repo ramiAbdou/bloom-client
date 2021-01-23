@@ -10,7 +10,7 @@ interface ListProps<T> extends MasonryProps<T> {
   options?: MatchSorterOptions<T>;
 }
 
-function List<T>({ items, options, render, ...props }: ListProps<T>) {
+function List<T>({ items, options, ...props }: ListProps<T>) {
   const numResults = ListStore.useStoreState((store) => store.numResults);
   const searchString = ListStore.useStoreState((store) => store.searchString);
 
@@ -38,7 +38,6 @@ function List<T>({ items, options, render, ...props }: ListProps<T>) {
       columnGutter={16}
       items={sortedItems}
       overscanBy={5}
-      render={render}
       style={{ outline: 'none' }}
       {...props}
     />

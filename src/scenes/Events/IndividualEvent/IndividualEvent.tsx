@@ -7,11 +7,19 @@ import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_EVENT, GetEventArgs } from '../Events.gql';
+import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAnalytics from './IndividualEventAnalytics';
 import IndividualEventGuestList from './IndividualEventGuestList';
-import IndividualEventHeader from './IndividualEventHeader';
+import IndividualEventMain from './IndividualEventMain';
 import IndividualEventPanel from './IndividualEventPanel';
+
+const IndividualEventHeader: React.FC = () => (
+  <div className="s-events-individual-header">
+    <EventsAspectBackground />
+    <IndividualEventMain />
+  </div>
+);
 
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
@@ -34,17 +42,14 @@ const IndividualEvent: React.FC = () => {
 
   return (
     <>
-      <div className="s-events-individual">
-        <IndividualEventHeader />
+      <IndividualEventHeader />
 
-        <div className="s-events-individual-grid">
-          <IndividualEventAbout />
-          <IndividualEventGuestList />
-        </div>
-
-        <IndividualEventAnalytics />
+      <div className="s-events-individual-grid">
+        <IndividualEventAbout />
+        <IndividualEventGuestList />
       </div>
 
+      <IndividualEventAnalytics />
       <IndividualEventPanel id={eventId} />
       <CreateEventModal id={eventId} />
     </>

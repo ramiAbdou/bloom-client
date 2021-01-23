@@ -1,11 +1,5 @@
 $PREF: 's-events-individual';
 
-// ## INDIVIDUAL EVENT
-
-.#{$PREF} {
-  padding: 0;
-}
-
 // ## INDIVIDUAL EVENT GRID
 
 .#{$PREF}-grid {
@@ -28,29 +22,6 @@ $PREF: 's-events-individual';
   @extend .#{$PREF}-grid;
 
   background-color: white;
-
-  > .t-aspect {
-    border-radius: $xs;
-    overflow: hidden;
-
-    > *:first-child { background-color: $primary-bg; border-radius: $xs; }
-
-    > svg {
-      height: auto;
-      opacity: 0.15;
-      stroke: $primary;
-      transform: scale(1.75);
-    }
-
-    > svg:first-of-type { margin-right: 5%; z-index: 10; }
-
-    > svg:last-of-type {
-      margin-bottom: -10%;
-      margin-left: 50%;
-      top: initial;
-      z-index: 10;
-    }
-  }
 }
 
 // ## INDIVIDUAL EVENT HEADER CONTENT - Contains basic information such as

@@ -31,19 +31,11 @@ $PREF: 's-events';
   > *:first-child { background-color: $primary-bg; border-radius: $xs; }
 
   > svg {
-    height: auto;
+    margin: auto;
     opacity: 0.15;
     stroke: $primary;
-    transform: scale(1.75);
-
-    &:first-of-type { margin-right: 5%; z-index: 10; }
-
-    &:last-of-type {
-      margin-bottom: -10%;
-      margin-left: 50%;
-      top: initial;
-      z-index: 10;
-    }
+    transform: scale(3);
+    width: auto;
   }
 }
 

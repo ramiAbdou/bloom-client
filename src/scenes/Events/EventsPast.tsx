@@ -13,15 +13,14 @@ import { useStoreState } from '@store/Store';
 import { GET_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
 import EventsHeader from './EventsHeader';
-import YourUpcomingEvents from './YourUpcomingEvents';
 
-const UpcomingEventsContent: React.FC = () => {
+const EventsPastContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventsId } = db.entities.events;
 
     return db.community?.events
       ?.map((eventId: string) => byEventsId[eventId])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event.endTime)))
+      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event.endTime)))
       ?.filter((event: IEvent) => {
         return !event.guests?.some((guestId: string) =>
           new Set(db.member.guests).has(guestId)
@@ -32,7 +31,7 @@ const UpcomingEventsContent: React.FC = () => {
   return (
     <>
       {!!events?.length && <ListSearchBar placeholder="Search events..." />}
-      {!events?.length && <p>Looks like there are no upcoming events.</p>}
+      {!events?.length && <p>Looks like there are no past events.</p>}
 
       <List
         className="s-events-card-ctr"
@@ -45,7 +44,7 @@ const UpcomingEventsContent: React.FC = () => {
   );
 };
 
-const UpcomingEvents: React.FC = () => {
+const EventsPast: React.FC = () => {
   const { loading } = useQuery<ICommunity>({
     name: 'getEvents',
     query: GET_EVENTS,
@@ -54,19 +53,17 @@ const UpcomingEvents: React.FC = () => {
 
   return (
     <MainContent Header={EventsHeader}>
-      <YourUpcomingEvents />
-
       <ListStore.Provider>
         <MainSection
           className="s-events-upcoming"
           loading={loading}
-          title="Upcoming Events"
+          title="Past Events"
         >
-          <UpcomingEventsContent />
+          <EventsPastContent />
         </MainSection>
       </ListStore.Provider>
     </MainContent>
   );
 };
 
-export default UpcomingEvents;
+export default EventsPast;

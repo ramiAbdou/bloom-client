@@ -22,7 +22,6 @@ const EventsAspectBackground: React.FC<EventsAspectBackgroundProps> = ({
       {imageUrl && <img alt="Profile Avatar" src={imageUrl} />}
       {!imageUrl && <div />}
       <Network />
-      <Network />
     </AspectRatio>
   );
 };
