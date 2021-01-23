@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Button from '@atoms/Button';
 import { ChildrenProps, ClassNameProps } from '@constants';
 import LoadingHeader, {
   LoadingHeaderProps
@@ -44,11 +43,7 @@ const Card: React.FC<CardProps> = ({
     </>
   );
 
-  return onClick ? (
-    <Button className={css} onClick={onClick}>
-      {body}
-    </Button>
-  ) : (
+  return (
     <div className={css} onClick={onClick}>
       {body}
     </div>

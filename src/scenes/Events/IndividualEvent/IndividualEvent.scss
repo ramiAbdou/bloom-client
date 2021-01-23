@@ -34,9 +34,22 @@ $PREF: 's-events-individual';
     overflow: hidden;
 
     > *:first-child { background-color: $primary-bg; border-radius: $xs; }
-    > svg { opacity: 0.15; stroke: $primary; transform: scale(1.5); }
+
+    > svg {
+      height: auto;
+      opacity: 0.15;
+      stroke: $primary;
+      transform: scale(1.5);
+    }
+
     > svg:first-of-type { margin-right: 5%; z-index: 10; }
-    > svg:last-of-type { margin-left: 50%; top: initial; z-index: 10; }
+
+    > svg:last-of-type {
+      margin-bottom: -10%;
+      margin-left: 50%;
+      top: initial;
+      z-index: 10;
+    }
   }
 }
 

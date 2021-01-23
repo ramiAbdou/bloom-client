@@ -12,13 +12,11 @@ const IndividualEventHeaderBackground: React.FC = () => (
   </AspectRatio>
 );
 
-const IndividualEventHeader: React.FC = () => {
-  return (
-    <div className="s-events-individual-header">
-      <IndividualEventHeaderBackground />
-      <IndividualEventMain />
-    </div>
-  );
-};
+const IndividualEventHeader: React.FC = () => (
+  <div className="s-events-individual-header">
+    <IndividualEventHeaderBackground />
+    <IndividualEventMain />
+  </div>
+);
 
 export default IndividualEventHeader;
