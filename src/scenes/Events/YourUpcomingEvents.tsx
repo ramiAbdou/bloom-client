@@ -1,3 +1,4 @@
+import day from 'dayjs';
 import React from 'react';
 
 import { MainSection } from '@containers/Main';
@@ -17,7 +18,8 @@ const YourUpcomingEventsContent: React.FC = () => {
 
     return db.member.guests
       ?.map((guestId: string) => byGuestsId[guestId])
-      ?.map((guest: IEventGuest) => byEventsId[guest.event]);
+      ?.map((guest: IEventGuest) => byEventsId[guest.event])
+      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event.endTime)));
   });
 
   return (
@@ -31,7 +33,15 @@ const YourUpcomingEventsContent: React.FC = () => {
 };
 
 const YourUpcomingEvents: React.FC = () => {
-  const hasRSVPs = useStoreState(({ db }) => !!db.member.guests?.length);
+  const events: IEvent[] = useStoreState(({ db }) => {
+    const { byId: byEventsId } = db.entities.events;
+    const { byId: byGuestsId } = db.entities.guests;
+
+    return db.member.guests
+      ?.map((guestId: string) => byGuestsId[guestId])
+      ?.map((guest: IEventGuest) => byEventsId[guest.event])
+      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event.endTime)));
+  });
 
   const { loading } = useQuery<IEventGuest[]>({
     name: 'getMemberUpcomingEvents',
@@ -39,7 +49,7 @@ const YourUpcomingEvents: React.FC = () => {
     schema: [Schema.EVENT_GUEST]
   });
 
-  if (!hasRSVPs) return null;
+  if (!events?.length) return null;
 
   return (
     <ListStore.Provider>

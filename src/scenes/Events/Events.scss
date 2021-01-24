@@ -20,6 +20,9 @@ $PREF: 's-events';
   background-color: white;
   max-width: $xxl * 6;
   padding: 0;
+
+  > .t-aspect,
+  > .t-aspect > div { border-radius: $xs $xs 0 0; }
 }
 
 // ## EVENTS ASPECT BACKGROUND
@@ -56,7 +59,7 @@ $PREF: 's-events';
   > h5 { margin-bottom: $xxs; }
   &--now > h5 { color: $primary; }
 
-  > h3 {
+  > h3:not(:last-child) {
     margin-bottom: $sm;
 
     @include OVERFLOW_ELLIPSES(2);

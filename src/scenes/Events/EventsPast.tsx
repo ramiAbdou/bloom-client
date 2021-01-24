@@ -20,12 +20,7 @@ const EventsPastContent: React.FC = () => {
 
     return db.community?.events
       ?.map((eventId: string) => byEventsId[eventId])
-      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event.endTime)))
-      ?.filter((event: IEvent) => {
-        return !event.guests?.some((guestId: string) =>
-          new Set(db.member.guests).has(guestId)
-        );
-      });
+      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event.endTime)));
   });
 
   return (
