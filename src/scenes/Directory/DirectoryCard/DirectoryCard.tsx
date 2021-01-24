@@ -4,10 +4,10 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
+import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import DirectoryCardModal from '../DirectoryModal/DirectoryModal';
 import MemberCard, { MemberCardModel } from './DirectoryCard.store';
 
 const DirectoryCardInformation: React.FC = () => {
@@ -47,7 +47,7 @@ const DirectoryCardContent: React.FC = () => {
     pictureUrl
   } = MemberCard.useStoreState((store) => store, deepequal);
 
-  const onClick = () => showModal(`${ModalType.DIRECTORY_CARD}-${id}`);
+  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${id}`);
 
   const css = cx('s-directory-card', {
     's-directory-card--empty': !highlightedValue
@@ -70,7 +70,7 @@ const DirectoryCardContent: React.FC = () => {
 const DirectoryCard = ({ data }: RenderComponentProps<MemberCardModel>) => (
   <MemberCard.Provider runtimeModel={data}>
     <DirectoryCardContent />
-    <DirectoryCardModal id={`${ModalType.DIRECTORY_CARD}-${data.id}`} />
+    <MemberProfileModal memberId={data?.memberId} userId={data?.userId} />
   </MemberCard.Provider>
 );
 

@@ -1,4 +1,5 @@
 import { matchSorter } from 'match-sorter';
+import { nanoid } from 'nanoid';
 import React, { useEffect } from 'react';
 
 import ListStore from './List.store';
@@ -30,7 +31,8 @@ function List<T>({ emptyMessage, Item, items, options }: ListProps<T>) {
   return (
     <div className="o-list">
       {sortedItems.map((value) => {
-        return <Item {...value} />;
+        // @ts-ignore b/c should have ID.
+        return <Item key={value?.id ?? nanoid()} {...value} />;
       })}
     </div>
   );

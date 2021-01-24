@@ -27,7 +27,13 @@ const DirectoryCardContainer = () => {
               byQuestionId[point.question]?.inExpandedDirectoryCard
           );
 
-        return { ...member, ...byUserId[member.user], data };
+        return {
+          ...byUserId[member.user],
+          ...member,
+          data,
+          memberId: member.id,
+          userId: member.user
+        };
       })
       ?.filter((member) => member?.status === 'ACCEPTED');
   }, deepequal);

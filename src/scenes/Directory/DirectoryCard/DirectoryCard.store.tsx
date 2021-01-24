@@ -6,6 +6,8 @@ export interface MemberCardModel
   extends Pick<IMember, 'bio' | 'role' | 'type'>,
     IUser {
   data: IMemberData[];
+  memberId?: string;
+  userId?: string;
 }
 
 export const memberCardModel: MemberCardModel = null;
