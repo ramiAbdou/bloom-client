@@ -8,7 +8,7 @@ import React, { useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { IoClose } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { useStoreActions, useStoreState } from '@store/Store';

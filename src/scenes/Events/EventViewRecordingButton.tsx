@@ -1,10 +1,9 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button';
+import Button, { ButtonProps } from '@atoms/Button/Button';
 
 const EventViewRecordingButton: React.FC<Partial<ButtonProps>> = ({
   href,
-  show,
   ...props
 }) => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -15,12 +14,12 @@ const EventViewRecordingButton: React.FC<Partial<ButtonProps>> = ({
     <Button
       fill
       secondary
+      disabled={!href}
       href={href}
-      show={!!href && show !== false}
       onClick={onClick}
       {...props}
     >
-      View Recording
+      {href ? 'View Recording' : 'No Recording Available'}
     </Button>
   );
 };

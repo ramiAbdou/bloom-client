@@ -36,7 +36,7 @@ const MemberProfileData: React.FC = () => {
 
   // If the member has just got onto the platform and no data is filled out,
   // leave it out of the member card.
-  if (items.every(({ value }) => value === null)) return null;
+  if (items?.every(({ value }) => value === null)) return null;
 
   return (
     <>

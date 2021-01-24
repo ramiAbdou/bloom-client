@@ -48,12 +48,30 @@ export const GET_EVENT = query({
     'title',
     'videoUrl',
     {
+      community: [
+        'id',
+        {
+          questions: [
+            'category',
+            'id',
+            'inDirectoryCard',
+            'inExpandedDirectoryCard',
+            'title',
+            'type',
+            'version'
+          ]
+        }
+      ]
+    },
+    {
       guests: [
         'createdAt',
         'id',
         {
           member: [
             'id',
+            { data: ['id', 'value', { question: ['id'] }] },
+            { type: ['id', 'name'] },
             { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
           ]
         }

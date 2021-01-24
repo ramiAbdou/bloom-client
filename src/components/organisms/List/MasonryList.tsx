@@ -36,7 +36,7 @@ function MasonryList<T>({
     <Masonry
       key={`${searchString}-${numResults}`}
       columnGutter={16}
-      items={items}
+      items={sortedItems}
       overscanBy={5}
       style={{ outline: 'none' }}
       {...props}

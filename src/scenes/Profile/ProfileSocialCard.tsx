@@ -6,7 +6,7 @@ import {
   IoLogoTwitter
 } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';

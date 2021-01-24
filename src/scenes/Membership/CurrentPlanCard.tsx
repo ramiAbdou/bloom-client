@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import Separator from '@atoms/Separator';
 import StatusTag from '@atoms/Tags/StatusTag';
 import { ModalType } from '@constants';

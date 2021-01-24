@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import AspectRatio from '@containers/AspectRatio/AspectRatio';
 import { convertImageToBase64 } from '@util/imageUtil';
 import EventsAspectBackground from '../../../../scenes/Events/EventsAspectBackground';

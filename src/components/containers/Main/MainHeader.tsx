@@ -2,7 +2,7 @@ import React from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner';
 import { HeaderTag } from '@atoms/Tags';
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';

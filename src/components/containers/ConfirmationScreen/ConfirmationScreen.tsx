@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { ChildrenProps } from '@constants';
 import { useStoreActions } from '@store/Store';
 

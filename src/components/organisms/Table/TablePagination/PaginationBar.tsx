@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import React from 'react';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { ValueProps } from '@constants';
 import { cx } from '@util/util';
 import Table from '../Table.store';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import StatusTag from '@atoms/Tags/StatusTag';
 import { useStoreActions, useStoreState } from '@store/Store';
 

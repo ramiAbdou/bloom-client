@@ -2,7 +2,7 @@ import day from 'dayjs';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import { MainSection } from '@containers/Main';
 import RowContainer from '@containers/Row/Row';

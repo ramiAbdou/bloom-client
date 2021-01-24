@@ -3,7 +3,7 @@ import { useMutation } from 'graphql-hooks';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { ToastOptions } from '@organisms/Toast/Toast.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';

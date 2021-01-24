@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 import { IoCreateOutline } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { HeaderTag } from '@atoms/Tags';
 import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import { useStoreState } from '@store/Store';

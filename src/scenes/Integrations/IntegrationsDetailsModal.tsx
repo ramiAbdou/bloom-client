@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';

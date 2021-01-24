@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { LoadingProps, ModalType } from '@constants';
 import { MainHeader, NavigationOptionProps } from '@containers/Main';
 import useFinalPath from '@hooks/useFinalPath';

@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button';
+import Button, { ButtonProps } from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
 import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';

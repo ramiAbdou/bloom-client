@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Modal from '@organisms/Modal/Modal';

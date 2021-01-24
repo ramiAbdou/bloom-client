@@ -52,7 +52,10 @@ $PREF: 's-events';
 // ## EVENTS CARD CONTENT
 
 .#{$PREF}-card-content {
+  @extend .flex-col;
+  
   box-sizing: border-box;
+  flex: 1;
   padding: $sm;
   width: 100%;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { IdProps } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { cx } from '@util/util';

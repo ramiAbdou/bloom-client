@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoCreateOutline } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 
 interface ProfileCardHeaderProps {

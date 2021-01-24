@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { IdProps } from '@constants';
 import Row from '@containers/Row/Row';
 import FormItem from '@organisms/Form/FormItem';

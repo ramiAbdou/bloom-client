@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button';
+import Button, { ButtonProps } from '@atoms/Button/Button';
 import { PanelType } from '@constants';
 import Row from '@containers/Row/Row';
 import { IEvent, IEventGuest } from '@store/entities';

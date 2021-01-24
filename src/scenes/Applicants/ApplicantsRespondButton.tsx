@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';

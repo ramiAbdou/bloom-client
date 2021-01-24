@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import IntegrationsStore, {
   IntegrationsModalType
 } from '../Integrations.store';

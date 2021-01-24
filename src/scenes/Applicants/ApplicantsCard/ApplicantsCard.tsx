@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import QuestionValueList, {

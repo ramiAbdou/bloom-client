@@ -1,20 +1,28 @@
 import React from 'react';
 
+import Button from '@atoms/Button/Button';
+import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
-import Row from '@containers/Row/Row';
+import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { IEventGuest, IMember, IUser } from '@store/entities';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { sortByDescendingCreatedAt } from '@util/util';
 
-const IndividualEventGuest: React.FC<
-  Pick<IUser, 'firstName' | 'lastName' | 'pictureUrl'>
-> = (props) => {
-  const { firstName, lastName, pictureUrl } = props;
+interface IndividualEventGuestProps
+  extends Pick<IUser, 'firstName' | 'id' | 'lastName' | 'pictureUrl'> {
+  memberId: string;
+}
+
+const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
+  const { firstName, lastName, memberId, pictureUrl } = props;
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
   const fullName = `${firstName} ${lastName}`;
 
   return (
-    <Row className="s-events-individual-guest">
+    <Button className="s-events-individual-guest" onClick={onClick}>
       <ProfilePicture
         circle
         fontSize={16}
@@ -23,12 +31,12 @@ const IndividualEventGuest: React.FC<
         {...props}
       />
       <p className="body--bold">{fullName}</p>
-    </Row>
+    </Button>
   );
 };
 
 const IndividualEventGuestListContent: React.FC = () => {
-  const users: IUser[] = useStoreState(({ db }) => {
+  const users: IndividualEventGuestProps[] = useStoreState(({ db }) => {
     const { byId: byGuestsId } = db.entities.guests;
     const { byId: byMembersId } = db.entities.members;
     const { byId: byUsersId } = db.entities.users;
@@ -37,7 +45,10 @@ const IndividualEventGuestListContent: React.FC = () => {
       ?.map((guestId: string) => byGuestsId[guestId])
       ?.sort(sortByDescendingCreatedAt)
       ?.map((guest: IEventGuest) => byMembersId[guest.member])
-      ?.map((member: IMember) => byUsersId[member.user]);
+      ?.map((member: IMember) => ({
+        ...byUsersId[member.user],
+        memberId: member.id
+      }));
   });
 
   return (
@@ -45,8 +56,13 @@ const IndividualEventGuestListContent: React.FC = () => {
       {!users?.length && <p>No guests have RSVP'd yet.</p>}
 
       <div>
-        {users?.map((user: IUser) => {
-          return <IndividualEventGuest key={user?.id} {...user} />;
+        {users?.map((user: IndividualEventGuestProps) => {
+          return (
+            <>
+              <IndividualEventGuest key={user?.id} {...user} />
+              <MemberProfileModal memberId={user?.memberId} userId={user?.id} />
+            </>
+          );
         })}
       </div>
     </>

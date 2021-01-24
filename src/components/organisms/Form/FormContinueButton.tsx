@@ -2,8 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useCallback, useState } from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
-import { ButtonProps } from '@atoms/Button/Button';
+import Button, { ButtonProps } from '@atoms/Button/Button';
 import { FormItemData, OnFormSubmit } from '@organisms/Form/Form.types';
 import { validateItem } from '@organisms/Form/Form.util';
 import FormStore from './Form.store';

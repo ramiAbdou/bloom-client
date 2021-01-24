@@ -71,6 +71,16 @@ $PREF: 's-events-individual';
 // // ## INDIVIDUAL EVENT GUEST - In the guest list.
 
 .#{$PREF}-guest {
+  @extend .flex-ac;
+
+  border-radius: $xs;
+  justify-content: flex-start;
+  padding: $xs $xxs;
+  transition: background-color 300ms;
+  width: 100%;
+
+  @include PRIMARY_HOVER;
+
   &:not(:last-child) { margin-bottom: $ss; }
   > *:first-child { margin-right: $ss; }
 }

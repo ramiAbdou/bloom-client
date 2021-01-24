@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { HeaderTag } from '@atoms/Tags';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
