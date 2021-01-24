@@ -19,7 +19,7 @@ const YourUpcomingEventsContent: React.FC = () => {
     return db.member.guests
       ?.map((guestId: string) => byGuestsId[guestId])
       ?.map((guest: IEventGuest) => byEventsId[guest.event])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event.endTime)));
+      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event?.endTime)));
   });
 
   return (
@@ -40,7 +40,7 @@ const YourUpcomingEvents: React.FC = () => {
     return db.member.guests
       ?.map((guestId: string) => byGuestsId[guestId])
       ?.map((guest: IEventGuest) => byEventsId[guest.event])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event.endTime)));
+      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event?.endTime)));
   });
 
   const { loading } = useQuery<IEventGuest[]>({
