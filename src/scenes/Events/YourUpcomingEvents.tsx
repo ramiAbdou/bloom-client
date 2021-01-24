@@ -33,23 +33,15 @@ const YourUpcomingEventsContent: React.FC = () => {
 };
 
 const YourUpcomingEvents: React.FC = () => {
-  const events: IEvent[] = useStoreState(({ db }) => {
-    const { byId: byEventsId } = db.entities.events;
-    const { byId: byGuestsId } = db.entities.guests;
-
-    return db.member.guests
-      ?.map((guestId: string) => byGuestsId[guestId])
-      ?.map((guest: IEventGuest) => byEventsId[guest.event])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event?.endTime)));
-  });
-
-  const { loading } = useQuery<IEventGuest[]>({
+  const { data, loading } = useQuery<IEventGuest[]>({
     name: 'getMemberUpcomingEvents',
     query: GET_MEMBER_UPCOMING_EVENTS,
     schema: [Schema.EVENT_GUEST]
   });
 
-  if (!events?.length) return null;
+  console.log(data);
+
+  if (!data?.length) return null;
 
   return (
     <ListStore.Provider>
