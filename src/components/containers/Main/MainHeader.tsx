@@ -3,7 +3,7 @@ import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
-import Spinner from '@atoms/Spinner';
+import Spinner from '@atoms/Spinner/Spinner';
 import { HeaderTag } from '@atoms/Tags';
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
 import { cx } from '@util/util';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from '@atoms/Input';
+import Input from '@atoms/Input/Input';
 import Form from '../Form.store';
 import { FormItemProps } from '../Form.types';
 

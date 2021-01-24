@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Checkbox from '@atoms/Checkbox';
+import Checkbox from '@atoms/Checkbox/Checkbox';
 import { IdProps } from '@constants';
 import Table from '../Table.store';
 
