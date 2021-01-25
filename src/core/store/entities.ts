@@ -5,6 +5,7 @@ type IdString = string;
 export interface BaseEntity {
   createdAt: IdString;
   id: IdString;
+  updatedAt: IdString;
 }
 
 // ## COMMUNITY
@@ -34,14 +35,13 @@ export interface ICommunityApplication {
 
 // ## EVENT
 
-export interface IEvent {
+export interface IEvent extends BaseEntity {
   attendees: IdString[];
   community?: IdString;
   description: string;
   endTime: string;
   eventUrl: string;
   guests: IdString[];
-  id: IdString;
   imageUrl?: string;
   past?: boolean;
   private: boolean;

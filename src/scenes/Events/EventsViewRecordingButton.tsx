@@ -11,7 +11,6 @@ interface EventsViewRecordingButtonProps extends Partial<ButtonProps> {
 
 const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   eventId,
-  href,
   ...props
 }) => {
   const event: IEvent = useStoreState(({ db }) => {
@@ -19,11 +18,13 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
     return byEventId[eventId];
   });
 
-  const show = day.utc().isAfter(day.utc(event?.endTime));
+  const isAdmin = useStoreState(({ db }) => !!db.member.role);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
   };
+
+  const href = event?.recordingUrl;
 
   return (
     <Button
@@ -31,7 +32,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
       secondary
       disabled={!href}
       href={href}
-      show={show}
+      show={!isAdmin && day.utc().isAfter(day.utc(event?.endTime))}
       onClick={onClick}
       {...props}
     >

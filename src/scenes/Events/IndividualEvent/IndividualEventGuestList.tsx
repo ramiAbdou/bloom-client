@@ -7,7 +7,7 @@ import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { IEventGuest, IMember, IUser } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { sortByDescendingCreatedAt } from '@util/util';
+import { sortObjects } from '@util/util';
 
 interface IndividualEventGuestProps
   extends Pick<IUser, 'firstName' | 'id' | 'lastName' | 'pictureUrl'> {
@@ -43,7 +43,7 @@ const IndividualEventGuestListContent: React.FC = () => {
 
     return db.event?.guests
       ?.map((guestId: string) => byGuestsId[guestId])
-      ?.sort(sortByDescendingCreatedAt)
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'DESC'))
       ?.map((guest: IEventGuest) => byMembersId[guest.member])
       ?.map((member: IMember) => ({
         ...byUsersId[member.user],

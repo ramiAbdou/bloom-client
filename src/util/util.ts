@@ -47,9 +47,15 @@ export const getGraphQLError = (error: APIError): string => {
  * @example sortByDescendingCreatedAt({ createdAt: 1 }, { createdAt: 2 }) => 1
  * @example sortByDescendingCreatedAt({ createdAt: 10 }, { createdAt: 1 }) => -1
  */
-export const sortByDescendingCreatedAt = (a: BaseEntity, b: BaseEntity) => {
-  return Number(a.createdAt > b.createdAt) ? -1 : 1;
-};
+export function sortObjects<T>(
+  a: T,
+  b: T,
+  key: keyof T,
+  direction: 'ASC' | 'DESC' = 'ASC'
+) {
+  const order = direction === 'ASC' ? 1 : -1;
+  return Number(a[key] > b[key]) ? order : order * -1;
+}
 
 /**
  * Returns the first value in which the condition is true.

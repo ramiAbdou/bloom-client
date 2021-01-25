@@ -40,7 +40,6 @@ const IndividualEventActions: React.FC = () => {
   const eventUrl = useStoreState(({ db }) => db.event?.eventUrl);
   const eventId = useStoreState(({ db }) => db.event?.id);
   const guests = useStoreState(({ db }) => db.event?.guests);
-  const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const startTime = useStoreState(({ db }) => db.event?.startTime);
   const videoUrl = useStoreState(({ db }) => db.event?.videoUrl);
 
@@ -75,7 +74,7 @@ const IndividualEventActions: React.FC = () => {
         {...timeProps}
       />
       <EventsShareButton large href={eventUrl} startTime={startTime} />
-      <EventsViewRecordingButton large href={recordingUrl} show={!isAdmin} />
+      <EventsViewRecordingButton large eventId={eventId} />
       <EventsAddRecordingButton show={hasPast && isAdmin} />
     </Row>
   );

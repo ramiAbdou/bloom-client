@@ -10,6 +10,7 @@ import ListSearchBar from '@organisms/List/ListSearchBar';
 import { ICommunity, IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import { GET_UPCOMING_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
 import EventsHeader from './EventsHeader';
@@ -25,7 +26,8 @@ const EventsUpcomingContent: React.FC = () => {
       ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event.endTime)))
       ?.filter((event: IEvent) => {
         return !event.guests?.some((guestId: string) => guests.has(guestId));
-      });
+      })
+      ?.sort((a, b) => sortObjects(a, b, 'startTime'));
   });
 
   return (

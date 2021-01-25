@@ -81,7 +81,7 @@ $PREF: 's-events-individual';
 
   @include PRIMARY_HOVER;
 
-  &:not(:last-child) { margin-bottom: $ss; }
+  &:not(:last-child) { margin-bottom: $xs; }
   > *:first-child { margin-right: $ss; }
 }
 

@@ -20,6 +20,7 @@ export interface CreateEventGuestArgs {
 
 export const CREATE_EVENT_GUEST = mutation({
   fields: [
+    'createdAt',
     'id',
     { event: ['id'] },
     { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
