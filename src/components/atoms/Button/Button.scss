@@ -6,10 +6,11 @@ $PREF: 'c-btn';
   @extend .flex-acc;
   
   border-radius: $xxs;
+  transition: transform 0.2s ease-out;
 
   &:not(:disabled, &--white) {
     @include HOVER { opacity: 0.8; }
-    &:active { transform: scale(0.95); transition: transform 0.1s ease-out; }
+    &:active { transform: scale(0.95); transition: transform 0.2s ease-out; }
   }
 
   &:disabled { cursor: not-allowed; }

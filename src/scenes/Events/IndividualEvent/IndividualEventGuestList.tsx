@@ -58,10 +58,10 @@ const IndividualEventGuestListContent: React.FC = () => {
       <div>
         {users?.map((user: IndividualEventGuestProps) => {
           return (
-            <>
+            <React.Fragment key={user?.id}>
               <IndividualEventGuest key={user?.id} {...user} />
               <MemberProfileModal memberId={user?.memberId} userId={user?.id} />
-            </>
+            </React.Fragment>
           );
         })}
       </div>
