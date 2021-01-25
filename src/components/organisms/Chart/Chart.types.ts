@@ -1,4 +1,4 @@
-import { AxisDomain, AxisInterval } from 'recharts';
+import { AxisDomain, AxisInterval, TickFormatterFunction } from 'recharts';
 
 import { ShowProps } from '@constants';
 
@@ -8,6 +8,7 @@ export type ChartFormat = 'HOUR' | 'MONEY';
 
 export interface ChartXAxisOptions {
   interval?: AxisInterval;
+  tickFormatter?: TickFormatterFunction;
 }
 
 export interface ChartYAxisOptions {

@@ -63,9 +63,9 @@ $PREF: 's-events-individual';
     @include T { margin-bottom: initial; }
     @include LTE(900) { margin-bottom: $md; }
   }
-  
 
   > .t-loading-header:first-child { margin-bottom: $sm; }
+  > div:last-child { max-height: $xxl * 5; overflow: scroll; }
 }
 
 // // ## INDIVIDUAL EVENT GUEST - In the guest list.
@@ -89,7 +89,10 @@ $PREF: 's-events-individual';
 
 .#{$PREF}-analytics { padding: $md; }
 .#{$PREF}-analytics-row {
-  > div:only-child { width: 100%; }
-  > div:not(:only-child) { width: 50%; }
-  > div:not(:only-child):first-child { margin-right: $sm; }
+  @include LTE(1300) {
+    display: block;
+
+    > div { width: 100%; }
+    > div:not(:last-child) { margin-bottom: $sm; }
+  }
 }
