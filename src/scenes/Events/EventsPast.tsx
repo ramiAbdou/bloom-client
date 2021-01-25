@@ -10,7 +10,7 @@ import ListSearchBar from '@organisms/List/ListSearchBar';
 import { ICommunity, IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import { GET_EVENTS } from './Events.gql';
+import { GET_PAST_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
 import EventsHeader from './EventsHeader';
 
@@ -40,9 +40,9 @@ const EventsPastContent: React.FC = () => {
 
 const EventsPast: React.FC = () => {
   const { loading } = useQuery<ICommunity>({
-    name: 'getEvents',
-    query: GET_EVENTS,
-    schema: Schema.COMMUNITY
+    name: 'getPastEvents',
+    query: GET_PAST_EVENTS,
+    schema: [Schema.EVENT]
   });
 
   return (

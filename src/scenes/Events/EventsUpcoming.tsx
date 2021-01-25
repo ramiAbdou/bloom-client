@@ -10,7 +10,7 @@ import ListSearchBar from '@organisms/List/ListSearchBar';
 import { ICommunity, IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import { GET_EVENTS } from './Events.gql';
+import { GET_UPCOMING_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
 import EventsHeader from './EventsHeader';
 import YourUpcomingEvents from './YourUpcomingEvents';
@@ -18,14 +18,13 @@ import YourUpcomingEvents from './YourUpcomingEvents';
 const EventsUpcomingContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventsId } = db.entities.events;
+    const guests = new Set(db.member.guests);
 
     return db.community?.events
       ?.map((eventId: string) => byEventsId[eventId])
       ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event.endTime)))
       ?.filter((event: IEvent) => {
-        return !event.guests?.some((guestId: string) =>
-          new Set(db.member.guests).has(guestId)
-        );
+        return !event.guests?.some((guestId: string) => guests.has(guestId));
       });
   });
 
@@ -46,9 +45,9 @@ const EventsUpcomingContent: React.FC = () => {
 
 const EventsUpcoming: React.FC = () => {
   const { loading } = useQuery<ICommunity>({
-    name: 'getEvents',
-    query: GET_EVENTS,
-    schema: Schema.COMMUNITY
+    name: 'getUpcomingEvents',
+    query: GET_UPCOMING_EVENTS,
+    schema: [Schema.EVENT]
   });
 
   return (

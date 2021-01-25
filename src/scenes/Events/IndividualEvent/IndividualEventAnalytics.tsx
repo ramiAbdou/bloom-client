@@ -32,6 +32,7 @@ const IndividualEventAnalytics: React.FC = () => {
           interval={2}
           options={{
             format: 'HOUR',
+            xAxis: { interval: 'preserveStartEnd' },
             yAxis: { domain: [0, (dataMax: number) => dataMax + 5] }
           }}
           show={!loading}

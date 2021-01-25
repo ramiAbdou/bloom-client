@@ -16,7 +16,7 @@ const useXAxisOptions = (): Partial<XAxisProps> => {
     minTickGap: 16,
     padding: { left: 4, right: 12 },
     tickFormatter: (label) => {
-      if (type !== ChartType.TIME_SERIES) return label;
+      if (type !== ChartType.TIME_SERIES || !day(label).isValid()) return label;
 
       return format === 'HOUR'
         ? day(label).format('MMM D, h A')

@@ -70,7 +70,6 @@ const TimeSeriesChart: React.FC = () => {
 
         <XAxis {...xAxisOptions} />
         <YAxis {...yAxisOptions} />
-
         <Tooltip content={({ label }) => <LineChartTooltip label={label} />} />
 
         <Line

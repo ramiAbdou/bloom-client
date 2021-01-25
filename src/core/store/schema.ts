@@ -5,6 +5,7 @@
  * to the actual PostgreSQL DB.
  */
 
+import deepmerge from 'deepmerge';
 import { schema } from 'normalizr';
 
 import { takeFirst } from '@util/util';
@@ -15,6 +16,7 @@ const Community = new schema.Entity(
   'communities',
   {},
   {
+    mergeStrategy: deepmerge,
     processStrategy: (community, parent) => {
       const processedData = takeFirst([
         [!!parent.eventId, { events: [parent.id] }],
@@ -34,7 +36,7 @@ const Event = new schema.Entity(
   {
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [!!parent.attendeeId, { guests: [parent.id] }],
+        [!!parent.attendeeId, { attendees: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         {}
       ]);
@@ -53,7 +55,16 @@ const EventAttendee = new schema.Entity(
 const EventGuest = new schema.Entity(
   'guests',
   {},
-  { processStrategy: (value) => ({ ...value, guestId: value.id }) }
+  {
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.eventId, { event: parent.id }],
+        {}
+      ]);
+
+      return { ...value, ...processedData, guestId: value.id };
+    }
+  }
 );
 
 const Integrations = new schema.Entity('integrations', {});
@@ -62,6 +73,7 @@ const Member = new schema.Entity(
   'members',
   {},
   {
+    mergeStrategy: deepmerge,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.eventId, { events: [parent.id] }],

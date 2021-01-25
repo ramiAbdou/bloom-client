@@ -2,16 +2,13 @@ import day from 'dayjs';
 import React from 'react';
 
 import { MainSection } from '@containers/Main';
-import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent, IEventGuest } from '@store/entities';
-import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
-import { GET_MEMBER_UPCOMING_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
 
-const YourUpcomingEventsContent: React.FC = () => {
+const YourUpcomingEventsList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventsId } = db.entities.events;
     const { byId: byGuestsId } = db.entities.guests;
@@ -32,28 +29,31 @@ const YourUpcomingEventsContent: React.FC = () => {
   );
 };
 
+const YourUpcomingEventsContent: React.FC = () => (
+  <ListStore.Provider>
+    <MainSection
+      className="s-events-upcoming"
+      loading={false}
+      title="Your Upcoming Events"
+    >
+      <YourUpcomingEventsList />
+    </MainSection>
+  </ListStore.Provider>
+);
+
 const YourUpcomingEvents: React.FC = () => {
-  const { data, loading } = useQuery<IEventGuest[]>({
-    name: 'getMemberUpcomingEvents',
-    query: GET_MEMBER_UPCOMING_EVENTS,
-    schema: [Schema.EVENT_GUEST]
+  const hasEvents: boolean = useStoreState(({ db }) => {
+    const { byId: byEventsId } = db.entities.events;
+    const { byId: byGuestsId } = db.entities.guests;
+
+    return !!db.member.guests
+      ?.map((guestId: string) => byGuestsId[guestId])
+      ?.map((guest: IEventGuest) => byEventsId[guest.event])
+      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event?.endTime)))
+      ?.length;
   });
 
-  console.log(data);
-
-  if (!data?.length) return null;
-
-  return (
-    <ListStore.Provider>
-      <MainSection
-        className="s-events-upcoming"
-        loading={loading}
-        title="Your Upcoming Events"
-      >
-        <YourUpcomingEventsContent />
-      </MainSection>
-    </ListStore.Provider>
-  );
+  return hasEvents ? <YourUpcomingEventsContent /> : null;
 };
 
 export default YourUpcomingEvents;

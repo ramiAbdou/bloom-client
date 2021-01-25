@@ -90,46 +90,66 @@ export const GET_EVENT_GUEST_SERIES = query({
   variables: { eventId: { required: true } }
 }).query;
 
-// ## GET EVENTS
+// ## GET PAST EVENTS
 
-export const GET_EVENTS = query({
+export const GET_PAST_EVENTS = query({
   fields: [
+    'description',
+    'endTime',
+    'eventUrl',
     'id',
+    'imageUrl',
+    'private',
+    'recordingUrl',
+    'startTime',
+    'summary',
+    'title',
+    'videoUrl',
+    { community: ['id'] },
     {
-      events: [
-        'description',
-        'endTime',
-        'eventUrl',
+      guests: [
         'id',
-        'imageUrl',
-        'private',
-        'recordingUrl',
-        'startTime',
-        'summary',
-        'title',
-        'videoUrl',
         {
-          guests: [
+          member: [
             'id',
-            {
-              member: [
-                'id',
-                { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
-              ]
-            }
+            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
           ]
         }
       ]
     }
   ],
-  operation: 'getEvents'
+  operation: 'getPastEvents'
 }).query;
 
-// ## GET MEMBER UPCOMING EVENTS
+// ## GET UPCOMING EVENTS
 
-export const GET_MEMBER_UPCOMING_EVENTS = query({
-  fields: ['id', { event: ['id'] }, { member: ['id'] }],
-  operation: 'getMemberUpcomingEvents'
+export const GET_UPCOMING_EVENTS = query({
+  fields: [
+    'description',
+    'endTime',
+    'eventUrl',
+    'id',
+    'imageUrl',
+    'private',
+    'recordingUrl',
+    'startTime',
+    'summary',
+    'title',
+    'videoUrl',
+    { community: ['id'] },
+    {
+      guests: [
+        'id',
+        {
+          member: [
+            'id',
+            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+          ]
+        }
+      ]
+    }
+  ],
+  operation: 'getUpcomingEvents'
 }).query;
 
 // ## UPDATE RECORDING LINK
