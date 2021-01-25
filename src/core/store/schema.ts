@@ -85,6 +85,7 @@ const Member = new schema.Entity(
     mergeStrategy: deepmerge,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
+        [!!parent.attendeeId, { attendees: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],

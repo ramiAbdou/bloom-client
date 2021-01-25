@@ -130,7 +130,7 @@ export const GET_PAST_EVENTS = query({
     'videoUrl',
     { community: ['id'] },
     {
-      guests: [
+      attendees: [
         'id',
         {
           member: [

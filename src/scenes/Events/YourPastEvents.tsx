@@ -4,18 +4,18 @@ import React from 'react';
 import { MainSection } from '@containers/Main';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { IEvent, IEventGuest } from '@store/entities';
+import { IEvent, IEventAttendee } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import EventsCard from './EventsCard';
 
 const YourPastEventsList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
+    const { byId: byAttendeeId } = db.entities.attendees;
     const { byId: byEventsId } = db.entities.events;
-    const { byId: byGuestsId } = db.entities.guests;
 
-    return db.member.guests
-      ?.map((guestId: string) => byGuestsId[guestId])
-      ?.map((guest: IEventGuest) => byEventsId[guest.event])
+    return db.member.attendees
+      ?.map((attendeeId: string) => byAttendeeId[attendeeId])
+      ?.map((attendee: IEventAttendee) => byEventsId[attendee.event])
       ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event?.endTime)));
   });
 
@@ -43,12 +43,12 @@ const YourPastEventsContent: React.FC = () => (
 
 const YourPastEvents: React.FC = () => {
   const hasEvents: boolean = useStoreState(({ db }) => {
+    const { byId: byAttendeeId } = db.entities.attendees;
     const { byId: byEventsId } = db.entities.events;
-    const { byId: byGuestsId } = db.entities.guests;
 
-    return !!db.member.guests
-      ?.map((guestId: string) => byGuestsId[guestId])
-      ?.map((guest: IEventGuest) => byEventsId[guest.event])
+    return !!db.member.attendees
+      ?.map((attendeeId: string) => byAttendeeId[attendeeId])
+      ?.map((attendee: IEventAttendee) => byEventsId[attendee.event])
       ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event?.endTime)))
       ?.length;
   });

@@ -19,13 +19,15 @@ import YourPastEvents from './YourPastEvents';
 const EventsPastContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventsId } = db.entities.events;
-    const guests = new Set(db.member.guests);
+    const attendees = new Set(db.member.attendees);
 
     return db.community?.events
       ?.map((eventId: string) => byEventsId[eventId])
       ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event.endTime)))
       ?.filter((event: IEvent) => {
-        return !event.guests?.some((guestId: string) => guests.has(guestId));
+        return !event.attendees?.some((attendeeId: string) =>
+          attendees.has(attendeeId)
+        );
       })
       ?.sort((a, b) => sortObjects(a, b, 'startTime', 'DESC'));
   });
@@ -46,11 +48,13 @@ const EventsPastContent: React.FC = () => {
 };
 
 const EventsPast: React.FC = () => {
-  const { loading } = useQuery<ICommunity>({
+  const { data, loading } = useQuery<ICommunity>({
     name: 'getPastEvents',
     query: GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
+
+  console.log(data);
 
   return (
     <MainContent Header={EventsHeader}>
