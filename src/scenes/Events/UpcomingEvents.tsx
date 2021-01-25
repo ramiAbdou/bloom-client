@@ -58,7 +58,7 @@ const EventsUpcoming: React.FC = () => {
 
       <ListStore.Provider>
         <MainSection
-          className="s-events-upcoming"
+          className="s-events-section"
           loading={loading}
           title="Upcoming Events"
         >

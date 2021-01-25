@@ -10,17 +10,24 @@ import ListSearchBar from '@organisms/List/ListSearchBar';
 import { ICommunity, IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import { GET_PAST_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard';
 import EventsHeader from './EventsHeader';
+import YourPastEvents from './YourPastEvents';
 
 const EventsPastContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventsId } = db.entities.events;
+    const guests = new Set(db.member.guests);
 
     return db.community?.events
       ?.map((eventId: string) => byEventsId[eventId])
-      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event.endTime)));
+      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event.endTime)))
+      ?.filter((event: IEvent) => {
+        return !event.guests?.some((guestId: string) => guests.has(guestId));
+      })
+      ?.sort((a, b) => sortObjects(a, b, 'startTime', 'DESC'));
   });
 
   return (
@@ -39,17 +46,21 @@ const EventsPastContent: React.FC = () => {
 };
 
 const EventsPast: React.FC = () => {
-  const { loading } = useQuery<ICommunity>({
+  const { data, loading } = useQuery<ICommunity>({
     name: 'getPastEvents',
     query: GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
+  console.log(data);
+
   return (
     <MainContent Header={EventsHeader}>
+      <YourPastEvents />
+
       <ListStore.Provider>
         <MainSection
-          className="s-events-upcoming"
+          className="s-events-section"
           loading={loading}
           title="Past Events"
         >

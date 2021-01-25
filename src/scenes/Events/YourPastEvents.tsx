@@ -8,7 +8,7 @@ import { IEvent, IEventGuest } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import EventsCard from './EventsCard';
 
-const YourUpcomingEventsList: React.FC = () => {
+const YourPastEventsList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventsId } = db.entities.events;
     const { byId: byGuestsId } = db.entities.guests;
@@ -16,7 +16,7 @@ const YourUpcomingEventsList: React.FC = () => {
     return db.member.guests
       ?.map((guestId: string) => byGuestsId[guestId])
       ?.map((guest: IEventGuest) => byEventsId[guest.event])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event?.endTime)));
+      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event?.endTime)));
   });
 
   return (
@@ -29,19 +29,19 @@ const YourUpcomingEventsList: React.FC = () => {
   );
 };
 
-const YourUpcomingEventsContent: React.FC = () => (
+const YourPastEventsContent: React.FC = () => (
   <ListStore.Provider>
     <MainSection
       className="s-events-section"
       loading={false}
-      title="Your Upcoming Events"
+      title="Your Past Events"
     >
-      <YourUpcomingEventsList />
+      <YourPastEventsList />
     </MainSection>
   </ListStore.Provider>
 );
 
-const YourUpcomingEvents: React.FC = () => {
+const YourPastEvents: React.FC = () => {
   const hasEvents: boolean = useStoreState(({ db }) => {
     const { byId: byEventsId } = db.entities.events;
     const { byId: byGuestsId } = db.entities.guests;
@@ -49,11 +49,11 @@ const YourUpcomingEvents: React.FC = () => {
     return !!db.member.guests
       ?.map((guestId: string) => byGuestsId[guestId])
       ?.map((guest: IEventGuest) => byEventsId[guest.event])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event?.endTime)))
+      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event?.endTime)))
       ?.length;
   });
 
-  return hasEvents ? <YourUpcomingEventsContent /> : null;
+  return hasEvents ? <YourPastEventsContent /> : null;
 };
 
-export default YourUpcomingEvents;
+export default YourPastEvents;
