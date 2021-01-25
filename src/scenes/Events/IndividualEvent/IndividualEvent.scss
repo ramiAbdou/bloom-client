@@ -95,4 +95,11 @@ $PREF: 's-events-individual';
     > div { width: 100%; }
     > div:not(:last-child) { margin-bottom: $sm; }
   }
+  @include GTE(1301) {
+    display: flex;
+
+    > div:only-child { width: 100%; }
+    > div:not(:only-child) { width: 50%; }
+    > div:not(:only-child):first-child { margin-right: $sm; }
+  }
 }

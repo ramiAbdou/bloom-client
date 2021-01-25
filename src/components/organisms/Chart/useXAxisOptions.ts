@@ -14,7 +14,7 @@ const useXAxisOptions = (): Partial<XAxisProps> => {
     dataKey: 'name',
     interval: xAxis?.interval ?? 'preserveEnd',
     minTickGap: 16,
-    padding: { left: 4, right: 12 },
+    padding: { left: 16, right: 16 },
     tickFormatter:
       xAxis?.tickFormatter ??
       ((label) => {

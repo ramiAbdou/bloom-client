@@ -11,6 +11,7 @@ const useYAxisOptions = (): Partial<YAxisProps> => {
       (dataMin: number) => Math.round(dataMin * 0.8),
       'auto'
     ],
+    padding: { bottom: 16 },
     tickFormatter: (value) => (format === 'MONEY' ? `$${value / 100}` : value),
     width: yOptions?.width ?? 48
   };

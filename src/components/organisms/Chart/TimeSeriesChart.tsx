@@ -3,7 +3,6 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 import {
   CartesianGrid,
-  Dot,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -48,11 +47,6 @@ const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
   );
 };
 
-const TimeSeriesDot: React.FC<any> = ({ payload, ...props }) => {
-  if (!payload || day(payload.name).get('date') !== 1) return null;
-  return <Dot r={8} {...props} />;
-};
-
 const TimeSeriesChart: React.FC = () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
   const data = ChartStore.useStoreState((store) => store.data, deepequal);
@@ -67,18 +61,10 @@ const TimeSeriesChart: React.FC = () => {
     <ResponsiveContainer height={isMonitor ? 360 : 240}>
       <LineChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <CartesianGrid vertical={false} />
-
         <XAxis {...xAxisOptions} />
         <YAxis {...yAxisOptions} />
         <Tooltip content={({ label }) => <LineChartTooltip label={label} />} />
-
-        <Line
-          activeDot={{ r: 8 }}
-          dataKey="value"
-          dot={(props) => <TimeSeriesDot {...props} />}
-          stroke={color}
-          type="monotone"
-        />
+        <Line activeDot={{ r: 8 }} dataKey="value" dot={false} stroke={color} />
       </LineChart>
     </ResponsiveContainer>
   );
