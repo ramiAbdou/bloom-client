@@ -49,7 +49,16 @@ const Event = new schema.Entity(
 const EventAttendee = new schema.Entity(
   'attendees',
   {},
-  { processStrategy: (value) => ({ ...value, attendeeId: value.id }) }
+  {
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.eventId, { event: parent.id }],
+        {}
+      ]);
+
+      return { ...value, ...processedData, attendeeId: value.id };
+    }
+  }
 );
 
 const EventGuest = new schema.Entity(

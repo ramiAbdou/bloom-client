@@ -6,16 +6,18 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture';
-import { IEventGuest, IMember, IUser } from '@store/entities';
+import { IEventAttendee, IMember, IUser } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
-interface IndividualEventGuestProps
+interface IndividualEventAttendeeProps
   extends Pick<IUser, 'firstName' | 'id' | 'lastName' | 'pictureUrl'> {
   memberId: string;
 }
 
-const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
+const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
+  props
+) => {
   const { firstName, lastName, memberId, pictureUrl } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -36,18 +38,18 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
   );
 };
 
-const IndividualEventGuestListContent: React.FC = () => {
-  const users: IndividualEventGuestProps[] = useStoreState(({ db }) => {
-    const { byId: byGuestsId } = db.entities.guests;
-    const { byId: byMembersId } = db.entities.members;
-    const { byId: byUsersId } = db.entities.users;
+const IndividualEventAttendeeListContent: React.FC = () => {
+  const users: IndividualEventAttendeeProps[] = useStoreState(({ db }) => {
+    const { byId: byAttendeeId } = db.entities.attendees;
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byUserId } = db.entities.users;
 
-    return db.event?.guests
-      ?.map((guestId: string) => byGuestsId[guestId])
+    return db.event?.attendees
+      ?.map((attendeeId: string) => byAttendeeId[attendeeId])
       ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'DESC'))
-      ?.map((guest: IEventGuest) => byMembersId[guest.member])
+      ?.map((attendee: IEventAttendee) => byMemberId[attendee.member])
       ?.map((member: IMember) => ({
-        ...byUsersId[member.user],
+        ...byUserId[member.user],
         memberId: member.id
       }));
   });
@@ -57,10 +59,10 @@ const IndividualEventGuestListContent: React.FC = () => {
       {!users?.length && <p>No guests have RSVP'd yet.</p>}
 
       <div>
-        {users?.map((user: IndividualEventGuestProps) => {
+        {users?.map((user: IndividualEventAttendeeProps) => {
           return (
             <React.Fragment key={user?.id}>
-              <IndividualEventGuest key={user?.id} {...user} />
+              <IndividualEventAttendee key={user?.id} {...user} />
               <MemberProfileModal memberId={user?.memberId} userId={user?.id} />
             </React.Fragment>
           );
@@ -72,17 +74,17 @@ const IndividualEventGuestListContent: React.FC = () => {
 
 const IndividualEventGuestList: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const numGuests = useStoreState(({ db }) => db.event?.guests?.length);
+  const numAttendees = useStoreState(({ db }) => db.event?.attendees?.length);
 
-  if (day.utc().isAfter(day.utc(endTime))) return null;
+  if (day.utc().isBefore(day.utc(endTime))) return null;
 
   return (
     <Card
       className="s-events-individual-card"
-      headerTag={numGuests ? `${numGuests} Going` : null}
-      title="Guest List"
+      headerTag={numAttendees ? `${numAttendees} Attended` : null}
+      title="Attendees"
     >
-      <IndividualEventGuestListContent />
+      <IndividualEventAttendeeListContent />
     </Card>
   );
 };

@@ -70,7 +70,7 @@ $PREF: 's-events-individual';
 
 // // ## INDIVIDUAL EVENT GUEST - In the guest list.
 
-.#{$PREF}-guest {
+.#{$PREF}-member {
   @extend .flex-ac;
 
   border-radius: $xs;

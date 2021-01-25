@@ -13,7 +13,7 @@ const useXAxisOptions = (): Partial<XAxisProps> => {
     allowDuplicatedCategory: false,
     dataKey: 'name',
     interval: xAxis?.interval ?? 'preserveEnd',
-    minTickGap: 16,
+    minTickGap: 24,
     padding: { left: 16, right: 16 },
     tickFormatter:
       xAxis?.tickFormatter ??

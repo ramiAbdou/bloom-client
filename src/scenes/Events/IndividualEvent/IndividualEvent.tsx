@@ -10,6 +10,7 @@ import { GET_EVENT, GetEventArgs } from '../Events.gql';
 import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAnalytics from './IndividualEventAnalytics';
+import IndividualEventAttendeeList from './IndividualEventAttendeeList';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventPanel from './IndividualEventPanel';
@@ -46,6 +47,7 @@ const IndividualEvent: React.FC = () => {
 
       <div className="s-events-individual-grid">
         <IndividualEventAbout />
+        <IndividualEventAttendeeList />
         <IndividualEventGuestList />
       </div>
 

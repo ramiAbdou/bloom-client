@@ -57,9 +57,8 @@ export interface IEvent extends BaseEntity {
 
 // ## EVENT ATTENDEE
 
-export interface IEventAttendee {
+export interface IEventAttendee extends BaseEntity {
   event: IdString;
-  id: IdString;
   member: IdString;
 }
 
@@ -180,6 +179,7 @@ export interface EntityRecord<T> {
 
 export interface IEntities {
   applications: EntityRecord<ICommunityApplication>;
+  attendees: EntityRecord<IEventAttendee>;
   communities: EntityRecord<ICommunity>;
   data: EntityRecord<IMemberData>;
   events: EntityRecord<IEvent>;
@@ -195,6 +195,7 @@ export interface IEntities {
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
   applications: { allIds: [], byId: {} },
+  attendees: { allIds: [], byId: {} },
   communities: { activeId: null, allIds: [], byId: {} },
   data: { allIds: [], byId: {} },
   events: { activeId: null, allIds: [], byId: {} },

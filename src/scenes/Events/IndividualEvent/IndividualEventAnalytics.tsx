@@ -61,8 +61,6 @@ const IndividualEventGuestsAnalytics: React.FC = () => {
     variables: { eventId }
   });
 
-  console.log(guestsSeries);
-
   if (loading || guestsSeries?.every(({ value }) => !value)) return null;
 
   return (

@@ -65,6 +65,20 @@ export const GET_EVENT = query({
       ]
     },
     {
+      attendees: [
+        'createdAt',
+        'id',
+        {
+          member: [
+            'id',
+            { data: ['id', 'value', { question: ['id'] }] },
+            { type: ['id', 'name'] },
+            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+          ]
+        }
+      ]
+    },
+    {
       guests: [
         'createdAt',
         'id',
