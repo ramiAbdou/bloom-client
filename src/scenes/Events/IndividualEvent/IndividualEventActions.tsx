@@ -6,14 +6,12 @@ import { PanelType } from '@constants';
 import Row from '@containers/Row/Row';
 import { IEvent, IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import EventJoinButton from '../EventJoinButton';
-import EventRsvpButton from '../EventRsvpButton';
-import EventShareButton from '../EventShareButton';
-import EventViewRecordingButton from '../EventViewRecordingButton';
+import EventsJoinButton from '../EventsJoinButton';
+import EventsRsvpButton from '../EventsRsvpButton';
+import EventsShareButton from '../EventsShareButton';
+import EventsViewRecordingButton from '../EventsViewRecordingButton';
 
-const IndividualEventAddRecordingButton: React.FC<Partial<ButtonProps>> = (
-  props
-) => {
+const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
   const eventId = useStoreState(({ db }) => db.event?.id);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
@@ -69,16 +67,16 @@ const IndividualEventActions: React.FC = () => {
 
   return (
     <Row marginTopAuto equal={!isGoing && isUpcoming}>
-      <EventRsvpButton large show={!isGoing && isUpcoming} {...timeProps} />
-      <EventJoinButton
+      <EventsRsvpButton large show={!isGoing && isUpcoming} {...timeProps} />
+      <EventsJoinButton
         large
         eventId={eventId}
         videoUrl={videoUrl}
         {...timeProps}
       />
-      <EventShareButton large href={eventUrl} startTime={startTime} />
-      <EventViewRecordingButton large href={recordingUrl} show={!isAdmin} />
-      <IndividualEventAddRecordingButton show={hasPast && isAdmin} />
+      <EventsShareButton large href={eventUrl} startTime={startTime} />
+      <EventsViewRecordingButton large href={recordingUrl} show={!isAdmin} />
+      <EventsAddRecordingButton show={hasPast && isAdmin} />
     </Row>
   );
 };

@@ -6,11 +6,11 @@ import Card from '@containers/Card/Card';
 import { IEvent } from '@store/entities';
 import { cx } from '@util/util';
 import EventStore from './Event.store';
-import EventJoinButton from './EventJoinButton';
-import EventRsvpButton from './EventRsvpButton';
 import EventsAspectBackground from './EventsAspectBackground';
-import EventShareButton from './EventShareButton';
-import EventViewRecordingButton from './EventViewRecordingButton';
+import EventsJoinButton from './EventsJoinButton';
+import EventsRsvpButton from './EventsRsvpButton';
+import EventsShareButton from './EventsShareButton';
+import EventsViewRecordingButton from './EventsViewRecordingButton';
 
 const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
   guest
@@ -44,14 +44,14 @@ const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
     <div className={css}>
       <h5>{formattedStartTime}</h5>
       <h3>{title}</h3>
-      <EventRsvpButton show={!guest} {...timeProps} />
-      <EventJoinButton eventId={eventId} videoUrl={videoUrl} {...timeProps} />
-      <EventShareButton
+      <EventsRsvpButton show={!guest} {...timeProps} />
+      <EventsJoinButton eventId={eventId} videoUrl={videoUrl} {...timeProps} />
+      <EventsShareButton
         href={eventUrl}
         show={!!guest && !isHappeningNow}
         {...timeProps}
       />
-      <EventViewRecordingButton href={recordingUrl} />
+      <EventsViewRecordingButton href={recordingUrl} />
     </div>
   );
 };

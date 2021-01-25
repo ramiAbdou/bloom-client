@@ -12,7 +12,7 @@ import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import socialMedia from './images/social-media.svg';
+import SocialMedia from './images/social-media.svg';
 import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
@@ -28,11 +28,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 
   return (
     <>
-      <img
-        alt="Social Media"
-        className="s-profile-card--social-empty-img"
-        src={socialMedia}
-      />
+      <SocialMedia className="s-profile-card--social-empty-img" />
 
       <Button primary onClick={onClick}>
         + Link Social Media
