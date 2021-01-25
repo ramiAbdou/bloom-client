@@ -8,9 +8,12 @@ import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
 
-interface EventRsvpButtonProps extends ButtonProps, Pick<IEvent, 'startTime'> {}
+interface EventRsvpButtonProps
+  extends ButtonProps,
+    Pick<IEvent, 'endTime' | 'startTime'> {}
 
 const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
+  endTime: _,
   show,
   startTime,
   ...props

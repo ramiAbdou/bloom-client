@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import BarChart from './Bar';
+import BarChart from './BarChart';
 import ChartStore, { chartModel } from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
 import ChartHeader from './ChartHeader';

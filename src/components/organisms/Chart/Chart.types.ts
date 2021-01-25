@@ -1,9 +1,24 @@
+import { AxisDomain, AxisInterval } from 'recharts';
+
 import { ShowProps } from '@constants';
 
 export type ChartData = { name: string; value: number | string };
 
+export type ChartFormat = 'HOUR' | 'MONEY';
+
+export interface ChartXAxisOptions {
+  interval?: AxisInterval;
+}
+
+export interface ChartYAxisOptions {
+  domain?: [AxisDomain, AxisDomain];
+  width?: number;
+}
+
 export interface ChartOptions {
-  format?: 'HOUR' | 'MONEY';
+  format?: ChartFormat;
+  xAxis?: ChartXAxisOptions;
+  yAxis?: ChartYAxisOptions;
 }
 
 export enum ChartType {

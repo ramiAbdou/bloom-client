@@ -17,6 +17,8 @@ import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import ChartStore from './Chart.store';
 import { ChartTooltipProps } from './Tooltip';
+import useXAxisOptions from './useXAxisOptions';
+import useYAxisOptions from './useYAxisOptions';
 
 const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
   label
@@ -53,12 +55,11 @@ const TimeSeriesDot: React.FC<any> = ({ payload, ...props }) => {
 
 const TimeSeriesChart: React.FC = () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
-
   const data = ChartStore.useStoreState((store) => store.data, deepequal);
-
-  const interval = ChartStore.useStoreState((store) => store.interval);
-  const format = ChartStore.useStoreState(({ options }) => options?.format);
   const isMonitor = useBreakpoint() === 4;
+
+  const xAxisOptions = useXAxisOptions();
+  const yAxisOptions = useYAxisOptions();
 
   if (!data?.length) return null;
 
@@ -67,27 +68,8 @@ const TimeSeriesChart: React.FC = () => {
       <LineChart data={data} margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <CartesianGrid vertical={false} />
 
-        <XAxis
-          allowDuplicatedCategory={false}
-          dataKey="name"
-          // interval="preserveEnd"
-          interval={interval ?? data.length / 12}
-          padding={{ left: 4, right: 12 }}
-          tickFormatter={(label) => {
-            return format === 'HOUR'
-              ? day(label).format('MMM D, h A')
-              : day(label).format('MMM D');
-          }}
-          tickSize={8}
-        />
-
-        <YAxis
-          domain={[(dataMin: number) => Math.round(dataMin * 0.8), 'auto']}
-          tickFormatter={(value) => {
-            return format === 'MONEY' ? `$${value / 100}` : value;
-          }}
-          width={48}
-        />
+        <XAxis {...xAxisOptions} />
+        <YAxis {...yAxisOptions} />
 
         <Tooltip content={({ label }) => <LineChartTooltip label={label} />} />
 

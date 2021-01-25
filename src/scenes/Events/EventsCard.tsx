@@ -49,7 +49,7 @@ const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
       <EventsShareButton
         href={eventUrl}
         show={!!guest && !isHappeningNow}
-        {...timeProps}
+        startTime={startTime}
       />
       <EventsViewRecordingButton href={recordingUrl} />
     </div>

@@ -19,9 +19,8 @@ const IndividualEventAnalytics: React.FC = () => {
     variables: { eventId }
   });
 
-  console.log(data);
-
-  if (!isAdmin) return null;
+  // If not admin or no RSVP's have been collected, don't show!
+  if (!isAdmin || data?.every(({ value }) => !value)) return null;
 
   return (
     <div className="s-events-individual-analytics">
@@ -31,7 +30,10 @@ const IndividualEventAnalytics: React.FC = () => {
         <Chart
           data={data}
           interval={2}
-          options={{ format: 'HOUR' }}
+          options={{
+            format: 'HOUR',
+            yAxis: { domain: [0, (dataMax: number) => dataMax + 5] }
+          }}
           show={!loading}
           title="RSVP's Collected"
           type={ChartType.TIME_SERIES}
