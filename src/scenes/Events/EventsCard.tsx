@@ -1,11 +1,13 @@
 import day from 'dayjs';
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Card from '@containers/Card/Card';
 import { IEvent } from '@store/entities';
+import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import EventStore from './Event.store';
+import IdStore from '../../core/store/Id.store';
 import EventsAspectBackground from './EventsAspectBackground';
 import EventsJoinButton from './EventsJoinButton';
 import EventsRsvpButton from './EventsRsvpButton';
@@ -15,13 +17,19 @@ import EventsViewRecordingButton from './EventsViewRecordingButton';
 const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
   guest
 }) => {
-  const endTime = EventStore.useStoreState((event) => event.endTime);
-  const eventUrl = EventStore.useStoreState((event) => event.eventUrl);
-  const eventId = EventStore.useStoreState((event) => event.id);
-  const recordingUrl = EventStore.useStoreState((event) => event.recordingUrl);
-  const startTime = EventStore.useStoreState((event) => event.startTime);
-  const title = EventStore.useStoreState((event) => event.title);
-  const videoUrl = EventStore.useStoreState((event) => event.videoUrl);
+  const eventId = IdStore.useStoreState((event) => event.id);
+
+  const {
+    endTime,
+    eventUrl,
+    recordingUrl,
+    startTime,
+    title,
+    videoUrl
+  }: IEvent = useStoreState(({ db }) => {
+    const { byId: byEventId } = db.entities.events;
+    return byEventId[eventId];
+  }, deepequal);
 
   const timeProps: Pick<IEvent, 'endTime' | 'startTime'> = {
     endTime,
@@ -60,17 +68,17 @@ interface EventsCardProps extends IEvent {
   guest?: boolean;
 }
 
-const EventsCard: React.FC<EventsCardProps> = ({ guest, ...event }) => {
+const EventsCard: React.FC<EventsCardProps> = ({ guest, id, ...event }) => {
   const { push } = useHistory();
-  const onClick = () => push(event?.id);
+  const onClick = () => push(id);
 
   return (
-    <EventStore.Provider runtimeModel={event}>
+    <IdStore.Provider runtimeModel={{ id }}>
       <Card noPadding className="s-events-card" onClick={onClick}>
         <EventsAspectBackground imageUrl={event.imageUrl} />
         <EventsCardContent guest={guest} />
       </Card>
-    </EventStore.Provider>
+    </IdStore.Provider>
   );
 };
 

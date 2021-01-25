@@ -10,13 +10,33 @@ import { schema } from 'normalizr';
 
 import { takeFirst } from '@util/util';
 
+/**
+ * Merges the two entities according to the deepmerge strategy, except handles
+ * array in a way that produces no duplicates.
+ *
+ * @param a First entity to merge.
+ * @param b Second entity to merge.
+ */
+export const mergeStrategy = (a: Partial<any>, b: Partial<any>) => {
+  const arrayMerge = (target: any[], source: any[]) => {
+    const updatedSource = source.filter(
+      (value: any) => !target.includes(value)
+    );
+
+    // Concat the source to the target.
+    return target.concat(updatedSource);
+  };
+
+  return deepmerge(a, b, { arrayMerge });
+};
+
 // ## NORMALIZR SCHEMA DECLARATIONS
 
 const Community = new schema.Entity(
   'communities',
   {},
   {
-    mergeStrategy: deepmerge,
+    mergeStrategy,
     processStrategy: (community, parent) => {
       const processedData = takeFirst([
         [!!parent.eventId, { events: [parent.id] }],
@@ -50,6 +70,7 @@ const EventAttendee = new schema.Entity(
   'attendees',
   {},
   {
+    mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.eventId, { event: parent.id }],
@@ -65,6 +86,7 @@ const EventGuest = new schema.Entity(
   'guests',
   {},
   {
+    mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.eventId, { event: parent.id }],
@@ -82,7 +104,7 @@ const Member = new schema.Entity(
   'members',
   {},
   {
-    mergeStrategy: deepmerge,
+    mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.attendeeId, { attendees: [parent.id] }],
@@ -97,7 +119,7 @@ const Member = new schema.Entity(
   }
 );
 
-const MemberData = new schema.Entity('data', {});
+const MemberData = new schema.Entity('data', {}, { mergeStrategy });
 
 const MemberPayment = new schema.Entity(
   'payments',
@@ -106,7 +128,7 @@ const MemberPayment = new schema.Entity(
 );
 
 const MemberType = new schema.Entity('types', {});
-const Question = new schema.Entity('questions', {});
+const Question = new schema.Entity('questions', {}, { mergeStrategy });
 const User = new schema.Entity('users', {});
 
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the

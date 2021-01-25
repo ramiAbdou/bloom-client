@@ -48,13 +48,11 @@ const EventsPastContent: React.FC = () => {
 };
 
 const EventsPast: React.FC = () => {
-  const { data, loading } = useQuery<ICommunity>({
+  const { loading } = useQuery<ICommunity>({
     name: 'getPastEvents',
     query: GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
-
-  console.log(data);
 
   return (
     <MainContent Header={EventsHeader}>

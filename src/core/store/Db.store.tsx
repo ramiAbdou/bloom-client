@@ -1,4 +1,3 @@
-import deepmerge from 'deepmerge';
 import { Action, action, Computed, computed } from 'easy-peasy';
 import { normalize, Schema } from 'normalizr';
 
@@ -13,6 +12,7 @@ import {
   IUser
 } from '@store/entities';
 import { updateDocumentColors } from '@util/colorUtil';
+import { mergeStrategy } from './schema';
 
 interface MergeEntitiesArgs {
   communityReferenceColumn?: string;
@@ -124,16 +124,7 @@ export const dbModel: DbModel = {
 
       return {
         ...state,
-        entities: deepmerge(state.entities, parsedEntities, {
-          arrayMerge: (target: any[], source: any[]) => {
-            const updatedSource = source.filter(
-              (value: any) => !target.includes(value)
-            );
-
-            // Concat the source to the target.
-            return target.concat(updatedSource);
-          }
-        }) as IEntities
+        entities: mergeStrategy(state.entities, parsedEntities) as IEntities
       };
     }
   ),
