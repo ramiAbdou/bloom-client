@@ -17,7 +17,6 @@ export interface ButtonProps
   secondary?: boolean;
   primary?: boolean;
   tertiary?: boolean;
-  white?: boolean;
 }
 
 const LoadingContainer = ({

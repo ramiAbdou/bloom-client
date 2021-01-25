@@ -88,3 +88,8 @@ $PREF: 's-events-individual';
 // // ## INDIVIDUAL EVENT ANALYTICS
 
 .#{$PREF}-analytics { padding: $md; }
+.#{$PREF}-analytics-row {
+  > div:only-child { width: 100%; }
+  > div:not(:only-child) { width: 50%; }
+  > div:not(:only-child):first-child { margin-right: $sm; }
+}

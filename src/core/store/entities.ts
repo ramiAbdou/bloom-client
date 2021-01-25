@@ -1,4 +1,4 @@
-import { QuestionCategory, QuestionType } from '@constants';
+import { QuestionCategory, QuestionType, TimeSeriesData } from '@constants';
 
 type IdString = string;
 
@@ -37,11 +37,13 @@ export interface ICommunityApplication {
 
 export interface IEvent extends BaseEntity {
   attendees: IdString[];
+  attendeesSeries: TimeSeriesData[];
   community?: IdString;
   description: string;
   endTime: string;
   eventUrl: string;
   guests: IdString[];
+  guestsSeries: TimeSeriesData[];
   imageUrl?: string;
   past?: boolean;
   private: boolean;

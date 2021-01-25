@@ -83,11 +83,19 @@ export const GET_EVENT = query({
   variables: { eventId: { required: true } }
 }).query;
 
-// ## GET EVENT GUEST SERIES
+// ## GET EVENT ATTENDEES SERIES
 
-export const GET_EVENT_GUEST_SERIES = query({
-  fields: ['name', 'value'],
-  operation: 'getEventGuestSeries',
+export const GET_EVENT_ATTENDEES_SERIES = query({
+  fields: ['id', { attendeesSeries: ['name', 'value'] }],
+  operation: 'getEvent',
+  variables: { eventId: { required: true } }
+}).query;
+
+// ## GET EVENT GUESTS SERIES
+
+export const GET_EVENT_GUESTS_SERIES = query({
+  fields: ['id', { guestsSeries: ['name', 'value'] }],
+  operation: 'getEvent',
   variables: { eventId: { required: true } }
 }).query;
 

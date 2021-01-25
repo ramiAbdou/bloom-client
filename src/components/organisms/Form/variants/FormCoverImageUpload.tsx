@@ -37,7 +37,7 @@ const FormCoverImageUploadContent: React.FC<
         onChange={onChange}
       />
 
-      <Button secondary white onClick={openFileUploader}>
+      <Button secondary onClick={openFileUploader}>
         {title}
       </Button>
     </>

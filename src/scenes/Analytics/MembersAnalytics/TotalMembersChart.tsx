@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { TimeSeriesResult } from '@constants';
+import { TimeSeriesData } from '@constants';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { GET_TOTAL_MEMBERS_SERIES } from '../Analytics.gql';
 
 const TotalMembersChart: React.FC = () => {
-  const { data, loading } = useQuery<TimeSeriesResult[]>({
+  const { data, loading } = useQuery<TimeSeriesData[]>({
     name: 'getTotalMembersSeries',
     query: GET_TOTAL_MEMBERS_SERIES
   });
