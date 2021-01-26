@@ -156,5 +156,52 @@ $PREF: 'o-form';
   }
 }
 
-.react-datepicker { @extend .shadow--2; border: none !important; }
+.react-datepicker {
+  @extend .shadow--2;
+
+  border: none !important;
+  padding: $xs;
+}
+
 .react-datepicker__current-month { @extend .meta; text-align: center; }
+
+.react-datepicker__header {
+  background-color: white !important;
+
+  > .react-datepicker__current-month { margin-bottom: $xxs; }
+}
+
+.react-datepicker__navigation { top: $sm !important; }
+
+.react-datepicker__time-list-item {
+  @extend .meta;
+
+  border-radius: $xxs !important;
+  height: initial !important;
+  outline: none;
+  padding: $xs 0 !important;
+
+  &:not(:last-child) { margin-bottom: $xs; }
+
+  &:not(&--disabled):not(&--selected):not(&--keyboard-selected):hover {
+    background-color: $primary-bg !important;
+  }
+
+  &--selected,
+  &--keyboard-selected { background-color: $primary !important; }
+}
+
+.react-datepicker__day {
+  @extend .meta;
+
+  outline: none;
+
+  &:not(&--disabled):not(&--selected):not(&--keyboard-selected):hover {
+    background-color: $primary-bg !important;
+  }
+  &--disabled { color: $gray-4 !important; }
+  &--today { font-weight: initial !important; }
+
+  &--selected,
+  &--keyboard-selected { background-color: $primary !important; }
+}
