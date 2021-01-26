@@ -10,6 +10,7 @@ import Modal from '@organisms/Modal/Modal';
 import { IEvent } from '@store/entities';
 import { useStoreState } from '@store/Store';
 import FormSectionHeader from '../../organisms/Form/FormSectionHeader';
+import DeleteEventButton from './DeleteEventButton';
 import useCreateEvent from './useCreateEvent';
 import useUpdateEvent from './useUpdateEvent';
 
@@ -101,6 +102,8 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
         <FormSubmitButton>
           {id ? 'Update Event' : 'Create Event'}
         </FormSubmitButton>
+
+        <DeleteEventButton show={!!id} />
       </Form>
     </Modal>
   );

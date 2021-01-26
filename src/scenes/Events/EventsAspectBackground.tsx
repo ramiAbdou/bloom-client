@@ -18,10 +18,10 @@ const EventsAspectBackground: React.FC<EventsAspectBackgroundProps> = ({
 
   return (
     <AspectRatio className={css} ratio={2}>
-      {children}
       {imageUrl && <img alt="Profile Avatar" src={imageUrl} />}
       {!imageUrl && <div />}
       <Network />
+      {children}
     </AspectRatio>
   );
 };

@@ -14,8 +14,9 @@ export interface ButtonProps
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
-  secondary?: boolean;
   primary?: boolean;
+  red?: boolean;
+  secondary?: boolean;
   tertiary?: boolean;
 }
 
@@ -54,6 +55,7 @@ const Button = forwardRef(
       loadingText,
       onClick,
       primary,
+      red,
       secondary,
       show,
       type,
@@ -90,6 +92,7 @@ const Button = forwardRef(
       'c-btn--lg': large,
       'c-btn--primary': primary,
       'c-btn--secondary': secondary,
+      'c-btn--secondary--red': red,
       'c-btn--tertiary': tertiary,
       [className]: className
     });

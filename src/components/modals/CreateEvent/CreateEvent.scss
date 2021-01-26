@@ -17,7 +17,13 @@ $PREF: 'mo-create-event';
   > div:last-child { flex: 1; }
 }
 
-.#{$PREF}-privacy-item {
+div.#{$PREF}-privacy-item {
+  margin-bottom: $xl;
+
   > div { flex-direction: row; }
   > div > div:first-child { margin: 0 $xs 0 0; }
 }
+
+// ## DELETE EVENT BUTTON
+
+.#{$PREF}-delete { margin-top: $xs; }
