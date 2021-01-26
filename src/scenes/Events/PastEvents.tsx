@@ -23,7 +23,7 @@ const EventsPastContent: React.FC = () => {
 
     return db.community?.events
       ?.map((eventId: string) => byEventsId[eventId])
-      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event.endTime)))
+      ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
       ?.filter((event: IEvent) => {
         return !event.attendees?.some((attendeeId: string) =>
           attendees.has(attendeeId)

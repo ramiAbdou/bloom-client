@@ -16,7 +16,7 @@ const YourUpcomingEventsList: React.FC = () => {
     return db.member.guests
       ?.map((guestId: string) => byGuestsId[guestId])
       ?.map((guest: IEventGuest) => byEventsId[guest.event])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event?.endTime)));
+      ?.filter((event: IEvent) => day().isBefore(day(event?.endTime)));
   });
 
   return (
@@ -49,8 +49,7 @@ const YourUpcomingEvents: React.FC = () => {
     return !!db.member.guests
       ?.map((guestId: string) => byGuestsId[guestId])
       ?.map((guest: IEventGuest) => byEventsId[guest.event])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event?.endTime)))
-      ?.length;
+      ?.filter((event: IEvent) => day().isBefore(day(event?.endTime)))?.length;
   });
 
   return hasEvents ? <YourUpcomingEventsContent /> : null;

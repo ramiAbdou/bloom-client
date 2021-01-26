@@ -21,7 +21,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   }, deepequal);
 
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
-  const isPast = day.utc().isAfter(day.utc(endTime));
+  const isPast = day().isAfter(day(endTime));
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();

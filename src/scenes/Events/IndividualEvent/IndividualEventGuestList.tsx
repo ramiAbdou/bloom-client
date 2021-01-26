@@ -74,7 +74,7 @@ const IndividualEventGuestList: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
   const numGuests = useStoreState(({ db }) => db.event?.guests?.length);
 
-  if (day.utc().isAfter(day.utc(endTime))) return null;
+  if (day().isAfter(day(endTime))) return null;
 
   return (
     <Card

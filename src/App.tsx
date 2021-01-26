@@ -6,7 +6,6 @@ import '../public/favicon.ico';
 import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
 import { StoreProvider } from 'easy-peasy';
 import { ClientContext, GraphQLClient } from 'graphql-hooks';
 import React from 'react';
@@ -20,7 +19,6 @@ import Router from './core/routing/Router';
 
 day.extend(advancedFormat);
 day.extend(timezone);
-day.extend(utc);
 
 const client = new GraphQLClient({
   fetchOptions: { credentials: 'include' },

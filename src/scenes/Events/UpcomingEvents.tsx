@@ -23,7 +23,7 @@ const EventsUpcomingContent: React.FC = () => {
 
     return db.community?.events
       ?.map((eventId: string) => byEventsId[eventId])
-      ?.filter((event: IEvent) => day.utc().isBefore(day.utc(event.endTime)))
+      ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
       ?.filter((event: IEvent) => {
         return !event.guests?.some((guestId: string) => guests.has(guestId));
       })

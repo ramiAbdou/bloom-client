@@ -31,7 +31,7 @@ const EventsEditEventButton: React.FC = () => {
   const eventId = useStoreState(({ db }) => db.event?.id);
 
   const hasPast = useStoreState(({ db }) => {
-    return day.utc().isAfter(db.event.startTime);
+    return day().isAfter(day(db.event.startTime));
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -59,11 +59,11 @@ const IndividualEventActions: React.FC = () => {
   const guests = useStoreState(({ db }) => db.event?.guests);
 
   const hasPast: boolean = useStoreState(({ db }) => {
-    return day.utc().isAfter(db.event.endTime);
+    return day().isAfter(day(db.event.endTime));
   });
 
   const isUpcoming: boolean = useStoreState(({ db }) => {
-    return day.utc().isBefore(db.event.startTime);
+    return day().isBefore(day(db.event.startTime));
   });
 
   const isGoing: boolean = useStoreState(({ db }) => {

@@ -79,7 +79,7 @@ const IndividualEventGuestList: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
   const numAttendees = useStoreState(({ db }) => db.event?.attendees?.length);
 
-  if (day.utc().isBefore(day.utc(endTime))) return null;
+  if (day().isBefore(day(endTime))) return null;
 
   return (
     <Card

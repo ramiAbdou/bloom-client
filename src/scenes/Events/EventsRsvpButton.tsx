@@ -28,7 +28,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
 
-  const isUpcoming = day.utc().isBefore(day.utc(startTime));
+  const isUpcoming = day().isBefore(day(startTime));
 
   const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
     name: 'createEventGuest',

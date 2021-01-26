@@ -43,7 +43,7 @@ const EventsCardPeople: React.FC = () => {
 
   const isPast: boolean = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
-    return day.utc().isAfter(day.utc(byEventId[eventId]?.endTime));
+    return day().isAfter(day(byEventId[eventId]?.endTime));
   });
 
   const users: IUser[] = useStoreState(({ db }) => {

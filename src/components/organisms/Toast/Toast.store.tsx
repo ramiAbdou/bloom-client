@@ -1,13 +1,7 @@
 import { Action, action } from 'easy-peasy';
-import { UseClientRequestOptions } from 'graphql-hooks';
 import { nanoid } from 'nanoid';
 
-import { IdProps, MessageProps } from '@constants';
-
-export interface ToastOptions extends Partial<IdProps>, MessageProps {
-  mutationOptionsOnClose?: [string, UseClientRequestOptions<any>];
-  onUndo?: VoidFunction;
-}
+import { ToastOptions } from './Toast.types';
 
 export type ToastModel = {
   dequeueToast: Action<ToastModel, string>;
@@ -15,7 +9,7 @@ export type ToastModel = {
   showToast: Action<ToastModel, ToastOptions>;
 };
 
-export const toastModel: ToastModel = {
+const toastModel: ToastModel = {
   dequeueToast: action(({ queue }, id: string) => {
     const index = queue.findIndex(({ id: toastId }) => toastId === id);
     if (index < 0) return { queue };
@@ -28,3 +22,5 @@ export const toastModel: ToastModel = {
     queue: [...queue, { id: nanoid(), ...toast }]
   }))
 };
+
+export default toastModel;

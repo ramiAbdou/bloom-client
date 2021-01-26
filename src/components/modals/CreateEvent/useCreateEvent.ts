@@ -22,29 +22,31 @@ const useCreateEvent = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const endDateOnly = day
-      .utc(items.find(({ title }) => title === 'End Time')?.value)
-      ?.format('MMMM D, YYYY');
+    const endDateOnly = day(
+      items.find(({ title }) => title === 'End Time')?.value
+    )?.format('MMMM D, YYYY');
 
-    const endTimeOnly = day
-      .utc(items.find(({ id }) => id === 'END_TIME')?.value)
-      ?.format('h:mm A');
+    const endTimeOnly = day(
+      items.find(({ id }) => id === 'END_TIME')?.value
+    )?.format('h:mm A');
 
-    const startDateOnly = day
-      .utc(items.find(({ title }) => title === 'Start Time')?.value)
-      ?.format('MMMM D, YYYY');
+    const startDateOnly = day(
+      items.find(({ title }) => title === 'Start Time')?.value
+    )?.format('MMMM D, YYYY');
 
-    const startTimeOnly = day
-      .utc(items.find(({ id }) => id === 'START_TIME')?.value)
-      ?.format('h:mm A');
+    const startTimeOnly = day(
+      items.find(({ id }) => id === 'START_TIME')?.value
+    )?.format('h:mm A');
 
-    const endTime = day
-      .utc(`${endDateOnly} @ ${endTimeOnly}`, 'MMMM D, YYYY @ h:mm A')
-      .format();
+    const endTime = day(
+      `${endDateOnly} @ ${endTimeOnly}`,
+      'MMMM D, YYYY @ h:mm A'
+    ).format();
 
-    const startTime = day
-      .utc(`${startDateOnly} @ ${startTimeOnly}`, 'MMMM D, YYYY @ h:mm A')
-      .format();
+    const startTime = day(
+      `${startDateOnly} @ ${startTimeOnly}`,
+      'MMMM D, YYYY @ h:mm A'
+    ).format();
 
     const coverImage = items.find(({ type }) => type === 'COVER_IMAGE')?.value;
 

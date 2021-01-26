@@ -38,8 +38,7 @@ const EventsCardContent: React.FC = () => {
   }, deepequal);
 
   const isHappeningNow =
-    day.utc().isAfter(day.utc(startTime)) &&
-    day.utc().isBefore(day.utc(endTime));
+    day().isAfter(day(startTime)) && day().isBefore(day(endTime));
 
   const formattedStartTime = isHappeningNow
     ? 'Happening Now'

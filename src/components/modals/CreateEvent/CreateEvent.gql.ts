@@ -4,9 +4,15 @@ import { mutation } from 'gql-query-builder';
 
 export const CREATE_EVENT = mutation({
   fields: [
+    'description',
     'endTime',
+    'eventUrl',
     'id',
+    'imageUrl',
+    'private',
+    'recordingUrl',
     'startTime',
+    'summary',
     'title',
     'videoUrl',
     { community: ['id'] }
@@ -22,6 +28,13 @@ export const CREATE_EVENT = mutation({
     title: { required: true },
     videoUrl: { required: true }
   }
+}).query;
+
+// ## DELETE EVENT
+
+export const DELETE_EVENT = mutation({
+  operation: 'deleteEvent',
+  variables: { id: { required: true } }
 }).query;
 
 // ## UPDATE EVENT

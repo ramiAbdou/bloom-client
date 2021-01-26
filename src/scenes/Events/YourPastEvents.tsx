@@ -16,7 +16,7 @@ const YourPastEventsList: React.FC = () => {
     return db.member.attendees
       ?.map((attendeeId: string) => byAttendeeId[attendeeId])
       ?.map((attendee: IEventAttendee) => byEventsId[attendee.event])
-      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event?.endTime)));
+      ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)));
   });
 
   return (
@@ -49,8 +49,7 @@ const YourPastEvents: React.FC = () => {
     return !!db.member.attendees
       ?.map((attendeeId: string) => byAttendeeId[attendeeId])
       ?.map((attendee: IEventAttendee) => byEventsId[attendee.event])
-      ?.filter((event: IEvent) => day.utc().isAfter(day.utc(event?.endTime)))
-      ?.length;
+      ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)))?.length;
   });
 
   return hasEvents ? <YourPastEventsContent /> : null;

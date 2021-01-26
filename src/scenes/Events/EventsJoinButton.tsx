@@ -23,8 +23,7 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
   }, deepequal);
 
   const isHappeningNow =
-    day.utc().isAfter(day.utc(startTime)) &&
-    day.utc().isBefore(day.utc(endTime));
+    day().isAfter(day(startTime)) && day().isBefore(day(endTime));
 
   const [createEventAttendee] = useMutation<
     IEventAttendee,

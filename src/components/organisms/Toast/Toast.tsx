@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Button from '@atoms/Button/Button';
-import { ToastOptions } from '@organisms/Toast/Toast.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
+import { ToastOptions } from './Toast.types';
 
 const Toast: React.FC<ToastOptions> = ({
   id,
@@ -24,13 +24,13 @@ const Toast: React.FC<ToastOptions> = ({
   // follow the rules of hooks, we have to pass something in, even if the
   // mutation query and variables are empty.
   mutationOptionsOnClose = mutationOptionsOnClose ?? ['', {}];
-  const [mutation] = useMutation(...mutationOptionsOnClose);
+  const [mutationFn] = useMutation(...mutationOptionsOnClose);
 
   useEffect(() => {
     // We only show the toast for 5 seconds, then we remove it from the DOM.
     const timeout = setTimeout(async () => {
       // If the mutation string isn't empty, we execute the mutation.
-      if (mutationOptionsOnClose[0]) await mutation();
+      if (mutationOptionsOnClose[0]) await mutationFn();
       dequeueToast(id);
     }, 5000);
 
@@ -60,11 +60,10 @@ const Toast: React.FC<ToastOptions> = ({
       initial={{ x: 150 }}
     >
       <p>{message}</p>
-      {onUndo && (
-        <Button tertiary onClick={onUndoClick}>
-          Undo
-        </Button>
-      )}
+
+      <Button tertiary show={!!onUndo} onClick={onUndoClick}>
+        Undo
+      </Button>
     </motion.div>
   );
 };

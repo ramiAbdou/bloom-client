@@ -103,7 +103,7 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
           {id ? 'Update Event' : 'Create Event'}
         </FormSubmitButton>
 
-        <DeleteEventButton show={!!id} />
+        <DeleteEventButton id={id} />
       </Form>
     </Modal>
   );
