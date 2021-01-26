@@ -25,7 +25,7 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
 
   return (
     <div className="mo-add-member-input-ctr">
-      <Row className="mo-add-member-input">
+      <Row align="baseline" className="mo-add-member-input">
         <AddMemberInputTrashButton id={id} />
 
         <FormItem

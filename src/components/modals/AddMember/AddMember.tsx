@@ -25,7 +25,7 @@ const AddMemberContent: React.FC = () => {
 
   const addMembers = useAddMembers();
   const onClose = () => clearRows();
-  const onPrimaryClick = () => addRow();
+  const onTertiaryClick = () => addRow();
   const onSecondaryClick = () => closeModal();
 
   return (
@@ -49,7 +49,7 @@ const AddMemberContent: React.FC = () => {
           ))}
         </div>
 
-        <Button tertiary onClick={onPrimaryClick}>
+        <Button tertiary onClick={onTertiaryClick}>
           + Add Another
         </Button>
 

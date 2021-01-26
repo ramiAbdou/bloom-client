@@ -23,6 +23,7 @@ $D_SIZE: 1440;
 .flex {
   display: flex;
 
+  &-ab { @extend .flex; align-items: baseline; }
   &-ac { @extend .flex; align-items: center; }
   &-acc { @extend .flex-ac; justify-content: center; }
   &-accol { @extend .flex-ac; flex-direction: column; }
