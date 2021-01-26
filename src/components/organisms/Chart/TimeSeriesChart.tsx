@@ -64,7 +64,13 @@ const TimeSeriesChart: React.FC = () => {
         <XAxis {...xAxisOptions} />
         <YAxis {...yAxisOptions} />
         <Tooltip content={({ label }) => <LineChartTooltip label={label} />} />
-        <Line activeDot={{ r: 8 }} dataKey="value" dot={false} stroke={color} />
+        <Line
+          activeDot={{ r: 8 }}
+          dataKey="value"
+          dot={false}
+          stroke={color}
+          type="basis"
+        />
       </LineChart>
     </ResponsiveContainer>
   );
