@@ -14,22 +14,34 @@ const FormTime: React.FC<
     ({ getItem }) => getItem(queryArgs)?.value
   );
 
+  const startTime = FormStore.useStoreState(
+    ({ getItem }) => getItem({ id: 'START_TIME' })?.value
+  );
+
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
   const updateDate = (date: Date | [Date, Date]) => {
     updateItem({ ...queryArgs, value: date });
   };
 
+  const minTime =
+    id === 'END_TIME' && startTime
+      ? day(startTime).add(30, 'minute').toDate()
+      : new Date();
+
+  const placeholderText = day()
+    .add(id === 'END_TIME' ? 2 : 1, 'hour')
+    .startOf('hour')
+    .format('h:mm A');
+
   return (
     <DatePicker
       showTimeSelect
       showTimeSelectOnly
       dateFormat="h:mm a"
-      minDate={new Date()}
-      placeholderText={`${day()
-        .add(id === 'END_TIME' ? 2 : 1, 'hour')
-        .startOf('hour')
-        .format('h:mm A')}`}
+      maxTime={day().endOf('day').toDate()}
+      minTime={minTime}
+      placeholderText={placeholderText}
       selected={day(value).isValid() && day(value).toDate()}
       onChange={(date) => updateDate(date)}
     />
