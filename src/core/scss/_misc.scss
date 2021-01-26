@@ -117,6 +117,7 @@
 // needed other than the div.
 body::-webkit-scrollbar,
 div::-webkit-scrollbar,
+ul::-webkit-scrollbar,
 section::-webkit-scrollbar { display: none; }
 
 // Pushes the home content to the right due to the fixed sidebar.

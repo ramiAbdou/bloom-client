@@ -1,5 +1,6 @@
 import './index.scss';
 import '../public/favicon.ico';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // Extend the time-based library for entire app.
 import day from 'dayjs';

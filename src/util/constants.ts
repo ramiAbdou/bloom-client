@@ -79,12 +79,14 @@ export type RouteType =
 export type QuestionType =
   | 'COVER_IMAGE'
   | 'CUSTOM'
+  | 'DATE'
   | 'IMAGE'
   | 'LARGE_TITLE'
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
   | 'MULTIPLE_SELECT'
   | 'SHORT_TEXT'
+  | 'TIME'
   | 'TOGGLE';
 
 export type QuestionCategory =

@@ -14,7 +14,7 @@ const baseConfig: Configuration = {
   module: {
     rules: [
       {
-        test: /\.scss$/,
+        test: /\.(css|scss)$/,
         use: [
           'style-loader',
           MiniCssExtractPlugin.loader,

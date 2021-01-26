@@ -17,35 +17,13 @@ const CreateEventTimeItems: React.FC<IdProps> = () => {
   return (
     <>
       <Row align="end" className="mo-create-event-row">
-        <FormItem
-          required
-          placeholder="January 10, 2021"
-          title="Start Time"
-          type="SHORT_TEXT"
-        />
-
-        <FormItem
-          required
-          id="START_TIME"
-          placeholder="2:00 PM"
-          type="SHORT_TEXT"
-        />
+        <FormItem required title="Start Time" type="DATE" />
+        <FormItem required id="START_TIME" type="TIME" />
       </Row>
 
       <Row align="end" className="mo-create-event-row">
-        <FormItem
-          required
-          placeholder="January 10, 2021"
-          title="End Time"
-          type="SHORT_TEXT"
-        />
-
-        <FormItem
-          required
-          id="END_TIME"
-          placeholder="3:00 PM"
-          type="SHORT_TEXT"
-        />
+        <FormItem required title="End Time" type="DATE" />
+        <FormItem required id="END_TIME" type="TIME" />
       </Row>
     </>
   );

@@ -14,7 +14,7 @@ import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 
 interface EventsCardPersonPictures {
-  users?: Partial<IUser>[];
+  users?: IUser[];
 }
 
 const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
@@ -25,6 +25,7 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
       {users?.map((user: IUser) => {
         return (
           <ProfilePicture
+            key={user.id}
             circle
             fontSize={12}
             href={user?.pictureUrl}
@@ -45,10 +46,7 @@ const EventsCardPeople: React.FC = () => {
     return day.utc().isAfter(day.utc(byEventId[eventId]?.endTime));
   });
 
-  const users: Pick<
-    IUser,
-    'firstName' | 'lastName' | 'pictureUrl'
-  >[] = useStoreState(({ db }) => {
+  const users: IUser[] = useStoreState(({ db }) => {
     const { byId: byAttendeeId } = db.entities.attendees;
     const { byId: byEventId } = db.entities.events;
     const { byId: byGuestId } = db.entities.guests;

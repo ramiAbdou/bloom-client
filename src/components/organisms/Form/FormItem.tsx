@@ -64,6 +64,7 @@ const FormItem: React.FC<FormItemProps> = ({
 
   const css = cx('o-form-item', {
     [className]: className,
+    'o-form-item--date': type === 'DATE' || type === 'TIME',
     'o-form-item--email': category === 'EMAIL',
     'o-form-item--image': type === 'IMAGE',
     'o-form-item--multiple-select': type === 'MULTIPLE_SELECT'

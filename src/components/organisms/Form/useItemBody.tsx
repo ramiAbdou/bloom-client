@@ -8,6 +8,7 @@ import {
   UseItemBodyProps
 } from './Form.types';
 import FormCoverImageUpload from './variants/FormCoverImageUpload';
+import FormDate from './variants/FormDate';
 import FormDropdown from './variants/FormDropdown';
 import FormImageUpload from './variants/FormImageUpload';
 import FormLargeTitle from './variants/FormLargeTitle';
@@ -15,6 +16,7 @@ import FormLongText from './variants/FormLongText';
 import FormMultipleChoice from './variants/FormMultipleChoice';
 import FormMultipleSelect from './variants/FormMultipleSelect';
 import FormShortText from './variants/FormShortText';
+import FormTime from './variants/FormTime';
 import FormToggle from './variants/FormToggle';
 
 /**
@@ -68,6 +70,8 @@ const useItemBody = (props: UseItemBodyProps) => {
     [type === 'IMAGE', <FormImageUpload {...baseProps} />],
     [type === 'COVER_IMAGE', <FormCoverImageUpload {...baseProps} />],
     [type === 'LARGE_TITLE', <FormLargeTitle {...textProps} />],
+    [type === 'DATE', <FormDate {...baseProps} />],
+    [type === 'TIME', <FormTime {...baseProps} />],
     [children, children]
   ]);
 
