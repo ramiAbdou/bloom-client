@@ -19,6 +19,13 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     return byId[eventId];
   }, deepequal);
 
+  const isGoing: boolean = useStoreState(({ db }) => {
+    const { byId: byEventId } = db.entities.events;
+    const guests = new Set(db.member.guests);
+    const event: IEvent = byEventId[eventId];
+    return event?.guests?.some((guestId: string) => guests.has(guestId));
+  });
+
   const isUpcoming = day.utc().isBefore(day.utc(startTime));
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -29,7 +36,13 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   };
 
   return (
-    <Button fill secondary large={large} show={isUpcoming} onClick={onClick}>
+    <Button
+      fill
+      secondary
+      large={large}
+      show={isUpcoming && (large || isGoing)}
+      onClick={onClick}
+    >
       Share Event
     </Button>
   );
