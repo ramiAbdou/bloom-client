@@ -21,7 +21,7 @@ const YourPastEventsList: React.FC = () => {
 
   return (
     <List
-      Item={(props) => <EventsCard guest id={props?.id} />}
+      Item={EventsCard}
       className="s-events-card-ctr"
       items={events}
       options={{ keys: ['title'] }}

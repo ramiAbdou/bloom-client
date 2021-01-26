@@ -16,48 +16,20 @@ import EventsShareButton from '../EventsShareButton';
 import EventsViewRecordingButton from '../EventsViewRecordingButton';
 import EventsCardPeople from './EventsCardPeople';
 
-const EventsCardButton: React.FC<Pick<EventsCardProps, 'guest'>> = ({
-  guest
-}) => {
+const EventsCardButton: React.FC = () => {
   const eventId = IdStore.useStoreState((event) => event.id);
-
-  const {
-    endTime,
-    eventUrl,
-    recordingUrl,
-    startTime,
-    videoUrl
-  }: IEvent = useStoreState(({ db }) => {
-    const { byId: byEventId } = db.entities.events;
-    return byEventId[eventId];
-  }, deepequal);
-
-  const isHappeningNow =
-    day.utc().isAfter(day.utc(startTime)) &&
-    day.utc().isBefore(day.utc(endTime));
-
-  const timeProps: Pick<IEvent, 'endTime' | 'startTime'> = {
-    endTime,
-    startTime
-  };
 
   return (
     <>
-      <EventsRsvpButton show={!guest} {...timeProps} />
-      <EventsJoinButton eventId={eventId} videoUrl={videoUrl} {...timeProps} />
-      <EventsShareButton
-        href={eventUrl}
-        show={!!guest && !isHappeningNow}
-        startTime={startTime}
-      />
-      <EventsViewRecordingButton href={recordingUrl} />
+      <EventsRsvpButton eventId={eventId} />
+      <EventsJoinButton eventId={eventId} />
+      <EventsShareButton eventId={eventId} />
+      <EventsViewRecordingButton eventId={eventId} />
     </>
   );
 };
 
-const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
-  guest
-}) => {
+const EventsCardContent: React.FC = () => {
   const eventId = IdStore.useStoreState((event) => event.id);
 
   const { endTime, startTime, title }: IEvent = useStoreState(({ db }) => {
@@ -85,16 +57,12 @@ const EventsCardContent: React.FC<Pick<EventsCardProps, 'guest'>> = ({
         <EventsCardPeople />
       </div>
 
-      <EventsCardButton guest={guest} />
+      <EventsCardButton />
     </div>
   );
 };
 
-interface EventsCardProps extends IdProps {
-  guest?: boolean;
-}
-
-const EventsCard: React.FC<EventsCardProps> = ({ guest, id }) => {
+const EventsCard: React.FC<IdProps> = ({ id }) => {
   const imageUrl = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
     return byEventId[id]?.imageUrl;
@@ -107,7 +75,7 @@ const EventsCard: React.FC<EventsCardProps> = ({ guest, id }) => {
     <IdStore.Provider runtimeModel={{ id }}>
       <Card noPadding className="s-events-card" onClick={onClick}>
         <EventsAspectBackground imageUrl={imageUrl} />
-        <EventsCardContent guest={guest} />
+        <EventsCardContent />
       </Card>
     </IdStore.Provider>
   );

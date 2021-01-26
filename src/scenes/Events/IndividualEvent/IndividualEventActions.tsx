@@ -4,7 +4,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { PanelType } from '@constants';
 import Row from '@containers/Row/Row';
-import { IEvent, IEventGuest } from '@store/entities';
+import { IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import EventsJoinButton from '../EventsJoinButton';
 import EventsRsvpButton from '../EventsRsvpButton';
@@ -36,12 +36,8 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
  */
 const IndividualEventActions: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const eventUrl = useStoreState(({ db }) => db.event?.eventUrl);
   const eventId = useStoreState(({ db }) => db.event?.id);
   const guests = useStoreState(({ db }) => db.event?.guests);
-  const startTime = useStoreState(({ db }) => db.event?.startTime);
-  const videoUrl = useStoreState(({ db }) => db.event?.videoUrl);
 
   const hasPast: boolean = useStoreState(({ db }) => {
     return day.utc().isAfter(db.event.endTime);
@@ -59,21 +55,11 @@ const IndividualEventActions: React.FC = () => {
       ?.some((guest: IEventGuest) => guest.member === db.member.id);
   });
 
-  const timeProps: Pick<IEvent, 'endTime' | 'startTime'> = {
-    endTime,
-    startTime
-  };
-
   return (
     <Row marginTopAuto equal={!isGoing && isUpcoming}>
-      <EventsRsvpButton large show={!isGoing && isUpcoming} {...timeProps} />
-      <EventsJoinButton
-        large
-        eventId={eventId}
-        videoUrl={videoUrl}
-        {...timeProps}
-      />
-      <EventsShareButton large href={eventUrl} startTime={startTime} />
+      <EventsRsvpButton large eventId={eventId} />
+      <EventsJoinButton large eventId={eventId} />
+      <EventsShareButton large eventId={eventId} />
       <EventsViewRecordingButton large eventId={eventId} />
       <EventsAddRecordingButton show={hasPast && isAdmin} />
     </Row>

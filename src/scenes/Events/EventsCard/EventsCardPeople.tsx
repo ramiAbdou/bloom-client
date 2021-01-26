@@ -72,8 +72,8 @@ const EventsCardPeople: React.FC = () => {
       <EventsCardPersonPictures users={users?.slice(0, 3)} />
       <p className="meta">
         {isPast
-          ? `${users?.length} People Attended`
-          : `${users?.length} People Going`}
+          ? `${users?.length} people attended`
+          : `${users?.length} people going`}
       </p>
     </Row>
   );

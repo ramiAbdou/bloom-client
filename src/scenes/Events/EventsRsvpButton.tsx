@@ -8,18 +8,27 @@ import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
 
-interface EventRsvpButtonProps
-  extends ButtonProps,
-    Pick<IEvent, 'endTime' | 'startTime'> {}
+interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
+  eventId: string;
+}
 
 const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
-  endTime: _,
-  show,
-  startTime,
+  eventId,
   ...props
 }) => {
-  const eventId = useStoreState(({ db }) => db.event?.id);
-  const canRsvp = day.utc().isBefore(day.utc(startTime));
+  const startTime = useStoreState(({ db }) => {
+    const { byId } = db.entities.events;
+    return byId[eventId]?.startTime;
+  });
+
+  const isGoing: boolean = useStoreState(({ db }) => {
+    const { byId: byEventId } = db.entities.events;
+    const guests = new Set(db.member.guests);
+    const event: IEvent = byEventId[eventId];
+    return event?.guests?.some((guestId: string) => guests.has(guestId));
+  });
+
+  const isUpcoming = day.utc().isBefore(day.utc(startTime));
 
   const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
     name: 'createEventGuest',
@@ -34,7 +43,13 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   };
 
   return (
-    <Button fill primary show={canRsvp && show} {...props} onClick={onClick}>
+    <Button
+      fill
+      primary
+      show={!isGoing && isUpcoming}
+      onClick={onClick}
+      {...props}
+    >
       RSVP
     </Button>
   );

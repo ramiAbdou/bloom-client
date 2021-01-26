@@ -6,6 +6,8 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture';
+import List from '@organisms/List/List';
+import ListStore from '@organisms/List/List.store';
 import { IEventAttendee, IMember, IUser } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
@@ -20,7 +22,6 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
 ) => {
   const { firstName, lastName, memberId, pictureUrl } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-
   const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
   const fullName = `${firstName} ${lastName}`;
 
@@ -58,16 +59,18 @@ const IndividualEventAttendeeListContent: React.FC = () => {
     <>
       {!users?.length && <p>No guests have RSVP'd yet.</p>}
 
-      <div>
-        {users?.map((user: IndividualEventAttendeeProps) => {
+      <List
+        Item={(user: IndividualEventAttendeeProps) => {
           return (
             <React.Fragment key={user?.id}>
               <IndividualEventAttendee key={user?.id} {...user} />
               <MemberProfileModal memberId={user?.memberId} userId={user?.id} />
             </React.Fragment>
           );
-        })}
-      </div>
+        }}
+        className="s-events-card-ctr"
+        items={users}
+      />
     </>
   );
 };
@@ -84,7 +87,9 @@ const IndividualEventGuestList: React.FC = () => {
       headerTag={numAttendees ? `${numAttendees} Attended` : null}
       title="Attendees"
     >
-      <IndividualEventAttendeeListContent />
+      <ListStore.Provider>
+        <IndividualEventAttendeeListContent />
+      </ListStore.Provider>
     </Card>
   );
 };

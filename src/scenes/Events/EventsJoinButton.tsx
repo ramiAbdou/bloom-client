@@ -1,29 +1,27 @@
 import day from 'dayjs';
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
-// import useMutation from '@hooks/useMutation';
 import { IEvent, IEventAttendee } from '@store/entities';
 import { Schema } from '@store/schema';
-// import { useStoreState } from '@store/Store';
-// import { Schema } from '@store/schema';
-// import { useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import { CREATE_EVENT_ATTENDEE, CreateEventAttendeeArgs } from './Events.gql';
 
-interface EventJoinButtonProps
-  extends ButtonProps,
-    Pick<IEvent, 'endTime' | 'startTime' | 'videoUrl'> {
+interface EventJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
 }
 
 const EventJoinButton: React.FC<EventJoinButtonProps> = ({
-  endTime,
   eventId,
-  startTime,
-  videoUrl,
-  ...props
+  large
 }) => {
+  const { endTime, startTime, videoUrl }: IEvent = useStoreState(({ db }) => {
+    const { byId } = db.entities.events;
+    return byId[eventId];
+  }, deepequal);
+
   const isHappeningNow =
     day.utc().isAfter(day.utc(startTime)) &&
     day.utc().isBefore(day.utc(endTime));
@@ -50,8 +48,8 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
       fill
       primary
       href={videoUrl}
+      large={large}
       show={isHappeningNow}
-      {...props}
       onClick={onClick}
     >
       Join
