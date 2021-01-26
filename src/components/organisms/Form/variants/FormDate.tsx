@@ -22,6 +22,10 @@ const FormDate: React.FC<
 
   const updateDate = (date: Date | [Date, Date]) => {
     updateItem({ ...queryArgs, value: date });
+
+    if (id === 'START_DATE') {
+      updateItem({ id: 'END_DATE', value: date });
+    }
   };
 
   const minDate =

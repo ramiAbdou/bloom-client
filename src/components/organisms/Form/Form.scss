@@ -183,12 +183,16 @@ $PREF: 'o-form';
 
   &:not(:last-child) { margin-bottom: $xs; }
 
-  &:not(&--disabled):not(&--selected):not(&--keyboard-selected):hover {
+  &:not(&--disabled):not(&--selected):hover {
     background-color: $primary-bg !important;
   }
 
-  &--selected,
-  &--keyboard-selected { background-color: $primary !important; }
+  &--selected { background-color: $primary !important; }
+
+  &--keyboard-selected {
+    background-color: initial !important;
+    color: initial !important;
+  }
 }
 
 .react-datepicker__day {
@@ -196,12 +200,17 @@ $PREF: 'o-form';
 
   outline: none;
 
-  &:not(&--disabled):not(&--selected):not(&--keyboard-selected):hover {
+  &:not(&--disabled):not(&--selected):hover {
     background-color: $primary-bg !important;
   }
+
   &--disabled { color: $gray-4 !important; }
   &--today { font-weight: initial !important; }
 
-  &--selected,
-  &--keyboard-selected { background-color: $primary !important; }
+  &--selected { background-color: $primary !important; }
+
+  &--keyboard-selected {
+    background-color: initial !important;
+    color: initial !important;
+  }
 }

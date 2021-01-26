@@ -22,6 +22,15 @@ const FormTime: React.FC<
 
   const updateDate = (date: Date | [Date, Date]) => {
     updateItem({ ...queryArgs, value: date });
+
+    if (id === 'START_TIME') {
+      updateItem({
+        id: 'END_TIME',
+        value: day(date as Date)
+          .add(1, 'hour')
+          .toDate()
+      });
+    }
   };
 
   const minTime =
