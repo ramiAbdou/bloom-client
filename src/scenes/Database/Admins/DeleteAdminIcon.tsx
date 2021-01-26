@@ -33,7 +33,11 @@ const DeleteMembersModal = () => {
     // that resets the members.
     showToast({
       message: `${numMembers} admin(s) removed from the community.`,
-      mutationOptionsOnClose: [DELETE_MEMBERS, { variables: { memberIds } }],
+      mutationArgs: {
+        name: 'deleteMembers',
+        query: DELETE_MEMBERS,
+        variables: { memberIds }
+      },
       onUndo: () => updateCommunity({ members: allMembers })
     });
 

@@ -5,7 +5,7 @@ import { useEffect, useMemo } from 'react';
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 
-type UseMutationArgs<T, S> = {
+export type UseMutationArgs<T, S> = {
   format?: (data: T) => any;
   name: string;
   query: string;

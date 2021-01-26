@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useMutation } from 'graphql-hooks';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Button from '@atoms/Button/Button';
+import useMutation from '@hooks/useMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import { ToastOptions } from './Toast.types';
@@ -11,7 +11,7 @@ import { ToastOptions } from './Toast.types';
 const Toast: React.FC<ToastOptions> = ({
   id,
   message,
-  mutationOptionsOnClose,
+  mutationArgs,
   onUndo
 }) => {
   // Since we have the option to undo the actions within Toasts, we keep track
@@ -23,14 +23,13 @@ const Toast: React.FC<ToastOptions> = ({
   // If the mutationOptionsOnClose, we must call the useMutation hook. To
   // follow the rules of hooks, we have to pass something in, even if the
   // mutation query and variables are empty.
-  mutationOptionsOnClose = mutationOptionsOnClose ?? ['', {}];
-  const [mutationFn] = useMutation(...mutationOptionsOnClose);
+  const [mutationFn] = useMutation(mutationArgs ?? { name: null, query: null });
 
   useEffect(() => {
     // We only show the toast for 5 seconds, then we remove it from the DOM.
     const timeout = setTimeout(async () => {
       // If the mutation string isn't empty, we execute the mutation.
-      if (mutationOptionsOnClose[0]) await mutationFn();
+      if (mutationArgs?.name) await mutationFn();
       dequeueToast(id);
     }, 5000);
 
