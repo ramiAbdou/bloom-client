@@ -74,8 +74,12 @@ export default () => {
 
   const notEnoughPermissions: boolean = useStoreState(({ db }) => {
     if (isOwner) return false;
-    const { allIds, byId } = db.entities.members;
-    const adminIds = allIds.filter((id: string) => !!byId[id].role);
+    const { byId } = db.entities.members;
+
+    const adminIds = db.community.members.filter(
+      (id: string) => !!byId[id].role
+    );
+
     if (selectedRowIds.some((id: string) => adminIds.includes(id))) return true;
     return false;
   });

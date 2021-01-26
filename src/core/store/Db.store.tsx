@@ -116,7 +116,7 @@ export const dbModel: DbModel = {
 
           return {
             ...acc,
-            [key]: { ...activeId, allIds: Object.keys(value), byId: value }
+            [key]: { ...activeId, byId: value }
           };
         },
         {}
@@ -196,7 +196,7 @@ export const dbModel: DbModel = {
       { entities, ...state },
       { entityName, ids, updatedData }: UpdateEntitiesArgs
     ) => {
-      const { byId, allIds, activeId } = entities[entityName];
+      const { byId, activeId } = entities[entityName];
 
       const updatedById = ids.reduce((acc: Record<string, any>, id: string) => {
         return { ...acc, [id]: { ...byId[id], ...updatedData } };
@@ -206,7 +206,7 @@ export const dbModel: DbModel = {
         ...state,
         entities: {
           ...entities,
-          [entityName]: { activeId, allIds, byId: { ...byId, ...updatedById } }
+          [entityName]: { activeId, byId: { ...byId, ...updatedById } }
         }
       };
     }

@@ -2,11 +2,10 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import useMutation from '@hooks/useMutation';
 import { IEvent } from '@store/entities';
 import { Schema } from '@store/schema';
-import { useStoreState } from '@store/Store';
-import { CREATE_EVENT_GUEST, CreateEventGuestArgs } from './Events.gql';
+import { useStoreActions, useStoreState } from '@store/Store';
+import { CREATE_EVENT_GUEST } from './Events.gql';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -16,6 +15,8 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+
   const startTime = useStoreState(({ db }) => {
     const { byId } = db.entities.events;
     return byId[eventId]?.startTime;
@@ -30,16 +31,19 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
 
   const isUpcoming = day().isBefore(day(startTime));
 
-  const [createEventGuest] = useMutation<any, CreateEventGuestArgs>({
-    name: 'createEventGuest',
-    query: CREATE_EVENT_GUEST,
-    schema: Schema.EVENT_GUEST,
-    variables: { eventId }
-  });
-
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
-    createEventGuest();
+
+    showToast({
+      message: 'RSVP has been registered.',
+      mutationArgs: {
+        name: 'createEventGuest',
+        query: CREATE_EVENT_GUEST,
+        schema: Schema.EVENT_GUEST,
+        variables: { eventId }
+      }
+    });
+    // createEventGuest();
   };
 
   return (

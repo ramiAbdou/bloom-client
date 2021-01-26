@@ -42,8 +42,8 @@ const CommunitySelector = ({ id, logoUrl, name }: Partial<ICommunity>) => {
 // Calling this dropdown even though it really drops up...lol.
 const Dropdown = () => {
   const communities = useStoreState(({ db }) => {
-    const { allIds, byId } = db.entities.communities;
-    return allIds.map((id: string) => byId[id]);
+    const { byId } = db.entities.communities;
+    return Object.values(byId);
   }, deepequal) as ICommunity[];
 
   const toggleDropdown = Home.useStoreActions((store) => store.toggleDropdown);

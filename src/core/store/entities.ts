@@ -174,7 +174,6 @@ export interface IUser {
 
 export interface EntityRecord<T> {
   activeId?: string;
-  allIds: string[];
   byId: Record<string, T>;
 }
 
@@ -195,16 +194,16 @@ export interface IEntities {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
-  applications: { allIds: [], byId: {} },
-  attendees: { allIds: [], byId: {} },
-  communities: { activeId: null, allIds: [], byId: {} },
-  data: { allIds: [], byId: {} },
-  events: { activeId: null, allIds: [], byId: {} },
-  guests: { allIds: [], byId: {} },
-  integrations: { allIds: [], byId: {} },
-  members: { activeId: null, allIds: [], byId: {} },
-  payments: { allIds: [], byId: {} },
-  questions: { allIds: [], byId: {} },
-  types: { allIds: [], byId: {} },
-  users: { activeId: null, allIds: [], byId: {} }
+  applications: { byId: {} },
+  attendees: { byId: {} },
+  communities: { activeId: null, byId: {} },
+  data: { byId: {} },
+  events: { activeId: null, byId: {} },
+  guests: { byId: {} },
+  integrations: { byId: {} },
+  members: { activeId: null, byId: {} },
+  payments: { byId: {} },
+  questions: { byId: {} },
+  types: { byId: {} },
+  users: { activeId: null, byId: {} }
 };
