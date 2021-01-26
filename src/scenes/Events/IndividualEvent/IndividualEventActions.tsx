@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { PanelType } from '@constants';
+import { ModalType, PanelType } from '@constants';
 import Row from '@containers/Row/Row';
 import { IEventGuest } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -22,6 +22,25 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
   return (
     <Button fill large secondary id={panelId} onClick={onClick} {...props}>
       {recordingUrl ? 'Edit Event Recording' : '+ Add Event Recording'}
+    </Button>
+  );
+};
+
+const EventsEditEventButton: React.FC = () => {
+  const isAdmin = useStoreState(({ db }) => !!db.member.role);
+  const eventId = useStoreState(({ db }) => db.event?.id);
+
+  const hasPast = useStoreState(({ db }) => {
+    return day.utc().isAfter(db.event.startTime);
+  });
+
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  const onClick = () => showModal(`${ModalType.CREATE_EVENT}-${eventId}`);
+
+  return (
+    <Button fill large secondary show={!hasPast && isAdmin} onClick={onClick}>
+      Edit Event
     </Button>
   );
 };
@@ -59,6 +78,7 @@ const IndividualEventActions: React.FC = () => {
     <Row marginTopAuto equal={!isGoing && isUpcoming}>
       <EventsRsvpButton large eventId={eventId} />
       <EventsJoinButton large eventId={eventId} />
+      <EventsEditEventButton />
       <EventsShareButton large eventId={eventId} />
       <EventsViewRecordingButton large eventId={eventId} />
       <EventsAddRecordingButton show={hasPast && isAdmin} />
