@@ -54,19 +54,19 @@ const BottomBarTablet: React.FC = () => {
 };
 
 const BottomBar: React.FC = () => {
-  const isMobile = useBreakpoint() === 1;
-  const isTablet = useBreakpoint() === 2;
+  // const isMobile = useBreakpoint() === 1;
+  // const isTablet = useBreakpoint() === 2;
 
-  if (!isMobile && !isTablet) return null;
+  return null;
 
-  return (
-    <BottomBarStore.Provider>
-      <footer className="o-bottom-bar">
-        {isMobile && <BottomBarMobile />}
-        {isTablet && <BottomBarTablet />}
-      </footer>
-    </BottomBarStore.Provider>
-  );
+  // return (
+  //   <BottomBarStore.Provider>
+  //     <footer className="o-bottom-bar">
+  //       {isMobile && <BottomBarMobile />}
+  //       {isTablet && <BottomBarTablet />}
+  //     </footer>
+  //   </BottomBarStore.Provider>
+  // );
 };
 
 export default BottomBar;

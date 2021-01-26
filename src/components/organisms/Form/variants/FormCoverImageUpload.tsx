@@ -44,6 +44,15 @@ const FormCoverImageUploadContent: React.FC<
   );
 };
 
+const FormCoverImageMessage: React.FC = () => {
+  return (
+    <p className="meta">
+      Note: For best results, upload image with an aspect ratio of 2:1 (width :
+      height).
+    </p>
+  );
+};
+
 const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
   args
 ) => {
@@ -58,17 +67,25 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
   //   : {};
 
   return selectedImage ? (
-    <AspectRatio
-      className="o-form-item--cover-image"
-      ratio={2}
-      // style={backgroundStyle}
-    >
-      <FormCoverImageUploadContent {...args} />
-    </AspectRatio>
+    <>
+      <AspectRatio
+        className="o-form-item--cover-image"
+        ratio={2}
+        // style={backgroundStyle}
+      >
+        <FormCoverImageUploadContent {...args} />
+      </AspectRatio>
+
+      <FormCoverImageMessage />
+    </>
   ) : (
-    <EventsAspectBackground className="o-form-item--cover-image">
-      <FormCoverImageUploadContent {...args} />
-    </EventsAspectBackground>
+    <>
+      <EventsAspectBackground className="o-form-item--cover-image">
+        <FormCoverImageUploadContent {...args} />
+      </EventsAspectBackground>
+
+      <FormCoverImageMessage />
+    </>
   );
 };
 

@@ -111,6 +111,7 @@ $PREF: 'o-form';
   }
 
   > input { display: none; }
+  ~ .meta { margin-top: $xs; }
 }
 
 // ## FORM IMAGE UPLOAD 

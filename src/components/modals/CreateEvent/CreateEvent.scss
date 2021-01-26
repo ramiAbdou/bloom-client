@@ -8,6 +8,8 @@ $PREF: 'mo-create-event';
   width: $xxl * 10;
 
   @include MT { width: 100%; }
+
+  > .o-form-item { margin-bottom: $lg; }
 }
 
 // ## CREATE EVENT ROW

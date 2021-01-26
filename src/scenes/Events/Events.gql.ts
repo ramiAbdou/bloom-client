@@ -74,7 +74,7 @@ export const GET_EVENT = query({
             'bio',
             { data: ['id', 'value', { question: ['id'] }] },
             { type: ['id', 'name'] },
-            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
           ]
         }
       ]
@@ -88,7 +88,7 @@ export const GET_EVENT = query({
             'id',
             { data: ['id', 'value', { question: ['id'] }] },
             { type: ['id', 'name'] },
-            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
           ]
         }
       ]
