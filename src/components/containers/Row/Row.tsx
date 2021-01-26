@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ChildrenProps, ClassNameProps } from '@constants';
+import { ChildrenProps, ClassNameProps, ShowProps } from '@constants';
 import { cx } from '@util/util';
 
-interface RowProps extends ChildrenProps, ClassNameProps {
+interface RowProps extends ChildrenProps, ClassNameProps, ShowProps {
   align?: 'end' | 'start';
   equal?: boolean;
   marginTopAuto?: boolean;
@@ -16,7 +16,8 @@ const Row: React.FC<RowProps> = ({
   className,
   equal,
   marginTopAuto,
-  spaceBetween
+  spaceBetween,
+  show
 }) => {
   const css = cx('flex-ac t-row', {
     [className]: className,
@@ -27,7 +28,7 @@ const Row: React.FC<RowProps> = ({
     't-row--margin-top-auto': marginTopAuto
   });
 
-  return <div className={css}>{children}</div>;
+  return show !== false ? <div className={css}>{children}</div> : null;
 };
 
 export default Row;

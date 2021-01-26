@@ -12,7 +12,7 @@ import { Schema } from '@store/schema';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { GET_UPCOMING_EVENTS } from './Events.gql';
-import EventsCard from './EventsCard';
+import EventsCard from './EventsCard/EventsCard';
 import EventsHeader from './EventsHeader';
 import YourUpcomingEvents from './YourUpcomingEvents';
 

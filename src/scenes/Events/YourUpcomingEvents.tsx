@@ -6,7 +6,7 @@ import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent, IEventGuest } from '@store/entities';
 import { useStoreState } from '@store/Store';
-import EventsCard from './EventsCard';
+import EventsCard from './EventsCard/EventsCard';
 
 const YourUpcomingEventsList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
@@ -21,7 +21,7 @@ const YourUpcomingEventsList: React.FC = () => {
 
   return (
     <List
-      Item={(props) => <EventsCard guest {...props} />}
+      Item={(props) => <EventsCard guest id={props?.id} />}
       className="s-events-card-ctr"
       items={events}
       options={{ keys: ['title'] }}

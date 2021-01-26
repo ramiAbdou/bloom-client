@@ -1,30 +1,5 @@
 $PREF: 's-events';
 
-// ## EVENTS CARD CONTAINER
-
-.#{$PREF}-card-ctr {
-  display: grid;
-  padding: $xxs 0;
-
-  @include MT { padding-bottom: $xxl + $sm; }
-
-  &:focus { outline: none; }
-};
-
-// ## EVENTS CARD
-
-.#{$PREF}-card {
-  @extend .flex-col;
-
-  align-items: flex-start;
-  background-color: white;
-  max-width: $xxl * 6;
-  padding: 0;
-
-  > .t-aspect,
-  > .t-aspect > div { border-radius: $xs $xs 0 0; }
-}
-
 // ## EVENTS ASPECT BACKGROUND
 
 .#{$PREF}-aspect-bg {
@@ -40,35 +15,6 @@ $PREF: 's-events';
     transform: scale(3);
     width: auto;
   }
-}
-
-// ## EVENTS CARD BACKGROUND
-
-.#{$PREF}-card-bg {
-  > div { background-color: $primary-bg; }
-  > *:first-child { border-radius: $xs $xs 0 0; }
-}
-
-// ## EVENTS CARD CONTENT
-
-.#{$PREF}-card-content {
-  @extend .flex-col;
-  
-  box-sizing: border-box;
-  flex: 1;
-  padding: $sm;
-  width: 100%;
-
-  > h5 { margin-bottom: $xxs; }
-  &--now > h5 { color: $primary; }
-
-  > h3:not(:last-child) {
-    margin-bottom: $sm;
-
-    @include OVERFLOW_ELLIPSES(2);
-  }
-  
-  > button:last-child { margin-top: auto; }
 }
 
 // ## UPCOMING EVENTS SECTION
