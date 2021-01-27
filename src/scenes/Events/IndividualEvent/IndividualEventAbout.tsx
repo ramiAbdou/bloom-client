@@ -8,7 +8,7 @@ const IndividualEventAbout: React.FC = () => {
 
   return (
     <Card className="s-events-individual-card" title="About This Event">
-      <p>{description}</p>
+      <p className="preserve-newlines">{description}</p>
     </Card>
   );
 };

@@ -124,3 +124,5 @@ section::-webkit-scrollbar { display: none; }
 .home-content {
   @include D { margin-left: ($xxl * 5.5); max-width: calc(100% - 330px); }
 }
+
+.preserve-newlines { white-space: pre-line; }
