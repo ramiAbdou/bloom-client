@@ -5,28 +5,29 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Modal from '@organisms/Modal/Modal';
 import Table from '@organisms/Table/Table.store';
+import { IMember } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { DELETE_MEMBERS } from '../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
-const DeleteMembersModal = () => {
-  const members = useStoreState(({ db }) => db.community.members);
+const DeleteMembersModal: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const updateCommunity = useStoreActions(({ db }) => db.updateCommunity);
+  const addEntities = useStoreActions(({ db }) => db.addEntities);
+  const deleteEntities = useStoreActions(({ db }) => db.deleteEntities);
   const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
   const numMembers = Table.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
   );
 
-  const onRemove = () => {
-    const allMembers = members;
+  const members: IMember[] = useStoreState(({ db }) => {
+    const { byId: byMemberId } = db.entities.members;
+    return memberIds.map((memberId: string) => byMemberId[memberId]);
+  });
 
-    // Filter the community members to NOT have the selected members.
-    updateCommunity({
-      members: members?.filter((id: string) => !memberIds.includes(id))
-    });
+  const onPrimaryClick = () => {
+    deleteEntities({ entityName: 'members', ids: memberIds });
 
     // After the toast finishes showing, we call the mutation that actually
     // deletes the members from the community. We supply an undo function
@@ -38,10 +39,10 @@ const DeleteMembersModal = () => {
         query: DELETE_MEMBERS,
         variables: { memberIds }
       },
-      onUndo: () => updateCommunity({ members: allMembers })
+      onUndo: () => addEntities({ entities: members, entityName: 'members' })
     });
 
-    setTimeout(closeModal, 0);
+    closeModal();
   };
 
   return (
@@ -55,9 +56,10 @@ const DeleteMembersModal = () => {
       </p>
 
       <div>
-        <Button primary onClick={onRemove}>
+        <Button primary onClick={onPrimaryClick}>
           Remove
         </Button>
+
         <Button secondary onClick={() => closeModal}>
           Cancel
         </Button>

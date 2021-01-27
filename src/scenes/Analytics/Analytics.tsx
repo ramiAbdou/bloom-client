@@ -21,7 +21,7 @@ import EventsAnalytics from './EventsAnalytics/Events';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
 
 const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const canCollectDues = useStoreState(({ db }) => db.canCollectDues);
+  const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
 
   const { push } = useHistory();
 

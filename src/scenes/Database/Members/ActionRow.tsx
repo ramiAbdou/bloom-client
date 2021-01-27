@@ -10,7 +10,7 @@ import FilterIcon from './FilterIcon';
 import PromoteToAdminIcon from './PromoteToAdminIcon';
 
 const IconContainer = () => {
-  const isOwner = useStoreState(({ db }) => db.isOwner);
+  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
 
   const isAnythingSelected = Table.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length

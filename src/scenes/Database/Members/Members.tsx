@@ -28,9 +28,10 @@ export default () => {
     const { byId: byUserId } = db.entities.users;
 
     return db.community.members?.reduce((acc: Row[], memberId: string) => {
-      const { duesStatus, joinedAt, id, ...member }: IMember = byMemberId[
-        memberId
-      ];
+      const member: IMember = byMemberId[memberId];
+      if (!member) return acc;
+
+      const { duesStatus, joinedAt, id } = member;
 
       const user: IUser = byUserId[member.user];
       const { email, firstName, gender, lastName } = user;

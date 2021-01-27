@@ -13,6 +13,7 @@ export interface BaseEntity {
 export interface ICommunity {
   application?: IdString;
   autoAccept?: boolean;
+  canCollectDues?: boolean;
   events?: IdString[];
   id: IdString;
   integrations: IdString;

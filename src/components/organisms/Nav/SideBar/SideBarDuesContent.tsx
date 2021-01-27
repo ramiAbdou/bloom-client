@@ -5,7 +5,7 @@ import StatusTag from '@atoms/Tags/StatusTag';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const SideBarDuesContent: React.FC = () => {
-  const canCollectDues = useStoreState(({ db }) => db.canCollectDues);
+  const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
   const hasPaid = useStoreState(({ db }) => db.member?.duesStatus === 'Active');
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 

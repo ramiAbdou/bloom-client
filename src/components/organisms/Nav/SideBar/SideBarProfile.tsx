@@ -34,7 +34,7 @@ const SideBarProfileContent: React.FC = () => {
 
 const SideBarProfile: React.FC = () => {
   const isDuesMessageShowing: boolean = useStoreState(({ db }) => {
-    return db.canCollectDues && db.member?.duesStatus !== 'Active';
+    return db.community.canCollectDues && db.member?.duesStatus !== 'Active';
   });
 
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);

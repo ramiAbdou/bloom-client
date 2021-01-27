@@ -33,13 +33,16 @@ export const GET_PENDING_APPLICATIONS = query({
   operation: 'getApplicants'
 }).query;
 
-export interface RespondToMembersArgs {
+// ## RESPOND TO APPLICANTS
+
+export interface RespondToApplicantsArgs {
   memberIds: string[];
   response: string;
 }
 
-export const RESPOND_TO_MEMBERS = mutation({
-  operation: 'respondToMembers',
+export const RESPOND_TO_APPLICANTS = mutation({
+  fields: ['id', 'status'],
+  operation: 'respondToApplicants',
   variables: {
     memberIds: { required: true, type: '[String!]' },
     response: { required: true }

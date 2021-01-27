@@ -8,11 +8,20 @@ import {
   IIntegrations,
   IMember,
   initialEntities,
-  IQuestion,
   IUser
 } from '@store/entities';
 import { updateDocumentColors } from '@util/colorUtil';
 import { mergeStrategy } from './schema';
+
+interface AddEntitiesArgs {
+  entities: IMember[];
+  entityName: 'members';
+}
+
+interface DeleteEntitiesArgs {
+  ids: string[];
+  entityName: 'members';
+}
 
 interface MergeEntitiesArgs {
   communityReferenceColumn?: string;
@@ -21,79 +30,100 @@ interface MergeEntitiesArgs {
   setActiveId?: boolean;
 }
 
-interface UpdateEntitiesArgs {
-  ids: string[];
-  entityName:
-    | 'communities'
-    | 'integrations'
-    | 'members'
-    | 'questions'
-    | 'users';
-  updatedData?: Partial<
-    ICommunity | IIntegrations | IMember | IQuestion | IUser
-  >;
-}
-
 export type DbModel = {
-  canCollectDues: Computed<DbModel, boolean>;
+  addEntities: Action<DbModel, AddEntitiesArgs>;
   clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
+  deleteEntities: Action<DbModel, DeleteEntitiesArgs>;
   entities: IEntities;
   event: Computed<DbModel, IEvent>;
-  hasPaidMembership: Computed<DbModel, boolean>;
   integrations: Computed<DbModel, IIntegrations>;
-  isOwner: Computed<DbModel, boolean>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
   setActiveCommunity: Action<DbModel, string>;
   setActiveEvent: Action<DbModel, string>;
-  updateCommunity: Action<DbModel, Partial<ICommunity>>;
-  updateEntities: Action<DbModel, UpdateEntitiesArgs>;
   user: Computed<DbModel, IUser>;
 };
 
 export const dbModel: DbModel = {
-  canCollectDues: computed(({ community, entities, hasPaidMembership }) => {
-    const { byId: byIntegrationsId } = entities.integrations;
+  addEntities: action(
+    (
+      { entities, ...state },
+      { entities: entitiesToAdd, entityName }: AddEntitiesArgs
+    ) => {
+      const table = entities[entityName];
 
-    const integrations: IIntegrations =
-      byIntegrationsId[community?.integrations];
+      const updatedById = entitiesToAdd.reduce((acc, entity: IMember) => {
+        return { ...acc, [entity.id]: entity };
+      }, table.byId);
 
-    return hasPaidMembership && !!integrations?.stripeAccountId;
-  }),
+      const updatedTable = { ...table, byId: updatedById };
+
+      return {
+        ...state,
+        entities: { ...entities, [entityName]: updatedTable }
+      };
+    }
+  ),
 
   clearEntities: action((state) => ({ ...state, entities: initialEntities })),
 
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
+    const { byId: byIntegrationsId } = entities.integrations;
+    const { byId: byTypeId } = entities.types;
+
     const result: ICommunity = byId[activeId];
+    const integrations: IIntegrations = byIntegrationsId[result?.integrations];
+
+    const hasPaidMembership: boolean = result?.types?.some(
+      (typeId: string) => !byTypeId[typeId]?.isFree
+    );
 
     // Updates the primary color (and gray's accordingly).
     if (result) updateDocumentColors(result.primaryColor ?? '#f58023');
-    return result;
+
+    return {
+      ...result,
+      canCollectDues: hasPaidMembership && !!integrations?.stripeAccountId
+    };
   }),
+
+  deleteEntities: action(
+    (
+      { entities, ...state },
+      { ids: idsToDelete, entityName }: DeleteEntitiesArgs
+    ) => {
+      const table = entities[entityName];
+
+      const updatedById = Object.entries(table.byId).reduce(
+        (acc, [key, value]) => {
+          if (idsToDelete.includes(key)) return acc;
+          return { ...acc, [key]: value };
+        },
+        {}
+      );
+
+      const updatedTable = { ...table, byId: updatedById };
+
+      return {
+        ...state,
+        entities: { ...entities, [entityName]: updatedTable }
+      };
+    }
+  ),
 
   entities: initialEntities,
 
   event: computed(({ entities }) => {
     const { activeId, byId } = entities.events;
-    return byId[activeId];
+    return byId[activeId] as IEvent;
   }),
 
-  hasPaidMembership: computed(({ community, entities }) => {
-    const { byId: byTypeId } = entities.types;
-    return community?.types?.some(
-      (typeId: string) => !byTypeId[typeId]?.isFree
-    );
+  integrations: computed(({ community, entities }) => {
+    const { byId: byIntegrationId } = entities.integrations;
+    return byIntegrationId[community?.integrations] as IIntegrations;
   }),
-
-  integrations: computed(({ entities }) => {
-    const { activeId, byId: byCommunityId } = entities.communities;
-    const { byId } = entities.integrations;
-    return byId[byCommunityId[activeId]?.integrations];
-  }),
-
-  isOwner: computed(({ member }) => member?.role === 'OWNER'),
 
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
@@ -111,13 +141,10 @@ export const dbModel: DbModel = {
       const parsedEntities = Object.entries(normalizedEntities).reduce(
         (acc: Record<string, any>, [key, value]) => {
           const activeId = setActiveId
-            ? ['users'].includes(key) && { activeId: Object.keys(value)[0] }
+            ? key === 'users' && { activeId: Object.keys(value)[0] }
             : {};
 
-          return {
-            ...acc,
-            [key]: { ...activeId, byId: value }
-          };
+          return { ...acc, [key]: { ...activeId, byId: value } };
         },
         {}
       );
@@ -156,61 +183,13 @@ export const dbModel: DbModel = {
     }
   ),
 
-  setActiveEvent: action(({ entities, ...state }, eventId: string) => {
-    return {
-      ...state,
-      entities: {
-        ...entities,
-        events: { ...entities.events, activeId: eventId }
-      }
-    };
-  }),
-
-  updateCommunity: action(
-    ({ community, entities, ...state }, payload: Partial<ICommunity>) => {
-      const { activeId, byId: byCommunityId } = entities.communities;
-
-      return {
-        ...state,
-        community,
-        entities: {
-          ...entities,
-          communities: {
-            ...entities.communities,
-            byId: {
-              ...byCommunityId,
-              [activeId]: { ...community, ...payload }
-            }
-          }
-        }
-      };
+  setActiveEvent: action(({ entities, ...state }, eventId: string) => ({
+    ...state,
+    entities: {
+      ...entities,
+      events: { ...entities.events, activeId: eventId }
     }
-  ),
-
-  /**
-   * Updates a specific entity, but does not change any reference values
-   * as it's not needed.
-   */
-  updateEntities: action(
-    (
-      { entities, ...state },
-      { entityName, ids, updatedData }: UpdateEntitiesArgs
-    ) => {
-      const { byId, activeId } = entities[entityName];
-
-      const updatedById = ids.reduce((acc: Record<string, any>, id: string) => {
-        return { ...acc, [id]: { ...byId[id], ...updatedData } };
-      }, {});
-
-      return {
-        ...state,
-        entities: {
-          ...entities,
-          [entityName]: { activeId, byId: { ...byId, ...updatedById } }
-        }
-      };
-    }
-  ),
+  })),
 
   /**
    * There should only be one user queried in the application, and that is

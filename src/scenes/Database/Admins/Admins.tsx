@@ -10,12 +10,10 @@ import ActionRow from './ActionRow';
 
 const Admins: React.FC = () => {
   const rows: Row[] = useStoreState(({ db }) => {
-    const { community } = db;
-    const { members, users } = db.entities;
-    const { byId: byMemberId } = members;
-    const { byId: byUserId } = users;
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byUserId } = db.entities.users;
 
-    return community.members?.reduce((acc: Row[], memberId: string) => {
+    return db.community.members?.reduce((acc: Row[], memberId: string) => {
       const { id, role, user } = byMemberId[memberId] ?? {};
       if (!role || !id || !user) return acc;
 
@@ -28,7 +26,7 @@ const Admins: React.FC = () => {
     }, []);
   }, deepequal);
 
-  const isOwner = useStoreState(({ db }) => db.isOwner);
+  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
 
   const isStoreUpdated = useStoreState(
     ({ db }) => !!db.community.members?.length

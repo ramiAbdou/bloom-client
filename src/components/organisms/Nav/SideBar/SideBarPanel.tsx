@@ -13,18 +13,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 const SidebarPanel: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
 
-  const canManageMembership = useStoreState(({ db }) => {
-    const isStripeConnected = !!db.entities.integrations.byId[
-      db.community.integrations
-    ].stripeAccountId;
-
-    const hasPaidMembership = !!db.community.types.some(
-      (typeId) => !db.entities.types.byId[typeId]?.isFree
-    );
-
-    return isStripeConnected && hasPaidMembership;
-  });
-
+  const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
 
   const { push } = useHistory();
@@ -54,7 +43,7 @@ const SidebarPanel: React.FC = () => {
 
   // Show a panel that either allows them to view their profile or log out.
   const actions: PanelAction[] = [
-    ...(canManageMembership
+    ...(canCollectDues
       ? [
           {
             Icon: IoCard,

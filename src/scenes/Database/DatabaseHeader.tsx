@@ -8,7 +8,7 @@ import useFinalPath from '@hooks/useFinalPath';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const DatbaseHeaderAddButton: React.FC = () => {
-  const isOwner = useStoreState(({ db }) => db.isOwner);
+  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isAdminsPage = useFinalPath() === 'admins';

@@ -13,7 +13,14 @@ import IntegrationCard, {
 // components to process and render.
 const IntegrationsCardContainer: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
-  const hasPaidMembership = useStoreState(({ db }) => db.hasPaidMembership);
+
+  const hasPaidMembership = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+
+    return db.community.types?.some(
+      (typeId: string) => !byTypeId[typeId]?.isFree
+    );
+  });
 
   const {
     isMailchimpAuthenticated,

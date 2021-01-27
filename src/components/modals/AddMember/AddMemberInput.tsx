@@ -20,7 +20,7 @@ const AddMemberInputTrashButton: React.FC<IdProps> = ({ id }) => {
 };
 
 const AddMemberInput: React.FC<IdProps> = ({ id }) => {
-  const isOwner = useStoreState(({ db }) => db.isOwner);
+  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   return (
