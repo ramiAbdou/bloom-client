@@ -12,7 +12,7 @@ const CheckInFinishPage: React.FC = () => {
     : '';
 
   return (
-    <FormPage id={`FINISH-${metadata}`}>
+    <FormPage id={`FINISH-${metadata ?? 'YES'}`}>
       <CheckInLoginContent />
     </FormPage>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
@@ -29,7 +30,9 @@ const IndividualEvent: React.FC = () => {
 
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
+  const isMembersOnly = useStoreState(({ db }) => db.event?.private);
   const setActiveEvent = useStoreActions(({ db }) => db.setActiveEvent);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
   const { data, loading } = useQuery<IEvent, GetEventArgs>({
@@ -58,6 +61,12 @@ const IndividualEvent: React.FC = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isMembersOnly && !isAuthenticated) {
+      showModal(`${ModalType.CHECK_IN}-${eventId}`);
+    }
+  }, [isMembersOnly, isAuthenticated]);
+
   if (loading || !isEventActive) return null;
 
   const css = cx('', { 's-events-individual--public': !isAuthenticated });
@@ -75,7 +84,7 @@ const IndividualEvent: React.FC = () => {
       <IndividualEventAnalytics />
       <IndividualEventPanel id={eventId} />
       <CreateEventModal id={eventId} />
-      <CheckInModal id={eventId} />
+      <CheckInModal id={eventId} lock={isMembersOnly && !isAuthenticated} />
     </div>
   );
 };
