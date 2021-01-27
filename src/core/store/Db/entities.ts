@@ -65,7 +65,10 @@ export interface IEventAttendee extends BaseEntity {
 // ## EVENT GUEST
 
 export interface IEventGuest extends BaseEntity {
+  email?: string;
   event: IdString;
+  firstName?: string;
+  lastName?: string;
   member: IdString;
 }
 

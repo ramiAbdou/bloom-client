@@ -102,6 +102,7 @@ $PREF: 's-events-individual';
   @include PRIMARY_HOVER;
 
   > *:first-child { margin-right: $ss; }
+  &--disabled { cursor: not-allowed; transform: none; }
 }
 
 // // ## INDIVIDUAL EVENT ANALYTICS

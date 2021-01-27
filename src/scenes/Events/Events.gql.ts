@@ -15,18 +15,29 @@ export const CREATE_EVENT_ATTENDEE = mutation({
 // ## CREATE EVENT GUEST
 
 export interface CreateEventGuestArgs {
+  email?: string;
   eventId: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export const CREATE_EVENT_GUEST = mutation({
   fields: [
     'createdAt',
+    'email',
+    'firstName',
     'id',
+    'lastName',
     { event: ['id'] },
     { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
   ],
   operation: 'createEventGuest',
-  variables: { eventId: { required: true } }
+  variables: {
+    email: { required: false },
+    eventId: { required: true },
+    firstName: { required: false },
+    lastName: { required: false }
+  }
 }).query;
 
 // ## DELETE EVENT GUEST
@@ -96,7 +107,10 @@ export const GET_EVENT = query({
     {
       guests: [
         'createdAt',
+        'email',
+        'firstName',
         'id',
+        'lastName',
         {
           member: [
             'id',

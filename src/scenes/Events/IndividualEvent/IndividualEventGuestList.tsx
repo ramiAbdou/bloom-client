@@ -8,10 +8,13 @@ import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { IEventGuest, IMember, IUser } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { sortObjects } from '@util/util';
+import { cx, sortObjects } from '@util/util';
 
 interface IndividualEventGuestProps
-  extends Pick<IUser, 'firstName' | 'id' | 'lastName' | 'pictureUrl'> {
+  extends Pick<
+    IUser,
+    'email' | 'firstName' | 'id' | 'lastName' | 'pictureUrl'
+  > {
   memberId: string;
 }
 
@@ -19,11 +22,17 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
   const { firstName, lastName, memberId, pictureUrl } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+  const onClick = () =>
+    memberId && showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+
   const fullName = `${firstName} ${lastName}`;
 
+  const css = cx('s-events-individual-member', {
+    's-events-individual-member--disabled': !memberId
+  });
+
   return (
-    <Button className="s-events-individual-member" onClick={onClick}>
+    <Button className={css} onClick={onClick}>
       <ProfilePicture
         circle
         fontSize={16}
@@ -38,18 +47,22 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 
 const IndividualEventGuestListContent: React.FC = () => {
   const users: IndividualEventGuestProps[] = useStoreState(({ db }) => {
-    const { byId: byGuestsId } = db.entities.guests;
-    const { byId: byMembersId } = db.entities.members;
-    const { byId: byUsersId } = db.entities.users;
+    const { byId: byGuestId } = db.entities.guests;
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byUserId } = db.entities.users;
 
     return db.event?.guests
-      ?.map((guestId: string) => byGuestsId[guestId])
-      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'DESC'))
-      ?.map((guest: IEventGuest) => byMembersId[guest.member])
-      ?.map((member: IMember) => ({
-        ...byUsersId[member.user],
-        memberId: member.id
-      }));
+      ?.map((guestId: string) => byGuestId[guestId])
+      ?.sort((a: IEventGuest, b) => sortObjects(a, b, 'createdAt', 'DESC'))
+      ?.reduce((acc, guest: IEventGuest) => {
+        if (guest.member) {
+          const member: IMember = byMemberId[guest.member];
+          const user: IUser = byUserId[member.user];
+          return [...acc, { ...user, memberId: member.id }];
+        }
+
+        return [...acc, { ...guest }];
+      }, []);
   });
 
   return (
@@ -59,7 +72,7 @@ const IndividualEventGuestListContent: React.FC = () => {
       <div>
         {users?.map((user: IndividualEventGuestProps) => {
           return (
-            <React.Fragment key={user?.id}>
+            <React.Fragment key={user?.email}>
               <IndividualEventGuest key={user?.id} {...user} />
               <MemberProfileModal memberId={user?.memberId} userId={user?.id} />
             </React.Fragment>

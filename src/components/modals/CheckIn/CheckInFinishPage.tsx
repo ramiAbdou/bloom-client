@@ -2,8 +2,8 @@ import React from 'react';
 
 import FormStore from '@organisms/Form/Form.store';
 import FormPage from '@organisms/Form/FormPage';
+import CheckInGuestForm from './CheckInGuestForm';
 import CheckInLoginContent from './CheckInLoginContent';
-import CheckInPublicForm from './CheckInPublicForm';
 
 const CheckInFinishPage: React.FC = () => {
   const pageId = FormStore.useStoreState((store) => store.pageId);
@@ -15,7 +15,7 @@ const CheckInFinishPage: React.FC = () => {
   return (
     <FormPage id={`FINISH-${metadata ?? 'YES'}`}>
       <CheckInLoginContent show={metadata === 'YES'} />
-      <CheckInPublicForm show={metadata === 'NO'} />
+      <CheckInGuestForm show={metadata === 'NO'} />
     </FormPage>
   );
 };
