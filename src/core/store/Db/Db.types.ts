@@ -41,10 +41,12 @@ export type DbModel = {
   deleteEntities: Action<DbModel, DeleteEntitiesArgs>;
   entities: IEntities;
   event: Computed<DbModel, IEvent>;
+  isAuthenticated: boolean;
   integrations: Computed<DbModel, IIntegrations>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
   setActiveCommunity: Action<DbModel, string>;
   setActiveEvent: Action<DbModel, string>;
+  setIsAuthenticated: Action<DbModel, boolean>;
   user: Computed<DbModel, IUser>;
 };

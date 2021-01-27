@@ -1,5 +1,22 @@
 $PREF: 's-events-individual';
 
+.#{$PREF}--public {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1140px;
+  width: 100%;
+
+  @include D { margin-top: $xl; }
+
+  > .#{$PREF}-header {
+    @extend .shadow--1;
+
+    @include D { border-radius: $sm; }
+  }
+
+  > .#{$PREF}-grid:last-child { @include D { padding: $md 0; } }
+}
+
 // ## INDIVIDUAL EVENT GRID
 
 .#{$PREF}-grid {

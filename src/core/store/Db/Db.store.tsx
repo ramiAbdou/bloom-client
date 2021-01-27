@@ -10,9 +10,9 @@ import {
   initialEntities
 } from '@store/Db/entities';
 import { updateDocumentColors } from '@util/colorUtil';
-import { mergeStrategy } from './schema';
 import { AddEntitiesArgs, DbModel, MergeEntitiesArgs } from './Db.types';
 import deleteEntities from './deleteEntities';
+import { mergeStrategy } from './schema';
 
 const dbStore: DbModel = {
   addEntities: action(
@@ -71,6 +71,8 @@ const dbStore: DbModel = {
     const { byId: byIntegrationId } = entities.integrations;
     return byIntegrationId[community?.integrations] as IIntegrations;
   }),
+
+  isAuthenticated: false,
 
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
@@ -136,6 +138,11 @@ const dbStore: DbModel = {
       ...entities,
       events: { ...entities.events, activeId: eventId }
     }
+  })),
+
+  setIsAuthenticated: action((state, isAuthenticated) => ({
+    ...state,
+    isAuthenticated
   })),
 
   /**

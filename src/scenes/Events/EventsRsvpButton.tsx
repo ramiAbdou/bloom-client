@@ -29,6 +29,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return byId[eventId]?.startTime;
   });
 
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const memberId = useStoreState(({ db }) => db.member?.id);
 
   const isGoing: boolean = useStoreState(({ db }) => {
@@ -49,6 +50,12 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
+
+    if (!isAuthenticated) {
+      console.log('NOT AUTH');
+      return;
+    }
+
     const { data } = await createEventGuest();
 
     const options: ToastOptions<boolean, DeleteEventGuestArgs> = {

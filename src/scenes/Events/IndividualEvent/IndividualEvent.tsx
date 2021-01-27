@@ -6,6 +6,7 @@ import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { cx } from '@util/util';
 import { GET_EVENT, GetEventArgs } from '../Events.gql';
 import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
@@ -14,7 +15,6 @@ import IndividualEventAttendeeList from './IndividualEventAttendeeList';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventPanel from './IndividualEventPanel';
-import IndividualEventWrapper from './IndividualEventWrapper';
 
 const IndividualEventHeader: React.FC = () => (
   <div className="s-events-individual-header">
@@ -26,6 +26,7 @@ const IndividualEventHeader: React.FC = () => (
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
 
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
   const setActiveEvent = useStoreActions(({ db }) => db.setActiveEvent);
 
@@ -53,8 +54,10 @@ const IndividualEvent: React.FC = () => {
 
   if (loading || !isEventActive) return null;
 
+  const css = cx('', { 's-events-individual--public': !isAuthenticated });
+
   return (
-    <IndividualEventWrapper>
+    <div className={css}>
       <IndividualEventHeader />
 
       <div className="s-events-individual-grid">
@@ -66,7 +69,7 @@ const IndividualEvent: React.FC = () => {
       <IndividualEventAnalytics />
       <IndividualEventPanel id={eventId} />
       <CreateEventModal id={eventId} />
-    </IndividualEventWrapper>
+    </div>
   );
 };
 
