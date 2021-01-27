@@ -4,16 +4,20 @@ import { IMember, IQuestion } from '@store/entities';
 
 // DELETE MEMBERS
 
+export interface DeleteMembersArgs {
+  memberIds: string[];
+}
+
 export const DELETE_MEMBERS = mutation({
   operation: 'deleteMembers',
   variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
 
+// DEMOTE TO MEMBER
+
 export interface DemoteToAdminArgs {
   memberIds: string[];
 }
-
-// DEMOTE TO MEMBER
 
 export const DEMOTE_TO_MEMBER = mutation({
   fields: ['id', 'role'],

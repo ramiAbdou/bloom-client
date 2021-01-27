@@ -6,10 +6,12 @@ import useMutation from '@hooks/useMutation';
 import { IEvent, IEventGuest } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ToastOptions } from '../../components/organisms/Toast/Toast.types';
 import {
   CREATE_EVENT_GUEST,
   CreateEventGuestArgs,
-  DELETE_EVENT_GUEST
+  DELETE_EVENT_GUEST,
+  DeleteEventGuestArgs
 } from './Events.gql';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
@@ -49,7 +51,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     e.stopPropagation();
     const { data } = await createEventGuest();
 
-    showToast({
+    const options: ToastOptions<boolean, DeleteEventGuestArgs> = {
       message: 'RSVP was registered.',
       mutationArgsOnUndo: {
         deleteArgs: {
@@ -64,7 +66,9 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
         query: DELETE_EVENT_GUEST,
         variables: { eventId }
       }
-    });
+    };
+
+    showToast(options);
   };
 
   const isUpcoming = day().isBefore(day(startTime));

@@ -19,8 +19,10 @@ type UseMutationArgs<T, S> = {
   variables?: S;
 };
 
-export interface ToastOptions extends Partial<IdProps>, MessageProps {
-  mutationArgsOnComplete?: UseMutationArgs<any, any>;
-  mutationArgsOnUndo?: UseMutationArgs<any, any>;
+export interface ToastOptions<T = any, S = any>
+  extends Partial<IdProps>,
+    MessageProps {
+  mutationArgsOnComplete?: UseMutationArgs<T, S>;
+  mutationArgsOnUndo?: UseMutationArgs<T, S>;
   onUndo?: VoidFunction;
 }

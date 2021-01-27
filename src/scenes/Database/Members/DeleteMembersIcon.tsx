@@ -8,7 +8,8 @@ import Table from '@organisms/Table/Table.store';
 import { IMember } from '@store/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { DELETE_MEMBERS } from '../Database.gql';
+import { ToastOptions } from '../../../components/organisms/Toast/Toast.types';
+import { DELETE_MEMBERS, DeleteMembersArgs } from '../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const DeleteMembersModal = () => {
@@ -31,10 +32,7 @@ const DeleteMembersModal = () => {
   const onRemove = () => {
     deleteEntities({ ids: memberIds, table: 'members' });
 
-    // After the toast finishes showing, we call the mutation that actually
-    // deletes the members from the community. We supply an undo function
-    // that resets the members.
-    showToast({
+    const options: ToastOptions<IMember, DeleteMembersArgs> = {
       message: `${numMembers} member(s) removed from the community.`,
       mutationArgsOnComplete: {
         name: 'deleteMembers',
@@ -42,9 +40,10 @@ const DeleteMembersModal = () => {
         variables: { memberIds }
       },
       onUndo: () => addEntities({ entities: members, table: 'members' })
-    });
+    };
 
-    setTimeout(closeModal, 0);
+    showToast(options);
+    closeModal();
   };
 
   return (
