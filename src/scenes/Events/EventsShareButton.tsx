@@ -38,8 +38,6 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     showToast({ message: 'Event link copied to clipboard.' });
   };
 
-  console.log(eventId, isUpcoming, isGoing);
-
   return (
     <Button
       fill

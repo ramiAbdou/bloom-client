@@ -29,7 +29,7 @@ const DeleteMembersModal = () => {
   });
 
   const onRemove = () => {
-    deleteEntities({ entityName: 'members', ids: memberIds });
+    deleteEntities({ ids: memberIds, table: 'members' });
 
     // After the toast finishes showing, we call the mutation that actually
     // deletes the members from the community. We supply an undo function
@@ -41,7 +41,7 @@ const DeleteMembersModal = () => {
         query: DELETE_MEMBERS,
         variables: { memberIds }
       },
-      onUndo: () => addEntities({ entities: members, entityName: 'members' })
+      onUndo: () => addEntities({ entities: members, table: 'members' })
     });
 
     setTimeout(closeModal, 0);

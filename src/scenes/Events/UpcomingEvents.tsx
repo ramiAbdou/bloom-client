@@ -18,14 +18,20 @@ import YourUpcomingEvents from './YourUpcomingEvents';
 
 const EventsUpcomingContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
-    const { byId: byEventsId } = db.entities.events;
+    const { byId: byEventId } = db.entities.events;
+    const { byId: byGuestId } = db.entities.guests;
+
     const guests = new Set(db.member.guests);
 
     return db.community?.events
-      ?.map((eventId: string) => byEventsId[eventId])
+      ?.map((eventId: string) => byEventId[eventId])
       ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
       ?.filter((event: IEvent) => {
-        return !event.guests?.some((guestId: string) => guests.has(guestId));
+        const hasRSVPd = event.guests?.some((guestId: string) => {
+          return guests.has(guestId) && !!byGuestId[guestId];
+        });
+
+        return !hasRSVPd;
       })
       ?.sort((a, b) => sortObjects(a, b, 'startTime'));
   });

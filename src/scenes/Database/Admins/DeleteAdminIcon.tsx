@@ -27,7 +27,7 @@ const DeleteMembersModal: React.FC = () => {
   });
 
   const onPrimaryClick = () => {
-    deleteEntities({ entityName: 'members', ids: memberIds });
+    deleteEntities({ ids: memberIds, table: 'members' });
 
     // After the toast finishes showing, we call the mutation that actually
     // deletes the members from the community. We supply an undo function
@@ -39,7 +39,7 @@ const DeleteMembersModal: React.FC = () => {
         query: DELETE_MEMBERS,
         variables: { memberIds }
       },
-      onUndo: () => addEntities({ entities: members, entityName: 'members' })
+      onUndo: () => addEntities({ entities: members, table: 'members' })
     });
 
     closeModal();

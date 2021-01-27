@@ -29,6 +29,17 @@ export const CREATE_EVENT_GUEST = mutation({
   variables: { eventId: { required: true } }
 }).query;
 
+// ## DELETE EVENT GUEST
+
+export interface DeleteEventGuestArgs {
+  eventId: string;
+}
+
+export const DELETE_EVENT_GUEST = mutation({
+  operation: 'deleteEventGuest',
+  variables: { eventId: { required: true } }
+}).query;
+
 // ## GET EVENT
 
 export interface GetEventArgs {

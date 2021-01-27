@@ -2,10 +2,15 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent } from '@store/entities';
+import useMutation from '@hooks/useMutation';
+import { IEvent, IEventGuest } from '@store/entities';
 import { Schema } from '@store/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { CREATE_EVENT_GUEST } from './Events.gql';
+import {
+  CREATE_EVENT_GUEST,
+  CreateEventGuestArgs,
+  DELETE_EVENT_GUEST
+} from './Events.gql';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -22,6 +27,8 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return byId[eventId]?.startTime;
   });
 
+  const memberId = useStoreState(({ db }) => db.member.id);
+
   const isGoing: boolean = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
     const guests = new Set(db.member.guests);
@@ -29,22 +36,38 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
 
-  const isUpcoming = day().isBefore(day(startTime));
+  const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
+    name: 'createEventGuest',
+    query: CREATE_EVENT_GUEST,
+    schema: Schema.EVENT_GUEST,
+    variables: { eventId }
+  });
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClick = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.stopPropagation();
+    const { data } = await createEventGuest();
 
     showToast({
-      message: 'RSVP has been registered.',
-      mutationArgs: {
-        name: 'createEventGuest',
-        query: CREATE_EVENT_GUEST,
-        schema: Schema.EVENT_GUEST,
+      message: 'RSVP was registered.',
+      mutationArgsOnUndo: {
+        deleteArgs: {
+          ids: [data.id],
+          refs: [
+            { column: 'guests', id: eventId, table: 'events' },
+            { column: 'guests', id: memberId, table: 'members' }
+          ],
+          table: 'guests'
+        },
+        name: 'deleteEventGuest',
+        query: DELETE_EVENT_GUEST,
         variables: { eventId }
       }
     });
-    // createEventGuest();
   };
+
+  const isUpcoming = day().isBefore(day(startTime));
 
   return (
     <Button

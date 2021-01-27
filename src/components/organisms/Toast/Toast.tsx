@@ -12,6 +12,7 @@ const Toast: React.FC<ToastOptions> = ({
   id,
   message,
   mutationArgs,
+  mutationArgsOnUndo,
   onUndo
 }) => {
   // Since we have the option to undo the actions within Toasts, we keep track
@@ -23,17 +24,22 @@ const Toast: React.FC<ToastOptions> = ({
   // If the mutationOptionsOnClose, we must call the useMutation hook. To
   // follow the rules of hooks, we have to pass something in, even if the
   // mutation query and variables are empty.
-  const [mutationFn] = useMutation(mutationArgs ?? { name: null, query: null });
+  const [mutationFn] = useMutation(mutationArgs ?? { name: null, query: '' });
+
+  const [mutationOnUndoFn] = useMutation(
+    mutationArgsOnUndo ?? { name: null, query: '' }
+  );
 
   useEffect(() => {
     // We only show the toast for 5 seconds, then we remove it from the DOM.
     const timeout = setTimeout(async () => {
+      // ConfigurationServicePlaceholders.log()
       // If the mutation string isn't empty, we execute the mutation.
-      if (mutationArgs?.name) await mutationFn();
+      if (mutationArgs) await mutationFn();
       dequeueToast(id);
     }, 5000);
 
-    if (wasUndid) onUndo();
+    if (wasUndid && onUndo) onUndo();
 
     return () => {
       // If the Toast was already undid, then in this cleanup function, we
@@ -43,12 +49,15 @@ const Toast: React.FC<ToastOptions> = ({
     };
   }, [wasUndid]);
 
-  const css = cx('c-toast', { 'c-toast--undo': !!onUndo });
-
-  const onUndoClick = () => {
+  const onUndoClick = async () => {
     setWasUndid(true);
     dequeueToast(id);
+    if (mutationArgsOnUndo) await mutationOnUndoFn();
   };
+
+  const css = cx('c-toast', {
+    'c-toast--undo': !!onUndo || !!mutationArgsOnUndo
+  });
 
   return (
     <motion.div
@@ -60,7 +69,11 @@ const Toast: React.FC<ToastOptions> = ({
     >
       <p>{message}</p>
 
-      <Button tertiary show={!!onUndo} onClick={onUndoClick}>
+      <Button
+        tertiary
+        show={!!onUndo || !!mutationArgsOnUndo}
+        onClick={onUndoClick}
+      >
         Undo
       </Button>
     </motion.div>

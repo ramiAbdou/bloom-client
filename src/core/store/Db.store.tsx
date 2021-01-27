@@ -15,12 +15,17 @@ import { mergeStrategy } from './schema';
 
 interface AddEntitiesArgs {
   entities: IMember[];
-  entityName: 'members';
+  table: 'members';
 }
 
 interface DeleteEntitiesArgs {
   ids: string[];
-  entityName: 'members';
+  refs?: {
+    id: string;
+    column: string;
+    table: 'events' | 'guests' | 'members';
+  }[];
+  table: 'events' | 'guests' | 'members';
 }
 
 interface MergeEntitiesArgs {
@@ -49,9 +54,9 @@ export const dbModel: DbModel = {
   addEntities: action(
     (
       { entities, ...state },
-      { entities: entitiesToAdd, entityName }: AddEntitiesArgs
+      { entities: entitiesToAdd, table: tableName }: AddEntitiesArgs
     ) => {
-      const table = entities[entityName];
+      const table = entities[tableName];
 
       const updatedById = entitiesToAdd.reduce((acc, entity: IMember) => {
         return { ...acc, [entity.id]: entity };
@@ -61,7 +66,7 @@ export const dbModel: DbModel = {
 
       return {
         ...state,
-        entities: { ...entities, [entityName]: updatedTable }
+        entities: { ...entities, [tableName]: updatedTable }
       };
     }
   ),
@@ -92,14 +97,47 @@ export const dbModel: DbModel = {
   deleteEntities: action(
     (
       { entities, ...state },
-      { ids: idsToDelete, entityName }: DeleteEntitiesArgs
+      { ids, refs, table: tableName }: DeleteEntitiesArgs
     ) => {
-      const table = entities[entityName];
+      const table = entities[tableName];
+
+      const idsToDelete = new Set(ids);
 
       const updatedById = Object.entries(table.byId).reduce(
         (acc, [key, value]) => {
-          if (idsToDelete.includes(key)) return acc;
+          if (idsToDelete.has(key)) return acc;
           return { ...acc, [key]: value };
+        },
+        {}
+      );
+
+      const updatedRefTables = refs.reduce(
+        (acc, { id, column, table: refTableName }) => {
+          const tableBeforeUpdate = entities[refTableName];
+          const entityBeforeUpdate = tableBeforeUpdate.byId[id];
+          const isArray = Array.isArray(entityBeforeUpdate[column]);
+
+          const updatedEntity = {
+            ...entityBeforeUpdate,
+            [column]: isArray
+              ? [
+                  ...(entityBeforeUpdate[column] as string[]).filter(
+                    (refId: string) => !idsToDelete.has(refId)
+                  )
+                ]
+              : null
+          };
+
+          return {
+            ...acc,
+            [refTableName]: {
+              ...tableBeforeUpdate,
+              byId: {
+                ...tableBeforeUpdate.byId,
+                [updatedEntity.id]: updatedEntity
+              }
+            }
+          };
         },
         {}
       );
@@ -108,7 +146,11 @@ export const dbModel: DbModel = {
 
       return {
         ...state,
-        entities: { ...entities, [entityName]: updatedTable }
+        entities: {
+          ...entities,
+          ...updatedRefTables,
+          [tableName]: updatedTable
+        }
       };
     }
   ),

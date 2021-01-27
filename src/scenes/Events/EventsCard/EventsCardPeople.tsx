@@ -59,6 +59,7 @@ const EventsCardPeople: React.FC = () => {
 
     return people
       ?.map((id: string) => (isPast ? byAttendeeId[id] : byGuestId[id]))
+      ?.filter((element: IEventGuest | IEventAttendee) => !!element)
       ?.map((element: IEventGuest | IEventAttendee) => {
         return byMemberId[element?.member];
       })
