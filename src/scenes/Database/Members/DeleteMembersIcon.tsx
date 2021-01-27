@@ -36,7 +36,7 @@ const DeleteMembersModal = () => {
     // that resets the members.
     showToast({
       message: `${numMembers} member(s) removed from the community.`,
-      mutationArgs: {
+      mutationArgsOnComplete: {
         name: 'deleteMembers',
         query: DELETE_MEMBERS,
         variables: { memberIds }

@@ -50,8 +50,6 @@ function useMutation<T = any, S = any>({
       variables: variables ?? initialVariables
     });
 
-    console.log('res', result);
-
     return {
       data: result.data ? (result.data[name] as T) : (null as T),
       error: getGraphQLError(result.error),

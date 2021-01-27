@@ -1,63 +1,39 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Button from '@atoms/Button/Button';
-import useMutation from '@hooks/useMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import { ToastOptions } from './Toast.types';
+import useToastMutation from './useToastMutation';
 
 const Toast: React.FC<ToastOptions> = ({
   id,
   message,
-  mutationArgs,
+  mutationArgsOnComplete,
   mutationArgsOnUndo,
   onUndo
 }) => {
-  // Since we have the option to undo the actions within Toasts, we keep track
-  // of that state.
+  // Tracks the option to undo the action that created the Toast.
   const [wasUndid, setWasUndid] = useState(false);
-
   const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
 
-  // If the mutationOptionsOnClose, we must call the useMutation hook. To
-  // follow the rules of hooks, we have to pass something in, even if the
-  // mutation query and variables are empty.
-  const [mutationFn] = useMutation(mutationArgs ?? { name: null, query: '' });
-
-  const [mutationOnUndoFn] = useMutation(
-    mutationArgsOnUndo ?? { name: null, query: '' }
-  );
-
-  useEffect(() => {
-    // We only show the toast for 5 seconds, then we remove it from the DOM.
-    const timeout = setTimeout(async () => {
-      // ConfigurationServicePlaceholders.log()
-      // If the mutation string isn't empty, we execute the mutation.
-      if (mutationArgs) await mutationFn();
-      dequeueToast(id);
-    }, 5000);
-
-    if (wasUndid && onUndo) onUndo();
-
-    return () => {
-      // If the Toast was already undid, then in this cleanup function, we
-      // clear the timeout that would've executed the mutation and removed
-      // the toast.
-      if (wasUndid) clearTimeout(timeout);
-    };
-  }, [wasUndid]);
+  const { mutationOnUndoFn } = useToastMutation({
+    id,
+    mutationArgsOnComplete,
+    wasUndid
+  });
 
   const onUndoClick = async () => {
     setWasUndid(true);
     dequeueToast(id);
     if (mutationArgsOnUndo) await mutationOnUndoFn();
+    if (onUndo) onUndo();
   };
 
-  const css = cx('c-toast', {
-    'c-toast--undo': !!onUndo || !!mutationArgsOnUndo
-  });
+  const showUndoButton = !!onUndo || !!mutationArgsOnUndo;
+  const css = cx('c-toast', { 'c-toast--undo': showUndoButton });
 
   return (
     <motion.div
@@ -69,11 +45,7 @@ const Toast: React.FC<ToastOptions> = ({
     >
       <p>{message}</p>
 
-      <Button
-        tertiary
-        show={!!onUndo || !!mutationArgsOnUndo}
-        onClick={onUndoClick}
-      >
+      <Button tertiary show={showUndoButton} onClick={onUndoClick}>
         Undo
       </Button>
     </motion.div>

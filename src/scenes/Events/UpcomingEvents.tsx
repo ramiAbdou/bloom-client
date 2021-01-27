@@ -19,7 +19,6 @@ import YourUpcomingEvents from './YourUpcomingEvents';
 const EventsUpcomingContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
-    const { byId: byGuestId } = db.entities.guests;
 
     const guests = new Set(db.member.guests);
 
@@ -27,9 +26,9 @@ const EventsUpcomingContent: React.FC = () => {
       ?.map((eventId: string) => byEventId[eventId])
       ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
       ?.filter((event: IEvent) => {
-        const hasRSVPd = event.guests?.some((guestId: string) => {
-          return guests.has(guestId) && !!byGuestId[guestId];
-        });
+        const hasRSVPd = event.guests?.some((guestId: string) =>
+          guests.has(guestId)
+        );
 
         return !hasRSVPd;
       })

@@ -48,12 +48,9 @@ const YourUpcomingEvents: React.FC = () => {
 
     return !!db.member.guests
       ?.map((guestId: string) => byGuestsId[guestId])
-      ?.filter((guest: IEventGuest) => !!guest)
       ?.map((guest: IEventGuest) => byEventsId[guest.event])
       ?.filter((event: IEvent) => day().isBefore(day(event?.endTime)))?.length;
   });
-
-  console.log('hasEvents', hasEvents);
 
   return hasEvents ? <YourUpcomingEventsContent /> : null;
 };

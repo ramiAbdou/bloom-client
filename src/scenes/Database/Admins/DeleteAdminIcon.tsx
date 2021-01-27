@@ -34,7 +34,7 @@ const DeleteMembersModal: React.FC = () => {
     // that resets the members.
     showToast({
       message: `${numMembers} admin(s) removed from the community.`,
-      mutationArgs: {
+      mutationArgsOnComplete: {
         name: 'deleteMembers',
         query: DELETE_MEMBERS,
         variables: { memberIds }
