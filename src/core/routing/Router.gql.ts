@@ -1,6 +1,6 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IUser } from '@store/entities';
+import { IUser } from '@store/Db/entities';
 
 // ## GET USER
 

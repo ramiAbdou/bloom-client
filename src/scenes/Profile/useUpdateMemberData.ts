@@ -1,7 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { IMemberData } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IMemberData } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UPDATE_MEMBER_DATA, UpdateMemberDataArgs } from './Profile.gql';
 

@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
-import { IIntegrations } from '@store/entities';
+import { IIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { buildIntegrationData } from './Integrations.util';
 import IntegrationCard, {

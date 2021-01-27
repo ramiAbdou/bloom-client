@@ -1,7 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { Schema } from '@store/schema';
+import { Schema } from '@store/Db/schema';
 import {
   CREATE_LIFETIME_PAYMENT,
   CreateLifetimePaymentArgs

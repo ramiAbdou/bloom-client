@@ -10,7 +10,7 @@ import FormStore from '@organisms/Form/Form.store';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormPage from '@organisms/Form/FormPage';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { IMemberType, IQuestion } from '@store/entities';
+import { IMemberType, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import InformationCard from '../../components/containers/Card/InformationCard';

@@ -1,7 +1,7 @@
 import deline from 'deline';
 
 import { FormNavigationPageProps } from '@organisms/Form/Form.types';
-import { IMemberType } from '@store/entities';
+import { IMemberType } from '@store/Db/entities';
 import { takeFirst } from '@util/util';
 
 export type PaymentModalType =

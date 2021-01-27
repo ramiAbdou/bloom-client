@@ -1,7 +1,7 @@
 import { Computed, computed, createContextStore } from 'easy-peasy';
 import moment from 'moment-timezone';
 
-import { IMember } from '@store/entities';
+import { IMember } from '@store/Db/entities';
 
 type ApplicantModel = {
   applicant: IMember;

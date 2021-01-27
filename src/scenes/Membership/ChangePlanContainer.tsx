@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IMemberType } from '@store/entities';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import PlanCard from './ChangePlanCard';
 import MembershipCardContainer from './MembershipCardContainer';

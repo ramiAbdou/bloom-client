@@ -2,8 +2,8 @@ import day from 'dayjs';
 
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { IEvent } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IEvent } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { uploadImage } from '@util/imageUtil';
 import { CREATE_EVENT } from './CreateEvent.gql';

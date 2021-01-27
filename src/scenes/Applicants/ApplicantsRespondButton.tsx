@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
-import { Schema } from '@store/schema';
+import { Schema } from '@store/Db/schema';
 import { takeFirst } from '@util/util';
 import {
   RESPOND_TO_APPLICANTS,

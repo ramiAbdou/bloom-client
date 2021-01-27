@@ -4,7 +4,7 @@ import React from 'react';
 import { MainSection } from '@containers/Main';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { IEvent, IEventAttendee } from '@store/entities';
+import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import EventsCard from './EventsCard/EventsCard';
 

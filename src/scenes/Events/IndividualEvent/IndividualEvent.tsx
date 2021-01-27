@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import useQuery from '@hooks/useQuery';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
-import { IEvent } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IEvent } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_EVENT, GetEventArgs } from '../Events.gql';
 import EventsAspectBackground from '../EventsAspectBackground';

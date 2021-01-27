@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
-import { IMemberType } from '@store/entities';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import Card from '../../components/containers/Card/Card';

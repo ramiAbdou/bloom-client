@@ -6,7 +6,7 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
-import { ICommunity } from '@store/entities';
+import { ICommunity } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import Home from './BottomBar.store';

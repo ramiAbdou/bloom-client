@@ -4,7 +4,7 @@ import { HeaderTag } from '@atoms/Tags';
 import Row from '@containers/Row/Row';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture';
-import { IMember, IUser } from '@store/entities';
+import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MemberProfileStore from './MemberProfile.store';
 import MemberProfileSocialContainer from './MemberProfileSocial';

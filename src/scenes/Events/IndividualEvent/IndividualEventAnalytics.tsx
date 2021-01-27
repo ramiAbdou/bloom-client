@@ -7,8 +7,8 @@ import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
-import { IEvent } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IEvent } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import {
   GET_EVENT_ATTENDEES_SERIES,

@@ -4,7 +4,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
-import { IPaymentMethod } from '@store/entities';
+import { IPaymentMethod } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const PaymentMethodContent = () => {

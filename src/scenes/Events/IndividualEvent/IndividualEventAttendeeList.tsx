@@ -8,7 +8,7 @@ import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { IEventAttendee, IMember, IUser } from '@store/entities';
+import { IEventAttendee, IMember, IUser } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { IdProps } from '@constants';
 import Card from '@containers/Card/Card';
-import { IEvent } from '@store/entities';
+import { IEvent } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';

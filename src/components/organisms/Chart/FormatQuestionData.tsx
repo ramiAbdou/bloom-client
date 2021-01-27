@@ -9,7 +9,7 @@ import {
   IMemberType,
   IQuestion,
   IUser
-} from '@store/entities';
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import Chart from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';

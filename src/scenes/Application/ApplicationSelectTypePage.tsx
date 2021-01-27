@@ -5,7 +5,7 @@ import usePrevious from '@hooks/usePrevious';
 import FormStore from '@organisms/Form/Form.store';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
-import { IMemberType } from '@store/entities';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { RadioOptionProps } from '../../components/molecules/Radio/Radio.types';

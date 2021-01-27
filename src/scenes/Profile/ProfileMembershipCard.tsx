@@ -7,8 +7,8 @@ import useQuery from '@hooks/useQuery';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import { IMemberData, IQuestion } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IMemberData, IQuestion } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_MEMBER_DATA } from './Profile.gql';
 import ProfileCardHeader from './ProfileCardHeader';

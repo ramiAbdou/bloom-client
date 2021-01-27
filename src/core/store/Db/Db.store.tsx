@@ -1,5 +1,5 @@
-import { Action, action, Computed, computed } from 'easy-peasy';
-import { normalize, Schema } from 'normalizr';
+import { action, computed } from 'easy-peasy';
+import { normalize } from 'normalizr';
 
 import {
   ICommunity,
@@ -7,52 +7,14 @@ import {
   IEvent,
   IIntegrations,
   IMember,
-  initialEntities,
-  IUser
-} from '@store/entities';
+  initialEntities
+} from '@store/Db/entities';
 import { updateDocumentColors } from '@util/colorUtil';
 import { mergeStrategy } from './schema';
+import { AddEntitiesArgs, DbModel, MergeEntitiesArgs } from './Db.types';
+import deleteEntities from './deleteEntities';
 
-interface AddEntitiesArgs {
-  entities: IMember[];
-  table: keyof IEntities;
-}
-
-export type DeleteEntitiesRef = {
-  id: string;
-  column: string;
-  table: keyof IEntities;
-};
-
-interface DeleteEntitiesArgs {
-  ids: string[];
-  refs?: DeleteEntitiesRef[];
-  table: keyof IEntities;
-}
-
-interface MergeEntitiesArgs {
-  communityReferenceColumn?: string;
-  data?: any;
-  schema?: Schema<any>;
-  setActiveId?: boolean;
-}
-
-export type DbModel = {
-  addEntities: Action<DbModel, AddEntitiesArgs>;
-  clearEntities: Action<DbModel>;
-  community: Computed<DbModel, ICommunity>;
-  deleteEntities: Action<DbModel, DeleteEntitiesArgs>;
-  entities: IEntities;
-  event: Computed<DbModel, IEvent>;
-  integrations: Computed<DbModel, IIntegrations>;
-  member: Computed<DbModel, IMember>;
-  mergeEntities: Action<DbModel, MergeEntitiesArgs>;
-  setActiveCommunity: Action<DbModel, string>;
-  setActiveEvent: Action<DbModel, string>;
-  user: Computed<DbModel, IUser>;
-};
-
-export const dbModel: DbModel = {
+const dbStore: DbModel = {
   addEntities: action(
     (
       { entities, ...state },
@@ -96,66 +58,7 @@ export const dbModel: DbModel = {
     };
   }),
 
-  deleteEntities: action(
-    (
-      { entities, ...state },
-      { ids, refs, table: tableName }: DeleteEntitiesArgs
-    ) => {
-      const table = entities[tableName];
-
-      const idsToDelete = new Set(ids);
-
-      const updatedById = Object.entries(table.byId).reduce(
-        (acc, [key, value]) => {
-          if (idsToDelete.has(key)) return acc;
-          return { ...acc, [key]: value };
-        },
-        {}
-      );
-
-      const updatedRefTables = refs.reduce(
-        (acc, { id, column, table: refTableName }) => {
-          const tableBeforeUpdate = entities[refTableName];
-          const entityBeforeUpdate = tableBeforeUpdate.byId[id];
-          const isArray = Array.isArray(entityBeforeUpdate[column]);
-
-          const updatedEntity = {
-            ...entityBeforeUpdate,
-            [column]: isArray
-              ? [
-                  ...(entityBeforeUpdate[column] as string[]).filter(
-                    (refId: string) => !idsToDelete.has(refId)
-                  )
-                ]
-              : null
-          };
-
-          return {
-            ...acc,
-            [refTableName]: {
-              ...tableBeforeUpdate,
-              byId: {
-                ...tableBeforeUpdate.byId,
-                [updatedEntity.id]: updatedEntity
-              }
-            }
-          };
-        },
-        {}
-      );
-
-      const updatedTable = { ...table, byId: updatedById };
-
-      return {
-        ...state,
-        entities: {
-          ...entities,
-          ...updatedRefTables,
-          [tableName]: updatedTable
-        }
-      };
-    }
-  ),
+  deleteEntities,
 
   entities: initialEntities,
 
@@ -244,3 +147,5 @@ export const dbModel: DbModel = {
     return byId[activeId];
   })
 };
+
+export default dbStore;

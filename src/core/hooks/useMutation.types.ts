@@ -1,7 +1,7 @@
 import { Schema } from 'normalizr';
 
-import { DeleteEntitiesRef } from '../store/Db.store';
-import { IEntities } from '../store/entities';
+import { DeleteEntitiesRef } from '../store/Db/Db.types';
+import { IEntities } from '../store/Db/entities';
 
 export type UseMutationArgs<T, S> = {
   deleteArgs?: {

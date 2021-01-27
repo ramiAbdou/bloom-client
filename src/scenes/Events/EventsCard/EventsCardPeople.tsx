@@ -9,7 +9,7 @@ import {
   IEventGuest,
   IMember,
   IUser
-} from '@store/entities';
+} from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 

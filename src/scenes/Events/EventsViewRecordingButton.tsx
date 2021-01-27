@@ -3,7 +3,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent } from '@store/entities';
+import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
 interface EventsViewRecordingButtonProps

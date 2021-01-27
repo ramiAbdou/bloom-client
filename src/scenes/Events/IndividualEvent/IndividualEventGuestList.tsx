@@ -6,7 +6,7 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture';
-import { IEventGuest, IMember, IUser } from '@store/entities';
+import { IEventGuest, IMember, IUser } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 

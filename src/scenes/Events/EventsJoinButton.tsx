@@ -4,8 +4,8 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
-import { IEvent, IEventAttendee } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IEvent, IEventAttendee } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { CREATE_EVENT_ATTENDEE, CreateEventAttendeeArgs } from './Events.gql';
 

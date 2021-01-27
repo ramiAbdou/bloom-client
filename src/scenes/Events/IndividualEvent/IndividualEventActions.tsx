@@ -4,7 +4,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { ModalType, PanelType } from '@constants';
 import Row from '@containers/Row/Row';
-import { IEventGuest } from '@store/entities';
+import { IEventGuest } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import EventsJoinButton from '../EventsJoinButton';
 import EventsRsvpButton from '../EventsRsvpButton';

@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import { IMember, IMemberData } from '@store/entities';
+import { IMember, IMemberData } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MasonryList from '../../components/organisms/List/MasonryList';
 import DirectoryCard from './DirectoryCard/DirectoryCard';

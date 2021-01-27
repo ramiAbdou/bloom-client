@@ -3,8 +3,8 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
-import { IEvent, IEventGuest } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IEvent, IEventGuest } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ToastOptions } from '../../components/organisms/Toast/Toast.types';
 import {

@@ -1,6 +1,6 @@
 import { createContextStore } from 'easy-peasy';
 
-import { IMember, IMemberData, IUser } from '@store/entities';
+import { IMember, IMemberData, IUser } from '@store/Db/entities';
 
 export interface MemberCardModel
   extends Pick<IMember, 'bio' | 'role' | 'type'>,

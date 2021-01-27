@@ -7,8 +7,8 @@ import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Panel from '@organisms/Panel/Panel';
-import { IEvent } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IEvent } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { UPDATE_RECORDING_LINK } from '../Events.gql';
 

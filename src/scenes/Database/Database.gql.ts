@@ -1,6 +1,6 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IMember, IQuestion } from '@store/entities';
+import { IMember, IQuestion } from '@store/Db/entities';
 
 // DELETE MEMBERS
 

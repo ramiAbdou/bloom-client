@@ -4,7 +4,7 @@ import {
   OnFormSubmit,
   OnFormSubmitArgs
 } from '@organisms/Form/Form.types';
-import { Schema } from '@store/schema';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { ADD_MEMBERS, AddMembersArgs } from './AddMember.gql';

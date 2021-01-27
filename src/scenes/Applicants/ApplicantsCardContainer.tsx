@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import { IMember } from '@store/entities';
+import { IMember } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ApplicantCard from './ApplicantsCard/ApplicantsCard';
 import Applicant, {

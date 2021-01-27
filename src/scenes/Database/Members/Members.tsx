@@ -12,7 +12,7 @@ import {
   IMemberType,
   IQuestion,
   IUser
-} from '@store/entities';
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import ActionRow from './ActionRow';

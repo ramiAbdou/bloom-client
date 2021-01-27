@@ -8,8 +8,8 @@ import Table from '@organisms/Table/Table';
 import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
-import { ICommunity, IMember, IMemberPayment, IUser } from '@store/entities';
-import { Schema } from '@store/schema';
+import { ICommunity, IMember, IMemberPayment, IUser } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { GET_PAYMENTS } from '../Analytics.gql';
 

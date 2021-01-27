@@ -6,7 +6,7 @@ import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
-import { IMemberData, IQuestion } from '@store/entities';
+import { IMemberData, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import useUpdateMemberData from './useUpdateMemberData';
 

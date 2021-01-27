@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
 import Chart from '@organisms/Chart/Chart';
-import { IQuestion } from '@store/entities';
+import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import Playground from './Playground.store';
 

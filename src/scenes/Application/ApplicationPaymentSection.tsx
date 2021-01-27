@@ -6,7 +6,7 @@ import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
 import FormStore from '@organisms/Form/Form.store';
 import FormContinueButton from '@organisms/Form/FormContinueButton';
 import FormItem from '@organisms/Form/FormItem';
-import { IMemberType } from '@store/entities';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';

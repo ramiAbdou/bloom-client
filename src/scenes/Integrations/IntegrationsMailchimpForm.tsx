@@ -9,7 +9,7 @@ import FormItem from '@organisms/Form/FormItem';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
-import { IIntegrations } from '@store/entities';
+import { IIntegrations } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';

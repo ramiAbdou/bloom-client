@@ -5,7 +5,7 @@ import FormContinueButton from '@organisms/Form/FormContinueButton';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { IQuestion } from '@store/entities';
+import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
 const ApplicationMembershipPageButton: React.FC = () => {

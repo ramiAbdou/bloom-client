@@ -1,6 +1,6 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { ICommunity } from '@store/entities';
+import { ICommunity } from '@store/Db/entities';
 
 export interface GetPendingApplicantsResult extends ICommunity {
   application: any;

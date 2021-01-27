@@ -2,7 +2,7 @@ import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
 import useQuery from '@hooks/useQuery';
-import { Schema } from '@store/schema';
+import { Schema } from '@store/Db/schema';
 import {
   GET_PENDING_APPLICATIONS,
   GetPendingApplicantsResult

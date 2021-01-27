@@ -8,7 +8,7 @@ import FormStore from '@organisms/Form/Form.store';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
-import { IMemberType } from '@store/entities';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import InformationCard from '../../containers/Card/InformationCard';
 import { GET_CHANGE_PREVIEW } from './Payment.gql';

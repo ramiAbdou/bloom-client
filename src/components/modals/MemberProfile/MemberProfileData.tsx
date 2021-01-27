@@ -4,7 +4,7 @@ import Separator from '@atoms/Separator';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import { IMember, IMemberData, IQuestion } from '@store/entities';
+import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MemberProfileStore from './MemberProfile.store';
 

@@ -10,8 +10,8 @@ import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
 import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMemberPayment } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IMemberPayment } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import {
   GET_MEMBER_PAYMENTS,

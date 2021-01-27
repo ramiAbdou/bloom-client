@@ -1,7 +1,7 @@
 import URLBuilder from 'util/URLBuilder';
 
 import { APP, isProduction, UrlNameProps } from '@constants';
-import { IIntegrations } from '../../core/store/entities';
+import { IIntegrations } from '../../core/store/Db/entities';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';
 import zapier from './images/zapier.png';

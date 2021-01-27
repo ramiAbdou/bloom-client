@@ -1,6 +1,6 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { Schema } from '@store/schema';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import {
   UPDATE_MAILCHIMP_LIST_ID,

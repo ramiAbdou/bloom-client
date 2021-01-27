@@ -5,8 +5,8 @@ import { MainContent, MainHeader } from '@containers/Main';
 import useQuery from '@hooks/useQuery';
 import ListStore from '@organisms/List/List.store';
 import ListSearchBar from '@organisms/List/ListSearchBar';
-import { ICommunity } from '@store/entities';
-import { Schema } from '@store/schema';
+import { ICommunity } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { GET_DIRECTORY } from './Directory.gql';
 import DirectoryCardContainer from './DirectoryCardContainer';
 

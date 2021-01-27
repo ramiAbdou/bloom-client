@@ -6,7 +6,7 @@ import {
   IoLogoTwitter
 } from 'react-icons/io5';
 
-import { IUser } from '@store/entities';
+import { IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import MemberProfileStore from './MemberProfile.store';

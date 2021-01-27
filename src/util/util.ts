@@ -1,6 +1,6 @@
 import { APIError } from 'graphql-hooks';
 
-import { BaseEntity } from '../core/store/entities';
+import { BaseEntity } from '../core/store/Db/entities';
 
 /**
  * Returns a string of classes based on the conditional flags set on each of

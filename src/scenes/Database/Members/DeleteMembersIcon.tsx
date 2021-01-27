@@ -5,7 +5,7 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Modal from '@organisms/Modal/Modal';
 import Table from '@organisms/Table/Table.store';
-import { IMember } from '@store/entities';
+import { IMember } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { ToastOptions } from '../../../components/organisms/Toast/Toast.types';
