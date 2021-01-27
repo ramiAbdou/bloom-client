@@ -4,7 +4,6 @@ import React from 'react';
 import { IdProps, ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
 import { FormNavigationPageProps } from '@organisms/Form/Form.types';
-import FormNavigation from '@organisms/Form/FormNavigation';
 import Modal from '@organisms/Modal/Modal';
 import { ModalProps } from '@organisms/Modal/Modal.types';
 import { takeFirst } from '@util/util';
@@ -45,7 +44,6 @@ const CheckInModal: React.FC<CheckInModal> = ({ id: eventId, lock }) => {
   return (
     <Modal id={`${ModalType.CHECK_IN}-${eventId}`} lock={lock}>
       <Form options={{ multiPage: true }} pages={pages} show={false}>
-        <FormNavigation />
         <CheckInChoosePage />
         <CheckInFinishPage />
       </Form>

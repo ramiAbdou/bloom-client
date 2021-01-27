@@ -4,7 +4,6 @@ import { ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import Form from '@organisms/Form/Form';
-import FormNavigation from '@organisms/Form/FormNavigation';
 import FormPage from '@organisms/Form/FormPage';
 import Modal from '@organisms/Modal/Modal';
 import { ICommunity } from '@store/Db/entities';
@@ -66,7 +65,6 @@ const PaymentForm: React.FC<Partial<PaymentModel>> = () => {
       onSubmit={onSubmit}
       onSubmitDeps={[prorationDate, typeId]}
     >
-      <FormNavigation />
       <PaymentCardScreen />
       <PaymentFinishScreen />
       <FormPage id="CONFIRMATION" />

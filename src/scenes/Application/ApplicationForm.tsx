@@ -57,7 +57,6 @@ const ApplicationForm: React.FC = () => {
         pages={[{ description, id: 'APPLICATION', title }, ...selectTypePages]}
         onSubmit={applyForMembership}
       >
-        <FormNavigation />
         <ApplicationMembershipPage />
         <ApplicationSelectTypePage />
         <ApplicationConfirmationPage />

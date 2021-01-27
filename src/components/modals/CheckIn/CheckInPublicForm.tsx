@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
+import Form from '@organisms/Form/Form';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 
@@ -9,8 +10,8 @@ const CheckInPublicForm: React.FC<ShowProps> = ({ show }) => {
   if (show === false) return null;
 
   return (
-    <div>
-      <Row equal spacing="xs">
+    <Form>
+      <Row equal align="baseline" spacing="xs">
         <FormItem
           required
           category="FIRST_NAME"
@@ -26,10 +27,16 @@ const CheckInPublicForm: React.FC<ShowProps> = ({ show }) => {
         />
       </Row>
 
-      <FormItem required category="EMAIL" title="Email" type="SHORT_TEXT" />
+      <FormItem
+        required
+        category="EMAIL"
+        title="Email"
+        type="SHORT_TEXT"
+        validate="IS_EMAIL"
+      />
 
-      <FormSubmitButton>Finish Checking-In</FormSubmitButton>
-    </div>
+      <FormSubmitButton>RSVP</FormSubmitButton>
+    </Form>
   );
 };
 

@@ -12,6 +12,7 @@ import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import { useStoreState } from '@store/Store';
 import { getCheckInErrorMessage, LoginError } from './CheckIn.util';
 import useSendLoginLink from './useSendLoginLink';
 
@@ -57,6 +58,7 @@ const LoginCardGoogleContainer: React.FC = () => {
 };
 
 const LoginCardEmailForm: React.FC = () => {
+  const isCheckIn = useStoreState(({ modal }) => modal.isShowing);
   const sendLoginLink = useSendLoginLink();
 
   return (
@@ -64,7 +66,11 @@ const LoginCardEmailForm: React.FC = () => {
       <FormItem
         required
         category="EMAIL"
-        description="Or continue with your email address to receive a login link."
+        description={
+          isCheckIn
+            ? 'Or continue with your email address to receive an RSVP link.'
+            : 'Or continue with your email address to receive a login link.'
+        }
         placeholder="Email"
         type="SHORT_TEXT"
         validate="IS_EMAIL"
@@ -73,7 +79,7 @@ const LoginCardEmailForm: React.FC = () => {
       <FormErrorMessage marginTop={0} />
 
       <FormSubmitButton loadingText="Sending...">
-        Send Login Link
+        {isCheckIn ? 'Send RSVP Link' : 'Send Login Link'}
       </FormSubmitButton>
     </Form>
   );

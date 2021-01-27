@@ -5,6 +5,7 @@ import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
 import { FormItemData, FormProps } from './Form.types';
 import { validateItem } from './Form.util';
+import FormNavigation from './FormNavigation';
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
@@ -58,12 +59,20 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     [items, ...(onSubmitDeps || [])]
   );
 
-  if (show === false) return <>{children}</>;
+  const body = (
+    <>
+      {pages?.length && <FormNavigation />}
+      {children}
+    </>
+  );
+
+  if (show === false) return body;
+
   const css = cx('o-form', { [className]: className });
 
   return (
     <form className={css} onSubmit={onFormSubmit}>
-      {children}
+      {body}
     </form>
   );
 };
