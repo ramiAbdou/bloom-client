@@ -12,8 +12,12 @@ $PREF: 't-row';
     position: sticky;
     width: 100%;
   
-    > button { width: 50%; }
-    > button:first-child { margin-right: $xxs; }
-    > button:last-child { margin-left: $xxs; }
+    > * { width: 50%; }
+    > *:first-child { margin-right: $xxs; }
+    > *:last-child { margin-left: $xxs; }
+  }
+
+  &--spacing-xs {
+    > *:not(:last-child) { margin-right: $xs; }
   }
 }

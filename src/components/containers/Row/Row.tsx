@@ -8,6 +8,7 @@ interface RowProps extends ChildrenProps, ClassNameProps, ShowProps {
   equal?: boolean;
   marginTopAuto?: boolean;
   spaceBetween?: boolean;
+  spacing?: 'xs';
 }
 
 const Row: React.FC<RowProps> = ({
@@ -17,6 +18,7 @@ const Row: React.FC<RowProps> = ({
   equal,
   marginTopAuto,
   spaceBetween,
+  spacing,
   show
 }) => {
   const css = cx('flex t-row', {
@@ -26,7 +28,8 @@ const Row: React.FC<RowProps> = ({
     'flex-ae': align === 'end',
     'flex-sb': spaceBetween,
     't-row--equal': equal,
-    't-row--margin-top-auto': marginTopAuto
+    't-row--margin-top-auto': marginTopAuto,
+    't-row--spacing-xs': spacing === 'xs'
   });
 
   return show !== false ? <div className={css}>{children}</div> : null;

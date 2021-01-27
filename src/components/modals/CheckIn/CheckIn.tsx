@@ -7,6 +7,7 @@ import { FormNavigationPageProps } from '@organisms/Form/Form.types';
 import FormNavigation from '@organisms/Form/FormNavigation';
 import Modal from '@organisms/Modal/Modal';
 import { ModalProps } from '@organisms/Modal/Modal.types';
+import { takeFirst } from '@util/util';
 import CheckInChoosePage from './CheckInChoosePage';
 import CheckInFinishPage from './CheckInFinishPage';
 
@@ -27,11 +28,15 @@ const CheckInModal: React.FC<CheckInModal> = ({ id: eventId, lock }) => {
       : []),
     {
       aliases: ['FINISH-YES', 'FINISH-NO'],
-      description: lock
-        ? deline`
-          You need to be a member to view this event. Sign in to continue.
-        `
-        : `Login with Google to finish checking-in.`,
+      description: takeFirst([
+        [
+          lock,
+          deline`
+            You need to be a member to view this event. Sign in to continue.
+          `
+        ],
+        [true, `Login with Google to finish checking-in.`]
+      ]),
       id: 'FINISH-YES',
       title: lock ? 'Sign In to Continue' : 'Check In'
     }

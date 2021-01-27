@@ -5,7 +5,7 @@ import URLBuilder from 'util/URLBuilder';
 
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
-import { APP } from '@constants';
+import { APP, ShowProps } from '@constants';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
@@ -74,7 +74,9 @@ const LoginCardEmailForm: React.FC = () => {
   );
 };
 
-const CheckInLoginContent: React.FC = () => {
+const CheckInLoginContent: React.FC<ShowProps> = ({ show }) => {
+  if (show === false) return null;
+
   return (
     <>
       <LoginCardGoogleContainer />
