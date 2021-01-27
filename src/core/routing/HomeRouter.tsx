@@ -9,6 +9,7 @@ import {
 
 import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
+import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import PaymentModal from '@modals/Payment/Payment';
@@ -19,6 +20,7 @@ import Applicants from '@scenes/Applicants/Applicants';
 import Database from '@scenes/Database/Database';
 import Directory from '@scenes/Directory/Directory';
 import Events from '@scenes/Events/Events';
+import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
@@ -56,9 +58,15 @@ const HomeRouterContent: React.FC = () => {
 
 const HomeRouter = () => {
   const { urlName }: UrlNameProps = useParams();
+  const route = useTopLevelRoute();
+  const { url } = useRouteMatch();
+
+  const params = useParams();
+  console.log(params);
 
   const activeCommunityId = useStoreState(({ db }) => db.community?.id);
   const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
   const memberTypeId: string = useStoreState(({ db }) => {
     const { byId } = db.entities.types;
@@ -99,8 +107,13 @@ const HomeRouter = () => {
   const token = new URLSearchParams(window.location.search).get('loginToken');
   if (token) return <TokenRoute token={token} />;
 
-  // If the activeUrlName hasn't been set yet, that means the community
-  // hasn't been loaded in the global state yet, so just wait...
+  if (!isAuthenticated && route === 'events') {
+    return (
+      <Switch>
+        <Route component={IndividualEvent} path={`${url}/events/:eventId`} />
+      </Switch>
+    );
+  }
   if (error) return <Redirect to="/login" />;
   if (loading || !activeUrlName) return <Loader />;
 

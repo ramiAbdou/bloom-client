@@ -5,10 +5,9 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useQuery from '@hooks/useQuery';
 import Loader from '@molecules/Loader/Loader';
 import ApplicationPage from '@scenes/Application/Application';
-import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import { useStoreActions } from '@store/Store';
 import HomeRouter from './HomeRouter';
-import { IS_LOGGED_IN } from './Router.gql';
+import { IS_USER_LOGGED_IN } from './Router.gql';
 
 /**
  * Core routing logic of the entire application. Nested logic should live
@@ -20,11 +19,11 @@ const Router: React.FC = () => {
 
   const { loading, data: isAuthenticated } = useQuery<boolean>({
     name: 'isUserLoggedIn',
-    query: IS_LOGGED_IN
+    query: IS_USER_LOGGED_IN
   });
 
   useEffect(() => {
-    if (isAuthenticated !== null) setIsAuthenticated(isAuthenticated);
+    setIsAuthenticated(isAuthenticated);
   }, [isAuthenticated]);
 
   if (loading) return <Loader />;
@@ -34,7 +33,6 @@ const Router: React.FC = () => {
       <Switch>
         <LoginRoute path="/login" />
         <Route component={ApplicationPage} path="/:urlName/apply" />
-        <Route component={IndividualEvent} path="/:urlName/events/:eventId" />
         <Route component={HomeRouter} path="/:urlName" />
         <Route exact component={HomeRouter} path="/" />
         <Redirect to="/login" />

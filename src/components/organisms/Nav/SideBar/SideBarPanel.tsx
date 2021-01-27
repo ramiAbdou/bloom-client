@@ -15,6 +15,7 @@ const SidebarPanel: React.FC = () => {
 
   const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
+  const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
   const { push } = useHistory();
   const [logout] = useMutation<boolean>({ name: 'logout', query: LOGOUT });
@@ -26,6 +27,7 @@ const SidebarPanel: React.FC = () => {
     // Clear the entities that we've fetched and reset the Bloom style guide
     // primary color.
     clearEntities();
+    setIsAuthenticated(false);
 
     const { style } = document.documentElement;
     style.setProperty('--primary', '#f58023');

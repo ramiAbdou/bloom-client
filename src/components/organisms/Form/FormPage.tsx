@@ -34,8 +34,14 @@ const FormPage: React.FC<FormPageProps> = ({
     (store) => store.setPageDisabled
   );
 
-  const currentPageIndex = pages.findIndex((element) => element.id === pageId);
-  const pageIndex = pages.findIndex((element) => element.id === id);
+  const currentPageIndex = pages.findIndex(
+    (element) => element.aliases?.includes(id) || element.id === id
+  );
+
+  const pageIndex = pages.findIndex(
+    (element) => element.aliases?.includes(id) || element.id === id
+  );
+
   const isSamePage = id === pageId;
   const { description, disabled, title } = pages[pageIndex] ?? {};
 

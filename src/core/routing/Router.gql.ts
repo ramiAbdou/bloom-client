@@ -55,7 +55,7 @@ export const GET_USER = query({
 
 // ## IS LOGGED IN
 
-export const IS_LOGGED_IN = query({ operation: 'isUserLoggedIn' }).query;
+export const IS_USER_LOGGED_IN = query({ operation: 'isUserLoggedIn' }).query;
 
 // ## LOGOUT
 

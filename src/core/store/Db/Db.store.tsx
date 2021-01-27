@@ -49,6 +49,8 @@ const dbStore: DbModel = {
       (typeId: string) => !byTypeId[typeId]?.isFree
     );
 
+    console.log(result?.primaryColor);
+
     // Updates the primary color (and gray's accordingly).
     if (result) updateDocumentColors(result.primaryColor ?? '#f58023');
 
@@ -132,13 +134,15 @@ const dbStore: DbModel = {
     }
   ),
 
-  setActiveEvent: action(({ entities, ...state }, eventId: string) => ({
-    ...state,
-    entities: {
-      ...entities,
-      events: { ...entities.events, activeId: eventId }
-    }
-  })),
+  setActiveEvent: action(({ entities, ...state }, eventId: string) => {
+    return {
+      ...state,
+      entities: {
+        ...entities,
+        events: { ...entities.events, activeId: eventId }
+      }
+    };
+  }),
 
   setIsAuthenticated: action((state, isAuthenticated) => ({
     ...state,

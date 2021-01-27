@@ -10,6 +10,8 @@ $PREF: 'c-modal';
   backdrop-filter: blur(2px);
   background-color: hsla($primary-hue, 5%, 20%, 0.75);
   z-index: 1000;
+
+  &--lock { backdrop-filter: blur(8px); }
 }
 
 // ## MODAL CONTAINER

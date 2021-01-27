@@ -20,15 +20,19 @@ import { ModalProps } from './Modal.types';
  * z-index so any clicks that hit outside of the modal content will hit this
  * background.
  */
-const ModalBackground: React.FC = () => {
+const ModalBackground: React.FC<Pick<ModalProps, 'lock'>> = ({ lock }) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const onClick = () => closeModal();
-  return <div key="c-modal-bg" className="c-modal-bg" onClick={onClick} />;
+
+  const onClick = () => !lock && closeModal();
+  const css = cx('c-modal-bg', { 'c-modal-bg--lock': lock });
+
+  return <div key="c-modal-bg" className={css} onClick={onClick} />;
 };
 
-const ModalCancel: React.FC = () => {
+const ModalCancel: React.FC<Pick<ModalProps, 'lock'>> = ({ lock }) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const onClick = () => closeModal();
+  if (lock) return null;
 
   return (
     <Button className="c-modal-cancel" onClick={onClick}>
@@ -86,6 +90,7 @@ const ModalContainer: React.FC = ({
 const Modal: React.FC<ModalProps> = ({
   children,
   className,
+  lock,
   id: MODAL_ID,
   ...containerProps
 }: ModalProps) => {
@@ -108,11 +113,13 @@ const Modal: React.FC<ModalProps> = ({
     <AnimatePresence>
       {shouldShowModal && (
         <>
-          <ModalBackground />
+          <ModalBackground lock={lock} />
+
           <ModalContainer {...containerProps}>
             <div className={css}>{children}</div>
           </ModalContainer>
-          <ModalCancel />
+
+          <ModalCancel lock={lock} />
         </>
       )}
     </AnimatePresence>,

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import useQuery from '@hooks/useQuery';
+import CheckInModal from '@modals/CheckIn/CheckIn';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -29,8 +30,9 @@ const IndividualEvent: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
   const setActiveEvent = useStoreActions(({ db }) => db.setActiveEvent);
+  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
-  const { loading } = useQuery<IEvent, GetEventArgs>({
+  const { data, loading } = useQuery<IEvent, GetEventArgs>({
     name: 'getEvent',
     query: GET_EVENT,
     schema: Schema.EVENT,
@@ -49,8 +51,12 @@ const IndividualEvent: React.FC = () => {
   });
 
   useEffect(() => {
-    if (eventId) setActiveEvent(eventId);
-  }, [eventId]);
+    if (data) {
+      setActiveEvent(data.id);
+      // @ts-ignore b/c type issues.
+      setActiveCommunity(data.community?.id);
+    }
+  }, [data]);
 
   if (loading || !isEventActive) return null;
 
@@ -69,6 +75,7 @@ const IndividualEvent: React.FC = () => {
       <IndividualEventAnalytics />
       <IndividualEventPanel id={eventId} />
       <CreateEventModal id={eventId} />
+      <CheckInModal id={eventId} />
     </div>
   );
 };

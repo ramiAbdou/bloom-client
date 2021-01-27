@@ -5,12 +5,14 @@ import { ChildrenProps } from '@constants';
 import { cx } from '@util/util';
 
 interface FormLabelProps extends ChildrenProps {
+  marginBottom?: number;
   required?: boolean;
   tooltip?: string;
 }
 
 const FormLabel: React.FC<FormLabelProps> = ({
   children,
+  marginBottom,
   required,
   tooltip
 }) => {
@@ -19,7 +21,7 @@ const FormLabel: React.FC<FormLabelProps> = ({
   const css = cx('o-form-label', { 'o-form-label--required': required });
 
   return (
-    <div className={css}>
+    <div className={css} style={{ marginBottom }}>
       <h4>{children}</h4>
       {tooltip && <InformationTip position="left" tooltip={tooltip} />}
     </div>

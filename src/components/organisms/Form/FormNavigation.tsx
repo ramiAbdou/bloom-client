@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React from 'react';
 
 import useTooltip from '@hooks/useTooltip';
@@ -7,12 +8,17 @@ import { FormNavigationPageProps } from './Form.types';
 
 const FormNavigationBar: React.FC<FormNavigationPageProps> = ({ id }) => {
   const disabled = FormStore.useStoreState(({ pages }) => {
-    return pages.find((page: FormNavigationPageProps) => page.id === id)
-      ?.disabled;
+    return pages.find(
+      (page: FormNavigationPageProps) =>
+        page.aliases?.includes(id) || page.id === id
+    )?.disabled;
   });
 
   const title = FormStore.useStoreState(({ pages }) => {
-    return pages.find((page: FormNavigationPageProps) => page.id === id)?.title;
+    return pages.find(
+      (page: FormNavigationPageProps) =>
+        page.aliases?.includes(id) || page.id === id
+    )?.title;
   });
 
   const setPageId = FormStore.useStoreActions((store) => store.setPageId);
@@ -37,7 +43,7 @@ const FormNavigation: React.FC = () => {
   return (
     <div className="o-form-nav-ctr">
       {pages.map(({ id }: FormNavigationPageProps) => {
-        return <FormNavigationBar key={id} id={id} />;
+        return <FormNavigationBar key={id ?? nanoid()} id={id} />;
       })}
     </div>
   );

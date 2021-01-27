@@ -63,6 +63,8 @@ export const GET_EVENT = query({
     {
       community: [
         'id',
+        'name',
+        'primaryColor',
         {
           questions: [
             'category',

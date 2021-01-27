@@ -96,6 +96,7 @@ export interface FormItemProps
     > {}
 
 export interface FormNavigationPageProps extends IdProps, TitleProps {
+  aliases?: string[];
   description?: string;
   disabled?: boolean;
   disableValidation?: boolean;

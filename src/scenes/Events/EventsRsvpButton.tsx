@@ -2,6 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
+import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -22,6 +23,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const startTime = useStoreState(({ db }) => {
@@ -52,7 +54,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      console.log('NOT AUTH');
+      showModal(`${ModalType.CHECK_IN}-${eventId}`);
       return;
     }
 

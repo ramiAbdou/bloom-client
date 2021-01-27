@@ -161,7 +161,10 @@ export const formModel: FormModel = {
       { pages, ...state },
       { disabled, id }: Pick<FormNavigationPageProps, 'disabled' | 'id'>
     ) => {
-      const index = pages.findIndex((page) => page.id === id);
+      const index = pages.findIndex(
+        (page) => page.aliases?.includes(id) || page.id === id
+      );
+
       pages[index].disabled = disabled;
       return { ...state, pages };
     }

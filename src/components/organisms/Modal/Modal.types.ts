@@ -11,6 +11,7 @@ export interface ModalProps
     ClassNameProps,
     IdProps,
     StyleProps {
+  lock?: boolean;
   onClose?: VoidFunction;
   options?: ModalOptions;
 }
