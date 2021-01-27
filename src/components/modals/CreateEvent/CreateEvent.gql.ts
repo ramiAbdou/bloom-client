@@ -32,6 +32,10 @@ export const CREATE_EVENT = mutation({
 
 // ## DELETE EVENT
 
+export interface DeleteEventArgs {
+  id: string;
+}
+
 export const DELETE_EVENT = mutation({
   operation: 'deleteEvent',
   variables: { id: { required: true } }

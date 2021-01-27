@@ -37,8 +37,8 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     showToast({ message: 'Event link copied to clipboard.' });
   };
 
-  const showOnSmall = !large && isGoing;
-  const showOnLarge = large && (!isAdmin || (isAdmin && !!isGoing));
+  const showOnSmall = !large && !!isGoing;
+  const showOnLarge = !!large && (!isAdmin || (isAdmin && !!isGoing));
 
   return (
     <Button
