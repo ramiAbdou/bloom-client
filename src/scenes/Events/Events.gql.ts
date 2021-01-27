@@ -44,6 +44,7 @@ export const DELETE_EVENT_GUEST = mutation({
 
 export interface GetEventArgs {
   eventId: string;
+  populate?: string[];
 }
 
 export const GET_EVENT = query({
@@ -106,7 +107,10 @@ export const GET_EVENT = query({
     }
   ],
   operation: 'getEvent',
-  variables: { eventId: { required: true } }
+  variables: {
+    eventId: { required: true },
+    populate: { required: false, type: '[String!]' }
+  }
 }).query;
 
 // ## GET EVENT ATTENDEES SERIES
@@ -114,7 +118,10 @@ export const GET_EVENT = query({
 export const GET_EVENT_ATTENDEES_SERIES = query({
   fields: ['id', { attendeesSeries: ['name', 'value'] }],
   operation: 'getEvent',
-  variables: { eventId: { required: true } }
+  variables: {
+    eventId: { required: true },
+    populate: { required: false, type: '[String!]' }
+  }
 }).query;
 
 // ## GET EVENT GUESTS SERIES
@@ -122,7 +129,10 @@ export const GET_EVENT_ATTENDEES_SERIES = query({
 export const GET_EVENT_GUESTS_SERIES = query({
   fields: ['id', { guestsSeries: ['name', 'value'] }],
   operation: 'getEvent',
-  variables: { eventId: { required: true } }
+  variables: {
+    eventId: { required: true },
+    populate: { required: false, type: '[String!]' }
+  }
 }).query;
 
 // ## GET PAST EVENTS

@@ -27,7 +27,7 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
 };
 
 const EventsEditEventButton: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const eventId = useStoreState(({ db }) => db.event?.id);
 
   const hasPast = useStoreState(({ db }) => {
@@ -54,7 +54,7 @@ const EventsEditEventButton: React.FC = () => {
  * - View Event Recording (Past Event)
  */
 const IndividualEventActions: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const eventId = useStoreState(({ db }) => db.event?.id);
   const guests = useStoreState(({ db }) => db.event?.guests);
 
@@ -71,7 +71,7 @@ const IndividualEventActions: React.FC = () => {
 
     return guests
       ?.map((guestId: string) => byGuestsId[guestId])
-      ?.some((guest: IEventGuest) => guest.member === db.member.id);
+      ?.some((guest: IEventGuest) => guest.member === db.member?.id);
   });
 
   return (

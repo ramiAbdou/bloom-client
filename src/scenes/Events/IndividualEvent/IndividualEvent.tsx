@@ -14,6 +14,7 @@ import IndividualEventAttendeeList from './IndividualEventAttendeeList';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventPanel from './IndividualEventPanel';
+import IndividualEventWrapper from './IndividualEventWrapper';
 
 const IndividualEventHeader: React.FC = () => (
   <div className="s-events-individual-header">
@@ -28,21 +29,32 @@ const IndividualEvent: React.FC = () => {
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
   const setActiveEvent = useStoreActions(({ db }) => db.setActiveEvent);
 
-  useQuery<IEvent, GetEventArgs>({
+  const { loading } = useQuery<IEvent, GetEventArgs>({
     name: 'getEvent',
     query: GET_EVENT,
     schema: Schema.EVENT,
-    variables: { eventId }
+    variables: {
+      eventId,
+      populate: [
+        'attendees.member.data',
+        'attendees.member.type',
+        'attendees.member.user',
+        'community.questions',
+        'guests.member.data',
+        'guests.member.type',
+        'guests.member.user'
+      ]
+    }
   });
 
   useEffect(() => {
     if (eventId) setActiveEvent(eventId);
   }, [eventId]);
 
-  if (!isEventActive) return null;
+  if (loading || !isEventActive) return null;
 
   return (
-    <>
+    <IndividualEventWrapper>
       <IndividualEventHeader />
 
       <div className="s-events-individual-grid">
@@ -54,7 +66,7 @@ const IndividualEvent: React.FC = () => {
       <IndividualEventAnalytics />
       <IndividualEventPanel id={eventId} />
       <CreateEventModal id={eventId} />
-    </>
+    </IndividualEventWrapper>
   );
 };
 

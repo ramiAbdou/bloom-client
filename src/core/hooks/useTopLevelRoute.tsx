@@ -1,7 +1,6 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-import { RouteType } from '@constants';
-import { useStoreState } from '@store/Store';
+import { RouteType, UrlNameProps } from '@constants';
 
 /**
  * Returns the first active route of the community. Doesn't care about the
@@ -12,7 +11,7 @@ import { useStoreState } from '@store/Store';
  * @example /colorstack/analytics/dues => analytics
  */
 const useTopLevelRoute = (): RouteType => {
-  const urlName = useStoreState(({ db }) => db.community?.urlName);
+  const { urlName } = useParams() as UrlNameProps;
 
   const { pathname } = useHistory().location;
   const route = pathname.slice(urlName?.length + 2);

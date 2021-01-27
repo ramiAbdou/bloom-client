@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import ApplicationPage from '@scenes/Application/Application';
+import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import HomeRouter from './HomeRouter';
 
 /**
@@ -15,6 +16,7 @@ const Router: React.FC = () => (
     <Switch>
       <LoginRoute path="/login" />
       <Route component={ApplicationPage} path="/:urlName/apply" />
+      <Route component={IndividualEvent} path="/:urlName/events/:eventId" />
       <Route component={HomeRouter} path="/:urlName" />
       <Route exact component={HomeRouter} path="/" />
       <Redirect to="/login" />

@@ -29,11 +29,11 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return byId[eventId]?.startTime;
   });
 
-  const memberId = useStoreState(({ db }) => db.member.id);
+  const memberId = useStoreState(({ db }) => db.member?.id);
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
-    const guests = new Set(db.member.guests);
+    const guests = new Set(db.member?.guests);
     const event: IEvent = byEventId[eventId];
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });

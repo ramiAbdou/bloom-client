@@ -82,7 +82,7 @@ const IndividualEventGuestsAnalytics: React.FC = () => {
 const IndividualEventAnalytics: React.FC = () => {
   const attendeesSeries = useStoreState(({ db }) => db.event?.attendeesSeries);
   const guestsSeries = useStoreState(({ db }) => db.event?.guestsSeries);
-  const isAdmin = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
 
   // If not admin or no RSVP's have been collected, don't show!
   if (

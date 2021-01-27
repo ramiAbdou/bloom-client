@@ -21,12 +21,12 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
-    const guests = new Set(db.member.guests);
+    const guests = new Set(db.member?.guests);
     const event: IEvent = byEventId[eventId];
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
 
-  const isAdmin = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const isUpcoming = day().isBefore(day(startTime));
