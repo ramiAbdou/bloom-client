@@ -10,12 +10,11 @@ export interface BaseEntity {
 
 // ## COMMUNITY
 
-export interface ICommunity {
+export interface ICommunity extends BaseEntity {
   application?: IdString;
   autoAccept?: boolean;
   canCollectDues?: boolean;
   events?: IdString[];
-  id: IdString;
   integrations: IdString;
   logoUrl: string;
   members: IdString[];
@@ -29,7 +28,7 @@ export interface ICommunity {
 
 // ## COMMUNITY APPLICATION
 
-export interface ICommunityApplication {
+export interface ICommunityApplication extends BaseEntity {
   description: string;
   title: string;
 }
@@ -72,7 +71,7 @@ export interface IEventGuest extends BaseEntity {
 
 // ## INTEGRATIONS
 
-export interface IIntegrations {
+export interface IIntegrations extends BaseEntity {
   isMailchimpAuthenticated: boolean;
   mailchimpLists: { name: string; id: string }[];
   mailchimpListId: string;
@@ -89,17 +88,15 @@ export interface IPaymentMethod {
   zipCode: string;
 }
 
-export interface IMember {
+export interface IMember extends BaseEntity {
   attendees: IdString[];
   autoRenew: boolean;
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
   community: IdString;
-  createdAt: string;
   data: IdString[];
   duesStatus: 'Active' | 'Inactive';
   guests: IdString[];
-  id: IdString;
   joinedAt: string;
   paymentMethod: IPaymentMethod;
   payments: IdString[];
@@ -111,28 +108,24 @@ export interface IMember {
 
 // ## MEMBER DATA
 
-export interface IMemberData {
-  id: IdString;
+export interface IMemberData extends BaseEntity {
   question: IdString;
   value: string | string[];
 }
 
 // ## MEMBER PAYMENT
 
-export interface IMemberPayment {
+export interface IMemberPayment extends BaseEntity {
   amount: number;
-  createdAt: string;
   stripeInvoiceUrl: string;
-  id: IdString;
   member: IdString;
   type: IdString;
 }
 
 // ## MEMBER TYPE
 
-export interface IMemberType {
+export interface IMemberType extends BaseEntity {
   amount: number;
-  id: IdString;
   isFree: boolean;
   name: string;
   recurrence: 'LIFETIME' | 'MONTHLY' | 'YEARLY';
@@ -140,9 +133,8 @@ export interface IMemberType {
 
 // ## QUESTION
 
-export interface IQuestion {
+export interface IQuestion extends BaseEntity {
   category: QuestionCategory;
-  id: IdString;
   inApplication: boolean;
   inApplicantCard: boolean;
   inDirectoryCard: boolean;
@@ -158,13 +150,12 @@ export interface IQuestion {
 
 // ## USER
 
-export interface IUser {
+export interface IUser extends BaseEntity {
   currentLocation: string;
   email: string;
   facebookUrl: string;
   firstName: string;
   gender?: 'Male' | 'Female' | 'Non-Binary' | 'Prefer Not to Say';
-  id: IdString;
   instagramUrl: string;
   lastName: string;
   linkedInUrl: string;

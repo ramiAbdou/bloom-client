@@ -15,17 +15,19 @@ import { mergeStrategy } from './schema';
 
 interface AddEntitiesArgs {
   entities: IMember[];
-  table: 'members';
+  table: keyof IEntities;
 }
+
+export type DeleteEntitiesRef = {
+  id: string;
+  column: string;
+  table: keyof IEntities;
+};
 
 interface DeleteEntitiesArgs {
   ids: string[];
-  refs?: {
-    id: string;
-    column: string;
-    table: 'events' | 'guests' | 'members';
-  }[];
-  table: 'events' | 'guests' | 'members';
+  refs?: DeleteEntitiesRef[];
+  table: keyof IEntities;
 }
 
 interface MergeEntitiesArgs {

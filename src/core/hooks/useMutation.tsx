@@ -1,33 +1,9 @@
 import { useMutation as useGraphQlHooksMutation } from 'graphql-hooks';
-import { Schema } from 'normalizr';
 import { useEffect, useMemo } from 'react';
 
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-
-export type UseMutationArgs<T, S> = {
-  deleteArgs?: {
-    ids: string[];
-    refs?: {
-      id: string;
-      column: string;
-      table: 'events' | 'guests' | 'members';
-    }[];
-    table: 'events' | 'guests' | 'members';
-  };
-  format?: (data: T) => any;
-  name: string;
-  query: string;
-  schema?: Schema<any>;
-  variables?: S;
-};
-
-type UseMutationResult<T> = { data: T; error: string; loading: boolean };
-
-export type UseMutation<T, S> = [
-  (variables?: S) => Promise<UseMutationResult<T>>,
-  UseMutationResult<T>
-];
+import { UseMutationArgs, UseMutationResult } from './useMutation.types';
 
 function useMutation<T = any, S = any>({
   deleteArgs,
@@ -36,7 +12,7 @@ function useMutation<T = any, S = any>({
   name,
   schema,
   variables: initialVariables
-}: UseMutationArgs<T, S>): UseMutation<T, S> {
+}: UseMutationArgs<T, S>): UseMutationResult<T, S> {
   const deleteEntities = useStoreActions(({ db }) => db.deleteEntities);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 

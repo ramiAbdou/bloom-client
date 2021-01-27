@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { IdProps } from '@constants';
+import usePrevious from '@hooks/usePrevious';
 import FormStore from '@organisms/Form/Form.store';
 import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
@@ -9,7 +10,6 @@ import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { RadioOptionProps } from '../../components/molecules/Radio/Radio.types';
 import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
-import usePrevious from '../../core/hooks/usePrevious';
 import ApplicationPaymentSection from './ApplicationPaymentSection';
 
 const ApplicationSelectTypeCardContent: React.FC<IdProps> = ({ id }) => {
