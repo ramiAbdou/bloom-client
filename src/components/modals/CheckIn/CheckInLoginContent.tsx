@@ -3,6 +3,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import URLBuilder from 'util/URLBuilder';
 
+import Button from '@atoms/Button/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
 import { APP, ShowProps } from '@constants';
@@ -11,8 +12,8 @@ import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { cx } from '@util/util';
 import { getCheckInErrorMessage, LoginError } from './CheckIn.util';
+import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {
   const { pathname } = useLocation();
@@ -25,10 +26,16 @@ const CheckInGoogleButton: React.FC = () => {
     .addParam('state', pathname);
 
   return (
-    <a href={url}>
+    <Button
+      fill
+      large
+      className="mo-check-in-google"
+      href={url}
+      openTab={false}
+    >
       <GoogleLogo style={{ height: 20, width: 20 }} />
       Sign In with Google
-    </a>
+    </Button>
   );
 };
 
@@ -41,10 +48,8 @@ const LoginCardGoogleContainer: React.FC = () => {
   // get shown again.
   if (cookie) Cookies.remove('LOGIN_ERROR');
 
-  const css = cx('s-login-google', { 's-login-google--sm': message });
-
   return (
-    <div className={css}>
+    <div>
       <CheckInGoogleButton />
       <ErrorMessage marginBottom={0}>{message}</ErrorMessage>
     </div>
@@ -52,10 +57,10 @@ const LoginCardGoogleContainer: React.FC = () => {
 };
 
 const LoginCardEmailForm: React.FC = () => {
-  // const sendLoginLink = useSendLoginLink();
-  // onSubmit={sendLoginLink}
+  const sendLoginLink = useSendLoginLink();
+
   return (
-    <Form className="s-login-email-form">
+    <Form onSubmit={sendLoginLink}>
       <FormItem
         required
         category="EMAIL"

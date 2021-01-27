@@ -17,38 +17,21 @@ $PREF: 's-login';
   @include M { box-sizing: border-box; width: 90%; }
 
   > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
-  > form > div { margin: $md 0; }
 }
 
 // ## LOGIN HEADER - Contains the network image as well as welcome message.
 
-.#{$PREF}-header { @extend .flex-acsb; }
-.#{$PREF}-header > div { margin-bottom: $lg; }
-.#{$PREF}-header > div > p { @extend .meta; }
-.#{$PREF}-header > svg {
-  margin-bottom: $lg;
-  opacity: 0.75;
+.#{$PREF}-header {
+  @extend .flex-acsb;
 
-  @include RESP (margin-top, -$xxl, -$xl, -$xl);
-  @include RESP (margin-left, $lg, $md, $sm);
-}
+  > div { margin-bottom: $lg; }
+  > div > p { @extend .meta; }
 
-// ## GOOGLE BUTTON
-
-.#{$PREF}-google {
-  margin-bottom: $md;
-  &--sm { margin-bottom: $sm; }
-
-  > a {
-    @extend .c-btn;
-    @extend .c-btn--lg;
-    @extend .meta--lg;
-
-    border: 1px $gray-5 solid;
-    color: $gray-1;
-
-    @include HOVER { background-color: $gray-6; }
+  > svg {
+    margin-bottom: $lg;
+    opacity: 0.75;
+  
+    @include RESP (margin-top, -$xxl, -$xl, -$xl);
+    @include RESP (margin-left, $lg, $md, $sm);
   }
-
-  > a > svg { margin-right: $xs; }
 }

@@ -1,0 +1,14 @@
+$PREF: 'mo-check-in';
+
+// ## CHECK IN GOOGLE BUTTON
+
+.#{$PREF}-google {
+  @extend .meta--lg;
+  
+  border: 1px $gray-5 solid;
+  color: $gray-1;
+
+  @include HOVER { background-color: $gray-6; }
+  
+  > svg { margin-right: $xs; }
+}

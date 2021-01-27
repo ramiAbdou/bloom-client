@@ -14,6 +14,7 @@ export interface ButtonProps
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
+  openTab?: boolean;
   primary?: boolean;
   red?: boolean;
   secondary?: boolean;
@@ -54,6 +55,7 @@ const Button = forwardRef(
       loading,
       loadingText,
       onClick,
+      openTab = true,
       primary,
       red,
       secondary,
@@ -80,9 +82,9 @@ const Button = forwardRef(
       if (href) {
         // If the browser is Safari, just change the location of the current
         // tab, but if not, open a new window with the URL.
-        if (navigator.vendor === 'Apple Computer, Inc.') {
+        if (navigator.vendor === 'Apple Computer, Inc.' || !openTab) {
           window.location.href = href;
-        } else window.open(href, '_blank');
+        } else window.open(href);
       }
     };
 

@@ -5,9 +5,8 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import {
   SEND_TEMPORARY_LOGIN_LINK,
   SendTemporaryLoginLinkArgs
-} from './Login.gql';
-import { LoginError } from './Login.types';
-import { getLoginErrorMessage } from './Login.util';
+} from './CheckIn.gql';
+import { getCheckInErrorMessage, LoginError } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmit => {
   const { push } = useHistory();
@@ -26,7 +25,7 @@ const useSendLoginLink = (): OnFormSubmit => {
     const { error } = await sendTemporaryLoginLink({ email });
 
     if (error) {
-      setErrorMessage(getLoginErrorMessage(error as LoginError));
+      setErrorMessage(getCheckInErrorMessage(error as LoginError));
       return;
     }
 

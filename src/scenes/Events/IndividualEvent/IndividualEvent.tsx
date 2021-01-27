@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 
 import { ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
+import Loader from '@molecules/Loader/Loader';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -35,7 +36,7 @@ const IndividualEvent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
-  const { data, loading } = useQuery<IEvent, GetEventArgs>({
+  const { data, error, loading } = useQuery<IEvent, GetEventArgs>({
     name: 'getEvent',
     query: GET_EVENT,
     schema: Schema.EVENT,
@@ -67,7 +68,9 @@ const IndividualEvent: React.FC = () => {
     }
   }, [isMembersOnly, isAuthenticated]);
 
-  if (loading || !isEventActive) return null;
+  if (error && !isAuthenticated) return <Redirect to="/login" />;
+  if (loading) return <Loader />;
+  if (!isEventActive) return null;
 
   const css = cx('', { 's-events-individual--public': !isAuthenticated });
 

@@ -44,7 +44,7 @@ const CheckInModal: React.FC<CheckInModal> = ({ id: eventId, lock }) => {
 
   return (
     <Modal id={`${ModalType.CHECK_IN}-${eventId}`} lock={lock}>
-      <Form options={{ multiPage: true }} pages={pages}>
+      <Form options={{ multiPage: true }} pages={pages} show={false}>
         <FormNavigation />
         <CheckInChoosePage />
         <CheckInFinishPage />

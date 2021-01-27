@@ -11,11 +11,22 @@ const CheckInPublicForm: React.FC<ShowProps> = ({ show }) => {
   return (
     <div>
       <Row equal spacing="xs">
-        <FormItem category="FIRST_NAME" title="First Name" type="SHORT_TEXT" />
-        <FormItem category="LAST_NAME" title="Last Name" type="SHORT_TEXT" />
+        <FormItem
+          required
+          category="FIRST_NAME"
+          title="First Name"
+          type="SHORT_TEXT"
+        />
+
+        <FormItem
+          required
+          category="LAST_NAME"
+          title="Last Name"
+          type="SHORT_TEXT"
+        />
       </Row>
 
-      <FormItem category="EMAIL" title="Email" type="SHORT_TEXT" />
+      <FormItem required category="EMAIL" title="Email" type="SHORT_TEXT" />
 
       <FormSubmitButton>Finish Checking-In</FormSubmitButton>
     </div>

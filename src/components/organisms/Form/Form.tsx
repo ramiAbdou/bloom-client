@@ -11,7 +11,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   children,
   onSubmit,
   onSubmitDeps,
-  pages
+  pages,
+  show
 }) => {
   const items = FormStore.useStoreState((store) => store.items, deepequal);
   const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
@@ -57,6 +58,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     [items, ...(onSubmitDeps || [])]
   );
 
+  if (show === false) return <>{children}</>;
   const css = cx('o-form', { [className]: className });
 
   return (
