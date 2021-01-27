@@ -22,6 +22,7 @@ const Toast: React.FC<ToastOptions> = ({
   const { mutationOnUndoFn } = useToastMutation({
     id,
     mutationArgsOnComplete,
+    mutationArgsOnUndo,
     wasUndid
   });
 

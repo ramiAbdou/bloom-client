@@ -27,10 +27,9 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   });
 
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
-
-  const isPast = day().isAfter(day(startTime));
-  const isUpcoming = day().isBefore(day(startTime));
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+
+  const isUpcoming = day().isBefore(day(startTime));
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
@@ -38,14 +37,15 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     showToast({ message: 'Event link copied to clipboard.' });
   };
 
+  const showOnSmall = !large && isGoing;
+  const showOnLarge = large && (!isAdmin || (isAdmin && !!isGoing));
+
   return (
     <Button
       fill
       secondary
       large={large}
-      show={
-        isUpcoming && (large || !!isGoing) && (!large || (!isAdmin && isPast))
-      }
+      show={isUpcoming && (showOnSmall || showOnLarge)}
       onClick={onClick}
     >
       Share Event
