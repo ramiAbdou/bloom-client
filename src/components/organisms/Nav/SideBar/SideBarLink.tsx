@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import { ModalType, OnClickProps } from '@constants';
+import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import useActiveRoute from '../../../../core/hooks/useActiveRoute';
 import { LinkOptions } from '../Nav.types';
 
 interface SidebarLinkProps extends LinkOptions, OnClickProps {}
@@ -52,7 +52,7 @@ const SideBarLink: React.FC<SidebarLinkProps> = (props) => {
   const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
 
   const { url } = useRouteMatch();
-  const isActive = useActiveRoute() === to;
+  const isActive = useTopLevelRoute() === to;
 
   // If onClick is supplied, means it is an action.
   if (onClick) return <SideBarLinkAction {...props} />;

@@ -2,7 +2,7 @@ import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import { PanelType } from '@constants';
-import useActiveRoute from '@hooks/useActiveRoute';
+import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
@@ -38,7 +38,7 @@ const SideBarProfile: React.FC = () => {
   });
 
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
-  const activeRoute = useActiveRoute();
+  const activeRoute = useTopLevelRoute();
   const isActive = ['membership', 'profile'].includes(activeRoute);
 
   const onClick = () => showPanel(PanelType.PROFILE);

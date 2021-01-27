@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-import useActiveRoute from '@hooks/useActiveRoute';
+import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { cx } from '@util/util';
 import { LinkOptions } from '../Nav.types';
 
@@ -12,7 +12,7 @@ import { LinkOptions } from '../Nav.types';
  */
 const BottomBarLink: React.FC<LinkOptions> = ({ Icon, to, title }) => {
   const { url } = useRouteMatch();
-  const isActive = useActiveRoute() === to;
+  const isActive = useTopLevelRoute() === to;
 
   const css = cx('o-bottom-bar-link', {
     'o-bottom-bar-link--active': isActive

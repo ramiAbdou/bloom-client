@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
 import { ModalType } from '@constants';
-import useActiveRoute from '@hooks/useActiveRoute';
 import useQuery from '@hooks/useQuery';
+import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import Form from '@organisms/Form/Form';
 import FormNavigation from '@organisms/Form/FormNavigation';
 import FormPage from '@organisms/Form/FormPage';
@@ -106,7 +106,7 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   type
 }) => {
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
-  const route = useActiveRoute();
+  const route = useTopLevelRoute();
 
   const { loading } = useQuery<ICommunity>({
     name: 'getIntegrations',
