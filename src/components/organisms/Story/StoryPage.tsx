@@ -5,6 +5,7 @@ import LoadingHeader from '@containers/Loading/LoadingHeader';
 import { cx } from '@util/util';
 import StoryStore from './Story.store';
 import { StoryPageBranch, StoryPageProps } from './Story.types';
+import useUpdateDisabledPage from './useUpdateDisabledPage';
 
 const StoryPage: React.FC<StoryPageProps> = ({
   branchId,
@@ -21,8 +22,10 @@ const StoryPage: React.FC<StoryPageProps> = ({
   const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
   const setPage = StoryStore.useStoreActions((store) => store.setPage);
 
+  useUpdateDisabledPage(id);
+
   useEffect(() => {
-    setPage({ branchId, branches, disabled: true, id });
+    setPage({ branchId, branches, id });
   }, []);
 
   if (id !== pageId) return null;
@@ -51,22 +54,3 @@ const StoryPage: React.FC<StoryPageProps> = ({
 };
 
 export default StoryPage;
-
-// const setPageDisabled = StoryStore.useStoreActions(
-//   (store) => store.setPageDisabled
-// );
-
-// const currentPageIndex = pages.findIndex((element) => element.id === id);
-
-// const pageIndex = pages.findIndex((element) => element.id === id);
-// const { disabled } = pages[pageIndex] ?? {};
-
-// if (Array.isArray(metadata)) {
-
-// }
-
-// useEffect(() => {
-//   if (pageIndex >= 0 && disabled) {
-//     setPageDisabled({ disabled: pageIndex > currentPageIndex, id });
-//   }
-// }, [disabled, pageIndex, isSamePage]);
