@@ -6,14 +6,18 @@ import StoryPage from '@organisms/Story/StoryPage';
 import CheckInGuestForm from './CheckInGuestForm';
 import CheckInLoginContent from './CheckInLoginContent';
 
-const CheckInFinishPage: React.FC = () => {
+interface CheckInFinishPageProps {
+  lock?: boolean;
+}
+
+const CheckInFinishPage: React.FC<CheckInFinishPageProps> = ({ lock }) => {
   const branchId = StoryStore.useStoreState(({ getPage }) => {
     return getPage('FINISH')?.branchId;
   });
 
   return (
     <StoryPage
-      branchId="FINISH_GUEST"
+      branchId="FINISH_MEMBER"
       branches={{
         FINISH_GUEST: {
           description: deline`
@@ -22,7 +26,12 @@ const CheckInFinishPage: React.FC = () => {
           `,
           title: 'Finish Checking-In'
         },
-        FINISH_MEMBER: { title: 'Sign In to Continue' }
+        FINISH_MEMBER: {
+          description:
+            lock &&
+            'You need to be a member to view this event. Sign in to continue.',
+          title: 'Sign In to Continue'
+        }
       }}
       id="FINISH"
     >

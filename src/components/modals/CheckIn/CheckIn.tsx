@@ -15,7 +15,7 @@ const CheckInModal: React.FC<CheckInModal> = ({ id: eventId, lock }) => {
     <Modal id={`${ModalType.CHECK_IN}-${eventId}`} lock={lock}>
       <Story>
         <CheckInChoosePage show={!lock} />
-        <CheckInFinishPage />
+        <CheckInFinishPage lock={lock} />
         <StoryConfirmationPage />
       </Story>
     </Modal>
