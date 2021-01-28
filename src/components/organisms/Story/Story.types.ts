@@ -14,6 +14,7 @@ export interface StoryPageBranch extends IdProps, LoadingProps, TitleProps {
 export interface StoryPageProps extends ChildrenProps, ClassNameProps {
   branchId?: string;
   branches?: Record<string, StoryPageBranch>;
+  confirmation?: boolean;
   disabled?: boolean;
   id?: string | 'CONFIRMATION';
 }

@@ -28,11 +28,13 @@ const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
 };
 
 const StoryNavigation: React.FC = () => {
+  const pageId = StoryStore.useStoreState((store) => store.pageId);
+
   const pages = StoryStore.useStoreState((store) =>
     store.pages.filter(({ id }) => id !== 'CONFIRMATION')
   );
 
-  if (pages?.length <= 1) return null;
+  if (pageId === 'CONFIRMATION' || pages?.length <= 1) return null;
 
   return (
     <div className="o-story-nav-ctr">

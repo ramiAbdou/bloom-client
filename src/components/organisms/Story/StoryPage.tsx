@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 
+import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import LoadingHeader from '@containers/Loading/LoadingHeader';
 import { cx } from '@util/util';
 import StoryStore from './Story.store';
@@ -12,10 +13,11 @@ const StoryPage: React.FC<StoryPageProps> = ({
   branches,
   children,
   className,
+  confirmation,
   id
 }) => {
   const branchKeys = Object.keys(branches);
-  id = id ?? branchKeys[0];
+  id = confirmation ? 'CONFIRMATION' : id ?? branchKeys[0];
   branchId = branchId ?? id;
 
   const pageId = StoryStore.useStoreState((store) => store.pageId);
@@ -32,6 +34,14 @@ const StoryPage: React.FC<StoryPageProps> = ({
 
   const currentBranch: StoryPageBranch = page.branches[page.branchId];
   const { description, iconUrl, loading, title } = currentBranch;
+
+  if (confirmation) {
+    return (
+      <ConfirmationScreen closeButton title={title}>
+        <p>{description}</p>
+      </ConfirmationScreen>
+    );
+  }
 
   const css = cx('o-story-page', { [className]: className });
 

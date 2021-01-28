@@ -1,5 +1,6 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import StoryStore from '@organisms/Story/Story.store';
 import {
   CREATE_EVENT_GUEST,
   CreateEventGuestArgs
@@ -17,11 +18,11 @@ const useCreatePublicEventGuest = () => {
     schema: Schema.EVENT_GUEST
   });
 
-  const onSubmit = async ({
-    goToNextPage,
-    items,
-    setErrorMessage
-  }: OnFormSubmitArgs) => {
+  const goToNextPage = StoryStore.useStoreActions(
+    (store) => store.goToNextPage
+  );
+
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const firstName = items.find(({ category }) => category === 'FIRST_NAME')
       ?.value;
 

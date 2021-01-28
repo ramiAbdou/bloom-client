@@ -4,8 +4,8 @@ import { IdProps, ModalType } from '@constants';
 import Modal from '@organisms/Modal/Modal';
 import { ModalProps } from '@organisms/Modal/Modal.types';
 import Story from '@organisms/Story/Story';
-import StoryConfirmationPage from '@organisms/Story/StoryConfirmationPage';
 import CheckInChoosePage from './CheckInChoosePage';
+import CheckInConfirmation from './CheckInConfirmation';
 import CheckInFinishPage from './CheckInFinishPage';
 
 interface CheckInModal extends IdProps, Pick<ModalProps, 'lock'> {}
@@ -16,7 +16,7 @@ const CheckInModal: React.FC<CheckInModal> = ({ id: eventId, lock }) => {
       <Story>
         <CheckInChoosePage show={!lock} />
         <CheckInFinishPage lock={lock} />
-        <StoryConfirmationPage />
+        <CheckInConfirmation />
       </Story>
     </Modal>
   );
