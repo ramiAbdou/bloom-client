@@ -1,22 +1,26 @@
 import React from 'react';
 
-import FormStore from '@organisms/Form/Form.store';
-import FormPage from '@organisms/Form/FormPage';
+import StoryStore from '@organisms/Story/Story.store';
+import StoryPage from '@organisms/Story/StoryPage';
 import CheckInGuestForm from './CheckInGuestForm';
 import CheckInLoginContent from './CheckInLoginContent';
 
 const CheckInFinishPage: React.FC = () => {
-  const pageId = FormStore.useStoreState((store) => store.pageId);
-
-  const metadata = pageId?.includes('FINISH')
-    ? pageId.slice(pageId.indexOf('-') + 1)
-    : '';
+  const page = StoryStore.useStoreState(({ getPage }) => getPage('FINISH'));
+  const branchId = page?.branchId;
 
   return (
-    <FormPage id={`FINISH-${metadata ?? 'YES'}`}>
-      <CheckInLoginContent show={metadata === 'YES'} />
-      <CheckInGuestForm show={metadata === 'NO'} />
-    </FormPage>
+    <StoryPage
+      branchId="FINISH_MEMBER"
+      branches={{
+        FINISH_GUEST: { title: 'Finish Checking-In' },
+        FINISH_MEMBER: { title: 'Finish Checking-In' }
+      }}
+      id="FINISH"
+    >
+      <CheckInLoginContent show={branchId === 'FINISH_MEMBER'} />
+      <CheckInGuestForm show={branchId === 'FINISH_GUEST'} />
+    </StoryPage>
   );
 };
 

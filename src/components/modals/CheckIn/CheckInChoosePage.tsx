@@ -1,25 +1,43 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
+import { ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
-import FormStore from '@organisms/Form/Form.store';
-import FormPage from '@organisms/Form/FormPage';
+import StoryStore from '@organisms/Story/Story.store';
+import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 import FormLabel from '../../organisms/Form/FormLabel';
 
-const CheckInChoosePage: React.FC = () => {
+const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   const name = useStoreState(({ db }) => {
     const { byId: byCommunityId } = db.entities.communities;
     return byCommunityId[db.event?.community]?.name;
   });
 
-  const setPageId = FormStore.useStoreActions((store) => store.setPageId);
+  const setCurrentPage = StoryStore.useStoreActions(
+    (store) => store.setCurrentPage
+  );
 
-  const onPrimaryClick = () => setPageId('FINISH-YES');
-  const onSecondaryClick = () => setPageId('FINISH-NO');
+  if (show === false) return null;
+
+  const onPrimaryClick = () => {
+    setCurrentPage({ branchId: 'FINISH_MEMBER', id: 'FINISH' });
+  };
+
+  const onSecondaryClick = () => {
+    setCurrentPage({ branchId: 'FINISH_GUEST', id: 'FINISH' });
+  };
 
   return (
-    <FormPage id="CHOOSE">
+    <StoryPage
+      branches={{
+        IS_MEMBER: {
+          description:
+            'This event records attendance, please check-in to continue.',
+          title: 'Check In'
+        }
+      }}
+    >
       <FormLabel marginBottom={16}>{`Are you a member of ${name}?`}</FormLabel>
       <Row equal>
         <Button primary onClick={onPrimaryClick}>
@@ -30,7 +48,7 @@ const CheckInChoosePage: React.FC = () => {
           No
         </Button>
       </Row>
-    </FormPage>
+    </StoryPage>
   );
 };
 

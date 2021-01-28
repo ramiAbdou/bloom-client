@@ -12,8 +12,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   children,
   onSubmit,
   onSubmitDeps,
-  pages,
-  show
+  pages
 }) => {
   const items = FormStore.useStoreState((store) => store.items, deepequal);
   const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
@@ -59,20 +58,12 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     [items, ...(onSubmitDeps || [])]
   );
 
-  const body = (
-    <>
-      {pages?.length && <FormNavigation />}
-      {children}
-    </>
-  );
-
-  if (show === false) return body;
-
   const css = cx('o-form', { [className]: className });
 
   return (
     <form className={css} onSubmit={onFormSubmit}>
-      {body}
+      {pages?.length && <FormNavigation />}
+      {children}
     </form>
   );
 };

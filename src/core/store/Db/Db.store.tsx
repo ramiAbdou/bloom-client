@@ -49,8 +49,6 @@ const dbStore: DbModel = {
       (typeId: string) => !byTypeId[typeId]?.isFree
     );
 
-    console.log(result?.primaryColor);
-
     // Updates the primary color (and gray's accordingly).
     if (result) updateDocumentColors(result.primaryColor ?? '#f58023');
 

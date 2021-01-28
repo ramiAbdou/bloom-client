@@ -61,9 +61,6 @@ const HomeRouter = () => {
   const route = useTopLevelRoute();
   const { url } = useRouteMatch();
 
-  const params = useParams();
-  console.log(params);
-
   const activeCommunityId = useStoreState(({ db }) => db.community?.id);
   const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);

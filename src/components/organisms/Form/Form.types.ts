@@ -6,7 +6,6 @@ import {
   IdProps,
   QuestionCategory,
   QuestionType,
-  ShowProps,
   TitleProps
 } from '@constants';
 import { RadioOptionProps } from '../../molecules/Radio/Radio.types';
@@ -108,7 +107,7 @@ export interface FormOptions {
   multiPage?: boolean;
 }
 
-export interface FormProps extends ChildrenProps, ClassNameProps, ShowProps {
+export interface FormProps extends ChildrenProps, ClassNameProps {
   questions?: FormItemData[];
   options?: FormOptions;
   pages?: FormNavigationPageProps[];
