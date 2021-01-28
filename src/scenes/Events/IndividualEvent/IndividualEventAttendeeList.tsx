@@ -13,7 +13,10 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
 interface IndividualEventAttendeeProps
-  extends Pick<IUser, 'firstName' | 'id' | 'lastName' | 'pictureUrl'> {
+  extends Pick<
+    IUser,
+    'email' | 'firstName' | 'id' | 'lastName' | 'pictureUrl'
+  > {
   memberId: string;
 }
 
@@ -48,11 +51,15 @@ const IndividualEventAttendeeListContent: React.FC = () => {
     return db.event?.attendees
       ?.map((attendeeId: string) => byAttendeeId[attendeeId])
       ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'DESC'))
-      ?.map((attendee: IEventAttendee) => byMemberId[attendee.member])
-      ?.map((member: IMember) => ({
-        ...byUserId[member.user],
-        memberId: member.id
-      }));
+      ?.reduce((acc, attendee: IEventAttendee) => {
+        if (attendee.member) {
+          const member: IMember = byMemberId[attendee.member];
+          const user: IUser = byUserId[member.user];
+          return [...acc, { ...user, memberId: member.id }];
+        }
+
+        return [...acc, { ...attendee }];
+      }, []);
   });
 
   return (
@@ -62,7 +69,7 @@ const IndividualEventAttendeeListContent: React.FC = () => {
       <List
         Item={(user: IndividualEventAttendeeProps) => {
           return (
-            <React.Fragment key={user?.id}>
+            <React.Fragment key={user?.email}>
               <IndividualEventAttendee key={user?.id} {...user} />
               <MemberProfileModal memberId={user?.memberId} userId={user?.id} />
             </React.Fragment>

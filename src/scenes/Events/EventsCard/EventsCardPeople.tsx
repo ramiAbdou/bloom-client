@@ -12,6 +12,7 @@ import {
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 
 interface EventsCardPersonPictures {
   users?: IUser[];
@@ -59,13 +60,19 @@ const EventsCardPeople: React.FC = () => {
 
     return people
       ?.map((id: string) => (isPast ? byAttendeeId[id] : byGuestId[id]))
-      ?.filter((element: IEventGuest | IEventAttendee) => !!element)
-      ?.map((element: IEventGuest | IEventAttendee) => {
-        return byMemberId[element?.member];
-      })
-      ?.map((member: IMember) => byUserId[member.user])
-      ?.sort((a: IUser) => Number(!!a.pictureUrl));
+      ?.reduce((acc, person: IEventGuest | IEventAttendee) => {
+        if (person.member) {
+          const member: IMember = byMemberId[person.member];
+          const user: IUser = byUserId[member.user];
+          return [...acc, { ...user, memberId: member.id }];
+        }
+
+        return [...acc, { ...person }];
+      }, [])
+      ?.sort((a: IUser, b: IUser) => sortObjects(a, b, 'pictureUrl', 'DESC'));
   });
+
+  console.log(users);
 
   return (
     <Row className="s-events-card-people" show={!!users?.length}>

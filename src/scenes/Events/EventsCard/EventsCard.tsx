@@ -53,7 +53,7 @@ const EventsCardContent: React.FC = () => {
       <div>
         <h5>{formattedStartTime}</h5>
         <h3>{title}</h3>
-        {/* <EventsCardPeople /> */}
+        <EventsCardPeople />
       </div>
 
       <EventsCardButton />

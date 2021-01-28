@@ -203,7 +203,10 @@ export const GET_UPCOMING_EVENTS = query({
     { community: ['id'] },
     {
       guests: [
+        'email',
+        'firstName',
         'id',
+        'lastName',
         {
           member: [
             'id',
