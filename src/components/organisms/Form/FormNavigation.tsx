@@ -26,7 +26,7 @@ const FormNavigationBar: React.FC<FormNavigationPageProps> = ({ id }) => {
 
   const onClick = () => !disabled && setPageId(id);
 
-  const css = cx('o-form-nav', { 'o-form-nav--disabled': disabled });
+  const css = cx('o-story-nav', { 'o-story-nav--disabled': disabled });
 
   return <div ref={ref} className={css} onClick={onClick} />;
 };
@@ -41,7 +41,7 @@ const FormNavigation: React.FC = () => {
   if (pageId === 'CONFIRMATION' || pages?.length === 1) return null;
 
   return (
-    <div className="o-form-nav-ctr">
+    <div className="o-story-nav-ctr">
       {pages.map(({ id }: FormNavigationPageProps) => {
         return <FormNavigationBar key={id ?? nanoid()} id={id} />;
       })}

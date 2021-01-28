@@ -33,7 +33,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
   const currentBranch: StoryPageBranch = page.branches[page.branchId];
   const { description, iconUrl, loading, title } = currentBranch;
 
-  const css = cx('o-form-page', { [className]: className });
+  const css = cx('o-story-page', { [className]: className });
 
   return (
     <motion.div

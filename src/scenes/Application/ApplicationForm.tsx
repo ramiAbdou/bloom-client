@@ -2,7 +2,6 @@ import React from 'react';
 
 import Form from '@organisms/Form/Form';
 import { useStoreState } from '@store/Store';
-import FormNavigation from '../../components/organisms/Form/FormNavigation';
 import ApplicationConfirmationPage from './ApplicationFinishPage';
 import ApplicationMembershipPage from './ApplicationMembershipPage';
 import ApplicationSelectTypePage from './ApplicationSelectTypePage';

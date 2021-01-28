@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
+import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
@@ -10,7 +11,7 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
   if (show === false) return null;
 
   return (
-    <>
+    <Form>
       <Row equal align="baseline" spacing="xs">
         <FormItem
           required
@@ -37,7 +38,7 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
 
       <FormErrorMessage />
       <FormSubmitButton>RSVP</FormSubmitButton>
-    </>
+    </Form>
   );
 };
 

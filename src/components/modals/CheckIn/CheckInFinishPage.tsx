@@ -1,3 +1,4 @@
+import deline from 'deline';
 import React from 'react';
 
 import StoryStore from '@organisms/Story/Story.store';
@@ -6,15 +7,22 @@ import CheckInGuestForm from './CheckInGuestForm';
 import CheckInLoginContent from './CheckInLoginContent';
 
 const CheckInFinishPage: React.FC = () => {
-  const page = StoryStore.useStoreState(({ getPage }) => getPage('FINISH'));
-  const branchId = page?.branchId;
+  const branchId = StoryStore.useStoreState(({ getPage }) => {
+    return getPage('FINISH')?.branchId;
+  });
 
   return (
     <StoryPage
-      branchId="FINISH_MEMBER"
+      branchId="FINISH_GUEST"
       branches={{
-        FINISH_GUEST: { title: 'Finish Checking-In' },
-        FINISH_MEMBER: { title: 'Finish Checking-In' }
+        FINISH_GUEST: {
+          description: deline`
+            We'll send you an email with a link to join the event 30 minutes
+            before the event's start time.
+          `,
+          title: 'Finish Checking-In'
+        },
+        FINISH_MEMBER: { title: 'Sign In to Continue' }
       }}
       id="FINISH"
     >

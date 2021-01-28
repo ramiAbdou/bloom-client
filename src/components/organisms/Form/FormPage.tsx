@@ -53,7 +53,7 @@ const FormPage: React.FC<FormPageProps> = ({
 
   if (!isSamePage) return null;
 
-  const css = cx('o-form-page', { [className]: className });
+  const css = cx('o-story-page', { [className]: className });
 
   if (id === 'CONFIRMATION') {
     return (

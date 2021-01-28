@@ -1,3 +1,4 @@
+import deepequal from 'fast-deep-equal';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
@@ -7,7 +8,10 @@ import StoryStore from './Story.store';
 import { StoryPageProps } from './Story.types';
 
 const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
-  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
+  const page = StoryStore.useStoreState(
+    ({ getPage }) => getPage(id),
+    deepequal
+  );
 
   const setCurrentPage = StoryStore.useStoreActions(
     (store) => store.setCurrentPage
@@ -18,7 +22,7 @@ const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
 
   const ref: React.LegacyRef<any> = useTooltip(title);
   const onClick = () => !disabled && setCurrentPage({ branchId, id });
-  const css = cx('o-form-nav', { 'o-form-nav--disabled': disabled });
+  const css = cx('o-story-nav', { 'o-story-nav--disabled': disabled });
 
   return <div ref={ref} className={css} onClick={onClick} />;
 };
@@ -31,7 +35,7 @@ const StoryNavigation: React.FC = () => {
   if (pages?.length <= 1) return null;
 
   return (
-    <div className="o-form-nav-ctr">
+    <div className="o-story-nav-ctr">
       {pages.map(({ id }: StoryPageProps) => {
         return <StoryNavigationBar key={id ?? nanoid()} id={id} />;
       })}
