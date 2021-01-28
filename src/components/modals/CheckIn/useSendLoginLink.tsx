@@ -6,7 +6,8 @@ import {
   SEND_TEMPORARY_LOGIN_LINK,
   SendTemporaryLoginLinkArgs
 } from './CheckIn.gql';
-import { getCheckInErrorMessage, LoginError } from './CheckIn.util';
+import { CheckInError } from './CheckIn.types';
+import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmit => {
   const { push } = useHistory();
@@ -25,7 +26,7 @@ const useSendLoginLink = (): OnFormSubmit => {
     const { error } = await sendTemporaryLoginLink({ email });
 
     if (error) {
-      setErrorMessage(getCheckInErrorMessage(error as LoginError));
+      setErrorMessage(getCheckInErrorMessage({ error: error as CheckInError }));
       return;
     }
 

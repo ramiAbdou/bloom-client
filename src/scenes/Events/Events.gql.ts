@@ -86,6 +86,9 @@ export const GET_EVENT = query({
             'type',
             'version'
           ]
+        },
+        {
+          owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }]
         }
       ]
     },

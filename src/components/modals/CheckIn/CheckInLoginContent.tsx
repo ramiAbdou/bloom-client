@@ -6,17 +6,20 @@ import URLBuilder from 'util/URLBuilder';
 import Button from '@atoms/Button/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
-import { APP, ShowProps } from '@constants';
+import { APP, CookieType, ShowProps } from '@constants';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { getCheckInErrorMessage, LoginError } from './CheckIn.util';
+import { CheckInError } from './CheckIn.types';
+import { getCheckInErrorMessage } from './CheckIn.util';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {
+  const communityId = useStoreState(({ db }) => db.community?.id);
   const { pathname } = useLocation();
 
   const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
@@ -24,7 +27,10 @@ const CheckInGoogleButton: React.FC = () => {
     .addParam('response_type', 'code')
     .addParam('redirect_uri', `${APP.SERVER_URL}/google/auth`)
     .addParam('client_id', process.env.GOOGLE_CLIENT_ID)
-    .addParam('state', pathname);
+    .addParam(
+      'state',
+      communityId && JSON.stringify({ communityId, pathname })
+    );
 
   return (
     <Button
@@ -41,13 +47,21 @@ const CheckInGoogleButton: React.FC = () => {
 };
 
 const LoginCardGoogleContainer: React.FC = () => {
+  const owner: IUser = useStoreState(({ db }) => {
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byUserId } = db.entities.users;
+
+    const member: IMember = byMemberId[db.community?.owner];
+    return byUserId[member?.user];
+  });
+
   // We store the error code in a cookie.
-  const cookie = Cookies.get('LOGIN_ERROR') as LoginError;
-  const message = getCheckInErrorMessage(cookie);
+  const error = Cookies.get(CookieType.LOGIN_ERROR) as CheckInError;
+  const message = getCheckInErrorMessage({ error, owner });
 
   // After we get the message, we remove the cookie so that the error doesn't
   // get shown again.
-  if (cookie) Cookies.remove('LOGIN_ERROR');
+  if (error) Cookies.remove(CookieType.LOGIN_ERROR);
 
   return (
     <div>

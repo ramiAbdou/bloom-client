@@ -37,6 +37,10 @@ export type ValueProps = { value?: any };
  * SYSTEM TYPES - Includes modal, panel and more.
  */
 
+export enum CookieType {
+  LOGIN_ERROR = 'LOGIN_ERROR'
+}
+
 export enum ModalType {
   ADD_ADMINS = 'ADD_ADMINS',
   ADD_MEMBERS = 'ADD_MEMBERS',
@@ -74,8 +78,18 @@ export type RouteType =
   | 'profile';
 
 /**
- * FORMS - Handling of all form-related items including custom Enums.
+ * MISC - Other miscelleaneous types.
  */
+
+export type QuestionCategory =
+  | 'CREDIT_OR_DEBIT_CARD'
+  | 'DUES_STATUS'
+  | 'EMAIL'
+  | 'FIRST_NAME'
+  | 'GENDER'
+  | 'JOINED_AT'
+  | 'LAST_NAME'
+  | 'MEMBERSHIP_TYPE';
 
 export type QuestionType =
   | 'COVER_IMAGE'
@@ -89,20 +103,6 @@ export type QuestionType =
   | 'SHORT_TEXT'
   | 'TIME'
   | 'TOGGLE';
-
-export type QuestionCategory =
-  | 'CREDIT_OR_DEBIT_CARD'
-  | 'DUES_STATUS'
-  | 'EMAIL'
-  | 'FIRST_NAME'
-  | 'GENDER'
-  | 'JOINED_AT'
-  | 'LAST_NAME'
-  | 'MEMBERSHIP_TYPE';
-
-/**
- * MISC - Other miscelleaneous types.
- */
 
 export interface TimeSeriesData {
   name: string;

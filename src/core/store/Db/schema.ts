@@ -139,6 +139,7 @@ Community.define({
   events: [Event],
   integrations: Integrations,
   members: [Member],
+  owner: Member,
   payments: [MemberPayment],
   questions: [Question],
   types: [MemberType]

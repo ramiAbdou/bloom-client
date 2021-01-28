@@ -107,7 +107,11 @@ const HomeRouter = () => {
   if (!isAuthenticated && route === 'events') {
     return (
       <Switch>
-        <Route component={IndividualEvent} path={`${url}/events/:eventId`} />
+        <Route
+          exact
+          component={IndividualEvent}
+          path={`${url}/events/:eventId`}
+        />
       </Switch>
     );
   }

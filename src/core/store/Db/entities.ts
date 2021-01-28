@@ -21,6 +21,7 @@ export interface ICommunity extends BaseEntity {
   payments: IdString[];
   questions: IdString[];
   name: string;
+  owner?: IdString;
   primaryColor: string;
   types: IdString[];
   urlName: string;

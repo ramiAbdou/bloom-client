@@ -1,5 +1,7 @@
 import { mutation } from 'gql-query-builder';
 
+// SEND TEMPORARY LOGIN LINK
+
 export interface SendTemporaryLoginLinkArgs {
   email: string;
 }

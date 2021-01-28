@@ -46,6 +46,7 @@ const IndividualEvent: React.FC = () => {
         'attendees.member.data',
         'attendees.member.type',
         'attendees.member.user',
+        'community.owner.user',
         'community.questions',
         'guests.member.data',
         'guests.member.type',
