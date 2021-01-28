@@ -5,7 +5,7 @@ import React from 'react';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
-import ProfilePicture from '@molecules/ProfilePicture';
+import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import MemberCard, { MemberCardModel } from './DirectoryCard.store';

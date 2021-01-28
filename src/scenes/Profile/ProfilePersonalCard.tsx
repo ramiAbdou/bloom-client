@@ -6,7 +6,7 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
-import ProfilePicture from '@molecules/ProfilePicture';
+import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import MailTo from '../../components/molecules/MailTo';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';

@@ -1,19 +1,35 @@
 import deline from 'deline';
-import React from 'react';
+import Cookies from 'js-cookie';
+import React, { useEffect } from 'react';
 
+import { CookieType } from '@constants';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import CheckInGuestForm from './CheckInGuestForm';
 import CheckInLoginContent from './CheckInLoginContent';
 
-interface CheckInFinishPageProps {
+interface CheckInMainPageProps {
   lock?: boolean;
 }
 
-const CheckInFinishPage: React.FC<CheckInFinishPageProps> = ({ lock }) => {
+const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
+  const pageId = StoryStore.useStoreState((store) => store.pageId);
+
   const branchId = StoryStore.useStoreState(({ getPage }) => {
     return getPage('FINISH')?.branchId;
   });
+
+  const setCurrentPage = StoryStore.useStoreActions(
+    (store) => store.setCurrentPage
+  );
+
+  const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
+
+  useEffect(() => {
+    if (hasCookieError && !!branchId && pageId !== 'FINISH') {
+      setCurrentPage({ branchId: 'FINISH_MEMBER', id: 'FINISH' });
+    }
+  }, [hasCookieError, pageId]);
 
   return (
     <StoryPage
@@ -41,4 +57,4 @@ const CheckInFinishPage: React.FC<CheckInFinishPageProps> = ({ lock }) => {
   );
 };
 
-export default CheckInFinishPage;
+export default CheckInMainPage;

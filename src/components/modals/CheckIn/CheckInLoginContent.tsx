@@ -46,7 +46,7 @@ const CheckInGoogleButton: React.FC = () => {
   );
 };
 
-const LoginCardGoogleContainer: React.FC = () => {
+const LoginCardGoogleContainer: React.FC = React.memo(() => {
   const owner: IUser = useStoreState(({ db }) => {
     const { byId: byMemberId } = db.entities.members;
     const { byId: byUserId } = db.entities.users;
@@ -69,7 +69,7 @@ const LoginCardGoogleContainer: React.FC = () => {
       <ErrorMessage marginBottom={0}>{message}</ErrorMessage>
     </div>
   );
-};
+});
 
 const LoginCardEmailForm: React.FC = () => {
   const isCheckIn = useStoreState(({ modal }) => modal.isShowing);

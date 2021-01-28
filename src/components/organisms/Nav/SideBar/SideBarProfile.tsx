@@ -3,7 +3,7 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import { PanelType } from '@constants';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
-import ProfilePicture from '@molecules/ProfilePicture';
+import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 

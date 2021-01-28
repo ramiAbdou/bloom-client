@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import ProfilePicture from '@molecules/ProfilePicture';
+import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import {
   IEvent,
   IEventAttendee,
@@ -71,8 +71,6 @@ const EventsCardPeople: React.FC = () => {
       }, [])
       ?.sort((a: IUser, b: IUser) => sortObjects(a, b, 'pictureUrl', 'DESC'));
   });
-
-  console.log(users);
 
   return (
     <Row className="s-events-card-people" show={!!users?.length}>

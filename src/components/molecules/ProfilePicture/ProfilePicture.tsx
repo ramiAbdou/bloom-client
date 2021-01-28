@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ClassNameProps } from '@constants';
 import { useStoreState } from '@store/Store';
@@ -22,6 +22,8 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({
   lastName: lName,
   size
 }) => {
+  const [imageError, setImageError] = useState(false);
+
   // If one of these is null, it means the user isn't fully loaded yet.
   const firstName = useStoreState(({ db }) => fName ?? db.user?.firstName);
   const lastName = useStoreState(({ db }) => lName ?? db.user?.lastName);
@@ -31,13 +33,20 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({
   const initials = firstName[0] + lastName[0];
 
   const body = takeFirst([
-    [href, <img alt="Profile Avatar" src={href} />],
+    [
+      href && !imageError,
+      <img
+        alt="Profile Avatar"
+        src={href}
+        onError={() => setImageError(true)}
+      />
+    ],
     <h3 style={{ fontSize }}>{initials}</h3>
   ]);
 
-  const css = cx('m-misc-profile-picture', {
+  const css = cx('m-profile-picture', {
     [className]: className,
-    'm-misc-profile-picture--circle': circle
+    'm-profile-picture--circle': circle
   });
 
   return (

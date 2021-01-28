@@ -1,7 +1,8 @@
+import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
-import { ModalType } from '@constants';
+import { CookieType, ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
@@ -55,6 +56,8 @@ const IndividualEvent: React.FC = () => {
     }
   });
 
+  const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
+
   useEffect(() => {
     if (data) {
       setActiveEvent(data.id);
@@ -64,10 +67,10 @@ const IndividualEvent: React.FC = () => {
   }, [data]);
 
   useEffect(() => {
-    if (isMembersOnly && !isAuthenticated) {
+    if (!isAuthenticated && (isMembersOnly || hasCookieError)) {
       showModal(`${ModalType.CHECK_IN}-${eventId}`);
     }
-  }, [isMembersOnly, isAuthenticated]);
+  }, [hasCookieError, isMembersOnly, isAuthenticated]);
 
   if (error && !isAuthenticated) return <Redirect to="/login" />;
   if (loading) return <Loader />;

@@ -5,7 +5,7 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
-import ProfilePicture from '@molecules/ProfilePicture';
+import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEventAttendee, IMember, IUser } from '@store/Db/entities';
