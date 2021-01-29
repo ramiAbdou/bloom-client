@@ -20,7 +20,7 @@ $PREF: 'o-story';
 .#{$PREF}-page {
   > div:first-child {
     > .t-loading-header { margin-bottom: $xs; }
-    > .t-loading-header > h1 { color: $primary; }
+    > .t-loading-header > div:first-child > h1 { color: $primary; }
     > p { color: $gray-2; margin-bottom: $md; }
 
     // Community icon for first page.

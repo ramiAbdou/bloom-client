@@ -70,7 +70,7 @@ const useCreateEvent = (): OnFormSubmit => {
       imageUrl,
       private:
         items.find(({ id }) => id === 'PRIVACY_SETTINGS')?.value ===
-        'Private Event',
+        'Members Only',
       startTime,
       summary: items.find(({ id }) => id === 'EVENT_SUMMARY')?.value,
       title: items.find(({ id }) => id === 'EVENT_NAME')?.value,
