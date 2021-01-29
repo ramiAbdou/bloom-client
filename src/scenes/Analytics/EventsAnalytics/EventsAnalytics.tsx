@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { PopulateArgs } from '@constants';
 import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import { IEvent } from '@store/Db/entities';
@@ -12,7 +11,7 @@ import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 import EventsAnalyticsTotalCard from './EventsAnalyticsTotalCard';
 
 const EventsAnalytics: React.FC = () => {
-  const { loading } = useQuery<IEvent[], PopulateArgs>({
+  const { loading } = useQuery<IEvent[]>({
     name: 'getPastEvents',
     query: GET_PAST_EVENTS_WITH_GUESTS,
     schema: [Schema.EVENT]

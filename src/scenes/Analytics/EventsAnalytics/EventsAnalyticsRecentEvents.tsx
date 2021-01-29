@@ -24,12 +24,13 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
     return db.community.events
       ?.map((eventId: string) => byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(event.endTime))
-      ?.map(({ attendees, id, guests, startTime, title }: IEvent) => {
+      ?.map(({ attendees, id, guests, startTime, title, watches }: IEvent) => {
         return {
           date: day(startTime).format('MMMM D, YYYY'),
           id,
           numAttendees: attendees?.length ?? 0,
           numGuests: guests?.length ?? 0,
+          numWatches: watches?.length ?? 0,
           title
         };
       })
@@ -40,7 +41,8 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
     { id: 'title', title: 'Title', type: 'LONG_TEXT' },
     { id: 'date', title: 'Date', type: 'SHORT_TEXT' },
     { id: 'numAttendees', title: '# of Attendees', type: 'SHORT_TEXT' },
-    { id: 'numGuests', title: `# of RSVP's`, type: 'SHORT_TEXT' }
+    { id: 'numGuests', title: `# of RSVP's`, type: 'SHORT_TEXT' },
+    { id: 'numWatches', title: `# of Recording Views`, type: 'SHORT_TEXT' }
   ];
 
   const { push } = useHistory();

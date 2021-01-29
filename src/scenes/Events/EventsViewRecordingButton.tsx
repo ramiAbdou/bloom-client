@@ -47,7 +47,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
       disabled={!recordingUrl}
       href={recordingUrl}
       large={large}
-      show={isPast && (!isAdmin || large)}
+      show={isPast && (!isAdmin || !large)}
       onClick={onClick}
     >
       {recordingUrl ? 'View Recording' : 'No Recording Available'}

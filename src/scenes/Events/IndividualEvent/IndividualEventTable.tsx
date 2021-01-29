@@ -106,7 +106,7 @@ const IndividualEventTable: React.FC = () => {
     return (
       Object.values(recordWithWatches)
         // @ts-ignore
-        ?.map((e) => ({ ...e, numWatches: e.numWatches.toString() }))
+        ?.map((e) => ({ ...e, numWatches: e.numWatches?.toString() }))
         ?.sort((a, b) =>
           // @ts-ignore
           sortObjects(a, b, ['joinedAt', 'rsvpdAt', 'numWatches'], 'DESC')

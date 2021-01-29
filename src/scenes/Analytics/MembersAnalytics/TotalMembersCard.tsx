@@ -10,7 +10,7 @@ const TotalMembersCard: React.FC = () => {
     query: GET_TOTAL_MEMBERS_GROWTH
   });
 
-  if (loading) return null;
+  if (loading || !data) return null;
 
   return (
     <AnalyticsCard label="Total Members" percentage={data[1]} value={data[0]} />

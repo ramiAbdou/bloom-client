@@ -253,7 +253,8 @@ export const GET_PAST_EVENTS_WITH_GUESTS = query({
         }
       ]
     },
-    { guests: ['id'] }
+    { guests: ['id'] },
+    { watches: ['id'] }
   ],
   operation: 'getPastEvents'
 }).query;
