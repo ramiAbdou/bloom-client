@@ -5,7 +5,7 @@ import AnalyticsCard from '@containers/Card/AnalyticsCard';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
-const EventsAnalyticsGuestCard: React.FC = () => {
+const EventsAnalyticsWatchesCard: React.FC = () => {
   const numViews: number = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
 
@@ -25,11 +25,11 @@ const EventsAnalyticsGuestCard: React.FC = () => {
 
   return (
     <AnalyticsCard
-      label="Average # of Recording Views"
+      label="Avg # of Recording Views"
       show={numViews !== null}
       value={numViews}
     />
   );
 };
 
-export default EventsAnalyticsGuestCard;
+export default EventsAnalyticsWatchesCard;

@@ -34,7 +34,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
           title
         };
       })
-      .sort((a, b) => sortObjects(a, b, 'numAttendees', 'DESC'));
+      .sort((a, b) => sortObjects(a, b, 'date', 'DESC'));
   });
 
   const columns: TableColumn[] = [

@@ -10,6 +10,7 @@ import EventsAnalyticsFrequentAttendees from './EventsAnalyticsFrequentAttendees
 import EventsAnalyticsGuestCard from './EventsAnalyticsGuestCard';
 import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 import EventsAnalyticsTotalCard from './EventsAnalyticsTotalCard';
+import EventsAnalyticsWatchesCard from './EventsAnalyticsWatchesCard';
 
 const EventsAnalytics: React.FC = () => {
   const { loading } = useQuery<IEvent[]>({
@@ -26,6 +27,7 @@ const EventsAnalytics: React.FC = () => {
         <EventsAnalyticsTotalCard />
         <EventsAnalyticsAttendanceCard />
         <EventsAnalyticsGuestCard />
+        <EventsAnalyticsWatchesCard />
       </Row>
 
       <EventsAnalyticsRecentEvents />
