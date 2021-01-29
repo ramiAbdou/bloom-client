@@ -11,7 +11,7 @@ import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
-const EventsAnalyticsTopEventsTable: React.FC = () => {
+const EventsAnalyticsRecentEventsTable: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community?.urlName);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
@@ -20,8 +20,9 @@ const EventsAnalyticsTopEventsTable: React.FC = () => {
     return db.community.events
       ?.map((eventId: string) => byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(event.endTime))
-      ?.map(({ attendees, id, guests, title }: IEvent) => {
+      ?.map(({ attendees, id, guests, startTime, title }: IEvent) => {
         return {
+          date: day(startTime).format('MMMM D, YYYY'),
           id,
           numAttendees: attendees?.length ?? 0,
           numGuests: guests?.length ?? 0,
@@ -33,6 +34,7 @@ const EventsAnalyticsTopEventsTable: React.FC = () => {
 
   const columns: Column[] = [
     { id: 'title', title: 'Title', type: 'LONG_TEXT' },
+    { id: 'date', title: 'Date', type: 'SHORT_TEXT' },
     { id: 'numAttendees', title: '# of Attendees', type: 'SHORT_TEXT' },
     { id: 'numGuests', title: `# of RSVP's`, type: 'SHORT_TEXT' }
   ];
@@ -56,8 +58,8 @@ const EventsAnalyticsTopEventsTable: React.FC = () => {
 
 const EventsAnalyticsTopEvents: React.FC = () => {
   return (
-    <MainSection title="Top Performing Events">
-      <EventsAnalyticsTopEventsTable />
+    <MainSection title="Recent Events">
+      <EventsAnalyticsRecentEventsTable />
     </MainSection>
   );
 };

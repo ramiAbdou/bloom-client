@@ -6,7 +6,6 @@ import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import ListSearchBar from '@organisms/List/ListSearchBar';
 import { ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -37,7 +36,6 @@ const EventsUpcomingContent: React.FC = () => {
 
   return (
     <>
-      {!!events?.length && <ListSearchBar placeholder="Search events..." />}
       {!events?.length && <p>Looks like there are no upcoming events.</p>}
 
       <List

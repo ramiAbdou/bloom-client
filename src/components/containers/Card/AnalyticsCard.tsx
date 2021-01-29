@@ -8,7 +8,7 @@ interface AnalyticsSimpleProps extends ShowProps, ValueProps {
   percentage?: number;
 }
 
-const NumberContainer: React.FC<
+const AnalyticsCardNumberContainer: React.FC<
   Pick<AnalyticsSimpleProps, 'percentage' | 'value'>
 > = ({ percentage, value }) => (
   <div>
@@ -21,7 +21,7 @@ const NumberContainer: React.FC<
  * Displays a simple number and our statistic, including the percentage of
  * either growth or lack thereof.
  */
-const AnalyticsStatusCard: React.FC<AnalyticsSimpleProps> = ({
+const AnalyticsCard: React.FC<AnalyticsSimpleProps> = ({
   label,
   show,
   ...props
@@ -29,11 +29,11 @@ const AnalyticsStatusCard: React.FC<AnalyticsSimpleProps> = ({
   if (show === false) return null;
 
   return (
-    <div className="s-analytics-simple">
-      <NumberContainer {...props} />
+    <div className="t-card--analytics">
+      <AnalyticsCardNumberContainer {...props} />
       <h4>{label}</h4>
     </div>
   );
 };
 
-export default AnalyticsStatusCard;
+export default AnalyticsCard;

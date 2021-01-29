@@ -13,6 +13,17 @@ $PREF: 't-misc-card';
   &--clickable { cursor: pointer; }
 }
 
+// ## ANALYTICS CARD
+
+.#{$PREF}--analytics {
+  background-color: hsla($primary-hue, 5%, 88%, 0.4);
+  border-radius: $xs;
+  min-width: $xxl * 4;
+  padding: $sm;
+  position: relative;
+  width: fit-content;
+}
+
 // ## INFORMATION CARD
 
 .#{$PREF}--information {

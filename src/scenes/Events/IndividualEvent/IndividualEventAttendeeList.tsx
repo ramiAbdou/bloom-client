@@ -84,20 +84,15 @@ const IndividualEventAttendeeListContent: React.FC = () => {
 
 const IndividualEventGuestList: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const startTime = useStoreState(({ db }) => db.event?.startTime);
   const numAttendees = useStoreState(({ db }) => db.event?.attendees?.length);
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
 
-  if (day().isBefore(day(startTime))) return null;
-  const isHappening = day().isBefore(day(endTime));
+  if (isAdmin || day().isBefore(day(endTime))) return null;
 
   return (
     <Card
       className="s-events-individual-card"
-      headerTag={
-        numAttendees
-          ? `${numAttendees} ${isHappening ? 'Attending' : 'Attended'}`
-          : null
-      }
+      headerTag={numAttendees ? `${numAttendees} Attended` : null}
       title="Attendees"
     >
       <ListStore.Provider>

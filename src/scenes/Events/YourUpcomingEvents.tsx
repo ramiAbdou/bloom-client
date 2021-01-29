@@ -34,7 +34,7 @@ const YourUpcomingEventsContent: React.FC = () => (
     <MainSection
       className="s-events-section"
       loading={false}
-      title="Your Upcoming Events"
+      title="Your RSVP's"
     >
       <YourUpcomingEventsList />
     </MainSection>

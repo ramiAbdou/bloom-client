@@ -34,7 +34,7 @@ const YourPastEventsContent: React.FC = () => (
     <MainSection
       className="s-events-section"
       loading={false}
-      title="Your Past Events"
+      title="Your Events Attended"
     >
       <YourPastEventsList />
     </MainSection>

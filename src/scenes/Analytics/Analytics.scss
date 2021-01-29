@@ -4,33 +4,11 @@ $PREF: 's-analytics';
 
 .#{$PREF}-page > .t-row:first-child { margin-bottom: $md; }
 
-// ## ANALYTICS CARD
-
-.#{$PREF}-card {
-  background-color: hsla($primary-hue, 5%, 88%, 0.4);
-  border-radius: $xs;
-  padding: $sm;
-}
-
 // ## ANALYTICS HEADER
 
 .#{$PREF}-header { display: grid; grid-template-columns: repeat(12, 1fr); }
 .#{$PREF}-header > div:first-child { grid-column-end: span 5; }
 .#{$PREF}-header > *:nth-child(2) { grid-column-end: span 4; }
-
-// ## ANALYTICS SIMPLE CARD - Card that displays simple information: value,
-// percentage change and a label.
-
-.#{$PREF}-simple {
-  background-color: hsla($primary-hue, 5%, 88%, 0.4);
-  border-radius: $xs;
-  min-width: $xxl * 4;
-  padding: $sm;
-  position: relative;
-  width: fit-content;
-
-  &:not(:last-child) { margin-right: $sm; }
-}
 
 // Wraps the value (number) and the percentage tag.
 .#{$PREF}-simple > div:first-child {

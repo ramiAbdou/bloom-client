@@ -14,7 +14,6 @@ import { cx } from '@util/util';
 import { GET_EVENT, GetEventArgs } from '../Events.gql';
 import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
-import IndividualEventAnalytics from './IndividualEventAnalytics';
 import IndividualEventAttendeeList from './IndividualEventAttendeeList';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventMain from './IndividualEventMain';
@@ -83,12 +82,12 @@ const IndividualEvent: React.FC = () => {
       <IndividualEventHeader />
 
       <div className="s-events-individual-grid">
+        <div />
         <IndividualEventAbout />
         <IndividualEventAttendeeList />
         <IndividualEventGuestList />
       </div>
 
-      <IndividualEventAnalytics />
       <IndividualEventPanel id={eventId} />
       <CreateEventModal id={eventId} />
       <CheckInModal id={eventId} lock={isMembersOnly && !isAuthenticated} />

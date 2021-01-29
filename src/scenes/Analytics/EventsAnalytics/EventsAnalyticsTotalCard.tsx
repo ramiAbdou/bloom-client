@@ -1,9 +1,9 @@
 import day from 'dayjs';
 import React from 'react';
 
+import AnalyticsCard from '@containers/Card/AnalyticsCard';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import AnalyticsStatusCard from '../AnalyticsStatusCard';
 
 const EventsAnalyticsTotalCard: React.FC = () => {
   const numPastEvents: number = useStoreState(({ db }) => {
@@ -15,7 +15,7 @@ const EventsAnalyticsTotalCard: React.FC = () => {
   });
 
   return (
-    <AnalyticsStatusCard
+    <AnalyticsCard
       label="Events Hosted"
       show={numPastEvents !== null}
       value={numPastEvents}
