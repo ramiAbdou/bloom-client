@@ -1,20 +1,22 @@
 import React from 'react';
 
+import { PopulateArgs } from '@constants';
 import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { GET_PAST_EVENTS } from '../../Events/Events.gql';
+import { GET_PAST_EVENTS_WITH_GUESTS } from '../../Events/Events.gql';
 import EventsAnalyticsAttendanceCard from './EventsAnalyticsAttendanceCard';
 import EventsAnalyticsFrequentAttendees from './EventsAnalyticsFrequentAttendees';
 import EventsAnalyticsTopEvents from './EventsAnalyticsTopEvents';
 import EventsAnalyticsTotalCard from './EventsAnalyticsTotalCard';
 
 const EventsAnalytics: React.FC = () => {
-  const { loading } = useQuery<IEvent[]>({
+  const { loading } = useQuery<IEvent[], PopulateArgs>({
     name: 'getPastEvents',
-    query: GET_PAST_EVENTS,
-    schema: [Schema.EVENT]
+    query: GET_PAST_EVENTS_WITH_GUESTS,
+    schema: [Schema.EVENT],
+    variables: { populate: ['guests'] }
   });
 
   if (loading) return null;

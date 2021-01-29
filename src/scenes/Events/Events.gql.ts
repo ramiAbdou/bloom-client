@@ -196,6 +196,42 @@ export const GET_PAST_EVENTS = query({
   operation: 'getPastEvents'
 }).query;
 
+// ## GET PAST EVENTS
+
+export const GET_PAST_EVENTS_WITH_GUESTS = query({
+  fields: [
+    'description',
+    'endTime',
+    'eventUrl',
+    'id',
+    'imageUrl',
+    'private',
+    'recordingUrl',
+    'startTime',
+    'summary',
+    'title',
+    'videoUrl',
+    { community: ['id'] },
+    {
+      attendees: [
+        'email',
+        'firstName',
+        'id',
+        'lastName',
+        {
+          member: [
+            'id',
+            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+          ]
+        }
+      ]
+    },
+    { guests: ['id'] }
+  ],
+  operation: 'getPastEvents',
+  variables: { populate: { required: false, type: '[String!]' } }
+}).query;
+
 // ## GET UPCOMING EVENTS
 
 export const GET_UPCOMING_EVENTS = query({

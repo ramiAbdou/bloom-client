@@ -19,6 +19,7 @@ const EventsAnalyticsTopEventsTable: React.FC = () => {
       ?.filter((event: IEvent) => day().isAfter(event.endTime))
       ?.map(({ attendees, guests, title }: IEvent) => {
         return {
+          id: title,
           numAttendees: attendees?.length ?? 0,
           numGuests: guests?.length ?? 0,
           title
@@ -36,7 +37,8 @@ const EventsAnalyticsTopEventsTable: React.FC = () => {
   const options: TableOptions = {
     alignEndRight: true,
     fixFirstColumn: false,
-    isSortable: false
+    isSortable: false,
+    showCount: false
   };
 
   return (
