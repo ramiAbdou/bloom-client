@@ -76,7 +76,7 @@ const PromoteToAdminModal = () => {
   );
 };
 
-export default () => {
+const MemberDatabasePromoteButton: React.FC = () => {
   const memberId = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -109,3 +109,5 @@ export default () => {
     </>
   );
 };
+
+export default MemberDatabasePromoteButton;

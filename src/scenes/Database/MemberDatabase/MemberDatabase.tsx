@@ -16,6 +16,13 @@ import {
 import { useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import ActionRow from './MemberDatabaseActions';
+import MemberDatabaseDeleteModal from './MemberDatabaseDeleteModal';
+
+const MemberDatabaseModals: React.FC = () => (
+  <>
+    <MemberDatabaseDeleteModal />
+  </>
+);
 
 const MemberDatabase: React.FC = () => {
   // Massage the member data into valid row data by mapping the question ID
@@ -118,6 +125,7 @@ const MemberDatabase: React.FC = () => {
     >
       <ActionRow />
       <TableContent onRenameColumn={onRenameColumn} />
+      <MemberDatabaseModals />
     </Table>
   );
 };

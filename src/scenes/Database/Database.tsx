@@ -6,7 +6,7 @@ import useQuery from '@hooks/useQuery';
 import { GET_DATABASE } from '@scenes/Database/Database.gql';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import Admins from './Admins/Admins';
+import AdminDatabase from './AdminDatabase/AdminDatabase';
 import DatabaseHeader from './DatabaseHeader';
 import MemberDatabase from './MemberDatabase/MemberDatabase';
 
@@ -22,7 +22,7 @@ const Database: React.FC = () => {
   return (
     <MainContent Header={DatabaseHeader} loading={loading}>
       <Switch>
-        <Route component={Admins} path={`${url}/admins`} />
+        <Route component={AdminDatabase} path={`${url}/admins`} />
         <Route component={MemberDatabase} path={`${url}/members`} />
         <Redirect to={`${url}/members`} />
       </Switch>

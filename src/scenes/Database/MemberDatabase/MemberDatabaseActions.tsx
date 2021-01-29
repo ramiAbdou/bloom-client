@@ -7,7 +7,7 @@ import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
 import DeleteMembersButton from './MemberDatabaseDeleteButton';
 import MemberDatabaseExportButton from './MemberDatabaseExportButton';
 import MemberDatabaseFilterButton from './MemberDatabaseFilterButton';
-import PromoteToAdminIcon from './PromoteToAdminIcon';
+import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
 
 const MemberDatabaseButtons = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
@@ -22,7 +22,7 @@ const MemberDatabaseButtons = () => {
     <div>
       <MemberDatabaseCopyButton />
       <MemberDatabaseExportButton />
-      {isOwner && <PromoteToAdminIcon />}
+      {isOwner && <MemberDatabasePromoteButton />}
       <DeleteMembersButton />
     </div>
   );

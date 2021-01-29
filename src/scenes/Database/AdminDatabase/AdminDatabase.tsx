@@ -6,9 +6,9 @@ import Table from '@organisms/Table/Table';
 import { Column, Row } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { useStoreState } from '@store/Store';
-import ActionRow from './ActionRow';
+import AdminDatabaseActions from './AdminDatabaseActions';
 
-const Admins: React.FC = () => {
+const AdminDatabase: React.FC = () => {
   const rows: Row[] = useStoreState(({ db }) => {
     const { byId: byMemberId } = db.entities.members;
     const { byId: byUserId } = db.entities.users;
@@ -49,7 +49,7 @@ const Admins: React.FC = () => {
         options={{ hasCheckbox: isOwner, isClickable: true }}
         rows={rows}
       >
-        <ActionRow />
+        <AdminDatabaseActions />
         <TableContent />
       </Table>
 
@@ -58,4 +58,4 @@ const Admins: React.FC = () => {
   );
 };
 
-export default Admins;
+export default AdminDatabase;

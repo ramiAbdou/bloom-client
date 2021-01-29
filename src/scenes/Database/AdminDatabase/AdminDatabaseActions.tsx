@@ -3,10 +3,10 @@ import React from 'react';
 import Table from '@organisms/Table/Table.store';
 import SearchBar from '@organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';
-import DeleteMembersIcon from './DeleteAdminIcon';
-import PromoteToAdminIcon from './DemoteAdminIcon';
+import AdminDatabaseDeleteButton from './AdminDatabaseDeleteButton';
+import AdminDatabaseDemoteButton from './AdminDatabaseDemoteButton';
 
-const IconContainer = () => {
+const AdminDatabaseButtons = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
 
   const isAnythingSelected = Table.useStoreState(
@@ -17,15 +17,17 @@ const IconContainer = () => {
 
   return (
     <div>
-      <PromoteToAdminIcon />
-      <DeleteMembersIcon />
+      <AdminDatabaseDemoteButton />
+      <AdminDatabaseDeleteButton />
     </div>
   );
 };
 
-export default () => (
+const AdminDatabaseActions: React.FC = () => (
   <div className="s-database-action-row">
     <SearchBar placeholder="Search admins..." />
-    <IconContainer />
+    <AdminDatabaseButtons />
   </div>
 );
+
+export default AdminDatabaseActions;
