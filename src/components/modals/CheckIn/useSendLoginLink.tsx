@@ -1,36 +1,45 @@
-import { useHistory, useRouteMatch } from 'react-router-dom';
-
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import {
-  SEND_TEMPORARY_LOGIN_LINK,
-  SendTemporaryLoginLinkArgs
-} from './CheckIn.gql';
+import StoryStore from '@organisms/Story/Story.store';
+import { IMember, IUser } from '@store/Db/entities';
+import { useStoreState } from '@store/Store';
+import { SEND_LOGIN_LINK, SendLoginLinkArgs } from './CheckIn.gql';
 import { CheckInError } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmit => {
-  const { push } = useHistory();
-  const { url } = useRouteMatch();
+  const communityId = useStoreState(({ db }) => db.community?.id);
 
-  const [sendTemporaryLoginLink] = useMutation<
-    boolean,
-    SendTemporaryLoginLinkArgs
-  >({
-    name: 'sendTemporaryLoginLink',
-    query: SEND_TEMPORARY_LOGIN_LINK
+  const owner: IUser = useStoreState(({ db }) => {
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byUserId } = db.entities.users;
+
+    const member: IMember = byMemberId[db.community?.owner];
+    return byUserId[member?.user];
+  });
+
+  const setCurrentPage = StoryStore.useStoreActions(
+    (store) => store.setCurrentPage
+  );
+
+  const [sendLoginLink] = useMutation<boolean, SendLoginLinkArgs>({
+    name: 'sendLoginLink',
+    query: SEND_LOGIN_LINK
   });
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const email = items.find(({ category }) => category === 'EMAIL')?.value;
-    const { error } = await sendTemporaryLoginLink({ email });
+    const { error } = await sendLoginLink({ communityId, email });
 
     if (error) {
-      setErrorMessage(getCheckInErrorMessage({ error: error as CheckInError }));
+      setErrorMessage(
+        getCheckInErrorMessage({ error: error as CheckInError, owner })
+      );
+
       return;
     }
 
-    push(`${url}/confirmation`);
+    setCurrentPage({ branchId: 'LOGIN_LINK', id: 'CONFIRMATION' });
   };
 
   return onSubmit;

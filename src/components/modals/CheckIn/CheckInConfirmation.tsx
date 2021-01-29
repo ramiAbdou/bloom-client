@@ -15,6 +15,14 @@ const CheckInConfirmation: React.FC = () => {
             minutes before the event starts.
           `,
           title: `RSVP Registered`
+        },
+        LOGIN_LINK: {
+          description: deline`
+            We just sent you a temporary login link. If you have any trouble,
+            you can request another login link or login with Google. You may
+            now close this page.
+          `,
+          title: `Login Link Sent`
         }
       }}
     />

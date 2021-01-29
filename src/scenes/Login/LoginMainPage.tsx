@@ -3,6 +3,7 @@ import React from 'react';
 import BloomLogo from '@images/bloom.svg';
 import NetworkIcon from '@images/network.svg';
 import LoginCardContent from '@modals/CheckIn/CheckInLoginContent';
+import StoryPage from '@organisms/Story/StoryPage';
 
 const LoginCardHeader: React.FC = () => (
   <div className="s-login-header">
@@ -22,4 +23,12 @@ const LoginCard: React.FC = () => (
   </>
 );
 
-export default LoginCard;
+const LoginMainPage: React.FC = () => {
+  return (
+    <StoryPage branches={{ MAIN: {} }}>
+      <LoginCard />
+    </StoryPage>
+  );
+};
+
+export default LoginMainPage;

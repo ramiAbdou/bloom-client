@@ -15,8 +15,6 @@ $PREF: 's-login';
   overflow: hidden; // Needed to hide the overflowed network image.
 
   @include M { box-sizing: border-box; width: 90%; }
-
-  > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
 }
 
 // ## LOGIN HEADER - Contains the network image as well as welcome message.

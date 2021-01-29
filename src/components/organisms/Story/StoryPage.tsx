@@ -14,6 +14,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
   children,
   className,
   confirmation,
+  confirmationClose,
   id
 }) => {
   const branchKeys = Object.keys(branches);
@@ -37,7 +38,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
 
   if (confirmation) {
     return (
-      <ConfirmationScreen closeButton title={title}>
+      <ConfirmationScreen closeButton={confirmationClose} title={title}>
         <p>{description}</p>
       </ConfirmationScreen>
     );
@@ -55,7 +56,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
       <div>
         {iconUrl && <img src={iconUrl} />}
         <LoadingHeader loading={loading} title={title} />
-        <p>{description}</p>
+        {description && <p>{description}</p>}
       </div>
 
       {!loading && children}

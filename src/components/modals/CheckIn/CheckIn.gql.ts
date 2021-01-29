@@ -1,12 +1,13 @@
 import { mutation } from 'gql-query-builder';
 
-// SEND TEMPORARY LOGIN LINK
+// SEND LOGIN LINK
 
-export interface SendTemporaryLoginLinkArgs {
+export interface SendLoginLinkArgs {
+  communityId?: string;
   email: string;
 }
 
-export const SEND_TEMPORARY_LOGIN_LINK = mutation({
-  operation: 'sendTemporaryLoginLink',
-  variables: { email: { required: true } }
+export const SEND_LOGIN_LINK = mutation({
+  operation: 'sendLoginLink',
+  variables: { communityId: { required: false }, email: { required: true } }
 }).query;
