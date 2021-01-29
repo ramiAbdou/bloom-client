@@ -4,13 +4,14 @@ import { useHistory } from 'react-router-dom';
 import { RouteType } from '@constants';
 import { useStoreState } from '@store/Store';
 
-const usePush = (to: RouteType) => {
+const usePush = (to: RouteType, path?: string) => {
   const urlName = useStoreState(({ db }) => db.community?.urlName);
 
   const { push } = useHistory();
 
   const result = useCallback(() => {
-    push(`/${urlName}/${to}`);
+    const url = path ? `/${urlName}/${to}/${path}` : `/${urlName}/${to}`;
+    push(url);
   }, [urlName]);
 
   return result;

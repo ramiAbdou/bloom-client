@@ -64,16 +64,19 @@ const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
 
 const DataRow = (row: TableRow) => {
   const isClickable = Table.useStoreState(({ options }) => options.isClickable);
+  const onRowClick = Table.useStoreState(({ options }) => options.onRowClick);
   const isSelected = Table.useStoreState((state) => state.isSelected(row.id));
   const columns = Table.useStoreState((store) => store.columns);
 
   const css = cx('', {
     'c-table-tr--active': isSelected,
-    'c-table-tr--clickable': isClickable
+    'c-table-tr--clickable': isClickable || !!onRowClick
   });
 
+  const onClick = () => onRowClick && onRowClick(row.id);
+
   return (
-    <tr className={css}>
+    <tr className={css} onClick={onClick}>
       {columns.map(({ category, id, type }, i: number) => {
         const value =
           category === 'JOINED_AT' ? moment(row[id]).format('M/D/YY') : row[id];

@@ -36,6 +36,7 @@ export type TableOptions = {
   isClickable?: boolean;
   isRenamable?: boolean;
   isSortable?: boolean;
+  onRowClick?: (id: string) => void;
   showCount?: boolean;
 };
 

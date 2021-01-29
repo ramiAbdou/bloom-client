@@ -1,5 +1,6 @@
 import day from 'dayjs';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { MainSection } from '@containers/Main';
 import Table from '@organisms/Table/Table';
@@ -11,15 +12,17 @@ import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsTopEventsTable: React.FC = () => {
+  const urlName = useStoreState(({ db }) => db.community?.urlName);
+
   const rows: TableRow[] = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
 
     return db.community.events
       ?.map((eventId: string) => byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(event.endTime))
-      ?.map(({ attendees, guests, title }: IEvent) => {
+      ?.map(({ attendees, id, guests, title }: IEvent) => {
         return {
-          id: title,
+          id,
           numAttendees: attendees?.length ?? 0,
           numGuests: guests?.length ?? 0,
           title
@@ -34,10 +37,13 @@ const EventsAnalyticsTopEventsTable: React.FC = () => {
     { id: 'numGuests', title: `# of RSVP's`, type: 'SHORT_TEXT' }
   ];
 
+  const { push } = useHistory();
+
   const options: TableOptions = {
     alignEndRight: true,
     fixFirstColumn: false,
     isSortable: false,
+    onRowClick: (eventId: string) => push(`/${urlName}/events/${eventId}`),
     showCount: false
   };
 
