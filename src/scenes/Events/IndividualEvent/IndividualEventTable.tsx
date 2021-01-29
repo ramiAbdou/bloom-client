@@ -1,6 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
+import { QuestionType } from '@constants';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -9,11 +10,12 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IEventAttendee, IEventGuest } from '@store/Db/entities';
-// import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
 const IndividualEventTable: React.FC = () => {
+  const startTime = useStoreState(({ db }) => db.event?.startTime);
+
   const rows: TableRow[] = useStoreState(({ db }) => {
     const { byId: byAttendeeId } = db.entities.attendees;
     const { byId: byGuestId } = db.entities.guests;
@@ -28,7 +30,7 @@ const IndividualEventTable: React.FC = () => {
           email,
           fullName: `${firstName} ${lastName}`,
           id: email,
-          joinedAt: day(createdAt).format('MMM, D @ h:mm A')
+          joinedAt: day(createdAt).format('MMM D @ h:mm A')
         }
       };
     }, {});
@@ -44,7 +46,7 @@ const IndividualEventTable: React.FC = () => {
           [email]: {
             email,
             fullName: `${firstName} ${lastName}`,
-            rsvpdAt: day(createdAt).format('MMM, D @ h:mm A')
+            rsvpdAt: day(createdAt).format('MMM D @ h:mm A')
           }
         };
       }
@@ -53,7 +55,7 @@ const IndividualEventTable: React.FC = () => {
         ...acc,
         [email]: {
           ...previousValue,
-          rsvpdAt: day(createdAt).format('MMM, D @ h:mm A')
+          rsvpdAt: day(createdAt).format('MMM D @ h:mm A')
         }
       };
     }, record);
@@ -67,12 +69,24 @@ const IndividualEventTable: React.FC = () => {
   const columns: TableColumn[] = [
     { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
     { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
-    { id: 'joinedAt', title: `Joined At`, type: 'SHORT_TEXT' },
-    { id: 'rsvpdAt', title: `RSVPd At`, type: 'SHORT_TEXT' }
+    ...(day().isAfter(day(startTime))
+      ? [
+          {
+            id: 'joinedAt',
+            title: `Joined At`,
+            type: 'SHORT_TEXT' as QuestionType
+          }
+        ]
+      : []),
+    { id: 'rsvpdAt', title: `RSVP'd At`, type: 'SHORT_TEXT' }
     // { id: 'value', title: '# of Events Attended', type: 'SHORT_TEXT' }
   ];
 
-  const options: TableOptions = { hideIfEmpty: true, showCount: true };
+  const options: TableOptions = {
+    fixFirstColumn: false,
+    hideIfEmpty: true,
+    showCount: true
+  };
 
   return (
     <Table columns={columns} options={options} rows={rows}>
