@@ -8,7 +8,7 @@ import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import Admins from './Admins/Admins';
 import DatabaseHeader from './DatabaseHeader';
-import Members from './Members/Members';
+import MemberDatabase from './MemberDatabase/MemberDatabase';
 
 const Database: React.FC = () => {
   const { url } = useRouteMatch();
@@ -23,7 +23,7 @@ const Database: React.FC = () => {
     <MainContent Header={DatabaseHeader} loading={loading}>
       <Switch>
         <Route component={Admins} path={`${url}/admins`} />
-        <Route component={Members} path={`${url}/members`} />
+        <Route component={MemberDatabase} path={`${url}/members`} />
         <Redirect to={`${url}/members`} />
       </Switch>
     </MainContent>

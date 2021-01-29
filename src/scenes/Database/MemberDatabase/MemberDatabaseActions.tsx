@@ -3,13 +3,13 @@ import React from 'react';
 import Table from '@organisms/Table/Table.store';
 import SearchBar from '@organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';
-import CopyEmailsIcon from './CopyEmailsIcon';
-import DeleteMembersIcon from './DeleteMembersIcon';
-import ExportDataIcon from './ExportDataIcon';
-import FilterIcon from './FilterIcon';
+import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
+import DeleteMembersButton from './MemberDatabaseDeleteButton';
+import MemberDatabaseExportButton from './MemberDatabaseExportButton';
+import MemberDatabaseFilterButton from './MemberDatabaseFilterButton';
 import PromoteToAdminIcon from './PromoteToAdminIcon';
 
-const IconContainer = () => {
+const MemberDatabaseButtons = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
 
   const isAnythingSelected = Table.useStoreState(
@@ -20,18 +20,20 @@ const IconContainer = () => {
 
   return (
     <div>
-      <CopyEmailsIcon />
-      <ExportDataIcon />
+      <MemberDatabaseCopyButton />
+      <MemberDatabaseExportButton />
       {isOwner && <PromoteToAdminIcon />}
-      <DeleteMembersIcon />
+      <DeleteMembersButton />
     </div>
   );
 };
 
-export default () => (
+const MemberDatabaseActions: React.FC = () => (
   <div className="s-database-action-row">
     <SearchBar placeholder="Search members..." />
-    <FilterIcon />
-    <IconContainer />
+    <MemberDatabaseFilterButton />
+    <MemberDatabaseButtons />
   </div>
 );
+
+export default MemberDatabaseActions;

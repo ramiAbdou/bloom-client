@@ -12,7 +12,7 @@ import { ToastOptions } from '../../../components/organisms/Toast/Toast.types';
 import { DELETE_MEMBERS, DeleteMembersArgs } from '../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
-const DeleteMembersModal = () => {
+const MemberDatabaseDeleteModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const addEntities = useStoreActions(({ db }) => db.addEntities);
@@ -66,7 +66,7 @@ const DeleteMembersModal = () => {
   );
 };
 
-export default () => {
+const MemberDatabaseDeleteButton: React.FC = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
   const memberId = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -99,7 +99,7 @@ export default () => {
 
   return (
     <>
-      <DeleteMembersModal />
+      <MemberDatabaseDeleteModal />
       <DatabaseAction
         Icon={IoTrash}
         className="s-database-action--delete"
@@ -110,3 +110,5 @@ export default () => {
     </>
   );
 };
+
+export default MemberDatabaseDeleteButton;

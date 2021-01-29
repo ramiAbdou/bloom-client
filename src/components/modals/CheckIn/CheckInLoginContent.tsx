@@ -72,7 +72,6 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
 });
 
 const LoginCardEmailForm: React.FC = () => {
-  const isCheckIn = useStoreState(({ modal }) => modal.isShowing);
   const sendLoginLink = useSendLoginLink();
 
   return (
@@ -80,11 +79,7 @@ const LoginCardEmailForm: React.FC = () => {
       <FormItem
         required
         category="EMAIL"
-        description={
-          isCheckIn
-            ? 'Or continue with your email address to receive an RSVP link.'
-            : 'Or continue with your email address to receive a login link.'
-        }
+        description="Or continue with your email address to receive a login link."
         placeholder="Email"
         type="SHORT_TEXT"
         validate="IS_EMAIL"
@@ -93,7 +88,7 @@ const LoginCardEmailForm: React.FC = () => {
       <FormErrorMessage marginTop={0} />
 
       <FormSubmitButton loadingText="Sending...">
-        {isCheckIn ? 'Send RSVP Link' : 'Send Login Link'}
+        Send Login Link
       </FormSubmitButton>
     </Form>
   );

@@ -6,7 +6,7 @@ import Table from '@organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 
-export default () => {
+const MemberDatabaseExportButton: React.FC = () => {
   const filename = useStoreState(({ db }) => `${db.community.urlName}.csv`);
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);
@@ -39,3 +39,5 @@ export default () => {
     </CSVLink>
   );
 };
+
+export default MemberDatabaseExportButton;

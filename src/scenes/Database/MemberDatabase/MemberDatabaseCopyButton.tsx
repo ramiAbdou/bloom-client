@@ -10,7 +10,7 @@ import DatabaseAction from '../DatabaseAction';
  * Copies all of the selected members' emails to clipboard, in a
  * comma-separated list.
  */
-export default () => {
+const MemberDatabaseCopyButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const emails = Table.useStoreState(({ columns, data, selectedRowIds }) => {
@@ -32,3 +32,5 @@ export default () => {
     <DatabaseAction Icon={IoCopy} tooltip="Copy Email" onClick={onClick} />
   );
 };
+
+export default MemberDatabaseCopyButton;

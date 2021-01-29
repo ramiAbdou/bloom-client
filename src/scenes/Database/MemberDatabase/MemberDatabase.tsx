@@ -15,9 +15,9 @@ import {
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
-import ActionRow from './ActionRow';
+import ActionRow from './MemberDatabaseActions';
 
-export default () => {
+const MemberDatabase: React.FC = () => {
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: Row[] = useStoreState(({ db }) => {
@@ -121,3 +121,5 @@ export default () => {
     </Table>
   );
 };
+
+export default MemberDatabase;
