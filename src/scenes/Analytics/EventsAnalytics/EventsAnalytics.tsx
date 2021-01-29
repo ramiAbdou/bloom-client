@@ -22,7 +22,7 @@ const EventsAnalytics: React.FC = () => {
   if (loading) return null;
 
   return (
-    <>
+    <div className="s-analytics-page">
       <Row spacing="sm">
         <EventsAnalyticsTotalCard />
         <EventsAnalyticsAttendanceCard />
@@ -30,7 +30,7 @@ const EventsAnalytics: React.FC = () => {
 
       <EventsAnalyticsTopEvents />
       <EventsAnalyticsFrequentAttendees />
-    </>
+    </div>
   );
 };
 

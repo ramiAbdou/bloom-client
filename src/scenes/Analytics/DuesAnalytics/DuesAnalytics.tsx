@@ -1,16 +1,17 @@
 import React from 'react';
 
+import Row from '@containers/Row/Row';
 import DuesAnalyticsChart from './DuesAnalyticsChart';
 import DuesAnalyticsHistory from './DuesAnalyticsHistory';
 import DuesAnalyticsPercentPaidCard from './PercentPaidCard';
 import DuesAnalyticsTotalCollectedCard from './TotalCollectedCard';
 
 const DuesAnalytics: React.FC = () => (
-  <div className="s-analytics-dues">
-    <div>
+  <div className="s-analytics-page s-analytics-dues">
+    <Row spacing="sm">
       <DuesAnalyticsTotalCollectedCard />
       <DuesAnalyticsPercentPaidCard />
-    </div>
+    </Row>
 
     <DuesAnalyticsChart />
     <DuesAnalyticsHistory />
