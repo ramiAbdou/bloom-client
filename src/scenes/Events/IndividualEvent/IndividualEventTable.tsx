@@ -135,7 +135,12 @@ const IndividualEventTable: React.FC = () => {
     : [];
 
   const columns: TableColumn[] = [
-    { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
+    {
+      category: 'PICTURE_FULL_NAME',
+      id: 'fullName',
+      title: 'Full Name',
+      type: 'SHORT_TEXT'
+    },
     { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
     ...joinedAtColumn,
     { id: 'rsvpdAt', title: `RSVP'd At`, type: 'SHORT_TEXT' },

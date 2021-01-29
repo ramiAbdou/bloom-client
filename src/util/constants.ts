@@ -89,7 +89,8 @@ export type QuestionCategory =
   | 'GENDER'
   | 'JOINED_AT'
   | 'LAST_NAME'
-  | 'MEMBERSHIP_TYPE';
+  | 'MEMBERSHIP_TYPE'
+  | 'PICTURE_FULL_NAME';
 
 export type QuestionType =
   | 'COVER_IMAGE'

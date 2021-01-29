@@ -4,6 +4,8 @@ import React from 'react';
 import { Attribute } from '@atoms/Tags';
 import Pill from '@atoms/Tags/Pill';
 import { QuestionType, ValueProps } from '@constants';
+import Row from '@containers/Row/Row';
+import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { cx, takeFirst } from '@util/util';
 import Table from '../Table.store';
 import { TableRow } from '../Table.types';
@@ -37,6 +39,19 @@ const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
     [
       category === 'DUES_STATUS',
       <Pill positive={value === 'Active'}>{value}</Pill>
+    ],
+    [
+      category === 'PROFILE_FULL_NAME',
+      <Row spacing="sm">
+        <ProfilePicture
+          circle
+          firstName="Rami"
+          fontSize={12}
+          lastName="Abdou"
+          size={24}
+        />
+        <p>{value}</p>
+      </Row>
     ],
     [type === 'MULTIPLE_CHOICE', <Attribute>{value}</Attribute>],
     [
