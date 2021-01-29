@@ -53,7 +53,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
 
   const columns: Column[] = [
     { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
-    { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
+    { id: 'email', title: 'Email', type: 'LONG_TEXT' },
     { id: 'value', title: '# of Events Attended', type: 'SHORT_TEXT' }
   ];
 

@@ -34,7 +34,7 @@ td {
     }
   }
 
-  &--right { > div > *:last-child { margin-left: auto; } }
+  &--right { > div > *:last-child { margin-left: auto; text-align: right; } }
 }
 
 // ## TABLE DATA ROW

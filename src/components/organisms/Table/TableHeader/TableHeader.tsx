@@ -20,6 +20,11 @@ const HeaderCell = ({
   id,
   title
 }: HeaderCellProps) => {
+  const alignEndRight = Table.useStoreState(({ columns, options }) => {
+    const isLastCell = i === columns.length - 1;
+    return options.alignEndRight && isLastCell;
+  });
+
   const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
   const direction = Table.useStoreState((store) => store.sortedColumnDirection);
   const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
@@ -37,6 +42,7 @@ const HeaderCell = ({
   const isSortedColumn = sortedColumnId === id;
 
   const css = cx(getTableCellClass({ category, type }), {
+    'c-table-td--right': alignEndRight,
     'c-table-th--fixed': fixFirstColumn && i === 0,
     'c-table-th--panel': isPanelShowing,
     'c-table-th--sortable': isSortable,

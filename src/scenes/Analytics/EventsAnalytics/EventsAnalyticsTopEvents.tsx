@@ -40,7 +40,6 @@ const EventsAnalyticsTopEventsTable: React.FC = () => {
   const { push } = useHistory();
 
   const options: TableOptions = {
-    alignEndRight: true,
     fixFirstColumn: false,
     isSortable: false,
     onRowClick: (eventId: string) => push(`/${urlName}/events/${eventId}`),

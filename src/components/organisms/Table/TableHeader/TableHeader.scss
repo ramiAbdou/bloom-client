@@ -61,4 +61,6 @@ th {
     // element.
     > div > svg { @extend .react-icon--sm; color: $primary; margin-left: $xs; }
   }
+
+  &--right { > div > *:last-child { margin-left: auto; text-align: right; } }
 }
