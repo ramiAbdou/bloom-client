@@ -1,4 +1,4 @@
-$PREF: 't-misc-card';
+$PREF: 't-card';
 
 // ## CARD
 
@@ -18,10 +18,24 @@ $PREF: 't-misc-card';
 .#{$PREF}--analytics {
   background-color: hsla($primary-hue, 5%, 88%, 0.4);
   border-radius: $xs;
+  box-sizing: border-box;
+  height: fit-content;
   min-width: $xxl * 4;
   padding: $sm;
   position: relative;
   width: fit-content;
+
+  // Wraps the value (number) and the percentage tag.
+  > div:first-child {
+    @extend .flex-ac;
+  
+    margin-bottom: $xxs;
+  
+    > p:first-child { @extend .display; margin-right: $xs; }
+  }
+
+  // Label of the simple card (etc: TOTAL MEMBERS).
+  > h4 { color: $gray-2; }
 }
 
 // ## INFORMATION CARD

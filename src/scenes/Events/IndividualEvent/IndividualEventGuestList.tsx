@@ -86,10 +86,9 @@ const IndividualEventGuestListContent: React.FC = () => {
 
 const IndividualEventGuestList: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const numGuests = useStoreState(({ db }) => db.event?.guests?.length);
 
-  if (isAdmin || day().isAfter(day(endTime))) return null;
+  if (day().isAfter(day(endTime))) return null;
 
   return (
     <Card

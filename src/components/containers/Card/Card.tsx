@@ -23,10 +23,10 @@ const Card: React.FC<CardProps> = ({
   onClick,
   title
 }) => {
-  const css = cx('t-misc-card', {
+  const css = cx('t-card', {
     [className]: className,
-    't-misc-card--clickable': !!onClick,
-    't-misc-card--no-padding': noPadding
+    't-card--clickable': !!onClick,
+    't-card--no-padding': noPadding
   });
 
   const body = (

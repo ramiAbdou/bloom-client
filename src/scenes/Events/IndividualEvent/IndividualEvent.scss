@@ -8,7 +8,7 @@ $PREF: 's-events-individual';
 
   @include D { margin-top: $xl; }
 
-  > .#{$PREF}-header {
+  > .#{$PREF}-header > .t-row:last-child {
     @extend .shadow--1;
 
     @include D { border-radius: $sm; }
@@ -36,9 +36,19 @@ $PREF: 's-events-individual';
 // ## INDIVIDUAL EVENT HEADER
 
 .#{$PREF}-header {
-  @extend .#{$PREF}-grid;
-
   background-color: white;
+  padding: $md;
+
+  > .t-row:first-child {
+    @include LTE(610) {
+      display: block;
+
+      > * { width: 100%; }
+      > *:not(:last-child) { margin-bottom: $sm; }
+    }
+  }
+
+  > .t-row:last-child { @extend .#{$PREF}-grid; padding: 0; }
 }
 
 // ## INDIVIDUAL EVENT HEADER CONTENT - Contains basic information such as
@@ -46,6 +56,8 @@ $PREF: 's-events-individual';
 
 .#{$PREF}-header-content {
   @extend .flex-col;
+
+  height: 100%;
 
   > div:first-child {
     margin-bottom: $md;

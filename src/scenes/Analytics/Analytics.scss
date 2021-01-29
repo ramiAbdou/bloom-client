@@ -9,15 +9,3 @@ $PREF: 's-analytics';
 .#{$PREF}-header { display: grid; grid-template-columns: repeat(12, 1fr); }
 .#{$PREF}-header > div:first-child { grid-column-end: span 5; }
 .#{$PREF}-header > *:nth-child(2) { grid-column-end: span 4; }
-
-// Wraps the value (number) and the percentage tag.
-.#{$PREF}-simple > div:first-child {
-  @extend .flex-ac;
-
-  margin-bottom: $xxs;
-
-  > p:first-child { @extend .display; margin-right: $xs; }
-}
-
-// Label of the simple card (etc: TOTAL MEMBERS).
-.#{$PREF}-simple > h4 { color: $gray-2; }

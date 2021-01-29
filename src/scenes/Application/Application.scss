@@ -10,7 +10,7 @@ $PREF: 's-application';
   @include RESP(padding-bottom, $xl, $lg, $md);
   @include RESP(padding-top, $xl, $lg, $md);
 
-  > .t-misc-card {
+  > .t-card {
     margin: auto;
     max-width: $xxl * 7;
 
@@ -26,7 +26,7 @@ $PREF: 's-application';
 
   @include TD { margin-bottom: $xxl; }
 
-  > .t-misc-card {
+  > .t-card {
     max-width: $xxl * 7;
     overflow: hidden;
     
