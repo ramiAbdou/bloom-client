@@ -14,12 +14,15 @@ interface MainSectionProps
   extends ClassNameProps,
     ChildrenProps,
     LoadingProps,
-    TitleProps {}
+    TitleProps {
+  SearchBar?: React.FC;
+}
 
 const MainSection: React.FC<MainSectionProps> = ({
   className,
   loading,
   title,
+  SearchBar,
   ...props
 }) => {
   const css = cx('t-main-section', { [className]: className });
@@ -28,7 +31,14 @@ const MainSection: React.FC<MainSectionProps> = ({
     <section className={css}>
       <LoadingContainer
         {...props}
-        Header={() => <LoadingHeader h2 loading={loading} title={title} />}
+        Header={() => (
+          <LoadingHeader
+            h2
+            SearchBar={SearchBar}
+            loading={loading}
+            title={title}
+          />
+        )}
       />
     </section>
   );

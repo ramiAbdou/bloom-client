@@ -22,7 +22,12 @@ const TableSearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
   }, [value]);
 
   return (
-    <SearchBar placeholder={placeholder} value={value} onChange={setValue} />
+    <SearchBar
+      className="c-table-search-bar"
+      placeholder={placeholder}
+      value={value}
+      onChange={setValue}
+    />
   );
 };
 

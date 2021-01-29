@@ -7,6 +7,7 @@ import { HeaderTag } from '@atoms/Tags';
 import { LoadingProps } from '@constants';
 
 export interface LoadingHeaderProps extends LoadingProps {
+  SearchBar?: React.FC;
   h2?: boolean;
   h3?: boolean;
   onBack?: VoidFunction;
@@ -26,22 +27,35 @@ const LoadingHeaderBackButton: React.FC<Pick<LoadingHeaderProps, 'onBack'>> = ({
   );
 };
 
-const LoadingHeader: React.FC<LoadingHeaderProps> = ({
-  onBack,
-  h2,
-  h3,
-  loading,
-  headerTag,
-  title
-}) => {
+const LoadingHeaderTitle: React.FC<
+  Pick<LoadingHeaderProps, 'h2' | 'h3' | 'title'>
+> = ({ h2, h3, title }) => {
   return (
-    <div className="t-loading-header">
-      <LoadingHeaderBackButton onBack={onBack} />
+    <>
       {!h2 && !h3 && <h1>{title}</h1>}
       {h2 && <h2>{title}</h2>}
       {h3 && <h3>{title}</h3>}
-      {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
-      <Spinner dark loading={loading} />
+    </>
+  );
+};
+
+const LoadingHeader: React.FC<LoadingHeaderProps> = ({
+  onBack,
+  loading,
+  headerTag,
+  SearchBar,
+  ...titleProps
+}) => {
+  return (
+    <div className="t-loading-header">
+      <div>
+        <LoadingHeaderBackButton onBack={onBack} />
+        <LoadingHeaderTitle {...titleProps} />
+        {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
+        <Spinner dark loading={loading} />
+      </div>
+
+      {!!SearchBar && <SearchBar />}
     </div>
   );
 };

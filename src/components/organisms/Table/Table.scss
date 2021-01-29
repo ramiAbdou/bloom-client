@@ -85,3 +85,7 @@ div.#{$PREF}-col-panel { padding: $sm; }
   margin-bottom: $sm;
   margin-top: 0;
 }
+
+// ## TABLE SEARCH BAR
+
+.t-main-section > .#{$PREF}-search-bar { margin-bottom: $sm; }
