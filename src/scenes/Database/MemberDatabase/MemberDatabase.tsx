@@ -17,10 +17,12 @@ import { useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import ActionRow from './MemberDatabaseActions';
 import MemberDatabaseDeleteModal from './MemberDatabaseDeleteModal';
+import MemberDatabasePromoteModal from './MemberDatabasePromoteModal';
 
 const MemberDatabaseModals: React.FC = () => (
   <>
     <MemberDatabaseDeleteModal />
+    <MemberDatabasePromoteModal />
   </>
 );
 

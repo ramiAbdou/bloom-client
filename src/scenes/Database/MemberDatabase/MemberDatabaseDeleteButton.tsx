@@ -2,47 +2,56 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import { ModalType } from '@constants';
-import Table from '@organisms/Table/Table.store';
+import TableStore from '@organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
-const MemberDatabaseDeleteButton: React.FC = () => {
-  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
-  const memberId = useStoreState(({ db }) => db.member.id);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const selectedRowIds = Table.useStoreState((store) => store.selectedRowIds);
-
-  const notEnoughPermissions: boolean = useStoreState(({ db }) => {
-    if (isOwner) return false;
-    const { byId } = db.entities.members;
-
-    const adminIds = db.community.members.filter(
-      (id: string) => !!byId[id].role
-    );
-
-    if (selectedRowIds.some((id: string) => adminIds.includes(id))) return true;
-    return false;
+/**
+ * Returns the appropriate tooltip message based on the user's permissions
+ * to delete another person in the community.
+ */
+const useDeleteTooltip = (): string => {
+  const selectedRowIds = TableStore.useStoreState((store) => {
+    return store.selectedRowIds;
   });
 
-  const selectedSelf: boolean = selectedRowIds.includes(memberId);
+  const isSelfSelected = useStoreState(({ db }) => {
+    return selectedRowIds.includes(db.member.id);
+  });
+
+  const hasPermissions: boolean = useStoreState(({ db }) => {
+    if (db.member?.role === 'OWNER') return true;
+    const { byId: byMemberId } = db.entities.members;
+
+    if (
+      selectedRowIds.some((memberId: string) => !!byMemberId[memberId]?.role)
+    ) {
+      return false;
+    }
+
+    return true;
+  });
 
   const tooltip: string = takeFirst([
-    [selectedSelf, `Can't delete member(s) because you selected yourself.`],
-    [
-      notEnoughPermissions,
-      `You don't have the permissions to delete other admins.`
-    ],
+    [isSelfSelected, `Can't delete member(s) because you selected yourself.`],
+    [!hasPermissions, `You don't have the permissions to delete other admins.`],
     'Delete Member(s)'
   ]);
 
+  return tooltip;
+};
+
+const MemberDatabaseDeleteButton: React.FC = () => {
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const tooltip: string = useDeleteTooltip();
   const onClick = () => showModal(ModalType.DELETE_MEMBERS);
 
   return (
     <DatabaseAction
       Icon={IoTrash}
       className="s-database-action--delete"
-      disabled={selectedSelf || notEnoughPermissions}
+      disabled={tooltip !== 'Delete Member(s)'}
       tooltip={tooltip}
       onClick={onClick}
     />
