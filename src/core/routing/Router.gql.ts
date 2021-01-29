@@ -61,9 +61,13 @@ export const IS_USER_LOGGED_IN = query({ operation: 'isUserLoggedIn' }).query;
 
 export const LOGOUT = mutation({ operation: 'logout' }).query;
 
-// ## VERIFY LOGIN TOKEN
+// ## VERIFY TOKEN
 
-export const VERIFY_LOGIN_TOKEN = query({
-  operation: 'verifyLoginToken',
-  variables: { loginToken: { required: true } }
+export interface VerifyTokenArgs {
+  token: string;
+}
+
+export const VERIFY_TOKEN = query({
+  operation: 'verifyToken',
+  variables: { token: { required: true } }
 }).query;

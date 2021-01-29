@@ -7,7 +7,7 @@ import Loader from '@molecules/Loader/Loader';
 import ApplicationPage from '@scenes/Application/Application';
 import { useStoreActions } from '@store/Store';
 import HomeRouter from './HomeRouter';
-import { IS_USER_LOGGED_IN } from './Router.gql';
+import { IS_USER_LOGGED_IN, VERIFY_TOKEN, VerifyTokenArgs } from './Router.gql';
 
 /**
  * Core routing logic of the entire application. Nested logic should live
@@ -15,18 +15,32 @@ import { IS_USER_LOGGED_IN } from './Router.gql';
  * most nested logic within it.
  */
 const Router: React.FC = () => {
+  const token = new URLSearchParams(window.location.search).get('token');
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
-  const { loading, data: isAuthenticated } = useQuery<boolean>({
+  const {
+    loading: isUserLoggedInLoading,
+    data: isAuthenticated
+  } = useQuery<boolean>({
     name: 'isUserLoggedIn',
     query: IS_USER_LOGGED_IN
   });
 
-  useEffect(() => {
-    setIsAuthenticated(isAuthenticated);
-  }, [isAuthenticated]);
+  const { data: isVerified, loading: isVerifyTokenLoading } = useQuery<
+    boolean,
+    VerifyTokenArgs
+  >({
+    name: 'verifyToken',
+    query: VERIFY_TOKEN,
+    variables: { token }
+  });
 
-  if (loading) return <Loader />;
+  useEffect(() => {
+    if (token) setIsAuthenticated(isVerified);
+    else setIsAuthenticated(isAuthenticated);
+  }, [isVerified, isAuthenticated, token]);
+
+  if (isUserLoggedInLoading || isVerifyTokenLoading) return <Loader />;
 
   return (
     <BrowserRouter>

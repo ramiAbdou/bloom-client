@@ -29,7 +29,6 @@ import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
 import { GET_USER, GetUserArgs, GetUserResult } from './Router.gql';
-import TokenRoute from './TokenRoute';
 
 const HomeRouterContent: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
@@ -100,9 +99,6 @@ const HomeRouter = () => {
     if (!communityId) return;
     if (communityId !== activeCommunityId) setActiveCommunity(communityId);
   }, [communityId]);
-
-  const token = new URLSearchParams(window.location.search).get('loginToken');
-  if (token) return <TokenRoute token={token} />;
 
   if (!isAuthenticated && route === 'events') {
     return (
