@@ -48,6 +48,23 @@ export const CREATE_EVENT_GUEST = mutation({
   }
 }).query;
 
+// ## CREATE EVENT WATCH
+
+export interface CreateEventWatchArgs {
+  eventId: string;
+}
+
+export const CREATE_EVENT_WATCH = mutation({
+  fields: [
+    'createdAt',
+    'id',
+    { event: ['id'] },
+    { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
+  ],
+  operation: 'createEventWatch',
+  variables: { eventId: { required: true } }
+}).query;
+
 // ## DELETE EVENT GUEST
 
 export interface DeleteEventGuestArgs {
@@ -133,6 +150,13 @@ export const GET_EVENT = query({
             { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
           ]
         }
+      ]
+    },
+    {
+      watches: [
+        'createdAt',
+        'id',
+        { member: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
       ]
     }
   ],
@@ -231,8 +255,7 @@ export const GET_PAST_EVENTS_WITH_GUESTS = query({
     },
     { guests: ['id'] }
   ],
-  operation: 'getPastEvents',
-  variables: { populate: { required: false, type: '[String!]' } }
+  operation: 'getPastEvents'
 }).query;
 
 // ## GET UPCOMING EVENTS

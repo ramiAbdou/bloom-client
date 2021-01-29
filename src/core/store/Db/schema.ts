@@ -58,6 +58,7 @@ const Event = new schema.Entity(
       const processedData = takeFirst([
         [!!parent.attendeeId, { attendees: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
+        [!!parent.watchId, { watches: [parent.id] }],
         {}
       ]);
 
@@ -98,6 +99,22 @@ const EventGuest = new schema.Entity(
   }
 );
 
+const EventWatch = new schema.Entity(
+  'watches',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.eventId, { event: parent.id }],
+        {}
+      ]);
+
+      return { ...value, ...processedData, watchId: value.id };
+    }
+  }
+);
+
 const Integrations = new schema.Entity('integrations', {});
 
 const Member = new schema.Entity(
@@ -111,6 +128,7 @@ const Member = new schema.Entity(
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
+        [!!parent.watchId, { watches: [parent.id] }],
         {}
       ]);
 
@@ -148,11 +166,13 @@ Community.define({
 Event.define({
   attendees: [EventAttendee],
   community: Community,
-  guests: [EventGuest]
+  guests: [EventGuest],
+  watches: [EventWatch]
 });
 
 EventAttendee.define({ event: Event, member: Member });
 EventGuest.define({ event: Event, member: Member });
+EventWatch.define({ event: Event, member: Member });
 
 Member.define({
   community: Community,
@@ -160,7 +180,8 @@ Member.define({
   guests: [EventGuest],
   payments: [MemberPayment],
   type: MemberType,
-  user: User
+  user: User,
+  watches: [EventWatch]
 });
 
 MemberData.define({ question: Question });
@@ -175,6 +196,7 @@ export const Schema = {
   EVENT: Event,
   EVENT_ATTENDEE: EventAttendee,
   EVENT_GUEST: EventGuest,
+  EVENT_WATCH: EventWatch,
   INTEGRATIONS: Integrations,
   MEMBER: Member,
   MEMBER_DATA: MemberData,

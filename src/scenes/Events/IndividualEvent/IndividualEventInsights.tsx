@@ -10,13 +10,20 @@ import IndividualEventTable from './IndividualEventTable';
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
   const startTime = useStoreState(({ db }) => db.event.startTime);
   const numAttendees = useStoreState(({ db }) => db.event.attendees?.length);
-  if (day().isAfter(day(startTime))) return null;
+  if (day().isBefore(day(startTime))) return null;
   return <AnalyticsCard label="# of Attendees" value={numAttendees} />;
 };
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
   const numGuests = useStoreState(({ db }) => db.event.guests?.length);
   return <AnalyticsCard label="# of RSVPs" value={numGuests} />;
+};
+
+const IndividualEventInsightsWatchesCard: React.FC = () => {
+  const recordingUrl = useStoreState(({ db }) => db.event.recordingUrl);
+  const numWatches = useStoreState(({ db }) => db.event.watches?.length);
+  if (!recordingUrl) return null;
+  return <AnalyticsCard label="# of Recording Views" value={numWatches} />;
 };
 
 const IndividualEventInsights: React.FC = () => {
@@ -28,6 +35,7 @@ const IndividualEventInsights: React.FC = () => {
       <Row spacing="sm">
         <IndividualEventInsightsAttendeesCard />
         <IndividualEventInsightsGuestsCard />
+        <IndividualEventInsightsWatchesCard />
       </Row>
 
       <IndividualEventTable />

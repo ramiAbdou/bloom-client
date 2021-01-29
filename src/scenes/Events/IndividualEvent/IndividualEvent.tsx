@@ -56,7 +56,10 @@ const IndividualEvent: React.FC = () => {
         'community.questions',
         'guests.member.data',
         'guests.member.type',
-        'guests.member.user'
+        'guests.member.user',
+        'watches.member.data',
+        'watches.member.type',
+        'watches.member.user'
       ]
     }
   });

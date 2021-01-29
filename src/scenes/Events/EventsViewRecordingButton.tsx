@@ -3,8 +3,11 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent } from '@store/Db/entities';
+import useMutation from '@hooks/useMutation';
+import { IEvent, IEventWatch } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { CREATE_EVENT_WATCH, CreateEventWatchArgs } from './Events.gql';
 
 interface EventsViewRecordingButtonProps
   extends Partial<Pick<ButtonProps, 'large'>> {
@@ -15,6 +18,13 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   eventId,
   large
 }) => {
+  const [createEventWatch] = useMutation<IEventWatch, CreateEventWatchArgs>({
+    name: 'createEventWatch',
+    query: CREATE_EVENT_WATCH,
+    schema: Schema.EVENT_WATCH,
+    variables: { eventId }
+  });
+
   const { endTime, recordingUrl }: IEvent = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
     return byEventId[eventId];
@@ -23,8 +33,11 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const isPast = day().isAfter(day(endTime));
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClick = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.stopPropagation();
+    await createEventWatch();
   };
 
   return (
@@ -34,7 +47,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
       disabled={!recordingUrl}
       href={recordingUrl}
       large={large}
-      show={!isAdmin && isPast}
+      show={isPast && (!isAdmin || large)}
       onClick={onClick}
     >
       {recordingUrl ? 'View Recording' : 'No Recording Available'}

@@ -15,8 +15,7 @@ const EventsAnalytics: React.FC = () => {
   const { loading } = useQuery<IEvent[], PopulateArgs>({
     name: 'getPastEvents',
     query: GET_PAST_EVENTS_WITH_GUESTS,
-    schema: [Schema.EVENT],
-    variables: { populate: ['guests'] }
+    schema: [Schema.EVENT]
   });
 
   if (loading) return null;

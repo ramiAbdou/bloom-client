@@ -60,6 +60,7 @@ export interface IEvent extends BaseEntity {
   title: string;
   upcoming?: boolean;
   videoUrl: string;
+  watches: IdString[];
 }
 
 // ## EVENT ATTENDEE
@@ -79,6 +80,13 @@ export interface IEventGuest extends BaseEntity {
   event: IdString;
   firstName?: string;
   lastName?: string;
+  member: IdString;
+}
+
+// ## EVENT WATCH
+
+export interface IEventWatch extends BaseEntity {
+  event: IdString;
   member: IdString;
 }
 
@@ -117,6 +125,7 @@ export interface IMember extends BaseEntity {
   type: IdString;
   status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
   user: IdString;
+  watches: IdString[];
 }
 
 // ## MEMBER DATA
@@ -196,6 +205,7 @@ export interface IEntities {
   questions: EntityRecord<IQuestion>;
   types: EntityRecord<IMemberType>;
   users: EntityRecord<IUser>;
+  watches: EntityRecord<IEventWatch>;
 }
 
 // Initial state for all of the entity (DB) definitions.
@@ -211,5 +221,6 @@ export const initialEntities: IEntities = {
   payments: { byId: {} },
   questions: { byId: {} },
   types: { byId: {} },
-  users: { activeId: null, byId: {} }
+  users: { activeId: null, byId: {} },
+  watches: { byId: {} }
 };
