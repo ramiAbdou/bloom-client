@@ -5,7 +5,7 @@ $PREF: 't-row';
 .#{$PREF} {
   &--margin-top-auto { margin-top: auto; }
 
-  &:not(&--equal) > *:not(:last-child) { margin-right: $xs; }
+  &:not(&--equal):not(&--spacing-sm) > *:not(:last-child) { margin-right: $xs; }
 
   &--equal {
     bottom: $md;
@@ -17,7 +17,6 @@ $PREF: 't-row';
     > *:last-child { margin-left: $xxs; }
   }
 
-  &--spacing-xs {
-    > *:not(:last-child) { margin-right: $xs; }
-  }
+  &--spacing-xs > *:not(:last-child) { margin-right: $xs; }
+  &--spacing-sm > *:not(:last-child) { margin-right: $sm; }
 }

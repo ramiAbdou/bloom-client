@@ -22,8 +22,9 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
   const { firstName, lastName, memberId, pictureUrl } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () =>
-    memberId && showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+  const onClick = () => {
+    if (memberId) showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+  };
 
   const fullName = `${firstName} ${lastName}`;
 
@@ -84,10 +85,10 @@ const IndividualEventGuestListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
+  const startTime = useStoreState(({ db }) => db.event?.startTime);
   const numGuests = useStoreState(({ db }) => db.event?.guests?.length);
 
-  if (day().isAfter(day(endTime))) return null;
+  if (day().isAfter(day(startTime))) return null;
 
   return (
     <Card

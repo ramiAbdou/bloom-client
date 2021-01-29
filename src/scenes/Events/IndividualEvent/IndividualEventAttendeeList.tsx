@@ -64,7 +64,7 @@ const IndividualEventAttendeeListContent: React.FC = () => {
 
   return (
     <>
-      {!users?.length && <p>No guests have RSVP'd yet.</p>}
+      {!users?.length && <p>No guests attended.</p>}
 
       <List
         Item={(user: IndividualEventAttendeeProps) => {
@@ -84,14 +84,20 @@ const IndividualEventAttendeeListContent: React.FC = () => {
 
 const IndividualEventGuestList: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
+  const startTime = useStoreState(({ db }) => db.event?.startTime);
   const numAttendees = useStoreState(({ db }) => db.event?.attendees?.length);
 
-  if (day().isBefore(day(endTime))) return null;
+  if (day().isBefore(day(startTime))) return null;
+  const isHappening = day().isBefore(day(endTime));
 
   return (
     <Card
       className="s-events-individual-card"
-      headerTag={numAttendees ? `${numAttendees} Attended` : null}
+      headerTag={
+        numAttendees
+          ? `${numAttendees} ${isHappening ? 'Attending' : 'Attended'}`
+          : null
+      }
       title="Attendees"
     >
       <ListStore.Provider>

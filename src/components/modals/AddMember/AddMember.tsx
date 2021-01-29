@@ -5,7 +5,7 @@ import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import SubmitButton from '@organisms/Form/FormSubmitButton';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
 import AddMemberStore, {
@@ -56,9 +56,9 @@ const AddMemberContent: React.FC = () => {
         <FormErrorMessage />
 
         <Row>
-          <SubmitButton fill={false} large={false} loadingText="Adding...">
+          <FormSubmitButton fill={false} large={false} loadingText="Adding...">
             Add
-          </SubmitButton>
+          </FormSubmitButton>
 
           <Button secondary onClick={onSecondaryClick}>
             Cancel

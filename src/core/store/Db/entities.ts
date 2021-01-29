@@ -10,11 +10,17 @@ export interface BaseEntity {
 
 // ## COMMUNITY
 
+export interface IFrequentEventAttendee
+  extends Pick<IUser, 'email' | 'fullName'> {
+  value: number;
+}
+
 export interface ICommunity extends BaseEntity {
   application?: IdString;
   autoAccept?: boolean;
   canCollectDues?: boolean;
   events?: IdString[];
+  frequentEventAttendees: IFrequentEventAttendee[];
   integrations: IdString;
   logoUrl: string;
   members: IdString[];
@@ -59,7 +65,10 @@ export interface IEvent extends BaseEntity {
 // ## EVENT ATTENDEE
 
 export interface IEventAttendee extends BaseEntity {
+  email?: string;
   event: IdString;
+  firstName?: string;
+  lastName?: string;
   member: IdString;
 }
 
@@ -159,6 +168,7 @@ export interface IUser extends BaseEntity {
   email: string;
   facebookUrl: string;
   firstName: string;
+  fullName?: string;
   gender?: 'Male' | 'Female' | 'Non-Binary' | 'Prefer Not to Say';
   instagramUrl: string;
   lastName: string;

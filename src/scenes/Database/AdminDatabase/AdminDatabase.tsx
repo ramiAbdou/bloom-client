@@ -3,17 +3,17 @@ import React from 'react';
 
 import AddMemberModal from '@modals/AddMember/AddMember';
 import Table from '@organisms/Table/Table';
-import { Column, Row } from '@organisms/Table/Table.types';
+import { Column, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
 const AdminDatabase: React.FC = () => {
-  const rows: Row[] = useStoreState(({ db }) => {
+  const rows: TableRow[] = useStoreState(({ db }) => {
     const { byId: byMemberId } = db.entities.members;
     const { byId: byUserId } = db.entities.users;
 
-    return db.community.members?.reduce((acc: Row[], memberId: string) => {
+    return db.community.members?.reduce((acc: TableRow[], memberId: string) => {
       const { id, role, user } = byMemberId[memberId] ?? {};
       if (!role || !id || !user) return acc;
 

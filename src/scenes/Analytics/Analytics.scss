@@ -23,6 +23,7 @@ $PREF: 's-analytics';
   min-width: $xxl * 4;
   padding: $sm;
   position: relative;
+  width: fit-content;
 
   &:not(:last-child) { margin-right: $sm; }
 }

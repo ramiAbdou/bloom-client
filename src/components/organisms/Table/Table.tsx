@@ -2,12 +2,17 @@ import React, { useEffect } from 'react';
 
 import { ChildrenProps } from '@constants';
 import TableStore, { tableModel } from './Table.store';
-import { Column, initialTableOptions, Row, TableOptions } from './Table.types';
+import {
+  Column,
+  initialTableOptions,
+  TableOptions,
+  TableRow
+} from './Table.types';
 
 interface TableProps extends ChildrenProps {
   columns: Column[];
   options?: TableOptions;
-  rows: Row[];
+  rows: TableRow[];
 }
 
 const UpdateAndRenderTableContent = ({

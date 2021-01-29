@@ -8,7 +8,7 @@ import { MainSection } from '@containers/Main';
 import RowContainer from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
-import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
+import { Column, TableOptions, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -47,7 +47,7 @@ const PaymentNextDueCard: React.FC = () => {
 };
 
 const PaymentHistoryTable: React.FC = () => {
-  const rows: Row[] = useStoreState(({ db }) => {
+  const rows: TableRow[] = useStoreState(({ db }) => {
     const { byId: byPaymentId } = db.entities.payments;
     const { byId: byTypeId } = db.entities.types;
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Pill from '@atoms/Tags/Pill';
-import { ValueProps } from '@constants';
+import { ShowProps, ValueProps } from '@constants';
 
-interface AnalyticsSimpleProps extends ValueProps {
+interface AnalyticsSimpleProps extends ShowProps, ValueProps {
   label: string;
   percentage?: number;
 }
@@ -23,8 +23,11 @@ const NumberContainer: React.FC<
  */
 const AnalyticsStatusCard: React.FC<AnalyticsSimpleProps> = ({
   label,
+  show,
   ...props
 }) => {
+  if (show === false) return null;
+
   return (
     <div className="s-analytics-simple">
       <NumberContainer {...props} />

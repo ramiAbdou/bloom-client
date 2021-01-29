@@ -2,7 +2,7 @@ import React from 'react';
 import { IoCopy } from 'react-icons/io5';
 
 import Table from '@organisms/Table/Table.store';
-import { Row } from '@organisms/Table/Table.types';
+import { TableRow } from '@organisms/Table/Table.types';
 import { useStoreActions } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 
@@ -18,7 +18,7 @@ const MemberDatabaseCopyButton: React.FC = () => {
     const columnId = columns.find(({ category }) => category === 'EMAIL')?.id;
 
     return selectedRowIds.map((rowId: string) => {
-      const selectedRow = data.find((row: Row) => row.id === rowId) || {};
+      const selectedRow = data.find((row: TableRow) => row.id === rowId) || {};
       return selectedRow[columnId];
     });
   });

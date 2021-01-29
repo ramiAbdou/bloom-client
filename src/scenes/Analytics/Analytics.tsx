@@ -17,7 +17,7 @@ import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
-import EventsAnalytics from './EventsAnalytics/Events';
+import EventsAnalytics from './EventsAnalytics/EventsAnalytics';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
 
 const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {

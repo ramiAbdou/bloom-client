@@ -3,7 +3,7 @@ import React from 'react';
 
 import useMutation from '@hooks/useMutation';
 import Table from '@organisms/Table/Table';
-import { Column, OnRenameColumn, Row } from '@organisms/Table/Table.types';
+import { Column, OnRenameColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import {
   IIntegrations,
@@ -29,14 +29,14 @@ const MemberDatabaseModals: React.FC = () => (
 const MemberDatabase: React.FC = () => {
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
-  const rows: Row[] = useStoreState(({ db }) => {
+  const rows: TableRow[] = useStoreState(({ db }) => {
     const { byId: byDataId } = db.entities.data;
     const { byId: byMemberId } = db.entities.members;
     const { byId: byQuestionId } = db.entities.questions;
     const { byId: byTypeId } = db.entities.types;
     const { byId: byUserId } = db.entities.users;
 
-    return db.community.members?.reduce((acc: Row[], memberId: string) => {
+    return db.community.members?.reduce((acc: TableRow[], memberId: string) => {
       const member: IMember = byMemberId[memberId];
       if (!member) return acc;
 
@@ -47,8 +47,8 @@ const MemberDatabase: React.FC = () => {
 
       if (member.status !== 'ACCEPTED') return acc;
 
-      const row: Row = db.community?.questions.reduce(
-        (result: Row, questionId: string) => {
+      const row: TableRow = db.community?.questions.reduce(
+        (result: TableRow, questionId: string) => {
           const { category }: IQuestion = byQuestionId[questionId];
 
           if (category === 'EMAIL') result[questionId] = email;

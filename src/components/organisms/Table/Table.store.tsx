@@ -10,16 +10,16 @@ import { matchSorter } from 'match-sorter';
 import {
   Column,
   initialTableOptions,
-  Row,
   SortDirection,
-  TableOptions
+  TableOptions,
+  TableRow
 } from './Table.types';
 import { sortByColumn } from './Table.util';
 
 export type TableModel = {
   columns: Column[];
-  data: Row[];
-  filteredData: Row[];
+  data: TableRow[];
+  filteredData: TableRow[];
   isAllPageSelected: Computed<TableModel, boolean>;
   isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
@@ -37,7 +37,7 @@ export type TableModel = {
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
   updateColumn: Action<TableModel, Partial<Column>>;
-  updateData: Action<TableModel, Row[]>;
+  updateData: Action<TableModel, TableRow[]>;
 };
 
 export const tableModel: TableModel = {
@@ -130,7 +130,8 @@ export const tableModel: TableModel = {
             keys: [
               ...columns.map(({ id }) => id),
               // Supports search for a fullName of a row.
-              (row: Row) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
+              (row: TableRow) =>
+                `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
             ],
             threshold: matchSorter.rankings.ACRONYM
           }),
@@ -219,7 +220,7 @@ export const tableModel: TableModel = {
     })
   ),
 
-  updateData: action((state, data: Row[]) => {
+  updateData: action((state, data: TableRow[]) => {
     return { ...state, data, filteredData: data, selectedRowIds: [] };
   })
 };

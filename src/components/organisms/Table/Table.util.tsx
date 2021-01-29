@@ -1,6 +1,6 @@
 import { QuestionCategory, QuestionType } from '@constants';
 import { cx } from '@util/util';
-import { PaginationValue, Row, SortDirection } from './Table.types';
+import { PaginationValue, SortDirection, TableRow } from './Table.types';
 
 /**
  * RETURNS an array of pagination values inserting ellipses at the correct
@@ -86,10 +86,10 @@ export const getTableCellClass = ({
  */
 export const sortByColumn = (
   columnId: string,
-  data: Row[],
+  data: TableRow[],
   direction: SortDirection
-): Row[] => {
-  return data.sort((a: Row, b: Row) => {
+): TableRow[] => {
+  return data.sort((a: TableRow, b: TableRow) => {
     const aValue = a[columnId]?.toLowerCase();
     const bValue = b[columnId]?.toLowerCase();
 

@@ -7,7 +7,15 @@ export interface CreateEventAttendeeArgs {
 }
 
 export const CREATE_EVENT_ATTENDEE = mutation({
-  fields: ['id', { event: ['id'] }, { member: ['id'] }],
+  fields: [
+    'createdAt',
+    'email',
+    'firstName',
+    'id',
+    'lastName',
+    { event: ['id'] },
+    { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
+  ],
   operation: 'createEventAttendee',
   variables: { eventId: { required: true } }
 }).query;
@@ -172,7 +180,10 @@ export const GET_PAST_EVENTS = query({
     { community: ['id'] },
     {
       attendees: [
+        'email',
+        'firstName',
         'id',
+        'lastName',
         {
           member: [
             'id',

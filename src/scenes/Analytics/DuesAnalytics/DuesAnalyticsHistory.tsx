@@ -5,7 +5,7 @@ import React from 'react';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
-import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
+import { Column, TableOptions, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { ICommunity, IMember, IMemberPayment, IUser } from '@store/Db/entities';
@@ -22,7 +22,7 @@ interface DuesAnalyticsHistoryTableData {
 }
 
 const DuesAnalyticsHistoryTable: React.FC = () => {
-  const rows: Row[] = useStoreState(({ db }) => {
+  const rows: TableRow[] = useStoreState(({ db }) => {
     const { byId: byMemberId } = db.entities.members;
     const { byId: byPaymentId } = db.entities.payments;
     const { byId: byTypeId } = db.entities.types;

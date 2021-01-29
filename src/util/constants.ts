@@ -104,6 +104,10 @@ export type QuestionType =
   | 'TIME'
   | 'TOGGLE';
 
+export interface PopulateArgs {
+  populate?: string[];
+}
+
 export interface TimeSeriesData {
   name: string;
   value: number;

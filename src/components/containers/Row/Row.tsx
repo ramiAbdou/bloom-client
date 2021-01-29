@@ -8,7 +8,7 @@ interface RowProps extends ChildrenProps, ClassNameProps, ShowProps {
   equal?: boolean;
   marginTopAuto?: boolean;
   spaceBetween?: boolean;
-  spacing?: 'xs';
+  spacing?: 'xs' | 'sm';
 }
 
 const Row: React.FC<RowProps> = ({
@@ -29,6 +29,7 @@ const Row: React.FC<RowProps> = ({
     'flex-sb': spaceBetween,
     't-row--equal': equal,
     't-row--margin-top-auto': marginTopAuto,
+    't-row--spacing-sm': spacing === 'sm',
     't-row--spacing-xs': spacing === 'xs'
   });
 

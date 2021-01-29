@@ -6,11 +6,11 @@ import Pill from '@atoms/Tags/Pill';
 import { QuestionType, ValueProps } from '@constants';
 import { cx, takeFirst } from '@util/util';
 import Table from '../Table.store';
-import { Row } from '../Table.types';
+import { TableRow } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
 import SelectRowCheckbox from './SelectRowCheckbox';
 
-interface DataCellProps extends Row, ValueProps {
+interface DataCellProps extends TableRow, ValueProps {
   i: number;
   type: QuestionType;
 }
@@ -62,7 +62,7 @@ const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
   );
 };
 
-const DataRow = (row: Row) => {
+const DataRow = (row: TableRow) => {
   const isClickable = Table.useStoreState(({ options }) => options.isClickable);
   const isSelected = Table.useStoreState((state) => state.isSelected(row.id));
   const columns = Table.useStoreState((store) => store.columns);

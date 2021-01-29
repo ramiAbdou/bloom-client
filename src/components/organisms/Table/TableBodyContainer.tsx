@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Table from './Table.store';
-import { Row } from './Table.types';
+import { TableRow } from './Table.types';
 import DataRow from './TableBody/TableBody';
 
 const BodyContainer = () => {
@@ -16,7 +16,7 @@ const BodyContainer = () => {
 
   return (
     <tbody>
-      {filteredData.slice(floor, ceiling).map((row: Row) => (
+      {filteredData.slice(floor, ceiling).map((row: TableRow) => (
         <DataRow key={row.id} {...row} />
       ))}
     </tbody>
