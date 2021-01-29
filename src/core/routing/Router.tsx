@@ -1,6 +1,12 @@
 import LoginRoute from 'core/routing/LoginRoute';
 import React, { useEffect } from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  useHistory
+} from 'react-router-dom';
 
 import useQuery from '@hooks/useQuery';
 import Loader from '@molecules/Loader/Loader';
@@ -14,7 +20,7 @@ import { IS_USER_LOGGED_IN, VERIFY_TOKEN, VerifyTokenArgs } from './Router.gql';
  * within each of the high level components. The Home route should have the
  * most nested logic within it.
  */
-const Router: React.FC = () => {
+const RouterContent: React.FC = () => {
   const token = new URLSearchParams(window.location.search).get('token');
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
@@ -35,15 +41,19 @@ const Router: React.FC = () => {
     variables: { token }
   });
 
+  const { push } = useHistory();
+
   useEffect(() => {
-    if (token) setIsAuthenticated(isVerified);
-    else setIsAuthenticated(isAuthenticated);
+    if (token) {
+      setIsAuthenticated(isVerified);
+      if (isVerified) push(window.location.pathname);
+    } else setIsAuthenticated(isAuthenticated);
   }, [isVerified, isAuthenticated, token]);
 
   if (isUserLoggedInLoading || isVerifyTokenLoading) return <Loader />;
 
   return (
-    <BrowserRouter>
+    <>
       <Switch>
         <LoginRoute path="/login" />
         <Route component={ApplicationPage} path="/:urlName/apply" />
@@ -51,8 +61,14 @@ const Router: React.FC = () => {
         <Route exact component={HomeRouter} path="/" />
         <Redirect to="/login" />
       </Switch>
-    </BrowserRouter>
+    </>
   );
 };
+
+const Router: React.FC = () => (
+  <BrowserRouter>
+    <RouterContent />
+  </BrowserRouter>
+);
 
 export default Router;

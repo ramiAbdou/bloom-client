@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom';
+
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import StoryStore from '@organisms/Story/Story.store';
@@ -9,6 +11,7 @@ import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmit => {
   const communityId = useStoreState(({ db }) => db.community?.id);
+  const { pathname } = useLocation();
 
   const owner: IUser = useStoreState(({ db }) => {
     const { byId: byMemberId } = db.entities.members;
@@ -29,7 +32,12 @@ const useSendLoginLink = (): OnFormSubmit => {
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const email = items.find(({ category }) => category === 'EMAIL')?.value;
-    const { error } = await sendLoginLink({ communityId, email });
+
+    const { error } = await sendLoginLink({
+      communityId,
+      email,
+      pathname: communityId && pathname
+    });
 
     if (error) {
       setErrorMessage(
