@@ -7,6 +7,7 @@ import { Schema } from '@store/Db/schema';
 import { GET_PAST_EVENTS_WITH_GUESTS } from '../../Events/Events.gql';
 import EventsAnalyticsAttendanceCard from './EventsAnalyticsAttendanceCard';
 import EventsAnalyticsFrequentAttendees from './EventsAnalyticsFrequentAttendees';
+import EventsAnalyticsGuestCard from './EventsAnalyticsGuestCard';
 import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 import EventsAnalyticsTotalCard from './EventsAnalyticsTotalCard';
 
@@ -24,6 +25,7 @@ const EventsAnalytics: React.FC = () => {
       <Row spacing="sm">
         <EventsAnalyticsTotalCard />
         <EventsAnalyticsAttendanceCard />
+        <EventsAnalyticsGuestCard />
       </Row>
 
       <EventsAnalyticsRecentEvents />
