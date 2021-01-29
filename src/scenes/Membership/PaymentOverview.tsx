@@ -8,7 +8,11 @@ import { MainSection } from '@containers/Main';
 import RowContainer from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
-import { Column, TableOptions, TableRow } from '@organisms/Table/Table.types';
+import {
+  TableColumn,
+  TableOptions,
+  TableRow
+} from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -75,7 +79,7 @@ const PaymentHistoryTable: React.FC = () => {
     });
   });
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     { id: 'Date', title: 'Date', type: 'SHORT_TEXT' },
     { id: 'Amount', title: 'Amount', type: 'SHORT_TEXT' },
     {

@@ -4,7 +4,11 @@ import { useHistory } from 'react-router-dom';
 
 import { MainSection } from '@containers/Main';
 import Table from '@organisms/Table/Table';
-import { Column, TableOptions, TableRow } from '@organisms/Table/Table.types';
+import {
+  TableColumn,
+  TableOptions,
+  TableRow
+} from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { IEvent } from '@store/Db/entities';
@@ -32,7 +36,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
       .sort((a, b) => sortObjects(a, b, 'numAttendees', 'DESC'));
   });
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     { id: 'title', title: 'Title', type: 'LONG_TEXT' },
     { id: 'date', title: 'Date', type: 'SHORT_TEXT' },
     { id: 'numAttendees', title: '# of Attendees', type: 'SHORT_TEXT' },

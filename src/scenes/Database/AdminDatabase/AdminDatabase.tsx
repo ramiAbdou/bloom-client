@@ -3,7 +3,7 @@ import React from 'react';
 
 import AddMemberModal from '@modals/AddMember/AddMember';
 import Table from '@organisms/Table/Table';
-import { Column, TableRow } from '@organisms/Table/Table.types';
+import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseActions from './AdminDatabaseActions';
@@ -34,7 +34,7 @@ const AdminDatabase: React.FC = () => {
 
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     { id: 'First Name', title: 'First Name', type: 'SHORT_TEXT' },
     { id: 'Last Name', title: 'Last Name', type: 'SHORT_TEXT' },
     { id: 'Email', title: 'Email', type: 'SHORT_TEXT' }

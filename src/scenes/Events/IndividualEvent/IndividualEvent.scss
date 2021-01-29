@@ -40,9 +40,11 @@ $PREF: 's-events-individual';
   padding: $md;
 
   > .t-row:first-child {
+    margin-bottom: $sm;
+
     @include LTE(610) {
       display: block;
-
+      
       > * { width: 100%; }
       > *:not(:last-child) { margin-bottom: $sm; }
     }

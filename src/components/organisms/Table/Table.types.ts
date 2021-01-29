@@ -2,7 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 
 import { QuestionCategory, QuestionType } from '@constants';
 
-export type Column = {
+export type TableColumn = {
   category?: QuestionCategory;
   hide?: boolean;
   id: string;
@@ -20,8 +20,8 @@ export interface TableRow extends Record<string, any> {
 export type SortDirection = 'ASC' | 'DESC';
 
 export type OnRenameColumnArgs = {
-  column: Partial<Column>;
-  updateColumn: ActionCreator<Partial<Column>>;
+  column: Partial<TableColumn>;
+  updateColumn: ActionCreator<Partial<TableColumn>>;
 };
 
 export type OnRenameColumn = (args: OnRenameColumnArgs) => Promise<void>;
@@ -33,6 +33,7 @@ export type TableOptions = {
   alignEndRight?: boolean;
   fixFirstColumn?: boolean;
   hasCheckbox?: boolean;
+  hideIfEmpty?: boolean;
   isClickable?: boolean;
   isRenamable?: boolean;
   isSortable?: boolean;

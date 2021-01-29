@@ -103,7 +103,10 @@ export const GET_EVENT = query({
     {
       attendees: [
         'createdAt',
+        'email',
+        'firstName',
         'id',
+        'lastName',
         {
           member: [
             'id',

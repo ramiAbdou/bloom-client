@@ -3,14 +3,14 @@ import React, { useEffect } from 'react';
 import { ChildrenProps } from '@constants';
 import TableStore, { tableModel } from './Table.store';
 import {
-  Column,
   initialTableOptions,
+  TableColumn,
   TableOptions,
   TableRow
 } from './Table.types';
 
 interface TableProps extends ChildrenProps {
-  columns: Column[];
+  columns: TableColumn[];
   options?: TableOptions;
   rows: TableRow[];
 }
@@ -38,7 +38,7 @@ const Table: React.FC<TableProps> = ({
   <TableStore.Provider
     runtimeModel={{
       ...tableModel,
-      columns: columns.map((column: Column) => ({
+      columns: columns.map((column: TableColumn) => ({
         ...column,
         id: column.id ?? column.title
       })),

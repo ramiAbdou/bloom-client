@@ -8,7 +8,7 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Panel from '@organisms/Panel/Panel';
 import { useStoreActions, useStoreState } from '@store/Store';
 import Table from './Table.store';
-import { Column, OnRenameColumnProps } from './Table.types';
+import { OnRenameColumnProps, TableColumn } from './Table.types';
 import TableSortButton from './TableSortButton';
 
 const TablePanelRenameForm: React.FC<OnRenameColumnProps> = ({
@@ -17,10 +17,10 @@ const TablePanelRenameForm: React.FC<OnRenameColumnProps> = ({
   const panelId = useStoreState(({ panel }) => panel.id);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const { id, title, version }: Column = Table.useStoreState(
+  const { id, title, version }: TableColumn = Table.useStoreState(
     ({ columns }) =>
       columns.find(({ id: columnId }) => columnId === panelId) ??
-      ({} as Column),
+      ({} as TableColumn),
     deepequal
   );
 

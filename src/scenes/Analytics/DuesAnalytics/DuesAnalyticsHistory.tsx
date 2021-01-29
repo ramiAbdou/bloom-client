@@ -5,7 +5,7 @@ import React from 'react';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
-import { Column, TableOptions, TableRow } from '@organisms/Table/Table.types';
+import { TableColumn, TableOptions, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { ICommunity, IMember, IMemberPayment, IUser } from '@store/Db/entities';
@@ -61,7 +61,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
     return result;
   });
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     { id: 'Full Name', title: 'Full Name', type: 'SHORT_TEXT' },
     { id: 'Email', title: 'Email', type: 'SHORT_TEXT' },
     { id: 'Amount', title: 'Amount', type: 'SHORT_TEXT' },

@@ -4,10 +4,10 @@ import Separator from '@atoms/Separator';
 import AnalyticsCard from '@containers/Card/AnalyticsCard';
 import Row from '@containers/Row/Row';
 import { useStoreState } from '@store/Store';
+import IndividualEventTable from './IndividualEventTable';
 
 const IndividualEventInsights: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
-
   if (!isAdmin) return null;
 
   return (
@@ -16,6 +16,8 @@ const IndividualEventInsights: React.FC = () => {
         <AnalyticsCard label="# of Attendees" value={14} />
         <AnalyticsCard label="# of RSVPs" value={28} />
       </Row>
+
+      <IndividualEventTable />
 
       <Separator margin={24} />
     </>

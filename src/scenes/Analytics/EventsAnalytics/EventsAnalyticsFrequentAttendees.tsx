@@ -3,7 +3,11 @@ import React from 'react';
 
 import { MainSection } from '@containers/Main';
 import Table from '@organisms/Table/Table';
-import { Column, TableOptions, TableRow } from '@organisms/Table/Table.types';
+import {
+  TableColumn,
+  TableOptions,
+  TableRow
+} from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -50,7 +54,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
     );
   });
 
-  const columns: Column[] = [
+  const columns: TableColumn[] = [
     { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
     { id: 'email', title: 'Email', type: 'LONG_TEXT' },
     { id: 'value', title: '# of Events Attended', type: 'SHORT_TEXT' }

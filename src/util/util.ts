@@ -1,7 +1,5 @@
 import { APIError } from 'graphql-hooks';
 
-import { BaseEntity } from '../core/store/Db/entities';
-
 /**
  * Returns a string of classes based on the conditional flags set on each of
  * the class names.
@@ -50,11 +48,34 @@ export const getGraphQLError = (error: APIError): string => {
 export function sortObjects<T>(
   a: T,
   b: T,
-  key: keyof T,
+  keys: keyof T | (keyof T)[],
   direction: 'ASC' | 'DESC' = 'ASC'
 ) {
   const order = direction === 'ASC' ? 1 : -1;
-  return Number(a[key] > b[key]) ? order : order * -1;
+  if (!Array.isArray(keys)) {
+    if (Number(a[keys] > b[keys]) || (a && !b)) return order;
+    if (Number(a[keys] < b[keys]) || (b && !a)) return order * -1;
+    return 0;
+  }
+
+  while (keys?.length) {
+    const currentKey = keys[0];
+    if (
+      Number(a[currentKey] > b[currentKey]) ||
+      (a[currentKey] && !b[currentKey])
+    ) {
+      return order;
+    }
+    if (
+      Number(a[currentKey] < b[currentKey]) ||
+      (b[currentKey] && !a[currentKey])
+    ) {
+      return order * -1;
+    }
+    keys.shift();
+  }
+
+  return 0;
 }
 
 /**

@@ -8,16 +8,16 @@ import {
 import { matchSorter } from 'match-sorter';
 
 import {
-  Column,
   initialTableOptions,
   SortDirection,
+  TableColumn,
   TableOptions,
   TableRow
 } from './Table.types';
 import { sortByColumn } from './Table.util';
 
 export type TableModel = {
-  columns: Column[];
+  columns: TableColumn[];
   data: TableRow[];
   filteredData: TableRow[];
   isAllPageSelected: Computed<TableModel, boolean>;
@@ -36,7 +36,7 @@ export type TableModel = {
   toggleAllPageRows: Action<TableModel>;
   toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
-  updateColumn: Action<TableModel, Partial<Column>>;
+  updateColumn: Action<TableModel, Partial<TableColumn>>;
   updateData: Action<TableModel, TableRow[]>;
 };
 
@@ -211,7 +211,7 @@ export const tableModel: TableModel = {
   }),
 
   updateColumn: action(
-    ({ columns, ...state }, updatedColumn: Partial<Column>) => ({
+    ({ columns, ...state }, updatedColumn: Partial<TableColumn>) => ({
       ...state,
       columns: columns.map((column) => {
         if (column.id !== updatedColumn.id) return column;

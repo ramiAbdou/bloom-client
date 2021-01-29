@@ -3,7 +3,11 @@ import React from 'react';
 
 import useMutation from '@hooks/useMutation';
 import Table from '@organisms/Table/Table';
-import { Column, OnRenameColumn, TableRow } from '@organisms/Table/Table.types';
+import {
+  OnRenameColumn,
+  TableColumn,
+  TableRow
+} from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import {
   IIntegrations,
@@ -83,7 +87,7 @@ const MemberDatabase: React.FC = () => {
     }, []);
   }, deepequal);
 
-  const columns: Column[] = useStoreState(({ db }) => {
+  const columns: TableColumn[] = useStoreState(({ db }) => {
     const { byId: byIntegrationsId } = db.entities.integrations;
     const { byId: byQuestionId } = db.entities.questions;
 

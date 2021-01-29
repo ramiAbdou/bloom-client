@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Table from './Table.store';
+import TableStore from './Table.store';
 import { OnRenameColumnProps } from './Table.types';
 import TableBanner from './TableBanner/TableBanner';
 import TableBodyContainer from './TableBodyContainer';
@@ -8,37 +8,45 @@ import TableHeaderContainer from './TableHeaderContainer';
 import TablePagination from './TablePagination/TablePagination';
 import TablePanel from './TablePanel';
 
-interface TableContent extends OnRenameColumnProps {
+interface TableContentProps extends OnRenameColumnProps {
   emptyMessage?: string;
+  small?: boolean;
 }
 
 const TableContentEmptyMessage: React.FC<
-  Pick<TableContent, 'emptyMessage'>
+  Pick<TableContentProps, 'emptyMessage'>
 > = ({ emptyMessage }) => {
   if (!emptyMessage) return null;
 
   return <p>{emptyMessage}</p>;
 };
 
-const TableContent: React.FC<TableContent> = ({
+const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage,
-  onRenameColumn
+  onRenameColumn,
+  small
 }) => {
-  const emptyMessage = Table.useStoreState(({ data }) => {
+  const emptyMessage = TableStore.useStoreState(({ data }) => {
     if (data?.length) return null;
     return eMessage;
   });
 
-  const isAllPageSelected = Table.useStoreState(
+  const show: boolean = TableStore.useStoreState(({ data, options }) => {
+    return !options.hideIfEmpty || !!data?.length;
+  });
+
+  const isAllPageSelected = TableStore.useStoreState(
     (store) => store.isAllPageSelected
   );
+
+  if (show === false) return null;
 
   return (
     <>
       {isAllPageSelected && <TableBanner />}
 
       {!emptyMessage && (
-        <div id="c-table-ctr">
+        <div id="c-table-ctr" style={{ maxHeight: small && '45vh' }}>
           <table className="c-table">
             <TableHeaderContainer />
             <TableBodyContainer />

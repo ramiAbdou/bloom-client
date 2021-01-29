@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Table from './Table.store';
-import { Column } from './Table.types';
+import { TableColumn } from './Table.types';
 import HeaderCell from './TableHeader/TableHeader';
 
 const HeaderContainer = () => {
@@ -13,7 +13,7 @@ const HeaderContainer = () => {
   return (
     <thead>
       <tr style={customStyle}>
-        {columns.map((column: Column, i: number) => (
+        {columns.map((column: TableColumn, i: number) => (
           <HeaderCell key={column.id} i={i} {...column} />
         ))}
       </tr>
