@@ -1,6 +1,5 @@
 import deline from 'deline';
 
-import { FormNavigationPageProps } from '@organisms/Form/Form.types';
 import { IMemberType } from '@store/Db/entities';
 import { takeFirst } from '@util/util';
 
@@ -17,7 +16,7 @@ interface GetPaymentScreensArgs {
 
 // ## CARD FORM SCREENS
 
-const addCardScreen: FormNavigationPageProps[] = [
+const addCardScreen: any[] = [
   {
     description: deline`
       We don’t have your payment information yet. Please enter your
@@ -28,7 +27,7 @@ const addCardScreen: FormNavigationPageProps[] = [
   }
 ];
 
-const updateCardScreen: FormNavigationPageProps[] = [
+const updateCardScreen: any[] = [
   {
     description: deline`
       An update to your current subscription will be reflected on your
@@ -39,7 +38,7 @@ const updateCardScreen: FormNavigationPageProps[] = [
   }
 ];
 
-const updateCardConfirmationScreen: FormNavigationPageProps[] = [
+const updateCardConfirmationScreen: any[] = [
   {
     description: deline`
       Your card on file has been updated, and you may now use this card to pay
@@ -52,7 +51,7 @@ const updateCardConfirmationScreen: FormNavigationPageProps[] = [
 
 // ## FINISH SCREENS
 
-const changeMembershipScreen: FormNavigationPageProps[] = [
+const changeMembershipScreen: any[] = [
   {
     description: deline`
       Please review this information to make sure we got everything right.
@@ -63,7 +62,7 @@ const changeMembershipScreen: FormNavigationPageProps[] = [
   }
 ];
 
-const changeToFreeMembershipScreen: FormNavigationPageProps[] = [
+const changeToFreeMembershipScreen: any[] = [
   {
     description: `Are you sure you want to downgrade your membership?`,
     disableValidation: true,
@@ -72,7 +71,7 @@ const changeToFreeMembershipScreen: FormNavigationPageProps[] = [
   }
 ];
 
-const changeMembershipConfirmationScreen: FormNavigationPageProps[] = [
+const changeMembershipConfirmationScreen: any[] = [
   {
     description: deline`
       Your membership has successfully been changed. Please check your email
@@ -84,7 +83,7 @@ const changeMembershipConfirmationScreen: FormNavigationPageProps[] = [
   }
 ];
 
-const finishDuesScreen: FormNavigationPageProps[] = [
+const finishDuesScreen: any[] = [
   {
     description: deline`
       Please review this information to make sure we got everything right.
@@ -95,7 +94,7 @@ const finishDuesScreen: FormNavigationPageProps[] = [
   }
 ];
 
-const payDuesConfirmationScreen: FormNavigationPageProps[] = [
+const payDuesConfirmationScreen: any[] = [
   {
     description: deline`
       Your dues have been paid successfully! Please check your email

@@ -11,6 +11,7 @@ import Modal from '@organisms/Modal/Modal';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import FormDate from '../../organisms/Form/FormDate';
+import FormLargeTitle from '../../organisms/Form/FormLargeTitle';
 import FormLongText from '../../organisms/Form/FormLongText';
 import FormMultipleChoice from '../../organisms/Form/FormMultipleChoice';
 import FormShortText from '../../organisms/Form/FormShortText';
@@ -58,11 +59,10 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
           value={event?.imageUrl}
         />
 
-        <FormItem
+        <FormLargeTitle
           id="EVENT_NAME"
           placeholder="New Event"
           title="Event Name"
-          type="LARGE_TITLE"
           value={event?.title}
         />
 

@@ -83,12 +83,13 @@ const ApplicationReviewContent: React.FC = () => {
     return getItem({ category: 'CREDIT_OR_DEBIT_CARD' })?.value?.last4;
   });
 
-  const applicationItems = FormStore.useStoreState(({ items }) =>
-    items?.filter((item) => item.pageId === 'APPLICATION')
-  );
-
-  const items: QuestionValueItemProps[] = applicationItems.map(
-    ({ title, type, value }) => ({ handleNull: 'HIDE_ALL', title, type, value })
+  const items: QuestionValueItemProps[] = FormStore.useStoreState((store) =>
+    store.items?.map(({ title, type, value }) => ({
+      handleNull: 'HIDE_ALL',
+      title,
+      type,
+      value
+    }))
   );
 
   return (

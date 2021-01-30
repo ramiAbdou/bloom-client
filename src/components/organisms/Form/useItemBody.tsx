@@ -57,7 +57,6 @@ const useItemBody = (props: UseItemBodyProps) => {
     [type === 'TOGGLE', <FormToggle {...baseProps} />],
     [type === 'IMAGE', <FormImageUpload {...baseProps} />],
     [type === 'COVER_IMAGE', <FormCoverImageUpload {...baseProps} />],
-    // [type === 'LARGE_TITLE', <FormLargeTitle {...baseProps} />],
     [children, children]
   ]);
 

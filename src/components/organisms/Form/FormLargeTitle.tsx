@@ -3,21 +3,24 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import { cx } from '@util/util';
 import Form from './Form.store';
-import { FormItemData, FormItemProps } from './Form.types';
+import { FormItemData } from './Form.types';
 
-const FormLargeTitle: React.FC<
-  Pick<FormItemProps, 'category' | 'id' | 'placeholder' | 'title'>
-> = ({ placeholder, ...queryArgs }: FormItemData) => {
+interface FormLargeTitleProps extends FormItemData {
+  placeholder?: string;
+}
+
+const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
+  placeholder,
+  ...args
+}) => {
   const error: boolean = Form.useStoreState(
-    ({ getItem }) => !!getItem(queryArgs)?.errorMessage
+    ({ getItem }) => !!getItem(args)?.errorMessage
   );
 
-  const value = Form.useStoreState(({ getItem }) => getItem(queryArgs)?.value);
+  const value = Form.useStoreState(({ getItem }) => getItem(args)?.value);
   const updateItem = Form.useStoreActions((store) => store.updateItem);
 
-  const updateText = (text: string) => {
-    updateItem({ ...queryArgs, value: text });
-  };
+  const updateText = (text: string) => updateItem({ ...args, value: text });
 
   const css = cx('o-form-item--large-title', {
     'o-form-item--large-title--error': error

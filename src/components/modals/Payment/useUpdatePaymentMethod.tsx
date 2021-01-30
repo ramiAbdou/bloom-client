@@ -1,11 +1,14 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import StoryStore from '@organisms/Story/Story.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { UPDATE_PAYMENT_METHOD, UpdatePaymentMethodArgs } from './Payment.gql';
 
 const useUpdatePaymentMethod = (): OnFormSubmit => {
+  const goForward = StoryStore.useStoreActions((store) => store.goForward);
+
   const elements = useElements();
   const stripe = useStripe();
 
@@ -20,11 +23,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
   if (!stripe) return null;
 
-  const onSubmit = async ({
-    goToNextPage,
-    items,
-    setErrorMessage
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const line1 = items.find(({ title }) => title === 'Billing Address').value;
     const city = items.find(({ title }) => title === 'City').value;
     const state = items.find(({ title }) => title === 'State').value;
@@ -64,7 +63,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
     // Success! Update the member entity just in case the membership type
     // changed or their duesStatus changed.
-    goToNextPage();
+    goForward();
   };
 
   return onSubmit;

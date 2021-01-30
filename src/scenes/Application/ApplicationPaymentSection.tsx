@@ -4,9 +4,9 @@ import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
 import FormStore from '@organisms/Form/Form.store';
-import FormContinueButton from '@organisms/Form/FormContinueButton';
 import FormItem from '@organisms/Form/FormItem';
 import FormShortText from '@organisms/Form/FormShortText';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
@@ -135,9 +135,9 @@ const ApplicationPaymentSectionContent: React.FC = () => {
         <PaymentCardForm />
       </div>
 
-      <FormContinueButton disabled={disabled} onClick={onContinue}>
+      <FormSubmitButton disabled={disabled} onClick={onContinue}>
         Next: Confirmation
-      </FormContinueButton>
+      </FormSubmitButton>
     </>
   );
 };
