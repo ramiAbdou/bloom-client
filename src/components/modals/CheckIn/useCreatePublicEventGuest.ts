@@ -18,9 +18,7 @@ const useCreatePublicEventGuest = () => {
     schema: Schema.EVENT_GUEST
   });
 
-  const goToNextPage = StoryStore.useStoreActions(
-    (store) => store.goToNextPage
-  );
+  const goForward = StoryStore.useStoreActions((store) => store.goForward);
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const firstName = items.find(({ category }) => category === 'FIRST_NAME')
@@ -39,7 +37,7 @@ const useCreatePublicEventGuest = () => {
     });
 
     if (error) setErrorMessage(error);
-    else goToNextPage();
+    else goForward();
   };
 
   return onSubmit;

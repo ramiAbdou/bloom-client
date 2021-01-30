@@ -31,6 +31,8 @@ const FormItem: React.FC<FormItemProps> = ({
 
   const setItem = Form.useStoreActions((store) => store.setItem);
 
+  console.log(queryArgs);
+
   useEffect(() => {
     const emptyValue = takeFirst([
       [type === 'MULTIPLE_SELECT', []],

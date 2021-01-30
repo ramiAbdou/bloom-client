@@ -1,6 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React, { useCallback, useEffect } from 'react';
 
+import Show from '@containers/Show';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
 import { FormItemData, FormProps } from './Form.types';
@@ -23,6 +24,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   const setItemErrorMessages = FormStore.useStoreActions(
     (store) => store.setItemErrorMessages
   );
+
+  console.log('FORM', items);
 
   useEffect(() => {
     if (pages) setPages(pages);
@@ -68,10 +71,12 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-const Form: React.FC<FormProps> = ({ options, ...props }: FormProps) => (
-  <FormStore.Provider runtimeModel={{ ...formModel, options }}>
-    <FormContent {...props} />
-  </FormStore.Provider>
+const Form: React.FC<FormProps> = ({ options, show, ...props }: FormProps) => (
+  <Show show={show}>
+    <FormStore.Provider runtimeModel={{ ...formModel, options }}>
+      <FormContent {...props} />
+    </FormStore.Provider>
+  </Show>
 );
 
 export default Form;

@@ -1,37 +1,16 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
-import FormStore from '@organisms/Form/Form.store';
-import FormContinueButton from '@organisms/Form/FormContinueButton';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
+import useSyncStory from '@organisms/Story/useSyncStory';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
-const ApplicationMainButton: React.FC = () => {
-  const numPages = FormStore.useStoreState(({ pages }) => pages?.length);
-
-  const isPageCompleted = FormStore.useStoreState(
-    (store) => store.isPageCompleted
-  );
-
-  if (numPages === 1) {
-    return <FormSubmitButton>Submit Application</FormSubmitButton>;
-  }
-
-  return (
-    <FormContinueButton disabled={!isPageCompleted}>
-      {numPages === 2 ? 'Next: Confirmation' : 'Next: Choose Membership'}
-    </FormContinueButton>
-  );
-};
-
-const ApplicationMain: React.FC = () => {
-  const description = useStoreState(({ db }) => db.application?.description);
-  const title = useStoreState(({ db }) => db.application?.title);
-  const iconUrl = useStoreState(({ db }) => db.community?.logoUrl);
-
+const ApplicationMainForm: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     const { byId: byQuestionId } = db.entities.questions;
 
@@ -40,22 +19,37 @@ const ApplicationMain: React.FC = () => {
       ?.filter((question: IQuestion) => question.inApplication);
   });
 
-  if (!questions?.length) return null;
+  const isSolo = StoryStore.useStoreState(({ pages }) => pages?.length === 1);
+  const items = StoryStore.useStoreState((store) => store.items, deepequal);
+
+  const syncStory = useSyncStory();
+
+  return (
+    <Form show={!!questions?.length} onSubmit={syncStory}>
+      {questions?.map((props) => (
+        <FormItem key={props?.id} value={items[props?.id]?.value} {...props} />
+      ))}
+
+      <FormSubmitButton>
+        {isSolo ? 'Submit Application' : 'Next: Choose Membership'}
+      </FormSubmitButton>
+    </Form>
+  );
+};
+
+const ApplicationMain: React.FC = () => {
+  const description = useStoreState(({ db }) => db.application?.description);
+  const title = useStoreState(({ db }) => db.application?.title);
+  const iconUrl = useStoreState(({ db }) => db.community?.logoUrl);
 
   return (
     <StoryPage
       description={description}
       iconUrl={iconUrl}
-      id="APPLICATION"
+      id="APPLICATION_MAIN"
       title={title}
     >
-      <Form>
-        {questions?.map((props) => (
-          <FormItem key={props.id} pageId="APPLICATION" {...props} />
-        ))}
-
-        <ApplicationMainButton />
-      </Form>
+      <ApplicationMainForm />
     </StoryPage>
   );
 };

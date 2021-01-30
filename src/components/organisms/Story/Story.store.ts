@@ -14,7 +14,7 @@ export type StoryModel = {
   currentPage: Computed<StoryModel, StoryPageProps>;
   items: Record<string, FormItemData>;
   getPage: Computed<StoryModel, (pageId: string) => StoryPageProps, {}>;
-  goToNextPage: Action<StoryModel>;
+  goForward: Action<StoryModel>;
   pageId: string;
   pages: StoryPageProps[];
   setCurrentPage: Action<StoryModel, Pick<StoryPageProps, 'id' | 'branchId'>>;
@@ -33,7 +33,7 @@ export const storyModel: StoryModel = {
     return pages.find((page: StoryPageProps) => page.id === pageId);
   }),
 
-  goToNextPage: action(({ pages, pageId, ...state }) => {
+  goForward: action(({ pages, pageId, ...state }) => {
     window.scrollTo({ top: 0 });
     const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
     const { id } = pages[nextIndex];
