@@ -7,7 +7,7 @@ import useQuery from '@hooks/useQuery';
 import FormStore from '@organisms/Form/Form.store';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
-import FormPage from '@organisms/Form/FormPage';
+import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import InformationCard from '../../containers/Card/InformationCard';
@@ -137,9 +137,9 @@ const PaymentFinishScreen: React.FC = () => {
   }, [data]);
 
   return (
-    <FormPage id="FINISH" loading={loading}>
+    <StoryPage id="FINISH" loading={loading}>
       <PaymentFinishScreenContent />
-    </FormPage>
+    </StoryPage>
   );
 };
 

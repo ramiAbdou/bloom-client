@@ -7,11 +7,7 @@ import {
 } from 'easy-peasy';
 import validator from 'validator';
 
-import {
-  FormItemData,
-  FormNavigationPageProps,
-  FormOptions
-} from './Form.types';
+import { FormItemData, FormOptions } from './Form.types';
 import { getFormItem, getFormItemIndex, validateItem } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
@@ -22,26 +18,16 @@ interface UpdateItemArgs extends GetItemArgs {
 export type FormModel = {
   errorMessage: string;
   getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
-  goToNextPage: Action<FormModel>;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
-  isPageCompleted: Computed<FormModel, boolean>;
   isShowingErrors: boolean;
   items: FormItemData[];
   options: FormOptions;
-  pageId: string;
-  pages: FormNavigationPageProps[];
   removeItems: Action<FormModel, Partial<FormItemData>[]>;
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
   setItemErrorMessages: Action<FormModel, FormItemData[]>;
   setIsLoading: Action<FormModel, boolean>;
-  setPageDisabled: Action<
-    FormModel,
-    Pick<FormNavigationPageProps, 'disabled' | 'id'>
-  >;
-  setPageId: Action<FormModel, string>;
-  setPages: Action<FormModel, FormNavigationPageProps[]>;
   updateItem: Action<FormModel, UpdateItemArgs>;
 };
 
@@ -51,13 +37,6 @@ export const formModel: FormModel = {
 
   getItem: computed(({ items }) => (args: GetItemArgs) => {
     return getFormItem({ ...args, items });
-  }),
-
-  goToNextPage: action(({ pages, pageId, ...state }) => {
-    window.scrollTo({ top: 0 });
-    const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
-    const { id } = pages[nextIndex];
-    return { ...state, pageId: id, pages };
   }),
 
   /**
@@ -85,35 +64,11 @@ export const formModel: FormModel = {
   // Used to ensure that the submit button is disabled.
   isLoading: false,
 
-  /**
-   * Returns true if all items on the page have been validated. Follows all
-   * the rules from isCompleted.
-   */
-  isPageCompleted: computed(({ items, pageId, pages }) => {
-    const page: FormNavigationPageProps = pages.find((p) => p.id === pageId);
-    if (page?.disableValidation) return true;
-
-    const validatedPageItems = items
-      ?.filter((item) => item.pageId === pageId)
-      ?.map(validateItem);
-
-    return (
-      validatedPageItems?.length &&
-      validatedPageItems.every(({ errorMessage }) => {
-        return !errorMessage;
-      })
-    );
-  }),
-
   isShowingErrors: false,
 
   items: [],
 
   options: null,
-
-  pageId: null,
-
-  pages: [],
 
   /**
    * Removes all the items from the array of items.
@@ -154,31 +109,6 @@ export const formModel: FormModel = {
   setItemErrorMessages: action((state, items: FormItemData[]) => ({
     ...state,
     items
-  })),
-
-  setPageDisabled: action(
-    (
-      { pages, ...state },
-      { disabled, id }: Pick<FormNavigationPageProps, 'disabled' | 'id'>
-    ) => {
-      const index = pages.findIndex(
-        (page) => page.aliases?.includes(id) || page.id === id
-      );
-
-      pages[index].disabled = disabled;
-      return { ...state, pages };
-    }
-  ),
-
-  setPageId: action((state, pageId: string) => {
-    window.scrollTo({ top: 0 });
-    return { ...state, pageId };
-  }),
-
-  setPages: action(({ pageId, ...state }, pages) => ({
-    ...state,
-    pageId: pageId ?? pages[0]?.id,
-    pages: pages.map((page, i: number) => ({ ...page, disabled: !!i }))
   })),
 
   /**

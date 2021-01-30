@@ -4,15 +4,15 @@ import { ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import Form from '@organisms/Form/Form';
-import FormPage from '@organisms/Form/FormPage';
 import Modal from '@organisms/Modal/Modal';
+import Story from '@organisms/Story/Story';
+import StoryPage from '@organisms/Story/StoryPage';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
-import { getPaymentPages } from './Payment.util';
 import PaymentCardScreen from './PaymentCardScreen';
 import PaymentFinishScreen from './PaymentFinishScreen';
 import PaymentStripeProvider from './PaymentStripeProvider';
@@ -27,13 +27,6 @@ const PaymentForm: React.FC<Partial<PaymentModel>> = () => {
 
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
   const type = PaymentStore.useStoreState((store) => store.type);
-
-  const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
-
-  const isFree: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId]?.isFree;
-  });
 
   const isLifetime: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
@@ -52,23 +45,21 @@ const PaymentForm: React.FC<Partial<PaymentModel>> = () => {
 
   if (!onSubmit) return null;
 
-  const pages = getPaymentPages({ isCardOnFile, isFree, type });
-
   return (
-    <Form
-      className="mo-payment"
-      options={{
-        disableValidation: type !== 'UPDATE_PAYMENT_METHOD',
-        multiPage: true
-      }}
-      pages={pages}
-      onSubmit={onSubmit}
-      onSubmitDeps={[prorationDate, typeId]}
-    >
-      <PaymentCardScreen />
-      <PaymentFinishScreen />
-      <FormPage id="CONFIRMATION" />
-    </Form>
+    <Story>
+      <Form
+        className="mo-payment"
+        options={{
+          disableValidation: type !== 'UPDATE_PAYMENT_METHOD'
+        }}
+        onSubmit={onSubmit}
+        onSubmitDeps={[prorationDate, typeId]}
+      >
+        <PaymentCardScreen />
+        <PaymentFinishScreen />
+        <StoryPage id="CONFIRMATION" />
+      </Form>
+    </Story>
   );
 };
 

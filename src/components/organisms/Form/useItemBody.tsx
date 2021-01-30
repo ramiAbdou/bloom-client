@@ -3,15 +3,12 @@ import React from 'react';
 import { takeFirst } from '@util/util';
 import { BaseItemProps, OptionItemProps, UseItemBodyProps } from './Form.types';
 import FormCoverImageUpload from './FormCoverImageUpload';
-import FormDate from './FormDate';
 import FormDropdown from './FormDropdown';
 import FormImageUpload from './FormImageUpload';
-import FormLargeTitle from './FormLargeTitle';
 import FormLongText from './FormLongText';
 import FormMultipleChoice from './FormMultipleChoice';
 import FormMultipleSelect from './FormMultipleSelect';
 import FormShortText from './FormShortText';
-import FormTime from './FormTime';
 import FormToggle from './FormToggle';
 
 /**
@@ -60,9 +57,7 @@ const useItemBody = (props: UseItemBodyProps) => {
     [type === 'TOGGLE', <FormToggle {...baseProps} />],
     [type === 'IMAGE', <FormImageUpload {...baseProps} />],
     [type === 'COVER_IMAGE', <FormCoverImageUpload {...baseProps} />],
-    [type === 'LARGE_TITLE', <FormLargeTitle {...baseProps} />],
-    [type === 'DATE', <FormDate {...baseProps} />],
-    [type === 'TIME', <FormTime {...baseProps} />],
+    // [type === 'LARGE_TITLE', <FormLargeTitle {...baseProps} />],
     [children, children]
   ]);
 

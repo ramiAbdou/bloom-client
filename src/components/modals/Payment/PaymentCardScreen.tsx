@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import FormContinueButton from '@organisms/Form/FormContinueButton';
+import Form from '@organisms/Form/Form';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
-import FormPage from '@organisms/Form/FormPage';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import StoryPage from '@organisms/Story/StoryPage';
 import { CardElement, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import FormShortText from '../../organisms/Form/FormShortText';
@@ -24,50 +25,53 @@ const options: StripeCardElementOptions = {
   style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
 };
 
-const PaymentCardForm: React.FC = () => (
-  <>
-    <FormShortText title="Name on Card" />
-
-    <FormItem value title="Credit or Debit Card">
-      <CardElement options={options} />
-    </FormItem>
-
-    <FormShortText title="Billing Address" />
-
-    <Row spaceBetween className="mo-payment-billing-ctr">
-      <FormShortText placeholder="Los Angeles" title="City" />
-      <FormShortText placeholder="CA" title="State" />
-      <FormShortText placeholder="00000" title="Zip Code" />
-    </Row>
-  </>
-);
-
-const PaymentCardContinueButton: React.FC = () => {
+const PaymentCardButton: React.FC = () => {
   const type = PaymentStore.useStoreState((store) => store.type);
 
-  const updatePaymentMethod = useUpdatePaymentMethod();
   const stripe = useStripe();
 
   if (type === 'UPDATE_PAYMENT_METHOD') return <PaymentFinishButton />;
 
   return (
-    <FormContinueButton
+    <FormSubmitButton
       className="mo-payment-button mo-payment-button--continue"
       disabled={!stripe}
       loadingText="Continuing..."
-      onContinue={updatePaymentMethod}
     >
       Continue
-    </FormContinueButton>
+    </FormSubmitButton>
+  );
+};
+
+const PaymentCardForm: React.FC = () => {
+  const updatePaymentMethod = useUpdatePaymentMethod();
+
+  return (
+    <Form onSubmit={updatePaymentMethod}>
+      <FormShortText title="Name on Card" />
+
+      <FormItem value title="Credit or Debit Card">
+        <CardElement options={options} />
+      </FormItem>
+
+      <FormShortText title="Billing Address" />
+
+      <Row spaceBetween className="mo-payment-billing-ctr">
+        <FormShortText placeholder="Los Angeles" title="City" />
+        <FormShortText placeholder="CA" title="State" />
+        <FormShortText placeholder="00000" title="Zip Code" />
+      </Row>
+
+      <PaymentFormErrorMessage />
+      <PaymentCardButton />
+    </Form>
   );
 };
 
 const PaymentCardScreen: React.FC = () => (
-  <FormPage id="CARD_FORM">
+  <StoryPage id="CARD_FORM">
     <PaymentCardForm />
-    <PaymentFormErrorMessage />
-    <PaymentCardContinueButton />
-  </FormPage>
+  </StoryPage>
 );
 
 export default PaymentCardScreen;

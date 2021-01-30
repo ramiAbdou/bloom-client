@@ -1,33 +1,25 @@
 import deepequal from 'fast-deep-equal';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 
 import Show from '@containers/Show';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
 import { FormItemData, FormProps } from './Form.types';
 import { validateItem } from './Form.util';
-import FormNavigation from './FormNavigation';
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
   children,
   onSubmit,
-  onSubmitDeps,
-  pages
+  onSubmitDeps
 }) => {
   const items = FormStore.useStoreState((store) => store.items, deepequal);
-  const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
   const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
-  const setPages = FormStore.useStoreActions((store) => store.setPages);
 
   const setItemErrorMessages = FormStore.useStoreActions(
     (store) => store.setItemErrorMessages
   );
-
-  useEffect(() => {
-    if (pages) setPages(pages);
-  }, [pages]);
 
   const onFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -48,11 +40,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       setError(null);
       setIsLoading(true);
 
-      await onSubmit({
-        goToNextPage,
-        items: validatedItems,
-        setErrorMessage: setError
-      });
+      await onSubmit({ items: validatedItems, setErrorMessage: setError });
 
       setIsLoading(false);
     },
@@ -63,7 +51,6 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
 
   return (
     <form className={css} onSubmit={onFormSubmit}>
-      {pages?.length && <FormNavigation />}
       {children}
     </form>
   );

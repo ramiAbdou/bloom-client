@@ -2,17 +2,13 @@ import day from 'dayjs';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
+import { FormItemData } from '@organisms/Form/Form.types';
 import FormStore from './Form.store';
-import { FormItemProps } from './Form.types';
+import useInitFormItem from './useInitFormItem';
 
-const FormTime: React.FC<
-  Pick<FormItemProps, 'category' | 'id' | 'placeholder' | 'title'>
-> = ({ ...queryArgs }) => {
-  const { id } = queryArgs;
-
-  const value = FormStore.useStoreState(
-    ({ getItem }) => getItem(queryArgs)?.value
-  );
+const FormTime: React.FC<FormItemData> = (args) => {
+  const { id } = args;
+  const value = FormStore.useStoreState(({ getItem }) => getItem(args)?.value);
 
   const startTime = FormStore.useStoreState(
     ({ getItem }) => getItem({ id: 'START_TIME' })?.value
@@ -20,8 +16,10 @@ const FormTime: React.FC<
 
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
+  useInitFormItem(args);
+
   const updateDate = (date: Date | [Date, Date]) => {
-    updateItem({ ...queryArgs, value: date });
+    updateItem({ ...args, value: date });
 
     if (id === 'START_TIME') {
       updateItem({

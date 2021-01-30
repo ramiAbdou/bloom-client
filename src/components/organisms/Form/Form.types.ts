@@ -3,12 +3,9 @@ import { ActionCreator } from 'easy-peasy';
 import {
   ChildrenProps,
   ClassNameProps,
-  ClassNameProps,
-  IdProps,
   QuestionCategory,
   QuestionType,
-  ShowProps,
-  TitleProps
+  ShowProps
 } from '@constants';
 
 export type FormQuestion = {
@@ -73,29 +70,19 @@ export interface FormItemProps
     ChildrenProps,
     Pick<FormItemData, 'description' | 'validate' | 'value'> {}
 
-export interface FormNavigationPageProps extends IdProps, TitleProps {
-  aliases?: string[];
-  description?: string;
-  disabled?: boolean;
-  disableValidation?: boolean;
-}
-
 export interface FormOptions {
   disableValidation?: boolean;
-  multiPage?: boolean;
 }
 
 export interface FormProps extends ChildrenProps, ClassNameProps, ShowProps {
   questions?: FormItemData[];
   options?: FormOptions;
-  pages?: FormNavigationPageProps[];
   onSubmit?: OnFormSubmit;
   onSubmitDeps?: any[];
 }
 
 export type OnFormSubmitArgs = {
   items: FormItemData[];
-  goToNextPage: ActionCreator;
   setErrorMessage: ActionCreator<string>;
 };
 

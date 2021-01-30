@@ -3,16 +3,13 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 
 import FormStore from './Form.store';
-import { FormItemProps } from './Form.types';
+import { FormItemData } from './Form.types';
+import useInitFormItem from './useInitFormItem';
 
-const FormDate: React.FC<
-  Pick<FormItemProps, 'category' | 'id' | 'placeholder' | 'title'>
-> = ({ ...queryArgs }) => {
-  const { id } = queryArgs;
+const FormDate: React.FC<FormItemData> = (args) => {
+  const { id } = args;
 
-  const value = FormStore.useStoreState(
-    ({ getItem }) => getItem(queryArgs)?.value
-  );
+  const value = FormStore.useStoreState(({ getItem }) => getItem(args)?.value);
 
   const startDate = FormStore.useStoreState(
     ({ getItem }) => getItem({ id: 'START_DATE' })?.value
@@ -20,12 +17,11 @@ const FormDate: React.FC<
 
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
-  const updateDate = (date: Date | [Date, Date]) => {
-    updateItem({ ...queryArgs, value: date });
+  useInitFormItem(args);
 
-    if (id === 'START_DATE') {
-      updateItem({ id: 'END_DATE', value: date });
-    }
+  const updateDate = (date: Date | [Date, Date]) => {
+    updateItem({ ...args, value: date });
+    if (id === 'START_DATE') updateItem({ id: 'END_DATE', value: date });
   };
 
   const minDate =
