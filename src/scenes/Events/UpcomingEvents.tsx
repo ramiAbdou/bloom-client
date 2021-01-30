@@ -13,24 +13,14 @@ import { sortObjects } from '@util/util';
 import { GET_UPCOMING_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard/EventsCard';
 import EventsHeader from './EventsHeader';
-import YourUpcomingEvents from './YourUpcomingEvents';
 
 const EventsUpcomingContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byEventId } = db.entities.events;
 
-    const guests = new Set(db.member.guests);
-
     return db.community?.events
       ?.map((eventId: string) => byEventId[eventId])
       ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
-      ?.filter((event: IEvent) => {
-        const hasRSVPd = event.guests?.some((guestId: string) =>
-          guests.has(guestId)
-        );
-
-        return !hasRSVPd;
-      })
       ?.sort((a, b) => sortObjects(a, b, 'startTime'));
   });
 
@@ -57,8 +47,6 @@ const EventsUpcoming: React.FC = () => {
 
   return (
     <MainContent Header={EventsHeader}>
-      <YourUpcomingEvents />
-
       <ListStore.Provider>
         <MainSection
           className="s-events-section"
