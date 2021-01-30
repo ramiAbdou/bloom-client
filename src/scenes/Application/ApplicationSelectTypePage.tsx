@@ -4,7 +4,7 @@ import { IdProps } from '@constants';
 import usePrevious from '@hooks/usePrevious';
 import FormStore from '@organisms/Form/Form.store';
 import FormItem from '@organisms/Form/FormItem';
-import FormPage from '@organisms/Form/FormPage';
+import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
@@ -64,6 +64,16 @@ const ApplicationSelectTypePage: React.FC = () => {
     return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
   });
 
+  const showForm: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    const types = db.community?.types;
+
+    const isMoreThanOneType = types?.length > 1;
+    const isFirstTypePaid = !!types && !byTypeId[types[0]]?.isFree;
+
+    return isMoreThanOneType || isFirstTypePaid;
+  });
+
   const removeItems = FormStore.useStoreActions((store) => store.removeItems);
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
@@ -91,12 +101,18 @@ const ApplicationSelectTypePage: React.FC = () => {
     }
   }, [isPaidMembershipSelected]);
 
+  if (!showForm) return null;
+
   return (
-    <FormPage id="SELECT_TYPE">
+    <StoryPage
+      description="Choose your membership type."
+      id="SELECT_TYPE"
+      title="Membership Selection"
+    >
       <FormItem
         cardOptions={cardOptions}
         category="MEMBERSHIP_TYPE"
-        pageId="SELECT_TYPE"
+        // pageId="SELECT_TYPE"
         type="MULTIPLE_CHOICE"
       />
 
@@ -107,7 +123,7 @@ const ApplicationSelectTypePage: React.FC = () => {
           Next: Confirmation
         </FormContinueButton>
       )}
-    </FormPage>
+    </StoryPage>
   );
 };
 

@@ -16,17 +16,11 @@ const LoginCardHeader: React.FC = () => (
   </div>
 );
 
-const LoginCard: React.FC = () => (
-  <>
-    <LoginCardHeader />
-    <LoginCardContent />
-  </>
-);
-
 const LoginMainPage: React.FC = () => {
   return (
     <StoryPage branches={{ MAIN: {} }}>
-      <LoginCard />
+      <LoginCardHeader />
+      <LoginCardContent />
     </StoryPage>
   );
 };

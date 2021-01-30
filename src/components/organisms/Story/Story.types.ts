@@ -11,7 +11,10 @@ export interface StoryPageBranch extends IdProps, LoadingProps, TitleProps {
   iconUrl?: string;
 }
 
-export interface StoryPageProps extends ChildrenProps, ClassNameProps {
+export interface StoryPageProps
+  extends ChildrenProps,
+    ClassNameProps,
+    StoryPageBranch {
   branchId?: string;
   branches?: Record<string, StoryPageBranch>;
   confirmation?: boolean;

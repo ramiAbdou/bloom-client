@@ -10,7 +10,7 @@ import {
 
 import useQuery from '@hooks/useQuery';
 import Loader from '@molecules/Loader/Loader';
-import ApplicationPage from '@scenes/Application/Application';
+import Application from '@scenes/Application/Application';
 import { useStoreActions } from '@store/Store';
 import HomeRouter from './HomeRouter';
 import { IS_USER_LOGGED_IN, VERIFY_TOKEN, VerifyTokenArgs } from './Router.gql';
@@ -56,7 +56,7 @@ const RouterContent: React.FC = () => {
     <>
       <Switch>
         <LoginRoute path="/login" />
-        <Route component={ApplicationPage} path="/:urlName/apply" />
+        <Route component={Application} path="/:urlName/apply" />
         <Route component={HomeRouter} path="/:urlName" />
         <Route exact component={HomeRouter} path="/" />
         <Redirect to="/login" />

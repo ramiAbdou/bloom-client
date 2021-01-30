@@ -15,11 +15,21 @@ const StoryPage: React.FC<StoryPageProps> = ({
   className,
   confirmation,
   confirmationClose,
-  id
+  description,
+  iconUrl,
+  id,
+  title
 }) => {
-  const branchKeys = Object.keys(branches);
-  id = confirmation ? 'CONFIRMATION' : id ?? branchKeys[0];
+  id =
+    (!!confirmation && 'CONFIRMATION') ||
+    (!!id && id) ||
+    (!!branches && Object.keys(branches)[0]);
+
   branchId = branchId ?? id;
+
+  if (!branches && description && title) {
+    branches = { [branchId]: { description, iconUrl, title } };
+  }
 
   const pageId = StoryStore.useStoreState((store) => store.pageId);
   const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
@@ -33,8 +43,13 @@ const StoryPage: React.FC<StoryPageProps> = ({
 
   if (id !== pageId) return null;
 
-  const currentBranch: StoryPageBranch = page.branches[page.branchId];
-  const { description, iconUrl, loading, title } = currentBranch;
+  const { loading, ...currentBranch }: StoryPageBranch = page.branches[
+    page.branchId
+  ];
+
+  description = description ?? currentBranch.description;
+  iconUrl = iconUrl ?? currentBranch.iconUrl;
+  title = title ?? currentBranch.title;
 
   if (confirmation) {
     return (

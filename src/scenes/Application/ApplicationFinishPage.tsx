@@ -1,3 +1,4 @@
+import deline from 'deline';
 import React from 'react';
 import { IoLockClosed } from 'react-icons/io5';
 
@@ -8,8 +9,8 @@ import QuestionValueList, {
 } from '@molecules/QuestionValueList';
 import FormStore from '@organisms/Form/Form.store';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormPage from '@organisms/Form/FormPage';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
@@ -92,14 +93,34 @@ const ApplicationFinishPage: React.FC = () => {
     items?.filter((item) => item.pageId === 'APPLICATION')
   );
 
+  const showForm: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    const types = db.community?.types;
+
+    const isMoreThanOneType = types?.length > 1;
+    const isFirstTypePaid = !!types && !byTypeId[types[0]]?.isFree;
+
+    return isMoreThanOneType || isFirstTypePaid;
+  });
+
   if (!questions?.length) return null;
 
   const items: QuestionValueItemProps[] = applicationItems.map(
     ({ title, type, value }) => ({ handleNull: 'HIDE_ALL', title, type, value })
   );
 
+  if (!showForm) return null;
+
   return (
-    <FormPage className="s-application-confirmation" id="FINISH">
+    <StoryPage
+      className="s-application-confirmation"
+      description={deline`
+        You’re almost done! Just review this information to make sure we got
+        everything right.
+      `}
+      id="FINISH"
+      title="Confirmation"
+    >
       <Separator marginBottom={24} marginTop={0} />
       <h2>Application</h2>
       <QuestionValueList items={items} marginBottom={24} />
@@ -110,7 +131,7 @@ const ApplicationFinishPage: React.FC = () => {
         {cardInfo && <IoLockClosed />}
         {cardInfo ? 'Confirm Payment and Join' : 'Submit Application'}
       </FormSubmitButton>
-    </FormPage>
+    </StoryPage>
   );
 };
 

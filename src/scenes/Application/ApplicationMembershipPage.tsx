@@ -3,8 +3,8 @@ import React from 'react';
 import FormStore from '@organisms/Form/Form.store';
 import FormContinueButton from '@organisms/Form/FormContinueButton';
 import FormItem from '@organisms/Form/FormItem';
-import FormPage from '@organisms/Form/FormPage';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import StoryPage from '@organisms/Story/StoryPage';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
@@ -29,6 +29,16 @@ const ApplicationMembershipPageButton: React.FC = () => {
 const ApplicationMembershipPage: React.FC = () => {
   const iconUrl = useStoreState(({ db }) => db.community?.logoUrl);
 
+  const description = useStoreState(({ db }) => {
+    const { byId: byApplicationId } = db.entities.applications;
+    return byApplicationId[db.community?.application]?.description;
+  });
+
+  const title = useStoreState(({ db }) => {
+    const { byId: byApplicationId } = db.entities.applications;
+    return byApplicationId[db.community?.application]?.title;
+  });
+
   const questions: IQuestion[] = useStoreState(({ db }) => {
     const { byId: byQuestionId } = db.entities.questions;
     return db.community?.questions
@@ -39,13 +49,18 @@ const ApplicationMembershipPage: React.FC = () => {
   if (!questions?.length) return null;
 
   return (
-    <FormPage iconUrl={iconUrl} id="APPLICATION">
+    <StoryPage
+      description={description}
+      iconUrl={iconUrl}
+      id="APPLICATION"
+      title={title}
+    >
       {questions?.map((props) => (
         <FormItem key={props.id} pageId="APPLICATION" {...props} />
       ))}
 
       <ApplicationMembershipPageButton />
-    </FormPage>
+    </StoryPage>
   );
 };
 

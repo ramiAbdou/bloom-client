@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Logo from './images/bloom.svg';
+import Logo from '@images/bloom.svg';
 
 interface LogoProps {
   multiplier?: number; // Changes the size of the logo dynamically.

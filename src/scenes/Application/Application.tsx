@@ -1,21 +1,36 @@
 import React, { useEffect } from 'react';
-import { Redirect, Route, Switch, useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
 import Loader from '@molecules/Loader/Loader';
+import Form from '@organisms/Form/Form';
+import Story from '@organisms/Story/Story';
 import { GET_APPLICATION } from '@scenes/Application/Application.gql';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
-import ApplicationConfirmationCard from './ApplicationConfirmationCard';
-import ApplicationForm from './ApplicationForm';
+import ApplicationConfirmationPage from './ApplicationFinishPage';
+import ApplicationMembershipPage from './ApplicationMembershipPage';
+import ApplicationSelectTypePage from './ApplicationSelectTypePage';
+import useApplyForMembership from './useApplyForMembership';
 
-/**
- * Controls sign-up process and has two different routes:
- * - Member Application Form
- * - Member Application Form Confirmation
- */
+const ApplicationContent: React.FC = () => {
+  const applyForMembership = useApplyForMembership();
+
+  return (
+    <div className="s-application-ctr">
+      <Story>
+        <Form className="s-application" onSubmit={applyForMembership}>
+          <ApplicationMembershipPage />
+          <ApplicationSelectTypePage />
+          <ApplicationConfirmationPage />
+        </Form>
+      </Story>
+    </div>
+  );
+};
+
 const Application: React.FC = () => {
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
   const { urlName } = useParams() as UrlNameProps;
@@ -35,18 +50,7 @@ const Application: React.FC = () => {
 
   if (error) return <Redirect to="/login" />;
   if (loading) return <Loader />;
-
-  return (
-    <Switch>
-      <Route exact component={ApplicationForm} path="/:urlName/apply" />
-
-      <Route
-        exact
-        component={ApplicationConfirmationCard}
-        path="/:urlName/apply/confirmation"
-      />
-    </Switch>
-  );
+  return <ApplicationContent />;
 };
 
 export default Application;

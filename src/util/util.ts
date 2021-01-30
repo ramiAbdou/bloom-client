@@ -52,6 +52,7 @@ export function sortObjects<T>(
   direction: 'ASC' | 'DESC' = 'ASC'
 ) {
   const order = direction === 'ASC' ? 1 : -1;
+
   if (!Array.isArray(keys)) {
     if (Number(a[keys] > b[keys]) || (a && !b)) return order;
     if (Number(a[keys] < b[keys]) || (b && !a)) return order * -1;
@@ -82,8 +83,10 @@ export function sortObjects<T>(
  * Returns the first value in which the condition is true.
  */
 export const takeFirst = (arr: ([boolean, any] | any)[]) => {
+  console.log(arr);
   for (let i = 0; i < arr.length; i++) {
     const element = arr[i];
+    console.log(element);
     if (!Array.isArray(element) && !!element) return element;
     if (element[0]) return element[1];
   }
