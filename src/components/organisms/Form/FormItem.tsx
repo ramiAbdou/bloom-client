@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { cx, takeFirst } from '@util/util';
+import { cx } from '@util/util';
 import ErrorMessage from '../../atoms/ErrorMessage';
 import Form from './Form.store';
 import { FormItemProps } from './Form.types';
@@ -31,14 +31,9 @@ const FormItem: React.FC<FormItemProps> = ({
 
   const setItem = Form.useStoreActions((store) => store.setItem);
 
-  console.log(queryArgs);
-
   useEffect(() => {
-    const emptyValue = takeFirst([
-      [type === 'MULTIPLE_SELECT', []],
-      [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
-      [type === 'TOGGLE', false]
-    ]);
+    const emptyValue =
+      (type === 'MULTIPLE_SELECT' && []) || (type === 'TOGGLE' && false) || '';
 
     value = value ?? emptyValue;
 

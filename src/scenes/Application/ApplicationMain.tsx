@@ -2,13 +2,14 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
+import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import useSyncStory from '@organisms/Story/useSyncStory';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import useSubmitMainApplication from './useSubmitMainApplication';
 
 const ApplicationMainForm: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
@@ -22,13 +23,15 @@ const ApplicationMainForm: React.FC = () => {
   const isSolo = StoryStore.useStoreState(({ pages }) => pages?.length === 1);
   const items = StoryStore.useStoreState((store) => store.items, deepequal);
 
-  const syncStory = useSyncStory();
+  const submitMainApplication = useSubmitMainApplication();
 
   return (
-    <Form show={!!questions?.length} onSubmit={syncStory}>
+    <Form show={!!questions?.length} onSubmit={submitMainApplication}>
       {questions?.map((props) => (
         <FormItem key={props?.id} value={items[props?.id]?.value} {...props} />
       ))}
+
+      <FormErrorMessage />
 
       <FormSubmitButton>
         {isSolo ? 'Submit Application' : 'Next: Choose Membership'}

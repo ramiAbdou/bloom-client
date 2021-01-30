@@ -25,8 +25,6 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     (store) => store.setItemErrorMessages
   );
 
-  console.log('FORM', items);
-
   useEffect(() => {
     if (pages) setPages(pages);
   }, [pages]);

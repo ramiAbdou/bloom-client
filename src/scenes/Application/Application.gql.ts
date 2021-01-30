@@ -22,6 +22,18 @@ export const APPLY_FOR_MEMBERSHIP = mutation({
   }
 }).query;
 
+// ## IS EMAIL TAKEN
+
+export interface IsEmailTakenArgs {
+  communityId: string;
+  email: string;
+}
+
+export const IS_EMAIL_TAKEN = query({
+  operation: 'isEmailTaken',
+  variables: { communityId: { required: true }, email: { required: true } }
+}).query;
+
 // ## GET APPLICATION
 
 export const GET_APPLICATION = query({
