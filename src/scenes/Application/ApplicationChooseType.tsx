@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { IdProps } from '@constants';
 import usePrevious from '@hooks/usePrevious';
+import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
 import FormItem from '@organisms/Form/FormItem';
 import StoryPage from '@organisms/Story/StoryPage';
@@ -12,7 +13,7 @@ import { RadioOptionProps } from '../../components/molecules/Radio/Radio.types';
 import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
 import ApplicationPaymentSection from './ApplicationPaymentSection';
 
-const ApplicationSelectTypeCardContent: React.FC<IdProps> = ({ id }) => {
+const ApplicationChooseTypeCardContent: React.FC<IdProps> = ({ id }) => {
   const amount = useStoreState(({ db }) => {
     return db.entities.types.byId[id]?.amount;
   });
@@ -41,20 +42,7 @@ const ApplicationSelectTypeCardContent: React.FC<IdProps> = ({ id }) => {
   );
 };
 
-const ApplicationSelectTypePage: React.FC = () => {
-  const cardOptions: RadioOptionProps[] = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-
-    return db.community?.types?.map((typeId: string) => {
-      const type: IMemberType = byTypeId[typeId];
-
-      return {
-        children: <ApplicationSelectTypeCardContent id={typeId} />,
-        label: type.name
-      };
-    });
-  });
-
+const ApplicationChooseTypeContent: React.FC = () => {
   const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
     const isTypeSelected = !!getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
     return !isTypeSelected;
@@ -62,16 +50,6 @@ const ApplicationSelectTypePage: React.FC = () => {
 
   const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
     return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
-  });
-
-  const showForm: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    const types = db.community?.types;
-
-    const isMoreThanOneType = types?.length > 1;
-    const isFirstTypePaid = !!types && !byTypeId[types[0]]?.isFree;
-
-    return isMoreThanOneType || isFirstTypePaid;
   });
 
   const removeItems = FormStore.useStoreActions((store) => store.removeItems);
@@ -101,6 +79,41 @@ const ApplicationSelectTypePage: React.FC = () => {
     }
   }, [isPaidMembershipSelected]);
 
+  return (
+    <>
+      {!isPaidMembershipSelected && (
+        <FormContinueButton disabled={disabled}>
+          Next: Confirmation
+        </FormContinueButton>
+      )}
+    </>
+  );
+};
+
+const ApplicationChooseType: React.FC = () => {
+  const cardOptions: RadioOptionProps[] = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+
+    return db.community?.types?.map((typeId: string) => {
+      const type: IMemberType = byTypeId[typeId];
+
+      return {
+        children: <ApplicationChooseTypeCardContent id={typeId} />,
+        label: type.name
+      };
+    });
+  });
+
+  const showForm: boolean = useStoreState(({ db }) => {
+    const { byId: byTypeId } = db.entities.types;
+    const types = db.community?.types;
+
+    const isMoreThanOneType = types?.length > 1;
+    const isFirstTypePaid = !!types && !byTypeId[types[0]]?.isFree;
+
+    return isMoreThanOneType || isFirstTypePaid;
+  });
+
   if (!showForm) return null;
 
   return (
@@ -109,22 +122,18 @@ const ApplicationSelectTypePage: React.FC = () => {
       id="SELECT_TYPE"
       title="Membership Selection"
     >
-      <FormItem
-        cardOptions={cardOptions}
-        category="MEMBERSHIP_TYPE"
-        // pageId="SELECT_TYPE"
-        type="MULTIPLE_CHOICE"
-      />
+      <Form>
+        <FormItem
+          cardOptions={cardOptions}
+          category="MEMBERSHIP_TYPE"
+          type="MULTIPLE_CHOICE"
+        />
 
-      <ApplicationPaymentSection />
-
-      {!isPaidMembershipSelected && (
-        <FormContinueButton disabled={disabled}>
-          Next: Confirmation
-        </FormContinueButton>
-      )}
+        <ApplicationPaymentSection />
+        <ApplicationChooseTypeContent />
+      </Form>
     </StoryPage>
   );
 };
 
-export default ApplicationSelectTypePage;
+export default ApplicationChooseType;

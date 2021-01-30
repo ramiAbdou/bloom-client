@@ -39,6 +39,7 @@ const Community = new schema.Entity(
     mergeStrategy,
     processStrategy: (community, parent) => {
       const processedData = takeFirst([
+        [!!parent.applicationId, { application: parent.id }],
         [!!parent.eventId, { events: [parent.id] }],
         {}
       ]);
@@ -48,7 +49,15 @@ const Community = new schema.Entity(
   }
 );
 
-const CommunityApplication = new schema.Entity('applications', {});
+const CommunityApplication = new schema.Entity(
+  'applications',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, applicationId: value.id };
+    }
+  }
+);
 
 const Event = new schema.Entity(
   'events',
@@ -163,6 +172,8 @@ Community.define({
   types: [MemberType]
 });
 
+CommunityApplication.define({ community: Community });
+
 Event.define({
   attendees: [EventAttendee],
   community: Community,
@@ -193,6 +204,7 @@ User.define({ members: [Member] });
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
   COMMUNITY: Community,
+  COMMUNITY_APPLICATION: CommunityApplication,
   EVENT: Event,
   EVENT_ATTENDEE: EventAttendee,
   EVENT_GUEST: EventGuest,

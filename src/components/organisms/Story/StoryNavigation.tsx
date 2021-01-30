@@ -2,6 +2,8 @@ import deepequal from 'fast-deep-equal';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
+import { ShowProps } from '@constants';
+import Show from '@containers/Show';
 import useTooltip from '@hooks/useTooltip';
 import { cx } from '@util/util';
 import StoryStore from './Story.store';
@@ -27,7 +29,7 @@ const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
   return <div ref={ref} className={css} onClick={onClick} />;
 };
 
-const StoryNavigation: React.FC = () => {
+const StoryNavigation: React.FC<ShowProps> = ({ show }) => {
   const pageId = StoryStore.useStoreState((store) => store.pageId);
 
   const pages = StoryStore.useStoreState((store) =>
@@ -37,11 +39,13 @@ const StoryNavigation: React.FC = () => {
   if (pageId === 'CONFIRMATION' || pages?.length <= 1) return null;
 
   return (
-    <div className="o-story-nav-ctr">
-      {pages.map(({ id }: StoryPageProps) => {
-        return <StoryNavigationBar key={id ?? nanoid()} id={id} />;
-      })}
-    </div>
+    <Show show={show}>
+      <div className="o-story-nav-ctr">
+        {pages.map(({ id }: StoryPageProps) => {
+          return <StoryNavigationBar key={id ?? nanoid()} id={id} />;
+        })}
+      </div>
+    </Show>
   );
 };
 

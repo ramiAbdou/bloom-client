@@ -2,6 +2,11 @@ import { useEffect } from 'react';
 
 import StoryStore from './Story.store';
 
+/**
+ * Updates the story page's disabled status based on the current page index.
+ * If the page is before the current page, it isn't disabled, otherwise it
+ * is.
+ */
 const useUpdateDisabledPage = (id: string) => {
   const pageId = StoryStore.useStoreState((store) => store.pageId);
   const pages = StoryStore.useStoreState((store) => store.pages);

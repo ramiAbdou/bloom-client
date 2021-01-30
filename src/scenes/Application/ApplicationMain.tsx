@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
 import FormContinueButton from '@organisms/Form/FormContinueButton';
 import FormItem from '@organisms/Form/FormItem';
@@ -8,7 +9,7 @@ import StoryPage from '@organisms/Story/StoryPage';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
-const ApplicationMembershipPageButton: React.FC = () => {
+const ApplicationMainButton: React.FC = () => {
   const numPages = FormStore.useStoreState(({ pages }) => pages?.length);
 
   const isPageCompleted = FormStore.useStoreState(
@@ -26,21 +27,14 @@ const ApplicationMembershipPageButton: React.FC = () => {
   );
 };
 
-const ApplicationMembershipPage: React.FC = () => {
+const ApplicationMain: React.FC = () => {
+  const description = useStoreState(({ db }) => db.application?.description);
+  const title = useStoreState(({ db }) => db.application?.title);
   const iconUrl = useStoreState(({ db }) => db.community?.logoUrl);
-
-  const description = useStoreState(({ db }) => {
-    const { byId: byApplicationId } = db.entities.applications;
-    return byApplicationId[db.community?.application]?.description;
-  });
-
-  const title = useStoreState(({ db }) => {
-    const { byId: byApplicationId } = db.entities.applications;
-    return byApplicationId[db.community?.application]?.title;
-  });
 
   const questions: IQuestion[] = useStoreState(({ db }) => {
     const { byId: byQuestionId } = db.entities.questions;
+
     return db.community?.questions
       ?.map((questionId: string) => byQuestionId[questionId])
       ?.filter((question: IQuestion) => question.inApplication);
@@ -55,13 +49,15 @@ const ApplicationMembershipPage: React.FC = () => {
       id="APPLICATION"
       title={title}
     >
-      {questions?.map((props) => (
-        <FormItem key={props.id} pageId="APPLICATION" {...props} />
-      ))}
+      <Form>
+        {questions?.map((props) => (
+          <FormItem key={props.id} pageId="APPLICATION" {...props} />
+        ))}
 
-      <ApplicationMembershipPageButton />
+        <ApplicationMainButton />
+      </Form>
     </StoryPage>
   );
 };
 
-export default ApplicationMembershipPage;
+export default ApplicationMain;

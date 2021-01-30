@@ -3,6 +3,7 @@ import { normalize } from 'normalizr';
 
 import {
   ICommunity,
+  ICommunityApplication,
   IEntities,
   IEvent,
   IIntegrations,
@@ -34,6 +35,11 @@ const dbStore: DbModel = {
       };
     }
   ),
+
+  application: computed(({ community, entities }) => {
+    const { byId: byApplicationId } = entities.applications;
+    return byApplicationId[community?.application] as ICommunityApplication;
+  }),
 
   clearEntities: action((state) => ({ ...state, entities: initialEntities })),
 

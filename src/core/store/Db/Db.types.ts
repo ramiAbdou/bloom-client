@@ -3,6 +3,7 @@ import { Schema } from 'normalizr';
 
 import {
   ICommunity,
+  ICommunityApplication,
   IEntities,
   IEvent,
   IIntegrations,
@@ -36,6 +37,7 @@ export interface MergeEntitiesArgs {
 
 export type DbModel = {
   addEntities: Action<DbModel, AddEntitiesArgs>;
+  application: Computed<DbModel, ICommunityApplication>;
   clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
   deleteEntities: Action<DbModel, DeleteEntitiesArgs>;

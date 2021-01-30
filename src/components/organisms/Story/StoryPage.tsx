@@ -26,10 +26,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
     (!!branches && Object.keys(branches)[0]);
 
   branchId = branchId ?? id;
-
-  if (!branches && description && title) {
-    branches = { [branchId]: { description, iconUrl, title } };
-  }
+  branches = branches ?? { [branchId]: { description, iconUrl, title } };
 
   const pageId = StoryStore.useStoreState((store) => store.pageId);
   const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
@@ -41,7 +38,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
     setPage({ branchId, branches, id });
   }, []);
 
-  if (id !== pageId) return null;
+  if (page?.id !== pageId) return null;
 
   const { loading, ...currentBranch }: StoryPageBranch = page.branches[
     page.branchId

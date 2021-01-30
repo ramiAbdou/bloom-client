@@ -6,9 +6,10 @@ import StoryNavigation from './StoryNavigation';
 
 const StoryContent: React.FC<ChildrenProps> = ({ children }) => {
   const hasPages = StoryStore.useStoreState((store) => !!store.pages?.length);
+
   return (
     <>
-      {hasPages && <StoryNavigation />}
+      <StoryNavigation show={hasPages} />
       {children}
     </>
   );

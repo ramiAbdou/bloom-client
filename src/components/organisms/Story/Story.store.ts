@@ -7,15 +7,18 @@ import {
   createContextStore
 } from 'easy-peasy';
 
+import { FormItemData } from '@organisms/Form/Form.types';
 import { StoryPageProps } from './Story.types';
 
 export type StoryModel = {
   currentPage: Computed<StoryModel, StoryPageProps>;
+  items: Record<string, FormItemData>;
   getPage: Computed<StoryModel, (pageId: string) => StoryPageProps, {}>;
   goToNextPage: Action<StoryModel>;
   pageId: string;
   pages: StoryPageProps[];
   setCurrentPage: Action<StoryModel, Pick<StoryPageProps, 'id' | 'branchId'>>;
+  setItems: Action<StoryModel, FormItemData[]>;
   setPage: Action<StoryModel, Partial<StoryPageProps>>;
   setPageDisabled: Action<StoryModel, Pick<StoryPageProps, 'disabled' | 'id'>>;
   setPageId: Action<StoryModel, string>;
@@ -37,6 +40,8 @@ export const storyModel: StoryModel = {
     return { ...state, pageId: id, pages };
   }),
 
+  items: {},
+
   pageId: null,
 
   pages: [],
@@ -52,6 +57,18 @@ export const storyModel: StoryModel = {
       return { ...state, pageId: id, pages };
     }
   ),
+
+  setItems: action((state, items) => {
+    const updatedItems = items.reduce(
+      (acc: Record<string, FormItemData>, item) => ({
+        ...acc,
+        [item.id]: item
+      }),
+      {}
+    );
+
+    return { ...state, items: { ...state.items, ...updatedItems } };
+  }),
 
   setPage: action((state, partialPage) => {
     const { getPage, pageId, pages } = state;
@@ -70,10 +87,7 @@ export const storyModel: StoryModel = {
     }
   ),
 
-  setPageId: action((state, pageId: string) => {
-    window.scrollTo({ top: 0 });
-    return { ...state, pageId };
-  })
+  setPageId: action((state, pageId: string) => ({ ...state, pageId }))
 };
 
 const StoryStore = createContextStore<StoryModel>(storyModel, {

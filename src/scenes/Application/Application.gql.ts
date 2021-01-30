@@ -26,27 +26,33 @@ export const APPLY_FOR_MEMBERSHIP = mutation({
 
 export const GET_APPLICATION = query({
   fields: [
-    'autoAccept',
+    'description',
     'id',
-    'logoUrl',
-    'name',
-    'primaryColor',
-    'urlName',
-    { application: ['title', 'description'] },
-    { integrations: ['stripeAccountId'] },
+    'title',
     {
-      questions: [
-        'category',
-        'description',
+      community: [
+        'autoAccept',
         'id',
-        'inApplication',
-        'options',
-        'required',
-        'title',
-        'type'
+        'logoUrl',
+        'name',
+        'primaryColor',
+        'urlName',
+        { integrations: ['stripeAccountId'] },
+        {
+          questions: [
+            'category',
+            'description',
+            'id',
+            'inApplication',
+            'options',
+            'required',
+            'title',
+            'type'
+          ]
+        },
+        { types: ['amount', 'id', 'isFree', 'name', 'recurrence'] }
       ]
-    },
-    { types: ['amount', 'id', 'isFree', 'name', 'recurrence'] }
+    }
   ],
   operation: 'getApplication',
   variables: { urlName: { required: true } }
