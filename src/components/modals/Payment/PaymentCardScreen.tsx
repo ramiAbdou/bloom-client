@@ -7,6 +7,7 @@ import FormItem from '@organisms/Form/FormItem';
 import FormPage from '@organisms/Form/FormPage';
 import { CardElement, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
+import FormShortText from '../../organisms/Form/FormShortText';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
 import useUpdatePaymentMethod from './useUpdatePaymentMethod';
@@ -25,48 +26,18 @@ const options: StripeCardElementOptions = {
 
 const PaymentCardForm: React.FC = () => (
   <>
-    <FormItem
-      required
-      pageId="CARD_FORM"
-      title="Name on Card"
-      type="SHORT_TEXT"
-    />
+    <FormShortText title="Name on Card" />
 
-    <FormItem required value pageId="CARD_FORM" title="Credit or Debit Card">
+    <FormItem value title="Credit or Debit Card">
       <CardElement options={options} />
     </FormItem>
 
-    <FormItem
-      required
-      pageId="CARD_FORM"
-      title="Billing Address"
-      type="SHORT_TEXT"
-    />
+    <FormShortText title="Billing Address" />
 
     <Row spaceBetween className="mo-payment-billing-ctr">
-      <FormItem
-        required
-        pageId="CARD_FORM"
-        placeholder="Los Angeles"
-        title="City"
-        type="SHORT_TEXT"
-      />
-
-      <FormItem
-        required
-        pageId="CARD_FORM"
-        placeholder="CA"
-        title="State"
-        type="SHORT_TEXT"
-      />
-
-      <FormItem
-        required
-        pageId="CARD_FORM"
-        placeholder="00000"
-        title="Zip Code"
-        type="SHORT_TEXT"
-      />
+      <FormShortText placeholder="Los Angeles" title="City" />
+      <FormShortText placeholder="CA" title="State" />
+      <FormShortText placeholder="00000" title="Zip Code" />
     </Row>
   </>
 );

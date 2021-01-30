@@ -3,7 +3,7 @@ import React from 'react';
 import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormItem from '@organisms/Form/FormItem';
+import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreState } from '@store/Store';
@@ -22,30 +22,26 @@ const ProfileSocialModal: React.FC = () => {
       <h1>Edit Social Media</h1>
 
       <Form onSubmit={updateUser}>
-        <FormItem
+        <FormShortText
           title="Twitter URL"
-          type="SHORT_TEXT"
           validate="IS_URL"
           value={twitterUrl}
         />
 
-        <FormItem
+        <FormShortText
           title="LinkedIn URL"
-          type="SHORT_TEXT"
           validate="IS_URL"
           value={linkedInUrl}
         />
 
-        <FormItem
+        <FormShortText
           title="Facebook URL"
-          type="SHORT_TEXT"
           validate="IS_URL"
           value={facebookUrl}
         />
 
-        <FormItem
+        <FormShortText
           title="Instagram URL"
-          type="SHORT_TEXT"
           validate="IS_URL"
           value={instagramUrl}
         />

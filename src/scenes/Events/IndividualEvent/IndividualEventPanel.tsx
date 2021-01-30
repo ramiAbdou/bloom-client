@@ -4,7 +4,7 @@ import { IdProps, PanelType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import FormItem from '@organisms/Form/FormItem';
+import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Panel from '@organisms/Panel/Panel';
 import { IEvent } from '@store/Db/entities';
@@ -40,10 +40,9 @@ const IndividualEventPanel: React.FC<IdProps> = ({ id }) => {
       size="lg"
     >
       <Form onSubmit={onSubmit}>
-        <FormItem
+        <FormShortText
           required
           title="Event Recording Link"
-          type="SHORT_TEXT"
           validate="IS_URL"
           value={recordingUrl ?? ''}
         />

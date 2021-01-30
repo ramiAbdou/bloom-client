@@ -3,13 +3,13 @@ import { ActionCreator } from 'easy-peasy';
 import {
   ChildrenProps,
   ClassNameProps,
+  ClassNameProps,
   IdProps,
   QuestionCategory,
   QuestionType,
   ShowProps,
   TitleProps
 } from '@constants';
-import { RadioOptionProps } from '../../molecules/Radio/Radio.types';
 
 export type FormQuestion = {
   category?: QuestionCategory;
@@ -33,20 +33,10 @@ export type FormQuestion = {
 
 export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 
-export interface FormItemData extends Partial<FormQuestion> {
-  // Only populated if the type is MUTLIPLE CHOICE or MULTIPLE SELECT.
-  cardOptions?: RadioOptionProps[];
-
-  className?: string;
-
+export interface FormItemData extends ClassNameProps, Partial<FormQuestion> {
   errorMessage?: string;
 
   initialValue?: any;
-
-  // The page that a form item belongs to.
-  pageId?: string;
-
-  placeholder?: string;
 
   // Only used in MULTIPLE_SELECT. True if checkbox shoudln't have an attribute
   // tag associated with it.
@@ -64,25 +54,15 @@ export type BaseItemProps = Pick<
 
 export interface OptionItemProps
   extends BaseItemProps,
-    Pick<FormItemData, 'cardOptions' | 'options' | 'plain'> {}
+    Pick<FormItemData, 'options' | 'plain'> {}
 
-export interface TextItemProps
-  extends BaseItemProps,
-    Pick<FormItemData, 'placeholder'> {}
+export interface TextItemProps extends BaseItemProps, FormItemData {}
 
 export interface UseItemBodyProps
   extends ChildrenProps,
     Pick<
       FormItemData,
-      | 'cardOptions'
-      | 'category'
-      | 'id'
-      | 'options'
-      | 'placeholder'
-      | 'plain'
-      | 'required'
-      | 'title'
-      | 'type'
+      'category' | 'id' | 'options' | 'plain' | 'required' | 'title' | 'type'
     > {}
 
 // FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,
@@ -91,10 +71,7 @@ export interface UseItemBodyProps
 export interface FormItemProps
   extends UseItemBodyProps,
     ChildrenProps,
-    Pick<
-      FormItemData,
-      'className' | 'description' | 'pageId' | 'validate' | 'value'
-    > {}
+    Pick<FormItemData, 'description' | 'validate' | 'value'> {}
 
 export interface FormNavigationPageProps extends IdProps, TitleProps {
   aliases?: string[];

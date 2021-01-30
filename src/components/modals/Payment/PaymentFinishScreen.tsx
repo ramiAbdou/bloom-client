@@ -60,7 +60,6 @@ const PaymentFinishScreenToggle: React.FC = () => {
         value
         description={nextPaymentMessage}
         id="autoRenew"
-        pageId="FINISH"
         title="Auto-Renew Membership"
         type="TOGGLE"
       />

@@ -1,23 +1,18 @@
 import React from 'react';
 
 import { takeFirst } from '@util/util';
-import {
-  BaseItemProps,
-  OptionItemProps,
-  TextItemProps,
-  UseItemBodyProps
-} from './Form.types';
-import FormCoverImageUpload from './variants/FormCoverImageUpload';
-import FormDate from './variants/FormDate';
-import FormDropdown from './variants/FormDropdown';
-import FormImageUpload from './variants/FormImageUpload';
-import FormLargeTitle from './variants/FormLargeTitle';
-import FormLongText from './variants/FormLongText';
-import FormMultipleChoice from './variants/FormMultipleChoice';
-import FormMultipleSelect from './variants/FormMultipleSelect';
-import FormShortText from './variants/FormShortText';
-import FormTime from './variants/FormTime';
-import FormToggle from './variants/FormToggle';
+import { BaseItemProps, OptionItemProps, UseItemBodyProps } from './Form.types';
+import FormCoverImageUpload from './FormCoverImageUpload';
+import FormDate from './FormDate';
+import FormDropdown from './FormDropdown';
+import FormImageUpload from './FormImageUpload';
+import FormLargeTitle from './FormLargeTitle';
+import FormLongText from './FormLongText';
+import FormMultipleChoice from './FormMultipleChoice';
+import FormMultipleSelect from './FormMultipleSelect';
+import FormShortText from './FormShortText';
+import FormTime from './FormTime';
+import FormToggle from './FormToggle';
 
 /**
  * Returns the appropriate Form element (ie: ShortText, LongText) with the
@@ -26,30 +21,26 @@ import FormToggle from './variants/FormToggle';
 const useItemBody = (props: UseItemBodyProps) => {
   const {
     category,
-    cardOptions,
     children,
     id,
     plain,
     required,
     title,
     options,
-    placeholder,
     type
   } = props;
 
   const baseProps: BaseItemProps = { category, id, required, title };
-  const textProps: TextItemProps = { ...baseProps, placeholder };
 
   const optionProps: OptionItemProps = {
     ...baseProps,
-    cardOptions,
     options,
     plain
   };
 
   const body: React.ReactElement = takeFirst([
-    [type === 'SHORT_TEXT', <FormShortText {...textProps} />],
-    [type === 'LONG_TEXT', <FormLongText {...textProps} />],
+    [type === 'SHORT_TEXT', <FormShortText {...baseProps} />],
+    [type === 'LONG_TEXT', <FormLongText {...baseProps} />],
     [
       type === 'MULTIPLE_SELECT' && options.length >= 5,
       <FormDropdown multiple {...optionProps} />
@@ -59,7 +50,7 @@ const useItemBody = (props: UseItemBodyProps) => {
       <FormMultipleSelect {...optionProps} />
     ],
     [
-      type === 'MULTIPLE_CHOICE' && (options?.length < 5 || cardOptions),
+      type === 'MULTIPLE_CHOICE' && options?.length < 5,
       <FormMultipleChoice {...optionProps} />
     ],
     [
@@ -69,7 +60,7 @@ const useItemBody = (props: UseItemBodyProps) => {
     [type === 'TOGGLE', <FormToggle {...baseProps} />],
     [type === 'IMAGE', <FormImageUpload {...baseProps} />],
     [type === 'COVER_IMAGE', <FormCoverImageUpload {...baseProps} />],
-    [type === 'LARGE_TITLE', <FormLargeTitle {...textProps} />],
+    [type === 'LARGE_TITLE', <FormLargeTitle {...baseProps} />],
     [type === 'DATE', <FormDate {...baseProps} />],
     [type === 'TIME', <FormTime {...baseProps} />],
     [children, children]

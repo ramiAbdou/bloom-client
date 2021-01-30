@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 
 import Button from '@atoms/Button/Button';
 import AspectRatio from '@containers/AspectRatio/AspectRatio';
+import EventsAspectBackground from '@scenes/Events/EventsAspectBackground';
 import { convertImageToBase64 } from '@util/imageUtil';
-import EventsAspectBackground from '../../../../scenes/Events/EventsAspectBackground';
-import FormStore from '../Form.store';
-import { FormItemProps } from '../Form.types';
+import FormStore from './Form.store';
+import { FormItemProps } from './Form.types';
 
 const FormCoverImageUploadContent: React.FC<
   Pick<FormItemProps, 'id' | 'title'>

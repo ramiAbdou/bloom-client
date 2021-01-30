@@ -2,8 +2,8 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import { cx } from '@util/util';
-import Form from '../Form.store';
-import { FormItemData, FormItemProps } from '../Form.types';
+import Form from './Form.store';
+import { FormItemData, FormItemProps } from './Form.types';
 
 const FormLargeTitle: React.FC<
   Pick<FormItemProps, 'category' | 'id' | 'placeholder' | 'title'>

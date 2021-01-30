@@ -9,14 +9,10 @@ import FormLabel from './FormLabel';
 import useItemBody from './useItemBody';
 
 const FormItem: React.FC<FormItemProps> = ({
-  cardOptions,
   children,
-  className,
   description,
   options,
   required,
-  pageId,
-  placeholder,
   plain,
   type,
   validate,
@@ -37,9 +33,12 @@ const FormItem: React.FC<FormItemProps> = ({
 
     value = value ?? emptyValue;
 
+    if (type === 'MULTIPLE_CHOICE' && options?.length < 5) return;
+    if (type === 'SHORT_TEXT') return;
+    if (type === 'LONG_TEXT') return;
+
     setItem({
       initialValue: value,
-      pageId,
       required,
       type,
       validate,
@@ -49,10 +48,8 @@ const FormItem: React.FC<FormItemProps> = ({
   }, []);
 
   const body: React.ReactElement = useItemBody({
-    cardOptions,
     children,
     options,
-    placeholder,
     plain,
     required,
     type,
@@ -60,7 +57,6 @@ const FormItem: React.FC<FormItemProps> = ({
   });
 
   const css = cx('o-form-item', {
-    [className]: className,
     'o-form-item--date': type === 'DATE' || type === 'TIME',
     'o-form-item--email': category === 'EMAIL',
     'o-form-item--image': type === 'IMAGE',

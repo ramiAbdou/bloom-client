@@ -2,8 +2,8 @@ import day from 'dayjs';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
-import FormStore from '../Form.store';
-import { FormItemProps } from '../Form.types';
+import FormStore from './Form.store';
+import { FormItemProps } from './Form.types';
 
 const FormTime: React.FC<
   Pick<FormItemProps, 'category' | 'id' | 'placeholder' | 'title'>

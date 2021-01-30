@@ -6,6 +6,7 @@ import { IdProps } from '@constants';
 import Row from '@containers/Row/Row';
 import FormItem from '@organisms/Form/FormItem';
 import { useStoreState } from '@store/Store';
+import FormShortText from '../../organisms/Form/FormShortText';
 import AddMemberStore from './AddMember.store';
 
 const AddMemberInputTrashButton: React.FC<IdProps> = ({ id }) => {
@@ -27,27 +28,12 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
     <div className="mo-add-member-input-ctr">
       <Row align="baseline" className="mo-add-member-input">
         <AddMemberInputTrashButton id={id} />
-
-        <FormItem
-          required
-          id={`${id}=FIRST_NAME`}
-          placeholder="First Name"
-          type="SHORT_TEXT"
-        />
-
-        <FormItem
-          required
-          id={`${id}=LAST_NAME`}
-          placeholder="Last Name"
-          type="SHORT_TEXT"
-        />
-
-        <FormItem
-          required
+        <FormShortText id={`${id}=FIRST_NAME`} placeholder="First Name" />
+        <FormShortText id={`${id}=LAST_NAME`} placeholder="Last Name" />
+        <FormShortText
+          category="EMAIL"
           id={`${id}=EMAIL`}
           placeholder="Email"
-          type="SHORT_TEXT"
-          validate="IS_EMAIL"
         />
 
         {isOwner && !admin && (
@@ -55,6 +41,7 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
             plain
             id={`${id}=CHECKBOX`}
             options={['Make Admin']}
+            required={false}
             type="MULTIPLE_SELECT"
           />
         )}

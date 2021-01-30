@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
-import Form from '../Form.store';
-import { FormItemProps } from '../Form.types';
+import Form from './Form.store';
+import { FormItemProps } from './Form.types';
 
 const FormMultipleSelect: React.FC<
   Pick<FormItemProps, 'id' | 'options' | 'plain' | 'title'>

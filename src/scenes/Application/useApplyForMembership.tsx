@@ -31,7 +31,7 @@ const useApplyForMembership = (): OnFormSubmit => {
     )?.value;
 
     const dataToSubmit = items
-      .filter(({ pageId }) => pageId === 'APPLICATION')
+      // .filter(({ pageId }) => pageId === 'APPLICATION')
       .map(({ category, id, value }) => ({
         category,
         questionId: id,

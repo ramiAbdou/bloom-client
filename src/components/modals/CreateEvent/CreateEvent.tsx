@@ -10,6 +10,9 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import FormLongText from '../../organisms/Form/FormLongText';
+import FormMultipleChoice from '../../organisms/Form/FormMultipleChoice';
+import FormShortText from '../../organisms/Form/FormShortText';
 import DeleteEventButton from './DeleteEventButton';
 import useCreateEvent from './useCreateEvent';
 import useUpdateEvent from './useUpdateEvent';
@@ -47,13 +50,13 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
     >
       <Form onSubmit={id ? updateEvent : createEvent}>
         <FormItem
+          required={false}
           title="Change Cover Photo"
           type="COVER_IMAGE"
           value={event?.imageUrl}
         />
 
         <FormItem
-          required
           id="EVENT_NAME"
           placeholder="New Event"
           title="Event Name"
@@ -61,28 +64,24 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
           value={event?.title}
         />
 
-        <FormItem
-          required
+        <FormLongText
           id="EVENT_DESCRIPTION"
           title="Event Description"
-          type="LONG_TEXT"
           value={event?.description}
         />
 
-        <FormItem
+        <FormShortText
           id="EVENT_SUMMARY"
+          required={false}
           title="1-Sentence Summary"
-          type="SHORT_TEXT"
           value={event?.summary}
         />
 
         <FormSectionHeader>Event Details</FormSectionHeader>
 
-        <FormItem
-          required
+        <FormShortText
           id="VIDEO_URL"
           title="Event Link"
-          type="SHORT_TEXT"
           validate="IS_URL"
           value={event?.videoUrl}
         />
@@ -90,12 +89,11 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
         {!id && <CreateEventTimeItems />}
         <FormSectionHeader>Privacy Settings</FormSectionHeader>
 
-        <FormItem
+        <FormMultipleChoice
           required
           cardOptions={[{ label: 'Members Only' }, { label: 'Open to All' }]}
           className="mo-create-event-privacy-item"
           id="PRIVACY_SETTINGS"
-          type="MULTIPLE_CHOICE"
           value={event?.private === false ? 'Open to All' : 'Members Only'}
         />
 

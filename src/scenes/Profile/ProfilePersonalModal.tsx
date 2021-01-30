@@ -4,9 +4,11 @@ import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
+import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreState } from '@store/Store';
+import FormLongText from '../../components/organisms/Form/FormLongText';
 import useUpdateUser from './useUpdateUser';
 
 const ProfilePersonalModal: React.FC = () => {
@@ -24,23 +26,19 @@ const ProfilePersonalModal: React.FC = () => {
       <Form onSubmit={updateUser}>
         <FormItem id="profilePicture" type="IMAGE" value={pictureUrl} />
 
-        <FormItem
-          required
+        <FormShortText
           category="FIRST_NAME"
           title="First Name"
-          type="SHORT_TEXT"
           value={firstName}
         />
 
-        <FormItem
-          required
+        <FormShortText
           category="LAST_NAME"
           title="Last Name"
-          type="SHORT_TEXT"
           value={lastName}
         />
 
-        <FormItem id="bio" title="Bio" type="LONG_TEXT" value={bio} />
+        <FormLongText id="bio" title="Bio" value={bio} />
 
         <FormErrorMessage />
         <FormSubmitButton>Save</FormSubmitButton>

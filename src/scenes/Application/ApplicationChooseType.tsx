@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 
 import { IdProps } from '@constants';
 import usePrevious from '@hooks/usePrevious';
+import { RadioOptionProps } from '@molecules/Radio/Radio.types';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
-import FormItem from '@organisms/Form/FormItem';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { RadioOptionProps } from '../../components/molecules/Radio/Radio.types';
-import FormContinueButton from '../../components/organisms/Form/FormContinueButton';
+import FormMultipleChoice from '../../components/organisms/Form/FormMultipleChoice';
 import ApplicationPaymentSection from './ApplicationPaymentSection';
 
-const ApplicationChooseTypeCardContent: React.FC<IdProps> = ({ id }) => {
+const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id }) => {
   const amount = useStoreState(({ db }) => {
     return db.entities.types.byId[id]?.amount;
   });
@@ -42,7 +42,7 @@ const ApplicationChooseTypeCardContent: React.FC<IdProps> = ({ id }) => {
   );
 };
 
-const ApplicationChooseTypeContent: React.FC = () => {
+const ApplicationChooseTypeButton: React.FC = () => {
   const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
     const isTypeSelected = !!getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
     return !isTypeSelected;
@@ -80,37 +80,43 @@ const ApplicationChooseTypeContent: React.FC = () => {
   }, [isPaidMembershipSelected]);
 
   return (
-    <>
-      {!isPaidMembershipSelected && (
-        <FormContinueButton disabled={disabled}>
-          Next: Confirmation
-        </FormContinueButton>
-      )}
-    </>
+    <FormSubmitButton disabled={disabled} show={!isPaidMembershipSelected}>
+      Next: Confirmation
+    </FormSubmitButton>
   );
 };
 
-const ApplicationChooseType: React.FC = () => {
-  const cardOptions: RadioOptionProps[] = useStoreState(({ db }) => {
+const ApplicationChooseTypeContent: React.FC = () => {
+  const types: RadioOptionProps[] = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
 
     return db.community?.types?.map((typeId: string) => {
       const type: IMemberType = byTypeId[typeId];
 
       return {
-        children: <ApplicationChooseTypeCardContent id={typeId} />,
+        children: <ApplicationChooseTypeCard id={typeId} />,
         label: type.name
       };
     });
   });
 
+  return (
+    <Form>
+      <FormMultipleChoice cardOptions={types} category="MEMBERSHIP_TYPE" />
+      <ApplicationPaymentSection />
+      <ApplicationChooseTypeButton />
+    </Form>
+  );
+};
+
+const ApplicationChooseType: React.FC = () => {
   const showForm: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
+
     const types = db.community?.types;
 
     const isMoreThanOneType = types?.length > 1;
     const isFirstTypePaid = !!types && !byTypeId[types[0]]?.isFree;
-
     return isMoreThanOneType || isFirstTypePaid;
   });
 
@@ -122,16 +128,7 @@ const ApplicationChooseType: React.FC = () => {
       id="SELECT_TYPE"
       title="Membership Selection"
     >
-      <Form>
-        <FormItem
-          cardOptions={cardOptions}
-          category="MEMBERSHIP_TYPE"
-          type="MULTIPLE_CHOICE"
-        />
-
-        <ApplicationPaymentSection />
-        <ApplicationChooseTypeContent />
-      </Form>
+      <ApplicationChooseTypeContent />
     </StoryPage>
   );
 };

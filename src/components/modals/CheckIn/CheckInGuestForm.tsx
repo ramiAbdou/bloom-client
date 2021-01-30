@@ -4,8 +4,8 @@ import { ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import FormShortText from '../../organisms/Form/FormShortText';
 import useCreatePublicEventGuest from './useCreatePublicEventGuest';
 
 const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
@@ -15,29 +15,11 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
   return (
     <Form onSubmit={createPublicEventGuest}>
       <Row equal align="baseline" spacing="xs">
-        <FormItem
-          required
-          category="FIRST_NAME"
-          title="First Name"
-          type="SHORT_TEXT"
-        />
-
-        <FormItem
-          required
-          category="LAST_NAME"
-          title="Last Name"
-          type="SHORT_TEXT"
-        />
+        <FormShortText category="FIRST_NAME" title="First Name" />
+        <FormShortText category="LAST_NAME" title="Last Name" />
       </Row>
 
-      <FormItem
-        required
-        category="EMAIL"
-        title="Email"
-        type="SHORT_TEXT"
-        validate="IS_EMAIL"
-      />
-
+      <FormShortText category="EMAIL" title="Email" />
       <FormErrorMessage />
       <FormSubmitButton>RSVP</FormSubmitButton>
     </Form>

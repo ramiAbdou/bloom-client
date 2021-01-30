@@ -3,8 +3,8 @@ import { IoCamera } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
 import { convertImageToBase64 } from '@util/imageUtil';
-import FormStore from '../Form.store';
-import { FormItemProps } from '../Form.types';
+import FormStore from './Form.store';
+import { FormItemProps } from './Form.types';
 
 const FormImageUpload: React.FC<Pick<FormItemProps, 'id'>> = (queryArgs) => {
   const selectedImage = FormStore.useStoreState(

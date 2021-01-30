@@ -1,3 +1,4 @@
+import deline from 'deline';
 import Cookies from 'js-cookie';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -10,10 +11,10 @@ import { APP, CookieType, ShowProps } from '@constants';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import FormShortText from '../../organisms/Form/FormShortText';
 import { CheckInError } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 import useSendLoginLink from './useSendLoginLink';
@@ -76,13 +77,12 @@ const LoginCardEmailForm: React.FC = () => {
 
   return (
     <Form onSubmit={sendLoginLink}>
-      <FormItem
-        required
+      <FormShortText
         category="EMAIL"
-        description="Or continue with your email address to receive a login link."
+        description={deline`
+          Or continue with your email address to receive a login link.
+        `}
         placeholder="Email"
-        type="SHORT_TEXT"
-        validate="IS_EMAIL"
       />
 
       <FormErrorMessage marginTop={0} />

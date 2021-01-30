@@ -1,8 +1,8 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { uploadImage } from '@util/imageUtil';
-import { Schema } from '@store/Db/schema';
 import { UPDATE_USER, UpdateUserArgs, UpdateUserResult } from './Profile.gql';
 
 const useUpdateUser = (): OnFormSubmit => {
