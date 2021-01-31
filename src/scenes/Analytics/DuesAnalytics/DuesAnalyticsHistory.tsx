@@ -5,20 +5,26 @@ import React from 'react';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
-import { TableColumn, TableOptions, TableRow } from '@organisms/Table/Table.types';
+import {
+  TableColumn,
+  TableOptions,
+  TableRow
+} from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { ICommunity, IMember, IMemberPayment, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import { GET_PAYMENTS } from '../Analytics.gql';
 
 interface DuesAnalyticsHistoryTableData {
-  Amount: string;
+  amount: string;
   id: string;
-  Email: string;
-  'Full Name': string;
-  'Paid On': string;
+  email: string;
+  fullName: string;
+  paidOn: string;
+  type: string;
 }
 
 const DuesAnalyticsHistoryTable: React.FC = () => {
@@ -38,17 +44,15 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
               paymentId
             ];
 
-            const typeName = byTypeId[type].name;
-
             const { firstName, lastName, email }: IUser = byUserId[member.user];
 
             return {
-              Amount: `$${(amount / 100).toFixed(2)}`,
-              Email: email,
-              'Full Name': `${firstName} ${lastName}`,
-              'Membership Plan': typeName,
-              'Paid On': day(createdAt).format('MMMM DD, YYYY @ h:mm A'),
-              id: nanoid()
+              amount: `$${(amount / 100).toFixed(2)}`,
+              email,
+              fullName: `${firstName} ${lastName}`,
+              id: nanoid(),
+              paidOn: day(createdAt).format('MMMM DD, YYYY @ h:mm A'),
+              type: byTypeId[type].name
             };
           }
         );
@@ -59,18 +63,18 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
     );
 
     return result;
-  });
+  })?.sort((a, b) => sortObjects(a, b, 'paidOn', 'DESC'));
 
   const columns: TableColumn[] = [
-    { id: 'Full Name', title: 'Full Name', type: 'SHORT_TEXT' },
-    { id: 'Email', title: 'Email', type: 'SHORT_TEXT' },
-    { id: 'Amount', title: 'Amount', type: 'SHORT_TEXT' },
+    { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
+    { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
+    { id: 'amount', title: 'Amount', type: 'SHORT_TEXT' },
     {
-      id: 'Membership Plan',
+      id: 'type',
       title: 'Membership Plan',
       type: 'MULTIPLE_CHOICE'
     },
-    { id: 'Paid On', title: 'Paid On', type: 'SHORT_TEXT' }
+    { id: 'paidOn', title: 'Paid On', type: 'SHORT_TEXT' }
   ];
 
   const options: TableOptions = {
