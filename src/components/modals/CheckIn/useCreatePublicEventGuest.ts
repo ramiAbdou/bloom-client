@@ -20,7 +20,7 @@ const useCreatePublicEventGuest = () => {
 
   const goForward = StoryStore.useStoreActions((store) => store.goForward);
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const firstName = items.FIRST_NAME?.value;
     const lastName = items.LAST_NAME?.value;
     const email = items.EMAIL?.value;
@@ -32,7 +32,7 @@ const useCreatePublicEventGuest = () => {
       lastName
     });
 
-    if (error) setErrorMessage(error);
+    if (error) setError(error);
     else goForward();
   };
 

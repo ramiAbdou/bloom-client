@@ -23,7 +23,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
   if (!stripe) return null;
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const city = items.CITY.value;
     const line1 = items.BILLING_ADDRESS.value;
     const nameOnCard = items.NAME_ON_CARD.value;
@@ -43,7 +43,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     // If the card information is incorrect or doesn't work for some reason,
     // show that error message.
     if (stripeResult.error) {
-      setErrorMessage(stripeResult.error.message);
+      setError(stripeResult.error.message);
       return;
     }
 
@@ -55,7 +55,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     });
 
     if (updateError) {
-      setErrorMessage(updateError);
+      setError(updateError);
       return;
     }
 

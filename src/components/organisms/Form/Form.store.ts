@@ -16,14 +16,14 @@ interface UpdateItemArgs extends GetItemArgs {
 }
 
 export type FormModel = {
-  errorMessage: string;
+  error: string;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
   isShowingErrors: boolean;
   items: Record<string, FormItemData>;
   options: FormOptions;
   // removeItems: Action<FormModel, Partial<FormItemData>[]>;
-  setErrorMessage: Action<FormModel, string>;
+  setError: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
   setItemErrorMessages: Action<FormModel, Record<string, FormItemData>>;
   setIsLoading: Action<FormModel, boolean>;
@@ -32,7 +32,7 @@ export type FormModel = {
 
 export const formModel: FormModel = {
   // Represents the error message for the entire Form, not any one element.
-  errorMessage: null,
+  error: null,
 
   /**
    * Returns true if the form has been completed. This is the case if:
@@ -83,10 +83,7 @@ export const formModel: FormModel = {
   //   return { ...state, items };
   // }),
 
-  setErrorMessage: action((state, errorMessage: string) => ({
-    ...state,
-    errorMessage
-  })),
+  setError: action((state, error: string) => ({ ...state, error })),
 
   // Typically set when a form is submitting an async function.
   setIsLoading: action((state, isLoading: boolean) => ({

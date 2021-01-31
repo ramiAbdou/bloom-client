@@ -30,7 +30,7 @@ const useSendLoginLink = (): OnFormSubmit => {
     query: SEND_LOGIN_LINK
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const email = items.EMAIL?.value;
 
     const { error } = await sendLoginLink({
@@ -40,10 +40,7 @@ const useSendLoginLink = (): OnFormSubmit => {
     });
 
     if (error) {
-      setErrorMessage(
-        getCheckInErrorMessage({ error: error as CheckInError, owner })
-      );
-
+      setError(getCheckInErrorMessage({ error: error as CheckInError, owner }));
       return;
     }
 

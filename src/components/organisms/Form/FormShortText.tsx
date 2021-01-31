@@ -1,3 +1,4 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Input from '@atoms/Input/Input';
@@ -17,11 +18,11 @@ const FormShortText: React.FC<FormShortTextProps> = ({
 }) => {
   const key = getFormItemKey(args);
 
-  const error: boolean = FormStore.useStoreState(
-    ({ items }) => !!items[key]?.errorMessage
+  const { error, value } = FormStore.useStoreState(
+    ({ items }) => items[key] ?? {},
+    deepequal
   );
 
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
   useInitFormItem({

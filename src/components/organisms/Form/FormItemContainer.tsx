@@ -18,8 +18,8 @@ const FormItemContainer: React.FC<FormItemData> = ({
 }) => {
   const key = getFormItemKey(args);
 
-  const { errorMessage, required }: FormItemData = FormStore.useStoreState(
-    ({ items }) => items[key],
+  const { error, required }: FormItemData = FormStore.useStoreState(
+    ({ items }) => items[key] ?? {},
     deepequal
   );
 
@@ -31,7 +31,7 @@ const FormItemContainer: React.FC<FormItemData> = ({
       <FormDescription>{description}</FormDescription>
       {children}
       <ErrorMessage marginBottom={16} marginTop={16}>
-        {errorMessage}
+        {error}
       </ErrorMessage>
     </div>
   );

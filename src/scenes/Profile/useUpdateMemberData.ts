@@ -15,13 +15,13 @@ const useUpdateUser = (): OnFormSubmit => {
     schema: [Schema.MEMBER_DATA]
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const { error } = await updateMemberData({
       items: Object.values(items).map(({ id, value }) => ({ id, value }))
     });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 

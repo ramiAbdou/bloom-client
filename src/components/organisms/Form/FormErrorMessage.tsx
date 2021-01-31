@@ -10,8 +10,8 @@ import Form from './Form.store';
 const FormErrorMessage: React.FC<Omit<ErrorMessageProps, 'message'>> = (
   props
 ) => {
-  const errorMessage = Form.useStoreState((store) => store.errorMessage);
-  return <ErrorMessage {...props}>{errorMessage}</ErrorMessage>;
+  const error = Form.useStoreState((store) => store.error);
+  return <ErrorMessage {...props}>{error}</ErrorMessage>;
 };
 
 export default FormErrorMessage;

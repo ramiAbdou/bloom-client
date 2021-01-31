@@ -33,7 +33,7 @@ export type FormQuestion = {
 export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 
 export interface FormItemData extends ClassNameProps, Partial<FormQuestion> {
-  errorMessage?: string;
+  error?: string;
 
   initialValue?: any;
 
@@ -89,7 +89,7 @@ export type OnFormSubmitArgs = {
   db?: State<DbModel>;
   goForward?: VoidFunction;
   items: Record<string, FormItemData>;
-  setErrorMessage: ActionCreator<string>;
+  setError: ActionCreator<string>;
   setItems?: ActionCreator<Record<string, FormItemData>>;
   storyItems?: Record<string, FormItemData>;
 };

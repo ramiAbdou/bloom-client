@@ -15,7 +15,7 @@ const useUpdateUser = (): OnFormSubmit => {
     schema: { member: Schema.MEMBER, user: Schema.USER }
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const bio = items.bio?.value;
     const facebookUrl = items['Facebook URL']?.value;
     const firstName = items.FIRST_NAME?.value;
@@ -34,7 +34,7 @@ const useUpdateUser = (): OnFormSubmit => {
           key: 'PROFILE_PICTURE'
         });
       } catch {
-        setErrorMessage('Failed to upload image.');
+        setError('Failed to upload image.');
         return;
       }
     }
@@ -51,7 +51,7 @@ const useUpdateUser = (): OnFormSubmit => {
     });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 

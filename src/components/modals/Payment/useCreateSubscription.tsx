@@ -32,7 +32,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     schema: Schema.MEMBER
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const autoRenew = items.AUTO_RENEW?.value;
 
     // Create the actual subscription. Pass the MemberType ID to know what
@@ -45,7 +45,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 

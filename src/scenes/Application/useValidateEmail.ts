@@ -15,14 +15,14 @@ const useValidateEmail = () => {
     db,
     items,
     goForward,
-    setErrorMessage
+    setError
   }: OnFormSubmitArgs) => {
     const communityId: string = db.community?.id;
     const email = items.EMAIL?.value;
     const { error } = await isEmailTaken({ communityId, email });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 

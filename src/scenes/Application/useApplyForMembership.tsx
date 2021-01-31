@@ -16,7 +16,7 @@ const useApplyForMembership = (): OnFormSubmit => {
   const onSubmit = async ({
     db,
     goForward,
-    setErrorMessage,
+    setError,
     storyItems
   }: OnFormSubmitArgs) => {
     const urlName: string = db.community?.urlName;
@@ -53,7 +53,7 @@ const useApplyForMembership = (): OnFormSubmit => {
     });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 

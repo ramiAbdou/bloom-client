@@ -26,10 +26,10 @@ const useCreateMembers = (): OnFormSubmit => {
     query: ADD_MEMBERS
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     // In the first pass, format all the values by looking at the item's
     // category and id.
-    const membersFirstPass: MembersAddedRecord = items.reduce(
+    const membersFirstPass: MembersAddedRecord = Object.values(items).reduce(
       (acc: MembersAddedRecord, { id, value }: FormItemData) => {
         const formattedId = id.slice(0, id.indexOf('='));
         const category = id.slice(id.indexOf('=') + 1);
@@ -61,7 +61,7 @@ const useCreateMembers = (): OnFormSubmit => {
     });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 

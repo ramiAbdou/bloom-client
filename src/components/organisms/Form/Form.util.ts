@@ -32,31 +32,31 @@ export const parseValue = (value: any) => {
 };
 
 /**
- * Returns the validated form item including the errorMessage in the
+ * Returns the validated form item including the error in the
  * FormItemData. If the item is validated, the item doesn't change.
  *
  * @example validateItem({ id: '1', required: true, value: null }) => (
  *  {
- *    errorMessage: 'Value cannot be empty.',
+ *    error: 'Value cannot be empty.',
  *    id: '1',
  *    required: true,
  *    value: null
  * })
  */
 export const validateItem = ({
-  errorMessage: _,
+  error: _,
   ...item
 }: FormItemData): FormItemData => {
   const { required, value, validate, type } = item;
 
   if (required && !value) {
-    return { ...item, errorMessage: 'Value cannot be empty.' };
+    return { ...item, error: 'Value cannot be empty.' };
   }
 
   if (!['SHORT_TEXT', 'LONG_TEXT'].includes(type)) return item;
 
   if (validate === 'IS_URL' && value && !validator.isURL(value)) {
-    return { ...item, errorMessage: 'Value must be a URL.' };
+    return { ...item, error: 'Value must be a URL.' };
   }
 
   return item;

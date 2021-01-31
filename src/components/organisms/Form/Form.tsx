@@ -23,7 +23,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     deepequal
   );
 
-  const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
+  const setError = FormStore.useStoreActions((store) => store.setError);
   const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
   const storyStore = StoryStore.useStore();
 
@@ -43,9 +43,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         return { ...acc, [key]: validateItem(item) };
       }, {});
 
-      if (
-        Object.values(validatedItems).some(({ errorMessage }) => !!errorMessage)
-      ) {
+      if (Object.values(validatedItems).some(({ error }) => !!error)) {
         setItemErrorMessages(validatedItems);
         return;
       }
@@ -63,7 +61,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         db: globalStore.getState()?.db,
         goForward: goForwardFn,
         items: validatedItems,
-        setErrorMessage: setError,
+        setError,
         setItems: storyStore?.getActions()?.setItems,
         storyItems: storyStore?.getState()?.items
       });

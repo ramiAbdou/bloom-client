@@ -16,7 +16,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
     schema: Schema.EVENT
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const base64String = items.COVER_IMAGE?.value;
 
     let imageUrl: string;
@@ -25,7 +25,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
       try {
         imageUrl = await uploadImage({ base64String, key: 'EVENT' });
       } catch {
-        setErrorMessage('Failed to upload image.');
+        setError('Failed to upload image.');
         return;
       }
     }

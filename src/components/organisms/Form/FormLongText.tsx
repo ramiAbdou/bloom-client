@@ -18,7 +18,7 @@ const FormLongText: React.FC<FormLongTextProps> = ({
 }) => {
   const key = getFormItemKey(args);
 
-  const { errorMessage, value }: FormItemData = FormStore.useStoreState(
+  const { error, value }: FormItemData = FormStore.useStoreState(
     ({ items }) => items[key],
     deepequal
   );
@@ -29,7 +29,7 @@ const FormLongText: React.FC<FormLongTextProps> = ({
   const updateText = (text: string) => updateItem({ ...args, value: text });
 
   const css = cx('c-misc-input c-misc-input--lg', {
-    'c-misc-input--error': !!errorMessage
+    'c-misc-input--error': !!error
   });
 
   return (

@@ -21,7 +21,7 @@ const useCreateEvent = (): OnFormSubmit => {
     schema: Schema.EVENT
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const endDateOnly = day(items.END_DATE?.value)?.format('MMMM D, YYYY');
     const endTimeOnly = day(items.END_TIME?.value)?.format('h:mm A');
     const startDateOnly = day(items.START_DATE?.value)?.format('MMMM D, YYYY');
@@ -48,7 +48,7 @@ const useCreateEvent = (): OnFormSubmit => {
           key: 'EVENT'
         });
       } catch {
-        setErrorMessage('Failed to upload image.');
+        setError('Failed to upload image.');
         return;
       }
     }

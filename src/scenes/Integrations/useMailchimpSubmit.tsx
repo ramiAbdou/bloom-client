@@ -17,7 +17,7 @@ const useMailchimpSubmit = (): OnFormSubmit => {
     query: UPDATE_MAILCHIMP_LIST_ID
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
     const selectedMailchimpList = items.MAILCHIMP_LIST_ID?.value;
 
     const { id: mailchimpListId } = options.find(
@@ -29,7 +29,7 @@ const useMailchimpSubmit = (): OnFormSubmit => {
     });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 

@@ -24,11 +24,11 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
     schema: Schema.MEMBER
   });
 
-  const onSubmit = async ({ setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ setError }: OnFormSubmitArgs) => {
     const { error } = await createSinglePayment({ memberTypeId });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 
