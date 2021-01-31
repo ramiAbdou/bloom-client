@@ -1,7 +1,6 @@
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import StoryStore from '@organisms/Story/Story.store';
 import { Schema } from '@store/Db/schema';
 import {
   CREATE_LIFETIME_PAYMENT,
@@ -10,8 +9,6 @@ import {
 import PaymentStore from './Payment.store';
 
 const useCreateLifetimePayment = (): OnFormSubmit => {
-  const goForward = StoryStore.useStoreActions((store) => store.goForward);
-
   const memberTypeId = PaymentStore.useStoreState(
     (store) => store.selectedTypeId
   );
@@ -24,7 +21,7 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
     schema: Schema.MEMBER
   });
 
-  const onSubmit = async ({ setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ goForward, setError }: OnFormSubmitArgs) => {
     const { error } = await createSinglePayment({ memberTypeId });
 
     if (error) {

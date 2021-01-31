@@ -5,13 +5,13 @@ import useQuery from '@hooks/useQuery';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import Modal from '@organisms/Modal/Modal';
 import Story from '@organisms/Story/Story';
-import StoryPage from '@organisms/Story/StoryPage';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import PaymentCardPage from './PaymentCard';
+import PaymentConfirmationPage from './PaymentConfirmation';
 import PaymentFinishPage from './PaymentFinish';
 import PaymentStripeProvider from './PaymentStripeProvider';
 
@@ -37,7 +37,7 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
       <Story>
         <PaymentCardPage />
         <PaymentFinishPage />
-        <StoryPage id="CONFIRMATION" />
+        <PaymentConfirmationPage />
       </Story>
     </Modal>
   );

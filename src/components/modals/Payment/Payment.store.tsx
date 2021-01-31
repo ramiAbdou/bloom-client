@@ -1,6 +1,6 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-import { PaymentModalType } from './Payment.util';
+import { PaymentModalType } from './Payment.types';
 
 interface SetChangeDataArgs {
   changeAmount: number;

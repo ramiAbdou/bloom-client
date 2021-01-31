@@ -1,102 +1,50 @@
-import day from 'dayjs';
+import deline from 'deline';
+import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
-import Separator from '@atoms/Separator';
+import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
-import FormStore from '@organisms/Form/Form.store';
+import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IMemberType } from '@store/Db/entities';
+import { IMemberType, IPaymentMethod } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import InformationCard from '../../containers/Card/InformationCard';
-import FormToggle from '../../organisms/Form/FormToggle';
 import { GET_CHANGE_PREVIEW } from './Payment.gql';
 import PaymentStore from './Payment.store';
 import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
+import PaymentFinishToggle from './PaymentFinishToggle';
+import useCreateLifetimePayment from './useCreateLifetimePayment';
+import useCreateSubscription from './useCreateSubscription';
 
-const PaymentFinishToggle: React.FC = () => {
+const PaymentFinishForm: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
-  const autoRenew = FormStore.useStoreState(
-    ({ items }) => items.AUTO_RENEW?.value
+  const { amount, isFree, name, recurrence }: IMemberType = useStoreState(
+    ({ db }) => {
+      const { byId: byTypeId } = db.entities.types;
+      return byTypeId[typeId];
+    },
+    deepequal
   );
 
-  const showToggle: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    const type: IMemberType = byTypeId[typeId];
+  const description = getTypeDescription({ amount, recurrence });
 
-    // Don't show toggle if auto renew was already enabled (which is the
-    // default status) or if the type is free.
-    return (
-      !db.member.autoRenew && !type.isFree && type.recurrence !== 'LIFETIME'
-    );
-  });
+  const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
+    ({ db }) => db.member.paymentMethod,
+    deepequal
+  );
 
-  const nextPaymentMessage: string = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    const { recurrence }: IMemberType = byTypeId[typeId];
+  const createSubscription = useCreateSubscription();
+  const createLifetimePayment = useCreateLifetimePayment();
 
-    if (autoRenew) {
-      const nextPaymentDate = day().format('MMMM Do');
-      return `Membership will auto-renew on ${nextPaymentDate} every year.`;
-    }
-
-    const nextPaymentDate = day()
-      .add(1, recurrence === 'YEARLY' ? 'y' : 'month')
-      .format('MMMM D, YYYY');
-
-    return `Next payment will be due on ${nextPaymentDate}.`;
-  });
-
-  if (!showToggle) return null;
+  const onSubmit =
+    recurrence === 'LIFETIME' ? createLifetimePayment : createSubscription;
 
   return (
-    <>
-      <Separator margin={24} />
-
-      <FormToggle
-        value
-        description={nextPaymentMessage}
-        id="AUTO_RENEW"
-        title="Auto-Renew Membership"
-      />
-    </>
-  );
-};
-
-const PaymentFinishContent: React.FC = () => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
-
-  const isFree: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId]?.isFree;
-  });
-
-  const typeDescription: string = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return getTypeDescription(byTypeId[typeId]);
-  });
-
-  const selectedTypeName: string = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId]?.name;
-  });
-
-  const brand = useStoreState(({ db }) => db.member.paymentMethod?.brand);
-  const last4 = useStoreState(({ db }) => db.member.paymentMethod?.last4);
-
-  const expirationDate = useStoreState(
-    ({ db }) => db.member.paymentMethod?.expirationDate
-  );
-
-  return (
-    <>
-      <Row>
-        <InformationCard
-          description={typeDescription}
-          title={selectedTypeName}
-        />
+    <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
+      <Row spaceBetween spacing="xs">
+        <InformationCard description={description} title={name} />
 
         <InformationCard
           description={`Expires ${expirationDate}`}
@@ -107,12 +55,13 @@ const PaymentFinishContent: React.FC = () => {
 
       <PaymentFinishToggle />
       <PaymentFinishButton />
-    </>
+    </Form>
   );
 };
 
 const PaymentFinish: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const modalType = PaymentStore.useStoreState((store) => store.type);
 
   const setChangeData = PaymentStore.useStoreActions(
     (store) => store.setChangeData
@@ -133,9 +82,22 @@ const PaymentFinish: React.FC = () => {
     }
   }, [data]);
 
+  const title: string =
+    modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan';
+
+  const description: string = deline`
+    Please review this information to make sure we got everything right.
+  `;
+
   return (
-    <StoryPage id="FINISH" loading={loading}>
-      <PaymentFinishContent />
+    <StoryPage
+      description={description}
+      id="FINISH"
+      loading={loading}
+      show={modalType !== 'UPDATE_PAYMENT_METHOD'}
+      title={title}
+    >
+      <PaymentFinishForm />
     </StoryPage>
   );
 };

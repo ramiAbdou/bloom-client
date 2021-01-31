@@ -1,7 +1,6 @@
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import StoryStore from '@organisms/Story/Story.store';
 import { Schema } from '@store/Db/schema';
 import {
   CREATE_SUBSCRIPTION,
@@ -11,8 +10,6 @@ import {
 import PaymentStore from './Payment.store';
 
 const useCreateSubscription = (): OnFormSubmit => {
-  const goForward = StoryStore.useStoreActions((store) => store.goForward);
-
   const prorationDate = PaymentStore.useStoreState(
     (store) => store.changeProrationDate
   );
@@ -32,7 +29,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     schema: Schema.MEMBER
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {
     const autoRenew = items.AUTO_RENEW?.value;
 
     // Create the actual subscription. Pass the MemberType ID to know what
