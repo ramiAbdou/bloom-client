@@ -9,10 +9,10 @@ import useInitFormItem from './useInitFormItem';
 const FormToggle: React.FC<FormItemData> = (args) => {
   const key = getFormItemKey(args);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
   useInitFormItem(args);
 
-  const onChange = () => updateItem({ ...args, value: !value });
+  const onChange = () => setValue({ key, value: !value });
 
   return <Toggle on={!!value} title={args?.title} onChange={onChange} />;
 };

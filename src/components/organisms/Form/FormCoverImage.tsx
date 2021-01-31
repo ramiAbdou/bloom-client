@@ -10,7 +10,8 @@ import { FormItemData } from './Form.types';
 import useInitFormItem from './useInitFormItem';
 
 const FormCoverImageContent: React.FC<FormItemData> = (args) => {
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const key: string = getFormItemKey(args);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
 
   useInitFormItem(args);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
@@ -26,7 +27,7 @@ const FormCoverImageContent: React.FC<FormItemData> = (args) => {
       dims: [600, 300]
     });
 
-    updateItem({ ...args, value: base64String });
+    setValue({ key, value: base64String });
   };
 
   return (

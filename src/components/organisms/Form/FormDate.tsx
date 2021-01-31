@@ -11,20 +11,19 @@ const FormDate: React.FC<FormItemData> = (args) => {
   const { id } = args;
 
   const key = getFormItemKey(args);
-
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
 
   const startDate = FormStore.useStoreState(
     ({ items }) => items.START_DATE?.value
   );
 
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
 
   useInitFormItem(args);
 
   const updateDate = (date: Date | [Date, Date]) => {
-    updateItem({ ...args, value: date });
-    if (id === 'START_DATE') updateItem({ id: 'END_DATE', value: date });
+    setValue({ key, value: date });
+    if (id === 'START_DATE') setValue({ key: 'END_DATE', value: date });
   };
 
   const minDate =

@@ -16,16 +16,16 @@ const FormTime: React.FC<FormItemData> = (args) => {
     ({ items }) => items.START_TIME?.value
   );
 
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
 
   useInitFormItem(args);
 
   const updateDate = (date: Date | [Date, Date]) => {
-    updateItem({ ...args, value: date });
+    setValue({ key, value: date });
 
     if (id === 'START_TIME') {
-      updateItem({
-        id: 'END_TIME',
+      setValue({
+        key: 'END_TIME',
         value: day(date as Date)
           .add(1, 'hour')
           .toDate()

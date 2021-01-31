@@ -14,11 +14,11 @@ interface FormDropdownProps extends FormItemData {
 const FormDropdown: React.FC<FormDropdownProps> = ({ multiple, ...args }) => {
   const key = getFormItemKey(args);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
 
   useInitFormItem(args);
 
-  const onUpdate = (result: string[]) => updateItem({ ...args, value: result });
+  const onUpdate = (result: string[]) => setValue({ key, value: result });
 
   return (
     <FormItemContainer {...args}>

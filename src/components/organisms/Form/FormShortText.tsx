@@ -18,7 +18,7 @@ const FormShortText: React.FC<FormShortTextProps> = ({
   const key = getFormItemKey(args);
   const error = FormStore.useStoreState(({ items }) => items[key]?.error);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
 
   useInitFormItem({
     ...args,
@@ -26,7 +26,7 @@ const FormShortText: React.FC<FormShortTextProps> = ({
       placeholder === 'Email' || args?.title === 'Email' ? 'IS_EMAIL' : null
   });
 
-  const updateText = (text: string) => updateItem({ ...args, value: text });
+  const updateText = (text: string) => setValue({ key, value: text });
 
   return (
     <FormItemContainer {...args}>

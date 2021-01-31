@@ -7,26 +7,25 @@ import {
 } from 'easy-peasy';
 import validator from 'validator';
 
+import { ValueProps } from '@constants';
 import { FormItemData, FormOptions } from './Form.types';
 import { getFormItemKey } from './Form.util';
 
-type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
-interface UpdateItemArgs extends GetItemArgs {
-  value: any;
+interface SetValueArgs extends ValueProps {
+  key: string;
 }
 
 export type FormModel = {
   error: string;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
-  isShowingErrors: boolean;
   items: Record<string, FormItemData>;
   options: FormOptions;
   setError: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
   setItemErrors: Action<FormModel, Record<string, FormItemData>>;
   setIsLoading: Action<FormModel, boolean>;
-  updateItem: Action<FormModel, UpdateItemArgs>;
+  setValue: Action<FormModel, SetValueArgs>;
 };
 
 export const formModel: FormModel = {
@@ -60,8 +59,6 @@ export const formModel: FormModel = {
   // Used to ensure that the submit button is disabled.
   isLoading: false,
 
-  isShowingErrors: false,
-
   items: {},
 
   options: null,
@@ -85,26 +82,14 @@ export const formModel: FormModel = {
     items
   })),
 
-  /**
-   * Updates the form item value based on the query arguments.
-   *
-   * Also validates the item in the process in case there is an error. In
-   * effect, creates a "dirty" form value validation process.
-   */
-  updateItem: action(
-    ({ items, ...state }, { value, ...args }: UpdateItemArgs) => {
-      const key: string = getFormItemKey(args);
-      items[key].value = value;
-      return { ...state, items };
-    }
-  )
+  setValue: action(({ items, ...state }, { key, value }: SetValueArgs) => {
+    items[key].value = value;
+    return { ...state, items };
+  })
 };
 
 const FormStore = createContextStore<FormModel>(
-  ({ options, ...runtimeModel }: FormModel) => ({
-    ...runtimeModel,
-    options
-  }),
+  ({ options, ...runtimeModel }: FormModel) => ({ ...runtimeModel, options }),
   { disableImmer: true }
 );
 

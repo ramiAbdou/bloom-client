@@ -17,9 +17,9 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
   const key = getFormItemKey(args);
   const error = FormStore.useStoreState(({ items }) => items[key]?.error);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
 
-  const updateText = (text: string) => updateItem({ ...args, value: text });
+  const updateText = (text: string) => setValue({ key, value: text });
 
   const css = cx('o-form-item--large-title', {
     'o-form-item--large-title--error': !!error

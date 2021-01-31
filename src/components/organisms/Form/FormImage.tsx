@@ -11,7 +11,7 @@ import useInitFormItem from './useInitFormItem';
 const FormImage: React.FC<FormItemData> = (args) => {
   const key = getFormItemKey(args);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
 
   useInitFormItem(args);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
@@ -25,7 +25,7 @@ const FormImage: React.FC<FormItemData> = (args) => {
       dims: [400, 400]
     });
 
-    updateItem({ ...args, value: base64String });
+    setValue({ key, value: base64String });
   };
 
   // The background blend creates the overlay effect. Makes the background

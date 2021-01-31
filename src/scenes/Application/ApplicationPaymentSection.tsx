@@ -66,7 +66,7 @@ const ApplicationPaymentSectionContent: React.FC = () => {
     return !isTypeSelected;
   });
 
-  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  const setValue = FormStore.useStoreActions((store) => store.setValue);
 
   const onContinue = async () => {
     // Create the payment method via the Stripe SDK.
@@ -86,8 +86,8 @@ const ApplicationPaymentSectionContent: React.FC = () => {
     const expirationMonth = paymentMethod?.card?.exp_month;
     const expirationYear = paymentMethod?.card?.exp_year;
 
-    updateItem({
-      category: 'CREDIT_OR_DEBIT_CARD',
+    setValue({
+      key: 'CREDIT_OR_DEBIT_CARD',
       value: {
         brand: brand.charAt(0).toUpperCase() + brand.slice(1).toLowerCase(),
         expirationDate: `${expirationMonth}/${expirationYear}`,
