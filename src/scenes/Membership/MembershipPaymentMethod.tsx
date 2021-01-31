@@ -4,49 +4,54 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
+import Show from '@containers/Show';
 import { IPaymentMethod } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 
-const PaymentMethodContent = () => {
-  const paymentMethod: IPaymentMethod = useStoreState(
-    ({ db }) => db.member.paymentMethod,
+const MembershipPaymentMethodEmpty: React.FC = () => {
+  const isCardOnFile: boolean = useStoreState(
+    ({ db }) => !!db.member.paymentMethod
+  );
+
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const onClick = () => showModal(ModalType.UPDATE_PAYMENT_METHOD);
+
+  return (
+    <Show show={!isCardOnFile}>
+      <p>No payment method added.</p>
+
+      <Button fill secondary onClick={onClick}>
+        Add Payment Method
+      </Button>
+    </Show>
+  );
+};
+
+const MembershipPaymentMethodContent: React.FC = () => {
+  const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
+    ({ db }) => db.member.paymentMethod ?? {},
     deepequal
   );
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal(ModalType.UPDATE_PAYMENT_METHOD);
 
-  if (!paymentMethod) {
-    return (
-      <>
-        <p>No payment method added.</p>
-        <Button fill secondary onClick={onClick}>
-          Add Payment Method
-        </Button>
-      </>
-    );
-  }
-
-  const { brand, expirationDate, last4, zipCode } = paymentMethod;
-
   return (
-    <>
+    <Show show={!!last4}>
       <p>
         {brand} ending in {last4}
       </p>
 
-      <p>
-        Expires: {expirationDate} &bull; ZIP Code: {zipCode}
-      </p>
+      <p>Expires: {expirationDate}</p>
 
       <Button fill secondary onClick={onClick}>
         Update Payment Method
       </Button>
-    </>
+    </Show>
   );
 };
 
-const PaymentMethodCard = () => {
+const MembershipPaymentMethod: React.FC = () => {
   const isDuesActive: boolean =
     useStoreState(({ db }) => db.member?.duesStatus) === 'Active';
 
@@ -55,17 +60,16 @@ const PaymentMethodCard = () => {
     return byTypeId[db.member?.type].recurrence === 'LIFETIME';
   });
 
-  if (isDuesActive && isLifetime) return null;
-
   return (
     <Card
       className="s-membership-card s-membership-card--payment"
-      loading={false}
+      show={!isDuesActive || !isLifetime}
       title="Payment Method"
     >
-      <PaymentMethodContent />
+      <MembershipPaymentMethodContent />
+      <MembershipPaymentMethodEmpty />
     </Card>
   );
 };
 
-export default PaymentMethodCard;
+export default MembershipPaymentMethod;

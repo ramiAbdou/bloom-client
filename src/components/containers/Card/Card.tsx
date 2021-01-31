@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { ChildrenProps, ClassNameProps } from '@constants';
+import { ChildrenProps, ClassNameProps, ShowProps } from '@constants';
 import LoadingHeader, {
   LoadingHeaderProps
 } from '@containers/Loading/LoadingHeader';
+import Show from '@containers/Show';
 import { cx } from '@util/util';
 
 interface CardProps
   extends ChildrenProps,
     ClassNameProps,
-    Pick<LoadingHeaderProps, 'headerTag' | 'loading' | 'title'> {
+    Pick<LoadingHeaderProps, 'headerTag' | 'loading' | 'title'>,
+    ShowProps {
   noPadding?: boolean;
   onClick?: VoidFunction;
 }
@@ -21,6 +23,7 @@ const Card: React.FC<CardProps> = ({
   loading,
   noPadding,
   onClick,
+  show,
   title
 }) => {
   const css = cx('t-card', {
@@ -29,24 +32,21 @@ const Card: React.FC<CardProps> = ({
     't-card--no-padding': noPadding
   });
 
-  const body = (
-    <>
-      {title && (
-        <LoadingHeader
-          h3
-          headerTag={headerTag}
-          loading={loading}
-          title={title}
-        />
-      )}
-      {!loading && children}
-    </>
-  );
-
   return (
-    <div className={css} onClick={onClick}>
-      {body}
-    </div>
+    <Show show={show}>
+      <div className={css} onClick={onClick}>
+        {title && (
+          <LoadingHeader
+            h3
+            headerTag={headerTag}
+            loading={loading}
+            title={title}
+          />
+        )}
+
+        {!loading && children}
+      </div>
+    </Show>
   );
 };
 

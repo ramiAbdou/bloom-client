@@ -6,9 +6,9 @@ import { MainContent } from '@containers/Main';
 import MainHeader, { MainHeaderProps } from '@containers/Main/MainHeader';
 import useFinalPath from '@hooks/useFinalPath';
 import ChangePlanContainer from './ChangePlanContainer';
-import CurrentPlanCard from './CurrentPlanCard';
 import MembershipCardContainer from './MembershipCardContainer';
-import PaymentMethodCard from './PaymentMethodCard';
+import MembershipCurrentPlan from './MembershipCurrentPlan';
+import MembershipPaymentMethod from './MembershipPaymentMethod';
 import PaymentOverview from './PaymentOverview';
 
 const MembershipHeader: React.FC<LoadingProps> = ({ loading }) => {
@@ -26,8 +26,8 @@ const MembershipHeader: React.FC<LoadingProps> = ({ loading }) => {
 const ManageMembershipContent: React.FC = () => (
   <>
     <MembershipCardContainer>
-      <CurrentPlanCard />
-      <PaymentMethodCard />
+      <MembershipCurrentPlan />
+      <MembershipPaymentMethod />
     </MembershipCardContainer>
 
     <PaymentOverview />
