@@ -13,6 +13,8 @@ const FormTime: React.FC<FormItemData> = (args) => {
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const setValue = FormStore.useStoreActions((store) => store.setValue);
 
+  const endDate = FormStore.useStoreState(({ items }) => items.END_DATE?.value);
+
   const startTime = FormStore.useStoreState(
     ({ items }) => items.START_TIME?.value
   );
@@ -22,20 +24,27 @@ const FormTime: React.FC<FormItemData> = (args) => {
   const updateDate = (date: Date | [Date, Date]) => {
     setValue({ key, value: date });
 
-    if (args?.id === 'START_TIME') {
-      setValue({
-        key: 'END_TIME',
-        value: day(date as Date)
-          .add(1, 'hour')
-          .toDate()
-      });
-    }
+    if (args?.id !== 'START_TIME') return;
+
+    setValue({
+      key: 'END_TIME',
+      value: day(date as Date)
+        .add(1, 'hour')
+        .toDate()
+    });
   };
 
-  const minTime =
-    args?.id === 'END_TIME' && startTime
-      ? day(startTime).add(30, 'minute').toDate()
-      : new Date();
+  let minTime: Date;
+
+  if (args?.id === 'END_TIME') {
+    if (startTime) minTime = day(startTime).add(30, 'minute').toDate();
+    else {
+      const endOfYesterday = day().subtract(1, 'day').endOf('day');
+      if (day(endDate).isAfter(endOfYesterday)) {
+        minTime = day().startOf('day').toDate();
+      }
+    }
+  } else minTime = new Date();
 
   const placeholderText = day()
     .add(args?.id === 'END_TIME' ? 2 : 1, 'hour')

@@ -54,7 +54,7 @@ const CreateEventForm: React.FC<IdProps> = ({ id }) => {
   const updateEvent = useUpdateEvent(id);
 
   return (
-    <Form onSubmit={id ? updateEvent : createEvent}>
+    <Form spacing="lg" onSubmit={id ? updateEvent : createEvent}>
       <FormCoverImage
         id="COVER_IMAGE"
         required={false}
