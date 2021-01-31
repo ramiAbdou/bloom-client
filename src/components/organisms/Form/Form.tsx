@@ -51,15 +51,10 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       setError(null);
       setIsLoading(true);
 
-      const goForwardFn = () => {
-        const goForward = storyStore?.getActions()?.goForward;
-        if (goForward) goForward();
-      };
-
       await onSubmit({
         actions: globalStore.getActions(),
         db: globalStore.getState()?.db,
-        goForward: goForwardFn,
+        goForward: storyStore?.getActions()?.goForward,
         items: validatedItems,
         setError,
         setItems: storyStore?.getActions()?.setItems,
