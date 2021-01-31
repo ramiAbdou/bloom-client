@@ -17,6 +17,8 @@ $PREF: 's-events-individual';
   > .#{$PREF}-grid:last-child { @include D { padding: $md 0; } }
 }
 
+// ## INDIVIDUAL EVENT TABLE
+
 // ## INDIVIDUAL EVENT GRID
 
 .#{$PREF}-grid {

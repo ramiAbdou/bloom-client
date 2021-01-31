@@ -5,7 +5,6 @@ import Separator from '@atoms/Separator';
 import AnalyticsCard from '@containers/Card/AnalyticsCard';
 import Row from '@containers/Row/Row';
 import { useStoreState } from '@store/Store';
-import IndividualEventTable from './IndividualEventTable';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
   const startTime = useStoreState(({ db }) => db.event.startTime);
@@ -37,8 +36,6 @@ const IndividualEventInsights: React.FC = () => {
         <IndividualEventInsightsGuestsCard />
         <IndividualEventInsightsWatchesCard />
       </Row>
-
-      <IndividualEventTable />
 
       <Separator margin={24} />
     </>

@@ -1,3 +1,4 @@
+import deline from 'deline';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
@@ -7,6 +8,7 @@ import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryPage from '@organisms/Story/StoryPage';
+import { useStoreState } from '@store/Store';
 import { useStripe } from '@stripe/react-stripe-js';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
@@ -14,7 +16,6 @@ import useUpdatePaymentMethod from './useUpdatePaymentMethod';
 
 const PaymentCardButton: React.FC = () => {
   const type = PaymentStore.useStoreState((store) => store.type);
-
   const stripe = useStripe();
 
   if (type === 'UPDATE_PAYMENT_METHOD') return <PaymentFinishButton />;
@@ -51,10 +52,30 @@ const PaymentCardForm: React.FC = () => {
   );
 };
 
-const PaymentCardScreen: React.FC = () => (
-  <StoryPage id="CARD_FORM">
-    <PaymentCardForm />
-  </StoryPage>
-);
+const PaymentCard: React.FC = () => {
+  const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
+  const type = PaymentStore.useStoreState((store) => store.type);
 
-export default PaymentCardScreen;
+  const description: string = isCardOnFile
+    ? deline`
+      An update to your current subscription will be reflected on your
+      next billing date.
+    `
+    : deline`
+      We don’t have your payment information yet. Please enter your
+      information to continue to the next step.
+    `;
+
+  return (
+    <StoryPage
+      description={description}
+      id="CARD_FORM"
+      show={type === 'UPDATE_PAYMENT_METHOD' || !isCardOnFile}
+      title="Update Payment Method"
+    >
+      <PaymentCardForm />
+    </StoryPage>
+  );
+};
+
+export default PaymentCard;

@@ -20,6 +20,7 @@ import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventInsights from './IndividualEventInsights';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventPanel from './IndividualEventPanel';
+import IndividualEventTable from './IndividualEventTable';
 
 const IndividualEventHeader: React.FC = () => (
   <div className="s-events-individual-header">
@@ -89,6 +90,7 @@ const IndividualEvent: React.FC = () => {
   return (
     <div className={css}>
       <IndividualEventHeader />
+      <IndividualEventTable />
 
       <div className="s-events-individual-grid">
         <IndividualEventAbout />

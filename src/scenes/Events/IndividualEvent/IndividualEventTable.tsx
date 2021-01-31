@@ -155,7 +155,6 @@ const IndividualEventTable: React.FC = () => {
 
   return (
     <Table columns={columns} options={options} rows={rows}>
-      {/* <TableSearchBar /> */}
       <TableContent small />
     </Table>
   );

@@ -5,7 +5,6 @@ import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import FormStore from '@organisms/Form/Form.store';
-import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -16,7 +15,7 @@ import PaymentStore from './Payment.store';
 import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
 
-const PaymentFinishScreenToggle: React.FC = () => {
+const PaymentFinishToggle: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
   const autoRenew = FormStore.useStoreState(
@@ -66,7 +65,7 @@ const PaymentFinishScreenToggle: React.FC = () => {
   );
 };
 
-const PaymentFinishScreenContent: React.FC = () => {
+const PaymentFinishContent: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
   const isFree: boolean = useStoreState(({ db }) => {
@@ -106,14 +105,13 @@ const PaymentFinishScreenContent: React.FC = () => {
         />
       </Row>
 
-      <PaymentFinishScreenToggle />
-      <PaymentFormErrorMessage />
+      <PaymentFinishToggle />
       <PaymentFinishButton />
     </>
   );
 };
 
-const PaymentFinishScreen: React.FC = () => {
+const PaymentFinish: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
   const setChangeData = PaymentStore.useStoreActions(
@@ -137,9 +135,9 @@ const PaymentFinishScreen: React.FC = () => {
 
   return (
     <StoryPage id="FINISH" loading={loading}>
-      <PaymentFinishScreenContent />
+      <PaymentFinishContent />
     </StoryPage>
   );
 };
 
-export default PaymentFinishScreen;
+export default PaymentFinish;

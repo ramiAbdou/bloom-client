@@ -10,7 +10,7 @@ interface SetChangeDataArgs {
 export type PaymentModel = {
   changeAmount: number;
   changeProrationDate: number;
-  clearOptions: Action<PaymentModel>;
+  clear: Action<PaymentModel>;
   selectedTypeId: string;
   setChangeData: Action<PaymentModel, SetChangeDataArgs>;
   setSelectedTypeId: Action<PaymentModel, string>;
@@ -22,7 +22,7 @@ export const paymentModel: PaymentModel = {
 
   changeProrationDate: null,
 
-  clearOptions: action((store) => ({
+  clear: action((store) => ({
     ...store,
     changeAmount: null,
     changeProrationDate: null,

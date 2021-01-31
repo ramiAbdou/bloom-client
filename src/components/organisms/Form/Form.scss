@@ -3,8 +3,8 @@ $PREF: 'o-form';
 // ## FORM
 
 .#{$PREF} {
-  &--spacing-md > .#{$PREF}-item { margin-bottom: $md; }
-  &--spacing-lg > .#{$PREF}-item { margin-bottom: $lg; }
+  &--spacing-md > .#{$PREF}-item, .t-row { margin-bottom: $md; }
+  &--spacing-lg > .#{$PREF}-item, .t-row { margin-bottom: $lg; }
 }
 
 // ## FORM DESCRIPTION
