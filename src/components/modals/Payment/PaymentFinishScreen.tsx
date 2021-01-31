@@ -19,9 +19,9 @@ import PaymentFinishButton from './PaymentFinishButton';
 const PaymentFinishScreenToggle: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
-  const autoRenew = FormStore.useStoreState(({ getItem }) =>
-    getItem({ id: 'autoRenew' })
-  )?.value;
+  const autoRenew = FormStore.useStoreState(
+    ({ items }) => items.AUTO_RENEW?.value
+  );
 
   const showToggle: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
@@ -59,7 +59,7 @@ const PaymentFinishScreenToggle: React.FC = () => {
       <FormItem
         value
         description={nextPaymentMessage}
-        id="autoRenew"
+        id="AUTO_RENEW"
         title="Auto-Renew Membership"
         type="TOGGLE"
       />

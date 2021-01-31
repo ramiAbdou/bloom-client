@@ -31,7 +31,7 @@ const useSendLoginLink = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const email = items.find(({ category }) => category === 'EMAIL')?.value;
+    const email = items.EMAIL?.value;
 
     const { error } = await sendLoginLink({
       communityId,

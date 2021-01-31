@@ -15,8 +15,8 @@ import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentSection from './ApplicationPaymentSection';
 
 const ApplicationChooseTypeButton: React.FC = () => {
-  const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+  const selectedTypeName: string = FormStore.useStoreState(({ items }) => {
+    return items.MEMBERSHIP_TYPE?.value;
   });
 
   // const removeItems = FormStore.useStoreActions((store) => store.removeItems);

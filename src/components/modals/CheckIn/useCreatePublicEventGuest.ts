@@ -21,13 +21,9 @@ const useCreatePublicEventGuest = () => {
   const goForward = StoryStore.useStoreActions((store) => store.goForward);
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const firstName = items.find(({ category }) => category === 'FIRST_NAME')
-      ?.value;
-
-    const lastName = items.find(({ category }) => category === 'LAST_NAME')
-      ?.value;
-
-    const email = items.find(({ category }) => category === 'EMAIL')?.value;
+    const firstName = items.FIRST_NAME?.value;
+    const lastName = items.LAST_NAME?.value;
+    const email = items.EMAIL?.value;
 
     const { error } = await createEventGuest({
       email,

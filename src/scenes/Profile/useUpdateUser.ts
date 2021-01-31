@@ -16,28 +16,14 @@ const useUpdateUser = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const bio = items.find(({ id }) => id === 'bio')?.value;
-
-    const facebookUrl = items.find(({ title }) => title === 'Facebook URL')
-      ?.value;
-
-    const firstName = items.find(({ category }) => category === 'FIRST_NAME')
-      ?.value;
-
-    const instagramUrl = items.find(({ title }) => title === 'Instagram URL')
-      ?.value;
-
-    const lastName = items.find(({ category }) => category === 'LAST_NAME')
-      ?.value;
-
-    const linkedInUrl = items.find(({ title }) => title === 'LinkedIn URL')
-      ?.value;
-
-    const profilePicture = items.find(({ id }) => id === 'profilePicture')
-      ?.value;
-
-    const twitterUrl = items.find(({ title }) => title === 'Twitter URL')
-      ?.value;
+    const bio = items.bio?.value;
+    const facebookUrl = items['Facebook URL']?.value;
+    const firstName = items.FIRST_NAME?.value;
+    const instagramUrl = items['Instagram URL']?.value;
+    const lastName = items.LAST_NAME?.value;
+    const linkedInUrl = items['LinkedIn URL']?.value;
+    const profilePicture = items.profilePicture?.value;
+    const twitterUrl = items['Twitter URL']?.value;
 
     let pictureUrl: string;
 

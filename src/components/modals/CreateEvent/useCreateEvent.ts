@@ -22,21 +22,10 @@ const useCreateEvent = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const endDateOnly = day(
-      items.find(({ title }) => title === 'End Time')?.value
-    )?.format('MMMM D, YYYY');
-
-    const endTimeOnly = day(
-      items.find(({ id }) => id === 'END_TIME')?.value
-    )?.format('h:mm A');
-
-    const startDateOnly = day(
-      items.find(({ title }) => title === 'Start Time')?.value
-    )?.format('MMMM D, YYYY');
-
-    const startTimeOnly = day(
-      items.find(({ id }) => id === 'START_TIME')?.value
-    )?.format('h:mm A');
+    const endDateOnly = day(items.END_DATE?.value)?.format('MMMM D, YYYY');
+    const endTimeOnly = day(items.END_TIME?.value)?.format('h:mm A');
+    const startDateOnly = day(items.START_DATE?.value)?.format('MMMM D, YYYY');
+    const startTimeOnly = day(items.START_TIME?.value)?.format('h:mm A');
 
     const endTime = day(
       `${endDateOnly} @ ${endTimeOnly}`,
@@ -48,7 +37,7 @@ const useCreateEvent = (): OnFormSubmit => {
       'MMMM D, YYYY @ h:mm A'
     ).format();
 
-    const coverImage = items.find(({ type }) => type === 'COVER_IMAGE')?.value;
+    const coverImage = items.COVER_IMAGE?.value;
 
     let imageUrl: string;
 
@@ -65,16 +54,14 @@ const useCreateEvent = (): OnFormSubmit => {
     }
 
     const args: Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'> = {
-      description: items.find(({ id }) => id === 'EVENT_DESCRIPTION')?.value,
+      description: items.EVENT_DESCRIPTION?.value,
       endTime,
       imageUrl,
-      private:
-        items.find(({ id }) => id === 'PRIVACY_SETTINGS')?.value ===
-        'Members Only',
+      private: items.PRIVACY_SETTINGS?.value === 'Members Only',
       startTime,
-      summary: items.find(({ id }) => id === 'EVENT_SUMMARY')?.value,
-      title: items.find(({ id }) => id === 'EVENT_NAME')?.value,
-      videoUrl: items.find(({ id }) => id === 'VIDEO_URL')?.value
+      summary: items.EVENT_SUMMARY?.value,
+      title: items.EVENT_NAME?.value,
+      videoUrl: items.VIDEO_URL?.value
     };
 
     await createEvent(args);

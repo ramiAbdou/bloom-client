@@ -24,13 +24,11 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
   if (!stripe) return null;
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const line1 = items.find(({ title }) => title === 'Billing Address').value;
-    const city = items.find(({ title }) => title === 'City').value;
-    const state = items.find(({ title }) => title === 'State').value;
-    const postalCode = items.find(({ title }) => title === 'Zip Code').value;
-
-    const nameOnCard = items.find(({ title }) => title === 'Name on Card')
-      .value;
+    const city = items.CITY.value;
+    const line1 = items.BILLING_ADDRESS.value;
+    const nameOnCard = items.NAME_ON_CARD.value;
+    const postalCode = items.ZIP_CODE.value;
+    const state = items.STATE.value;
 
     // Create the payment method via the Stripe SDK.
     const stripeResult = await stripe.createPaymentMethod({

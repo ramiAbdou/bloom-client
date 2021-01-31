@@ -48,18 +48,18 @@ const PaymentCardForm: React.FC = () => {
 
   return (
     <Form onSubmit={updatePaymentMethod}>
-      <FormShortText title="Name on Card" />
+      <FormShortText id="NAME_ON_CARD" title="Name on Card" />
 
       <FormItem value title="Credit or Debit Card">
         <CardElement options={options} />
       </FormItem>
 
-      <FormShortText title="Billing Address" />
+      <FormShortText id="BILLING_ADDRESS" title="Billing Address" />
 
       <Row spaceBetween className="mo-payment-billing-ctr">
-        <FormShortText placeholder="Los Angeles" title="City" />
-        <FormShortText placeholder="CA" title="State" />
-        <FormShortText placeholder="00000" title="Zip Code" />
+        <FormShortText id="CITY" placeholder="Los Angeles" title="City" />
+        <FormShortText id="STATE" placeholder="CA" title="State" />
+        <FormShortText id="ZIP_CODE" placeholder="00000" title="Zip Code" />
       </Row>
 
       <PaymentFormErrorMessage />

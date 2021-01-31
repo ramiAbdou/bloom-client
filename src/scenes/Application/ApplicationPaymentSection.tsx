@@ -49,8 +49,8 @@ const PaymentCardForm: React.FC = () => {
 };
 
 const ApplicationPaymentSectionContent: React.FC = () => {
-  const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+  const selectedTypeName: string = FormStore.useStoreState(({ items }) => {
+    return items.MEMBERSHIP_TYPE?.value;
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
@@ -66,24 +66,24 @@ const ApplicationPaymentSectionContent: React.FC = () => {
   const elements = useElements();
   const stripe = useStripe();
 
-  const city = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ title: 'City' })?.value;
+  const city = FormStore.useStoreState(({ items }) => {
+    return items.CITY?.value;
   });
 
-  const state = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ title: 'State' })?.value;
+  const state = FormStore.useStoreState(({ items }) => {
+    return items.STATE?.value;
   });
 
-  const postalCode = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ title: 'Zip Code' })?.value;
+  const postalCode = FormStore.useStoreState(({ items }) => {
+    return items.ZIP_CODE?.value;
   });
 
-  const nameOnCard = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ title: 'Name on Card' })?.value;
+  const nameOnCard = FormStore.useStoreState(({ items }) => {
+    return items.NAME_ON_CARD?.value;
   });
 
-  const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
-    const isTypeSelected = !!getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+  const disabled: boolean = FormStore.useStoreState(({ items }) => {
+    const isTypeSelected = !!items.MEMBERSHIP_TYPE?.value;
     return !isTypeSelected;
   });
 
@@ -143,8 +143,8 @@ const ApplicationPaymentSectionContent: React.FC = () => {
 };
 
 const ApplicationPaymentSection: React.FC = () => {
-  const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
-    return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
+  const selectedTypeName: string = FormStore.useStoreState(({ items }) => {
+    return items.MEMBERSHIP_TYPE?.value;
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {

@@ -8,7 +8,6 @@ import {
 } from 'easy-peasy';
 
 import { FormItemData } from '@organisms/Form/Form.types';
-import { getFormItemKey } from '@organisms/Form/Form.util';
 import { StoryPageProps } from './Story.types';
 
 export type StoryModel = {
@@ -19,7 +18,7 @@ export type StoryModel = {
   pageId: string;
   pages: StoryPageProps[];
   setCurrentPage: Action<StoryModel, Pick<StoryPageProps, 'id' | 'branchId'>>;
-  setItems: Action<StoryModel, FormItemData[]>;
+  setItems: Action<StoryModel, Record<string, FormItemData>>;
   setPage: Action<StoryModel, Partial<StoryPageProps>>;
   setPageDisabled: Action<StoryModel, Pick<StoryPageProps, 'disabled' | 'id'>>;
   setPageId: Action<StoryModel, string>;
@@ -60,15 +59,7 @@ export const storyModel: StoryModel = {
   ),
 
   setItems: action((state, items) => {
-    const updatedItems = items.reduce(
-      (acc: Record<string, FormItemData>, item) => {
-        const key = getFormItemKey(item);
-        return { ...acc, [key]: item };
-      },
-      {}
-    );
-
-    return { ...state, items: { ...state.items, ...updatedItems } };
+    return { ...state, items: { ...state.items, ...items } };
   }),
 
   setPage: action((state, partialPage) => {

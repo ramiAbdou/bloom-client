@@ -5,12 +5,11 @@ import Button from '@atoms/Button/Button';
 import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
 import { FormItemProps } from './Form.types';
+import { getFormItemKey } from './Form.util';
 
-const FormImageUpload: React.FC<Pick<FormItemProps, 'id'>> = (queryArgs) => {
-  const selectedImage = FormStore.useStoreState(
-    ({ getItem }) => getItem(queryArgs)?.value
-  );
-
+const FormImageUpload: React.FC<Pick<FormItemProps, 'id'>> = (args) => {
+  const key = getFormItemKey(args);
+  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
@@ -24,16 +23,16 @@ const FormImageUpload: React.FC<Pick<FormItemProps, 'id'>> = (queryArgs) => {
       dims: [400, 400]
     });
 
-    updateItem({ ...queryArgs, value: base64String });
+    updateItem({ ...args, value: base64String });
   };
 
   // The background blend creates the overlay effect. Makes the background
   // darker so that white <Camera /> component shows clearly.
-  const backgroundStyle: React.CSSProperties = selectedImage
+  const backgroundStyle: React.CSSProperties = value
     ? {
         backgroundBlendMode: 'multiply',
         backgroundColor: 'var(--gray-4)',
-        backgroundImage: `url(${selectedImage})`
+        backgroundImage: `url(${value})`
       }
     : { backgroundColor: 'var(--gray-4)' };
 

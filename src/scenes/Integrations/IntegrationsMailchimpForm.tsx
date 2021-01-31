@@ -47,10 +47,10 @@ const MailchimpModalContent: React.FC = () => {
       <h1 style={{ marginBottom: -24 }}>Finish Integrating Mailchimp</h1>
 
       <FormItem
-        required
         description="Choose the Mailchimp Audience/List that you would like
           new members to automatically be added to upon joining your
           community."
+        id="MAILCHIMP_LIST_ID"
         options={mailchimpLists.map(({ name }) => name)}
         title="Select Audience/List ID"
         type="MULTIPLE_CHOICE"

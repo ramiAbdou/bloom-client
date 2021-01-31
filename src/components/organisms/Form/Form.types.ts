@@ -88,8 +88,9 @@ export type OnFormSubmitArgs = {
   actions?: Actions<StoreModel>;
   db?: State<DbModel>;
   goForward?: VoidFunction;
-  items: FormItemData[];
+  items: Record<string, FormItemData>;
   setErrorMessage: ActionCreator<string>;
+  setItems?: ActionCreator<Record<string, FormItemData>>;
   storyItems?: Record<string, FormItemData>;
 };
 

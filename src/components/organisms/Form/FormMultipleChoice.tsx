@@ -4,6 +4,7 @@ import Radio from '@molecules/Radio/Radio';
 import { RadioOptionProps } from '@molecules/Radio/Radio.types';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
+import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
@@ -18,10 +19,8 @@ const FormMultipleChoice: React.FC<FormMultipleChoiceProps> = ({
 }) => {
   const { options, title, ...queryArgs } = args;
 
-  const value = FormStore.useStoreState(
-    ({ getItem }) => getItem(queryArgs)?.value
-  );
-
+  const key = getFormItemKey(args);
+  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
   useInitFormItem(args);
 

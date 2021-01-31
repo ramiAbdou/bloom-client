@@ -53,6 +53,7 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
     >
       <Form onSubmit={id ? updateEvent : createEvent}>
         <FormItem
+          id="COVER_IMAGE"
           required={false}
           title="Change Cover Photo"
           type="COVER_IMAGE"

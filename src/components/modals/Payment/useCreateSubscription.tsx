@@ -33,7 +33,7 @@ const useCreateSubscription = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const autoRenew = items.find(({ type }) => type === 'TOGGLE')?.value;
+    const autoRenew = items.AUTO_RENEW?.value;
 
     // Create the actual subscription. Pass the MemberType ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod

@@ -17,7 +17,7 @@ const useUpdateUser = (): OnFormSubmit => {
 
   const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
     const { error } = await updateMemberData({
-      items: items.map(({ id, value }) => ({ id, value }))
+      items: Object.values(items).map(({ id, value }) => ({ id, value }))
     });
 
     if (error) {

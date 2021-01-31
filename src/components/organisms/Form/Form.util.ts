@@ -2,44 +2,11 @@ import validator from 'validator';
 
 import { FormItemData } from '@organisms/Form/Form.types';
 
-interface GetFormItemArgs
-  extends Pick<FormItemData, 'category' | 'id' | 'title'> {
-  items: FormItemData[];
-}
-
-/**
- * Returns the form item based on the query arguments (ie: category).
- */
-export const getFormItem = ({
-  category,
-  id,
-  items,
-  title
-}: GetFormItemArgs) => {
-  if (id) return items.find((item) => item.id === id);
-  if (title) return items.find((item) => item.title === title);
-  return items.find((item) => item.category === category);
-};
-
 export const getFormItemKey = ({ category, id, title }: FormItemData) => {
   if (id) return id;
   if (category) return category;
   if (title) return title;
   return null;
-};
-
-/**
- * Returns the form item index based on the query arguments (ie: category).
- */
-export const getFormItemIndex = ({
-  category,
-  id,
-  items,
-  title
-}: GetFormItemArgs) => {
-  if (id) return items.findIndex((item) => item.id === id);
-  if (title) return items.findIndex((item) => item.title === title);
-  return items.findIndex((item) => item.category === category);
 };
 
 /**

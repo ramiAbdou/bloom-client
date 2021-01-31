@@ -1,9 +1,11 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
 import { cx } from '@util/util';
-import Form from './Form.store';
+import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
+import { getFormItemKey } from './Form.util';
 
 interface FormLargeTitleProps extends FormItemData {
   placeholder?: string;
@@ -13,17 +15,19 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
   placeholder,
   ...args
 }) => {
-  const error: boolean = Form.useStoreState(
-    ({ getItem }) => !!getItem(args)?.errorMessage
+  const key = getFormItemKey(args);
+
+  const { errorMessage, value }: FormItemData = FormStore.useStoreState(
+    ({ items }) => items[key],
+    deepequal
   );
 
-  const value = Form.useStoreState(({ getItem }) => getItem(args)?.value);
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
+  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
   const updateText = (text: string) => updateItem({ ...args, value: text });
 
   const css = cx('o-form-item--large-title', {
-    'o-form-item--large-title--error': error
+    'o-form-item--large-title--error': !!errorMessage
   });
 
   return (

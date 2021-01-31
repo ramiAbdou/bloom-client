@@ -4,7 +4,6 @@ import StoryStore from '@organisms/Story/Story.store';
 import { IS_EMAIL_TAKEN, IsEmailTakenArgs } from './Application.gql';
 
 const useValidateEmail = () => {
-  const goForward = StoryStore.useStoreActions((store) => store.goForward);
   const setItems = StoryStore.useStoreActions((store) => store.setItems);
 
   const [isEmailTaken] = useMutation<boolean, IsEmailTakenArgs>({
@@ -12,9 +11,14 @@ const useValidateEmail = () => {
     query: IS_EMAIL_TAKEN
   });
 
-  const onSubmit = async ({ db, items, setErrorMessage }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    db,
+    items,
+    goForward,
+    setErrorMessage
+  }: OnFormSubmitArgs) => {
     const communityId: string = db.community?.id;
-    const email = items.find((item) => item.category === 'EMAIL')?.value;
+    const email = items.EMAIL?.value;
     const { error } = await isEmailTaken({ communityId, email });
 
     if (error) {

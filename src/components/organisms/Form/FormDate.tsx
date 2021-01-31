@@ -4,15 +4,18 @@ import DatePicker from 'react-datepicker';
 
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
+import { getFormItemKey } from './Form.util';
 import useInitFormItem from './useInitFormItem';
 
 const FormDate: React.FC<FormItemData> = (args) => {
   const { id } = args;
 
-  const value = FormStore.useStoreState(({ getItem }) => getItem(args)?.value);
+  const key = getFormItemKey(args);
+
+  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
 
   const startDate = FormStore.useStoreState(
-    ({ getItem }) => getItem({ id: 'START_DATE' })?.value
+    ({ items }) => items.START_DATE?.value
   );
 
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);

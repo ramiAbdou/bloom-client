@@ -8,7 +8,7 @@ import {
 import validator from 'validator';
 
 import { FormItemData, FormOptions } from './Form.types';
-import { getFormItem, getFormItemIndex, validateItem } from './Form.util';
+import { getFormItemKey } from './Form.util';
 
 type GetItemArgs = Pick<FormItemData, 'category' | 'id' | 'title'>;
 interface UpdateItemArgs extends GetItemArgs {
@@ -17,16 +17,15 @@ interface UpdateItemArgs extends GetItemArgs {
 
 export type FormModel = {
   errorMessage: string;
-  getItem: Computed<FormModel, (args: GetItemArgs) => FormItemData, {}>;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
   isShowingErrors: boolean;
-  items: FormItemData[];
+  items: Record<string, FormItemData>;
   options: FormOptions;
-  removeItems: Action<FormModel, Partial<FormItemData>[]>;
+  // removeItems: Action<FormModel, Partial<FormItemData>[]>;
   setErrorMessage: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
-  setItemErrorMessages: Action<FormModel, FormItemData[]>;
+  setItemErrorMessages: Action<FormModel, Record<string, FormItemData>>;
   setIsLoading: Action<FormModel, boolean>;
   updateItem: Action<FormModel, UpdateItemArgs>;
 };
@@ -34,10 +33,6 @@ export type FormModel = {
 export const formModel: FormModel = {
   // Represents the error message for the entire Form, not any one element.
   errorMessage: null,
-
-  getItem: computed(({ items }) => (args: GetItemArgs) => {
-    return getFormItem({ ...args, items });
-  }),
 
   /**
    * Returns true if the form has been completed. This is the case if:
@@ -51,14 +46,16 @@ export const formModel: FormModel = {
 
     if (disableValidation) return true;
     if (!items?.length) return false;
-    if (items.every(({ value }) => !value)) return false;
+    if (Object.values(items).every(({ value }) => !value)) return false;
 
-    return items.every(({ required, value, validate }: FormItemData) => {
-      if (required && !value) return false;
-      if (validate === 'IS_EMAIL') return validator.isEmail(value);
-      if (validate === 'IS_URL') return validator.isURL(value);
-      return true;
-    });
+    return Object.values(items).every(
+      ({ required, value, validate }: FormItemData) => {
+        if (required && !value) return false;
+        if (validate === 'IS_EMAIL') return validator.isEmail(value);
+        if (validate === 'IS_URL') return validator.isURL(value);
+        return true;
+      }
+    );
   }),
 
   // Used to ensure that the submit button is disabled.
@@ -66,25 +63,25 @@ export const formModel: FormModel = {
 
   isShowingErrors: false,
 
-  items: [],
+  items: {},
 
   options: null,
 
   /**
    * Removes all the items from the array of items.
    */
-  removeItems: action(({ items, ...state }, itemsToRemove) => {
-    items = items.filter((item: FormItemData) => {
-      const isItemInRemoveList = !!getFormItem({
-        items: itemsToRemove,
-        ...item
-      });
+  // removeItems: action(({ items, ...state }, itemsToRemove) => {
+  //   items = items.filter((item: FormItemData) => {
+  //     const isItemInRemoveList = !!getFormItem({
+  //       items: itemsToRemove,
+  //       ...item
+  //     });
 
-      return !isItemInRemoveList;
-    });
+  //     return !isItemInRemoveList;
+  //   });
 
-    return { ...state, items };
-  }),
+  //   return { ...state, items };
+  // }),
 
   setErrorMessage: action((state, errorMessage: string) => ({
     ...state,
@@ -98,18 +95,18 @@ export const formModel: FormModel = {
   })),
 
   setItem: action(({ items, ...state }, item: Partial<FormItemData>) => {
-    const isFound = getFormItem({ items, ...item });
+    const key: string = getFormItemKey(item);
+    const updatedItems = { [key]: { ...items[key], ...item } };
 
-    return {
-      ...state,
-      items: isFound ? items : [...items, item]
-    };
+    return { ...state, items: { ...items, ...updatedItems } };
   }),
 
-  setItemErrorMessages: action((state, items: FormItemData[]) => ({
-    ...state,
-    items
-  })),
+  setItemErrorMessages: action(
+    (state, items: Record<string, FormItemData>) => ({
+      ...state,
+      items
+    })
+  ),
 
   /**
    * Updates the form item value based on the query arguments.
@@ -119,9 +116,8 @@ export const formModel: FormModel = {
    */
   updateItem: action(
     ({ items, ...state }, { value, ...args }: UpdateItemArgs) => {
-      const index: number = getFormItemIndex({ items, ...args });
-      const updatedItem = { ...items[index], value };
-      items[index] = validateItem(updatedItem);
+      const key: string = getFormItemKey(args);
+      items[key].value = value;
       return { ...state, items };
     }
   )

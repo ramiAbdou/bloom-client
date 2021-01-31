@@ -5,6 +5,7 @@ import ErrorMessage from '@atoms/ErrorMessage';
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
+import { getFormItemKey } from './Form.util';
 import FormDescription from './FormDescription';
 import FormLabel from './FormLabel';
 
@@ -15,8 +16,10 @@ const FormItemContainer: React.FC<FormItemData> = ({
   title,
   ...args
 }) => {
+  const key = getFormItemKey(args);
+
   const { errorMessage, required }: FormItemData = FormStore.useStoreState(
-    ({ getItem }) => getItem(args) ?? {},
+    ({ items }) => items[key],
     deepequal
   );
 

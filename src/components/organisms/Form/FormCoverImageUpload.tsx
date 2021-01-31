@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 
 import Button from '@atoms/Button/Button';
 import AspectRatio from '@containers/AspectRatio/AspectRatio';
+import { getFormItemKey } from '@organisms/Form/Form.util';
 import EventsAspectBackground from '@scenes/Events/EventsAspectBackground';
 import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
@@ -56,8 +57,10 @@ const FormCoverImageMessage: React.FC = () => {
 const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
   args
 ) => {
+  const key = getFormItemKey(args);
+
   const selectedImage = FormStore.useStoreState(
-    ({ getItem }) => getItem(args)?.value
+    ({ items }) => items[key]?.value
   );
 
   // The background blend creates the overlay effect. Makes the background

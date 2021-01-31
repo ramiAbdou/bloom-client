@@ -1,8 +1,10 @@
+import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
+import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
@@ -14,18 +16,20 @@ const FormLongText: React.FC<FormLongTextProps> = ({
   placeholder,
   ...args
 }) => {
-  const error: boolean = FormStore.useStoreState(
-    ({ getItem }) => !!getItem(args)?.errorMessage
+  const key = getFormItemKey(args);
+
+  const { errorMessage, value }: FormItemData = FormStore.useStoreState(
+    ({ items }) => items[key],
+    deepequal
   );
 
-  const value = FormStore.useStoreState(({ getItem }) => getItem(args)?.value);
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
   useInitFormItem(args);
 
   const updateText = (text: string) => updateItem({ ...args, value: text });
 
   const css = cx('c-misc-input c-misc-input--lg', {
-    'c-misc-input--error': error
+    'c-misc-input--error': !!errorMessage
   });
 
   return (

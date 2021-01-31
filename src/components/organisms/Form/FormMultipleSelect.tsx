@@ -1,14 +1,16 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
-import Form from './Form.store';
+import FormStore from './Form.store';
 import { FormItemProps } from './Form.types';
+import { getFormItemKey } from './Form.util';
 
 const FormMultipleSelect: React.FC<
   Pick<FormItemProps, 'id' | 'options' | 'plain' | 'title'>
-> = ({ options, plain, ...queryArgs }) => {
-  const value = Form.useStoreState(({ getItem }) => getItem(queryArgs)?.value);
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
+> = ({ options, plain, ...args }) => {
+  const key = getFormItemKey(args);
+  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
+  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
   if (!options) return null;
 
@@ -20,7 +22,7 @@ const FormMultipleSelect: React.FC<
             ? value.filter((element) => element !== option)
             : [...value, option];
 
-          updateItem({ ...queryArgs, value: updatedValue });
+          updateItem({ ...args, value: updatedValue });
         };
 
         return (

@@ -3,6 +3,7 @@ import React from 'react';
 import Input from '@atoms/Input/Input';
 import { FormItemData } from '@organisms/Form/Form.types';
 import FormStore from './Form.store';
+import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
@@ -14,11 +15,13 @@ const FormShortText: React.FC<FormShortTextProps> = ({
   placeholder,
   ...args
 }) => {
+  const key = getFormItemKey(args);
+
   const error: boolean = FormStore.useStoreState(
-    ({ getItem }) => !!getItem(args)?.errorMessage
+    ({ items }) => !!items[key]?.errorMessage
   );
 
-  const value = FormStore.useStoreState(({ getItem }) => getItem(args)?.value);
+  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
   useInitFormItem({
