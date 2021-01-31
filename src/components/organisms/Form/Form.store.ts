@@ -38,7 +38,7 @@ export const formModel: FormModel = {
     const { disableValidation } = options ?? {};
 
     if (disableValidation) return true;
-    if (!items?.length) return false;
+    if (!Object.keys(items)?.length) return false;
     if (Object.values(items).every(({ value }) => !value)) return false;
 
     return Object.values(items).every(

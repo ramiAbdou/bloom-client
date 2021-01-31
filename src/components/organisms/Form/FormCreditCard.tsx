@@ -19,14 +19,17 @@ const options: StripeCardElementOptions = {
 };
 
 const FormCreditCard: React.FC<FormItemData> = (args) => {
+  args = {
+    ...args,
+    category: 'CREDIT_OR_DEBIT_CARD',
+    title: 'Credit or Debit Card',
+    value: true
+  };
+
   useInitFormItem({ ...args, value: true });
 
   return (
-    <FormItemContainer
-      {...args}
-      category="CREDIT_OR_DEBIT_CARD"
-      title="Credit or Debit Card"
-    >
+    <FormItemContainer {...args}>
       <CardElement options={options} />
     </FormItemContainer>
   );

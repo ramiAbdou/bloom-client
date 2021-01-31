@@ -16,7 +16,7 @@ $PREF: 'o-form';
   &:last-child { @extend .meta; color: $gray-3; margin: $xs 0 0 0; }
 }
 
-.#{$PREF}-error { color: $red; margin-top: $xxs; }
+.#{$PREF}-error { color: $red; margin-top: $xxs; width: max-content; }
 
 // ## FORM LABEL
 
