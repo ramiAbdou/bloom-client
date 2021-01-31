@@ -8,7 +8,7 @@ import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import useSubmitMainApplication from './useSubmitMainApplication';
+import useValidateEmail from './useValidateEmail';
 
 const ApplicationMainForm: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
@@ -22,14 +22,10 @@ const ApplicationMainForm: React.FC = () => {
   const isSolo = StoryStore.useStoreState(({ pages }) => pages?.length === 1);
   const items = StoryStore.useStoreState((store) => store.items);
 
-  const submitMainApplication = useSubmitMainApplication();
+  const validateEmail = useValidateEmail();
 
   return (
-    <Form
-      show={!!questions?.length}
-      spacing="lg"
-      onSubmit={submitMainApplication}
-    >
+    <Form show={!!questions?.length} spacing="lg" onSubmit={validateEmail}>
       {questions?.map((props) => {
         const args = { ...props, ...items[props?.id] };
         return <FormItem key={args?.id} {...args} />;

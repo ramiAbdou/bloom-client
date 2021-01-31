@@ -1,4 +1,4 @@
-import { ActionCreator } from 'easy-peasy';
+import { ActionCreator, Actions, State } from 'easy-peasy';
 
 import {
   ChildrenProps,
@@ -7,6 +7,8 @@ import {
   QuestionType,
   ShowProps
 } from '@constants';
+import { DbModel } from '@store/Db/Db.types';
+import { StoreModel } from '@store/Store';
 
 export type FormQuestion = {
   category?: QuestionCategory;
@@ -83,6 +85,8 @@ export interface FormProps extends ChildrenProps, ClassNameProps, ShowProps {
 }
 
 export type OnFormSubmitArgs = {
+  actions?: Actions<StoreModel>;
+  db?: State<DbModel>;
   items: FormItemData[];
   setErrorMessage: ActionCreator<string>;
 };

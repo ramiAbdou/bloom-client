@@ -2,6 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
 import Show from '@containers/Show';
+import { useStore } from '@store/Store';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
 import { FormItemData, FormProps } from './Form.types';
@@ -14,6 +15,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   onSubmitDeps,
   spacing
 }) => {
+  const globalStore = useStore();
   const items = FormStore.useStoreState((store) => store.items, deepequal);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
   const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
@@ -37,7 +39,12 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       setError(null);
       setIsLoading(true);
 
-      await onSubmit({ items: validatedItems, setErrorMessage: setError });
+      await onSubmit({
+        actions: globalStore.getActions(),
+        db: globalStore.getState()?.db,
+        items: validatedItems,
+        setErrorMessage: setError
+      });
 
       setIsLoading(false);
     },

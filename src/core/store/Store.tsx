@@ -14,7 +14,7 @@ import toast, { ToastModel } from '@organisms/Toast/Toast.store';
 import db from './Db/Db.store';
 import { DbModel } from './Db/Db.types';
 
-type StoreModel = {
+export type StoreModel = {
   db: DbModel;
   modal: ModalModel;
   panel: PanelModel;
@@ -28,5 +28,6 @@ export const store = createStore<StoreModel>(
 
 export const {
   useStoreActions,
-  useStoreState
+  useStoreState,
+  useStore
 } = createTypedHooks<StoreModel>();
