@@ -3,6 +3,7 @@ import React from 'react';
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
+import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
 interface FormLongTextProps extends FormItemData {
@@ -28,12 +29,14 @@ const FormLongText: React.FC<FormLongTextProps> = ({
   });
 
   return (
-    <textarea
-      className={css}
-      placeholder={placeholder}
-      value={value ?? ''}
-      onChange={({ target }) => updateText(target.value)}
-    />
+    <FormItemContainer {...args}>
+      <textarea
+        className={css}
+        placeholder={placeholder}
+        value={value ?? ''}
+        onChange={({ target }) => updateText(target.value)}
+      />
+    </FormItemContainer>
   );
 };
 

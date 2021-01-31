@@ -1,4 +1,3 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
@@ -21,15 +20,20 @@ const ApplicationMainForm: React.FC = () => {
   });
 
   const isSolo = StoryStore.useStoreState(({ pages }) => pages?.length === 1);
-  const items = StoryStore.useStoreState((store) => store.items, deepequal);
+  const items = StoryStore.useStoreState((store) => store.items);
 
   const submitMainApplication = useSubmitMainApplication();
 
   return (
-    <Form show={!!questions?.length} onSubmit={submitMainApplication}>
-      {questions?.map((props) => (
-        <FormItem key={props?.id} value={items[props?.id]?.value} {...props} />
-      ))}
+    <Form
+      show={!!questions?.length}
+      spacing="lg"
+      onSubmit={submitMainApplication}
+    >
+      {questions?.map((props) => {
+        const args = { ...props, ...items[props?.id] };
+        return <FormItem key={args?.id} {...args} />;
+      })}
 
       <FormErrorMessage />
 

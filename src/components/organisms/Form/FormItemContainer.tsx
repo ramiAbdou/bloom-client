@@ -11,15 +11,12 @@ import FormLabel from './FormLabel';
 const FormItemContainer: React.FC<FormItemData> = ({
   className,
   children,
-  ...queryArgs
+  description,
+  title,
+  ...args
 }) => {
-  const {
-    description,
-    errorMessage,
-    required,
-    title
-  }: FormItemData = FormStore.useStoreState(
-    ({ getItem }) => getItem(queryArgs) ?? {},
+  const { errorMessage, required }: FormItemData = FormStore.useStoreState(
+    ({ getItem }) => getItem(args) ?? {},
     deepequal
   );
 

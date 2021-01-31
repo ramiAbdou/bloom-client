@@ -11,7 +11,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
   children,
   onSubmit,
-  onSubmitDeps
+  onSubmitDeps,
+  spacing
 }) => {
   const items = FormStore.useStoreState((store) => store.items, deepequal);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
@@ -26,11 +27,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       event.preventDefault();
       if (!onSubmit) return;
 
-      const validatedItems: FormItemData[] = items
-        ?.map(validateItem)
-        ?.filter(({ initialValue, value }: FormItemData) => {
-          return !deepequal(initialValue, value);
-        });
+      const validatedItems: FormItemData[] = items?.map(validateItem);
 
       if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
         setItemErrorMessages(validatedItems);
@@ -47,7 +44,11 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     [items, ...(onSubmitDeps || [])]
   );
 
-  const css = cx('o-form', { [className]: className });
+  const css = cx('o-form', {
+    [className]: className,
+    'o-form--spacing-lg': !spacing || spacing === 'lg',
+    'o-form--spacing-md': !spacing || spacing === 'md'
+  });
 
   return (
     <form className={css} onSubmit={onFormSubmit}>

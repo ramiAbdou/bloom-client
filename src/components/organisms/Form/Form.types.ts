@@ -79,6 +79,7 @@ export interface FormProps extends ChildrenProps, ClassNameProps, ShowProps {
   options?: FormOptions;
   onSubmit?: OnFormSubmit;
   onSubmitDeps?: any[];
+  spacing?: 'md' | 'lg';
 }
 
 export type OnFormSubmitArgs = {

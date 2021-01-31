@@ -1,8 +1,11 @@
 $PREF: 'o-form';
 
-// ## FORM ITEM
+// ## FORM
 
-.#{$PREF}-item { margin-bottom: $md; }
+.#{$PREF} {
+  &--spacing-md > .#{$PREF}-item { margin-bottom: $md; }
+  &--spacing-lg > .#{$PREF}-item { margin-bottom: $lg; }
+}
 
 // ## FORM DESCRIPTION
 
