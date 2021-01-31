@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
+import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 
 const ApplicationConfirmationDefaultMessage: React.FC = () => {
@@ -54,7 +55,11 @@ const ApplicationConfirmation: React.FC = () => {
   const name = useStoreState(({ db }) => db.community?.name);
 
   return (
-    <div className="s-application-ctr--confirmation">
+    <StoryPage
+      className="s-application-ctr--confirmation"
+      id="CONFIRMATION"
+      show={!!name}
+    >
       <Card>
         <ConfirmationScreen
           title={autoAccept ? `Welcome to ${name}` : 'Application Received'}
@@ -62,7 +67,7 @@ const ApplicationConfirmation: React.FC = () => {
           <ApplicationConfirmationContent />
         </ConfirmationScreen>
       </Card>
-    </div>
+    </StoryPage>
   );
 };
 

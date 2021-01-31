@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';

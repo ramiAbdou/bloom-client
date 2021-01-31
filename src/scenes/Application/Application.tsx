@@ -10,8 +10,9 @@ import { ICommunityApplication } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import ApplicationChooseTypePage from './ApplicationChooseType';
+import ApplicationConfirmationPage from './ApplicationConfirmation';
 import ApplicationMainPage from './ApplicationMain';
-import ApplicationConfirmationPage from './ApplicationReview';
+import ApplicationReviewPage from './ApplicationReview';
 
 const Application: React.FC = () => {
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
@@ -42,6 +43,7 @@ const Application: React.FC = () => {
       <Story>
         <ApplicationMainPage />
         <ApplicationChooseTypePage />
+        <ApplicationReviewPage />
         <ApplicationConfirmationPage />
       </Story>
     </div>

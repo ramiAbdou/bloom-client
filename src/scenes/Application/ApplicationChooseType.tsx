@@ -79,7 +79,7 @@ const ApplicationChooseTypeForm: React.FC = () => {
 };
 
 const ApplicationChooseType: React.FC = () => {
-  const showForm: boolean = useStoreState(({ db }) => {
+  const show: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
 
     const types = db.community?.types;
@@ -89,12 +89,11 @@ const ApplicationChooseType: React.FC = () => {
     return isMoreThanOneType || isFirstTypePaid;
   });
 
-  if (!showForm) return null;
-
   return (
     <StoryPage
       description="Choose your membership type."
       id="SELECT_TYPE"
+      show={!!show}
       title="Membership Selection"
     >
       <ApplicationChooseTypeForm />
