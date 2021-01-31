@@ -1,5 +1,3 @@
-import { useHistory, useRouteMatch } from 'react-router-dom';
-
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
@@ -7,53 +5,51 @@ import {
   APPLY_FOR_MEMBERSHIP,
   ApplyForMembershipArgs
 } from '@scenes/Application/Application.gql';
-import { useStoreState } from '@store/Store';
+import { IMemberType } from '@store/Db/entities';
 
 const useApplyForMembership = (): OnFormSubmit => {
-  const name = useStoreState(({ db }) => db.community?.urlName);
-
-  const types = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return db.community?.types?.map((typeId: string) => byTypeId[typeId]);
-  });
-
-  const { push } = useHistory();
-  const { url } = useRouteMatch();
-
   const [applyForMembership] = useMutation<any, ApplyForMembershipArgs>({
     name: 'applyForMembership',
     query: APPLY_FOR_MEMBERSHIP
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const paymentMethodId = items.find(
-      ({ category }) => category === 'CREDIT_OR_DEBIT_CARD'
-    )?.value;
+  const onSubmit = async ({
+    db,
+    goForward,
+    setErrorMessage,
+    storyItems
+  }: OnFormSubmitArgs) => {
+    const urlName: string = db.community?.urlName;
+    const { byId: byQuestionId } = db.entities.questions;
+    const { byId: byTypeId } = db.entities.types;
 
-    const dataToSubmit = items
-      // .filter(({ pageId }) => pageId === 'APPLICATION')
+    const types: IMemberType[] = db.community?.types?.map((typeId: string) => {
+      return byTypeId[typeId];
+    });
+
+    const emailId = db.community?.questions?.find((questionId: string) => {
+      return byQuestionId[questionId]?.category === 'EMAIL';
+    });
+
+    const email = storyItems[emailId]?.value;
+    const paymentMethodId = storyItems.CREDIT_OR_DEBIT_CARD?.value;
+    const typeName = storyItems.MEMBERSHIP_TYPE?.value;
+    const memberTypeId = types.find((type) => type.name === typeName)?.id;
+
+    const data = Object.values(storyItems)
+      .filter(({ id }) => !!id)
       .map(({ category, id, value }) => ({
         category,
         questionId: id,
         value: parseValue(value)
       }));
 
-    // Set the email so that the confirmation page displays the right email,
-    // and use it for the GraphQL mutation as well.
-    const email = items.find(({ category }) => category === 'EMAIL')?.value;
-
-    const typeName = items.find(
-      ({ category }) => category === 'MEMBERSHIP_TYPE'
-    )?.value;
-
-    const memberTypeId = types.find((type) => type.name === typeName)?.id;
-
-    const { data, error } = await applyForMembership({
-      data: dataToSubmit,
+    const { error } = await applyForMembership({
+      data,
       email,
       memberTypeId,
       paymentMethodId,
-      urlName: name
+      urlName
     });
 
     if (error) {
@@ -61,7 +57,7 @@ const useApplyForMembership = (): OnFormSubmit => {
       return;
     }
 
-    if (data) push(`${url}/confirmation`);
+    goForward();
   };
 
   return onSubmit;

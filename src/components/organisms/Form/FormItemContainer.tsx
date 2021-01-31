@@ -27,7 +27,9 @@ const FormItemContainer: React.FC<FormItemData> = ({
       <FormLabel required={required}>{title}</FormLabel>
       <FormDescription>{description}</FormDescription>
       {children}
-      <ErrorMessage marginBottom={16}>{errorMessage}</ErrorMessage>
+      <ErrorMessage marginBottom={16} marginTop={16}>
+        {errorMessage}
+      </ErrorMessage>
     </div>
   );
 };

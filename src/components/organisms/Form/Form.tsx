@@ -2,6 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
 import Show from '@containers/Show';
+import StoryStore from '@organisms/Story/Story.store';
 import { useStore } from '@store/Store';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
@@ -19,6 +20,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   const items = FormStore.useStoreState((store) => store.items, deepequal);
   const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
   const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
+  const storyStore = StoryStore.useStore();
 
   const setItemErrorMessages = FormStore.useStoreActions(
     (store) => store.setItemErrorMessages
@@ -39,11 +41,18 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       setError(null);
       setIsLoading(true);
 
+      const goForwardFn = () => {
+        const goForward = storyStore?.getActions()?.goForward;
+        if (goForward) goForward();
+      };
+
       await onSubmit({
         actions: globalStore.getActions(),
         db: globalStore.getState()?.db,
+        goForward: goForwardFn,
         items: validatedItems,
-        setErrorMessage: setError
+        setErrorMessage: setError,
+        storyItems: storyStore?.getState()?.items
       });
 
       setIsLoading(false);

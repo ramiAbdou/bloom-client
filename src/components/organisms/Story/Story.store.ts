@@ -8,6 +8,7 @@ import {
 } from 'easy-peasy';
 
 import { FormItemData } from '@organisms/Form/Form.types';
+import { getFormItemKey } from '@organisms/Form/Form.util';
 import { StoryPageProps } from './Story.types';
 
 export type StoryModel = {
@@ -60,10 +61,10 @@ export const storyModel: StoryModel = {
 
   setItems: action((state, items) => {
     const updatedItems = items.reduce(
-      (acc: Record<string, FormItemData>, item) => ({
-        ...acc,
-        [item.id]: item
-      }),
+      (acc: Record<string, FormItemData>, item) => {
+        const key = getFormItemKey(item);
+        return { ...acc, [key]: item };
+      },
       {}
     );
 

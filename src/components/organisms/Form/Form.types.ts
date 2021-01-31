@@ -87,8 +87,10 @@ export interface FormProps extends ChildrenProps, ClassNameProps, ShowProps {
 export type OnFormSubmitArgs = {
   actions?: Actions<StoreModel>;
   db?: State<DbModel>;
+  goForward?: VoidFunction;
   items: FormItemData[];
   setErrorMessage: ActionCreator<string>;
+  storyItems?: Record<string, FormItemData>;
 };
 
 export type OnFormSubmit = (args: OnFormSubmitArgs) => Promise<void>;

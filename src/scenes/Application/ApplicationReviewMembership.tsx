@@ -55,8 +55,6 @@ const ApplicationReviewMembeship: React.FC = () => {
     return `${amountString} ${recurrenceString}`;
   });
 
-  console.log(description, selectedTypeName);
-
   return (
     <FormSection title={last4 ? 'Membership & Payment' : 'Membership Plan'}>
       <Row spaceBetween spacing="xs">

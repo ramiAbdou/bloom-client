@@ -10,6 +10,7 @@ import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 import ApplicationReviewMain from './ApplicationReviewMain';
 import ApplicationReviewMembership from './ApplicationReviewMembership';
+import useApplyForMembership from './useApplyForMembership';
 
 const ApplicationReviewButton: React.FC = () => {
   const hasCreditCard = StoryStore.useStoreState(({ items }) => {
@@ -24,13 +25,17 @@ const ApplicationReviewButton: React.FC = () => {
   );
 };
 
-const ApplicationReviewForm: React.FC = () => (
-  <Form>
-    <ApplicationReviewMain />
-    <ApplicationReviewMembership />
-    <ApplicationReviewButton />
-  </Form>
-);
+const ApplicationReviewForm: React.FC = () => {
+  const applyForMembership = useApplyForMembership();
+
+  return (
+    <Form options={{ disableValidation: true }} onSubmit={applyForMembership}>
+      <ApplicationReviewMain />
+      <ApplicationReviewMembership />
+      <ApplicationReviewButton />
+    </Form>
+  );
+};
 
 const ApplicationReview: React.FC = () => {
   const showForm: boolean = useStoreState(({ db }) => {

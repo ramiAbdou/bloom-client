@@ -1,6 +1,6 @@
 import validator from 'validator';
 
-import { FormItemData } from './Form.types';
+import { FormItemData } from '@organisms/Form/Form.types';
 
 interface GetFormItemArgs
   extends Pick<FormItemData, 'category' | 'id' | 'title'> {
@@ -19,6 +19,13 @@ export const getFormItem = ({
   if (id) return items.find((item) => item.id === id);
   if (title) return items.find((item) => item.title === title);
   return items.find((item) => item.category === category);
+};
+
+export const getFormItemKey = ({ category, id, title }: FormItemData) => {
+  if (id) return id;
+  if (category) return category;
+  if (title) return title;
+  return null;
 };
 
 /**
