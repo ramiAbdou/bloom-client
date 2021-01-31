@@ -5,11 +5,10 @@ import { LoadingProps } from '@constants';
 import { MainContent } from '@containers/Main';
 import MainHeader, { MainHeaderProps } from '@containers/Main/MainHeader';
 import useFinalPath from '@hooks/useFinalPath';
-import ChangePlanContainer from './ChangePlanContainer';
-import MembershipCardContainer from './MembershipCardContainer';
+import MembershipChangeContainer from './MembershipChangeContainer';
 import MembershipCurrentPlan from './MembershipCurrentPlan';
 import MembershipPaymentMethod from './MembershipPaymentMethod';
-import PaymentOverview from './PaymentOverview';
+import PaymentOverview from './MembershipPaymentOverview';
 
 const MembershipHeader: React.FC<LoadingProps> = ({ loading }) => {
   const isChangePlan = useFinalPath() === 'change';
@@ -25,10 +24,10 @@ const MembershipHeader: React.FC<LoadingProps> = ({ loading }) => {
 
 const ManageMembershipContent: React.FC = () => (
   <>
-    <MembershipCardContainer>
+    <div className="s-membership-card-ctr">
       <MembershipCurrentPlan />
       <MembershipPaymentMethod />
-    </MembershipCardContainer>
+    </div>
 
     <PaymentOverview />
   </>
@@ -41,7 +40,11 @@ const MembershipContent: React.FC = () => {
     <MainContent Header={MembershipHeader} loading={false}>
       <Switch>
         <Route exact component={ManageMembershipContent} path={url} />
-        <Route exact component={ChangePlanContainer} path={`${url}/change`} />
+        <Route
+          exact
+          component={MembershipChangeContainer}
+          path={`${url}/change`}
+        />
         <Redirect to={url} />
       </Switch>
     </MainContent>

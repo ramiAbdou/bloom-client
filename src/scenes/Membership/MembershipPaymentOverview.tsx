@@ -5,7 +5,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import { MainSection } from '@containers/Main';
-import RowContainer from '@containers/Row/Row';
+import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
 import {
@@ -23,7 +23,7 @@ import {
   GetUpcomingPaymentResult
 } from './Membership.gql';
 
-const PaymentNextDueCard: React.FC = () => {
+const MembershipPaymentNextDueCard: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member.autoRenew);
 
   const { data, loading } = useQuery<GetUpcomingPaymentResult>({
@@ -33,24 +33,23 @@ const PaymentNextDueCard: React.FC = () => {
 
   const { amount, nextPaymentDate } = data ?? {};
 
-  if (loading || !amount) return null;
-
   return (
     <Card
       className="s-membership-card s-membership-card--next"
       loading={loading}
+      show={!loading && !!amount}
     >
       <h4>{autoRenew ? 'Next Scheduled Payment' : 'Next Payment Due'}</h4>
 
-      <RowContainer spaceBetween>
+      <Row spaceBetween>
         <p>{day(nextPaymentDate).format('MMMM D, YYYY')}</p>
-        <p>${amount.toFixed(2)}</p>
-      </RowContainer>
+        <p>${amount?.toFixed(2)}</p>
+      </Row>
     </Card>
   );
 };
 
-const PaymentHistoryTable: React.FC = () => {
+const MembershipPaymentTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
     const { byId: byPaymentId } = db.entities.payments;
     const { byId: byTypeId } = db.entities.types;
@@ -104,7 +103,7 @@ const PaymentHistoryTable: React.FC = () => {
   );
 };
 
-const PaymentOverview: React.FC = () => {
+const MembershipPaymentOverview: React.FC = () => {
   const { loading } = useQuery<IMemberPayment[]>({
     name: 'getMemberPayments',
     query: GET_MEMBER_PAYMENTS,
@@ -117,10 +116,10 @@ const PaymentOverview: React.FC = () => {
       loading={loading}
       title="Payment Overview"
     >
-      <PaymentNextDueCard />
-      <PaymentHistoryTable />
+      <MembershipPaymentNextDueCard />
+      <MembershipPaymentTable />
     </MainSection>
   );
 };
 
-export default PaymentOverview;
+export default MembershipPaymentOverview;

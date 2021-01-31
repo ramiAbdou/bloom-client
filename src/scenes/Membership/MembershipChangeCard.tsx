@@ -2,13 +2,18 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
+import Card from '@containers/Card/Card';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import Card from '../../components/containers/Card/Card';
 import ChangePlanStore from './Membership.store';
 
-const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
+const MembershipChangeCard: React.FC<IMemberType> = ({
+  amount,
+  id,
+  name,
+  recurrence
+}) => {
   const isCurrent = useStoreState(({ db }) => db.member.type === id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -53,4 +58,4 @@ const PlanCard = ({ amount, id, name, recurrence }: IMemberType) => {
   );
 };
 
-export default PlanCard;
+export default MembershipChangeCard;

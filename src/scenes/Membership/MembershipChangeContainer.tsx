@@ -2,22 +2,21 @@ import React from 'react';
 
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import PlanCard from './ChangePlanCard';
-import MembershipCardContainer from './MembershipCardContainer';
+import MembershipChangeCard from './MembershipChangeCard';
 
-const PlanContainer = () => {
+const MembershipChangeContainer: React.FC = () => {
   const types: IMemberType[] = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
     return db.community.types.map((typeId: string) => byTypeId[typeId]);
   });
 
   return (
-    <MembershipCardContainer>
+    <div className="s-membership-card-ctr">
       {types.map((type: IMemberType) => (
-        <PlanCard key={type.id} {...type} />
+        <MembershipChangeCard key={type.id} {...type} />
       ))}
-    </MembershipCardContainer>
+    </div>
   );
 };
 
-export default PlanContainer;
+export default MembershipChangeContainer;
