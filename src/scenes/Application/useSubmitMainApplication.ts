@@ -18,7 +18,7 @@ const useSubmitMainApplication = () => {
     const email = items.find((item) => item.category === 'EMAIL')?.value;
     const { error } = await isEmailTaken({ communityId, email });
 
-    if (error) 
+    if (error) {
       setErrorMessage(error);
       return;
     }
