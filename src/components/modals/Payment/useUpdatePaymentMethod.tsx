@@ -1,14 +1,11 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import StoryStore from '@organisms/Story/Story.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { UPDATE_PAYMENT_METHOD, UpdatePaymentMethodArgs } from './Payment.gql';
 
 const useUpdatePaymentMethod = (): OnFormSubmit => {
-  const goForward = StoryStore.useStoreActions((store) => store.goForward);
-
   const elements = useElements();
   const stripe = useStripe();
 
@@ -23,7 +20,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
   if (!stripe) return null;
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {
     const city = items.CITY.value;
     const line1 = items.BILLING_ADDRESS.value;
     const nameOnCard = items.NAME_ON_CARD.value;

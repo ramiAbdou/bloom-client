@@ -2,6 +2,23 @@ import validator from 'validator';
 
 import { FormItemData } from '@organisms/Form/Form.types';
 
+/**
+ * Returns the error message from the form item.
+ *
+ * @example getError({ id: '1', required: true, value: null }) =>
+ *  "Value cannot be empty."
+ */
+export const getError = (item: FormItemData): string => {
+  const { required, value, validate } = item;
+  if (required && !value) return 'Value cannot be empty.';
+
+  if (validate === 'IS_URL' && !validator.isURL(value)) {
+    return 'Value must be a URL.';
+  }
+
+  return null;
+};
+
 export const getFormItemKey = ({ category, id, title }: FormItemData) => {
   if (id) return id;
   if (category) return category;
@@ -29,35 +46,4 @@ export const parseValue = (value: any) => {
   }
 
   return isArray ? value : [value];
-};
-
-/**
- * Returns the validated form item including the error in the
- * FormItemData. If the item is validated, the item doesn't change.
- *
- * @example validateItem({ id: '1', required: true, value: null }) => (
- *  {
- *    error: 'Value cannot be empty.',
- *    id: '1',
- *    required: true,
- *    value: null
- * })
- */
-export const validateItem = ({
-  error: _,
-  ...item
-}: FormItemData): FormItemData => {
-  const { required, value, validate, type } = item;
-
-  if (required && !value) {
-    return { ...item, error: 'Value cannot be empty.' };
-  }
-
-  if (!['SHORT_TEXT', 'LONG_TEXT'].includes(type)) return item;
-
-  if (validate === 'IS_URL' && value && !validator.isURL(value)) {
-    return { ...item, error: 'Value must be a URL.' };
-  }
-
-  return item;
 };

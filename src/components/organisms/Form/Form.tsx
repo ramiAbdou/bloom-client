@@ -7,7 +7,7 @@ import { useStore } from '@store/Store';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
 import { FormItemData, FormProps } from './Form.types';
-import { getFormItemKey, validateItem } from './Form.util';
+import { getError, getFormItemKey } from './Form.util';
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
@@ -40,7 +40,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         items
       )?.reduce((acc: Record<string, FormItemData>, item: FormItemData) => {
         const key = getFormItemKey(item);
-        return { ...acc, [key]: validateItem(item) };
+        return { ...acc, [key]: { ...item, error: getError(item) } };
       }, {});
 
       if (Object.values(validatedItems).some(({ error }) => !!error)) {

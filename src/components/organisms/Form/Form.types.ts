@@ -5,7 +5,8 @@ import {
   ClassNameProps,
   QuestionCategory,
   QuestionType,
-  ShowProps
+  ShowProps,
+  ValueProps
 } from '@constants';
 import { DbModel } from '@store/Db/Db.types';
 import { StoreModel } from '@store/Store';
@@ -37,6 +38,10 @@ export interface FormItemData
   initialValue?: any;
   value?: any;
   validate?: FormValidate;
+}
+
+export interface SetValueArgs extends ValueProps {
+  key: string;
 }
 
 // FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,

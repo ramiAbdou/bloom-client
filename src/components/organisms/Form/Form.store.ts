@@ -7,13 +7,8 @@ import {
 } from 'easy-peasy';
 import validator from 'validator';
 
-import { ValueProps } from '@constants';
-import { FormItemData, FormOptions } from './Form.types';
-import { getFormItemKey } from './Form.util';
-
-interface SetValueArgs extends ValueProps {
-  key: string;
-}
+import { FormItemData, FormOptions, SetValueArgs } from './Form.types';
+import { getError, getFormItemKey } from './Form.util';
 
 export type FormModel = {
   error: string;
@@ -84,6 +79,7 @@ export const formModel: FormModel = {
 
   setValue: action(({ items, ...state }, { key, value }: SetValueArgs) => {
     items[key].value = value;
+    items[key].error = getError(items[key]);
     return { ...state, items };
   })
 };
