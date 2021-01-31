@@ -3,9 +3,11 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { cx } from '@util/util';
 import Form from './Form.store';
+import FormErrorMessage from './FormErrorMessage';
 
 interface FormSubmitButtonProps extends ButtonProps {
   invisible?: boolean;
+  showError?: boolean;
 }
 
 const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
@@ -15,6 +17,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   invisible,
   large,
   loadingText,
+  showError = true,
   ...props
 }) => {
   const isCompleted = Form.useStoreState((store) => store.isCompleted);
@@ -26,17 +29,21 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   });
 
   return (
-    <Button
-      primary
-      className={css}
-      disabled={disabled || !isCompleted}
-      fill={fill ?? true}
-      large={large ?? true}
-      loading={isLoading}
-      loadingText={loadingText ?? 'Submitting...'}
-      type="submit"
-      {...props}
-    />
+    <>
+      {showError && <FormErrorMessage />}
+
+      <Button
+        primary
+        className={css}
+        disabled={disabled || !isCompleted}
+        fill={fill ?? true}
+        large={large ?? true}
+        loading={isLoading}
+        loadingText={loadingText ?? 'Submitting...'}
+        type="submit"
+        {...props}
+      />
+    </>
   );
 };
 

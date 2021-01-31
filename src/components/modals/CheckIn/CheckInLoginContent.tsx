@@ -85,8 +85,6 @@ const LoginCardEmailForm: React.FC = () => {
         placeholder="Email"
       />
 
-      <FormErrorMessage marginTop={0} />
-
       <FormSubmitButton loadingText="Sending...">
         Send Login Link
       </FormSubmitButton>

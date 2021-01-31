@@ -81,7 +81,7 @@ $PREF: 's-application';
 
 // ## APPLICATION CONFIRMATION
 
-.#{$PREF}-confirmation {
+.#{$PREF}-review {
   > h2 { margin-bottom: $md; }
 
   > button:last-child {
@@ -92,4 +92,4 @@ $PREF: 's-application';
   }
 }
 
-.#{$PREF}-confirmation-membership > h2 { margin-bottom: $md; }
+.#{$PREF}-review-membership > h2 { margin-bottom: $md; }

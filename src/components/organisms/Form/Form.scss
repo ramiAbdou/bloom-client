@@ -34,6 +34,13 @@ $PREF: 'o-form';
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }
 
+// ## FORM SECTION
+
+.#{$PREF}-section {
+  margin-bottom: $lg;
+  > h2 { margin-bottom: $md; }
+}
+
 // ## FORM SECTION HEADER
 
 .#{$PREF}-section-header { margin-bottom: $md; }

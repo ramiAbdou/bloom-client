@@ -31,8 +31,6 @@ const ApplicationMainForm: React.FC = () => {
         return <FormItem key={args?.id} {...args} />;
       })}
 
-      <FormErrorMessage />
-
       <FormSubmitButton>
         {isSolo ? 'Submit Application' : 'Next: Choose Membership'}
       </FormSubmitButton>

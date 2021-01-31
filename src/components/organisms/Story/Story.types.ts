@@ -3,6 +3,7 @@ import {
   ClassNameProps,
   IdProps,
   LoadingProps,
+  ShowProps,
   TitleProps
 } from '@constants';
 
@@ -14,6 +15,7 @@ export interface StoryPageBranch extends IdProps, LoadingProps, TitleProps {
 export interface StoryPageProps
   extends ChildrenProps,
     ClassNameProps,
+    ShowProps,
     StoryPageBranch {
   branchId?: string;
   branches?: Record<string, StoryPageBranch>;

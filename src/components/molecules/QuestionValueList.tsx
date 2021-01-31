@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { QuestionType, ValueProps } from '@constants';
-import { takeFirst } from '@util/util';
+import Show from '@containers/Show';
 import Attribute from '../atoms/Tags/Attribute';
 import FormLabel from '../organisms/Form/FormLabel';
 
@@ -10,11 +10,11 @@ const Value = ({ type, value }: Partial<QuestionValueItemProps>) => {
     value = value.toString();
   }
 
-  const body: ReactNode = takeFirst([
-    [!value, <p>N/A</p>],
-    [type === 'MULTIPLE_CHOICE', <Attribute showNullValue>{value}</Attribute>],
-    [
-      type === 'MULTIPLE_SELECT',
+  const body: React.ReactNode = (!value && <p>N/A</p>) ||
+    (type === 'MULTIPLE_CHOICE' && (
+      <Attribute showNullValue>{value}</Attribute>
+    )) ||
+    (type === 'MULTIPLE_SELECT' && (
       <>
         {value?.split(',').map((val: string) => (
           <Attribute key={val} showNullValue>
@@ -22,9 +22,7 @@ const Value = ({ type, value }: Partial<QuestionValueItemProps>) => {
           </Attribute>
         ))}
       </>
-    ],
-    <p>{value}</p>
-  ]);
+    )) || <p>{value}</p>;
 
   return <div>{body}</div>;
 };
@@ -45,15 +43,15 @@ const QuestionValueListItem: React.FC<QuestionValueItemProps> = ({
   type,
   value
 }) => {
-  if (handleNull === 'HIDE_ALL' && !value) return null;
-
   return (
-    <div className="m-misc-question">
-      <FormLabel>{title}</FormLabel>
-      {(value || handleNull !== 'HIDE_VALUE') && (
-        <Value type={type} value={value} />
-      )}
-    </div>
+    <Show show={handleNull !== 'HIDE_ALL' || !!value}>
+      <div className="m-misc-question">
+        <FormLabel>{title}</FormLabel>
+        {(value || handleNull !== 'HIDE_VALUE') && (
+          <Value type={type} value={value} />
+        )}
+      </div>
+    </Show>
   );
 };
 
@@ -68,14 +66,14 @@ const QuestionValueList: React.FC<QuestionValueListProps> = ({
   marginBottom,
   ...props
 }) => {
-  if (!items?.length) return null;
-
   return (
-    <div className="m-misc-question-ctr" style={{ marginBottom }}>
-      {items.map((item: QuestionValueItemProps) => (
-        <QuestionValueListItem key={item.title} {...item} {...props} />
-      ))}
-    </div>
+    <Show show={!!items?.length}>
+      <div className="m-misc-question-ctr" style={{ marginBottom }}>
+        {items.map((item: QuestionValueItemProps) => (
+          <QuestionValueListItem key={item.title} {...item} {...props} />
+        ))}
+      </div>
+    </Show>
   );
 };
 

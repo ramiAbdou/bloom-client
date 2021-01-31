@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
@@ -46,8 +45,7 @@ const ProfileSocialModal: React.FC = () => {
           value={instagramUrl}
         />
 
-        <FormErrorMessage />
-        <FormSubmitButton>Save</FormSubmitButton>
+        <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
       </Form>
     </Modal>
   );

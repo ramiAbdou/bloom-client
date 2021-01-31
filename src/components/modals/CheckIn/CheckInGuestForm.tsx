@@ -3,7 +3,6 @@ import React from 'react';
 import { ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import FormShortText from '../../organisms/Form/FormShortText';
 import useCreatePublicEventGuest from './useCreatePublicEventGuest';
@@ -20,7 +19,6 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
       </Row>
 
       <FormShortText category="EMAIL" title="Email" />
-      <FormErrorMessage />
       <FormSubmitButton>RSVP</FormSubmitButton>
     </Form>
   );

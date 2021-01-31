@@ -56,7 +56,12 @@ const AddMemberContent: React.FC = () => {
         <FormErrorMessage />
 
         <Row>
-          <FormSubmitButton fill={false} large={false} loadingText="Adding...">
+          <FormSubmitButton
+            fill={false}
+            large={false}
+            loadingText="Adding..."
+            showError={false}
+          >
             Add
           </FormSubmitButton>
 

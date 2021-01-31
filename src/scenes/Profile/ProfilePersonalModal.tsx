@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormItem from '@organisms/Form/FormItem';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
@@ -40,8 +39,7 @@ const ProfilePersonalModal: React.FC = () => {
 
         <FormLongText id="bio" title="Bio" value={bio} />
 
-        <FormErrorMessage />
-        <FormSubmitButton>Save</FormSubmitButton>
+        <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
       </Form>
     </Modal>
   );

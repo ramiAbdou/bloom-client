@@ -1,58 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { IdProps } from '@constants';
-import usePrevious from '@hooks/usePrevious';
+// import React, { useEffect } from 'react';
+// import usePrevious from '@hooks/usePrevious';
 import { RadioOptionProps } from '@molecules/Radio/Radio.types';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
+import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryPage from '@organisms/Story/StoryPage';
+import useSyncStory from '@organisms/Story/useSyncStory';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { takeFirst } from '@util/util';
-import FormMultipleChoice from '../../components/organisms/Form/FormMultipleChoice';
+import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentSection from './ApplicationPaymentSection';
 
-const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id }) => {
-  const amount = useStoreState(({ db }) => {
-    return db.entities.types.byId[id]?.amount;
-  });
-
-  const recurrence = useStoreState(({ db }) => {
-    return db.entities.types.byId[id]?.recurrence;
-  });
-
-  if (amount === undefined || recurrence === undefined) return null;
-
-  // Formats the amount with FREE if the amount is 0.
-  const amountString = amount ? `$${amount / 100}` : 'FREE';
-
-  // Construct string "Per" timespan based on the recurrence.
-  const recurrenceString = takeFirst([
-    [recurrence === 'YEARLY', 'Per Year'],
-    [recurrence === 'MONTHLY', 'Per Month'],
-    [recurrence === 'LIFETIME', 'Lifetime']
-  ]);
-
-  return (
-    <p className="s-application-type-string">
-      <span>{amountString}</span>
-      <span>{recurrenceString}</span>
-    </p>
-  );
-};
-
 const ApplicationChooseTypeButton: React.FC = () => {
-  const disabled: boolean = FormStore.useStoreState(({ getItem }) => {
-    const isTypeSelected = !!getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
-    return !isTypeSelected;
-  });
-
   const selectedTypeName: string = FormStore.useStoreState(({ getItem }) => {
     return getItem({ category: 'MEMBERSHIP_TYPE' })?.value;
   });
 
-  const removeItems = FormStore.useStoreActions((store) => store.removeItems);
+  // const removeItems = FormStore.useStoreActions((store) => store.removeItems);
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
@@ -64,29 +31,29 @@ const ApplicationChooseTypeButton: React.FC = () => {
     return !!selectedType?.amount;
   });
 
-  const wasPaidMembershipSelected = usePrevious(isPaidMembershipSelected);
+  // const wasPaidMembershipSelected = usePrevious(isPaidMembershipSelected);
 
-  useEffect(() => {
-    if (wasPaidMembershipSelected && !isPaidMembershipSelected) {
-      removeItems([
-        { title: 'Name on Card' },
-        { category: 'CREDIT_OR_DEBIT_CARD' },
-        { title: 'Billing Address' },
-        { title: 'City' },
-        { title: 'State' },
-        { title: 'Zip Code' }
-      ]);
-    }
-  }, [isPaidMembershipSelected]);
+  // useEffect(() => {
+  //   if (wasPaidMembershipSelected && !isPaidMembershipSelected) {
+  //     removeItems([
+  //       { title: 'Name on Card' },
+  //       { category: 'CREDIT_OR_DEBIT_CARD' },
+  //       { title: 'Billing Address' },
+  //       { title: 'City' },
+  //       { title: 'State' },
+  //       { title: 'Zip Code' }
+  //     ]);
+  //   }
+  // }, [isPaidMembershipSelected]);
 
   return (
-    <FormSubmitButton disabled={disabled} show={!isPaidMembershipSelected}>
+    <FormSubmitButton show={!isPaidMembershipSelected}>
       Next: Confirmation
     </FormSubmitButton>
   );
 };
 
-const ApplicationChooseTypeContent: React.FC = () => {
+const ApplicationChooseTypeForm: React.FC = () => {
   const types: RadioOptionProps[] = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
 
@@ -100,8 +67,10 @@ const ApplicationChooseTypeContent: React.FC = () => {
     });
   });
 
+  const syncStory = useSyncStory();
+
   return (
-    <Form>
+    <Form onSubmit={syncStory}>
       <FormMultipleChoice cardOptions={types} category="MEMBERSHIP_TYPE" />
       <ApplicationPaymentSection />
       <ApplicationChooseTypeButton />
@@ -128,7 +97,7 @@ const ApplicationChooseType: React.FC = () => {
       id="SELECT_TYPE"
       title="Membership Selection"
     >
-      <ApplicationChooseTypeContent />
+      <ApplicationChooseTypeForm />
     </StoryPage>
   );
 };

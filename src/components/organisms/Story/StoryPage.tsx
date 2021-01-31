@@ -18,6 +18,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
   description,
   iconUrl,
   id,
+  show,
   title
 }) => {
   id =
@@ -35,10 +36,10 @@ const StoryPage: React.FC<StoryPageProps> = ({
   useUpdateDisabledPage(id);
 
   useEffect(() => {
-    setPage({ branchId, branches, id });
-  }, []);
+    if (show !== false) setPage({ branchId, branches, id });
+  }, [show]);
 
-  if (page?.id !== pageId) return null;
+  if (page?.id !== pageId || show === false) return null;
 
   const { loading, ...currentBranch }: StoryPageBranch = page.branches[
     page.branchId

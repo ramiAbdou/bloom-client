@@ -5,7 +5,6 @@ import { IdProps, ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormItem from '@organisms/Form/FormItem';
-import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import { IEvent } from '@store/Db/entities';
@@ -14,6 +13,7 @@ import FormDate from '../../organisms/Form/FormDate';
 import FormLargeTitle from '../../organisms/Form/FormLargeTitle';
 import FormLongText from '../../organisms/Form/FormLongText';
 import FormMultipleChoice from '../../organisms/Form/FormMultipleChoice';
+import FormSection from '../../organisms/Form/FormSection';
 import FormShortText from '../../organisms/Form/FormShortText';
 import FormTime from '../../organisms/Form/FormTime';
 import DeleteEventButton from './DeleteEventButton';
@@ -79,25 +79,25 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
           value={event?.summary}
         />
 
-        <FormSectionHeader>Event Details</FormSectionHeader>
+        <FormSection title="Event Details">
+          <FormShortText
+            id="VIDEO_URL"
+            title="Event Link"
+            validate="IS_URL"
+            value={event?.videoUrl}
+          />
 
-        <FormShortText
-          id="VIDEO_URL"
-          title="Event Link"
-          validate="IS_URL"
-          value={event?.videoUrl}
-        />
+          {!id && <CreateEventTimeItems />}
+        </FormSection>
 
-        {!id && <CreateEventTimeItems />}
-        <FormSectionHeader>Privacy Settings</FormSectionHeader>
-
-        <FormMultipleChoice
-          required
-          cardOptions={[{ label: 'Members Only' }, { label: 'Open to All' }]}
-          className="mo-create-event-privacy-item"
-          id="PRIVACY_SETTINGS"
-          value={event?.private === false ? 'Open to All' : 'Members Only'}
-        />
+        <FormSection title="Privacy Settings">
+          <FormMultipleChoice
+            cardOptions={[{ label: 'Members Only' }, { label: 'Open to All' }]}
+            className="mo-create-event-privacy-item"
+            id="PRIVACY_SETTINGS"
+            value={event?.private === false ? 'Open to All' : 'Members Only'}
+          />
+        </FormSection>
 
         <FormSubmitButton>
           {id ? 'Update Event' : 'Create Event'}
