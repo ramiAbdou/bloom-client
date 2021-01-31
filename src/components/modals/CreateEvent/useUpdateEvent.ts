@@ -2,21 +2,17 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions } from '@store/Store';
 import { uploadImage } from '@util/imageUtil';
 import { UPDATE_EVENT } from './CreateEvent.gql';
 
 const useUpdateEvent = (eventId: string): OnFormSubmit => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
   const [updateEvent] = useMutation<IEvent, Partial<IEvent>>({
     name: 'updateEvent',
     query: UPDATE_EVENT,
     schema: Schema.EVENT
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ actions, items, setError }: OnFormSubmitArgs) => {
     const base64String = items.COVER_IMAGE?.value;
 
     let imageUrl: string;
@@ -41,8 +37,9 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
     };
 
     await updateEvent(args);
-    showToast({ message: 'Event updated.' });
-    closeModal();
+
+    actions.toast.showToast({ message: 'Event updated!' });
+    actions.modal.closeModal();
   };
 
   return onSubmit;

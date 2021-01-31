@@ -2,9 +2,18 @@ $PREF: 'o-form';
 
 // ## FORM
 
-.#{$PREF} {
-  &--spacing-md > .#{$PREF}-item, .t-row { margin-bottom: $md; }
-  &--spacing-lg > .#{$PREF}-item, .t-row { margin-bottom: $lg; }
+.#{$PREF}--spacing-md {
+  > .#{$PREF}-item,
+  > .t-row,
+  > .#{$PREF}-section > .#{$PREF}-item,
+  > .#{$PREF}-section > .t-row { margin-bottom: $md; }
+}
+
+.#{$PREF}--spacing-lg {
+  > .#{$PREF}-item,
+  > .t-row,
+  > .#{$PREF}-section > .#{$PREF}-item,
+  > .#{$PREF}-section > .t-row { margin-bottom: $lg; }
 }
 
 // ## FORM DESCRIPTION
@@ -42,20 +51,9 @@ $PREF: 'o-form';
   > h2 { margin-bottom: $md; }
 }
 
-// ## FORM SECTION HEADER
-
-.#{$PREF}-section-header { margin-bottom: $md; }
-
 // ## FORM SUBMIT BUTTON
 
 .#{$PREF}-submit {
-  &--continue {
-    margin-top: $lg;
-
-    &:disabled > svg { color: $gray-3; }
-    > svg { color: white; margin-left: $xs; }
-  }
-  
   &--invisible { display: none; }
   &--sticky { bottom: $md; position: sticky; }
 }

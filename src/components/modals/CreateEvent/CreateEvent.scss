@@ -20,8 +20,6 @@ $PREF: 'mo-create-event';
 }
 
 div.#{$PREF}-privacy-item {
-  margin-bottom: $xl;
-
   > div { flex-direction: row; }
   > div > div:first-child { margin: 0 $xs 0 0; }
 }

@@ -4,14 +4,10 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions } from '@store/Store';
 import { uploadImage } from '@util/imageUtil';
 import { CREATE_EVENT } from './CreateEvent.gql';
 
 const useCreateEvent = (): OnFormSubmit => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
   const [createEvent] = useMutation<
     IEvent,
     Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>
@@ -21,7 +17,7 @@ const useCreateEvent = (): OnFormSubmit => {
     schema: Schema.EVENT
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ actions, items, setError }: OnFormSubmitArgs) => {
     const endDateOnly = day(items.END_DATE?.value)?.format('MMMM D, YYYY');
     const endTimeOnly = day(items.END_TIME?.value)?.format('h:mm A');
     const startDateOnly = day(items.START_DATE?.value)?.format('MMMM D, YYYY');
@@ -37,16 +33,12 @@ const useCreateEvent = (): OnFormSubmit => {
       'MMMM D, YYYY @ h:mm A'
     ).format();
 
-    const coverImage = items.COVER_IMAGE?.value;
-
+    const base64String = items.COVER_IMAGE?.value;
     let imageUrl: string;
 
-    if (coverImage) {
+    if (base64String) {
       try {
-        imageUrl = await uploadImage({
-          base64String: coverImage,
-          key: 'EVENT'
-        });
+        imageUrl = await uploadImage({ base64String, key: 'EVENT' });
       } catch {
         setError('Failed to upload image.');
         return;
@@ -65,8 +57,9 @@ const useCreateEvent = (): OnFormSubmit => {
     };
 
     await createEvent(args);
-    showToast({ message: 'Event created!' });
-    closeModal();
+
+    actions.toast.showToast({ message: 'Event created!' });
+    actions.modal.closeModal();
   };
 
   return onSubmit;

@@ -26,10 +26,13 @@ const DeleteEventButton: React.FC<IdProps> = ({ id }) => {
   const pushToEvents = usePush('events');
 
   const onClick = async () => {
-    await deleteEvent();
-    showToast({ message: 'Event deleted.' });
-    pushToEvents();
-    closeModal();
+    const { error } = await deleteEvent();
+
+    if (!error) {
+      showToast({ message: 'Event deleted.' });
+      pushToEvents();
+      closeModal();
+    }
   };
 
   return (
