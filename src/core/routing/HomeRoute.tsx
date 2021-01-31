@@ -30,7 +30,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
 import { GET_USER, GetUserArgs, GetUserResult } from './Router.gql';
 
-const HomeRouterContent: React.FC = () => {
+const HomeRouteContent: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
   const { url } = useRouteMatch();
 
@@ -55,7 +55,7 @@ const HomeRouterContent: React.FC = () => {
   );
 };
 
-const HomeRouter = () => {
+const HomeRoute: React.FC = () => {
   const { urlName }: UrlNameProps = useParams();
   const route = useTopLevelRoute();
   const { url } = useRouteMatch();
@@ -96,8 +96,9 @@ const HomeRouter = () => {
   const communityId = data?.activeCommunityId;
 
   useEffect(() => {
-    if (!communityId) return;
-    if (communityId !== activeCommunityId) setActiveCommunity(communityId);
+    if (communityId && communityId !== activeCommunityId) {
+      setActiveCommunity(communityId);
+    }
   }, [communityId]);
 
   if (!isAuthenticated && route === 'events') {
@@ -123,7 +124,7 @@ const HomeRouter = () => {
   return (
     <>
       <Nav />
-      <HomeRouterContent />
+      <HomeRouteContent />
       <AddMemberModal />
       <CreateEventModal />
       <PaymentModal selectedTypeId={memberTypeId} type="PAY_DUES" />
@@ -131,4 +132,4 @@ const HomeRouter = () => {
   );
 };
 
-export default HomeRouter;
+export default HomeRoute;

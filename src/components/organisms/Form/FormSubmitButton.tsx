@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { cx } from '@util/util';
-import Form from './Form.store';
+import FormStore from './Form.store';
 import FormErrorMessage from './FormErrorMessage';
 
 interface FormSubmitButtonProps extends ButtonProps {
@@ -20,8 +20,8 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   showError = true,
   ...props
 }) => {
-  const isCompleted = Form.useStoreState((store) => store.isCompleted);
-  const isLoading = Form.useStoreState((store) => store.isLoading);
+  const isCompleted = FormStore.useStoreState((store) => store.isCompleted);
+  const isLoading = FormStore.useStoreState((store) => store.isLoading);
 
   const css = cx('', {
     [className]: className,
