@@ -1,31 +1,34 @@
 import React from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
-import Form from './Form.store';
+import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
+import FormItemContainer from './FormItemContainer';
+import useInitFormItem from './useInitFormItem';
 
-interface FormDropdownProps extends Pick<FormItemData, 'options' | 'title'> {
+interface FormDropdownProps extends FormItemData {
   multiple?: boolean;
 }
 
-const FormDropdown: React.FC<FormDropdownProps> = ({
-  multiple,
-  options,
-  title
-}) => {
-  const value = Form.useStoreState(({ getItem }) => getItem({ title })?.value);
-  const updateItem = Form.useStoreActions((store) => store.updateItem);
-  const onUpdate = (result: string[]) => updateItem({ title, value: result });
+const FormDropdown: React.FC<FormDropdownProps> = ({ multiple, ...args }) => {
+  const value = FormStore.useStoreState(
+    ({ getItem }) => getItem({ ...args })?.value
+  );
 
-  if (!options) return null;
+  const updateItem = FormStore.useStoreActions((store) => store.updateItem);
+  useInitFormItem(args);
+
+  const onUpdate = (result: string[]) => updateItem({ ...args, value: result });
 
   return (
-    <Dropdown
-      multiple={multiple}
-      options={options}
-      value={value}
-      onUpdate={onUpdate}
-    />
+    <FormItemContainer {...args}>
+      <Dropdown
+        multiple={multiple}
+        options={args?.options}
+        value={value}
+        onUpdate={onUpdate}
+      />
+    </FormItemContainer>
   );
 };
 
