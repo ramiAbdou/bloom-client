@@ -9,7 +9,7 @@ import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 import ApplicationReviewMain from './ApplicationReviewMain';
-import ApplicationReviewMembeship from './ApplicationReviewMembership';
+import ApplicationReviewMembership from './ApplicationReviewMembership';
 
 const ApplicationReviewButton: React.FC = () => {
   const hasCreditCard = StoryStore.useStoreState(({ items }) => {
@@ -27,7 +27,7 @@ const ApplicationReviewButton: React.FC = () => {
 const ApplicationReviewForm: React.FC = () => (
   <Form>
     <ApplicationReviewMain />
-    <ApplicationReviewMembeship />
+    <ApplicationReviewMembership />
     <ApplicationReviewButton />
   </Form>
 );

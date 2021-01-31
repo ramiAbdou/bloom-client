@@ -2,8 +2,9 @@ import React from 'react';
 
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
+import FormSection from '@organisms/Form/FormSection';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMemberType } from '@store/Db/entities';
+import { IMemberType, IPaymentMethod } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 
@@ -12,8 +13,12 @@ const ApplicationReviewMembeship: React.FC = () => {
     return items.MEMBERSHIP_TYPE?.value;
   });
 
-  const cardInfo = StoryStore.useStoreState(({ items }) => {
-    return items.CREDIT_OR_DEBIT_CARD?.value;
+  const {
+    brand,
+    expirationDate,
+    last4
+  }: IPaymentMethod = StoryStore.useStoreState(({ items }) => {
+    return items.CREDIT_OR_DEBIT_CARD?.value ?? {};
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
@@ -26,7 +31,7 @@ const ApplicationReviewMembeship: React.FC = () => {
     return !!selectedType?.amount;
   });
 
-  const description = useStoreState(({ db }) => {
+  const description: string = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;
 
     const selectedType: IMemberType = db.community?.types
@@ -50,12 +55,11 @@ const ApplicationReviewMembeship: React.FC = () => {
     return `${amountString} ${recurrenceString}`;
   });
 
-  const { brand, expirationDate, last4 } = cardInfo ?? {};
+  console.log(description, selectedTypeName);
 
   return (
-    <div className="s-application-confirmation-membership">
-      <h2>{cardInfo ? 'Membership & Payment' : 'Membership Plan'} </h2>
-      <Row spaceBetween>
+    <FormSection title={last4 ? 'Membership & Payment' : 'Membership Plan'}>
+      <Row spaceBetween spacing="xs">
         <InformationCard description={description} title={selectedTypeName} />
 
         <InformationCard
@@ -64,7 +68,7 @@ const ApplicationReviewMembeship: React.FC = () => {
           title={`${brand} Ending in ${last4}`}
         />
       </Row>
-    </div>
+    </FormSection>
   );
 };
 
