@@ -37,6 +37,15 @@ export const CREATE_SUBSCRIPTION = mutation({
 
 // ## GET CHANGE PREVIEW
 
+export interface GetChangePreviewArgs {
+  memberTypeId: string;
+}
+
+export interface GetChangePreviewResult {
+  amount: number;
+  prorationDate: number;
+}
+
 export const GET_CHANGE_PREVIEW = query({
   fields: ['amount', 'prorationDate'],
   operation: 'getChangePreview',

@@ -4,12 +4,16 @@ import React, { useEffect } from 'react';
 
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
-import useQuery from '@hooks/useQuery';
+import useManualQuery from '@hooks/useManualQuery';
 import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType, IPaymentMethod } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { GET_CHANGE_PREVIEW } from './Payment.gql';
+import {
+  GET_CHANGE_PREVIEW,
+  GetChangePreviewArgs,
+  GetChangePreviewResult
+} from './Payment.gql';
 import PaymentStore from './Payment.store';
 import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
@@ -67,20 +71,26 @@ const PaymentFinish: React.FC = () => {
     (store) => store.setChangeData
   );
 
-  const { data, loading } = useQuery({
+  const [getChangePreview, { loading }] = useManualQuery<
+    GetChangePreviewResult,
+    GetChangePreviewArgs
+  >({
     name: 'getChangePreview',
-    query: GET_CHANGE_PREVIEW,
-    variables: { memberTypeId: typeId }
+    query: GET_CHANGE_PREVIEW
   });
 
   useEffect(() => {
-    if (data) {
+    if (modalType !== 'CHANGE_MEMBERSHIP') return;
+
+    (async () => {
+      const { data } = await getChangePreview({ memberTypeId: typeId });
+
       setChangeData({
         changeAmount: data?.amount,
         changeProrationDate: data?.prorationDate
       });
-    }
-  }, [data]);
+    })();
+  }, [modalType, typeId]);
 
   const title: string =
     modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan';

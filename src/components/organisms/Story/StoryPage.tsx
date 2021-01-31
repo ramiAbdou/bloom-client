@@ -18,6 +18,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
   description,
   iconUrl,
   id,
+  loading,
   show,
   title
 }) => {
@@ -41,10 +42,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
 
   if (page?.id !== pageId || show === false) return null;
 
-  const { loading, ...currentBranch }: StoryPageBranch = page.branches[
-    page.branchId
-  ];
-
+  const currentBranch: StoryPageBranch = page.branches[page.branchId];
   description = description ?? currentBranch.description;
   iconUrl = iconUrl ?? currentBranch.iconUrl;
   title = title ?? currentBranch.title;
