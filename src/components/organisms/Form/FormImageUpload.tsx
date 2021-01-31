@@ -4,10 +4,10 @@ import { IoCamera } from 'react-icons/io5';
 import Button from '@atoms/Button/Button';
 import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
-import { FormItemProps } from './Form.types';
+import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
 
-const FormImageUpload: React.FC<Pick<FormItemProps, 'id'>> = (args) => {
+const FormImageUpload: React.FC<FormItemData> = (args) => {
   const key = getFormItemKey(args);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);

@@ -27,8 +27,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
   const storyStore = StoryStore.useStore();
 
-  const setItemErrorMessages = FormStore.useStoreActions(
-    (store) => store.setItemErrorMessages
+  const setItemErrors = FormStore.useStoreActions(
+    (store) => store.setItemErrors
   );
 
   const onFormSubmit = useCallback(
@@ -44,7 +44,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       }, {});
 
       if (Object.values(validatedItems).some(({ error }) => !!error)) {
-        setItemErrorMessages(validatedItems);
+        setItemErrors(validatedItems);
         return;
       }
 

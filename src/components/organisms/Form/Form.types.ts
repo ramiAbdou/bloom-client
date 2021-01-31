@@ -32,45 +32,21 @@ export type FormQuestion = {
 
 export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 
-export interface FormItemData extends ClassNameProps, Partial<FormQuestion> {
+export interface FormItemData
+  extends ClassNameProps,
+    Partial<FormQuestion>,
+    ShowProps {
   error?: string;
 
   initialValue?: any;
-
-  // Only used in MULTIPLE_SELECT. True if checkbox shoudln't have an attribute
-  // tag associated with it.
-  plain?: boolean;
 
   value?: any;
 
   validate?: FormValidate;
 }
 
-export type BaseItemProps = Pick<
-  FormItemData,
-  'category' | 'id' | 'required' | 'title'
->;
-
-export interface OptionItemProps
-  extends BaseItemProps,
-    Pick<FormItemData, 'options' | 'plain'> {}
-
-export interface TextItemProps extends BaseItemProps, FormItemData {}
-
-export interface UseItemBodyProps
-  extends ChildrenProps,
-    Pick<
-      FormItemData,
-      'category' | 'id' | 'options' | 'plain' | 'required' | 'title' | 'type'
-    > {}
-
 // FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,
 // the rest are either used for state or for something else in the store.
-
-export interface FormItemProps
-  extends UseItemBodyProps,
-    ChildrenProps,
-    Pick<FormItemData, 'description' | 'validate' | 'value'> {}
 
 export interface FormOptions {
   disableValidation?: boolean;

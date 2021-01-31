@@ -6,13 +6,13 @@ import { getFormItemKey } from '@organisms/Form/Form.util';
 import EventsAspectBackground from '@scenes/Events/EventsAspectBackground';
 import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
-import { FormItemProps } from './Form.types';
+import { FormItemData } from './Form.types';
+import useInitFormItem from './useInitFormItem';
 
-const FormCoverImageUploadContent: React.FC<
-  Pick<FormItemProps, 'id' | 'title'>
-> = ({ id, title }) => {
+const FormCoverImageContent: React.FC<FormItemData> = (args) => {
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
+  useInitFormItem(args);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
 
   // Opens the file uploader by "clicking" the invisible file input tag.
@@ -26,7 +26,7 @@ const FormCoverImageUploadContent: React.FC<
       dims: [600, 300]
     });
 
-    updateItem({ id, value: base64String });
+    updateItem({ ...args, value: base64String });
   };
 
   return (
@@ -39,7 +39,7 @@ const FormCoverImageUploadContent: React.FC<
       />
 
       <Button secondary onClick={openFileUploader}>
-        {title}
+        {args?.title}
       </Button>
     </>
   );
@@ -54,9 +54,7 @@ const FormCoverImageMessage: React.FC = () => {
   );
 };
 
-const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
-  args
-) => {
+const FormCoverImage: React.FC<FormItemData> = (args) => {
   const key = getFormItemKey(args);
 
   const selectedImage = FormStore.useStoreState(
@@ -76,7 +74,7 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
         ratio={2}
         // style={backgroundStyle}
       >
-        <FormCoverImageUploadContent {...args} />
+        <FormCoverImageContent {...args} />
       </AspectRatio>
 
       <FormCoverImageMessage />
@@ -84,7 +82,7 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
   ) : (
     <>
       <EventsAspectBackground className="o-form-item--cover-image">
-        <FormCoverImageUploadContent {...args} />
+        <FormCoverImageContent {...args} />
       </EventsAspectBackground>
 
       <FormCoverImageMessage />
@@ -92,4 +90,4 @@ const FormCoverImageUpload: React.FC<Pick<FormItemProps, 'id' | 'title'>> = (
   );
 };
 
-export default FormCoverImageUpload;
+export default FormCoverImage;

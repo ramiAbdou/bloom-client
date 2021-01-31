@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import FormStore from './Form.store';
-import { FormItemProps } from './Form.types';
+import { FormItemData } from './Form.types';
 
 const useInitFormItem = ({
   category,
@@ -11,7 +11,7 @@ const useInitFormItem = ({
   type,
   validate,
   value
-}: FormItemProps) => {
+}: FormItemData) => {
   const setItem = FormStore.useStoreActions((store) => store.setItem);
 
   useEffect(() => {

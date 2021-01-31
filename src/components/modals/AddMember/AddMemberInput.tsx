@@ -4,8 +4,8 @@ import { IoTrash } from 'react-icons/io5';
 import Button from '@atoms/Button/Button';
 import { IdProps } from '@constants';
 import Row from '@containers/Row/Row';
-import FormItem from '@organisms/Form/FormItem';
 import { useStoreState } from '@store/Store';
+import FormMultipleSelect from '../../organisms/Form/FormMultipleSelect';
 import FormShortText from '../../organisms/Form/FormShortText';
 import AddMemberStore from './AddMember.store';
 
@@ -30,21 +30,20 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
         <AddMemberInputTrashButton id={id} />
         <FormShortText id={`${id}=FIRST_NAME`} placeholder="First Name" />
         <FormShortText id={`${id}=LAST_NAME`} placeholder="Last Name" />
+
         <FormShortText
           category="EMAIL"
           id={`${id}=EMAIL`}
           placeholder="Email"
         />
 
-        {isOwner && !admin && (
-          <FormItem
-            plain
-            id={`${id}=CHECKBOX`}
-            options={['Make Admin']}
-            required={false}
-            type="MULTIPLE_SELECT"
-          />
-        )}
+        <FormMultipleSelect
+          plain
+          id={`${id}=CHECKBOX`}
+          options={['Make Admin']}
+          required={false}
+          show={!!isOwner && !admin}
+        />
       </Row>
     </div>
   );

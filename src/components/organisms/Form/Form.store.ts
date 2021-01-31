@@ -22,10 +22,9 @@ export type FormModel = {
   isShowingErrors: boolean;
   items: Record<string, FormItemData>;
   options: FormOptions;
-  // removeItems: Action<FormModel, Partial<FormItemData>[]>;
   setError: Action<FormModel, string>;
   setItem: Action<FormModel, Partial<FormItemData>>;
-  setItemErrorMessages: Action<FormModel, Record<string, FormItemData>>;
+  setItemErrors: Action<FormModel, Record<string, FormItemData>>;
   setIsLoading: Action<FormModel, boolean>;
   updateItem: Action<FormModel, UpdateItemArgs>;
 };
@@ -67,22 +66,6 @@ export const formModel: FormModel = {
 
   options: null,
 
-  /**
-   * Removes all the items from the array of items.
-   */
-  // removeItems: action(({ items, ...state }, itemsToRemove) => {
-  //   items = items.filter((item: FormItemData) => {
-  //     const isItemInRemoveList = !!getFormItem({
-  //       items: itemsToRemove,
-  //       ...item
-  //     });
-
-  //     return !isItemInRemoveList;
-  //   });
-
-  //   return { ...state, items };
-  // }),
-
   setError: action((state, error: string) => ({ ...state, error })),
 
   // Typically set when a form is submitting an async function.
@@ -94,16 +77,13 @@ export const formModel: FormModel = {
   setItem: action(({ items, ...state }, item: Partial<FormItemData>) => {
     const key: string = getFormItemKey(item);
     const updatedItems = { [key]: { ...items[key], ...item } };
-
     return { ...state, items: { ...items, ...updatedItems } };
   }),
 
-  setItemErrorMessages: action(
-    (state, items: Record<string, FormItemData>) => ({
-      ...state,
-      items
-    })
-  ),
+  setItemErrors: action((state, items: Record<string, FormItemData>) => ({
+    ...state,
+    items
+  })),
 
   /**
    * Updates the form item value based on the query arguments.
