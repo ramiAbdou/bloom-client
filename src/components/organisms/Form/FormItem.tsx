@@ -3,15 +3,18 @@ import React from 'react';
 import { FormItemData } from './Form.types';
 import FormCoverImage from './FormCoverImage';
 import FormDropdown from './FormDropdown';
+import FormImage from './FormImage';
 import FormLongText from './FormLongText';
 import FormMultipleChoice from './FormMultipleChoice';
 import FormMultipleSelect from './FormMultipleSelect';
 import FormShortText from './FormShortText';
+import FormToggle from './FormToggle';
 
 const FormItem: React.FC<FormItemData> = (props: FormItemData) => {
   const { options, type } = props;
 
   if (type === 'COVER_IMAGE') return <FormCoverImage {...props} />;
+  if (type === 'IMAGE') return <FormImage {...props} />;
   if (type === 'LONG_TEXT') return <FormLongText {...props} />;
 
   if (type === 'MULTIPLE_CHOICE') {
@@ -25,6 +28,7 @@ const FormItem: React.FC<FormItemData> = (props: FormItemData) => {
   }
 
   if (type === 'SHORT_TEXT') return <FormShortText {...props} />;
+  if (type === 'TOGGLE') return <FormToggle {...props} />;
 
   return null;
 };

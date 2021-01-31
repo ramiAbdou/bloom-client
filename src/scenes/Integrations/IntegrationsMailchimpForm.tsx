@@ -1,3 +1,4 @@
+import deline from 'deline';
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
@@ -5,7 +6,7 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
-import FormItem from '@organisms/Form/FormItem';
+import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
@@ -46,14 +47,14 @@ const MailchimpModalContent: React.FC = () => {
 
       <h1 style={{ marginBottom: -24 }}>Finish Integrating Mailchimp</h1>
 
-      <FormItem
-        description="Choose the Mailchimp Audience/List that you would like
-          new members to automatically be added to upon joining your
-          community."
+      <FormMultipleChoice
+        description={deline`
+          Choose the Mailchimp Audience/List that you would like new members to
+          automatically be added to upon joining your community.
+        `}
         id="MAILCHIMP_LIST_ID"
         options={mailchimpLists.map(({ name }) => name)}
         title="Select Audience/List ID"
-        type="MULTIPLE_CHOICE"
       />
 
       <MailchimpModalActionContainer />

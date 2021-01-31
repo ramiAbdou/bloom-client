@@ -2,28 +2,15 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
+import FormCreditCard from '@organisms/Form/FormCreditCard';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormItem from '@organisms/Form/FormItem';
+import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryPage from '@organisms/Story/StoryPage';
-import { CardElement, useStripe } from '@stripe/react-stripe-js';
-import { StripeCardElementOptions } from '@stripe/stripe-js';
-import FormShortText from '../../organisms/Form/FormShortText';
+import { useStripe } from '@stripe/react-stripe-js';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
 import useUpdatePaymentMethod from './useUpdatePaymentMethod';
-
-const options: StripeCardElementOptions = {
-  classes: {
-    base: 'c-misc-input',
-    empty: 'c-misc-input',
-    focus: 'c-misc-input--focus',
-    invalid: 'c-misc-input--error'
-  },
-  hidePostalCode: true,
-  iconStyle: 'solid',
-  style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
-};
 
 const PaymentCardButton: React.FC = () => {
   const type = PaymentStore.useStoreState((store) => store.type);
@@ -49,11 +36,7 @@ const PaymentCardForm: React.FC = () => {
   return (
     <Form onSubmit={updatePaymentMethod}>
       <FormShortText id="NAME_ON_CARD" title="Name on Card" />
-
-      <FormItem value title="Credit or Debit Card">
-        <CardElement options={options} />
-      </FormItem>
-
+      <FormCreditCard />
       <FormShortText id="BILLING_ADDRESS" title="Billing Address" />
 
       <Row spaceBetween className="mo-payment-billing-ctr">

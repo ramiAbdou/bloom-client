@@ -6,11 +6,11 @@ import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import FormStore from '@organisms/Form/Form.store';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormItem from '@organisms/Form/FormItem';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import InformationCard from '../../containers/Card/InformationCard';
+import FormToggle from '../../organisms/Form/FormToggle';
 import { GET_CHANGE_PREVIEW } from './Payment.gql';
 import PaymentStore from './Payment.store';
 import { getTypeDescription } from './Payment.util';
@@ -56,12 +56,11 @@ const PaymentFinishScreenToggle: React.FC = () => {
     <>
       <Separator margin={24} />
 
-      <FormItem
+      <FormToggle
         value
         description={nextPaymentMessage}
         id="AUTO_RENEW"
         title="Auto-Renew Membership"
-        type="TOGGLE"
       />
     </>
   );

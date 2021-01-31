@@ -4,39 +4,18 @@ import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
 import FormStore from '@organisms/Form/Form.store';
-import FormItem from '@organisms/Form/FormItem';
+import FormCreditCard from '@organisms/Form/FormCreditCard';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { StripeCardElementOptions } from '@stripe/stripe-js';
-
-const options: StripeCardElementOptions = {
-  classes: {
-    base: 'c-misc-input',
-    empty: 'c-misc-input',
-    focus: 'c-misc-input--focus',
-    invalid: 'c-misc-input--error'
-  },
-  hidePostalCode: true,
-  iconStyle: 'solid',
-  style: { base: { fontFamily: 'Muli', fontSize: '15px', fontWeight: '700' } }
-};
 
 const PaymentCardForm: React.FC = () => {
   return (
     <>
       <FormShortText title="Name on Card" />
-
-      <FormItem
-        value
-        category="CREDIT_OR_DEBIT_CARD"
-        title="Credit or Debit Card"
-      >
-        <CardElement options={options} />
-      </FormItem>
-
+      <FormCreditCard />
       <FormShortText title="Billing Address" />
 
       <Row spaceBetween className="mo-payment-billing-ctr">

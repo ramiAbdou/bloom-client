@@ -1,13 +1,13 @@
 import React from 'react';
 
+import FormImage from '@components/organisms/Form/FormImage';
 import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
-import FormItem from '@organisms/Form/FormItem';
+import FormLongText from '@organisms/Form/FormLongText';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import { useStoreState } from '@store/Store';
-import FormLongText from '../../components/organisms/Form/FormLongText';
 import useUpdateUser from './useUpdateUser';
 
 const ProfilePersonalModal: React.FC = () => {
@@ -23,7 +23,7 @@ const ProfilePersonalModal: React.FC = () => {
       <h1>Edit Personal Information</h1>
 
       <Form onSubmit={updateUser}>
-        <FormItem id="profilePicture" type="IMAGE" value={pictureUrl} />
+        <FormImage id="profilePicture" value={pictureUrl} />
 
         <FormShortText
           category="FIRST_NAME"

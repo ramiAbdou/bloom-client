@@ -6,12 +6,14 @@ import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
+import useInitFormItem from './useInitFormItem';
 
-const FormImageUpload: React.FC<FormItemData> = (args) => {
+const FormImage: React.FC<FormItemData> = (args) => {
   const key = getFormItemKey(args);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
+  useInitFormItem(args);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
 
   // Opens the file uploader by "clicking" the invisible file input tag.
@@ -52,4 +54,4 @@ const FormImageUpload: React.FC<FormItemData> = (args) => {
   );
 };
 
-export default FormImageUpload;
+export default FormImage;

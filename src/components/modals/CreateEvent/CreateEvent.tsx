@@ -4,11 +4,11 @@ import React from 'react';
 import { IdProps, ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
-import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import FormCoverImage from '../../organisms/Form/FormCoverImage';
 import FormDate from '../../organisms/Form/FormDate';
 import FormLargeTitle from '../../organisms/Form/FormLargeTitle';
 import FormLongText from '../../organisms/Form/FormLongText';
@@ -52,11 +52,10 @@ const CreateEvent: React.FC<IdProps> = ({ id }) => {
       options={{ sheet: true }}
     >
       <Form onSubmit={id ? updateEvent : createEvent}>
-        <FormItem
+        <FormCoverImage
           id="COVER_IMAGE"
           required={false}
           title="Change Cover Photo"
-          type="COVER_IMAGE"
           value={event?.imageUrl}
         />
 
