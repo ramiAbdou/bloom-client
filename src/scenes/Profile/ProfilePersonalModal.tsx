@@ -1,8 +1,8 @@
 import React from 'react';
 
-import FormImage from '@components/organisms/Form/FormImage';
 import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
+import FormImage from '@organisms/Form/FormImage';
 import FormLongText from '@organisms/Form/FormLongText';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';

@@ -1,4 +1,3 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import ErrorMessage from '@atoms/ErrorMessage';
@@ -17,11 +16,8 @@ const FormItemContainer: React.FC<FormItemData> = ({
   ...args
 }) => {
   const key = getFormItemKey(args);
-
-  const { error, required }: FormItemData = FormStore.useStoreState(
-    ({ items }) => items[key] ?? {},
-    deepequal
-  );
+  const error = FormStore.useStoreState(({ items }) => items[key]?.error);
+  const required = FormStore.useStoreState(({ items }) => items[key]?.required);
 
   const css = cx('o-form-item', { [className]: className });
 

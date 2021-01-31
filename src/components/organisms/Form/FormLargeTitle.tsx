@@ -1,4 +1,3 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
@@ -16,12 +15,8 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
   ...args
 }) => {
   const key = getFormItemKey(args);
-
-  const { error, value }: FormItemData = FormStore.useStoreState(
-    ({ items }) => items[key],
-    deepequal
-  );
-
+  const error = FormStore.useStoreState(({ items }) => items[key]?.error);
+  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const updateItem = FormStore.useStoreActions((store) => store.updateItem);
 
   const updateText = (text: string) => updateItem({ ...args, value: text });
