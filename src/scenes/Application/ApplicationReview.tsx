@@ -3,58 +3,34 @@ import React from 'react';
 import { IoLockClosed } from 'react-icons/io5';
 
 import Separator from '@atoms/Separator';
-import QuestionValueList, {
-  QuestionValueItemProps
-} from '@molecules/QuestionValueList';
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import FormSection from '../../components/organisms/Form/FormSection';
+import ApplicationReviewMain from './ApplicationReviewMain';
 import ApplicationReviewMembeship from './ApplicationReviewMembership';
 
-const ApplicationReviewForm: React.FC = () => {
-  const questions: IQuestion[] = useStoreState(({ db }) => {
-    const { byId: byQuestionId } = db.entities.questions;
-    return db.community?.questions
-      ?.map((questionId: string) => byQuestionId[questionId])
-      ?.filter((question: IQuestion) => question.inApplication);
-  });
-
+const ApplicationReviewButton: React.FC = () => {
   const hasCreditCard = StoryStore.useStoreState(({ items }) => {
     return !!items.CREDIT_OR_DEBIT_CARD;
   });
 
-  const items: QuestionValueItemProps[] = StoryStore.useStoreState((store) => {
-    return questions?.map(({ id, title, type }: IQuestion) => {
-      return {
-        handleNull: 'HIDE_ALL',
-        title,
-        type,
-        value: store.items[id]?.value
-      };
-    });
-  });
-
   return (
-    <Form>
-      <FormSection title="Application">
-        <QuestionValueList items={items} marginBottom={24} />
-      </FormSection>
-
-      <ApplicationReviewMembeship />
-
-      <FormSubmitButton>
-        {hasCreditCard && <IoLockClosed />}
-        {hasCreditCard ? 'Confirm Payment and Join' : 'Submit Application'}
-      </FormSubmitButton>
-    </Form>
+    <FormSubmitButton>
+      {hasCreditCard && <IoLockClosed />}
+      {hasCreditCard ? 'Confirm Payment and Join' : 'Submit Application'}
+    </FormSubmitButton>
   );
 };
+
+const ApplicationReviewForm: React.FC = () => (
+  <Form>
+    <ApplicationReviewMain />
+    <ApplicationReviewMembeship />
+    <ApplicationReviewButton />
+  </Form>
+);
 
 const ApplicationReview: React.FC = () => {
   const showForm: boolean = useStoreState(({ db }) => {
