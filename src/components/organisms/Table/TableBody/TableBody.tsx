@@ -1,8 +1,8 @@
 import moment from 'moment-timezone';
 import React from 'react';
 
-import { Attribute } from '@atoms/Tags';
-import Pill from '@atoms/Tags/Pill';
+import Attribute from '@atoms/Tag/Attribute';
+import Pill from '@atoms/Tag/Pill';
 import { QuestionType, ValueProps } from '@constants';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';

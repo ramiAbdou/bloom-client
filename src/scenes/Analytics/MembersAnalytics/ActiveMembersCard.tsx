@@ -1,7 +1,7 @@
 import React from 'react';
 
+import AnalyticsCard from '@containers/Card/AnalyticsCard';
 import useQuery from '@hooks/useQuery';
-import AnalyticsCard from '../../../components/containers/Card/AnalyticsCard';
 import { GET_ACTIVE_MEMBERS_GROWTH } from '../Analytics.gql';
 
 const ActiveMembersCard: React.FC = () => {

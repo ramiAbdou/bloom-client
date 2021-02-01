@@ -1,6 +1,6 @@
 import React from 'react';
 
-import StatusTag from '@atoms/Tags/StatusTag';
+import StatusTag from '@atoms/Tag/StatusTag';
 
 export type IntegrationCardProps = {
   connected?: boolean;

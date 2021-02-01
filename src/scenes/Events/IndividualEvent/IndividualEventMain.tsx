@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { HeaderTag } from '@atoms/Tags';
+import HeaderTag from '@atoms/Tag/HeaderTag';
 import { useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
 

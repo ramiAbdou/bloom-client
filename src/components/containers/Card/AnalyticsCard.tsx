@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Pill from '@atoms/Tags/Pill';
+import Pill from '@atoms/Tag/Pill';
 import { ShowProps, ValueProps } from '@constants';
 
 interface AnalyticsSimpleProps extends ShowProps, ValueProps {

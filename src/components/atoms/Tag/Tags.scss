@@ -14,8 +14,6 @@ $PREF: 'c-tag';
   width: fit-content;
 
   @include OVERFLOW_ELLIPSES;
-
-  &:not(.c-tag-attr:first-of-type) { margin-left: $xs; }
 }
 
 // ## NUMBER TAG - Similar to the regular Tag component, except it has a very

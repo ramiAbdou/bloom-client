@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { HeaderTag } from '@atoms/Tags';
+import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';

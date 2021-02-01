@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import StatusTag from '@atoms/Tags/StatusTag';
+import StatusTag from '@atoms/Tag/StatusTag';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import { IMemberType } from '@store/Db/entities';

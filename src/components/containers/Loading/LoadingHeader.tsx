@@ -3,8 +3,9 @@ import { IoArrowBack } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
-import { HeaderTag } from '@atoms/Tags';
+import HeaderTag from '@atoms/Tag/HeaderTag';
 import { LoadingProps } from '@constants';
+import Show from '@containers/Show';
 
 export interface LoadingHeaderProps extends LoadingProps {
   SearchBar?: React.FC;
@@ -18,12 +19,12 @@ export interface LoadingHeaderProps extends LoadingProps {
 const LoadingHeaderBackButton: React.FC<Pick<LoadingHeaderProps, 'onBack'>> = ({
   onBack
 }) => {
-  if (!onBack) return null;
-
   return (
-    <Button onClick={onBack}>
-      <IoArrowBack />
-    </Button>
+    <Show show={!!onBack}>
+      <Button onClick={onBack}>
+        <IoArrowBack />
+      </Button>
+    </Show>
   );
 };
 

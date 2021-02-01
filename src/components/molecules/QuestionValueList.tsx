@@ -2,7 +2,7 @@ import React from 'react';
 
 import { QuestionType, ValueProps } from '@constants';
 import Show from '@containers/Show';
-import Attribute from '../atoms/Tags/Attribute';
+import Attribute from '../atoms/Tag/Attribute';
 import FormLabel from '../organisms/Form/FormLabel';
 
 const Value = ({ type, value }: Partial<QuestionValueItemProps>) => {

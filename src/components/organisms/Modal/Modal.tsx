@@ -111,14 +111,16 @@ const Modal: React.FC<ModalProps> = ({
 
   return createPortal(
     <AnimatePresence>
-      <Show show={shouldShowModal}>
-        <ModalBackground lock={lock} />
-        <ModalCancel lock={lock} />
+      {shouldShowModal && (
+        <>
+          <ModalBackground lock={lock} />
+          <ModalCancel lock={lock} />
 
-        <ModalContainer {...containerProps}>
-          <div className={css}>{children}</div>
-        </ModalContainer>
-      </Show>
+          <ModalContainer {...containerProps}>
+            <div className={css}>{children}</div>
+          </ModalContainer>
+        </>
+      )}
     </AnimatePresence>,
     document.body
   );

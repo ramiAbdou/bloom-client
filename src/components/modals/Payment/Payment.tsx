@@ -48,7 +48,6 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   type
 }) => {
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
-  const route = useTopLevelRoute();
 
   const { loading } = useQuery<ICommunity>({
     name: 'getIntegrations',
@@ -63,10 +62,8 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const isUserActive = duesStatus === 'Active';
 
   useEffect(() => {
-    if (!isAdmin && route !== 'membership' && duesStatus && !isUserActive) {
-      showModal(ModalType.PAY_DUES);
-    }
-  }, [isUserActive, route]);
+    if (!isAdmin && !isUserActive) showModal(ModalType.PAY_DUES);
+  }, [isUserActive]);
 
   if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId)) {
     return null;
