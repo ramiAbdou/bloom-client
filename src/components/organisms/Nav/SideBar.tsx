@@ -13,7 +13,6 @@ import {
 
 import Separator from '@atoms/Separator';
 import { ModalType } from '@constants';
-import Show from '@containers/Show';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LinkOptions } from './Nav.types';
@@ -75,17 +74,18 @@ const SideBar: React.FC = () => {
 
   return (
     <AnimatePresence>
-      <Show show={isDesktop || !!isOpen}>
+      {(isDesktop || !!isOpen) && (
         <motion.div
           animate={{ x: !isDesktop && 0 }}
           className="o-nav"
-          exit={{ x: !isDesktop && -100 }}
-          initial={{ x: !isDesktop && -100 }}
+          exit={{ x: !isDesktop && -1000 }}
+          initial={{ x: !isDesktop && -1000 }}
+          transition={{ damping: 300 }}
         >
           <SideBarCommunityList />
           <SideBarContent />
         </motion.div>
-      </Show>
+      )}
     </AnimatePresence>
   );
 };

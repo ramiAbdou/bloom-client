@@ -11,9 +11,9 @@ $PREF: 'o-nav';
   position: fixed;
   top: 0;
   width: $xxl * 5.5;
-  z-index: 1001;
+  z-index: 12;
 
-  @include MT { width: 90%; }
+  @include MT { width: 90%; z-index: 1001; }
 }
 
 .#{$PREF}-bg {
