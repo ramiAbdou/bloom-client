@@ -9,6 +9,10 @@ import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
 const useMinTime = (id: string) => {
+  const startDate = FormStore.useStoreState(
+    ({ items }) => items.START_DATE?.value
+  );
+
   const endDate = FormStore.useStoreState(({ items }) => items.END_DATE?.value);
 
   const startTime = FormStore.useStoreState(
@@ -17,13 +21,16 @@ const useMinTime = (id: string) => {
 
   let minTime: Date;
 
+  const endOfYesterday = day().subtract(1, 'day').endOf('day');
+
   if (id === 'END_TIME') {
     if (startTime) minTime = day(startTime).add(30, 'minute').toDate();
-    else {
-      const endOfYesterday = day().subtract(1, 'day').endOf('day');
-      if (day(endDate).isAfter(endOfYesterday)) {
-        minTime = day().startOf('day').toDate();
-      }
+    else if (endDate && day(endDate).isAfter(endOfYesterday)) {
+      minTime = day().startOf('day').toDate();
+    }
+  } else if (id === 'START_TIME') {
+    if (startDate && day(startDate).isAfter(endOfYesterday)) {
+      minTime = day().startOf('day').toDate();
     }
   } else minTime = new Date();
 
