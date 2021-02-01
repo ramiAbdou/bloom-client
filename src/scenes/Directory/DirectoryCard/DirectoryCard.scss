@@ -24,7 +24,7 @@ button.#{$PREF} {
 .#{$PREF} > div:first-child {
   position: relative;
   width: 100%;
-  &::before { content: ''; display: block; padding-top: 100%; }
+  &::before { aspect-ratio: 1; content: ''; display: block; }
 }
 
 .#{$PREF} > div:first-child > * {

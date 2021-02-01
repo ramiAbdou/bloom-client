@@ -8,8 +8,8 @@ $PREF: 't-aspect';
 
   &::before { content: ''; display: block; }
 
-  &--1::before { padding-top: 100%; }
-  &--2::before { padding-top: 50%; }
+  &--1::before { aspect-ratio: 1; }
+  &--2::before { aspect-ratio: 2; }
 
   > * {
     bottom: 0;

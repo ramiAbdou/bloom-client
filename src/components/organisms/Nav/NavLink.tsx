@@ -3,6 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 
 import { OnClickProps } from '@constants';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
+import { useStoreActions } from '@store/Store';
 import { cx } from '@util/util';
 import { LinkOptions } from './Nav.types';
 
@@ -11,8 +12,15 @@ interface NavLinkProps extends LinkOptions, OnClickProps {}
 const NavLinkAction: React.FC<
   Pick<NavLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
+  const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
+
+  const onUpdatedClick = () => {
+    setIsOpen(false);
+    onClick();
+  };
+
   return (
-    <button className="o-nav-link" onClick={onClick}>
+    <button className="o-nav-link" onClick={onUpdatedClick}>
       <Icon />
       {title}
     </button>
@@ -25,6 +33,7 @@ const NavLinkAction: React.FC<
  * Button that opens up a modal.
  */
 const NavLink: React.FC<NavLinkProps> = (props) => {
+  const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
   const { Icon, onClick, to, title } = props;
 
   const { url } = useRouteMatch();
@@ -37,8 +46,10 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
     'o-nav-link--active': isActive
   });
 
+  const onLinkClick = () => setIsOpen(false);
+
   return (
-    <Link className={css} to={`${url}/${to}`}>
+    <Link className={css} to={`${url}/${to}`} onClick={onLinkClick}>
       <Icon />
       {title}
     </Link>
