@@ -14,7 +14,7 @@ const SideBarDuesContent: React.FC = () => {
   const onClick = () => showModal('PAY_DUES');
 
   return (
-    <div className="o-side-bar-dues-ctr">
+    <div className="o-nav-dues-ctr">
       <StatusTag positive={false}>Member Status: Inactive</StatusTag>
       <Button fill secondary onClick={onClick}>
         Pay Dues

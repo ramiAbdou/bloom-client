@@ -13,7 +13,7 @@ const SideBarLinkAction: React.FC<
   Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
   return (
-    <button className="o-side-bar-link" onClick={onClick}>
+    <button className="o-nav-link" onClick={onClick}>
       <Icon />
       {title}
     </button>
@@ -27,7 +27,7 @@ const SideBarLinkProtected: React.FC<
   const onClick = () => showModal(ModalType.PAY_DUES);
 
   return (
-    <button className="o-side-bar-link" onClick={onClick}>
+    <button className="o-nav-link" onClick={onClick}>
       <Icon />
       {title}
     </button>
@@ -67,8 +67,8 @@ const SideBarLink: React.FC<SidebarLinkProps> = (props) => {
     return <SideBarLinkProtected {...props} />;
   }
 
-  const css = cx('o-side-bar-link', {
-    'o-side-bar-link--active': isActive
+  const css = cx('o-nav-link', {
+    'o-nav-link--active': isActive
   });
 
   return (

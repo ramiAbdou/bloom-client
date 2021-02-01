@@ -23,8 +23,8 @@ const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
   const { push } = useHistory();
   const onClick = () => id !== communityId && push(`/${urlName}`);
 
-  const css = cx('o-side-bar-community', {
-    'o-side-bar-community--active': isActive
+  const css = cx('o-nav-community', {
+    'o-nav-community--active': isActive
   });
 
   return (
@@ -58,7 +58,7 @@ const SideBarCommunityList: React.FC = () => {
   });
 
   return (
-    <div className="o-side-bar-community-ctr">
+    <div className="o-nav-community-ctr">
       {communities?.map((props: SideBarCommunityIconProps) => (
         <SideBarCommunityIcon key={props.logoUrl} {...props} />
       ))}

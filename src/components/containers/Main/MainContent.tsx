@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
+import NavHamburgerContainer from '@organisms/Nav/NavHamburgerContainer';
 import { cx } from '@util/util';
 import LoadingContainer from '../Loading/LoadingContainer';
 
@@ -16,9 +17,13 @@ const MainContent: React.FC<MainContentProps> = ({
   const css = cx('t-main-content', { [className]: className });
 
   return (
-    <LoadingContainer {...props}>
-      <section className={css}>{children}</section>
-    </LoadingContainer>
+    <>
+      <NavHamburgerContainer />
+
+      <LoadingContainer {...props}>
+        <section className={css}>{children}</section>
+      </LoadingContainer>
+    </>
   );
 };
 

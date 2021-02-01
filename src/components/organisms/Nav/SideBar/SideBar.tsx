@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import {
   IoAdd,
@@ -12,6 +13,7 @@ import {
 
 import Separator from '@atoms/Separator';
 import { ModalType } from '@constants';
+import Show from '@containers/Show';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LinkOptions } from '../Nav.types';
@@ -20,7 +22,7 @@ import SideBarDuesContent from './SideBarDuesContent';
 import SideBarProfile from './SideBarProfile';
 import SideBarSection from './SideBarSection';
 
-const SideBarContent = () => {
+const SideBarContent: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
   const name = useStoreState(({ db }) => db.community.name);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -55,7 +57,7 @@ const SideBarContent = () => {
   ];
 
   return (
-    <div className="o-side-bar-main">
+    <div className="o-nav-main">
       <h3>{name}</h3>
       <Separator noMargin />
       <SideBarSection links={mainLinks} title="Main" />
@@ -68,14 +70,16 @@ const SideBarContent = () => {
 };
 
 const SideBar: React.FC = () => {
+  const isOpen = useStoreState(({ nav }) => nav.isOpen);
   const isDesktop = useBreakpoint() >= 3;
-  if (!isDesktop) return null;
 
   return (
-    <div className="o-side-bar">
-      <SideBarCommunityList />
-      <SideBarContent />
-    </div>
+    <Show show={isDesktop || !!isOpen}>
+      <motion.div animate={{ x: 0 }} className="o-nav" initial={{ x: -100 }}>
+        <SideBarCommunityList />
+        <SideBarContent />
+      </motion.div>
+    </Show>
   );
 };
 

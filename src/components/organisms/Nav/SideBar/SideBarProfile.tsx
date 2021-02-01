@@ -24,7 +24,7 @@ const SideBarProfileContent: React.FC = () => {
     <div>
       <ProfilePicture circle href={pictureUrl} size={48} />
 
-      <div className="o-side-bar-profile-info">
+      <div className="o-nav-profile-info">
         <p>{fullName}</p>
         <p>{role?.toLowerCase() ?? memberTypeName}</p>
       </div>
@@ -43,12 +43,12 @@ const SideBarProfile: React.FC = () => {
 
   const onClick = () => showPanel(PanelType.PROFILE);
 
-  const containerCss = cx('o-side-bar-profile-ctr', {
-    'o-side-bar-profile-ctr--no-auto': isDuesMessageShowing
+  const containerCss = cx('o-nav-profile-ctr', {
+    'o-nav-profile-ctr--no-auto': isDuesMessageShowing
   });
 
-  const buttonCss = cx('o-side-bar-profile', {
-    'o-side-bar-profile--active': isActive
+  const buttonCss = cx('o-nav-profile', {
+    'o-nav-profile--active': isActive
   });
 
   return (

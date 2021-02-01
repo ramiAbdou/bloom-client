@@ -1,6 +1,6 @@
-$PREF: 'o-side-bar';
+$PREF: 'o-nav';
 
-// ## SIDEBAR
+// ## NAV
 
 .#{$PREF} {
   @extend .flex;
@@ -11,9 +11,19 @@ $PREF: 'o-side-bar';
   position: fixed;
   top: 0;
   width: $xxl * 5.5;
-  z-index: 12;
+  z-index: 1001;
 
-  @include MT { display: none; }
+  @include MT { width: 90%; }
+}
+
+.#{$PREF}-bg {
+  @extend .full-screen;
+
+  backdrop-filter: blur(2px);
+  background-color: hsla($primary-hue, 5%, 20%, 0.75);
+  z-index: 1000;
+
+  &--lock { backdrop-filter: blur(8px); }
 }
 
 // ## SIDEBAR COMMUNITY LIST
@@ -160,4 +170,18 @@ $PREF: 'o-side-bar';
 
   > p { @extend .overflow-ellipses; text-align: left; }
   > p:last-child { @extend .meta; color: $gray-3; text-transform: capitalize; }
+}
+
+// ## NAV HAMBURGER CONTAINER
+
+.#{$PREF}-hamburger {
+  background-color: $gray-6;
+  padding: $md $md 0 $md;
+  position: sticky;
+  top: 0;
+  z-index: 12;
+
+  @include M { padding: $sm; }
+
+  > button > svg { @extend .react-icon--lg; }
 }
