@@ -41,7 +41,7 @@ const IndividualEventTable: React.FC = () => {
           fullName: `${firstName} ${lastName}`,
           id: email,
           joinedAt: day(createdAt).format('MMM D @ h:mm A'),
-          numWatches: 0
+          watched: 'No'
         }
       };
     }, {});
@@ -87,7 +87,7 @@ const IndividualEventTable: React.FC = () => {
             [email]: {
               email,
               fullName: `${firstName} ${lastName}`,
-              numWatches: 1
+              watched: 'Yes'
             }
           };
         }
@@ -96,7 +96,7 @@ const IndividualEventTable: React.FC = () => {
           ...acc,
           [email]: {
             ...previousValue,
-            numWatches: previousValue.numWatches + 1
+            watched: 'Yes'
           }
         };
       },
@@ -127,9 +127,9 @@ const IndividualEventTable: React.FC = () => {
   const recordingClicksColumn = recordingUrl
     ? [
         {
-          id: 'numWatches',
-          title: `# of Recording Views`,
-          type: 'SHORT_TEXT' as QuestionType
+          id: 'watched',
+          title: `Viewed Recording`,
+          type: 'TRUE_FALSE' as QuestionType
         }
       ]
     : [];

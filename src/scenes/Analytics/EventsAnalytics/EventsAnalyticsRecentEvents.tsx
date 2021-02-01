@@ -30,7 +30,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
           id,
           numAttendees: attendees?.length ?? 0,
           numGuests: guests?.length ?? 0,
-          numWatches: watches?.length ?? 0,
+          numViewers: watches?.length ?? 0,
           title
         };
       })
@@ -42,7 +42,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
     { id: 'date', title: 'Date', type: 'SHORT_TEXT' },
     { id: 'numAttendees', title: '# of Attendees', type: 'SHORT_TEXT' },
     { id: 'numGuests', title: `# of RSVP's`, type: 'SHORT_TEXT' },
-    { id: 'numWatches', title: `# of Recording Views`, type: 'SHORT_TEXT' }
+    { id: 'numWatches', title: `# of Recording Viewers`, type: 'SHORT_TEXT' }
   ];
 
   const { push } = useHistory();

@@ -27,7 +27,7 @@ const IndividualEventPanel: React.FC<IdProps> = ({ id }) => {
   });
 
   const onSubmit = async ({ items }: OnFormSubmitArgs) => {
-    const value = items[0]?.value;
+    const value = items.RECORDING_URL?.value;
     await updateRecordingLink({ id, recordingUrl: value });
     showToast({ message: 'Event recording link updated.' });
     closePanel();
@@ -41,7 +41,7 @@ const IndividualEventPanel: React.FC<IdProps> = ({ id }) => {
     >
       <Form onSubmit={onSubmit}>
         <FormShortText
-          required
+          id="RECORDING_URL"
           title="Event Recording Link"
           validate="IS_URL"
           value={recordingUrl ?? ''}

@@ -2,7 +2,6 @@ $PREF: 's-database';
 
 // ## ACTION ROW
 
-.#{$PREF}-action-row { @extend .flex-acsb; margin-bottom: $sm; }
 .#{$PREF}-action-row > div { @extend .flex-ac; }
 
 // ## ACTION

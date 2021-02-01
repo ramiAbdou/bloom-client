@@ -37,8 +37,10 @@ const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
 
   const content: React.ReactNode = takeFirst([
     [
-      category === 'DUES_STATUS',
-      <Pill positive={value === 'Active'}>{value}</Pill>
+      category === 'DUES_STATUS' || type === 'TRUE_FALSE',
+      <Pill positive={['Active', 'Yes'].includes(value)} show={!!value}>
+        {value}
+      </Pill>
     ],
     [
       category === 'PROFILE_FULL_NAME',

@@ -22,7 +22,7 @@ const IndividualEventInsightsWatchesCard: React.FC = () => {
   const recordingUrl = useStoreState(({ db }) => db.event.recordingUrl);
   const numWatches = useStoreState(({ db }) => db.event.watches?.length);
   if (!recordingUrl) return null;
-  return <AnalyticsCard label="# of Recording Views" value={numWatches} />;
+  return <AnalyticsCard label="# of Recording Viewers" value={numWatches} />;
 };
 
 const IndividualEventInsights: React.FC = () => {

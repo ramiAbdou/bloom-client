@@ -1,14 +1,20 @@
 import React from 'react';
 
-import { ChildrenProps } from '@constants';
+import { ChildrenProps, ShowProps } from '@constants';
+import Show from '@containers/Show';
 import { cx, takeFirst } from '@util/util';
 
-interface PillProps extends ChildrenProps {
+interface PillProps extends ChildrenProps, ShowProps {
   percentage?: number;
   positive?: boolean;
 }
 
-const Pill: React.FC<PillProps> = ({ children, percentage, positive }) => {
+const Pill: React.FC<PillProps> = ({
+  children,
+  percentage,
+  positive,
+  show
+}) => {
   const isPositive = positive ?? percentage >= 0;
 
   if (percentage === undefined && positive === undefined) return null;
@@ -26,7 +32,11 @@ const Pill: React.FC<PillProps> = ({ children, percentage, positive }) => {
     'c-tag-pill--positive': isPositive
   });
 
-  return <p className={css}>{value}</p>;
+  return (
+    <Show show={(percentage !== undefined || positive !== undefined) && show}>
+      <p className={css}>{value}</p>
+    </Show>
+  );
 };
 
 export default Pill;

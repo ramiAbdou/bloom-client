@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Row from '@containers/Row/Row';
 import Table from '@organisms/Table/Table.store';
 import SearchBar from '@organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';
@@ -29,11 +30,11 @@ const MemberDatabaseButtons = () => {
 };
 
 const MemberDatabaseActions: React.FC = () => (
-  <div className="s-database-action-row">
+  <Row spaceBetween align="baseline">
     <SearchBar placeholder="Search members..." />
     <MemberDatabaseFilterButton />
     <MemberDatabaseButtons />
-  </div>
+  </Row>
 );
 
 export default MemberDatabaseActions;

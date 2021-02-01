@@ -4,9 +4,8 @@ $PREF: 'o-form';
 
 .#{$PREF}--spacing-md {
   > .#{$PREF}-item,
-  > .t-row,
   > .#{$PREF}-section > .#{$PREF}-item,
-  > .#{$PREF}-section > .t-row { margin-bottom: $md; }
+  > .#{$PREF}-section > .t-row > .#{$PREF}-item { margin-bottom: $md; }
 }
 
 .#{$PREF}--spacing-lg {

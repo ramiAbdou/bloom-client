@@ -103,7 +103,8 @@ export type QuestionType =
   | 'MULTIPLE_SELECT'
   | 'SHORT_TEXT'
   | 'TIME'
-  | 'TOGGLE';
+  | 'TOGGLE'
+  | 'TRUE_FALSE';
 
 export interface PopulateArgs {
   populate?: string[];

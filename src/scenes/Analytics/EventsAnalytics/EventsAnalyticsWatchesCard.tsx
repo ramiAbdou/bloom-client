@@ -25,7 +25,7 @@ const EventsAnalyticsWatchesCard: React.FC = () => {
 
   return (
     <AnalyticsCard
-      label="Avg # of Recording Views"
+      label="Avg # of Recording Viewers"
       show={numViews !== null}
       value={numViews}
     />
