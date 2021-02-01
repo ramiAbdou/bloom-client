@@ -7,6 +7,7 @@ import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import useApplyForMembership from './useApplyForMembership';
 import useValidateEmail from './useValidateEmail';
 
 const ApplicationMainForm: React.FC = () => {
@@ -18,13 +19,22 @@ const ApplicationMainForm: React.FC = () => {
       ?.filter((question: IQuestion) => question.inApplication);
   });
 
-  const isSolo = StoryStore.useStoreState(({ pages }) => pages?.length === 1);
+  const isSolo = StoryStore.useStoreState(
+    ({ pages }) =>
+      pages?.filter(({ id }) => id !== 'CONFIRMATION')?.length === 1
+  );
+
   const items = StoryStore.useStoreState((store) => store.items);
 
+  const applyForMembership = useApplyForMembership();
   const validateEmail = useValidateEmail();
 
   return (
-    <Form show={!!questions?.length} spacing="lg" onSubmit={validateEmail}>
+    <Form
+      show={!!questions?.length}
+      spacing="lg"
+      onSubmit={isSolo ? applyForMembership : validateEmail}
+    >
       {questions?.map((props) => {
         const args = { ...props, ...items[props?.id] };
         return <FormItem key={args?.id} {...args} />;

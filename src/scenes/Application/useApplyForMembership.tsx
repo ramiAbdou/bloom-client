@@ -15,10 +15,15 @@ const useApplyForMembership = (): OnFormSubmit => {
 
   const onSubmit = async ({
     db,
+    items,
     goForward,
     setError,
     storyItems
   }: OnFormSubmitArgs) => {
+    // If application was only one page, storyItems don't have copy of the
+    // Form's items yet.
+    if (!Object.keys(storyItems).length) storyItems = { ...items };
+
     const urlName: string = db.community?.urlName;
     const { byId: byQuestionId } = db.entities.questions;
     const { byId: byTypeId } = db.entities.types;

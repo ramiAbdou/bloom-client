@@ -43,7 +43,11 @@ export const formModel: FormModel = {
 
     return Object.values(items).every(
       ({ required, value, validate }: FormItemData) => {
-        if (required && !value) return false;
+        if (required) {
+          if (Array.isArray(value) && !value?.length) return false;
+          if (!Array.isArray(value) && !value) return false;
+        }
+
         if (validate === 'IS_EMAIL') return validator.isEmail(value);
         if (validate === 'IS_URL') return validator.isURL(value);
         return true;

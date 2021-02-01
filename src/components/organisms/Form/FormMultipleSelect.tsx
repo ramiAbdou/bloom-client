@@ -5,6 +5,7 @@ import Show from '@containers/Show';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
+import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
 interface FormMultipleChoiceProps extends FormItemData {
@@ -25,27 +26,29 @@ const FormMultipleSelect: React.FC<FormMultipleChoiceProps> = ({
 
   return (
     <Show show={show}>
-      <div className="c-misc-checkbox-ctr">
-        {args?.options.map((option: string) => {
-          const onChange = () => {
-            const updatedValue = value?.includes(option)
-              ? value.filter((element) => element !== option)
-              : [...value, option];
+      <FormItemContainer {...args}>
+        <div className="c-misc-checkbox-ctr">
+          {args?.options.map((option: string) => {
+            const onChange = () => {
+              const updatedValue = value?.includes(option)
+                ? value.filter((element) => element !== option)
+                : [...value, option];
 
-            setValue({ key, value: updatedValue });
-          };
+              setValue({ key, value: updatedValue });
+            };
 
-          return (
-            <Checkbox
-              key={option}
-              checked={value?.includes(option)}
-              plain={plain}
-              title={option}
-              onChange={onChange}
-            />
-          );
-        })}
-      </div>
+            return (
+              <Checkbox
+                key={option}
+                checked={value?.includes(option)}
+                plain={plain}
+                title={option}
+                onChange={onChange}
+              />
+            );
+          })}
+        </div>
+      </FormItemContainer>
     </Show>
   );
 };
