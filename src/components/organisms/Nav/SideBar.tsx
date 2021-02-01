@@ -3,6 +3,7 @@ import React from 'react';
 import {
   IoAdd,
   IoCalendar,
+  IoCloud,
   IoExtensionPuzzle,
   IoFolderOpen,
   IoGlobe,
@@ -28,7 +29,16 @@ const SideBarContent: React.FC = () => {
 
   const mainLinks: LinkOptions[] = [
     { Icon: IoPeople, title: 'Directory', to: 'directory' },
-    { Icon: IoCalendar, title: 'Events', to: 'events' }
+    { Icon: IoCalendar, title: 'Events', to: 'events' },
+    {
+      Icon: IoCloud,
+      onClick: () => {
+        if (navigator.vendor === 'Apple Computer, Inc.') {
+          window.location.href = 'https://www.notion.so/login';
+        } else window.open('https://www.notion.so/login');
+      },
+      title: 'Knowledge Hub'
+    }
   ];
 
   const pendingApplicantsLinks: LinkOptions[] = !autoAccept
