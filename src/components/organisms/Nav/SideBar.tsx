@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import {
   IoAdd,
@@ -16,9 +16,9 @@ import { ModalType } from '@constants';
 import Show from '@containers/Show';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { LinkOptions } from '../Nav.types';
+import { LinkOptions } from './Nav.types';
+import SideBarDuesContent from './NavMemberStatus';
 import SideBarCommunityList from './SideBarCommunityList';
-import SideBarDuesContent from './SideBarDuesContent';
 import SideBarProfile from './SideBarProfile';
 import SideBarSection from './SideBarSection';
 
@@ -74,12 +74,19 @@ const SideBar: React.FC = () => {
   const isDesktop = useBreakpoint() >= 3;
 
   return (
-    <Show show={isDesktop || !!isOpen}>
-      <motion.div animate={{ x: 0 }} className="o-nav" initial={{ x: -100 }}>
-        <SideBarCommunityList />
-        <SideBarContent />
-      </motion.div>
-    </Show>
+    <AnimatePresence>
+      <Show show={isDesktop || !!isOpen}>
+        <motion.div
+          animate={{ x: !isDesktop && 0 }}
+          className="o-nav"
+          exit={{ x: !isDesktop && -100 }}
+          initial={{ x: !isDesktop && -100 }}
+        >
+          <SideBarCommunityList />
+          <SideBarContent />
+        </motion.div>
+      </Show>
+    </AnimatePresence>
   );
 };
 

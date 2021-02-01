@@ -2,8 +2,8 @@ import { nanoid } from 'nanoid';
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import { LinkOptions } from '../Nav.types';
-import SidebarLink from './SideBarLink';
+import { LinkOptions } from './Nav.types';
+import NavLink from './NavLink';
 
 interface LinkSectionProps {
   links: LinkOptions[];
@@ -22,7 +22,7 @@ const SideBarSection: React.FC<LinkSectionProps> = ({
     <div className="o-nav-section">
       <h5>{title}</h5>
       {links.map((link) => (
-        <SidebarLink key={link.to ?? nanoid()} {...link} />
+        <NavLink key={link.to ?? nanoid()} {...link} />
       ))}
     </div>
   );

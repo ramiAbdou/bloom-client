@@ -2,8 +2,8 @@ import React from 'react';
 
 import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
-import SideBar from './SideBar/SideBar';
-import SideBarPanel from './SideBar/SideBarPanel';
+import SideBar from './SideBar';
+import SideBarPanel from './SideBarPanel';
 
 const NavBackground: React.FC = () => {
   const isOpen = useStoreState(({ nav }) => nav.isOpen);
