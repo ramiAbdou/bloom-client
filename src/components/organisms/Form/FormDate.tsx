@@ -18,14 +18,15 @@ const FormDate: React.FC<FormItemData> = (args) => {
   );
 
   useInitFormItem(args);
+  const { id } = args;
 
   const updateDate = (date: Date | [Date, Date]) => {
     setValue({ key, value: date });
-    if (args?.id === 'START_DATE') setValue({ key: 'END_DATE', value: date });
+    if (id === 'START_DATE') setValue({ key: 'END_DATE', value: date });
   };
 
   const minDate =
-    args?.id === 'END_DATE' && startDate ? day(startDate).toDate() : new Date();
+    id === 'END_DATE' && startDate ? day(startDate).toDate() : new Date();
 
   return (
     <FormItemContainer className="o-form-item--date" {...args}>
