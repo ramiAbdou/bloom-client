@@ -18,6 +18,7 @@ import {
   IUser
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import ActionRow from './MemberDatabaseActions';
 import MemberDatabaseDeleteModal from './MemberDatabaseDeleteModal';
@@ -40,51 +41,59 @@ const MemberDatabase: React.FC = () => {
     const { byId: byTypeId } = db.entities.types;
     const { byId: byUserId } = db.entities.users;
 
-    return db.community.members?.reduce((acc: TableRow[], memberId: string) => {
-      const member: IMember = byMemberId[memberId];
-      if (!member) return acc;
+    const joinedAtQuestionId = db.community?.questions?.find(
+      (questionId: string) => {
+        return byQuestionId[questionId]?.category === 'JOINED_AT';
+      }
+    );
 
-      const { duesStatus, joinedAt, id } = member;
+    return db.community.members
+      ?.reduce((acc: TableRow[], memberId: string) => {
+        const member: IMember = byMemberId[memberId];
+        if (!member) return acc;
 
-      const user: IUser = byUserId[member.user];
-      const { email, firstName, gender, lastName } = user;
+        const { duesStatus, joinedAt, id } = member;
 
-      if (member.status !== 'ACCEPTED') return acc;
+        const user: IUser = byUserId[member.user];
+        const { email, firstName, gender, lastName } = user;
 
-      const row: TableRow = db.community?.questions.reduce(
-        (result: TableRow, questionId: string) => {
-          const { category }: IQuestion = byQuestionId[questionId];
+        if (member.status !== 'ACCEPTED') return acc;
 
-          if (category === 'EMAIL') result[questionId] = email;
-          else if (category === 'FIRST_NAME') result[questionId] = firstName;
-          else if (category === 'GENDER') result[questionId] = gender;
-          else if (category === 'JOINED_AT') result[questionId] = joinedAt;
-          else if (category === 'LAST_NAME') result[questionId] = lastName;
-          else if (category === 'MEMBERSHIP_TYPE') {
-            const type: IMemberType = byTypeId[member.type];
-            result[questionId] = type.name;
-          } else if (category === 'DUES_STATUS') {
-            const duesStatusString =
-              duesStatus?.charAt(0).toUpperCase() +
-              duesStatus?.slice(1).toLowerCase();
+        const row: TableRow = db.community?.questions.reduce(
+          (result: TableRow, questionId: string) => {
+            const { category }: IQuestion = byQuestionId[questionId];
 
-            result[questionId] = duesStatusString;
-          } else {
-            const d = member.data.find((dataId: string) => {
-              const data: IMemberData = byDataId[dataId];
-              const question: IQuestion = byQuestionId[data.question];
-              return question.id === questionId;
-            });
+            if (category === 'EMAIL') result[questionId] = email;
+            else if (category === 'FIRST_NAME') result[questionId] = firstName;
+            else if (category === 'GENDER') result[questionId] = gender;
+            else if (category === 'JOINED_AT') result[questionId] = joinedAt;
+            else if (category === 'LAST_NAME') result[questionId] = lastName;
+            else if (category === 'MEMBERSHIP_TYPE') {
+              const type: IMemberType = byTypeId[member.type];
+              result[questionId] = type.name;
+            } else if (category === 'DUES_STATUS') {
+              const duesStatusString =
+                duesStatus?.charAt(0).toUpperCase() +
+                duesStatus?.slice(1).toLowerCase();
 
-            result[questionId] = byDataId[d]?.value;
-          }
-          return result;
-        },
-        { id }
-      );
+              result[questionId] = duesStatusString;
+            } else {
+              const d = member.data.find((dataId: string) => {
+                const data: IMemberData = byDataId[dataId];
+                const question: IQuestion = byQuestionId[data.question];
+                return question.id === questionId;
+              });
 
-      return [...acc, row];
-    }, []);
+              result[questionId] = byDataId[d]?.value;
+            }
+            return result;
+          },
+          { id }
+        );
+
+        return [...acc, row];
+      }, [])
+      ?.sort((a, b) => sortObjects(a, b, joinedAtQuestionId, 'DESC'));
   }, deepequal);
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
