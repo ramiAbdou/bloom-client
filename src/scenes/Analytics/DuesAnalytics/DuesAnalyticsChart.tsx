@@ -1,5 +1,6 @@
 import React from 'react';
 
+import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
@@ -12,16 +13,16 @@ const DuesAnalyticsChart: React.FC = () => {
     query: GET_TOTAL_DUES_SERIES
   });
 
-  if (loading || data?.every(({ value }) => !value)) return null;
-
   return (
-    <Chart
-      data={data}
-      interval={2}
-      options={{ format: 'MONEY' }}
-      title="Total Dues Collected"
-      type={ChartType.TIME_SERIES}
-    />
+    <MainSection show={!loading && data?.some(({ value }) => !!value)}>
+      <Chart
+        data={data}
+        interval={2}
+        options={{ format: 'MONEY' }}
+        title="Total Dues Collected"
+        type={ChartType.TIME_SERIES}
+      />
+    </MainSection>
   );
 };
 
