@@ -5,8 +5,12 @@ import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
  * multiple pages.
  */
 const useSyncStory = () => {
-  const onSubmit = async ({ goForward, items, setItems }: OnFormSubmitArgs) => {
-    setItems(items);
+  const onSubmit = async ({
+    goForward,
+    items,
+    setStoryItems
+  }: OnFormSubmitArgs) => {
+    setStoryItems(items);
     goForward();
   };
 

@@ -65,7 +65,7 @@ export type OnFormSubmitArgs = {
   goForward?: ActionCreator;
   items: Record<string, FormItemData>;
   setError: ActionCreator<string>;
-  setItems?: ActionCreator<Record<string, FormItemData>>;
+  setStoryItems?: ActionCreator<Record<string, FormItemData>>;
   storyItems?: Record<string, FormItemData>;
 };
 
