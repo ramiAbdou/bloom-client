@@ -2,10 +2,10 @@ import React, { memo } from 'react';
 import { IoCloseCircle, IoSearch } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { ClassNameProps, ValueProps } from '@constants';
+import { ClassNameProps, ShowProps, ValueProps } from '@constants';
 import { cx } from '@util/util';
 
-export interface SearchBarProps extends ClassNameProps, ValueProps {
+export interface SearchBarProps extends ClassNameProps, ShowProps, ValueProps {
   placeholder?: string;
   onChange: (value: string) => any;
 }
@@ -30,9 +30,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
   className,
   placeholder,
   onChange,
+  show,
   value
 }: SearchBarProps) => {
   const css = cx('c-misc-search', { [className]: className });
+  if (show === false) return null;
 
   return (
     <div className={css}>

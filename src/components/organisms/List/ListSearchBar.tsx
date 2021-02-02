@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import SearchBar, { SearchBarProps } from '@molecules/SearchBar/SearchBar';
 import ListStore from './List.store';
 
-const ListSearchBar: React.FC<Pick<SearchBarProps, 'placeholder'>> = ({
-  placeholder
-}) => {
+const ListSearchBar: React.FC<Pick<SearchBarProps, 'placeholder' | 'show'>> = (
+  props
+) => {
   const [value, setValue] = useState('');
 
   const setSearchString = ListStore.useStoreActions(
@@ -17,9 +17,7 @@ const ListSearchBar: React.FC<Pick<SearchBarProps, 'placeholder'>> = ({
     return () => clearTimeout(timeout);
   }, [value]);
 
-  return (
-    <SearchBar placeholder={placeholder} value={value} onChange={setValue} />
-  );
+  return <SearchBar value={value} onChange={setValue} {...props} />;
 };
 
 export default ListSearchBar;

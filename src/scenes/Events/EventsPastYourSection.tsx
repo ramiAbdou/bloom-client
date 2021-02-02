@@ -1,15 +1,16 @@
 import day from 'dayjs';
 import React from 'react';
 
+import { LoadingProps } from '@constants';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import LoadingHeader from '../../components/containers/LoadingHeader/LoadingHeader';
 import EventsCard from './EventsCard/EventsCard';
 
-const YourPastEventsList: React.FC = () => {
+const EventsPastYourList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     const { byId: byAttendeeId } = db.entities.attendees;
     const { byId: byEventsId } = db.entities.events;
@@ -30,16 +31,7 @@ const YourPastEventsList: React.FC = () => {
   );
 };
 
-const YourPastEventsContent: React.FC = () => (
-  <ListStore.Provider>
-    <MainSection className="s-events-section">
-      <LoadingHeader h2 title="Your Events Attended" />
-      <YourPastEventsList />
-    </MainSection>
-  </ListStore.Provider>
-);
-
-const YourPastEvents: React.FC = () => {
+const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const hasEvents: boolean = useStoreState(({ db }) => {
     const { byId: byAttendeeId } = db.entities.attendees;
     const { byId: byEventsId } = db.entities.events;
@@ -50,7 +42,15 @@ const YourPastEvents: React.FC = () => {
       ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)))?.length;
   });
 
-  return hasEvents ? <YourPastEventsContent /> : null;
+  return (
+    <MainSection className="s-events-section" show={hasEvents}>
+      <LoadingHeader h2 loading={loading} title="Your Events Attended" />
+
+      <ListStore.Provider>
+        <EventsPastYourList />
+      </ListStore.Provider>
+    </MainSection>
+  );
 };
 
-export default YourPastEvents;
+export default EventsPastYourSection;

@@ -26,16 +26,12 @@ const EventsUpcomingContent: React.FC = () => {
   });
 
   return (
-    <>
-      {!events?.length && <p>Looks like there are no upcoming events.</p>}
-
-      <List
-        Item={EventsCard}
-        className="s-events-card-ctr"
-        items={events}
-        options={{ keys: ['title'] }}
-      />
-    </>
+    <List
+      Item={EventsCard}
+      emptyMessage="Looks like there are no upcoming events."
+      items={events}
+      options={{ keys: ['title'] }}
+    />
   );
 };
 

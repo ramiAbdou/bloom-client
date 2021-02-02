@@ -1,15 +1,5 @@
 $PREF: 's-events-card';
 
-// ## EVENTS CARD CONTAINER
-
-.#{$PREF}-ctr {
-  padding: $xxs 0;
-
-  @include MT { padding-bottom: $xxl + $sm; }
-
-  &:focus { outline: none; }
-};
-
 // ## EVENTS CARD
 
 .#{$PREF} {
