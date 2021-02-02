@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 
-import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
 import LoadingHeader from '@containers/Loading/LoadingHeader';
 import { cx } from '@util/util';
 import StoryStore from './Story.store';
 import { StoryPageBranch, StoryPageProps } from './Story.types';
+import StoryConfirmation from './StoryConfirmation';
 import useUpdateDisabledPage from './useUpdateDisabledPage';
 
 const StoryPage: React.FC<StoryPageProps> = ({
@@ -49,9 +49,9 @@ const StoryPage: React.FC<StoryPageProps> = ({
 
   if (confirmation) {
     return (
-      <ConfirmationScreen closeButton={confirmationClose} title={title}>
+      <StoryConfirmation closeButton={confirmationClose} title={title}>
         <p>{description}</p>
-      </ConfirmationScreen>
+      </StoryConfirmation>
     );
   }
 

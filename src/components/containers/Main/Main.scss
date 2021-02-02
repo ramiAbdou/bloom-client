@@ -11,8 +11,8 @@ $PREF: 't-main';
   top: 0;
   z-index: 11;
 
-  @include T { padding: $sm $md; top: $xl; }
-  @include M { padding: $xs $sm $sm $sm; top: $xl; }
+  @include T { padding: $sm 0; top: $xl; }
+  @include M { padding: $xs 0; top: $xl; }
 }
 
 .#{$PREF}-header > div:first-of-type {

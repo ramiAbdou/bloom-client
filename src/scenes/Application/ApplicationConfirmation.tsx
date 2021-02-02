@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
-import ConfirmationScreen from '@containers/ConfirmationScreen/ConfirmationScreen';
+import StoryConfirmation from '@organisms/Story/StoryConfirmation';
 import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 
@@ -61,11 +61,11 @@ const ApplicationConfirmation: React.FC = () => {
       show={!!name}
     >
       <Card>
-        <ConfirmationScreen
+        <StoryConfirmation
           title={autoAccept ? `Welcome to ${name}` : 'Application Received'}
         >
           <ApplicationConfirmationContent />
-        </ConfirmationScreen>
+        </StoryConfirmation>
       </Card>
     </StoryPage>
   );

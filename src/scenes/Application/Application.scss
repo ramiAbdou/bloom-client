@@ -14,7 +14,7 @@ $PREF: 's-application';
     margin: auto;
     max-width: $xxl * 7;
 
-    > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+    > .o-story-confirmation > p:first-of-type { margin-bottom: $md; }
   }
 
   > div {
@@ -37,7 +37,7 @@ $PREF: 's-application';
     max-width: $xxl * 7;
     overflow: hidden;
     
-    > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+    > .o-story-confirmation > p:first-of-type { margin-bottom: $md; }
   }
 }
 

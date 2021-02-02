@@ -34,3 +34,18 @@ $PREF: 'o-story';
     }
   }
 }
+
+// ## STORY CONFIRMATION
+
+$PREF: 'o-story-confirmation';
+
+.#{$PREF}-confirmation > div:first-child {
+  @extend .flex-ac;
+
+  margin-bottom: $sm;
+
+  > h1 { color: $primary; }
+  > svg { color: $primary; height: $xl; margin-right: $xs; width: $xl; }
+}
+
+.#{$PREF} > button:last-child { margin-top: $md; }
