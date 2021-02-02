@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
+import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -23,12 +23,12 @@ const EventsAnalytics: React.FC = () => {
 
   return (
     <div className="s-analytics-page">
-      <Row spacing="sm">
+      <MainSection className="flex-ac t-row--spacing-sm">
         <EventsAnalyticsTotalCard />
         <EventsAnalyticsAttendanceCard />
         <EventsAnalyticsGuestCard />
         <EventsAnalyticsWatchesCard />
-      </Row>
+      </MainSection>
 
       <EventsAnalyticsRecentEvents />
       <EventsAnalyticsFrequentAttendees />
