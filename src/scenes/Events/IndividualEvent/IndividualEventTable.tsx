@@ -2,6 +2,8 @@ import day from 'dayjs';
 import React from 'react';
 
 import { QuestionType } from '@constants';
+import MainSection from '@containers/Main/MainSection';
+import Show from '@containers/Show';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -20,6 +22,7 @@ import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
 const IndividualEventTable: React.FC = () => {
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const startTime = useStoreState(({ db }) => db.event?.startTime);
 
@@ -154,9 +157,13 @@ const IndividualEventTable: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows}>
-      <TableContent small />
-    </Table>
+    <Show show={isAdmin}>
+      <MainSection className="s-events-individual-table-ctr">
+        <Table columns={columns} options={options} rows={rows}>
+          <TableContent small />
+        </Table>
+      </MainSection>
+    </Show>
   );
 };
 

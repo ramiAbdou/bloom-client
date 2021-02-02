@@ -57,7 +57,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     }
 
     // Success! Update the member entity just in case the membership type
-    // changed or their duesStatus changed.
+    // changed or their status changed.
     goForward();
   };
 

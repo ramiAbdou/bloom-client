@@ -7,7 +7,7 @@ export interface CreateLifetimePaymentArgs {
 }
 
 export const CREATE_LIFETIME_PAYMENT = mutation({
-  fields: ['id', 'autoRenew', 'duesStatus', { type: ['id', 'name'] }],
+  fields: ['id', 'autoRenew', 'isDuesActive', { type: ['id', 'name'] }],
   operation: 'createLifetimePayment',
   variables: { memberTypeId: { required: true } }
 }).query;
@@ -22,12 +22,12 @@ export interface CreateSubscriptionArgs {
 
 export interface CreateSubscriptionResult {
   id: string;
-  duesStatus: string;
+  isDuesActive: boolean;
   type: { id: string; name: string };
 }
 
 export const CREATE_SUBSCRIPTION = mutation({
-  fields: ['id', 'autoRenew', 'duesStatus', { type: ['id', 'name'] }],
+  fields: ['id', 'autoRenew', 'isDuesActive', { type: ['id', 'name'] }],
   operation: 'createSubscription',
   variables: {
     autoRenew: { required: false, type: 'Boolean' },

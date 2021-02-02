@@ -54,8 +54,9 @@ const useQuestionData = (): Pick<
 
       if (category === 'MEMBERSHIP_TYPE') value = type.name;
       else if (category === 'GENDER') value = user.gender;
-      else if (category === 'DUES_STATUS') value = member.duesStatus;
-      else {
+      else if (category === 'DUES_STATUS') {
+        value = member.isDuesActive ? 'Active' : 'Inactive';
+      } else {
         const d = member.data.find((dataId: string) => {
           const data: IMemberData = byDataId[dataId];
           const question: IQuestion = byQuestionId[data.question];

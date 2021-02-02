@@ -28,8 +28,8 @@ export const GET_USER = query({
       members: [
         'autoRenew',
         'bio',
-        'duesStatus',
         'id',
+        'isDuesActive',
         'role',
         'status',
         {

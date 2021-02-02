@@ -7,8 +7,7 @@ import Row from '@containers/Row/Row';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const MembershipCurrentPlanActions: React.FC = () => {
-  const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'Active';
+  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   const isLifetime: boolean = useStoreState(({ db }) => {
     const { byId: byTypeId } = db.entities.types;

@@ -11,8 +11,7 @@ import MembershipCurrentPlanActions from './MembershipCurrentPlanActions';
 import MembershipCurrentPlanToggle from './MembershipCurrentPlanToggle';
 
 const MembershipCurrentPlanHeader: React.FC = () => {
-  const isDuesActive: boolean =
-    useStoreState(({ db }) => db.member?.duesStatus) === 'Active';
+  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   return (
     <Row spaceBetween>

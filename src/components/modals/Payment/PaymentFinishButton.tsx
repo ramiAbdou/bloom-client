@@ -22,7 +22,7 @@ const PaymentFinishButton: React.FC = () => {
     const currentAmount: number = byId[db.member.type]?.amount;
 
     return (
-      db.member.duesStatus === 'Active' &&
+      db.member.isDuesActive &&
       !byId[selectedTypeId]?.isFree &&
       selectedAmount < currentAmount
     );

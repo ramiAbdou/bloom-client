@@ -111,8 +111,8 @@ export interface IMember extends BaseEntity {
   bio: string;
   community: IdString;
   data: IdString[];
-  duesStatus: 'Active' | 'Inactive';
   guests: IdString[];
+  isDuesActive: boolean;
   joinedAt: string;
   paymentMethod: IPaymentMethod;
   payments: IdString[];

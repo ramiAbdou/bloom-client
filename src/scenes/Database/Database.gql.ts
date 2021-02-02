@@ -41,7 +41,7 @@ export const GET_DATABASE = query({
     {
       members: [
         'id',
-        'duesStatus',
+        'isDuesActive',
         'joinedAt',
         'role',
         'status',

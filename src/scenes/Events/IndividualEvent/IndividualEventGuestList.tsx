@@ -21,15 +21,18 @@ interface IndividualEventGuestProps
 const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
   const { firstName, lastName, memberId, pictureUrl } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
   const onClick = () => {
-    if (memberId) showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+    if (isAuthenticated && memberId) {
+      showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+    }
   };
 
   const fullName = `${firstName} ${lastName}`;
 
   const css = cx('s-events-individual-member', {
-    's-events-individual-member--disabled': !memberId
+    's-events-individual-member--disabled': !isAuthenticated
   });
 
   return (

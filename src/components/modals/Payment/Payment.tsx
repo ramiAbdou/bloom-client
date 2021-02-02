@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 import { ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
-import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import Modal from '@organisms/Modal/Modal';
 import Story from '@organisms/Story/Story';
 import { ICommunity } from '@store/Db/entities';
@@ -56,14 +55,12 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   });
 
   // Get the user and see if they've paid their dues or not.
-  const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
+  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const isUserActive = duesStatus === 'Active';
-
   useEffect(() => {
-    if (!isAdmin && !isUserActive) showModal(ModalType.PAY_DUES);
-  }, [isUserActive]);
+    if (!isAdmin && !isDuesActive) showModal(ModalType.PAY_DUES);
+  }, [isDuesActive]);
 
   if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId)) {
     return null;

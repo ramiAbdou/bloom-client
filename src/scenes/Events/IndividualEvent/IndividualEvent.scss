@@ -19,6 +19,10 @@ $PREF: 's-events-individual';
 
 // ## INDIVIDUAL EVENT TABLE
 
+.#{$PREF}-table-ctr {
+  padding: $md;
+}
+
 // ## INDIVIDUAL EVENT GRID
 
 .#{$PREF}-grid {
@@ -115,7 +119,7 @@ $PREF: 's-events-individual';
   transition: background-color 300ms;
   width: 100%;
 
-  @include PRIMARY_HOVER;
+  &:not(&--disabled) { @include PRIMARY_HOVER; }
 
   > *:first-child { margin-right: $ss; }
   &--disabled { cursor: not-allowed; transform: none; }

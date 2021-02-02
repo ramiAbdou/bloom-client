@@ -52,7 +52,7 @@ const MemberDatabase: React.FC = () => {
         const member: IMember = byMemberId[memberId];
         if (!member) return acc;
 
-        const { duesStatus, joinedAt, id } = member;
+        const { isDuesActive, joinedAt, id } = member;
 
         const user: IUser = byUserId[member.user];
         const { email, firstName, gender, lastName } = user;
@@ -72,11 +72,7 @@ const MemberDatabase: React.FC = () => {
               const type: IMemberType = byTypeId[member.type];
               result[questionId] = type.name;
             } else if (category === 'DUES_STATUS') {
-              const duesStatusString =
-                duesStatus?.charAt(0).toUpperCase() +
-                duesStatus?.slice(1).toLowerCase();
-
-              result[questionId] = duesStatusString;
+              result[questionId] = isDuesActive ? 'Active' : 'Inactive';
             } else {
               const d = member.data.find((dataId: string) => {
                 const data: IMemberData = byDataId[dataId];
