@@ -36,14 +36,7 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
     { onClick: () => push('events'), pathname: 'events', title: 'Events' }
   ];
 
-  return (
-    <MainHeader
-      className="s-analytics-header"
-      loading={loading}
-      options={options}
-      title="Analytics"
-    />
-  );
+  return <MainHeader loading={loading} options={options} title="Analytics" />;
 };
 
 const Analytics: React.FC = () => {

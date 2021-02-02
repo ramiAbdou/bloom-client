@@ -33,6 +33,8 @@ $PREF: 't-main';
   }
 }
 
+.#{$PREF}-header-element--hidden { visibility: hidden; width: $xxl * 4; }
+
 // ## MAIN CONTENT
 
 .#{$PREF}-content {

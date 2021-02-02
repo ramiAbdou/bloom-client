@@ -36,12 +36,7 @@ const DatabaseHeader: React.FC<LoadingProps> = ({ loading }) => {
   ];
 
   return (
-    <MainHeader
-      className="s-database-header"
-      loading={loading}
-      options={options}
-      title="Member Database"
-    >
+    <MainHeader loading={loading} options={options} title="Member Database">
       <DatbaseHeaderAddButton />
     </MainHeader>
   );

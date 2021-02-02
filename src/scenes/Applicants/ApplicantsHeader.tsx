@@ -19,7 +19,6 @@ const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
 
   return (
     <MainHeader
-      className="s-applicants-header"
       headerTag={headerTag}
       loading={loading}
       title="Pending Applicants"

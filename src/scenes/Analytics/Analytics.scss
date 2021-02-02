@@ -1,7 +1,0 @@
-$PREF: 's-analytics';
-
-// ## ANALYTICS HEADER
-
-.#{$PREF}-header { display: grid; grid-template-columns: repeat(12, 1fr); }
-.#{$PREF}-header > div:first-child { grid-column-end: span 5; }
-.#{$PREF}-header > *:nth-child(2) { grid-column-end: span 4; }

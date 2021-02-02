@@ -27,14 +27,3 @@ $PREF: 's-database';
 // For all buttons that are not the Promote to Admin button, we set the tooltip
 // to be to the right side of the icon.
 :not(a) > .#{$PREF}-action { &:last-of-type { @extend .tooltip--right; } }
-
-// ## HEADER
-
-.#{$PREF}-header { display: grid; grid-template-columns: repeat(12, 1fr); }
-.#{$PREF}-header > div:first-child { grid-column-end: span 5; }
-.#{$PREF}-header > *:nth-child(2) { grid-column-end: span 4; }
-.#{$PREF}-header > *:nth-child(3) {
-  grid-column-end: span 3;
-  justify-self: end;
-  width: fit-content;
-}

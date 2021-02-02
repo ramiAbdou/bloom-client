@@ -32,12 +32,7 @@ const EventsHeader: React.FC<LoadingProps> = ({ loading }) => {
   ];
 
   return (
-    <MainHeader
-      className="s-database-header"
-      loading={loading}
-      options={options}
-      title="Events"
-    >
+    <MainHeader loading={loading} options={options} title="Events">
       <CreateEventButton />
     </MainHeader>
   );
