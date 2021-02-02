@@ -3,7 +3,6 @@ $PREF: 's-events-card';
 // ## EVENTS CARD CONTAINER
 
 .#{$PREF}-ctr {
-  display: grid;
   padding: $xxs 0;
 
   @include MT { padding-bottom: $xxl + $sm; }
@@ -18,7 +17,6 @@ $PREF: 's-events-card';
 
   align-items: flex-start;
   background-color: white;
-  max-width: $xxl * 6;
   padding: 0;
 
   > .t-aspect,

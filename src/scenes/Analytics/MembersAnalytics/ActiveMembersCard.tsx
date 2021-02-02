@@ -10,13 +10,12 @@ const ActiveMembersCard: React.FC = () => {
     query: GET_ACTIVE_MEMBERS_GROWTH
   });
 
-  if (loading) return null;
-
   return (
     <AnalyticsCard
-      label="Active Users in Last 30 Days"
-      percentage={data[1]}
-      value={data[0]}
+      label="Active Users"
+      percentage={data && data[1]}
+      show={!loading}
+      value={data && data[0]}
     />
   );
 };

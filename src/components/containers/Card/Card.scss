@@ -20,10 +20,9 @@ $PREF: 't-card';
   border-radius: $xs;
   box-sizing: border-box;
   height: fit-content;
-  min-width: $xxl * 4;
   padding: $sm;
   position: relative;
-  width: fit-content;
+  width: $xxl * 4.5;
 
   // Wraps the value (number) and the percentage tag.
   > div:first-child {
@@ -35,7 +34,11 @@ $PREF: 't-card';
   }
 
   // Label of the simple card (etc: TOTAL MEMBERS).
-  > h4 { color: $gray-2; }
+  > h4 {
+    color: $gray-2;
+
+    @include OVERFLOW_ELLIPSES;
+  }
 }
 
 // ## INFORMATION CARD
