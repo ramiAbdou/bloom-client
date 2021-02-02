@@ -5,7 +5,6 @@ import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import { LoadingProps, ShowProps } from '@constants';
-import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 
 export interface LoadingHeaderProps extends LoadingProps, ShowProps {
@@ -49,12 +48,12 @@ const LoadingHeader: React.FC<LoadingHeaderProps> = ({
 }) => {
   return (
     <Show show={show}>
-      <Row className="t-loading-header">
+      <header className="t-loading-header">
         <LoadingHeaderBackButton onBack={onBack} />
         <LoadingHeaderTitle {...titleProps} />
         {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
         <Spinner dark loading={loading} />
-      </Row>
+      </header>
     </Show>
   );
 };
