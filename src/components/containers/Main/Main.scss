@@ -15,26 +15,22 @@ $PREF: 't-main';
 
   @include T { padding: $sm 0; top: $xl; }
   @include M { padding: $xs 0; top: $xl; }
-}
 
-.#{$PREF}-header > div:first-of-type {
-  @extend .flex-ac;
+  > div:first-child { @extend .flex-ac; }
+  > div:first-child > h1 { margin-right: $sm; }
+  > div:first-child > .c-tag-number ~ .c-spinner { margin-left: $xs; }
 
-  > h1 { margin-right: $sm; }
-
-  > button:first-of-type > svg {
+  > div:first-child > button:first-of-type > svg {
     @extend .react-icon--xl;
-
+  
     border-radius: 50%;
     margin-right: $sm;
     padding: 2px;
-
+  
     @include HOVER {
       background-color: rgba($color: $primary-hex, $alpha: 0.15);
     }
   }
-
-  > .c-tag-number ~ .c-spinner { margin-left: $xs; }
 }
 
 // ## MAIN CONTENT

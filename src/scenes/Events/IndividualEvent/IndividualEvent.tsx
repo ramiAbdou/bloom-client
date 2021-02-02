@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
 import { CookieType, ModalType } from '@constants';
-import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
@@ -24,12 +23,8 @@ import IndividualEventTable from './IndividualEventTable';
 
 const IndividualEventHeader: React.FC = () => (
   <div className="s-events-individual-header">
-    <IndividualEventInsights />
-
-    <Row>
-      <EventsAspectBackground />
-      <IndividualEventMain />
-    </Row>
+    <EventsAspectBackground />
+    <IndividualEventMain />
   </div>
 );
 
@@ -89,6 +84,7 @@ const IndividualEvent: React.FC = () => {
 
   return (
     <div className={css}>
+      <IndividualEventInsights />
       <IndividualEventHeader />
       <IndividualEventTable />
 

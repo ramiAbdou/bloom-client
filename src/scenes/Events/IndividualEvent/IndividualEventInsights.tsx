@@ -3,14 +3,21 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import AnalyticsCard from '@containers/Card/AnalyticsCard';
+import MainSection from '@containers/Main/MainSection';
 import Row from '@containers/Row/Row';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
   const startTime = useStoreState(({ db }) => db.event.startTime);
   const numAttendees = useStoreState(({ db }) => db.event.attendees?.length);
-  if (day().isBefore(day(startTime))) return null;
-  return <AnalyticsCard label="# of Attendees" value={numAttendees} />;
+
+  return (
+    <AnalyticsCard
+      label="# of Attendees"
+      show={!!day().isAfter(day(startTime))}
+      value={numAttendees}
+    />
+  );
 };
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
@@ -21,24 +28,29 @@ const IndividualEventInsightsGuestsCard: React.FC = () => {
 const IndividualEventInsightsWatchesCard: React.FC = () => {
   const recordingUrl = useStoreState(({ db }) => db.event.recordingUrl);
   const numWatches = useStoreState(({ db }) => db.event.watches?.length);
-  if (!recordingUrl) return null;
-  return <AnalyticsCard label="# of Recording Viewers" value={numWatches} />;
+
+  return (
+    <AnalyticsCard
+      label="# of Recording Viewers"
+      show={!!recordingUrl}
+      value={numWatches}
+    />
+  );
 };
 
 const IndividualEventInsights: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
-  if (!isAdmin) return null;
 
   return (
-    <>
+    <MainSection className="s-events-individual-insights" show={!!isAdmin}>
       <Row spacing="sm">
         <IndividualEventInsightsAttendeesCard />
         <IndividualEventInsightsGuestsCard />
         <IndividualEventInsightsWatchesCard />
       </Row>
 
-      <Separator margin={24} />
-    </>
+      <Separator marginBottom={0} marginTop={24} />
+    </MainSection>
   );
 };
 

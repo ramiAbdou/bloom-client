@@ -1,5 +1,7 @@
 $PREF: 's-events-individual';
 
+// ## INDIVIDUAL EVENT PUBLIC
+
 .#{$PREF}--public {
   box-sizing: border-box;
   margin: 0 auto;
@@ -8,20 +10,19 @@ $PREF: 's-events-individual';
 
   @include D { margin-top: $xl; }
 
-  > .#{$PREF}-header > .t-row:last-child {
+  > .#{$PREF}-header {
     @extend .shadow--1;
 
     @include D { border-radius: $sm; }
   }
+  
 
   > .#{$PREF}-grid:last-child { @include D { padding: $md 0; } }
 }
 
 // ## INDIVIDUAL EVENT TABLE
 
-.#{$PREF}-table-ctr {
-  padding: $md;
-}
+.#{$PREF}-table-ctr { padding: $md; }
 
 // ## INDIVIDUAL EVENT GRID
 
@@ -39,24 +40,27 @@ $PREF: 's-events-individual';
   > *:last-child { grid-column-end: span 5; }
 }
 
+// ## INDIVIDUAL EVENT INSIGHTS
+
+.#{$PREF}-insights {
+  background-color: white;
+  margin-bottom: 0;
+  padding: $md $md 0 $md;
+
+  @include LTE(610) {
+    display: block;
+    
+    > * { width: 100%; }
+  }
+}
+
 // ## INDIVIDUAL EVENT HEADER
 
 .#{$PREF}-header {
+  @extend .#{$PREF}-grid;
+
   background-color: white;
   padding: $md;
-
-  > .t-row:first-child {
-    margin-bottom: $sm;
-
-    @include LTE(610) {
-      display: block;
-      
-      > * { width: 100%; }
-      > *:not(:last-child) { margin-bottom: $sm; }
-    }
-  }
-
-  > .t-row:last-child { @extend .#{$PREF}-grid; padding: 0; }
 }
 
 // ## INDIVIDUAL EVENT HEADER CONTENT - Contains basic information such as
