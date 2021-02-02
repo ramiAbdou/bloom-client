@@ -21,6 +21,7 @@ const ApplicationPaymentForm: React.FC = () => {
   return (
     <Form onSubmit={savePaymentMethod}>
       <FormHeader
+        h2
         description={deline`
           You selected a paid plan. Please enter your card and billing
           information to continue. You will be able to review this information

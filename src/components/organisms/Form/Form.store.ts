@@ -11,6 +11,7 @@ import { FormItemData, FormOptions, SetValueArgs } from './Form.types';
 import { getError, getFormItemKey } from './Form.util';
 
 export type FormModel = {
+  deleteItems: Action<FormModel, Partial<FormItemData>[]>;
   error: string;
   isCompleted: Computed<FormModel, boolean>;
   isLoading: boolean;
@@ -24,6 +25,21 @@ export type FormModel = {
 };
 
 export const formModel: FormModel = {
+  deleteItems: action(
+    ({ items, ...state }, deletedItems: Partial<FormItemData>[]) => {
+      const updatedItems: Record<string, FormItemData> = deletedItems.reduce(
+        (acc: Record<string, FormItemData>, item: Partial<FormItemData>) => {
+          const key = getFormItemKey(item);
+          delete acc[key];
+          return acc;
+        },
+        items
+      );
+
+      return { ...state, items: updatedItems };
+    }
+  ),
+
   // Represents the error message for the entire Form, not any one element.
   error: null,
 

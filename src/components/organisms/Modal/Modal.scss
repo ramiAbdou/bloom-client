@@ -64,7 +64,8 @@ $PREF: 'c-modal';
 .#{$PREF} > form {
   // All modals will have an h1 tag, which will be standardized everywhere.
   > h1,
-  > .t-loading-header > h1 { color: $primary; }
+  > .t-loading-header > h1,
+  > header > h1 { color: $primary; }
 
   > h1,
   > .t-loading-header { margin-bottom: $sm; }

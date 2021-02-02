@@ -46,8 +46,9 @@ $PREF: 'o-form';
 // ## FORM HEADER
 
 .#{$PREF}-header {
-  margin-bottom: $lg;
+  margin-bottom: $md;
 
+  > h1:first-of-type,
   > h2:first-of-type { margin-bottom: $xs; }
 }
 
