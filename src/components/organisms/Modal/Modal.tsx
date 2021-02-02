@@ -9,7 +9,6 @@ import { createPortal } from 'react-dom';
 import { IoClose } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import Show from '@containers/Show';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -114,11 +113,10 @@ const Modal: React.FC<ModalProps> = ({
       {shouldShowModal && (
         <>
           <ModalBackground lock={lock} />
-          <ModalCancel lock={lock} />
-
           <ModalContainer {...containerProps}>
             <div className={css}>{children}</div>
           </ModalContainer>
+          <ModalCancel lock={lock} />
         </>
       )}
     </AnimatePresence>,
