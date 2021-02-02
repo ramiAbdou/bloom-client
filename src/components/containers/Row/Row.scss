@@ -12,11 +12,13 @@ $PREF: 't-row';
 
   &--spacing-xs {
     &:not(&--col) > *:not(:last-child) { margin-right: $xs; }
+    &.t-row--col-m > *:not(:last-child) { @include M { margin-bottom: $xs; } }
     &.t-row--col-t > *:not(:last-child) { @include MT { margin-bottom: $xs; } }
   }
 
   &--spacing-sm {
     &:not(&--col) > *:not(:last-child) { margin-right: $sm; }
+    &.t-row--col-m > *:not(:last-child) { @include M { margin-bottom: $sm; } }
     &.t-row--col-t > *:not(:last-child) { @include MT { margin-bottom: $sm; } }
   }
 

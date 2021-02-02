@@ -11,7 +11,7 @@ import MembersAnalyticsTotalMembersChart from './TotalMembersChart';
 const MembersAnalytics: React.FC = () => (
   <div className="s-analytics-page s-analytics-members">
     <MainSection>
-      <Row spacing="sm">
+      <Row columnBreakpoint="M" spacing="sm">
         <MembersAnalyticsTotalMembersCard />
         <MembersAnalyticsActiveMembersCard />
       </Row>
