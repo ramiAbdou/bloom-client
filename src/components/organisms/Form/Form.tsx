@@ -57,7 +57,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         goForward: storyStore?.getActions()?.goForward,
         items: validatedItems,
         setError,
-        setStoryItems: storyStore?.getActions()?.setItems,
+        setStoryValue: storyStore?.getActions()?.setValue,
         storyItems: storyStore?.getState()?.items
       });
 

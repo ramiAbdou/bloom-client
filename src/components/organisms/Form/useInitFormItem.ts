@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import { getFormItemKey } from '@organisms/Form/Form.util';
+import StoryStore from '@organisms/Story/Story.store';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 
@@ -12,7 +14,13 @@ const useInitFormItem = ({
   validate,
   value
 }: FormItemData) => {
+  const key = getFormItemKey({ category, id, title });
+
+  const storedValue = FormStore.useStoreState(({ items }) => items[key]?.value);
   const setItem = FormStore.useStoreActions((store) => store.setItem);
+  const storyStore = StoryStore.useStore();
+  const storyItems = storyStore?.getState()?.items;
+  const setValue = storyStore?.getActions()?.setValue;
 
   useEffect(() => {
     const emptyValue =
@@ -31,6 +39,13 @@ const useInitFormItem = ({
       value
     });
   }, []);
+
+  useEffect(() => {
+    // const
+    if (storyItems && storyItems[key]?.value !== storedValue) {
+      setValue({ key, value: storedValue });
+    }
+  }, [storedValue]);
 };
 
 export default useInitFormItem;

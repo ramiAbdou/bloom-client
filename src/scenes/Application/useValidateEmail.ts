@@ -12,8 +12,7 @@ const useValidateEmail = () => {
     db,
     items,
     goForward,
-    setError,
-    setStoryItems
+    setError
   }: OnFormSubmitArgs) => {
     const { byId: byQuestionId } = db.entities.questions;
 
@@ -33,7 +32,6 @@ const useValidateEmail = () => {
       return;
     }
 
-    setStoryItems(items);
     goForward();
   };
 

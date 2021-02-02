@@ -11,7 +11,7 @@ const useSavePaymentMethod = (): OnFormSubmit => {
     goForward,
     items,
     setError,
-    setStoryItems
+    setStoryValue
   }: OnFormSubmitArgs) => {
     const city = items.CITY.value;
     const line1 = items.BILLING_ADDRESS.value;
@@ -41,9 +41,9 @@ const useSavePaymentMethod = (): OnFormSubmit => {
       last4
     } = paymentMethod?.card ?? {};
 
-    setStoryItems({
-      ...items,
-      CREDIT_OR_DEBIT_CARD: {
+    setStoryValue({
+      key: 'CREDIT_OR_DEBIT_CARD',
+      value: {
         brand: brand.charAt(0).toUpperCase() + brand.slice(1).toLowerCase(),
         expirationDate: `${expirationMonth}/${expirationYear}`,
         last4

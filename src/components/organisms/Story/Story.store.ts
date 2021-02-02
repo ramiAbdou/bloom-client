@@ -7,7 +7,8 @@ import {
   createContextStore
 } from 'easy-peasy';
 
-import { FormItemData } from '@organisms/Form/Form.types';
+import { FormItemData, SetValueArgs } from '@organisms/Form/Form.types';
+import { getError } from '@organisms/Form/Form.util';
 import { StoryPageProps } from './Story.types';
 
 export type StoryModel = {
@@ -18,10 +19,10 @@ export type StoryModel = {
   pageId: string;
   pages: StoryPageProps[];
   setCurrentPage: Action<StoryModel, Pick<StoryPageProps, 'id' | 'branchId'>>;
-  setItems: Action<StoryModel, Record<string, FormItemData>>;
   setPage: Action<StoryModel, Partial<StoryPageProps>>;
   setPageDisabled: Action<StoryModel, Pick<StoryPageProps, 'disabled' | 'id'>>;
   setPageId: Action<StoryModel, string>;
+  setValue: Action<StoryModel, SetValueArgs>;
 };
 
 export const storyModel: StoryModel = {
@@ -58,10 +59,6 @@ export const storyModel: StoryModel = {
     }
   ),
 
-  setItems: action((state, items) => {
-    return { ...state, items: { ...state.items, ...items } };
-  }),
-
   setPage: action((state, partialPage) => {
     const { getPage, pageId, pages } = state;
     const page = deepmerge(getPage(partialPage?.id), partialPage);
@@ -79,7 +76,19 @@ export const storyModel: StoryModel = {
     }
   ),
 
-  setPageId: action((state, pageId: string) => ({ ...state, pageId }))
+  setPageId: action((state, pageId: string) => ({ ...state, pageId })),
+
+  setValue: action(({ items, ...state }, { key, value }: SetValueArgs) => {
+    const updatedItem = { ...items[key], value };
+
+    return {
+      ...state,
+      items: {
+        ...items,
+        [key]: { ...updatedItem, error: getError(updatedItem) }
+      }
+    };
+  })
 };
 
 const StoryStore = createContextStore<StoryModel>(storyModel, {

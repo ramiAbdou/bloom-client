@@ -8,7 +8,6 @@ import FormStore from '@organisms/Form/Form.store';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryPage from '@organisms/Story/StoryPage';
-import useSyncStory from '@organisms/Story/useSyncStory';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
@@ -67,10 +66,10 @@ const ApplicationChooseTypeForm: React.FC = () => {
     });
   });
 
-  const syncStory = useSyncStory();
+  // const syncStory = useSyncStory();
 
   return (
-    <Form onSubmit={syncStory}>
+    <Form>
       <FormMultipleChoice cardOptions={types} category="MEMBERSHIP_TYPE" />
       <ApplicationPaymentSection />
       <ApplicationChooseTypeButton />
