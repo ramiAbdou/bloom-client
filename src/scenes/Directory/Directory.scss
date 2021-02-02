@@ -20,6 +20,7 @@ $PREF: 's-directory';
 // the directory cards.
 
 .#{$PREF}-card-ctr {
+  box-sizing: border-box;
   display: grid;
   padding: $xxs 0;
 

@@ -6,7 +6,9 @@ $PREF: 't-main';
 
 .#{$PREF}-header {
   background-color: $gray-6;
-  padding: $md 0;
+  margin-left: -$xxs;
+  margin-right: -$xxs;
+  padding: $md $xxs;
   position: sticky;
   top: 0;
   z-index: 11;
@@ -31,6 +33,8 @@ $PREF: 't-main';
       background-color: rgba($color: $primary-hex, $alpha: 0.15);
     }
   }
+
+  > .c-tag-number ~ .c-spinner { margin-left: $xs; }
 }
 
 // ## MAIN CONTENT

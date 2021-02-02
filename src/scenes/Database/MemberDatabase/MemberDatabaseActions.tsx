@@ -17,15 +17,13 @@ const MemberDatabaseButtons = () => {
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  if (!isAnythingSelected) return null;
-
   return (
-    <div>
+    <Row show={!!isAnythingSelected}>
       <MemberDatabaseCopyButton />
       <MemberDatabaseExportButton />
       {isOwner && <MemberDatabasePromoteButton />}
       <DeleteMembersButton />
-    </div>
+    </Row>
   );
 };
 
