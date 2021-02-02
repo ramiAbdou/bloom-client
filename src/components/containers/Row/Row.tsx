@@ -5,6 +5,7 @@ import { cx } from '@util/util';
 
 interface RowProps extends ChildrenProps, ClassNameProps, ShowProps {
   align?: 'baseline' | 'end' | 'start';
+  columnBreakpoint?: number;
   equal?: boolean;
   marginTopAuto?: boolean;
   spaceBetween?: boolean;
