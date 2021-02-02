@@ -5,9 +5,13 @@ import { useHistory } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
+import {
+  ChildrenProps,
+  ClassNameProps,
+  LoadingProps,
+  ShowProps
+} from '@constants';
 import Row from '@containers/Row/Row';
-import Show from '@containers/Show';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { cx } from '@util/util';
 import MainNavigation, { NavigationProps } from './MainNavigation';
@@ -22,25 +26,13 @@ export interface MainHeaderProps
   title: string;
 }
 
-const MainHeaderBackButton = () => {
+const MainHeaderBackButton: React.FC<ShowProps> = ({ show }) => {
   const { goBack } = useHistory();
 
   return (
-    <Button onClick={goBack}>
+    <Button show={show} onClick={goBack}>
       <IoArrowBack />
     </Button>
-  );
-};
-
-const MainHiddenButton: React.FC<
-  Pick<MainHeaderProps, 'children' | 'options'>
-> = ({ children, options }) => {
-  const isDesktop = useBreakpoint() >= 3;
-
-  return (
-    <Show show={!children && isDesktop && !!options?.length}>
-      <div className="t-main-header-element--hidden" />
-    </Show>
   );
 };
 
@@ -59,15 +51,14 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   return (
     <Row spaceBetween className={css}>
       <div>
-        {backButton && <MainHeaderBackButton />}
+        <MainHeaderBackButton show={!!backButton} />
         <h1>{title}</h1>
-        {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
+        <HeaderTag show={!loading && !!headerTag}>{headerTag}</HeaderTag>
         <Spinner dark loading={loading} />
       </div>
 
       {!loading && <MainNavigation options={options} />}
-      {!loading && isDesktop && children}
-      <MainHiddenButton options={options}>{children}</MainHiddenButton>
+      <div>{!loading && isDesktop && children}</div>
     </Row>
   );
 };

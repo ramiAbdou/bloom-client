@@ -13,9 +13,6 @@ $PREF: 't-main';
   top: 0;
   z-index: 11;
 
-  // @include T { padding: $sm 0; top: $xl; }
-  // @include M { padding: $xs 0; top: $xl; }
-
   > div:first-child { @extend .flex-ac; }
   > div:first-child > h1 { margin-right: $sm; }
   > div:first-child > .c-tag-number ~ .c-spinner { margin-left: $xs; }
@@ -31,9 +28,14 @@ $PREF: 't-main';
       background-color: rgba($color: $primary-hex, $alpha: 0.15);
     }
   }
-}
 
-.#{$PREF}-header-element--hidden { visibility: hidden; width: $xxl * 4; }
+  > div:last-child:not(:first-child) {
+    width: $xxl * 4;
+
+    @include MT { display: none; }
+    > * { margin-left: auto; }
+  }
+}
 
 // ## MAIN CONTENT
 
