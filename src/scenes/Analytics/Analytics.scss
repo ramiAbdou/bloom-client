@@ -1,9 +1,5 @@
 $PREF: 's-analytics';
 
-// ## ANALYTICS PAGE
-
-.#{$PREF}-page > .t-row:first-child { margin-bottom: $md; }
-
 // ## ANALYTICS HEADER
 
 .#{$PREF}-header { display: grid; grid-template-columns: repeat(12, 1fr); }
