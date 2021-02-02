@@ -37,12 +37,12 @@ $PREF: 't-main';
 
 .#{$PREF}-content {
   margin: 0 $md;
-  padding: 2px 2px $xl * 2 2px;
+  padding: 2px 2px $xl * 2 2px; // 2px for box-shadow to show properly.
 
   @include M { margin: 0 $sm; }
 }
 
-// ## MAIN CONTENT
+// ## MAIN SECTION
 
 .#{$PREF}-section {
   margin-bottom: $md;

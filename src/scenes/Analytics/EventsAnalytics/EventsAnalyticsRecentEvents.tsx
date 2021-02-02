@@ -2,6 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import LoadingHeader from '@containers/Loading/LoadingHeader';
 import { MainSection } from '@containers/Main';
 import Table from '@organisms/Table/Table';
 import {
@@ -64,7 +65,8 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
 
 const EventsAnalyticsTopEvents: React.FC = () => {
   return (
-    <MainSection title="Recent Events">
+    <MainSection>
+      <LoadingHeader h2 title="Recent Events" />
       <EventsAnalyticsRecentEventsTable />
     </MainSection>
   );

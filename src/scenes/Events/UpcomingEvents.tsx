@@ -1,9 +1,9 @@
 import day from 'dayjs';
 import React from 'react';
 
+import LoadingHeader from '@containers/Loading/LoadingHeader';
 import MainContent from '@containers/Main/MainContent';
 import MainSection from '@containers/Main/MainSection';
-import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
@@ -48,19 +48,14 @@ const EventsUpcoming: React.FC = () => {
 
   return (
     <MainContent>
-      <EventsHeader loading={loading} />
+      <EventsHeader />
 
-      <Show show={!loading}>
+      <MainSection className="s-events-section">
+        <LoadingHeader h2 loading={loading} title="Upcoming Events" />
         <ListStore.Provider>
-          <MainSection
-            className="s-events-section"
-            loading={loading}
-            title="Upcoming Events"
-          >
-            <EventsUpcomingContent />
-          </MainSection>
+          {!loading && <EventsUpcomingContent />}
         </ListStore.Provider>
-      </Show>
+      </MainSection>
     </MainContent>
   );
 };

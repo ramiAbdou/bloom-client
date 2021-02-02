@@ -2,6 +2,7 @@ import day from 'dayjs';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
+import LoadingHeader from '@containers/Loading/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
@@ -98,15 +99,13 @@ const DuesAnalyticsHistory: React.FC = () => {
     schema: Schema.COMMUNITY
   });
 
-  if (!data?.payments?.length) return null;
-
   return (
     <MainSection
       className="s-analytics-dues-history"
-      loading={loading}
-      title="Dues History"
+      show={!!data?.payments?.length}
     >
-      <DuesAnalyticsHistoryTable />
+      <LoadingHeader h2 loading={loading} title="Dues History" />
+      {!loading && <DuesAnalyticsHistoryTable />}
     </MainSection>
   );
 };

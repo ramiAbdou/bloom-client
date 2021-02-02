@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ChildrenProps, ClassNameProps } from '@constants';
-import AspectRatio from '@containers/AspectRatio/AspectRatio';
+import Aspect from '@containers/Aspect/Aspect';
 import Network from '@images/network.svg';
 import { cx } from '@util/util';
 
@@ -17,12 +17,12 @@ const EventsAspectBackground: React.FC<EventsAspectBackgroundProps> = ({
   const css = cx('s-events-aspect-bg', { [className]: className });
 
   return (
-    <AspectRatio className={css} ratio={2}>
+    <Aspect className={css} ratio={2}>
       {imageUrl && <img alt="Profile Avatar" src={imageUrl} />}
       {!imageUrl && <div />}
       <Network />
       {children}
-    </AspectRatio>
+    </Aspect>
   );
 };
 

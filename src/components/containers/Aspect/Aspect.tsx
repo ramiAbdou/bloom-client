@@ -3,15 +3,11 @@ import React from 'react';
 import { ClassNameProps } from '@constants';
 import { cx } from '@util/util';
 
-interface AspectRatioProps extends ClassNameProps {
+interface AspectProps extends ClassNameProps {
   ratio: 1 | 2;
 }
 
-const AspectRatio: React.FC<AspectRatioProps> = ({
-  children,
-  className,
-  ratio
-}) => {
+const Aspect: React.FC<AspectProps> = ({ children, className, ratio }) => {
   const css = cx('t-aspect', {
     [className]: className,
     't-aspect--1': ratio === 1,
@@ -21,4 +17,4 @@ const AspectRatio: React.FC<AspectRatioProps> = ({
   return <div className={css}>{children}</div>;
 };
 
-export default AspectRatio;
+export default Aspect;

@@ -1,6 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
+import LoadingHeader from '@containers/Loading/LoadingHeader';
 import { MainSection } from '@containers/Main';
 import Table from '@organisms/Table/Table';
 import {
@@ -75,7 +76,8 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
 };
 
 const EventsAnalyticsFrequentAttendees: React.FC = () => (
-  <MainSection title="Top 10 Event Goers">
+  <MainSection>
+    <LoadingHeader h2 title="Top 10 Event Goers" />
     <EventsAnalyticsFrequentAttendeesTable />
   </MainSection>
 );

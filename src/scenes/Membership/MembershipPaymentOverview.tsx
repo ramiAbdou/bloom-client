@@ -4,6 +4,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
+import LoadingHeader from '@containers/Loading/LoadingHeader';
 import { MainSection } from '@containers/Main';
 import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
@@ -111,11 +112,8 @@ const MembershipPaymentOverview: React.FC = () => {
   });
 
   return (
-    <MainSection
-      className="s-membership-overview-ctr"
-      loading={loading}
-      title="Payment Overview"
-    >
+    <MainSection className="s-membership-overview-ctr">
+      <LoadingHeader h2 loading={loading} title="Payment Overview" />
       <MembershipPaymentNextDueCard />
       <MembershipPaymentTable />
     </MainSection>

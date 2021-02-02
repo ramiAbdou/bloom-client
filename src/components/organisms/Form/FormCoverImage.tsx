@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 import Button from '@atoms/Button/Button';
-import AspectRatio from '@containers/AspectRatio/AspectRatio';
+import Aspect from '@containers/Aspect/Aspect';
 import { getFormItemKey } from '@organisms/Form/Form.util';
 import EventsAspectBackground from '@scenes/Events/EventsAspectBackground';
 import { convertImageToBase64 } from '@util/imageUtil';
@@ -70,13 +70,13 @@ const FormCoverImage: React.FC<FormItemData> = (args) => {
 
   return selectedImage ? (
     <>
-      <AspectRatio
+      <Aspect
         className="o-form-item--cover-image"
         ratio={2}
         // style={backgroundStyle}
       >
         <FormCoverImageContent {...args} />
-      </AspectRatio>
+      </Aspect>
 
       <FormCoverImageMessage />
     </>

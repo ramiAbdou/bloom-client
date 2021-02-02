@@ -1,9 +1,9 @@
 import day from 'dayjs';
 import React from 'react';
 
+import LoadingHeader from '@containers/Loading/LoadingHeader';
 import MainContent from '@containers/Main/MainContent';
 import MainSection from '@containers/Main/MainSection';
-import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
@@ -58,20 +58,15 @@ const EventsPast: React.FC = () => {
   return (
     <MainContent>
       <EventsHeader loading={loading} />
+      <YourPastEvents />
 
-      <Show show={!loading}>
-        <YourPastEvents />
+      <MainSection className="s-events-section">
+        <LoadingHeader h2 loading={loading} title="Past Events" />
 
         <ListStore.Provider>
-          <MainSection
-            className="s-events-section"
-            loading={loading}
-            title="Past Events"
-          >
-            <EventsPastContent />
-          </MainSection>
+          <EventsPastContent />
         </ListStore.Provider>
-      </Show>
+      </MainSection>
     </MainContent>
   );
 };

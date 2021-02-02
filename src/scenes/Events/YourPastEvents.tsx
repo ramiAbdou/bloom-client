@@ -6,6 +6,7 @@ import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import LoadingHeader from '../../components/containers/Loading/LoadingHeader';
 import EventsCard from './EventsCard/EventsCard';
 
 const YourPastEventsList: React.FC = () => {
@@ -31,11 +32,8 @@ const YourPastEventsList: React.FC = () => {
 
 const YourPastEventsContent: React.FC = () => (
   <ListStore.Provider>
-    <MainSection
-      className="s-events-section"
-      loading={false}
-      title="Your Events Attended"
-    >
+    <MainSection className="s-events-section">
+      <LoadingHeader h2 title="Your Events Attended" />
       <YourPastEventsList />
     </MainSection>
   </ListStore.Provider>

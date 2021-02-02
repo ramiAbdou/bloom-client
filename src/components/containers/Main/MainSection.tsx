@@ -1,46 +1,22 @@
 import React from 'react';
 
-import {
-  ChildrenProps,
-  ClassNameProps,
-  LoadingProps,
-  TitleProps
-} from '@constants';
+import { ChildrenProps, ClassNameProps, ShowProps } from '@constants';
+import Show from '@containers/Show';
 import { cx } from '@util/util';
-import LoadingContainer from '../Loading/LoadingContainer';
-import LoadingHeader from '../Loading/LoadingHeader';
 
-interface MainSectionProps
-  extends ClassNameProps,
-    ChildrenProps,
-    LoadingProps,
-    TitleProps {
-  SearchBar?: React.FC;
-}
+interface MainSectionProps extends ClassNameProps, ChildrenProps, ShowProps {}
 
 const MainSection: React.FC<MainSectionProps> = ({
+  children,
   className,
-  loading,
-  title,
-  SearchBar,
-  ...props
+  show
 }) => {
   const css = cx('t-main-section', { [className]: className });
 
   return (
-    <section className={css}>
-      <LoadingContainer
-        {...props}
-        Header={() => (
-          <LoadingHeader
-            h2
-            SearchBar={SearchBar}
-            loading={loading}
-            title={title}
-          />
-        )}
-      />
-    </section>
+    <Show show={show}>
+      <section className={css}>{children}</section>
+    </Show>
   );
 };
 
