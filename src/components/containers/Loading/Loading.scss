@@ -1,9 +1,7 @@
 $PREF: 't-loading-header';
 
-.#{$PREF} > div:first-child {
+.#{$PREF} {
   @extend .flex-ac;
-
-  // &:not(:only-child) {  }
 
   > h1,
   > h2,

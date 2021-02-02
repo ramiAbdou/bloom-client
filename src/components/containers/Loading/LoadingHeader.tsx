@@ -8,7 +8,6 @@ import { LoadingProps } from '@constants';
 import Show from '@containers/Show';
 
 export interface LoadingHeaderProps extends LoadingProps {
-  SearchBar?: React.FC;
   h2?: boolean;
   h3?: boolean;
   onBack?: VoidFunction;
@@ -44,19 +43,14 @@ const LoadingHeader: React.FC<LoadingHeaderProps> = ({
   onBack,
   loading,
   headerTag,
-  SearchBar,
   ...titleProps
 }) => {
   return (
     <div className="t-loading-header">
-      <div>
-        <LoadingHeaderBackButton onBack={onBack} />
-        <LoadingHeaderTitle {...titleProps} />
-        {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
-        <Spinner dark loading={loading} />
-      </div>
-
-      {!!SearchBar && <SearchBar />}
+      <LoadingHeaderBackButton onBack={onBack} />
+      <LoadingHeaderTitle {...titleProps} />
+      {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
+      <Spinner dark loading={loading} />
     </div>
   );
 };
