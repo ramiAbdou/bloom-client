@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MainSection from '@containers/Main/MainSection';
+import Row from '@containers/Row/Row';
 import MembersAnalyticsActiveMembersCard from './ActiveMembersCard';
 import MembersAnalyticsActiveMembersChart from './ActiveMembersChart';
 import MembersAnalyticsPlayground from './Playground';
@@ -9,14 +10,18 @@ import MembersAnalyticsTotalMembersChart from './TotalMembersChart';
 
 const MembersAnalytics: React.FC = () => (
   <div className="s-analytics-page s-analytics-members">
-    <MainSection className="flex-ac t-row--spacing-sm">
-      <MembersAnalyticsTotalMembersCard />
-      <MembersAnalyticsActiveMembersCard />
+    <MainSection>
+      <Row spacing="sm">
+        <MembersAnalyticsTotalMembersCard />
+        <MembersAnalyticsActiveMembersCard />
+      </Row>
     </MainSection>
 
-    <MainSection className="flex-acsb t-row--equal t-row--spacing-sm">
-      <MembersAnalyticsTotalMembersChart />
-      <MembersAnalyticsActiveMembersChart />
+    <MainSection>
+      <Row equal columnBreakpoint="T" spacing="sm">
+        <MembersAnalyticsTotalMembersChart />
+        <MembersAnalyticsActiveMembersChart />
+      </Row>
     </MainSection>
 
     <MembersAnalyticsPlayground />

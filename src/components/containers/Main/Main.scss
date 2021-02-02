@@ -32,7 +32,7 @@ $PREF: 't-main';
   }
 
   > div:last-child:not(:first-child) {
-    min-width: $xxl * 4;
+    min-width: 15%;
 
     @include MT { display: none; }
     > * { margin-left: auto; }

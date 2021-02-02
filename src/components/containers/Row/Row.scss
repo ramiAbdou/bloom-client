@@ -3,20 +3,28 @@ $PREF: 't-row';
 // ## ROW CONTAINER
 
 .#{$PREF} {
+  &--equal { bottom: $md; position: sticky; width: 100%; }
+  &--equal > * { width: 50%; }
+
   &--margin-top-auto { margin-top: auto; }
 
-  &:not(&--equal):not(&--spacing-sm) > *:not(:last-child) { margin-right: $xs; }
+  &--spacing-sm:not(&--col) > *:not(:last-child) { margin-right: $sm; }
 
-  &--equal {
-    bottom: $md;
-    position: sticky;
-    width: 100%;
-  
-    > * { width: 50%; }
-    > *:first-child { margin-right: $xxs; }
-    > *:last-child { margin-left: $xxs; }
+  &--spacing-xs {
+    &:not(&--col) > *:not(:last-child) { margin-right: $xs; }
+    &.t-row--col-t > *:not(:last-child) { @include MT { margin-bottom: $xs; } }
   }
 
-  &--spacing-xs > *:not(:last-child) { margin-right: $xs; }
-  &--spacing-sm > *:not(:last-child) { margin-right: $sm; }
+  &--spacing-sm {
+    &:not(&--col) > *:not(:last-child) { margin-right: $sm; }
+    &.t-row--col-t > *:not(:last-child) { @include MT { margin-bottom: $sm; } }
+  }
+
+  &--col-t {
+    @include MT { display: block; > * { margin-right: 0; width: 100%; } }
+  }
+
+  &--col-m {
+    @include M { display: block; > * { margin-right: 0; width: 100%; } }
+  }
 }
