@@ -41,10 +41,6 @@ $PREF: 's-application';
   }
 }
 
-// ## APPLICATION
-
-.#{$PREF} > .o-form-item { margin-bottom: $lg; }
-
 // ## APPLICATION COMMUNITY ICON
 
 .#{$PREF} > img {
@@ -67,15 +63,6 @@ $PREF: 's-application';
 
   > span:first-child { @extend .display; margin-right: $xxs; }
   > span:last-child { @extend .meta--lg; color: $gray-2; }
-}
-
-// ## APPLICATION PAYMENT SECTION
-
-.#{$PREF}-payment-ctr {
-  > h2 { margin-bottom: $xs; }
-  > p { margin-bottom: $md; }
-
-  > .o-form-item > .c-misc-input > .__PrivateStripeElement { width: 100%; }
 }
 
 // ## APPLICATION REVIEW

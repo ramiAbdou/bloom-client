@@ -43,11 +43,20 @@ $PREF: 'o-form';
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }
 
+// ## FORM HEADER
+
+.#{$PREF}-header {
+  margin-bottom: $lg;
+
+  > h2:first-of-type { margin-bottom: $xs; }
+}
+
 // ## FORM SECTION
 
 .#{$PREF}-section {
   margin-bottom: $lg;
-  > h2 { margin-bottom: $md; }
+
+  > h2:first-of-type { margin-bottom: $md; }
 }
 
 // ## FORM SUBMIT BUTTON
@@ -188,3 +197,5 @@ $PREF: 'o-form';
     color: initial !important;
   }
 }
+
+.__PrivateStripeElement { width: 100%; }

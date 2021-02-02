@@ -23,7 +23,5 @@ $PREF: 'mo-payment';
   > .o-form-label { margin-bottom: $xs; }
 }
 
-.c-misc-input > .__PrivateStripeElement { width: 100%; }
-
 .#{$PREF}-billing-ctr > .o-form-item { margin-bottom: 0; margin-top: 0; }
 .#{$PREF}-item--type > div { @extend .flex-acsb; }
