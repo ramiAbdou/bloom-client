@@ -6,6 +6,7 @@ import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
+import useBreakpoint from '@hooks/useBreakpoint';
 import { cx } from '@util/util';
 import MainNavigation, { NavigationProps } from './MainNavigation';
 
@@ -38,6 +39,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   options,
   title
 }) => {
+  const isDesktop = useBreakpoint() >= 3;
   const css = cx('t-main-header', { [className]: className });
 
   return (
@@ -50,7 +52,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       </div>
 
       <MainNavigation options={options} />
-      {!loading && children}
+      {!loading && isDesktop && children}
     </header>
   );
 };

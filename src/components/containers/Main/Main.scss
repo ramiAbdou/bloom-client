@@ -13,8 +13,8 @@ $PREF: 't-main';
   top: 0;
   z-index: 11;
 
-  @include T { padding: $sm 0; top: $xl; }
-  @include M { padding: $xs 0; top: $xl; }
+  // @include T { padding: $sm 0; top: $xl; }
+  // @include M { padding: $xs 0; top: $xl; }
 
   > div:first-child { @extend .flex-ac; }
   > div:first-child > h1 { margin-right: $sm; }
