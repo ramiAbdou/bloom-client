@@ -16,7 +16,6 @@ const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
 
   return (
     <MainHeader
-      className="s-directory-header"
       headerTag={`${numResults} Members`}
       loading={loading}
       title="Directory"

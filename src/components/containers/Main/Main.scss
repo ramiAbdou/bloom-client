@@ -12,7 +12,9 @@ $PREF: 't-main';
   position: sticky;
   top: 0;
   z-index: 11;
+}
 
+.#{$PREF}-header > .t-row {
   > div:first-child { @extend .flex-ac; }
   > div:first-child > h1 { margin-right: $sm; }
   > div:first-child > .c-tag-number ~ .c-spinner { margin-left: $xs; }
@@ -30,7 +32,7 @@ $PREF: 't-main';
   }
 
   > div:last-child:not(:first-child) {
-    width: $xxl * 4;
+    min-width: $xxl * 4;
 
     @include MT { display: none; }
     > * { margin-left: auto; }
@@ -44,6 +46,15 @@ $PREF: 't-main';
   padding: 2px 2px $xl * 2 2px; // 2px for box-shadow to show properly.
 
   @include M { margin: 0 $sm; }
+}
+
+// ## MAIN HAMBURGER
+
+.#{$PREF}-hamburger {
+  margin-bottom: $sm;
+
+  @include D { display: none; }
+  > button > svg { @extend .react-icon--lg; }
 }
 
 // ## MAIN SECTION
