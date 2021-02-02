@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { LoadingProps } from '@constants';
-import { MainContent } from '@containers/Main';
+import MainContent from '@containers/Main/MainContent';
 import MainHeader, { MainHeaderProps } from '@containers/Main/MainHeader';
 import useFinalPath from '@hooks/useFinalPath';
 import MembershipChangeContainer from './MembershipChangeContainer';

@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { MainSection } from '@containers/Main';
+import MainSection from '@containers/Main/MainSection';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent, IEventAttendee } from '@store/Db/entities';

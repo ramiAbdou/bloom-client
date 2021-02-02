@@ -8,8 +8,8 @@ import {
 } from 'react-router-dom';
 
 import { LoadingProps } from '@constants';
-import { MainHeader } from '@containers/Main';
 import MainContent from '@containers/Main/MainContent';
+import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';

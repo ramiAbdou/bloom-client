@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { LoadingProps } from '@constants';
-import { MainHeader } from '@containers/Main';
+import MainHeader from '@containers/Main/MainHeader';
 import Row from '@containers/Row/Row';
 import { useStoreState } from '@store/Store';
 import ApplicantsHeaderRespondAllButton from './ApplicantsRespondButton';

@@ -41,7 +41,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   const css = cx('t-main-header', { [className]: className });
 
   return (
-    <div className={css}>
+    <header className={css}>
       <div>
         {backButton && <MainHeaderBackButton />}
         <h1>{title}</h1>
@@ -51,7 +51,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
 
       <MainNavigation options={options} />
       {!loading && children}
-    </div>
+    </header>
   );
 };
 

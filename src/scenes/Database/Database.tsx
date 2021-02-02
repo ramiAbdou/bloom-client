@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import { MainContent } from '@containers/Main';
+import MainContent from '@containers/Main/MainContent';
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE } from '@scenes/Database/Database.gql';

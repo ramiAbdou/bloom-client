@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { LoadingProps } from '@constants';
-import { MainContent, MainHeader } from '@containers/Main';
+import MainContent from '@containers/Main/MainContent';
+import MainHeader from '@containers/Main/MainHeader';
 import useQuery from '@hooks/useQuery';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
