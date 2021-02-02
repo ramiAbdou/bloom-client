@@ -1,30 +1,14 @@
 import React from 'react';
 
-import { ChildrenProps, ClassNameProps, LoadingProps } from '@constants';
-import NavHamburgerContainer from '@organisms/Nav/NavHamburgerContainer';
+import { ChildrenProps, ClassNameProps } from '@constants';
+// import NavHamburgerContainer from '@organisms/Nav/NavHamburgerContainer';
 import { cx } from '@util/util';
-import LoadingContainer from '../Loading/LoadingContainer';
 
-interface MainContentProps extends ChildrenProps, ClassNameProps, LoadingProps {
-  Header?: React.FC<LoadingProps>;
-}
+interface MainContentProps extends ChildrenProps, ClassNameProps {}
 
-const MainContent: React.FC<MainContentProps> = ({
-  children,
-  className,
-  ...props
-}) => {
+const MainContent: React.FC<MainContentProps> = ({ children, className }) => {
   const css = cx('t-main-content', { [className]: className });
-
-  return (
-    <>
-      <NavHamburgerContainer />
-
-      <LoadingContainer {...props}>
-        <section className={css}>{children}</section>
-      </LoadingContainer>
-    </>
-  );
+  return <section className={css}>{children}</section>;
 };
 
 export default MainContent;

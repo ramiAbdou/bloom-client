@@ -3,6 +3,7 @@ import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
 import MainSection from '@containers/Main/MainSection';
+import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
@@ -55,18 +56,22 @@ const EventsPast: React.FC = () => {
   });
 
   return (
-    <MainContent Header={EventsHeader}>
-      <YourPastEvents />
+    <MainContent>
+      <EventsHeader loading={loading} />
 
-      <ListStore.Provider>
-        <MainSection
-          className="s-events-section"
-          loading={loading}
-          title="Past Events"
-        >
-          <EventsPastContent />
-        </MainSection>
-      </ListStore.Provider>
+      <Show show={!loading}>
+        <YourPastEvents />
+
+        <ListStore.Provider>
+          <MainSection
+            className="s-events-section"
+            loading={loading}
+            title="Past Events"
+          >
+            <EventsPastContent />
+          </MainSection>
+        </ListStore.Provider>
+      </Show>
     </MainContent>
   );
 };

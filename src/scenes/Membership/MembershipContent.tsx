@@ -37,7 +37,9 @@ const MembershipContent: React.FC = () => {
   const { url } = useRouteMatch();
 
   return (
-    <MainContent Header={MembershipHeader} loading={false}>
+    <MainContent>
+      <MembershipHeader loading={false} />
+
       <Switch>
         <Route exact component={ManageMembershipContent} path={url} />
         <Route

@@ -3,6 +3,7 @@ import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
 import MainSection from '@containers/Main/MainSection';
+import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
@@ -46,16 +47,20 @@ const EventsUpcoming: React.FC = () => {
   });
 
   return (
-    <MainContent Header={EventsHeader}>
-      <ListStore.Provider>
-        <MainSection
-          className="s-events-section"
-          loading={loading}
-          title="Upcoming Events"
-        >
-          <EventsUpcomingContent />
-        </MainSection>
-      </ListStore.Provider>
+    <MainContent>
+      <EventsHeader loading={loading} />
+
+      <Show show={!loading}>
+        <ListStore.Provider>
+          <MainSection
+            className="s-events-section"
+            loading={loading}
+            title="Upcoming Events"
+          >
+            <EventsUpcomingContent />
+          </MainSection>
+        </ListStore.Provider>
+      </Show>
     </MainContent>
   );
 };

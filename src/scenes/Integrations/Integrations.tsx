@@ -22,8 +22,9 @@ const IntegrationsContent: React.FC = () => {
   });
 
   return (
-    <MainContent Header={IntegrationsHeader} loading={loading}>
-      <IntegrationsCardContainer />
+    <MainContent>
+      <IntegrationsHeader loading={loading} />
+      {!loading && <IntegrationsCardContainer />}
     </MainContent>
   );
 };

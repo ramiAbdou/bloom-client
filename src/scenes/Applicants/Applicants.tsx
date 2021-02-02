@@ -18,8 +18,9 @@ const Applicants: React.FC = () => {
   });
 
   return (
-    <MainContent Header={ApplicantsHeader} loading={loading}>
-      <ApplicantsCardContainer />
+    <MainContent>
+      <ApplicantsHeader loading={loading} />
+      {!loading && <ApplicantsCardContainer />}
     </MainContent>
   );
 };

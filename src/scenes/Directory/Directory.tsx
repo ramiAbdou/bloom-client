@@ -34,8 +34,9 @@ const Directory: React.FC = () => {
 
   return (
     <ListStore.Provider>
-      <MainContent Header={DirectoryHeader} loading={loading}>
-        <DirectoryCardContainer />
+      <MainContent>
+        <DirectoryHeader loading={loading} />
+        {!loading && <DirectoryCardContainer />}
       </MainContent>
     </ListStore.Provider>
   );

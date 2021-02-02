@@ -6,7 +6,7 @@ $PREF: 't-main';
 
 .#{$PREF}-header {
   background-color: $gray-6;
-  padding: $md;
+  padding: $md 0;
   position: sticky;
   top: 0;
   z-index: 11;

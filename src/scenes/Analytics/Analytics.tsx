@@ -11,6 +11,7 @@ import { LoadingProps } from '@constants';
 import { MainHeader } from '@containers/Main';
 import MainContent from '@containers/Main/MainContent';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
+import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE } from '@scenes/Database/Database.gql';
 import { ICommunity } from '@store/Db/entities';
@@ -55,13 +56,17 @@ const Analytics: React.FC = () => {
   });
 
   return (
-    <MainContent Header={AnalyticsHeader} loading={loading}>
-      <Switch>
-        <Route component={DuesAnalytics} path={`${url}/dues`} />
-        <Route component={EventsAnalytics} path={`${url}/events`} />
-        <Route component={MembersAnalytics} path={`${url}/members`} />
-        <Redirect to={`${url}/members`} />
-      </Switch>
+    <MainContent>
+      <AnalyticsHeader loading={loading} />
+
+      <Show show={!loading}>
+        <Switch>
+          <Route component={DuesAnalytics} path={`${url}/dues`} />
+          <Route component={EventsAnalytics} path={`${url}/events`} />
+          <Route component={MembersAnalytics} path={`${url}/members`} />
+          <Redirect to={`${url}/members`} />
+        </Switch>
+      </Show>
     </MainContent>
   );
 };
