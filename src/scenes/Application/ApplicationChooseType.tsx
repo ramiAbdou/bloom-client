@@ -11,7 +11,7 @@ import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
-import ApplicationPaymentSection from './ApplicationPaymentSection';
+import ApplicationPaymentForm from './ApplicationPaymentSection';
 
 const ApplicationChooseTypeButton: React.FC = () => {
   const selectedTypeName: string = FormStore.useStoreState(({ items }) => {
@@ -71,7 +71,7 @@ const ApplicationChooseTypeForm: React.FC = () => {
   return (
     <Form>
       <FormMultipleChoice cardOptions={types} category="MEMBERSHIP_TYPE" />
-      <ApplicationPaymentSection />
+
       <ApplicationChooseTypeButton />
     </Form>
   );
@@ -96,6 +96,7 @@ const ApplicationChooseType: React.FC = () => {
       title="Membership Selection"
     >
       <ApplicationChooseTypeForm />
+      <ApplicationPaymentForm />
     </StoryPage>
   );
 };

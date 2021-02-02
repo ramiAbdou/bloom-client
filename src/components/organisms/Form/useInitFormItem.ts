@@ -5,45 +5,34 @@ import StoryStore from '@organisms/Story/Story.store';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 
-const useInitFormItem = ({
-  category,
-  id,
-  required,
-  title,
-  type,
-  validate,
-  value
-}: FormItemData) => {
-  const key = getFormItemKey({ category, id, title });
+const useInitFormItem = (props: FormItemData) => {
+  const key = getFormItemKey(props);
 
   const storedValue = FormStore.useStoreState(({ items }) => items[key]?.value);
   const setItem = FormStore.useStoreActions((store) => store.setItem);
   const storyStore = StoryStore.useStore();
   const storyItems = storyStore?.getState()?.items;
-  const setValue = storyStore?.getActions()?.setValue;
+  const setStoryItem = storyStore?.getActions()?.setItem;
+  const setStoryValue = storyStore?.getActions()?.setValue;
+
+  const { required, type, value } = props;
 
   useEffect(() => {
     const emptyValue =
       (type === 'MULTIPLE_SELECT' && []) || (type === 'TOGGLE' && false) || '';
 
-    value = value ?? emptyValue;
-
     setItem({
-      category,
-      id,
-      initialValue: value,
+      ...props,
       required: required ?? true,
-      title,
-      type,
-      validate,
-      value
+      value: value ?? emptyValue
     });
+
+    if (storyStore?.getState()?.items) setStoryItem(props);
   }, []);
 
   useEffect(() => {
-    // const
     if (storyItems && storyItems[key]?.value !== storedValue) {
-      setValue({ key, value: storedValue });
+      setStoryValue({ key, value: storedValue });
     }
   }, [storedValue]);
 };

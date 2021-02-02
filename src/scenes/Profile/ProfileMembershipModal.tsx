@@ -49,7 +49,7 @@ const ProfileMembershipModal: React.FC = () => {
 
       <Form onSubmit={updateMemberData}>
         {items?.map((item) => {
-          return <FormItem key={item.id} {...item} />;
+          return <FormItem key={item.id} questionId={item?.id} {...item} />;
         })}
 
         <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>

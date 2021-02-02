@@ -46,7 +46,8 @@ const useSavePaymentMethod = (): OnFormSubmit => {
       value: {
         brand: brand.charAt(0).toUpperCase() + brand.slice(1).toLowerCase(),
         expirationDate: `${expirationMonth}/${expirationYear}`,
-        last4
+        last4,
+        paymentMethodId: paymentMethod.id
       }
     });
 

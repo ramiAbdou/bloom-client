@@ -37,7 +37,7 @@ const ApplicationMainForm: React.FC = () => {
     >
       {questions?.map((props) => {
         const args = { ...props, ...items[props?.id] };
-        return <FormItem key={args?.id} {...args} />;
+        return <FormItem key={args?.id} questionId={props?.id} {...args} />;
       })}
 
       <FormSubmitButton>

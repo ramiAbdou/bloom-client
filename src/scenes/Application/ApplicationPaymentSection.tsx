@@ -6,11 +6,11 @@ import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
 import Form from '@organisms/Form/Form';
-import FormStore from '@organisms/Form/Form.store';
 import FormCreditCard from '@organisms/Form/FormCreditCard';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import StoryStore from '@organisms/Story/Story.store';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import useSavePaymentMethod from './useSavePaymentMethod';
@@ -45,7 +45,7 @@ const ApplicationPaymentForm: React.FC = () => {
 };
 
 const ApplicationPaymentSection: React.FC = () => {
-  const selectedTypeName: string = FormStore.useStoreState(({ items }) => {
+  const selectedTypeName: string = StoryStore.useStoreState(({ items }) => {
     return items.MEMBERSHIP_TYPE?.value;
   });
 

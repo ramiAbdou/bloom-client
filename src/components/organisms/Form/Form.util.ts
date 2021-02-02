@@ -19,7 +19,13 @@ export const getError = (item: FormItemData): string => {
   return null;
 };
 
-export const getFormItemKey = ({ category, id, title }: FormItemData) => {
+export const getFormItemKey = ({
+  category,
+  id,
+  questionId,
+  title
+}: FormItemData) => {
+  if (questionId) return questionId;
   if (id) return id;
   if (category) return category;
   if (title) return title;
