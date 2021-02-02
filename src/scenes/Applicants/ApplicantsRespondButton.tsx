@@ -3,6 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/Db/schema';
+import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
 import {
   RESPOND_TO_APPLICANTS,
@@ -20,6 +21,8 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   applicantIds,
   response
 }) => {
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+
   const [respondToApplicants] = useMutation<boolean, RespondToApplicantsArgs>({
     name: 'respondToApplicants',
     query: RESPOND_TO_APPLICANTS,
@@ -30,7 +33,10 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   // If no pending applicants, shouldn't be able to respond to anything.
   if (!applicantIds?.length) return null;
 
-  const onClick = async () => respondToApplicants();
+  const onClick = async () => {
+    await respondToApplicants();
+    showToast({ message: `Member(s) have been ${response.toLowerCase()}.` });
+  };
 
   const buttonText = takeFirst([
     [response === 'ACCEPTED' && all, 'Accept All'],

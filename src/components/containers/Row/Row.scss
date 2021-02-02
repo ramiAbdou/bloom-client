@@ -8,8 +8,6 @@ $PREF: 't-row';
 
   &--margin-top-auto { margin-top: auto; }
 
-  &--spacing-sm:not(&--col) > *:not(:last-child) { margin-right: $sm; }
-
   &--spacing-xs {
     &:not(&--col) > *:not(:last-child) { margin-right: $xs; }
     &.t-row--col-m > *:not(:last-child) { @include M { margin-bottom: $xs; } }

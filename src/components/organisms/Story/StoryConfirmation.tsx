@@ -41,7 +41,7 @@ const StoryConfirmation: React.FC<StoryConfirmationProps> = ({
 
       {children}
 
-      <StoryConfirmationCloseButton show={closeButton} />
+      <StoryConfirmationCloseButton show={!!closeButton} />
     </motion.div>
   );
 };

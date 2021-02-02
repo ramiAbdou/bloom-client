@@ -37,8 +37,6 @@ $PREF: 'o-story';
 
 // ## STORY CONFIRMATION
 
-$PREF: 'o-story-confirmation';
-
 .#{$PREF}-confirmation > div:first-child {
   @extend .flex-ac;
 
