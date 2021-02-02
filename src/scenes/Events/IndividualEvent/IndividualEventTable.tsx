@@ -80,7 +80,7 @@ const IndividualEventTable: React.FC = () => {
         const member: IMember = byMemberId[watch.member];
         const user: IUser = byUserId[member.user];
 
-        const { firstName, lastName, email } = user;
+        const { firstName, lastName, email } = user ?? {};
 
         const previousValue = acc[email];
 
