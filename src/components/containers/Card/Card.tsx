@@ -35,14 +35,13 @@ const Card: React.FC<CardProps> = ({
   return (
     <Show show={show}>
       <div className={css} onClick={onClick}>
-        {title && (
-          <LoadingHeader
-            h3
-            headerTag={headerTag}
-            loading={loading}
-            title={title}
-          />
-        )}
+        <LoadingHeader
+          h3
+          headerTag={headerTag}
+          loading={loading}
+          show={!!title}
+          title={title}
+        />
 
         {!loading && children}
       </div>

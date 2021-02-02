@@ -4,10 +4,10 @@ import { IoArrowBack } from 'react-icons/io5';
 import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { LoadingProps } from '@constants';
+import { LoadingProps, ShowProps } from '@constants';
 import Show from '@containers/Show';
 
-export interface LoadingHeaderProps extends LoadingProps {
+export interface LoadingHeaderProps extends LoadingProps, ShowProps {
   h2?: boolean;
   h3?: boolean;
   onBack?: VoidFunction;
@@ -43,15 +43,18 @@ const LoadingHeader: React.FC<LoadingHeaderProps> = ({
   onBack,
   loading,
   headerTag,
+  show,
   ...titleProps
 }) => {
   return (
-    <div className="t-loading-header">
-      <LoadingHeaderBackButton onBack={onBack} />
-      <LoadingHeaderTitle {...titleProps} />
-      {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
-      <Spinner dark loading={loading} />
-    </div>
+    <Show show={show}>
+      <div className="t-loading-header">
+        <LoadingHeaderBackButton onBack={onBack} />
+        <LoadingHeaderTitle {...titleProps} />
+        {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
+        <Spinner dark loading={loading} />
+      </div>
+    </Show>
   );
 };
 
