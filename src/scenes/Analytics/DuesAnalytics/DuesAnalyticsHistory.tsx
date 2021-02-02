@@ -2,7 +2,7 @@ import day from 'dayjs';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
-import LoadingHeader from '@containers/Loading/LoadingHeader';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';

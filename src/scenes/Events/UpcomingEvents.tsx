@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import LoadingHeader from '@containers/Loading/LoadingHeader';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainContent from '@containers/Main/MainContent';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';

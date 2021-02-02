@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 
-import LoadingHeader from '@containers/Loading/LoadingHeader';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import { cx } from '@util/util';
 import StoryStore from './Story.store';
 import { StoryPageBranch, StoryPageProps } from './Story.types';

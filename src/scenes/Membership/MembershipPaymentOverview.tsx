@@ -4,7 +4,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
-import LoadingHeader from '@containers/Loading/LoadingHeader';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';

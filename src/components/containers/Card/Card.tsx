@@ -3,7 +3,7 @@ import React from 'react';
 import { ChildrenProps, ClassNameProps, ShowProps } from '@constants';
 import LoadingHeader, {
   LoadingHeaderProps
-} from '@containers/Loading/LoadingHeader';
+} from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
 import { cx } from '@util/util';
 

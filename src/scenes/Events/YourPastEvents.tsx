@@ -6,7 +6,7 @@ import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import LoadingHeader from '../../components/containers/Loading/LoadingHeader';
+import LoadingHeader from '../../components/containers/LoadingHeader/LoadingHeader';
 import EventsCard from './EventsCard/EventsCard';
 
 const YourPastEventsList: React.FC = () => {

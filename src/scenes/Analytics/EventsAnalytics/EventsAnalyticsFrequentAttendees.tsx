@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import LoadingHeader from '@containers/Loading/LoadingHeader';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import Table from '@organisms/Table/Table';
 import {
