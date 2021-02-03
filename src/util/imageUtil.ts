@@ -4,9 +4,9 @@ import { nanoid } from 'nanoid';
 
 import { isProduction } from '@constants';
 
-const endpoint = `${process.env.DIGITAL_OCEAN_REGION}.digitaloceanspaces.com`;
-const cdnEndpoint = `${process.env.DIGITAL_OCEAN_REGION}.cdn.digitaloceanspaces.com`;
-const spacesEndpoint = new aws.Endpoint(endpoint);
+const bucketUrl = isProduction
+  ? process.env.DIGITAL_OCEAN_BUCKET_URL
+  : process.env.DIGITAL_OCEAN_TEST_BUCKET_URL;
 
 const bucketName = isProduction
   ? process.env.DIGITAL_OCEAN_BUCKET_NAME
@@ -16,7 +16,7 @@ const s3 = new aws.S3({
   accessKeyId: isProduction
     ? process.env.DIGITAL_OCEAN_KEY
     : process.env.DIGITAL_OCEAN_TEST_KEY,
-  endpoint: spacesEndpoint,
+  endpoint: new aws.Endpoint(bucketUrl),
   secretAccessKey: isProduction
     ? process.env.DIGITAL_OCEAN_SECRET
     : process.env.DIGITAL_OCEAN_TEST_SECRET
@@ -69,7 +69,5 @@ export const uploadImage = async ({
   };
 
   await s3.putObject(options).promise();
-
-  const imageUrl = `https://${bucketName}.${cdnEndpoint}/${bucketKey}`;
-  return imageUrl;
+  return `${bucketUrl}/${bucketKey}`;
 };
