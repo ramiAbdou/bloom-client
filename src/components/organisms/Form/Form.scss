@@ -191,9 +191,12 @@ $PREF: 'o-form';
   &:not(:last-child) { margin-bottom: $xs; }
 }
 
-.react-datepicker__day:not(&--disabled):not(&--selected):hover,
-.react-datepicker__time-list-item:not(&--disabled):not(&--selected):hover {
-  background-color: $primary-bg !important;
+/* stylelint-disable */
+.react-datepicker__day,
+.react-datepicker__time-list-item {
+  &:not(&--disabled):not(&--selected):hover {
+    background-color: $primary-bg !important;
+  }
 }
 
 // ## STRIPE ELEMENT OVERRIDING STYLES

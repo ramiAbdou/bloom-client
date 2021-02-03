@@ -13,7 +13,12 @@ interface InputProps extends ValueProps {
  * Resuable and customizable input component. Has three different versions:
  * regular, dark and gray.
  */
-const Input = ({ error, placeholder, onChange, value }: InputProps) => {
+const Input: React.FC<InputProps> = ({
+  error,
+  placeholder,
+  onChange,
+  value
+}) => {
   const modifiedOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };

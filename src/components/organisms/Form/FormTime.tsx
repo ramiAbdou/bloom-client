@@ -8,33 +8,31 @@ import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
-const useMinTime = (id: string) => {
+/**
+ * Returns the minimum time that is selectable for the FormTime component.
+ * If the START_DATE is today, then minimum time is right now. If the
+ * START_DATE is after today, the minimum time is the start of the day AKA
+ * midnight.
+ */
+const useMinTime = (key: string) => {
   const startDate = FormStore.useStoreState(
     ({ items }) => items.START_DATE?.value
   );
-
-  const endDate = FormStore.useStoreState(({ items }) => items.END_DATE?.value);
 
   const startTime = FormStore.useStoreState(
     ({ items }) => items.START_TIME?.value
   );
 
-  let minTime: Date;
+  const startOfToday = day().startOf('day');
 
-  const endOfYesterday = day().subtract(1, 'day').endOf('day');
+  if (key === 'END_TIME' && !startTime) return null;
+  if (key === 'END_TIME') return day(startTime).add(30, 'minute').toDate();
+  if (key === 'START_TIME' && !startDate) return null;
+  if (key === 'START_TIME' && day(startDate).isAfter(startOfToday)) {
+    return day().startOf('day').toDate();
+  }
 
-  if (id === 'END_TIME') {
-    if (startTime) minTime = day(startTime).add(30, 'minute').toDate();
-    else if (endDate && day(endDate).isAfter(endOfYesterday)) {
-      minTime = day().startOf('day').toDate();
-    }
-  } else if (id === 'START_TIME') {
-    if (startDate && day(startDate).isAfter(endOfYesterday)) {
-      minTime = day().startOf('day').toDate();
-    }
-  } else minTime = new Date();
-
-  return minTime;
+  return new Date();
 };
 
 const FormTime: React.FC<FormItemData> = (args) => {
@@ -42,26 +40,28 @@ const FormTime: React.FC<FormItemData> = (args) => {
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const setValue = FormStore.useStoreActions((store) => store.setValue);
 
+  const disabled: boolean = FormStore.useStoreState(({ items }) => {
+    if (key === 'END_TIME') return !items.START_TIME?.value;
+    return !items.START_DATE?.value;
+  });
+
   useInitFormItem(args);
-  const { id } = args;
+  const minTime = useMinTime(key);
 
   const updateDate = (date: Date | [Date, Date]) => {
-    setValue({ key, value: date });
+    if (key === 'START_TIME') {
+      setValue({ key: 'START_TIME', value: date });
 
-    if (id !== 'START_TIME') return;
-
-    setValue({
-      key: 'END_TIME',
-      value: day(date as Date)
+      const endTime = day(date as Date)
         .add(1, 'hour')
-        .toDate()
-    });
+        .toDate();
+
+      setValue({ key: 'END_TIME', value: endTime });
+    } else setValue({ key: 'END_TIME', value: date });
   };
 
-  const minTime = useMinTime(id);
-
   const placeholderText = day()
-    .add(id === 'END_TIME' ? 2 : 1, 'hour')
+    .add(key === 'END_TIME' ? 2 : 1, 'hour')
     .startOf('hour')
     .format('h:mm A');
 
@@ -71,6 +71,7 @@ const FormTime: React.FC<FormItemData> = (args) => {
         showTimeSelect
         showTimeSelectOnly
         dateFormat="h:mm a"
+        disabled={disabled}
         maxTime={day().endOf('day').toDate()}
         minTime={minTime}
         placeholderText={placeholderText}
