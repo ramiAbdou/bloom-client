@@ -33,7 +33,8 @@ const useUpdateUser = (): OnFormSubmit => {
           base64String: profilePicture,
           key: 'PROFILE_PICTURE'
         });
-      } catch {
+      } catch (e) {
+        console.log(e);
         setError('Failed to upload image.');
         return;
       }

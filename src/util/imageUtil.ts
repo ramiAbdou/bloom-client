@@ -8,15 +8,13 @@ const bucketUrl = isProduction
   ? process.env.DIGITAL_OCEAN_BUCKET_URL
   : process.env.DIGITAL_OCEAN_TEST_BUCKET_URL;
 
-const bucketName = isProduction
-  ? process.env.DIGITAL_OCEAN_BUCKET_NAME
-  : process.env.DIGITAL_OCEAN_TEST_BUCKET_NAME;
+const spacesEndpoint = 'sfo3.digitaloceanspaces.com';
 
 const s3 = new aws.S3({
   accessKeyId: isProduction
     ? process.env.DIGITAL_OCEAN_KEY
     : process.env.DIGITAL_OCEAN_TEST_KEY,
-  endpoint: new aws.Endpoint(bucketUrl),
+  endpoint: spacesEndpoint,
   secretAccessKey: isProduction
     ? process.env.DIGITAL_OCEAN_SECRET
     : process.env.DIGITAL_OCEAN_TEST_SECRET
@@ -64,7 +62,9 @@ export const uploadImage = async ({
   const options: aws.S3.PutObjectRequest = {
     ACL: 'public-read',
     Body: buffer,
-    Bucket: bucketName,
+    Bucket: isProduction
+      ? process.env.DIGITAL_OCEAN_BUCKET_NAME
+      : process.env.DIGITAL_OCEAN_TEST_BUCKET_NAME,
     Key: bucketKey
   };
 

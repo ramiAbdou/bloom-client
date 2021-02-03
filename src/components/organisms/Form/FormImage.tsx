@@ -6,6 +6,7 @@ import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
+import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
 const FormImage: React.FC<FormItemData> = (args) => {
@@ -39,7 +40,7 @@ const FormImage: React.FC<FormItemData> = (args) => {
     : { backgroundColor: 'var(--gray-4)' };
 
   return (
-    <>
+    <FormItemContainer className="o-form-item--image">
       <input
         ref={ref}
         accept=".png, .jpg, .jpeg"
@@ -50,7 +51,7 @@ const FormImage: React.FC<FormItemData> = (args) => {
       <Button style={backgroundStyle} onClick={openFileUploader}>
         <IoCamera />
       </Button>
-    </>
+    </FormItemContainer>
   );
 };
 
