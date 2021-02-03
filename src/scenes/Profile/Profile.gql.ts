@@ -36,8 +36,13 @@ export const GET_MEMBER_DATA = query({
 
 // ## UPDATE MEMBER DATA
 
+interface MemberDataArgs {
+  questionId: string;
+  value: string[];
+}
+
 export interface UpdateMemberDataArgs {
-  items: Pick<IMemberData, 'id' | 'value'>[];
+  items: MemberDataArgs[];
 }
 
 export const UPDATE_MEMBER_DATA = mutation({

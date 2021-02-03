@@ -2,6 +2,8 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
+import { parseValue } from '@organisms/Form/Form.util';
+import FormHeader from '@organisms/Form/FormHeader';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
@@ -9,7 +11,7 @@ import { IMemberData, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import useUpdateMemberData from './useUpdateMemberData';
 
-const ProfileMembershipModal: React.FC = () => {
+const ProfileMembershipForm: React.FC = () => {
   const items = useStoreState(({ db }) => {
     const { byId: byDataId } = db.entities.data;
     const { byId: byQuestionId } = db.entities.questions;
@@ -26,16 +28,11 @@ const ProfileMembershipModal: React.FC = () => {
         (element: IMemberData) => element.question === id
       );
 
-      let value = data?.value;
-
-      if (
-        (type === 'MULTIPLE_SELECT' ||
-          (type === 'MULTIPLE_CHOICE' && options?.length >= 5)) &&
-        value &&
-        !Array.isArray(value)
-      ) {
-        value = value ? value.split(',') : [];
-      }
+      const value =
+        type === 'MULTIPLE_SELECT' ||
+        (type === 'MULTIPLE_CHOICE' && options?.length >= 5)
+          ? parseValue(data?.value)
+          : data?.value;
 
       return { ...question, value };
     });
@@ -44,16 +41,22 @@ const ProfileMembershipModal: React.FC = () => {
   const updateMemberData = useUpdateMemberData();
 
   return (
+    <Form onSubmit={updateMemberData}>
+      <FormHeader title="Edit Membership Information" />
+
+      {items?.map(({ id, ...item }) => {
+        return <FormItem key={id} questionId={id} {...item} />;
+      })}
+
+      <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
+    </Form>
+  );
+};
+
+const ProfileMembershipModal: React.FC = () => {
+  return (
     <Modal id={ModalType.EDIT_MEMBERSHIP_INFORMATION}>
-      <h1>Edit Membership Information</h1>
-
-      <Form onSubmit={updateMemberData}>
-        {items?.map((item) => {
-          return <FormItem key={item.id} questionId={item?.id} {...item} />;
-        })}
-
-        <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
-      </Form>
+      <ProfileMembershipForm />
     </Modal>
   );
 };

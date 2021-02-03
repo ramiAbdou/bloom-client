@@ -5,7 +5,7 @@ import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UPDATE_MEMBER_DATA, UpdateMemberDataArgs } from './Profile.gql';
 
-const useUpdateUser = (): OnFormSubmit => {
+const useUpdateMemberData = (): OnFormSubmit => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -16,9 +16,12 @@ const useUpdateUser = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
-    const { error } = await updateMemberData({
-      items: Object.values(items).map(({ id, value }) => ({ id, value }))
-    });
+    const data = Object.values(items).map(({ questionId, value }) => ({
+      questionId,
+      value
+    }));
+
+    const { error } = await updateMemberData({ items: data });
 
     if (error) {
       setError(error);
@@ -33,4 +36,4 @@ const useUpdateUser = (): OnFormSubmit => {
   return onSubmit;
 };
 
-export default useUpdateUser;
+export default useUpdateMemberData;

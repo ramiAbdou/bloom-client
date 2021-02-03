@@ -7,7 +7,7 @@ import useQuery from '@hooks/useQuery';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import { IMemberData, IQuestion } from '@store/Db/entities';
+import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_MEMBER_DATA } from './Profile.gql';
@@ -49,30 +49,27 @@ const ProfileMembershipContent: React.FC = () => {
 const ProfileMembershipOnboardingContainer: React.FC = () => {
   const hasData = useStoreState(({ db }) => !!db.member.data?.length);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-
-  if (hasData) return null;
-
   const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
 
   return (
-    <Button fill primary onClick={onClick}>
+    <Button fill primary show={!hasData} onClick={onClick}>
       + Fill Out Membership Information
     </Button>
   );
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const { loading } = useQuery({
+  const { loading } = useQuery<IMember>({
     name: 'getMember',
     query: GET_MEMBER_DATA,
     schema: Schema.MEMBER,
     variables: { populate: ['community.questions', 'data.question'] }
   });
 
-  if (loading) return null;
+  console.log(loading);
 
   return (
-    <Card className="s-profile-card--membership">
+    <Card className="s-profile-card--membership" loading={loading}>
       <ProfileMembershipHeader />
       <ProfileMembershipContent />
       <ProfileMembershipOnboardingContainer />

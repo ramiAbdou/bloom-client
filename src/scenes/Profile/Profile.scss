@@ -31,8 +31,6 @@ $PREF: 's-profile';
 
 // ## PROFILE CARD
 
-// .#{$PREF}-card {}
-
 .#{$PREF}-card--personal,
 .#{$PREF}-card--membership { grid-column-end: span 8; height: fit-content; }
 
