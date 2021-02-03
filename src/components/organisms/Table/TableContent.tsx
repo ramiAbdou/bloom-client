@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Show from '@containers/Show';
 import TableStore from './Table.store';
 import { OnRenameColumnProps } from './Table.types';
 import TableBanner from './TableBanner/TableBanner';
@@ -16,9 +17,11 @@ interface TableContentProps extends OnRenameColumnProps {
 const TableContentEmptyMessage: React.FC<
   Pick<TableContentProps, 'emptyMessage'>
 > = ({ emptyMessage }) => {
-  if (!emptyMessage) return null;
-
-  return <p>{emptyMessage}</p>;
+  return (
+    <Show show={!!emptyMessage}>
+      <p>{emptyMessage}</p>
+    </Show>
+  );
 };
 
 const TableContent: React.FC<TableContentProps> = ({
@@ -27,8 +30,7 @@ const TableContent: React.FC<TableContentProps> = ({
   small
 }) => {
   const emptyMessage = TableStore.useStoreState(({ data }) => {
-    if (data?.length) return null;
-    return eMessage;
+    return !data?.length ? eMessage : null;
   });
 
   const show: boolean = TableStore.useStoreState(({ data, options }) => {
@@ -39,25 +41,23 @@ const TableContent: React.FC<TableContentProps> = ({
     (store) => store.isAllPageSelected
   );
 
-  if (show === false) return null;
-
   return (
-    <>
+    <Show show={show}>
       {isAllPageSelected && <TableBanner />}
 
-      {!emptyMessage && (
+      <Show show={!emptyMessage}>
         <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
           <table className="o-table">
             <TableHeaderContainer />
             <TableBodyContainer />
           </table>
         </div>
-      )}
+      </Show>
 
       {!emptyMessage && <TablePagination />}
       <TableContentEmptyMessage emptyMessage={emptyMessage} />
       <TablePanel onRenameColumn={onRenameColumn} />
-    </>
+    </Show>
   );
 };
 

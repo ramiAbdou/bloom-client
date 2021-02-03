@@ -49,14 +49,14 @@ const IndividualEventJoinedFilter: React.FC = () => {
 };
 
 const IndividualEventNoShowFilter: React.FC = () => {
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
+  const startTime = useStoreState(({ db }) => db.event?.startTime);
   const filter: TableFilter = (row) => !!row.rsvpdAt && !row.joinedAt;
 
   return (
     <TableQuickFilter
       filter={filter}
       id="RSVP_NO_SHOW"
-      show={day().isAfter(day(endTime))}
+      show={day().isAfter(day(startTime))}
       title="RSVP'd + Didn't Join"
     />
   );

@@ -60,6 +60,7 @@ const IndividualEventTable: React.FC = () => {
           [email]: {
             email,
             fullName: `${firstName} ${lastName}`,
+            id: email,
             rsvpdAt: day(createdAt).format('MMM D @ h:mm A')
           }
         };
@@ -90,6 +91,7 @@ const IndividualEventTable: React.FC = () => {
             [email]: {
               email,
               fullName: `${firstName} ${lastName}`,
+              id: email,
               watched: 'Yes'
             }
           };

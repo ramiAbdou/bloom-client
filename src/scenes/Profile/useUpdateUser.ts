@@ -16,19 +16,20 @@ const useUpdateUser = (): OnFormSubmit => {
     schema: Schema.MEMBER
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ db, items, setError }: OnFormSubmitArgs) => {
     const bio = items.BIO?.value;
     const firstName = items.FIRST_NAME?.value;
     const lastName = items.LAST_NAME?.value;
-    const profilePicture = items.PROFILE_PICTURE?.value;
+    const base64String = items.PROFILE_PICTURE?.value;
 
     let pictureUrl: string;
 
-    if (profilePicture) {
+    if (base64String) {
       try {
         pictureUrl = await uploadImage({
-          base64String: profilePicture,
-          key: 'PROFILE_PICTURE'
+          base64String,
+          key: 'PROFILE',
+          previousImageUrl: db.user?.pictureUrl
         });
       } catch (e) {
         setError('Failed to upload image.');

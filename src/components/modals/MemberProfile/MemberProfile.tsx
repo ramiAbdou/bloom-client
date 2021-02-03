@@ -8,7 +8,7 @@ import MemberProfileData from './MemberProfileData';
 import MemberProfilePersonal from './MemberProfilePersonal';
 
 const MemberProfile: React.FC<MemberProfileModel> = ({ memberId, userId }) => {
-  const doesMemberExist = useStoreState(({ db }) => {
+  const doesMemberExist: boolean = useStoreState(({ db }) => {
     const { byId: byMemberId } = db.entities.members;
     const { byId: byUserId } = db.entities.users;
 

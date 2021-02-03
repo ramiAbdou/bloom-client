@@ -51,7 +51,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   const options: TableOptions = {
     fixFirstColumn: false,
     isSortable: false,
-    onRowClick: (eventId: string) => push(`/${urlName}/events/${eventId}`),
+    onRowClick: ({ id }: TableRow) => push(`/${urlName}/events/${id}`),
     showCount: false
   };
 

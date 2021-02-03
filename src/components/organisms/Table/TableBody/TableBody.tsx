@@ -90,7 +90,7 @@ const DataRow = (row: TableRow) => {
     'o-table-tr--clickable': isClickable || !!onRowClick
   });
 
-  const onClick = () => onRowClick && onRowClick(row.id);
+  const onClick = () => onRowClick && onRowClick(row);
 
   return (
     <tr className={css} onClick={onClick}>

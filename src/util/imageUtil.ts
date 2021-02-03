@@ -4,6 +4,10 @@ import { nanoid } from 'nanoid';
 
 import { isProduction } from '@constants';
 
+const bucketName = isProduction
+  ? process.env.DIGITAL_OCEAN_BUCKET_NAME
+  : process.env.DIGITAL_OCEAN_TEST_BUCKET_NAME;
+
 const bucketUrl = isProduction
   ? process.env.DIGITAL_OCEAN_BUCKET_URL
   : process.env.DIGITAL_OCEAN_TEST_BUCKET_URL;
@@ -39,10 +43,39 @@ export const convertImageToBase64 = async ({
   return image.getBase64Async(Jimp.MIME_PNG);
 };
 
+interface DeleteImageArgs {
+  key: string;
+  imageUrl: string;
+}
+
+/**
+ * Deletes image from the AWS S3 bucket.
+ *
+ * @param key The S3 bucket object key.
+ * @param imageUrl URL that points to the S3 bucket object.
+ */
+const deleteImage = async ({
+  key,
+  imageUrl
+}: DeleteImageArgs): Promise<boolean> => {
+  if (!imageUrl) return false;
+
+  const bucketKey = imageUrl.substring(imageUrl.indexOf(key), imageUrl.length);
+  if (!bucketKey) return false;
+
+  const options: aws.S3.DeleteObjectRequest = {
+    Bucket: bucketName,
+    Key: bucketKey
+  };
+
+  await s3.deleteObject(options).promise();
+  return true;
+};
+
 interface UploadImageArgs {
   base64String: string;
   key: string;
-  version?: number;
+  previousImageUrl?: string;
 }
 
 /**
@@ -52,7 +85,8 @@ interface UploadImageArgs {
  */
 export const uploadImage = async ({
   base64String,
-  key
+  key,
+  previousImageUrl
 }: UploadImageArgs): Promise<string> => {
   const image: Jimp = await Jimp.read(base64String);
   const buffer = await image.getBufferAsync(Jimp.MIME_PNG);
@@ -62,12 +96,11 @@ export const uploadImage = async ({
   const options: aws.S3.PutObjectRequest = {
     ACL: 'public-read',
     Body: buffer,
-    Bucket: isProduction
-      ? process.env.DIGITAL_OCEAN_BUCKET_NAME
-      : process.env.DIGITAL_OCEAN_TEST_BUCKET_NAME,
+    Bucket: bucketName,
     Key: bucketKey
   };
 
   await s3.putObject(options).promise();
+  if (previousImageUrl) await deleteImage({ imageUrl: previousImageUrl, key });
   return `${bucketUrl}/${bucketKey}`;
 };

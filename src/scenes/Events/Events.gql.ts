@@ -130,7 +130,19 @@ export const GET_EVENT = query({
             'bio',
             { data: ['id', 'value', { question: ['id'] }] },
             { type: ['id', 'name'] },
-            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+            {
+              user: [
+                'id',
+                'email',
+                'facebookUrl',
+                'instagramUrl',
+                'linkedInUrl',
+                'firstName',
+                'lastName',
+                'pictureUrl',
+                'twitterUrl'
+              ]
+            }
           ]
         }
       ]
@@ -148,7 +160,19 @@ export const GET_EVENT = query({
             'bio',
             { data: ['id', 'value', { question: ['id'] }] },
             { type: ['id', 'name'] },
-            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+            {
+              user: [
+                'id',
+                'email',
+                'facebookUrl',
+                'instagramUrl',
+                'linkedInUrl',
+                'firstName',
+                'lastName',
+                'pictureUrl',
+                'twitterUrl'
+              ]
+            }
           ]
         }
       ]
@@ -205,7 +229,22 @@ export const GET_PAST_EVENTS = query({
     'summary',
     'title',
     'videoUrl',
-    { community: ['id'] },
+    {
+      community: [
+        'id',
+        {
+          questions: [
+            'category',
+            'id',
+            'inDirectoryCard',
+            'inExpandedDirectoryCard',
+            'title',
+            'type',
+            'version'
+          ]
+        }
+      ]
+    },
     {
       attendees: [
         'email',
@@ -215,7 +254,22 @@ export const GET_PAST_EVENTS = query({
         {
           member: [
             'id',
-            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+            'bio',
+            { data: ['id', 'value', { question: ['id'] }] },
+            { type: ['id', 'name'] },
+            {
+              user: [
+                'id',
+                'email',
+                'facebookUrl',
+                'instagramUrl',
+                'linkedInUrl',
+                'firstName',
+                'lastName',
+                'pictureUrl',
+                'twitterUrl'
+              ]
+            }
           ]
         }
       ]
@@ -239,7 +293,22 @@ export const GET_PAST_EVENTS_WITH_GUESTS = query({
     'summary',
     'title',
     'videoUrl',
-    { community: ['id'] },
+    {
+      community: [
+        'id',
+        {
+          questions: [
+            'category',
+            'id',
+            'inDirectoryCard',
+            'inExpandedDirectoryCard',
+            'title',
+            'type',
+            'version'
+          ]
+        }
+      ]
+    },
     {
       attendees: [
         'email',
@@ -249,7 +318,22 @@ export const GET_PAST_EVENTS_WITH_GUESTS = query({
         {
           member: [
             'id',
-            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+            'bio',
+            { data: ['id', 'value', { question: ['id'] }] },
+            { type: ['id', 'name'] },
+            {
+              user: [
+                'id',
+                'email',
+                'facebookUrl',
+                'instagramUrl',
+                'linkedInUrl',
+                'firstName',
+                'lastName',
+                'pictureUrl',
+                'twitterUrl'
+              ]
+            }
           ]
         }
       ]
