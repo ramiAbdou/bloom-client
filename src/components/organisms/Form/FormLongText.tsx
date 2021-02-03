@@ -1,4 +1,5 @@
 import React from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import { cx } from '@util/util';
 import FormStore from './Form.store';
@@ -19,9 +20,12 @@ const FormLongText: React.FC<FormLongTextProps> = ({
   const error = FormStore.useStoreState(({ items }) => items[key]?.error);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const setValue = FormStore.useStoreActions((store) => store.setValue);
+
   useInitFormItem(args);
 
-  const updateText = (text: string) => setValue({ key, value: text });
+  const updateText = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue({ key, value: target.value });
+  };
 
   const css = cx('c-misc-input c-misc-input--lg', {
     'c-misc-input--error': !!error
@@ -29,11 +33,12 @@ const FormLongText: React.FC<FormLongTextProps> = ({
 
   return (
     <FormItemContainer {...args}>
-      <textarea
+      <TextareaAutosize
         className={css}
+        minRows={4}
         placeholder={placeholder}
         value={value ?? ''}
-        onChange={({ target }) => updateText(target.value)}
+        onChange={updateText}
       />
     </FormItemContainer>
   );

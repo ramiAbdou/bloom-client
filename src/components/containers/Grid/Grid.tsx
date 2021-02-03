@@ -15,7 +15,10 @@ const Grid: React.FC<GridProps> = ({
   show,
   spacing = 'xs'
 }) => {
-  const css = cx('t-grid', { 't-grid--spacing-xs': spacing === 'xs' });
+  const css = cx('t-grid', {
+    't-grid--spacing-sm': spacing === 'sm',
+    't-grid--spacing-xs': spacing === 'xs'
+  });
 
   return (
     <Show show={show}>

@@ -3,6 +3,7 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import AnalyticsCard from '@containers/Card/AnalyticsCard';
+import Grid from '@containers/Grid/Grid';
 import MainSection from '@containers/Main/MainSection';
 import Row from '@containers/Row/Row';
 import { useStoreState } from '@store/Store';
@@ -43,11 +44,11 @@ const IndividualEventInsights: React.FC = () => {
 
   return (
     <MainSection className="s-events-individual-insights" show={!!isAdmin}>
-      <Row spacing="sm">
+      <Grid spacing="sm">
         <IndividualEventInsightsAttendeesCard />
         <IndividualEventInsightsGuestsCard />
         <IndividualEventInsightsWatchesCard />
-      </Row>
+      </Grid>
 
       <Separator marginBottom={0} marginTop={24} />
     </MainSection>

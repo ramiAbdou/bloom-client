@@ -2,7 +2,6 @@ import day from 'dayjs';
 import React from 'react';
 
 import Grid from '@containers/Grid/Grid';
-import Row from '@containers/Row/Row';
 import { TableFilter } from '@organisms/Table/Table.types';
 import TableQuickFilter from '@organisms/Table/TableQuickFilter';
 import { useStoreState } from '@store/Store';
@@ -79,7 +78,7 @@ const IndividualEventNoShowAndFilter: React.FC = () => {
 
 const IndividualEventTableFilters: React.FC = () => {
   return (
-    <Grid>
+    <Grid marginBottom={12} spacing="xs">
       <IndividualEventJoinedFilter />
       <IndividualEventRsvpFilter />
       <IndividualEventViewedFilter />

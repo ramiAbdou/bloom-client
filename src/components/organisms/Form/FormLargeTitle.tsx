@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import Separator from '@atoms/Separator';
 import { cx } from '@util/util';
@@ -16,18 +17,14 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
   placeholder,
   ...args
 }) => {
-  const [rows, setRows] = useState(1);
-
   const key = getFormItemKey(args);
   const error = FormStore.useStoreState(({ items }) => items[key]?.error);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const setValue = FormStore.useStoreActions((store) => store.setValue);
 
-  const ref: React.MutableRefObject<HTMLTextAreaElement> = useRef(null);
   useInitFormItem(args);
 
   const updateText = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setRows(target?.scrollHeight / 30);
     setValue({ key, value: target.value });
   };
 
@@ -37,11 +34,10 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
 
   return (
     <FormItemContainer {...args}>
-      <textarea
-        ref={ref}
+      <TextareaAutosize
         className={css}
         placeholder={placeholder}
-        rows={rows}
+        rows={1}
         value={value ?? ''}
         onChange={updateText}
       />
