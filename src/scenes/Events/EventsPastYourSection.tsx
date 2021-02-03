@@ -43,7 +43,7 @@ const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
   });
 
   return (
-    <MainSection className="s-events-section" show={hasEvents}>
+    <MainSection show={hasEvents}>
       <LoadingHeader h2 loading={loading} title="Your Events Attended" />
 
       <ListStore.Provider>

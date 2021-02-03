@@ -102,7 +102,7 @@ const CreateEventForm: React.FC<IdProps> = ({ id }) => {
         />
       </FormSection>
 
-      <FormSubmitButton>
+      <FormSubmitButton loadingText={id ? 'Updating...' : 'Creating...'}>
         {id ? 'Update Event' : 'Create Event'}
       </FormSubmitButton>
 

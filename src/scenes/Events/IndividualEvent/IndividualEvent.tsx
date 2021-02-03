@@ -21,12 +21,16 @@ import IndividualEventMain from './IndividualEventMain';
 import IndividualEventPanel from './IndividualEventPanel';
 import IndividualEventTable from './IndividualEventTable';
 
-const IndividualEventHeader: React.FC = () => (
-  <div className="s-events-individual-header">
-    <EventsAspectBackground />
-    <IndividualEventMain />
-  </div>
-);
+const IndividualEventHeader: React.FC = () => {
+  const imageUrl = useStoreState(({ db }) => db.event?.imageUrl);
+
+  return (
+    <div className="s-events-individual-header">
+      <EventsAspectBackground imageUrl={imageUrl} />
+      <IndividualEventMain />
+    </div>
+  );
+};
 
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };

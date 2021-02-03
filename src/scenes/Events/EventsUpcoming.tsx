@@ -46,7 +46,7 @@ const EventsUpcoming: React.FC = () => {
     <MainContent>
       <EventsHeader />
 
-      <MainSection className="s-events-section">
+      <MainSection>
         <LoadingHeader h2 loading={loading} title="Upcoming Events" />
         <ListStore.Provider>
           {!loading && <EventsUpcomingContent />}

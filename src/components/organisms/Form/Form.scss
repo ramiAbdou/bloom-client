@@ -69,14 +69,27 @@ $PREF: 'o-form';
 
 // ## FORM COVER IMAGE UPLOAD 
 
+.#{$PREF}-item--cover-image-aspect {
+  > *:first-child { border-radius: $xs; }
+  > div:first-child { background-color: $primary-bg; }
+
+  > svg {
+    margin: auto;
+    opacity: 0.15;
+    stroke: $primary;
+    transform: scale(3);
+    width: auto;
+  }
+}
+
 .#{$PREF}-item--cover-image {
   @extend .flex-col;
+  @extend .#{$PREF}-item--cover-image-aspect;
 
   background-blend-mode: multiply;
   background-color: white;
   background-size: cover;
   border: 1px $primary dashed;
-  border-radius: $xs;
   box-sizing: border-box;
   height: 300px;
   justify-content: flex-end;
@@ -109,6 +122,14 @@ $PREF: 'o-form';
     border-radius: 50%;
     height: $xl * 2;
     width: $xl * 2;
+  }
+
+  > svg {
+    margin: auto;
+    opacity: 0.15;
+    stroke: $primary;
+    transform: scale(3);
+    width: auto;
   }
 
   > button > svg { @extend .react-icon--xl; color: white; }

@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 
 import Button from '@atoms/Button/Button';
 import Aspect from '@containers/Aspect/Aspect';
+import Network from '@images/network.svg';
 import { getFormItemKey } from '@organisms/Form/Form.util';
-import EventsAspectBackground from '@scenes/Events/EventsAspectBackground';
 import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
@@ -13,7 +13,6 @@ const FormCoverImageContent: React.FC<FormItemData> = (args) => {
   const key: string = getFormItemKey(args);
   const setValue = FormStore.useStoreActions((store) => store.setValue);
 
-  useInitFormItem(args);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
 
   // Opens the file uploader by "clicking" the invisible file input tag.
@@ -62,29 +61,25 @@ const FormCoverImage: React.FC<FormItemData> = (args) => {
     ({ items }) => items[key]?.value
   );
 
+  useInitFormItem(args);
+
   // The background blend creates the overlay effect. Makes the background
   // darker so that white <Camera /> component shows clearly.
-  // const backgroundStyle: React.CSSProperties = selectedImage
-  //   ? { backgroundImage: `url(${selectedImage})` }
-  //   : {};
+  const backgroundStyle: React.CSSProperties = selectedImage
+    ? { backgroundImage: `url(${selectedImage})` }
+    : {};
 
-  return selectedImage ? (
+  return (
     <>
       <Aspect
         className="o-form-item--cover-image"
         ratio={2}
-        // style={backgroundStyle}
+        style={backgroundStyle}
       >
+        {!selectedImage && <div />}
+        {!selectedImage && <Network />}
         <FormCoverImageContent {...args} />
       </Aspect>
-
-      <FormCoverImageMessage />
-    </>
-  ) : (
-    <>
-      <EventsAspectBackground className="o-form-item--cover-image">
-        <FormCoverImageContent {...args} />
-      </EventsAspectBackground>
 
       <FormCoverImageMessage />
     </>
