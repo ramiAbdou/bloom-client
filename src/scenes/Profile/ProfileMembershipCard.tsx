@@ -35,9 +35,9 @@ const ProfileMembershipContent: React.FC = () => {
       .filter((question: IQuestion) => !question.category);
 
     return questions?.map(({ id, title, type }: IQuestion) => {
-      const data: IMemberData = Object.values(byDataId).find(
-        (element: IMemberData) => element.question === id
-      );
+      const data: IMemberData = db.member.data
+        ?.map((dataId: string) => byDataId[dataId])
+        ?.find((entity: IMemberData) => entity?.question === id);
 
       return { title, type, value: data?.value };
     });
@@ -67,7 +67,7 @@ const ProfileMembershipCard: React.FC = () => {
   });
 
   return (
-    <Card className="s-profile-card--membership" loading={loading}>
+    <Card className="s-profile-card--membership" show={!loading}>
       <ProfileMembershipHeader />
       <ProfileMembershipContent />
       <ProfileMembershipOnboardingContainer />

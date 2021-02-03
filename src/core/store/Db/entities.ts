@@ -152,6 +152,7 @@ export interface IMemberType extends BaseEntity {
 
 export interface IQuestion extends BaseEntity {
   category: QuestionCategory;
+  data?: IdString[];
   inApplication: boolean;
   inApplicantCard: boolean;
   inDirectoryCard: boolean;

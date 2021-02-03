@@ -90,7 +90,7 @@ const PlaygroundChart: React.FC = () => {
  * Only state that is tracked here is the questionId of the question that is
  * currently being displayed.
  */
-const MembersAnalyticsPlayground = () => (
+const MembersAnalyticsPlayground: React.FC = () => (
   <Playground.Provider>
     <div className="s-analytics-members-playground">
       <PlaygroundHeader />

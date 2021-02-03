@@ -146,7 +146,16 @@ const Member = new schema.Entity(
   }
 );
 
-const MemberData = new schema.Entity('data', {}, { mergeStrategy });
+const MemberData = new schema.Entity(
+  'data',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (value) => {
+      return { ...value, memberDataId: value.id };
+    }
+  }
+);
 
 const MemberPayment = new schema.Entity(
   'payments',
@@ -155,7 +164,22 @@ const MemberPayment = new schema.Entity(
 );
 
 const MemberType = new schema.Entity('types', {});
-const Question = new schema.Entity('questions', {}, { mergeStrategy });
+
+const Question = new schema.Entity(
+  'questions',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.memberDataId, { data: [parent.id] }]
+      ]);
+
+      return { ...value, ...processedData };
+    }
+  }
+);
+
 const User = new schema.Entity('users', {});
 
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
@@ -197,6 +221,7 @@ Member.define({
 
 MemberData.define({ question: Question });
 MemberPayment.define({ member: Member, type: MemberType });
+Question.define({ data: [MemberData] });
 User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
