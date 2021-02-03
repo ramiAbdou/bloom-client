@@ -145,6 +145,7 @@ export const GET_EVENT = query({
         {
           member: [
             'id',
+            'bio',
             { data: ['id', 'value', { question: ['id'] }] },
             { type: ['id', 'name'] },
             { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
