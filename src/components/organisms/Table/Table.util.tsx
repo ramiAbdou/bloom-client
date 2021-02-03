@@ -67,11 +67,11 @@ export const getTableCellClass = ({
   const isDuesStatus = category === 'DUES_STATUS';
 
   return cx('', {
-    'c-table-cell--lg': ['LONG_TEXT'].includes(type),
-    'c-table-cell--md':
+    'o-table-cell--lg': ['LONG_TEXT'].includes(type),
+    'o-table-cell--md':
       !isDuesStatus && ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
-    'c-table-cell--sm': !type || ['SHORT_TEXT', 'CUSTOM'].includes(type),
-    'c-table-cell--xs': isDuesStatus
+    'o-table-cell--sm': !type || ['SHORT_TEXT', 'CUSTOM'].includes(type),
+    'o-table-cell--xs': isDuesStatus
   });
 };
 

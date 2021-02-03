@@ -1,46 +1,37 @@
-import {
-  Action,
-  action,
-  Computed,
-  computed,
-  createContextStore
-} from 'easy-peasy';
+import { action, computed, createContextStore } from 'easy-peasy';
 import { matchSorter } from 'match-sorter';
 
 import {
   initialTableOptions,
-  SortDirection,
   TableColumn,
-  TableOptions,
+  TableFilter,
+  TableFilterArgs,
+  TableModel,
   TableRow
 } from './Table.types';
 import { sortByColumn } from './Table.util';
 
-export type TableModel = {
-  columns: TableColumn[];
-  data: TableRow[];
-  filteredData: TableRow[];
-  isAllPageSelected: Computed<TableModel, boolean>;
-  isAllSelected: Computed<TableModel, boolean>;
-  isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
-  options: TableOptions;
-  page: number;
-  range: Computed<TableModel, [number, number]>;
-  searchString: string;
-  selectedRowIds: string[];
-  setRange: Action<TableModel, number>;
-  setSearchString: Action<TableModel, string>;
-  setSortedColumn: Action<TableModel, [string, SortDirection]>;
-  sortedColumnDirection: SortDirection;
-  sortedColumnId: string;
-  toggleAllPageRows: Action<TableModel>;
-  toggleAllRows: Action<TableModel>;
-  toggleRow: Action<TableModel, string>;
-  updateColumn: Action<TableModel, Partial<TableColumn>>;
-  updateData: Action<TableModel, TableRow[]>;
-};
-
 export const tableModel: TableModel = {
+  addFilter: action(
+    ({ filters, ...state }, { filterId, filter }: TableFilterArgs) => {
+      const updatedFilters = { ...filters, [filterId]: filter };
+
+      const updatedFilteredData: TableRow[] = state.data?.filter((row) => {
+        return Object.values(updatedFilters)?.every(
+          (tableFilter: TableFilter) => {
+            return tableFilter(row);
+          }
+        );
+      });
+
+      return {
+        ...state,
+        filteredData: updatedFilteredData,
+        filters: updatedFilters
+      };
+    }
+  ),
+
   columns: [],
 
   data: [],
@@ -50,6 +41,8 @@ export const tableModel: TableModel = {
    * row. Returns all the data if there are no filters present.
    */
   filteredData: [],
+
+  filters: {},
 
   /**
    * Returns true if all of the filtered data rows are selected.
@@ -99,14 +92,35 @@ export const tableModel: TableModel = {
     return [floor, ceiling];
   }),
 
+  removeFilter: action(({ filters, ...state }, filterId: string) => {
+    const updatedFilters = { ...filters };
+    delete updatedFilters[filterId];
+
+    const updatedFilteredData: TableRow[] = state.data?.filter((row) => {
+      return Object.values(updatedFilters)?.every((tableFilter: TableFilter) =>
+        tableFilter(row)
+      );
+    });
+
+    return {
+      ...state,
+      filteredData: updatedFilteredData,
+      filters: updatedFilters
+    };
+  }),
+
   searchString: '',
 
   selectedRowIds: [],
 
+  setFilteredData: action((state, filter: TableFilter) => {
+    return { ...state, filteredData: state.filteredData.filter(filter) };
+  }),
+
   setRange: action((state, page) => {
     // When going to a new page, we need to ensure that the scroll position is
     // set to 0 so they start at the top of the page.
-    const element = document.getElementById('c-table-ctr');
+    const element = document.getElementById('o-table-ctr');
     element.scroll({ top: 0 });
     return { ...state, page };
   }),
@@ -225,6 +239,9 @@ export const tableModel: TableModel = {
   })
 };
 
-export default createContextStore<TableModel>((model: TableModel) => model, {
-  disableImmer: true
-});
+const TableStore = createContextStore<TableModel>(
+  (model: TableModel) => model,
+  { disableImmer: true }
+);
+
+export default TableStore;

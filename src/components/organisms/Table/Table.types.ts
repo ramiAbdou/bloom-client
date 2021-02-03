@@ -1,4 +1,4 @@
-import { ActionCreator } from 'easy-peasy';
+import { Action, ActionCreator, Computed } from 'easy-peasy';
 
 import { QuestionCategory, QuestionType } from '@constants';
 
@@ -52,3 +52,37 @@ export const initialTableOptions: TableOptions = {
 };
 
 export type PaginationValue = number | '...';
+
+export type TableFilter = (rows: TableRow) => boolean;
+export type TableFilterArgs = {
+  filterId: string;
+  filter: (rows: TableRow) => boolean;
+};
+
+export type TableModel = {
+  addFilter: Action<TableModel, TableFilterArgs>;
+  columns: TableColumn[];
+  data: TableRow[];
+  filteredData: TableRow[];
+  filters: Record<string, TableFilter>;
+  isAllPageSelected: Computed<TableModel, boolean>;
+  isAllSelected: Computed<TableModel, boolean>;
+  isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
+  options: TableOptions;
+  page: number;
+  range: Computed<TableModel, [number, number]>;
+  removeFilter: Action<TableModel, string>;
+  searchString: string;
+  selectedRowIds: string[];
+  setFilteredData: Action<TableModel, TableFilter>;
+  setRange: Action<TableModel, number>;
+  setSearchString: Action<TableModel, string>;
+  setSortedColumn: Action<TableModel, [string, SortDirection]>;
+  sortedColumnDirection: SortDirection;
+  sortedColumnId: string;
+  toggleAllPageRows: Action<TableModel>;
+  toggleAllRows: Action<TableModel>;
+  toggleRow: Action<TableModel, string>;
+  updateColumn: Action<TableModel, Partial<TableColumn>>;
+  updateData: Action<TableModel, TableRow[]>;
+};

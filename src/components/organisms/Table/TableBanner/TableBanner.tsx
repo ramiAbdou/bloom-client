@@ -18,7 +18,7 @@ import TableBannerButton from './Button';
 import TableBannerMessage from './TableBannerMessage';
 
 const TableBanner: React.FC = () => (
-  <Card className="c-table-banner">
+  <Card className="o-table-banner">
     <TableBannerMessage />
     <TableBannerButton />
   </Card>

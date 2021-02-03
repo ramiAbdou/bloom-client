@@ -46,8 +46,8 @@ const TableContent: React.FC<TableContentProps> = ({
       {isAllPageSelected && <TableBanner />}
 
       {!emptyMessage && (
-        <div id="c-table-ctr" style={{ maxHeight: small && '45vh' }}>
-          <table className="c-table">
+        <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
+          <table className="o-table">
             <TableHeaderContainer />
             <TableBodyContainer />
           </table>

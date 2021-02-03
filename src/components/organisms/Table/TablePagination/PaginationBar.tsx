@@ -17,9 +17,9 @@ const PaginationNumber = ({ value }: ValueProps) => {
   const isEllipses = value === '...';
   const onClick = () => !isEllipses && setRange(value);
 
-  const css = cx('c-table-pagination-num', {
-    'c-table-pagination-num--active': page === value,
-    'c-table-pagination-num--ellipses': isEllipses
+  const css = cx('o-table-pagination-num', {
+    'o-table-pagination-num--active': page === value,
+    'o-table-pagination-num--ellipses': isEllipses
   });
 
   return (
@@ -36,7 +36,7 @@ const BackButton = () => {
   const onClick = () => page > 0 && setRange(page - 1);
 
   return (
-    <Button className="c-table-pagination-chevron" onClick={onClick}>
+    <Button className="o-table-pagination-chevron" onClick={onClick}>
       <IoChevronBackOutline />
     </Button>
   );
@@ -53,7 +53,7 @@ const NextButton = () => {
   const onClick = () => page < numPages - 1 && setRange(page + 1);
 
   return (
-    <Button className="c-table-pagination-chevron" onClick={onClick}>
+    <Button className="o-table-pagination-chevron" onClick={onClick}>
       <IoChevronForwardOutline />
     </Button>
   );
@@ -69,7 +69,7 @@ export default () => {
   );
 
   return (
-    <div className="c-table-pagination-row">
+    <div className="o-table-pagination-row">
       <BackButton />
 
       {nums.map((value: any) => (

@@ -42,11 +42,11 @@ const HeaderCell = ({
   const isSortedColumn = sortedColumnId === id;
 
   const css = cx(getTableCellClass({ category, type }), {
-    'c-table-td--right': alignEndRight,
-    'c-table-th--fixed': fixFirstColumn && i === 0,
-    'c-table-th--panel': isPanelShowing,
-    'c-table-th--sortable': isSortable,
-    'c-table-th--sorted': isSortedColumn
+    'o-table-td--right': alignEndRight,
+    'o-table-th--fixed': fixFirstColumn && i === 0,
+    'o-table-th--panel': isPanelShowing,
+    'o-table-th--sortable': isSortable,
+    'o-table-th--sorted': isSortedColumn
   });
 
   const showCaretUp = isSortedColumn && direction === 'ASC';

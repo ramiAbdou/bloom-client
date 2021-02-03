@@ -65,9 +65,9 @@ const TablePanel: React.FC<OnRenameColumnProps> = ({ onRenameColumn }) => {
   return (
     <Panel
       align="BOTTOM_LEFT"
-      className="c-table-col-panel"
+      className="o-table-col-panel"
       id={panelId}
-      scrollId="c-table-ctr"
+      scrollId="o-table-ctr"
     >
       <TablePanelRenameForm onRenameColumn={onRenameColumn} />
       <TableSortButton direction="ASC" id={panelId} />

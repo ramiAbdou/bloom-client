@@ -30,9 +30,9 @@ const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
   );
 
   const css = cx(getTableCellClass({ category, type }), {
-    'c-table-td--fixed': fixFirstColumn && i === 0,
-    'c-table-td--multiple-select': type === 'MULTIPLE_SELECT',
-    'c-table-td--right': alignEndRight
+    'o-table-td--fixed': fixFirstColumn && i === 0,
+    'o-table-td--multiple-select': type === 'MULTIPLE_SELECT',
+    'o-table-td--right': alignEndRight
   });
 
   const content: React.ReactNode = takeFirst([
@@ -86,8 +86,8 @@ const DataRow = (row: TableRow) => {
   const columns = Table.useStoreState((store) => store.columns);
 
   const css = cx('', {
-    'c-table-tr--active': isSelected,
-    'c-table-tr--clickable': isClickable || !!onRowClick
+    'o-table-tr--active': isSelected,
+    'o-table-tr--clickable': isClickable || !!onRowClick
   });
 
   const onClick = () => onRowClick && onRowClick(row.id);

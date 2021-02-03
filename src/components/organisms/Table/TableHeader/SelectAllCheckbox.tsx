@@ -17,7 +17,7 @@ const SelectAllCheckbox = () => {
   return (
     <Checkbox
       checked={isAllPageSelected}
-      className="c-table-select"
+      className="o-table-select"
       onChange={onChange}
     />
   );

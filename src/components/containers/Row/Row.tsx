@@ -8,6 +8,7 @@ interface RowProps extends ChildrenProps, ClassNameProps, ShowProps {
   align?: 'baseline' | 'end' | 'start';
   columnBreakpoint?: 'M' | 'T';
   equal?: boolean;
+  marginBottom?: number;
   marginTopAuto?: boolean;
   spaceBetween?: boolean;
   spacing?: 'xs' | 'sm';
@@ -19,6 +20,7 @@ const Row: React.FC<RowProps> = ({
   columnBreakpoint,
   className,
   equal,
+  marginBottom,
   marginTopAuto,
   spaceBetween,
   spacing = 'xs',
@@ -43,7 +45,11 @@ const Row: React.FC<RowProps> = ({
     't-row--spacing-xs': spacing === 'xs'
   });
 
-  return show !== false ? <div className={css}>{children}</div> : null;
+  return show !== false ? (
+    <div className={css} style={{ marginBottom }}>
+      {children}
+    </div>
+  ) : null;
 };
 
 export default Row;

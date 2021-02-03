@@ -22,7 +22,7 @@ const TablePagination: React.FC = () => {
   const numRows = Table.useStoreState((store) => store.filteredData.length);
 
   return (
-    <div className="c-table-pagination-ctr">
+    <div className="o-table-pagination-ctr">
       <TablePaginationMessage />
       {numRows >= 100 && <PaginationBar />}
     </div>
