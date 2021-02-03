@@ -70,6 +70,9 @@ $PREF: 'o-form';
 // ## FORM COVER IMAGE UPLOAD 
 
 .#{$PREF}-item--cover-image-aspect {
+  border-radius: $xs;
+  overflow: hidden;
+  
   > *:first-child { border-radius: $xs; }
   > div:first-child { background-color: $primary-bg; }
 
