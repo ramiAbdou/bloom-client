@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { ChildrenProps, ShowProps } from '@constants';
+import { ShowProps } from '@constants';
 import Show from '@containers/Show';
 import { cx, takeFirst } from '@util/util';
 
-interface PillProps extends ChildrenProps, ShowProps {
+interface PillProps extends ShowProps {
   percentage?: number;
   positive?: boolean;
 }

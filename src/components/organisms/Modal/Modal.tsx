@@ -40,11 +40,11 @@ const ModalCancel: React.FC<Pick<ModalProps, 'lock'>> = ({ lock }) => {
   );
 };
 
-const ModalContainer: React.FC = ({
+const ModalContainer: React.FC<Pick<ModalProps, 'onClose' | 'options'>> = ({
   children,
   onClose,
   options
-}: Pick<ModalProps, 'children' | 'onClose' | 'options'>) => {
+}) => {
   const { sheet, width } = options ?? {};
   useLockBodyScroll();
 
@@ -92,7 +92,7 @@ const Modal: React.FC<ModalProps> = ({
   lock,
   id: MODAL_ID,
   ...containerProps
-}: ModalProps) => {
+}) => {
   const { confirmation } = containerProps?.options ?? {};
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const id = useStoreState(({ modal }) => modal.id);

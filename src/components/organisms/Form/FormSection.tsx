@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { ChildrenProps, TitleProps } from '@constants';
+import { TitleProps } from '@constants';
 
-interface FormSectionProps extends ChildrenProps, TitleProps {}
-
-const FormSection: React.FC<FormSectionProps> = ({ children, title }) => {
+const FormSection: React.FC<TitleProps> = ({ children, title }) => {
   return (
     <div className="o-form-section">
       <h2>{title}</h2>

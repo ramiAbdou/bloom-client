@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { ChildrenProps } from '@constants';
 import StoryStore from './Story.store';
 import StoryNavigation from './StoryNavigation';
 
-const StoryContent: React.FC<ChildrenProps> = ({ children }) => {
+const StoryContent: React.FC = ({ children }) => {
   const hasPages = StoryStore.useStoreState((store) => !!store.pages?.length);
 
   return (
@@ -15,7 +14,7 @@ const StoryContent: React.FC<ChildrenProps> = ({ children }) => {
   );
 };
 
-const Story: React.FC<ChildrenProps> = (props) => (
+const Story: React.FC = (props) => (
   <StoryStore.Provider>
     <StoryContent {...props} />
   </StoryStore.Provider>

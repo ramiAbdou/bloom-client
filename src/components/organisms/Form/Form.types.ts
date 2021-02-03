@@ -1,7 +1,6 @@
 import { ActionCreator, Actions, State } from 'easy-peasy';
 
 import {
-  ChildrenProps,
   ClassNameProps,
   QuestionCategory,
   QuestionType,
@@ -51,7 +50,7 @@ export interface FormOptions {
   disableValidation?: boolean;
 }
 
-export interface FormProps extends ChildrenProps, ClassNameProps, ShowProps {
+export interface FormProps extends ClassNameProps, ShowProps {
   questions?: FormItemData[];
   options?: FormOptions;
   onSubmit?: OnFormSubmit;

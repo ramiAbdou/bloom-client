@@ -1,5 +1,4 @@
 import {
-  ChildrenProps,
   ClassNameProps,
   IdProps,
   LoadingProps,
@@ -13,8 +12,7 @@ export interface StoryPageBranch extends IdProps, LoadingProps, TitleProps {
 }
 
 export interface StoryPageProps
-  extends ChildrenProps,
-    ClassNameProps,
+  extends ClassNameProps,
     ShowProps,
     StoryPageBranch {
   branchId?: string;

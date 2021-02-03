@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { ChildrenProps } from '@constants';
-
-interface AttributeProps extends ChildrenProps {
+interface AttributeProps {
   // If the value is null, this determines whether or not the "N/A" text is
   // shown.
   showNullValue?: boolean;

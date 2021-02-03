@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 
-import { ChildrenProps } from '@constants';
 import TableStore, { tableModel } from './Table.store';
 import {
   initialTableOptions,
@@ -9,16 +8,16 @@ import {
   TableRow
 } from './Table.types';
 
-interface TableProps extends ChildrenProps {
+interface TableProps {
   columns: TableColumn[];
   options?: TableOptions;
   rows: TableRow[];
 }
 
-const UpdateAndRenderTableContent = ({
+const UpdateAndRenderTableContent: React.FC<Pick<TableProps, 'rows'>> = ({
   children,
   rows
-}: Pick<TableProps, 'children' | 'rows'>) => {
+}) => {
   const updateData = TableStore.useStoreActions((store) => store.updateData);
 
   // Used primarily for the removal of rows. This will not update the

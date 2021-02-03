@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { ChildrenProps } from '@constants';
-
-interface ShowProps extends ChildrenProps {
+interface ShowProps {
   show?: boolean;
 }
 

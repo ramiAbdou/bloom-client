@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export const isProduction = process.env.NODE_ENV === 'production';
 
 /**
@@ -20,18 +18,17 @@ export const APP = {
  * GENERAL PROPS - General component props.
  */
 
-export type ChildrenProps = { children?: ReactNode };
 export type ClassNameProps = { className?: string };
-export type UrlNameProps = { urlName?: string };
 export type IdProps = { id?: string };
-export type IsActiveProps = { isActive?: boolean };
 export type LoadingProps = { loading?: boolean };
 export type OnClickProps = { onClick?: VoidFunction };
-export type MessageProps = { message?: string };
 export type ShowProps = { show?: boolean };
 export type StyleProps = { style?: React.CSSProperties };
 export type TitleProps = { title?: string };
+export type UrlNameProps = { urlName?: string };
 export type ValueProps = { value?: any };
+
+export interface BaseProps extends ClassNameProps, ShowProps, StyleProps {}
 
 /**
  * SYSTEM TYPES - Includes modal, panel and more.

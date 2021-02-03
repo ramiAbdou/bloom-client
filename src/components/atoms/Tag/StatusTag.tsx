@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { ChildrenProps } from '@constants';
 import { cx } from '@util/util';
 
-interface StatusTagProps extends ChildrenProps {
+interface StatusTagProps {
   positive?: boolean;
 }
 

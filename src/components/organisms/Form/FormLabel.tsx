@@ -1,10 +1,9 @@
 import React from 'react';
 
 import InformationTip from '@atoms/InformationTip/InformationTip';
-import { ChildrenProps } from '@constants';
 import { cx } from '@util/util';
 
-interface FormLabelProps extends ChildrenProps {
+interface FormLabelProps {
   marginBottom?: number;
   required?: boolean;
   tooltip?: string;

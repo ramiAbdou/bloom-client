@@ -3,10 +3,10 @@ import React from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { ChildrenProps, ShowProps } from '@constants';
+import { ShowProps } from '@constants';
 import { useStoreActions } from '@store/Store';
 
-interface StoryConfirmationProps extends ChildrenProps {
+interface StoryConfirmationProps {
   closeButton?: boolean;
   title: string;
 }

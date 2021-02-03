@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { ChildrenProps, ClassNameProps, ShowProps } from '@constants';
+import { ClassNameProps, ShowProps } from '@constants';
 import Show from '@containers/Show';
 import { cx } from '@util/util';
 
-interface MainSectionProps extends ClassNameProps, ChildrenProps, ShowProps {}
+interface MainSectionProps extends ClassNameProps, ShowProps {}
 
 const MainSection: React.FC<MainSectionProps> = ({
   children,

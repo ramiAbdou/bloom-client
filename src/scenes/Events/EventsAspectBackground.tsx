@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { ChildrenProps, ClassNameProps } from '@constants';
+import { ClassNameProps } from '@constants';
 import Aspect from '@containers/Aspect/Aspect';
 import Network from '@images/network.svg';
 import { cx } from '@util/util';
 
-interface EventsAspectBackgroundProps extends ChildrenProps, ClassNameProps {
+interface EventsAspectBackgroundProps extends ClassNameProps {
   imageUrl?: string;
 }
 

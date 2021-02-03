@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { ChildrenProps, ClassNameProps, ShowProps } from '@constants';
+import { ClassNameProps, ShowProps } from '@constants';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { cx } from '@util/util';
 
-interface RowProps extends ChildrenProps, ClassNameProps, ShowProps {
+interface RowProps extends ClassNameProps, ShowProps {
   align?: 'baseline' | 'end' | 'start';
   columnBreakpoint?: 'M' | 'T';
   equal?: boolean;

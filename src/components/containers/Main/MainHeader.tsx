@@ -5,12 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import {
-  ChildrenProps,
-  ClassNameProps,
-  LoadingProps,
-  ShowProps
-} from '@constants';
+import { ClassNameProps, LoadingProps, ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions } from '@store/Store';
@@ -19,7 +14,6 @@ import MainNavigation, { NavigationProps } from './MainNavigation';
 
 export interface MainHeaderProps
   extends ClassNameProps,
-    ChildrenProps,
     LoadingProps,
     NavigationProps {
   backButton?: boolean;

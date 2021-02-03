@@ -2,9 +2,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 
-import { ChildrenProps } from '@constants';
-
-export interface WarningMessageProps extends ChildrenProps {
+export interface WarningMessageProps {
   marginBottom?: number;
   marginTop?: number;
 }

@@ -2,9 +2,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 
-import { ChildrenProps } from '@constants';
-
-export interface ErrorMessageProps extends ChildrenProps {
+export interface ErrorMessageProps {
   marginBottom?: number;
   marginTop?: number;
 }

@@ -3,23 +3,19 @@ import React, { CSSProperties, MutableRefObject, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { ChildrenProps, ClassNameProps, IdProps, StyleProps } from '@constants';
+import { ClassNameProps, IdProps, StyleProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import usePanelPosition from './hooks/usePickerPosition';
 import { PanelAlign } from './Panel.types';
 
-export interface PanelProps
-  extends ChildrenProps,
-    IdProps,
-    ClassNameProps,
-    StyleProps {
+export interface PanelProps extends IdProps, ClassNameProps, StyleProps {
   align?: PanelAlign;
   scrollId?: string;
   size?: 'md' | 'lg';
 }
 
-const PanelContent = ({
+const PanelContent: React.FC<PanelProps> = ({
   align: initialAlign,
   className,
   children,
@@ -27,7 +23,7 @@ const PanelContent = ({
   scrollId,
   size,
   style
-}: PanelProps) => {
+}) => {
   const id = useStoreState(({ panel }) => panel.id);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
