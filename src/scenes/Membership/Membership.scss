@@ -4,6 +4,7 @@ $PREF: 's-membership';
   column-gap: $sm;
   display: grid;
   margin-bottom: $lg;
+  padding: 2px;
   row-gap: $sm;
 
   @include TD { grid-template-columns: repeat(auto-fill, $xxl * 5.5); }
