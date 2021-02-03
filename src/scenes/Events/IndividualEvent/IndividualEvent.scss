@@ -49,12 +49,12 @@ $PREF: 's-events-individual';
   max-width: 100%;
   padding: $md $md 0 $md;
 
-  > .t-row {
+  > div.t-row {
     @include LTE(700) {
       flex-direction: column;
 
-      > * { margin-right: 0; width: 100%; }
-      > *:not(:last-child) { margin-bottom: $sm; width: 100%; }
+      > .t-card--analytics { margin-right: 0; width: 100%; }
+      > .t-card--analytics:not(:last-child) { margin-bottom: $sm; width: 100%; }
     }
   }
 }

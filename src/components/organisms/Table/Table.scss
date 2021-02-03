@@ -102,7 +102,7 @@ div.#{$PREF}-col-panel { padding: $sm; }
   margin-right: $xxs;
   padding: $xxs 6px;
   text-align: left;
-  width: fit-content;
+  width: max-content;
 
   &--active { background-color: $primary; color: white; }
 }
