@@ -140,63 +140,62 @@ $PREF: 'o-form';
   }
 }
 
+// ## REACT DATE PICKER OVERRIDING STYLES
+
 .react-datepicker {
   @extend .shadow--2;
 
   border: none !important;
+  border-radius: $xs;
   padding: $xs;
 }
 
-.react-datepicker__current-month { @extend .meta; text-align: center; }
+.react-datepicker__month { margin: 0; }
 
-.react-datepicker__header {
-  background-color: white !important;
+.react-datepicker__day-names,
+.react-datepicker__week { @extend .flex-acsb; padding: $xxs; }
 
-  > .react-datepicker__current-month { margin-bottom: $xxs; }
+.react-datepicker__day-names > *:not(:last-child),
+.react-datepicker__week > *:not(:last-child) { margin: 0 $xxs 0 0; }
+
+.react-datepicker__current-month {
+  @extend .body--bold;
+
+  margin-bottom: $xxs;
+  text-align: center;
 }
 
+.react-datepicker__header { background-color: white !important; }
 .react-datepicker__navigation { top: $sm !important; }
 
+.react-datepicker__day,
 .react-datepicker__time-list-item {
   @extend .meta;
 
   border-radius: $xxs !important;
   height: initial !important;
   outline: none;
-  padding: $xs 0 !important;
-
-  &:not(:last-child) { margin-bottom: $xs; }
-
-  &:not(&--disabled):not(&--selected):hover {
-    background-color: $primary-bg !important;
-  }
-
-  &--selected { background-color: $primary !important; }
-
-  &--keyboard-selected {
-    background-color: initial !important;
-    color: initial !important;
-  }
-}
-
-.react-datepicker__day {
-  @extend .meta;
-
-  outline: none;
-
-  &:not(&--disabled):not(&--selected):hover {
-    background-color: $primary-bg !important;
-  }
 
   &--disabled { color: $gray-4 !important; }
-  &--today { font-weight: initial !important; }
-
   &--selected { background-color: $primary !important; }
+  &--today { font-weight: initial !important; }
 
   &--keyboard-selected {
     background-color: initial !important;
     color: initial !important;
   }
 }
+
+.react-datepicker__time-list-item {
+  padding: $xs 0 !important;
+  &:not(:last-child) { margin-bottom: $xs; }
+}
+
+.react-datepicker__day:not(&--disabled):not(&--selected):hover,
+.react-datepicker__time-list-item:not(&--disabled):not(&--selected):hover {
+  background-color: $primary-bg !important;
+}
+
+// ## STRIPE ELEMENT OVERRIDING STYLES
 
 .__PrivateStripeElement { width: 100%; }
