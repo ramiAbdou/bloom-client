@@ -22,7 +22,7 @@ const ProfilePersonalForm: React.FC = () => {
   return (
     <Form onSubmit={updateUser}>
       <FormHeader title="Edit Personal Information" />
-      <FormImage id="profilePicture" value={pictureUrl} />
+      <FormImage id="PROFILE_PICTURE" value={pictureUrl} />
 
       <FormShortText
         category="FIRST_NAME"
@@ -31,7 +31,7 @@ const ProfilePersonalForm: React.FC = () => {
       />
 
       <FormShortText category="LAST_NAME" title="Last Name" value={lastName} />
-      <FormLongText id="bio" required={false} title="Bio" value={bio} />
+      <FormLongText id="BIO" required={false} title="Bio" value={bio} />
       <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
     </Form>
   );

@@ -80,6 +80,7 @@ const Button = forwardRef(
       if (onClick) onClick(event);
 
       if (href) {
+        if (!href?.startsWith('http')) href = `http://${href}`;
         // If the browser is Safari, just change the location of the current
         // tab, but if not, open a new window with the URL.
         if (navigator.vendor === 'Apple Computer, Inc.' || !openTab) {

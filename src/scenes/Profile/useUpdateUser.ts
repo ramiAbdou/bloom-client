@@ -1,29 +1,26 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { uploadImage } from '@util/imageUtil';
-import { UPDATE_USER, UpdateUserArgs, UpdateUserResult } from './Profile.gql';
+import { UPDATE_USER, UpdateUserArgs } from './Profile.gql';
 
 const useUpdateUser = (): OnFormSubmit => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const [updateUser] = useMutation<UpdateUserResult, UpdateUserArgs>({
+  const [updateUser] = useMutation<IMember, UpdateUserArgs>({
     name: 'updateUser',
     query: UPDATE_USER,
-    schema: { member: Schema.MEMBER, user: Schema.USER }
+    schema: Schema.MEMBER
   });
 
   const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
-    const bio = items.bio?.value;
-    const facebookUrl = items['Facebook URL']?.value;
+    const bio = items.BIO?.value;
     const firstName = items.FIRST_NAME?.value;
-    const instagramUrl = items['Instagram URL']?.value;
     const lastName = items.LAST_NAME?.value;
-    const linkedInUrl = items['LinkedIn URL']?.value;
-    const profilePicture = items.profilePicture?.value;
-    const twitterUrl = items['Twitter URL']?.value;
+    const profilePicture = items.PROFILE_PICTURE?.value;
 
     let pictureUrl: string;
 
@@ -34,7 +31,6 @@ const useUpdateUser = (): OnFormSubmit => {
           key: 'PROFILE_PICTURE'
         });
       } catch (e) {
-        console.log(e);
         setError('Failed to upload image.');
         return;
       }
@@ -42,13 +38,9 @@ const useUpdateUser = (): OnFormSubmit => {
 
     const { error } = await updateUser({
       bio,
-      facebookUrl,
       firstName,
-      instagramUrl,
       lastName,
-      linkedInUrl,
-      pictureUrl,
-      twitterUrl
+      pictureUrl
     });
 
     if (error) {

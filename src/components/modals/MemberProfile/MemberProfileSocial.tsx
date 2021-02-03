@@ -6,6 +6,7 @@ import {
   IoLogoTwitter
 } from 'react-icons/io5';
 
+import Button from '@atoms/Button/Button';
 import { IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
@@ -34,12 +35,12 @@ const MemberProfileSocialButton: React.FC<MemberProfileSocialButtonProps> = ({
   });
 
   return (
-    <a className={css} href={href} rel="noreferrer" target="_blank">
+    <Button className={css} href={href}>
       {isFacebook && <IoLogoFacebook />}
       {isInstagram && <IoLogoInstagram />}
       {isLinkedIn && <IoLogoLinkedin />}
       {isTwitter && <IoLogoTwitter />}
-    </a>
+    </Button>
   );
 };
 
