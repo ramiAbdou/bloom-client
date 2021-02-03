@@ -1,7 +1,5 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IMemberData } from '@store/Db/entities';
-
 // ## GET MEMBER DATA
 
 export interface GetMemberDataArgs {

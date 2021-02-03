@@ -66,8 +66,6 @@ const ProfileMembershipCard: React.FC = () => {
     variables: { populate: ['community.questions', 'data.question'] }
   });
 
-  console.log(loading);
-
   return (
     <Card className="s-profile-card--membership" loading={loading}>
       <ProfileMembershipHeader />

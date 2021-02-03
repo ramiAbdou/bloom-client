@@ -16,7 +16,14 @@ const StoryConfirmationCloseButton: React.FC<ShowProps> = ({ show }) => {
   const onClose = () => closeModal();
 
   return (
-    <Button fill large secondary show={show} onClick={onClose}>
+    <Button
+      fill
+      large
+      secondary
+      show={show}
+      style={{ marginTop: 24 }}
+      onClick={onClose}
+    >
       Close
     </Button>
   );
