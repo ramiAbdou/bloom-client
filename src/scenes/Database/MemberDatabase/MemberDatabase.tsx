@@ -48,16 +48,16 @@ const MemberDatabase: React.FC = () => {
     );
 
     return db.community.members
+      ?.filter((memberId: string) => {
+        const member: IMember = byMemberId[memberId];
+        return !!member?.user && member?.status === 'ACCEPTED';
+      })
       ?.reduce((acc: TableRow[], memberId: string) => {
         const member: IMember = byMemberId[memberId];
-        if (!member) return acc;
+        const user: IUser = byUserId[member.user];
 
         const { isDuesActive, joinedAt, id } = member;
-
-        const user: IUser = byUserId[member.user];
         const { email, firstName, gender, lastName } = user;
-
-        if (member.status !== 'ACCEPTED') return acc;
 
         const row: TableRow = db.community?.questions?.reduce(
           (result: TableRow, questionId: string) => {

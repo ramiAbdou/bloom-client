@@ -17,19 +17,19 @@ import MemberDatabase from './MemberDatabase/MemberDatabase';
 const Database: React.FC = () => {
   const { url } = useRouteMatch();
 
-  const { loading: loading1 } = useQuery<ICommunity>({
+  const { data: data1, loading: loading1 } = useQuery<ICommunity>({
     name: 'getDatabase',
     query: GET_DATABASE,
-    schema: Schema.COMMUNITY
+    schema: [Schema.MEMBER]
   });
 
-  const { loading: loading2 } = useQuery<IQuestion[]>({
+  const { data: data2, loading: loading2 } = useQuery<IQuestion[]>({
     name: 'getQuestions',
     query: GET_DATABASE_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
-  const loading = loading1 && loading2;
+  const loading = data1 && data2 && loading1 && loading2;
 
   return (
     <MainContent>

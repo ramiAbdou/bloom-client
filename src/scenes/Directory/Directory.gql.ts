@@ -5,14 +5,10 @@ import { query } from 'gql-query-builder';
 export const GET_DIRECTORY = query({
   fields: [
     'id',
-    {
-      members: [
-        'id',
-        'status',
-        { data: ['id', 'value', { question: ['id'] }] },
-        { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-      ]
-    }
+    'status',
+    { community: ['id'] },
+    { data: ['id', 'value', { question: ['id'] }] },
+    { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
   ],
   operation: 'getDirectory'
 }).query;

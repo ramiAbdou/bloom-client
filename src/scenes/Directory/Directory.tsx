@@ -29,7 +29,7 @@ const Directory: React.FC = () => {
   const { data: data1, loading: loading1 } = useQuery<ICommunity>({
     name: 'getDirectory',
     query: GET_DIRECTORY,
-    schema: Schema.COMMUNITY
+    schema: [Schema.MEMBER]
   });
 
   const { data: data2, loading: loading2 } = useQuery<ICommunity>({

@@ -36,19 +36,14 @@ export interface GetDatabaseResult {
 export const GET_DATABASE = query({
   fields: [
     'id',
-    { integrations: ['id', 'stripeAccountId'] },
-    {
-      members: [
-        'id',
-        'isDuesActive',
-        'joinedAt',
-        'role',
-        'status',
-        { data: ['id', 'value', { question: ['id'] }] },
-        { type: ['id', 'name'] },
-        { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
-      ]
-    }
+    'isDuesActive',
+    'joinedAt',
+    'role',
+    'status',
+    { community: ['id'] },
+    { data: ['id', 'value', { question: ['id'] }] },
+    { type: ['id', 'name'] },
+    { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
   ],
   operation: 'getDatabase'
 }).query;
