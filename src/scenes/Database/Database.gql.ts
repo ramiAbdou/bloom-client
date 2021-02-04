@@ -51,7 +51,15 @@ export const GET_DATABASE = query({
 // GET DATABASE QUESTIONS
 
 export const GET_DATABASE_QUESTIONS = query({
-  fields: ['category', 'id', 'title', 'type', 'version', { community: ['id'] }],
+  fields: [
+    'category',
+    'id',
+    'inExpandedDirectoryCard',
+    'title',
+    'type',
+    'version',
+    { community: ['id'] }
+  ],
   operation: 'getQuestions'
 }).query;
 
