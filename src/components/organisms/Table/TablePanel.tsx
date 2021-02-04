@@ -7,60 +7,60 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Panel from '@organisms/Panel/Panel';
 import { useStoreActions, useStoreState } from '@store/Store';
 import FormShortText from '../Form/FormShortText';
-import Table from './Table.store';
-import { OnRenameColumnProps, TableColumn } from './Table.types';
+import TableStore from './Table.store';
+import { TableColumn } from './Table.types';
 import TableSortButton from './TableSortButton';
 
-const TablePanelRenameForm: React.FC<OnRenameColumnProps> = ({
-  onRenameColumn
-}) => {
+const TablePanelRenameForm: React.FC = () => {
   const panelId = useStoreState(({ panel }) => panel.id);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const { id, title, version }: TableColumn = Table.useStoreState(
+  const { id, title }: TableColumn = TableStore.useStoreState(
     ({ columns }) =>
       columns.find(({ id: columnId }) => columnId === panelId) ??
       ({} as TableColumn),
     deepequal
   );
 
-  const updateColumn = Table.useStoreActions((store) => store.updateColumn);
+  const onRenameColumn = TableStore.useStoreState(
+    ({ options }) => options.onRenameColumn
+  );
+
+  const updateColumn = TableStore.useStoreActions(
+    (store) => store.updateColumn
+  );
 
   const onSubmit: OnFormSubmit = async ({ items }) => {
     // Only one form item, so just index first element.
-    const columnName: string = items[0]?.value;
+    const updatedTitle: string = items.TABLE_COLUMN?.value;
 
     // If the column name didn't change, don't send to backend.
-    if (columnName === title) return;
+    if (updatedTitle === title) return;
 
     await onRenameColumn({
-      column: { id, title: columnName, version },
+      column: { id, title: updatedTitle },
       updateColumn
     });
 
     closePanel();
   };
 
-  if (!onRenameColumn) return null;
-
   return (
-    <Form onSubmit={onSubmit}>
+    <Form show={!!onRenameColumn} onSubmit={onSubmit}>
       <FormShortText id="TABLE_COLUMN" value={title} />
       <FormSubmitButton invisible />
     </Form>
   );
 };
 
-const TablePanel: React.FC<OnRenameColumnProps> = ({ onRenameColumn }) => {
+const TablePanel: React.FC = () => {
   const panelId = useStoreState(({ panel }) => panel.id);
 
   // Panel ID is the same as the column ID, so there should be a column that
   // is present with the same ID.
-  const isColumnFound: boolean = Table.useStoreState(
+  const isColumnFound: boolean = TableStore.useStoreState(
     ({ columns }) => !!columns.find((column) => column.id === panelId)
   );
-
-  if (!isColumnFound) return null;
 
   return (
     <Panel
@@ -68,8 +68,9 @@ const TablePanel: React.FC<OnRenameColumnProps> = ({ onRenameColumn }) => {
       className="o-table-col-panel"
       id={panelId}
       scrollId="o-table-ctr"
+      show={!!isColumnFound}
     >
-      <TablePanelRenameForm onRenameColumn={onRenameColumn} />
+      <TablePanelRenameForm />
       <TableSortButton direction="ASC" id={panelId} />
       <TableSortButton direction="DESC" id={panelId} />
     </Panel>

@@ -23,7 +23,6 @@ export const GET_DIRECTORY_QUESTIONS = query({
     'inExpandedDirectoryCard',
     'title',
     'type',
-    'version',
     { community: ['id'] }
   ],
   operation: 'getQuestions'

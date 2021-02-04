@@ -2,14 +2,13 @@ import React from 'react';
 
 import Show from '@containers/Show';
 import TableStore from './Table.store';
-import { OnRenameColumnProps } from './Table.types';
 import TableBanner from './TableBanner/TableBanner';
 import TableBodyContainer from './TableBodyContainer';
 import TableHeaderContainer from './TableHeaderContainer';
 import TablePagination from './TablePagination/TablePagination';
 import TablePanel from './TablePanel';
 
-interface TableContentProps extends OnRenameColumnProps {
+interface TableContentProps {
   emptyMessage?: string;
   small?: boolean;
 }
@@ -26,7 +25,6 @@ const TableContentEmptyMessage: React.FC<
 
 const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage,
-  onRenameColumn,
   small
 }) => {
   const emptyMessage = TableStore.useStoreState(({ data }) => {
@@ -56,7 +54,7 @@ const TableContent: React.FC<TableContentProps> = ({
 
       {!emptyMessage && <TablePagination />}
       <TableContentEmptyMessage emptyMessage={emptyMessage} />
-      <TablePanel onRenameColumn={onRenameColumn} />
+      <TablePanel />
     </Show>
   );
 };

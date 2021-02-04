@@ -57,7 +57,6 @@ export const GET_DATABASE_QUESTIONS = query({
     'inExpandedDirectoryCard',
     'title',
     'type',
-    'version',
     { community: ['id'] }
   ],
   operation: 'getQuestions'
@@ -78,7 +77,6 @@ export const PROMOTE_TO_ADMIN = mutation({
 export interface RenameQuestionArgs {
   id: string;
   title: string;
-  version: number;
 }
 
 export const RENAME_QUESTION = mutation({
@@ -86,7 +84,6 @@ export const RENAME_QUESTION = mutation({
   operation: 'renameQuestion',
   variables: {
     id: { required: true },
-    title: { required: true },
-    version: { required: true, type: 'Int' }
+    title: { required: true }
   }
 }).query;

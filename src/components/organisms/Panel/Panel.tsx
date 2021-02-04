@@ -3,13 +3,13 @@ import React, { CSSProperties, MutableRefObject, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { ClassNameProps, IdProps, StyleProps } from '@constants';
+import { BaseProps, IdProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import usePanelPosition from './hooks/usePickerPosition';
 import { PanelAlign } from './Panel.types';
 
-export interface PanelProps extends IdProps, ClassNameProps, StyleProps {
+export interface PanelProps extends BaseProps, IdProps {
   align?: PanelAlign;
   scrollId?: string;
   size?: 'md' | 'lg';
@@ -136,10 +136,12 @@ const PanelContent: React.FC<PanelProps> = ({
   );
 };
 
-const Panel: React.FC<PanelProps> = ({ children, ...props }) => {
+const Panel: React.FC<PanelProps> = ({ children, show, ...props }) => {
   const isPanelShowing = useStoreState(({ panel }) =>
     panel.isIdShowing(props.id)
   );
+
+  if (show === false) return null;
 
   return createPortal(
     <AnimatePresence>

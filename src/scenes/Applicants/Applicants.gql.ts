@@ -27,7 +27,6 @@ export const GET_APPLICANTS_QUESTIONS = query({
     'order',
     'title',
     'type',
-    'version',
     { community: ['id'] }
   ],
   operation: 'getQuestions'

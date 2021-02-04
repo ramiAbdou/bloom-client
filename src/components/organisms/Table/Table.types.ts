@@ -8,7 +8,6 @@ export type TableColumn = {
   id: string;
   type: QuestionType;
   title: string;
-  version?: number;
 };
 
 // Each row will have a series of random question ID's as well as a unique ID
@@ -25,9 +24,6 @@ export type OnRenameColumnArgs = {
 };
 
 export type OnRenameColumn = (args: OnRenameColumnArgs) => Promise<void>;
-export interface OnRenameColumnProps {
-  onRenameColumn?: OnRenameColumn;
-}
 
 export type TableOptions = {
   alignEndRight?: boolean;
@@ -37,6 +33,7 @@ export type TableOptions = {
   isClickable?: boolean;
   isRenamable?: boolean;
   isSortable?: boolean;
+  onRenameColumn?: (args: OnRenameColumnArgs) => Promise<void>;
   onRowClick?: (row: TableRow) => void;
   showCount?: boolean;
 };

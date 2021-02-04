@@ -163,7 +163,6 @@ export interface IQuestion extends BaseEntity {
   required: boolean;
   title: QuestionType;
   type: QuestionType;
-  version: number;
 }
 
 // ## USER
