@@ -9,9 +9,14 @@ import {
   GET_APPLICATION,
   GET_APPLICATION_QUESTIONS
 } from '@scenes/Application/Application.gql';
-import { ICommunityApplication, IQuestion } from '@store/Db/entities';
+import {
+  ICommunityApplication,
+  IMemberType,
+  IQuestion
+} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
+import { GET_TYPES } from '@store/Store.gql';
 import ApplicationChooseTypePage from './ApplicationChooseType';
 import ApplicationConfirmationPage from './ApplicationConfirmation';
 import ApplicationMainPage from './ApplicationMain';
@@ -38,7 +43,14 @@ const Application: React.FC = () => {
     variables: { urlName }
   });
 
-  const loading = loading1 && loading2;
+  const { loading: loading3 } = useQuery<IMemberType[]>({
+    name: 'getTypes',
+    query: GET_TYPES,
+    schema: [Schema.MEMBER_TYPE],
+    variables: { urlName }
+  });
+
+  const loading = loading1 && loading2 && loading3;
 
   // @ts-ignore b/c community is entire entity, not ID.
   const communityId = data?.community?.id;

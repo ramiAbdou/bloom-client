@@ -49,8 +49,7 @@ export const GET_APPLICATION = query({
         'name',
         'primaryColor',
         'urlName',
-        { integrations: ['stripeAccountId'] },
-        { types: ['amount', 'id', 'isFree', 'name', 'recurrence'] }
+        { integrations: ['stripeAccountId'] }
       ]
     }
   ],

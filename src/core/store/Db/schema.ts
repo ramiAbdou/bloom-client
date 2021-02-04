@@ -36,13 +36,17 @@ const Community = new schema.Entity(
   'communities',
   {},
   {
-    mergeStrategy,
+    mergeStrategy: (a, b) => {
+      console.log(a, b, mergeStrategy(a, b));
+      return mergeStrategy(a, b);
+    },
     processStrategy: (community, parent) => {
       const processedData = takeFirst([
         [!!parent.applicationId, { application: parent.id }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.memberId, { members: [parent.id] }],
         [!!parent.questionId, { questions: [parent.id] }],
+        [!!parent.typeId, { types: [parent.id] }],
         {}
       ]);
 
@@ -165,7 +169,15 @@ const MemberPayment = new schema.Entity(
   { processStrategy: (value) => ({ ...value, paymentId: value.id }) }
 );
 
-const MemberType = new schema.Entity('types', {});
+const MemberType = new schema.Entity(
+  'types',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, typeId: value.id };
+    }
+  }
+);
 
 const Question = new schema.Entity(
   'questions',
@@ -223,6 +235,7 @@ Member.define({
 
 MemberData.define({ question: Question });
 MemberPayment.define({ member: Member, type: MemberType });
+MemberType.define({ community: Community });
 Question.define({ community: Community, data: [MemberData] });
 User.define({ members: [Member] });
 

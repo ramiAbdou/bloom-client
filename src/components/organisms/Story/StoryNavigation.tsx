@@ -1,4 +1,3 @@
-import deepequal from 'fast-deep-equal';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
@@ -10,10 +9,7 @@ import StoryStore from './Story.store';
 import { StoryPageProps } from './Story.types';
 
 const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
-  const page = StoryStore.useStoreState(
-    ({ getPage }) => getPage(id),
-    deepequal
-  );
+  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
 
   const setCurrentPage = StoryStore.useStoreActions(
     (store) => store.setCurrentPage

@@ -37,7 +37,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
   useUpdateDisabledPage(id);
 
   useEffect(() => {
-    if (show !== false) setPage({ branchId, branches, id });
+    if (show !== false) setPage({ branchId, branches, disabled: !!pageId, id });
   }, [show]);
 
   if (page?.id !== pageId || show === false) return null;
