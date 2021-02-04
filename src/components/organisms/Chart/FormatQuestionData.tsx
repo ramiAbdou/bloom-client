@@ -52,7 +52,7 @@ const useQuestionData = (): Pick<
 
       let value;
 
-      if (category === 'MEMBERSHIP_TYPE') value = type.name;
+      if (category === 'MEMBERSHIP_TYPE') value = type?.name;
       else if (category === 'GENDER') value = user.gender;
       else if (category === 'DUES_STATUS') {
         value = member.isDuesActive ? 'Active' : 'Inactive';

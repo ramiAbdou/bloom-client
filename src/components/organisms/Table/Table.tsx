@@ -1,3 +1,4 @@
+import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import { ShowProps } from '@constants';
@@ -20,13 +21,14 @@ const UpdateAndRenderTableContent: React.FC<Pick<TableProps, 'rows'>> = ({
   children,
   rows
 }) => {
+  const data = TableStore.useStoreState((store) => store.data);
   const updateData = TableStore.useStoreActions((store) => store.updateData);
 
   // Used primarily for the removal of rows. This will not update the
   // data if the number of rows doesn't change.
   useEffect(() => {
-    if (rows) updateData(rows);
-  }, [rows?.length]);
+    if (!deepequal(data, rows)) updateData(rows);
+  }, [rows]);
 
   return <>{children}</>;
 };

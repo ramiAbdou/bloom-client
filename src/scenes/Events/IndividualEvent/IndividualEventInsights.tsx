@@ -22,7 +22,6 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
   const numGuests = useStoreState(({ db }) => db.event.guests?.length);
-  // useStoreState(({ db }) => console.log(db.event));
   return <AnalyticsCard label="# of RSVPs" value={numGuests ?? 0} />;
 };
 

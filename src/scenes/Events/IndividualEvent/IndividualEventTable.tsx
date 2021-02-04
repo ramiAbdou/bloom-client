@@ -83,11 +83,8 @@ const IndividualEventTable: React.FC = () => {
     const recordWithWatches =
       db.event.watches?.reduce((acc, watchId: string) => {
         const watch: IEventWatch = byWatchId[watchId];
-        const member: IMember = byMemberId[watch.member];
-
-        if (!member) return acc;
-
-        const user: IUser = byUserId[member.user];
+        const member: IMember = byMemberId[watch?.member];
+        const user: IUser = byUserId[member?.user];
         const { firstName, lastName, email } = user ?? {};
         const previousValue = acc[email];
 
@@ -105,18 +102,15 @@ const IndividualEventTable: React.FC = () => {
 
         return {
           ...acc,
-          [email]: {
-            ...previousValue,
-            watched: 'Yes'
-          }
+          [email]: { ...previousValue, watched: 'Yes' }
         };
-      }, recordWithGuests) ?? recordWithGuests;
+      }, recordWithGuests ?? {}) ?? recordWithGuests;
 
     if (!recordWithWatches) return null;
 
     return Object.values(recordWithWatches)?.sort((a, b) =>
       // @ts-ignore
-      sortObjects(a, b, ['joinedAt', 'rsvpdAt', 'watched'], 'DESC')
+      sortObjects(a, b, ['joinedAt', 'rsvpdAt'], 'DESC')
     ) as TableRow[];
   });
 

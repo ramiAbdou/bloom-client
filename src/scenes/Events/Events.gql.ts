@@ -240,23 +240,23 @@ export const GET_PAST_EVENTS_WITH_GUESTS = query({
     'summary',
     'title',
     'videoUrl',
-    { community: ['id'] }
-    // {
-    //   attendees: [
-    //     'email',
-    //     'firstName',
-    //     'id',
-    //     'lastName',
-    //     {
-    //       member: [
-    //         'id',
-    //         { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-    //       ]
-    //     }
-    //   ]
-    // },
-    // { guests: ['id'] },
-    // { watches: ['id'] }
+    { community: ['id'] },
+    {
+      attendees: [
+        'email',
+        'firstName',
+        'id',
+        'lastName',
+        {
+          member: [
+            'id',
+            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+          ]
+        }
+      ]
+    },
+    { guests: ['id'] },
+    { watches: ['id'] }
   ],
   operation: 'getPastEvents'
 }).query;

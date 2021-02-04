@@ -80,7 +80,6 @@ const IndividualEvent: React.FC = () => {
   });
 
   const loading = loading1 || loading2 || loading3 || loading4;
-
   const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
 
   useEffect(() => {
