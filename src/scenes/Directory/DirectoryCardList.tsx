@@ -1,13 +1,13 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import { IMember, IMemberData } from '@store/Db/entities';
+import MasonryList from '@organisms/List/MasonryList';
+import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import MasonryList from '../../components/organisms/List/MasonryList';
-import DirectoryCard from './DirectoryCard/DirectoryCard';
-import { MemberCardModel } from './DirectoryCard/DirectoryCard.store';
+import DirectoryCard from './DirectoryCard';
+import { MemberCardModel } from './DirectoryCard.store';
 
-const DirectoryCardContainer = () => {
+const DirectoryCardList: React.FC = () => {
   const members: MemberCardModel[] = useStoreState(({ db }) => {
     const { byId: byDataId } = db.entities.data;
     const { byId: byMemberId } = db.entities.members;
@@ -19,23 +19,19 @@ const DirectoryCardContainer = () => {
     return db.community.members
       ?.map((memberId: string) => {
         const member: IMember = byMemberId[memberId];
+        const user: IUser = byUserId[member?.user];
 
         const data: IMemberData[] = member.data
-          ?.map((dataId) => byDataId[dataId])
-          ?.filter(
-            (point: IMemberData) =>
-              byQuestionId[point.question]?.inExpandedDirectoryCard
-          );
+          ?.map((dataId: string) => byDataId[dataId])
+          ?.filter((entity: IMemberData) => {
+            const question: IQuestion = byQuestionId[entity.question];
+            return question?.inDirectoryCard;
+          });
 
-        return {
-          ...byUserId[member.user],
-          ...member,
-          data,
-          memberId: member.id,
-          userId: member.user
-        };
+        return { ...member, ...user, data, memberId, userId: user?.id };
       })
-      ?.filter((member) => member?.status === 'ACCEPTED');
+      ?.filter((member) => member?.status === 'ACCEPTED')
+      ?.filter((member) => !!member?.userId);
   }, deepequal);
 
   return (
@@ -57,4 +53,4 @@ const DirectoryCardContainer = () => {
   );
 };
 
-export default DirectoryCardContainer;
+export default DirectoryCardList;

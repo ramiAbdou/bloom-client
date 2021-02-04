@@ -67,11 +67,16 @@ const DirectoryCardContent: React.FC = () => {
   );
 };
 
-const DirectoryCard = ({ data }: RenderComponentProps<MemberCardModel>) => (
-  <MemberCard.Provider runtimeModel={data}>
-    <DirectoryCardContent />
-    <MemberProfileModal memberId={data?.memberId} />
-  </MemberCard.Provider>
-);
+const DirectoryCard: React.FC<RenderComponentProps<MemberCardModel>> = ({
+  data
+}) => {
+  console.log(data);
+  return (
+    <MemberCard.Provider runtimeModel={data}>
+      <DirectoryCardContent />
+      <MemberProfileModal memberId={data?.memberId} />
+    </MemberCard.Provider>
+  );
+};
 
 export default DirectoryCard;

@@ -9,7 +9,7 @@ import ListSearchBar from '@organisms/List/ListSearchBar';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { GET_DIRECTORY, GET_DIRECTORY_QUESTIONS } from './Directory.gql';
-import DirectoryCardContainer from './DirectoryCardContainer';
+import DirectoryCardList from './DirectoryCardList';
 
 const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
   const numResults = ListStore.useStoreState((store) => store.numResults);
@@ -26,25 +26,25 @@ const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
 };
 
 const Directory: React.FC = () => {
-  const { loading: loading1 } = useQuery<ICommunity>({
+  const { data: data1, loading: loading1 } = useQuery<ICommunity>({
     name: 'getDirectory',
     query: GET_DIRECTORY,
     schema: Schema.COMMUNITY
   });
 
-  const { loading: loading2 } = useQuery<ICommunity>({
+  const { data: data2, loading: loading2 } = useQuery<ICommunity>({
     name: 'getQuestions',
     query: GET_DIRECTORY_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
-  const loading = loading1 && loading2;
+  const loading = !data1 && !data2 && loading1 && loading2;
 
   return (
     <ListStore.Provider>
       <MainContent>
         <DirectoryHeader loading={loading} />
-        {!loading && <DirectoryCardContainer />}
+        {!loading && <DirectoryCardList />}
       </MainContent>
     </ListStore.Provider>
   );

@@ -36,10 +36,7 @@ const Community = new schema.Entity(
   'communities',
   {},
   {
-    mergeStrategy: (a, b) => {
-      console.log(a, b, mergeStrategy(a, b));
-      return mergeStrategy(a, b);
-    },
+    mergeStrategy,
     processStrategy: (community, parent) => {
       const processedData = takeFirst([
         [!!parent.applicationId, { application: parent.id }],

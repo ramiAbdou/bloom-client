@@ -24,7 +24,6 @@ export const GET_DIRECTORY_QUESTIONS = query({
     'category',
     'id',
     'inDirectoryCard',
-    'inExpandedDirectoryCard',
     'title',
     'type',
     'version',
