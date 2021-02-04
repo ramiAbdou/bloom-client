@@ -41,6 +41,8 @@ const Community = new schema.Entity(
       const processedData = takeFirst([
         [!!parent.applicationId, { application: parent.id }],
         [!!parent.eventId, { events: [parent.id] }],
+        [!!parent.memberId, { members: [parent.id] }],
+        [!!parent.questionId, { questions: [parent.id] }],
         {}
       ]);
 
@@ -141,7 +143,7 @@ const Member = new schema.Entity(
         {}
       ]);
 
-      return { ...value, ...processedData };
+      return { ...value, ...processedData, memberId: value.id };
     }
   }
 );
@@ -175,7 +177,7 @@ const Question = new schema.Entity(
         [!!parent.memberDataId, { data: [parent.id] }]
       ]);
 
-      return { ...value, ...processedData };
+      return { ...value, ...processedData, questionId: value.id };
     }
   }
 );
@@ -221,7 +223,7 @@ Member.define({
 
 MemberData.define({ question: Question });
 MemberPayment.define({ member: Member, type: MemberType });
-Question.define({ data: [MemberData] });
+Question.define({ community: Community, data: [MemberData] });
 User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
@@ -239,5 +241,6 @@ export const Schema = {
   MEMBER_DATA: MemberData,
   MEMBER_PAYMENT: MemberPayment,
   MEMBER_TYPE: MemberType,
+  QUESTION: Question,
   USER: User
 };

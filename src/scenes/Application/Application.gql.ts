@@ -50,22 +50,28 @@ export const GET_APPLICATION = query({
         'primaryColor',
         'urlName',
         { integrations: ['stripeAccountId'] },
-        {
-          questions: [
-            'category',
-            'description',
-            'id',
-            'inApplication',
-            'options',
-            'required',
-            'title',
-            'type'
-          ]
-        },
         { types: ['amount', 'id', 'isFree', 'name', 'recurrence'] }
       ]
     }
   ],
   operation: 'getApplication',
   variables: { urlName: { required: true } }
+}).query;
+
+// ## GET APPLICATION QUESTIONS
+
+export const GET_APPLICATION_QUESTIONS = query({
+  fields: [
+    'category',
+    'description',
+    'id',
+    'inApplication',
+    'options',
+    'required',
+    'title',
+    'type',
+    { community: ['id'] }
+  ],
+  operation: 'getQuestions',
+  variables: { urlName: { required: false } }
 }).query;

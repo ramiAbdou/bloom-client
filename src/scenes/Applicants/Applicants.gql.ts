@@ -1,36 +1,36 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { ICommunity } from '@store/Db/entities';
+// ## GET APPLICANTS
 
-export interface GetPendingApplicantsResult extends ICommunity {
-  application: any;
-}
-
-export const GET_PENDING_APPLICATIONS = query({
+export const GET_APPLICANTS = query({
   fields: [
     'id',
-    {
-      questions: [
-        'category',
-        'id',
-        'inApplicantCard',
-        'inApplication',
-        'order',
-        'title',
-        'type',
-        'version'
-      ]
-    },
-    {
-      members: [
-        'id',
-        'createdAt',
-        'status',
-        { applicantData: ['questionId', 'value'] }
-      ]
-    }
+    'createdAt',
+    'role',
+    'status',
+    { community: ['id'] },
+    { data: ['id', 'value', { question: ['id'] }] },
+    { type: ['id', 'name'] },
+    { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
   ],
   operation: 'getApplicants'
+}).query;
+
+// ## GET APPLICANTS QUESTIONS
+
+export const GET_APPLICANTS_QUESTIONS = query({
+  fields: [
+    'category',
+    'id',
+    'inApplicantCard',
+    'inApplication',
+    'order',
+    'title',
+    'type',
+    'version',
+    { community: ['id'] }
+  ],
+  operation: 'getQuestions'
 }).query;
 
 // ## RESPOND TO APPLICANTS

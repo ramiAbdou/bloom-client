@@ -1,31 +1,49 @@
 import React from 'react';
 
 import { ModalType } from '@constants';
+import Show from '@containers/Show';
+import useQuery from '@hooks/useQuery';
 import Modal from '@organisms/Modal/Modal';
-import { useStoreState } from '@store/Store';
+import { IMember } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
+import { GET_MEMBER_PROFILE, GetMemberProfileArgs } from './MemberProfile.gql';
 import MemberProfileStore, { MemberProfileModel } from './MemberProfile.store';
 import MemberProfileData from './MemberProfileData';
 import MemberProfilePersonal from './MemberProfilePersonal';
 
-const MemberProfile: React.FC<MemberProfileModel> = ({ memberId, userId }) => {
-  const doesMemberExist: boolean = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-
-    return !!byMemberId[memberId] && !!byUserId[userId];
+const MemberProfileContent: React.FC<Pick<MemberProfileModel, 'memberId'>> = ({
+  memberId
+}) => {
+  const { data, error, loading } = useQuery<IMember, GetMemberProfileArgs>({
+    name: 'getMemberProfile',
+    query: GET_MEMBER_PROFILE,
+    schema: Schema.MEMBER,
+    variables: { memberId }
   });
 
-  if (!doesMemberExist) return null;
+  return (
+    <Show show={!loading && !error}>
+      <MemberProfileStore.Provider
+        // @ts-ignore b/c user is populated.
+        runtimeModel={{ memberId, userId: data?.user?.id }}
+      >
+        <MemberProfilePersonal />
+        <MemberProfileData />
+      </MemberProfileStore.Provider>
+    </Show>
+  );
+};
 
+const MemberProfile: React.FC<Pick<MemberProfileModel, 'memberId'>> = ({
+  memberId
+}) => {
   return (
     <Modal
       className="mo-member-profile"
       id={`${ModalType.MEMBER_PROFILE}-${memberId}`}
+      show={!!memberId}
     >
-      <MemberProfileStore.Provider runtimeModel={{ memberId, userId }}>
-        <MemberProfilePersonal />
-        <MemberProfileData />
-      </MemberProfileStore.Provider>
+      <MemberProfileContent memberId={memberId} />
     </Modal>
   );
 };

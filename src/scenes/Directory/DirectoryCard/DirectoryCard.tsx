@@ -70,7 +70,7 @@ const DirectoryCardContent: React.FC = () => {
 const DirectoryCard = ({ data }: RenderComponentProps<MemberCardModel>) => (
   <MemberCard.Provider runtimeModel={data}>
     <DirectoryCardContent />
-    <MemberProfileModal memberId={data?.memberId} userId={data?.userId} />
+    <MemberProfileModal memberId={data?.memberId} />
   </MemberCard.Provider>
 );
 

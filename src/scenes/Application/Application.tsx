@@ -5,8 +5,11 @@ import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
 import Loader from '@molecules/Loader/Loader';
 import Story from '@organisms/Story/Story';
-import { GET_APPLICATION } from '@scenes/Application/Application.gql';
-import { ICommunityApplication } from '@store/Db/entities';
+import {
+  GET_APPLICATION,
+  GET_APPLICATION_QUESTIONS
+} from '@scenes/Application/Application.gql';
+import { ICommunityApplication, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import ApplicationChooseTypePage from './ApplicationChooseType';
@@ -18,7 +21,7 @@ const Application: React.FC = () => {
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
   const { urlName } = useParams() as UrlNameProps;
 
-  const { data, error, loading } = useQuery<
+  const { data, error, loading: loading1 } = useQuery<
     ICommunityApplication,
     UrlNameProps
   >({
@@ -27,6 +30,15 @@ const Application: React.FC = () => {
     schema: Schema.COMMUNITY_APPLICATION,
     variables: { urlName }
   });
+
+  const { loading: loading2 } = useQuery<IQuestion[]>({
+    name: 'getQuestions',
+    query: GET_APPLICATION_QUESTIONS,
+    schema: [Schema.QUESTION],
+    variables: { urlName }
+  });
+
+  const loading = loading1 && loading2;
 
   // @ts-ignore b/c community is entire entity, not ID.
   const communityId = data?.community?.id;

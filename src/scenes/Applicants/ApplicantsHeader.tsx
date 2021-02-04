@@ -4,7 +4,7 @@ import { LoadingProps } from '@constants';
 import MainHeader from '@containers/Main/MainHeader';
 import Row from '@containers/Row/Row';
 import { useStoreState } from '@store/Store';
-import ApplicantsHeaderRespondAllButton from './ApplicantsRespondButton';
+import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const pendingApplicantIds: string[] = useStoreState(({ db }) => {
@@ -24,13 +24,13 @@ const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
       title="Pending Applicants"
     >
       <Row>
-        <ApplicantsHeaderRespondAllButton
+        <ApplicantsRespondButton
           all
           applicantIds={pendingApplicantIds}
           response="ACCEPTED"
         />
 
-        <ApplicantsHeaderRespondAllButton
+        <ApplicantsRespondButton
           all
           applicantIds={pendingApplicantIds}
           response="REJECTED"

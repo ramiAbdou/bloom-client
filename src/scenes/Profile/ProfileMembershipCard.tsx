@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType, PopulateArgs } from '@constants';
 import Card from '@containers/Card/Card';
 import useQuery from '@hooks/useQuery';
 import QuestionValueList, {
@@ -10,7 +10,7 @@ import QuestionValueList, {
 import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_MEMBER_DATA } from './Profile.gql';
+import { GET_MEMBER_DATA, GET_MEMBER_DATA_QUESTIONS } from './Profile.gql';
 import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileMembershipHeader: React.FC = () => {
@@ -47,7 +47,10 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const hasData = useStoreState(({ db }) => !!db.member.data?.length);
+  const hasData: boolean = useStoreState(({ db }) => {
+    return db.member.data !== undefined;
+  });
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
 
@@ -59,12 +62,20 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const { loading } = useQuery<IMember>({
+  const { loading: loading1 } = useQuery<IMember, PopulateArgs>({
     name: 'getMember',
     query: GET_MEMBER_DATA,
     schema: Schema.MEMBER,
     variables: { populate: ['community.questions', 'data.question'] }
   });
+
+  const { loading: loading2 } = useQuery<[IQuestion]>({
+    name: 'getQuestions',
+    query: GET_MEMBER_DATA_QUESTIONS,
+    schema: [Schema.QUESTION]
+  });
+
+  const loading = loading1 && loading2;
 
   return (
     <Card className="s-profile-card--membership" show={!loading}>

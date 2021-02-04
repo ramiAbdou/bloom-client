@@ -10,26 +10,27 @@ export const GET_MEMBER_DATA = query({
   fields: [
     'id',
     { data: ['id', 'value', { question: ['id'] }] },
-    {
-      community: [
-        'id',
-        {
-          questions: [
-            'id',
-            'category',
-            'description',
-            'onlyInApplication',
-            'options',
-            'required',
-            'title',
-            'type'
-          ]
-        }
-      ]
-    }
+    { community: ['id'] }
   ],
   operation: 'getMember',
   variables: { populate: { required: false, type: '[String!]' } }
+}).query;
+
+// ## GET MEMBER DATA QUESTIONS
+
+export const GET_MEMBER_DATA_QUESTIONS = query({
+  fields: [
+    'id',
+    'category',
+    'description',
+    'onlyInApplication',
+    'options',
+    'required',
+    'title',
+    'type',
+    { community: ['id'] }
+  ],
+  operation: 'getQuestions'
 }).query;
 
 // ## UPDATE MEMBER DATA

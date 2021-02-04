@@ -37,7 +37,6 @@ export const GET_DATABASE = query({
   fields: [
     'id',
     { integrations: ['id', 'stripeAccountId'] },
-    { questions: ['category', 'id', 'title', 'type', 'version'] },
     {
       members: [
         'id',
@@ -52,6 +51,13 @@ export const GET_DATABASE = query({
     }
   ],
   operation: 'getDatabase'
+}).query;
+
+// GET DATABASE QUESTIONS
+
+export const GET_DATABASE_QUESTIONS = query({
+  fields: ['category', 'id', 'title', 'type', 'version', { community: ['id'] }],
+  operation: 'getQuestions'
 }).query;
 
 // PROMOTE TO ADMIN

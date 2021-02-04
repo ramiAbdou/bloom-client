@@ -91,6 +91,7 @@ const Modal: React.FC<ModalProps> = ({
   className,
   lock,
   id: MODAL_ID,
+  show,
   ...containerProps
 }) => {
   const { confirmation } = containerProps?.options ?? {};
@@ -107,6 +108,8 @@ const Modal: React.FC<ModalProps> = ({
     'c-modal--confirmation': confirmation,
     [className]: className
   });
+
+  if (show === false) return null;
 
   return createPortal(
     <AnimatePresence>

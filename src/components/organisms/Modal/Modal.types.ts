@@ -1,4 +1,4 @@
-import { ClassNameProps, IdProps, StyleProps } from '@constants';
+import { BaseProps, IdProps } from '@constants';
 
 export interface ModalOptions {
   confirmation?: boolean;
@@ -6,7 +6,7 @@ export interface ModalOptions {
   width?: number;
 }
 
-export interface ModalProps extends ClassNameProps, IdProps, StyleProps {
+export interface ModalProps extends BaseProps, IdProps {
   lock?: boolean;
   onClose?: VoidFunction;
   options?: ModalOptions;

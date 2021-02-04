@@ -86,10 +86,8 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
     <Table columns={columns} options={options} rows={rows}>
       <TableContent emptyMessage="Looks like nobody has attended an event yet." />
 
-      {rows?.map(({ id, memberId, userId }: TableRow) => {
-        return (
-          <MemberProfileModal key={id} memberId={memberId} userId={userId} />
-        );
+      {rows?.map(({ id, memberId }: TableRow) => {
+        return <MemberProfileModal key={id} memberId={memberId} />;
       })}
     </Table>
   );

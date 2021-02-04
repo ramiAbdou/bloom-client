@@ -59,7 +59,7 @@ const MemberDatabase: React.FC = () => {
 
         if (member.status !== 'ACCEPTED') return acc;
 
-        const row: TableRow = db.community?.questions.reduce(
+        const row: TableRow = db.community?.questions?.reduce(
           (result: TableRow, questionId: string) => {
             const { category }: IQuestion = byQuestionId[questionId];
 

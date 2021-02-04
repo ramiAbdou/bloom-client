@@ -78,7 +78,7 @@ const IndividualEventGuestListContent: React.FC = () => {
           return (
             <React.Fragment key={user?.email}>
               <IndividualEventGuest key={user?.id} {...user} />
-              <MemberProfileModal memberId={user?.memberId} userId={user?.id} />
+              <MemberProfileModal memberId={user?.memberId} />
             </React.Fragment>
           );
         })}
