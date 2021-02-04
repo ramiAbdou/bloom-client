@@ -22,7 +22,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import IndividualEventTableFilters from './IndividualEventTableFilters';
 
-const IndividualEventTableContent: React.FC = () => {
+const IndividualEventTable: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const startTime = useStoreState(({ db }) => db.event?.startTime);
@@ -44,7 +44,7 @@ const IndividualEventTableContent: React.FC = () => {
         [email]: {
           email,
           fullName: `${firstName} ${lastName}`,
-          id: email,
+          id: attendee?.member,
           joinedAt: day(createdAt).format('MMM D @ h:mm A'),
           watched: 'No'
         }
@@ -55,16 +55,17 @@ const IndividualEventTableContent: React.FC = () => {
       db.event.guests?.reduce((acc, guestId: string) => {
         const guest: IEventGuest = byGuestId[guestId];
         const { createdAt, firstName, lastName, email } = guest;
-
         const previousValue = acc[email];
+
         if (!previousValue) {
           return {
             ...acc,
             [email]: {
               email,
               fullName: `${firstName} ${lastName}`,
-              id: email,
-              rsvpdAt: day(createdAt).format('MMM D @ h:mm A')
+              id: guest?.member,
+              rsvpdAt: day(createdAt).format('MMM D @ h:mm A'),
+              watched: 'No'
             }
           };
         }
@@ -73,7 +74,8 @@ const IndividualEventTableContent: React.FC = () => {
           ...acc,
           [email]: {
             ...previousValue,
-            rsvpdAt: day(createdAt).format('MMM D @ h:mm A')
+            rsvpdAt: day(createdAt).format('MMM D @ h:mm A'),
+            watched: 'No'
           }
         };
       }, record ?? {}) ?? record;
@@ -82,10 +84,11 @@ const IndividualEventTableContent: React.FC = () => {
       db.event.watches?.reduce((acc, watchId: string) => {
         const watch: IEventWatch = byWatchId[watchId];
         const member: IMember = byMemberId[watch.member];
+
+        if (!member) return acc;
+
         const user: IUser = byUserId[member.user];
-
         const { firstName, lastName, email } = user ?? {};
-
         const previousValue = acc[email];
 
         if (!previousValue) {
@@ -94,7 +97,7 @@ const IndividualEventTableContent: React.FC = () => {
             [email]: {
               email,
               fullName: `${firstName} ${lastName}`,
-              id: email,
+              id: watch?.member,
               watched: 'Yes'
             }
           };
@@ -153,8 +156,9 @@ const IndividualEventTableContent: React.FC = () => {
   const options: TableOptions = {
     fixFirstColumn: false,
     hideIfEmpty: true,
-    onRowClick: (row: TableRow) =>
-      showModal(`${ModalType.MEMBER_PROFILE}-${row?.id}`),
+    onRowClick: (row: TableRow) => {
+      showModal(`${ModalType.MEMBER_PROFILE}-${row?.id}`);
+    },
     showCount: true
   };
 
@@ -164,16 +168,12 @@ const IndividualEventTableContent: React.FC = () => {
         <IndividualEventTableFilters />
         <TableContent small />
 
-        {rows?.map((row) => {
-          return <MemberProfileModal memberId={row?.id} />;
+        {rows?.map((row: TableRow) => {
+          return <MemberProfileModal key={row?.email} memberId={row?.id} />;
         })}
       </Table>
     </MainSection>
   );
-};
-
-const IndividualEventTable: React.FC = () => {
-  return <IndividualEventTableContent />;
 };
 
 export default IndividualEventTable;

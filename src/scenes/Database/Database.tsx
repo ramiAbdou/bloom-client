@@ -10,7 +10,6 @@ import {
 } from '@scenes/Database/Database.gql';
 import { ICommunity, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { GET_TYPES } from '@store/Store.gql';
 import AdminDatabase from './AdminDatabase/AdminDatabase';
 import DatabaseHeader from './DatabaseHeader';
 import MemberDatabase from './MemberDatabase/MemberDatabase';
@@ -18,25 +17,19 @@ import MemberDatabase from './MemberDatabase/MemberDatabase';
 const Database: React.FC = () => {
   const { url } = useRouteMatch();
 
-  const { data: data1 } = useQuery<ICommunity>({
+  const { loading: loading1 } = useQuery<ICommunity>({
     name: 'getDatabase',
     query: GET_DATABASE,
     schema: [Schema.MEMBER]
   });
 
-  const { data: data2 } = useQuery<IQuestion[]>({
+  const { loading: loading2 } = useQuery<IQuestion[]>({
     name: 'getQuestions',
     query: GET_DATABASE_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
-  const { data: data3 } = useQuery<IQuestion[]>({
-    name: 'getTypes',
-    query: GET_TYPES,
-    schema: [Schema.MEMBER_TYPE]
-  });
-
-  const loading = !data1 && !data2 && !data3;
+  const loading = loading1 || loading2;
 
   return (
     <MainContent>

@@ -15,7 +15,7 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
     <AnalyticsCard
       label="# of Attendees"
       show={!!day().isAfter(day(startTime))}
-      value={numAttendees}
+      value={numAttendees ?? 0}
     />
   );
 };
@@ -23,7 +23,7 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
 const IndividualEventInsightsGuestsCard: React.FC = () => {
   const numGuests = useStoreState(({ db }) => db.event.guests?.length);
   // useStoreState(({ db }) => console.log(db.event));
-  return <AnalyticsCard label="# of RSVPs" value={numGuests} />;
+  return <AnalyticsCard label="# of RSVPs" value={numGuests ?? 0} />;
 };
 
 const IndividualEventInsightsWatchesCard: React.FC = () => {
@@ -34,7 +34,7 @@ const IndividualEventInsightsWatchesCard: React.FC = () => {
     <AnalyticsCard
       label="# of Recording Viewers"
       show={!!recordingUrl}
-      value={numWatches}
+      value={numWatches ?? 0}
     />
   );
 };

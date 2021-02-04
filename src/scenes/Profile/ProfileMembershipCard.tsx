@@ -69,7 +69,7 @@ const ProfileMembershipCard: React.FC = () => {
     variables: { populate: ['community.questions', 'data.question'] }
   });
 
-  const { loading: loading2 } = useQuery<[IQuestion]>({
+  const { loading: loading2 } = useQuery<IQuestion[]>({
     name: 'getQuestions',
     query: GET_MEMBER_DATA_QUESTIONS,
     schema: [Schema.QUESTION]

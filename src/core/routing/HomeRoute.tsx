@@ -24,15 +24,40 @@ import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
-import { ICommunity, IMember } from '@store/Db/entities';
+import {
+  ICommunity,
+  IMember,
+  IMemberType,
+  IQuestion
+} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
-import { GET_USER, GetUserArgs, GetUserResult } from './Router.gql';
+import {
+  GET_QUESTIONS,
+  GET_TYPES,
+  GET_USER,
+  GetUserArgs,
+  GetUserResult
+} from './Router.gql';
 
 const HomeRouteContent: React.FC = () => {
+  const { loading: loading1 } = useQuery<IQuestion[]>({
+    name: 'getQuestions',
+    query: GET_QUESTIONS,
+    schema: [Schema.QUESTION]
+  });
+
+  const { loading: loading2 } = useQuery<IMemberType[]>({
+    name: 'getTypes',
+    query: GET_TYPES,
+    schema: [Schema.MEMBER_TYPE]
+  });
+
   const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
   const { url } = useRouteMatch();
+
+  if (loading1 || loading2) return <Loader />;
 
   return (
     <div className="home-content">

@@ -48,35 +48,38 @@ const IndividualEvent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
-  const { data: data1, error } = useQuery<IEvent, GetEventArgs>({
+  const { data: data1, loading: loading1, error } = useQuery<
+    IEvent,
+    GetEventArgs
+  >({
     name: 'getEvent',
     query: GET_EVENT,
     schema: Schema.EVENT,
     variables: { eventId }
   });
 
-  const { data: data2 } = useQuery<IEvent, GetEventArgs>({
+  const { loading: loading2 } = useQuery<IEvent, GetEventArgs>({
     name: 'getEventGuests',
     query: GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     variables: { eventId }
   });
 
-  const { data: data3 } = useQuery<IEvent, GetEventArgs>({
+  const { loading: loading3 } = useQuery<IEvent, GetEventArgs>({
     name: 'getEventAttendees',
     query: GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     variables: { eventId }
   });
 
-  const { data: data4 } = useQuery<IEvent, GetEventArgs>({
+  const { loading: loading4 } = useQuery<IEvent, GetEventArgs>({
     name: 'getEventWatches',
     query: GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     variables: { eventId }
   });
 
-  const loading = !data1 && !data2 && !data3 && !data4;
+  const loading = loading1 || loading2 || loading3 || loading4;
 
   const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
 

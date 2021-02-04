@@ -2,6 +2,35 @@ import { mutation, query } from 'gql-query-builder';
 
 import { IUser } from '@store/Db/entities';
 
+// ## GET QUESTIONS
+
+export const GET_QUESTIONS = query({
+  fields: [
+    'category',
+    'id',
+    'inExpandedDirectoryCard',
+    'title',
+    'type',
+    { community: ['id'] }
+  ],
+  operation: 'getQuestions'
+}).query;
+
+// ## GET TYPES
+
+export const GET_TYPES = query({
+  fields: [
+    'amount',
+    'id',
+    'isFree',
+    'name',
+    'recurrence',
+    { community: ['id'] }
+  ],
+  operation: 'getTypes',
+  variables: { urlName: { required: false } }
+}).query;
+
 // ## GET USER
 
 export interface GetUserArgs {
