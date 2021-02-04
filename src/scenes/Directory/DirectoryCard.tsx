@@ -1,80 +1,89 @@
-import deepequal from 'fast-deep-equal';
-import { RenderComponentProps } from 'masonic';
 import React from 'react';
 
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { cx } from '@util/util';
-import MemberCard, { MemberCardModel } from './DirectoryCard.store';
 
 const DirectoryCardInformation: React.FC = () => {
-  const data = MemberCard.useStoreState((store) => store.data);
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const value = useStoreState(({ db }) => {
-    const { byId: byQuestionId } = db.entities.questions;
+  const fullName: string = useStoreState(({ db }) => {
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byUserId } = db.entities.users;
 
-    const questionId = db.community.questions?.find((id) => {
-      return byQuestionId[id]?.inDirectoryCard;
-    });
+    const member: IMember = byMemberId[memberId];
+    const user: IUser = byUserId[member?.user];
 
-    return data?.find(({ question }) => question === questionId)?.value;
+    return `${user?.firstName} ${user?.lastName}`;
   });
 
-  const fullName = MemberCard.useStoreState(({ firstName, lastName }) => {
-    return `${firstName} ${lastName}`;
+  const highlightedValue = useStoreState(({ db }) => {
+    const { byId: byDataId } = db.entities.data;
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byQuestionId } = db.entities.questions;
+
+    const member: IMember = byMemberId[memberId];
+
+    return member.data
+      ?.map((dataId: string) => byDataId[dataId])
+      ?.find((data: IMemberData) => {
+        const question: IQuestion = byQuestionId[data?.question];
+        return !!question?.inDirectoryCard;
+      })?.value;
   });
 
   return (
     <div className="s-directory-card-content">
       <p>
-        {fullName} <span>{value ?? ''}</span>
+        {fullName} <span>{highlightedValue ?? ''}</span>
       </p>
     </div>
   );
 };
 
-const DirectoryCardContent: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+const DirectoryCardPicture: React.FC = () => {
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const {
-    highlightedValue,
-    firstName,
-    memberId,
-    lastName,
-    pictureUrl
-  } = MemberCard.useStoreState((store) => store, deepequal);
-
-  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
-
-  const css = cx('s-directory-card', {
-    's-directory-card--empty': !highlightedValue
+  const user: IUser = useStoreState(({ db }) => {
+    const { byId: byMemberId } = db.entities.members;
+    const { byId: byUserId } = db.entities.users;
+    const member: IMember = byMemberId[memberId];
+    return byUserId[member?.user];
   });
 
   return (
-    <Card noPadding className={css} onClick={onClick}>
-      <ProfilePicture
-        firstName={firstName}
-        fontSize={60}
-        href={pictureUrl}
-        lastName={lastName}
-      />
+    <ProfilePicture
+      firstName={user?.firstName}
+      fontSize={60}
+      href={user?.pictureUrl}
+      lastName={user?.lastName}
+    />
+  );
+};
 
+const DirectoryCardContent: React.FC = () => {
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
+  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+
+  return (
+    <Card noPadding className="s-directory-card" onClick={onClick}>
+      <DirectoryCardPicture />
       <DirectoryCardInformation />
     </Card>
   );
 };
 
-const DirectoryCard: React.FC<RenderComponentProps<MemberCardModel>> = ({
-  data
-}) => {
+const DirectoryCard: React.FC<any> = ({ data }) => {
   return (
-    <MemberCard.Provider runtimeModel={data}>
+    <IdStore.Provider runtimeModel={{ id: data?.memberId }}>
       <DirectoryCardContent />
       <MemberProfileModal memberId={data?.memberId} />
-    </MemberCard.Provider>
+    </IdStore.Provider>
   );
 };
 

@@ -5,10 +5,9 @@ import MasonryList from '@organisms/List/MasonryList';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import DirectoryCard from './DirectoryCard';
-import { MemberCardModel } from './DirectoryCard.store';
 
 const DirectoryCardList: React.FC = () => {
-  const members: MemberCardModel[] = useStoreState(({ db }) => {
+  const members: any[] = useStoreState(({ db }) => {
     const { byId: byDataId } = db.entities.data;
     const { byId: byMemberId } = db.entities.members;
     const { byId: byQuestionId } = db.entities.questions;

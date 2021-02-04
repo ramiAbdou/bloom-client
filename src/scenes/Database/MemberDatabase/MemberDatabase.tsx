@@ -152,8 +152,8 @@ const MemberDatabase: React.FC = () => {
       <TableContent onRenameColumn={onRenameColumn} />
       <MemberDatabaseModals />
 
-      {rows.map(({ id: memberId }: TableRow) => {
-        return <MemberProfileModal memberId={memberId} />;
+      {rows.map((row: TableRow) => {
+        return <MemberProfileModal memberId={row?.id} />;
       })}
     </Table>
   );
