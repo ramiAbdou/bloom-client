@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Separator from '@atoms/Separator';
+import Show from '@containers/Show';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
@@ -23,9 +24,9 @@ const MemberProfileData: React.FC = () => {
     const member: IMember = byMemberId[memberId];
 
     return member?.data
-      ?.map((dataId) => byDataId[dataId])
-      ?.filter((element: IMemberData) => {
-        const question: IQuestion = byQuestionId[element.question];
+      ?.map((dataId: string) => byDataId[dataId])
+      ?.filter((data: IMemberData) => {
+        const question: IQuestion = byQuestionId[data.question];
         return questions.has(question?.id) && question?.inExpandedDirectoryCard;
       })
       ?.map((element: IMemberData) => {
@@ -34,15 +35,11 @@ const MemberProfileData: React.FC = () => {
       });
   });
 
-  // If the member has just got onto the platform and no data is filled out,
-  // leave it out of the member card.
-  if (items?.every(({ value }) => value === null)) return null;
-
   return (
-    <>
+    <Show show={items?.some(({ value }) => !!value)}>
       <Separator marginBottom={24} />
       <QuestionValueList handleNull="HIDE_ALL" items={items} />
-    </>
+    </Show>
   );
 };
 

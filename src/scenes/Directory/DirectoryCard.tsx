@@ -42,12 +42,12 @@ const DirectoryCardContent: React.FC = () => {
   const {
     highlightedValue,
     firstName,
-    id,
+    memberId,
     lastName,
     pictureUrl
   } = MemberCard.useStoreState((store) => store, deepequal);
 
-  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${id}`);
+  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
 
   const css = cx('s-directory-card', {
     's-directory-card--empty': !highlightedValue
@@ -70,7 +70,6 @@ const DirectoryCardContent: React.FC = () => {
 const DirectoryCard: React.FC<RenderComponentProps<MemberCardModel>> = ({
   data
 }) => {
-  console.log(data);
   return (
     <MemberCard.Provider runtimeModel={data}>
       <DirectoryCardContent />
