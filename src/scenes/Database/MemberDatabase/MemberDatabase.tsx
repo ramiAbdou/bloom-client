@@ -1,11 +1,14 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
+import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
+import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import Table from '@organisms/Table/Table';
 import {
   OnRenameColumn,
   TableColumn,
+  TableOptions,
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
@@ -17,7 +20,7 @@ import {
   IQuestion,
   IUser
 } from '@store/Db/entities';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import ActionRow from './MemberDatabaseActions';
@@ -32,6 +35,8 @@ const MemberDatabaseModals: React.FC = () => (
 );
 
 const MemberDatabase: React.FC = () => {
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: TableRow[] = useStoreState(({ db }) => {
@@ -46,6 +51,8 @@ const MemberDatabase: React.FC = () => {
         return byQuestionId[questionId]?.category === 'JOINED_AT';
       }
     );
+
+    if (!db.community.types?.length) return [];
 
     return db.community.members
       ?.filter((memberId: string) => {
@@ -70,7 +77,7 @@ const MemberDatabase: React.FC = () => {
             else if (category === 'LAST_NAME') result[questionId] = lastName;
             else if (category === 'MEMBERSHIP_TYPE') {
               const type: IMemberType = byTypeId[member.type];
-              result[questionId] = type.name;
+              if (type) result[questionId] = type.name;
             } else if (category === 'DUES_STATUS') {
               result[questionId] = isDuesActive ? 'Active' : 'Inactive';
             } else {
@@ -118,8 +125,6 @@ const MemberDatabase: React.FC = () => {
     query: RENAME_QUESTION
   });
 
-  if (!columns?.length) return null;
-
   const onRenameColumn: OnRenameColumn = async ({ column, updateColumn }) => {
     const { title, id, version } = column;
 
@@ -128,15 +133,28 @@ const MemberDatabase: React.FC = () => {
     if (!error) updateColumn({ id, title, version: version + 1 });
   };
 
+  const options: TableOptions = {
+    hasCheckbox: true,
+    isClickable: true,
+    onRowClick: ({ id: memberId }: TableRow) => {
+      showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+    }
+  };
+
   return (
     <Table
       columns={columns}
-      options={{ hasCheckbox: true, isClickable: true }}
+      options={options}
       rows={rows}
+      show={!!columns?.length}
     >
       <ActionRow />
       <TableContent onRenameColumn={onRenameColumn} />
       <MemberDatabaseModals />
+
+      {rows.map(({ id: memberId }: TableRow) => {
+        return <MemberProfileModal memberId={memberId} />;
+      })}
     </Table>
   );
 };

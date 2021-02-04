@@ -26,19 +26,19 @@ const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
 };
 
 const Directory: React.FC = () => {
-  const { data: data1, loading: loading1 } = useQuery<ICommunity>({
+  const { data: data1 } = useQuery<ICommunity>({
     name: 'getDirectory',
     query: GET_DIRECTORY,
     schema: [Schema.MEMBER]
   });
 
-  const { data: data2, loading: loading2 } = useQuery<ICommunity>({
+  const { data: data2 } = useQuery<ICommunity>({
     name: 'getQuestions',
     query: GET_DIRECTORY_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
-  const loading = !data1 && !data2 && loading1 && loading2;
+  const loading = !data1 && !data2;
 
   return (
     <ListStore.Provider>

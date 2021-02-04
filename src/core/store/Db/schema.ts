@@ -191,7 +191,7 @@ const Question = new schema.Entity(
   }
 );
 
-const User = new schema.Entity('users', {});
+const User = new schema.Entity('users', {}, { mergeStrategy });
 
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.

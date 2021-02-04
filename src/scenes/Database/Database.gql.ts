@@ -42,7 +42,7 @@ export const GET_DATABASE = query({
     'status',
     { community: ['id'] },
     { data: ['id', 'value', { question: ['id'] }] },
-    { type: ['id', 'name'] },
+    { type: ['id'] },
     { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
   ],
   operation: 'getDatabase'
