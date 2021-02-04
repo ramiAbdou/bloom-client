@@ -80,7 +80,6 @@ export const DELETE_EVENT_GUEST = mutation({
 
 export interface GetEventArgs {
   eventId: string;
-  populate?: string[];
 }
 
 export const GET_EVENT = query({
@@ -103,55 +102,70 @@ export const GET_EVENT = query({
         'primaryColor',
         { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
       ]
-    },
-    {
-      attendees: [
-        'createdAt',
-        'email',
-        'firstName',
-        'id',
-        'lastName',
-        {
-          member: [
-            'id',
-            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-          ]
-        }
-      ]
-    },
-    {
-      guests: [
-        'createdAt',
-        'email',
-        'firstName',
-        'id',
-        'lastName',
-        {
-          member: [
-            'id',
-            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-          ]
-        }
-      ]
-    },
-    {
-      watches: [
-        'createdAt',
-        'id',
-        {
-          member: [
-            'id',
-            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-          ]
-        }
-      ]
     }
   ],
   operation: 'getEvent',
-  variables: {
-    eventId: { required: true },
-    populate: { required: false, type: '[String!]' }
-  }
+  variables: { eventId: { required: true } }
+}).query;
+
+// ## GET EVENT ATTENDEES
+
+export const GET_EVENT_ATTENDEES = query({
+  fields: [
+    'createdAt',
+    'email',
+    'firstName',
+    'id',
+    'lastName',
+    { event: ['id'] },
+    {
+      member: [
+        'id',
+        { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+      ]
+    }
+  ],
+  operation: 'getEventAttendees',
+  variables: { eventId: { required: true } }
+}).query;
+
+// ## GET EVENT GUESTS
+
+export const GET_EVENT_GUESTS = query({
+  fields: [
+    'createdAt',
+    'email',
+    'firstName',
+    'id',
+    'lastName',
+    { event: ['id'] },
+    {
+      member: [
+        'id',
+        { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+      ]
+    }
+  ],
+  operation: 'getEventGuests',
+  variables: { eventId: { required: true } }
+}).query;
+
+// ## GET EVENT WATCHES
+
+export const GET_EVENT_WATCHES = query({
+  fields: [
+    'createdAt',
+    'id',
+    { event: ['id'] },
+    {
+      member: [
+        'id',
+        { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+      ]
+    }
+  ],
+  operation: 'getEventWatches',
+  variables: { eventId: { required: true } }
 }).query;
 
 // ## GET EVENT ATTENDEES SERIES
@@ -226,23 +240,23 @@ export const GET_PAST_EVENTS_WITH_GUESTS = query({
     'summary',
     'title',
     'videoUrl',
-    { community: ['id'] },
-    {
-      attendees: [
-        'email',
-        'firstName',
-        'id',
-        'lastName',
-        {
-          member: [
-            'id',
-            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-          ]
-        }
-      ]
-    },
-    { guests: ['id'] },
-    { watches: ['id'] }
+    { community: ['id'] }
+    // {
+    //   attendees: [
+    //     'email',
+    //     'firstName',
+    //     'id',
+    //     'lastName',
+    //     {
+    //       member: [
+    //         'id',
+    //         { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // { guests: ['id'] },
+    // { watches: ['id'] }
   ],
   operation: 'getPastEvents'
 }).query;

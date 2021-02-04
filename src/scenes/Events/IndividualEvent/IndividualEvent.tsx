@@ -11,7 +11,13 @@ import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import { GET_EVENT, GetEventArgs } from '../Events.gql';
+import {
+  GET_EVENT,
+  GET_EVENT_ATTENDEES,
+  GET_EVENT_GUESTS,
+  GET_EVENT_WATCHES,
+  GetEventArgs
+} from '../Events.gql';
 import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAttendeeList from './IndividualEventAttendeeList';
@@ -42,37 +48,45 @@ const IndividualEvent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
-  const { data, error, loading } = useQuery<IEvent, GetEventArgs>({
+  const { data: data1, error } = useQuery<IEvent, GetEventArgs>({
     name: 'getEvent',
     query: GET_EVENT,
     schema: Schema.EVENT,
-    variables: {
-      eventId,
-      populate: [
-        'attendees.member.data',
-        'attendees.member.type',
-        'attendees.member.user',
-        'community.owner.user',
-        'community.questions',
-        'guests.member.data',
-        'guests.member.type',
-        'guests.member.user',
-        'watches.member.data',
-        'watches.member.type',
-        'watches.member.user'
-      ]
-    }
+    variables: { eventId }
   });
+
+  const { data: data2 } = useQuery<IEvent, GetEventArgs>({
+    name: 'getEventGuests',
+    query: GET_EVENT_GUESTS,
+    schema: [Schema.EVENT_GUEST],
+    variables: { eventId }
+  });
+
+  const { data: data3 } = useQuery<IEvent, GetEventArgs>({
+    name: 'getEventAttendees',
+    query: GET_EVENT_ATTENDEES,
+    schema: [Schema.EVENT_ATTENDEE],
+    variables: { eventId }
+  });
+
+  const { data: data4 } = useQuery<IEvent, GetEventArgs>({
+    name: 'getEventWatches',
+    query: GET_EVENT_WATCHES,
+    schema: [Schema.EVENT_WATCH],
+    variables: { eventId }
+  });
+
+  const loading = !data1 && !data2 && !data3 && !data4;
 
   const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
 
   useEffect(() => {
-    if (data) {
-      setActiveEvent(data.id);
+    if (data1) {
+      setActiveEvent(data1.id);
       // @ts-ignore b/c type issues.
-      setActiveCommunity(data.community?.id);
+      setActiveCommunity(data1.community?.id);
     }
-  }, [data]);
+  }, [data1]);
 
   useEffect(() => {
     if (!isAuthenticated && (isMembersOnly || hasCookieError)) {

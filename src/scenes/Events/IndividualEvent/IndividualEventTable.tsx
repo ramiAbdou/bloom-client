@@ -1,8 +1,9 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { QuestionType } from '@constants';
+import { ModalType, QuestionType } from '@constants';
 import MainSection from '@containers/Main/MainSection';
+import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -17,14 +18,15 @@ import {
   IMember,
   IUser
 } from '@store/Db/entities';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import IndividualEventTableFilters from './IndividualEventTableFilters';
 
-const IndividualEventTable: React.FC = () => {
+const IndividualEventTableContent: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const startTime = useStoreState(({ db }) => db.event?.startTime);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
     const { byId: byAttendeeId } = db.entities.attendees;
@@ -49,34 +51,35 @@ const IndividualEventTable: React.FC = () => {
       };
     }, {});
 
-    const recordWithGuests = db.event.guests?.reduce((acc, guestId: string) => {
-      const guest: IEventGuest = byGuestId[guestId];
-      const { createdAt, firstName, lastName, email } = guest;
+    const recordWithGuests =
+      db.event.guests?.reduce((acc, guestId: string) => {
+        const guest: IEventGuest = byGuestId[guestId];
+        const { createdAt, firstName, lastName, email } = guest;
 
-      const previousValue = acc[email];
-      if (!previousValue) {
+        const previousValue = acc[email];
+        if (!previousValue) {
+          return {
+            ...acc,
+            [email]: {
+              email,
+              fullName: `${firstName} ${lastName}`,
+              id: email,
+              rsvpdAt: day(createdAt).format('MMM D @ h:mm A')
+            }
+          };
+        }
+
         return {
           ...acc,
           [email]: {
-            email,
-            fullName: `${firstName} ${lastName}`,
-            id: email,
+            ...previousValue,
             rsvpdAt: day(createdAt).format('MMM D @ h:mm A')
           }
         };
-      }
+      }, record ?? {}) ?? record;
 
-      return {
-        ...acc,
-        [email]: {
-          ...previousValue,
-          rsvpdAt: day(createdAt).format('MMM D @ h:mm A')
-        }
-      };
-    }, record);
-
-    const recordWithWatches = db.event.watches?.reduce(
-      (acc, watchId: string) => {
+    const recordWithWatches =
+      db.event.watches?.reduce((acc, watchId: string) => {
         const watch: IEventWatch = byWatchId[watchId];
         const member: IMember = byMemberId[watch.member];
         const user: IUser = byUserId[member.user];
@@ -104,19 +107,14 @@ const IndividualEventTable: React.FC = () => {
             watched: 'Yes'
           }
         };
-      },
-      recordWithGuests
-    );
+      }, recordWithGuests) ?? recordWithGuests;
 
-    return (
-      Object.values(recordWithWatches)
-        // @ts-ignore
-        ?.map((e) => ({ ...e, numWatches: e.numWatches?.toString() }))
-        ?.sort((a, b) =>
-          // @ts-ignore
-          sortObjects(a, b, ['joinedAt', 'rsvpdAt', 'numWatches'], 'DESC')
-        ) as TableRow[]
-    );
+    if (!recordWithWatches) return null;
+
+    return Object.values(recordWithWatches)?.sort((a, b) =>
+      // @ts-ignore
+      sortObjects(a, b, ['joinedAt', 'rsvpdAt', 'watched'], 'DESC')
+    ) as TableRow[];
   });
 
   const joinedAtColumn = day().isAfter(day(startTime))
@@ -155,6 +153,8 @@ const IndividualEventTable: React.FC = () => {
   const options: TableOptions = {
     fixFirstColumn: false,
     hideIfEmpty: true,
+    onRowClick: (row: TableRow) =>
+      showModal(`${ModalType.MEMBER_PROFILE}-${row?.id}`),
     showCount: true
   };
 
@@ -163,9 +163,17 @@ const IndividualEventTable: React.FC = () => {
       <Table columns={columns} options={options} rows={rows}>
         <IndividualEventTableFilters />
         <TableContent small />
+
+        {rows?.map((row) => {
+          return <MemberProfileModal memberId={row?.id} />;
+        })}
       </Table>
     </MainSection>
   );
+};
+
+const IndividualEventTable: React.FC = () => {
+  return <IndividualEventTableContent />;
 };
 
 export default IndividualEventTable;

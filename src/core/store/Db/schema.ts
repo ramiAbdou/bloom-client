@@ -66,6 +66,7 @@ const Event = new schema.Entity(
   'events',
   {},
   {
+    mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.attendeeId, { attendees: [parent.id] }],
