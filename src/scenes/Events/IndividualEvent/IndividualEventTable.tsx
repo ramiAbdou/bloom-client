@@ -135,7 +135,6 @@ const IndividualEventTable: React.FC = () => {
 
   const columns: TableColumn[] = [
     {
-      category: 'PICTURE_FULL_NAME',
       id: 'fullName',
       title: 'Full Name',
       type: 'SHORT_TEXT'

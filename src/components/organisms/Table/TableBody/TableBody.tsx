@@ -3,21 +3,21 @@ import React from 'react';
 
 import Attribute from '@atoms/Tag/Attribute';
 import Pill from '@atoms/Tag/Pill';
-import { QuestionType, ValueProps } from '@constants';
-import Row from '@containers/Row/Row';
-import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import { ValueProps } from '@constants';
 import { cx, takeFirst } from '@util/util';
 import Table from '../Table.store';
-import { TableRow } from '../Table.types';
+import { TableColumn, TableRow } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
 import SelectRowCheckbox from './SelectRowCheckbox';
 
-interface DataCellProps extends TableRow, ValueProps {
+interface DataCellProps
+  extends Pick<TableColumn, 'category' | 'render' | 'type'>,
+    TableRow,
+    ValueProps {
   i: number;
-  type: QuestionType;
 }
 
-const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
+const DataCell = ({ category, i, id, render, type, value }: DataCellProps) => {
   const alignEndRight = Table.useStoreState(({ columns, options }) => {
     const isLastCell = i === columns.length - 1;
     return options.alignEndRight && isLastCell;
@@ -36,24 +36,12 @@ const DataCell = ({ category, i, id, type, value }: DataCellProps) => {
   });
 
   const content: React.ReactNode = takeFirst([
+    [!!render, render && render(value)],
     [
       category === 'DUES_STATUS' || type === 'TRUE_FALSE',
       <Pill positive={['Active', 'Yes'].includes(value)} show={!!value}>
         {value}
       </Pill>
-    ],
-    [
-      category === 'PROFILE_FULL_NAME',
-      <Row spacing="sm">
-        <ProfilePicture
-          circle
-          firstName="Rami"
-          fontSize={12}
-          lastName="Abdou"
-          size={24}
-        />
-        <p>{value}</p>
-      </Row>
     ],
     [type === 'MULTIPLE_CHOICE', <Attribute>{value}</Attribute>],
     [
@@ -94,7 +82,7 @@ const DataRow = (row: TableRow) => {
 
   return (
     <tr className={css} onClick={onClick}>
-      {columns.map(({ category, id, type }, i: number) => {
+      {columns.map(({ category, id, render, type }, i: number) => {
         const value =
           category === 'JOINED_AT' ? moment(row[id]).format('M/D/YY') : row[id];
 
@@ -104,6 +92,7 @@ const DataRow = (row: TableRow) => {
             category={category}
             i={i}
             id={row.id}
+            render={render}
             type={type}
             value={value}
           />

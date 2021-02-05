@@ -6,8 +6,9 @@ export type TableColumn = {
   category?: QuestionCategory;
   hide?: boolean;
   id: string;
-  type: QuestionType;
+  render?: (value: any) => JSX.Element;
   title: string;
+  type: QuestionType;
 };
 
 // Each row will have a series of random question ID's as well as a unique ID
