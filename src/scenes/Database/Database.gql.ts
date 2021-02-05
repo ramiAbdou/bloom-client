@@ -1,12 +1,10 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IMember, IQuestion } from '@store/Db/entities';
-
-// DELETE MEMBERS
-
-export interface DeleteMembersArgs {
+export interface MemberIdsArgs {
   memberIds: string[];
 }
+
+// DELETE MEMBERS
 
 export const DELETE_MEMBERS = mutation({
   operation: 'deleteMembers',
@@ -15,23 +13,13 @@ export const DELETE_MEMBERS = mutation({
 
 // DEMOTE TO MEMBER
 
-export interface DemoteToAdminArgs {
-  memberIds: string[];
-}
-
-export const DEMOTE_TO_MEMBER = mutation({
+export const DEMOTE_MEMBERS = mutation({
   fields: ['id', 'role'],
-  operation: 'demoteToMember',
+  operation: 'demoteMembers',
   variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
 
 // GET DATABASE
-
-export interface GetDatabaseResult {
-  id: string;
-  members: IMember;
-  questions: IQuestion[];
-}
 
 export const GET_DATABASE = query({
   fields: [
@@ -62,13 +50,11 @@ export const GET_DATABASE_QUESTIONS = query({
   operation: 'getQuestions'
 }).query;
 
-// PROMOTE TO ADMIN
+// PROMOTE MEMBERS
 
-export type PromoteToAdminArgs = DemoteToAdminArgs;
-
-export const PROMOTE_TO_ADMIN = mutation({
+export const PROMOTE_MEMBERS = mutation({
   fields: ['id', 'role'],
-  operation: 'promoteToAdmin',
+  operation: 'promoteMembers',
   variables: { memberIds: { required: true, type: '[String!]' } }
 }).query;
 

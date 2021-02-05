@@ -25,7 +25,7 @@ const MembershipPaymentScheduledCard: React.FC = () => {
     <Card
       className="s-membership-card s-membership-card--next"
       loading={loading}
-      show={!loading && !!amount}
+      show={!loading && !!data?.amount}
     >
       <h4>{autoRenew ? 'Next Scheduled Payment' : 'Next Payment Due'}</h4>
 

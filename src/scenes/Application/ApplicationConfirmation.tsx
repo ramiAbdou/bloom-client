@@ -54,11 +54,15 @@ const ApplicationConfirmation: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
   const name = useStoreState(({ db }) => db.community?.name);
 
+  const show: boolean = useStoreState(({ db }) => {
+    return !!db.community?.questions?.length && !!db.community?.types?.length;
+  });
+
   return (
     <StoryPage
       className="s-application-ctr--confirmation"
       id="CONFIRMATION"
-      show={!!name}
+      show={!!show}
     >
       <Card>
         <StoryConfirmation

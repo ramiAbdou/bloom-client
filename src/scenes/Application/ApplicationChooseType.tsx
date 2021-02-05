@@ -71,7 +71,6 @@ const ApplicationChooseTypeForm: React.FC = () => {
   return (
     <Form>
       <FormMultipleChoice cardOptions={types} category="MEMBERSHIP_TYPE" />
-
       <ApplicationChooseTypeButton />
     </Form>
   );

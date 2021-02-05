@@ -14,7 +14,7 @@ const useLoader = (loading: boolean) => {
     else {
       timeout = setTimeout(() => {
         if (!loading && isShowing) closeLoader();
-      }, 250);
+      }, 500);
     }
 
     return () => clearTimeout(timeout);

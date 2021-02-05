@@ -9,10 +9,9 @@ import Table from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
-import { PROMOTE_TO_ADMIN, PromoteToAdminArgs } from '../Database.gql';
+import { MemberIdsArgs, PROMOTE_MEMBERS } from '../Database.gql';
 
 const MemberDatabasePromoteModal: React.FC = () => {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -20,24 +19,16 @@ const MemberDatabasePromoteModal: React.FC = () => {
 
   const { push } = useHistory();
 
-  const [promoteToAdmin, { loading }] = useMutation<
-    IMember[],
-    PromoteToAdminArgs
-  >({
-    name: 'promoteToAdmin',
-    query: PROMOTE_TO_ADMIN
+  const [promoteMembers, { loading }] = useMutation<IMember[], MemberIdsArgs>({
+    name: 'promoteMembers',
+    query: PROMOTE_MEMBERS,
+    schema: [Schema.MEMBER]
   });
 
   const onPromote = async () => {
-    const { data } = await promoteToAdmin({ memberIds });
-    if (!data) return;
-
-    mergeEntities({ data, schema: [Schema.MEMBER] });
-
-    showToast({
-      message: `${memberIds.length} member(s) promoted to admin.`
-    });
-
+    const { error } = await promoteMembers({ memberIds });
+    if (error) return;
+    showToast({ message: `${memberIds.length} member(s) promoted to admin.` });
     setTimeout(closeModal, 0);
   };
 

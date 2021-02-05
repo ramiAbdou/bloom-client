@@ -34,6 +34,7 @@ const ApplicationMainForm: React.FC = () => {
       show={!!questions?.length}
       spacing="lg"
       onSubmit={isSolo ? applyForMembership : validateEmail}
+      onSubmitDeps={[isSolo]}
     >
       {questions?.map((props) => {
         const args = { ...props, ...items[props?.id] };

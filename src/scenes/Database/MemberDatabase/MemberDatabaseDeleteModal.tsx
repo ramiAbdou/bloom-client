@@ -7,7 +7,7 @@ import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IMember } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { DELETE_MEMBERS, DeleteMembersArgs } from '../Database.gql';
+import { DELETE_MEMBERS, MemberIdsArgs } from '../Database.gql';
 
 const MemberDatabaseDeleteModal: React.FC = () => {
   const addEntities = useStoreActions(({ db }) => db.addEntities);
@@ -27,7 +27,7 @@ const MemberDatabaseDeleteModal: React.FC = () => {
   const onRemove = () => {
     deleteEntities({ ids: memberIds, table: 'members' });
 
-    const options: ToastOptions<IMember, DeleteMembersArgs> = {
+    const options: ToastOptions<IMember, MemberIdsArgs> = {
       message: `${members?.length} member(s) removed from the community.`,
       mutationArgsOnComplete: {
         name: 'deleteMembers',

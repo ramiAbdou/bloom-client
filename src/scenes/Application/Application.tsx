@@ -50,7 +50,7 @@ const Application: React.FC = () => {
     variables: { urlName }
   });
 
-  const loading = loading1 && loading2 && loading3;
+  const loading = loading1 || loading2 || loading3;
   useLoader(loading);
 
   // @ts-ignore b/c community is entire entity, not ID.

@@ -14,9 +14,9 @@ const StoryContent: React.FC = ({ children }) => {
   );
 };
 
-const Story: React.FC = (props) => (
+const Story: React.FC = ({ children }) => (
   <StoryStore.Provider>
-    <StoryContent {...props} />
+    <StoryContent>{children}</StoryContent>
   </StoryStore.Provider>
 );
 

@@ -9,32 +9,30 @@ import Table from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
-import { DEMOTE_TO_MEMBER, DemoteToAdminArgs } from '../Database.gql';
+import { DEMOTE_MEMBERS, MemberIdsArgs } from '../Database.gql';
 import DatabaseAction from '../DatabaseAction';
 
 const DemoteToMemberModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
-  const [demoteToMember, { loading }] = useMutation<
-    IMember[],
-    DemoteToAdminArgs
-  >({ name: 'demoteToMember', query: DEMOTE_TO_MEMBER });
+  const [demoteMembers, { loading }] = useMutation<IMember[], MemberIdsArgs>({
+    name: 'demoteMembers',
+    query: DEMOTE_MEMBERS,
+    schema: [Schema.MEMBER]
+  });
 
-  const onDemote = async () => {
-    const { data } = await demoteToMember({ memberIds: adminIds });
-    if (!data) return;
+  const onPrimaryClick = async () => {
+    const { data } = await demoteMembers({ memberIds: adminIds });
 
-    mergeEntities({ data, schema: [Schema.MEMBER] });
-
-    showToast({
-      message: `${adminIds.length} admin(s) demoted to member.`
-    });
-
-    setTimeout(closeModal, 0);
+    if (data) {
+      showToast({ message: `${adminIds.length} admin(s) demoted to member.` });
+      closeModal();
+    }
   };
+
+  const onSecondaryClick = () => closeModal();
 
   return (
     <Modal id={ModalType.DEMOTE_TO_MEMBER} options={{ confirmation: true }}>
@@ -47,10 +45,11 @@ const DemoteToMemberModal = () => {
       </p>
 
       <div>
-        <Button primary loading={loading} onClick={onDemote}>
+        <Button primary loading={loading} onClick={onPrimaryClick}>
           Demote
         </Button>
-        <Button secondary onClick={() => closeModal}>
+
+        <Button secondary onClick={onSecondaryClick}>
           Cancel
         </Button>
       </div>

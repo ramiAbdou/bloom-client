@@ -28,7 +28,7 @@ $PREF: 'mo-member-profile';
 // ### PERSONAL INFORMATION CONTAINER
 
 .#{$PREF}-personal-ctr {
-  > h1 { color: $gray-1; margin-bottom: $xxs; }
+  > h1 { color: $gray-1; margin-bottom: $xs; }
   > a:not(:last-child) { margin-bottom: $sm; }
   > .t-row { margin-bottom: $ss; }
 }
