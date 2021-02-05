@@ -106,3 +106,15 @@ div.#{$PREF}-col-panel { padding: $sm; }
 
   &--active { background-color: $primary; color: white; }
 }
+
+// ## TABLE BANNER
+
+.#{$PREF}-table {
+  @extend .flex-acc;
+
+  flex-direction: row;
+  margin-bottom: $xs;
+  padding: $xs 0;
+
+  > p { margin-right: $sm; }
+}

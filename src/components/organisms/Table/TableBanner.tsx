@@ -13,9 +13,33 @@
 
 import React from 'react';
 
+import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
-import TableBannerButton from './Button';
-import TableBannerMessage from './TableBannerMessage';
+import TableStore from './Table.store';
+import { getBannerButtonTitle, getBannerMessage } from './Table.util';
+
+const TableBannerButton: React.FC = () => {
+  const title: string = TableStore.useStoreState((state) => {
+    return getBannerButtonTitle(state);
+  });
+
+  const toggleRows = TableStore.useStoreActions((store) => store.toggleAllRows);
+  const onClick = () => toggleRows();
+
+  return (
+    <Button tertiary onClick={onClick}>
+      {title}
+    </Button>
+  );
+};
+
+const TableBannerMessage: React.FC = () => {
+  const message: string = TableStore.useStoreState((state) => {
+    return getBannerMessage(state);
+  });
+
+  return <p>{message}</p>;
+};
 
 const TableBanner: React.FC = () => (
   <Card className="o-table-banner">

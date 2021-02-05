@@ -10,7 +10,7 @@ import Table from '../Table.store';
 import { PaginationValue } from '../Table.types';
 import { getPaginationValues } from '../Table.util';
 
-const PaginationNumber = ({ value }: ValueProps) => {
+const TablePaginationBarNumber = ({ value }: ValueProps) => {
   const page = Table.useStoreState((store) => store.page);
   const setRange = Table.useStoreActions((store) => store.setRange);
 
@@ -29,7 +29,7 @@ const PaginationNumber = ({ value }: ValueProps) => {
   );
 };
 
-const BackButton = () => {
+const TablePaginationBarBackButton: React.FC = () => {
   const page = Table.useStoreState((store) => store.page);
   const setRange = Table.useStoreActions((store) => store.setRange);
 
@@ -42,7 +42,7 @@ const BackButton = () => {
   );
 };
 
-const NextButton = () => {
+const TablePaginationBarNextButton: React.FC = () => {
   const page = Table.useStoreState((store) => store.page);
   const setRange = Table.useStoreActions((store) => store.setRange);
 
@@ -59,7 +59,7 @@ const NextButton = () => {
   );
 };
 
-export default () => {
+const TablePaginationBar: React.FC = () => {
   const nums: PaginationValue[] = Table.useStoreState(
     ({ filteredRows, page }) => {
       const numPages = Math.ceil(filteredRows.length / 50);
@@ -70,13 +70,15 @@ export default () => {
 
   return (
     <div className="o-table-pagination-row">
-      <BackButton />
+      <TablePaginationBarBackButton />
 
       {nums.map((value: any) => (
-        <PaginationNumber key={nanoid()} value={value} />
+        <TablePaginationBarNumber key={nanoid()} value={value} />
       ))}
 
-      <NextButton />
+      <TablePaginationBarNextButton />
     </div>
   );
 };
+
+export default TablePaginationBar;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Show from '@containers/Show';
 import TableStore from './Table.store';
-import TableBanner from './TableBanner/TableBanner';
+import TableBanner from './TableBanner';
 import TableBodyContainer from './TableBodyContainer';
 import TableHeaderContainer from './TableHeaderContainer';
 import TablePagination from './TablePagination/TablePagination';

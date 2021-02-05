@@ -1,7 +1,8 @@
 import React from 'react';
 
+import Show from '@containers/Show';
 import Table from '../Table.store';
-import PaginationBar from './PaginationBar';
+import PaginationBar from './TablePaginationBar';
 
 const TablePaginationMessage: React.FC = () => {
   const floor = Table.useStoreState(({ range }) => range[0] + 1);
@@ -9,13 +10,15 @@ const TablePaginationMessage: React.FC = () => {
   const numRows = Table.useStoreState((store) => store.filteredRows?.length);
   const showCount = Table.useStoreState(({ options }) => options.showCount);
 
-  if (!showCount) return null;
-
   const message = numRows
     ? `Displaying ${floor}-${ceiling} of ${numRows} results.`
     : 'No results found.';
 
-  return <p className="meta">{message}</p>;
+  return (
+    <Show show={!!showCount}>
+      <p className="meta">{message}</p>
+    </Show>
+  );
 };
 
 const TablePagination: React.FC = () => {

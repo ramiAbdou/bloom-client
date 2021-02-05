@@ -1,6 +1,62 @@
+import { State } from 'easy-peasy';
+
 import { QuestionCategory, QuestionType } from '@constants';
 import { cx } from '@util/util';
-import { PaginationValue } from './Table.types';
+import { PaginationValue, TableModel } from './Table.types';
+
+/**
+ * Returns the title of the TableBannerButton based on the current state of
+ * selectedRowIds.
+ *
+ * @param state Entire table state.
+ */
+export const getBannerButtonTitle = (state: State<TableModel>): string => {
+  const { filteredRows, rows, selectedRowIds } = state;
+  const numMembers: number = rows.length;
+  const numFilteredMembers: number = filteredRows.length;
+
+  const isAllSelected: boolean =
+    !!selectedRowIds.length && selectedRowIds.length === filteredRows.length;
+
+  if (isAllSelected) return 'Clear Selection';
+  if (numMembers === numFilteredMembers) {
+    return `Select All ${numMembers} Rows in Database`;
+  }
+
+  return `Select All ${numFilteredMembers} Filtered Rows`;
+};
+
+/**
+ * Returns the appropriate Table banner message based on the current state of
+ * selectedRowIds.
+ *
+ * @param state Entire table state.
+ */
+export const getBannerMessage = (state: State<TableModel>): string => {
+  const { filteredRows, range, rows, selectedRowIds } = state;
+
+  const numTotalRows = rows.length;
+  const numFilteredRows = filteredRows.length;
+  const numSelectedRows = selectedRowIds.length;
+
+  if (numSelectedRows === numTotalRows) {
+    return `All ${numTotalRows} rows are selected.`;
+  }
+
+  if (numSelectedRows === numFilteredRows) {
+    return `All ${numFilteredRows} filtered rows are selected.`;
+  }
+
+  if (
+    filteredRows
+      .slice(range[0], range[1])
+      .every(({ id }) => selectedRowIds.includes(id))
+  ) {
+    return `All 50 rows on this page are selected.`;
+  }
+
+  return null;
+};
 
 /**
  * RETURNS an array of pagination values inserting ellipses at the correct
