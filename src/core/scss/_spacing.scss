@@ -37,3 +37,13 @@ $D_SIZE: 1440;
   &-sb { @extend .flex; justify-content: space-between; }
   &-w { @extend .flex; flex-wrap: wrap; }
 }
+
+.mb {
+  &-xxs { margin-bottom: $xxs; }
+  &-xs { margin-bottom: $xs; }
+  &-ss { margin-bottom: $ss; }
+  &-sm { margin-bottom: $sm; }
+  &-sl { margin-bottom: $sl; }
+  &-md { margin-bottom: $md; }
+  &-lg { margin-bottom: $lg; }
+}

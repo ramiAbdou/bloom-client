@@ -1,17 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { ValueProps } from '@constants';
+import { BaseProps, ValueProps } from '@constants';
 import { cx } from '@util/util';
-import ClickBar from './ClickBar';
 import DropdownStore, { DropdownModel, dropdownModel } from './Dropdown.store';
-import OptionContainer from './OptionContainer';
+import DropdownClickBar from './DropdownClickBar';
+import DropdownOptionContainer from './DropdownOptionContainer';
 
-interface DropdownContentProps extends ValueProps {
+interface DropdownContentProps extends BaseProps, ValueProps {
   fit?: boolean;
 }
 
-const DropdownContent: React.FC<DropdownContentProps> = ({ fit, value }) => {
+const DropdownContent: React.FC<DropdownContentProps> = ({
+  className,
+  fit,
+  value
+}) => {
   const isOpen = DropdownStore.useStoreState((store) => store.isOpen);
   const setIsOpen = DropdownStore.useStoreActions((store) => store.setIsOpen);
   const setValue = DropdownStore.useStoreActions((store) => store.setValue);
@@ -23,22 +27,24 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ fit, value }) => {
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   useOnClickOutside(ref, () => isOpen && setIsOpen(false));
 
-  const css = cx('', { 'o-dropdown--fit': fit });
+  const css = cx('', { [className]: className, 'o-dropdown--fit': fit });
 
   return (
     <div ref={ref} className={css}>
-      <ClickBar />
-      {isOpen && <OptionContainer />}
+      <DropdownClickBar />
+      {isOpen && <DropdownOptionContainer />}
     </div>
   );
 };
 
 interface DropdownProps
-  extends Pick<DropdownModel, 'multiple' | 'options' | 'onUpdate' | 'value'> {
+  extends BaseProps,
+    Pick<DropdownModel, 'multiple' | 'options' | 'onUpdate' | 'value'> {
   fit?: boolean;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
+  className,
   fit,
   options,
   value,
@@ -53,7 +59,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         options
       }}
     >
-      <DropdownContent fit={fit} value={value} />
+      <DropdownContent className={className} fit={fit} value={value} />
     </DropdownStore.Provider>
   );
 };

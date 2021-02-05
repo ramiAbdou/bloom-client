@@ -2,7 +2,7 @@ import React from 'react';
 
 import Dropdown from './Dropdown.store';
 
-export default function SearchInput() {
+const DropdownSearch: React.FC = () => {
   const searchString = Dropdown.useStoreState((store) => store.searchString);
 
   const setSearchString = Dropdown.useStoreActions(
@@ -22,4 +22,6 @@ export default function SearchInput() {
       onChange={onChange}
     />
   );
-}
+};
+
+export default DropdownSearch;

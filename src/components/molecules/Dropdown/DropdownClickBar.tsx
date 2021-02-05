@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 
+import { ValueProps } from '@constants';
+import Show from '@containers/Show';
 import { cx } from '@util/util';
 import Dropdown from './Dropdown.store';
-
-type ValueProps = { value: string };
 
 const Value = ({ value }: ValueProps) => {
   const isOpen = Dropdown.useStoreState((store) => store.isOpen);
@@ -35,18 +35,19 @@ const Value = ({ value }: ValueProps) => {
 
 const ValueList = () => {
   const values = Dropdown.useStoreState((store) => store.value);
-  if (!values?.length) return null;
 
   return (
-    <div className="o-dropdown-value-ctr">
-      {values.map((value: string) => (
-        <Value key={value} value={value} />
-      ))}
-    </div>
+    <Show show={!!values?.length}>
+      <div className="o-dropdown-value-ctr">
+        {values.map((value: string) => (
+          <Value key={value} value={value} />
+        ))}
+      </div>
+    </Show>
   );
 };
 
-export default () => {
+const DropdownClickBar: React.FC = () => {
   const isOpen = Dropdown.useStoreState((store) => store.isOpen);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
   const setWidth = Dropdown.useStoreActions((store) => store.setWidth);
@@ -74,3 +75,5 @@ export default () => {
     </div>
   );
 };
+
+export default DropdownClickBar;

@@ -42,6 +42,7 @@ const PlaygroundDropdown: React.FC = () => {
   return (
     <Dropdown
       fit
+      className="mb-sm"
       options={questions?.map(({ title }) => title)}
       value={[questions?.find(({ id }) => id === questionId)?.title]}
       onUpdate={onUpdate}
@@ -74,7 +75,9 @@ const PlaygroundHeader: React.FC = () => {
 
   return (
     <Show show={!!questionId}>
-      <p>Choose any piece of data that you'd like to explore.</p>
+      <p className="mb-xs">
+        Choose any piece of data that you'd like to explore.
+      </p>
       <PlaygroundDropdown />
     </Show>
   );
