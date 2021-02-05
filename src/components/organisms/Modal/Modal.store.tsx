@@ -1,9 +1,5 @@
 import { Action, action } from 'easy-peasy';
 
-import { IdProps } from '@constants';
-
-export type ShowModalArgs = IdProps;
-
 export type ModalModel = {
   closeModal: Action<ModalModel>;
   id: string; // Every modal must have unique identifier to help rendering.
@@ -12,15 +8,15 @@ export type ModalModel = {
 };
 
 export const modalModel: ModalModel = {
-  closeModal: action((state) => ({
-    ...state,
-    id: null,
-    isShowing: false
-  })),
+  closeModal: action((state) => {
+    return { ...state, id: null, isShowing: false };
+  }),
 
   id: null,
 
   isShowing: false,
 
-  showModal: action((state, id: string) => ({ ...state, id, isShowing: true }))
+  showModal: action((state, id: string) => {
+    return { ...state, id, isShowing: true };
+  })
 };

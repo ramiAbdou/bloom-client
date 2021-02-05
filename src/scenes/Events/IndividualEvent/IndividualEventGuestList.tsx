@@ -91,12 +91,11 @@ const IndividualEventGuestList: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
   const numGuests = useStoreState(({ db }) => db.event?.guests?.length);
 
-  if (day().isAfter(day(endTime))) return null;
-
   return (
     <Card
       className="s-events-individual-card"
       headerTag={numGuests ? `${numGuests} Going` : null}
+      show={day().isBefore(day(endTime))}
       title="Guest List"
     >
       <IndividualEventGuestListContent />

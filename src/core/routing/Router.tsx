@@ -2,7 +2,8 @@ import LoginRoute from 'core/routing/LoginRoute';
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-import Loader from '@molecules/Loader/Loader';
+import Show from '@containers/Show';
+import useLoader from '@organisms/Loader/useLoader';
 import Application from '@scenes/Application/Application';
 import HomeRoute from './HomeRoute';
 import useInitRouter from './useInitRouter';
@@ -14,16 +15,18 @@ import useInitRouter from './useInitRouter';
  */
 const RouterContent: React.FC = () => {
   const loading = useInitRouter();
-  if (loading) return <Loader />;
+  useLoader(loading);
 
   return (
-    <Switch>
-      <LoginRoute path="/login" />
-      <Route component={Application} path="/:urlName/apply" />
-      <Route component={HomeRoute} path="/:urlName" />
-      <Route exact component={HomeRoute} path="/" />
-      <Redirect to="/login" />
-    </Switch>
+    <Show show={!loading}>
+      <Switch>
+        <LoginRoute path="/login" />
+        <Route component={Application} path="/:urlName/apply" />
+        <Route component={HomeRoute} path="/:urlName" />
+        <Route exact component={HomeRoute} path="/" />
+        <Redirect to="/login" />
+      </Switch>
+    </Show>
   );
 };
 

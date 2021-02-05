@@ -67,17 +67,18 @@ const IndividualEventAttendeeListContent: React.FC = () => {
       {!users?.length && <p>No guests attended.</p>}
 
       <List
-        Item={(user: IndividualEventAttendeeProps) => {
-          return (
-            <React.Fragment key={user?.email}>
-              <IndividualEventAttendee key={user?.id} {...user} />
-              <MemberProfileModal memberId={user?.memberId} />
-            </React.Fragment>
-          );
-        }}
+        Item={(user: IndividualEventAttendeeProps) => (
+          <IndividualEventAttendee key={user?.email} {...user} />
+        )}
         className="s-events-card-ctr"
         items={users}
       />
+
+      {users?.map((user) => {
+        return (
+          <MemberProfileModal key={user?.email} memberId={user?.memberId} />
+        );
+      })}
     </>
   );
 };
@@ -86,12 +87,11 @@ const IndividualEventGuestList: React.FC = () => {
   const endTime = useStoreState(({ db }) => db.event?.endTime);
   const numAttendees = useStoreState(({ db }) => db.event?.attendees?.length);
 
-  if (day().isBefore(day(endTime))) return null;
-
   return (
     <Card
       className="s-events-individual-card"
       headerTag={numAttendees ? `${numAttendees} Attended` : null}
+      show={day().isAfter(day(endTime))}
       title="Attendees"
     >
       <ListStore.Provider>

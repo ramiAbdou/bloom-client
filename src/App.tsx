@@ -13,6 +13,7 @@ import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 
 import { APP } from '@constants';
+import Loader from '@organisms/Loader/Loader';
 import ToastQueue from '@organisms/Toast/Toast';
 import { store } from '@store/Store';
 import Router from './core/routing/Router';
@@ -29,6 +30,7 @@ const App = () => (
   <ClientContext.Provider value={client}>
     <StoreProvider store={store}>
       <IconContext.Provider value={{ className: 'react-icon' }}>
+        <Loader />
         <Router />
         <ToastQueue />
       </IconContext.Provider>

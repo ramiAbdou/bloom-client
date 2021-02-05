@@ -6,7 +6,7 @@ import { CookieType, ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
-import Loader from '@molecules/Loader/Loader';
+import useLoader from '@organisms/Loader/useLoader';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -82,6 +82,8 @@ const IndividualEvent: React.FC = () => {
   const loading = loading1 || loading2 || loading3 || loading4;
   const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
 
+  useLoader(loading);
+
   useEffect(() => {
     if (data1) {
       setActiveEvent(data1.id);
@@ -97,8 +99,7 @@ const IndividualEvent: React.FC = () => {
   }, [hasCookieError, isMembersOnly, isAuthenticated]);
 
   if (error && !isAuthenticated) return <Redirect to="/login" />;
-  if (loading) return <Loader />;
-  if (!isEventActive) return null;
+  if (loading || !isEventActive) return null;
 
   const css = cx('', { 's-events-individual--public': !isAuthenticated });
 

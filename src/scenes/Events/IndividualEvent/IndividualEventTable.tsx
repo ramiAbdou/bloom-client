@@ -3,7 +3,6 @@ import React from 'react';
 
 import { ModalType, QuestionType } from '@constants';
 import MainSection from '@containers/Main/MainSection';
-import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -161,10 +160,6 @@ const IndividualEventTable: React.FC = () => {
       <Table columns={columns} options={options} rows={rows}>
         <IndividualEventTableFilters />
         <TableContent small />
-
-        {rows?.map((row: TableRow) => {
-          return <MemberProfileModal key={row?.email} memberId={row?.id} />;
-        })}
       </Table>
     </MainSection>
   );

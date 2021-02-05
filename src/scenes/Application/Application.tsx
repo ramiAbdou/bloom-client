@@ -1,9 +1,10 @@
+import { GET_TYPES } from 'core/routing/Router.gql';
 import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
-import Loader from '@molecules/Loader/Loader';
+import useLoader from '@organisms/Loader/useLoader';
 import Story from '@organisms/Story/Story';
 import {
   GET_APPLICATION,
@@ -16,7 +17,6 @@ import {
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_TYPES } from '@store/Store.gql';
 import ApplicationChooseTypePage from './ApplicationChooseType';
 import ApplicationConfirmationPage from './ApplicationConfirmation';
 import ApplicationMainPage from './ApplicationMain';
@@ -51,6 +51,7 @@ const Application: React.FC = () => {
   });
 
   const loading = loading1 && loading2 && loading3;
+  useLoader(loading);
 
   // @ts-ignore b/c community is entire entity, not ID.
   const communityId = data?.community?.id;
@@ -60,7 +61,7 @@ const Application: React.FC = () => {
   }, [communityId]);
 
   if (error) return <Redirect to="/login" />;
-  if (loading) return <Loader />;
+  if (loading) return null;
 
   return (
     <div className="s-application-ctr">

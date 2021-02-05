@@ -8,6 +8,7 @@
 
 import { createStore, createTypedHooks } from 'easy-peasy';
 
+import loader, { LoaderModel } from '@organisms/Loader/Loader.store';
 import { ModalModel, modalModel } from '@organisms/Modal/Modal.store';
 import nav, { NavModel } from '@organisms/Nav/Nav.store';
 import { PanelModel, panelModel } from '@organisms/Panel/Panel.store';
@@ -17,6 +18,7 @@ import { DbModel } from './Db/Db.types';
 
 export type StoreModel = {
   db: DbModel;
+  loader: LoaderModel;
   modal: ModalModel;
   nav: NavModel;
   panel: PanelModel;
@@ -24,7 +26,7 @@ export type StoreModel = {
 };
 
 export const store = createStore<StoreModel>(
-  { db, modal: modalModel, nav, panel: panelModel, toast },
+  { db, loader, modal: modalModel, nav, panel: panelModel, toast },
   { disableImmer: true }
 );
 

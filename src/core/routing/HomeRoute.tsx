@@ -14,7 +14,7 @@ import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import PaymentModal from '@modals/Payment/Payment';
-import Loader from '@molecules/Loader/Loader';
+import useLoader from '@organisms/Loader/useLoader';
 import Nav from '@organisms/Nav/Nav';
 import Analytics from '@scenes/Analytics/Analytics';
 import Applicants from '@scenes/Applicants/Applicants';
@@ -43,6 +43,10 @@ import {
 } from './Router.gql';
 
 const HomeRouteContent: React.FC = () => {
+  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
+
+  const { url } = useRouteMatch();
+
   const { loading: loading1 } = useQuery<IQuestion[]>({
     name: 'getQuestions',
     query: GET_QUESTIONS,
@@ -55,10 +59,10 @@ const HomeRouteContent: React.FC = () => {
     schema: [Schema.MEMBER_TYPE]
   });
 
-  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
-  const { url } = useRouteMatch();
+  const loading = loading1 || loading2;
+  useLoader(loading);
 
-  if (loading1 || loading2) return <Loader />;
+  if (loading) return null;
 
   return (
     <div className="home-content">
@@ -128,6 +132,8 @@ const HomeRoute: React.FC = () => {
     }
   }, [communityId]);
 
+  useLoader(loading || !activeUrlName);
+
   if (
     !isAuthenticated &&
     route === 'events' &&
@@ -144,7 +150,7 @@ const HomeRoute: React.FC = () => {
     );
   }
   if (error) return <Redirect to="/login" />;
-  if (loading || !activeUrlName) return <Loader />;
+  if (loading || !activeUrlName) return null;
 
   // If the user isn't a member of the community who's URL we are currently
   // sitting at, then we redirect them to the first community that they are

@@ -90,7 +90,7 @@ const Modal: React.FC<ModalProps> = ({
   children,
   className,
   lock,
-  id: MODAL_ID,
+  id: modalId,
   show,
   ...containerProps
 }) => {
@@ -98,10 +98,10 @@ const Modal: React.FC<ModalProps> = ({
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const id = useStoreState(({ modal }) => modal.id);
 
-  const shouldShowModal = useMemo(() => isShowing && MODAL_ID === id, [
+  const shouldShowModal = useMemo(() => isShowing && modalId === id, [
     isShowing,
     id,
-    MODAL_ID
+    modalId
   ]);
 
   const css = cx('c-modal', {
