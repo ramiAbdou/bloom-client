@@ -44,6 +44,7 @@ export interface GetUserResult extends IUser {
 export const GET_USER = query({
   fields: [
     'activeCommunityId',
+    'createdAt',
     'email',
     'facebookUrl',
     'firstName',

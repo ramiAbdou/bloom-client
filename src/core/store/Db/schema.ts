@@ -231,7 +231,7 @@ Member.define({
   watches: [EventWatch]
 });
 
-MemberData.define({ question: Question });
+MemberData.define({ member: Member, question: Question });
 MemberPayment.define({ member: Member, type: MemberType });
 MemberType.define({ community: Community });
 Question.define({ community: Community, data: [MemberData] });

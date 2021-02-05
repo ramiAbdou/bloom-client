@@ -70,16 +70,23 @@ const ApplicantsCardItems: React.FC = () => {
 
     const member: IMember = byMemberId[memberId];
 
-    return member?.data
-      ?.filter((dataId: string) => {
-        const data: IMemberData = byDataId[dataId];
-        const question: IQuestion = byQuestionId[data?.question];
-        return question?.inApplicantCard;
-      })
-      ?.map((dataId: string) => {
-        const data: IMemberData = byDataId[dataId];
-        const { title, type }: IQuestion = byQuestionId[data?.question];
-        return { title, type, value: data.value };
+    const data: IMemberData[] = member.data?.map(
+      (dataId: string) => byDataId[dataId]
+    );
+
+    return db.community.questions
+      ?.map((questionId: string) => byQuestionId[questionId])
+      ?.filter((question: IQuestion) => !!question?.inApplicantCard)
+      ?.map((question: IQuestion) => {
+        const element: IMemberData = data?.find((entity: IMemberData) => {
+          return entity.question === question.id;
+        });
+
+        return {
+          title: question?.title,
+          type: question?.type,
+          value: element?.value
+        };
       });
   });
 

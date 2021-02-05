@@ -4,6 +4,7 @@ import React from 'react';
 import MasonryList from '@organisms/List/MasonryList';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import DirectoryCard from './DirectoryCard';
 
 const DirectoryCardList: React.FC = () => {
@@ -30,7 +31,8 @@ const DirectoryCardList: React.FC = () => {
         return { ...member, ...user, data, memberId, userId: user?.id };
       })
       ?.filter((member) => member?.status === 'ACCEPTED')
-      ?.filter((member) => !!member?.userId);
+      ?.filter((member) => !!member?.userId)
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'DESC'));
   }, deepequal);
 
   return (
