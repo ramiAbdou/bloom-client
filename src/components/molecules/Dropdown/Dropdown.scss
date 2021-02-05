@@ -1,4 +1,4 @@
-$PREF: 'c-misc-dropdown';
+$PREF: 'o-dropdown';
 
 // ## DROPDOWN - The dropdown div only displays the current value, and only
 // when you click on it does the container appear.
@@ -13,6 +13,8 @@ $PREF: 'c-misc-dropdown';
   width: 100%;
 
   @include OVERFLOW_ELLIPSES;
+
+  &--fit { @include RESP(width, 50%, 100%, 100%); }
 }
 
 .#{$PREF} > div:first-child {

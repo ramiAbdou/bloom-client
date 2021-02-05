@@ -22,8 +22,8 @@ const Value = ({ value }: ValueProps) => {
     onUpdate(updatedValues);
   };
 
-  const css = cx('c-tag-attr c-misc-dropdown-value', {
-    'c-misc-dropdown-value--cancel': multiple
+  const css = cx('c-tag-attr o-dropdown-value', {
+    'o-dropdown-value--cancel': multiple
   });
 
   return (
@@ -38,7 +38,7 @@ const ValueList = () => {
   if (!values?.length) return null;
 
   return (
-    <div className="c-misc-dropdown-value-ctr">
+    <div className="o-dropdown-value-ctr">
       {values.map((value: string) => (
         <Value key={value} value={value} />
       ))}
@@ -60,8 +60,8 @@ export default () => {
 
   const onClick = () => setIsOpen(!isOpen);
 
-  const css = cx('c-misc-dropdown-bar', {
-    'c-misc-dropdown-bar--open': isOpen
+  const css = cx('o-dropdown-bar', {
+    'o-dropdown-bar--open': isOpen
   });
 
   return (

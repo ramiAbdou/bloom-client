@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Show from '@containers/Show';
 import { useStoreState } from '@store/Store';
@@ -21,7 +21,7 @@ const LoaderColumn: React.FC<LoaderColumnProps> = ({ images }) => (
         key={delay}
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
-        transition={{ delay, duration: 1, yoyo: Infinity }}
+        transition={{ delay, duration: 0.4, yoyo: Infinity }}
       >
         <Loader />
       </motion.div>
@@ -29,17 +29,31 @@ const LoaderColumn: React.FC<LoaderColumnProps> = ({ images }) => (
   </div>
 );
 
-const DELAY = 1.5; // Represents 1500 ms.
+const DELAY = 0.5; // Represents 1500 ms.
 
 /**
  * Hexagon-styled loader that is overlayed over the entire page when the entire
  * application is being loaded for the first time.
  */
 const Loader: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const isShowing = useStoreState(({ loader }) => loader.isShowing);
 
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (isShowing && !loading) setLoading(true);
+    else {
+      timeout = setTimeout(() => {
+        if (!isShowing && loading) setLoading(false);
+      }, 500);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isShowing, loading]);
+
   return (
-    <Show show={isShowing}>
+    <Show show={loading}>
       <div className="c-loader-ctr">
         <div className="c-loader">
           <LoaderColumn

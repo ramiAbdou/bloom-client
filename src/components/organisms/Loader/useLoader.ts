@@ -8,16 +8,8 @@ const useLoader = (loading: boolean) => {
   const showLoader = useStoreActions(({ loader }) => loader.showLoader);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
     if (loading && !isShowing) showLoader();
-    else {
-      timeout = setTimeout(() => {
-        if (!loading && isShowing) closeLoader();
-      }, 500);
-    }
-
-    return () => clearTimeout(timeout);
+    else if (!loading && isShowing) closeLoader();
   }, [isShowing, loading]);
 };
 

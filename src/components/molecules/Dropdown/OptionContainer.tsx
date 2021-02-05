@@ -24,7 +24,7 @@ export default function OptionContainer() {
   );
 
   return (
-    <div className="c-misc-dropdown-option-ctr">
+    <div className="o-dropdown-option-ctr">
       <SearchInput />
       {noOptionsFound && <p>No results found.</p>}
       {!noOptionsFound && <OptionList />}

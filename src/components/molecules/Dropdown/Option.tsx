@@ -8,11 +8,7 @@ export default function Option({ option }: OptionProps) {
   const selectOption = useSelectOption(option);
 
   return (
-    <button
-      className="c-misc-dropdown-option"
-      type="button"
-      onClick={selectOption}
-    >
+    <button className="o-dropdown-option" type="button" onClick={selectOption}>
       <p>{option}</p>
     </button>
   );

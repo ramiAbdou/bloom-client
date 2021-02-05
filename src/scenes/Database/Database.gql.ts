@@ -36,20 +36,6 @@ export const GET_DATABASE = query({
   operation: 'getDatabase'
 }).query;
 
-// GET DATABASE QUESTIONS
-
-export const GET_DATABASE_QUESTIONS = query({
-  fields: [
-    'category',
-    'id',
-    'inExpandedDirectoryCard',
-    'title',
-    'type',
-    { community: ['id'] }
-  ],
-  operation: 'getQuestions'
-}).query;
-
 // PROMOTE MEMBERS
 
 export const PROMOTE_MEMBERS = mutation({

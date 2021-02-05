@@ -1,9 +1,17 @@
-import { createContextStore } from 'easy-peasy';
+import { Action, action, createContextStore } from 'easy-peasy';
 
 import { IdProps } from '@constants';
 
-const IdStore = createContextStore<IdProps>((runtimeModel) => runtimeModel, {
-  disableImmer: true
-});
+interface IdModel extends IdProps {
+  setId?: Action<IdModel, string>;
+}
+
+const IdStore = createContextStore<IdModel>(
+  (runtimeModel) => ({
+    ...runtimeModel,
+    setId: action((state, id: string) => ({ ...state, id }))
+  }),
+  { disableImmer: true }
+);
 
 export default IdStore;
