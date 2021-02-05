@@ -11,14 +11,7 @@ $PREF: 'mo-member-profile';
   top: 0;
 }
 
-.#{$PREF}-user-ctr {
-  background-color: white;
-  position: sticky;
-  top: $md;
-  z-index: 10;
-
-  &:not(:last-child) { margin-bottom: $sm; }
-}
+.#{$PREF}-user-ctr:not(:last-child) { margin-bottom: $sm; }
 
 .#{$PREF}-user-ctr > p { margin-bottom: $sm; text-align: center; }
 
