@@ -52,7 +52,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
               email,
               fullName: `${firstName} ${lastName}`,
               id: nanoid(),
-              paidOn: day(createdAt).format('MMMM DD, YYYY @ h:mm A'),
+              paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
               type: byTypeId[type].name
             };
           }

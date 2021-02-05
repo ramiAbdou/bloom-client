@@ -18,9 +18,9 @@ const useCreateEvent = (): OnFormSubmit => {
   });
 
   const onSubmit = async ({ actions, items, setError }: OnFormSubmitArgs) => {
-    const endDateOnly = day(items.END_DATE?.value)?.format('MMMM D, YYYY');
+    const endDateOnly = day(items.END_DATE?.value)?.format('MMM D, YYYY');
     const endTimeOnly = day(items.END_TIME?.value)?.format('h:mm A');
-    const startDateOnly = day(items.START_DATE?.value)?.format('MMMM D, YYYY');
+    const startDateOnly = day(items.START_DATE?.value)?.format('MMM D, YYYY');
     const startTimeOnly = day(items.START_TIME?.value)?.format('h:mm A');
 
     const endTime = day(

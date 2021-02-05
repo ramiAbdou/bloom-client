@@ -43,7 +43,7 @@ const MembershipPaymentNextDueCard: React.FC = () => {
       <h4>{autoRenew ? 'Next Scheduled Payment' : 'Next Payment Due'}</h4>
 
       <Row spaceBetween>
-        <p>{day(nextPaymentDate).format('MMMM D, YYYY')}</p>
+        <p>{day(nextPaymentDate).format('MMM D, YYYY')}</p>
         <p>${amount?.toFixed(2)}</p>
       </Row>
     </Card>
