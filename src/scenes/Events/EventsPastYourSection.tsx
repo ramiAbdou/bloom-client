@@ -32,7 +32,7 @@ const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const hasEvents: boolean = useStoreState(({ db }) => {
     return !!db.member.attendees
       ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
-      ?.map((attendee: IEventAttendee) => db.byEventsId[attendee.event])
+      ?.map((attendee: IEventAttendee) => db.byEventId[attendee.event])
       ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)))?.length;
   });
 

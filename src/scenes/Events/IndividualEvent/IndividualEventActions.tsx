@@ -68,7 +68,7 @@ const IndividualEventActions: React.FC = () => {
 
   const isGoing: boolean = useStoreState(({ db }) => {
     return guests
-      ?.map((guestId: string) => db.byGuestsId[guestId])
+      ?.map((guestId: string) => db.byGuestId[guestId])
       ?.some((guest: IEventGuest) => guest.member === db.member?.id);
   });
 
