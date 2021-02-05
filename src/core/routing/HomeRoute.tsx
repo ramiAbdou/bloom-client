@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
+import useFinalPath from '@hooks/useFinalPath';
 import useQuery from '@hooks/useQuery';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import AddMemberModal from '@modals/AddMember/AddMember';
@@ -84,6 +85,7 @@ const HomeRoute: React.FC = () => {
   const { urlName }: UrlNameProps = useParams();
   const route = useTopLevelRoute();
   const { url } = useRouteMatch();
+  const finalPath = useFinalPath();
 
   const activeCommunityId = useStoreState(({ db }) => db.community?.id);
   const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
@@ -126,7 +128,11 @@ const HomeRoute: React.FC = () => {
     }
   }, [communityId]);
 
-  if (!isAuthenticated && route === 'events') {
+  if (
+    !isAuthenticated &&
+    route === 'events' &&
+    !['past', 'upcoming'].includes(finalPath)
+  ) {
     return (
       <Switch>
         <Route

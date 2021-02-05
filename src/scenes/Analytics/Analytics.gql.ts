@@ -22,10 +22,10 @@ export const GET_ACTIVE_MEMBERS_SERIES = query({
 export const GET_PAST_EVENT_ATTENDEES = query({
   fields: [
     'createdAt',
-    'email',
-    'firstName',
+    // 'email',
+    // 'firstName',
     'id',
-    'lastName',
+    // 'lastName',
     { event: ['id'] },
     {
       member: [
@@ -62,10 +62,7 @@ export const GET_PAST_EVENT_GUESTS = query({
 export const GET_PAST_EVENT_WATCHES = query({
   fields: [
     'createdAt',
-    'email',
-    'firstName',
     'id',
-    'lastName',
     { event: ['id'] },
     {
       member: [

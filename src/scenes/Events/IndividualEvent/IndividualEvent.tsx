@@ -41,6 +41,8 @@ const IndividualEventHeader: React.FC = () => {
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
 
+  console.log('HERE', eventId);
+
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
   const isMembersOnly = useStoreState(({ db }) => db.event?.private);
