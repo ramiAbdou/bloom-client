@@ -10,9 +10,9 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
+import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import SocialMedia from './images/social-media.svg';
 import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
@@ -24,16 +24,17 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal(ModalType.EDIT_SOCIAL_MEDIA);
 
-  if (isSocialLinked) return null;
-
   return (
-    <>
-      <SocialMedia className="s-profile-card--social-empty-img" />
+    <Show show={!isSocialLinked}>
+      <p className="mb-sm">
+        Strengthen your relationships with other community members by adding
+        your social profiles!
+      </p>
 
       <Button primary onClick={onClick}>
         + Link Social Media
       </Button>
-    </>
+    </Show>
   );
 };
 
