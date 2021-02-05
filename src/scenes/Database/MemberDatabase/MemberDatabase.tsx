@@ -1,4 +1,3 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import { ModalType } from '@constants';
@@ -15,7 +14,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { IIntegrations, IQuestion } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
-import getMemberTableRow from './getMemberTableRow';
+import { getMemberTableRow } from '../Database.util';
 import ActionRow from './MemberDatabaseActions';
 import MemberDatabaseDeleteModal from './MemberDatabaseDeleteModal';
 import MemberDatabasePromoteModal from './MemberDatabasePromoteModal';
@@ -32,10 +31,8 @@ const MemberDatabase: React.FC = () => {
 
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
-  const rows: TableRow[] = useStoreState(
-    ({ db }) => getMemberTableRow({ db }),
-    deepequal
-  );
+  const rows: TableRow[] = useStoreState(({ db }) => getMemberTableRow({ db }));
+  console.log(rows);
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
     const integrations: IIntegrations =

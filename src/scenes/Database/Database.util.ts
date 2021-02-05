@@ -50,7 +50,7 @@ const getMemberValue = ({
   return value;
 };
 
-const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
+export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
   if (!db.community.types?.length) return [];
 
   const sortQuestionId: string = db.community?.questions?.find(

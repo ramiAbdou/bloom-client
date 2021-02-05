@@ -13,12 +13,12 @@ import DatabaseAction from '../DatabaseAction';
 const MemberDatabaseCopyButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const emails = Table.useStoreState(({ columns, data, selectedRowIds }) => {
+  const emails = Table.useStoreState(({ columns, rows, selectedRowIds }) => {
     // Get the column that has EMAIL as the category.
     const columnId = columns.find(({ category }) => category === 'EMAIL')?.id;
 
     return selectedRowIds.map((rowId: string) => {
-      const selectedRow = data.find((row: TableRow) => row.id === rowId) || {};
+      const selectedRow = rows.find((row: TableRow) => row.id === rowId) || {};
       return selectedRow[columnId];
     });
   });

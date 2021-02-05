@@ -6,7 +6,7 @@ import PaginationBar from './PaginationBar';
 const TablePaginationMessage: React.FC = () => {
   const floor = Table.useStoreState(({ range }) => range[0] + 1);
   const ceiling = Table.useStoreState(({ range }) => range[1]);
-  const numRows = Table.useStoreState((store) => store.filteredData.length);
+  const numRows = Table.useStoreState((store) => store.filteredRows?.length);
   const showCount = Table.useStoreState(({ options }) => options.showCount);
 
   if (!showCount) return null;
@@ -19,7 +19,7 @@ const TablePaginationMessage: React.FC = () => {
 };
 
 const TablePagination: React.FC = () => {
-  const numRows = Table.useStoreState((store) => store.filteredData.length);
+  const numRows = Table.useStoreState((store) => store.filteredRows?.length);
 
   return (
     <div className="o-table-pagination-ctr">

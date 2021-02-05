@@ -1,12 +1,15 @@
 import React from 'react';
 
-import Table from './Table.store';
+import TableStore from './Table.store';
 import { TableColumn } from './Table.types';
 import HeaderCell from './TableHeader/TableHeader';
 
-const HeaderContainer = () => {
-  const columns = Table.useStoreState((store) => store.columns);
-  const hasData = Table.useStoreState((store) => !!store.filteredData.length);
+const TableHeaderContainer: React.FC = () => {
+  const columns = TableStore.useStoreState((store) => store.columns);
+
+  const hasData = TableStore.useStoreState(
+    (store) => !!store.filteredRows.length
+  );
 
   const customStyle = !hasData ? { borderBottom: 'none' } : {};
 
@@ -21,4 +24,4 @@ const HeaderContainer = () => {
   );
 };
 
-export default HeaderContainer;
+export default TableHeaderContainer;

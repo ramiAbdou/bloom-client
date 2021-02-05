@@ -5,10 +5,10 @@ import TableStore from '../Table.store';
 
 const SelectAllCheckbox = () => {
   const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredData, range, selectedRowIds }) => {
+    ({ filteredRows, range, selectedRowIds }) => {
       return (
         !!selectedRowIds.length &&
-        filteredData
+        filteredRows
           .slice(range[0], range[1])
           .every(({ id: rowId }) => selectedRowIds.includes(rowId))
       );

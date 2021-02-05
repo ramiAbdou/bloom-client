@@ -16,11 +16,11 @@ const MemberDatabaseExportButton: React.FC = () => {
     columns.map(({ id, title }) => ({ key: id, label: title }))
   );
 
-  const data = Table.useStoreState(({ filteredData, selectedRowIds }) => {
+  const data = Table.useStoreState(({ filteredRows, selectedRowIds }) => {
     return selectedRowIds.map((rowId: string) => {
       // We return every piece of data in the selected row except for the
       // ID of the row, which is just the member ID in this case.
-      const { id: _, ...rest } = filteredData.find(({ id }) => id === rowId);
+      const { id: _, ...rest } = filteredRows.find(({ id }) => id === rowId);
       return rest;
     });
   });

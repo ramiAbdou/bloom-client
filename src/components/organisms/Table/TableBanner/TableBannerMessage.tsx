@@ -3,11 +3,11 @@ import React from 'react';
 import Table from '../Table.store';
 
 const TableBannerMessage: React.FC = () => {
-  const numTotalRows = Table.useStoreState(({ data }) => data.length);
+  const numTotalRows = Table.useStoreState(({ rows }) => rows.length);
   const range = Table.useStoreState((store) => store.range);
 
-  const filteredData = Table.useStoreState((store) => store.filteredData);
-  const numFilteredRows = filteredData.length;
+  const filteredRows = Table.useStoreState((store) => store.filteredRows);
+  const numFilteredRows = filteredRows.length;
 
   const selectedRowIds = Table.useStoreState((store) => store.selectedRowIds);
   const numSelectedRows = selectedRowIds.length;
@@ -21,7 +21,7 @@ const TableBannerMessage: React.FC = () => {
   }
 
   if (
-    filteredData
+    filteredRows
       .slice(range[0], range[1])
       .every(({ id }) => selectedRowIds.includes(id))
   ) {

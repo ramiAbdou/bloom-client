@@ -27,19 +27,19 @@ const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage,
   small
 }) => {
-  const emptyMessage = TableStore.useStoreState(({ data }) => {
-    return !data?.length ? eMessage : null;
+  const emptyMessage = TableStore.useStoreState(({ rows }) => {
+    return !rows?.length ? eMessage : null;
   });
 
-  const show: boolean = TableStore.useStoreState(({ data, options }) => {
-    return !options.hideIfEmpty || !!data?.length;
+  const show: boolean = TableStore.useStoreState(({ rows, options }) => {
+    return !options.hideIfEmpty || !!rows?.length;
   });
 
   const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredData, range, selectedRowIds }) => {
+    ({ filteredRows, range, selectedRowIds }) => {
       return (
         !!selectedRowIds.length &&
-        filteredData
+        filteredRows
           .slice(range[0], range[1])
           .every(({ id: rowId }) => selectedRowIds.includes(rowId))
       );

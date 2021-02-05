@@ -2,7 +2,6 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import { ShowProps } from '@constants';
-import Show from '@containers/Show';
 import TableStore, { tableModel } from './Table.store';
 import {
   initialTableOptions,
@@ -21,14 +20,17 @@ const UpdateAndRenderTableContent: React.FC<Pick<TableProps, 'rows'>> = ({
   children,
   rows
 }) => {
-  const data = TableStore.useStoreState((store) => store.data);
-  const updateData = TableStore.useStoreActions((store) => store.updateData);
+  const storedRows = TableStore.useStoreState((store) => store.rows);
+  const setRows = TableStore.useStoreActions((store) => store.setRows);
 
   // Used primarily for the removal of rows. This will not update the
   // data if the number of rows doesn't change.
   useEffect(() => {
-    if (!deepequal(data, rows)) updateData(rows ?? []);
-  }, [rows]);
+    if (!deepequal(storedRows, rows)) {
+      console.log('UPDATING', storedRows, rows);
+      setRows(rows ?? []);
+    }
+  }, [storedRows, rows]);
 
   return <>{children}</>;
 };
@@ -38,8 +40,10 @@ const Table: React.FC<TableProps> = ({
   options,
   show,
   ...props
-}: TableProps) => (
-  <Show show={show}>
+}: TableProps) => {
+  if (show === false) return null;
+
+  return (
     <TableStore.Provider
       runtimeModel={{
         ...tableModel,
@@ -52,7 +56,7 @@ const Table: React.FC<TableProps> = ({
     >
       <UpdateAndRenderTableContent {...props} />
     </TableStore.Provider>
-  </Show>
-);
+  );
+};
 
 export default Table;

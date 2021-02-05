@@ -16,7 +16,7 @@ export const tableModel: TableModel = {
     ({ filters, ...state }, { filterId, filter }: TableFilterArgs) => {
       const updatedFilters = { ...filters, [filterId]: filter };
 
-      const updatedFilteredData: TableRow[] = state.data?.filter((row) => {
+      const updatedFilteredRows: TableRow[] = state.rows?.filter((row) => {
         return Object.values(updatedFilters)?.every(
           (tableFilter: TableFilter) => {
             return tableFilter(row);
@@ -26,7 +26,7 @@ export const tableModel: TableModel = {
 
       return {
         ...state,
-        filteredData: updatedFilteredData,
+        filteredRows: updatedFilteredRows,
         filters: updatedFilters
       };
     }
@@ -36,13 +36,11 @@ export const tableModel: TableModel = {
 
   columns: [],
 
-  data: [],
-
   /**
    * Returns the filtered data by running all of the filter functions on every
    * row. Returns all the data if there are no filters present.
    */
-  filteredData: [],
+  filteredRows: [],
 
   filters: {},
 
@@ -62,10 +60,15 @@ export const tableModel: TableModel = {
    */
   page: 0,
 
-  range: computed(({ filteredData: { length }, page }) => {
+  range: computed((state) => {
+    const {
+      filteredRows: { length },
+      page
+    } = state;
+
     const floor = page * 50;
 
-    // If the page is the last page, then the filteredData length - floor will
+    // If the page is the last page, then the filteredRows length - floor will
     // be less than 50, in which case we just show the length as the ceiling.
     const ceiling = length - floor >= 50 ? floor + 50 : length;
     return [floor, ceiling];
@@ -75,7 +78,7 @@ export const tableModel: TableModel = {
     const updatedFilters = { ...filters };
     delete updatedFilters[filterId];
 
-    const updatedFilteredData: TableRow[] = state.data?.filter((row) => {
+    const updatedFilteredData: TableRow[] = state.rows?.filter((row) => {
       return Object.values(updatedFilters)?.every((tableFilter: TableFilter) =>
         tableFilter(row)
       );
@@ -83,17 +86,20 @@ export const tableModel: TableModel = {
 
     return {
       ...state,
-      filteredData: updatedFilteredData,
+      filteredRows: updatedFilteredData,
       filters: updatedFilters
     };
   }),
+
+  rows: [],
 
   searchString: '',
 
   selectedRowIds: [],
 
   setFilteredData: action((state, filter: TableFilter) => {
-    return { ...state, filteredData: state.filteredData.filter(filter) };
+    const { filteredRows } = state;
+    return { ...state, filteredRows: filteredRows.filter(filter) };
   }),
 
   setRange: action((state, page) => {
@@ -104,7 +110,11 @@ export const tableModel: TableModel = {
     return { ...state, page };
   }),
 
-  setSearchString: action(({ columns, data, ...state }, searchString) => {
+  setRows: action((state, rows: TableRow[]) => {
+    return { ...state, filteredRows: rows, rows, selectedRowIds: [] };
+  }),
+
+  setSearchString: action(({ columns, rows, ...state }, searchString) => {
     const firstNameColumnId = columns.find(
       ({ category }) => category === 'FIRST_NAME'
     )?.id;
@@ -116,10 +126,9 @@ export const tableModel: TableModel = {
     return {
       ...state,
       columns,
-      data,
-      filteredData: !searchString
-        ? data
-        : matchSorter(data, searchString, {
+      filteredRows: !searchString
+        ? rows
+        : matchSorter(rows, searchString, {
             keys: [
               ...columns.map(({ id }) => id),
               // Supports search for a fullName of a row.
@@ -128,6 +137,7 @@ export const tableModel: TableModel = {
             ],
             threshold: matchSorter.rankings.ACRONYM
           }),
+      rows,
       searchString
     };
   }),
@@ -136,43 +146,43 @@ export const tableModel: TableModel = {
    * Sets the sorted column ID and direction of the column to be sorted.
    */
   setSortedColumn: action((state, [id, direction]) => {
-    const { data, filteredData, sortedColumnDirection, sortedColumnId } = state;
+    const { rows, filteredRows, sortDirection, sortColumnId } = state;
 
     // If the column ID is the same and the direction is the same direction,
     // we should effectively unapply the sorting.
-    if (sortedColumnId === id && direction === sortedColumnDirection) {
+    if (sortColumnId === id && direction === sortDirection) {
       return {
         ...state,
-        filteredData: data,
-        sortedColumnDirection: null,
-        sortedColumnId: null
+        filteredRows: rows,
+        sortColumnId: null,
+        sortDirection: null
       };
     }
 
-    const sortedFilteredData: TableRow[] = filteredData.sort((a, b) => {
+    const sortedFilteredData: TableRow[] = filteredRows.sort((a, b) => {
       return sortObjects(a, b, id, direction);
     });
 
     return {
       ...state,
-      filteredData: sortedFilteredData,
-      sortedColumnDirection: direction,
-      sortedColumnId: id
+      filteredRows: sortedFilteredData,
+      sortColumnId: id,
+      sortDirection: direction
     };
   }),
 
-  sortedColumnDirection: null,
+  sortColumnId: null,
 
-  sortedColumnId: null,
+  sortDirection: null,
 
   /**
    * Updates the data by setting isSelected to true where the ID of the row
    * matches the ID of the data (row).
    */
   toggleAllPageRows: action((state) => {
-    const { filteredData, range, selectedRowIds } = state;
+    const { filteredRows, range, selectedRowIds } = state;
 
-    const isPageSelected = filteredData
+    const isPageSelected = filteredRows
       .slice(range[0], range[1])
       .every(({ id: rowId }) => selectedRowIds.includes(rowId));
 
@@ -180,7 +190,7 @@ export const tableModel: TableModel = {
       ...state,
       range,
       selectedRowIds: !isPageSelected
-        ? state.filteredData.slice(range[0], range[1]).map(({ id }) => id)
+        ? state.filteredRows.slice(range[0], range[1]).map(({ id }) => id)
         : []
     };
   }),
@@ -190,14 +200,14 @@ export const tableModel: TableModel = {
    * matches the ID of the data (row).
    */
   toggleAllRows: action((state) => {
-    const { filteredData, selectedRowIds } = state;
+    const { filteredRows, selectedRowIds } = state;
 
     return {
       ...state,
       selectedRowIds:
-        selectedRowIds?.length === filteredData?.length
+        selectedRowIds?.length === filteredRows?.length
           ? []
-          : filteredData.map(({ id }) => id)
+          : filteredRows.map(({ id }) => id)
     };
   }),
 
@@ -228,11 +238,7 @@ export const tableModel: TableModel = {
         return { ...column, ...updatedColumn };
       })
     })
-  ),
-
-  updateData: action((state, data: TableRow[]) => {
-    return { ...state, data, filteredData: data, selectedRowIds: [] };
-  })
+  )
 };
 
 const TableStore = createContextStore<TableModel>(

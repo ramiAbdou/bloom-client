@@ -5,18 +5,18 @@ import { takeFirst } from '@util/util';
 import Table from '../Table.store';
 
 export default () => {
-  const numMembers = Table.useStoreState(({ data }) => data.length);
+  const numMembers = Table.useStoreState(({ rows }) => rows.length);
 
   const numFilteredMembers = Table.useStoreState(
-    ({ filteredData }) => filteredData.length
+    ({ filteredRows }) => filteredRows.length
   );
 
   const toggleAllRows = Table.useStoreActions((store) => store.toggleAllRows);
 
   const isAllSelected: boolean = Table.useStoreState(
-    ({ filteredData, selectedRowIds }) => {
+    ({ filteredRows, selectedRowIds }) => {
       return (
-        !!selectedRowIds.length && selectedRowIds.length === filteredData.length
+        !!selectedRowIds.length && selectedRowIds.length === filteredRows.length
       );
     }
   );

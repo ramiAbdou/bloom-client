@@ -15,12 +15,12 @@ const TablePanelRenameForm: React.FC = () => {
   const panelId = useStoreState(({ panel }) => panel.id);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const { id, title }: TableColumn = TableStore.useStoreState(
-    ({ columns }) =>
+  const { id, title }: TableColumn = TableStore.useStoreState(({ columns }) => {
+    return (
       columns.find(({ id: columnId }) => columnId === panelId) ??
-      ({} as TableColumn),
-    deepequal
-  );
+      ({} as TableColumn)
+    );
+  }, deepequal);
 
   const onRenameColumn = TableStore.useStoreState(
     ({ options }) => options.onRenameColumn

@@ -25,8 +25,8 @@ const HeaderCell = ({
     return options.alignEndRight && isLastCell;
   });
 
-  const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
-  const direction = Table.useStoreState((store) => store.sortedColumnDirection);
+  const sortColumnId = Table.useStoreState((store) => store.sortColumnId);
+  const direction = Table.useStoreState((store) => store.sortDirection);
   const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
   const isSortable = Table.useStoreState(({ options }) => options.isSortable);
 
@@ -39,7 +39,7 @@ const HeaderCell = ({
 
   const onClick = () => isSortable && showPanel(id);
 
-  const isSortedColumn = sortedColumnId === id;
+  const isSortedColumn = sortColumnId === id;
 
   const css = cx(getTableCellClass({ category, type }), {
     'o-table-td--right': alignEndRight,

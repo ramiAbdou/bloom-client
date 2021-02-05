@@ -15,11 +15,9 @@ interface TableSortButtonProps extends IdProps {
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction, id }) => {
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const isSorted = Table.useStoreState(
-    ({ sortedColumnDirection, sortedColumnId }) => {
-      return sortedColumnDirection === direction && sortedColumnId === id;
-    }
-  );
+  const isSorted = Table.useStoreState(({ sortDirection, sortColumnId }) => {
+    return sortDirection === direction && sortColumnId === id;
+  });
 
   const setSortedColumn = Table.useStoreActions(
     (store) => store.setSortedColumn
