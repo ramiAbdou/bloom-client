@@ -35,8 +35,15 @@ const TableContent: React.FC<TableContentProps> = ({
     return !options.hideIfEmpty || !!data?.length;
   });
 
-  const isAllPageSelected = TableStore.useStoreState(
-    (store) => store.isAllPageSelected
+  const isAllPageSelected: boolean = TableStore.useStoreState(
+    ({ filteredData, range, selectedRowIds }) => {
+      return (
+        !!selectedRowIds.length &&
+        filteredData
+          .slice(range[0], range[1])
+          .every(({ id: rowId }) => selectedRowIds.includes(rowId))
+      );
+    }
   );
 
   return (

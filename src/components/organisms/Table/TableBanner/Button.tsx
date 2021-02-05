@@ -12,7 +12,14 @@ export default () => {
   );
 
   const toggleAllRows = Table.useStoreActions((store) => store.toggleAllRows);
-  const isAllSelected = Table.useStoreState((store) => store.isAllSelected);
+
+  const isAllSelected: boolean = Table.useStoreState(
+    ({ filteredData, selectedRowIds }) => {
+      return (
+        !!selectedRowIds.length && selectedRowIds.length === filteredData.length
+      );
+    }
+  );
 
   const title: string = takeFirst([
     [isAllSelected, 'Clear Selection'],

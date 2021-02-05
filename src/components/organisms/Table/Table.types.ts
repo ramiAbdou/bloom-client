@@ -64,8 +64,6 @@ export type TableModel = {
   data: TableRow[];
   filteredData: TableRow[];
   filters: Record<string, TableFilter>;
-  isAllPageSelected: Computed<TableModel, boolean>;
-  isAllSelected: Computed<TableModel, boolean>;
   isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
   options: TableOptions;
   page: number;

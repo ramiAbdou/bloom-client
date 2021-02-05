@@ -1,6 +1,7 @@
 import { action, computed, createContextStore } from 'easy-peasy';
 import { matchSorter } from 'match-sorter';
 
+import { sortObjects } from '@util/util';
 import {
   initialTableOptions,
   TableColumn,
@@ -9,7 +10,6 @@ import {
   TableModel,
   TableRow
 } from './Table.types';
-import { sortByColumn } from './Table.util';
 
 export const tableModel: TableModel = {
   addFilter: action(
@@ -47,34 +47,11 @@ export const tableModel: TableModel = {
   filters: {},
 
   /**
-   * Returns true if all of the filtered data rows are selected.
-   */
-  isAllPageSelected: computed(({ filteredData, range, selectedRowIds }) => {
-    return (
-      !!selectedRowIds.length &&
-      filteredData
-        .slice(range[0], range[1])
-        .every(({ id: rowId }) => selectedRowIds.includes(rowId))
-    );
-  }),
-
-  /**
-   * Returns true if all of the filtered data rows are selected.
-   */
-  isAllSelected: computed(({ filteredData, selectedRowIds }) => {
-    return (
-      !!selectedRowIds.length && selectedRowIds.length === filteredData.length
-    );
-  }),
-
-  /**
    * Returns true if all rows are selected.
    */
-  isSelected: computed(
-    ({ isAllSelected, selectedRowIds }) => (rowId: string) => {
-      return isAllSelected || selectedRowIds.includes(rowId);
-    }
-  ),
+  isSelected: computed(({ selectedRowIds }) => (rowId: string) => {
+    return selectedRowIds.includes(rowId);
+  }),
 
   options: initialTableOptions,
 
@@ -172,9 +149,13 @@ export const tableModel: TableModel = {
       };
     }
 
+    const sortedFilteredData: TableRow[] = filteredData.sort((a, b) => {
+      return sortObjects(a, b, id, direction);
+    });
+
     return {
       ...state,
-      filteredData: sortByColumn(id, filteredData, direction),
+      filteredData: sortedFilteredData,
       sortedColumnDirection: direction,
       sortedColumnId: id
     };
@@ -188,24 +169,37 @@ export const tableModel: TableModel = {
    * Updates the data by setting isSelected to true where the ID of the row
    * matches the ID of the data (row).
    */
-  toggleAllPageRows: action(({ range, ...state }) => ({
-    ...state,
-    range,
-    selectedRowIds: !state.isAllPageSelected
-      ? state.filteredData.slice(range[0], range[1]).map(({ id }) => id)
-      : []
-  })),
+  toggleAllPageRows: action((state) => {
+    const { filteredData, range, selectedRowIds } = state;
+
+    const isPageSelected = filteredData
+      .slice(range[0], range[1])
+      .every(({ id: rowId }) => selectedRowIds.includes(rowId));
+
+    return {
+      ...state,
+      range,
+      selectedRowIds: !isPageSelected
+        ? state.filteredData.slice(range[0], range[1]).map(({ id }) => id)
+        : []
+    };
+  }),
 
   /**
    * Updates the data by setting isSelected to true where the ID of the row
    * matches the ID of the data (row).
    */
-  toggleAllRows: action(({ isAllSelected, filteredData, ...state }) => ({
-    ...state,
-    filteredData,
-    isAllSelected,
-    selectedRowIds: !isAllSelected ? filteredData.map(({ id }) => id) : []
-  })),
+  toggleAllRows: action((state) => {
+    const { filteredData, selectedRowIds } = state;
+
+    return {
+      ...state,
+      selectedRowIds:
+        selectedRowIds?.length === filteredData?.length
+          ? []
+          : filteredData.map(({ id }) => id)
+    };
+  }),
 
   /**
    * Updates the data by setting isSelected to true where the ID of the row

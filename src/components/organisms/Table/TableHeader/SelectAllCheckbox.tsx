@@ -1,14 +1,21 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
-import Table from '../Table.store';
+import TableStore from '../Table.store';
 
 const SelectAllCheckbox = () => {
-  const isAllPageSelected = Table.useStoreState(
-    (state) => state.isAllPageSelected
+  const isAllPageSelected: boolean = TableStore.useStoreState(
+    ({ filteredData, range, selectedRowIds }) => {
+      return (
+        !!selectedRowIds.length &&
+        filteredData
+          .slice(range[0], range[1])
+          .every(({ id: rowId }) => selectedRowIds.includes(rowId))
+      );
+    }
   );
 
-  const toggleAllPageRows = Table.useStoreActions(
+  const toggleAllPageRows = TableStore.useStoreActions(
     (store) => store.toggleAllPageRows
   );
 
