@@ -32,6 +32,11 @@ export const tableModel: TableModel = {
     }
   ),
 
+  clearSelectedRows: action(({ selectedRowIds, ...state }) => ({
+    ...state,
+    selectedRowIds: []
+  })),
+
   columns: [],
 
   data: [],

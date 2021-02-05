@@ -59,6 +59,7 @@ export type TableFilterArgs = {
 
 export type TableModel = {
   addFilter: Action<TableModel, TableFilterArgs>;
+  clearSelectedRows: Action<TableModel>;
   columns: TableColumn[];
   data: TableRow[];
   filteredData: TableRow[];

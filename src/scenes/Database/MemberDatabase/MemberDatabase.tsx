@@ -84,7 +84,7 @@ const MemberDatabase: React.FC = () => {
       <MemberDatabaseModals />
 
       {rows.map((row: TableRow) => {
-        return <MemberProfileModal memberId={row?.id} />;
+        return <MemberProfileModal key={row?.id} memberId={row?.id} />;
       })}
     </Table>
   );

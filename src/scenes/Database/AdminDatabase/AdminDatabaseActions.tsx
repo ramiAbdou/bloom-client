@@ -7,20 +7,18 @@ import { useStoreState } from '@store/Store';
 import AdminDatabaseDeleteButton from './AdminDatabaseDeleteButton';
 import AdminDatabaseDemoteButton from './AdminDatabaseDemoteButton';
 
-const AdminDatabaseButtons = () => {
+const AdminDatabaseButtons: React.FC = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
 
   const isAnythingSelected = Table.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  if (!isAnythingSelected || !isOwner) return null;
-
   return (
-    <div>
+    <Row show={!!isAnythingSelected && !!isOwner}>
       <AdminDatabaseDemoteButton />
       <AdminDatabaseDeleteButton />
-    </div>
+    </Row>
   );
 };
 

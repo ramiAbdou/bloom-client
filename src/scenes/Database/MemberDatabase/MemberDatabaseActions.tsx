@@ -10,7 +10,7 @@ import MemberDatabaseExportButton from './MemberDatabaseExportButton';
 import MemberDatabaseFilterButton from './MemberDatabaseFilterButton';
 import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
 
-const MemberDatabaseButtons = () => {
+const MemberDatabaseButtons: React.FC = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
 
   const isAnythingSelected = Table.useStoreState(
