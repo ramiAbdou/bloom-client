@@ -18,7 +18,8 @@ const MembershipPaymentScheduledCard: React.FC = () => {
     query: GET_UPCOMING_PAYMENT
   });
 
-  const { amount, nextPaymentDate } = data ?? {};
+  const amount = `$${data?.amount?.toFixed(2)}`;
+  const date = day(data?.nextPaymentDate).format('MMMM D, YYYY');
 
   return (
     <Card
@@ -29,8 +30,8 @@ const MembershipPaymentScheduledCard: React.FC = () => {
       <h4>{autoRenew ? 'Next Scheduled Payment' : 'Next Payment Due'}</h4>
 
       <Row spaceBetween>
-        <p>{day(nextPaymentDate).format('MMM D, YYYY')}</p>
-        <p>${amount?.toFixed(2)}</p>
+        <p>{date}</p>
+        <p>{amount}</p>
       </Row>
     </Card>
   );

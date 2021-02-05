@@ -4,11 +4,11 @@ import { QuestionCategory, QuestionType } from '@constants';
 
 export type TableColumn = {
   category?: QuestionCategory;
-  hide?: boolean;
+  hideTitle?: boolean;
   id: string;
   render?: (value: any) => JSX.Element;
   title: string;
-  type: QuestionType;
+  type?: QuestionType;
 };
 
 // Each row will have a series of random question ID's as well as a unique ID

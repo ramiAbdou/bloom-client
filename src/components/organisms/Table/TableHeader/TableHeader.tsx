@@ -14,7 +14,7 @@ interface HeaderCellProps extends TableColumn {
 
 const HeaderCell = ({
   category,
-  hide,
+  hideTitle,
   i,
   type,
   id,
@@ -56,7 +56,7 @@ const HeaderCell = ({
     <th className={css} id={id} onClick={onClick}>
       <div>
         {!i && hasCheckbox && <SelectAllCheckbox />}
-        {!hide && <p>{title}</p>}
+        {!hideTitle && <p>{title}</p>}
         {showCaretUp && <IoCaretUp />}
         {showCaretDown && <IoCaretDown />}
       </div>
