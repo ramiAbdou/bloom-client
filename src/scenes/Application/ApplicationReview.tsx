@@ -39,10 +39,9 @@ const ApplicationReviewForm: React.FC = () => {
 
 const ApplicationReview: React.FC = () => {
   const showForm: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
     const types = db.community?.types;
     const isMoreThanOneType = types?.length > 1;
-    const isFirstTypePaid = !!types && !byTypeId[types[0]]?.isFree;
+    const isFirstTypePaid = !!types && !db.byTypeId[types[0]]?.isFree;
     return isMoreThanOneType || isFirstTypePaid;
   });
 

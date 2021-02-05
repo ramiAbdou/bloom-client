@@ -14,15 +14,12 @@ import { useStoreState } from '@store/Store';
 
 const MembershipPaymentTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
-    const { byId: byPaymentId } = db.entities.payments;
-    const { byId: byTypeId } = db.entities.types;
-
     return db.member.payments
-      ?.map((paymentId: string) => byPaymentId[paymentId])
+      ?.map((paymentId: string) => db.byPaymentId[paymentId])
       ?.filter((payment: IMemberPayment) => !!payment?.type)
       ?.map((payment: IMemberPayment) => {
         const { createdAt, id, stripeInvoiceUrl: receipt } = payment;
-        const type: IMemberType = byTypeId[payment.type];
+        const type: IMemberType = db.byTypeId[payment.type];
         const amount = `$${(payment.amount / 100).toFixed(2)}`;
         const paidOn = day(createdAt).format('MMM DD, YYYY');
         return { amount, id, paidOn, receipt, type: type?.name };

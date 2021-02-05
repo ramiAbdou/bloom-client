@@ -7,8 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const StripeProvider: React.FC = ({ children }) => {
   const stripeAccount: string = useStoreState(({ db }) => {
-    const { byId } = db.entities.integrations;
-    return byId[db.community.integrations]?.stripeAccountId;
+    return db.byIntegrationsId[db.community.integrations]?.stripeAccountId;
   });
 
   if (!stripeAccount) return null;

@@ -26,8 +26,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   });
 
   const { endTime, recordingUrl }: IEvent = useStoreState(({ db }) => {
-    const { byId: byEventId } = db.entities.events;
-    return byEventId[eventId];
+    return db.byEventId[eventId];
   }, deepequal);
 
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);

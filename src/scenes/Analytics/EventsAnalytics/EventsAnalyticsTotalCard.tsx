@@ -7,10 +7,8 @@ import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {
   const numPastEvents: number = useStoreState(({ db }) => {
-    const { byId: byEventId } = db.entities.events;
-
     return db.community.events
-      ?.map((eventId: string) => byEventId[eventId])
+      ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(event.endTime))?.length;
   });
 

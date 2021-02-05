@@ -28,7 +28,7 @@ const IndividualEventMain: React.FC = () => {
   const title = useStoreState(({ db }) => db.event?.title);
 
   const community = useStoreState(({ db }) => {
-    return db.entities.communities.byId[db.event?.community]?.name;
+    return db.byCommunityId[db.event?.community]?.name;
   });
 
   return (

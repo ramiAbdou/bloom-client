@@ -6,10 +6,17 @@ import {
   ICommunityApplication,
   IEntities,
   IEvent,
+  IEventAttendee,
+  IEventGuest,
+  IEventWatch,
   IIntegrations,
   IMember,
+  IMemberData,
+  IMemberPayment,
+  IMemberType,
+  IQuestion,
   IUser
-} from '@store/Db/entities';
+} from './entities';
 
 export interface AddEntitiesArgs {
   entities: IMember[];
@@ -36,6 +43,20 @@ export interface MergeEntitiesArgs {
 }
 
 export type DbModel = {
+  byApplicationId: Computed<DbModel, Record<string, ICommunityApplication>>;
+  byAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
+  byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
+  byDataId: Computed<DbModel, Record<string, IMemberData>>;
+  byEventId: Computed<DbModel, Record<string, IEvent>>;
+  byGuestId: Computed<DbModel, Record<string, IEventGuest>>;
+  byIntegrationsId: Computed<DbModel, Record<string, IIntegrations>>;
+  byMemberId: Computed<DbModel, Record<string, IMember>>;
+  byPaymentId: Computed<DbModel, Record<string, IMemberPayment>>;
+  byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
+  byTypeId: Computed<DbModel, Record<string, IMemberType>>;
+  byUserId: Computed<DbModel, Record<string, IUser>>;
+  byWatchId: Computed<DbModel, Record<string, IEventWatch>>;
+
   addEntities: Action<DbModel, AddEntitiesArgs>;
   application: Computed<DbModel, ICommunityApplication>;
   clearEntities: Action<DbModel>;

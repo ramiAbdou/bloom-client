@@ -28,26 +28,22 @@ const getMemberValue = ({
   questionId,
   type
 }: GetMemberValueArgs) => {
-  const { byId: byDataId } = db.entities.data;
-  const { byId: byQuestionId } = db.entities.questions;
-  const { byId: byTypeId } = db.entities.types;
-
-  const { category }: IQuestion = byQuestionId[questionId];
+  const { category }: IQuestion = db.byQuestionId[questionId];
 
   if (category === 'EMAIL') return email;
   if (category === 'FIRST_NAME') return firstName;
   if (category === 'GENDER') return gender;
   if (category === 'JOINED_AT') return joinedAt;
   if (category === 'LAST_NAME') return lastName;
-  if (category === 'MEMBERSHIP_TYPE') return byTypeId[type]?.name;
+  if (category === 'MEMBERSHIP_TYPE') return db.byTypeId[type]?.name;
   if (category === 'DUES_STATUS') {
     return isDuesActive ? 'Active' : 'Inactive';
   }
 
   const value = data
-    ?.map((dataId: string) => byDataId[dataId])
+    ?.map((dataId: string) => db.byDataId[dataId])
     ?.find((entity: IMemberData) => {
-      const question: IQuestion = byQuestionId[entity.question];
+      const question: IQuestion = db.byQuestionId[entity.question];
       return question.id === questionId;
     })?.value;
 
@@ -55,27 +51,23 @@ const getMemberValue = ({
 };
 
 const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
-  const { byId: byMemberId } = db.entities.members;
-  const { byId: byQuestionId } = db.entities.questions;
-  const { byId: byUserId } = db.entities.users;
-
   if (!db.community.types?.length) return [];
 
   const sortQuestionId: string = db.community?.questions?.find(
     (questionId: string) => {
-      const question: IQuestion = byQuestionId[questionId];
+      const question: IQuestion = db.byQuestionId[questionId];
       return question?.category === 'JOINED_AT';
     }
   );
 
   const filteredMembers: IMember[] = db.community.members
-    ?.map((memberId: string) => byMemberId[memberId])
+    ?.map((memberId: string) => db.byMemberId[memberId])
     ?.filter((member: IMember) => {
       return !!member?.user && member?.status === 'ACCEPTED';
     });
 
   const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
-    const user: IUser = byUserId[member.user];
+    const user: IUser = db.byUserId[member.user];
 
     return db.community?.questions?.reduce(
       (result: TableRow, questionId: string) => {

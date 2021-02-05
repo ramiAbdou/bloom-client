@@ -19,26 +19,22 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
-    const { byId: byAttendeeId } = db.entities.attendees;
-    const { byId: byEventId } = db.entities.events;
-    const { byId: byMemberId } = db.entities.members;
-
     const pastEvents: IEvent[] = db.community.events
-      ?.map((eventId: string) => byEventId[eventId])
+      ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(event.endTime));
 
     const pastAttendees: IEventAttendee[] = pastEvents
       ?.reduce((acc: string[], event: IEvent) => {
         return acc.concat(event?.attendees);
       }, [])
-      ?.map((attendeeId: string) => byAttendeeId[attendeeId]);
+      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId]);
 
     const result = pastAttendees?.reduce(
       (
         acc,
         { email, firstName, lastName, member: memberId }: IEventAttendee
       ) => {
-        const member: IMember = byMemberId[memberId];
+        const member: IMember = db.byMemberId[memberId];
         const previousValue = acc[email];
 
         return {

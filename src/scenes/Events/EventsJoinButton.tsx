@@ -18,8 +18,7 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
   large
 }) => {
   const { endTime, startTime, videoUrl }: IEvent = useStoreState(({ db }) => {
-    const { byId } = db.entities.events;
-    return byId[eventId];
+    return db.byEventId[eventId];
   }, deepequal);
 
   const isHappeningNow =

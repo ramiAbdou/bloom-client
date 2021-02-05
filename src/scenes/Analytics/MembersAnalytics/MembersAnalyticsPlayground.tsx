@@ -15,16 +15,15 @@ import { useStoreState } from '@store/Store';
 const PlaygroundDropdown: React.FC = () => {
   // We only want the questions that are meaningful, and things like first/last
   // name aren't very meaningful.
-  const questions = useStoreState(({ db }) => {
-    const { byId } = db.entities.questions;
+  const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community.questions
-      ?.map((id: string) => byId[id])
+      ?.map((id: string) => db.byQuestionId[id])
       ?.filter(({ category }) => {
         return !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(
           category
         );
       });
-  }) as IQuestion[];
+  });
 
   const questionId = IdStore.useStoreState((store) => store.id);
   const setId = IdStore.useStoreActions((store) => store.setId);
@@ -54,10 +53,8 @@ const PlaygroundHeader: React.FC = () => {
   // We only want the questions that are meaningful, and things like first/last
   // name aren't very meaningful.
   const initialQuestionId: string = useStoreState(({ db }) => {
-    const { byId } = db.entities.questions;
-
     return db.community.questions
-      ?.map((id: string) => byId[id])
+      ?.map((id: string) => db.byQuestionId[id])
       .filter(
         ({ category }) =>
           !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(category)

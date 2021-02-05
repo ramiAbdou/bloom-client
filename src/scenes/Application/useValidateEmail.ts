@@ -14,11 +14,9 @@ const useValidateEmail = () => {
     goForward,
     setError
   }: OnFormSubmitArgs) => {
-    const { byId: byQuestionId } = db.entities.questions;
-
     const emailId: string = db.community.questions.find(
       (questionId: string) => {
-        return byQuestionId[questionId]?.category === 'EMAIL';
+        return db.byQuestionId[questionId]?.category === 'EMAIL';
       }
     );
 

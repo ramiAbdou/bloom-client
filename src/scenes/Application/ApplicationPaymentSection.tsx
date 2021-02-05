@@ -51,10 +51,8 @@ const ApplicationPaymentSection: React.FC = () => {
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-
     const selectedType: IMemberType = db.community?.types
-      ?.map((typeId: string) => byTypeId[typeId])
+      ?.map((typeId: string) => db.byTypeId[typeId])
       ?.find((type: IMemberType) => type?.name === selectedTypeName);
 
     return !!selectedType?.amount;

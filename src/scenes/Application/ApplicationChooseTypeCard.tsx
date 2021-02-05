@@ -9,8 +9,7 @@ import { takeFirst } from '@util/util';
 
 const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: typeId }) => {
   const { amount, recurrence }: IMemberType = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return byTypeId[typeId];
+    return db.byTypeId[typeId];
   }, deepequal);
 
   // Formats the amount with FREE if the amount is 0.

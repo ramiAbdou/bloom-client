@@ -14,11 +14,8 @@ const useSendLoginLink = (): OnFormSubmit => {
   const { pathname } = useLocation();
 
   const owner: IUser = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-
-    const member: IMember = byMemberId[db.community?.owner];
-    return byUserId[member?.user];
+    const member: IMember = db.byMemberId[db.community?.owner];
+    return db.byUserId[member?.user];
   });
 
   const setCurrentPage = StoryStore.useStoreActions(

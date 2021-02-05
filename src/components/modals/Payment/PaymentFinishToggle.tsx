@@ -17,8 +17,7 @@ const PaymentFinishToggle: React.FC = () => {
   );
 
   const show: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    const type: IMemberType = byTypeId[typeId];
+    const type: IMemberType = db.byTypeId[typeId];
 
     // Don't show toggle if auto renew was already enabled (which is the
     // default status) or if the type is free.
@@ -28,8 +27,7 @@ const PaymentFinishToggle: React.FC = () => {
   });
 
   const nextPaymentMessage: string = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    const { recurrence }: IMemberType = byTypeId[typeId];
+    const { recurrence }: IMemberType = db.byTypeId[typeId];
 
     if (autoRenew) {
       const nextPaymentDate = day().format('MMMM Do');

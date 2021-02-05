@@ -12,12 +12,9 @@ import EventsCard from './EventsCard/EventsCard';
 
 const EventsPastYourList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
-    const { byId: byAttendeeId } = db.entities.attendees;
-    const { byId: byEventsId } = db.entities.events;
-
     return db.member.attendees
-      ?.map((attendeeId: string) => byAttendeeId[attendeeId])
-      ?.map((attendee: IEventAttendee) => byEventsId[attendee.event])
+      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
+      ?.map((attendee: IEventAttendee) => db.byEventId[attendee.event])
       ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)));
   });
 
@@ -33,12 +30,9 @@ const EventsPastYourList: React.FC = () => {
 
 const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const hasEvents: boolean = useStoreState(({ db }) => {
-    const { byId: byAttendeeId } = db.entities.attendees;
-    const { byId: byEventsId } = db.entities.events;
-
     return !!db.member.attendees
-      ?.map((attendeeId: string) => byAttendeeId[attendeeId])
-      ?.map((attendee: IEventAttendee) => byEventsId[attendee.event])
+      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
+      ?.map((attendee: IEventAttendee) => db.byEventsId[attendee.event])
       ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)))?.length;
   });
 

@@ -20,8 +20,7 @@ const MemberDatabaseDeleteModal: React.FC = () => {
   );
 
   const members: IMember[] = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    return memberIds.map((memberId: string) => byMemberId[memberId]);
+    return memberIds.map((memberId: string) => db.byMemberId[memberId]);
   });
 
   const onRemove = () => {

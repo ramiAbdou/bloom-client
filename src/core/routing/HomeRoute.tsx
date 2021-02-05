@@ -96,20 +96,16 @@ const HomeRoute: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
   const memberTypeId: string = useStoreState(({ db }) => {
-    const { byId } = db.entities.types;
-    return byId[db.member?.type]?.id;
+    return db.byTypeId[db.member?.type]?.id;
   });
 
   const isMember: boolean = useStoreState(({ db }) => {
-    const { byId: byCommunityId } = db.entities.communities;
-    const { byId: byMemberId } = db.entities.members;
-
     const members: IMember[] = db.user?.members?.map((memberId: string) => {
-      return byMemberId[memberId];
+      return db.byMemberId[memberId];
     });
 
     return members?.some((member) => {
-      const community: ICommunity = byCommunityId[member.community];
+      const community: ICommunity = db.byCommunityId[member.community];
       return urlName === community.urlName;
     });
   });

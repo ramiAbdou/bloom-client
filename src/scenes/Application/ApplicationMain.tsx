@@ -12,10 +12,8 @@ import useValidateEmail from './useValidateEmail';
 
 const ApplicationMainForm: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
-    const { byId: byQuestionId } = db.entities.questions;
-
     return db.community?.questions
-      ?.map((questionId: string) => byQuestionId[questionId])
+      ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter((question: IQuestion) => question.inApplication);
   });
 

@@ -17,10 +17,8 @@ import EventsHeader from './EventsHeader';
 
 const EventsUpcomingContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
-    const { byId: byEventId } = db.entities.events;
-
     return db.community?.events
-      ?.map((eventId: string) => byEventId[eventId])
+      ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
       ?.sort((a, b) => sortObjects(a, b, 'startTime'));
   });

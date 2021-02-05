@@ -8,9 +8,8 @@ import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const pendingApplicantIds: string[] = useStoreState(({ db }) => {
-    const { byId } = db.entities.members;
     return db.community?.members?.filter((memberId: string) => {
-      return byId[memberId]?.status === 'PENDING';
+      return db.byMemberId[memberId]?.status === 'PENDING';
     });
   });
 

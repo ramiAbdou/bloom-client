@@ -36,15 +36,14 @@ const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
 
 const SideBarCommunityList: React.FC = () => {
   const communities: SideBarCommunityIconProps[] = useStoreState(({ db }) => {
-    const { activeId, byId: byCommunityId } = db.entities.communities;
-    const { byId: byMemberId } = db.entities.members;
+    const { activeId } = db.entities.communities;
 
     const members: IMember[] = db.user.members?.map((memberId: string) => {
-      return byMemberId[memberId];
+      return db.byMemberId[memberId];
     });
 
     return members.map((member: IMember) => {
-      const { logoUrl, urlName, id }: ICommunity = byCommunityId[
+      const { logoUrl, urlName, id }: ICommunity = db.byCommunityId[
         member.community
       ];
 

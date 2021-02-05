@@ -7,10 +7,8 @@ import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsGuestCard: React.FC = () => {
   const numGuests: number = useStoreState(({ db }) => {
-    const { byId: byEventId } = db.entities.events;
-
     const pastEvents: IEvent[] = db.community.events
-      ?.map((eventId: string) => byEventId[eventId])
+      ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(event.endTime));
 
     if (!pastEvents?.length) return null;

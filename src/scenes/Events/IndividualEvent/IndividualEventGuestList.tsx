@@ -51,17 +51,13 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 
 const IndividualEventGuestListContent: React.FC = () => {
   const users: IndividualEventGuestProps[] = useStoreState(({ db }) => {
-    const { byId: byGuestId } = db.entities.guests;
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-
     return db.event?.guests
-      ?.map((guestId: string) => byGuestId[guestId])
+      ?.map((guestId: string) => db.byGuestId[guestId])
       ?.sort((a: IEventGuest, b) => sortObjects(a, b, 'createdAt', 'DESC'))
       ?.reduce((acc, guest: IEventGuest) => {
         if (guest.member) {
-          const member: IMember = byMemberId[guest.member];
-          const user: IUser = byUserId[member.user];
+          const member: IMember = db.byMemberId[guest.member];
+          const user: IUser = db.byUserId[member.user];
           return [...acc, { ...user, memberId: member.id }];
         }
 

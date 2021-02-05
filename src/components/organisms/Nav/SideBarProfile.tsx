@@ -9,8 +9,7 @@ import { cx } from '@util/util';
 
 const SideBarProfileContent: React.FC = () => {
   const memberTypeName: string = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return byTypeId[db.member.type]?.name;
+    return db.byTypeId[db.member.type]?.name;
   });
 
   const role = useStoreState(({ db }) => db.member?.role);

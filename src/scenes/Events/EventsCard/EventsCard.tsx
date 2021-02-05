@@ -33,8 +33,7 @@ const EventsCardContent: React.FC = () => {
   const eventId = IdStore.useStoreState((event) => event.id);
 
   const { endTime, startTime, title }: IEvent = useStoreState(({ db }) => {
-    const { byId: byEventId } = db.entities.events;
-    return byEventId[eventId];
+    return db.byEventId[eventId];
   }, deepequal);
 
   const isHappeningNow =
@@ -63,8 +62,7 @@ const EventsCardContent: React.FC = () => {
 
 const EventsCard: React.FC<IdProps> = ({ id }) => {
   const imageUrl = useStoreState(({ db }) => {
-    const { byId: byEventId } = db.entities.events;
-    return byEventId[id]?.imageUrl;
+    return db.byEventId[id]?.imageUrl;
   });
 
   const { push } = useHistory();

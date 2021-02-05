@@ -20,15 +20,13 @@ const useApplyForMembership = (): OnFormSubmit => {
     storyItems
   }: OnFormSubmitArgs) => {
     const urlName: string = db.community?.urlName;
-    const { byId: byQuestionId } = db.entities.questions;
-    const { byId: byTypeId } = db.entities.types;
 
     const types: IMemberType[] = db.community?.types?.map((typeId: string) => {
-      return byTypeId[typeId];
+      return db.byTypeId[typeId];
     });
 
     const emailId = db.community?.questions?.find((questionId: string) => {
-      return byQuestionId[questionId]?.category === 'EMAIL';
+      return db.byQuestionId[questionId]?.category === 'EMAIL';
     });
 
     const email = storyItems[emailId]?.value;

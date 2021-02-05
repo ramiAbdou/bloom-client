@@ -14,11 +14,10 @@ import EventsCard from './EventsCard/EventsCard';
 
 const EventsPastList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
-    const { byId: byEventsId } = db.entities.events;
     const attendees = new Set(db.member.attendees);
 
     return db.community?.events
-      ?.map((eventId: string) => byEventsId[eventId])
+      ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
       ?.filter((event: IEvent) => {
         return !event.attendees?.some((attendeeId: string) =>
@@ -44,11 +43,10 @@ const EventsPastList: React.FC = () => {
 
 const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => {
   const hasEvents: boolean = useStoreState(({ db }) => {
-    const { byId: byEventsId } = db.entities.events;
     const attendees = new Set(db.member.attendees);
 
     return !!db.community?.events
-      ?.map((eventId: string) => byEventsId[eventId])
+      ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
       ?.filter((event: IEvent) => {
         return !event.attendees?.some((attendeeId: string) =>

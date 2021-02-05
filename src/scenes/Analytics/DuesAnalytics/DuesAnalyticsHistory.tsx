@@ -30,22 +30,19 @@ interface DuesAnalyticsHistoryTableData {
 
 const DuesAnalyticsHistoryTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byPaymentId } = db.entities.payments;
-    const { byId: byTypeId } = db.entities.types;
-    const { byId: byUserId } = db.entities.users;
-
     const result: DuesAnalyticsHistoryTableData[] = db.community.members
-      ?.map((memberId: string) => byMemberId[memberId])
+      ?.map((memberId: string) => db.byMemberId[memberId])
       ?.filter((member: IMember) => !!member?.user)
       ?.reduce((acc: DuesAnalyticsHistoryTableData[], member: IMember) => {
         const payments: DuesAnalyticsHistoryTableData[] = member.payments?.map(
           (paymentId: string) => {
-            const { amount, createdAt, type }: IMemberPayment = byPaymentId[
+            const { amount, createdAt, type }: IMemberPayment = db.byPaymentId[
               paymentId
             ];
 
-            const { firstName, lastName, email }: IUser = byUserId[member.user];
+            const { firstName, lastName, email }: IUser = db.byUserId[
+              member.user
+            ];
 
             return {
               amount: `$${(amount / 100).toFixed(2)}`,
@@ -53,7 +50,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
               fullName: `${firstName} ${lastName}`,
               id: nanoid(),
               paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
-              type: byTypeId[type].name
+              type: db.byTypeId[type].name
             };
           }
         );

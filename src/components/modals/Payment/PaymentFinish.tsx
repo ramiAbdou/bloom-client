@@ -25,10 +25,7 @@ const PaymentFinishForm: React.FC = () => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
   const { amount, isFree, name, recurrence }: IMemberType = useStoreState(
-    ({ db }) => {
-      const { byId: byTypeId } = db.entities.types;
-      return byTypeId[typeId];
-    },
+    ({ db }) => db.byTypeId[typeId],
     deepequal
   );
 

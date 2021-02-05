@@ -22,10 +22,9 @@ const useDeleteTooltip = (): string => {
 
   const hasPermissions: boolean = useStoreState(({ db }) => {
     if (db.member?.role === 'OWNER') return true;
-    const { byId: byMemberId } = db.entities.members;
 
     if (
-      selectedRowIds.some((memberId: string) => !!byMemberId[memberId]?.role)
+      selectedRowIds.some((memberId: string) => !!db.byMemberId[memberId]?.role)
     ) {
       return false;
     }

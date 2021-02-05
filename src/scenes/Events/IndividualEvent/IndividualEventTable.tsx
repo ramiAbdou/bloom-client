@@ -28,14 +28,8 @@ const IndividualEventTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
-    const { byId: byAttendeeId } = db.entities.attendees;
-    const { byId: byGuestId } = db.entities.guests;
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-    const { byId: byWatchId } = db.entities.watches;
-
     const record = db.event.attendees?.reduce((acc, attendeeId: string) => {
-      const attendee: IEventAttendee = byAttendeeId[attendeeId];
+      const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
       const { createdAt, firstName, lastName, email } = attendee;
 
       return {
@@ -52,7 +46,7 @@ const IndividualEventTable: React.FC = () => {
 
     const recordWithGuests =
       db.event.guests?.reduce((acc, guestId: string) => {
-        const guest: IEventGuest = byGuestId[guestId];
+        const guest: IEventGuest = db.byGuestId[guestId];
         const { createdAt, firstName, lastName, email } = guest;
         const previousValue = acc[email];
 
@@ -81,9 +75,9 @@ const IndividualEventTable: React.FC = () => {
 
     const recordWithWatches =
       db.event.watches?.reduce((acc, watchId: string) => {
-        const watch: IEventWatch = byWatchId[watchId];
-        const member: IMember = byMemberId[watch?.member];
-        const user: IUser = byUserId[member?.user];
+        const watch: IEventWatch = db.byWatchId[watchId];
+        const member: IMember = db.byMemberId[watch?.member];
+        const user: IUser = db.byUserId[member?.user];
         const { firstName, lastName, email } = user ?? {};
         const previousValue = acc[email];
 

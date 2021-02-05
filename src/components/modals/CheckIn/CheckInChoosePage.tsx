@@ -10,8 +10,7 @@ import FormLabel from '../../organisms/Form/FormLabel';
 
 const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   const name = useStoreState(({ db }) => {
-    const { byId: byCommunityId } = db.entities.communities;
-    return byCommunityId[db.event?.community]?.name;
+    return db.byCommunityId[db.event?.community]?.name;
   });
 
   const setCurrentPage = StoryStore.useStoreActions(

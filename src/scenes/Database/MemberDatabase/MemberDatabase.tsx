@@ -38,14 +38,11 @@ const MemberDatabase: React.FC = () => {
   );
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
-    const { byId: byIntegrationsId } = db.entities.integrations;
-    const { byId: byQuestionId } = db.entities.questions;
-
     const integrations: IIntegrations =
-      byIntegrationsId[db.community?.integrations];
+      db.byIntegrationsId[db.community?.integrations];
 
     return db.community.questions
-      ?.map((id: string) => byQuestionId[id])
+      ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter(({ category }: IQuestion) => {
         if (category === 'DUES_STATUS' && !integrations.stripeAccountId) {
           return false;

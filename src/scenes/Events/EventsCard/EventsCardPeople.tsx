@@ -43,27 +43,20 @@ const EventsCardPeople: React.FC = () => {
   const eventId = IdStore.useStoreState((event) => event.id);
 
   const isPast: boolean = useStoreState(({ db }) => {
-    const { byId: byEventId } = db.entities.events;
-    const endTime = byEventId[eventId]?.endTime;
+    const endTime = db.byEventId[eventId]?.endTime;
     return day().isAfter(day(endTime));
   });
 
   const users: IUser[] = useStoreState(({ db }) => {
-    const { byId: byAttendeeId } = db.entities.attendees;
-    const { byId: byEventId } = db.entities.events;
-    const { byId: byGuestId } = db.entities.guests;
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-
-    const event: IEvent = byEventId[eventId];
+    const event: IEvent = db.byEventId[eventId];
     const people = isPast ? event?.attendees : event?.guests;
 
     return people
-      ?.map((id: string) => (isPast ? byAttendeeId[id] : byGuestId[id]))
+      ?.map((id: string) => (isPast ? db.byAttendeeId[id] : db.byGuestId[id]))
       ?.reduce((acc, person: IEventGuest | IEventAttendee) => {
         if (person.member) {
-          const member: IMember = byMemberId[person.member];
-          const user: IUser = byUserId[member.user];
+          const member: IMember = db.byMemberId[person.member];
+          const user: IUser = db.byUserId[member.user];
           return [...acc, { ...user, memberId: member.id }];
         }
 

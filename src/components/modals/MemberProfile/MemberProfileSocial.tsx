@@ -52,10 +52,7 @@ const MemberProfileSocialContainer: React.FC = () => {
     instagramUrl,
     linkedInUrl,
     twitterUrl
-  }: IUser = useStoreState(({ db }) => {
-    const { byId: byUserId } = db.entities.users;
-    return byUserId[userId];
-  });
+  }: IUser = useStoreState(({ db }) => db.byUserId[userId]);
 
   return (
     <div className="flex-ac">

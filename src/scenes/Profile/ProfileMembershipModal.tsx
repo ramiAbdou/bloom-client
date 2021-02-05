@@ -13,18 +13,15 @@ import useUpdateMemberData from './useUpdateMemberData';
 
 const ProfileMembershipForm: React.FC = () => {
   const items = useStoreState(({ db }) => {
-    const { byId: byDataId } = db.entities.data;
-    const { byId: byQuestionId } = db.entities.questions;
-
     const questions: IQuestion[] = db.community.questions
-      ?.map((questionId: string) => byQuestionId[questionId])
+      ?.map((questionId: string) => db.byQuestionId[questionId])
       .filter((question: IQuestion) => !question.onlyInApplication)
       .filter((question: IQuestion) => !question.category);
 
     return questions?.map((question: IQuestion) => {
       const { id, options, type } = question;
 
-      const data: IMemberData = Object.values(byDataId).find(
+      const data: IMemberData = Object.values(db.byDataId).find(
         (element: IMemberData) => element.question === id
       );
 

@@ -16,11 +16,8 @@ const ApplicantsModalTitle: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   const fullName = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-
-    const member: IMember = byMemberId[memberId];
-    const user: IUser = byUserId[member?.user];
+    const member: IMember = db.byMemberId[memberId];
+    const user: IUser = db.byUserId[member?.user];
     return `${user?.firstName} ${user?.lastName}`;
   });
 
@@ -31,18 +28,14 @@ const ApplicantsModalItems: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
-    const { byId: byDataId } = db.entities.data;
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byQuestionId } = db.entities.questions;
-
-    const member: IMember = byMemberId[memberId];
+    const member: IMember = db.byMemberId[memberId];
 
     const data: IMemberData[] = member.data?.map(
-      (dataId: string) => byDataId[dataId]
+      (dataId: string) => db.byDataId[dataId]
     );
 
     return db.community.questions
-      ?.map((questionId: string) => byQuestionId[questionId])
+      ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter((question: IQuestion) => {
         return !question?.category || question?.category === 'EMAIL';
       })

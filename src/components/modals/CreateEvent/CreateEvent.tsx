@@ -46,8 +46,7 @@ const CreateEventForm: React.FC<IdProps> = ({ id }) => {
     title,
     videoUrl
   }: IEvent = useStoreState(({ db }) => {
-    const { byId: byEventsId } = db.entities.events;
-    return byEventsId[id] ?? {};
+    return db.byEventsId[id] ?? {};
   }, deepequal);
 
   const createEvent = useCreateEvent();

@@ -6,8 +6,7 @@ import MembershipChangeCard from './MembershipChangeCard';
 
 const MembershipChangeContainer: React.FC = () => {
   const types: IMemberType[] = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-    return db.community.types.map((typeId: string) => byTypeId[typeId]);
+    return db.community.types.map((typeId: string) => db.byTypeId[typeId]);
   });
 
   return (

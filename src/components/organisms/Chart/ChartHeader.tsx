@@ -10,8 +10,7 @@ const ChartHeader: React.FC = () => {
   const currentTitle = Chart.useStoreState((store) => store.title);
 
   const title = useStoreState(({ db }) => {
-    const { byId: byQuestionId } = db.entities.questions;
-    return byQuestionId[questionId]?.title;
+    return db.byQuestionId[questionId]?.title;
   });
 
   return (

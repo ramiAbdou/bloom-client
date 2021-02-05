@@ -26,7 +26,7 @@ const MembershipCurrentPlanHeader: React.FC = () => {
 
 const MembershipCurrentPlanDescription: React.FC = () => {
   const currentType: IMemberType = useStoreState(({ db }) => {
-    return db.entities.types.byId[db.member.type];
+    return db.byTypeId[db.member.type];
   }, deepequal);
 
   if (!currentType) return null;

@@ -6,10 +6,8 @@ import ApplicantCard from './ApplicantsCard';
 
 const ApplicantsCardList: React.FC = () => {
   const applicantIds: string[] = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-
     return db.community.members?.filter(
-      (memberId: string) => byMemberId[memberId]?.status === 'PENDING'
+      (memberId: string) => db.byMemberId[memberId]?.status === 'PENDING'
     );
   });
 

@@ -17,20 +17,16 @@ const MemberProfileData: React.FC = () => {
   });
 
   const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
-    const { byId: byDataId } = db.entities.data;
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byQuestionId } = db.entities.questions;
-
-    const member: IMember = byMemberId[memberId];
+    const member: IMember = db.byMemberId[memberId];
 
     return member?.data
-      ?.map((dataId: string) => byDataId[dataId])
+      ?.map((dataId: string) => db.byDataId[dataId])
       ?.filter((data: IMemberData) => {
-        const question: IQuestion = byQuestionId[data.question];
+        const question: IQuestion = db.byQuestionId[data.question];
         return questions.has(question?.id) && question?.inExpandedDirectoryCard;
       })
       ?.map((element: IMemberData) => {
-        const { title, type }: IQuestion = byQuestionId[element.question];
+        const { title, type }: IQuestion = db.byQuestionId[element.question];
         return { title, type, value: element.value };
       });
   });

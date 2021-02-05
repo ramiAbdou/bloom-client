@@ -12,26 +12,19 @@ const DirectoryCardInformation: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   const fullName: string = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-
-    const member: IMember = byMemberId[memberId];
-    const user: IUser = byUserId[member?.user];
+    const member: IMember = db.byMemberId[memberId];
+    const user: IUser = db.byUserId[member?.user];
 
     return `${user?.firstName} ${user?.lastName}`;
   });
 
   const highlightedValue = useStoreState(({ db }) => {
-    const { byId: byDataId } = db.entities.data;
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byQuestionId } = db.entities.questions;
-
-    const member: IMember = byMemberId[memberId];
+    const member: IMember = db.byMemberId[memberId];
 
     return member.data
-      ?.map((dataId: string) => byDataId[dataId])
+      ?.map((dataId: string) => db.byDataId[dataId])
       ?.find((data: IMemberData) => {
-        const question: IQuestion = byQuestionId[data?.question];
+        const question: IQuestion = db.byQuestionId[data?.question];
         return !!question?.inDirectoryCard;
       })?.value;
   });
@@ -49,10 +42,8 @@ const DirectoryCardPicture: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   const user: IUser = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-    const member: IMember = byMemberId[memberId];
-    return byUserId[member?.user];
+    const member: IMember = db.byMemberId[memberId];
+    return db.byUserId[member?.user];
   });
 
   return (

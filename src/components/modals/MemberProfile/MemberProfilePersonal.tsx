@@ -13,8 +13,7 @@ const MemberProfilePersonalPicture: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);
 
   const { pictureUrl, firstName, lastName }: IUser = useStoreState(({ db }) => {
-    const { byId: byUserId } = db.entities.users;
-    return byUserId[userId];
+    return db.byUserId[userId];
   });
 
   return (
@@ -34,8 +33,7 @@ const MemberProfilePersonalName: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);
 
   const fullName: string = useStoreState(({ db }) => {
-    const { byId: byUserId } = db.entities.users;
-    const { firstName, lastName }: IUser = byUserId[userId];
+    const { firstName, lastName }: IUser = db.byUserId[userId];
     return `${firstName} ${lastName}`;
   });
 
@@ -46,16 +44,12 @@ const MemberProfilePersonalTags: React.FC = () => {
   const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
 
   const role = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    return byMemberId[memberId]?.role;
+    return db.byMemberId[memberId]?.role;
   });
 
   const type: string = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byTypeId } = db.entities.types;
-
-    const member: IMember = byMemberId[memberId];
-    return byTypeId[member.type]?.name;
+    const member: IMember = db.byMemberId[memberId];
+    return db.byTypeId[member.type]?.name;
   });
 
   return (
@@ -70,8 +64,7 @@ const MemberProfilePersonalEmail: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);
 
   const email: string = useStoreState(({ db }) => {
-    const { byId: byUserId } = db.entities.users;
-    return byUserId[userId]?.email;
+    return db.byUserId[userId]?.email;
   });
 
   return <MailTo email={email} />;
@@ -81,8 +74,7 @@ const MemberProfilePersonalBio: React.FC = () => {
   const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
 
   const bio = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    return byMemberId[memberId]?.bio;
+    return db.byMemberId[memberId]?.bio;
   });
 
   return <p className="mo-member-profile-bio">{bio}</p>;

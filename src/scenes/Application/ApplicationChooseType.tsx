@@ -21,10 +21,8 @@ const ApplicationChooseTypeButton: React.FC = () => {
   // const removeItems = FormStore.useStoreActions((store) => store.removeItems);
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-
     const selectedType: IMemberType = db.community?.types
-      ?.map((typeId: string) => byTypeId[typeId])
+      ?.map((typeId: string) => db.byTypeId[typeId])
       ?.find((type: IMemberType) => type?.name === selectedTypeName);
 
     return !!selectedType?.amount;
@@ -54,10 +52,8 @@ const ApplicationChooseTypeButton: React.FC = () => {
 
 const ApplicationChooseTypeForm: React.FC = () => {
   const types: RadioOptionProps[] = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-
     return db.community?.types?.map((typeId: string) => {
-      const type: IMemberType = byTypeId[typeId];
+      const type: IMemberType = db.byTypeId[typeId];
 
       return {
         children: <ApplicationChooseTypeCard id={typeId} />,
@@ -78,12 +74,10 @@ const ApplicationChooseTypeForm: React.FC = () => {
 
 const ApplicationChooseType: React.FC = () => {
   const show: boolean = useStoreState(({ db }) => {
-    const { byId: byTypeId } = db.entities.types;
-
     const types = db.community?.types;
 
     const isMoreThanOneType = types?.length > 1;
-    const isFirstTypePaid = !!types && !byTypeId[types[0]]?.isFree;
+    const isFirstTypePaid = !!types && !db.byTypeId[types[0]]?.isFree;
     return isMoreThanOneType || isFirstTypePaid;
   });
 

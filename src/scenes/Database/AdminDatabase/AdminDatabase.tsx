@@ -10,14 +10,11 @@ import AdminDatabaseActions from './AdminDatabaseActions';
 
 const AdminDatabase: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byUserId } = db.entities.users;
-
     return db.community.members
-      ?.map((memberId: string) => byMemberId[memberId])
+      ?.map((memberId: string) => db.byMemberId[memberId])
       ?.filter((member: IMember) => !!member?.role && !!member?.user)
       ?.map((member: IMember) => {
-        const user: IUser = byUserId[member.user];
+        const user: IUser = db.byUserId[member.user];
         const { email, firstName, lastName } = user ?? {};
         return { email, firstName, id: member.id, lastName };
       }, []);

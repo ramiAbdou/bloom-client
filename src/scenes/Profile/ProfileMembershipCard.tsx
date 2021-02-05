@@ -26,17 +26,14 @@ const ProfileMembershipHeader: React.FC = () => {
 
 const ProfileMembershipContent: React.FC = () => {
   const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
-    const { byId: byDataId } = db.entities.data;
-    const { byId: byQuestionId } = db.entities.questions;
-
     const questions: IQuestion[] = db.community.questions
-      ?.map((questionId: string) => byQuestionId[questionId])
+      ?.map((questionId: string) => db.byQuestionId[questionId])
       .filter((question: IQuestion) => !question.onlyInApplication)
       .filter((question: IQuestion) => !question.category);
 
     return questions?.map(({ id, title, type }: IQuestion) => {
       const data: IMemberData = db.member.data
-        ?.map((dataId: string) => byDataId[dataId])
+        ?.map((dataId: string) => db.byDataId[dataId])
         ?.find((entity: IMemberData) => entity?.question === id);
 
       return { title, type, value: data?.value };
