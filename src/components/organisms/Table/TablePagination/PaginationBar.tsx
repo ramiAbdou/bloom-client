@@ -47,7 +47,7 @@ const NextButton = () => {
   const setRange = Table.useStoreActions((store) => store.setRange);
 
   const numPages = Table.useStoreState(({ filteredData }) =>
-    Math.ceil(filteredData.length / 100)
+    Math.ceil(filteredData.length / 50)
   );
 
   const onClick = () => page < numPages - 1 && setRange(page + 1);
@@ -62,7 +62,7 @@ const NextButton = () => {
 export default () => {
   const nums: PaginationValue[] = Table.useStoreState(
     ({ filteredData, page }) => {
-      const numPages = Math.ceil(filteredData.length / 100);
+      const numPages = Math.ceil(filteredData.length / 50);
       return getPaginationValues(Array.from(Array(numPages).keys()), page);
     },
     deepequal

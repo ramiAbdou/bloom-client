@@ -24,7 +24,7 @@ const TablePagination: React.FC = () => {
   return (
     <div className="o-table-pagination-ctr">
       <TablePaginationMessage />
-      {numRows >= 100 && <PaginationBar />}
+      {numRows >= 50 && <PaginationBar />}
     </div>
   );
 };

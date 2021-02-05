@@ -32,10 +32,7 @@ export const tableModel: TableModel = {
     }
   ),
 
-  clearSelectedRows: action(({ selectedRowIds, ...state }) => ({
-    ...state,
-    selectedRowIds: []
-  })),
+  clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
 
   columns: [],
 
@@ -83,17 +80,17 @@ export const tableModel: TableModel = {
 
   /**
    * Represents the page (currently in 100s) that the table is currently
-   * paginated on. In other words, 0 represents 1-99, 1 represents 100-199,
+   * paginated on. In other words, 0 represents 1-50, 1 represents 51-100,
    * 2 represents 200-299, etc.
    */
   page: 0,
 
   range: computed(({ filteredData: { length }, page }) => {
-    const floor = page * 100;
+    const floor = page * 50;
 
     // If the page is the last page, then the filteredData length - floor will
-    // be less than 100, in which case we just show the length as the ceiling.
-    const ceiling = length - floor >= 100 ? floor + 100 : length;
+    // be less than 50, in which case we just show the length as the ceiling.
+    const ceiling = length - floor >= 50 ? floor + 50 : length;
     return [floor, ceiling];
   }),
 

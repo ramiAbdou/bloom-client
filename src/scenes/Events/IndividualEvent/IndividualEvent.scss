@@ -131,7 +131,13 @@ $PREF: 's-events-individual';
   &:not(&--disabled) { @include PRIMARY_HOVER; }
 
   > *:first-child { margin-right: $ss; }
-  &--disabled { cursor: not-allowed; transform: none; }
+}
+
+button.#{$PREF}-member--disabled {
+  cursor: default;
+  transform: none;
+
+  @include HOVER { opacity: 1; }
 }
 
 // // ## INDIVIDUAL EVENT ANALYTICS

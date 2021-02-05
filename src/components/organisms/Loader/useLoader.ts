@@ -1,16 +1,21 @@
 import { useEffect } from 'react';
 
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 
+/**
+ * Updates the global loading state to match the loading state of the query
+ * calls.
+ *
+ * @param loading True if the application is loading.
+ */
 const useLoader = (loading: boolean) => {
-  const isShowing = useStoreState(({ loader }) => loader.isShowing);
   const closeLoader = useStoreActions(({ loader }) => loader.closeLoader);
   const showLoader = useStoreActions(({ loader }) => loader.showLoader);
 
   useEffect(() => {
-    if (loading && !isShowing) showLoader();
-    else if (!loading && isShowing) closeLoader();
-  }, [isShowing, loading]);
+    if (loading) showLoader();
+    else if (!loading) closeLoader();
+  }, [loading]);
 };
 
 export default useLoader;

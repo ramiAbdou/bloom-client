@@ -1,6 +1,6 @@
 import deline from 'deline';
 import Cookies from 'js-cookie';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import URLBuilder from 'util/URLBuilder';
 
@@ -8,9 +8,9 @@ import Button from '@atoms/Button/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
 import { APP, CookieType, ShowProps } from '@constants';
+import Show from '@containers/Show';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -58,8 +58,15 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
   const message = getCheckInErrorMessage({ error, owner });
 
   // After we get the message, we remove the cookie so that the error doesn't
-  // get shown again.
-  if (error) Cookies.remove(CookieType.LOGIN_ERROR);
+  // get shown again. We set a timeout to ensure that even if the component
+  // re-renders, the message still appears.
+  useEffect(() => {
+    const timeout: NodeJS.Timeout = setTimeout(() => {
+      if (error) Cookies.remove(CookieType.LOGIN_ERROR);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [error]);
 
   return (
     <div>
@@ -90,14 +97,12 @@ const LoginCardEmailForm: React.FC = () => {
 };
 
 const CheckInLoginContent: React.FC<ShowProps> = ({ show }) => {
-  if (show === false) return null;
-
   return (
-    <>
+    <Show show={show}>
       <LoginCardGoogleContainer />
       <Separator margin={24} />
       <LoginCardEmailForm />
-    </>
+    </Show>
   );
 };
 

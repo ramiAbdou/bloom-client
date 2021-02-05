@@ -11,13 +11,7 @@ import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import {
-  GET_EVENT,
-  GET_EVENT_ATTENDEES,
-  GET_EVENT_GUESTS,
-  GET_EVENT_WATCHES,
-  GetEventArgs
-} from '../Events.gql';
+import { GET_EVENT, GET_EVENT_GUESTS, GetEventArgs } from '../Events.gql';
 import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAttendeeList from './IndividualEventAttendeeList';
@@ -65,21 +59,7 @@ const IndividualEvent: React.FC = () => {
     variables: { eventId }
   });
 
-  const { loading: loading3 } = useQuery<IEvent, GetEventArgs>({
-    name: 'getEventAttendees',
-    query: GET_EVENT_ATTENDEES,
-    schema: [Schema.EVENT_ATTENDEE],
-    variables: { eventId }
-  });
-
-  const { loading: loading4 } = useQuery<IEvent, GetEventArgs>({
-    name: 'getEventWatches',
-    query: GET_EVENT_WATCHES,
-    schema: [Schema.EVENT_WATCH],
-    variables: { eventId }
-  });
-
-  const loading = loading1 || loading2 || loading3 || loading4;
+  const loading = loading1 || loading2;
   const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
 
   useLoader(loading);

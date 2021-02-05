@@ -25,7 +25,7 @@ const TableBannerMessage: React.FC = () => {
       .slice(range[0], range[1])
       .every(({ id }) => selectedRowIds.includes(id))
   ) {
-    return <p>All 100 rows on this page are selected.</p>;
+    return <p>All 50 rows on this page are selected.</p>;
   }
 
   return null;
