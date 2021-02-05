@@ -27,7 +27,7 @@ const UpdateAndRenderTableContent: React.FC<Pick<TableProps, 'rows'>> = ({
   // Used primarily for the removal of rows. This will not update the
   // data if the number of rows doesn't change.
   useEffect(() => {
-    if (!deepequal(data, rows)) updateData(rows);
+    if (!deepequal(data, rows)) updateData(rows ?? []);
   }, [rows]);
 
   return <>{children}</>;

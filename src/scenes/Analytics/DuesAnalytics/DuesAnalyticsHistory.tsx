@@ -35,10 +35,10 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
     const { byId: byTypeId } = db.entities.types;
     const { byId: byUserId } = db.entities.users;
 
-    const result: DuesAnalyticsHistoryTableData[] = db.community.members?.reduce(
-      (acc: DuesAnalyticsHistoryTableData[], memberId: string) => {
-        const member: IMember = byMemberId[memberId];
-
+    const result: DuesAnalyticsHistoryTableData[] = db.community.members
+      ?.map((memberId: string) => byMemberId[memberId])
+      ?.filter((member: IMember) => !!member?.user)
+      ?.reduce((acc: DuesAnalyticsHistoryTableData[], member: IMember) => {
         const payments: DuesAnalyticsHistoryTableData[] = member.payments?.map(
           (paymentId: string) => {
             const { amount, createdAt, type }: IMemberPayment = byPaymentId[
@@ -59,9 +59,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
         );
 
         return payments?.length ? [...acc, ...payments] : acc;
-      },
-      []
-    );
+      }, []);
 
     return result;
   })?.sort((a, b) => sortObjects(a, b, 'paidOn', 'DESC'));

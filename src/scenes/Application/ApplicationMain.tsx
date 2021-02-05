@@ -26,6 +26,8 @@ const ApplicationMainForm: React.FC = () => {
 
   const items = StoryStore.useStoreState((store) => store.items);
 
+  StoryStore.useStoreState(({ pages }) => console.log(pages));
+
   const applyForMembership = useApplyForMembership();
   const validateEmail = useValidateEmail();
 
