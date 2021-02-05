@@ -13,3 +13,7 @@ $PREF: 'o-list';
   @include T { grid-template-columns: repeat(auto-fill, 360px); }
   @include LTE(788) { grid-template-columns: auto; }
 }
+
+// ## LIST SEARCH
+
+.#{$PREF}-search { margin-bottom: $sm; }

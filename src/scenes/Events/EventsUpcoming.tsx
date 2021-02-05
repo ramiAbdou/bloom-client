@@ -11,7 +11,7 @@ import { ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
-import { GET_UPCOMING_EVENTS } from './Events.gql';
+import { GET_UPCOMING_EVENT_GUESTS, GET_UPCOMING_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard/EventsCard';
 import EventsHeader from './EventsHeader';
 
@@ -36,11 +36,19 @@ const EventsUpcomingContent: React.FC = () => {
 };
 
 const EventsUpcoming: React.FC = () => {
-  const { loading } = useQuery<ICommunity>({
+  const { loading: loading1 } = useQuery<ICommunity>({
     name: 'getUpcomingEvents',
     query: GET_UPCOMING_EVENTS,
     schema: [Schema.EVENT]
   });
+
+  const { loading: loading2 } = useQuery<ICommunity>({
+    name: 'getUpcomingEventGuests',
+    query: GET_UPCOMING_EVENT_GUESTS,
+    schema: [Schema.EVENT_GUEST]
+  });
+
+  const loading = loading1 || loading2;
 
   return (
     <MainContent>

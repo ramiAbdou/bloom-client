@@ -17,7 +17,14 @@ const ListSearchBar: React.FC<Pick<SearchBarProps, 'placeholder' | 'show'>> = (
     return () => clearTimeout(timeout);
   }, [value]);
 
-  return <SearchBar value={value} onChange={setValue} {...props} />;
+  return (
+    <SearchBar
+      className="o-list-search"
+      value={value}
+      onChange={setValue}
+      {...props}
+    />
+  );
 };
 
 export default ListSearchBar;

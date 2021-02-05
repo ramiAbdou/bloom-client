@@ -168,28 +168,6 @@ export const GET_EVENT_WATCHES = query({
   variables: { eventId: { required: true } }
 }).query;
 
-// ## GET EVENT ATTENDEES SERIES
-
-export const GET_EVENT_ATTENDEES_SERIES = query({
-  fields: ['id', { attendeesSeries: ['name', 'value'] }],
-  operation: 'getEvent',
-  variables: {
-    eventId: { required: true },
-    populate: { required: false, type: '[String!]' }
-  }
-}).query;
-
-// ## GET EVENT GUESTS SERIES
-
-export const GET_EVENT_GUESTS_SERIES = query({
-  fields: ['id', { guestsSeries: ['name', 'value'] }],
-  operation: 'getEvent',
-  variables: {
-    eventId: { required: true },
-    populate: { required: false, type: '[String!]' }
-  }
-}).query;
-
 // ## GET PAST EVENTS
 
 export const GET_PAST_EVENTS = query({
@@ -205,58 +183,7 @@ export const GET_PAST_EVENTS = query({
     'summary',
     'title',
     'videoUrl',
-    { community: ['id'] },
-    {
-      attendees: [
-        'createdAt',
-        'email',
-        'firstName',
-        'id',
-        'lastName',
-        {
-          member: [
-            'id',
-            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-          ]
-        }
-      ]
-    }
-  ],
-  operation: 'getPastEvents'
-}).query;
-
-// ## GET PAST EVENTS
-
-export const GET_PAST_EVENTS_WITH_GUESTS = query({
-  fields: [
-    'description',
-    'endTime',
-    'eventUrl',
-    'id',
-    'imageUrl',
-    'private',
-    'recordingUrl',
-    'startTime',
-    'summary',
-    'title',
-    'videoUrl',
-    { community: ['id'] },
-    {
-      attendees: [
-        'email',
-        'firstName',
-        'id',
-        'lastName',
-        {
-          member: [
-            'id',
-            { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-          ]
-        }
-      ]
-    },
-    { guests: ['id'] },
-    { watches: ['id'] }
+    { community: ['id'] }
   ],
   operation: 'getPastEvents'
 }).query;
@@ -276,23 +203,29 @@ export const GET_UPCOMING_EVENTS = query({
     'summary',
     'title',
     'videoUrl',
-    { community: ['id'] },
+    { community: ['id'] }
+  ],
+  operation: 'getUpcomingEvents'
+}).query;
+
+// ## GET UPCOMING EVENT GUESTS
+
+export const GET_UPCOMING_EVENT_GUESTS = query({
+  fields: [
+    'createdAt',
+    'email',
+    'firstName',
+    'id',
+    'lastName',
+    { event: ['id'] },
     {
-      guests: [
-        'email',
-        'firstName',
+      member: [
         'id',
-        'lastName',
-        {
-          member: [
-            'id',
-            { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
-          ]
-        }
+        { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
       ]
     }
   ],
-  operation: 'getUpcomingEvents'
+  operation: 'getUpcomingEventGuests'
 }).query;
 
 // ## UPDATE RECORDING LINK
