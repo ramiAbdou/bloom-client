@@ -7,6 +7,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseActions from './AdminDatabaseActions';
+import AdminDatabaseDemoteModal from './AdminDatabaseDemoteModal';
 
 const AdminDatabase: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
@@ -39,6 +40,7 @@ const AdminDatabase: React.FC = () => {
       >
         <AdminDatabaseActions />
         <TableContent />
+        <AdminDatabaseDemoteModal />
       </Table>
 
       <AddMemberModal admin />
