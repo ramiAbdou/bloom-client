@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Table from './Table.store';
-import { TableRow } from './Table.types';
-import DataRow from './TableBody/TableBody';
+import { TableRow as TableRowProps } from './Table.types';
+import TableRow from './TableRow/TableRow';
 
-const BodyContainer = () => {
+const TableBody: React.FC = () => {
   const filteredRows = Table.useStoreState((store) => store.filteredRows);
   const floor = Table.useStoreState((store) => store.range[0]);
   const ceiling = Table.useStoreState((store) => store.range[1]);
@@ -16,11 +16,11 @@ const BodyContainer = () => {
 
   return (
     <tbody>
-      {filteredRows.slice(floor, ceiling).map((row: TableRow) => (
-        <DataRow key={row.id} {...row} />
+      {filteredRows.slice(floor, ceiling).map((row: TableRowProps) => (
+        <TableRow key={row.id} {...row} />
       ))}
     </tbody>
   );
 };
 
-export default BodyContainer;
+export default TableBody;

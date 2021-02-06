@@ -63,7 +63,6 @@ export type TableModel = {
   columns: TableColumn[];
   filteredRows: TableRow[];
   filters: Record<string, TableFilter>;
-  isSelected: Computed<TableModel, (rowId: string) => boolean, {}>;
   options: TableOptions;
   page: number;
   range: Computed<TableModel, [number, number]>;

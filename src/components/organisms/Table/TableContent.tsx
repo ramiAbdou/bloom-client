@@ -3,8 +3,8 @@ import React from 'react';
 import Show from '@containers/Show';
 import TableStore from './Table.store';
 import TableBanner from './TableBanner';
-import TableBodyContainer from './TableBodyContainer';
-import TableHeaderContainer from './TableHeaderContainer';
+import TableBodyContainer from './TableBody';
+import TableHeaderContainer from './TableHeader';
 import TablePagination from './TablePagination/TablePagination';
 import TablePanel from './TablePanel';
 

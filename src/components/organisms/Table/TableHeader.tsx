@@ -4,7 +4,7 @@ import TableStore from './Table.store';
 import { TableColumn } from './Table.types';
 import HeaderCell from './TableHeader/TableHeader';
 
-const TableHeaderContainer: React.FC = () => {
+const TableHeader: React.FC = () => {
   const columns = TableStore.useStoreState((store) => store.columns);
 
   const hasData = TableStore.useStoreState(
@@ -24,4 +24,4 @@ const TableHeaderContainer: React.FC = () => {
   );
 };
 
-export default TableHeaderContainer;
+export default TableHeader;

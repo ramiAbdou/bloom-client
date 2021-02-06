@@ -44,13 +44,6 @@ export const tableModel: TableModel = {
 
   filters: {},
 
-  /**
-   * Returns true if all rows are selected.
-   */
-  isSelected: computed(({ selectedRowIds }) => (rowId: string) => {
-    return selectedRowIds.includes(rowId);
-  }),
-
   options: initialTableOptions,
 
   /**
@@ -175,10 +168,6 @@ export const tableModel: TableModel = {
 
   sortDirection: null,
 
-  /**
-   * Updates the data by setting isSelected to true where the ID of the row
-   * matches the ID of the data (row).
-   */
   toggleAllPageRows: action((state) => {
     const { filteredRows, range, selectedRowIds } = state;
 
@@ -195,10 +184,6 @@ export const tableModel: TableModel = {
     };
   }),
 
-  /**
-   * Updates the data by setting isSelected to true where the ID of the row
-   * matches the ID of the data (row).
-   */
   toggleAllRows: action((state) => {
     const { filteredRows, selectedRowIds } = state;
 

@@ -2,12 +2,14 @@ import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
 import { IdProps } from '@constants';
-import Table from '../Table.store';
+import TableStore from '../Table.store';
 
-const SelectRowCheckbox = ({ id }: IdProps) => {
-  const isSelected = Table.useStoreState((state) => state.isSelected(id));
-  const toggleRow = Table.useStoreActions((store) => store.toggleRow);
+const SelectRowCheckbox: React.FC<IdProps> = ({ id }) => {
+  const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) => {
+    return selectedRowIds.includes(id);
+  });
 
+  const toggleRow = TableStore.useStoreActions((store) => store.toggleRow);
   const onChange = () => toggleRow(id);
 
   return (

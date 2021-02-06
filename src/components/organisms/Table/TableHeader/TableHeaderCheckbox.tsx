@@ -3,7 +3,7 @@ import React from 'react';
 import Checkbox from '@atoms/Checkbox/Checkbox';
 import TableStore from '../Table.store';
 
-const SelectAllCheckbox = () => {
+const TableHeaderCheckbox: React.FC = () => {
   const isAllPageSelected: boolean = TableStore.useStoreState(
     ({ filteredRows, range, selectedRowIds }) => {
       return (
@@ -30,4 +30,4 @@ const SelectAllCheckbox = () => {
   );
 };
 
-export default SelectAllCheckbox;
+export default TableHeaderCheckbox;

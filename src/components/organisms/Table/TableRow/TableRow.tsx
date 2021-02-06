@@ -5,27 +5,29 @@ import Attribute from '@atoms/Tag/Attribute';
 import Pill from '@atoms/Tag/Pill';
 import { ValueProps } from '@constants';
 import { cx, takeFirst } from '@util/util';
-import Table from '../Table.store';
-import { TableColumn, TableRow } from '../Table.types';
+import TableStore from '../Table.store';
+import { TableColumn, TableRow as TableRowProps } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
-import SelectRowCheckbox from './SelectRowCheckbox';
+import SelectRowCheckbox from './TableRowCheckbox';
 
 interface DataCellProps
   extends Pick<TableColumn, 'category' | 'render' | 'type'>,
-    TableRow,
+    TableRowProps,
     ValueProps {
   i: number;
 }
 
 const DataCell = ({ category, i, id, render, type, value }: DataCellProps) => {
-  const alignEndRight = Table.useStoreState(({ columns, options }) => {
+  const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
     const isLastCell = i === columns.length - 1;
     return options.alignEndRight && isLastCell;
   });
 
-  const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
+  const hasCheckbox = TableStore.useStoreState(
+    ({ options }) => options.hasCheckbox
+  );
 
-  const fixFirstColumn = Table.useStoreState(
+  const fixFirstColumn = TableStore.useStoreState(
     ({ options }) => options.fixFirstColumn
   );
 
@@ -67,11 +69,20 @@ const DataCell = ({ category, i, id, render, type, value }: DataCellProps) => {
   );
 };
 
-const DataRow = (row: TableRow) => {
-  const isClickable = Table.useStoreState(({ options }) => options.isClickable);
-  const onRowClick = Table.useStoreState(({ options }) => options.onRowClick);
-  const isSelected = Table.useStoreState((state) => state.isSelected(row.id));
-  const columns = Table.useStoreState((store) => store.columns);
+const TableRow: React.FC<TableRowProps> = (row) => {
+  const isClickable = TableStore.useStoreState(
+    ({ options }) => options.isClickable
+  );
+
+  const onRowClick = TableStore.useStoreState(
+    ({ options }) => options.onRowClick
+  );
+
+  const columns = TableStore.useStoreState((store) => store.columns);
+
+  const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) => {
+    return selectedRowIds.includes(row?.id);
+  });
 
   const css = cx('', {
     'o-table-tr--active': isSelected,
@@ -102,4 +113,4 @@ const DataRow = (row: TableRow) => {
   );
 };
 
-export default DataRow;
+export default TableRow;

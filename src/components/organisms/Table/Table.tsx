@@ -16,7 +16,7 @@ interface TableProps extends ShowProps {
   rows: TableRow[];
 }
 
-const UpdateAndRenderTableContent: React.FC<Pick<TableProps, 'rows'>> = ({
+const TableUpdateRows: React.FC<Pick<TableProps, 'rows'>> = ({
   children,
   rows
 }) => {
@@ -36,11 +36,12 @@ const UpdateAndRenderTableContent: React.FC<Pick<TableProps, 'rows'>> = ({
 };
 
 const Table: React.FC<TableProps> = ({
+  children,
   columns,
   options,
-  show,
-  ...props
-}: TableProps) => {
+  rows,
+  show
+}) => {
   if (show === false) return null;
 
   return (
@@ -54,7 +55,7 @@ const Table: React.FC<TableProps> = ({
         options: { ...initialTableOptions, ...options }
       }}
     >
-      <UpdateAndRenderTableContent {...props} />
+      <TableUpdateRows rows={rows}>{children}</TableUpdateRows>
     </TableStore.Provider>
   );
 };

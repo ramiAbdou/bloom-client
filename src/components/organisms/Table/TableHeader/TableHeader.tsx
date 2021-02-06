@@ -6,7 +6,7 @@ import { cx } from '@util/util';
 import Table from '../Table.store';
 import { TableColumn } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
-import SelectAllCheckbox from './SelectAllCheckbox';
+import TableHeaderCheckbox from './TableHeaderCheckbox';
 
 interface HeaderCellProps extends TableColumn {
   i: number;
@@ -55,7 +55,7 @@ const HeaderCell = ({
   return (
     <th className={css} id={id} onClick={onClick}>
       <div>
-        {!i && hasCheckbox && <SelectAllCheckbox />}
+        {!i && hasCheckbox && <TableHeaderCheckbox />}
         {!hideTitle && <p>{title}</p>}
         {showCaretUp && <IoCaretUp />}
         {showCaretDown && <IoCaretDown />}
