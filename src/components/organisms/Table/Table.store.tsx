@@ -13,10 +13,9 @@ import {
 
 export const tableModel: TableModel = {
   addFilter: action((state, { filterId, filter }: TableFilterArgs) => {
-    const { filters, rows } = state;
-    const updatedFilters = { ...filters, [filterId]: filter };
+    const updatedFilters = { ...state.filters, [filterId]: filter };
 
-    const updatedFilteredRows: TableRow[] = rows?.filter((row) => {
+    const updatedFilteredRows: TableRow[] = [...state.rows]?.filter((row) => {
       return Object.values(updatedFilters)?.every(
         (tableFilter: TableFilter) => {
           return tableFilter(row);
@@ -53,26 +52,22 @@ export const tableModel: TableModel = {
   page: 0,
 
   range: computed((state) => {
-    const {
-      filteredRows: { length },
-      page
-    } = state;
-
-    const floor = page * 50;
+    const numFilteredRows = state.filteredRows.length;
+    const floor = state.page * 50;
 
     // If the page is the last page, then the filteredRows length - floor will
     // be less than 50, in which case we just show the length as the ceiling.
-    const ceiling = length - floor >= 50 ? floor + 50 : length;
+    const ceiling =
+      numFilteredRows - floor >= 50 ? floor + 50 : numFilteredRows;
+
     return [floor, ceiling];
   }),
 
   removeFilter: action((state, filterId: string) => {
-    const { filters, rows } = state;
-
-    const updatedFilters = { ...filters };
+    const updatedFilters = { ...state.filters };
     delete updatedFilters[filterId];
 
-    const updatedFilteredData: TableRow[] = rows?.filter((row) => {
+    const updatedFilteredData: TableRow[] = [...state.rows]?.filter((row) => {
       return Object.values(updatedFilters)?.every((tableFilter: TableFilter) =>
         tableFilter(row)
       );
@@ -92,8 +87,7 @@ export const tableModel: TableModel = {
   selectedRowIds: [],
 
   setFilteredData: action((state, filter: TableFilter) => {
-    const { filteredRows } = state;
-    return { ...state, filteredRows: filteredRows.filter(filter) };
+    return { ...state, filteredRows: [...state.filteredRows].filter(filter) };
   }),
 
   setRange: action((state, page) => {
@@ -109,52 +103,48 @@ export const tableModel: TableModel = {
   }),
 
   setSearchString: action((state, searchString) => {
-    const { columns, rows } = state;
+    const columnsCopy = [...state.columns];
 
-    const firstNameColumnId = columns.find(
+    const firstNameColumnId: string = columnsCopy.find(
       ({ category }) => category === 'FIRST_NAME'
     )?.id;
 
-    const lastNameColumnId = columns.find(
+    const lastNameColumnId: string = columnsCopy.find(
       ({ category }) => category === 'LAST_NAME'
     )?.id;
 
-    return {
-      ...state,
-      columns,
-      filteredRows: !searchString
-        ? [...rows]
-        : matchSorter([...rows], searchString, {
-            keys: [
-              ...columns.map(({ id }) => id),
-              // Supports search for a fullName of a row.
-              (row: TableRow) =>
-                `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
-            ],
-            threshold: matchSorter.rankings.ACRONYM
-          }),
-      searchString
-    };
+    const updatedFilteredRows: TableRow[] = !searchString
+      ? [...state.rows]
+      : matchSorter([...state.rows], searchString, {
+          keys: [
+            ...columnsCopy.map(({ id }) => id),
+            // Supports search for a fullName of a row.
+            (row: TableRow) => {
+              return `${row[firstNameColumnId]} ${row[lastNameColumnId]}`;
+            }
+          ],
+          threshold: matchSorter.rankings.ACRONYM
+        });
+
+    return { ...state, filteredRows: updatedFilteredRows, searchString };
   }),
 
   /**
    * Sets the sorted column ID and direction of the column to be sorted.
    */
   sortColumn: action((state, [id, direction]) => {
-    const { rows, filteredRows, sortDirection, sortColumnId } = state;
-
     // If the column ID is the same and the direction is the same direction,
     // we should effectively unapply the sorting.
-    if (sortColumnId === id && direction === sortDirection) {
+    if (state.sortColumnId === id && direction === state.sortDirection) {
       return {
         ...state,
-        filteredRows: rows,
+        filteredRows: [...state.rows],
         sortColumnId: null,
         sortDirection: null
       };
     }
 
-    const sortedFilteredData: TableRow[] = filteredRows.sort(
+    const sortedFilteredData: TableRow[] = [...state.filteredRows].sort(
       (a: TableRow, b: TableRow) => {
         return sortObjects(a, b, id, direction);
       }
@@ -173,30 +163,27 @@ export const tableModel: TableModel = {
   sortDirection: null,
 
   toggleAllPageRows: action((state) => {
-    const { filteredRows, range, selectedRowIds } = state;
+    const { range } = state;
 
-    const isPageSelected = filteredRows
+    const isPageSelected = [...state.filteredRows]
       .slice(range[0], range[1])
-      .every(({ id: rowId }) => selectedRowIds.includes(rowId));
+      .every(({ id: rowId }) => [...state.selectedRowIds].includes(rowId));
 
     return {
       ...state,
-      range,
       selectedRowIds: !isPageSelected
-        ? filteredRows.slice(range[0], range[1]).map(({ id }) => id)
+        ? [...state.filteredRows].slice(range[0], range[1]).map(({ id }) => id)
         : []
     };
   }),
 
   toggleAllRows: action((state) => {
-    const { filteredRows, selectedRowIds } = state;
-
     return {
       ...state,
       selectedRowIds:
-        selectedRowIds?.length === filteredRows?.length
+        state.selectedRowIds?.length === state.filteredRows?.length
           ? []
-          : filteredRows.map(({ id }) => id)
+          : [...state.filteredRows].map(({ id }) => id)
     };
   }),
 
@@ -205,17 +192,20 @@ export const tableModel: TableModel = {
    * matches the ID of the data (row).
    */
   toggleRow: action((state, rowId: string) => {
-    const { selectedRowIds } = state;
-    const index = selectedRowIds.findIndex((value: string) => value === rowId);
+    const updatedSelectedRowIds = [...state.selectedRowIds];
+
+    const index = state.selectedRowIds.findIndex(
+      (value: string) => value === rowId
+    );
 
     return {
       ...state,
       selectedRowIds:
         index < 0
-          ? [...selectedRowIds, rowId]
+          ? [...updatedSelectedRowIds, rowId]
           : [
-              ...selectedRowIds.slice(0, index),
-              ...selectedRowIds.slice(index + 1)
+              ...updatedSelectedRowIds.slice(0, index),
+              ...updatedSelectedRowIds.slice(index + 1)
             ]
     };
   }),

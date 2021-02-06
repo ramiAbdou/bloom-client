@@ -27,7 +27,7 @@ const TableUpdateRows: React.FC<Pick<TableProps, 'rows'>> = ({
   // // data if the number of rows doesn't change.
   useEffect(() => {
     if (!deepequal(storedRows, rows)) setRows(rows ?? []);
-  }, [storedRows, rows]);
+  }, [rows]);
 
   return <>{children}</>;
 };
