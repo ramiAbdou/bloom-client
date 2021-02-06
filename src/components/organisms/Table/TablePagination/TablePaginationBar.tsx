@@ -7,7 +7,7 @@ import Button from '@atoms/Button/Button';
 import { ValueProps } from '@constants';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
-import { PaginationValue } from '../Table.types';
+import { TablePaginationValue } from '../Table.types';
 import { getPaginationValues } from '../Table.util';
 
 const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
@@ -59,7 +59,7 @@ const TablePaginationBarNextButton: React.FC = () => {
 };
 
 const TablePaginationBar: React.FC = () => {
-  const nums: PaginationValue[] = TableStore.useStoreState(
+  const nums: TablePaginationValue[] = TableStore.useStoreState(
     ({ filteredRows, page }) => {
       const numPages = Math.ceil(filteredRows.length / 50);
       return getPaginationValues(Array.from(Array(numPages).keys()), page);

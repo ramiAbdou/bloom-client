@@ -60,7 +60,8 @@ export enum ModalType {
 
 export enum PanelType {
   ADD_RECORDING_LINK = 'ADD_RECORDING_LINK',
-  PROFILE = 'PROFILE'
+  PROFILE = 'PROFILE',
+  TABLE_FILTER = 'TABLE_FILTER'
 }
 
 export type RouteType =

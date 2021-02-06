@@ -1,6 +1,13 @@
 import { Action, ActionCreator, Computed } from 'easy-peasy';
 
-import { QuestionCategory, QuestionType } from '@constants';
+import {
+  IdProps,
+  QuestionCategory,
+  QuestionType,
+  ValueProps
+} from '@constants';
+
+// ## TABLE COLUMN
 
 export type TableColumn = {
   category?: QuestionCategory;
@@ -11,13 +18,27 @@ export type TableColumn = {
   type?: QuestionType;
 };
 
-// Each row will have a series of random question ID's as well as a unique ID
-// representing the row (ie: Member ID).
-export interface TableRow extends Record<string, any> {
-  id: string;
+// ## TABLE FILTER
+
+export type TableFilter = (rows: TableRow) => boolean;
+export type TableFilterJoinOperator = 'AND' | 'OR';
+export type TableFilterOperator = 'IS' | 'IS_NOT';
+
+export interface TableFilterArgs extends IdProps, ValueProps {
+  columnId: string;
+  operator: TableFilterOperator;
 }
 
-export type SortDirection = 'ASC' | 'DESC';
+export type TableQuickFilterArgs = {
+  filterId: string;
+  filter: (rows: TableRow) => boolean;
+};
+
+// ## TABLE PAGINATION
+
+export type TablePaginationValue = number | '...';
+
+// ## TABLE RENAME COLUMN
 
 export type OnRenameColumnArgs = {
   column: Partial<TableColumn>;
@@ -25,6 +46,12 @@ export type OnRenameColumnArgs = {
 };
 
 export type OnRenameColumn = (args: OnRenameColumnArgs) => Promise<void>;
+
+// ## TABLE ROW
+
+export interface TableRow extends Pick<IdProps, 'id'>, Record<string, any> {}
+
+// ## TABLE OPTIONS
 
 export type TableOptions = {
   alignEndRight?: boolean;
@@ -49,13 +76,11 @@ export const initialTableOptions: TableOptions = {
   showCount: true
 };
 
-export type PaginationValue = number | '...';
+// ## TABLE SORTING
 
-export type TableFilter = (rows: TableRow) => boolean;
-export type TableFilterArgs = {
-  filterId: string;
-  filter: (rows: TableRow) => boolean;
-};
+export type TableSortDirection = 'ASC' | 'DESC';
+
+// ## TABLE MODEL
 
 export type TableModel = {
   clearSelectedRows: Action<TableModel>;
@@ -69,11 +94,11 @@ export type TableModel = {
   rows: TableRow[];
   searchString: string;
   selectedRowIds: string[];
-  setFilter: Action<TableModel, TableFilterArgs>;
+  setFilter: Action<TableModel, TableQuickFilterArgs>;
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
-  sortColumn: Action<TableModel, [string, SortDirection]>;
-  sortDirection: SortDirection;
+  sortColumn: Action<TableModel, [string, TableSortDirection]>;
+  sortDirection: TableSortDirection;
   sortColumnId: string;
   toggleAllPageRows: Action<TableModel>;
   toggleAllRows: Action<TableModel>;

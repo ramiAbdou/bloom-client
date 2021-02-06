@@ -6,10 +6,10 @@ import { IdProps } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { cx } from '@util/util';
 import TableStore from './Table.store';
-import { SortDirection } from './Table.types';
+import { TableSortDirection } from './Table.types';
 
 interface TableSortButtonProps extends IdProps {
-  direction: SortDirection;
+  direction: TableSortDirection;
 }
 
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction, id }) => {

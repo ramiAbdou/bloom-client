@@ -1,4 +1,3 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
@@ -8,23 +7,23 @@ import Panel from '@organisms/Panel/Panel';
 import { useStoreActions, useStoreState } from '@store/Store';
 import FormShortText from '../Form/FormShortText';
 import TableStore from './Table.store';
-import { TableColumn } from './Table.types';
 import TableSortButton from './TableSortButton';
 
-const TablePanelRenameForm: React.FC = () => {
+const TableColumnRenameForm: React.FC = () => {
   const panelId = useStoreState(({ panel }) => panel.id);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const { id, title }: TableColumn = TableStore.useStoreState(({ columns }) => {
-    return (
-      columns.find(({ id: columnId }) => columnId === panelId) ??
-      ({} as TableColumn)
-    );
-  }, deepequal);
+  const id: string = TableStore.useStoreState(({ columns }) => {
+    return columns.find(({ id: columnId }) => columnId === panelId)?.id;
+  });
 
-  const onRenameColumn = TableStore.useStoreState(
-    ({ options }) => options.onRenameColumn
-  );
+  const title: string = TableStore.useStoreState(({ columns }) => {
+    return columns.find(({ id: columnId }) => columnId === panelId)?.title;
+  });
+
+  const onRenameColumn = TableStore.useStoreState(({ options }) => {
+    return options.onRenameColumn;
+  });
 
   const updateColumn = TableStore.useStoreActions(
     (store) => store.updateColumn
@@ -53,7 +52,7 @@ const TablePanelRenameForm: React.FC = () => {
   );
 };
 
-const TablePanel: React.FC = () => {
+const TableColumnRenamePanel: React.FC = () => {
   const panelId = useStoreState(({ panel }) => panel.id);
 
   // Panel ID is the same as the column ID, so there should be a column that
@@ -70,11 +69,11 @@ const TablePanel: React.FC = () => {
       scrollId="o-table-ctr"
       show={!!isColumnFound}
     >
-      <TablePanelRenameForm />
+      <TableColumnRenameForm />
       <TableSortButton direction="ASC" id={panelId} />
       <TableSortButton direction="DESC" id={panelId} />
     </Panel>
   );
 };
 
-export default TablePanel;
+export default TableColumnRenamePanel;

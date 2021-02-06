@@ -4,8 +4,8 @@ import { sortObjects } from '@util/util';
 import {
   initialTableOptions,
   TableColumn,
-  TableFilterArgs,
   TableModel,
+  TableQuickFilterArgs,
   TableRow
 } from './Table.types';
 import { runFilters } from './Table.util';
@@ -66,7 +66,7 @@ export const tableModel: TableModel = {
 
   selectedRowIds: [],
 
-  setFilter: action((state, { filterId, filter }: TableFilterArgs) => {
+  setFilter: action((state, { filterId, filter }: TableQuickFilterArgs) => {
     const updatedFilters = { ...state.filters, [filterId]: filter };
 
     const updatedFilteredRows: TableRow[] = runFilters({

@@ -4,7 +4,7 @@ import { matchSorter } from 'match-sorter';
 import { QuestionCategory, QuestionType } from '@constants';
 import { cx } from '@util/util';
 import {
-  PaginationValue,
+  TablePaginationValue,
   TableColumn,
   TableFilter,
   TableModel,
@@ -77,7 +77,7 @@ export const getBannerMessage = (state: State<TableModel>): string => {
 export const getPaginationValues = (
   arr: number[],
   currIndex: number
-): PaginationValue[] => {
+): TablePaginationValue[] => {
   const { length: initialLength } = arr;
   if (initialLength <= 7) return arr;
 
