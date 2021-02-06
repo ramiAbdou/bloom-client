@@ -4,7 +4,7 @@ import { IoTrash } from 'react-icons/io5';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Modal from '@organisms/Modal/Modal';
-import Table from '@organisms/Table/Table.store';
+import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IMember } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -16,9 +16,12 @@ const DeleteMembersModal: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const addEntities = useStoreActions(({ db }) => db.addEntities);
   const deleteEntities = useStoreActions(({ db }) => db.deleteEntities);
-  const memberIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
 
-  const numMembers = Table.useStoreState(
+  const memberIds = TableStore.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds
+  );
+
+  const numMembers = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length
   );
 

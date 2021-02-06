@@ -23,13 +23,10 @@ const TableUpdateRows: React.FC<Pick<TableProps, 'rows'>> = ({
   const storedRows = TableStore.useStoreState((store) => store.rows);
   const setRows = TableStore.useStoreActions((store) => store.setRows);
 
-  // Used primarily for the removal of rows. This will not update the
-  // data if the number of rows doesn't change.
+  // // Used primarily for the removal of rows. This will not update the
+  // // data if the number of rows doesn't change.
   useEffect(() => {
-    if (!deepequal(storedRows, rows)) {
-      console.log('UPDATING', storedRows, rows);
-      setRows(rows ?? []);
-    }
+    if (!deepequal(storedRows, rows)) setRows(rows ?? []);
   }, [storedRows, rows]);
 
   return <>{children}</>;

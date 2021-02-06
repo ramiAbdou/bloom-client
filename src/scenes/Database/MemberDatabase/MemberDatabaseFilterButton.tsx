@@ -1,11 +1,11 @@
 import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
-import Table from '@organisms/Table/Table.store';
+import TableStore from '@organisms/Table/Table.store';
 import DatabaseAction from '../DatabaseAction';
 
 const FilterButton: React.FC = () => {
-  const isAnythingSelected = Table.useStoreState(
+  const isAnythingSelected = TableStore.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 

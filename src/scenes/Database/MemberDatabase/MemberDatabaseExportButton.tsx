@@ -2,7 +2,7 @@ import React from 'react';
 import { CSVLink } from 'react-csv';
 import { IoExit } from 'react-icons/io5';
 
-import Table from '@organisms/Table/Table.store';
+import TableStore from '@organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 
@@ -12,11 +12,11 @@ const MemberDatabaseExportButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   // Formatted in a way that CSV Link can properly read it.
-  const headers = Table.useStoreState(({ columns }) =>
+  const headers = TableStore.useStoreState(({ columns }) =>
     columns.map(({ id, title }) => ({ key: id, label: title }))
   );
 
-  const data = Table.useStoreState(({ filteredRows, selectedRowIds }) => {
+  const data = TableStore.useStoreState(({ filteredRows, selectedRowIds }) => {
     return selectedRowIds.map((rowId: string) => {
       // We return every piece of data in the selected row except for the
       // ID of the row, which is just the member ID in this case.

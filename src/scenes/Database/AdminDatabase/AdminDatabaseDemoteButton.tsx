@@ -5,7 +5,7 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Modal from '@organisms/Modal/Modal';
-import Table from '@organisms/Table/Table.store';
+import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
@@ -15,7 +15,10 @@ import DatabaseAction from '../DatabaseAction';
 const DemoteToMemberModal = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const adminIds = Table.useStoreState(({ selectedRowIds }) => selectedRowIds);
+
+  const adminIds = TableStore.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds
+  );
 
   const [demoteMembers, { loading }] = useMutation<IMember[], MemberIdsArgs>({
     name: 'demoteMembers',
@@ -60,7 +63,7 @@ const DemoteToMemberModal = () => {
 export default () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const disabled = Table.useStoreState(
+  const disabled = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
   );
 

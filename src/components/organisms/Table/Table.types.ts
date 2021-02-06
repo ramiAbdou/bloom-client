@@ -73,7 +73,7 @@ export type TableModel = {
   setFilteredData: Action<TableModel, TableFilter>;
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
-  setSortedColumn: Action<TableModel, [string, SortDirection]>;
+  sortColumn: Action<TableModel, [string, SortDirection]>;
   sortDirection: SortDirection;
   sortColumnId: string;
   toggleAllPageRows: Action<TableModel>;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import Table from '@organisms/Table/Table.store';
+import TableStore from '@organisms/Table/Table.store';
 import SearchBar from '@organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseDeleteButton from './AdminDatabaseDeleteButton';
@@ -10,7 +10,7 @@ import AdminDatabaseDemoteButton from './AdminDatabaseDemoteButton';
 const AdminDatabaseButtons: React.FC = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
 
-  const isAnythingSelected = Table.useStoreState(
+  const isAnythingSelected = TableStore.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 

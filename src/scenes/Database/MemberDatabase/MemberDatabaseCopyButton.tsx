@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoCopy } from 'react-icons/io5';
 
-import Table from '@organisms/Table/Table.store';
+import TableStore from '@organisms/Table/Table.store';
 import { TableRow } from '@organisms/Table/Table.types';
 import { useStoreActions } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
@@ -13,15 +13,19 @@ import DatabaseAction from '../DatabaseAction';
 const MemberDatabaseCopyButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const emails = Table.useStoreState(({ columns, rows, selectedRowIds }) => {
-    // Get the column that has EMAIL as the category.
-    const columnId = columns.find(({ category }) => category === 'EMAIL')?.id;
+  const emails = TableStore.useStoreState(
+    ({ columns, rows, selectedRowIds }) => {
+      // Get the column that has EMAIL as the category.
+      const columnId = columns.find(({ category }) => category === 'EMAIL')?.id;
 
-    return selectedRowIds.map((rowId: string) => {
-      const selectedRow = rows.find((row: TableRow) => row.id === rowId) || {};
-      return selectedRow[columnId];
-    });
-  });
+      return selectedRowIds.map((rowId: string) => {
+        const selectedRow =
+          rows.find((row: TableRow) => row.id === rowId) || {};
+
+        return selectedRow[columnId];
+      });
+    }
+  );
 
   const onClick = () => {
     navigator.clipboard.writeText(emails.join(','));

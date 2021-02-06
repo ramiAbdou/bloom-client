@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import SearchBar from '@molecules/SearchBar/SearchBar';
-import Table from './Table.store';
+import TableStore from './Table.store';
 
 type SearchBarProps = { placeholder?: string };
 
@@ -12,7 +12,7 @@ type SearchBarProps = { placeholder?: string };
 const TableSearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
   const [value, setValue] = useState('');
 
-  const setSearchString = Table.useStoreActions(
+  const setSearchString = TableStore.useStoreActions(
     (store) => store.setSearchString
   );
 

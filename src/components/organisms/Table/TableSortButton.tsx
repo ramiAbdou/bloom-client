@@ -5,7 +5,7 @@ import Button from '@atoms/Button/Button';
 import { IdProps } from '@constants';
 import { useStoreActions } from '@store/Store';
 import { cx } from '@util/util';
-import Table from './Table.store';
+import TableStore from './Table.store';
 import { SortDirection } from './Table.types';
 
 interface TableSortButtonProps extends IdProps {
@@ -15,16 +15,16 @@ interface TableSortButtonProps extends IdProps {
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction, id }) => {
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const isSorted = Table.useStoreState(({ sortDirection, sortColumnId }) => {
-    return sortDirection === direction && sortColumnId === id;
-  });
-
-  const setSortedColumn = Table.useStoreActions(
-    (store) => store.setSortedColumn
+  const isSorted = TableStore.useStoreState(
+    ({ sortDirection, sortColumnId }) => {
+      return sortDirection === direction && sortColumnId === id;
+    }
   );
 
+  const sortColumn = TableStore.useStoreActions((store) => store.sortColumn);
+
   const onClick = () => {
-    setSortedColumn([id, direction]);
+    sortColumn([id, direction]);
     closePanel();
   };
 

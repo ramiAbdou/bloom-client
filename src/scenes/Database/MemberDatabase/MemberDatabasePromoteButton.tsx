@@ -2,7 +2,7 @@ import React from 'react';
 import { IoArrowUpCircle } from 'react-icons/io5';
 
 import { ModalType } from '@constants';
-import Table from '@organisms/Table/Table.store';
+import TableStore from '@organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
@@ -11,11 +11,11 @@ const MemberDatabasePromoteButton: React.FC = () => {
   const memberId = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const tooManySelected = Table.useStoreState(
+  const tooManySelected = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
   );
 
-  const selfSelected = Table.useStoreState(({ selectedRowIds }) =>
+  const selfSelected = TableStore.useStoreState(({ selectedRowIds }) =>
     selectedRowIds.includes(memberId)
   );
 

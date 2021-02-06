@@ -3,7 +3,7 @@ import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import Table from '../Table.store';
+import TableStore from '../Table.store';
 import { TableColumn } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
 import TableHeaderCheckbox from './TableHeaderCheckbox';
@@ -20,17 +20,23 @@ const HeaderCell = ({
   id,
   title
 }: HeaderCellProps) => {
-  const alignEndRight = Table.useStoreState(({ columns, options }) => {
+  const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
     const isLastCell = i === columns.length - 1;
     return options.alignEndRight && isLastCell;
   });
 
-  const sortColumnId = Table.useStoreState((store) => store.sortColumnId);
-  const direction = Table.useStoreState((store) => store.sortDirection);
-  const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
-  const isSortable = Table.useStoreState(({ options }) => options.isSortable);
+  const sortColumnId = TableStore.useStoreState((store) => store.sortColumnId);
+  const direction = TableStore.useStoreState((store) => store.sortDirection);
 
-  const fixFirstColumn = Table.useStoreState(
+  const hasCheckbox = TableStore.useStoreState(
+    ({ options }) => options.hasCheckbox
+  );
+
+  const isSortable = TableStore.useStoreState(
+    ({ options }) => options.isSortable
+  );
+
+  const fixFirstColumn = TableStore.useStoreState(
     ({ options }) => options.fixFirstColumn
   );
 

@@ -12,25 +12,24 @@ import {
 } from './Table.types';
 
 export const tableModel: TableModel = {
-  addFilter: action(
-    ({ filters, ...state }, { filterId, filter }: TableFilterArgs) => {
-      const updatedFilters = { ...filters, [filterId]: filter };
+  addFilter: action((state, { filterId, filter }: TableFilterArgs) => {
+    const { filters, rows } = state;
+    const updatedFilters = { ...filters, [filterId]: filter };
 
-      const updatedFilteredRows: TableRow[] = state.rows?.filter((row) => {
-        return Object.values(updatedFilters)?.every(
-          (tableFilter: TableFilter) => {
-            return tableFilter(row);
-          }
-        );
-      });
+    const updatedFilteredRows: TableRow[] = rows?.filter((row) => {
+      return Object.values(updatedFilters)?.every(
+        (tableFilter: TableFilter) => {
+          return tableFilter(row);
+        }
+      );
+    });
 
-      return {
-        ...state,
-        filteredRows: updatedFilteredRows,
-        filters: updatedFilters
-      };
-    }
-  ),
+    return {
+      ...state,
+      filteredRows: updatedFilteredRows,
+      filters: updatedFilters
+    };
+  }),
 
   clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
 
@@ -67,11 +66,13 @@ export const tableModel: TableModel = {
     return [floor, ceiling];
   }),
 
-  removeFilter: action(({ filters, ...state }, filterId: string) => {
+  removeFilter: action((state, filterId: string) => {
+    const { filters, rows } = state;
+
     const updatedFilters = { ...filters };
     delete updatedFilters[filterId];
 
-    const updatedFilteredData: TableRow[] = state.rows?.filter((row) => {
+    const updatedFilteredData: TableRow[] = rows?.filter((row) => {
       return Object.values(updatedFilters)?.every((tableFilter: TableFilter) =>
         tableFilter(row)
       );
@@ -107,7 +108,9 @@ export const tableModel: TableModel = {
     return { ...state, filteredRows: rows, rows, selectedRowIds: [] };
   }),
 
-  setSearchString: action(({ columns, rows, ...state }, searchString) => {
+  setSearchString: action((state, searchString) => {
+    const { columns, rows } = state;
+
     const firstNameColumnId = columns.find(
       ({ category }) => category === 'FIRST_NAME'
     )?.id;
@@ -120,8 +123,8 @@ export const tableModel: TableModel = {
       ...state,
       columns,
       filteredRows: !searchString
-        ? rows
-        : matchSorter(rows, searchString, {
+        ? [...rows]
+        : matchSorter([...rows], searchString, {
             keys: [
               ...columns.map(({ id }) => id),
               // Supports search for a fullName of a row.
@@ -130,7 +133,6 @@ export const tableModel: TableModel = {
             ],
             threshold: matchSorter.rankings.ACRONYM
           }),
-      rows,
       searchString
     };
   }),
@@ -138,7 +140,7 @@ export const tableModel: TableModel = {
   /**
    * Sets the sorted column ID and direction of the column to be sorted.
    */
-  setSortedColumn: action((state, [id, direction]) => {
+  sortColumn: action((state, [id, direction]) => {
     const { rows, filteredRows, sortDirection, sortColumnId } = state;
 
     // If the column ID is the same and the direction is the same direction,
@@ -152,9 +154,11 @@ export const tableModel: TableModel = {
       };
     }
 
-    const sortedFilteredData: TableRow[] = filteredRows.sort((a, b) => {
-      return sortObjects(a, b, id, direction);
-    });
+    const sortedFilteredData: TableRow[] = filteredRows.sort(
+      (a: TableRow, b: TableRow) => {
+        return sortObjects(a, b, id, direction);
+      }
+    );
 
     return {
       ...state,
@@ -179,7 +183,7 @@ export const tableModel: TableModel = {
       ...state,
       range,
       selectedRowIds: !isPageSelected
-        ? state.filteredRows.slice(range[0], range[1]).map(({ id }) => id)
+        ? filteredRows.slice(range[0], range[1]).map(({ id }) => id)
         : []
     };
   }),
@@ -200,7 +204,8 @@ export const tableModel: TableModel = {
    * Updates the data by setting isSelected to true where the ID of the row
    * matches the ID of the data (row).
    */
-  toggleRow: action(({ selectedRowIds, ...state }, rowId: string) => {
+  toggleRow: action((state, rowId: string) => {
+    const { selectedRowIds } = state;
     const index = selectedRowIds.findIndex((value: string) => value === rowId);
 
     return {

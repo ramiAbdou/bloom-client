@@ -32,7 +32,6 @@ const MemberDatabase: React.FC = () => {
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: TableRow[] = useStoreState(({ db }) => getMemberTableRow({ db }));
-  console.log(rows);
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
     const integrations: IIntegrations =
