@@ -9,13 +9,14 @@ import DeleteMembersButton from './MemberDatabaseDeleteButton';
 import MemberDatabaseExportButton from './MemberDatabaseExportButton';
 import MemberDatabaseFilterButton from './MemberDatabaseFilterButton';
 import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
+import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 
 const MemberDatabaseButtons: React.FC = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
 
-  const isAnythingSelected = TableStore.useStoreState(
-    ({ selectedRowIds }) => !!selectedRowIds.length
-  );
+  const isAnythingSelected = TableStore.useStoreState(({ selectedRowIds }) => {
+    return !!selectedRowIds.length;
+  });
 
   return (
     <Row show={!!isAnythingSelected}>
@@ -27,9 +28,18 @@ const MemberDatabaseButtons: React.FC = () => {
   );
 };
 
+const MemberDatabaseQuickContainer: React.FC = () => {
+  return (
+    <Row spacing="sm">
+      <SearchBar placeholder="Search members..." />
+      <MemberDatabaseQuickFilters />
+    </Row>
+  );
+};
+
 const MemberDatabaseActions: React.FC = () => (
-  <Row spaceBetween align="baseline">
-    <SearchBar placeholder="Search members..." />
+  <Row spaceBetween className="mb-sm">
+    <MemberDatabaseQuickContainer />
     <MemberDatabaseFilterButton />
     <MemberDatabaseButtons />
   </Row>

@@ -14,19 +14,25 @@ interface DatabaseActionProps
   tooltip?: string;
 }
 
-export default memo(
-  ({ Icon, disabled, tooltip, className, ...props }: DatabaseActionProps) => {
-    const ref: MutableRefObject<HTMLElement> = useTooltip(tooltip);
+const DatabaseAction: React.FC<DatabaseActionProps> = ({
+  Icon,
+  disabled,
+  tooltip,
+  className,
+  ...props
+}) => {
+  const ref: MutableRefObject<HTMLElement> = useTooltip(tooltip);
 
-    const css = cx('s-database-action', {
-      [className]: className,
-      's-database-action--disabled': disabled
-    });
+  const css = cx('s-database-action', {
+    [className]: className,
+    's-database-action--disabled': disabled
+  });
 
-    return (
-      <Button ref={ref} className={css} disabled={disabled} {...props}>
-        <Icon />
-      </Button>
-    );
-  }
-);
+  return (
+    <Button ref={ref} className={css} disabled={disabled} {...props}>
+      <Icon />
+    </Button>
+  );
+};
+
+export default DatabaseAction;

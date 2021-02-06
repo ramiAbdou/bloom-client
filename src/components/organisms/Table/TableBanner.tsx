@@ -43,7 +43,7 @@ const TableBannerMessage: React.FC = () => {
 };
 
 const TableBanner: React.FC = () => (
-  <Card>
+  <Card className="mb-xs">
     <Row justify="center">
       <TableBannerMessage />
       <TableBannerButton />

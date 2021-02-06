@@ -47,3 +47,9 @@ $D_SIZE: 1440;
   &-md { margin-bottom: $md; }
   &-lg { margin-bottom: $lg; }
 }
+
+.mr {
+  &-xxs { margin-right: $xxs; }
+  &-xs { margin-right: $xs; }
+  &-sm { margin-right: $sm; }
+}

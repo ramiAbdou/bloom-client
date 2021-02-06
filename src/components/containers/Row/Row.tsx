@@ -5,7 +5,7 @@ import useBreakpoint from '@hooks/useBreakpoint';
 import { cx } from '@util/util';
 
 interface RowProps extends ClassNameProps, ShowProps {
-  align?: 'baseline' | 'end' | 'start';
+  align?: 'baseline' | 'center' | 'end' | 'start';
   columnBreakpoint?: 'M' | 'T';
   equal?: boolean;
   justify?: 'center';
@@ -17,7 +17,7 @@ interface RowProps extends ClassNameProps, ShowProps {
 }
 
 const Row: React.FC<RowProps> = ({
-  align,
+  align = 'center',
   children,
   columnBreakpoint,
   className,
@@ -35,7 +35,7 @@ const Row: React.FC<RowProps> = ({
   const css = cx('flex t-row', {
     [className]: className,
     'flex-ab': align === 'baseline',
-    'flex-ac': !align,
+    'flex-ac': align === 'center',
     'flex-ae': align === 'end',
     'flex-sb': spaceBetween,
     'flex-w': !!wrap,

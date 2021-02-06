@@ -81,7 +81,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 
   return (
     <Table columns={columns} options={options} rows={rows}>
-      <TableSearchBar />
+      <TableSearchBar className="mb-sm" />
       <TableContent emptyMessage="Looks like nobody has paid dues in the last year." />
     </Table>
   );

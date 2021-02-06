@@ -15,16 +15,9 @@ import { IIntegrations, IQuestion } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import { getMemberTableRow } from '../Database.util';
-import ActionRow from './MemberDatabaseActions';
+import MemberDatabaseActions from './MemberDatabaseActions';
 import MemberDatabaseDeleteModal from './MemberDatabaseDeleteModal';
 import MemberDatabasePromoteModal from './MemberDatabasePromoteModal';
-
-const MemberDatabaseModals: React.FC = () => (
-  <>
-    <MemberDatabaseDeleteModal />
-    <MemberDatabasePromoteModal />
-  </>
-);
 
 const MemberDatabase: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -75,13 +68,15 @@ const MemberDatabase: React.FC = () => {
       rows={rows}
       show={!!columns?.length}
     >
-      <ActionRow />
+      <MemberDatabaseActions />
       <TableContent />
-      <MemberDatabaseModals />
 
       {rows.map((row: TableRow) => {
         return <MemberProfileModal key={row?.id} memberId={row?.id} />;
       })}
+
+      <MemberDatabaseDeleteModal />
+      <MemberDatabasePromoteModal />
     </Table>
   );
 };
