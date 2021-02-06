@@ -128,7 +128,7 @@ const HomeRoute: React.FC = () => {
     }
   }, [communityId]);
 
-  useLoader(loading || !activeUrlName);
+  useLoader(loading);
 
   if (
     !isAuthenticated &&
