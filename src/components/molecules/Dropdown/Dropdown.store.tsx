@@ -30,14 +30,15 @@ export const dropdownModel: DropdownModel = {
 
   setIsOpen: action((state, isOpen: boolean) => ({ ...state, isOpen })),
 
-  setSearchString: action(({ options, ...state }, searchString: string) => ({
-    ...state,
-    filteredOptions: options.filter((option: string) => {
-      return option?.toLowerCase().includes(searchString.toLowerCase());
-    }),
-    options,
-    searchString
-  })),
+  setSearchString: action((state, searchString: string) => {
+    return {
+      ...state,
+      filteredOptions: [...state.options].filter((option: string) => {
+        return option?.toLowerCase().includes(searchString.toLowerCase());
+      }),
+      searchString
+    };
+  }),
 
   setValue: action((state, value: string[]) => ({ ...state, value })),
 
@@ -48,7 +49,9 @@ export const dropdownModel: DropdownModel = {
   width: 0
 };
 
-export default createContextStore<DropdownModel>(
+const DropdownStore = createContextStore<DropdownModel>(
   (runtimeModel: DropdownModel) => runtimeModel,
   { disableImmer: true }
 );
+
+export default DropdownStore;

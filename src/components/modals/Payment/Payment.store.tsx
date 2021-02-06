@@ -22,8 +22,8 @@ export const paymentModel: PaymentModel = {
 
   changeProrationDate: null,
 
-  clear: action((store) => ({
-    ...store,
+  clear: action((state) => ({
+    ...state,
     changeAmount: null,
     changeProrationDate: null,
     screen: null,
@@ -32,14 +32,14 @@ export const paymentModel: PaymentModel = {
 
   selectedTypeId: null,
 
-  setChangeData: action((store, args) => ({
-    ...store,
+  setChangeData: action((state, args) => ({
+    ...state,
     changeAmount: args?.changeAmount,
     changeProrationDate: args?.changeProrationDate
   })),
 
-  setSelectedTypeId: action((store, selectedTypeId: string) => ({
-    ...store,
+  setSelectedTypeId: action((state, selectedTypeId: string) => ({
+    ...state,
     selectedTypeId
   })),
 
