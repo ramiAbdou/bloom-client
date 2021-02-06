@@ -10,6 +10,7 @@ import QuestionValueList, {
 import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import { GET_MEMBER_DATA, GET_MEMBER_DATA_QUESTIONS } from './Profile.gql';
 import ProfileCardHeader from './ProfileCardHeader';
 
@@ -28,15 +29,20 @@ const ProfileMembershipContent: React.FC = () => {
   const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      .filter((question: IQuestion) => !question.onlyInApplication)
-      .filter((question: IQuestion) => !question.category);
+      ?.filter((question: IQuestion) => !question.onlyInApplication)
+      ?.filter((question: IQuestion) => !question.category)
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'ASC'));
+
+    const data: IMemberData[] = db.member.data?.map(
+      (dataId: string) => db.byDataId[dataId]
+    );
 
     return questions?.map(({ id, title, type }: IQuestion) => {
-      const data: IMemberData = db.member.data
-        ?.map((dataId: string) => db.byDataId[dataId])
-        ?.find((entity: IMemberData) => entity?.question === id);
+      const value: any = data?.find(
+        (entity: IMemberData) => entity?.question === id
+      )?.value;
 
-      return { title, type, value: data?.value };
+      return { title, type, value };
     });
   });
 
@@ -44,10 +50,7 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const hasData: boolean = useStoreState(({ db }) => {
-    return db.member.data !== undefined;
-  });
-
+  const hasData: boolean = useStoreState(({ db }) => !!db.member.data);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
 

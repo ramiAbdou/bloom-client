@@ -18,20 +18,24 @@ const ProfileMembershipForm: React.FC = () => {
       .filter((question: IQuestion) => !question.onlyInApplication)
       .filter((question: IQuestion) => !question.category);
 
+    const data: IMemberData[] = db.member.data?.map(
+      (dataId: string) => db.byDataId[dataId]
+    );
+
     return questions?.map((question: IQuestion) => {
       const { id, options, type } = question;
 
-      const data: IMemberData = Object.values(db.byDataId).find(
-        (element: IMemberData) => element.question === id
-      );
+      const value: any = data?.find(
+        (entity: IMemberData) => entity?.question === id
+      )?.value;
 
-      const value =
+      const parsedValue: any =
         type === 'MULTIPLE_SELECT' ||
         (type === 'MULTIPLE_CHOICE' && options?.length >= 5)
-          ? parseValue(data?.value)
-          : data?.value;
+          ? parseValue(value)
+          : value;
 
-      return { ...question, value };
+      return { ...question, value: parsedValue };
     });
   });
 
