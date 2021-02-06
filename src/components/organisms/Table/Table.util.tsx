@@ -5,6 +5,7 @@ import { QuestionCategory, QuestionType } from '@constants';
 import { cx } from '@util/util';
 import {
   PaginationValue,
+  TableColumn,
   TableFilter,
   TableModel,
   TableRow
@@ -152,10 +153,12 @@ export const runFilters = ({
   searchString,
   state
 }: RunFiltersArgs) => {
+  const rows: TableRow[] = [...state.rows];
+
   filters = filters ?? state.filters;
   searchString = searchString ?? state.searchString;
 
-  const filteredRows: TableRow[] = [...state.rows]?.filter((row) => {
+  const filteredRows: TableRow[] = rows?.filter((row) => {
     return Object.values(filters)?.every((tableFilter: TableFilter) => {
       return tableFilter(row);
     });
@@ -163,8 +166,21 @@ export const runFilters = ({
 
   if (!searchString) return filteredRows;
 
+  const columns: TableColumn[] = [...state.columns];
+
+  const firstNameColumnId: string = columns.find(({ category }) => {
+    return category === 'FIRST_NAME';
+  })?.id;
+
+  const lastNameColumnId: string = columns.find(({ category }) => {
+    return category === 'LAST_NAME';
+  })?.id;
+
   return matchSorter(filteredRows, searchString, {
-    keys: [...[...state.columns].map(({ id }) => id)],
+    keys: [
+      ...[...state.columns].map(({ id }) => id),
+      (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
+    ],
     threshold: matchSorter.rankings.ACRONYM
   });
 };
