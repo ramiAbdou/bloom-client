@@ -1,21 +1,9 @@
-$PREF: 'o-dropdown';
+$PREF: 'm-dropdown';
 
 // ## DROPDOWN - The dropdown div only displays the current value, and only
 // when you click on it does the container appear.
 
-.#{$PREF} {
-  background-color: $gray-5;
-  background-position-x: calc(100% - 8px);
-  border-radius: $xxs;
-  color: $gray-3;
-  cursor: pointer;
-  height: $lg;
-  width: 100%;
-
-  @include OVERFLOW_ELLIPSES;
-
-  &--fit { @include RESP(width, 50%, 100%, 100%); }
-}
+.#{$PREF}--fit { @include RESP(width, 50%, 100%, 100%); }
 
 .#{$PREF} > div:first-child {
   @extend .flex-acsb;
@@ -27,18 +15,34 @@ $PREF: 'o-dropdown';
   > svg { color: $gray-3; height: $sm; width: $sm; }
 }
 
-// ## DROPDOWN OPTION CONTAINER
-
 .#{$PREF}-search { box-sizing: border-box; padding: 8px; width: 100%; }
+
+// ## DROPDOWN OPTION CONTAINER
 
 .#{$PREF}-option-ctr {
   @extend .shadow--1;
 
   background-color: white;
   border-radius: $xxs;
+  margin-top: $xxs;
+  max-height: $xxl * 5;
+  overflow: scroll;
+  padding: $xs 0;
+  position: absolute; // So that the container doesn't change document flow.
+  z-index: 3;
+
+  // Wraps the list of options.
+  > div { max-height: $xxl * 5; overflow: scroll; }
+}
+
+.#{$PREF}-option-ctr--relative {
+  @extend .shadow--1;
+
+  background-color: white;
+  border-radius: $xxs;
   margin: 0 2px $md 2px;
   max-height: $xxl * 5;
-  overflow: hidden;
+  overflow: scroll;
   padding: $xs 0;
   position: relative; // So that the container doesn't change document flow.
   z-index: 3;

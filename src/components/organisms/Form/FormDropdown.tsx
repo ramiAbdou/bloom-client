@@ -18,15 +18,15 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ multiple, ...args }) => {
 
   useInitFormItem(args);
 
-  const onUpdate = (result: string[]) => setValue({ key, value: result });
+  const onSelect = (result) => setValue({ key, value: result });
 
   return (
     <FormItemContainer {...args}>
       <Dropdown
-        multiple={multiple}
-        options={args?.options}
+        options={{ multiple }}
         value={value}
-        onUpdate={onUpdate}
+        values={args?.options}
+        onSelect={onSelect}
       />
     </FormItemContainer>
   );

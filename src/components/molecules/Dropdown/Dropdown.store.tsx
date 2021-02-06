@@ -1,51 +1,28 @@
-import { Action, action, createContextStore } from 'easy-peasy';
+import { action, createContextStore } from 'easy-peasy';
 
-export type DropdownModel = {
-  filteredOptions: string[];
-  isOpen: boolean;
-  multiple?: boolean; // True if the dropdown is a multiple select.
-  onUpdate: (result: string[]) => any;
-  options: string[];
-  searchString: string;
-  setSearchString: Action<DropdownModel, string>;
-  setIsOpen: Action<DropdownModel, boolean>;
-  setValue: Action<DropdownModel, string[]>;
-  setWidth: Action<DropdownModel, number>;
-  value: string[];
-  width: number;
-};
+import { DropdownModel } from './Dropdown.types';
 
 export const dropdownModel: DropdownModel = {
-  filteredOptions: [],
-
+  filteredValues: [],
   isOpen: false,
-
-  multiple: false,
-
-  onUpdate: null,
-
-  options: [],
-
+  options: { multiple: false },
   searchString: '',
-
   setIsOpen: action((state, isOpen: boolean) => ({ ...state, isOpen })),
 
   setSearchString: action((state, searchString: string) => {
     return {
       ...state,
-      filteredOptions: [...state.options].filter((option: string) => {
+      filteredOptions: [...state.values].filter((option: string) => {
         return option?.toLowerCase().includes(searchString.toLowerCase());
       }),
       searchString
     };
   }),
 
-  setValue: action((state, value: string[]) => ({ ...state, value })),
-
+  setValue: action((state, value) => ({ ...state, value })),
   setWidth: action((state, width: number) => ({ ...state, width })),
-
-  value: [],
-
+  value: null,
+  values: [],
   width: 0
 };
 

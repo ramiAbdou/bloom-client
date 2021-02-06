@@ -94,28 +94,28 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
       {rowIndex === 0 && <h5>Where</h5>}
       {rowIndex === 1 && (
         <Dropdown
-          options={['And', 'Or']}
-          value={[
+          value={
             joinOperator.charAt(0) + joinOperator.substring(1).toLowerCase()
-          ]}
-          onUpdate={onJoinOperatorUpdate}
+          }
+          values={['And', 'Or']}
+          onSelect={onJoinOperatorUpdate}
         />
       )}
       {rowIndex >= 2 && <h5>{joinOperator}</h5>}
 
       <Row spacing="xs">
         <Dropdown
-          options={questions?.map(({ title }) => title)}
-          value={[
+          value={
             questions?.find((question) => question.id === questionId)?.title
-          ]}
-          onUpdate={onQuestionUpdate}
+          }
+          values={questions?.map(({ title }) => title)}
+          onSelect={onQuestionUpdate}
         />
 
         <Dropdown
-          options={['is', 'is not']}
           value={['is']}
-          onUpdate={onOperatorUpdate}
+          values={['is', 'is not']}
+          onSelect={onOperatorUpdate}
         />
 
         <Input

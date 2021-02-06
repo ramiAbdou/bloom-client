@@ -12,7 +12,7 @@ import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 
-const PlaygroundDropdown: React.FC = () => {
+const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   // We only want the questions that are meaningful, and things like first/last
   // name aren't very meaningful.
   const questions: IQuestion[] = useStoreState(({ db }) => {
@@ -28,11 +28,9 @@ const PlaygroundDropdown: React.FC = () => {
   const questionId = IdStore.useStoreState((store) => store.id);
   const setId = IdStore.useStoreActions((store) => store.setId);
 
-  const onUpdate = (result: string[]) => {
-    const title = result[0];
-
+  const onSelect = (result: string) => {
     const updatedQuestionId = questions.find(
-      (question) => question.title === title
+      (question) => question.title === result
     )?.id;
 
     setId(updatedQuestionId);
@@ -42,14 +40,14 @@ const PlaygroundDropdown: React.FC = () => {
     <Dropdown
       fit
       className="mb-sm"
-      options={questions?.map(({ title }) => title)}
-      value={[questions?.find(({ id }) => id === questionId)?.title]}
-      onUpdate={onUpdate}
+      value={questions?.find(({ id }) => id === questionId)?.title}
+      values={questions?.map(({ title }) => title)}
+      onSelect={onSelect}
     />
   );
 };
 
-const PlaygroundHeader: React.FC = () => {
+const MembersAnalyticsPlaygroundHeader: React.FC = () => {
   // We only want the questions that are meaningful, and things like first/last
   // name aren't very meaningful.
   const initialQuestionId: string = useStoreState(({ db }) => {
@@ -75,12 +73,13 @@ const PlaygroundHeader: React.FC = () => {
       <p className="mb-xs">
         Choose any piece of data that you'd like to explore.
       </p>
-      <PlaygroundDropdown />
+
+      <MembersAnalyticsPlaygroundDropdown />
     </Show>
   );
 };
 
-const PlaygroundChart: React.FC = () => {
+const MembersAnalyticsPlaygroundChart: React.FC = () => {
   const questionId = IdStore.useStoreState((store) => store.id);
   return <Chart questionId={questionId} />;
 };
@@ -101,8 +100,8 @@ const MembersAnalyticsPlayground: React.FC = () => {
       <LoadingHeader h2 loading={loading} title="Data Playground" />
       <IdStore.Provider>
         <div className="s-analytics-members-playground">
-          <PlaygroundHeader />
-          <PlaygroundChart />
+          <MembersAnalyticsPlaygroundHeader />
+          <MembersAnalyticsPlaygroundChart />
         </div>
       </IdStore.Provider>
     </MainSection>

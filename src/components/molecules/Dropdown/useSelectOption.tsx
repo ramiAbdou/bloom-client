@@ -1,17 +1,14 @@
 import Dropdown from './Dropdown.store';
+import { DropdownValue } from './Dropdown.types';
 
-export default function useSelectOption(option: string) {
-  const allFilteredOptions = Dropdown.useStoreState(
-    ({ filteredOptions, value }) => {
-      return filteredOptions.filter((element1: string) => {
-        return !value?.includes(element1);
-      });
-    }
+const useSelectOption = (option: string) => {
+  const filteredValues = Dropdown.useStoreState(
+    (store) => store.filteredValues
   );
 
-  const multiple = Dropdown.useStoreState((store) => store.multiple);
+  const multiple = Dropdown.useStoreState((store) => store.options.multiple);
   const value = Dropdown.useStoreState((store) => store.value);
-  const onUpdate = Dropdown.useStoreState((store) => store.onUpdate);
+  const onSelect = Dropdown.useStoreState((store) => store.onSelect);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
 
   const setSearchString = Dropdown.useStoreActions(
@@ -19,25 +16,32 @@ export default function useSelectOption(option: string) {
   );
 
   const selectOption = () => {
-    const wasNonePreviouslySelected = value?.some((element) =>
-      ['None', 'None of the Above', 'N/A'].includes(element)
-    );
+    let wasNonePreviouslySelected: boolean;
+
+    if (Array.isArray(value)) {
+      wasNonePreviouslySelected = (value as string[])?.some((element) =>
+        ['None', 'None of the Above', 'N/A'].includes(element)
+      );
+    }
 
     const isNoneSelected = ['None', 'None of the Above', 'N/A'].includes(
       option
     );
 
-    const result =
-      !multiple || wasNonePreviouslySelected || isNoneSelected
-        ? [option]
-        : [...value, option];
+    let updatedValue: DropdownValue;
 
-    onUpdate(result);
+    if (multiple) {
+      if (wasNonePreviouslySelected || isNoneSelected) updatedValue = [option];
+      else updatedValue = [...(value as string[]), option];
+    } else updatedValue = option;
+
+    onSelect(updatedValue);
     setSearchString('');
 
-    const updatedOptions = allFilteredOptions.filter(
-      (opt: string) => !result?.includes(opt)
-    );
+    const updatedOptions = filteredValues.filter((element: string) => {
+      if (Array.isArray(updatedValue)) return !updatedValue?.includes(element);
+      return element === updatedValue;
+    });
 
     if (
       !multiple ||
@@ -51,4 +55,6 @@ export default function useSelectOption(option: string) {
   };
 
   return selectOption;
-}
+};
+
+export default useSelectOption;

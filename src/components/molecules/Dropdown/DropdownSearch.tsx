@@ -15,7 +15,7 @@ const DropdownSearch: React.FC = () => {
 
   return (
     <input
-      className="o-dropdown-search"
+      className="m-dropdown-search"
       placeholder="Search..."
       type="text"
       value={searchString}

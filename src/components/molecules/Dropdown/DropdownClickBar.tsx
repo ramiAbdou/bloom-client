@@ -6,24 +6,28 @@ import Show from '@containers/Show';
 import { cx } from '@util/util';
 import Dropdown from './Dropdown.store';
 
-const Value = ({ value }: ValueProps) => {
+const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
   const isOpen = Dropdown.useStoreState((store) => store.isOpen);
-  const multiple = Dropdown.useStoreState((store) => store.multiple);
+  const multiple = Dropdown.useStoreState((store) => store.options.multiple);
   const storedValue = Dropdown.useStoreState((store) => store.value);
-  const onUpdate = Dropdown.useStoreState((store) => store.onUpdate);
+  const onSelect = Dropdown.useStoreState((store) => store.onSelect);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
 
   const deleteValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
+
     if (!isOpen) setIsOpen(true);
     if (!multiple) return;
 
-    const updatedValues = storedValue.filter((option) => option !== value);
-    onUpdate(updatedValues);
+    onSelect(
+      multiple
+        ? (storedValue as string[]).filter((option) => option !== value)
+        : (storedValue as string)
+    );
   };
 
-  const css = cx('c-tag-attr o-dropdown-value', {
-    'o-dropdown-value--cancel': multiple
+  const css = cx('c-tag-attr m-dropdown-value', {
+    'm-dropdown-value--cancel': multiple
   });
 
   return (
@@ -33,16 +37,21 @@ const Value = ({ value }: ValueProps) => {
   );
 };
 
-const ValueList = () => {
-  const values = Dropdown.useStoreState((store) => store.value);
+const DropdownClickBarValues: React.FC = () => {
+  const value = Dropdown.useStoreState((store) => store.value);
+
+  let values: string[] = [];
+
+  if (Array.isArray(value)) values = value;
+  else if (value) values = [value];
 
   return (
     <Show show={!!values?.length}>
-      <div className="o-dropdown-value-ctr">
-        {values.map((value: string) => (
-          <Value key={value} value={value} />
+      <ul className="m-dropdown-value-ctr">
+        {values.map((element: string) => (
+          <DropdownClickBarValue key={element} value={element} />
         ))}
-      </div>
+      </ul>
     </Show>
   );
 };
@@ -61,14 +70,14 @@ const DropdownClickBar: React.FC = () => {
 
   const onClick = () => setIsOpen(!isOpen);
 
-  const css = cx('o-dropdown-bar', {
-    'o-dropdown-bar--open': isOpen
+  const css = cx('m-dropdown-bar', {
+    'm-dropdown-bar--open': isOpen
   });
 
   return (
     <div ref={ref} className={css} onClick={onClick}>
       <div>
-        <ValueList />
+        <DropdownClickBarValues />
       </div>
 
       <IoCaretDown />

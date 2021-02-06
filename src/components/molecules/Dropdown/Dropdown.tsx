@@ -3,9 +3,10 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { BaseProps, ValueProps } from '@constants';
 import { cx } from '@util/util';
-import DropdownStore, { DropdownModel, dropdownModel } from './Dropdown.store';
+import DropdownStore, { dropdownModel } from './Dropdown.store';
+import { DropdownModel } from './Dropdown.types';
 import DropdownClickBar from './DropdownClickBar';
-import DropdownOptionContainer from './DropdownOptionContainer';
+import DropdownOptions from './DropdownOptions';
 
 interface DropdownContentProps extends BaseProps, ValueProps {
   fit?: boolean;
@@ -27,27 +28,30 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   useOnClickOutside(ref, () => isOpen && setIsOpen(false));
 
-  const css = cx('', { [className]: className, 'o-dropdown--fit': fit });
+  const css = cx('', {
+    [className]: className,
+    'm-dropdown--fit': fit
+  });
 
   return (
     <div ref={ref} className={css}>
       <DropdownClickBar />
-      {isOpen && <DropdownOptionContainer />}
+      <DropdownOptions />
     </div>
   );
 };
 
-interface DropdownProps
-  extends BaseProps,
-    Pick<DropdownModel, 'multiple' | 'options' | 'onUpdate' | 'value'> {
+interface DropdownProps extends BaseProps, Partial<DropdownModel> {
   fit?: boolean;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
   className,
   fit,
-  options,
+  onSelect,
+  options = { multiple: false },
   value,
+  values,
   ...rest
 }) => {
   return (
@@ -55,8 +59,10 @@ const Dropdown: React.FC<DropdownProps> = ({
       runtimeModel={{
         ...dropdownModel,
         ...rest,
-        filteredOptions: options,
-        options
+        filteredValues: values,
+        onSelect,
+        options,
+        values
       }}
     >
       <DropdownContent className={className} fit={fit} value={value} />
