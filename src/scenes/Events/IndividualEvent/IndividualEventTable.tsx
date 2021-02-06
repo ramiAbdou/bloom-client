@@ -12,23 +12,16 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import {
-  IEvent,
-  IEventAttendee,
-  IEventGuest,
-  IEventWatch,
-  IMember,
-  IUser
-} from '@store/Db/entities';
+import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { sortObjects } from '@util/util';
 import {
   GET_EVENT_ATTENDEES,
   GET_EVENT_WATCHES,
   GetEventArgs
 } from '../Events.gql';
-import IndividualEventTableFilters from './IndividualEventTableFilters';
+import { getIndividualEventTableRows } from './IndividualEvent.util';
+import IndividualEventTableActions from './IndividualEventTableActions';
 
 const IndividualEventTableContent: React.FC = () => {
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
@@ -36,83 +29,7 @@ const IndividualEventTableContent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
-    const record = db.event.attendees?.reduce((acc, attendeeId: string) => {
-      const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
-      const { createdAt, firstName, lastName, email } = attendee;
-
-      return {
-        ...acc,
-        [email]: {
-          email,
-          fullName: `${firstName} ${lastName}`,
-          id: attendee?.member,
-          joinedAt: day(createdAt).format('MMM D @ h:mm A'),
-          watched: 'No'
-        }
-      };
-    }, {});
-
-    const recordWithGuests =
-      db.event.guests?.reduce((acc, guestId: string) => {
-        const guest: IEventGuest = db.byGuestId[guestId];
-        const { createdAt, firstName, lastName, email } = guest;
-        const previousValue = acc[email];
-
-        if (!previousValue) {
-          return {
-            ...acc,
-            [email]: {
-              email,
-              fullName: `${firstName} ${lastName}`,
-              id: guest?.member,
-              rsvpdAt: day(createdAt).format('MMM D @ h:mm A'),
-              watched: 'No'
-            }
-          };
-        }
-
-        return {
-          ...acc,
-          [email]: {
-            ...previousValue,
-            rsvpdAt: day(createdAt).format('MMM D @ h:mm A'),
-            watched: 'No'
-          }
-        };
-      }, record ?? {}) ?? record;
-
-    const recordWithWatches =
-      db.event.watches?.reduce((acc, watchId: string) => {
-        const watch: IEventWatch = db.byWatchId[watchId];
-        const member: IMember = db.byMemberId[watch?.member];
-        const user: IUser = db.byUserId[member?.user];
-        const { firstName, lastName, email } = user ?? {};
-        const previousValue = acc[email];
-
-        if (!previousValue) {
-          return {
-            ...acc,
-            [email]: {
-              email,
-              fullName: `${firstName} ${lastName}`,
-              id: watch?.member,
-              watched: 'Yes'
-            }
-          };
-        }
-
-        return {
-          ...acc,
-          [email]: { ...previousValue, watched: 'Yes' }
-        };
-      }, recordWithGuests ?? {}) ?? recordWithGuests;
-
-    if (!recordWithWatches) return null;
-
-    return Object.values(recordWithWatches)?.sort((a, b) =>
-      // @ts-ignore
-      sortObjects(a, b, ['joinedAt', 'rsvpdAt'], 'DESC')
-    ) as TableRow[];
+    return getIndividualEventTableRows(db);
   });
 
   const joinedAtColumn = day().isAfter(day(startTime))
@@ -159,7 +76,7 @@ const IndividualEventTableContent: React.FC = () => {
   return (
     <MainSection className="s-events-individual-table-ctr">
       <Table columns={columns} options={options} rows={rows}>
-        <IndividualEventTableFilters />
+        <IndividualEventTableActions />
         <TableContent small />
       </Table>
     </MainSection>

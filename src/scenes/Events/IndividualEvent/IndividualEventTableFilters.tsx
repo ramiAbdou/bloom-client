@@ -78,7 +78,8 @@ const IndividualEventNoShowAndFilter: React.FC = () => {
 
 const IndividualEventTableFilters: React.FC = () => {
   return (
-    <Row wrap marginBottom={12} spacing="xs">
+    <Row wrap spacing="xs">
+      <p className="meta">Quick Filters:</p>
       <IndividualEventJoinedFilter />
       <IndividualEventRsvpFilter />
       <IndividualEventViewedFilter />
