@@ -58,7 +58,6 @@ export type TableFilterArgs = {
 };
 
 export type TableModel = {
-  addFilter: Action<TableModel, TableFilterArgs>;
   clearSelectedRows: Action<TableModel>;
   columns: TableColumn[];
   filteredRows: TableRow[];
@@ -70,7 +69,7 @@ export type TableModel = {
   rows: TableRow[];
   searchString: string;
   selectedRowIds: string[];
-  setFilteredData: Action<TableModel, TableFilter>;
+  setFilter: Action<TableModel, TableFilterArgs>;
   setRange: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
   sortColumn: Action<TableModel, [string, SortDirection]>;

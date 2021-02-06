@@ -1,8 +1,14 @@
 import { State } from 'easy-peasy';
+import { matchSorter } from 'match-sorter';
 
 import { QuestionCategory, QuestionType } from '@constants';
 import { cx } from '@util/util';
-import { PaginationValue, TableModel } from './Table.types';
+import {
+  PaginationValue,
+  TableFilter,
+  TableModel,
+  TableRow
+} from './Table.types';
 
 /**
  * Returns the title of the TableBannerButton based on the current state of
@@ -128,5 +134,37 @@ export const getTableCellClass = ({
       !isDuesStatus && ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
     'o-table-cell--sm': !type || ['SHORT_TEXT', 'CUSTOM'].includes(type),
     'o-table-cell--xs': isDuesStatus
+  });
+};
+
+interface RunFiltersArgs {
+  filters?: Record<string, TableFilter>;
+  searchString?: string;
+  state: State<TableModel>;
+}
+
+/**
+ * Returns the filtered Table rows based on the active filters as well as
+ * the Table search string.
+ */
+export const runFilters = ({
+  filters,
+  searchString,
+  state
+}: RunFiltersArgs) => {
+  filters = filters ?? state.filters;
+  searchString = searchString ?? state.searchString;
+
+  const filteredRows: TableRow[] = [...state.rows]?.filter((row) => {
+    return Object.values(filters)?.every((tableFilter: TableFilter) => {
+      return tableFilter(row);
+    });
+  });
+
+  if (!searchString) return filteredRows;
+
+  return matchSorter(filteredRows, searchString, {
+    keys: [...[...state.columns].map(({ id }) => id)],
+    threshold: matchSorter.rankings.ACRONYM
   });
 };

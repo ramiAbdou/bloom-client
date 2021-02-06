@@ -7,7 +7,7 @@ import { cx } from '@util/util';
 import TableStore from './Table.store';
 
 interface TableQuickFilterProps extends IdProps, ShowProps, TitleProps {
-  filter: (rows: TableRow) => boolean;
+  filter: (row: TableRow) => boolean;
 }
 
 const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
@@ -16,17 +16,17 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
   show,
   title
 }) => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState<boolean>(false);
 
-  const addFilter = TableStore.useStoreActions((store) => store.addFilter);
   const filters = TableStore.useStoreState((store) => store.filters);
+  const setFilter = TableStore.useStoreActions((store) => store.setFilter);
 
   const removeFilter = TableStore.useStoreActions(
     (store) => store.removeFilter
   );
 
   useEffect(() => {
-    if (active && !filters[filterId]) addFilter({ filter, filterId });
+    if (active && !filters[filterId]) setFilter({ filter, filterId });
     else if (!active && !!filters[filterId]) removeFilter(filterId);
   }, [active]);
 

@@ -1,35 +1,16 @@
 import { action, computed, createContextStore } from 'easy-peasy';
-import { matchSorter } from 'match-sorter';
 
 import { sortObjects } from '@util/util';
 import {
   initialTableOptions,
   TableColumn,
-  TableFilter,
   TableFilterArgs,
   TableModel,
   TableRow
 } from './Table.types';
+import { runFilters } from './Table.util';
 
 export const tableModel: TableModel = {
-  addFilter: action((state, { filterId, filter }: TableFilterArgs) => {
-    const updatedFilters = { ...state.filters, [filterId]: filter };
-
-    const updatedFilteredRows: TableRow[] = [...state.rows]?.filter((row) => {
-      return Object.values(updatedFilters)?.every(
-        (tableFilter: TableFilter) => {
-          return tableFilter(row);
-        }
-      );
-    });
-
-    return {
-      ...state,
-      filteredRows: updatedFilteredRows,
-      filters: updatedFilters
-    };
-  }),
-
   clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
 
   columns: [],
@@ -67,15 +48,14 @@ export const tableModel: TableModel = {
     const updatedFilters = { ...state.filters };
     delete updatedFilters[filterId];
 
-    const updatedFilteredData: TableRow[] = [...state.rows]?.filter((row) => {
-      return Object.values(updatedFilters)?.every((tableFilter: TableFilter) =>
-        tableFilter(row)
-      );
+    const updatedFilteredRows: TableRow[] = runFilters({
+      filters: updatedFilters,
+      state
     });
 
     return {
       ...state,
-      filteredRows: updatedFilteredData,
+      filteredRows: updatedFilteredRows,
       filters: updatedFilters
     };
   }),
@@ -86,8 +66,19 @@ export const tableModel: TableModel = {
 
   selectedRowIds: [],
 
-  setFilteredData: action((state, filter: TableFilter) => {
-    return { ...state, filteredRows: [...state.filteredRows].filter(filter) };
+  setFilter: action((state, { filterId, filter }: TableFilterArgs) => {
+    const updatedFilters = { ...state.filters, [filterId]: filter };
+
+    const updatedFilteredRows: TableRow[] = runFilters({
+      filters: updatedFilters,
+      state
+    });
+
+    return {
+      ...state,
+      filteredRows: updatedFilteredRows,
+      filters: updatedFilters
+    };
   }),
 
   setRange: action((state, page) => {
@@ -102,29 +93,11 @@ export const tableModel: TableModel = {
     return { ...state, filteredRows: rows, rows, selectedRowIds: [] };
   }),
 
-  setSearchString: action((state, searchString) => {
-    const columnsCopy = [...state.columns];
-
-    const firstNameColumnId: string = columnsCopy.find(
-      ({ category }) => category === 'FIRST_NAME'
-    )?.id;
-
-    const lastNameColumnId: string = columnsCopy.find(
-      ({ category }) => category === 'LAST_NAME'
-    )?.id;
-
-    const updatedFilteredRows: TableRow[] = !searchString
-      ? [...state.rows]
-      : matchSorter([...state.rows], searchString, {
-          keys: [
-            ...columnsCopy.map(({ id }) => id),
-            // Supports search for a fullName of a row.
-            (row: TableRow) => {
-              return `${row[firstNameColumnId]} ${row[lastNameColumnId]}`;
-            }
-          ],
-          threshold: matchSorter.rankings.ACRONYM
-        });
+  setSearchString: action((state, searchString: string) => {
+    const updatedFilteredRows: TableRow[] = runFilters({
+      searchString,
+      state
+    });
 
     return { ...state, filteredRows: updatedFilteredRows, searchString };
   }),
@@ -144,7 +117,7 @@ export const tableModel: TableModel = {
       };
     }
 
-    const sortedFilteredData: TableRow[] = [...state.filteredRows].sort(
+    const sortedFilteredRows: TableRow[] = [...state.filteredRows].sort(
       (a: TableRow, b: TableRow) => {
         return sortObjects(a, b, id, direction);
       }
@@ -152,7 +125,7 @@ export const tableModel: TableModel = {
 
     return {
       ...state,
-      filteredRows: sortedFilteredData,
+      filteredRows: sortedFilteredRows,
       sortColumnId: id,
       sortDirection: direction
     };
@@ -188,8 +161,8 @@ export const tableModel: TableModel = {
   }),
 
   /**
-   * Updates the data by setting isSelected to true where the ID of the row
-   * matches the ID of the data (row).
+   * Updates the rows by setting isSelected to true where the ID of the row
+   * matches the ID of the row.
    */
   toggleRow: action((state, rowId: string) => {
     const updatedSelectedRowIds = [...state.selectedRowIds];
