@@ -6,26 +6,42 @@ import { TableFilterArgs, TableFilterJoinOperator } from '../Table.types';
 interface TableFilterModel {
   addFilter: Action<TableFilterModel>;
   clearFilters: Action<TableFilterModel>;
+  filterIds: string[];
   filters: Record<string, TableFilterArgs>;
   joinOperator: TableFilterJoinOperator;
   setFilter: Action<TableFilterModel, Partial<TableFilterArgs>>;
-  setJoinOperator?: Action<TableFilterModel, 'AND' | 'OR'>;
+  setJoinOperator: Action<TableFilterModel, TableFilterJoinOperator>;
 }
 
 const tableFilterModel: TableFilterModel = {
-  addFilter: action((state) => ({
-    ...state,
-    filters: {
-      ...state.filters,
-      [nanoid()]: { columnId: null, operator: 'IS' }
-    }
-  })),
+  addFilter: action((state) => {
+    const id = nanoid();
 
-  clearFilters: action((state) => ({ ...state, filters: {} })),
+    return {
+      ...state,
+      filterIds: [...state.filterIds, id],
+      filters: {
+        ...state.filters,
+        [id]: { columnId: null, operator: 'IS' }
+      }
+    };
+  }),
 
-  filters: { [nanoid()]: { columnId: null, operator: 'IS' } },
+  clearFilters: action((state) => {
+    const id = nanoid();
 
-  joinOperator: 'AND',
+    return {
+      ...state,
+      filterIds: [id],
+      filters: { [id]: { columnId: null, operator: 'IS' } }
+    };
+  }),
+
+  filterIds: [],
+
+  filters: {},
+
+  joinOperator: 'And',
 
   setFilter: action(
     (state, { id, ...filterArgs }: Partial<TableFilterArgs>) => {
@@ -47,7 +63,16 @@ const tableFilterModel: TableFilterModel = {
 };
 
 const TableFilterStore = createContextStore<TableFilterModel>(
-  tableFilterModel,
+  (runtimeModel) => {
+    const id = nanoid();
+
+    return {
+      ...runtimeModel,
+      ...tableFilterModel,
+      filterIds: [id],
+      filters: { [id]: { columnId: null, operator: 'IS' } }
+    };
+  },
   { disableImmer: true }
 );
 

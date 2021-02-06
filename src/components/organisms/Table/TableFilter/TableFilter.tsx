@@ -9,7 +9,7 @@ import TableFilterAddButton from './TableFilterAddButton';
 import TableFilterClearButton from './TableFilterClearButton';
 import TableFilterRow from './TableFilterRow';
 
-const TableFilterPanel: React.FC = () => {
+const TableFilter: React.FC = () => {
   const filterIds: string[] = TableFilterStore.useStoreState((store) =>
     Object.keys(store.filters)
   );
@@ -30,14 +30,6 @@ const TableFilterPanel: React.FC = () => {
       <TableFilterAddButton />
       <TableFilterActions />
     </Panel>
-  );
-};
-
-const TableFilter: React.FC = () => {
-  return (
-    <TableFilterStore.Provider>
-      <TableFilterPanel />
-    </TableFilterStore.Provider>
   );
 };
 

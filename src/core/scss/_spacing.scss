@@ -39,17 +39,17 @@ $D_SIZE: 1440;
 }
 
 .mb {
-  &-xxs { margin-bottom: $xxs; }
-  &-xs { margin-bottom: $xs; }
-  &-ss { margin-bottom: $ss; }
-  &-sm { margin-bottom: $sm; }
-  &-sl { margin-bottom: $sl; }
-  &-md { margin-bottom: $md; }
-  &-lg { margin-bottom: $lg; }
+  &-xxs:not(:last-child) { margin-bottom: $xxs; }
+  &-xs:not(:last-child) { margin-bottom: $xs; }
+  &-ss:not(:last-child) { margin-bottom: $ss; }
+  &-sm:not(:last-child) { margin-bottom: $sm; }
+  &-sl:not(:last-child) { margin-bottom: $sl; }
+  &-md:not(:last-child) { margin-bottom: $md; }
+  &-lg:not(:last-child) { margin-bottom: $lg; }
 }
 
 .mr {
-  &-xxs { margin-right: $xxs; }
-  &-xs { margin-right: $xs; }
-  &-sm { margin-right: $sm; }
+  &-xxs:not(:last-child) { margin-right: $xxs; }
+  &-xs:not(:last-child) { margin-right: $xs; }
+  &-sm:not(:last-child) { margin-right: $sm; }
 }

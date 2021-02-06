@@ -10,6 +10,7 @@ import {
   TableRow
 } from './Table.types';
 import TableFilterPanel from './TableFilter/TableFilter';
+import TableFilterStore from './TableFilter/TableFilter.store';
 
 interface TableProps extends ShowProps {
   columns: TableColumn[];
@@ -53,8 +54,10 @@ const Table: React.FC<TableProps> = ({
         options: { ...initialTableOptions, ...options }
       }}
     >
-      <TableUpdateRows rows={rows}>{children}</TableUpdateRows>
-      <TableFilterPanel />
+      <TableFilterStore.Provider>
+        <TableUpdateRows rows={rows}>{children}</TableUpdateRows>
+        <TableFilterPanel />
+      </TableFilterStore.Provider>
     </TableStore.Provider>
   );
 };

@@ -7,7 +7,11 @@ import Row from '@containers/Row/Row';
 import Dropdown from '@molecules/Dropdown/Dropdown';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { TableFilterArgs, TableFilterOperator } from '../Table.types';
+import {
+  TableFilterArgs,
+  TableFilterJoinOperator,
+  TableFilterOperator
+} from '../Table.types';
 import TableFilterStore from './TableFilter.store';
 
 const TableFilterRow: React.FC<IdProps> = ({ id }) => {
@@ -19,27 +23,48 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
     deepequal
   );
 
-  const [questionId, setQuestionId] = useState<string>(columnId ?? null);
+  const rowIndex: number = TableFilterStore.useStoreState((state) => {
+    return state.filterIds.findIndex((filterId) => filterId === id);
+  });
 
-  const qId: string = useStoreState(({ db }) => {
-    if (!db.community.questions) return null;
-    return db.community.questions[0];
+  const joinOperator = TableFilterStore.useStoreState(
+    (store) => store.joinOperator
+  );
+
+  const [questionId, setQuestionId] = useState<string>(columnId);
+
+  const defaultQuestionId: string = useStoreState(({ db }) => {
+    return db.community.questions
+      ?.map((entityId: string) => db.byQuestionId[entityId])
+      ?.filter((question: IQuestion) => {
+        return !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(
+          question.category
+        );
+      })[0]?.id;
   });
 
   const questions: IQuestion[] = useStoreState(({ db }) => {
-    return db.community.questions?.map((entityId: string) => {
-      return db.byQuestionId[entityId];
-    });
+    return db.community.questions
+      ?.map((entityId: string) => db.byQuestionId[entityId])
+      ?.filter((question: IQuestion) => {
+        return !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(
+          question.category
+        );
+      });
   });
 
   const setFilter = TableFilterStore.useStoreActions(
     (store) => store.setFilter
   );
 
+  const setJoinOperator = TableFilterStore.useStoreActions(
+    (store) => store.setJoinOperator
+  );
+
   useEffect(() => {
-    if (!questionId && qId) setQuestionId(qId);
+    if (!questionId && defaultQuestionId) setQuestionId(defaultQuestionId);
     else if (columnId !== questionId) setQuestionId(columnId);
-  }, [columnId, qId]);
+  }, [columnId, defaultQuestionId]);
 
   const onQuestionUpdate = (result: string[]) => {
     const title = result[0];
@@ -57,11 +82,26 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
     setFilter({ id, operator });
   };
 
+  const onJoinOperatorUpdate = (result: string[]) => {
+    const operator = result[0];
+    setJoinOperator(operator as TableFilterJoinOperator);
+  };
+
   const onInputChange = (value: string) => setFilter({ id, value });
 
   return (
-    <Row className="mb-sm" spacing="sm">
-      <h5>Where</h5>
+    <Row className="o-table-filter-row mb-md" spacing="sm">
+      {rowIndex === 0 && <h5>Where</h5>}
+      {rowIndex === 1 && (
+        <Dropdown
+          options={['And', 'Or']}
+          value={[
+            joinOperator.charAt(0) + joinOperator.substring(1).toLowerCase()
+          ]}
+          onUpdate={onJoinOperatorUpdate}
+        />
+      )}
+      {rowIndex >= 2 && <h5>{joinOperator}</h5>}
 
       <Row spacing="xs">
         <Dropdown

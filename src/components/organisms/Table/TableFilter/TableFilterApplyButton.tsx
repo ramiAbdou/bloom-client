@@ -36,7 +36,7 @@ const TableFilterApplyButton: React.FC = () => {
 
   const onClick = () => {
     const filter: TableFilter = (row: TableRow) => {
-      if (joinOperator === 'AND') {
+      if (joinOperator === 'And') {
         return filters?.every((filterArgs: TableFilterArgs) => {
           return processFilter({ ...filterArgs, row });
         });

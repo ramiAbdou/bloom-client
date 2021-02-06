@@ -21,7 +21,7 @@ export type TableColumn = {
 // ## TABLE FILTER
 
 export type TableFilter = (rows: TableRow) => boolean;
-export type TableFilterJoinOperator = 'AND' | 'OR';
+export type TableFilterJoinOperator = 'And' | 'Or';
 export type TableFilterOperator = 'IS' | 'IS_NOT';
 
 export interface TableFilterArgs extends IdProps, ValueProps {
