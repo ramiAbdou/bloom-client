@@ -3,6 +3,7 @@ $PREF: 't-row';
 // ## ROW CONTAINER
 
 .#{$PREF} {
+  &--c { justify-content: center; }
   &--equal { bottom: $md; position: sticky; width: 100%; }
   &--equal > * { width: 50%; }
 

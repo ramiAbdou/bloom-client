@@ -15,6 +15,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
+import Row from '@containers/Row/Row';
 import TableStore from './Table.store';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';
 
@@ -42,9 +43,11 @@ const TableBannerMessage: React.FC = () => {
 };
 
 const TableBanner: React.FC = () => (
-  <Card className="o-table-banner">
-    <TableBannerMessage />
-    <TableBannerButton />
+  <Card>
+    <Row justify="center">
+      <TableBannerMessage />
+      <TableBannerButton />
+    </Row>
   </Card>
 );
 

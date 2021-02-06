@@ -44,21 +44,6 @@ $PREF: 'o-table';
 
 .#{$PREF}-select { background-color: inherit; margin: 0 $lg 0 0; }
 
-// ## SELECTED BANNER
-
-.#{$PREF}-banner {
-  @extend .flex-acc;
-  @extend .shadow--1;
-
-  background-color: white;
-  border-radius: $xs;
-  margin-bottom: $xs;
-  padding: $xs 0;
-}
-
-.#{$PREF}-banner > p { margin-right: $sm; }
-.#{$PREF}-banner > p > span { @extend .body--bold; }
-
 // ## COLUMN PANEL
 
 // Added a div before the name to make it take higher precedence.
@@ -105,16 +90,4 @@ div.#{$PREF}-col-panel { padding: $sm; }
   width: max-content;
 
   &--active { background-color: $primary; color: white; }
-}
-
-// ## TABLE BANNER
-
-.#{$PREF}-table {
-  @extend .flex-acc;
-
-  flex-direction: row;
-  margin-bottom: $xs;
-  padding: $xs 0;
-
-  > p { margin-right: $sm; }
 }
