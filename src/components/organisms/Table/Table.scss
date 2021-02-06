@@ -95,11 +95,12 @@ div.#{$PREF}-col-panel { padding: $sm; }
 
   > *:first-child { flex: 1; }
 
-  > *:last-child {
+  > *:nth-child(2) {
     flex: 4;
 
     > *:nth-child(1) { max-width: 200px; min-width: 200px; }
     > *:nth-child(2) { max-width: 75px; min-width: 75px; }
     > *:nth-child(3) { max-width: 200px; min-width: 200px; }
+    > button:nth-child(4) { > svg { color: $red; } }
   }
 }

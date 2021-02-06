@@ -1,11 +1,16 @@
 import { action, createContextStore } from 'easy-peasy';
 
-import { DropdownModel } from './Dropdown.types';
+import { DropdownModel, DropdownOptions } from './Dropdown.types';
+
+export const initialOptions: DropdownOptions = {
+  attribute: true,
+  multiple: false
+};
 
 export const dropdownModel: DropdownModel = {
   filteredValues: [],
   isOpen: false,
-  options: { multiple: false },
+  options: { attribute: true, multiple: false },
   searchString: '',
   setIsOpen: action((state, isOpen: boolean) => ({ ...state, isOpen })),
 

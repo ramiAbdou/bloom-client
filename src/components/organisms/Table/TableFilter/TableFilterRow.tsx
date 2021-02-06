@@ -1,6 +1,8 @@
 import deepequal from 'fast-deep-equal';
 import React, { useEffect, useState } from 'react';
+import { IoTrash } from 'react-icons/io5';
 
+import Button from '@atoms/Button/Button';
 import Input from '@atoms/Input/Input';
 import { IdProps } from '@constants';
 import Row from '@containers/Row/Row';
@@ -23,9 +25,11 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
     deepequal
   );
 
-  const rowIndex: number = TableFilterStore.useStoreState((state) => {
-    return state.filterIds.findIndex((filterId) => filterId === id);
+  const filterIds: string[] = TableFilterStore.useStoreState((state) => {
+    return state.filterIds;
   });
+
+  const rowIndex: number = filterIds.findIndex((filterId) => filterId === id);
 
   const joinOperator = TableFilterStore.useStoreState(
     (store) => store.joinOperator
@@ -53,6 +57,10 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
       });
   });
 
+  const removeFilter = TableFilterStore.useStoreActions(
+    (store) => store.removeFilter
+  );
+
   const setFilter = TableFilterStore.useStoreActions(
     (store) => store.setFilter
   );
@@ -66,25 +74,21 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
     else if (columnId !== questionId) setQuestionId(columnId);
   }, [columnId, defaultQuestionId]);
 
-  const onQuestionUpdate = (result: string[]) => {
-    const title = result[0];
-
+  const onQuestionUpdate = (result: string) => {
     const updatedColumnId = questions.find(
-      (question) => question.title === title
+      (question) => question.title === result
     )?.id;
 
     setFilter({ columnId: updatedColumnId, id });
     setQuestionId(updatedColumnId);
   };
 
-  const onOperatorUpdate = (result: string[]) => {
-    const operator = result[0] as TableFilterOperator;
-    setFilter({ id, operator });
+  const onOperatorUpdate = (result: string) => {
+    setFilter({ id, operator: result as TableFilterOperator });
   };
 
-  const onJoinOperatorUpdate = (result: string[]) => {
-    const operator = result[0];
-    setJoinOperator(operator as TableFilterJoinOperator);
+  const onJoinOperatorUpdate = (result: string) => {
+    setJoinOperator(result as TableFilterJoinOperator);
   };
 
   const onInputChange = (value: string) => setFilter({ id, value });
@@ -105,6 +109,7 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
 
       <Row spacing="xs">
         <Dropdown
+          options={{ attribute: false }}
           value={
             questions?.find((question) => question.id === questionId)?.title
           }
@@ -113,6 +118,7 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
         />
 
         <Dropdown
+          options={{ attribute: false }}
           value={['is']}
           values={['is', 'is not']}
           onSelect={onOperatorUpdate}
@@ -123,6 +129,10 @@ const TableFilterRow: React.FC<IdProps> = ({ id }) => {
           value={storedValue}
           onChange={onInputChange}
         />
+
+        <Button show={filterIds?.length >= 2} onClick={() => removeFilter(id)}>
+          <IoTrash />
+        </Button>
       </Row>
     </Row>
   );

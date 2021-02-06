@@ -8,6 +8,7 @@ import Dropdown from './Dropdown.store';
 
 const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
   const isOpen = Dropdown.useStoreState((store) => store.isOpen);
+  const attribute = Dropdown.useStoreState((store) => store.options.attribute);
   const multiple = Dropdown.useStoreState((store) => store.options.multiple);
   const storedValue = Dropdown.useStoreState((store) => store.value);
   const onSelect = Dropdown.useStoreState((store) => store.onSelect);
@@ -25,6 +26,8 @@ const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
         : (storedValue as string)
     );
   };
+
+  if (!attribute) return <p className="overflow-ellipses">{value}</p>;
 
   const css = cx('c-tag-attr m-dropdown-value', {
     'm-dropdown-value--cancel': multiple

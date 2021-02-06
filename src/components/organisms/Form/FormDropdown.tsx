@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
+import { DropdownValue } from '@molecules/Dropdown/Dropdown.types';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
@@ -18,7 +19,7 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ multiple, ...args }) => {
 
   useInitFormItem(args);
 
-  const onSelect = (result) => setValue({ key, value: result });
+  const onSelect = (result: DropdownValue) => setValue({ key, value: result });
 
   return (
     <FormItemContainer {...args}>

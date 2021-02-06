@@ -9,6 +9,7 @@ interface TableFilterModel {
   filterIds: string[];
   filters: Record<string, TableFilterArgs>;
   joinOperator: TableFilterJoinOperator;
+  removeFilter: Action<TableFilterModel, string>;
   setFilter: Action<TableFilterModel, Partial<TableFilterArgs>>;
   setJoinOperator: Action<TableFilterModel, TableFilterJoinOperator>;
 }
@@ -42,6 +43,20 @@ const tableFilterModel: TableFilterModel = {
   filters: {},
 
   joinOperator: 'And',
+
+  removeFilter: action((state, filterId: string) => {
+    const updatedFilters: Record<string, TableFilterArgs> = {
+      ...state.filters
+    };
+
+    delete updatedFilters[filterId];
+
+    const updatedFilterIds: string[] = [...state.filterIds].filter(
+      (id: string) => id !== filterId
+    );
+
+    return { ...state, filterIds: updatedFilterIds, filters: updatedFilters };
+  }),
 
   setFilter: action(
     (state, { id, ...filterArgs }: Partial<TableFilterArgs>) => {

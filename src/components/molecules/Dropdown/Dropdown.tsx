@@ -3,7 +3,7 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { BaseProps, ValueProps } from '@constants';
 import { cx } from '@util/util';
-import DropdownStore, { dropdownModel } from './Dropdown.store';
+import DropdownStore, { dropdownModel, initialOptions } from './Dropdown.store';
 import { DropdownModel } from './Dropdown.types';
 import DropdownClickBar from './DropdownClickBar';
 import DropdownOptions from './DropdownOptions';
@@ -49,7 +49,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   className,
   fit,
   onSelect,
-  options = { multiple: false },
+  options,
   value,
   values,
   ...rest
@@ -61,7 +61,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         ...rest,
         filteredValues: values,
         onSelect,
-        options,
+        options: { ...initialOptions, ...options },
         values
       }}
     >

@@ -3,6 +3,7 @@ import { Action } from 'easy-peasy';
 export type DropdownValue = string | string[];
 
 export interface DropdownOptions {
+  attribute?: boolean;
   multiple?: boolean; // True if the dropdown is a multiple select.
 }
 

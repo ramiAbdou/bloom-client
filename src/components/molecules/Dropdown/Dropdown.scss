@@ -96,7 +96,7 @@ div.#{$PREF}-bar {
 
 // When a user selects an option, it displays in this container.
 .#{$PREF}-value-ctr { @extend .flex-ac; }
-.#{$PREF}-value-ctr > button.c-tag-attr { overflow: visible; }
+.#{$PREF}-value-ctr > * { overflow: visible; }
 
 // The value that displays is just a tag except with no margin-left and that
 // has an option to delete, shown by the 'x' in the ::after rule.
