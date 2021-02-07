@@ -18,13 +18,14 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   values
 }) => {
   const isOpen = DropdownStore.useStoreState((store) => store.isOpen);
+  const storedValue = DropdownStore.useStoreState((store) => store.value);
   const storedValues = DropdownStore.useStoreState((store) => store.values);
   const setIsOpen = DropdownStore.useStoreActions((store) => store.setIsOpen);
   const setValue = DropdownStore.useStoreActions((store) => store.setValue);
   const setValues = DropdownStore.useStoreActions((store) => store.setValues);
 
   useEffect(() => {
-    if (value) setValue(value);
+    if (!deepequal(storedValue, value)) setValue(value);
   }, [value]);
 
   useEffect(() => {
