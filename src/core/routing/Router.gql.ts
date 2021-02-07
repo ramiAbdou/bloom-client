@@ -9,6 +9,7 @@ export const GET_QUESTIONS = query({
     'category',
     'id',
     'inExpandedDirectoryCard',
+    'options',
     'title',
     'type',
     { community: ['id'] }

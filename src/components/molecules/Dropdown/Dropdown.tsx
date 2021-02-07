@@ -1,29 +1,35 @@
+import deepequal from 'fast-deep-equal';
 import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { BaseProps, ValueProps } from '@constants';
+import { BaseProps } from '@constants';
 import { cx } from '@util/util';
 import DropdownStore, { dropdownModel, initialOptions } from './Dropdown.store';
 import { DropdownModel } from './Dropdown.types';
 import DropdownClickBar from './DropdownClickBar';
 import DropdownOptions from './DropdownOptions';
 
-interface DropdownContentProps extends BaseProps, ValueProps {
-  fit?: boolean;
-}
+type DropdownContentProps = Partial<DropdownProps>;
 
 const DropdownContent: React.FC<DropdownContentProps> = ({
   className,
   fit,
-  value
+  value,
+  values
 }) => {
   const isOpen = DropdownStore.useStoreState((store) => store.isOpen);
+  const storedValues = DropdownStore.useStoreState((store) => store.values);
   const setIsOpen = DropdownStore.useStoreActions((store) => store.setIsOpen);
   const setValue = DropdownStore.useStoreActions((store) => store.setValue);
+  const setValues = DropdownStore.useStoreActions((store) => store.setValues);
 
   useEffect(() => {
     if (value) setValue(value);
   }, [value]);
+
+  useEffect(() => {
+    if (!deepequal(storedValues, values)) setValues(values ?? []);
+  }, [values]);
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   useOnClickOutside(ref, () => isOpen && setIsOpen(false));
@@ -46,14 +52,10 @@ interface DropdownProps extends BaseProps, Partial<DropdownModel> {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
-  className,
-  fit,
   onSelect,
   options,
   show,
-  value,
-  values,
-  ...rest
+  ...props
 }) => {
   if (show === false) return null;
 
@@ -61,14 +63,11 @@ const Dropdown: React.FC<DropdownProps> = ({
     <DropdownStore.Provider
       runtimeModel={{
         ...dropdownModel,
-        ...rest,
-        filteredValues: values,
         onSelect,
-        options: { ...initialOptions, ...options },
-        values
+        options: { ...initialOptions, ...options }
       }}
     >
-      <DropdownContent className={className} fit={fit} value={value} />
+      <DropdownContent {...props} />
     </DropdownStore.Provider>
   );
 };

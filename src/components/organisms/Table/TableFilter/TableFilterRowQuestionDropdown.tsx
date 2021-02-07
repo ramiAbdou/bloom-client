@@ -40,8 +40,10 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
   );
 
   useEffect(() => {
-    if (!questionId && defaultQuestionId) setQuestionId(defaultQuestionId);
-    else if (columnId !== questionId) setQuestionId(columnId);
+    if (!questionId && defaultQuestionId) {
+      setQuestionId(defaultQuestionId);
+      setFilter({ columnId: defaultQuestionId, id });
+    } else if (columnId !== questionId) setQuestionId(columnId);
   }, [columnId, defaultQuestionId]);
 
   const onQuestionUpdate = (result: string) => {
@@ -49,7 +51,7 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
       (question) => question.title === result
     )?.id;
 
-    setFilter({ columnId: updatedColumnId, id });
+    setFilter({ columnId: updatedColumnId, id, value: null });
     setQuestionId(updatedColumnId);
   };
 

@@ -16,6 +16,7 @@ export interface DropdownModel {
   setSearchString: Action<DropdownModel, string>;
   setIsOpen: Action<DropdownModel, boolean>;
   setValue: Action<DropdownModel, DropdownValue>;
+  setValues: Action<DropdownModel, string[]>;
   setWidth: Action<DropdownModel, number>;
   value: DropdownValue;
   values: string[];

@@ -25,6 +25,13 @@ export const dropdownModel: DropdownModel = {
   }),
 
   setValue: action((state, value) => ({ ...state, value })),
+
+  setValues: action((state, values) => ({
+    ...state,
+    filteredValues: values,
+    values
+  })),
+
   setWidth: action((state, width: number) => ({ ...state, width })),
   value: null,
   values: [],
