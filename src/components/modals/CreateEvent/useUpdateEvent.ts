@@ -13,10 +13,11 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
   });
 
   const onSubmit = async ({
-    actions,
+    closeModal,
     db,
     items,
-    setError
+    setError,
+    showToast
   }: OnFormSubmitArgs) => {
     const base64String = items.COVER_IMAGE?.value;
 
@@ -47,8 +48,8 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
 
     await updateEvent(args);
 
-    actions.toast.showToast({ message: 'Event updated!' });
-    actions.modal.closeModal();
+    showToast({ message: 'Event updated!' });
+    closeModal();
   };
 
   return onSubmit;

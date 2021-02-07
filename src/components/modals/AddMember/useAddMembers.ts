@@ -16,10 +16,12 @@ const useAddMembers = (): OnFormSubmit => {
     query: ADD_MEMBERS
   });
 
-  const onSubmit = async ({ actions, items, setError }: OnFormSubmitArgs) => {
-    const { closeModal } = actions.modal;
-    const { showToast } = actions.toast;
-
+  const onSubmit = async ({
+    closeModal,
+    items,
+    setError,
+    showToast
+  }: OnFormSubmitArgs) => {
     // In the first pass, format all the values by looking at the item's
     // category and id.
     const memberData: Record<string, AddMemberArgs> = Object.values(

@@ -52,12 +52,13 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       setIsLoading(true);
 
       await onSubmit({
-        actions: globalStore.getActions(),
+        closeModal: globalStore.getActions()?.modal?.closeModal,
         db: globalStore.getState()?.db,
         goForward: storyStore?.getActions()?.goForward,
         items: validatedItems,
         setError,
         setStoryValue: storyStore?.getActions()?.setValue,
+        showToast: globalStore.getActions()?.toast?.showToast,
         storyItems: storyStore?.getState()?.items
       });
 

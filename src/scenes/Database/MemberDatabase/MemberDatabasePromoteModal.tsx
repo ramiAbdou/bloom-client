@@ -47,10 +47,11 @@ const MemberDatabasePromoteForm: React.FC = () => {
     schema: [Schema.MEMBER]
   });
 
-  const onSubmit = async ({ actions, setError }: OnFormSubmitArgs) => {
-    const { closeModal } = actions.modal;
-    const { showToast } = actions.toast;
-
+  const onSubmit = async ({
+    closeModal,
+    setError,
+    showToast
+  }: OnFormSubmitArgs) => {
     const { error } = await promoteMembers({ memberIds });
 
     if (error) {

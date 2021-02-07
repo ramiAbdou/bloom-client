@@ -7,6 +7,7 @@ import {
   ShowProps,
   ValueProps
 } from '@constants';
+import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { DbModel } from '@store/Db/Db.types';
 import { StoreModel } from '@store/Store';
 
@@ -60,12 +61,13 @@ export interface FormProps extends ClassNameProps, ShowProps {
 }
 
 export type OnFormSubmitArgs = {
-  actions?: Actions<StoreModel>;
+  closeModal?: ActionCreator;
   db?: State<DbModel>;
   goForward?: ActionCreator;
   items: Record<string, FormItemData>;
   setError: ActionCreator<string>;
   setStoryValue: ActionCreator<SetValueArgs>;
+  showToast?: ActionCreator<ToastOptions>;
   storyItems?: Record<string, FormItemData>;
 };
 

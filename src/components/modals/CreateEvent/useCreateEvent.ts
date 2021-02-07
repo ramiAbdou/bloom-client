@@ -17,7 +17,12 @@ const useCreateEvent = (): OnFormSubmit => {
     schema: Schema.EVENT
   });
 
-  const onSubmit = async ({ actions, items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    closeModal,
+    items,
+    setError,
+    showToast
+  }: OnFormSubmitArgs) => {
     const endDateOnly = day(items.END_DATE?.value)?.format('MMM D, YYYY');
     const endTimeOnly = day(items.END_TIME?.value)?.format('h:mm A');
     const startDateOnly = day(items.START_DATE?.value)?.format('MMM D, YYYY');
@@ -58,8 +63,8 @@ const useCreateEvent = (): OnFormSubmit => {
 
     await createEvent(args);
 
-    actions.toast.showToast({ message: 'Event created!' });
-    actions.modal.closeModal();
+    showToast({ message: 'Event created!' });
+    closeModal();
   };
 
   return onSubmit;
