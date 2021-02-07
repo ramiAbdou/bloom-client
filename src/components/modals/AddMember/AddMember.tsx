@@ -8,26 +8,17 @@ import AddMemberStore, {
 } from './AddMember.store';
 import AddMemberForm from './AddMemberForm';
 
-const AddMemberContent: React.FC = () => {
-  const admin = AddMemberStore.useStoreState((store) => store.admin);
-  const clearRows = AddMemberStore.useStoreActions((store) => store.clearRows);
-  const onClose = () => clearRows();
-
+const AddMemberModal: React.FC<Pick<AddMemberModel, 'admin'>> = ({ admin }) => {
   return (
     <Modal
       id={admin ? ModalType.ADD_ADMINS : ModalType.ADD_MEMBERS}
       options={{ width: 750 }}
-      onClose={onClose}
     >
-      <AddMemberForm />
+      <AddMemberStore.Provider runtimeModel={{ ...addMemberModel, admin }}>
+        <AddMemberForm />
+      </AddMemberStore.Provider>
     </Modal>
   );
 };
-
-const AddMemberModal: React.FC<Pick<AddMemberModel, 'admin'>> = ({ admin }) => (
-  <AddMemberStore.Provider runtimeModel={{ ...addMemberModel, admin }}>
-    <AddMemberContent />
-  </AddMemberStore.Provider>
-);
 
 export default AddMemberModal;

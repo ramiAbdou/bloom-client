@@ -34,6 +34,7 @@ export interface FormItemData
     Partial<FormQuestion>,
     ShowProps {
   error?: string;
+  metadata?: any;
   questionId?: string;
   value?: any;
   validate?: FormValidate;

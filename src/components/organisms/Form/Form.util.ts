@@ -19,14 +19,19 @@ export const getError = (item: FormItemData): string => {
   return null;
 };
 
+/**
+ * Returns the unique identifier of the Form item.
+ */
 export const getFormItemKey = ({
   category,
   id,
+  metadata,
   questionId,
   title
 }: FormItemData) => {
   if (questionId) return questionId;
   if (id) return id;
+  if (category && metadata) return `${metadata.toString()}-${category}`;
   if (category) return category;
   if (title) return title;
   return null;

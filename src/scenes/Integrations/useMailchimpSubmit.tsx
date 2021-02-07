@@ -9,12 +9,12 @@ import {
 
 const useMailchimpSubmit = (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const [updateMailchimpListId] = useMutation<any, UpdateMailchimpListIdArgs>({
     name: 'updateMailchimpListId',
-    query: UPDATE_MAILCHIMP_LIST_ID
+    query: UPDATE_MAILCHIMP_LIST_ID,
+    schema: Schema.INTEGRATIONS
   });
 
   const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
@@ -24,18 +24,13 @@ const useMailchimpSubmit = (): OnFormSubmit => {
       ({ name }) => name === selectedMailchimpList
     );
 
-    const { data: integrations, error } = await updateMailchimpListId({
-      mailchimpListId
-    });
+    const { error } = await updateMailchimpListId({ mailchimpListId });
 
     if (error) {
       setError(error);
       return;
     }
 
-    // If the function is successful, update the entities with the new
-    // Mailchimp information and close the modal.
-    mergeEntities({ data: integrations, schema: Schema.INTEGRATIONS });
     closeModal();
   };
 

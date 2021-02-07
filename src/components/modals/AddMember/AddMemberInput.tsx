@@ -28,18 +28,24 @@ const AddMemberInput: React.FC<IdProps> = ({ id }) => {
     <div className="mo-add-member-input-ctr">
       <Row align="baseline" className="mo-add-member-input">
         <AddMemberInputTrashButton id={id} />
-        <FormShortText id={`${id}=FIRST_NAME`} placeholder="First Name" />
-        <FormShortText id={`${id}=LAST_NAME`} placeholder="Last Name" />
 
         <FormShortText
-          category="EMAIL"
-          id={`${id}=EMAIL`}
-          placeholder="Email"
+          category="FIRST_NAME"
+          metadata={id}
+          placeholder="First Name"
         />
+
+        <FormShortText
+          category="LAST_NAME"
+          metadata={id}
+          placeholder="Last Name"
+        />
+
+        <FormShortText category="EMAIL" metadata={id} placeholder="Email" />
 
         <FormMultipleSelect
           plain
-          id={`${id}=CHECKBOX`}
+          metadata={id}
           options={['Make Admin']}
           required={false}
           show={!!isOwner && !admin}
