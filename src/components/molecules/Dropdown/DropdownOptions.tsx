@@ -3,15 +3,17 @@ import React from 'react';
 
 import { ValueProps } from '@constants';
 import Show from '@containers/Show';
+import { cx } from '@util/util';
 import DropdownStore from './Dropdown.store';
 import DropdownSearch from './DropdownSearch';
 import useSelectOption from './useSelectOption';
 
 const DropdownOption: React.FC<ValueProps> = ({ value }) => {
   const selectOption = useSelectOption(value);
+  const css = cx('m-dropdown-option', {});
 
   return (
-    <button className="m-dropdown-option" type="button" onClick={selectOption}>
+    <button className={css} type="button" onClick={selectOption}>
       <p>{value}</p>
     </button>
   );
@@ -24,11 +26,11 @@ const DropdownOptionList: React.FC = () => {
 
   return (
     <Show show={!!options?.length}>
-      <div>
+      <ul>
         {options.map((value: string) => (
           <DropdownOption key={value} value={value} />
         ))}
-      </div>
+      </ul>
     </Show>
   );
 };

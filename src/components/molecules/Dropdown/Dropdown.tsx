@@ -4,8 +4,8 @@ import useOnClickOutside from 'use-onclickoutside';
 
 import { BaseProps } from '@constants';
 import { cx } from '@util/util';
-import DropdownStore, { dropdownModel, initialOptions } from './Dropdown.store';
-import { DropdownModel } from './Dropdown.types';
+import DropdownStore, { dropdownModel } from './Dropdown.store';
+import { defaultOptions, DropdownModel } from './Dropdown.types';
 import DropdownClickBar from './DropdownClickBar';
 import DropdownOptions from './DropdownOptions';
 
@@ -65,7 +65,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       runtimeModel={{
         ...dropdownModel,
         onSelect,
-        options: { ...initialOptions, ...options }
+        options: { ...defaultOptions, ...options }
       }}
     >
       <DropdownContent {...props} />

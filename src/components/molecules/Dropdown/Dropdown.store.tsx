@@ -1,11 +1,6 @@
 import { action, createContextStore } from 'easy-peasy';
 
-import { DropdownModel, DropdownOptions } from './Dropdown.types';
-
-export const initialOptions: DropdownOptions = {
-  attribute: true,
-  multiple: false
-};
+import { DropdownModel } from './Dropdown.types';
 
 export const dropdownModel: DropdownModel = {
   filteredValues: [],
@@ -17,7 +12,7 @@ export const dropdownModel: DropdownModel = {
   setSearchString: action((state, searchString: string) => {
     return {
       ...state,
-      filteredOptions: [...state.values].filter((option: string) => {
+      filteredValues: [...state.values].filter((option: string) => {
         return option?.toLowerCase().includes(searchString.toLowerCase());
       }),
       searchString

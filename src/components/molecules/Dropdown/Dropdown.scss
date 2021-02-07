@@ -61,6 +61,8 @@ $PREF: 'm-dropdown';
   width: 100%;
 }
 
+// ## DROPDOWN OPTION
+
 .#{$PREF}-option {
   @extend .flex-ac;
   
@@ -69,9 +71,9 @@ $PREF: 'm-dropdown';
   width: 100%;
 
   @include HOVER { background-color: $gray-6; }
-}
 
-.#{$PREF}-option > p { @extend .c-tag-attr; margin-left: $xs; }
+  > p { @extend .c-tag-attr; margin-left: $xs; }
+}
 
 // ## DROPDOWN BAR CONTAINER
 

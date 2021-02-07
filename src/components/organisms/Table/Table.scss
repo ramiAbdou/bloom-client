@@ -93,8 +93,10 @@ div.#{$PREF}-col-panel { padding: $sm; }
 .#{$PREF}-filter-row {
   margin-bottom: $sm;
 
+  // Join operator: WHERE, AND, OR.
   > *:first-child { flex: 1; }
 
+  // Contains main dropdowns/input for filter.
   > *:nth-child(2) {
     flex: 4;
 

@@ -1,11 +1,16 @@
 import React from 'react';
 
-import Dropdown from './Dropdown.store';
+import Show from '@containers/Show';
+import DropdownStore from './Dropdown.store';
 
 const DropdownSearch: React.FC = () => {
-  const searchString = Dropdown.useStoreState((store) => store.searchString);
+  const show: boolean = DropdownStore.useStoreState(
+    ({ values }) => values?.length >= 5
+  );
 
-  const setSearchString = Dropdown.useStoreActions(
+  const value = DropdownStore.useStoreState((store) => store.searchString);
+
+  const setSearchString = DropdownStore.useStoreActions(
     (store) => store.setSearchString
   );
 
@@ -14,13 +19,15 @@ const DropdownSearch: React.FC = () => {
   };
 
   return (
-    <input
-      className="m-dropdown-search"
-      placeholder="Search..."
-      type="text"
-      value={searchString}
-      onChange={onChange}
-    />
+    <Show show={show}>
+      <input
+        className="m-dropdown-search"
+        placeholder="Search..."
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+    </Show>
   );
 };
 

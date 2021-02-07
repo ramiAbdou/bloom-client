@@ -7,6 +7,11 @@ export interface DropdownOptions {
   multiple?: boolean; // True if the dropdown is a multiple select.
 }
 
+export const defaultOptions: DropdownOptions = {
+  attribute: true,
+  multiple: false
+};
+
 export interface DropdownModel {
   filteredValues: string[];
   isOpen: boolean;
