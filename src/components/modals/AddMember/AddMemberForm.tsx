@@ -4,8 +4,10 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
+import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import IdStore from '@store/Id.store';
 import { useStoreActions } from '@store/Store';
 import AddMemberStore from './AddMember.store';
 import AddMemberInput from './AddMemberInput';
@@ -38,7 +40,7 @@ const AddMemberFormAddAnotherButton: React.FC = () => {
   const onClick = () => addRow();
 
   return (
-    <Button tertiary onClick={onClick}>
+    <Button tertiary className="mb-md" onClick={onClick}>
       + Add Another
     </Button>
   );
@@ -47,13 +49,15 @@ const AddMemberFormAddAnotherButton: React.FC = () => {
 const AddMemberFormRows: React.FC = () => {
   const rows = AddMemberStore.useStoreState((store) => store.rows);
 
-  console.log(rows);
-
   return (
     <ul>
-      {rows.map((id) => (
-        <AddMemberInput key={id} id={id} />
-      ))}
+      {rows.map((id) => {
+        return (
+          <IdStore.Provider key={id} runtimeModel={{ id }}>
+            <AddMemberInput />
+          </IdStore.Provider>
+        );
+      })}
     </ul>
   );
 };
@@ -75,6 +79,7 @@ const AddMemberForm: React.FC = () => {
 
       <AddMemberFormRows />
       <AddMemberFormAddAnotherButton />
+      <FormErrorMessage />
       <AddMemberFormActions />
     </Form>
   );

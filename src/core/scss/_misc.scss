@@ -126,3 +126,12 @@ section::-webkit-scrollbar { display: none; }
 }
 
 .preserve-newlines { white-space: pre-line; }
+
+// ## TRASH BUTTON
+
+.misc-trash {
+  @include HOVER { > svg { color: $red; } }
+
+  > svg { transition: color 300ms; }
+  &:active { > svg { color: $red; } }
+}

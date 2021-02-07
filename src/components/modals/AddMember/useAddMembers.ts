@@ -4,14 +4,11 @@ import {
   OnFormSubmit,
   OnFormSubmitArgs
 } from '@organisms/Form/Form.types';
-import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
 import { ADD_MEMBERS, AddMemberArgs, AddMembersArgs } from './AddMember.gql';
 import AddMemberStore from './AddMember.store';
 
 const useAddMembers = (): OnFormSubmit => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   const [addMembers] = useMutation<any, AddMembersArgs>({
@@ -19,27 +16,28 @@ const useAddMembers = (): OnFormSubmit => {
     query: ADD_MEMBERS
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ actions, items, setError }: OnFormSubmitArgs) => {
+    const { closeModal } = actions.modal;
+    const { showToast } = actions.toast;
+
     // In the first pass, format all the values by looking at the item's
     // category and id.
-    const members: Record<string, AddMemberArgs> = Object.values(items).reduce(
-      (acc: Record<string, AddMemberArgs>, data: FormItemData) => {
-        const { category, metadata: inputId, type, value } = data;
+    const memberData: Record<string, AddMemberArgs> = Object.values(
+      items
+    ).reduce((acc: Record<string, AddMemberArgs>, data: FormItemData) => {
+      const { category, metadata: inputId, type, value } = data;
 
-        const formattedValue = takeFirst([
-          [category === 'FIRST_NAME', { firstName: value }],
-          [category === 'LAST_NAME', { lastName: value }],
-          [category === 'EMAIL', { email: value }],
-          [type === 'MULTIPLE_SELECT', { isAdmin: admin || !!value.length }]
-        ]);
+      const formattedValue = takeFirst([
+        [category === 'FIRST_NAME', { firstName: value }],
+        [category === 'LAST_NAME', { lastName: value }],
+        [category === 'EMAIL', { email: value }],
+        [type === 'MULTIPLE_SELECT', { isAdmin: admin || !!value.length }]
+      ]);
 
-        return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };
-      },
-      {}
-    );
+      return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };
+    }, {});
 
-    console.log(members);
-
+    const members: AddMemberArgs[] = Object.values(memberData);
     const { error } = await addMembers({ members: Object.values(members) });
 
     if (error) {

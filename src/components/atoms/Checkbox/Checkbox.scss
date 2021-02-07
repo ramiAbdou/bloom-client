@@ -34,6 +34,8 @@ $PREF: 'c-misc-checkbox';
   }
 
   &--plain {
+    margin-right: $xs;
+
     > span,
     > svg { margin-top: 0; }
   }
