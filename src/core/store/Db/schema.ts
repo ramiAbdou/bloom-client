@@ -75,6 +75,8 @@ const Event = new schema.Entity(
         {}
       ]);
 
+      if (parent.attendeeId) console.log(processedData);
+
       return { ...value, ...processedData, eventId: value.id };
     }
   }

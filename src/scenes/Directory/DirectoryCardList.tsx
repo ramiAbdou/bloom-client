@@ -20,15 +20,18 @@ const DirectoryCardList: React.FC = () => {
           ?.map((dataId: string) => db.byDataId[dataId])
           ?.filter((entity: IMemberData) => {
             const question: IQuestion = db.byQuestionId[entity.question];
-            return question?.inDirectoryCard;
+            return !!question?.inExpandedDirectoryCard;
           });
 
         return { ...member, ...user, data, memberId, userId: user?.id };
       })
       ?.filter((member) => member?.status === 'ACCEPTED')
       ?.filter((member) => !!member?.userId)
+      ?.filter((member) => !member?.deletedAt)
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'));
   }, deepequal);
+
+  // members.forEach((member) => console.log(member.data));
 
   return (
     <MasonryList

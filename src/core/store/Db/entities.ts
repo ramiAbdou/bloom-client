@@ -4,6 +4,7 @@ type IdString = string;
 
 export interface BaseEntity {
   createdAt: IdString;
+  deletedAt?: IdString;
   id: IdString;
   updatedAt: IdString;
 }

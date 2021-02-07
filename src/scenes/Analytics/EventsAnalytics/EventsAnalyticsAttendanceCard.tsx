@@ -14,7 +14,7 @@ const EventsAnalyticsTotalCard: React.FC = () => {
     if (!pastEvents?.length) return null;
 
     const totalAttendees = pastEvents?.reduce((acc: number, event: IEvent) => {
-      return acc + event?.attendees?.length;
+      return event?.attendees ? acc + event?.attendees?.length : acc;
     }, 0);
 
     return Math.ceil(totalAttendees / pastEvents.length);

@@ -25,7 +25,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
 
     const pastAttendees: IEventAttendee[] = pastEvents
       ?.reduce((acc: string[], event: IEvent) => {
-        return acc.concat(event?.attendees);
+        return event?.attendees ? acc.concat(event.attendees) : acc;
       }, [])
       ?.map((attendeeId: string) => db.byAttendeeId[attendeeId]);
 

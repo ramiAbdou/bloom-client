@@ -2,7 +2,7 @@ import React from 'react';
 
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
-import { IEvent } from '@store/Db/entities';
+import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { GET_PAST_EVENTS } from '../../Events/Events.gql';
 import {
@@ -21,13 +21,11 @@ const EventsAnalytics: React.FC = () => {
     schema: [Schema.EVENT]
   });
 
-  const { data, loading: loading2 } = useQuery<IEvent[]>({
+  const { loading: loading2 } = useQuery<IEventAttendee[]>({
     name: 'getPastEventAttendees',
     query: GET_PAST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
-
-  console.log(data);
 
   const { loading: loading3 } = useQuery<IEvent[]>({
     name: 'getPastEventGuests',

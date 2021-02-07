@@ -8,6 +8,7 @@ export const GET_QUESTIONS = query({
   fields: [
     'category',
     'id',
+    'inDirectoryCard',
     'inExpandedDirectoryCard',
     'options',
     'title',

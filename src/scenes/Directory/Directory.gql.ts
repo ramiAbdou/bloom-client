@@ -12,18 +12,3 @@ export const GET_DIRECTORY = query({
   ],
   operation: 'getDirectory'
 }).query;
-
-// ## GET DIRECTORY QUESTIONS
-
-export const GET_DIRECTORY_QUESTIONS = query({
-  fields: [
-    'category',
-    'id',
-    'inDirectoryCard',
-    'inExpandedDirectoryCard',
-    'title',
-    'type',
-    { community: ['id'] }
-  ],
-  operation: 'getQuestions'
-}).query;
