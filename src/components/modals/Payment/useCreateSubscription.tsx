@@ -26,7 +26,7 @@ const useCreateSubscription = (): OnFormSubmit => {
   >({
     name: 'createSubscription',
     query: CREATE_SUBSCRIPTION,
-    schema: Schema.MEMBER
+    schema: Schema.MEMBER_PAYMENT
   });
 
   const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {

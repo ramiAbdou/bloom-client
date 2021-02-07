@@ -29,28 +29,23 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
       }, [])
       ?.map((attendeeId: string) => db.byAttendeeId[attendeeId]);
 
-    const result = pastAttendees?.reduce(
-      (
-        acc,
-        { email, firstName, lastName, member: memberId }: IEventAttendee
-      ) => {
-        const member: IMember = db.byMemberId[memberId];
-        const previousValue = acc[email];
+    const result = pastAttendees?.reduce((acc, attendee: IEventAttendee) => {
+      const { email, firstName, lastName, member: memberId } = attendee ?? {};
+      const member: IMember = db.byMemberId[memberId];
+      const previousValue = acc[email];
 
-        return {
-          ...acc,
-          [email]: {
-            email,
-            fullName: `${firstName} ${lastName}`,
-            id: email,
-            memberId,
-            userId: member?.user,
-            value: previousValue ? previousValue?.value + 1 : 1
-          }
-        };
-      },
-      {}
-    );
+      return {
+        ...acc,
+        [email]: {
+          email,
+          fullName: `${firstName} ${lastName}`,
+          id: email,
+          memberId,
+          userId: member?.user,
+          value: previousValue ? previousValue?.value + 1 : 1
+        }
+      };
+    }, {});
 
     if (!result) return [];
 

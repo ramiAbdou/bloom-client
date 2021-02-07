@@ -18,7 +18,7 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
   const [createSinglePayment] = useMutation<any, CreateLifetimePaymentArgs>({
     name: 'createLifetimePayment',
     query: CREATE_LIFETIME_PAYMENT,
-    schema: Schema.MEMBER
+    schema: Schema.MEMBER_PAYMENT
   });
 
   const onSubmit = async ({ goForward, setError }: OnFormSubmitArgs) => {
