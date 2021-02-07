@@ -46,7 +46,7 @@ const IndividualEventAttendeeListContent: React.FC = () => {
   const users: IndividualEventAttendeeProps[] = useStoreState(({ db }) => {
     return db.event?.attendees
       ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
-      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'DESC'))
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt'))
       ?.reduce((acc, attendee: IEventAttendee) => {
         if (attendee.member) {
           const member: IMember = db.byMemberId[attendee.member];

@@ -11,6 +11,7 @@ import {
 import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment, IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 
 const MembershipPaymentTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
@@ -20,10 +21,13 @@ const MembershipPaymentTable: React.FC = () => {
       ?.map((payment: IMemberPayment) => {
         const { createdAt, id, stripeInvoiceUrl: receipt } = payment;
         const type: IMemberType = db.byTypeId[payment.type];
+
         const amount = `$${(payment.amount / 100).toFixed(2)}`;
         const paidOn = day(createdAt).format('MMM DD, YYYY');
-        return { amount, id, paidOn, receipt, type: type?.name };
-      });
+
+        return { amount, createdAt, id, paidOn, receipt, type: type?.name };
+      })
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt'));
   });
 
   const columns: TableColumn[] = [

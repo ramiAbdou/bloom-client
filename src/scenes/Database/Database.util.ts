@@ -78,7 +78,7 @@ export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
     );
   });
 
-  return rows?.sort((a, b) => sortObjects(a, b, sortQuestionId, 'DESC'));
+  return rows?.sort((a, b) => sortObjects(a, b, sortQuestionId));
 };
 
 export default getMemberTableRow;

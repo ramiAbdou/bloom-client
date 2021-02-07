@@ -59,7 +59,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
       }, []);
 
     return result;
-  })?.sort((a, b) => sortObjects(a, b, 'paidOn', 'DESC'));
+  })?.sort((a, b) => sortObjects(a, b, 'paidOn'));
 
   const columns: TableColumn[] = [
     { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },

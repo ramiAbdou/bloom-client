@@ -49,7 +49,7 @@ export function sortObjects<T>(
   a: T,
   b: T,
   keys: keyof T | (keyof T)[],
-  direction: 'ASC' | 'DESC' = 'ASC'
+  direction: 'ASC' | 'DESC' = 'DESC'
 ) {
   const order = direction === 'ASC' ? 1 : -1;
 

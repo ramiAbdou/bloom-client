@@ -20,7 +20,7 @@ const EventsUpcomingContent: React.FC = () => {
     return db.community?.events
       ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
-      ?.sort((a, b) => sortObjects(a, b, 'startTime'));
+      ?.sort((a, b) => sortObjects(a, b, 'startTime', 'ASC'));
   });
 
   return (

@@ -62,7 +62,7 @@ const EventsCardPeople: React.FC = () => {
 
         return [...acc, { ...person }];
       }, [])
-      ?.sort((a: IUser, b: IUser) => sortObjects(a, b, 'pictureUrl', 'DESC'));
+      ?.sort((a: IUser, b: IUser) => sortObjects(a, b, 'pictureUrl'));
   });
 
   return (

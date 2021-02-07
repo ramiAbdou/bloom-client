@@ -21,11 +21,13 @@ const EventsAnalytics: React.FC = () => {
     schema: [Schema.EVENT]
   });
 
-  const { loading: loading2 } = useQuery<IEvent[]>({
+  const { data, loading: loading2 } = useQuery<IEvent[]>({
     name: 'getPastEventAttendees',
     query: GET_PAST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
+
+  console.log(data);
 
   const { loading: loading3 } = useQuery<IEvent[]>({
     name: 'getPastEventGuests',

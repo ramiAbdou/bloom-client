@@ -24,7 +24,7 @@ const EventsPastList: React.FC = () => {
           attendees.has(attendeeId)
         );
       })
-      ?.sort((a, b) => sortObjects(a, b, 'startTime', 'DESC'));
+      ?.sort((a, b) => sortObjects(a, b, 'startTime'));
   });
 
   return (

@@ -27,7 +27,7 @@ const DirectoryCardList: React.FC = () => {
       })
       ?.filter((member) => member?.status === 'ACCEPTED')
       ?.filter((member) => !!member?.userId)
-      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'DESC'));
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt'));
   }, deepequal);
 
   return (

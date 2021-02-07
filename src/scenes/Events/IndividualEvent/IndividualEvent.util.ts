@@ -130,6 +130,6 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
 
   return Object.values(totalRecord)?.sort((a, b) =>
     // @ts-ignore
-    sortObjects(a, b, ['joinedAt', 'rsvpdAt'], 'DESC')
+    sortObjects(a, b, ['joinedAt', 'rsvpdAt'])
   ) as TableRow[];
 };

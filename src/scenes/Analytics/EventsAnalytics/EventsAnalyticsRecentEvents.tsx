@@ -30,10 +30,11 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
           numAttendees: attendees?.length ?? 0,
           numGuests: guests?.length ?? 0,
           numViewers: watches?.length ?? 0,
+          startTime,
           title
         };
       })
-      .sort((a, b) => sortObjects(a, b, 'date', 'DESC'));
+      .sort((a, b) => sortObjects(a, b, 'startTime'));
   });
 
   const columns: TableColumn[] = [
