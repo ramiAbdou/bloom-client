@@ -18,7 +18,7 @@ const AdminDatabaseDemoteButton: React.FC = () => {
   return (
     <DatabaseAction
       Icon={IoArrowDownCircle}
-      className="s-database-action--demote"
+      className="o-table-action--demote"
       disabled={disabled}
       tooltip="Demote to Member"
       onClick={onClick}

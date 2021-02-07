@@ -2,12 +2,12 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import TableStore from '@organisms/Table/Table.store';
+import TableFilterButton from '@organisms/Table/TableFilter/TableFilterButton';
 import SearchBar from '@organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';
 import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
 import DeleteMembersButton from './MemberDatabaseDeleteButton';
 import MemberDatabaseExportButton from './MemberDatabaseExportButton';
-import MemberDatabaseFilterButton from './MemberDatabaseFilterButton';
 import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 
@@ -40,7 +40,7 @@ const MemberDatabaseQuickContainer: React.FC = () => {
 const MemberDatabaseActions: React.FC = () => (
   <Row spaceBetween className="mb-sm">
     <MemberDatabaseQuickContainer />
-    <MemberDatabaseFilterButton />
+    <TableFilterButton />
     <MemberDatabaseButtons />
   </Row>
 );

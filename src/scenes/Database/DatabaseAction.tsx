@@ -18,9 +18,9 @@ const DatabaseAction: React.FC<DatabaseActionProps> = ({
   const { disabled } = props;
   const ref: MutableRefObject<HTMLElement> = useTooltip(tooltip);
 
-  const css = cx('s-database-action', {
+  const css = cx('o-table-action', {
     [className]: className,
-    's-database-action--disabled': disabled
+    'o-table-action--disabled': disabled
   });
 
   return (

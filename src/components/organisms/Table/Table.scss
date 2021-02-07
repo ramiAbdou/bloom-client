@@ -88,6 +88,30 @@ div.#{$PREF}-col-panel { padding: $sm; }
   &--active { background-color: $primary; color: white; }
 }
 
+// ## TABLE ACTION
+
+.#{$PREF}-action {
+  background-color: $gray-5;
+  border-radius: $xxs;
+  height: $lg;
+  width: $lg;
+
+  // !important overrides the normal .c-btn styling for hover state.
+
+  @include HOVER { opacity: 1 !important; }
+
+  &--demote { &::before { margin-left: -$xxs; } }
+  &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
+  &--delete > svg { color: $red; }
+  &--disabled > svg { color: $gray-3; }
+
+  > svg { @extend .react-icon--lg; }
+}
+
+// For all buttons that are not the Promote to Admin button, we set the tooltip
+// to be to the right side of the icon.
+:not(a) > .#{$PREF}-action { &:last-of-type { @extend .tooltip--right; } }
+
 // ## TABLE FILTER
 
 .#{$PREF}-filter-row {

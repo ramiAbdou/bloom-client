@@ -12,7 +12,7 @@ const AdminDatabaseDeleteButton: React.FC = () => {
   return (
     <DatabaseAction
       Icon={IoTrash}
-      className="s-database-action--delete"
+      className="o-table-action--delete"
       tooltip="Delete Admin"
       onClick={onClick}
     />

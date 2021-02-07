@@ -30,7 +30,7 @@ const MemberDatabasePromoteButton: React.FC = () => {
   return (
     <DatabaseAction
       Icon={IoArrowUpCircle}
-      className="s-database-action--promote"
+      className="o-table-action--promote"
       disabled={tooManySelected || selfSelected}
       tooltip={tooltip}
       onClick={onClick}
