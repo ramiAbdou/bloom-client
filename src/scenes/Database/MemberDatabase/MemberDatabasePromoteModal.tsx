@@ -1,20 +1,38 @@
+import deline from 'deline';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import useMutation from '@hooks/useMutation';
+import Form from '@organisms/Form/Form';
+import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import FormHeader from '@organisms/Form/FormHeader';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import Modal from '@organisms/Modal/Modal';
+import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions } from '@store/Store';
 import { MemberIdsArgs, PROMOTE_MEMBERS } from '../Database.gql';
 
 const MemberDatabasePromoteActions: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  return (
+    <Row spacing="xs">
+      <FormSubmitButton
+        fill={false}
+        large={false}
+        loadingText="Promoting..."
+        showError={false}
+      >
+        Promote
+      </FormSubmitButton>
 
+      <ModalCloseButton />
+    </Row>
+  );
+};
+
+const MemberDatabasePromoteForm: React.FC = () => {
   const memberIds = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
@@ -23,49 +41,47 @@ const MemberDatabasePromoteActions: React.FC = () => {
     (store) => store.clearSelectedRows
   );
 
-  const [promoteMembers, { loading }] = useMutation<IMember[], MemberIdsArgs>({
+  const [promoteMembers] = useMutation<IMember[], MemberIdsArgs>({
     name: 'promoteMembers',
     query: PROMOTE_MEMBERS,
     schema: [Schema.MEMBER]
   });
 
-  const onPromote = async () => {
+  const onSubmit = async ({ actions, setError }: OnFormSubmitArgs) => {
+    const { closeModal } = actions.modal;
+    const { showToast } = actions.toast;
+
     const { error } = await promoteMembers({ memberIds });
-    if (error) return;
+
+    if (error) {
+      setError(error);
+      return;
+    }
+
     clearSelectedRows();
     showToast({ message: `${memberIds.length} member(s) promoted to admin.` });
     closeModal();
   };
 
   return (
-    <Row spacing="xs">
-      <Button
-        primary
-        loading={loading}
-        loadingText="Promoting..."
-        onClick={onPromote}
-      >
-        Promote
-      </Button>
+    <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
+      <FormHeader
+        description={deline`
+          Are you sure you want to promote this member to admin? They will be
+          granted all admin priviledges. You can undo this action at any time.
+        `}
+        title="Promote to admin?"
+      />
 
-      <Button secondary onClick={() => closeModal()}>
-        Cancel
-      </Button>
-    </Row>
+      <MemberDatabasePromoteActions />
+    </Form>
   );
 };
 
 const MemberDatabasePromoteModal: React.FC = () => {
   return (
     <Modal id={ModalType.PROMOTE_TO_ADMIN} options={{ confirmation: true }}>
-      <h1>Promote to admin?</h1>
-
-      <p>
-        Are you sure you want to promote this member to admin? They will be
-        granted all admin priviledges. You can undo this action at any time.
-      </p>
-
-      <MemberDatabasePromoteActions />
+      <MemberDatabasePromoteForm />
     </Modal>
   );
 };

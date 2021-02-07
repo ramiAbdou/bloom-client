@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
 
+import Spinner from '@atoms/Spinner/Spinner';
 import { ShowProps } from '@constants';
 import { cx } from '@util/util';
-import { useShowSpinner } from '../Spinner/Spinner';
+import Show from '../../containers/Show';
 
 export interface ButtonProps
   extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>>,
@@ -21,24 +21,16 @@ export interface ButtonProps
   tertiary?: boolean;
 }
 
-const LoadingContainer = ({
-  loading,
-  loadingText,
-  secondary
-}: Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>) => {
-  if (!loading) return null;
-
-  const css = cx('c-spinner', { 'c-spinner--dark': secondary });
-
+const ButtonLoadingContainer: React.FC<
+  Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>
+> = ({ loading, loadingText, secondary }) => {
   return (
-    <div className="c-btn-loading-ctr">
-      <p>{loadingText}</p>
-      <motion.div
-        animate={{ rotate: 360 }}
-        className={css}
-        transition={{ duration: 0.75, ease: 'linear', loop: Infinity }}
-      />
-    </div>
+    <Show show={!!loading}>
+      <div className="c-btn-loading-ctr">
+        <p>{loadingText}</p>
+        <Spinner dark={secondary} />
+      </div>
+    </Show>
   );
 };
 
@@ -67,7 +59,7 @@ const Button = forwardRef(
     ref: React.MutableRefObject<any>
   ) => {
     // If the button is in it's loading state, it should be disabled.
-    const showSpinner: boolean = useShowSpinner(loading) && !!loadingText;
+    const showSpinner: boolean = loading && !!loadingText;
     disabled = disabled || showSpinner;
 
     if (show === false) return null;
@@ -109,7 +101,7 @@ const Button = forwardRef(
         onClick={onButtonClick}
         {...props}
       >
-        <LoadingContainer
+        <ButtonLoadingContainer
           loading={showSpinner}
           loadingText={loadingText}
           secondary={secondary}
