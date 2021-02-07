@@ -50,10 +50,13 @@ const Dropdown: React.FC<DropdownProps> = ({
   fit,
   onSelect,
   options,
+  show,
   value,
   values,
   ...rest
 }) => {
+  if (show === false) return null;
+
   return (
     <DropdownStore.Provider
       runtimeModel={{
