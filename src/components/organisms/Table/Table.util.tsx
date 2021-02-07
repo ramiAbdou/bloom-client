@@ -4,10 +4,10 @@ import { matchSorter } from 'match-sorter';
 import { QuestionCategory, QuestionType } from '@constants';
 import { cx } from '@util/util';
 import {
-  TablePaginationValue,
   TableColumn,
   TableFilter,
   TableModel,
+  TablePaginationValue,
   TableRow
 } from './Table.types';
 

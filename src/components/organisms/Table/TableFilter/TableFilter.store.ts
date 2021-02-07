@@ -23,7 +23,7 @@ const tableFilterModel: TableFilterModel = {
       filterIds: [...state.filterIds, id],
       filters: {
         ...state.filters,
-        [id]: { columnId: null, operator: 'IS' }
+        [id]: { columnId: null, operator: 'is' }
       }
     };
   }),
@@ -34,7 +34,7 @@ const tableFilterModel: TableFilterModel = {
     return {
       ...state,
       filterIds: [id],
-      filters: { [id]: { columnId: null, operator: 'IS' } }
+      filters: { [id]: { columnId: null, operator: 'is' } }
     };
   }),
 
@@ -42,7 +42,7 @@ const tableFilterModel: TableFilterModel = {
 
   filters: {},
 
-  joinOperator: 'And',
+  joinOperator: 'and',
 
   removeFilter: action((state, filterId: string) => {
     const updatedFilters: Record<string, TableFilterArgs> = {
@@ -85,7 +85,7 @@ const TableFilterStore = createContextStore<TableFilterModel>(
       ...runtimeModel,
       ...tableFilterModel,
       filterIds: [id],
-      filters: { [id]: { columnId: null, operator: 'IS' } }
+      filters: { [id]: { columnId: null, operator: 'is' } }
     };
   },
   { disableImmer: true }

@@ -16,8 +16,8 @@ const processFilter = ({
   row,
   value
 }: ProcessFilterArgs) => {
-  if (operator === 'IS') return row[columnId] === value;
-  if (operator === 'IS_NOT') return row[columnId] !== value;
+  if (operator === 'is') return row[columnId] === value;
+  if (operator === 'is not') return row[columnId] !== value;
   return false;
 };
 
@@ -36,7 +36,7 @@ const TableFilterApplyButton: React.FC = () => {
 
   const onClick = () => {
     const filter: TableFilter = (row: TableRow) => {
-      if (joinOperator === 'And') {
+      if (joinOperator === 'and') {
         return filters?.every((filterArgs: TableFilterArgs) => {
           return processFilter({ ...filterArgs, row });
         });

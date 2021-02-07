@@ -30,7 +30,7 @@ const TableFilterRowJoinOperator: React.FC = () => {
   return (
     <Dropdown
       options={{ attribute: false }}
-      value={joinOperator.charAt(0) + joinOperator.substring(1).toLowerCase()}
+      value={joinOperator}
       values={['and', 'or']}
       onSelect={onSelect}
     />

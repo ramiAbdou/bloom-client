@@ -20,9 +20,9 @@ const DropdownOption: React.FC<ValueProps> = ({ value }) => {
 };
 
 const DropdownOptionList: React.FC = () => {
-  const options = DropdownStore.useStoreState(({ filteredValues, value }) =>
-    filteredValues.filter((option: string) => !value?.includes(option))
-  );
+  const options = DropdownStore.useStoreState(({ filteredValues, value }) => {
+    return filteredValues.filter((option: string) => !value?.includes(option));
+  });
 
   return (
     <Show show={!!options?.length}>

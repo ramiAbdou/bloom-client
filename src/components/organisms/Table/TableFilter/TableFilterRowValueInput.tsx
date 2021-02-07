@@ -33,7 +33,7 @@ const TableFilterRowValueInput: React.FC = () => {
     return (
       <Dropdown
         options={{ attribute: false }}
-        value={question?.options.find((option) => option === storedValue)}
+        value={question?.options?.find((option) => option === storedValue)}
         values={question?.options}
         onSelect={onInputChange}
       />

@@ -51,7 +51,7 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
       (question) => question.title === result
     )?.id;
 
-    setFilter({ columnId: updatedColumnId, id, value: null });
+    setFilter({ columnId: updatedColumnId, id, operator: 'is', value: null });
     setQuestionId(updatedColumnId);
   };
 

@@ -16,8 +16,8 @@ const TableFilterRowOperatorDropdown: React.FC = () => {
     (store) => store.setFilter
   );
 
-  const onOperatorUpdate = (result: string) => {
-    setFilter({ id, operator: result as TableFilterOperator });
+  const onOperatorUpdate = (result: TableFilterOperator) => {
+    setFilter({ id, operator: result });
   };
 
   return (
