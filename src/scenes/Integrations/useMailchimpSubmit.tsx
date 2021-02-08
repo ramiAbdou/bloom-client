@@ -13,7 +13,7 @@ const useMailchimpSubmit = (): OnFormSubmit => {
   const [updateMailchimpListId] = useMutation<any, UpdateMailchimpListIdArgs>({
     name: 'updateMailchimpListId',
     query: UPDATE_MAILCHIMP_LIST_ID,
-    schema: Schema.INTEGRATIONS
+    schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
   const onSubmit = async ({

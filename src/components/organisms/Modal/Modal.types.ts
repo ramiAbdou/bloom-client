@@ -31,6 +31,8 @@ export const globalModals: ModalType[] = [
   ModalType.EDIT_MEMBERSHIP_INFORMATION,
   ModalType.EDIT_PERSONAL_INFORMATION,
   ModalType.EDIT_SOCIAL_MEDIA,
+  ModalType.INTEGRATIONS_DETAILS,
+  ModalType.MAILCHIMP_FLOW,
   ModalType.MEMBER_PROFILE,
   ModalType.PAY_DUES
 ];
@@ -38,8 +40,6 @@ export const globalModals: ModalType[] = [
 export const localModals: ModalType[] = [
   ModalType.DELETE_MEMBERS,
   ModalType.DEMOTE_MEMBERS,
-  ModalType.INTEGRATIONS_DETAILS,
-  ModalType.MAILCHIMP_FLOW,
   ModalType.PROMOTE_MEMBERS
 ];
 

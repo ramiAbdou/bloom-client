@@ -1,16 +1,13 @@
 import deline from 'deline';
-import deepequal from 'fast-deep-equal';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
+import Show from '@containers/Show';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
-import IntegrationsStore from '@scenes/Integrations/Integrations.store';
-import { IIntegrations } from '@store/Db/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
@@ -27,12 +24,12 @@ const MailchimpModalActionContainer: React.FC = () => {
 };
 
 const MailchimpModalContent: React.FC = () => {
-  const mailchimpLists = useStoreState(
-    ({ db }) => db.integrations.mailchimpLists
-  );
+  const mailchimpLists = useStoreState(({ db }) => {
+    return db.integrations.mailchimpLists;
+  });
 
   return (
-    <>
+    <Show show={!!mailchimpLists?.length}>
       <img
         alt="Mailchimp Icon"
         className="s-integrations-icon--lg"
@@ -47,35 +44,17 @@ const MailchimpModalContent: React.FC = () => {
           automatically be added to upon joining your community.
         `}
         id="MAILCHIMP_LIST_ID"
-        options={mailchimpLists.map(({ name }) => name)}
+        options={mailchimpLists?.map(({ name }) => name)}
         title="Select Audience/List ID"
       />
 
       <MailchimpModalActionContainer />
-    </>
+    </Show>
   );
 };
 
 const IntegrationsMailchimpModal: React.FC = () => {
-  const { mailchimpListId, mailchimpLists } = useStoreState(
-    ({ db }) => db.integrations,
-    deepequal
-  ) as IIntegrations;
-
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const flow = IntegrationsStore.useStoreState((store) => store.flow);
-  const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
-
   const onSubmit = useMailchimpSubmit();
-
-  const shouldShowModal: boolean =
-    flow === 'MAILCHIMP_FORM' && !mailchimpListId && !!mailchimpLists?.length;
-
-  const onClose = () => setFlow(null);
-
-  useEffect(() => {
-    if (shouldShowModal) showModal({ id: ModalType.MAILCHIMP_FLOW, onClose });
-  }, [shouldShowModal]);
 
   return (
     <Form className="s-integrations-onboarding-form" onSubmit={onSubmit}>

@@ -1,5 +1,7 @@
 import { mutation, query } from 'gql-query-builder';
 
+// ## GET INTEGRATIONS
+
 export const GET_INTEGRATIONS = query({
   fields: [
     'id',
@@ -12,6 +14,8 @@ export const GET_INTEGRATIONS = query({
   ],
   operation: 'getIntegrations'
 }).query;
+
+// ## UPDATE MAILCHIMP LIST ID
 
 export interface UpdateMailchimpListIdArgs {
   mailchimpListId: string;

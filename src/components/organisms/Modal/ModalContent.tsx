@@ -7,6 +7,8 @@ import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import PaymentModal from '@modals/Payment/Payment';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
+import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
+import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
@@ -32,6 +34,12 @@ const ModalCustomContent: React.FC = () => {
   }
 
   if (id === ModalType.EDIT_SOCIAL_MEDIA) return <ProfileSocialModal />;
+
+  if (id === ModalType.INTEGRATIONS_DETAILS) {
+    return <IntegrationsDetailsModal />;
+  }
+
+  if (id === ModalType.MAILCHIMP_FLOW) return <IntegrationsMailchimpModal />;
   if (id === ModalType.MEMBER_PROFILE) return <MemberProfileModal />;
   if (id === ModalType.PAY_DUES) return <PaymentModal />;
 

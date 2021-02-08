@@ -41,6 +41,7 @@ const Community = new schema.Entity(
       const processedData = takeFirst([
         [!!parent.applicationId, { application: parent.id }],
         [!!parent.eventId, { events: [parent.id] }],
+        [!!parent.integrationsId, { integrations: parent.id }],
         [!!parent.memberId, { members: [parent.id] }],
         [!!parent.questionId, { questions: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
@@ -139,8 +140,6 @@ const EventWatch = new schema.Entity(
   }
 );
 
-const Integrations = new schema.Entity('integrations', {});
-
 const Member = new schema.Entity(
   'members',
   {},
@@ -211,7 +210,7 @@ const User = new schema.Entity('users', {}, { mergeStrategy });
 Community.define({
   application: CommunityApplication,
   events: [Event],
-  integrations: Integrations,
+  integrations: CommunityIntegrations,
   members: [Member],
   owner: Member,
   payments: [MemberPayment],
@@ -266,7 +265,6 @@ export const Schema = {
   EVENT_ATTENDEE: EventAttendee,
   EVENT_GUEST: EventGuest,
   EVENT_WATCH: EventWatch,
-  INTEGRATIONS: Integrations,
   MEMBER: Member,
   MEMBER_DATA: MemberData,
   MEMBER_PAYMENT: MemberPayment,
