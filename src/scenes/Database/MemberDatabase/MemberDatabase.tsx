@@ -54,7 +54,6 @@ const MemberDatabase: React.FC = () => {
 
   const options: TableOptions = {
     hasCheckbox: true,
-    isClickable: true,
     onRenameColumn,
     onRowClick: ({ id: memberId }: TableRow) => {
       showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);

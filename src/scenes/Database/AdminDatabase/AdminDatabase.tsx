@@ -33,11 +33,7 @@ const AdminDatabase: React.FC = () => {
 
   return (
     <>
-      <Table
-        columns={columns}
-        options={{ hasCheckbox: isOwner, isClickable: true }}
-        rows={rows}
-      >
+      <Table columns={columns} options={{ hasCheckbox: isOwner }} rows={rows}>
         <AdminDatabaseActions />
         <TableContent />
         <AdminDatabaseDemoteModal />

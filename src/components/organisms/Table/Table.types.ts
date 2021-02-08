@@ -58,7 +58,6 @@ export type TableOptions = {
   fixFirstColumn?: boolean;
   hasCheckbox?: boolean;
   hideIfEmpty?: boolean;
-  isClickable?: boolean;
   isRenamable?: boolean;
   isSortable?: boolean;
   onRenameColumn?: (args: OnRenameColumnArgs) => Promise<void>;
@@ -66,11 +65,10 @@ export type TableOptions = {
   showCount?: boolean;
 };
 
-export const initialTableOptions: TableOptions = {
+export const defaultTableOptions: TableOptions = {
   alignEndRight: false,
-  fixFirstColumn: true,
+  fixFirstColumn: false,
   hasCheckbox: false,
-  isClickable: false,
   isRenamable: false,
   isSortable: true,
   showCount: true

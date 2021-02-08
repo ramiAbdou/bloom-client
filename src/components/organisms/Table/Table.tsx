@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { ShowProps } from '@constants';
 import TableStore, { tableModel } from './Table.store';
 import {
-  initialTableOptions,
+  defaultTableOptions,
   TableColumn,
   TableOptions,
   TableRow
@@ -51,7 +51,7 @@ const Table: React.FC<TableProps> = ({
           ...column,
           id: column.id ?? column.title
         })),
-        options: { ...initialTableOptions, ...options }
+        options: { ...defaultTableOptions, ...options }
       }}
     >
       <TableFilterStore.Provider>

@@ -2,7 +2,7 @@ import { action, computed, createContextStore } from 'easy-peasy';
 
 import { sortObjects } from '@util/util';
 import {
-  initialTableOptions,
+  defaultTableOptions,
   TableColumn,
   TableModel,
   TableQuickFilterArgs,
@@ -23,7 +23,7 @@ export const tableModel: TableModel = {
 
   filters: {},
 
-  options: initialTableOptions,
+  options: defaultTableOptions,
 
   /**
    * Represents the page (currently in 100s) that the table is currently

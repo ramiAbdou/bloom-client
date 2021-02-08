@@ -62,6 +62,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
   })?.sort((a, b) => sortObjects(a, b, 'paidOn'));
 
   const columns: TableColumn[] = [
+    { id: 'paidOn', title: 'Paid On', type: 'SHORT_TEXT' },
     { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
     { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
     { id: 'amount', title: 'Amount', type: 'SHORT_TEXT' },
@@ -69,18 +70,11 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
       id: 'type',
       title: 'Membership Plan',
       type: 'MULTIPLE_CHOICE'
-    },
-    { id: 'paidOn', title: 'Paid On', type: 'SHORT_TEXT' }
+    }
   ];
 
-  const options: TableOptions = {
-    alignEndRight: true,
-    fixFirstColumn: false,
-    isSortable: false
-  };
-
   return (
-    <Table columns={columns} options={options} rows={rows}>
+    <Table columns={columns} rows={rows}>
       <TableSearchBar className="mb-sm" />
       <TableContent emptyMessage="Looks like nobody has paid dues in the last year." />
     </Table>

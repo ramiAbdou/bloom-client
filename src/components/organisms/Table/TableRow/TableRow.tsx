@@ -70,10 +70,6 @@ const DataCell = ({ category, i, id, render, type, value }: DataCellProps) => {
 };
 
 const TableRow: React.FC<TableRowProps> = (row) => {
-  const isClickable = TableStore.useStoreState(
-    ({ options }) => options.isClickable
-  );
-
   const onRowClick = TableStore.useStoreState(
     ({ options }) => options.onRowClick
   );
@@ -86,7 +82,7 @@ const TableRow: React.FC<TableRowProps> = (row) => {
 
   const css = cx('', {
     'o-table-tr--active': isSelected,
-    'o-table-tr--clickable': isClickable || !!onRowClick
+    'o-table-tr--clickable': !!onRowClick
   });
 
   const onClick = () => onRowClick && onRowClick(row);
