@@ -10,11 +10,10 @@ import LocalModalContent from './ModalLocalContent';
 const ModalLocal: React.FC = () => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const modalId = useStoreState(({ modal }) => modal.id);
-  if (!localModals.includes(modalId)) return null;
 
   return createPortal(
     <AnimatePresence>
-      {isShowing && (
+      {isShowing && localModals.includes(modalId) && (
         <>
           <ModalContainer>
             <LocalModalContent />

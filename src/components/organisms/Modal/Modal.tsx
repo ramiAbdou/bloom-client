@@ -11,11 +11,9 @@ const Modal: React.FC = () => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
   const modalId = useStoreState(({ modal }) => modal.id);
 
-  if (!globalModals.includes(modalId)) return null;
-
   return createPortal(
     <AnimatePresence>
-      {isShowing && (
+      {isShowing && globalModals.includes(modalId) && (
         <>
           <ModalContainer>
             <ModalContent />
