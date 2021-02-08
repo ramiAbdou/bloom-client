@@ -2,8 +2,18 @@ import { action, createContextStore } from 'easy-peasy';
 
 import { defaultModalOptions, ModalData, ModalModel } from './Modal.types';
 
+const resetModalState: Partial<ModalModel> = {
+  className: null,
+  id: null,
+  isShowing: false,
+  metadata: null,
+  onClose: null,
+  options: null,
+  width: null
+};
+
 const localModalModel: ModalModel = {
-  className: '',
+  ...resetModalState,
 
   closeModal: action((state) => {
     return { ...state, id: null, isShowing: false, options: null };
@@ -11,9 +21,6 @@ const localModalModel: ModalModel = {
 
   id: null,
   isShowing: false,
-  metadata: null,
-  onClose: null,
-  options: null,
 
   showModal: action((state, args: ModalData) => {
     return {
@@ -22,9 +29,7 @@ const localModalModel: ModalModel = {
       ...defaultModalOptions[args.id],
       isShowing: true
     };
-  }),
-
-  width: null
+  })
 };
 
 const ModalStore = createContextStore<ModalModel>(localModalModel, {

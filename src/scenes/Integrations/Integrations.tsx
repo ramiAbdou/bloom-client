@@ -30,7 +30,7 @@ const IntegrationsContent: React.FC = () => {
 
   return (
     <MainContent>
-      <MainHeader loading={loading} title="Integrations" />;
+      <MainHeader loading={loading} title="Integrations" />
       {!loading && <IntegrationsCardContainer />}
     </MainContent>
   );

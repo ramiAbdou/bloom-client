@@ -2,18 +2,25 @@ import { action } from 'easy-peasy';
 
 import { defaultModalOptions, ModalData, ModalModel } from './Modal.types';
 
-const modalModel: ModalModel = {
-  className: '',
-
-  closeModal: action((state) => {
-    return { ...state, id: null, isShowing: false, options: null };
-  }),
-
+const resetModalState: Partial<ModalModel> = {
+  className: null,
   id: null,
   isShowing: false,
   metadata: null,
   onClose: null,
   options: null,
+  width: null
+};
+
+const modalModel: ModalModel = {
+  ...resetModalState,
+
+  closeModal: action((state) => {
+    return { ...state, ...resetModalState, isShowing: false };
+  }),
+
+  id: null,
+  isShowing: false,
 
   showModal: action((state, args: ModalData) => {
     return {
@@ -22,9 +29,7 @@ const modalModel: ModalModel = {
       ...defaultModalOptions[args.id],
       isShowing: true
     };
-  }),
-
-  width: null
+  })
 };
 
 export default modalModel;
