@@ -14,6 +14,7 @@ import FormSection from '@organisms/Form/FormSection';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import FormTime from '@organisms/Form/FormTime';
+import ModalStore from '@organisms/Modal/Modal.store';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import DeleteEventButton from './DeleteEventButton';
@@ -37,7 +38,7 @@ const CreateEventTimeItems: React.FC<ShowProps> = ({ show }) => {
 };
 
 const CreateEvent: React.FC = () => {
-  const id: string = useStoreState(({ modal }) => modal.metadata);
+  const id: string = ModalStore.useStoreState((store) => store.metadata);
 
   const {
     description,

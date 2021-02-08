@@ -5,15 +5,16 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
+import ModalStore from '@organisms/Modal/Modal.store';
 import { IPaymentMethod } from '@store/Db/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 
 const MembershipPaymentMethodEmpty: React.FC = () => {
   const isCardOnFile: boolean = useStoreState(
     ({ db }) => !!db.member.paymentMethod
   );
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
   const onClick = () => showModal({ id: ModalType.UPDATE_PAYMENT_METHOD });
 
   return (
@@ -33,7 +34,7 @@ const MembershipPaymentMethodContent: React.FC = () => {
     deepequal
   );
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
   const onClick = () => showModal({ id: ModalType.UPDATE_PAYMENT_METHOD });
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LocalModal from '@organisms/Modal/LocalModal';
-import ModalStore from '@organisms/Modal/LocalModal.store';
+import ModalStore from '@organisms/Modal/Modal.store';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';

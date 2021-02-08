@@ -3,9 +3,10 @@ import React from 'react';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import ModalStore from '@organisms/Modal/Modal.store';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 
 const DirectoryCardInformation: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
@@ -56,7 +57,7 @@ const DirectoryCardPicture: React.FC = () => {
 };
 
 const DirectoryCardContent: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   const onClick = () => {

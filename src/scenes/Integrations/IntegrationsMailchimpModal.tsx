@@ -7,7 +7,7 @@ import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
-import ModalStore from '@organisms/Modal/LocalModal.store';
+import ModalStore from '@organisms/Modal/Modal.store';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/Db/entities';

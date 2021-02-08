@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
-import ModalStore from '@organisms/Modal/LocalModal.store';
+import ModalStore from '@organisms/Modal/Modal.store';
 import useIntegrationsDetails from './useIntegrationsDetails';
 
 const IntegrationsDetailsModal: React.FC = () => {

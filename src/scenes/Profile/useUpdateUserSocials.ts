@@ -6,7 +6,6 @@ import { useStoreActions } from '@store/Store';
 import { UPDATE_USER_SOCIALS, UpdateUserSocialsArgs } from './Profile.gql';
 
 const useUpdateUserSocials = (): OnFormSubmit => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [updateUserSocials] = useMutation<IUser, UpdateUserSocialsArgs>({
@@ -15,7 +14,11 @@ const useUpdateUserSocials = (): OnFormSubmit => {
     schema: Schema.USER
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    closeModal,
+    items,
+    setError
+  }: OnFormSubmitArgs) => {
     const facebookUrl = items.FACEBOOK_URL?.value;
     const instagramUrl = items.INSTAGRAM_URL?.value;
     const linkedInUrl = items.LINKED_IN_URL?.value;

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
-import ModalStore from '@organisms/Modal/LocalModal.store';
+import ModalStore from '@organisms/Modal/Modal.store';
 import IntegrationsStore, {
   IntegrationsModalType
 } from '../Integrations.store';

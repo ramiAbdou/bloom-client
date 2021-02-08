@@ -4,7 +4,7 @@ import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import useQuery from '@hooks/useQuery';
 import LocalModal from '@organisms/Modal/LocalModal';
-import ModalStore from '@organisms/Modal/LocalModal.store';
+import ModalStore from '@organisms/Modal/Modal.store';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { GET_INTEGRATIONS } from './Integrations.gql';

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import ModalStore from '@organisms/Modal/LocalModal.store';
-import LocalModalCloseButton from '@organisms/Modal/LocalModalCloseButton';
+import ModalStore from '@organisms/Modal/Modal.store';
+import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IMember } from '@store/Db/entities';
@@ -53,7 +53,7 @@ const MemberDatabaseDeleteModal: React.FC = () => {
           Remove
         </Button>
 
-        <LocalModalCloseButton />
+        <ModalCloseButton />
       </div>
     </>
   );

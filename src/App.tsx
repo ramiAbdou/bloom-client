@@ -16,6 +16,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { APP } from '@constants';
 import Loader from '@organisms/Loader/Loader';
 import Modal from '@organisms/Modal/Modal';
+import ModalStore from '@organisms/Modal/Modal.store';
 import ToastQueue from '@organisms/Toast/Toast';
 import { store } from '@store/Store';
 import Router from './core/routing/Router';
@@ -32,12 +33,14 @@ const App = () => (
   <ClientContext.Provider value={client}>
     <StoreProvider store={store}>
       <IconContext.Provider value={{ className: 'react-icon' }}>
-        <BrowserRouter>
-          <Loader />
-          <Modal />
-          <Router />
-          <ToastQueue />
-        </BrowserRouter>
+        <ModalStore.Provider>
+          <BrowserRouter>
+            <Loader />
+            <Modal />
+            <Router />
+            <ToastQueue />
+          </BrowserRouter>
+        </ModalStore.Provider>
       </IconContext.Provider>
     </StoreProvider>
   </ClientContext.Provider>

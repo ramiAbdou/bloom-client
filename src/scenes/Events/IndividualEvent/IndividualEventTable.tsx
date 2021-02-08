@@ -5,6 +5,7 @@ import { ModalType, QuestionType } from '@constants';
 import MainSection from '@containers/Main/MainSection';
 import Show from '@containers/Show';
 import useManualQuery from '@hooks/useManualQuery';
+import ModalStore from '@organisms/Modal/Modal.store';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -14,7 +15,7 @@ import {
 import TableContent from '@organisms/Table/TableContent';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import {
   GET_EVENT_ATTENDEES,
   GET_EVENT_WATCHES,
@@ -26,7 +27,7 @@ import IndividualEventTableActions from './IndividualEventTableActions';
 const IndividualEventTableContent: React.FC = () => {
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const startTime = useStoreState(({ db }) => db.event?.startTime);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
     return getIndividualEventTableRows(db);

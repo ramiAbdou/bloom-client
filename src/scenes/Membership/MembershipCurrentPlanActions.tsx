@@ -4,7 +4,8 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
-import { useStoreActions, useStoreState } from '@store/Store';
+import ModalStore from '@organisms/Modal/Modal.store';
+import { useStoreState } from '@store/Store';
 
 const MembershipCurrentPlanActions: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
@@ -17,7 +18,7 @@ const MembershipCurrentPlanActions: React.FC = () => {
     return db.member?.type;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   const { url } = useRouteMatch();
   const { push } = useHistory();

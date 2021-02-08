@@ -4,6 +4,7 @@ import React from 'react';
 import { ModalType } from '@constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
+import ModalStore from '@organisms/Modal/Modal.store';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -12,10 +13,10 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IEvent, IEventAttendee, IMember } from '@store/Db/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
     const pastEvents: IEvent[] = db.community.events

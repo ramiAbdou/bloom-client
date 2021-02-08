@@ -6,9 +6,10 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
+import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { useStoreActions, useStoreState } from '@store/Store';
-import MailTo from '../../components/molecules/MailTo';
+import ModalStore from '@organisms/Modal/Modal.store';
+import { useStoreState } from '@store/Store';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
@@ -17,7 +18,7 @@ const ProfilePersonalHeader: React.FC = () => {
     return `${firstName} ${lastName}`;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
   const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
@@ -54,7 +55,7 @@ const ProfilePersonalBio: React.FC = () => {
 const ProfilePersonalOnboardingContainer: React.FC = () => {
   const bio = useStoreState(({ db }) => db.member.bio);
   const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   if (bio && pictureUrl) return null;
 
@@ -89,7 +90,7 @@ const ProfilePersonalMainContent: React.FC = () => (
 
 const ProfilePersonalPictureRow: React.FC = () => {
   const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   const isMobile = useBreakpoint() === 1;
   const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });

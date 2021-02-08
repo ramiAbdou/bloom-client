@@ -6,7 +6,6 @@ import { useStoreActions } from '@store/Store';
 import { UPDATE_MEMBER_DATA, UpdateMemberDataArgs } from './Profile.gql';
 
 const useUpdateMemberData = (): OnFormSubmit => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [updateMemberData] = useMutation<IMemberData[], UpdateMemberDataArgs>({
@@ -15,7 +14,11 @@ const useUpdateMemberData = (): OnFormSubmit => {
     schema: [Schema.MEMBER_DATA]
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    closeModal,
+    items,
+    setError
+  }: OnFormSubmitArgs) => {
     const data = Object.values(items).map(({ questionId, value }) => ({
       questionId,
       value
@@ -29,7 +32,6 @@ const useUpdateMemberData = (): OnFormSubmit => {
     }
 
     showToast({ message: 'Membership information updated.' });
-    setTimeout(closeModal, 0);
     closeModal();
   };
 

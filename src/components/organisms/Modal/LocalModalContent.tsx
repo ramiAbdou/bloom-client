@@ -7,17 +7,17 @@ import MemberDatabasePromoteModal from '@scenes/Database/MemberDatabase/MemberDa
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
 import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
 import { cx } from '@util/util';
-import ModalStore from './LocalModal.store';
+import ModalStore from './Modal.store';
 
 const LocalModalCustomContent: React.FC = () => {
   const id: string = ModalStore.useStoreState((store) => store.id);
-
   if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteModal />;
   if (id === ModalType.DEMOTE_MEMBERS) return <AdminDatabaseDemoteModal />;
 
   if (id === ModalType.INTEGRATIONS_DETAILS) {
     return <IntegrationsDetailsModal />;
   }
+
   if (id === ModalType.MAILCHIMP_FLOW) return <IntegrationsMailchimpModal />;
   if (id === ModalType.PROMOTE_MEMBERS) return <MemberDatabasePromoteModal />;
 

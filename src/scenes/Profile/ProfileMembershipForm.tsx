@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
+import { FormItemData } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormItem from '@organisms/Form/FormItem';
@@ -9,16 +10,16 @@ import { IMemberData, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import useUpdateMemberData from './useUpdateMemberData';
 
-const ProfileMembershipModal: React.FC = () => {
-  const items = useStoreState(({ db }) => {
+const ProfileMembershipForm: React.FC = () => {
+  const items: FormItemData[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
       .filter((question: IQuestion) => !question.onlyInApplication)
       .filter((question: IQuestion) => !question.category);
 
-    const data: IMemberData[] = db.member.data?.map(
-      (dataId: string) => db.byDataId[dataId]
-    );
+    const data: IMemberData[] = db.member.data?.map((dataId: string) => {
+      return db.byDataId[dataId];
+    });
 
     return questions?.map((question: IQuestion) => {
       const { id, options, type } = question;
@@ -52,4 +53,4 @@ const ProfileMembershipModal: React.FC = () => {
   );
 };
 
-export default ProfileMembershipModal;
+export default ProfileMembershipForm;

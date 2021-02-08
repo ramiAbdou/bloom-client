@@ -2,8 +2,8 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
-import ModalStore from '@organisms/Modal/LocalModal.store';
-import LocalModalCloseButton from '@organisms/Modal/LocalModalCloseButton';
+import ModalStore from '@organisms/Modal/Modal.store';
+import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -48,7 +48,7 @@ const AdminDatabaseDemoteModal: React.FC = () => {
           Demote
         </Button>
 
-        <LocalModalCloseButton />
+        <ModalCloseButton />
       </div>
     </>
   );

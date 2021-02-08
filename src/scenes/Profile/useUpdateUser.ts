@@ -7,7 +7,6 @@ import { uploadImage } from '@util/imageUtil';
 import { UPDATE_USER, UpdateUserArgs } from './Profile.gql';
 
 const useUpdateUser = (): OnFormSubmit => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [updateUser] = useMutation<IMember, UpdateUserArgs>({
@@ -16,7 +15,12 @@ const useUpdateUser = (): OnFormSubmit => {
     schema: Schema.MEMBER
   });
 
-  const onSubmit = async ({ db, items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    closeModal,
+    db,
+    items,
+    setError
+  }: OnFormSubmitArgs) => {
     const bio = items.BIO?.value;
     const firstName = items.FIRST_NAME?.value;
     const lastName = items.LAST_NAME?.value;

@@ -5,8 +5,9 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import ModalStore from '@organisms/Modal/Modal.store';
 import { IEventGuest, IMember, IUser } from '@store/Db/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import { cx, sortObjects } from '@util/util';
 
 interface IndividualEventGuestProps
@@ -19,7 +20,7 @@ interface IndividualEventGuestProps
 
 const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
   const { firstName, lastName, memberId, pictureUrl } = props;
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
   const onClick = () => {

@@ -1,7 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import {
   UPDATE_MAILCHIMP_LIST_ID,
   UpdateMailchimpListIdArgs
@@ -9,7 +9,6 @@ import {
 
 const useMailchimpSubmit = (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const [updateMailchimpListId] = useMutation<any, UpdateMailchimpListIdArgs>({
     name: 'updateMailchimpListId',
@@ -17,7 +16,11 @@ const useMailchimpSubmit = (): OnFormSubmit => {
     schema: Schema.INTEGRATIONS
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    closeModal,
+    items,
+    setError
+  }: OnFormSubmitArgs) => {
     const selectedMailchimpList = items.MAILCHIMP_LIST_ID?.value;
 
     const { id: mailchimpListId } = options.find(

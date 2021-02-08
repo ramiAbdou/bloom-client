@@ -7,9 +7,10 @@ import useQuery from '@hooks/useQuery';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
+import ModalStore from '@organisms/Modal/Modal.store';
 import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { GET_MEMBER_DATA, GET_MEMBER_DATA_QUESTIONS } from './Profile.gql';
 import ProfileCardHeader from './ProfileCardHeader';
@@ -19,7 +20,7 @@ const ProfileMembershipHeader: React.FC = () => {
     return `${db.community.name} Membership Information`;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   const onClick = () =>
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
@@ -53,7 +54,7 @@ const ProfileMembershipContent: React.FC = () => {
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
   const hasData: boolean = useStoreState(({ db }) => !!db.member.data);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   const onClick = () =>
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });

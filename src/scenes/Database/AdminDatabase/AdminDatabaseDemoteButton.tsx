@@ -2,7 +2,7 @@ import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
 import { ModalType } from '@constants';
-import ModalStore from '@organisms/Modal/LocalModal.store';
+import ModalStore from '@organisms/Modal/Modal.store';
 import TableStore from '@organisms/Table/Table.store';
 import DatabaseAction from '../DatabaseAction';
 

@@ -7,14 +7,14 @@ import Form from '@organisms/Form/Form';
 import FormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import ModalStore from '@organisms/Modal/Modal.store';
 import IdStore from '@store/Id.store';
-import { useStoreActions } from '@store/Store';
 import AddMemberStore from './AddMember.store';
 import AddMemberInput from './AddMemberInput';
 import useAddMembers from './useAddMembers';
 
 const AddMemberFormActions: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
   const onSecondaryClick = () => closeModal();
 
   return (

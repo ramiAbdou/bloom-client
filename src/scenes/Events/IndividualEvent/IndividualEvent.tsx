@@ -5,6 +5,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import { CookieType, ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
+import ModalStore from '@organisms/Modal/Modal.store';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -37,7 +38,7 @@ const IndividualEvent: React.FC = () => {
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
   const isMembersOnly = useStoreState(({ db }) => db.event?.private);
   const setActiveEvent = useStoreActions(({ db }) => db.setActiveEvent);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
   const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
   const { data: data1, loading: loading1, error } = useQuery<
