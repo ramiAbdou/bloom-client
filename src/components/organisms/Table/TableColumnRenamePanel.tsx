@@ -63,11 +63,11 @@ const TableColumnRenamePanel: React.FC = () => {
 
   return (
     <Panel
-      align="BOTTOM_LEFT"
-      className="o-table-col-panel"
-      id={panelId}
-      scrollId="o-table-ctr"
-      show={!!isColumnFound}
+    // align="BOTTOM_LEFT"
+    // className="o-table-col-panel"
+    // id={panelId}
+    // scrollId="o-table-ctr"
+    // show={!!isColumnFound}
     >
       <TableColumnRenameForm />
       <TableSortButton direction="ASC" id={panelId} />

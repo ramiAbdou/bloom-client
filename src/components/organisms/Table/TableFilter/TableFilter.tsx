@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { PanelType } from '@constants';
 import Row from '@containers/Row/Row';
-import Panel from '@organisms/Panel/Panel';
 import IdStore from '@store/Id.store';
 import TableFilterStore from './TableFilter.store';
 import TableFilterActions from './TableFIlterActions';
@@ -39,12 +37,12 @@ const TableFilterRows: React.FC = () => {
 
 const TableFilter: React.FC = () => {
   return (
-    <Panel align="BOTTOM_RIGHT" id={PanelType.TABLE_FILTER}>
+    <>
       <TableFilterHeader />
       <TableFilterRows />
       <TableFilterAddButton />
       <TableFilterActions />
-    </Panel>
+    </>
   );
 };
 

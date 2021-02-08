@@ -1,23 +1,30 @@
-import { Action, action, Computed, computed } from 'easy-peasy';
+import { action } from 'easy-peasy';
 
-export type PanelModel = {
-  closePanel: Action<PanelModel>;
-  id: string;
-  isIdShowing: Computed<PanelModel, (id: string) => boolean, {}>;
-  isShowing: boolean;
-  showPanel: Action<PanelModel, string>;
-};
+import {
+  defaultPanelOptions,
+  initialPanelModel,
+  PanelData,
+  PanelModel
+} from './Panel.types';
 
-export const panelModel: PanelModel = {
-  closePanel: action((state) => ({ ...state, id: '', isShowing: false })),
+const panelModel: PanelModel = {
+  ...initialPanelModel,
 
-  id: '',
+  closePanel: action((state) => {
+    return { ...state, ...initialPanelModel, isShowing: false };
+  }),
 
-  isIdShowing: computed(({ id, isShowing }) => (panelId: string) =>
-    isShowing && id === panelId
-  ),
-
+  id: null,
   isShowing: false,
 
-  showPanel: action((state, id: string) => ({ ...state, id, isShowing: true }))
+  showPanel: action((state, args: PanelData) => {
+    return {
+      ...state,
+      ...args,
+      ...defaultPanelOptions[args.id],
+      isShowing: true
+    };
+  })
 };
+
+export default panelModel;

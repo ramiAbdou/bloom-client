@@ -16,6 +16,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { APP } from '@constants';
 import Loader from '@organisms/Loader/Loader';
 import Modal from '@organisms/Modal/Modal';
+import Panel from '@organisms/Panel/Panel';
 import ToastQueue from '@organisms/Toast/Toast';
 import { store } from '@store/Store';
 import Router from './core/routing/Router';
@@ -35,6 +36,7 @@ const App = () => (
         <BrowserRouter>
           <Loader />
           <Modal />
+          <Panel />
           <Router />
           <ToastQueue />
         </BrowserRouter>

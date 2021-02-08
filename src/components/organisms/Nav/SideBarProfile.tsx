@@ -40,7 +40,7 @@ const SideBarProfile: React.FC = () => {
   const activeRoute = useTopLevelRoute();
   const isActive = ['membership', 'profile'].includes(activeRoute);
 
-  const onClick = () => showPanel(PanelType.PROFILE);
+  const onClick = () => showPanel({ id: PanelType.PROFILE });
 
   const containerCss = cx('o-nav-profile-ctr', {
     'o-nav-profile-ctr--no-auto': isDuesMessageShowing

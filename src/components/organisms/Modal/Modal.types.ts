@@ -2,6 +2,8 @@ import { Action } from 'easy-peasy';
 
 import { ModalType } from '@constants';
 
+// ## MODAL OPTIONS/DATA
+
 export interface ModalOptions {
   confirmation?: boolean;
   lock?: boolean;
@@ -16,6 +18,8 @@ export interface ModalData {
   options?: ModalOptions;
   width?: number;
 }
+
+// ## MODAL TYPES
 
 export const globalModals: ModalType[] = [
   ModalType.ADD_ADMINS,

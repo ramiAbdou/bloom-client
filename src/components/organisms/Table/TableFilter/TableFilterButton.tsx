@@ -14,7 +14,7 @@ const TableFilterButton: React.FC<Partial<ButtonProps>> = () => {
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  const onClick = () => showPanel(PanelType.TABLE_FILTER);
+  const onClick = () => showPanel({ id: PanelType.TABLE_FILTER });
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   return (

@@ -16,11 +16,19 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const panelId = `${PanelType.ADD_RECORDING_LINK}-${eventId}`;
-  const onClick = () => showPanel(panelId);
+  const onClick = () => {
+    showPanel({ id: PanelType.ADD_RECORDING_LINK, metadata: eventId });
+  };
 
   return (
-    <Button fill large secondary id={panelId} onClick={onClick} {...props}>
+    <Button
+      fill
+      large
+      secondary
+      id={PanelType.ADD_RECORDING_LINK}
+      onClick={onClick}
+      {...props}
+    >
       {recordingUrl ? 'Edit Event Recording' : '+ Add Event Recording'}
     </Button>
   );

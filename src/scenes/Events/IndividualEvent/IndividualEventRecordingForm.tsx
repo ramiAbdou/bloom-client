@@ -1,18 +1,17 @@
 import React from 'react';
 
-import { IdProps, PanelType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import Panel from '@organisms/Panel/Panel';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { UPDATE_RECORDING_LINK } from '../Events.gql';
 
-const IndividualEventPanel: React.FC<IdProps> = ({ id }) => {
+const IndividualEventRecordingForm: React.FC = () => {
+  const id = useStoreState(({ panel }) => panel.metadata);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
@@ -34,25 +33,19 @@ const IndividualEventPanel: React.FC<IdProps> = ({ id }) => {
   };
 
   return (
-    <Panel
-      align="BOTTOM_LEFT"
-      id={`${PanelType.ADD_RECORDING_LINK}-${id}`}
-      size="lg"
-    >
-      <Form onSubmit={onSubmit}>
-        <FormShortText
-          id="RECORDING_URL"
-          title="Event Recording Link"
-          validate="IS_URL"
-          value={recordingUrl ?? ''}
-        />
+    <Form onSubmit={onSubmit}>
+      <FormShortText
+        id="RECORDING_URL"
+        title="Event Recording Link"
+        validate="IS_URL"
+        value={recordingUrl ?? ''}
+      />
 
-        <FormSubmitButton large={false} loadingText="Saving...">
-          Save
-        </FormSubmitButton>
-      </Form>
-    </Panel>
+      <FormSubmitButton large={false} loadingText="Saving...">
+        Save
+      </FormSubmitButton>
+    </Form>
   );
 };
 
-export default IndividualEventPanel;
+export default IndividualEventRecordingForm;

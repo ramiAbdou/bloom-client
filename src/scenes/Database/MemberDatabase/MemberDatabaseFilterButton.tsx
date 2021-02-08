@@ -13,7 +13,7 @@ const FilterButton: React.FC = () => {
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  const onClick = () => showPanel(PanelType.TABLE_FILTER);
+  const onClick = () => showPanel({ id: PanelType.TABLE_FILTER });
 
   return (
     <DatabaseAction

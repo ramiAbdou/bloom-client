@@ -2,6 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
 import { ShowProps } from '@constants';
+import PanelLocal from '../Panel/PanelLocal';
 import TableStore, { tableModel } from './Table.store';
 import {
   defaultTableOptions,
@@ -9,7 +10,6 @@ import {
   TableOptions,
   TableRow
 } from './Table.types';
-import TableFilterPanel from './TableFilter/TableFilter';
 import TableFilterStore from './TableFilter/TableFilter.store';
 
 interface TableProps extends ShowProps {
@@ -56,7 +56,7 @@ const Table: React.FC<TableProps> = ({
     >
       <TableFilterStore.Provider>
         <TableUpdateRows rows={rows}>{children}</TableUpdateRows>
-        <TableFilterPanel />
+        <PanelLocal />
       </TableFilterStore.Provider>
     </TableStore.Provider>
   );

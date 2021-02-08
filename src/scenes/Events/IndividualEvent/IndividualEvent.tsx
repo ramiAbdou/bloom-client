@@ -16,7 +16,6 @@ import IndividualEventAttendeeList from './IndividualEventAttendeeList';
 import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventInsights from './IndividualEventInsights';
 import IndividualEventMain from './IndividualEventMain';
-import IndividualEventPanel from './IndividualEventPanel';
 import IndividualEventTable from './IndividualEventTable';
 
 const IndividualEventHeader: React.FC = () => {
@@ -92,8 +91,6 @@ const IndividualEvent: React.FC = () => {
         <IndividualEventAttendeeList />
         <IndividualEventGuestList />
       </div>
-
-      <IndividualEventPanel id={eventId} />
     </div>
   );
 };

@@ -3,9 +3,7 @@ import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import { PanelType } from '@constants';
 import useMutation from '@hooks/useMutation';
-import Panel from '@organisms/Panel/Panel';
 import { PanelAction } from '@organisms/Panel/Panel.types';
 import PanelOption from '@organisms/Panel/PanelOption';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -63,15 +61,11 @@ const SidebarPanel: React.FC = () => {
   ];
 
   return (
-    <Panel
-      align="RIGHT_BOTTOM"
-      id={PanelType.PROFILE}
-      style={{ marginLeft: 24, minWidth: 270, padding: 8 }}
-    >
+    <>
       {actions.map((action) => (
         <PanelOption key={action.text} {...action} />
       ))}
-    </Panel>
+    </>
   );
 };
 

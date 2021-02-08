@@ -3,7 +3,6 @@ import React from 'react';
 import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
 import SideBar from './SideBar';
-import SideBarPanel from './SideBarPanel';
 
 const NavBackground: React.FC = () => {
   const isOpen = useStoreState(({ nav }) => nav.isOpen);
@@ -20,7 +19,6 @@ const NavBackground: React.FC = () => {
 const Nav: React.FC = () => (
   <>
     <SideBar />
-    <SideBarPanel />
     <NavBackground />
   </>
 );

@@ -78,7 +78,7 @@ const IndividualEventNoShowAndFilter: React.FC = () => {
 
 const IndividualEventTableFilters: React.FC = () => {
   const show: boolean = useStoreState(({ db }) => {
-    return !!db.event?.recordingUrl && day().isAfter(day(db.event.startTime));
+    return !!db.event?.recordingUrl || day().isAfter(day(db.event.startTime));
   });
 
   return (

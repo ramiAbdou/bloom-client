@@ -3,19 +3,19 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { useStoreState } from '@store/Store';
-import { globalPanels } from './Panel.types';
+import { localPanels } from './Panel.types';
 import PanelContainer from './PanelContainer';
-import PanelContent from './PanelContent';
+import PanelLocalContent from './PanelLocalContent';
 
-const Panel: React.FC = () => {
+const PanelLocal: React.FC = () => {
   const isShowing = useStoreState(({ panel }) => panel.isShowing);
   const panelId = useStoreState(({ panel }) => panel.id);
 
   return createPortal(
     <AnimatePresence>
-      {isShowing && globalPanels.includes(panelId) && (
+      {isShowing && localPanels.includes(panelId) && (
         <PanelContainer>
-          <PanelContent />
+          <PanelLocalContent />
         </PanelContainer>
       )}
     </AnimatePresence>,
@@ -23,4 +23,4 @@ const Panel: React.FC = () => {
   );
 };
 
-export default Panel;
+export default PanelLocal;

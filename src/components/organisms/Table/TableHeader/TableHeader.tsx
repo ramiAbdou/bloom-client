@@ -40,10 +40,10 @@ const HeaderCell = ({
     ({ options }) => options.fixFirstColumn
   );
 
-  const isPanelShowing = useStoreState(({ panel }) => panel.isIdShowing(id));
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const isPanelShowing = useStoreState(({ panel }) => panel.id === id);
+  // const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const onClick = () => isSortable && showPanel(id);
+  // const onClick = () => isSortable && showPanel(id);
 
   const isSortedColumn = sortColumnId === id;
 
@@ -59,7 +59,8 @@ const HeaderCell = ({
   const showCaretDown = isSortedColumn && direction === 'DESC';
 
   return (
-    <th className={css} id={id} onClick={onClick}>
+    // <th className={css} id={id} onClick={onClick}>
+    <th className={css} id={id}>
       <div>
         {!i && hasCheckbox && <TableHeaderCheckbox />}
         {!hideTitle && <p>{title}</p>}
