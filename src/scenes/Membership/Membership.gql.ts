@@ -11,7 +11,8 @@ export const GET_MEMBER_PAYMENTS = query({
     { member: ['id'] },
     { type: ['id'] }
   ],
-  operation: 'getMemberPayments'
+  operation: 'getMemberPayments',
+  variables: { memberId: { required: false } }
 }).query;
 
 // ## GET UPCOMING PAYMENT

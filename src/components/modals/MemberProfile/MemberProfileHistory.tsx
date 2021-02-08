@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Separator from '@atoms/Separator';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import {
@@ -22,9 +23,9 @@ const MemberProfileHistoryEvents: React.FC = () => {
     (store) => store.memberId
   );
 
-  const history: MemberHistoryData[] = useStoreState(({ db }) =>
-    getMemberHistory({ db, memberId })
-  );
+  const history: MemberHistoryData[] = useStoreState(({ db }) => {
+    return getMemberHistory({ db, memberId });
+  });
 
   return (
     <ul>
@@ -35,7 +36,7 @@ const MemberProfileHistoryEvents: React.FC = () => {
   );
 };
 
-const MemberProfileHistory: React.FC = () => {
+const MemberProfileHistoryContent: React.FC = () => {
   const memberId: string = MemberProfileStore.useStoreState(
     (store) => store.memberId
   );
@@ -71,10 +72,20 @@ const MemberProfileHistory: React.FC = () => {
   const loading = loading1 || loading2 || loading3 || loading4;
 
   return (
-    <Show show={!loading}>
+    <>
       <Separator margin={24} />
-      <h2 className="mb-sm">History</h2>
-      <MemberProfileHistoryEvents />
+      <LoadingHeader h2 loading={loading} title="History" />
+      {!loading && <MemberProfileHistoryEvents />}
+    </>
+  );
+};
+
+const MemberProfileHistory: React.FC = () => {
+  const admin: boolean = useStoreState(({ db }) => !!db.member.role);
+
+  return (
+    <Show show={admin}>
+      <MemberProfileHistoryContent />
     </Show>
   );
 };

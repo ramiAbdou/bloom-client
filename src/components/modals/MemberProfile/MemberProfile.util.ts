@@ -54,7 +54,6 @@ export const getMemberHistory = ({
     { date: member.joinedAt, event: 'Joined Community', title: community?.name }
   ];
 
-
   const paymentEvents: MemberHistoryData[] =
     member.payments?.map((paymentId: string) => {
       const payment: IMemberPayment = db.byPaymentId[paymentId];

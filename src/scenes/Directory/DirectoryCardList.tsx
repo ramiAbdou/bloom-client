@@ -31,8 +31,6 @@ const DirectoryCardList: React.FC = () => {
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'));
   }, deepequal);
 
-  // members.forEach((member) => console.log(member.data));
-
   return (
     <MasonryList
       className="s-directory-card-ctr"
