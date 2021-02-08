@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import useQuery from '@hooks/useQuery';
-import ModalStore from '@organisms/Modal/Modal.store';
 import LocalModal from '@organisms/Modal/ModalLocal';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -37,12 +36,10 @@ const IntegrationsContent: React.FC = () => {
 };
 
 const Integrations: React.FC = () => (
-  <ModalStore.Provider>
-    <IntegrationsStore.Provider>
-      <IntegrationsContent />
-      <LocalModal />
-    </IntegrationsStore.Provider>
-  </ModalStore.Provider>
+  <IntegrationsStore.Provider>
+    <IntegrationsContent />
+    <LocalModal />
+  </IntegrationsStore.Provider>
 );
 
 export default Integrations;

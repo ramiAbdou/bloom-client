@@ -4,7 +4,6 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
-import ModalStore from '@organisms/Modal/Modal.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -24,7 +23,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const startTime = useStoreState(({ db }) => {

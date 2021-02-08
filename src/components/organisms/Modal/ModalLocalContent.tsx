@@ -6,11 +6,11 @@ import MemberDatabaseDeleteModal from '@scenes/Database/MemberDatabase/MemberDat
 import MemberDatabasePromoteModal from '@scenes/Database/MemberDatabase/MemberDatabasePromoteModal';
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
 import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
+import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import ModalStore from './Modal.store';
 
 const LocalModalCustomContent: React.FC = () => {
-  const id: string = ModalStore.useStoreState((store) => store.id);
+  const id: string = useStoreState(({ modal }) => modal.id);
   if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteModal />;
   if (id === ModalType.DEMOTE_MEMBERS) return <AdminDatabaseDemoteModal />;
 
@@ -25,12 +25,10 @@ const LocalModalCustomContent: React.FC = () => {
 };
 
 const ModalLocalContent: React.FC = () => {
-  const className: string = ModalStore.useStoreState(
-    (store) => store.className
-  );
+  const className: string = useStoreState(({ modal }) => modal.className);
 
-  const confirmation: boolean = ModalStore.useStoreState(
-    (store) => store.options?.confirmation
+  const confirmation: boolean = useStoreState(
+    ({ modal }) => modal.options?.confirmation
   );
 
   const css = cx('c-modal', {

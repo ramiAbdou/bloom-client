@@ -10,11 +10,11 @@ import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
+import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import ModalStore from './Modal.store';
 
 const ModalCustomContent: React.FC = () => {
-  const id: string = ModalStore.useStoreState((store) => store.id);
+  const id: string = useStoreState(({ modal }) => modal.id);
 
   if (id === ModalType.ADD_ADMINS) return <AddMemberModal admin />;
   if (id === ModalType.ADD_MEMBERS) return <AddMemberModal />;
@@ -39,8 +39,11 @@ const ModalCustomContent: React.FC = () => {
 };
 
 const ModalContent: React.FC = () => {
-  const className: string = ModalStore.useStoreState((store) => store.className);
-  const confirmation: boolean = ModalStore.useStoreState((store) => store.options?.confirmation);
+  const className: string = useStoreState(({ modal }) => modal.className);
+
+  const confirmation: boolean = useStoreState(
+    ({ modal }) => modal.options?.confirmation
+  );
 
   const css = cx('c-modal', {
     'c-modal--confirmation': confirmation,

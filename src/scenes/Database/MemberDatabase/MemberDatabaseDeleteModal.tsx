@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import ModalStore from '@organisms/Modal/Modal.store';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
@@ -13,7 +12,7 @@ const MemberDatabaseDeleteModal: React.FC = () => {
   const addEntities = useStoreActions(({ db }) => db.addEntities);
   const deleteEntities = useStoreActions(({ db }) => db.deleteEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const memberIds = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds

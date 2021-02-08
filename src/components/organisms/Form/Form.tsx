@@ -2,7 +2,6 @@ import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
 import Show from '@containers/Show';
-import ModalStore from '@organisms/Modal/Modal.store';
 import StoryStore from '@organisms/Story/Story.store';
 import { useStore } from '@store/Store';
 import { cx } from '@util/util';
@@ -18,7 +17,6 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   spacing
 }) => {
   const globalStore = useStore();
-  const modalStore = ModalStore.useStore();
 
   const items: Record<string, FormItemData> = FormStore.useStoreState(
     (store) => store.items,
@@ -54,7 +52,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
       setIsLoading(true);
 
       await onSubmit({
-        closeModal: modalStore?.getActions()?.closeModal,
+        closeModal: globalStore?.getActions()?.modal.closeModal,
         db: globalStore.getState()?.db,
         goForward: storyStore?.getActions()?.goForward,
         items: validatedItems,

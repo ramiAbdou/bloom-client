@@ -10,12 +10,34 @@ export interface ModalOptions {
 
 export interface ModalData {
   className?: string;
-  id: string;
+  id: ModalType;
   metadata?: any;
   onClose?: VoidFunction;
   options?: ModalOptions;
   width?: number;
 }
+
+export const globalModals: ModalType[] = [
+  ModalType.ADD_ADMINS,
+  ModalType.ADD_MEMBERS,
+  ModalType.APPLICANT,
+  ModalType.CHANGE_MEMBERSHIP,
+  ModalType.CHECK_IN,
+  ModalType.CREATE_EVENT,
+  ModalType.EDIT_MEMBERSHIP_INFORMATION,
+  ModalType.EDIT_PERSONAL_INFORMATION,
+  ModalType.EDIT_SOCIAL_MEDIA,
+  ModalType.MEMBER_PROFILE,
+  ModalType.PAY_DUES
+];
+
+export const localModals: ModalType[] = [
+  ModalType.DELETE_MEMBERS,
+  ModalType.DEMOTE_MEMBERS,
+  ModalType.INTEGRATIONS_DETAILS,
+  ModalType.MAILCHIMP_FLOW,
+  ModalType.PROMOTE_MEMBERS
+];
 
 export const defaultModalOptions: Record<string, Partial<ModalData>> = {
   [ModalType.ADD_MEMBERS]: { width: 750 },

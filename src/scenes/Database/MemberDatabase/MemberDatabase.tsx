@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
-import ModalStore from '@organisms/Modal/Modal.store';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
@@ -13,13 +12,13 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IIntegrations, IQuestion } from '@store/Db/entities';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
 
 const MemberDatabase: React.FC = () => {
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
@@ -60,18 +59,16 @@ const MemberDatabase: React.FC = () => {
   };
 
   return (
-    <ModalStore.Provider>
-      <Table
-        columns={columns}
-        options={options}
-        rows={rows}
-        show={!!columns?.length}
-      >
-        <MemberDatabaseActions />
-        <TableContent />
-        <ModalLocal />
-      </Table>
-    </ModalStore.Provider>
+    <Table
+      columns={columns}
+      options={options}
+      rows={rows}
+      show={!!columns?.length}
+    >
+      <MemberDatabaseActions />
+      <TableContent />
+      <ModalLocal />
+    </Table>
   );
 };
 

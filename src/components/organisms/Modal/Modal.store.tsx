@@ -1,4 +1,4 @@
-import { action, createContextStore } from 'easy-peasy';
+import { action } from 'easy-peasy';
 
 import {
   defaultModalOptions,
@@ -27,8 +27,4 @@ const modalModel: ModalModel = {
   })
 };
 
-const ModalStore = createContextStore<ModalModel>(modalModel, {
-  disableImmer: true
-});
-
-export default ModalStore;
+export default modalModel;

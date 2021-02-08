@@ -4,13 +4,12 @@ import Button from '@atoms/Button/Button';
 import StatusTag from '@atoms/Tag/StatusTag';
 import { ModalType } from '@constants';
 import Show from '@containers/Show';
-import ModalStore from '@organisms/Modal/Modal.store';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 
 const NavMemberStatus: React.FC = () => {
   const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const currentTypeId: string = useStoreState(({ db }) => {
     return db.member?.type;

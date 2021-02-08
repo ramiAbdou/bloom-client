@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
-import ModalStore from '@organisms/Modal/Modal.store';
+import { useStoreActions } from '@store/Store';
 import IntegrationsStore, {
   IntegrationsModalType
 } from '../Integrations.store';
@@ -18,7 +18,7 @@ export type IntegrationCardProps = {
 const IntegrationCardButton = memo(
   ({ connected, href, logo, name }: Partial<IntegrationCardProps>) => {
     const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
-    const showModal = ModalStore.useStoreActions((store) => store.showModal);
+    const showModal = useStoreActions(({ modal }) => modal.showModal);
 
     // onClick only executes if href isn't populated, per the Button component.
     const onOpenFlow = () =>

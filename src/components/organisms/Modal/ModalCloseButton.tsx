@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import ModalStore from './Modal.store';
+import { useStoreActions } from '@store/Store';
 
 const ModalCloseButton: React.FC = () => {
-  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const onClick = () => closeModal();
 
   return (

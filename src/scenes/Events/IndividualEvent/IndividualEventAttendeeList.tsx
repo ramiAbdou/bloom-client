@@ -7,9 +7,8 @@ import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import ModalStore from '@organisms/Modal/Modal.store';
 import { IEventAttendee, IMember, IUser } from '@store/Db/entities';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
 interface IndividualEventAttendeeProps
@@ -24,7 +23,7 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
   props
 ) => {
   const { firstName, lastName, memberId, pictureUrl } = props;
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });

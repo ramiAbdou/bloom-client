@@ -11,8 +11,7 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import ModalStore from '@organisms/Modal/Modal.store';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
 
@@ -22,7 +21,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
     return !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
   });
 
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
 
   return (
@@ -81,7 +80,7 @@ const ProfileSocialCard: React.FC = () => {
   const isSocialLinked: boolean =
     !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
 
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
 
   return (

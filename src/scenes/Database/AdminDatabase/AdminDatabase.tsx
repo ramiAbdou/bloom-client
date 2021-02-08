@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ModalStore from '@organisms/Modal/Modal.store';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
@@ -32,13 +31,11 @@ const AdminDatabase: React.FC = () => {
   ];
 
   return (
-    <ModalStore.Provider>
-      <Table columns={columns} options={{ hasCheckbox: isOwner }} rows={rows}>
-        <AdminDatabaseActions />
-        <TableContent />
-        <ModalLocal />
-      </Table>
-    </ModalStore.Provider>
+    <Table columns={columns} options={{ hasCheckbox: isOwner }} rows={rows}>
+      <AdminDatabaseActions />
+      <TableContent />
+      <ModalLocal />
+    </Table>
   );
 };
 

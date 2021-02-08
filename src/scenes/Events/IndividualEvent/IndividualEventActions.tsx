@@ -4,7 +4,6 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { ModalType, PanelType } from '@constants';
 import Row from '@containers/Row/Row';
-import ModalStore from '@organisms/Modal/Modal.store';
 import { IEventGuest } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import EventsJoinButton from '../EventsJoinButton';
@@ -35,7 +34,7 @@ const EventsEditEventButton: React.FC = () => {
     return day().isAfter(day(db.event.startTime));
   });
 
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({ id: ModalType.CREATE_EVENT, metadata: eventId });

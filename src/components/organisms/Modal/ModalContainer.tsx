@@ -5,8 +5,8 @@ import { IoClose } from 'react-icons/io5';
 import Button from '@atoms/Button/Button';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import ModalStore from './Modal.store';
 
 /**
  * The darkish overlay that lays underneath the actual modal. Has a high
@@ -14,11 +14,8 @@ import ModalStore from './Modal.store';
  * background.
  */
 const ModalBackground: React.FC = () => {
-  const lock: boolean = ModalStore.useStoreState(
-    (store) => store.options?.lock
-  );
-
-  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
+  const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const onClick = () => !lock && closeModal();
   const css = cx('c-modal-bg', { 'c-modal-bg--lock': lock });
@@ -27,11 +24,8 @@ const ModalBackground: React.FC = () => {
 };
 
 const ModalExitButton: React.FC = () => {
-  const lock: boolean = ModalStore.useStoreState(
-    (store) => store.options?.lock
-  );
-
-  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
+  const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const onClick = () => closeModal();
 
   return (
@@ -42,13 +36,9 @@ const ModalExitButton: React.FC = () => {
 };
 
 const ModalContainer: React.FC = ({ children }) => {
-  const onClose = ModalStore.useStoreState((store) => store?.onClose);
-
-  const sheet: boolean = ModalStore.useStoreState(
-    (store) => store.options?.sheet
-  );
-
-  const width: number = ModalStore.useStoreState((store) => store?.width);
+  const onClose = useStoreState(({ modal }) => modal?.onClose);
+  const sheet: boolean = useStoreState(({ modal }) => modal.options?.sheet);
+  const width: number = useStoreState(({ modal }) => modal?.width);
 
   useLockBodyScroll();
 

@@ -2,9 +2,8 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import { ModalType } from '@constants';
-import ModalStore from '@organisms/Modal/Modal.store';
 import TableStore from '@organisms/Table/Table.store';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
@@ -43,7 +42,7 @@ const useDeleteTooltip = (): string => {
 };
 
 const MemberDatabaseDeleteButton: React.FC = () => {
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const tooltip: string = useDeleteTooltip();
   const onClick = () => showModal({ id: ModalType.DELETE_MEMBERS });
 

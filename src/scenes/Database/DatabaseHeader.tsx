@@ -6,12 +6,11 @@ import { LoadingProps, ModalType } from '@constants';
 import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import useFinalPath from '@hooks/useFinalPath';
-import ModalStore from '@organisms/Modal/Modal.store';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 
 const DatbaseHeaderAddButton: React.FC = () => {
   const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isAdminsPage = useFinalPath() === 'admins';
   const isMembersPage = useFinalPath() === 'members';

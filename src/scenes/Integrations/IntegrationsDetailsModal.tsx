@@ -3,16 +3,12 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
-import ModalStore from '@organisms/Modal/Modal.store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import useIntegrationsDetails from './useIntegrationsDetails';
 
 const IntegrationsDetailsModal: React.FC = () => {
-  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
-
-  const { name, logo } = ModalStore.useStoreState(
-    (store) => store.metadata ?? {}
-  );
-
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const { name, logo } = useStoreState(({ modal }) => modal.metadata ?? {});
   const details = useIntegrationsDetails(name);
 
   return (

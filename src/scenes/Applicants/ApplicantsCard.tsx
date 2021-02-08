@@ -8,14 +8,13 @@ import Row from '@containers/Row/Row';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import ModalStore from '@organisms/Modal/Modal.store';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsCardHeader: React.FC = () => {
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   const createdAt: string = useStoreState(({ db }) => {

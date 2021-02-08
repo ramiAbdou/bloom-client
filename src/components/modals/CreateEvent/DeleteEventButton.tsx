@@ -4,7 +4,6 @@ import Button from '@atoms/Button/Button';
 import { IdProps } from '@constants';
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
-import ModalStore from '@organisms/Modal/Modal.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { DELETE_EVENT } from './CreateEvent.gql';
 
@@ -12,8 +11,8 @@ const DeleteEventButton: React.FC = () => {
   const communityId = useStoreState(({ db }) => db.community.id);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const id: string = ModalStore.useStoreState((store) => store.metadata);
-  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
+  const id: string = useStoreState(({ modal }) => modal.metadata);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const [deleteEvent, { loading }] = useMutation<boolean, IdProps>({
     deleteArgs: {

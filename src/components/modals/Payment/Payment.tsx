@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 
 import { ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
-import ModalStore from '@organisms/Modal/Modal.store';
 import Story from '@organisms/Story/Story';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
@@ -42,12 +41,12 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 };
 
 const PaymentModal: React.FC = () => {
-  const type = ModalStore.useStoreState(
-    (store) => store.metadata?.type
+  const type = useStoreState(
+    ({ modal }) => modal.metadata?.type
   ) as PaymentModalType;
 
-  const selectedTypeId = ModalStore.useStoreState(
-    (store) => store.metadata?.selectedTypeId
+  const selectedTypeId = useStoreState(
+    ({ modal }) => modal.metadata?.selectedTypeId
   ) as string;
 
   const currentTypeId: string = useStoreState(({ db }) => {
@@ -64,7 +63,7 @@ const PaymentModal: React.FC = () => {
 
   // Get the user and see if they've paid their dues or not.
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   useEffect(() => {
     if (!isAdmin && !isDuesActive) {

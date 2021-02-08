@@ -2,7 +2,6 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
-import ModalStore from '@organisms/Modal/Modal.store';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
@@ -11,7 +10,7 @@ import { useStoreActions } from '@store/Store';
 import { DEMOTE_MEMBERS, MemberIdsArgs } from '../Database.gql';
 
 const AdminDatabaseDemoteModal: React.FC = () => {
-  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const memberIds = TableStore.useStoreState(

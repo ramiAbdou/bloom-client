@@ -2,12 +2,12 @@ import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
 import { ModalType } from '@constants';
-import ModalStore from '@organisms/Modal/Modal.store';
 import TableStore from '@organisms/Table/Table.store';
+import { useStoreActions } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 
 const AdminDatabaseDemoteButton: React.FC = () => {
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const disabled = TableStore.useStoreState(({ selectedRowIds }) => {
     return selectedRowIds.length > 15;

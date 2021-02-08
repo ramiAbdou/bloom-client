@@ -14,7 +14,6 @@ import FormSection from '@organisms/Form/FormSection';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import FormTime from '@organisms/Form/FormTime';
-import ModalStore from '@organisms/Modal/Modal.store';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import DeleteEventButton from './DeleteEventButton';
@@ -38,7 +37,7 @@ const CreateEventTimeItems: React.FC<ShowProps> = ({ show }) => {
 };
 
 const CreateEvent: React.FC = () => {
-  const id: string = ModalStore.useStoreState((store) => store.metadata);
+  const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
   const {
     description,
@@ -48,14 +47,14 @@ const CreateEvent: React.FC = () => {
     title,
     videoUrl
   }: IEvent = useStoreState(({ db }) => {
-    return db.byEventId[id] ?? {};
+    return db.byEventId[eventId] ?? {};
   }, deepequal);
 
   const createEvent = useCreateEvent();
-  const updateEvent = useUpdateEvent(id);
+  const updateEvent = useUpdateEvent(eventId);
 
   return (
-    <Form spacing="lg" onSubmit={id ? updateEvent : createEvent}>
+    <Form spacing="lg" onSubmit={eventId ? updateEvent : createEvent}>
       <FormCoverImage
         id="COVER_IMAGE"
         required={false}
@@ -91,7 +90,7 @@ const CreateEvent: React.FC = () => {
           value={videoUrl}
         />
 
-        <CreateEventTimeItems show={!id} />
+        <CreateEventTimeItems show={!eventId} />
       </FormSection>
 
       <FormSection title="Privacy Settings">
@@ -103,8 +102,8 @@ const CreateEvent: React.FC = () => {
         />
       </FormSection>
 
-      <FormSubmitButton loadingText={id ? 'Updating...' : 'Creating...'}>
-        {id ? 'Update Event' : 'Create Event'}
+      <FormSubmitButton loadingText={eventId ? 'Updating...' : 'Creating...'}>
+        {eventId ? 'Update Event' : 'Create Event'}
       </FormSubmitButton>
 
       <DeleteEventButton />

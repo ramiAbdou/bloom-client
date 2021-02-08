@@ -15,8 +15,7 @@ import {
 import Separator from '@atoms/Separator';
 import { ModalType } from '@constants';
 import useBreakpoint from '@hooks/useBreakpoint';
-import ModalStore from '@organisms/Modal/Modal.store';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { LinkOptions } from './Nav.types';
 import SideBarDuesContent from './NavMemberStatus';
 import SideBarCommunityList from './SideBarCommunityList';
@@ -26,7 +25,7 @@ import SideBarSection from './SideBarSection';
 const SideBarContent: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
   const name = useStoreState(({ db }) => db.community.name);
-  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const mainLinks: LinkOptions[] = [
     { Icon: IoPeople, title: 'Directory', to: 'directory' },

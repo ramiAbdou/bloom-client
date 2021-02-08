@@ -4,13 +4,12 @@ import Row from '@containers/Row/Row';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import ModalStore from '@organisms/Modal/Modal.store';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
-  const memberId: string = ModalStore.useStoreState((store) => store.metadata);
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const fullName = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -22,7 +21,7 @@ const ApplicantsModalTitle: React.FC = () => {
 };
 
 const ApplicantsModalItems: React.FC = () => {
-  const memberId: string = ModalStore.useStoreState((store) => store.metadata);
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -57,7 +56,7 @@ const ApplicantsModalItems: React.FC = () => {
 };
 
 const ApplicantsModalActionContainer: React.FC = () => {
-  const memberId: string = ModalStore.useStoreState((store) => store.metadata);
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   return (
     <Row equal>
