@@ -20,7 +20,7 @@ const IntegrationsContent: React.FC = () => {
     if (searchParam && searchParam !== flow) {
       setFlow(`${searchParam.toUpperCase()}_FORM` as IntegrationsModalType);
     }
-  }, []);
+  }, [searchParam]);
 
   const { loading } = useQuery<ICommunity>({
     name: 'getIntegrations',
