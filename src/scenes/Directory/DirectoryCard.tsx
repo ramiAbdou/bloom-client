@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
-import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
@@ -60,8 +59,9 @@ const DirectoryCardContent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const onClick = () =>
-    showModal({ id: `${ModalType.MEMBER_PROFILE}-${memberId}` });
+  const onClick = () => {
+    showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+  };
 
   return (
     <Card noPadding className="s-directory-card" onClick={onClick}>
@@ -75,7 +75,6 @@ const DirectoryCard: React.FC<any> = ({ data }) => {
   return (
     <IdStore.Provider runtimeModel={{ id: data?.memberId }}>
       <DirectoryCardContent />
-      <MemberProfileModal memberId={data?.memberId} />
     </IdStore.Provider>
   );
 };

@@ -11,9 +11,6 @@ import { UrlNameProps } from '@constants';
 import useFinalPath from '@hooks/useFinalPath';
 import useQuery from '@hooks/useQuery';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
-import AddMemberModal from '@modals/AddMember/AddMember';
-import CreateEventModal from '@modals/CreateEvent/CreateEvent';
-import PaymentModal from '@modals/Payment/Payment';
 import useLoader from '@organisms/Loader/useLoader';
 import Nav from '@organisms/Nav/Nav';
 import Analytics from '@scenes/Analytics/Analytics';
@@ -95,10 +92,6 @@ const HomeRoute: React.FC = () => {
   const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
-  const memberTypeId: string = useStoreState(({ db }) => {
-    return db.byTypeId[db.member?.type]?.id;
-  });
-
   const isMember: boolean = useStoreState(({ db }) => {
     const members: IMember[] = db.user?.members?.map((memberId: string) => {
       return db.byMemberId[memberId];
@@ -158,9 +151,6 @@ const HomeRoute: React.FC = () => {
     <>
       <Nav />
       <HomeRouteContent />
-      <AddMemberModal />
-      <CreateEventModal />
-      <PaymentModal selectedTypeId={memberTypeId} type="PAY_DUES" />
     </>
   );
 };

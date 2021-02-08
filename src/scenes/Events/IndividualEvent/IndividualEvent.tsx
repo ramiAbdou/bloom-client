@@ -4,8 +4,6 @@ import { Redirect, useParams } from 'react-router-dom';
 
 import { CookieType, ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
-import CheckInModal from '@modals/CheckIn/CheckIn';
-import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import useLoader from '@organisms/Loader/useLoader';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -74,7 +72,7 @@ const IndividualEvent: React.FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated && (isMembersOnly || hasCookieError)) {
-      showModal({ id: `${ModalType.CHECK_IN}-${eventId}` });
+      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
     }
   }, [hasCookieError, isMembersOnly, isAuthenticated]);
 
@@ -96,8 +94,6 @@ const IndividualEvent: React.FC = () => {
       </div>
 
       <IndividualEventPanel id={eventId} />
-      <CreateEventModal id={eventId} />
-      <CheckInModal id={eventId} lock={isMembersOnly && !isAuthenticated} />
     </div>
   );
 };

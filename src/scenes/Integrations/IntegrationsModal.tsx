@@ -9,7 +9,7 @@ import stripe from './images/stripe.png';
 import IntegrationsDetailsModal, {
   ExpandedDetailProps
 } from './IntegrationsDetailsModal';
-import IntegrationsMailchimpForm from './IntegrationsMailchimpForm';
+import IntegrationsMailchimpForm from './IntegrationsMailchimpModal';
 
 const IntegrationsMailchimpDetails: React.FC = () => {
   const listName = useStoreState(({ db }) => db.integrations.mailchimpListName);

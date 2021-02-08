@@ -4,7 +4,6 @@ import React from 'react';
 import { ModalType } from '@constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
-import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -68,7 +67,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
     fixFirstColumn: false,
     isSortable: false,
     onRowClick: ({ memberId }: TableRow) => {
-      showModal({ id: `${ModalType.MEMBER_PROFILE}-${memberId}` });
+      showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
     },
     showCount: false
   };
@@ -76,10 +75,6 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   return (
     <Table columns={columns} options={options} rows={rows}>
       <TableContent emptyMessage="Looks like nobody has attended an event yet." />
-
-      {rows?.map(({ id, memberId }: TableRow) => {
-        return <MemberProfileModal key={id} memberId={memberId} />;
-      })}
     </Table>
   );
 };

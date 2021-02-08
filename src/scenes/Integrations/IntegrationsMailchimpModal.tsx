@@ -8,7 +8,6 @@ import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
-import Modal from '@organisms/Modal/Modal';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -62,7 +61,7 @@ const MailchimpModalContent: React.FC = () => {
   );
 };
 
-const MailchimpModal: React.FC = () => {
+const IntegrationsMailchimpModal: React.FC = () => {
   const { mailchimpListId, mailchimpLists } = useStoreState(
     ({ db }) => db.integrations,
     deepequal
@@ -77,19 +76,17 @@ const MailchimpModal: React.FC = () => {
   const shouldShowModal: boolean =
     flow === 'MAILCHIMP_FORM' && !mailchimpListId && !!mailchimpLists?.length;
 
-  useEffect(() => {
-    if (shouldShowModal) showModal({ id: ModalType.MAILCHIMP_FLOW });
-  }, [shouldShowModal]);
-
   const onClose = () => setFlow(null);
 
+  useEffect(() => {
+    if (shouldShowModal) showModal({ id: ModalType.MAILCHIMP_FLOW, onClose });
+  }, [shouldShowModal]);
+
   return (
-    <Modal id={ModalType.MAILCHIMP_FLOW} onClose={onClose}>
-      <Form className="s-integrations-onboarding-form" onSubmit={onSubmit}>
-        <MailchimpModalContent />
-      </Form>
-    </Modal>
+    <Form className="s-integrations-onboarding-form" onSubmit={onSubmit}>
+      <MailchimpModalContent />
+    </Form>
   );
 };
 
-export default MailchimpModal;
+export default IntegrationsMailchimpModal;

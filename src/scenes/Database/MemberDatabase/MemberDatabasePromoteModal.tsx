@@ -1,14 +1,12 @@
 import deline from 'deline';
 import React from 'react';
 
-import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import useMutation from '@hooks/useMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import Modal from '@organisms/Modal/Modal';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
@@ -32,7 +30,7 @@ const MemberDatabasePromoteActions: React.FC = () => {
   );
 };
 
-const MemberDatabasePromoteForm: React.FC = () => {
+const MemberDatabasePromoteModal: React.FC = () => {
   const memberIds = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
@@ -76,14 +74,6 @@ const MemberDatabasePromoteForm: React.FC = () => {
 
       <MemberDatabasePromoteActions />
     </Form>
-  );
-};
-
-const MemberDatabasePromoteModal: React.FC = () => {
-  return (
-    <Modal id={ModalType.PROMOTE_TO_ADMIN} options={{ confirmation: true }}>
-      <MemberDatabasePromoteForm />
-    </Modal>
   );
 };
 

@@ -11,7 +11,16 @@ const NavMemberStatus: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () => showModal({ id: ModalType.PAY_DUES });
+  const currentTypeId: string = useStoreState(({ db }) => {
+    return db.member?.type;
+  });
+
+  const onClick = () => {
+    showModal({
+      id: ModalType.PAY_DUES,
+      metadata: { selectedTypeId: currentTypeId, type: 'PAY_DUES' }
+    });
+  };
 
   return (
     <Show show={!!canCollectDues && !isDuesActive}>

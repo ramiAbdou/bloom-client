@@ -1,8 +1,6 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
-import Modal from '@organisms/Modal/Modal';
 import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IMember } from '@store/Db/entities';
@@ -41,7 +39,7 @@ const MemberDatabaseDeleteModal: React.FC = () => {
   };
 
   return (
-    <Modal id={ModalType.DELETE_MEMBERS} options={{ confirmation: true }}>
+    <>
       <h1>Remove {members?.length} member(s)?</h1>
       <p>
         Are you sure you want to remove these member(s)? They will no longer
@@ -56,7 +54,7 @@ const MemberDatabaseDeleteModal: React.FC = () => {
           Cancel
         </Button>
       </div>
-    </Modal>
+    </>
   );
 };
 

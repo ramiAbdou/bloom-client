@@ -13,6 +13,10 @@ const MembershipCurrentPlanActions: React.FC = () => {
     return db.byTypeId[db.member?.type]?.recurrence === 'LIFETIME';
   });
 
+  const currentTypeId: string = useStoreState(({ db }) => {
+    return db.member?.type;
+  });
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { url } = useRouteMatch();
@@ -20,7 +24,13 @@ const MembershipCurrentPlanActions: React.FC = () => {
 
   if (isDuesActive && isLifetime) return null;
 
-  const onPrimaryClick = () => showModal({ id: ModalType.PAY_DUES });
+  const onPrimaryClick = () => {
+    showModal({
+      id: ModalType.PAY_DUES,
+      metadata: { selectedTypeId: currentTypeId, type: 'PAY_DUES' }
+    });
+  };
+
   const onSecondaryClick = () => push(`${url}/change`);
 
   return (

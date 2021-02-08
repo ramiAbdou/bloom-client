@@ -4,7 +4,6 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
-import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
@@ -26,8 +25,9 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
   const { firstName, lastName, memberId, pictureUrl } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () =>
-    showModal({ id: `${ModalType.MEMBER_PROFILE}-${memberId}` });
+  const onClick = () => {
+    showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+  };
 
   const fullName = `${firstName} ${lastName}`;
 
@@ -72,12 +72,6 @@ const IndividualEventAttendeeListContent: React.FC = () => {
         className="s-events-card-ctr"
         items={users}
       />
-
-      {users?.map((user) => {
-        return (
-          <MemberProfileModal key={user?.email} memberId={user?.memberId} />
-        );
-      })}
     </>
   );
 };

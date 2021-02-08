@@ -1,6 +1,6 @@
 import { action } from 'easy-peasy';
 
-import { ModalModel, ShowModalArgs } from './Modal.types';
+import { ModalData, ModalModel } from './Modal.types';
 
 const modalModel: ModalModel = {
   closeModal: action((state) => {
@@ -13,11 +13,15 @@ const modalModel: ModalModel = {
 
   metadata: null,
 
+  onClose: null,
+
   options: null,
 
-  showModal: action((state, args: ShowModalArgs) => {
+  showModal: action((state, args: ModalData) => {
     return { ...state, ...args, isShowing: true };
-  })
+  }),
+
+  width: null
 };
 
 export default modalModel;

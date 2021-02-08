@@ -1,9 +1,7 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
-import Modal from '@organisms/Modal/Modal';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -36,7 +34,7 @@ const AdminDatabaseDemoteModal: React.FC = () => {
   const onSecondaryClick = () => closeModal();
 
   return (
-    <Modal id={ModalType.DEMOTE_MEMBERS} options={{ confirmation: true }}>
+    <>
       <h1>Demote to member?</h1>
 
       <p>
@@ -54,7 +52,7 @@ const AdminDatabaseDemoteModal: React.FC = () => {
           Cancel
         </Button>
       </div>
-    </Modal>
+    </>
   );
 };
 

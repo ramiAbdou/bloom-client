@@ -52,7 +52,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      showModal({ id: `${ModalType.CHECK_IN}-${eventId}` });
+      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
       return;
     }
 

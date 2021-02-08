@@ -22,7 +22,7 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
 }) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setFlow = Integrations.useStoreActions((store) => store.setFlow);
+  // const setFlow = Integrations.useStoreActions((store) => store.setFlow);
 
   const MODAL_ID = `${name.toUpperCase()}_DETAILS`;
 
@@ -32,9 +32,9 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
 
   return (
     <Modal
-      className="s-integrations-modal"
-      id={MODAL_ID}
-      onClose={() => setFlow(null)}
+    // className="s-integrations-modal"
+    // id={MODAL_ID}
+    // onClose={() => setFlow(null)}
     >
       <img className="s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>

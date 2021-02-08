@@ -25,7 +25,12 @@ const MemberDatabasePromoteButton: React.FC = () => {
     'Promote to Admin(s)'
   ]);
 
-  const onClick = () => showModal({ id: ModalType.PROMOTE_TO_ADMIN });
+  const onClick = () => {
+    showModal({
+      id: ModalType.PROMOTE_TO_ADMIN,
+      options: { confirmation: true }
+    });
+  };
 
   return (
     <DatabaseAction

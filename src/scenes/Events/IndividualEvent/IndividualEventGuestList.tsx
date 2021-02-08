@@ -4,7 +4,6 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
-import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { IEventGuest, IMember, IUser } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -25,7 +24,7 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 
   const onClick = () => {
     if (isAuthenticated && memberId) {
-      showModal({ id: `${ModalType.MEMBER_PROFILE}-${memberId}` });
+      showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
     }
   };
 
@@ -74,7 +73,6 @@ const IndividualEventGuestListContent: React.FC = () => {
           return (
             <React.Fragment key={user?.email}>
               <IndividualEventGuest key={user?.id} {...user} />
-              <MemberProfileModal memberId={user?.memberId} />
             </React.Fragment>
           );
         })}

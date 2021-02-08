@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import Modal from '@organisms/Modal/Modal';
 import { useStoreState } from '@store/Store';
 import useUpdateUserSocials from './useUpdateUserSocials';
 
-const ProfileSocialForm: React.FC = () => {
+const ProfileSocialModal: React.FC = () => {
   const facebookUrl = useStoreState(({ db }) => db.user.facebookUrl);
   const instagramUrl = useStoreState(({ db }) => db.user.instagramUrl);
   const linkedInUrl = useStoreState(({ db }) => db.user.linkedInUrl);
@@ -55,14 +53,6 @@ const ProfileSocialForm: React.FC = () => {
 
       <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
     </Form>
-  );
-};
-
-const ProfileSocialModal: React.FC = () => {
-  return (
-    <Modal id={ModalType.EDIT_SOCIAL_MEDIA}>
-      <ProfileSocialForm />
-    </Modal>
   );
 };
 

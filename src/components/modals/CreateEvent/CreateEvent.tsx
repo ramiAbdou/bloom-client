@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import { IdProps, ModalType, ShowProps } from '@constants';
+import { ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import Form from '@organisms/Form/Form';
@@ -14,7 +14,6 @@ import FormSection from '@organisms/Form/FormSection';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import FormTime from '@organisms/Form/FormTime';
-import Modal from '@organisms/Modal/Modal';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import DeleteEventButton from './DeleteEventButton';
@@ -37,7 +36,9 @@ const CreateEventTimeItems: React.FC<ShowProps> = ({ show }) => {
   );
 };
 
-const CreateEventForm: React.FC<IdProps> = ({ id }) => {
+const CreateEvent: React.FC = () => {
+  const id: string = useStoreState(({ modal }) => modal.metadata);
+
   const {
     description,
     imageUrl,
@@ -107,18 +108,6 @@ const CreateEventForm: React.FC<IdProps> = ({ id }) => {
 
       <DeleteEventButton id={id} />
     </Form>
-  );
-};
-
-const CreateEvent: React.FC<IdProps> = ({ id }) => {
-  return (
-    <Modal
-      className="mo-create-event"
-      id={id ? `${ModalType.CREATE_EVENT}-${id}` : ModalType.CREATE_EVENT}
-      options={{ sheet: true }}
-    >
-      <CreateEventForm id={id} />
-    </Modal>
   );
 };
 

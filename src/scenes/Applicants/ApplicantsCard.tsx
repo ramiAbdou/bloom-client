@@ -11,7 +11,6 @@ import QuestionValueList, {
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import ApplicantsModal from './ApplicantsModal';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsCardHeader: React.FC = () => {
@@ -29,7 +28,9 @@ const ApplicantsCardHeader: React.FC = () => {
     return `${user?.firstName} ${user?.lastName}`;
   });
 
-  const onClick = () => showModal({ id: `${ModalType.APPLICANT}-${memberId}` });
+  const onClick = () => {
+    showModal({ id: ModalType.APPLICANT, metadata: memberId });
+  };
 
   return (
     <Row spaceBetween marginBottom={24}>
@@ -91,7 +92,6 @@ const ApplicantsCard: React.FC = () => {
       <ApplicantsCardHeader />
       <ApplicantsCardItems />
       <ApplicantsCardActionContainer />
-      <ApplicantsModal />
     </Card>
   );
 };

@@ -1,18 +1,15 @@
 import React from 'react';
 
-import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import Modal from '@organisms/Modal/Modal';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
-import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const fullName = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -24,7 +21,7 @@ const ApplicantsModalTitle: React.FC = () => {
 };
 
 const ApplicantsModalItems: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -59,7 +56,7 @@ const ApplicantsModalItems: React.FC = () => {
 };
 
 const ApplicantsModalActionContainer: React.FC = () => {
-  const memberId = IdStore.useStoreState(({ id }) => id);
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   return (
     <Row equal>
@@ -70,14 +67,12 @@ const ApplicantsModalActionContainer: React.FC = () => {
 };
 
 const ApplicantsModal: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
-
   return (
-    <Modal id={`${ModalType.APPLICANT}-${memberId}`}>
+    <>
       <ApplicantsModalTitle />
       <ApplicantsModalItems />
       <ApplicantsModalActionContainer />
-    </Modal>
+    </>
   );
 };
 

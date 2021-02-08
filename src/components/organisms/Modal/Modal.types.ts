@@ -1,30 +1,28 @@
 import { Action } from 'easy-peasy';
 
-import { BaseProps, IdProps } from '@constants';
+import { ModalType } from '@constants';
+import { ADD_MEMBERS } from '@modals/AddMember/AddMember.gql';
 
 export interface ModalOptions {
   confirmation?: boolean;
+  lock?: boolean;
   sheet?: boolean;
+}
+
+export interface ModalData {
+  id: string;
+  metadata?: any;
+  onClose?: VoidFunction;
+  options?: ModalOptions;
   width?: number;
 }
 
-export interface ModalProps extends BaseProps, IdProps {
-  lock?: boolean;
-  onClose?: VoidFunction;
-  options?: ModalOptions;
-}
+const modals: Record<string, ModalData> = {
+  [ModalType.ADD_MEMBERS]: { id: ModalType.ADD_MEMBERS, width: 750 }
+};
 
-export interface ShowModalArgs {
-  id: string;
-  metadata?: any;
-  options?: ModalOptions;
-}
-
-export interface ModalModel {
+export interface ModalModel extends ModalData {
   closeModal: Action<ModalModel>;
-  id: string; // Every modal must have unique identifier to help rendering.
   isShowing: boolean;
-  metadata?: any;
-  options?: ModalOptions;
-  showModal: Action<ModalModel, ShowModalArgs>;
+  showModal: Action<ModalModel, ModalData>;
 }

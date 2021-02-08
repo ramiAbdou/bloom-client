@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
-import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import Table from '@organisms/Table/Table';
 import {
   OnRenameColumn,
@@ -16,8 +15,6 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
-import MemberDatabaseDeleteModal from './MemberDatabaseDeleteModal';
-import MemberDatabasePromoteModal from './MemberDatabasePromoteModal';
 
 const MemberDatabase: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -56,7 +53,7 @@ const MemberDatabase: React.FC = () => {
     hasCheckbox: true,
     onRenameColumn,
     onRowClick: ({ id: memberId }: TableRow) => {
-      showModal({ id: `${ModalType.MEMBER_PROFILE}-${memberId}` });
+      showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
     }
   };
 
@@ -69,13 +66,6 @@ const MemberDatabase: React.FC = () => {
     >
       <MemberDatabaseActions />
       <TableContent />
-
-      {rows.map((row: TableRow) => {
-        return <MemberProfileModal key={row?.id} memberId={row?.id} />;
-      })}
-
-      <MemberDatabaseDeleteModal />
-      <MemberDatabasePromoteModal />
     </Table>
   );
 };
