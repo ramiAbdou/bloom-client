@@ -2,8 +2,8 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
-import LocalModal from '@organisms/Modal/LocalModal';
 import ModalStore from '@organisms/Modal/Modal.store';
+import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
   OnRenameColumn,
@@ -69,7 +69,7 @@ const MemberDatabase: React.FC = () => {
       >
         <MemberDatabaseActions />
         <TableContent />
-        <LocalModal />
+        <ModalLocal />
       </Table>
     </ModalStore.Provider>
   );

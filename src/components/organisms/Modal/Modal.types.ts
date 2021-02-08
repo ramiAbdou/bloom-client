@@ -34,3 +34,13 @@ export interface ModalModel extends ModalData {
   isShowing: boolean;
   showModal: Action<ModalModel, ModalData>;
 }
+
+export const initialModalModel: Partial<ModalModel> = {
+  className: null,
+  id: null,
+  isShowing: false,
+  metadata: null,
+  onClose: null,
+  options: null,
+  width: null
+};

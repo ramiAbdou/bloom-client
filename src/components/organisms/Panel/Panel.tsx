@@ -6,8 +6,8 @@ import useOnClickOutside from 'use-onclickoutside';
 import { BaseProps, IdProps } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import usePanelPosition from './hooks/usePickerPosition';
 import { PanelAlign } from './Panel.types';
+import usePanelPosition from './usePanelPosition';
 
 export interface PanelProps extends BaseProps, IdProps {
   align?: PanelAlign;

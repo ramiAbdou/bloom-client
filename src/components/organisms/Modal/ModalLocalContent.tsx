@@ -24,7 +24,7 @@ const LocalModalCustomContent: React.FC = () => {
   return null;
 };
 
-const LocalModalContent: React.FC = () => {
+const ModalLocalContent: React.FC = () => {
   const className: string = ModalStore.useStoreState(
     (store) => store.className
   );
@@ -45,4 +45,4 @@ const LocalModalContent: React.FC = () => {
   );
 };
 
-export default LocalModalContent;
+export default ModalLocalContent;

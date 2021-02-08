@@ -2,20 +2,20 @@ import { useEffect, useState } from 'react';
 
 import { IdProps } from '@constants';
 import { takeFirst } from '@util/util';
-import { PanelAlign } from '../Panel.types';
+import { PanelAlign } from './Panel.types';
 
-interface UsePickerPositionProps extends IdProps {
+interface UsePanelPositionProps extends IdProps {
   initialAlign: PanelAlign;
   scrollId?: string;
 }
 
-type UsePickerPositionValue = { align: PanelAlign; left: number; top: number };
+type UsePanelPositionResult = { align: PanelAlign; left: number; top: number };
 
-export default ({
+const usePanelPosition = ({
   initialAlign,
   id,
   scrollId
-}: UsePickerPositionProps): UsePickerPositionValue => {
+}: UsePanelPositionProps): UsePanelPositionResult => {
   const element: HTMLElement = document.getElementById(id);
   const scrollElement: HTMLElement = document.getElementById(scrollId);
   const { left, top, width } = element?.getBoundingClientRect() ?? {};
@@ -68,3 +68,5 @@ export default ({
 
   return { align, left: targetLeft, top: targetTop };
 };
+
+export default usePanelPosition;
