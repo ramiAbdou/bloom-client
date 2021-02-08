@@ -1,8 +1,8 @@
-import { action } from 'easy-peasy';
+import { action, createContextStore } from 'easy-peasy';
 
 import { defaultModalOptions, ModalData, ModalModel } from './Modal.types';
 
-const modalModel: ModalModel = {
+const localModalModel: ModalModel = {
   className: '',
 
   closeModal: action((state) => {
@@ -27,4 +27,8 @@ const modalModel: ModalModel = {
   width: null
 };
 
-export default modalModel;
+const ModalStore = createContextStore<ModalModel>(localModalModel, {
+  disableImmer: true
+});
+
+export default ModalStore;

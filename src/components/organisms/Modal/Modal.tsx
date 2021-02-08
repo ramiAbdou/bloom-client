@@ -9,13 +9,7 @@ const Modal: React.FC = () => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
 
   return createPortal(
-    <AnimatePresence>
-      {isShowing && (
-        <>
-          <ModalContainer />
-        </>
-      )}
-    </AnimatePresence>,
+    <AnimatePresence>{isShowing && <ModalContainer />}</AnimatePresence>,
     document.body
   );
 };

@@ -2,14 +2,15 @@ import React from 'react';
 import { IoArrowUpCircle } from 'react-icons/io5';
 
 import { ModalType } from '@constants';
+import ModalStore from '@organisms/Modal/LocalModal.store';
 import TableStore from '@organisms/Table/Table.store';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabasePromoteButton: React.FC = () => {
   const memberId = useStoreState(({ db }) => db.member.id);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   const tooManySelected = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds.length > 15
@@ -25,12 +26,7 @@ const MemberDatabasePromoteButton: React.FC = () => {
     'Promote to Admin(s)'
   ]);
 
-  const onClick = () => {
-    showModal({
-      id: ModalType.PROMOTE_TO_ADMIN,
-      options: { confirmation: true }
-    });
-  };
+  const onClick = () => showModal({ id: ModalType.PROMOTE_MEMBERS });
 
   return (
     <DatabaseAction

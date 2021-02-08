@@ -7,10 +7,6 @@ import CreateEventModal from '@modals/CreateEvent/CreateEvent';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import PaymentModal from '@modals/Payment/Payment';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
-import AdminDatabaseDemoteModal from '@scenes/Database/AdminDatabase/AdminDatabaseDemoteModal';
-import MemberDatabaseDeleteModal from '@scenes/Database/MemberDatabase/MemberDatabaseDeleteModal';
-import MemberDatabasePromoteModal from '@scenes/Database/MemberDatabase/MemberDatabasePromoteModal';
-import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
 import ProfileMembershipModal from '@scenes/Profile/ProfileMembershipModal';
 import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
@@ -26,8 +22,6 @@ const ModalCustomContent: React.FC = () => {
   if (id === ModalType.CHANGE_MEMBERSHIP) return <PaymentModal />;
   if (id === ModalType.CHECK_IN) return <CheckInModal />;
   if (id === ModalType.CREATE_EVENT) return <CreateEventModal />;
-  if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteModal />;
-  if (id === ModalType.DEMOTE_MEMBERS) return <AdminDatabaseDemoteModal />;
 
   if (id === ModalType.EDIT_MEMBERSHIP_INFORMATION) {
     return <ProfileMembershipModal />;
@@ -38,10 +32,8 @@ const ModalCustomContent: React.FC = () => {
   }
 
   if (id === ModalType.EDIT_SOCIAL_MEDIA) return <ProfileSocialModal />;
-  if (id === ModalType.MAILCHIMP_FLOW) return <IntegrationsMailchimpModal />;
   if (id === ModalType.MEMBER_PROFILE) return <MemberProfileModal />;
   if (id === ModalType.PAY_DUES) return <PaymentModal />;
-  if (id === ModalType.PROMOTE_TO_ADMIN) return <MemberDatabasePromoteModal />;
 
   return null;
 };

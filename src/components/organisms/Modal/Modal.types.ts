@@ -23,7 +23,9 @@ export const defaultModalOptions: Record<string, Partial<ModalData>> = {
     className: 'mo-create-event',
     options: { sheet: true }
   },
-  [ModalType.INTEGRATIONS_DETAILS]: { className: 's-integrations-modal' }
+  [ModalType.DELETE_MEMBERS]: { options: { confirmation: true } },
+  [ModalType.INTEGRATIONS_DETAILS]: { className: 's-integrations-modal' },
+  [ModalType.PROMOTE_MEMBERS]: { options: { confirmation: true } }
 };
 
 export interface ModalModel extends ModalData {

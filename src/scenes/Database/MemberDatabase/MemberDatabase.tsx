@@ -2,6 +2,8 @@ import React from 'react';
 
 import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
+import LocalModal from '@organisms/Modal/LocalModal';
+import ModalStore from '@organisms/Modal/LocalModal.store';
 import Table from '@organisms/Table/Table';
 import {
   OnRenameColumn,
@@ -58,15 +60,18 @@ const MemberDatabase: React.FC = () => {
   };
 
   return (
-    <Table
-      columns={columns}
-      options={options}
-      rows={rows}
-      show={!!columns?.length}
-    >
-      <MemberDatabaseActions />
-      <TableContent />
-    </Table>
+    <ModalStore.Provider>
+      <Table
+        columns={columns}
+        options={options}
+        rows={rows}
+        show={!!columns?.length}
+      >
+        <MemberDatabaseActions />
+        <TableContent />
+        <LocalModal />
+      </Table>
+    </ModalStore.Provider>
   );
 };
 
