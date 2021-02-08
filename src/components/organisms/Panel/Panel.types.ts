@@ -32,17 +32,17 @@ export const globalPanels: PanelType[] = [
 ];
 
 export const localPanels: PanelType[] = [
-  PanelType.RENAME_TABLE_COLUMN,
-  PanelType.TABLE_FILTER
+  PanelType.FILTER_TABLE,
+  PanelType.RENAME_TABLE_COLUMN
 ];
 
 export const defaultPanelOptions: Record<string, Partial<PanelData>> = {
   [PanelType.ADD_RECORDING_LINK]: { align: 'BOTTOM_LEFT', size: 'lg' },
+  [PanelType.FILTER_TABLE]: { align: 'BOTTOM_RIGHT' },
   [PanelType.PROFILE]: {
     align: 'RIGHT_BOTTOM',
     style: { marginLeft: 24, minWidth: 270, padding: 8 }
-  },
-  [PanelType.TABLE_FILTER]: { align: 'BOTTOM_RIGHT' }
+  }
 };
 
 // ## PANEL MODEL

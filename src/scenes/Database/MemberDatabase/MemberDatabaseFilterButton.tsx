@@ -13,12 +13,12 @@ const FilterButton: React.FC = () => {
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  const onClick = () => showPanel({ id: PanelType.TABLE_FILTER });
+  const onClick = () => showPanel({ id: PanelType.FILTER_TABLE });
 
   return (
     <DatabaseAction
       Icon={IoFilter}
-      id={PanelType.TABLE_FILTER}
+      id={PanelType.FILTER_TABLE}
       show={!isAnythingSelected}
       tooltip="Filter"
       onClick={onClick}

@@ -14,14 +14,14 @@ const TableFilterButton: React.FC<Partial<ButtonProps>> = () => {
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  const onClick = () => showPanel({ id: PanelType.TABLE_FILTER });
+  const onClick = () => showPanel({ id: PanelType.FILTER_TABLE });
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   return (
     <Button
       ref={ref}
       className="o-table-action"
-      id={PanelType.TABLE_FILTER}
+      id={PanelType.FILTER_TABLE}
       show={!isAnythingSelected}
       onClick={onClick}
     >
