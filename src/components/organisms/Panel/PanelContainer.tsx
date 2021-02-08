@@ -10,17 +10,21 @@ const PanelContainer: React.FC = ({ children }) => {
   const initialAlign = useStoreState(({ panel }) => panel.align);
   const className = useStoreState(({ panel }) => panel.className);
   const id = useStoreState(({ panel }) => panel.id);
+  const metadata = useStoreState(({ panel }) => panel.metadata);
   const scrollId = useStoreState(({ panel }) => panel.scrollId);
   const size = useStoreState(({ panel }) => panel.size);
   const style = useStoreState(({ panel }) => panel.style);
+  const useMetadataInId = useStoreState(({ panel }) => panel.useMetadataInId);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
+  const elementId = useMetadataInId ? `${id}-${metadata}` : id;
+
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
-  const element: HTMLElement = document.getElementById(id);
+  const element: HTMLElement = document.getElementById(elementId);
   const { height, width } = element?.getBoundingClientRect() ?? {};
   const { innerHeight, innerWidth } = window;
 
-  const position = usePanelPosition({ id, initialAlign, scrollId });
+  const position = usePanelPosition({ id: elementId, initialAlign, scrollId });
   const { align, left, top } = position;
 
   // If the click happened within the element that was used to open the

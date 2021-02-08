@@ -22,6 +22,7 @@ export interface PanelData extends BaseProps {
   metadata?: any;
   scrollId?: string;
   size?: 'md' | 'lg';
+  useMetadataInId?: boolean;
 }
 
 // ## PANEL TYPES
@@ -46,7 +47,8 @@ export const defaultPanelOptions: Record<string, Partial<PanelData>> = {
   [PanelType.RENAME_TABLE_COLUMN]: {
     align: 'BOTTOM_LEFT',
     className: 'o-table-col-panel',
-    scrollId: 'o-table-ctr'
+    scrollId: 'o-table-ctr',
+    useMetadataInId: true
   }
 };
 
@@ -65,5 +67,6 @@ export const initialPanelModel: Partial<PanelModel> = {
   isShowing: false,
   metadata: null,
   scrollId: null,
-  style: null
+  style: null,
+  useMetadataInId: false
 };

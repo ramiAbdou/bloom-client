@@ -64,7 +64,11 @@ const HeaderCell = ({
   const showCaretDown = isSortedColumn && direction === 'DESC';
 
   return (
-    <th className={css} id={id} onClick={onClick}>
+    <th
+      className={css}
+      id={`${PanelType.RENAME_TABLE_COLUMN}-${id}`}
+      onClick={onClick}
+    >
       <div>
         {!i && hasCheckbox && <TableHeaderCheckbox />}
         {!hideTitle && <p>{title}</p>}
