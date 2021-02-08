@@ -9,6 +9,7 @@ import { Schema } from '@store/Db/schema';
 import { GET_MEMBER_PROFILE, GetMemberProfileArgs } from './MemberProfile.gql';
 import MemberProfileStore, { MemberProfileModel } from './MemberProfile.store';
 import MemberProfileData from './MemberProfileData';
+import MemberProfileHistory from './MemberProfileHistory';
 import MemberProfilePersonal from './MemberProfilePersonal';
 
 const MemberProfileContent: React.FC<Pick<MemberProfileModel, 'memberId'>> = ({
@@ -29,6 +30,7 @@ const MemberProfileContent: React.FC<Pick<MemberProfileModel, 'memberId'>> = ({
       >
         <MemberProfilePersonal />
         <MemberProfileData />
+        <MemberProfileHistory />
       </MemberProfileStore.Provider>
     </Show>
   );

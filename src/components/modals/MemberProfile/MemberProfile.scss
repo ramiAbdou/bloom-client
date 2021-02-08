@@ -61,3 +61,27 @@ $PREF: 'mo-member-profile';
 }
 .#{$PREF}-question > p:last-of-type { color: $primary; }
 .#{$PREF}-question--choice > p:last-child { @extend .c-tag-attr; }
+
+// ## MEMBER PROFILE HISTORY EVENT
+
+.#{$PREF}-history-event {
+  > div:first-child { @extend .flex-col; align-items: center; }
+
+  > div:first-child > div:first-child {
+    background-color: $primary-bg;
+    border: 1px $primary solid;
+    border-radius: 50%;
+
+    @include SIZE(16px);
+  }
+
+  > .t-row:nth-child(2) { flex: 1; }
+}
+
+.#{$PREF}-history-event:not(:last-child) {
+  > div:first-child > div:last-child {
+    background-color: $primary;
+    height: $xl;
+    width: 1px;
+  }
+}

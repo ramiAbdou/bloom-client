@@ -117,7 +117,7 @@ export const GET_EVENT_ATTENDEES = query({
     'firstName',
     'id',
     'lastName',
-    { event: ['id'] },
+    { event: ['id', 'title'] },
     {
       member: [
         'id',
@@ -126,7 +126,7 @@ export const GET_EVENT_ATTENDEES = query({
     }
   ],
   operation: 'getEventAttendees',
-  variables: { eventId: { required: true } }
+  variables: { eventId: { required: false }, memberId: { required: false } }
 }).query;
 
 // ## GET EVENT GUESTS
@@ -138,7 +138,7 @@ export const GET_EVENT_GUESTS = query({
     'firstName',
     'id',
     'lastName',
-    { event: ['id'] },
+    { event: ['id', 'title'] },
     {
       member: [
         'id',
@@ -147,7 +147,7 @@ export const GET_EVENT_GUESTS = query({
     }
   ],
   operation: 'getEventGuests',
-  variables: { eventId: { required: true } }
+  variables: { eventId: { required: false }, memberId: { required: false } }
 }).query;
 
 // ## GET EVENT WATCHES
@@ -156,7 +156,7 @@ export const GET_EVENT_WATCHES = query({
   fields: [
     'createdAt',
     'id',
-    { event: ['id'] },
+    { event: ['id', 'title'] },
     {
       member: [
         'id',
@@ -165,7 +165,7 @@ export const GET_EVENT_WATCHES = query({
     }
   ],
   operation: 'getEventWatches',
-  variables: { eventId: { required: true } }
+  variables: { eventId: { required: false }, memberId: { required: false } }
 }).query;
 
 // ## GET PAST EVENTS

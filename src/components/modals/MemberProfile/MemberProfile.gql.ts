@@ -10,6 +10,7 @@ export const GET_MEMBER_PROFILE = query({
   fields: [
     'id',
     'bio',
+    'joinedAt',
     { data: ['id', 'value', { question: ['id'] }] },
     { type: ['id', 'name'] },
     {

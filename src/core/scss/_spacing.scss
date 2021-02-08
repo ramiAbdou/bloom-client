@@ -52,4 +52,6 @@ $D_SIZE: 1440;
   &-xxs:not(:last-child) { margin-right: $xxs; }
   &-xs:not(:last-child) { margin-right: $xs; }
   &-sm:not(:last-child) { margin-right: $sm; }
+  &-md:not(:last-child) { margin-right: $md; }
+  &-lg:not(:last-child) { margin-right: $lg; }
 }

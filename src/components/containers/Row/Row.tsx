@@ -37,6 +37,7 @@ const Row: React.FC<RowProps> = ({
     'flex-ab': align === 'baseline',
     'flex-ac': align === 'center',
     'flex-ae': align === 'end',
+    'flex-as': align === 'start',
     'flex-sb': spaceBetween,
     'flex-w': !!wrap,
     't-row--c': justify === 'center',
