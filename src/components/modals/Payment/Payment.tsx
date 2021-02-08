@@ -51,7 +51,7 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const { loading } = useQuery<ICommunity>({
     name: 'getIntegrations',
     query: GET_PAYMENT_INTEGRATIONS,
-    schema: Schema.COMMUNITY
+    schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
   // Get the user and see if they've paid their dues or not.

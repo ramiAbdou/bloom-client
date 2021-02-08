@@ -19,7 +19,7 @@ const IntegrationsContent: React.FC = () => {
   const { loading } = useQuery<ICommunity>({
     name: 'getIntegrations',
     query: GET_INTEGRATIONS,
-    schema: Schema.COMMUNITY
+    schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
   return (

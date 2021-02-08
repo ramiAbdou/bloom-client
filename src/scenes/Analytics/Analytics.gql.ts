@@ -78,17 +78,13 @@ export const GET_PAST_EVENT_WATCHES = query({
 
 export const GET_PAYMENTS = query({
   fields: [
+    'amount',
+    'createdAt',
     'id',
-    {
-      payments: [
-        'amount',
-        'createdAt',
-        'id',
-        'stripeInvoiceUrl',
-        { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
-        { type: ['id'] }
-      ]
-    }
+    'stripeInvoiceUrl',
+    { community: ['id'] },
+    { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
+    { type: ['id'] }
   ],
   operation: 'getPayments'
 }).query;

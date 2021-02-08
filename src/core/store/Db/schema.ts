@@ -43,6 +43,7 @@ const Community = new schema.Entity(
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.memberId, { members: [parent.id] }],
         [!!parent.questionId, { questions: [parent.id] }],
+        [!!parent.paymentId, { payments: [parent.id] }],
         [!!parent.typeId, { types: [parent.id] }],
         {}
       ]);
@@ -62,6 +63,16 @@ const CommunityApplication = new schema.Entity(
   }
 );
 
+const CommunityIntegrations = new schema.Entity(
+  'integrations',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, integrationsId: value.id };
+    }
+  }
+);
+
 const Event = new schema.Entity(
   'events',
   {},
@@ -74,8 +85,6 @@ const Event = new schema.Entity(
         [!!parent.watchId, { watches: [parent.id] }],
         {}
       ]);
-
-      if (parent.attendeeId) console.log(processedData);
 
       return { ...value, ...processedData, eventId: value.id };
     }
@@ -211,6 +220,7 @@ Community.define({
 });
 
 CommunityApplication.define({ community: Community });
+CommunityIntegrations.define({ community: Community });
 
 Event.define({
   attendees: [EventAttendee],
@@ -234,7 +244,13 @@ Member.define({
 });
 
 MemberData.define({ member: Member, question: Question });
-MemberPayment.define({ member: Member, type: MemberType });
+
+MemberPayment.define({
+  community: Community,
+  member: Member,
+  type: MemberType
+});
+
 MemberType.define({ community: Community });
 Question.define({ community: Community, data: [MemberData] });
 User.define({ members: [Member] });
@@ -245,6 +261,7 @@ User.define({ members: [Member] });
 export const Schema = {
   COMMUNITY: Community,
   COMMUNITY_APPLICATION: CommunityApplication,
+  COMMUNITY_INTEGRATIONS: CommunityIntegrations,
   EVENT: Event,
   EVENT_ATTENDEE: EventAttendee,
   EVENT_GUEST: EventGuest,

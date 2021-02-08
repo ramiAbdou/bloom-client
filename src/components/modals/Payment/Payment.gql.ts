@@ -65,11 +65,7 @@ export const GET_CHANGE_PREVIEW = query({
 // ## GET PAYMENT INTEGRATIONS
 
 export const GET_PAYMENT_INTEGRATIONS = query({
-  fields: [
-    'id',
-    { integrations: ['id', 'stripeAccountId'] },
-    { types: ['id', 'amount', 'isFree', 'name', 'recurrence'] }
-  ],
+  fields: ['id', 'stripeAccountId', { community: ['id'] }],
   operation: 'getIntegrations'
 }).query;
 

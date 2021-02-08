@@ -3,16 +3,12 @@ import { mutation, query } from 'gql-query-builder';
 export const GET_INTEGRATIONS = query({
   fields: [
     'id',
-    {
-      integrations: [
-        'id',
-        'isMailchimpAuthenticated',
-        'mailchimpListId',
-        'mailchimpListName',
-        { mailchimpLists: ['id', 'name'] },
-        'stripeAccountId'
-      ]
-    }
+    'isMailchimpAuthenticated',
+    'mailchimpListId',
+    'mailchimpListName',
+    'stripeAccountId',
+    { community: ['id'] },
+    { mailchimpLists: ['id', 'name'] }
   ],
   operation: 'getIntegrations'
 }).query;
