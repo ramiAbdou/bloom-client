@@ -1,7 +1,6 @@
 import { Action } from 'easy-peasy';
 
 import { ModalType } from '@constants';
-import { ADD_MEMBERS } from '@modals/AddMember/AddMember.gql';
 
 export interface ModalOptions {
   confirmation?: boolean;
@@ -10,6 +9,7 @@ export interface ModalOptions {
 }
 
 export interface ModalData {
+  className?: string;
   id: string;
   metadata?: any;
   onClose?: VoidFunction;
@@ -17,8 +17,12 @@ export interface ModalData {
   width?: number;
 }
 
-const modals: Record<string, ModalData> = {
-  [ModalType.ADD_MEMBERS]: { id: ModalType.ADD_MEMBERS, width: 750 }
+export const defaultModalOptions: Record<string, Partial<ModalData>> = {
+  [ModalType.ADD_MEMBERS]: { width: 750 },
+  [ModalType.CREATE_EVENT]: {
+    className: 'mo-create-event',
+    options: { sheet: true }
+  }
 };
 
 export interface ModalModel extends ModalData {

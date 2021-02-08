@@ -7,7 +7,8 @@ import usePush from '@hooks/usePush';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { DELETE_EVENT } from './CreateEvent.gql';
 
-const DeleteEventButton: React.FC<IdProps> = ({ id }) => {
+const DeleteEventButton: React.FC = () => {
+  const id: string = useStoreState(({ modal }) => modal.metadata);
   const communityId = useStoreState(({ db }) => db.community.id);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);

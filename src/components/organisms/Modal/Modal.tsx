@@ -7,15 +7,6 @@ import ModalContainer from './ModalContainer';
 
 const Modal: React.FC = () => {
   const isShowing = useStoreState(({ modal }) => modal.isShowing);
-  // const id = useStoreState(({ modal }) => modal.id);
-
-  // const css = cx('c-modal', {
-  //   'c-modal--confirmation': confirmation,
-  //   [className]: className
-  // });
-
-  // if (show === false) return null;
-  // return null;
 
   return createPortal(
     <AnimatePresence>

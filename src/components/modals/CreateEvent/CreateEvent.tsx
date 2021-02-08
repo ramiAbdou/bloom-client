@@ -106,7 +106,7 @@ const CreateEvent: React.FC = () => {
         {id ? 'Update Event' : 'Create Event'}
       </FormSubmitButton>
 
-      <DeleteEventButton id={id} />
+      <DeleteEventButton />
     </Form>
   );
 };

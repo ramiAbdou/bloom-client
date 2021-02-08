@@ -1,8 +1,10 @@
 import { action } from 'easy-peasy';
 
-import { ModalData, ModalModel } from './Modal.types';
+import { defaultModalOptions, ModalData, ModalModel } from './Modal.types';
 
 const modalModel: ModalModel = {
+  className: '',
+
   closeModal: action((state) => {
     return { ...state, id: null, isShowing: false, options: null };
   }),
@@ -18,7 +20,12 @@ const modalModel: ModalModel = {
   options: null,
 
   showModal: action((state, args: ModalData) => {
-    return { ...state, ...args, isShowing: true };
+    return {
+      ...state,
+      ...args,
+      ...defaultModalOptions[args.id],
+      isShowing: true
+    };
   }),
 
   width: null

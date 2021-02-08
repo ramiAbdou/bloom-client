@@ -19,7 +19,6 @@ import { cx } from '@util/util';
 
 const ModalCustomContent: React.FC = () => {
   const id: string = useStoreState(({ modal }) => modal.id);
-  // const metadata: any = useStoreState(({ modal }) => modal.metadata);
 
   if (id === ModalType.ADD_ADMINS) return <AddMemberModal admin />;
   if (id === ModalType.ADD_MEMBERS) return <AddMemberModal />;
@@ -43,20 +42,20 @@ const ModalCustomContent: React.FC = () => {
   if (id === ModalType.MEMBER_PROFILE) return <MemberProfileModal />;
   if (id === ModalType.PAY_DUES) return <PaymentModal />;
   if (id === ModalType.PROMOTE_TO_ADMIN) return <MemberDatabasePromoteModal />;
-  // if (id === ModalType.) return <PaymentModal />
-  // if (id === ModalType.APPLICANT)
 
   return null;
 };
 
 const ModalContent: React.FC = () => {
+  const className: string = useStoreState(({ modal }) => modal.className);
+
   const confirmation: boolean = useStoreState(
     ({ modal }) => modal.options?.confirmation
   );
 
   const css = cx('c-modal', {
-    'c-modal--confirmation': confirmation
-    // [className]: className
+    'c-modal--confirmation': confirmation,
+    [className]: className
   });
 
   return (

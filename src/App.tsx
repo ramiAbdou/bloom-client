@@ -11,6 +11,7 @@ import { ClientContext, GraphQLClient } from 'graphql-hooks';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
+import { BrowserRouter } from 'react-router-dom';
 
 import { APP } from '@constants';
 import Loader from '@organisms/Loader/Loader';
@@ -31,10 +32,12 @@ const App = () => (
   <ClientContext.Provider value={client}>
     <StoreProvider store={store}>
       <IconContext.Provider value={{ className: 'react-icon' }}>
-        <Loader />
-        <Modal />
-        <Router />
-        <ToastQueue />
+        <BrowserRouter>
+          <Loader />
+          <Modal />
+          <Router />
+          <ToastQueue />
+        </BrowserRouter>
       </IconContext.Provider>
     </StoreProvider>
   </ClientContext.Provider>

@@ -1,6 +1,6 @@
 import LoginRoute from 'core/routing/LoginRoute';
 import React from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Show from '@containers/Show';
 import useLoader from '@organisms/Loader/useLoader';
@@ -13,7 +13,7 @@ import useInitRouter from './useInitRouter';
  * within each of the high level components. The Home route should have the
  * most nested logic within it.
  */
-const RouterContent: React.FC = () => {
+const Router: React.FC = () => {
   const loading = useInitRouter();
   useLoader(loading);
 
@@ -29,11 +29,5 @@ const RouterContent: React.FC = () => {
     </Show>
   );
 };
-
-const Router: React.FC = () => (
-  <BrowserRouter>
-    <RouterContent />
-  </BrowserRouter>
-);
 
 export default Router;
