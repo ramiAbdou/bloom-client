@@ -1,30 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
-import { useStoreActions } from '@store/Store';
+import ModalStore from '@organisms/Modal/LocalModal.store';
+import useIntegrationsDetails from './useIntegrationsDetails';
 
-export type ExpandedDetailProps = { label: string; value: any };
+const IntegrationsDetailsModal: React.FC = () => {
+  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
 
-type ExpandedDetailsProps = {
-  details: ExpandedDetailProps[];
-  logo: string;
-  name: string;
-};
+  const { name, logo } = ModalStore.useStoreState(
+    (store) => store.metadata ?? {}
+  );
 
-const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
-  details,
-  logo,
-  name
-}) => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
-  useEffect(() => {
-    showModal({ id: ModalType.INTEGRATIONS_DETAILS, metadata: name });
-  }, []);
+  const details = useIntegrationsDetails(name);
 
   return (
     <>

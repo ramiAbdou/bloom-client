@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Card from '@containers/Card/Card';
-import IntegrationCardButton from './Button';
-import IntegrationCardContent from './Content';
+import IntegrationCardButton from './IntegrationsCardButton';
+import IntegrationCardContent from './IntegrationsCardContent';
 
 export type IntegrationCardProps = {
   connected?: boolean;

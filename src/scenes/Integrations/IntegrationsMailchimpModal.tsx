@@ -7,10 +7,11 @@ import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
+import ModalStore from '@organisms/Modal/LocalModal.store';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/Db/entities';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
@@ -62,7 +63,7 @@ const IntegrationsMailchimpModal: React.FC = () => {
     deepequal
   ) as IIntegrations;
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
   const flow = IntegrationsStore.useStoreState((store) => store.flow);
   const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
 

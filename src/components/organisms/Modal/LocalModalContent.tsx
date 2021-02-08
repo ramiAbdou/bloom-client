@@ -4,6 +4,7 @@ import { ModalType } from '@constants';
 import AdminDatabaseDemoteModal from '@scenes/Database/AdminDatabase/AdminDatabaseDemoteModal';
 import MemberDatabaseDeleteModal from '@scenes/Database/MemberDatabase/MemberDatabaseDeleteModal';
 import MemberDatabasePromoteModal from '@scenes/Database/MemberDatabase/MemberDatabasePromoteModal';
+import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
 import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
 import { cx } from '@util/util';
 import ModalStore from './LocalModal.store';
@@ -13,6 +14,10 @@ const LocalModalCustomContent: React.FC = () => {
 
   if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteModal />;
   if (id === ModalType.DEMOTE_MEMBERS) return <AdminDatabaseDemoteModal />;
+
+  if (id === ModalType.INTEGRATIONS_DETAILS) {
+    return <IntegrationsDetailsModal />;
+  }
   if (id === ModalType.MAILCHIMP_FLOW) return <IntegrationsMailchimpModal />;
   if (id === ModalType.PROMOTE_MEMBERS) return <MemberDatabasePromoteModal />;
 

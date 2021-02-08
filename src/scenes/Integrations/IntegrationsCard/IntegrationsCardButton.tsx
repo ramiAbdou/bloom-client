@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 
 import Button from '@atoms/Button/Button';
+import { ModalType } from '@constants';
+import ModalStore from '@organisms/Modal/LocalModal.store';
 import IntegrationsStore, {
   IntegrationsModalType
 } from '../Integrations.store';
@@ -14,8 +16,9 @@ export type IntegrationCardProps = {
 };
 
 const IntegrationCardButton = memo(
-  ({ connected, href, name }: Partial<IntegrationCardProps>) => {
+  ({ connected, href, logo, name }: Partial<IntegrationCardProps>) => {
     const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
+    const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
     // onClick only executes if href isn't populated, per the Button component.
     const onOpenFlow = () =>
@@ -26,8 +29,12 @@ const IntegrationCardButton = memo(
     // respective process (ie: choosing a Mailchimp Audience ID).
     const buttonText = href ? 'Connect +' : 'Finish Connecting +';
 
-    const onSeeDetails = () =>
-      setFlow(`${name.toUpperCase()}_DETAILS` as IntegrationsModalType);
+    const onSeeDetails = () => {
+      showModal({
+        id: ModalType.INTEGRATIONS_DETAILS,
+        metadata: { logo, name }
+      });
+    };
 
     if (connected) {
       return (

@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { LoadingProps } from '@constants';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import useQuery from '@hooks/useQuery';
+import LocalModal from '@organisms/Modal/LocalModal';
+import ModalStore from '@organisms/Modal/LocalModal.store';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { GET_INTEGRATIONS } from './Integrations.gql';
-import IntegrationsStore from './Integrations.store';
+import IntegrationsStore, { IntegrationsModalType } from './Integrations.store';
 import IntegrationsCardContainer from './IntegrationsCardContainer';
-import IntegrationsModal from './IntegrationsModal';
-
-const IntegrationsHeader: React.FC<LoadingProps> = ({ loading }) => {
-  return <MainHeader loading={loading} title="Integrations" />;
-};
 
 const IntegrationsContent: React.FC = () => {
+  const searchParam = new URLSearchParams(window.location.search).get('flow');
+  const flow = IntegrationsStore.useStoreState((store) => store.flow);
+  const setFlow = IntegrationsStore.useStoreActions((store) => store.setFlow);
+
+  useEffect(() => {
+    if (searchParam && searchParam !== flow) {
+      setFlow(`${searchParam.toUpperCase()}_FORM` as IntegrationsModalType);
+    }
+  }, []);
+
   const { loading } = useQuery<ICommunity>({
     name: 'getIntegrations',
     query: GET_INTEGRATIONS,
@@ -24,23 +30,19 @@ const IntegrationsContent: React.FC = () => {
 
   return (
     <MainContent>
-      <IntegrationsHeader loading={loading} />
+      <MainHeader loading={loading} title="Integrations" />;
       {!loading && <IntegrationsCardContainer />}
     </MainContent>
   );
 };
 
-const IntegrationsModals: React.FC = () => (
-  <>
-    <IntegrationsModal />
-  </>
-);
-
 const Integrations: React.FC = () => (
-  <IntegrationsStore.Provider>
-    <IntegrationsContent />
-    <IntegrationsModals />
-  </IntegrationsStore.Provider>
+  <ModalStore.Provider>
+    <IntegrationsStore.Provider>
+      <IntegrationsContent />
+      <LocalModal />
+    </IntegrationsStore.Provider>
+  </ModalStore.Provider>
 );
 
 export default Integrations;
