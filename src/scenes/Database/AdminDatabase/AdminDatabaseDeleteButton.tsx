@@ -2,18 +2,12 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import { ModalType } from '@constants';
-import { useStoreActions } from '@store/Store';
+import ModalStore from '@organisms/Modal/LocalModal.store';
 import DatabaseAction from '../DatabaseAction';
 
 const AdminDatabaseDeleteButton: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
-  const onClick = () => {
-    showModal({
-      id: ModalType.DELETE_MEMBERS,
-      options: { confirmation: true }
-    });
-  };
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
+  const onClick = () => showModal({ id: ModalType.DELETE_MEMBERS });
 
   return (
     <DatabaseAction

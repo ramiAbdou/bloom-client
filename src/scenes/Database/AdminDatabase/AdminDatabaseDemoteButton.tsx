@@ -2,23 +2,18 @@ import React from 'react';
 import { IoArrowDownCircle } from 'react-icons/io5';
 
 import { ModalType } from '@constants';
+import ModalStore from '@organisms/Modal/LocalModal.store';
 import TableStore from '@organisms/Table/Table.store';
-import { useStoreActions } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 
 const AdminDatabaseDemoteButton: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = ModalStore.useStoreActions((store) => store.showModal);
 
   const disabled = TableStore.useStoreState(({ selectedRowIds }) => {
     return selectedRowIds.length > 15;
   });
 
-  const onClick = () => {
-    showModal({
-      id: ModalType.DEMOTE_MEMBERS,
-      options: { confirmation: true }
-    });
-  };
+  const onClick = () => showModal({ id: ModalType.DEMOTE_MEMBERS });
 
   return (
     <DatabaseAction

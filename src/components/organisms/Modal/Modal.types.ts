@@ -24,6 +24,7 @@ export const defaultModalOptions: Record<string, Partial<ModalData>> = {
     options: { sheet: true }
   },
   [ModalType.DELETE_MEMBERS]: { options: { confirmation: true } },
+  [ModalType.DEMOTE_MEMBERS]: { options: { confirmation: true } },
   [ModalType.INTEGRATIONS_DETAILS]: { className: 's-integrations-modal' },
   [ModalType.PROMOTE_MEMBERS]: { options: { confirmation: true } }
 };

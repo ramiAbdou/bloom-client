@@ -2,6 +2,8 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
+import ModalStore from '@organisms/Modal/LocalModal.store';
+import LocalModalCloseButton from '@organisms/Modal/LocalModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -9,7 +11,7 @@ import { useStoreActions } from '@store/Store';
 import { DEMOTE_MEMBERS, MemberIdsArgs } from '../Database.gql';
 
 const AdminDatabaseDemoteModal: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const memberIds = TableStore.useStoreState(
@@ -31,8 +33,6 @@ const AdminDatabaseDemoteModal: React.FC = () => {
     }
   };
 
-  const onSecondaryClick = () => closeModal();
-
   return (
     <>
       <h1>Demote to member?</h1>
@@ -48,9 +48,7 @@ const AdminDatabaseDemoteModal: React.FC = () => {
           Demote
         </Button>
 
-        <Button secondary onClick={onSecondaryClick}>
-          Cancel
-        </Button>
+        <LocalModalCloseButton />
       </div>
     </>
   );

@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
+import ModalStore from '@organisms/Modal/LocalModal.store';
+import LocalModalCloseButton from '@organisms/Modal/LocalModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IMember } from '@store/Db/entities';
@@ -9,9 +11,9 @@ import { DELETE_MEMBERS, MemberIdsArgs } from '../Database.gql';
 
 const MemberDatabaseDeleteModal: React.FC = () => {
   const addEntities = useStoreActions(({ db }) => db.addEntities);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const deleteEntities = useStoreActions(({ db }) => db.deleteEntities);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const closeModal = ModalStore.useStoreActions((store) => store.closeModal);
 
   const memberIds = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
@@ -50,9 +52,8 @@ const MemberDatabaseDeleteModal: React.FC = () => {
         <Button primary onClick={onRemove}>
           Remove
         </Button>
-        <Button secondary onClick={() => closeModal()}>
-          Cancel
-        </Button>
+
+        <LocalModalCloseButton />
       </div>
     </>
   );
