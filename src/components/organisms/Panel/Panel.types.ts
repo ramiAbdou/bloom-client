@@ -31,7 +31,10 @@ export const globalPanels: PanelType[] = [
   PanelType.PROFILE
 ];
 
-export const localPanels: PanelType[] = [PanelType.TABLE_FILTER];
+export const localPanels: PanelType[] = [
+  PanelType.RENAME_TABLE_COLUMN,
+  PanelType.TABLE_FILTER
+];
 
 export const defaultPanelOptions: Record<string, Partial<PanelData>> = {
   [PanelType.ADD_RECORDING_LINK]: { align: 'BOTTOM_LEFT', size: 'lg' },

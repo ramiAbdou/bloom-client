@@ -34,7 +34,7 @@ const PanelContainer: React.FC = ({ children }) => {
 
     // @ts-ignore b/c we know that clientX and clientY exist on the HTML Event.
     const { clientX, clientY } = event;
-    const { offsetLeft, offsetTop, offsetHeight, offsetWidth } = element;
+    const { offsetLeft, offsetTop, offsetHeight, offsetWidth } = ref?.current;
 
     if (
       clientX < offsetLeft ||
