@@ -13,15 +13,10 @@ import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MemberIdsArgs, PROMOTE_MEMBERS } from '../Database.gql';
 
-const MemberDatabasePromoteActions: React.FC = () => {
+const MemberDatabasePromoteFormActions: React.FC = () => {
   return (
     <Row spacing="xs">
-      <FormSubmitButton
-        fill={false}
-        large={false}
-        loadingText="Promoting..."
-        showError={false}
-      >
+      <FormSubmitButton row loadingText="Promoting...">
         Promote
       </FormSubmitButton>
 
@@ -30,7 +25,7 @@ const MemberDatabasePromoteActions: React.FC = () => {
   );
 };
 
-const MemberDatabasePromoteModal: React.FC = () => {
+const MemberDatabasePromoteForm: React.FC = () => {
   const memberIds = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
   );
@@ -72,9 +67,9 @@ const MemberDatabasePromoteModal: React.FC = () => {
         title="Promote to admin?"
       />
 
-      <MemberDatabasePromoteActions />
+      <MemberDatabasePromoteFormActions />
     </Form>
   );
 };
 
-export default MemberDatabasePromoteModal;
+export default MemberDatabasePromoteForm;

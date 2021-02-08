@@ -7,14 +7,12 @@ import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import { UPDATE_RECORDING_LINK } from '../Events.gql';
 
 const IndividualEventRecordingForm: React.FC = () => {
   const id = useStoreState(({ panel }) => panel.metadata);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
-  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [updateRecordingLink] = useMutation<
     IEvent,
@@ -25,7 +23,11 @@ const IndividualEventRecordingForm: React.FC = () => {
     schema: Schema.EVENT
   });
 
-  const onSubmit = async ({ items }: OnFormSubmitArgs) => {
+  const onSubmit = async ({
+    closePanel,
+    items,
+    showToast
+  }: OnFormSubmitArgs) => {
     const value = items.RECORDING_URL?.value;
     await updateRecordingLink({ id, recordingUrl: value });
     showToast({ message: 'Event recording link updated.' });

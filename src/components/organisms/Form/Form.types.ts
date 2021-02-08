@@ -1,4 +1,4 @@
-import { ActionCreator, Actions, State } from 'easy-peasy';
+import { ActionCreator, State } from 'easy-peasy';
 
 import {
   ClassNameProps,
@@ -9,7 +9,6 @@ import {
 } from '@constants';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { DbModel } from '@store/Db/Db.types';
-import { StoreModel } from '@store/Store';
 
 export type FormQuestion = {
   category?: QuestionCategory;
@@ -62,6 +61,7 @@ export interface FormProps extends ClassNameProps, ShowProps {
 
 export type OnFormSubmitArgs = {
   closeModal?: ActionCreator;
+  closePanel?: ActionCreator;
   db?: State<DbModel>;
   goForward?: ActionCreator;
   items: Record<string, FormItemData>;

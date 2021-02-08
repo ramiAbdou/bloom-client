@@ -2,13 +2,10 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions } from '@store/Store';
 import { uploadImage } from '@util/imageUtil';
 import { UPDATE_USER, UpdateUserArgs } from './Profile.gql';
 
 const useUpdateUser = (): OnFormSubmit => {
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
   const [updateUser] = useMutation<IMember, UpdateUserArgs>({
     name: 'updateUser',
     query: UPDATE_USER,
@@ -19,7 +16,8 @@ const useUpdateUser = (): OnFormSubmit => {
     closeModal,
     db,
     items,
-    setError
+    setError,
+    showToast
   }: OnFormSubmitArgs) => {
     const bio = items.BIO?.value;
     const firstName = items.FIRST_NAME?.value;

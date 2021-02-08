@@ -4,7 +4,7 @@ import React from 'react';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmit } from '@organisms/Form/Form.types';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import FormShortText from '../Form/FormShortText';
 import TableStore from './Table.store';
 import { TableColumn } from './Table.types';
@@ -12,7 +12,6 @@ import TableSortButton from './TableSortButton';
 
 const TableRenameForm: React.FC = () => {
   const columnId = useStoreState(({ panel }) => panel.metadata);
-  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
   const { id, title }: TableColumn = TableStore.useStoreState(({ columns }) => {
     return columns.find((column) => column.id === columnId) ?? {};
@@ -26,7 +25,7 @@ const TableRenameForm: React.FC = () => {
     (store) => store.updateColumn
   );
 
-  const onSubmit: OnFormSubmit = async ({ items }) => {
+  const onSubmit: OnFormSubmit = async ({ closePanel, items }) => {
     // Only one form item, so just index first element.
     const updatedTitle: string = items.TABLE_COLUMN?.value;
 

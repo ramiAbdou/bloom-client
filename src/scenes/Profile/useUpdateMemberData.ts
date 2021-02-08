@@ -2,12 +2,9 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMemberData } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions } from '@store/Store';
 import { UPDATE_MEMBER_DATA, UpdateMemberDataArgs } from './Profile.gql';
 
 const useUpdateMemberData = (): OnFormSubmit => {
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
   const [updateMemberData] = useMutation<IMemberData[], UpdateMemberDataArgs>({
     name: 'updateMemberData',
     query: UPDATE_MEMBER_DATA,
@@ -17,7 +14,8 @@ const useUpdateMemberData = (): OnFormSubmit => {
   const onSubmit = async ({
     closeModal,
     items,
-    setError
+    setError,
+    showToast
   }: OnFormSubmitArgs) => {
     const data = Object.values(items).map(({ questionId, value }) => ({
       questionId,

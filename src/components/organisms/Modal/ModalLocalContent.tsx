@@ -1,18 +1,18 @@
 import React from 'react';
 
 import { ModalType } from '@constants';
-import AdminDatabaseDemoteModal from '@scenes/Database/AdminDatabase/AdminDatabaseDemoteModal';
-import MemberDatabaseDeleteModal from '@scenes/Database/MemberDatabase/MemberDatabaseDeleteModal';
-import MemberDatabasePromoteModal from '@scenes/Database/MemberDatabase/MemberDatabasePromoteModal';
+import AdminDatabaseDemoteForm from '@scenes/Database/AdminDatabase/AdminDatabaseDemoteForm';
+import MemberDatabaseDeleteForm from '@scenes/Database/MemberDatabase/MemberDatabaseDeleteForm';
+import MemberDatabasePromoteForm from '@scenes/Database/MemberDatabase/MemberDatabasePromoteForm';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 
 const LocalModalCustomContent: React.FC = () => {
   const id: string = useStoreState(({ modal }) => modal.id);
 
-  if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteModal />;
-  if (id === ModalType.DEMOTE_MEMBERS) return <AdminDatabaseDemoteModal />;
-  if (id === ModalType.PROMOTE_MEMBERS) return <MemberDatabasePromoteModal />;
+  if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteForm />;
+  if (id === ModalType.DEMOTE_MEMBERS) return <AdminDatabaseDemoteForm />;
+  if (id === ModalType.PROMOTE_MEMBERS) return <MemberDatabasePromoteForm />;
 
   return null;
 };

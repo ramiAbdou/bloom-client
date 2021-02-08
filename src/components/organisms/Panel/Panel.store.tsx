@@ -9,11 +9,7 @@ import {
 
 const panelModel: PanelModel = {
   ...initialPanelModel,
-
-  closePanel: action((state) => {
-    return { ...state, ...initialPanelModel, isShowing: false };
-  }),
-
+  closePanel: action((state) => ({ ...state, ...initialPanelModel })),
   id: null,
   isShowing: false,
 

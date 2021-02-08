@@ -7,6 +7,7 @@ import FormErrorMessage from './FormErrorMessage';
 
 interface FormSubmitButtonProps extends ButtonProps {
   invisible?: boolean;
+  row?: boolean;
   showError?: boolean;
 }
 
@@ -17,11 +18,18 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   invisible,
   large,
   loadingText,
+  row,
   showError = true,
   ...props
 }) => {
   const isCompleted = FormStore.useStoreState((store) => store.isCompleted);
   const isLoading = FormStore.useStoreState((store) => store.isLoading);
+
+  if (row) {
+    fill = false;
+    large = false;
+    showError = false;
+  }
 
   const css = cx('', {
     [className]: className,

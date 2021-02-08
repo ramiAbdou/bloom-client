@@ -1,6 +1,11 @@
+import deline from 'deline';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Row from '@containers/Row/Row';
+import Form from '@organisms/Form/Form';
+import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import FormHeader from '@organisms/Form/FormHeader';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
@@ -8,11 +13,21 @@ import { IMember } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { DELETE_MEMBERS, MemberIdsArgs } from '../Database.gql';
 
-const MemberDatabaseDeleteModal: React.FC = () => {
+const MemberDatabaseDeleteFormActions: React.FC = () => {
+  return (
+    <Row>
+      <FormSubmitButton row loadingText="Removing...">
+        Remove
+      </FormSubmitButton>
+
+      <ModalCloseButton />
+    </Row>
+  );
+};
+
+const MemberDatabaseDeleteForm: React.FC = () => {
   const addEntities = useStoreActions(({ db }) => db.addEntities);
   const deleteEntities = useStoreActions(({ db }) => db.deleteEntities);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const memberIds = TableStore.useStoreState(
     ({ selectedRowIds }) => selectedRowIds
@@ -22,7 +37,7 @@ const MemberDatabaseDeleteModal: React.FC = () => {
     return memberIds.map((memberId: string) => db.byMemberId[memberId]);
   });
 
-  const onRemove = () => {
+  const onSubmit = async ({ closeModal, showToast }: OnFormSubmitArgs) => {
     deleteEntities({ ids: memberIds, table: 'members' });
 
     const options: ToastOptions<IMember, MemberIdsArgs> = {
@@ -40,22 +55,19 @@ const MemberDatabaseDeleteModal: React.FC = () => {
   };
 
   return (
-    <>
-      <h1>Remove {members?.length} member(s)?</h1>
-      <p>
-        Are you sure you want to remove these member(s)? They will no longer
-        have access to your community and they will not show up in the member
-        database.
-      </p>
-      <div>
-        <Button primary onClick={onRemove}>
-          Remove
-        </Button>
+    <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
+      <FormHeader
+        description={deline`
+          Are you sure you want to remove these member(s)? They will no longer
+          have access to your community and they will not show up in the member
+          database.
+        `}
+        title={`Remove ${members?.length} member(s)?`}
+      />
 
-        <ModalCloseButton />
-      </div>
-    </>
+      <MemberDatabaseDeleteFormActions />
+    </Form>
   );
 };
 
-export default MemberDatabaseDeleteModal;
+export default MemberDatabaseDeleteForm;
