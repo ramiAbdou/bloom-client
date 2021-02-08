@@ -22,7 +22,8 @@ export const defaultModalOptions: Record<string, Partial<ModalData>> = {
   [ModalType.CREATE_EVENT]: {
     className: 'mo-create-event',
     options: { sheet: true }
-  }
+  },
+  [ModalType.INTEGRATIONS_DETAILS]: { className: 's-integrations-modal' }
 };
 
 export interface ModalModel extends ModalData {

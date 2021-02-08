@@ -1,13 +1,11 @@
 import React from 'react';
 
-import AddMemberModal from '@modals/AddMember/AddMember';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseActions from './AdminDatabaseActions';
-import AdminDatabaseDemoteModal from './AdminDatabaseDemoteModal';
 
 const AdminDatabase: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
@@ -32,15 +30,10 @@ const AdminDatabase: React.FC = () => {
   ];
 
   return (
-    <>
-      <Table columns={columns} options={{ hasCheckbox: isOwner }} rows={rows}>
-        <AdminDatabaseActions />
-        <TableContent />
-        <AdminDatabaseDemoteModal />
-      </Table>
-
-      <AddMemberModal admin />
-    </>
+    <Table columns={columns} options={{ hasCheckbox: isOwner }} rows={rows}>
+      <AdminDatabaseActions />
+      <TableContent />
+    </Table>
   );
 };
 

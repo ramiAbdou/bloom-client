@@ -2,12 +2,12 @@ import deline from 'deline';
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
-import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
+import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import IntegrationsStore from '@scenes/Integrations/Integrations.store';
 import { IIntegrations } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -15,18 +15,13 @@ import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
 const MailchimpModalActionContainer: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const onSecondaryClick = () => closeModal();
-
   return (
     <Row>
       <SubmitButton fill={false} large={false} loadingText="Finishing...">
         Finish
       </SubmitButton>
 
-      <Button secondary onClick={onSecondaryClick}>
-        Cancel
-      </Button>
+      <ModalCloseButton />
     </Row>
   );
 };

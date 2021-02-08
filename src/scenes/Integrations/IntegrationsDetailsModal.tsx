@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 
 import Button from '@atoms/Button/Button';
+import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
-import Modal from '@organisms/Modal/Modal';
 import { useStoreActions } from '@store/Store';
-import Integrations from './Integrations.store';
 
 export type ExpandedDetailProps = { label: string; value: any };
 
@@ -22,20 +21,13 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
 }) => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  // const setFlow = Integrations.useStoreActions((store) => store.setFlow);
-
-  const MODAL_ID = `${name.toUpperCase()}_DETAILS`;
 
   useEffect(() => {
-    showModal({ id: MODAL_ID });
+    showModal({ id: ModalType.INTEGRATIONS_DETAILS, metadata: name });
   }, []);
 
   return (
-    <Modal
-    // className="s-integrations-modal"
-    // id={MODAL_ID}
-    // onClose={() => setFlow(null)}
-    >
+    <>
       <img className="s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>
 
@@ -53,7 +45,7 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
           Close
         </Button>
       </Row>
-    </Modal>
+    </>
   );
 };
 
