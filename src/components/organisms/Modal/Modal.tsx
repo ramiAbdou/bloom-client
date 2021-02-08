@@ -86,45 +86,42 @@ const ModalContainer: React.FC<Pick<ModalProps, 'onClose' | 'options'>> = ({
   );
 };
 
-const Modal: React.FC<ModalProps> = ({
-  children,
-  className,
-  lock,
-  id: modalId,
-  show,
-  ...containerProps
-}) => {
-  const { confirmation } = containerProps?.options ?? {};
-  const isShowing = useStoreState(({ modal }) => modal.isShowing);
-  const id = useStoreState(({ modal }) => modal.id);
+const Modal: React.FC<ModalProps> = React.memo(
+  ({ children, className, lock, id: modalId, show, ...containerProps }) => {
+    const { confirmation } = containerProps?.options ?? {};
+    const isShowing = useStoreState(({ modal }) => modal.isShowing);
+    const id = useStoreState(({ modal }) => modal.id);
 
-  const shouldShowModal = useMemo(() => isShowing && modalId === id, [
-    isShowing,
-    id,
-    modalId
-  ]);
+    const shouldShowModal = useMemo(() => isShowing && modalId === id, [
+      isShowing,
+      id,
+      modalId
+    ]);
 
-  const css = cx('c-modal', {
-    'c-modal--confirmation': confirmation,
-    [className]: className
-  });
+    console.log(modalId);
 
-  if (show === false) return null;
+    const css = cx('c-modal', {
+      'c-modal--confirmation': confirmation,
+      [className]: className
+    });
 
-  return createPortal(
-    <AnimatePresence>
-      {shouldShowModal && (
-        <>
-          <ModalBackground lock={lock} />
-          <ModalContainer {...containerProps}>
-            <div className={css}>{children}</div>
-          </ModalContainer>
-          <ModalCancel lock={lock} />
-        </>
-      )}
-    </AnimatePresence>,
-    document.body
-  );
-};
+    if (show === false) return null;
+
+    return createPortal(
+      <AnimatePresence>
+        {shouldShowModal && (
+          <>
+            <ModalBackground lock={lock} />
+            <ModalContainer {...containerProps}>
+              <div className={css}>{children}</div>
+            </ModalContainer>
+            <ModalCancel lock={lock} />
+          </>
+        )}
+      </AnimatePresence>,
+      document.body
+    );
+  }
+);
 
 export default Modal;

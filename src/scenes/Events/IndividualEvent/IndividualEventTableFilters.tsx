@@ -77,8 +77,12 @@ const IndividualEventNoShowAndFilter: React.FC = () => {
 };
 
 const IndividualEventTableFilters: React.FC = () => {
+  const show: boolean = useStoreState(({ db }) => {
+    return !!db.event?.recordingUrl && day().isAfter(day(db.event.startTime));
+  });
+
   return (
-    <Row wrap spacing="xs">
+    <Row wrap show={show} spacing="xs">
       <p className="meta">Quick Filters:</p>
       <IndividualEventJoinedFilter />
       <IndividualEventRsvpFilter />
