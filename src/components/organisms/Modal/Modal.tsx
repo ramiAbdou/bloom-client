@@ -1,19 +1,13 @@
-import {
-  AnimatePresence,
-  AnimationProps,
-  motion,
-  MotionProps
-} from 'framer-motion';
-import React, { useEffect, useMemo } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import React, { useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { IoClose } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import useBreakpoint from '@hooks/useBreakpoint';
-import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import { ModalProps } from './Modal.types';
+import ModalContainer from './ModalContainer';
 
 /**
  * The darkish overlay that lays underneath the actual modal. Has a high
@@ -40,52 +34,6 @@ const ModalCancel: React.FC<Pick<ModalProps, 'lock'>> = ({ lock }) => {
   );
 };
 
-const ModalContainer: React.FC<Pick<ModalProps, 'onClose' | 'options'>> = ({
-  children,
-  onClose,
-  options
-}) => {
-  const { sheet, width } = options ?? {};
-  useLockBodyScroll();
-
-  useEffect(() => {
-    return () => onClose && onClose();
-  }, []);
-
-  const isMobile = useBreakpoint() === 1;
-
-  const animate: AnimationProps['animate'] =
-    sheet ?? isMobile
-      ? { opacity: 1, top: 'initial' }
-      : { opacity: 1, scale: 1 };
-
-  const exit: AnimationProps['exit'] =
-    sheet ?? isMobile
-      ? { opacity: 0, top: '100%' }
-      : { opacity: 0, scale: 0.5 };
-
-  const initial: MotionProps['initial'] =
-    sheet ?? isMobile ? { opacity: 0.25 } : { opacity: 0.25, scale: 0.5 };
-
-  const css = cx('c-modal-ctr', {
-    'c-modal-ctr--modal': !sheet && !isMobile,
-    'c-modal-ctr--sheet': sheet ?? isMobile
-  });
-
-  return (
-    <motion.div
-      animate={animate}
-      className={css}
-      exit={exit}
-      initial={initial}
-      style={width ? { width } : {}}
-      transition={{ duration: 0.2 }}
-    >
-      {children}
-    </motion.div>
-  );
-};
-
 const Modal: React.FC<ModalProps> = React.memo(
   ({ children, className, lock, id: modalId, show, ...containerProps }) => {
     const { confirmation } = containerProps?.options ?? {};
@@ -97,8 +45,6 @@ const Modal: React.FC<ModalProps> = React.memo(
       id,
       modalId
     ]);
-
-    console.log(modalId);
 
     const css = cx('c-modal', {
       'c-modal--confirmation': confirmation,

@@ -10,7 +10,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 const CreateEventButton: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.CREATE_EVENT);
+  const onClick = () => showModal({ id: ModalType.CREATE_EVENT });
 
   return (
     <Button primary show={isAdmin} onClick={onClick}>

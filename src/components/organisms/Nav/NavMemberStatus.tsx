@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import StatusTag from '@atoms/Tag/StatusTag';
+import { ModalType } from '@constants';
 import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
 
@@ -10,7 +11,7 @@ const NavMemberStatus: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () => showModal('PAY_DUES');
+  const onClick = () => showModal({ id: ModalType.PAY_DUES });
 
   return (
     <Show show={!!canCollectDues && !isDuesActive}>

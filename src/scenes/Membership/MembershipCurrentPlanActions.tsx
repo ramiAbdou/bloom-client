@@ -20,7 +20,7 @@ const MembershipCurrentPlanActions: React.FC = () => {
 
   if (isDuesActive && isLifetime) return null;
 
-  const onPrimaryClick = () => showModal(ModalType.PAY_DUES);
+  const onPrimaryClick = () => showModal({ id: ModalType.PAY_DUES });
   const onSecondaryClick = () => push(`${url}/change`);
 
   return (

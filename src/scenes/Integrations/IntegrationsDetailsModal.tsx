@@ -27,7 +27,7 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
   const MODAL_ID = `${name.toUpperCase()}_DETAILS`;
 
   useEffect(() => {
-    showModal(MODAL_ID);
+    showModal({ id: MODAL_ID });
   }, []);
 
   return (

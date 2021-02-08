@@ -29,7 +29,7 @@ const ApplicantsCardHeader: React.FC = () => {
     return `${user?.firstName} ${user?.lastName}`;
   });
 
-  const onClick = () => showModal(`${ModalType.APPLICANT}-${memberId}`);
+  const onClick = () => showModal({ id: `${ModalType.APPLICANT}-${memberId}` });
 
   return (
     <Row spaceBetween marginBottom={24}>

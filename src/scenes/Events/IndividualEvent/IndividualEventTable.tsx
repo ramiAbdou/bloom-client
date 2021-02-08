@@ -68,7 +68,7 @@ const IndividualEventTableContent: React.FC = () => {
     fixFirstColumn: false,
     hideIfEmpty: true,
     onRowClick: (row: TableRow) => {
-      showModal(`${ModalType.MEMBER_PROFILE}-${row?.id}`);
+      showModal({ id: `${ModalType.MEMBER_PROFILE}-${row?.id}` });
     },
     showCount: true
   };

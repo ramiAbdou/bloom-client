@@ -55,12 +55,12 @@ const SideBarContent: React.FC = () => {
   const quickLinks: LinkOptions[] = [
     {
       Icon: IoAdd,
-      onClick: () => showModal(ModalType.CREATE_EVENT),
+      onClick: () => showModal({ id: ModalType.CREATE_EVENT }),
       title: 'Create Event'
     },
     {
       Icon: IoPersonAdd,
-      onClick: () => showModal(ModalType.ADD_MEMBERS),
+      onClick: () => showModal({ id: ModalType.ADD_MEMBERS }),
       title: 'Add Member'
     }
   ];

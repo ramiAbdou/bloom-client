@@ -6,7 +6,6 @@ import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
 import Modal from '@organisms/Modal/Modal';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
@@ -53,9 +52,9 @@ const ApplicantsModalItems: React.FC = () => {
   });
 
   return (
-    <ModalContentContainer>
+    <section className="c-modal-content-ctr">
       <QuestionValueList items={items} />
-    </ModalContentContainer>
+    </section>
   );
 };
 

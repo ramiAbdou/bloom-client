@@ -9,7 +9,8 @@
 import { createStore, createTypedHooks } from 'easy-peasy';
 
 import loader, { LoaderModel } from '@organisms/Loader/Loader.store';
-import { ModalModel, modalModel } from '@organisms/Modal/Modal.store';
+import modalModel from '@organisms/Modal/Modal.store';
+import { ModalModel } from '@organisms/Modal/Modal.types';
 import nav, { NavModel } from '@organisms/Nav/Nav.store';
 import { PanelModel, panelModel } from '@organisms/Panel/Panel.store';
 import toast, { ToastModel } from '@organisms/Toast/Toast.store';

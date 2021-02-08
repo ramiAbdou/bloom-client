@@ -14,7 +14,7 @@ const MembershipPaymentMethodEmpty: React.FC = () => {
   );
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.UPDATE_PAYMENT_METHOD);
+  const onClick = () => showModal({ id: ModalType.UPDATE_PAYMENT_METHOD });
 
   return (
     <Show show={!isCardOnFile}>
@@ -34,7 +34,7 @@ const MembershipPaymentMethodContent: React.FC = () => {
   );
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.UPDATE_PAYMENT_METHOD);
+  const onClick = () => showModal({ id: ModalType.UPDATE_PAYMENT_METHOD });
 
   return (
     <Show show={!!last4}>

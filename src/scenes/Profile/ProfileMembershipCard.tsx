@@ -20,7 +20,9 @@ const ProfileMembershipHeader: React.FC = () => {
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
+
+  const onClick = () =>
+    showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
 
   return <ProfileCardHeader canEdit title={title} onEditClick={onClick} />;
 };
@@ -52,7 +54,9 @@ const ProfileMembershipContent: React.FC = () => {
 const ProfileMembershipOnboardingContainer: React.FC = () => {
   const hasData: boolean = useStoreState(({ db }) => !!db.member.data);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
+
+  const onClick = () =>
+    showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
 
   return (
     <Button fill primary show={!hasData} onClick={onClick}>

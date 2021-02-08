@@ -18,7 +18,7 @@ const ProfilePersonalHeader: React.FC = () => {
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
+  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
     <ProfileCardHeader canEdit h2 title={fullName} onEditClick={onClick} />
@@ -58,7 +58,7 @@ const ProfilePersonalOnboardingContainer: React.FC = () => {
 
   if (bio && pictureUrl) return null;
 
-  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
+  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
     <Row>
@@ -92,7 +92,7 @@ const ProfilePersonalPictureRow: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isMobile = useBreakpoint() === 1;
-  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
+  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
     <Row spaceBetween>

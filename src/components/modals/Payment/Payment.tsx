@@ -59,7 +59,7 @@ const PaymentModal: React.FC<Partial<PaymentModel>> = ({
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   useEffect(() => {
-    if (!isAdmin && !isDuesActive) showModal(ModalType.PAY_DUES);
+    if (!isAdmin && !isDuesActive) showModal({ id: ModalType.PAY_DUES });
   }, [isDuesActive]);
 
   if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId)) {

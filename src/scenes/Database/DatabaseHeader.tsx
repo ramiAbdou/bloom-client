@@ -16,8 +16,8 @@ const DatbaseHeaderAddButton: React.FC = () => {
   const isMembersPage = useFinalPath() === 'members';
 
   const onClick = () => {
-    if (isMembersPage) showModal(ModalType.ADD_MEMBERS);
-    else if (isAdminsPage && isOwner) showModal(ModalType.ADD_ADMINS);
+    if (isMembersPage) showModal({ id: ModalType.ADD_MEMBERS });
+    else if (isAdminsPage && isOwner) showModal({ id: ModalType.ADD_ADMINS });
   };
 
   return (

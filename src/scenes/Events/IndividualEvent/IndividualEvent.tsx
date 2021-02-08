@@ -74,7 +74,7 @@ const IndividualEvent: React.FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated && (isMembersOnly || hasCookieError)) {
-      showModal(`${ModalType.CHECK_IN}-${eventId}`);
+      showModal({ id: `${ModalType.CHECK_IN}-${eventId}` });
     }
   }, [hasCookieError, isMembersOnly, isAuthenticated]);
 

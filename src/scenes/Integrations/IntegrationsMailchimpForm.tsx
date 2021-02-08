@@ -78,7 +78,7 @@ const MailchimpModal: React.FC = () => {
     flow === 'MAILCHIMP_FORM' && !mailchimpListId && !!mailchimpLists?.length;
 
   useEffect(() => {
-    if (shouldShowModal) showModal(ModalType.MAILCHIMP_FLOW);
+    if (shouldShowModal) showModal({ id: ModalType.MAILCHIMP_FLOW });
   }, [shouldShowModal]);
 
   const onClose = () => setFlow(null);

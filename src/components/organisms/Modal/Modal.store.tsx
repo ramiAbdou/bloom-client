@@ -1,22 +1,23 @@
-import { Action, action } from 'easy-peasy';
+import { action } from 'easy-peasy';
 
-export type ModalModel = {
-  closeModal: Action<ModalModel>;
-  id: string; // Every modal must have unique identifier to help rendering.
-  isShowing: boolean;
-  showModal: Action<ModalModel, string>;
-};
+import { ModalModel, ShowModalArgs } from './Modal.types';
 
-export const modalModel: ModalModel = {
+const modalModel: ModalModel = {
   closeModal: action((state) => {
-    return { ...state, id: null, isShowing: false };
+    return { ...state, id: null, isShowing: false, options: null };
   }),
 
   id: null,
 
   isShowing: false,
 
-  showModal: action((state, id: string) => {
-    return { ...state, id, isShowing: true };
+  metadata: null,
+
+  options: null,
+
+  showModal: action((state, args: ShowModalArgs) => {
+    return { ...state, ...args, isShowing: true };
   })
 };
+
+export default modalModel;

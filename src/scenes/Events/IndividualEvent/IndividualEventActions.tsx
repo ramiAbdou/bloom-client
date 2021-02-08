@@ -36,7 +36,8 @@ const EventsEditEventButton: React.FC = () => {
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () => showModal(`${ModalType.CREATE_EVENT}-${eventId}`);
+  const onClick = () =>
+    showModal({ id: `${ModalType.CREATE_EVENT}-${eventId}` });
 
   return (
     <Button fill large secondary show={!hasPast && isAdmin} onClick={onClick}>

@@ -59,7 +59,9 @@ const DirectoryCardPicture: React.FC = () => {
 const DirectoryCardContent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const memberId: string = IdStore.useStoreState(({ id }) => id);
-  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+
+  const onClick = () =>
+    showModal({ id: `${ModalType.MEMBER_PROFILE}-${memberId}` });
 
   return (
     <Card noPadding className="s-directory-card" onClick={onClick}>

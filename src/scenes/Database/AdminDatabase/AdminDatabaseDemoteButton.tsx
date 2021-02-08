@@ -13,7 +13,7 @@ const AdminDatabaseDemoteButton: React.FC = () => {
     return selectedRowIds.length > 15;
   });
 
-  const onClick = () => showModal(ModalType.DEMOTE_MEMBERS);
+  const onClick = () => showModal({ id: ModalType.DEMOTE_MEMBERS });
 
   return (
     <DatabaseAction

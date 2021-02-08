@@ -25,7 +25,10 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
 ) => {
   const { firstName, lastName, memberId, pictureUrl } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(`${ModalType.MEMBER_PROFILE}-${memberId}`);
+
+  const onClick = () =>
+    showModal({ id: `${ModalType.MEMBER_PROFILE}-${memberId}` });
+
   const fullName = `${firstName} ${lastName}`;
 
   return (

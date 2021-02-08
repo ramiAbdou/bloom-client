@@ -22,7 +22,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.EDIT_SOCIAL_MEDIA);
+  const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
 
   return (
     <Show show={!isSocialLinked}>
@@ -81,7 +81,7 @@ const ProfileSocialCard: React.FC = () => {
     !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.EDIT_SOCIAL_MEDIA);
+  const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
 
   return (
     <Card className="s-profile-card--social">

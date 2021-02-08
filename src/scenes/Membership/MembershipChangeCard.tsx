@@ -23,7 +23,7 @@ const MembershipChangeCard: React.FC<IMemberType> = ({
 
   const onClick = () => {
     setSelectedTypeId(id);
-    showModal(ModalType.CHANGE_MEMBERSHIP);
+    showModal({ id: ModalType.CHANGE_MEMBERSHIP });
   };
 
   // Formats the amount with FREE if the amount is 0.
