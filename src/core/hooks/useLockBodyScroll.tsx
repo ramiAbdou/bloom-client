@@ -3,7 +3,7 @@ import { useLayoutEffect } from 'react';
 /**
  * @see https://usehooks.com/useLockBodyScroll/
  */
-export default () => {
+const useLockBodyScroll = () => {
   useLayoutEffect(() => {
     document.body.style.overflow = 'hidden';
 
@@ -13,3 +13,5 @@ export default () => {
     };
   }, []);
 };
+
+export default useLockBodyScroll;

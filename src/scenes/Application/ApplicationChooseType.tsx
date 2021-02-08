@@ -1,7 +1,5 @@
 import React from 'react';
 
-// import React, { useEffect } from 'react';
-// import usePrevious from '@hooks/usePrevious';
 import { RadioOptionProps } from '@molecules/Radio/Radio.types';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
@@ -18,8 +16,6 @@ const ApplicationChooseTypeButton: React.FC = () => {
     return items.MEMBERSHIP_TYPE?.value;
   });
 
-  // const removeItems = FormStore.useStoreActions((store) => store.removeItems);
-
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
     const selectedType: IMemberType = db.community?.types
       ?.map((typeId: string) => db.byTypeId[typeId])
@@ -27,21 +23,6 @@ const ApplicationChooseTypeButton: React.FC = () => {
 
     return !!selectedType?.amount;
   });
-
-  // const wasPaidMembershipSelected = usePrevious(isPaidMembershipSelected);
-
-  // useEffect(() => {
-  //   if (wasPaidMembershipSelected && !isPaidMembershipSelected) {
-  //     removeItems([
-  //       { title: 'Name on Card' },
-  //       { category: 'CREDIT_OR_DEBIT_CARD' },
-  //       { title: 'Billing Address' },
-  //       { title: 'City' },
-  //       { title: 'State' },
-  //       { title: 'Zip Code' }
-  //     ]);
-  //   }
-  // }, [isPaidMembershipSelected]);
 
   return (
     <FormSubmitButton show={!isPaidMembershipSelected}>
@@ -61,8 +42,6 @@ const ApplicationChooseTypeForm: React.FC = () => {
       };
     });
   });
-
-  // const syncStory = useSyncStory();
 
   return (
     <Form>

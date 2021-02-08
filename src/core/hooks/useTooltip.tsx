@@ -1,9 +1,9 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export type TooltipPosition = 'left' | 'middle' | 'right';
 
-export default (tooltip: string, position: TooltipPosition = 'middle') => {
-  const ref: MutableRefObject<HTMLElement> = useRef(null);
+const useTooltip = (tooltip: string, position: TooltipPosition = 'middle') => {
+  const ref: React.MutableRefObject<HTMLElement> = useRef(null);
 
   useEffect(() => {
     const element = ref?.current;
@@ -23,3 +23,5 @@ export default (tooltip: string, position: TooltipPosition = 'middle') => {
 
   return ref;
 };
+
+export default useTooltip;
