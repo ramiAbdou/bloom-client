@@ -3,7 +3,6 @@ import React from 'react';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmit } from '@organisms/Form/Form.types';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import Panel from '@organisms/Panel/Panel';
 import { useStoreActions, useStoreState } from '@store/Store';
 import FormShortText from '../Form/FormShortText';
 import TableStore from './Table.store';
@@ -53,26 +52,12 @@ const TableColumnRenameForm: React.FC = () => {
 };
 
 const TableColumnRenamePanel: React.FC = () => {
-  const panelId = useStoreState(({ panel }) => panel.id);
-
-  // Panel ID is the same as the column ID, so there should be a column that
-  // is present with the same ID.
-  const isColumnFound: boolean = TableStore.useStoreState(
-    ({ columns }) => !!columns.find((column) => column.id === panelId)
-  );
-
   return (
-    <Panel
-    // align="BOTTOM_LEFT"
-    // className="o-table-col-panel"
-    // id={panelId}
-    // scrollId="o-table-ctr"
-    // show={!!isColumnFound}
-    >
+    <>
       <TableColumnRenameForm />
-      <TableSortButton direction="ASC" id={panelId} />
-      <TableSortButton direction="DESC" id={panelId} />
-    </Panel>
+      <TableSortButton direction="ASC" />
+      <TableSortButton direction="DESC" />
+    </>
   );
 };
 

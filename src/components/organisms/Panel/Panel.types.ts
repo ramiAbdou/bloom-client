@@ -42,6 +42,11 @@ export const defaultPanelOptions: Record<string, Partial<PanelData>> = {
   [PanelType.PROFILE]: {
     align: 'RIGHT_BOTTOM',
     style: { marginLeft: 24, minWidth: 270, padding: 8 }
+  },
+  [PanelType.RENAME_TABLE_COLUMN]: {
+    align: 'BOTTOM_LEFT',
+    className: 'o-table-col-panel',
+    scrollId: 'o-table-ctr'
   }
 };
 

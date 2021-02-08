@@ -4,7 +4,6 @@ import Show from '@containers/Show';
 import TableStore from './Table.store';
 import TableBanner from './TableBanner';
 import TableBodyContainer from './TableBody';
-import TableColumnRenamePanel from './TableColumnRenamePanel';
 import TableHeaderContainer from './TableHeader';
 import TablePagination from './TablePagination/TablePagination';
 
@@ -61,7 +60,6 @@ const TableContent: React.FC<TableContentProps> = ({
 
       {!emptyMessage && <TablePagination />}
       <TableContentEmptyMessage emptyMessage={emptyMessage} />
-      <TableColumnRenamePanel />
     </Show>
   );
 };

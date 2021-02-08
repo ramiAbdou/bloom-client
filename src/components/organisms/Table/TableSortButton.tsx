@@ -3,7 +3,7 @@ import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
 import { IdProps } from '@constants';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import TableStore from './Table.store';
 import { TableSortDirection } from './Table.types';
@@ -12,19 +12,20 @@ interface TableSortButtonProps extends IdProps {
   direction: TableSortDirection;
 }
 
-const TableSortButton: React.FC<TableSortButtonProps> = ({ direction, id }) => {
+const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
+  const columnId = useStoreState(({ panel }) => panel.metadata);
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
   const isSorted = TableStore.useStoreState(
     ({ sortDirection, sortColumnId }) => {
-      return sortDirection === direction && sortColumnId === id;
+      return sortDirection === direction && sortColumnId === columnId;
     }
   );
 
   const sortColumn = TableStore.useStoreActions((store) => store.sortColumn);
 
   const onClick = () => {
-    sortColumn([id, direction]);
+    sortColumn([columnId, direction]);
     closePanel();
   };
 

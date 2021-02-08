@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
+import { PanelType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
@@ -41,9 +42,13 @@ const HeaderCell = ({
   );
 
   const isPanelShowing = useStoreState(({ panel }) => panel.id === id);
-  // const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  // const onClick = () => isSortable && showPanel(id);
+  const onClick = () => {
+    if (isSortable) {
+      showPanel({ id: PanelType.RENAME_TABLE_COLUMN, metadata: id });
+    }
+  };
 
   const isSortedColumn = sortColumnId === id;
 
@@ -59,8 +64,7 @@ const HeaderCell = ({
   const showCaretDown = isSortedColumn && direction === 'DESC';
 
   return (
-    // <th className={css} id={id} onClick={onClick}>
-    <th className={css} id={id}>
+    <th className={css} id={id} onClick={onClick}>
       <div>
         {!i && hasCheckbox && <TableHeaderCheckbox />}
         {!hideTitle && <p>{title}</p>}
