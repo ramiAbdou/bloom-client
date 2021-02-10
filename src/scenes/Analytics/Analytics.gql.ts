@@ -17,6 +17,13 @@ export const GET_ACTIVE_MEMBERS_SERIES = query({
   operation: 'getActiveMembersSeries'
 }).query;
 
+// ## GET EVENT ATTENDEES SERIES
+
+export const GET_EVENT_ATTENDEES_SERIES = query({
+  fields: ['name', 'value'],
+  operation: 'getEventAttendeesSeries'
+}).query;
+
 // ## GET PAST EVENT ATTENDEES
 
 export const GET_PAST_EVENT_ATTENDEES = query({
