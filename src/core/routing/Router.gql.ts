@@ -54,10 +54,6 @@ export interface GetUserArgs {
   urlName: string;
 }
 
-export interface GetUserResult extends IUser {
-  activeCommunityId: string;
-}
-
 export const GET_USER = query({
   fields: [
     // 'activeCommunityId',
@@ -71,6 +67,7 @@ export const GET_USER = query({
     'linkedInUrl',
     'pictureUrl',
     'twitterUrl',
+    { member: ['id', { community: ['id', 'primaryColor'] }] },
     {
       members: [
         'autoRenew',
@@ -80,14 +77,7 @@ export const GET_USER = query({
         'role',
         'status',
         {
-          community: [
-            'autoAccept',
-            'id',
-            'logoUrl',
-            'name',
-            'primaryColor',
-            'urlName'
-          ]
+          community: ['autoAccept', 'id', 'logoUrl', 'name', 'urlName']
         },
         { type: ['id'] }
       ]

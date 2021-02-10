@@ -12,7 +12,7 @@ export const GET_MEMBER_DATA = query({
     { data: ['id', 'value', { question: ['id'] }] },
     { community: ['id'] }
   ],
-  operation: 'getMember',
+  operation: 'getMemberPopulate',
   variables: { populate: { required: false, type: '[String!]' } }
 }).query;
 

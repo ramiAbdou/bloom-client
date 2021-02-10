@@ -22,7 +22,7 @@ import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
-import { ICommunity, IMember } from '@store/Db/entities';
+import { ICommunity, IMember, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
@@ -31,8 +31,7 @@ import {
   GET_QUESTIONS,
   GET_TYPES,
   GET_USER,
-  GetUserArgs,
-  GetUserResult
+  GetUserArgs
 } from './Router.gql';
 
 const HomeRouteContent: React.FC = () => {
@@ -90,7 +89,7 @@ const HomeRoute: React.FC = () => {
   const { url } = useRouteMatch();
   const finalPath = useFinalPath();
 
-  const activeCommunityId = useStoreState(({ db }) => db.community?.id);
+  // const activeCommunityId = useStoreState(({ db }) => db.community?.id);
   const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
@@ -107,22 +106,25 @@ const HomeRoute: React.FC = () => {
 
   const setActive = useStoreActions(({ db }) => db.setActive);
 
-  const { loading, data, error } = useQuery<GetUserResult, GetUserArgs>({
+  const { loading, data, error } = useQuery<IUser, GetUserArgs>({
     name: 'getUser',
     query: GET_USER,
     schema: Schema.USER,
     variables: { urlName }
   });
 
+  console.log(data);
+
   // const communityId = data?.activeCommunityId;
 
   useEffect(() => {
     if (data) {
       setActive({ id: data.id, table: 'users' });
+      // @ts-ignore b/c of type check.
+      setActive({ id: data.member?.id, table: 'members' });
+      // @ts-ignore b/c of type check.
+      setActive({ id: data.member?.community?.id, table: 'communities' });
     }
-    // if (communityId && communityId !== activeCommunityId) {
-    //   setActiveCommunity(communityId);
-    // }
   }, [data]);
 
   useLoader(loading);

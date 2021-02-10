@@ -265,7 +265,7 @@ MemberPayment.define({
 
 MemberType.define({ community: Community });
 Question.define({ community: Community, data: [MemberData] });
-User.define({ members: [Member] });
+User.define({ member: Member, members: [Member] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations

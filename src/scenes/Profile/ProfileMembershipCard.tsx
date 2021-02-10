@@ -67,7 +67,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 
 const ProfileMembershipCard: React.FC = () => {
   const { loading: loading1 } = useQuery<IMember, PopulateArgs>({
-    name: 'getMember',
+    name: 'getMemberPopulate',
     query: GET_MEMBER_DATA,
     schema: Schema.MEMBER,
     variables: { populate: ['community.questions', 'data.question'] }
