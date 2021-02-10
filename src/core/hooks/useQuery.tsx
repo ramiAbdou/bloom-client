@@ -6,7 +6,6 @@ import { getGraphQLError } from '@util/util';
 import { UseQueryArgs, UseQueryResult } from './useQuery.types';
 
 function useQuery<T = any, S = any>({
-  activeId,
   format,
   query,
   name,
@@ -31,7 +30,7 @@ function useQuery<T = any, S = any>({
   useEffect(() => {
     if (result.data && schema) {
       const formattedData = format ? format(result.data) : result.data;
-      mergeEntities({ data: formattedData, schema, setActiveId: activeId });
+      mergeEntities({ data: formattedData, schema });
     }
   }, [result.data, schema]);
 

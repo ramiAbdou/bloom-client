@@ -1,7 +1,6 @@
 import { Schema } from 'normalizr';
 
 export interface UseQueryArgs<T, S> {
-  activeId?: boolean;
   format?: (data: T) => any;
   name: string;
   query: string;

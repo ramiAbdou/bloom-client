@@ -3,11 +3,7 @@ import React, { useEffect } from 'react';
 import { ModalType } from '@constants';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
-import useQuery from '@hooks/useQuery';
-import { ICommunity } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
-import { GET_INTEGRATIONS } from './Integrations.gql';
 import IntegrationsCardContainer from './IntegrationsCardContainer';
 
 const Integrations: React.FC = () => {
@@ -20,16 +16,10 @@ const Integrations: React.FC = () => {
     }
   }, [searchParam]);
 
-  const { loading } = useQuery<ICommunity>({
-    name: 'getIntegrations',
-    query: GET_INTEGRATIONS,
-    schema: Schema.COMMUNITY_INTEGRATIONS
-  });
-
   return (
     <MainContent>
-      <MainHeader loading={loading} title="Integrations" />
-      {!loading && <IntegrationsCardContainer />}
+      <MainHeader loading={false} title="Integrations" />
+      <IntegrationsCardContainer />
     </MainContent>
   );
 };

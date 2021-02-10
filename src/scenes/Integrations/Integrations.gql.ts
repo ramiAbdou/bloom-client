@@ -1,19 +1,4 @@
-import { mutation, query } from 'gql-query-builder';
-
-// ## GET INTEGRATIONS
-
-export const GET_INTEGRATIONS = query({
-  fields: [
-    'id',
-    'isMailchimpAuthenticated',
-    'mailchimpListId',
-    'mailchimpListName',
-    'stripeAccountId',
-    { community: ['id'] },
-    { mailchimpLists: ['id', 'name'] }
-  ],
-  operation: 'getIntegrations'
-}).query;
+import { mutation } from 'gql-query-builder';
 
 // ## UPDATE MAILCHIMP LIST ID
 

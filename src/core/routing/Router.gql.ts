@@ -2,6 +2,21 @@ import { mutation, query } from 'gql-query-builder';
 
 import { IUser } from '@store/Db/entities';
 
+// ## GET INTEGRATIONS
+
+export const GET_INTEGRATIONS = query({
+  fields: [
+    'id',
+    'isMailchimpAuthenticated',
+    'mailchimpListId',
+    'mailchimpListName',
+    'stripeAccountId',
+    { community: ['id'] },
+    { mailchimpLists: ['id', 'name'] }
+  ],
+  operation: 'getIntegrations'
+}).query;
+
 // ## GET QUESTIONS
 
 export const GET_QUESTIONS = query({
@@ -45,7 +60,7 @@ export interface GetUserResult extends IUser {
 
 export const GET_USER = query({
   fields: [
-    'activeCommunityId',
+    // 'activeCommunityId',
     'createdAt',
     'email',
     'facebookUrl',
@@ -71,12 +86,9 @@ export const GET_USER = query({
             'logoUrl',
             'name',
             'primaryColor',
-            'urlName',
-            { integrations: ['mailchimpListId', 'stripeAccountId'] },
-            { types: ['amount', 'id', 'name', 'isFree', 'recurrence'] }
+            'urlName'
           ]
         },
-        { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] },
         { type: ['id'] }
       ]
     }

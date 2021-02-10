@@ -202,7 +202,20 @@ const Question = new schema.Entity(
   }
 );
 
-const User = new schema.Entity('users', {}, { mergeStrategy });
+const User = new schema.Entity(
+  'users',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.memberId, { members: [parent.id] }]
+      ]);
+
+      return { ...value, ...processedData, userId: value.id };
+    }
+  }
+);
 
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.

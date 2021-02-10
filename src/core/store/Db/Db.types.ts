@@ -36,10 +36,13 @@ export interface DeleteEntitiesArgs {
 }
 
 export interface MergeEntitiesArgs {
-  communityReferenceColumn?: string;
   data?: any;
   schema?: Schema;
-  setActiveId?: boolean;
+}
+
+export interface SetActiveArgs {
+  id: string;
+  table: keyof IEntities;
 }
 
 export type DbModel = {
@@ -68,8 +71,7 @@ export type DbModel = {
   integrations: Computed<DbModel, IIntegrations>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
-  setActiveCommunity: Action<DbModel, string>;
-  setActiveEvent: Action<DbModel, string>;
+  setActive: Action<DbModel, SetActiveArgs>;
   setIsAuthenticated: Action<DbModel, boolean>;
   user: Computed<DbModel, IUser>;
 };

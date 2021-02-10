@@ -35,9 +35,8 @@ const IndividualEvent: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
   const isMembersOnly = useStoreState(({ db }) => db.event?.private);
-  const setActiveEvent = useStoreActions(({ db }) => db.setActiveEvent);
+  const setActive = useStoreActions(({ db }) => db.setActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
   const { data: data1, loading: loading1, error } = useQuery<
     IEvent,
@@ -63,9 +62,9 @@ const IndividualEvent: React.FC = () => {
 
   useEffect(() => {
     if (data1) {
-      setActiveEvent(data1.id);
+      setActive({ id: data1.id, table: 'events' });
       // @ts-ignore b/c type issues.
-      setActiveCommunity(data1.community?.id);
+      setActive({ id: data1.community?.id, table: 'communities' });
     }
   }, [data1]);
 

@@ -22,16 +22,12 @@ import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
-import {
-  ICommunity,
-  IMember,
-  IMemberType,
-  IQuestion
-} from '@store/Db/entities';
+import { ICommunity, IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
 import {
+  GET_INTEGRATIONS,
   GET_QUESTIONS,
   GET_TYPES,
   GET_USER,
@@ -44,19 +40,25 @@ const HomeRouteContent: React.FC = () => {
 
   const { url } = useRouteMatch();
 
-  const { loading: loading1 } = useQuery<IQuestion[]>({
+  const { loading: loading1 } = useQuery({
     name: 'getQuestions',
     query: GET_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
-  const { loading: loading2 } = useQuery<IMemberType[]>({
+  const { loading: loading2 } = useQuery({
     name: 'getTypes',
     query: GET_TYPES,
     schema: [Schema.MEMBER_TYPE]
   });
 
-  const loading = loading1 || loading2;
+  const { loading: loading3 } = useQuery({
+    name: 'getIntegrations',
+    query: GET_INTEGRATIONS,
+    schema: Schema.COMMUNITY_INTEGRATIONS
+  });
+
+  const loading = loading1 || loading2 || loading3;
   useLoader(loading);
 
   if (loading) return null;
@@ -103,23 +105,25 @@ const HomeRoute: React.FC = () => {
     });
   });
 
-  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
+  const setActive = useStoreActions(({ db }) => db.setActive);
 
   const { loading, data, error } = useQuery<GetUserResult, GetUserArgs>({
-    activeId: true,
     name: 'getUser',
     query: GET_USER,
     schema: Schema.USER,
     variables: { urlName }
   });
 
-  const communityId = data?.activeCommunityId;
+  // const communityId = data?.activeCommunityId;
 
   useEffect(() => {
-    if (communityId && communityId !== activeCommunityId) {
-      setActiveCommunity(communityId);
+    if (data) {
+      setActive({ id: data.id, table: 'users' });
     }
-  }, [communityId]);
+    // if (communityId && communityId !== activeCommunityId) {
+    //   setActiveCommunity(communityId);
+    // }
+  }, [data]);
 
   useLoader(loading);
 

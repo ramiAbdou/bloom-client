@@ -7,7 +7,6 @@ import { UseMutationResult } from './useMutation.types';
 import { UseQueryArgs, UseQueryResult } from './useQuery.types';
 
 function useManualQuery<T = any, S = any>({
-  activeId,
   format,
   query,
   name,
@@ -46,7 +45,7 @@ function useManualQuery<T = any, S = any>({
   useEffect(() => {
     if (result.data && schema) {
       const formattedData = format ? format(result.data) : result.data;
-      mergeEntities({ data: formattedData, schema, setActiveId: activeId });
+      mergeEntities({ data: formattedData, schema });
     }
   }, [result.data, memoizedSchema]);
 

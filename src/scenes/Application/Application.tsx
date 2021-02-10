@@ -23,7 +23,7 @@ import ApplicationMainPage from './ApplicationMain';
 import ApplicationReviewPage from './ApplicationReview';
 
 const Application: React.FC = () => {
-  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
+  const setActive = useStoreActions(({ db }) => db.setActive);
   const { urlName } = useParams() as UrlNameProps;
 
   const { data, error, loading: loading1 } = useQuery<
@@ -57,7 +57,7 @@ const Application: React.FC = () => {
   const communityId = data?.community?.id;
 
   useEffect(() => {
-    if (communityId) setActiveCommunity(communityId);
+    if (communityId) setActive({ id: communityId, table: 'communities' });
   }, [communityId]);
 
   if (error) return <Redirect to="/login" />;
