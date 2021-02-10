@@ -1,36 +1,35 @@
 import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import { IdProps } from '@constants';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import Table from './Table.store';
-import { SortDirection } from './Table.types';
+import TableStore from './Table.store';
+import { TableSortDirection } from './Table.types';
 
 interface TableSortButtonProps extends IdProps {
-  direction: SortDirection;
+  direction: TableSortDirection;
 }
 
-const TableSortButton: React.FC<TableSortButtonProps> = ({ direction, id }) => {
-  const closePicker = useStoreActions(({ panel }) => panel.closePicker);
+const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
+  const columnId = useStoreState(({ panel }) => panel.metadata);
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const isSorted = Table.useStoreState(
-    ({ sortedColumnDirection, sortedColumnId }) => {
-      return sortedColumnDirection === direction && sortedColumnId === id;
+  const isSorted = TableStore.useStoreState(
+    ({ sortDirection, sortColumnId }) => {
+      return sortDirection === direction && sortColumnId === columnId;
     }
   );
 
-  const setSortedColumn = Table.useStoreActions(
-    (store) => store.setSortedColumn
-  );
+  const sortColumn = TableStore.useStoreActions((store) => store.sortColumn);
 
   const onClick = () => {
-    setSortedColumn([id, direction]);
-    closePicker();
+    sortColumn([columnId, direction]);
+    closePanel();
   };
 
-  const css = cx('', { 'c-table-col-picker-button--active': isSorted });
+  const css = cx('', { 'o-table-col-panel-button--active': isSorted });
   const isAscending = direction === 'ASC';
 
   return (

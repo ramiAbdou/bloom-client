@@ -15,7 +15,7 @@ type Breakpoint = 1 | 2 | 3 | 4;
  * @example useBreakpoint() => 4 (Monitor)
  */
 const useBreakpoint = (): Breakpoint => {
-  const [breakpoint, setBreakpoint] = useState<Breakpoint>(3);
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>(null);
 
   const onWindowResize = () => {
     const { innerWidth } = window;

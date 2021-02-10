@@ -1,6 +1,6 @@
-import { ChildrenProps, ValueProps } from '@constants';
+import { ValueProps } from '@constants';
 
-export interface RadioOptionProps extends ChildrenProps {
+export interface RadioOptionProps {
   checked?: boolean;
   description?: string;
   label: string;

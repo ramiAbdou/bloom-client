@@ -1,32 +1,19 @@
 import { useMutation as useGraphQlHooksMutation } from 'graphql-hooks';
-import { Schema } from 'normalizr';
 import { useEffect, useMemo } from 'react';
 
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-
-type UseMutationArgs<T, S> = {
-  format?: (data: T) => any;
-  name: string;
-  query: string;
-  schema?: Schema<any>;
-  variables?: S;
-};
-
-type UseMutationResult<T> = { data: T; error: string; loading: boolean };
-
-type UseMutation<T, S> = [
-  (variables?: S) => Promise<UseMutationResult<T>>,
-  UseMutationResult<T>
-];
+import { UseMutationArgs, UseMutationResult } from './useMutation.types';
 
 function useMutation<T = any, S = any>({
+  deleteArgs,
   format,
   query,
   name,
   schema,
   variables: initialVariables
-}: UseMutationArgs<T, S>): UseMutation<T, S> {
+}: UseMutationArgs<T, S>): UseMutationResult<T, S> {
+  const deleteEntities = useStoreActions(({ db }) => db.deleteEntities);
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const [mutationFn, { data, error, loading }] = useGraphQlHooksMutation(
@@ -53,6 +40,10 @@ function useMutation<T = any, S = any>({
   };
 
   const memoizedSchema = useMemo(() => schema, []);
+
+  useEffect(() => {
+    if (result.data && deleteArgs) deleteEntities(deleteArgs);
+  }, [result.data, deleteArgs]);
 
   useEffect(() => {
     if (result.data && schema) {

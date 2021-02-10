@@ -41,7 +41,7 @@ input[type="radio"]:checked ~ div > span {
 .#{$PREF} {
   @extend .flex-col;
 
-  > div:not(.#{$PREF}-option-card) {
+  > div:not(.c-misc-radio-option-card) {
     @extend .flex-ac;
 
     cursor: pointer;
@@ -69,6 +69,7 @@ input[type="radio"]:checked ~ div > span {
   &--active { background-color: $primary-bg; border: 1px $primary solid; }
 
   > div:last-child {
-    > h4 { color: $gray-2; margin-bottom: $xs; }
+    > h4 { color: $gray-2; }
+    > h4:not(:only-child) { margin-bottom: $xs; }
   }
 }

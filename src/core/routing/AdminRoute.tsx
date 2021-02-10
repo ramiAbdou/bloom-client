@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
-import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 
 /**
@@ -17,9 +16,8 @@ const AdminRoute: React.FC<RouteProps> = ({
   const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
 
   const { urlName }: UrlNameProps = useParams();
-  const isDesktop = useBreakpoint() >= 3;
 
-  if (!isDesktop || !isAdmin) return <Redirect to={`/${urlName}`} />;
+  if (!isAdmin) return <Redirect to={`/${urlName}`} />;
   return <Route exact {...rest} component={component} />;
 };
 

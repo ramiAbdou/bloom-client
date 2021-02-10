@@ -1,83 +1,36 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { cx, takeFirst } from '@util/util';
-import ErrorMessage from '../../atoms/ErrorMessage';
-import Form from './Form.store';
-import { FormItemProps } from './Form.types';
-import FormDescription from './FormDescription';
-import FormLabel from './FormLabel';
-import useItemBody from './useItemBody';
+import { FormItemData } from './Form.types';
+import FormCoverImage from './FormCoverImage';
+import FormDropdown from './FormDropdown';
+import FormImage from './FormImage';
+import FormLongText from './FormLongText';
+import FormMultipleChoice from './FormMultipleChoice';
+import FormMultipleSelect from './FormMultipleSelect';
+import FormShortText from './FormShortText';
+import FormToggle from './FormToggle';
 
-const FormItem: React.FC<FormItemProps> = ({
-  card,
-  cardOptions,
-  children,
-  description,
-  options,
-  required,
-  pageId,
-  placeholder,
-  plain,
-  type,
-  validate,
-  value,
-  ...queryArgs
-}: FormItemProps) => {
-  const { category, title } = queryArgs;
+const FormItem: React.FC<FormItemData> = (props: FormItemData) => {
+  const { options, type } = props;
 
-  const errorMessage = Form.useStoreState(
-    ({ getItem }) => getItem(queryArgs)?.errorMessage
-  );
+  if (type === 'COVER_IMAGE') return <FormCoverImage {...props} />;
+  if (type === 'IMAGE') return <FormImage {...props} />;
+  if (type === 'LONG_TEXT') return <FormLongText {...props} />;
 
-  const setItem = Form.useStoreActions((store) => store.setItem);
+  if (type === 'MULTIPLE_CHOICE') {
+    if (options.length < 5) return <FormMultipleChoice {...props} />;
+    return <FormDropdown {...props} />;
+  }
 
-  useEffect(() => {
-    const emptyValue = takeFirst([
-      [type === 'MULTIPLE_SELECT', []],
-      [['SHORT_TEXT', 'LONG_TEXT'].includes(type), ''],
-      [type === 'TOGGLE', false]
-    ]);
+  if (type === 'MULTIPLE_SELECT') {
+    if (options.length < 5) return <FormMultipleSelect {...props} />;
+    return <FormDropdown multiple {...props} />;
+  }
 
-    value = value ?? emptyValue;
+  if (type === 'SHORT_TEXT') return <FormShortText {...props} />;
+  if (type === 'TOGGLE') return <FormToggle {...props} />;
 
-    setItem({
-      initialValue: value,
-      pageId,
-      required,
-      type,
-      validate,
-      value,
-      ...queryArgs
-    });
-  }, []);
-
-  const body: React.ReactElement = useItemBody({
-    card,
-    cardOptions,
-    children,
-    options,
-    placeholder,
-    plain,
-    required,
-    type,
-    ...queryArgs
-  });
-
-  const css = cx('o-form-item', {
-    'o-form-item--email': category === 'EMAIL',
-    'o-form-item--image': type === 'IMAGE',
-    'o-form-item--multiple-select': type === 'MULTIPLE_SELECT'
-  });
-
-  return (
-    <div className={css}>
-      {type !== 'TOGGLE' && <FormLabel required={required}>{title}</FormLabel>}
-      {type !== 'TOGGLE' && <FormDescription>{description}</FormDescription>}
-      {body}
-      {type === 'TOGGLE' && <FormDescription>{description}</FormDescription>}
-      <ErrorMessage marginBottom={16} message={errorMessage} />
-    </div>
-  );
+  return null;
 };
 
 export default FormItem;

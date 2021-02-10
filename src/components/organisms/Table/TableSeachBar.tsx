@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 
+import { BaseProps } from '@constants';
 import SearchBar from '@molecules/SearchBar/SearchBar';
-import Table from './Table.store';
+import TableStore from './Table.store';
 
-type SearchBarProps = { placeholder?: string };
+interface TableSearchBarProps extends BaseProps {
+  placeholder?: string;
+}
 
 /**
  * Deep searches through every row in the table, and since most of the rows
  * data values are all strings, no complex logic is needed to search.
  */
-const TableSearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
+const TableSearchBar: React.FC<TableSearchBarProps> = ({
+  className,
+  placeholder
+}) => {
   const [value, setValue] = useState('');
 
-  const setSearchString = Table.useStoreActions(
+  const setSearchString = TableStore.useStoreActions(
     (store) => store.setSearchString
   );
 
@@ -22,7 +28,12 @@ const TableSearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
   }, [value]);
 
   return (
-    <SearchBar placeholder={placeholder} value={value} onChange={setValue} />
+    <SearchBar
+      className={className}
+      placeholder={placeholder}
+      value={value}
+      onChange={setValue}
+    />
   );
 };
 

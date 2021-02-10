@@ -1,6 +1,6 @@
 import { mutation } from 'gql-query-builder';
 
-interface AddMemberArgs {
+export interface AddMemberArgs {
   email: string;
   firstName: string;
   isAdmin: boolean;

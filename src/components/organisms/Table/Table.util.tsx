@@ -1,6 +1,69 @@
+import { State } from 'easy-peasy';
+import { matchSorter } from 'match-sorter';
+
 import { QuestionCategory, QuestionType } from '@constants';
 import { cx } from '@util/util';
-import { PaginationValue, Row, SortDirection } from './Table.types';
+import {
+  TableColumn,
+  TableFilter,
+  TableModel,
+  TablePaginationValue,
+  TableRow
+} from './Table.types';
+
+/**
+ * Returns the title of the TableBannerButton based on the current state of
+ * selectedRowIds.
+ *
+ * @param state Entire table state.
+ */
+export const getBannerButtonTitle = (state: State<TableModel>): string => {
+  const { filteredRows, rows, selectedRowIds } = state;
+  const numMembers: number = rows.length;
+  const numFilteredMembers: number = filteredRows.length;
+
+  const isAllSelected: boolean =
+    !!selectedRowIds.length && selectedRowIds.length === filteredRows.length;
+
+  if (isAllSelected) return 'Clear Selection';
+  if (numMembers === numFilteredMembers) {
+    return `Select All ${numMembers} Rows in Database`;
+  }
+
+  return `Select All ${numFilteredMembers} Filtered Rows`;
+};
+
+/**
+ * Returns the appropriate Table banner message based on the current state of
+ * selectedRowIds.
+ *
+ * @param state Entire table state.
+ */
+export const getBannerMessage = (state: State<TableModel>): string => {
+  const { filteredRows, range, rows, selectedRowIds } = state;
+
+  const numTotalRows = rows.length;
+  const numFilteredRows = filteredRows.length;
+  const numSelectedRows = selectedRowIds.length;
+
+  if (numSelectedRows === numTotalRows) {
+    return `All ${numTotalRows} rows are selected.`;
+  }
+
+  if (numSelectedRows === numFilteredRows) {
+    return `All ${numFilteredRows} filtered rows are selected.`;
+  }
+
+  if (
+    filteredRows
+      .slice(range[0], range[1])
+      .every(({ id }) => selectedRowIds.includes(id))
+  ) {
+    return `All 50 rows on this page are selected.`;
+  }
+
+  return null;
+};
 
 /**
  * RETURNS an array of pagination values inserting ellipses at the correct
@@ -14,7 +77,7 @@ import { PaginationValue, Row, SortDirection } from './Table.types';
 export const getPaginationValues = (
   arr: number[],
   currIndex: number
-): PaginationValue[] => {
+): TablePaginationValue[] => {
   const { length: initialLength } = arr;
   if (initialLength <= 7) return arr;
 
@@ -67,45 +130,57 @@ export const getTableCellClass = ({
   const isDuesStatus = category === 'DUES_STATUS';
 
   return cx('', {
-    'c-table-cell--lg': ['LONG_TEXT'].includes(type),
-    'c-table-cell--md':
+    'o-table-cell--lg': ['LONG_TEXT'].includes(type),
+    'o-table-cell--md':
       !isDuesStatus && ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
-    'c-table-cell--sm': !type || ['SHORT_TEXT', 'CUSTOM'].includes(type),
-    'c-table-cell--xs': isDuesStatus
+    'o-table-cell--sm': !type || ['SHORT_TEXT', 'CUSTOM'].includes(type),
+    'o-table-cell--xs': isDuesStatus
   });
 };
 
+interface RunFiltersArgs {
+  filters?: Record<string, TableFilter>;
+  searchString?: string;
+  state: State<TableModel>;
+}
+
 /**
- * Sorts the given data by the column ID, either in an ASC or DESC fashion. All
- * data is formatted as a CSV string, so we can do a simple equality check,
- * instead of having to worry about arrays.
- *
- * @param columnId The column's ID of the value needed in the row.
- * @param data Data to be sorted.
- * @param direction ASC or DESC
+ * Returns the filtered Table rows based on the active filters as well as
+ * the Table search string.
  */
-export const sortByColumn = (
-  columnId: string,
-  data: Row[],
-  direction: SortDirection
-): Row[] => {
-  return data.sort((a: Row, b: Row) => {
-    const aValue = a[columnId]?.toLowerCase();
-    const bValue = b[columnId]?.toLowerCase();
+export const runFilters = ({
+  filters,
+  searchString,
+  state
+}: RunFiltersArgs) => {
+  const rows: TableRow[] = [...state.rows];
 
-    if (!aValue?.length) return 1;
-    if (!bValue?.length) return -1;
+  filters = filters ?? state.filters;
+  searchString = searchString ?? state.searchString;
 
-    if (aValue < bValue) {
-      if (direction === 'ASC') return -1;
-      if (direction === 'DESC') return 1;
-    }
+  const filteredRows: TableRow[] = rows?.filter((row) => {
+    return Object.values(filters)?.every((tableFilter: TableFilter) => {
+      return tableFilter(row);
+    });
+  });
 
-    if (bValue < aValue) {
-      if (direction === 'ASC') return 1;
-      if (direction === 'DESC') return -1;
-    }
+  if (!searchString) return filteredRows;
 
-    return 0;
+  const columns: TableColumn[] = [...state.columns];
+
+  const firstNameColumnId: string = columns.find(({ category }) => {
+    return category === 'FIRST_NAME';
+  })?.id;
+
+  const lastNameColumnId: string = columns.find(({ category }) => {
+    return category === 'LAST_NAME';
+  })?.id;
+
+  return matchSorter(filteredRows, searchString, {
+    keys: [
+      ...[...state.columns].map(({ id }) => id),
+      (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
+    ],
+    threshold: matchSorter.rankings.ACRONYM
   });
 };

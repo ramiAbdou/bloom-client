@@ -1,19 +1,20 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import MainHeader from '@containers/Main/MainHeader';
-import { useStoreState } from '@store/Store';
+import EventsPast from './EventsPast';
+import EventsUpcoming from './EventsUpcoming';
+import IndividualEvent from './IndividualEvent/IndividualEvent';
 
 const Events: React.FC = () => {
-  const duesStatus = useStoreState(({ db }) => db.member?.duesStatus);
-  const isUserActive = duesStatus === 'Active';
-
-  if (!isUserActive) return <Redirect to="directory" />;
+  const { url } = useRouteMatch();
 
   return (
-    <>
-      <MainHeader title="Events" />
-    </>
+    <Switch>
+      <Route exact component={EventsUpcoming} path={`${url}/upcoming`} />
+      <Route exact component={EventsPast} path={`${url}/past`} />
+      <Route exact component={IndividualEvent} path={`${url}/:eventId`} />
+      <Redirect to={`${url}/upcoming`} />
+    </Switch>
   );
 };
 

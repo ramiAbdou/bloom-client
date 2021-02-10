@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { ShowProps } from '@constants';
 import { takeFirst } from '@util/util';
 
-interface SeparatorProps {
+interface SeparatorProps extends ShowProps {
   margin?: number; // Refers only to the vertical margin.
   marginBottom?: number;
   marginTop?: number;
@@ -17,8 +18,11 @@ const Separator: React.FC<SeparatorProps> = ({
   margin,
   marginBottom: mBottom,
   marginTop: mTop,
-  noMargin
+  noMargin,
+  show
 }) => {
+  if (show === false) return null;
+
   const marginTop = takeFirst([
     [noMargin, 0],
     [margin !== undefined, margin],

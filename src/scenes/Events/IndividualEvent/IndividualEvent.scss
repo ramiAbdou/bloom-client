@@ -1,0 +1,160 @@
+$PREF: 's-events-individual';
+
+// ## INDIVIDUAL EVENT PUBLIC
+
+.#{$PREF}--public {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1140px;
+  width: 100%;
+
+  @include D { margin-top: $xl; }
+
+  > .#{$PREF}-header {
+    @extend .shadow--1;
+
+    @include D { border-radius: $sm; }
+  }
+  
+
+  > .#{$PREF}-grid:last-child { @include D { padding: $md 0; } }
+}
+
+// ## INDIVIDUAL EVENT TABLE
+
+.#{$PREF}-table-ctr { padding: $md; }
+
+// ## INDIVIDUAL EVENT GRID
+
+.#{$PREF}-grid {
+  column-gap: $md;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding: $md;
+
+  @include LTE(1300) { display: block; }
+  @include T { display: grid; }
+  @include LTE(900) { display: block; }
+
+  > *:first-child { grid-column-end: span 7; }
+  > *:last-child { grid-column-end: span 5; }
+}
+
+// ## INDIVIDUAL EVENT INSIGHTS
+
+.#{$PREF}-insights {
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 0;
+  max-width: 100%;
+  padding: $md $md 0 $md;
+
+  > div.t-row {
+    @include LTE(700) {
+      flex-direction: column;
+
+      > .t-card--analytics { margin-right: 0; width: 100%; }
+      > .t-card--analytics:not(:last-child) { margin-bottom: $sm; width: 100%; }
+    }
+  }
+}
+
+// ## INDIVIDUAL EVENT HEADER
+
+.#{$PREF}-header {
+  @extend .#{$PREF}-grid;
+
+  background-color: white;
+  padding: $md;
+}
+
+// ## INDIVIDUAL EVENT HEADER CONTENT - Contains basic information such as
+// date, title, and actions for the event.
+
+.#{$PREF}-header-content {
+  @extend .flex-col;
+
+  height: 100%;
+
+  > div:first-child {
+    margin-bottom: $md;
+    margin-top: auto;
+
+    @include LTE(1300) { margin-top: $md; }
+    @include T { margin-top: auto; }
+    @include LTE(900) { margin-top: $md; }
+  }
+
+  > div:first-child > h1 { margin-bottom: $xxs; }
+  > div:first-child > .meta { margin-bottom: $ss; }
+  > div:first-child > .c-tag-number { margin-top: $ss; }
+  > div:first-child > .flex-ac { margin-bottom: $md; }
+
+  > .t-action-ctr { margin-top: auto; }
+}
+
+.#{$PREF}-header-date {
+  margin-bottom: $md;
+
+  > h4:first-child { margin-bottom: $xxs; }
+  > h4:last-child { color: $primary; }
+}
+
+// // ## INDIVIDUAL EVENT CARD - Refers to the about card and the guest list
+// // card.
+
+.#{$PREF}-card {
+  height: fit-content;
+
+  &:not(:last-child) {
+    @include LTE(1300) { margin-bottom: $md; }
+    @include T { margin-bottom: initial; }
+    @include LTE(900) { margin-bottom: $md; }
+  }
+
+  > .t-loading-header:first-child { margin-bottom: $sm; }
+  > div:last-child { max-height: $xxl * 4; overflow: scroll; }
+  > .o-list { grid-template-columns: initial; row-gap: $xs; }
+}
+
+// // ## INDIVIDUAL EVENT GUEST - In the guest list.
+
+.#{$PREF}-member {
+  @extend .flex-ac;
+
+  border-radius: $xs;
+  justify-content: flex-start;
+  padding: $xs $xxs;
+  transition: background-color 300ms;
+  width: 100%;
+
+  &:not(&--disabled) { @include PRIMARY_HOVER; }
+
+  > *:first-child { margin-right: $ss; }
+}
+
+button.#{$PREF}-member--disabled {
+  cursor: default;
+  transform: none;
+
+  @include HOVER { opacity: 1; }
+}
+
+// // ## INDIVIDUAL EVENT ANALYTICS
+
+.#{$PREF}-analytics { padding: $md; }
+.#{$PREF}-analytics-row {
+  @include LTE(1300) {
+    display: block;
+
+    > div { width: 100%; }
+    > div:not(:last-child) { margin-bottom: $sm; }
+  }
+  @include GTE(1301) {
+    display: flex;
+
+    > div:only-child { width: 100%; }
+    > div:not(:only-child) { width: 50%; }
+    > div:not(:only-child):first-child { margin-right: $sm; }
+  }
+}

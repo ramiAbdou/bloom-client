@@ -1,48 +1,45 @@
 import React from 'react';
 
 import { LoadingProps } from '@constants';
-import { MainContent, MainHeader } from '@containers/Main';
+import MainContent from '@containers/Main/MainContent';
+import MainHeader from '@containers/Main/MainHeader';
 import useQuery from '@hooks/useQuery';
-import { ICommunity } from '@store/entities';
-import { Schema } from '@store/schema';
+import ListStore from '@organisms/List/List.store';
+import ListSearchBar from '@organisms/List/ListSearchBar';
+import { ICommunity } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { GET_DIRECTORY } from './Directory.gql';
-import DirectoryStore from './Directory.store';
-import DirectoryCardContainer from './DirectoryCardContainer';
-import DirectoryHeaderSearchBar from './DirectorySearchBar';
+import DirectoryCardList from './DirectoryCardList';
 
 const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const numMembers = DirectoryStore.useStoreState((store) => store.numMembers);
+  const numResults = ListStore.useStoreState((store) => store.numResults);
 
   return (
     <MainHeader
-      className="s-directory-header"
-      headerTag={`${numMembers} Members`}
+      headerTag={`${numResults} Members`}
       loading={loading}
       title="Directory"
     >
-      <DirectoryHeaderSearchBar />
+      <ListSearchBar />
     </MainHeader>
   );
 };
 
-const DirectoryContent: React.FC = () => {
+const Directory: React.FC = () => {
   const { loading } = useQuery<ICommunity>({
     name: 'getDirectory',
     query: GET_DIRECTORY,
-    schema: Schema.COMMUNITY
+    schema: [Schema.MEMBER]
   });
 
   return (
-    <MainContent Header={DirectoryHeader} loading={loading}>
-      <DirectoryCardContainer />
-    </MainContent>
+    <ListStore.Provider>
+      <MainContent>
+        <DirectoryHeader loading={loading} />
+        {!loading && <DirectoryCardList />}
+      </MainContent>
+    </ListStore.Provider>
   );
 };
-
-const Directory: React.FC = () => (
-  <DirectoryStore.Provider>
-    <DirectoryContent />
-  </DirectoryStore.Provider>
-);
 
 export default Directory;

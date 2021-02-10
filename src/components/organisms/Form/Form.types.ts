@@ -1,24 +1,22 @@
-import { ActionCreator } from 'easy-peasy';
+import { ActionCreator, State } from 'easy-peasy';
 
 import {
-  ChildrenProps,
   ClassNameProps,
-  IdProps,
   QuestionCategory,
   QuestionType,
-  TitleProps
+  ShowProps,
+  ValueProps
 } from '@constants';
-import { RadioOptionProps } from '../../molecules/Radio/Radio.types';
+import { ToastOptions } from '@organisms/Toast/Toast.types';
+import { DbModel } from '@store/Db/Db.types';
 
 export type FormQuestion = {
   category?: QuestionCategory;
-
   description?: string;
 
   // Typically, this is only populated if we are fetching the form questions
   // from the backend, in which case the question has an entity ID.
   id?: string;
-
   required?: boolean;
 
   // Only populated if the type is MUTLIPLE CHOICE or MULTIPLE SELECT.
@@ -26,98 +24,51 @@ export type FormQuestion = {
 
   // These are the only 2 required fields for every question.
   title: string;
-
   type: QuestionType;
 };
 
 export type FormValidate = 'IS_EMAIL' | 'IS_URL';
 
-export interface FormItemData extends Partial<FormQuestion> {
-  // Only used in MULTIPLE_CHOICE. True if radio should use card format instead
-  // of regular radio buttons.
-  card?: boolean;
-
-  // Only populated if the type is MUTLIPLE CHOICE or MULTIPLE SELECT.
-  cardOptions?: RadioOptionProps[];
-
-  errorMessage?: string;
-
-  initialValue?: any;
-
-  // The page that a form item belongs to.
-  pageId?: string;
-
-  placeholder?: string;
-
-  // Only used in MULTIPLE_SELECT. True if checkbox shoudln't have an attribute
-  // tag associated with it.
-  plain?: boolean;
-
+export interface FormItemData
+  extends ClassNameProps,
+    Partial<FormQuestion>,
+    ShowProps {
+  error?: string;
+  metadata?: any;
+  questionId?: string;
   value?: any;
-
   validate?: FormValidate;
 }
 
-export type BaseItemProps = Pick<
-  FormItemData,
-  'category' | 'id' | 'required' | 'title'
->;
-
-export interface OptionItemProps
-  extends BaseItemProps,
-    Pick<FormItemData, 'options' | 'plain'> {}
-
-export interface TextItemProps
-  extends BaseItemProps,
-    Pick<FormItemData, 'placeholder'> {}
-
-export interface UseItemBodyProps
-  extends ChildrenProps,
-    Pick<
-      FormItemData,
-      | 'card'
-      | 'cardOptions'
-      | 'category'
-      | 'id'
-      | 'options'
-      | 'placeholder'
-      | 'plain'
-      | 'required'
-      | 'title'
-      | 'type'
-    > {}
+export interface SetValueArgs extends ValueProps {
+  key: string;
+}
 
 // FORM ITEM PROPS - Extracts the necessary fields from the FormItemData,
 // the rest are either used for state or for something else in the store.
 
-export interface FormItemProps
-  extends UseItemBodyProps,
-    ChildrenProps,
-    Pick<FormItemData, 'description' | 'pageId' | 'validate' | 'value'> {}
-
-export interface FormNavigationPageProps extends IdProps, TitleProps {
-  description?: string;
-  disabled?: boolean;
-  disableValidation?: boolean;
-}
-
 export interface FormOptions {
   disableValidation?: boolean;
-  multiPage?: boolean;
 }
 
-export interface FormProps extends ChildrenProps, ClassNameProps {
+export interface FormProps extends ClassNameProps, ShowProps {
   questions?: FormItemData[];
   options?: FormOptions;
-  pages?: FormNavigationPageProps[];
   onSubmit?: OnFormSubmit;
   onSubmitDeps?: any[];
+  spacing?: 'md' | 'lg';
 }
 
 export type OnFormSubmitArgs = {
-  items: FormItemData[];
-  goToNextPage: ActionCreator;
-  setErrorMessage: ActionCreator<string>;
+  closeModal?: ActionCreator;
+  closePanel?: ActionCreator;
+  db?: State<DbModel>;
+  goForward?: ActionCreator;
+  items: Record<string, FormItemData>;
+  setError: ActionCreator<string>;
+  setStoryValue: ActionCreator<SetValueArgs>;
+  showToast?: ActionCreator<ToastOptions>;
+  storyItems?: Record<string, FormItemData>;
 };
 
 export type OnFormSubmit = (args: OnFormSubmitArgs) => Promise<void>;

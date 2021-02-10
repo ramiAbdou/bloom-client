@@ -1,4 +1,4 @@
-$PREF: 'c-table';
+$PREF: 'o-table';
 
 // ## TABLE CONTAINER
 
@@ -44,27 +44,12 @@ $PREF: 'c-table';
 
 .#{$PREF}-select { background-color: inherit; margin: 0 $lg 0 0; }
 
-// ## SELECTED BANNER
-
-.#{$PREF}-banner {
-  @extend .flex-acc;
-  @extend .shadow--1;
-
-  background-color: white;
-  border-radius: $xs;
-  margin-bottom: $xs;
-  padding: $xs 0;
-}
-
-.#{$PREF}-banner > p { margin-right: $sm; }
-.#{$PREF}-banner > p > span { @extend .body--bold; }
-
-// ## COLUMN PICKER
+// ## COLUMN PANEL
 
 // Added a div before the name to make it take higher precedence.
-div.#{$PREF}-col-picker { padding: $sm; }
-.#{$PREF}-col-picker > form { margin-bottom: $sm; }
-.#{$PREF}-col-picker > button {
+div.#{$PREF}-col-panel { padding: $sm; }
+.#{$PREF}-col-panel > form { margin-bottom: $sm; }
+.#{$PREF}-col-panel > button {
   @extend .flex-ac;
 
   justify-content: left;
@@ -74,14 +59,74 @@ div.#{$PREF}-col-picker { padding: $sm; }
   @include PRIMARY_HOVER;
 }
 
-.#{$PREF}-col-picker > button:first-of-type { margin-bottom: $xs; }
+.#{$PREF}-col-panel > button:first-of-type { margin-bottom: $xs; }
 
-.#{$PREF}-col-picker > button > svg { margin-right: $xs; }
+.#{$PREF}-col-panel > button > svg { margin-right: $xs; }
 
-.#{$PREF}-col-picker-button--active > svg,
-.#{$PREF}-col-picker-button--active > p { color: $primary; }
+.#{$PREF}-col-panel-button--active > svg,
+.#{$PREF}-col-panel-button--active > p { color: $primary; }
 
-.#{$PREF}-col-picker > form > .o-form-item {
+.#{$PREF}-col-panel > form > .o-form-item {
   margin-bottom: $sm;
   margin-top: 0;
+}
+
+// ## TABLE QUICK FILTER
+
+.#{$PREF}-quick-filter {
+  @extend .flex-ac;
+  @extend .body--sm;
+
+  background-color: rgba($color: $primary-hex, $alpha: 0.05);
+  border: 1px rgba($color: $primary-hex, $alpha: 0.2) solid;
+  border-radius: $sm;
+  margin-right: $xxs;
+  padding: $xxs 6px;
+  text-align: left;
+  width: max-content;
+
+  &--active { background-color: $primary; color: white; }
+}
+
+// ## TABLE ACTION
+
+.#{$PREF}-action {
+  background-color: $gray-5;
+  border-radius: $xxs;
+  height: $lg;
+  width: $lg;
+
+  // !important overrides the normal .c-btn styling for hover state.
+
+  @include HOVER { opacity: 1 !important; }
+
+  &--demote { &::before { margin-left: -$xxs; } }
+  &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
+  &--delete > svg { color: $red; }
+  &--disabled > svg { color: $gray-3; }
+
+  > svg { @extend .react-icon--lg; }
+}
+
+// For all buttons that are not the Promote to Admin button, we set the tooltip
+// to be to the right side of the icon.
+:not(a) > .#{$PREF}-action { &:last-of-type { @extend .tooltip--right; } }
+
+// ## TABLE FILTER
+
+.#{$PREF}-filter-row {
+  margin-bottom: $sm;
+
+  // Join operator: WHERE, AND, OR.
+  > *:first-child { flex: 1; }
+
+  // Contains main dropdowns/input for filter.
+  > *:nth-child(2) {
+    flex: 4;
+
+    > *:nth-child(1) { max-width: 200px; min-width: 200px; }
+    > *:nth-child(2) { max-width: 100px; min-width: 100px; }
+    > *:nth-child(3) { max-width: 200px; min-width: 200px; }
+    > button:nth-child(4) { > svg { color: $red; } }
+  }
 }

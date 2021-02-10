@@ -7,7 +7,12 @@ export interface CreateLifetimePaymentArgs {
 }
 
 export const CREATE_LIFETIME_PAYMENT = mutation({
-  fields: ['id', 'autoRenew', 'duesStatus', { type: ['id', 'name'] }],
+  fields: [
+    'amount',
+    'createdAt',
+    'id',
+    { member: ['id', 'autoRenew', 'isDuesActive', { type: ['id', 'name'] }] }
+  ],
   operation: 'createLifetimePayment',
   variables: { memberTypeId: { required: true } }
 }).query;
@@ -22,12 +27,17 @@ export interface CreateSubscriptionArgs {
 
 export interface CreateSubscriptionResult {
   id: string;
-  duesStatus: string;
+  isDuesActive: boolean;
   type: { id: string; name: string };
 }
 
 export const CREATE_SUBSCRIPTION = mutation({
-  fields: ['id', 'autoRenew', 'duesStatus', { type: ['id', 'name'] }],
+  fields: [
+    'amount',
+    'createdAt',
+    'id',
+    { member: ['id', 'autoRenew', 'isDuesActive', { type: ['id', 'name'] }] }
+  ],
   operation: 'createSubscription',
   variables: {
     autoRenew: { required: false, type: 'Boolean' },
@@ -36,6 +46,15 @@ export const CREATE_SUBSCRIPTION = mutation({
 }).query;
 
 // ## GET CHANGE PREVIEW
+
+export interface GetChangePreviewArgs {
+  memberTypeId: string;
+}
+
+export interface GetChangePreviewResult {
+  amount: number;
+  prorationDate: number;
+}
 
 export const GET_CHANGE_PREVIEW = query({
   fields: ['amount', 'prorationDate'],
@@ -46,11 +65,7 @@ export const GET_CHANGE_PREVIEW = query({
 // ## GET PAYMENT INTEGRATIONS
 
 export const GET_PAYMENT_INTEGRATIONS = query({
-  fields: [
-    'id',
-    { integrations: ['id', 'stripeAccountId'] },
-    { types: ['id', 'amount', 'isFree', 'name', 'recurrence'] }
-  ],
+  fields: ['id', 'stripeAccountId', { community: ['id'] }],
   operation: 'getIntegrations'
 }).query;
 

@@ -1,32 +1,50 @@
 import React from 'react';
 
-import { ChildrenProps, ClassNameProps } from '@constants';
+import { ClassNameProps, ShowProps } from '@constants';
 import LoadingHeader, {
   LoadingHeaderProps
-} from '@containers/Loading/LoadingHeader';
+} from '@containers/LoadingHeader/LoadingHeader';
+import Show from '@containers/Show';
 import { cx } from '@util/util';
 
 interface CardProps
-  extends ChildrenProps,
-    ClassNameProps,
-    Pick<LoadingHeaderProps, 'loading' | 'title'> {
+  extends ClassNameProps,
+    Pick<LoadingHeaderProps, 'headerTag' | 'loading' | 'title'>,
+    ShowProps {
+  noPadding?: boolean;
   onClick?: VoidFunction;
 }
 
 const Card: React.FC<CardProps> = ({
   children,
   className,
+  headerTag,
   loading,
+  noPadding,
   onClick,
+  show,
   title
 }) => {
-  const css = cx('t-misc-card', { [className]: className });
+  const css = cx('t-card', {
+    [className]: className,
+    't-card--clickable': !!onClick,
+    't-card--no-padding': noPadding
+  });
 
   return (
-    <div className={css} onClick={onClick}>
-      {title && <LoadingHeader h3 loading={loading} title={title} />}
-      {!loading && children}
-    </div>
+    <Show show={show}>
+      <div className={css} onClick={onClick}>
+        <LoadingHeader
+          h3
+          headerTag={headerTag}
+          loading={loading}
+          show={!!title}
+          title={title}
+        />
+
+        {!loading && children}
+      </div>
+    </Show>
   );
 };
 

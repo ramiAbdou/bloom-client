@@ -1,0 +1,18 @@
+$PREF: 'm-profile-picture';
+
+// ## PROFILE PICTURE CONTAINER - Can either be an img tag or if there is
+// no URL provided, an h3 will be rendered.
+
+.#{$PREF} {
+  &--circle { border-radius: 50%; }
+  
+  > * { @extend .fill; border-radius: inherit; }
+  > img { object-fit: cover; }
+
+  > h3 {
+    @extend .flex-acc;
+  
+    background-color: $primary;
+    color: white;
+  }
+}

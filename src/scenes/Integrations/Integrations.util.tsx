@@ -1,11 +1,11 @@
 import URLBuilder from 'util/URLBuilder';
 
 import { APP, isProduction, UrlNameProps } from '@constants';
-import { IIntegrations } from '../../core/store/entities';
+import { IIntegrations } from '@store/Db/entities';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';
 import zapier from './images/zapier.png';
-import { IntegrationCardProps } from './IntegrationsCard/Button';
+import { IntegrationsDetailsData } from './Integrations.types';
 
 const MAILCHIMP_BASE_URI = isProduction
   ? APP.SERVER_URL
@@ -31,8 +31,8 @@ export const buildIntegrationData = ({
   isMailchimpAuthenticated,
   mailchimpListId,
   stripeAccountId
-}: BuildIntegrationDataProps): IntegrationCardProps[] => {
-  const stripeCardProps: IntegrationCardProps[] = hasPaidMembership
+}: BuildIntegrationDataProps): IntegrationsDetailsData[] => {
+  const stripeCardProps: IntegrationsDetailsData[] = hasPaidMembership
     ? [
         {
           connected: !!stripeAccountId,

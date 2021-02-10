@@ -1,38 +1,40 @@
 import validator from 'validator';
 
-import { FormItemData } from './Form.types';
-
-interface GetFormItemArgs
-  extends Pick<FormItemData, 'category' | 'id' | 'title'> {
-  items: FormItemData[];
-}
+import { FormItemData } from '@organisms/Form/Form.types';
 
 /**
- * Returns the form item based on the query arguments (ie: category).
+ * Returns the error message from the form item.
+ *
+ * @example getError({ id: '1', required: true, value: null }) =>
+ *  "Value cannot be empty."
  */
-export const getFormItem = ({
-  category,
-  id,
-  items,
-  title
-}: GetFormItemArgs) => {
-  if (id) return items.find((item) => item.id === id);
-  if (title) return items.find((item) => item.title === title);
-  return items.find((item) => item.category === category);
+export const getError = (item: FormItemData): string => {
+  const { required, value, validate } = item;
+  if (required && !value) return 'Value cannot be empty.';
+
+  if (validate === 'IS_URL' && !validator.isURL(value)) {
+    return 'Value must be a URL.';
+  }
+
+  return null;
 };
 
 /**
- * Returns the form item index based on the query arguments (ie: category).
+ * Returns the unique identifier of the Form item.
  */
-export const getFormItemIndex = ({
+export const getFormItemKey = ({
   category,
   id,
-  items,
+  metadata,
+  questionId,
   title
-}: GetFormItemArgs) => {
-  if (id) return items.findIndex((item) => item.id === id);
-  if (title) return items.findIndex((item) => item.title === title);
-  return items.findIndex((item) => item.category === category);
+}: FormItemData) => {
+  if (questionId) return questionId;
+  if (id) return id;
+  if (category && metadata) return `${metadata.toString()}-${category}`;
+  if (category) return category;
+  if (title) return title;
+  return null;
 };
 
 /**
@@ -55,35 +57,4 @@ export const parseValue = (value: any) => {
   }
 
   return isArray ? value : [value];
-};
-
-/**
- * Returns the validated form item including the errorMessage in the
- * FormItemData. If the item is validated, the item doesn't change.
- *
- * @example validateItem({ id: '1', required: true, value: null }) => (
- *  {
- *    errorMessage: 'Value cannot be empty.',
- *    id: '1',
- *    required: true,
- *    value: null
- * })
- */
-export const validateItem = ({
-  errorMessage: _,
-  ...item
-}: FormItemData): FormItemData => {
-  const { required, value, validate, type } = item;
-
-  if (required && !value) {
-    return { ...item, errorMessage: 'Value cannot be empty.' };
-  }
-
-  if (!['SHORT_TEXT', 'LONG_TEXT'].includes(type)) return item;
-
-  if (validate === 'IS_URL' && value && !validator.isURL(value)) {
-    return { ...item, errorMessage: 'Value must be a URL.' };
-  }
-
-  return item;
 };

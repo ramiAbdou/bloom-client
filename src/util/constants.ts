@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export const isProduction = process.env.NODE_ENV === 'production';
 
 /**
@@ -20,41 +18,52 @@ export const APP = {
  * GENERAL PROPS - General component props.
  */
 
-export type ChildrenProps = { children?: ReactNode };
 export type ClassNameProps = { className?: string };
-export type UrlNameProps = { urlName?: string };
 export type IdProps = { id?: string };
-export type IsActiveProps = { isActive?: boolean };
 export type LoadingProps = { loading?: boolean };
 export type OnClickProps = { onClick?: VoidFunction };
-export type MessageProps = { message?: string };
+export type ShowProps = { show?: boolean };
 export type StyleProps = { style?: React.CSSProperties };
 export type TitleProps = { title?: string };
+export type UrlNameProps = { urlName?: string };
 export type ValueProps = { value?: any };
+
+export interface BaseProps extends ClassNameProps, ShowProps, StyleProps {}
 
 /**
  * SYSTEM TYPES - Includes modal, panel and more.
  */
 
+export enum CookieType {
+  LOGIN_ERROR = 'LOGIN_ERROR'
+}
+
 export enum ModalType {
   ADD_ADMINS = 'ADD_ADMINS',
   ADD_MEMBERS = 'ADD_MEMBERS',
+  APPLICANT = 'APPLICANT',
   CHANGE_MEMBERSHIP = 'CHANGE_MEMBERSHIP',
+  CHECK_IN = 'CHECK_IN',
+  CREATE_EVENT = 'CREATE_EVENT',
   DELETE_ADMINS = 'DELETE_ADMINS',
   DELETE_MEMBERS = 'DELETE_MEMBERS',
-  DEMOTE_TO_MEMBER = 'DEMOTE_TO_MEMBER',
-  DIRECTORY_CARD = 'DIRECTORY_CARD',
+  DEMOTE_MEMBERS = 'DEMOTE_MEMBERS',
   EDIT_MEMBERSHIP_INFORMATION = 'EDIT_MEMBERSHIP_INFORMATION',
   EDIT_PERSONAL_INFORMATION = 'EDIT_PERSONAL_INFORMATION',
   EDIT_SOCIAL_MEDIA = 'EDIT_SOCIAL_MEDIA',
+  INTEGRATIONS_DETAILS = 'INTEGRATIONS_DETAILS',
   MAILCHIMP_FLOW = 'MAILCHIMP_FLOW',
+  MEMBER_PROFILE = 'MEMBER_PROFILE',
   PAY_DUES = 'PAY_DUES',
-  PROMOTE_TO_ADMIN = 'PROMOTE_TO_ADMIN',
+  PROMOTE_MEMBERS = 'PROMOTE_MEMBERS',
   UPDATE_PAYMENT_METHOD = 'UPDATE_PAYMENT_METHOD'
 }
 
 export enum PanelType {
-  PROFILE = 'PROFILE'
+  ADD_RECORDING_LINK = 'ADD_RECORDING_LINK',
+  FILTER_TABLE = 'FILTER_TABLE',
+  PROFILE = 'PROFILE',
+  RENAME_TABLE_COLUMN = 'RENAME_TABLE_COLUMN'
 }
 
 export type RouteType =
@@ -70,17 +79,8 @@ export type RouteType =
   | 'profile';
 
 /**
- * FORMS - Handling of all form-related items including custom Enums.
+ * MISC - Other miscelleaneous types.
  */
-
-export type QuestionType =
-  | 'CUSTOM'
-  | 'IMAGE'
-  | 'LONG_TEXT'
-  | 'MULTIPLE_CHOICE'
-  | 'MULTIPLE_SELECT'
-  | 'SHORT_TEXT'
-  | 'TOGGLE';
 
 export type QuestionCategory =
   | 'CREDIT_OR_DEBIT_CARD'
@@ -92,11 +92,25 @@ export type QuestionCategory =
   | 'LAST_NAME'
   | 'MEMBERSHIP_TYPE';
 
-/**
- * MISC - Other miscelleaneous types.
- */
+export type QuestionType =
+  | 'COVER_IMAGE'
+  | 'CUSTOM'
+  | 'DATE'
+  | 'IMAGE'
+  | 'LARGE_TITLE'
+  | 'LONG_TEXT'
+  | 'MULTIPLE_CHOICE'
+  | 'MULTIPLE_SELECT'
+  | 'SHORT_TEXT'
+  | 'TIME'
+  | 'TOGGLE'
+  | 'TRUE_FALSE';
 
-export interface TimeSeriesResult {
+export interface PopulateArgs {
+  populate?: string[];
+}
+
+export interface TimeSeriesData {
   name: string;
   value: number;
 }

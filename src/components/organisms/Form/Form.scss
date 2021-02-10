@@ -1,24 +1,18 @@
 $PREF: 'o-form';
 
-// ## FORM ITEM
+// ## FORM
 
-.#{$PREF}-item { margin-bottom: $md; }
+.#{$PREF}--spacing-md {
+  > .#{$PREF}-item,
+  .t-row > .#{$PREF}-item,
+  .#{$PREF}-section > .#{$PREF}-item { margin-bottom: $md; }
+}
 
-// ## FORM IMAGE UPLOAD ITEM 
-
-.#{$PREF}-item--image {
-  > input { display: none; }
-
-  > button {
-    @extend .flex-acc;
-  
-    background-size: cover;
-    border-radius: 50%;
-    height: $xl * 2;
-    width: $xl * 2;
-  }
-
-  > button > svg { @extend .react-icon--xl; color: white; }
+.#{$PREF}--spacing-lg {
+  > .#{$PREF}-item,
+  > .t-row,
+  > .#{$PREF}-section > .#{$PREF}-item,
+  > .#{$PREF}-section > .t-row { margin-bottom: $lg; }
 }
 
 // ## FORM DESCRIPTION
@@ -31,6 +25,7 @@ $PREF: 'o-form';
 }
 
 .#{$PREF}-error { color: $red; margin-top: $xxs; }
+.t-row > .#{$PREF}-item > .#{$PREF}-error { width: max-content; }
 
 // ## FORM LABEL
 
@@ -48,51 +43,186 @@ $PREF: 'o-form';
   &--required > h4::after { color: $red; content: '*'; margin-left: $xxs; }
 }
 
-// ## FORM NAVIGATION
+// ## FORM HEADER
 
-.#{$PREF}-nav-ctr { @extend .flex-acsb; margin-bottom: $md; }
+.#{$PREF}-header {
+  margin-bottom: $md;
 
-.#{$PREF}-nav {
-  background-color: $primary;
-  border-radius: $xs;
-  cursor: pointer;
-  height: $xs;
-  width: -webkit-fill-available;
-
-  &:not(:last-child) { margin-right: $ss; }
-  &--disabled { background-color: $gray-5; cursor: default; }
+  > h1:first-of-type,
+  > h2:first-of-type { margin-bottom: $xs; }
 }
 
-// ## FORM PAGE
+// ## FORM SECTION
 
-.#{$PREF}-page {
-  > div:first-child {
-    > .t-loading-header { margin-bottom: $xs; }
-    > .t-loading-header > h1 { color: $primary; }
-    > p { color: $gray-2; margin-bottom: $md; }
+.#{$PREF}-section {
+  margin-bottom: $lg;
 
-    // Community icon for first page.
-    > img {
-      border: 2px $primary solid;
-      border-radius: $xs;
-      height: $xl;
-      margin-bottom: $xs;
-      padding: 2px;
-      width: $xl;
-    }
-  }
+  > h2:first-of-type { margin-bottom: $md; }
 }
 
 // ## FORM SUBMIT BUTTON
 
 .#{$PREF}-submit {
-  &--continue {
-    margin-top: $lg;
-
-    &:disabled > svg { color: $gray-3; }
-    > svg { color: white; margin-left: $xs; }
-  }
-  
   &--invisible { display: none; }
   &--sticky { bottom: $md; position: sticky; }
 }
+
+// ## FORM COVER IMAGE UPLOAD 
+
+.#{$PREF}-item--cover-image-aspect {
+  border-radius: $xs;
+  overflow: hidden;
+  
+  > *:first-child { border-radius: $xs; }
+  > div:first-child { background-color: $primary-bg; }
+
+  > svg {
+    margin: auto;
+    opacity: 0.15;
+    stroke: $primary;
+    transform: scale(3);
+    width: auto;
+  }
+}
+
+.#{$PREF}-item--cover-image {
+  @extend .flex-col;
+  @extend .#{$PREF}-item--cover-image-aspect;
+
+  background-blend-mode: multiply;
+  background-color: white;
+  background-size: cover;
+  border: 1px $primary dashed;
+  box-sizing: border-box;
+  height: 300px;
+  justify-content: flex-end;
+  padding: $sm;
+  width: 100%;
+
+  @include MT { aspect-ratio: 2; height: initial; }
+
+  > .c-btn--secondary {
+    background-color: white;
+    margin-top: $sm;
+    position: sticky;
+    width: fit-content;
+    z-index: 11;
+  }
+
+  > input { display: none; }
+  ~ .meta { margin-top: $xs; }
+}
+
+// ## FORM IMAGE UPLOAD 
+
+.#{$PREF}-item--image {
+  > input { display: none; }
+
+  > button {
+    @extend .flex-acc;
+  
+    background-size: cover;
+    border-radius: 50%;
+    height: $xl * 2;
+    width: $xl * 2;
+  }
+
+  > svg {
+    margin: auto;
+    opacity: 0.15;
+    stroke: $primary;
+    transform: scale(3);
+    width: auto;
+  }
+
+  > button > svg { @extend .react-icon--xl; color: white; }
+}
+
+// ## FORM LARGE TITLE
+
+.#{$PREF}-item--large-title {
+  border: none;
+  font-size: 24px;
+  font-weight: 700;
+  resize: none;
+  width: 100%;
+
+  &:not(&--error):focus ~ hr { border-bottom: 1px $primary solid; }
+  &--error ~ hr { border-bottom: 1px $red solid; }
+}
+
+// ## FORM DATE PICKER
+
+.#{$PREF}-item--date {
+  > .react-datepicker-wrapper { @extend .c-misc-input; }
+
+  > .react-datepicker-wrapper > *,
+  > .react-datepicker-wrapper > * > * {
+    background-color: inherit;
+    height: 100%;
+    width: inherit;
+  }
+}
+
+// ## REACT DATE PICKER OVERRIDING STYLES
+
+.react-datepicker {
+  @extend .shadow--2;
+
+  border: none !important;
+  border-radius: $xs;
+  padding: $xs;
+}
+
+.react-datepicker__month { margin: 0; }
+
+.react-datepicker__day-names,
+.react-datepicker__week { @extend .flex-acsb; padding: $xxs; }
+
+.react-datepicker__day-names > *:not(:last-child),
+.react-datepicker__week > *:not(:last-child) { margin: 0 $xxs 0 0; }
+
+.react-datepicker__current-month {
+  @extend .body--bold;
+
+  margin-bottom: $xxs;
+  text-align: center;
+}
+
+.react-datepicker__header { background-color: white !important; }
+.react-datepicker__navigation { top: $sm !important; }
+
+.react-datepicker__day,
+.react-datepicker__time-list-item {
+  @extend .meta;
+
+  border-radius: $xxs !important;
+  height: initial !important;
+  outline: none;
+
+  &--disabled { color: $gray-4 !important; }
+  &--selected { background-color: $primary !important; }
+  &--today { font-weight: initial !important; }
+
+  &--keyboard-selected {
+    background-color: initial !important;
+    color: initial !important;
+  }
+}
+
+.react-datepicker__time-list-item {
+  padding: $xs 0 !important;
+  &:not(:last-child) { margin-bottom: $xs; }
+}
+
+/* stylelint-disable */
+.react-datepicker__day,
+.react-datepicker__time-list-item {
+  &:not(&--disabled):not(&--selected):hover {
+    background-color: $primary-bg !important;
+  }
+}
+
+// ## STRIPE ELEMENT OVERRIDING STYLES
+
+.__PrivateStripeElement { width: 100%; }

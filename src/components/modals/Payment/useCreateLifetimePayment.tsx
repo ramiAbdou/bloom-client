@@ -1,7 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { Schema } from '@store/schema';
+import { Schema } from '@store/Db/schema';
 import {
   CREATE_LIFETIME_PAYMENT,
   CreateLifetimePaymentArgs
@@ -18,21 +18,18 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
   const [createSinglePayment] = useMutation<any, CreateLifetimePaymentArgs>({
     name: 'createLifetimePayment',
     query: CREATE_LIFETIME_PAYMENT,
-    schema: Schema.MEMBER
+    schema: Schema.MEMBER_PAYMENT
   });
 
-  const onSubmit = async ({
-    goToNextPage,
-    setErrorMessage
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ goForward, setError }: OnFormSubmitArgs) => {
     const { error } = await createSinglePayment({ memberTypeId });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 
-    goToNextPage();
+    goForward();
     pushToMembership();
   };
 

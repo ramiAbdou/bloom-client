@@ -22,32 +22,55 @@ export const APPLY_FOR_MEMBERSHIP = mutation({
   }
 }).query;
 
+// ## IS EMAIL TAKEN
+
+export interface IsEmailTakenArgs {
+  communityId: string;
+  email: string;
+}
+
+export const IS_EMAIL_TAKEN = query({
+  operation: 'isEmailTaken',
+  variables: { communityId: { required: true }, email: { required: true } }
+}).query;
+
 // ## GET APPLICATION
 
 export const GET_APPLICATION = query({
   fields: [
-    'autoAccept',
+    'description',
     'id',
-    'logoUrl',
-    'name',
-    'primaryColor',
-    'urlName',
-    { application: ['title', 'description'] },
-    { integrations: ['stripeAccountId'] },
+    'title',
     {
-      questions: [
-        'category',
-        'description',
+      community: [
+        'autoAccept',
         'id',
-        'inApplication',
-        'options',
-        'required',
-        'title',
-        'type'
+        'logoUrl',
+        'name',
+        'primaryColor',
+        'urlName',
+        { integrations: ['stripeAccountId'] }
       ]
-    },
-    { types: ['amount', 'id', 'isFree', 'name', 'recurrence'] }
+    }
   ],
   operation: 'getApplication',
   variables: { urlName: { required: true } }
+}).query;
+
+// ## GET APPLICATION QUESTIONS
+
+export const GET_APPLICATION_QUESTIONS = query({
+  fields: [
+    'category',
+    'description',
+    'id',
+    'inApplication',
+    'options',
+    'required',
+    'title',
+    'type',
+    { community: ['id'] }
+  ],
+  operation: 'getQuestions',
+  variables: { urlName: { required: false } }
 }).query;

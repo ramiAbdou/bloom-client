@@ -1,11 +1,6 @@
 $PREF: 's-applicants';
 
-// ## HEADER
-
-.#{$PREF}-header { @extend .flex-acsb; }
-.#{$PREF}-header > div:last-of-type { @extend .flex-ac; }
-
-// ## CARD CONTAINER
+// ## APPLICANTS CARD CONTAINER
 
 .#{$PREF}-card-ctr {
   column-gap: $md;
@@ -13,4 +8,9 @@ $PREF: 's-applicants';
   grid-template-columns: repeat(auto-fill, minmax($xxl * 7.5, 1fr));
   padding: $xxs 0;
   row-gap: $md;
+
+  > .t-card > .t-row:first-child > div > p {
+    color: $gray-2;
+    margin-bottom: $xxs;
+  }
 };

@@ -1,55 +1,66 @@
 import React from 'react';
 
-import Table from './Table.store';
-import { OnRenameColumnProps } from './Table.types';
-import TableBanner from './TableBanner/TableBanner';
-import TableBodyContainer from './TableBodyContainer';
-import TableHeaderContainer from './TableHeaderContainer';
+import Show from '@containers/Show';
+import TableStore from './Table.store';
+import TableBanner from './TableBanner';
+import TableBodyContainer from './TableBody';
+import TableHeaderContainer from './TableHeader';
 import TablePagination from './TablePagination/TablePagination';
-import TablePanel from './TablePanel';
 
-interface TableContent extends OnRenameColumnProps {
+interface TableContentProps {
   emptyMessage?: string;
+  small?: boolean;
 }
 
 const TableContentEmptyMessage: React.FC<
-  Pick<TableContent, 'emptyMessage'>
+  Pick<TableContentProps, 'emptyMessage'>
 > = ({ emptyMessage }) => {
-  if (!emptyMessage) return null;
-
-  return <p>{emptyMessage}</p>;
+  return (
+    <Show show={!!emptyMessage}>
+      <p>{emptyMessage}</p>
+    </Show>
+  );
 };
 
-const TableContent: React.FC<TableContent> = ({
+const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage,
-  onRenameColumn
+  small
 }) => {
-  const emptyMessage = Table.useStoreState(({ data }) => {
-    if (data?.length) return null;
-    return eMessage;
+  const emptyMessage = TableStore.useStoreState(({ rows }) => {
+    return !rows?.length ? eMessage : null;
   });
 
-  const isAllPageSelected = Table.useStoreState(
-    (store) => store.isAllPageSelected
+  const show: boolean = TableStore.useStoreState(({ rows, options }) => {
+    return !options.hideIfEmpty || !!rows?.length;
+  });
+
+  const isAllPageSelected: boolean = TableStore.useStoreState(
+    ({ filteredRows, range, selectedRowIds }) => {
+      return (
+        !!selectedRowIds.length &&
+        filteredRows
+          .slice(range[0], range[1])
+          .every(({ id: rowId }) => selectedRowIds.includes(rowId))
+      );
+    }
   );
 
   return (
-    <>
+    <Show show={show}>
       {isAllPageSelected && <TableBanner />}
 
-      {!emptyMessage && (
-        <div id="c-table-ctr">
-          <table className="c-table">
+      <Show show={!emptyMessage}>
+        <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
+          <table className="o-table">
             <TableHeaderContainer />
             <TableBodyContainer />
           </table>
         </div>
-      )}
+      </Show>
 
       {!emptyMessage && <TablePagination />}
       <TableContentEmptyMessage emptyMessage={emptyMessage} />
-      <TablePanel onRenameColumn={onRenameColumn} />
-    </>
+    </Show>
   );
 };
 

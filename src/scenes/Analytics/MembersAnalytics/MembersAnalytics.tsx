@@ -1,23 +1,13 @@
 import React from 'react';
 
-import MembersAnalyticsActiveMembersCard from './ActiveMembersCard';
-import MembersAnalyticsActiveMembersChart from './ActiveMembersChart';
-import MembersAnalyticsPlayground from './Playground';
-import MembersAnalyticsTotalMembersCard from './TotalMembersCard';
-import MembersAnalyticsTotalMembersChart from './TotalMembersChart';
+import MembersAnalyticsCharts from './MembersAnalyticsCharts';
+import MembersAnalyticsOverview from './MembersAnalyticsOverview';
+import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';
 
 const MembersAnalytics: React.FC = () => (
-  <div className="s-analytics-members">
-    <div>
-      <MembersAnalyticsTotalMembersCard />
-      <MembersAnalyticsActiveMembersCard />
-    </div>
-
-    <div>
-      <MembersAnalyticsTotalMembersChart />
-      <MembersAnalyticsActiveMembersChart />
-    </div>
-
+  <div className="s-analytics-page s-analytics-members">
+    <MembersAnalyticsOverview />
+    <MembersAnalyticsCharts />
     <MembersAnalyticsPlayground />
   </div>
 );

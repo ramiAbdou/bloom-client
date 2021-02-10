@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Button from '@atoms/Button';
-import { HeaderTag } from '@atoms/Tags';
+import Button from '@atoms/Button/Button';
+import HeaderTag from '@atoms/Tag/HeaderTag';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
-import ProfilePicture from '@molecules/ProfilePicture';
+import MailTo from '@molecules/MailTo';
+import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
-import MailTo from '../../components/molecules/MailTo';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
@@ -18,7 +18,7 @@ const ProfilePersonalHeader: React.FC = () => {
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
+  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
     <ProfileCardHeader canEdit h2 title={fullName} onEditClick={onClick} />
@@ -29,12 +29,11 @@ const ProfilePersonalTagList: React.FC = () => {
   const role = useStoreState(({ db }) => db.member.role);
 
   const type: string = useStoreState(({ db }) => {
-    const { byId } = db.entities.types;
-    return byId[db.member.type].name;
+    return db.byTypeId[db.member.type].name;
   });
 
   return (
-    <Row gap="sm">
+    <Row>
       {role && <HeaderTag>{role}</HeaderTag>}
       <HeaderTag>{type}</HeaderTag>
     </Row>
@@ -59,10 +58,10 @@ const ProfilePersonalOnboardingContainer: React.FC = () => {
 
   if (bio && pictureUrl) return null;
 
-  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
+  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
-    <Row gap="sm">
+    <Row>
       {!pictureUrl && (
         <Button primary onClick={onClick}>
           + Add Profile Picture
@@ -93,7 +92,7 @@ const ProfilePersonalPictureRow: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isMobile = useBreakpoint() === 1;
-  const onClick = () => showModal(ModalType.EDIT_PERSONAL_INFORMATION);
+  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
     <Row spaceBetween>

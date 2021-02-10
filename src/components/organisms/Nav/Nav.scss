@@ -1,0 +1,187 @@
+$PREF: 'o-nav';
+
+// ## NAV
+
+.#{$PREF} {
+  @extend .flex;
+  @extend .shadow--1;
+
+  background-color: white;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  width: $xxl * 5.5;
+  z-index: 12;
+
+  @include MT { width: 90%; z-index: 1001; }
+}
+
+.#{$PREF}-bg {
+  @extend .full-screen;
+
+  backdrop-filter: blur(2px);
+  background-color: hsla($primary-hue, 5%, 20%, 0.75);
+  z-index: 1000;
+
+  &--lock { backdrop-filter: blur(8px); }
+}
+
+// ## SIDEBAR COMMUNITY LIST
+
+.#{$PREF}-community-ctr {
+  @extend .flex-accol;
+
+  border-right: 1px $gray-5 solid;
+  padding: $sm $xs;
+
+  > button {
+    border-radius: $xs;
+    height: $xl;
+    margin-bottom: $sm;
+    padding: 2px;
+    width: $xl;
+  }
+
+  > button > img { @extend .fill; border-radius: $xxs; }
+}
+
+.#{$PREF}-community {
+  border: 2px white solid;
+  border-radius: $xs;
+  height: $xl;
+  margin-bottom: $sm;
+  padding: 2px;
+  width: $xl;
+
+  &--active { border: 2px $primary solid; }
+
+  > img { @extend .fill; border-radius: $xxs; }
+}
+
+// ## SIDEBAR MAIN
+
+.#{$PREF}-main {
+  @extend .flex-col;
+
+  width: 100%;
+
+  // The active community name.
+  > h3 { color: $primary; margin: $md $sm; }
+}
+
+// ## SIDEBAR SECTION
+
+.#{$PREF}-section {
+  margin: $sm $ss 0 0;
+
+  > h5 { color: $gray-3; margin: 0 0 $xs $sm; }
+  > h4 { color: $gray-3; margin: 0 0 $xs $sm; }
+}
+
+// ## SIDEBAR LINK
+
+.#{$PREF}-link {
+  @extend .flex-ac;
+
+  border-left: 3px white solid;
+  border-radius: 0 $lg $lg 0;
+  box-sizing: border-box;
+  margin: $xxs $ss $xxs 0;
+  padding: $xs $xxs $xs $sm;
+  width: 100%;
+
+  @include PRIMARY_HOVER;
+
+  // To make the border color appear as we want it to, we need to
+  // background-clip it.
+
+  @include HOVER {
+    background-clip: padding-box; // Needed to set the border-left color.
+    border-left: 3px $primary-bg solid;
+  }
+
+  &--active {
+    @extend .body--bold; 
+
+    background-color: $primary-bg;
+    border-left: 3px $primary solid;
+    color: $primary;
+
+    @include HOVER { border-left: 3px $primary solid; }
+
+    > svg { color: $primary; }
+  }
+
+  > svg { margin-right: $xs; }
+}
+
+// ## SIDEBAR DUES CONTAINER - Only shows if the user hasn't paid their 
+// dues yet.
+
+.#{$PREF}-dues-ctr {
+  box-sizing: border-box;
+  margin-bottom: $sm;
+  margin-top: auto;
+  padding: 0 $sm;
+  width: 100%;
+
+  > div:first-child { margin-bottom: $xs; }
+}
+
+// ## SIDEBAR PROFILE CONTAINER
+
+.#{$PREF}-profile-ctr {
+  border-top: 1px $gray-5 solid;
+  margin-top: auto;
+  padding: $xs $ss $xs 0;
+  
+  &--no-auto { margin-top: initial; }
+}
+
+// ## SIDEBAR PROFILE - Actual button that opens the Panel.
+
+.#{$PREF}-profile {
+  @extend .flex-acsb;
+
+  border-radius: 0 $lg $lg 0;
+  box-sizing: border-box;
+  padding: $xs 0 $xs $sm;
+  width: 100%;
+
+  &--active { background-color: $primary-bg; }
+  &--active > svg { color: $primary; }
+  &--active > div > .#{$PREF}-profile-info > p:first-child {
+    @extend .body--bold;
+
+    color: $primary;
+  }
+
+  > div { @extend .flex-ac; }
+  > svg { margin-right: $sm; }
+}
+
+// ## SIDEBAR INFO - Contains the user's name and role in community.
+
+.#{$PREF}-profile-info {
+  @extend .flex-col; 
+
+  align-items: flex-start;
+  margin-left: $sm;
+
+  > p { @extend .overflow-ellipses; text-align: left; }
+  > p:last-child { @extend .meta; color: $gray-3; text-transform: capitalize; }
+}
+
+// ## NAV HAMBURGER CONTAINER
+
+.#{$PREF}-hamburger {
+  background-color: $gray-6;
+  padding: $md $md 0 $md;
+  position: sticky;
+  top: 0;
+  z-index: 12;
+
+  @include M { padding: $sm; }
+
+  > button > svg { @extend .react-icon--lg; }
+}

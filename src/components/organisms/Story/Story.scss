@@ -1,0 +1,48 @@
+$PREF: 'o-story';
+
+// ## STORY NAVIGATION
+
+.#{$PREF}-nav-ctr { @extend .flex-acsb; margin-bottom: $md; }
+
+.#{$PREF}-nav {
+  background-color: $primary;
+  border-radius: $xs;
+  cursor: pointer;
+  height: $xs;
+  width: -webkit-fill-available;
+
+  &:not(:last-child) { margin-right: $ss; }
+  &--disabled { background-color: $gray-5; cursor: default; }
+}
+
+// ## STORY PAGE
+
+.#{$PREF}-page {
+  > div:first-child {
+    > .t-loading-header { margin-bottom: $xs; }
+    > .t-loading-header > h1 { color: $primary; }
+    > p { color: $gray-2; margin-bottom: $md; }
+
+    // Community icon for first page.
+    > img {
+      border: 2px $primary solid;
+      border-radius: $xs;
+      height: $xl;
+      margin-bottom: $xs;
+      padding: 2px;
+      width: $xl;
+    }
+  }
+}
+
+// ## STORY CONFIRMATION
+
+.#{$PREF}-confirmation > div:first-child {
+  @extend .flex-ac;
+
+  margin-bottom: $sm;
+
+  > h1 { color: $primary; }
+  > svg { color: $primary; height: $xl; margin-right: $xs; width: $xl; }
+  > button:last-child { margin-top: $md; }
+}

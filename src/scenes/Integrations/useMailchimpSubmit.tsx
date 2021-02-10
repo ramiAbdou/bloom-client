@@ -1,7 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { Schema } from '@store/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { Schema } from '@store/Db/schema';
+import { useStoreState } from '@store/Store';
 import {
   UPDATE_MAILCHIMP_LIST_ID,
   UpdateMailchimpListIdArgs
@@ -9,33 +9,31 @@ import {
 
 const useMailchimpSubmit = (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const [updateMailchimpListId] = useMutation<any, UpdateMailchimpListIdArgs>({
     name: 'updateMailchimpListId',
-    query: UPDATE_MAILCHIMP_LIST_ID
+    query: UPDATE_MAILCHIMP_LIST_ID,
+    schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const selectedMailchimpList = items[items?.length - 1]?.value;
+  const onSubmit = async ({
+    closeModal,
+    items,
+    setError
+  }: OnFormSubmitArgs) => {
+    const selectedMailchimpList = items.MAILCHIMP_LIST_ID?.value;
 
     const { id: mailchimpListId } = options.find(
       ({ name }) => name === selectedMailchimpList
     );
 
-    const { data: integrations, error } = await updateMailchimpListId({
-      mailchimpListId
-    });
+    const { error } = await updateMailchimpListId({ mailchimpListId });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 
-    // If the function is successful, update the entities with the new
-    // Mailchimp information and close the modal.
-    mergeEntities({ data: integrations, schema: Schema.INTEGRATIONS });
     closeModal();
   };
 

@@ -6,29 +6,36 @@ $PREF: 't-main';
 
 .#{$PREF}-header {
   background-color: $gray-6;
-  padding: $md;
+  margin-left: -$xxs;
+  margin-right: -$xxs;
+  padding: $md $xxs;
   position: sticky;
   top: 0;
   z-index: 11;
-
-  @include M { padding: $sm; }
 }
 
-.#{$PREF}-header > div:first-of-type {
-  @extend .flex-ac;
+.#{$PREF}-header > .t-row {
+  > div:first-child { @extend .flex-ac; }
+  > div:first-child > h1 { margin-right: $sm; }
+  > div:first-child > .c-tag-number ~ .c-spinner { margin-left: $xs; }
 
-  > h1 { margin-right: $sm; }
-
-  > button:first-of-type > svg {
+  > div:first-child > button:first-of-type > svg {
     @extend .react-icon--xl;
-
+  
     border-radius: 50%;
     margin-right: $sm;
     padding: 2px;
-
+  
     @include HOVER {
       background-color: rgba($color: $primary-hex, $alpha: 0.15);
     }
+  }
+
+  > div:last-child:not(:first-child) {
+    min-width: 15%;
+
+    @include MT { display: none; }
+    > * { margin-left: auto; }
   }
 }
 
@@ -36,14 +43,24 @@ $PREF: 't-main';
 
 .#{$PREF}-content {
   margin: 0 $md;
-  padding: 2px 2px $xl * 2 2px;
+  padding: 2px 2px $xl * 2 2px; // 2px for box-shadow to show properly.
 
   @include M { margin: 0 $sm; }
 }
 
-// ## MAIN CONTENT
+// ## MAIN HAMBURGER
+
+.#{$PREF}-hamburger {
+  margin-bottom: $sm;
+
+  @include D { display: none; }
+  > button > svg { @extend .react-icon--lg; }
+}
+
+// ## MAIN SECTION
 
 .#{$PREF}-section {
+  margin-bottom: $md;
   > .t-loading-header { margin-bottom: $sm; }
 }
 

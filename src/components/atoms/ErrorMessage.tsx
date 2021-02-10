@@ -2,19 +2,17 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 
-import { MessageProps } from '@constants';
-
-export interface ErrorMessageProps extends MessageProps {
+export interface ErrorMessageProps {
   marginBottom?: number;
   marginTop?: number;
 }
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({
+  children,
   marginBottom,
-  marginTop,
-  message
+  marginTop
 }) => {
-  if (!message) return null;
+  if (!children) return null;
 
   return (
     <motion.div
@@ -25,7 +23,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
       transition={{ duration: 0.2 }}
     >
       <IoAlertCircleOutline />
-      <p>{message}</p>
+      <p>{children}</p>
     </motion.div>
   );
 };

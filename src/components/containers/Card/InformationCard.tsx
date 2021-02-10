@@ -15,7 +15,7 @@ const InformationCard: React.FC<InformationCardProps> = ({
   if (show === false) return null;
 
   return (
-    <div className="t-misc-card--information">
+    <div className="t-card--information">
       <h4>{title}</h4>
       <p>{description}</p>
     </div>

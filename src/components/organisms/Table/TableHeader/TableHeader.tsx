@@ -1,56 +1,77 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
+import { PanelType } from '@constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import Table from '../Table.store';
-import { Column } from '../Table.types';
+import TableStore from '../Table.store';
+import { TableColumn } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
-import SelectAllCheckbox from './SelectAllCheckbox';
+import TableHeaderCheckbox from './TableHeaderCheckbox';
 
-interface HeaderCellProps extends Column {
+interface HeaderCellProps extends TableColumn {
   i: number;
 }
 
 const HeaderCell = ({
   category,
-  hide,
+  hideTitle,
   i,
   type,
   id,
   title
 }: HeaderCellProps) => {
-  const sortedColumnId = Table.useStoreState((store) => store.sortedColumnId);
-  const direction = Table.useStoreState((store) => store.sortedColumnDirection);
-  const hasCheckbox = Table.useStoreState(({ options }) => options.hasCheckbox);
-  const isSortable = Table.useStoreState(({ options }) => options.isSortable);
+  const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
+    const isLastCell = i === columns.length - 1;
+    return options.alignEndRight && isLastCell;
+  });
 
-  const fixFirstColumn = Table.useStoreState(
+  const sortColumnId = TableStore.useStoreState((store) => store.sortColumnId);
+  const direction = TableStore.useStoreState((store) => store.sortDirection);
+
+  const hasCheckbox = TableStore.useStoreState(
+    ({ options }) => options.hasCheckbox
+  );
+
+  const isSortable = TableStore.useStoreState(
+    ({ options }) => options.isSortable
+  );
+
+  const fixFirstColumn = TableStore.useStoreState(
     ({ options }) => options.fixFirstColumn
   );
 
-  const isPickerShowing = useStoreState(({ panel }) => panel.isIdShowing(id));
-  const showPicker = useStoreActions(({ panel }) => panel.showPicker);
+  const isPanelShowing = useStoreState(({ panel }) => panel.id === id);
+  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const onClick = () => isSortable && showPicker(id);
+  const onClick = () => {
+    if (isSortable) {
+      showPanel({ id: PanelType.RENAME_TABLE_COLUMN, metadata: id });
+    }
+  };
 
-  const isSortedColumn = sortedColumnId === id;
+  const isSortedColumn = sortColumnId === id;
 
   const css = cx(getTableCellClass({ category, type }), {
-    'c-table-th--fixed': fixFirstColumn && i === 0,
-    'c-table-th--picker': isPickerShowing,
-    'c-table-th--sortable': isSortable,
-    'c-table-th--sorted': isSortedColumn
+    'o-table-td--right': alignEndRight,
+    'o-table-th--fixed': fixFirstColumn && i === 0,
+    'o-table-th--panel': isPanelShowing,
+    'o-table-th--sortable': isSortable,
+    'o-table-th--sorted': isSortedColumn
   });
 
   const showCaretUp = isSortedColumn && direction === 'ASC';
   const showCaretDown = isSortedColumn && direction === 'DESC';
 
   return (
-    <th className={css} id={id} onClick={onClick}>
+    <th
+      className={css}
+      id={`${PanelType.RENAME_TABLE_COLUMN}-${id}`}
+      onClick={onClick}
+    >
       <div>
-        {!i && hasCheckbox && <SelectAllCheckbox />}
-        {!hide && <p>{title}</p>}
+        {!i && hasCheckbox && <TableHeaderCheckbox />}
+        {!hideTitle && <p>{title}</p>}
         {showCaretUp && <IoCaretUp />}
         {showCaretDown && <IoCaretDown />}
       </div>

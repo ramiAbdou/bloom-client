@@ -8,29 +8,32 @@
 
 import { createStore, createTypedHooks } from 'easy-peasy';
 
-import { ModalModel, modalModel } from '@organisms/Modal/Modal.store';
-import { PanelModel, panelModel } from '@organisms/Panel/Panel.store';
-import { ToastModel, toastModel } from '@organisms/Toast/Toast.store';
-import { DbModel, dbModel } from './Db.store';
+import loader, { LoaderModel } from '@organisms/Loader/Loader.store';
+import modal from '@organisms/Modal/Modal.store';
+import { ModalModel } from '@organisms/Modal/Modal.types';
+import nav, { NavModel } from '@organisms/Nav/Nav.store';
+import panel from '@organisms/Panel/Panel.store';
+import { PanelModel } from '@organisms/Panel/Panel.types';
+import toast, { ToastModel } from '@organisms/Toast/Toast.store';
+import db from './Db/Db.store';
+import { DbModel } from './Db/Db.types';
 
-type StoreModel = {
+export type StoreModel = {
   db: DbModel;
+  loader: LoaderModel;
   modal: ModalModel;
+  nav: NavModel;
   panel: PanelModel;
   toast: ToastModel;
 };
 
 export const store = createStore<StoreModel>(
-  {
-    db: dbModel,
-    modal: modalModel,
-    panel: panelModel,
-    toast: toastModel
-  },
+  { db, loader, modal, nav, panel, toast },
   { disableImmer: true }
 );
 
 export const {
   useStoreActions,
-  useStoreState
+  useStoreState,
+  useStore
 } = createTypedHooks<StoreModel>();

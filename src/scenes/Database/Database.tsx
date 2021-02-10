@@ -1,31 +1,36 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import { MainContent } from '@containers/Main';
+import MainContent from '@containers/Main/MainContent';
+import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE } from '@scenes/Database/Database.gql';
-import { ICommunity } from '@store/entities';
-import { Schema } from '@store/schema';
-import Admins from './Admins/Admins';
+import { IMember } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
+import AdminDatabase from './AdminDatabase/AdminDatabase';
 import DatabaseHeader from './DatabaseHeader';
-import Members from './Members/Members';
+import MemberDatabase from './MemberDatabase/MemberDatabase';
 
 const Database: React.FC = () => {
   const { url } = useRouteMatch();
 
-  const { loading } = useQuery<ICommunity>({
+  const { loading } = useQuery<IMember[]>({
     name: 'getDatabase',
     query: GET_DATABASE,
-    schema: Schema.COMMUNITY
+    schema: [Schema.MEMBER]
   });
 
   return (
-    <MainContent Header={DatabaseHeader} loading={loading}>
-      <Switch>
-        <Route component={Admins} path={`${url}/admins`} />
-        <Route component={Members} path={`${url}/members`} />
-        <Redirect to={`${url}/members`} />
-      </Switch>
+    <MainContent>
+      <DatabaseHeader loading={loading} />
+
+      <Show show={!loading}>
+        <Switch>
+          <Route component={AdminDatabase} path={`${url}/admins`} />
+          <Route component={MemberDatabase} path={`${url}/members`} />
+          <Redirect to={`${url}/members`} />
+        </Switch>
+      </Show>
     </MainContent>
   );
 };

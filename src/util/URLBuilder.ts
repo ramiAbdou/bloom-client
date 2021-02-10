@@ -16,6 +16,7 @@ export default class URLBuilder {
    * the first parameter and a '&' otherwise.
    */
   addParam = (key: string, value: any) => {
+    if (!value) return this;
     const separatingCharacter = this.hasFirstParam ? '&' : '?';
     if (!this.hasFirstParam) this.hasFirstParam = true;
     this.url = `${this.url}${separatingCharacter}${key}=${value}`;

@@ -31,8 +31,6 @@ $PREF: 's-profile';
 
 // ## PROFILE CARD
 
-// .#{$PREF}-card {}
-
 .#{$PREF}-card--personal,
 .#{$PREF}-card--membership { grid-column-end: span 8; height: fit-content; }
 
@@ -64,7 +62,7 @@ $PREF: 's-profile';
 
   > div:first-child { margin-bottom: $xxs; }
   > .m-misc-mail-to { margin-bottom: $sm; }
-  > .t-row--gap-sm:nth-child(2) { margin-bottom: $ss; }
+  > .t-row:nth-child(2) { margin-bottom: $ss; }
   > p:not(:last-child) { margin-bottom: $sm; }
 }
 

@@ -1,10 +1,14 @@
 import React from 'react';
 
-import Button from '@atoms/Button';
+import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { RESPOND_TO_MEMBERS, RespondToMembersArgs } from './Applicants.gql';
+import {
+  RESPOND_TO_APPLICANTS,
+  RespondToApplicantsArgs
+} from './Applicants.gql';
 
 interface ApplicantsRespondButtonProps {
   all?: boolean;
@@ -17,11 +21,12 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   applicantIds,
   response
 }) => {
-  const updateEntities = useStoreActions(({ db }) => db.updateEntities);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const [respondToMembers] = useMutation<boolean, RespondToMembersArgs>({
-    name: 'respondToMembers',
-    query: RESPOND_TO_MEMBERS,
+  const [respondToApplicants] = useMutation<boolean, RespondToApplicantsArgs>({
+    name: 'respondToApplicants',
+    query: RESPOND_TO_APPLICANTS,
+    schema: [Schema.MEMBER],
     variables: { memberIds: applicantIds, response }
   });
 
@@ -29,17 +34,8 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   if (!applicantIds?.length) return null;
 
   const onClick = async () => {
-    // Call to the server.
-    const { error } = await respondToMembers();
-    if (error) return;
-
-    updateEntities({
-      entityName: 'members',
-      ids: applicantIds,
-      updatedData: {
-        status: response === 'ACCEPTED' ? 'ACCEPTED' : 'REJECTED'
-      }
-    });
+    await respondToApplicants();
+    showToast({ message: `Member(s) have been ${response.toLowerCase()}.` });
   };
 
   const buttonText = takeFirst([

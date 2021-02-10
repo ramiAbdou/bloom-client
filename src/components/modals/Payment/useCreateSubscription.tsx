@@ -1,7 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { Schema } from '@store/schema';
+import { Schema } from '@store/Db/schema';
 import {
   CREATE_SUBSCRIPTION,
   CreateSubscriptionArgs,
@@ -26,15 +26,11 @@ const useCreateSubscription = (): OnFormSubmit => {
   >({
     name: 'createSubscription',
     query: CREATE_SUBSCRIPTION,
-    schema: Schema.MEMBER
+    schema: Schema.MEMBER_PAYMENT
   });
 
-  const onSubmit = async ({
-    goToNextPage,
-    items,
-    setErrorMessage
-  }: OnFormSubmitArgs) => {
-    const autoRenew = items.find(({ type }) => type === 'TOGGLE')?.value;
+  const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {
+    const autoRenew = items.AUTO_RENEW?.value;
 
     // Create the actual subscription. Pass the MemberType ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod
@@ -46,11 +42,11 @@ const useCreateSubscription = (): OnFormSubmit => {
     });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 
-    goToNextPage();
+    goForward();
     pushToMembership();
   };
 

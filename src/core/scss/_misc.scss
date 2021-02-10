@@ -117,9 +117,21 @@
 // needed other than the div.
 body::-webkit-scrollbar,
 div::-webkit-scrollbar,
+ul::-webkit-scrollbar,
 section::-webkit-scrollbar { display: none; }
 
 // Pushes the home content to the right due to the fixed sidebar.
 .home-content {
   @include D { margin-left: ($xxl * 5.5); max-width: calc(100% - 330px); }
+}
+
+.preserve-newlines { white-space: pre-line; }
+
+// ## TRASH BUTTON
+
+.misc-trash {
+  @include HOVER { > svg { color: $red; } }
+
+  > svg { transition: color 300ms; }
+  &:active { > svg { color: $red; } }
 }

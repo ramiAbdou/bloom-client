@@ -10,6 +10,8 @@ $PREF: 'c-modal';
   backdrop-filter: blur(2px);
   background-color: hsla($primary-hue, 5%, 20%, 0.75);
   z-index: 1000;
+
+  &--lock { backdrop-filter: blur(8px); }
 }
 
 // ## MODAL CONTAINER
@@ -21,14 +23,22 @@ $PREF: 'c-modal';
   height: fit-content;
   left: calc(-50vw + 50%);
   margin: auto;
-  overflow: hidden;
+  overflow: scroll;
   position: fixed;
   right: calc(-50vw + 50%);
   top: calc(-50vh + 50%);
   z-index: 1001;
 
-  @include TD { border-radius: $xs; max-height: 90%; width: 550px; }
-  @include M {
+  &--modal {
+    border-radius: $xs;
+    max-height: 90%;
+    width: 550px;
+
+    ~ .#{$PREF}-cancel { right: $md; top: $md; }
+    ~ .#{$PREF}-cancel > svg { @include SIZE($md); }
+  }
+  
+  &--sheet {
     border-radius: $sm $sm 0 0;
     bottom: 0;
     margin: 0;
@@ -37,39 +47,30 @@ $PREF: 'c-modal';
     min-width: 100vw;
     top: 100%;
     width: 100vw;
+
+    ~ .#{$PREF}-cancel { right: $sm; top: $sm; }
+    ~ .#{$PREF}-cancel > svg { @include SIZE($md); }
   }
 }
 
-.#{$PREF}-cancel {
-  position: fixed;
-  right: $md;
-  top: $md;
-  z-index: 1002;
-
-  @include M {
-    right: $sm;
-    top: $sm;
-
-    > svg { @include SIZE($md); }
-  }
-
-  > svg { @extend .react-icon--xl; color: $gray-5; }
-}
+.#{$PREF}-cancel { position: fixed; z-index: 1002; }
+.#{$PREF}-cancel > svg { @extend .react-icon--xl; color: $gray-5; }
 
 // ## MODAL CONTENT
 
-.#{$PREF} { max-height: inherit; padding: $md; }
+.#{$PREF} { padding: $md; }
 
 .#{$PREF},
 .#{$PREF} > form {
   // All modals will have an h1 tag, which will be standardized everywhere.
   > h1,
-  > .t-loading-header > h1 { color: $primary; }
+  > header > h1 { color: $primary; }
 
   > h1,
-  > .t-loading-header { margin-bottom: $sm; position: sticky; top: $md; }
+  > .t-loading-header { margin-bottom: $sm; }
   > p:first-of-type { margin-bottom: $md; }
   > .c-misc-question-ctr { max-height: 65vh; overflow: scroll; }
+  > .o-story-page > button:last-child { margin-top: $md; }
 }
 
 // ## CONFIRMATION MODAL

@@ -2,107 +2,82 @@ import day from 'dayjs';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
-import { Column, Row, TableOptions } from '@organisms/Table/Table.types';
+import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
-import { ICommunity, IMember, IMemberPayment, IUser } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IMember, IMemberPayment, IUser } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import { GET_PAYMENTS } from '../Analytics.gql';
 
 interface DuesAnalyticsHistoryTableData {
-  Amount: string;
+  amount: string;
   id: string;
-  Email: string;
-  'Full Name': string;
-  'Paid On': string;
+  email: string;
+  fullName: string;
+  paidOn: string;
+  type: string;
 }
 
 const DuesAnalyticsHistoryTable: React.FC = () => {
-  const rows: Row[] = useStoreState(({ db }) => {
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byPaymentId } = db.entities.payments;
-    const { byId: byTypeId } = db.entities.types;
-    const { byId: byUserId } = db.entities.users;
+  const rows: TableRow[] = useStoreState(({ db }) => {
+    const result: DuesAnalyticsHistoryTableData[] = db.community.payments
+      ?.map((paymentId: string) => db.byPaymentId[paymentId])
+      ?.map((payment: IMemberPayment) => {
+        const { amount, createdAt, type }: IMemberPayment = payment;
+        const member: IMember = db.byMemberId[payment?.member];
+        const user: IUser = db.byUserId[member?.user];
+        const { firstName, lastName, email }: IUser = user;
 
-    const result: DuesAnalyticsHistoryTableData[] = db.community.members?.reduce(
-      (acc: DuesAnalyticsHistoryTableData[], memberId: string) => {
-        const member: IMember = byMemberId[memberId];
-
-        const payments: DuesAnalyticsHistoryTableData[] = member.payments?.map(
-          (paymentId: string) => {
-            const { amount, createdAt, type }: IMemberPayment = byPaymentId[
-              paymentId
-            ];
-
-            const typeName = byTypeId[type].name;
-
-            const { firstName, lastName, email }: IUser = byUserId[member.user];
-
-            return {
-              Amount: `$${(amount / 100).toFixed(2)}`,
-              Email: email,
-              'Full Name': `${firstName} ${lastName}`,
-              'Membership Plan': typeName,
-              'Paid On': day(createdAt).format('MMMM DD, YYYY @ h:mm A'),
-              id: nanoid()
-            };
-          }
-        );
-
-        return payments?.length ? [...acc, ...payments] : acc;
-      },
-      []
-    );
+        return {
+          amount: `$${(amount / 100).toFixed(2)}`,
+          email,
+          fullName: `${firstName} ${lastName}`,
+          id: nanoid(),
+          paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
+          type: db.byTypeId[type].name
+        };
+      }, []);
 
     return result;
-  });
+  })?.sort((a, b) => sortObjects(a, b, 'paidOn'));
 
-  const columns: Column[] = [
-    { id: 'Full Name', title: 'Full Name', type: 'SHORT_TEXT' },
-    { id: 'Email', title: 'Email', type: 'SHORT_TEXT' },
-    { id: 'Amount', title: 'Amount', type: 'SHORT_TEXT' },
+  const columns: TableColumn[] = [
+    { id: 'paidOn', title: 'Paid On', type: 'SHORT_TEXT' },
+    { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
+    { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
+    { id: 'amount', title: 'Amount', type: 'SHORT_TEXT' },
     {
-      id: 'Membership Plan',
+      id: 'type',
       title: 'Membership Plan',
       type: 'MULTIPLE_CHOICE'
-    },
-    { id: 'Paid On', title: 'Paid On', type: 'SHORT_TEXT' }
+    }
   ];
 
-  const options: TableOptions = {
-    alignEndRight: true,
-    fixFirstColumn: false,
-    isSortable: false
-  };
-
   return (
-    <Table columns={columns} options={options} rows={rows}>
-      <TableSearchBar />
+    <Table columns={columns} rows={rows}>
+      <TableSearchBar className="mb-sm" />
       <TableContent emptyMessage="Looks like nobody has paid dues in the last year." />
     </Table>
   );
 };
 
 const DuesAnalyticsHistory: React.FC = () => {
-  const { data, loading } = useQuery<ICommunity>({
+  const { data, loading } = useQuery<IMemberPayment[]>({
     name: 'getPayments',
     query: GET_PAYMENTS,
-    schema: Schema.COMMUNITY
+    schema: [Schema.MEMBER_PAYMENT]
   });
 
-  if (!data?.payments?.length) return null;
-
   return (
-    <MainSection
-      className="s-analytics-dues-history"
-      loading={loading}
-      title="Dues History"
-    >
-      <DuesAnalyticsHistoryTable />
+    <MainSection className="s-analytics-dues-history" show={!!data?.length}>
+      <LoadingHeader h2 loading={loading} title="Dues History" />
+      {!loading && <DuesAnalyticsHistoryTable />}
     </MainSection>
   );
 };

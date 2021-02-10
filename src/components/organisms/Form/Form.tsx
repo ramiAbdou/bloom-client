@@ -1,63 +1,83 @@
 import deepequal from 'fast-deep-equal';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 
+import Show from '@containers/Show';
+import StoryStore from '@organisms/Story/Story.store';
+import { useStore } from '@store/Store';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';
 import { FormItemData, FormProps } from './Form.types';
-import { validateItem } from './Form.util';
+import { getError, getFormItemKey } from './Form.util';
 
 const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   className,
   children,
   onSubmit,
   onSubmitDeps,
-  pages
+  spacing
 }) => {
-  const items = FormStore.useStoreState((store) => store.items, deepequal);
-  const goToNextPage = FormStore.useStoreActions((store) => store.goToNextPage);
-  const setError = FormStore.useStoreActions((store) => store.setErrorMessage);
-  const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
-  const setPages = FormStore.useStoreActions((store) => store.setPages);
+  const globalStore = useStore();
 
-  const setItemErrorMessages = FormStore.useStoreActions(
-    (store) => store.setItemErrorMessages
+  const items: Record<string, FormItemData> = FormStore.useStoreState(
+    (store) => store.items,
+    deepequal
   );
 
-  useEffect(() => {
-    if (pages) setPages(pages);
-  }, [pages]);
+  const setError = FormStore.useStoreActions((store) => store.setError);
+  const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
+  const storyStore = StoryStore.useStore();
+
+  const setItemErrors = FormStore.useStoreActions(
+    (store) => store.setItemErrors
+  );
 
   const onFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (!onSubmit) return;
 
-      const validatedItems: FormItemData[] = items
-        ?.map(validateItem)
-        ?.filter(({ initialValue, value }: FormItemData) => {
-          return !deepequal(initialValue, value);
-        });
+      const validatedItems: Record<string, FormItemData> = Object.values(
+        items
+      )?.reduce((acc: Record<string, FormItemData>, item: FormItemData) => {
+        const key = getFormItemKey(item);
+        return { ...acc, [key]: { ...item, error: getError(item) } };
+      }, {});
 
-      if (validatedItems.some(({ errorMessage }) => !!errorMessage)) {
-        setItemErrorMessages(validatedItems);
+      if (Object.values(validatedItems).some(({ error }) => !!error)) {
+        setItemErrors(validatedItems);
         return;
       }
 
       setError(null);
       setIsLoading(true);
 
+      const { modal, panel, toast } = globalStore?.getActions() ?? {};
+
+      const { goForward, setValue: setStoryValue } =
+        storyStore?.getActions() ?? {};
+
       await onSubmit({
-        goToNextPage,
+        closeModal: modal?.closeModal,
+        closePanel: panel?.closePanel,
+        db: globalStore.getState()?.db,
+        goForward,
         items: validatedItems,
-        setErrorMessage: setError
+        setError,
+        setStoryValue,
+        showToast: toast?.showToast,
+        storyItems: storyStore?.getState()?.items
       });
 
       setIsLoading(false);
     },
-    [items, ...onSubmitDeps]
+    [items, ...(onSubmitDeps || [])]
   );
 
-  const css = cx('o-form', { [className]: className });
+  const css = cx('o-form', {
+    [className]: className,
+    'o-form--spacing-lg': spacing === 'lg',
+    'o-form--spacing-md': !spacing || spacing === 'md'
+  });
 
   return (
     <form className={css} onSubmit={onFormSubmit}>
@@ -66,10 +86,12 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-const Form: React.FC<FormProps> = ({ options, ...props }: FormProps) => (
-  <FormStore.Provider runtimeModel={{ ...formModel, options }}>
-    <FormContent {...props} />
-  </FormStore.Provider>
+const Form: React.FC<FormProps> = ({ options, show, ...props }: FormProps) => (
+  <Show show={show}>
+    <FormStore.Provider runtimeModel={{ ...formModel, options }}>
+      <FormContent {...props} />
+    </FormStore.Provider>
+  </Show>
 );
 
 export default Form;

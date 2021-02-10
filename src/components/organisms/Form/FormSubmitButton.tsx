@@ -1,11 +1,14 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button';
+import Button, { ButtonProps } from '@atoms/Button/Button';
 import { cx } from '@util/util';
-import Form from './Form.store';
+import FormStore from './Form.store';
+import FormErrorMessage from './FormErrorMessage';
 
 interface FormSubmitButtonProps extends ButtonProps {
   invisible?: boolean;
+  row?: boolean;
+  showError?: boolean;
 }
 
 const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
@@ -15,10 +18,18 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   invisible,
   large,
   loadingText,
+  row,
+  showError = true,
   ...props
 }) => {
-  const isCompleted = Form.useStoreState((store) => store.isCompleted);
-  const isLoading = Form.useStoreState((store) => store.isLoading);
+  const isCompleted = FormStore.useStoreState((store) => store.isCompleted);
+  const isLoading = FormStore.useStoreState((store) => store.isLoading);
+
+  if (row) {
+    fill = false;
+    large = false;
+    showError = false;
+  }
 
   const css = cx('', {
     [className]: className,
@@ -26,17 +37,21 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   });
 
   return (
-    <Button
-      primary
-      className={css}
-      disabled={disabled || !isCompleted}
-      fill={fill ?? true}
-      large={large ?? true}
-      loading={isLoading}
-      loadingText={loadingText ?? 'Submitting...'}
-      type="submit"
-      {...props}
-    />
+    <>
+      {showError && <FormErrorMessage />}
+
+      <Button
+        primary
+        className={css}
+        disabled={disabled || !isCompleted}
+        fill={fill ?? true}
+        large={large ?? true}
+        loading={isLoading}
+        loadingText={loadingText ?? 'Submitting...'}
+        type="submit"
+        {...props}
+      />
+    </>
   );
 };
 

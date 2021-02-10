@@ -1,5 +1,31 @@
 $PREF: 't-row';
 
+// ## ROW CONTAINER
+
 .#{$PREF} {
-  &--gap-sm > *:not(:last-child) { margin-right: $xs; }
+  &--c { justify-content: center; }
+  &--equal { bottom: $md; position: sticky; width: 100%; }
+  &--equal > * { width: 50%; }
+
+  &--margin-top-auto { margin-top: auto; }
+
+  &--spacing-xs {
+    &:not(&--col) > *:not(:last-child) { margin-right: $xs; }
+    &.t-row--col-m > *:not(:last-child) { @include M { margin-bottom: $xs; } }
+    &.t-row--col-t > *:not(:last-child) { @include MT { margin-bottom: $xs; } }
+  }
+
+  &--spacing-sm {
+    &:not(&--col) > *:not(:last-child) { margin-right: $sm; }
+    &.t-row--col-m > *:not(:last-child) { @include M { margin-bottom: $sm; } }
+    &.t-row--col-t > *:not(:last-child) { @include MT { margin-bottom: $sm; } }
+  }
+
+  &--col-t {
+    @include MT { display: block; > * { margin-right: 0; width: 100%; } }
+  }
+
+  &--col-m {
+    @include M { display: block; > * { margin-right: 0; width: 100%; } }
+  }
 }

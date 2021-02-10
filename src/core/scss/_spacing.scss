@@ -23,6 +23,7 @@ $D_SIZE: 1440;
 .flex {
   display: flex;
 
+  &-ab { @extend .flex; align-items: baseline; }
   &-ac { @extend .flex; align-items: center; }
   &-acc { @extend .flex-ac; justify-content: center; }
   &-accol { @extend .flex-ac; flex-direction: column; }
@@ -35,4 +36,22 @@ $D_SIZE: 1440;
   &-colsb { @extend .flex-col; justify-content: space-between; }
   &-sb { @extend .flex; justify-content: space-between; }
   &-w { @extend .flex; flex-wrap: wrap; }
+}
+
+.mb {
+  &-xxs:not(:last-child) { margin-bottom: $xxs; }
+  &-xs:not(:last-child) { margin-bottom: $xs; }
+  &-ss:not(:last-child) { margin-bottom: $ss; }
+  &-sm:not(:last-child) { margin-bottom: $sm; }
+  &-sl:not(:last-child) { margin-bottom: $sl; }
+  &-md:not(:last-child) { margin-bottom: $md; }
+  &-lg:not(:last-child) { margin-bottom: $lg; }
+}
+
+.mr {
+  &-xxs:not(:last-child) { margin-right: $xxs; }
+  &-xs:not(:last-child) { margin-right: $xs; }
+  &-sm:not(:last-child) { margin-right: $sm; }
+  &-md:not(:last-child) { margin-right: $md; }
+  &-lg:not(:last-child) { margin-right: $lg; }
 }

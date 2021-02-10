@@ -1,60 +1,78 @@
 import React from 'react';
 
-import { IdProps } from '@constants';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Row from '@containers/Row/Row';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import Modal from '@organisms/Modal/Modal';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
-import ApplicantsCardStore from './ApplicantsCard/ApplicantsCard.store';
+import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import { useStoreState } from '@store/Store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
-const ApplicantsModalActionContainer: React.FC = () => {
-  const applicantId = ApplicantsCardStore.useStoreState(
-    (store) => store.applicant.id
-  );
+const ApplicantsModalTitle: React.FC = () => {
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+
+  const fullName = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    const user: IUser = db.byUserId[member?.user];
+    return `${user?.firstName} ${user?.lastName}`;
+  });
+
+  return <h1>{fullName}</h1>;
+};
+
+const ApplicantsModalItems: React.FC = () => {
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+
+  const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+
+    const data: IMemberData[] = member.data?.map(
+      (dataId: string) => db.byDataId[dataId]
+    );
+
+    return db.community.questions
+      ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.filter((question: IQuestion) => {
+        return !question?.category || question?.category === 'EMAIL';
+      })
+      ?.map((question: IQuestion) => {
+        const element: IMemberData = data?.find((entity: IMemberData) => {
+          return entity.question === question.id;
+        });
+
+        return {
+          title: question?.title,
+          type: question?.type,
+          value: element?.value
+        };
+      });
+  });
 
   return (
-    <ActionContainer equal>
-      <ApplicantsRespondButton
-        applicantIds={[applicantId]}
-        response="ACCEPTED"
-      />
-
-      <ApplicantsRespondButton
-        applicantIds={[applicantId]}
-        response="REJECTED"
-      />
-    </ActionContainer>
+    <section className="c-modal-content-ctr">
+      <QuestionValueList items={items} />
+    </section>
   );
 };
 
-const ApplicantsModal: React.FC<IdProps> = ({ id }) => {
-  const fullName = ApplicantsCardStore.useStoreState((store) => store.fullName);
-
-  const items: QuestionValueItemProps[] = ApplicantsCardStore.useStoreState(
-    (store) => {
-      return store.expandedData
-        .filter(({ question }) => {
-          return !['FIRST_NAME', 'LAST_NAME'].includes(question.category);
-        })
-        .map(({ question, value }) => {
-          return { title: question.title, type: question.type, value };
-        });
-    }
-  );
+const ApplicantsModalActionContainer: React.FC = () => {
+  const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   return (
-    <Modal id={id}>
-      <h1>{fullName}</h1>
+    <Row equal>
+      <ApplicantsRespondButton applicantIds={[memberId]} response="ACCEPTED" />
+      <ApplicantsRespondButton applicantIds={[memberId]} response="REJECTED" />
+    </Row>
+  );
+};
 
-      <ModalContentContainer>
-        <QuestionValueList items={items} marginBottom={24} />
-      </ModalContentContainer>
-
+const ApplicantsModal: React.FC = () => {
+  return (
+    <>
+      <ApplicantsModalTitle />
+      <ApplicantsModalItems />
       <ApplicantsModalActionContainer />
-    </Modal>
+    </>
   );
 };
 

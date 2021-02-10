@@ -14,7 +14,7 @@ const baseConfig: Configuration = {
   module: {
     rules: [
       {
-        test: /\.scss$/,
+        test: /\.(css|scss)$/,
         use: [
           'style-loader',
           MiniCssExtractPlugin.loader,
@@ -27,7 +27,11 @@ const baseConfig: Configuration = {
         exclude: /node_modules/,
         loader: 'file-loader',
         options: { context: 'src', name: 'images/[name].[ext]' },
-        test: /\.(png|svg|ico)$/
+        test: /\.(png|ico)$/
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack']
       },
       {
         exclude: /node_modules/,

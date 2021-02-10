@@ -2,14 +2,13 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { LoadingProps } from '@constants';
-import { MainContent } from '@containers/Main';
+import MainContent from '@containers/Main/MainContent';
 import MainHeader, { MainHeaderProps } from '@containers/Main/MainHeader';
 import useFinalPath from '@hooks/useFinalPath';
-import ChangePlanContainer from './ChangePlanContainer';
-import CurrentPlanCard from './CurrentPlanCard';
-import MembershipCardContainer from './MembershipCardContainer';
-import PaymentMethodCard from './PaymentMethodCard';
-import PaymentOverview from './PaymentOverview';
+import MembershipChangeContainer from './MembershipChangeContainer';
+import MembershipCurrentPlan from './MembershipCurrentPlan';
+import MembershipPaymentMethod from './MembershipPaymentMethod';
+import PaymentOverview from './MembershipPaymentOverview';
 
 const MembershipHeader: React.FC<LoadingProps> = ({ loading }) => {
   const isChangePlan = useFinalPath() === 'change';
@@ -25,10 +24,10 @@ const MembershipHeader: React.FC<LoadingProps> = ({ loading }) => {
 
 const ManageMembershipContent: React.FC = () => (
   <>
-    <MembershipCardContainer>
-      <CurrentPlanCard />
-      <PaymentMethodCard />
-    </MembershipCardContainer>
+    <div className="s-membership-card-ctr">
+      <MembershipCurrentPlan />
+      <MembershipPaymentMethod />
+    </div>
 
     <PaymentOverview />
   </>
@@ -38,10 +37,16 @@ const MembershipContent: React.FC = () => {
   const { url } = useRouteMatch();
 
   return (
-    <MainContent Header={MembershipHeader} loading={false}>
+    <MainContent>
+      <MembershipHeader loading={false} />
+
       <Switch>
         <Route exact component={ManageMembershipContent} path={url} />
-        <Route exact component={ChangePlanContainer} path={`${url}/change`} />
+        <Route
+          exact
+          component={MembershipChangeContainer}
+          path={`${url}/change`}
+        />
         <Redirect to={url} />
       </Switch>
     </MainContent>

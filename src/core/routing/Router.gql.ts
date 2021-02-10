@@ -1,6 +1,37 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IUser } from '@store/entities';
+import { IUser } from '@store/Db/entities';
+
+// ## GET QUESTIONS
+
+export const GET_QUESTIONS = query({
+  fields: [
+    'category',
+    'id',
+    'inDirectoryCard',
+    'inExpandedDirectoryCard',
+    'options',
+    'title',
+    'type',
+    { community: ['id'] }
+  ],
+  operation: 'getQuestions'
+}).query;
+
+// ## GET TYPES
+
+export const GET_TYPES = query({
+  fields: [
+    'amount',
+    'id',
+    'isFree',
+    'name',
+    'recurrence',
+    { community: ['id'] }
+  ],
+  operation: 'getTypes',
+  variables: { urlName: { required: false } }
+}).query;
 
 // ## GET USER
 
@@ -15,6 +46,7 @@ export interface GetUserResult extends IUser {
 export const GET_USER = query({
   fields: [
     'activeCommunityId',
+    'createdAt',
     'email',
     'facebookUrl',
     'firstName',
@@ -28,8 +60,8 @@ export const GET_USER = query({
       members: [
         'autoRenew',
         'bio',
-        'duesStatus',
         'id',
+        'isDuesActive',
         'role',
         'status',
         {
@@ -55,15 +87,19 @@ export const GET_USER = query({
 
 // ## IS LOGGED IN
 
-export const IS_LOGGED_IN = query({ operation: 'isUserLoggedIn' }).query;
+export const IS_USER_LOGGED_IN = query({ operation: 'isUserLoggedIn' }).query;
 
 // ## LOGOUT
 
 export const LOGOUT = mutation({ operation: 'logout' }).query;
 
-// ## VERIFY LOGIN TOKEN
+// ## VERIFY TOKEN
 
-export const VERIFY_LOGIN_TOKEN = query({
-  operation: 'verifyLoginToken',
-  variables: { loginToken: { required: true } }
+export interface VerifyTokenArgs {
+  token: string;
+}
+
+export const VERIFY_TOKEN = query({
+  operation: 'verifyToken',
+  variables: { token: { required: true } }
 }).query;

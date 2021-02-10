@@ -1,15 +1,5 @@
 $PREF: 's-analytics-members';
 
-.#{$PREF} > div { margin-bottom: $md; }
-.#{$PREF} > div:first-child { @extend .flex-ac; }
-.#{$PREF} > div:nth-child(2) {
-  @extend .flex-ac; 
-  
-  > div { width: 50%; }
-  > div:first-child { margin-right: $xs; }
-  > div:last-child { margin-left: $xs; }
-}
-
 // ## PLAYGROUND
 
 .#{$PREF}-playground > div:first-child {

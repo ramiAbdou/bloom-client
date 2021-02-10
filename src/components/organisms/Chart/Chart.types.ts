@@ -1,7 +1,25 @@
+import { AxisDomain, AxisInterval, TickFormatterFunction } from 'recharts';
+
+import { ShowProps } from '@constants';
+
 export type ChartData = { name: string; value: number | string };
 
+export type ChartFormat = 'HOUR' | 'MONEY';
+
+export interface ChartXAxisOptions {
+  interval?: AxisInterval;
+  tickFormatter?: TickFormatterFunction;
+}
+
+export interface ChartYAxisOptions {
+  domain?: [AxisDomain, AxisDomain];
+  width?: number;
+}
+
 export interface ChartOptions {
-  format?: 'MONEY';
+  format?: ChartFormat;
+  xAxis?: ChartXAxisOptions;
+  yAxis?: ChartYAxisOptions;
 }
 
 export enum ChartType {
@@ -10,12 +28,12 @@ export enum ChartType {
   TIME_SERIES = 'TIME_SERIES'
 }
 
-export type ChartModelInitArgs = {
+export interface ChartModelInitArgs extends ShowProps {
   data?: ChartData[];
+  interval?: number;
   options?: ChartOptions;
   questionId?: string;
-  interval?: number;
   totalResponses?: number;
   title?: string;
   type?: ChartType;
-};
+}

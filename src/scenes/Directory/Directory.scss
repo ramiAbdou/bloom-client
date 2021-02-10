@@ -1,25 +1,10 @@
 $PREF: 's-directory';
 
-// ## DIRECTORY HEADER - Contains title, number tag and search bar.
-
-.#{$PREF}-header {
-  // If big screen, the search bar is aligned on the top.
-
-  @include TD { display: flex; justify-content: space-between; }
-
-  // Otherwise, we put the search bar on the next line, and separate it from
-  // the header text by 16px.
-
-  @include M {
-    > div:first-child { margin-bottom: $sm; }
-    > div:last-child { width: 100%; }
-  }
-}
-
 // ## CARD CONTAINER - Contains masonry component with infinite scrolling of
 // the directory cards.
 
 .#{$PREF}-card-ctr {
+  box-sizing: border-box;
   display: grid;
   padding: $xxs 0;
 
@@ -27,3 +12,62 @@ $PREF: 's-directory';
 
   &:focus { outline: none; }
 };
+
+// ## CARD
+
+button.#{$PREF}-card {
+  @extend .flex-ac;
+  
+  height: max-content;
+  height: 100%;
+  padding: 0;
+  width: 100%;
+
+  &--empty { height: initial; }
+};
+
+.#{$PREF}-card > div > h1 {
+  @extend .flex-acc;
+
+  background-color: $primary;
+  color: white;
+  font-size: $xxl;
+}
+
+.#{$PREF}-card > div:first-child {
+  position: relative;
+  width: 100%;
+  &::before { aspect-ratio: 1; content: ''; display: block; }
+}
+
+.#{$PREF}-card > div:first-child > * {
+  border-radius: $xs $xs 0 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+}
+
+// ## CARD CONTENT - Refers to the text within the card (name and highlighted
+// field).
+
+.#{$PREF}-card-content { height: $xxl; padding: $sm $xs; }
+.#{$PREF}-card-content > p {
+  @extend .body--bold;
+
+  max-width: 100%;
+  text-align: center;
+
+  @include OVERFLOW_ELLIPSES(3);
+}
+
+.#{$PREF}-card-content > p > span {
+  @extend .meta;
+
+  color: $gray-2;
+  display: block;
+  margin-top: $xxs;
+  text-align: center;
+}

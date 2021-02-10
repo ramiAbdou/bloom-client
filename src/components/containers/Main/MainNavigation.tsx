@@ -1,18 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import {
-  ChildrenProps,
-  IsActiveProps,
-  OnClickProps,
-  TitleProps
-} from '@constants';
+import { OnClickProps, TitleProps } from '@constants';
 import { cx } from '@util/util';
 
-export interface NavigationOptionProps
-  extends ChildrenProps,
-    OnClickProps,
-    TitleProps {
+export interface NavigationOptionProps extends OnClickProps, TitleProps {
   pathname: string;
 }
 
@@ -20,18 +12,17 @@ export interface NavigationProps {
   options?: NavigationOptionProps[];
 }
 
-interface NavigationButtonProps
-  extends Pick<NavigationOptionProps, 'children'>,
-    IsActiveProps {
+interface NavigationButtonProps {
+  active?: boolean;
   onClick: VoidFunction;
 }
 
-const NavigationButton = ({
+const NavigationButton: React.FC<NavigationButtonProps> = ({
+  active,
   children,
-  isActive,
   onClick
-}: NavigationButtonProps) => {
-  const css = cx('t-main-multi', { 't-main-multi--active': isActive });
+}) => {
+  const css = cx('t-main-multi', { 't-main-multi--active': active });
 
   return (
     <button className={css} onClick={onClick}>
@@ -62,7 +53,7 @@ const HeaderNavigation: React.FC<NavigationProps> = ({ options }) => {
         return (
           <NavigationButton
             key={title}
-            isActive={activeOption.title === title}
+            active={activeOption.title === title}
             onClick={onButtonClick}
           >
             {title}

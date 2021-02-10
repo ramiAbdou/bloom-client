@@ -1,6 +1,6 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-import { PaymentModalType } from './Payment.util';
+import { PaymentModalType } from './Payment.types';
 
 interface SetChangeDataArgs {
   changeAmount: number;
@@ -10,7 +10,7 @@ interface SetChangeDataArgs {
 export type PaymentModel = {
   changeAmount: number;
   changeProrationDate: number;
-  clearOptions: Action<PaymentModel>;
+  clear: Action<PaymentModel>;
   selectedTypeId: string;
   setChangeData: Action<PaymentModel, SetChangeDataArgs>;
   setSelectedTypeId: Action<PaymentModel, string>;
@@ -22,8 +22,8 @@ export const paymentModel: PaymentModel = {
 
   changeProrationDate: null,
 
-  clearOptions: action((store) => ({
-    ...store,
+  clear: action((state) => ({
+    ...state,
     changeAmount: null,
     changeProrationDate: null,
     screen: null,
@@ -32,14 +32,14 @@ export const paymentModel: PaymentModel = {
 
   selectedTypeId: null,
 
-  setChangeData: action((store, args) => ({
-    ...store,
+  setChangeData: action((state, args) => ({
+    ...state,
     changeAmount: args?.changeAmount,
     changeProrationDate: args?.changeProrationDate
   })),
 
-  setSelectedTypeId: action((store, selectedTypeId: string) => ({
-    ...store,
+  setSelectedTypeId: action((state, selectedTypeId: string) => ({
+    ...state,
     selectedTypeId
   })),
 

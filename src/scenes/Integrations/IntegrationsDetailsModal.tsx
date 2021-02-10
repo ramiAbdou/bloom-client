@@ -1,41 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import Button from '@atoms/Button';
-import ActionContainer from '@containers/ActionContainer/ActionContainer';
+import Button from '@atoms/Button/Button';
+import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
-import Modal from '@organisms/Modal/Modal';
-import { useStoreActions } from '@store/Store';
-import Integrations from './Integrations.store';
+import { useStoreActions, useStoreState } from '@store/Store';
+import useIntegrationsDetails from './useIntegrationsDetails';
 
-export type ExpandedDetailProps = { label: string; value: any };
-
-type ExpandedDetailsProps = {
-  details: ExpandedDetailProps[];
-  logo: string;
-  name: string;
-};
-
-const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
-  details,
-  logo,
-  name
-}) => {
+const IntegrationsDetailsModal: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setFlow = Integrations.useStoreActions((store) => store.setFlow);
-
-  const MODAL_ID = `${name.toUpperCase()}_DETAILS`;
-
-  useEffect(() => {
-    showModal(MODAL_ID);
-  }, []);
+  const { name, logo } = useStoreState(({ modal }) => modal.metadata ?? {});
+  const details = useIntegrationsDetails(name);
 
   return (
-    <Modal
-      className="s-integrations-modal"
-      id={MODAL_ID}
-      onClose={() => setFlow(null)}
-    >
+    <>
       <img className="s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>
 
@@ -48,12 +25,12 @@ const IntegrationsDetailsModal: React.FC<ExpandedDetailsProps> = ({
         marginBottom={24}
       />
 
-      <ActionContainer>
+      <Row>
         <Button secondary onClick={() => closeModal()}>
           Close
         </Button>
-      </ActionContainer>
-    </Modal>
+      </Row>
+    </>
   );
 };
 

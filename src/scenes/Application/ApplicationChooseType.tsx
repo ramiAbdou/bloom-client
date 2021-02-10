@@ -1,0 +1,76 @@
+import React from 'react';
+
+import { RadioOptionProps } from '@molecules/Radio/Radio.types';
+import Form from '@organisms/Form/Form';
+import FormStore from '@organisms/Form/Form.store';
+import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
+import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import StoryPage from '@organisms/Story/StoryPage';
+import { IMemberType } from '@store/Db/entities';
+import { useStoreState } from '@store/Store';
+import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
+import ApplicationPaymentForm from './ApplicationPaymentSection';
+
+const ApplicationChooseTypeButton: React.FC = () => {
+  const selectedTypeName: string = FormStore.useStoreState(({ items }) => {
+    return items.MEMBERSHIP_TYPE?.value;
+  });
+
+  const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
+    const selectedType: IMemberType = db.community?.types
+      ?.map((typeId: string) => db.byTypeId[typeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+
+    return !!selectedType?.amount;
+  });
+
+  return (
+    <FormSubmitButton show={!isPaidMembershipSelected}>
+      Next: Confirmation
+    </FormSubmitButton>
+  );
+};
+
+const ApplicationChooseTypeForm: React.FC = () => {
+  const types: RadioOptionProps[] = useStoreState(({ db }) => {
+    return db.community?.types?.map((typeId: string) => {
+      const type: IMemberType = db.byTypeId[typeId];
+
+      return {
+        children: <ApplicationChooseTypeCard id={typeId} />,
+        label: type.name
+      };
+    });
+  });
+
+  return (
+    <Form>
+      <FormMultipleChoice cardOptions={types} category="MEMBERSHIP_TYPE" />
+      <ApplicationChooseTypeButton />
+    </Form>
+  );
+};
+
+const ApplicationChooseType: React.FC = () => {
+  const show: boolean = useStoreState(({ db }) => {
+    const types = db.community?.types;
+
+    const isMoreThanOneType = types?.length > 1;
+    const isFirstTypePaid = !!types && !db.byTypeId[types[0]]?.isFree;
+    return isMoreThanOneType || isFirstTypePaid;
+  });
+
+  return (
+    <StoryPage
+      description="Choose your membership type."
+      id="SELECT_TYPE"
+      show={!!show}
+      title="Membership Selection"
+    >
+      <ApplicationChooseTypeForm />
+      <ApplicationPaymentForm />
+    </StoryPage>
+  );
+};
+
+export default ApplicationChooseType;

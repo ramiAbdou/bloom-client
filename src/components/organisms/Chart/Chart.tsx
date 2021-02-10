@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 
-import BarChart from './Bar';
+import BarChart from './BarChart';
 import ChartStore, { chartModel } from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
+import ChartHeader from './ChartHeader';
 import FormatQuestionData from './FormatQuestionData';
-import ChartHeader from './Header';
-import PieChart from './Pie';
-import TimeSeriesChart from './TimeSeries';
+import PieChart from './PieChart';
+import TimeSeriesChart from './TimeSeriesChart';
 
 const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
   const chartType = ChartStore.useStoreState((store) => store.type);
@@ -27,13 +27,17 @@ const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
   );
 };
 
-const Chart: React.FC<ChartModelInitArgs> = ({ options, ...args }) => (
-  <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
-    <div className="c-chart">
-      <ChartHeader />
-      <ChartContent {...args} />
-    </div>
-  </ChartStore.Provider>
-);
+const Chart: React.FC<ChartModelInitArgs> = ({ options, show, ...args }) => {
+  if (show === false) return null;
+
+  return (
+    <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
+      <div className="o-chart">
+        <ChartHeader />
+        <ChartContent {...args} />
+      </div>
+    </ChartStore.Provider>
+  );
+};
 
 export default Chart;

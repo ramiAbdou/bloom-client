@@ -40,6 +40,46 @@ export const getGraphQLError = (error: APIError): string => {
 };
 
 /**
+ * Returns the array in descending order based on the createdAt.
+ *
+ * @example sortByDescendingCreatedAt({ createdAt: 1 }, { createdAt: 2 }) => 1
+ * @example sortByDescendingCreatedAt({ createdAt: 10 }, { createdAt: 1 }) => -1
+ */
+export function sortObjects<T>(
+  a: T,
+  b: T,
+  keys: keyof T | (keyof T)[],
+  direction: 'ASC' | 'DESC' = 'DESC'
+) {
+  const order = direction === 'ASC' ? 1 : -1;
+
+  if (!Array.isArray(keys)) {
+    if (Number(a[keys] > b[keys]) || (a && !b)) return order;
+    if (Number(a[keys] < b[keys]) || (b && !a)) return order * -1;
+    return 0;
+  }
+
+  while (keys?.length) {
+    const currentKey = keys[0];
+    if (
+      Number(a[currentKey] > b[currentKey]) ||
+      (a[currentKey] && !b[currentKey])
+    ) {
+      return order;
+    }
+    if (
+      Number(a[currentKey] < b[currentKey]) ||
+      (b[currentKey] && !a[currentKey])
+    ) {
+      return order * -1;
+    }
+    keys.shift();
+  }
+
+  return 0;
+}
+
+/**
  * Returns the first value in which the condition is true.
  */
 export const takeFirst = (arr: ([boolean, any] | any)[]) => {

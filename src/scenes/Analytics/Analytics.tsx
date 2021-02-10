@@ -8,20 +8,21 @@ import {
 } from 'react-router-dom';
 
 import { LoadingProps } from '@constants';
-import { MainHeader } from '@containers/Main';
 import MainContent from '@containers/Main/MainContent';
+import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
+import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE } from '@scenes/Database/Database.gql';
-import { ICommunity } from '@store/entities';
-import { Schema } from '@store/schema';
+import { ICommunity } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
-import EventsAnalytics from './EventsAnalytics/Events';
+import EventsAnalytics from './EventsAnalytics/EventsAnalytics';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
 
 const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const canCollectDues = useStoreState(({ db }) => db.canCollectDues);
+  const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
 
   const { push } = useHistory();
 
@@ -35,14 +36,7 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
     { onClick: () => push('events'), pathname: 'events', title: 'Events' }
   ];
 
-  return (
-    <MainHeader
-      className="s-analytics-header"
-      loading={loading}
-      options={options}
-      title="Analytics"
-    />
-  );
+  return <MainHeader loading={loading} options={options} title="Analytics" />;
 };
 
 const Analytics: React.FC = () => {
@@ -55,13 +49,17 @@ const Analytics: React.FC = () => {
   });
 
   return (
-    <MainContent Header={AnalyticsHeader} loading={loading}>
-      <Switch>
-        <Route component={DuesAnalytics} path={`${url}/dues`} />
-        <Route component={EventsAnalytics} path={`${url}/events`} />
-        <Route component={MembersAnalytics} path={`${url}/members`} />
-        <Redirect to={`${url}/members`} />
-      </Switch>
+    <MainContent>
+      <AnalyticsHeader loading={loading} />
+
+      <Show show={!loading}>
+        <Switch>
+          <Route component={DuesAnalytics} path={`${url}/dues`} />
+          <Route component={EventsAnalytics} path={`${url}/events`} />
+          <Route component={MembersAnalytics} path={`${url}/members`} />
+          <Redirect to={`${url}/members`} />
+        </Switch>
+      </Show>
     </MainContent>
   );
 };

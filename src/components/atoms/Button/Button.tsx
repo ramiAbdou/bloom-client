@@ -1,40 +1,36 @@
-import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
 
+import Spinner from '@atoms/Spinner/Spinner';
+import { ShowProps } from '@constants';
 import { cx } from '@util/util';
-import { useShowSpinner } from '../Spinner/Spinner';
+import Show from '../../containers/Show';
 
 export interface ButtonProps
-  extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>> {
+  extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>>,
+    ShowProps {
   href?: string;
   fill?: boolean;
   fit?: boolean;
   loading?: boolean;
   loadingText?: string;
   large?: boolean;
-  secondary?: boolean;
+  openTab?: boolean;
   primary?: boolean;
+  red?: boolean;
+  secondary?: boolean;
   tertiary?: boolean;
 }
 
-const LoadingContainer = ({
-  loading,
-  loadingText,
-  secondary
-}: Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>) => {
-  if (!loading) return null;
-
-  const css = cx('c-spinner', { 'c-spinner--dark': secondary });
-
+const ButtonLoadingContainer: React.FC<
+  Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>
+> = ({ loading, loadingText, secondary }) => {
   return (
-    <div className="c-btn-loading-ctr">
-      <p>{loadingText}</p>
-      <motion.div
-        animate={{ rotate: 360 }}
-        className={css}
-        transition={{ duration: 0.75, ease: 'linear', loop: Infinity }}
-      />
-    </div>
+    <Show show={!!loading}>
+      <div className="c-btn-loading-ctr">
+        <p>{loadingText}</p>
+        <Spinner dark={secondary} loading={loading} />
+      </div>
+    </Show>
   );
 };
 
@@ -51,8 +47,11 @@ const Button = forwardRef(
       loading,
       loadingText,
       onClick,
+      openTab = true,
       primary,
+      red,
       secondary,
+      show,
       type,
       tertiary,
       ...props
@@ -60,22 +59,25 @@ const Button = forwardRef(
     ref: React.MutableRefObject<any>
   ) => {
     // If the button is in it's loading state, it should be disabled.
-    const showSpinner: boolean = useShowSpinner(loading) && !!loadingText;
+    const showSpinner: boolean = loading && !!loadingText;
     disabled = disabled || showSpinner;
+
+    if (show === false) return null;
 
     const onButtonClick = (
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
       if (type === 'button') event.preventDefault();
       if (disabled) return;
-      if (onClick) onClick(null);
+      if (onClick) onClick(event);
 
       if (href) {
+        if (!href?.startsWith('http')) href = `http://${href}`;
         // If the browser is Safari, just change the location of the current
         // tab, but if not, open a new window with the URL.
-        if (navigator.vendor === 'Apple Computer, Inc.') {
+        if (navigator.vendor === 'Apple Computer, Inc.' || !openTab) {
           window.location.href = href;
-        } else window.open(href, '_blank');
+        } else window.open(href);
       }
     };
 
@@ -85,6 +87,7 @@ const Button = forwardRef(
       'c-btn--lg': large,
       'c-btn--primary': primary,
       'c-btn--secondary': secondary,
+      'c-btn--secondary--red': red,
       'c-btn--tertiary': tertiary,
       [className]: className
     });
@@ -98,7 +101,7 @@ const Button = forwardRef(
         onClick={onButtonClick}
         {...props}
       >
-        <LoadingContainer
+        <ButtonLoadingContainer
           loading={showSpinner}
           loadingText={loadingText}
           secondary={secondary}

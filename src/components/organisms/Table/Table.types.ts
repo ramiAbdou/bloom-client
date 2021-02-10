@@ -1,52 +1,106 @@
-import { ActionCreator } from 'easy-peasy';
+import { Action, ActionCreator, Computed } from 'easy-peasy';
 
-import { QuestionCategory, QuestionType } from '@constants';
+import {
+  IdProps,
+  QuestionCategory,
+  QuestionType,
+  ValueProps
+} from '@constants';
 
-export type Column = {
+// ## TABLE COLUMN
+
+export type TableColumn = {
   category?: QuestionCategory;
-  hide?: boolean;
+  hideTitle?: boolean;
   id: string;
-  type: QuestionType;
+  render?: (value: any) => JSX.Element;
   title: string;
-  version?: number;
+  type?: QuestionType;
 };
 
-// Each row will have a series of random question ID's as well as a unique ID
-// representing the row (ie: Member ID).
-export interface Row extends Record<string, any> {
-  id: string;
+// ## TABLE FILTER
+
+export type TableFilter = (rows: TableRow) => boolean;
+export type TableFilterJoinOperator = 'and' | 'or';
+export type TableFilterOperator = 'is' | 'is not';
+
+export interface TableFilterArgs extends IdProps, ValueProps {
+  columnId: string;
+  operator: TableFilterOperator;
 }
 
-export type SortDirection = 'ASC' | 'DESC';
+export type TableQuickFilterArgs = {
+  filterId: string;
+  filter: (rows: TableRow) => boolean;
+};
+
+// ## TABLE PAGINATION
+
+export type TablePaginationValue = number | '...';
+
+// ## TABLE RENAME COLUMN
 
 export type OnRenameColumnArgs = {
-  column: Partial<Column>;
-  updateColumn: ActionCreator<Partial<Column>>;
+  column: Partial<TableColumn>;
+  updateColumn: ActionCreator<Partial<TableColumn>>;
 };
 
 export type OnRenameColumn = (args: OnRenameColumnArgs) => Promise<void>;
-export interface OnRenameColumnProps {
-  onRenameColumn?: OnRenameColumn;
-}
+
+// ## TABLE ROW
+
+export interface TableRow extends Pick<IdProps, 'id'>, Record<string, any> {}
+
+// ## TABLE OPTIONS
 
 export type TableOptions = {
   alignEndRight?: boolean;
   fixFirstColumn?: boolean;
   hasCheckbox?: boolean;
-  isClickable?: boolean;
+  hideIfEmpty?: boolean;
   isRenamable?: boolean;
   isSortable?: boolean;
+  onRenameColumn?: (args: OnRenameColumnArgs) => Promise<void>;
+  onRowClick?: (row: TableRow) => void;
   showCount?: boolean;
 };
 
-export const initialTableOptions: TableOptions = {
+export const defaultTableOptions: TableOptions = {
   alignEndRight: false,
-  fixFirstColumn: true,
+  fixFirstColumn: false,
   hasCheckbox: false,
-  isClickable: false,
   isRenamable: false,
   isSortable: true,
   showCount: true
 };
 
-export type PaginationValue = number | '...';
+// ## TABLE SORTING
+
+export type TableSortDirection = 'ASC' | 'DESC';
+
+// ## TABLE MODEL
+
+export type TableModel = {
+  clearSelectedRows: Action<TableModel>;
+  columns: TableColumn[];
+  filteredRows: TableRow[];
+  filters: Record<string, TableFilter>;
+  options: TableOptions;
+  page: number;
+  range: Computed<TableModel, [number, number]>;
+  removeFilter: Action<TableModel, string>;
+  rows: TableRow[];
+  searchString: string;
+  selectedRowIds: string[];
+  setFilter: Action<TableModel, TableQuickFilterArgs>;
+  setRange: Action<TableModel, number>;
+  setSearchString: Action<TableModel, string>;
+  sortColumn: Action<TableModel, [string, TableSortDirection]>;
+  sortDirection: TableSortDirection;
+  sortColumnId: string;
+  toggleAllPageRows: Action<TableModel>;
+  toggleAllRows: Action<TableModel>;
+  toggleRow: Action<TableModel, string>;
+  updateColumn: Action<TableModel, Partial<TableColumn>>;
+  setRows: Action<TableModel, TableRow[]>;
+};

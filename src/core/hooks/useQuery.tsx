@@ -1,24 +1,9 @@
-import { useQuery as useGraphQlHooksQuery } from 'graphql-hooks';
-import { Schema } from 'normalizr';
+import { useQuery as useGQLQuery } from 'graphql-hooks';
 import { useEffect } from 'react';
 
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-
-type UseQueryArgs<T, S> = {
-  activeId?: boolean;
-  format?: (data: T) => any;
-  name: string;
-  query: string;
-  schema?: Schema<any>;
-  variables?: S;
-};
-
-type UseQuery<T, S> = {
-  data: T;
-  error: string;
-  loading: boolean;
-};
+import { UseQueryArgs, UseQueryResult } from './useQuery.types';
 
 function useQuery<T = any, S = any>({
   activeId,
@@ -27,20 +12,22 @@ function useQuery<T = any, S = any>({
   name,
   schema,
   variables
-}: UseQueryArgs<T, S>): UseQuery<T, S> {
+}: UseQueryArgs<T, S>): UseQueryResult<T, S> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
-  const { data, error, loading } = useGraphQlHooksQuery(
+  const { data, error, loading } = useGQLQuery(
     query,
     variables ? { variables } : {}
   );
 
-  const result = {
+  const result: UseQueryResult<T, S> = {
     data: data ? (data[name] as T) : (null as T),
     error: getGraphQLError(error),
     loading
   };
 
+  // Updates the global entities store if a schema is passed in. Also formats
+  // the data to match the schema if need be.
   useEffect(() => {
     if (result.data && schema) {
       const formattedData = format ? format(result.data) : result.data;

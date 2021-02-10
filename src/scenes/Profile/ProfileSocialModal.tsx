@@ -1,14 +1,11 @@
 import React from 'react';
 
-import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormItem from '@organisms/Form/FormItem';
+import FormHeader from '@organisms/Form/FormHeader';
+import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import Modal from '@organisms/Modal/Modal';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { useStoreState } from '@store/Store';
-import useUpdateUser from './useUpdateUser';
+import useUpdateUserSocials from './useUpdateUserSocials';
 
 const ProfileSocialModal: React.FC = () => {
   const facebookUrl = useStoreState(({ db }) => db.user.facebookUrl);
@@ -16,47 +13,46 @@ const ProfileSocialModal: React.FC = () => {
   const linkedInUrl = useStoreState(({ db }) => db.user.linkedInUrl);
   const twitterUrl = useStoreState(({ db }) => db.user.twitterUrl);
 
-  const updateUser = useUpdateUser();
+  const updateUserSocials = useUpdateUserSocials();
 
   return (
-    <Modal id={ModalType.EDIT_SOCIAL_MEDIA}>
-      <h1>Edit Social Media</h1>
+    <Form onSubmit={updateUserSocials}>
+      <FormHeader title="Edit Social Media" />
 
-      <Form onSubmit={updateUser}>
-        <ModalContentContainer>
-          <FormItem
-            title="Twitter URL"
-            type="SHORT_TEXT"
-            validate="IS_URL"
-            value={twitterUrl}
-          />
+      <FormShortText
+        id="TWITTER_URL"
+        required={false}
+        title="Twitter URL"
+        validate="IS_URL"
+        value={twitterUrl}
+      />
 
-          <FormItem
-            title="LinkedIn URL"
-            type="SHORT_TEXT"
-            validate="IS_URL"
-            value={linkedInUrl}
-          />
+      <FormShortText
+        id="LINKED_IN_URL"
+        required={false}
+        title="LinkedIn URL"
+        validate="IS_URL"
+        value={linkedInUrl}
+      />
 
-          <FormItem
-            title="Facebook URL"
-            type="SHORT_TEXT"
-            validate="IS_URL"
-            value={facebookUrl}
-          />
+      <FormShortText
+        id="FACEBOOK_URL"
+        required={false}
+        title="Facebook URL"
+        validate="IS_URL"
+        value={facebookUrl}
+      />
 
-          <FormItem
-            title="Instagram URL"
-            type="SHORT_TEXT"
-            validate="IS_URL"
-            value={instagramUrl}
-          />
-        </ModalContentContainer>
+      <FormShortText
+        id="INSTAGRAM_URL"
+        required={false}
+        title="Instagram URL"
+        validate="IS_URL"
+        value={instagramUrl}
+      />
 
-        <FormErrorMessage />
-        <FormSubmitButton>Save</FormSubmitButton>
-      </Form>
-    </Modal>
+      <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
+    </Form>
   );
 };
 

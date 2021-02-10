@@ -1,0 +1,53 @@
+$PREF: 's-events-card';
+
+// ## EVENTS CARD
+
+.#{$PREF} {
+  @extend .flex-col;
+
+  align-items: flex-start;
+  background-color: white;
+  padding: 0;
+
+  > .t-aspect,
+  > .t-aspect > div { border-radius: $xs $xs 0 0; }
+}
+
+// ## EVENTS CARD BACKGROUND
+
+.#{$PREF}-bg {
+  > div { background-color: $primary-bg; }
+  > *:first-child { border-radius: $xs $xs 0 0; }
+}
+
+// ## EVENTS CARD CONTENT
+
+.#{$PREF}-content {
+  @extend .flex-col;
+  
+  box-sizing: border-box;
+  flex: 1;
+  padding: $sm;
+  width: 100%;
+
+  > div {
+    &:not(:only-child) { margin-bottom: $sm; }
+
+    > h5 { margin-bottom: $xxs; }
+    > h3 { @include OVERFLOW_ELLIPSES(2); }
+    > h3:not(:only-child) { margin-bottom: $xxs; }
+  }
+
+  &--now > div h5 { color: $primary; }
+
+  > button:last-child { margin-top: auto; }
+}
+
+// ## EVENTS CARD PEOPLE
+
+.#{$PREF}-people {
+  > .t-row > *:not(:first-child) {
+    border: 2px white solid;
+    margin-left: -$sm;
+  }
+}

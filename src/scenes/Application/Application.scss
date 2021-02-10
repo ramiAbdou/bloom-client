@@ -10,11 +10,18 @@ $PREF: 's-application';
   @include RESP(padding-bottom, $xl, $lg, $md);
   @include RESP(padding-top, $xl, $lg, $md);
 
-  > .t-misc-card {
+  > .t-card {
     margin: auto;
     max-width: $xxl * 7;
 
-    > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+    > .o-story-confirmation > p:first-of-type { margin-bottom: $md; }
+  }
+
+  > div {
+    margin-left: auto;
+    margin-right: auto;
+
+    @include RESP(width, 600px, 500px, 90%);
   }
 }
 
@@ -26,23 +33,12 @@ $PREF: 's-application';
 
   @include TD { margin-bottom: $xxl; }
 
-  > .t-misc-card {
+  > .t-card {
     max-width: $xxl * 7;
     overflow: hidden;
     
-    > .t-confirmation-screen > p:first-of-type { margin-bottom: $md; }
+    > .o-story-confirmation > p:first-of-type { margin-bottom: $md; }
   }
-}
-
-// ## APPLICATION
-
-.#{$PREF} {
-  margin-left: auto;
-  margin-right: auto;
-
-  @include RESP(width, 600px, 500px, 90%);
-
-  > .o-form-item { margin-bottom: $lg; }
 }
 
 // ## APPLICATION COMMUNITY ICON
@@ -69,26 +65,11 @@ $PREF: 's-application';
   > span:last-child { @extend .meta--lg; color: $gray-2; }
 }
 
-// ## APPLICATION PAYMENT SECTION
+// ## APPLICATION REVIEW
 
-.#{$PREF}-payment-ctr {
-  > h2 { margin-bottom: $xs; }
-  > p { margin-bottom: $md; }
-
-  > .o-form-item > .c-misc-input > .__PrivateStripeElement { width: 100%; }
-}
-
-// ## APPLICATION CONFIRMATION
-
-.#{$PREF}-confirmation {
+.#{$PREF}-review {
   > h2 { margin-bottom: $md; }
-
-  > button:last-child {
-    margin-top: $lg;
-
-    &:disabled > svg { color: $gray-3; }
-    > svg { color: white; margin-right: $xs; }
-  }
+  > form > button:last-child > svg { color: white; margin-right: $xs; }
 }
 
-.#{$PREF}-confirmation-membership > h2 { margin-bottom: $md; }
+.#{$PREF}-review-membership > h2 { margin-bottom: $md; }

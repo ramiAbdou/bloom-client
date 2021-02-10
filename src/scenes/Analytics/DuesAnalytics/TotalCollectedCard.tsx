@@ -1,8 +1,8 @@
 import React from 'react';
 
+import AnalyticsCard from '@containers/Card/AnalyticsCard';
 import useQuery from '@hooks/useQuery';
 import { GET_TOTAL_DUES_GROWTH } from '../Analytics.gql';
-import AnalyticsSimple from '../AnalyticsStatusCard';
 
 const DuesAnalyticsTotalCollectedCard: React.FC = () => {
   const { data, loading } = useQuery<number>({
@@ -11,7 +11,7 @@ const DuesAnalyticsTotalCollectedCard: React.FC = () => {
   });
 
   if (loading) return null;
-  return <AnalyticsSimple label="Total Dues Collected" value={`$${data}`} />;
+  return <AnalyticsCard label="Total Dues Collected" value={`$${data}`} />;
 };
 
 export default DuesAnalyticsTotalCollectedCard;

@@ -1,7 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { IMember } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IMember } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { UPDATE_PAYMENT_METHOD, UpdatePaymentMethodArgs } from './Payment.gql';
 
@@ -20,18 +20,12 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
 
   if (!stripe) return null;
 
-  const onSubmit = async ({
-    goToNextPage,
-    items,
-    setErrorMessage
-  }: OnFormSubmitArgs) => {
-    const line1 = items.find(({ title }) => title === 'Billing Address').value;
-    const city = items.find(({ title }) => title === 'City').value;
-    const state = items.find(({ title }) => title === 'State').value;
-    const postalCode = items.find(({ title }) => title === 'Zip Code').value;
-
-    const nameOnCard = items.find(({ title }) => title === 'Name on Card')
-      .value;
+  const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {
+    const city = items.CITY.value;
+    const line1 = items.BILLING_ADDRESS.value;
+    const nameOnCard = items.NAME_ON_CARD.value;
+    const postalCode = items.ZIP_CODE.value;
+    const state = items.STATE.value;
 
     // Create the payment method via the Stripe SDK.
     const stripeResult = await stripe.createPaymentMethod({
@@ -46,7 +40,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     // If the card information is incorrect or doesn't work for some reason,
     // show that error message.
     if (stripeResult.error) {
-      setErrorMessage(stripeResult.error.message);
+      setError(stripeResult.error.message);
       return;
     }
 
@@ -58,13 +52,13 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     });
 
     if (updateError) {
-      setErrorMessage(updateError);
+      setError(updateError);
       return;
     }
 
     // Success! Update the member entity just in case the membership type
-    // changed or their duesStatus changed.
-    goToNextPage();
+    // changed or their status changed.
+    goForward();
   };
 
   return onSubmit;

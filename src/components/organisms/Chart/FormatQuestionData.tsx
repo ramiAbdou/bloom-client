@@ -9,7 +9,7 @@ import {
   IMemberType,
   IQuestion,
   IUser
-} from '@store/entities';
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import Chart from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
@@ -21,7 +21,7 @@ const useQuestionData = (): Pick<
   const questionId = Chart.useStoreState((store) => store.questionId);
 
   const questionType: QuestionType = useStoreState(
-    ({ db }) => db.entities.questions.byId[questionId]?.type
+    ({ db }) => db.byQuestionId[questionId]?.type
   );
 
   // Construct the data array and calculate the number of responses that
@@ -29,40 +29,35 @@ const useQuestionData = (): Pick<
   const result: ChartModelInitArgs = useStoreState(({ db }) => {
     const record: Record<string, number> = {};
 
-    const { byId: byDataId } = db.entities.data;
-    const { byId: byMemberId } = db.entities.members;
-    const { byId: byQuestionId } = db.entities.questions;
-    const { byId: byTypeId } = db.entities.types;
-    const { byId: byUserId } = db.entities.users;
-
     const { members } = db.community;
 
     // If the community doesn't have members loaded yet,
     if (!members?.length || !questionId) return { data: [], totalResponses: 0 };
 
-    const { category }: IQuestion = byQuestionId[questionId];
+    const { category }: IQuestion = db.byQuestionId[questionId];
 
     // Initialize a counter for the number of meaningful responses.
     let totalResponses = 0;
 
     members.forEach((memberId: string) => {
-      const member: IMember = byMemberId[memberId];
-      const type: IMemberType = byTypeId[member.type];
-      const user: IUser = byUserId[member.user];
+      const member: IMember = db.byMemberId[memberId];
+      const type: IMemberType = db.byTypeId[member.type];
+      const user: IUser = db.byUserId[member.user];
 
       let value;
 
-      if (category === 'MEMBERSHIP_TYPE') value = type.name;
+      if (category === 'MEMBERSHIP_TYPE') value = type?.name;
       else if (category === 'GENDER') value = user.gender;
-      else if (category === 'DUES_STATUS') value = member.duesStatus;
-      else {
+      else if (category === 'DUES_STATUS') {
+        value = member.isDuesActive ? 'Active' : 'Inactive';
+      } else {
         const d = member.data.find((dataId: string) => {
-          const data: IMemberData = byDataId[dataId];
-          const question: IQuestion = byQuestionId[data.question];
+          const data: IMemberData = db.byDataId[dataId];
+          const question: IQuestion = db.byQuestionId[data.question];
           return question.id === questionId;
         });
 
-        value = byDataId[d]?.value;
+        value = db.byDataId[d]?.value;
       }
 
       if (!value) return;
@@ -114,7 +109,7 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
   const setType = Chart.useStoreActions((store) => store.setType);
 
   const type: QuestionType = useStoreState(
-    ({ db }) => db.entities.questions.byId[questionId]?.type
+    ({ db }) => db.byQuestionId[questionId]?.type
   );
 
   const { data, totalResponses } = useQuestionData();

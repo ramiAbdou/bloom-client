@@ -1,7 +1,5 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IMember, IMemberData, IUser } from '@store/entities';
-
 // ## GET MEMBER DATA
 
 export interface GetMemberDataArgs {
@@ -12,32 +10,38 @@ export const GET_MEMBER_DATA = query({
   fields: [
     'id',
     { data: ['id', 'value', { question: ['id'] }] },
-    {
-      community: [
-        'id',
-        {
-          questions: [
-            'id',
-            'category',
-            'description',
-            'onlyInApplication',
-            'options',
-            'required',
-            'title',
-            'type'
-          ]
-        }
-      ]
-    }
+    { community: ['id'] }
   ],
   operation: 'getMember',
   variables: { populate: { required: false, type: '[String!]' } }
 }).query;
 
+// ## GET MEMBER DATA QUESTIONS
+
+export const GET_MEMBER_DATA_QUESTIONS = query({
+  fields: [
+    'id',
+    'category',
+    'description',
+    'onlyInApplication',
+    'options',
+    'required',
+    'title',
+    'type',
+    { community: ['id'] }
+  ],
+  operation: 'getQuestions'
+}).query;
+
 // ## UPDATE MEMBER DATA
 
+interface MemberDataArgs {
+  questionId: string;
+  value: string[];
+}
+
 export interface UpdateMemberDataArgs {
-  items: Pick<IMemberData, 'id' | 'value'>[];
+  items: MemberDataArgs[];
 }
 
 export const UPDATE_MEMBER_DATA = mutation({
@@ -50,45 +54,42 @@ export const UPDATE_MEMBER_DATA = mutation({
 
 export interface UpdateUserArgs {
   bio?: string;
-  facebookUrl?: string;
   firstName?: string;
-  instagramUrl?: string;
   lastName?: string;
-  linkedInUrl?: string;
   pictureUrl?: string;
-  twitterUrl?: string;
-}
-
-export interface UpdateUserResult {
-  member: IMember;
-  user: IUser;
 }
 
 export const UPDATE_USER = mutation({
   fields: [
-    {
-      user: [
-        'id',
-        'facebookUrl',
-        'firstName',
-        'instagramUrl',
-        'lastName',
-        'linkedInUrl',
-        'pictureUrl',
-        'twitterUrl'
-      ]
-    },
-    { member: ['id', 'bio'] }
+    'id',
+    'bio',
+    { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
   ],
   operation: 'updateUser',
   variables: {
     bio: { required: false },
-    facebookUrl: { required: false },
     firstName: { required: false },
-    instagramUrl: { required: false },
     lastName: { required: false },
+    pictureUrl: { required: false }
+  }
+}).query;
+
+// ## UPDATE USER SOCIALS
+
+export interface UpdateUserSocialsArgs {
+  facebookUrl?: string;
+  instagramUrl?: string;
+  linkedInUrl?: string;
+  twitterUrl?: string;
+}
+
+export const UPDATE_USER_SOCIALS = mutation({
+  fields: ['id', 'facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+  operation: 'updateUserSocials',
+  variables: {
+    facebookUrl: { required: false },
+    instagramUrl: { required: false },
     linkedInUrl: { required: false },
-    pictureUrl: { required: false },
     twitterUrl: { required: false }
   }
 }).query;

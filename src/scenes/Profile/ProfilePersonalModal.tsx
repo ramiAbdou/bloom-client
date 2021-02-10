@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { ModalType } from '@constants';
 import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormItem from '@organisms/Form/FormItem';
+import FormHeader from '@organisms/Form/FormHeader';
+import FormImage from '@organisms/Form/FormImage';
+import FormLongText from '@organisms/Form/FormLongText';
+import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import Modal from '@organisms/Modal/Modal';
-import ModalContentContainer from '@organisms/Modal/ModalContentContainer';
 import { useStoreState } from '@store/Store';
 import useUpdateUser from './useUpdateUser';
 
@@ -19,36 +18,20 @@ const ProfilePersonalModal: React.FC = () => {
   const updateUser = useUpdateUser();
 
   return (
-    <Modal id={ModalType.EDIT_PERSONAL_INFORMATION}>
-      <h1>Edit Personal Information</h1>
+    <Form onSubmit={updateUser}>
+      <FormHeader title="Edit Personal Information" />
+      <FormImage id="PROFILE_PICTURE" value={pictureUrl} />
 
-      <Form onSubmit={updateUser}>
-        <ModalContentContainer>
-          <FormItem id="profilePicture" type="IMAGE" value={pictureUrl} />
+      <FormShortText
+        category="FIRST_NAME"
+        title="First Name"
+        value={firstName}
+      />
 
-          <FormItem
-            required
-            category="FIRST_NAME"
-            title="First Name"
-            type="SHORT_TEXT"
-            value={firstName}
-          />
-
-          <FormItem
-            required
-            category="LAST_NAME"
-            title="Last Name"
-            type="SHORT_TEXT"
-            value={lastName}
-          />
-
-          <FormItem id="bio" title="Bio" type="LONG_TEXT" value={bio} />
-        </ModalContentContainer>
-
-        <FormErrorMessage />
-        <FormSubmitButton>Save</FormSubmitButton>
-      </Form>
-    </Modal>
+      <FormShortText category="LAST_NAME" title="Last Name" value={lastName} />
+      <FormLongText id="BIO" required={false} title="Bio" value={bio} />
+      <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
+    </Form>
   );
 };
 

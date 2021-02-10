@@ -1,6 +1,6 @@
 import React from 'react';
 
-import bloom from './images/bloom.svg';
+import Logo from '@images/bloom.svg';
 
 interface LogoProps {
   multiplier?: number; // Changes the size of the logo dynamically.
@@ -17,7 +17,7 @@ const BloomLogo: React.FC<LogoProps> = ({ multiplier }) => {
 
   return (
     <button>
-      <img alt="Bloom Logo" className="c-misc-logo" src={bloom} style={style} />
+      <Logo className="c-misc-logo" style={style} />
     </button>
   );
 };

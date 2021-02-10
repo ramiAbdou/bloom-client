@@ -1,16 +1,17 @@
 import React from 'react';
 
-import Button from '@atoms/Button';
-import { ModalType } from '@constants';
+import Button from '@atoms/Button/Button';
+import { ModalType, PopulateArgs } from '@constants';
 import Card from '@containers/Card/Card';
 import useQuery from '@hooks/useQuery';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import { IMemberData, IQuestion } from '@store/entities';
-import { Schema } from '@store/schema';
+import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_MEMBER_DATA } from './Profile.gql';
+import { sortObjects } from '@util/util';
+import { GET_MEMBER_DATA, GET_MEMBER_DATA_QUESTIONS } from './Profile.gql';
 import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileMembershipHeader: React.FC = () => {
@@ -19,27 +20,31 @@ const ProfileMembershipHeader: React.FC = () => {
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
+
+  const onClick = () =>
+    showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
 
   return <ProfileCardHeader canEdit title={title} onEditClick={onClick} />;
 };
 
 const ProfileMembershipContent: React.FC = () => {
   const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
-    const { byId: byDataId } = db.entities.data;
-    const { byId: byQuestionId } = db.entities.questions;
-
     const questions: IQuestion[] = db.community.questions
-      ?.map((questionId: string) => byQuestionId[questionId])
-      .filter((question: IQuestion) => !question.onlyInApplication)
-      .filter((question: IQuestion) => !question.category);
+      ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.filter((question: IQuestion) => !question.onlyInApplication)
+      ?.filter((question: IQuestion) => !question.category)
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'ASC'));
+
+    const data: IMemberData[] = db.member.data?.map(
+      (dataId: string) => db.byDataId[dataId]
+    );
 
     return questions?.map(({ id, title, type }: IQuestion) => {
-      const data: IMemberData = Object.values(byDataId).find(
-        (element: IMemberData) => element.question === id
-      );
+      const value: any = data?.find(
+        (entity: IMemberData) => entity?.question === id
+      )?.value;
 
-      return { title, type, value: data?.value };
+      return { title, type, value };
     });
   });
 
@@ -47,32 +52,37 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const hasData = useStoreState(({ db }) => !!db.member.data?.length);
+  const hasData: boolean = useStoreState(({ db }) => !!db.member.data);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  if (hasData) return null;
-
-  const onClick = () => showModal(ModalType.EDIT_MEMBERSHIP_INFORMATION);
+  const onClick = () =>
+    showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
 
   return (
-    <Button fill primary onClick={onClick}>
+    <Button fill primary show={!hasData} onClick={onClick}>
       + Fill Out Membership Information
     </Button>
   );
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const { loading } = useQuery({
+  const { loading: loading1 } = useQuery<IMember, PopulateArgs>({
     name: 'getMember',
     query: GET_MEMBER_DATA,
     schema: Schema.MEMBER,
     variables: { populate: ['community.questions', 'data.question'] }
   });
 
-  if (loading) return null;
+  const { loading: loading2 } = useQuery<IQuestion[]>({
+    name: 'getQuestions',
+    query: GET_MEMBER_DATA_QUESTIONS,
+    schema: [Schema.QUESTION]
+  });
+
+  const loading = loading1 && loading2;
 
   return (
-    <Card className="s-profile-card--membership">
+    <Card className="s-profile-card--membership" show={!loading}>
       <ProfileMembershipHeader />
       <ProfileMembershipContent />
       <ProfileMembershipOnboardingContainer />

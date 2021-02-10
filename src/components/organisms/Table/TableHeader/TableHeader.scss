@@ -1,6 +1,6 @@
 // ## TABLE HEADER CELL
 
-$PREF: 'c-table';
+$PREF: 'o-table';
 
 th {
   @extend .#{$PREF}-cell;
@@ -45,8 +45,8 @@ th {
   // horizontal scrolling hide the other cells under this first one.
   &--fixed { left: 0; z-index: 12; }
 
-  // When the picker is showing, we keep the background-color dark.
-  &--picker { background-color: $gray-5; }
+  // When the panel is showing, we keep the background-color dark.
+  &--panel { background-color: $gray-5; }
 
   &--sortable {
     cursor: pointer;
@@ -61,4 +61,6 @@ th {
     // element.
     > div > svg { @extend .react-icon--sm; color: $primary; margin-left: $xs; }
   }
+
+  &--right { > div > *:last-child { margin-left: auto; text-align: right; } }
 }

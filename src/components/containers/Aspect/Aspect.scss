@@ -1,0 +1,22 @@
+$PREF: 't-aspect';
+
+// ## ASPECT RATIO CONTAINER
+
+.#{$PREF} {
+  position: relative;
+  width: 100%;
+
+  &::before { content: ''; display: block; }
+
+  &--1::before { aspect-ratio: 1; }
+  &--2::before { aspect-ratio: 2; }
+
+  > * {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+}

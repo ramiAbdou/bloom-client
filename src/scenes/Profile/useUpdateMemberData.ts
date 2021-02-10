@@ -1,36 +1,39 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { IMemberData } from '@store/entities';
-import { Schema } from '@store/schema';
-import { useStoreActions } from '@store/Store';
+import { IMemberData } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { UPDATE_MEMBER_DATA, UpdateMemberDataArgs } from './Profile.gql';
 
-const useUpdateUser = (): OnFormSubmit => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
-
+const useUpdateMemberData = (): OnFormSubmit => {
   const [updateMemberData] = useMutation<IMemberData[], UpdateMemberDataArgs>({
     name: 'updateMemberData',
     query: UPDATE_MEMBER_DATA,
     schema: [Schema.MEMBER_DATA]
   });
 
-  const onSubmit = async ({ items, setErrorMessage }: OnFormSubmitArgs) => {
-    const { error } = await updateMemberData({
-      items: items.map(({ id, value }) => ({ id, value }))
-    });
+  const onSubmit = async ({
+    closeModal,
+    items,
+    setError,
+    showToast
+  }: OnFormSubmitArgs) => {
+    const data = Object.values(items).map(({ questionId, value }) => ({
+      questionId,
+      value
+    }));
+
+    const { error } = await updateMemberData({ items: data });
 
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
 
     showToast({ message: 'Membership information updated.' });
-    setTimeout(closeModal, 0);
     closeModal();
   };
 
   return onSubmit;
 };
 
-export default useUpdateUser;
+export default useUpdateMemberData;
