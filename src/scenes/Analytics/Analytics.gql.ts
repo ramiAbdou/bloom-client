@@ -1,29 +1,5 @@
 import { query } from 'gql-query-builder';
 
-// ## GET ACTIVE DUES GROWTH
-
-export const GET_ACTIVE_DUES_GROWTH = query({
-  operation: 'getActiveDuesGrowth'
-}).query;
-
-// ## GET ACTIVE MEMBERS GROWTH
-
-export const GET_ACTIVE_MEMBERS_GROWTH = query({
-  operation: 'getActiveMembersGrowth'
-}).query;
-
-export const GET_ACTIVE_MEMBERS_SERIES = query({
-  fields: ['name', 'value'],
-  operation: 'getActiveMembersSeries'
-}).query;
-
-// ## GET EVENT ATTENDEES SERIES
-
-export const GET_EVENT_ATTENDEES_SERIES = query({
-  fields: ['name', 'value'],
-  operation: 'getEventAttendeesSeries'
-}).query;
-
 // ## GET PAST EVENT ATTENDEES
 
 export const GET_PAST_EVENT_ATTENDEES = query({
@@ -94,26 +70,4 @@ export const GET_PAYMENTS = query({
     { type: ['id'] }
   ],
   operation: 'getPayments'
-}).query;
-
-// ## GET TOTAL DUES GROWTH
-
-export const GET_TOTAL_DUES_GROWTH = query({
-  operation: 'getTotalDuesGrowth'
-}).query;
-
-export const GET_TOTAL_DUES_SERIES = query({
-  fields: ['name', 'value'],
-  operation: 'getTotalDuesSeries'
-}).query;
-
-// ## GET TOTAL MEMBERS GROWTH
-
-export const GET_TOTAL_MEMBERS_GROWTH = query({
-  operation: 'getTotalMembersGrowth'
-}).query;
-
-export const GET_TOTAL_MEMBERS_SERIES = query({
-  fields: ['name', 'value'],
-  operation: 'getTotalMembersSeries'
 }).query;

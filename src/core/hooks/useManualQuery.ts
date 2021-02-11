@@ -7,7 +7,6 @@ import { UseMutationResult } from './useMutation.types';
 import { UseQueryArgs, UseQueryResult } from './useQuery.types';
 
 function useManualQuery<T = any, S = any>({
-  format,
   query,
   name,
   schema,
@@ -43,10 +42,7 @@ function useManualQuery<T = any, S = any>({
   // Updates the global entities store if a schema is passed in. Also formats
   // the data to match the schema if need be.
   useEffect(() => {
-    if (result.data && schema) {
-      const formattedData = format ? format(result.data) : result.data;
-      mergeEntities({ data: formattedData, schema });
-    }
+    if (result.data && schema) mergeEntities({ data: result.data, schema });
   }, [result.data, memoizedSchema]);
 
   return [typedManualQueryFn, result];

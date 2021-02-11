@@ -5,7 +5,6 @@ import useQuery from '@hooks/useQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { GET_MEMBER_PROFILE, GetMemberProfileArgs } from './MemberProfile.gql';
 import MemberProfileStore from './MemberProfile.store';
 import MemberProfileData from './MemberProfileData';
 import MemberProfileHistory from './MemberProfileHistory';
@@ -14,10 +13,11 @@ import MemberProfilePersonal from './MemberProfilePersonal';
 const MemberProfile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data, error, loading } = useQuery<IMember, GetMemberProfileArgs>({
+  const { data, error, loading } = useQuery<IMember>({
+    fields: ['id', 'bio', 'joinedAt', { type: ['id'] }, { user: ['id'] }],
     name: 'getMember',
-    query: GET_MEMBER_PROFILE,
     schema: Schema.MEMBER,
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 

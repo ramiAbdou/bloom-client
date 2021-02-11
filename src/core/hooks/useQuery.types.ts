@@ -1,11 +1,14 @@
+import Fields from 'gql-query-builder/build/Fields';
+import VariableOptions from 'gql-query-builder/build/VariableOptions';
 import { Schema } from 'normalizr';
 
 export interface UseQueryArgs<T, S> {
-  fields?: string[];
-  format?: (data: T) => any;
+  fields?: Fields;
   name: string;
   query?: string;
+  operation?: string;
   schema?: Schema;
+  types?: VariableOptions;
   variables?: S;
 }
 

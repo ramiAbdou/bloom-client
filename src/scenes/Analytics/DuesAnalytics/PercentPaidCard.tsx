@@ -2,17 +2,19 @@ import React from 'react';
 
 import AnalyticsCard from '@containers/Card/AnalyticsCard';
 import useQuery from '@hooks/useQuery';
-import { GET_ACTIVE_DUES_GROWTH } from '../Analytics.gql';
 
 const DuesAnalyticsPercentPaidCard: React.FC = () => {
   const { data, loading } = useQuery<number>({
-    name: 'getActiveDuesGrowth',
-    query: GET_ACTIVE_DUES_GROWTH
+    name: 'getActiveDuesGrowth'
   });
 
-  if (loading) return null;
-
-  return <AnalyticsCard label="Percent of Members Paid" value={`${data}%`} />;
+  return (
+    <AnalyticsCard
+      label="Percent of Members Paid"
+      show={!loading}
+      value={data && `${data}%`}
+    />
+  );
 };
 
 export default DuesAnalyticsPercentPaidCard;

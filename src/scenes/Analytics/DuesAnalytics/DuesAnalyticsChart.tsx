@@ -4,13 +4,12 @@ import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
-import { GET_TOTAL_DUES_SERIES } from '../Analytics.gql';
 import { TimeSeriesData } from '../Analytics.types';
 
 const DuesAnalyticsChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
-    name: 'getTotalDuesSeries',
-    query: GET_TOTAL_DUES_SERIES
+    fields: ['name', 'value'],
+    name: 'getTotalDuesSeries'
   });
 
   return (

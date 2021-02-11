@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
@@ -96,23 +95,27 @@ const MemberProfilePersonalInformation: React.FC = () => (
 const MemberProfilePersonal: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);
 
-  const { loading } = useQuery<IUser, GetUserArgs>({
+  useQuery<IUser, GetUserArgs>({
+    fields: [
+      'email',
+      'facebookUrl',
+      'id',
+      'instagramUrl',
+      'linkedInUrl',
+      'twitterUrl'
+    ],
     name: 'getUser',
-    query: GET_USER,
     schema: Schema.USER,
+    types: { userId: { required: false } },
     variables: { userId }
   });
 
   return (
-    <>
-      <Spinner show={loading} />
-
-      <div className="mo-member-profile-user-ctr">
-        <MemberProfilePersonalPicture />
-        <MemberProfilePersonalInformation />
-        <MemberProfileSocialContainer />
-      </div>
-    </>
+    <div className="mo-member-profile-user-ctr">
+      <MemberProfilePersonalPicture />
+      <MemberProfilePersonalInformation />
+      <MemberProfileSocialContainer />
+    </div>
   );
 };
 
