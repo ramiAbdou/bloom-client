@@ -42,7 +42,7 @@ const MemberProfileData: React.FC = () => {
     variables: { memberId }
   });
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner show />;
 
   return (
     <Show show={items?.some(({ value }) => !!value)}>

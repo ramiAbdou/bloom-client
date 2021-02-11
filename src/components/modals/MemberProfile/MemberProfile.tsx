@@ -15,7 +15,7 @@ const MemberProfile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const { data, error, loading } = useQuery<IMember, GetMemberProfileArgs>({
-    name: 'getMemberProfile',
+    name: 'getMember',
     query: GET_MEMBER_PROFILE,
     schema: Schema.MEMBER,
     variables: { memberId }

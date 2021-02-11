@@ -52,7 +52,7 @@ const LoadingHeader: React.FC<LoadingHeaderProps> = ({
         <LoadingHeaderBackButton onBack={onBack} />
         <LoadingHeaderTitle {...titleProps} />
         {!loading && headerTag && <HeaderTag>{headerTag}</HeaderTag>}
-        <Spinner dark loading={loading} />
+        <Spinner dark show={loading} />
       </header>
     </Show>
   );

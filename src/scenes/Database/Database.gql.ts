@@ -46,16 +46,13 @@ export const PROMOTE_MEMBERS = mutation({
 
 // RENAME QUESTION
 
-export interface RenameQuestionArgs {
-  id: string;
+export interface UpdateQuestionArgs {
+  questionId: string;
   title: string;
 }
 
-export const RENAME_QUESTION = mutation({
+export const UPDATE_QUESTION = mutation({
   fields: ['id', 'title'],
-  operation: 'renameQuestion',
-  variables: {
-    id: { required: true },
-    title: { required: true }
-  }
+  operation: 'updateQuestion',
+  variables: { questionId: { required: true }, title: { required: true } }
 }).query;

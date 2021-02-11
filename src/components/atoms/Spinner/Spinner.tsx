@@ -1,19 +1,19 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import { LoadingProps } from '@constants';
+import { ShowProps } from '@constants';
 import Show from '@containers/Show';
 import { cx } from '@util/util';
 
-interface SpinnerProps extends LoadingProps {
+interface SpinnerProps extends ShowProps {
   dark?: boolean;
 }
 
-const Spinner: React.FC<SpinnerProps> = ({ dark, loading = true }) => {
+const Spinner: React.FC<SpinnerProps> = ({ dark, show }) => {
   const css = cx('c-spinner', { 'c-spinner--dark': dark });
 
   return (
-    <Show show={!!loading}>
+    <Show show={!!show}>
       <motion.div
         animate={{ rotate: 360 }}
         className={css}

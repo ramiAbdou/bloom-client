@@ -12,8 +12,9 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IIntegrations, IQuestion } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { RENAME_QUESTION, RenameQuestionArgs } from '../Database.gql';
+import { UPDATE_QUESTION, UpdateQuestionArgs } from '../Database.gql';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
 
@@ -39,14 +40,15 @@ const MemberDatabase: React.FC = () => {
       });
   });
 
-  const [renameQuestion] = useMutation<IQuestion, RenameQuestionArgs>({
-    name: 'renameQuestion',
-    query: RENAME_QUESTION
+  const [updateQuestion] = useMutation<IQuestion, UpdateQuestionArgs>({
+    name: 'updateQuestion',
+    query: UPDATE_QUESTION,
+    schema: Schema.QUESTION
   });
 
   const onRenameColumn: OnRenameColumn = async ({ column, updateColumn }) => {
     const { title, id } = column;
-    const { error } = await renameQuestion({ id, title });
+    const { error } = await updateQuestion({ questionId: id, title });
     if (!error) updateColumn({ id, title });
   };
 

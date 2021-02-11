@@ -28,7 +28,7 @@ const ButtonLoadingContainer: React.FC<
     <Show show={!!loading}>
       <div className="c-btn-loading-ctr">
         <p>{loadingText}</p>
-        <Spinner dark={secondary} />
+        <Spinner show dark={secondary} />
       </div>
     </Show>
   );

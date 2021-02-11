@@ -59,7 +59,7 @@ const MainHeaderContent: React.FC<MainHeaderProps> = ({
         <MainHeaderBackButton show={!!backButton} />
         <h1>{title}</h1>
         <HeaderTag show={!loading && !!headerTag}>{headerTag}</HeaderTag>
-        <Spinner dark loading={loading} />
+        <Spinner dark show={loading} />
       </div>
 
       {!loading && <MainNavigation options={options} />}
