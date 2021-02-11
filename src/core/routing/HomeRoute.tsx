@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
+import Show from '@containers/Show';
 import useFinalPath from '@hooks/useFinalPath';
 import useQuery from '@hooks/useQuery';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
@@ -22,64 +23,45 @@ import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
-import { ICommunity, IMember, IUser } from '@store/Db/entities';
+import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
-import {
-  GET_INTEGRATIONS,
-  GET_QUESTIONS,
-  GET_TYPES,
-  GET_USER,
-  GetUserArgs
-} from './Router.gql';
+import { GET_USER, GetUserArgs } from './Router.gql';
+import useInitCommunity from './useInitCommunity';
 
 const HomeRouteContent: React.FC = () => {
-  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
+  const isInitialized: boolean = useStoreState(({ db }) => {
+    return !!db.community && !!db.member && !!db.user;
+  });
 
+  const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
+
+  useInitCommunity();
   const { url } = useRouteMatch();
 
-  const { loading: loading1 } = useQuery({
-    name: 'getQuestions',
-    query: GET_QUESTIONS,
-    schema: [Schema.QUESTION]
-  });
-
-  const { loading: loading2 } = useQuery({
-    name: 'getTypes',
-    query: GET_TYPES,
-    schema: [Schema.MEMBER_TYPE]
-  });
-
-  const { loading: loading3 } = useQuery({
-    name: 'getIntegrations',
-    query: GET_INTEGRATIONS,
-    schema: Schema.COMMUNITY_INTEGRATIONS
-  });
-
-  const loading = loading1 || loading2 || loading3;
-  useLoader(loading);
-
-  if (loading) return null;
-
   return (
-    <div className="home-content">
-      <Switch>
-        <Route component={Directory} path={`${url}/directory`} />
-        <Route component={Events} path={`${url}/events`} />
-        <AdminRoute component={Database} path={`${url}/database`} />
-        <AdminRoute component={Analytics} path={`${url}/analytics`} />
-        <AdminRoute component={Integrations} path={`${url}/integrations`} />
+    <Show show={isInitialized}>
+      <Nav />
 
-        {!autoAccept && (
-          <AdminRoute component={Applicants} path={`${url}/applicants`} />
-        )}
+      <div className="home-content">
+        <Switch>
+          <Route component={Directory} path={`${url}/directory`} />
+          <Route component={Events} path={`${url}/events`} />
+          <AdminRoute component={Database} path={`${url}/database`} />
+          <AdminRoute component={Analytics} path={`${url}/analytics`} />
+          <AdminRoute component={Integrations} path={`${url}/integrations`} />
 
-        <Route component={Membership} path={`${url}/membership`} />
-        <Route component={Profile} path={`${url}/profile`} />
-        <Redirect to={`${url}/directory`} />
-      </Switch>
-    </div>
+          {!autoAccept && (
+            <AdminRoute component={Applicants} path={`${url}/applicants`} />
+          )}
+
+          <Route component={Membership} path={`${url}/membership`} />
+          <Route component={Profile} path={`${url}/profile`} />
+          <Redirect to={`${url}/directory`} />
+        </Switch>
+      </div>
+    </Show>
   );
 };
 
@@ -89,21 +71,7 @@ const HomeRoute: React.FC = () => {
   const { url } = useRouteMatch();
   const finalPath = useFinalPath();
 
-  // const activeCommunityId = useStoreState(({ db }) => db.community?.id);
-  const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-
-  const isMember: boolean = useStoreState(({ db }) => {
-    const members: IMember[] = db.user?.members?.map((memberId: string) => {
-      return db.byMemberId[memberId];
-    });
-
-    return members?.some((member) => {
-      const community: ICommunity = db.byCommunityId[member.community];
-      return urlName === community.urlName;
-    });
-  });
-
   const setActive = useStoreActions(({ db }) => db.setActive);
 
   const { loading, data, error } = useQuery<IUser, GetUserArgs>({
@@ -113,18 +81,8 @@ const HomeRoute: React.FC = () => {
     variables: { urlName }
   });
 
-  console.log(data);
-
-  // const communityId = data?.activeCommunityId;
-
   useEffect(() => {
-    if (data) {
-      setActive({ id: data.id, table: 'users' });
-      // @ts-ignore b/c of type check.
-      setActive({ id: data.member?.id, table: 'members' });
-      // @ts-ignore b/c of type check.
-      setActive({ id: data.member?.community?.id, table: 'communities' });
-    }
+    if (data) setActive({ id: data.id, table: 'users' });
   }, [data]);
 
   useLoader(loading);
@@ -145,19 +103,12 @@ const HomeRoute: React.FC = () => {
     );
   }
   if (error) return <Redirect to="/login" />;
-  if (loading || !activeUrlName) return null;
-
-  // If the user isn't a member of the community who's URL we are currently
-  // sitting at, then we redirect them to the first community that they are
-  // a member of.
-  if (!isMember) return <Redirect to={`/${activeUrlName}`} />;
 
   // If they are a member, just return the requested content.
   return (
-    <>
-      <Nav />
+    <Show show={isAuthenticated}>
       <HomeRouteContent />
-    </>
+    </Show>
   );
 };
 

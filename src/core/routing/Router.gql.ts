@@ -1,6 +1,28 @@
 import { mutation, query } from 'gql-query-builder';
 
-import { IUser } from '@store/Db/entities';
+// ## GET COMMUNITY
+
+export const GET_COMMUNITY = query({
+  fields: ['autoAccept', 'id', 'logoUrl', 'name', 'primaryColor', 'urlName'],
+  operation: 'getCommunity'
+}).query;
+
+// ## GET MEMBER
+
+export const GET_MEMBER = query({
+  fields: [
+    'autoRenew',
+    'bio',
+    'id',
+    'isDuesActive',
+    'role',
+    'status',
+    { community: ['id'] },
+    { type: ['id'] },
+    { user: ['id'] }
+  ],
+  operation: 'getMember'
+}).query;
 
 // ## GET INTEGRATIONS
 
@@ -56,7 +78,6 @@ export interface GetUserArgs {
 
 export const GET_USER = query({
   fields: [
-    // 'activeCommunityId',
     'createdAt',
     'email',
     'facebookUrl',
@@ -68,20 +89,7 @@ export const GET_USER = query({
     'pictureUrl',
     'twitterUrl',
     { member: ['id', { community: ['id', 'primaryColor'] }] },
-    {
-      members: [
-        'autoRenew',
-        'bio',
-        'id',
-        'isDuesActive',
-        'role',
-        'status',
-        {
-          community: ['autoAccept', 'id', 'logoUrl', 'name', 'urlName']
-        },
-        { type: ['id'] }
-      ]
-    }
+    { members: ['id', { community: ['id', 'logoUrl', 'urlName'] }] }
   ],
   operation: 'getUser',
   variables: { urlName: { required: false } }

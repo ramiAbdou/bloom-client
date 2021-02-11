@@ -6,22 +6,15 @@ import useQuery from '@hooks/useQuery';
 import { useStoreActions } from '@store/Store';
 import { IS_USER_LOGGED_IN, VERIFY_TOKEN, VerifyTokenArgs } from './Router.gql';
 
-const useInitRouter = (): boolean => {
+/**
+ * Verifies the login token if one is present in the SearchParams. Will exist
+ * if user logs in from email.
+ */
+const useVerifyToken = (): boolean => {
   const token = new URLSearchParams(window.location.search).get('token');
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
-  const {
-    loading: isUserLoggedInLoading,
-    data: isAuthenticated
-  } = useQuery<boolean>({
-    name: 'isUserLoggedIn',
-    query: IS_USER_LOGGED_IN
-  });
-
-  const [verifyToken, { loading: isVerifyTokenLoading }] = useManualQuery<
-    boolean,
-    VerifyTokenArgs
-  >({
+  const [verifyToken, { loading }] = useManualQuery<boolean, VerifyTokenArgs>({
     name: 'verifyToken',
     query: VERIFY_TOKEN,
     variables: { token }
@@ -39,11 +32,32 @@ const useInitRouter = (): boolean => {
     })();
   }, [token]);
 
-  useEffect(() => {
-    setIsAuthenticated(isAuthenticated);
-  }, [isAuthenticated, token]);
-
-  return isUserLoggedInLoading || isVerifyTokenLoading;
+  return loading;
 };
 
-export default useInitRouter;
+/**
+ * Updates the authenticated status of the user by checking the httpOnly
+ * cookies stored in the browser.
+ */
+const useIsUserLoggedIn = (): boolean => {
+  const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
+
+  const { loading, data: isAuthenticated } = useQuery<boolean>({
+    name: 'isUserLoggedIn',
+    query: IS_USER_LOGGED_IN
+  });
+
+  useEffect(() => {
+    setIsAuthenticated(isAuthenticated);
+  }, [isAuthenticated]);
+
+  return loading;
+};
+
+const useIsAuthenticated = (): boolean => {
+  const loading1 = useIsUserLoggedIn();
+  const loading2 = useVerifyToken();
+  return loading1 || loading2;
+};
+
+export default useIsAuthenticated;

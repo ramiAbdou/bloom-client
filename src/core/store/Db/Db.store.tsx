@@ -6,7 +6,8 @@ import {
   IEvent,
   IIntegrations,
   IMember,
-  initialEntities
+  initialEntities,
+  IUser
 } from '@store/Db/entities';
 import { updateDocumentColors } from '@util/colorUtil';
 import { AddEntitiesArgs, DbModel, SetActiveArgs } from './Db.types';
@@ -67,8 +68,10 @@ const dbStore: DbModel = {
       (typeId: string) => !byTypeId[typeId]?.isFree
     );
 
+    if (!result) return null;
+
     // Updates the primary color (and gray's accordingly).
-    if (result) updateDocumentColors(result.primaryColor ?? '#f58023');
+    updateDocumentColors(result.primaryColor ?? '#f58023');
 
     return {
       ...result,
@@ -120,7 +123,7 @@ const dbStore: DbModel = {
    */
   user: computed(({ entities }) => {
     const { activeId, byId } = entities.users;
-    return byId[activeId];
+    return byId[activeId] as IUser;
   })
 };
 

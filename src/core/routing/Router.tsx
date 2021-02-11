@@ -6,7 +6,7 @@ import Show from '@containers/Show';
 import useLoader from '@organisms/Loader/useLoader';
 import Application from '@scenes/Application/Application';
 import HomeRoute from './HomeRoute';
-import useInitRouter from './useInitRouter';
+import useIsAuthenticated from './useIsAuthenticated';
 
 /**
  * Core routing logic of the entire application. Nested logic should live
@@ -14,7 +14,7 @@ import useInitRouter from './useInitRouter';
  * most nested logic within it.
  */
 const Router: React.FC = () => {
-  const loading = useInitRouter();
+  const loading = useIsAuthenticated();
   useLoader(loading);
 
   return (
