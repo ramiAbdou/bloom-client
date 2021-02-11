@@ -72,7 +72,8 @@ const HomeRoute: React.FC = () => {
   const { loading, data, error } = useQuery<IUser>({
     name: 'getUser',
     query: GET_USER,
-    schema: Schema.USER
+    schema: Schema.USER,
+    variables: { populate: ['members.community'] }
   });
 
   useEffect(() => {

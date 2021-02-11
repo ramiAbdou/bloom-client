@@ -1,15 +1,15 @@
 import React from 'react';
 
+import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import { GET_USER, GetUserArgs } from '@store/Db/Db.gql';
 import { IMember, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { GET_USER, GetUserArgs } from '../../../core/store/Db/Db.gql';
-import Spinner from '../../atoms/Spinner/Spinner';
 import MemberProfileStore from './MemberProfile.store';
 import MemberProfileSocialContainer from './MemberProfileSocial';
 

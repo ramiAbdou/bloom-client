@@ -1,5 +1,7 @@
 import { mutation, query } from 'gql-query-builder';
 
+import { PopulateArgs } from '@constants';
+
 // ## GET COMMUNITY
 
 export const GET_COMMUNITY = query({
@@ -89,7 +91,7 @@ export const GET_TYPES = query({
 
 // ## GET USER
 
-export interface GetUserArgs {
+export interface GetUserArgs extends PopulateArgs {
   userId?: string;
 }
 
@@ -108,7 +110,10 @@ export const GET_USER = query({
     { members: ['joinedAt', 'id', { community: ['id', 'logoUrl', 'urlName'] }] }
   ],
   operation: 'getUser',
-  variables: { userId: { required: false } }
+  variables: {
+    populate: { required: false, type: '[String!]' },
+    userId: { required: false }
+  }
 }).query;
 
 // ## IS LOGGED IN
