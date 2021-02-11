@@ -24,7 +24,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     CreateSubscriptionResult,
     CreateSubscriptionArgs
   >({
-    name: 'createSubscription',
+    operation: 'createSubscription',
     query: CREATE_SUBSCRIPTION,
     schema: Schema.MEMBER_PAYMENT
   });

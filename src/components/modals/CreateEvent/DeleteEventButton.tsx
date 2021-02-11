@@ -20,7 +20,7 @@ const DeleteEventButton: React.FC = () => {
       refs: [{ column: 'events', id: communityId, table: 'communities' }],
       table: 'events'
     },
-    name: 'deleteEvent',
+    operation: 'deleteEvent',
     query: DELETE_EVENT,
     variables: { id }
   });

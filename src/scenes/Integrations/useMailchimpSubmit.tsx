@@ -11,7 +11,7 @@ const useMailchimpSubmit = (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
 
   const [updateMailchimpListId] = useMutation<any, UpdateMailchimpListIdArgs>({
-    name: 'updateMailchimpListId',
+    operation: 'updateMailchimpListId',
     query: UPDATE_MAILCHIMP_LIST_ID,
     schema: Schema.COMMUNITY_INTEGRATIONS
   });

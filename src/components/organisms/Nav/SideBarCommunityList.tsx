@@ -18,7 +18,7 @@ const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
   }) as ICommunity;
 
   const [switchMember, { loading }] = useMutation<boolean, SwitchMemberArgs>({
-    name: 'switchMember',
+    operation: 'switchMember',
     query: SWITCH_MEMBER,
     variables: { memberId }
   });

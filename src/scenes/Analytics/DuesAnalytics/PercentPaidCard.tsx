@@ -5,7 +5,7 @@ import useQuery from '@hooks/useQuery';
 
 const DuesAnalyticsPercentPaidCard: React.FC = () => {
   const { data, loading } = useQuery<number>({
-    name: 'getActiveDuesGrowth'
+    operation: 'getActiveDuesGrowth'
   });
 
   return (

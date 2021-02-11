@@ -18,7 +18,7 @@ const IndividualEventRecordingForm: React.FC = () => {
     IEvent,
     Pick<IEvent, 'id' | 'recordingUrl'>
   >({
-    name: 'updateRecordingLink',
+    operation: 'updateRecordingLink',
     query: UPDATE_RECORDING_LINK,
     schema: Schema.EVENT
   });

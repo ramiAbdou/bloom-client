@@ -4,7 +4,7 @@ import { IS_EMAIL_TAKEN, IsEmailTakenArgs } from './Application.gql';
 
 const useValidateEmail = () => {
   const [isEmailTaken] = useMutation<boolean, IsEmailTakenArgs>({
-    name: 'isEmailTaken',
+    operation: 'isEmailTaken',
     query: IS_EMAIL_TAKEN
   });
 

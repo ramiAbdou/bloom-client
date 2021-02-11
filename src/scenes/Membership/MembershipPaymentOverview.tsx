@@ -11,7 +11,7 @@ import MembershipPaymentTable from './MembershipPaymentTable';
 
 const MembershipPaymentOverview: React.FC = () => {
   const { loading } = useQuery<IMemberPayment[]>({
-    name: 'getMemberPayments',
+    operation: 'getMemberPayments',
     query: GET_MEMBER_PAYMENTS,
     schema: [Schema.MEMBER_PAYMENT]
   });

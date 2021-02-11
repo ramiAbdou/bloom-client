@@ -104,7 +104,7 @@ const MemberProfilePersonal: React.FC = () => {
       'linkedInUrl',
       'twitterUrl'
     ],
-    name: 'getUser',
+    operation: 'getUser',
     schema: Schema.USER,
     types: { userId: { required: false } },
     variables: { userId }

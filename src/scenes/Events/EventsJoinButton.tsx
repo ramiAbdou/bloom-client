@@ -28,7 +28,7 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
     IEventAttendee,
     CreateEventAttendeeArgs
   >({
-    name: 'createEventAttendee',
+    operation: 'createEventAttendee',
     query: CREATE_EVENT_ATTENDEE,
     schema: Schema.EVENT_ATTENDEE,
     variables: { eventId }

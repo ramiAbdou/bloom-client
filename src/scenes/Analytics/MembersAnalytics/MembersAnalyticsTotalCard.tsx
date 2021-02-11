@@ -5,7 +5,7 @@ import useQuery from '@hooks/useQuery';
 
 const MembersAnalyticsTotalCard: React.FC = () => {
   const { data, loading } = useQuery<[number, number]>({
-    name: 'getTotalMembersGrowth'
+    operation: 'getTotalMembersGrowth'
   });
 
   return (

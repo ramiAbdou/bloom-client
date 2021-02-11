@@ -15,7 +15,7 @@ const MemberProfile: React.FC = () => {
 
   const { data, error, loading } = useQuery<IMember>({
     fields: ['id', 'bio', 'joinedAt', { type: ['id'] }, { user: ['id'] }],
-    name: 'getMember',
+    operation: 'getMember',
     schema: Schema.MEMBER,
     types: { memberId: { required: false } },
     variables: { memberId }

@@ -56,7 +56,7 @@ const PaymentModal: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
 
   const { loading } = useQuery<ICommunity>({
-    name: 'getIntegrations',
+    operation: 'getIntegrations',
     query: GET_PAYMENT_INTEGRATIONS,
     schema: Schema.COMMUNITY_INTEGRATIONS
   });

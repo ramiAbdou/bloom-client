@@ -18,7 +18,7 @@ const MembershipCurrentPlanToggle: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
-    name: 'updateMember',
+    operation: 'updateMember',
     query: UPDATE_MEMBER_AUTO_RENEW,
     schema: Schema.MEMBER,
     variables: { autoRenew: !autoRenew }

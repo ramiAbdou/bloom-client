@@ -16,7 +16,7 @@ const SidebarPanel: React.FC = () => {
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
   const { push } = useHistory();
-  const [logout] = useMutation<boolean>({ name: 'logout', query: LOGOUT });
+  const [logout] = useMutation<boolean>({ operation: 'logout', query: LOGOUT });
 
   const onLogout = async () => {
     const { error } = await logout();

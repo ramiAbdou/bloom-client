@@ -12,13 +12,13 @@ import EventsPastYourSection from './EventsPastYourSection';
 
 const EventsPast: React.FC = () => {
   const { loading: loading1 } = useQuery<IEvent[]>({
-    name: 'getPastEvents',
+    operation: 'getPastEvents',
     query: GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
   const { loading: loading2 } = useQuery<IEventAttendee[]>({
-    name: 'getPastEventAttendees',
+    operation: 'getPastEventAttendees',
     query: GET_PAST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });

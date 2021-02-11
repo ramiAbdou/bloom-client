@@ -16,25 +16,25 @@ import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 
 const EventsAnalytics: React.FC = () => {
   const { loading: loading1 } = useQuery({
-    name: 'getPastEvents',
+    operation: 'getPastEvents',
     query: GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
   const { loading: loading2 } = useQuery({
-    name: 'getPastEventAttendees',
+    operation: 'getPastEventAttendees',
     query: GET_PAST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 
   const { loading: loading3 } = useQuery({
-    name: 'getPastEventGuests',
+    operation: 'getPastEventGuests',
     query: GET_PAST_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });
 
   const { loading: loading4 } = useQuery({
-    name: 'getPastEventWatches',
+    operation: 'getPastEventWatches',
     query: GET_PAST_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH]
   });

@@ -19,7 +19,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   large
 }) => {
   const [createEventWatch] = useMutation<IEventWatch, CreateEventWatchArgs>({
-    name: 'createEventWatch',
+    operation: 'createEventWatch',
     query: CREATE_EVENT_WATCH,
     schema: Schema.EVENT_WATCH,
     variables: { eventId }

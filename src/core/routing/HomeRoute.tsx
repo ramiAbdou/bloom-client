@@ -70,7 +70,7 @@ const HomeRoute: React.FC = () => {
   const setActive = useStoreActions(({ db }) => db.setActive);
 
   const { loading, data, error } = useQuery<IUser>({
-    name: 'getUser',
+    operation: 'getUser',
     query: GET_USER,
     schema: Schema.USER,
     variables: { populate: ['members.community'] }

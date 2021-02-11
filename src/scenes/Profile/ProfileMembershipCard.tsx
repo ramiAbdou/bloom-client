@@ -67,14 +67,14 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 
 const ProfileMembershipCard: React.FC = () => {
   const { loading: loading1 } = useQuery<IMemberData[]>({
-    name: 'getMemberData',
+    operation: 'getMemberData',
     query: GET_MEMBER_DATA,
     schema: [Schema.MEMBER_DATA]
   });
 
   const { loading: loading2 } = useQuery<IQuestion[]>({
     fields: ['id', 'description', 'onlyInApplication', 'required', 'type'],
-    name: 'getQuestions',
+    operation: 'getQuestions',
     schema: [Schema.QUESTION]
   });
 

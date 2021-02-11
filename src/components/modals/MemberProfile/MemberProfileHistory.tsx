@@ -42,28 +42,28 @@ const MemberProfileHistoryContent: React.FC = () => {
   );
 
   const { loading: loading1 } = useQuery<IEventGuest[]>({
-    name: 'getEventAttendees',
+    operation: 'getEventAttendees',
     query: GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     variables: { memberId }
   });
 
   const { loading: loading2 } = useQuery<IEventGuest[]>({
-    name: 'getEventGuests',
+    operation: 'getEventGuests',
     query: GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     variables: { memberId }
   });
 
   const { loading: loading3 } = useQuery<IEventGuest[]>({
-    name: 'getEventWatches',
+    operation: 'getEventWatches',
     query: GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     variables: { memberId }
   });
 
   const { loading: loading4 } = useQuery<IMemberPayment[]>({
-    name: 'getMemberPayments',
+    operation: 'getMemberPayments',
     query: GET_MEMBER_PAYMENTS,
     schema: [Schema.MEMBER_PAYMENT],
     variables: { memberId }

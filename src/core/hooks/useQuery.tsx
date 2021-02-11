@@ -9,7 +9,7 @@ import { UseQueryArgs, UseQueryResult } from './useQuery.types';
 function useQuery<T = any, S = any>({
   fields,
   query,
-  name,
+  operation,
   schema,
   types,
   variables
@@ -17,12 +17,12 @@ function useQuery<T = any, S = any>({
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { data, error, loading } = useGQLQuery(
-    query ?? queryFn({ fields, operation: name, variables: types }).query,
+    query ?? queryFn({ fields, operation, variables: types }).query,
     variables ? { variables } : {}
   );
 
   const result: UseQueryResult<T, S> = {
-    data: data ? (data[name] as T) : (null as T),
+    data: data ? (data[operation] as T) : (null as T),
     error: getGraphQLError(error),
     loading
   };

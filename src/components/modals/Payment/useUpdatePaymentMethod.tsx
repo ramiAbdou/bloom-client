@@ -13,7 +13,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     Pick<IMember, 'id' | 'paymentMethod'>,
     UpdatePaymentMethodArgs
   >({
-    name: 'updatePaymentMethod',
+    operation: 'updatePaymentMethod',
     query: UPDATE_PAYMENT_METHOD,
     schema: Schema.MEMBER
   });

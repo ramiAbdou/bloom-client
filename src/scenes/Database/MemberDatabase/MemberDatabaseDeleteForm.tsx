@@ -43,7 +43,7 @@ const MemberDatabaseDeleteForm: React.FC = () => {
     const options: ToastOptions<IMember, MemberIdsArgs> = {
       message: `${members?.length} member(s) removed from the community.`,
       mutationArgsOnComplete: {
-        name: 'deleteMembers',
+        operation: 'deleteMembers',
         query: DELETE_MEMBERS,
         variables: { memberIds }
       },

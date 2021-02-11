@@ -47,7 +47,7 @@ const MemberProfileData: React.FC = () => {
 
   const { loading } = useQuery<IMemberData[], GetMemberDataArgs>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    name: 'getMemberData',
+    operation: 'getMemberData',
     schema: [Schema.MEMBER_DATA],
     types: { memberId: { required: false } },
     variables: { memberId }

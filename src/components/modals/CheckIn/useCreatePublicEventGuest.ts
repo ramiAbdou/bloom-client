@@ -13,7 +13,7 @@ const useCreatePublicEventGuest = () => {
   const eventId = useStoreState(({ db }) => db.event.id);
 
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
-    name: 'createEventGuest',
+    operation: 'createEventGuest',
     query: CREATE_EVENT_GUEST,
     schema: Schema.EVENT_GUEST
   });

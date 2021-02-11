@@ -35,7 +35,7 @@ const MemberDatabasePromoteForm: React.FC = () => {
   );
 
   const [promoteMembers] = useMutation<IMember[], MemberIdsArgs>({
-    name: 'promoteMembers',
+    operation: 'promoteMembers',
     query: PROMOTE_MEMBERS,
     schema: [Schema.MEMBER]
   });

@@ -43,7 +43,7 @@ const Analytics: React.FC = () => {
   const { url } = useRouteMatch();
 
   const { loading } = useQuery<ICommunity>({
-    name: 'getDatabase',
+    operation: 'getDatabase',
     query: GET_DATABASE,
     schema: Schema.COMMUNITY
   });

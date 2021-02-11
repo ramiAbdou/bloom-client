@@ -27,7 +27,7 @@ const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
 
 const Directory: React.FC = () => {
   const { loading } = useQuery<ICommunity>({
-    name: 'getDirectory',
+    operation: 'getDirectory',
     query: GET_DIRECTORY,
     schema: [Schema.MEMBER]
   });

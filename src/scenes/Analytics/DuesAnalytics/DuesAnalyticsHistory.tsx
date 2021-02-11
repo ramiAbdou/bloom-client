@@ -81,7 +81,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 
 const DuesAnalyticsHistory: React.FC = () => {
   const { data, loading } = useQuery<IMemberPayment[]>({
-    name: 'getPayments',
+    operation: 'getPayments',
     query: GET_PAYMENTS,
     schema: [Schema.MEMBER_PAYMENT]
   });

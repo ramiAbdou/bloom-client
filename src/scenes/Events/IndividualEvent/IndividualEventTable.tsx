@@ -91,7 +91,7 @@ const IndividualEventTable: React.FC = () => {
     IEvent,
     GetEventArgs
   >({
-    name: 'getEventAttendees',
+    operation: 'getEventAttendees',
     query: GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     variables: { eventId }
@@ -101,7 +101,7 @@ const IndividualEventTable: React.FC = () => {
     IEvent,
     GetEventArgs
   >({
-    name: 'getEventWatches',
+    operation: 'getEventWatches',
     query: GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     variables: { eventId }

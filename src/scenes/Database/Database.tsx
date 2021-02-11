@@ -15,7 +15,7 @@ const Database: React.FC = () => {
   const { url } = useRouteMatch();
 
   const { loading } = useQuery<IMember[]>({
-    name: 'getDatabase',
+    operation: 'getDatabase',
     query: GET_DATABASE,
     schema: [Schema.MEMBER]
   });

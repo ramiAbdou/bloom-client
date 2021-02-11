@@ -6,7 +6,7 @@ import { UPDATE_USER_SOCIALS, UpdateUserSocialsArgs } from './Profile.gql';
 
 const useUpdateUserSocials = (): OnFormSubmit => {
   const [updateUserSocials] = useMutation<IUser, UpdateUserSocialsArgs>({
-    name: 'updateUserSocials',
+    operation: 'updateUserSocials',
     query: UPDATE_USER_SOCIALS,
     schema: Schema.USER
   });

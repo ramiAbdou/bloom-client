@@ -14,7 +14,7 @@ const MembershipPaymentScheduledCard: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member.autoRenew);
 
   const { data, loading } = useQuery<GetUpcomingPaymentResult>({
-    name: 'getUpcomingPayment',
+    operation: 'getUpcomingPayment',
     query: GET_UPCOMING_PAYMENT
   });
 

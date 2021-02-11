@@ -40,7 +40,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   });
 
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
-    name: 'createEventGuest',
+    operation: 'createEventGuest',
     query: CREATE_EVENT_GUEST,
     schema: Schema.EVENT_GUEST,
     variables: { eventId }
@@ -69,7 +69,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
           ],
           table: 'guests'
         },
-        name: 'deleteEventGuest',
+        operation: 'deleteEventGuest',
         query: DELETE_EVENT_GUEST,
         variables: { eventId }
       }

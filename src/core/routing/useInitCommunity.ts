@@ -16,31 +16,31 @@ const useInitCommunity = (): boolean => {
   const setActive = useStoreActions(({ db }) => db.setActive);
 
   const [getCommunity, { data: data1, loading: loading1 }] = useManualQuery({
-    name: 'getCommunity',
+    operation: 'getCommunity',
     query: GET_COMMUNITY,
     schema: Schema.COMMUNITY
   });
 
   const [getIntegrations, { loading: loading2 }] = useManualQuery({
-    name: 'getIntegrations',
+    operation: 'getIntegrations',
     query: GET_INTEGRATIONS,
     schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
   const [getMember, { data: data3, loading: loading3 }] = useManualQuery({
-    name: 'getMember',
+    operation: 'getMember',
     query: GET_MEMBER,
     schema: Schema.MEMBER
   });
 
   const [getQuestions, { loading: loading4 }] = useManualQuery({
-    name: 'getQuestions',
+    operation: 'getQuestions',
     query: GET_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
   const [getTypes, { loading: loading5 }] = useManualQuery({
-    name: 'getTypes',
+    operation: 'getTypes',
     query: GET_TYPES,
     schema: [Schema.MEMBER_TYPE]
   });

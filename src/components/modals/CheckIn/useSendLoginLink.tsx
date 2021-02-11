@@ -23,7 +23,7 @@ const useSendLoginLink = (): OnFormSubmit => {
   );
 
   const [sendLoginLink] = useMutation<boolean, SendLoginLinkArgs>({
-    name: 'sendLoginLink',
+    operation: 'sendLoginLink',
     query: SEND_LOGIN_LINK
   });
 

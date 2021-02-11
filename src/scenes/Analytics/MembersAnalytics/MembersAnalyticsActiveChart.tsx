@@ -8,7 +8,7 @@ import { ChartType } from '@organisms/Chart/Chart.types';
 const MembersAnalyticsActiveChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
-    name: 'getActiveMembersSeries'
+    operation: 'getActiveMembersSeries'
   });
 
   return (

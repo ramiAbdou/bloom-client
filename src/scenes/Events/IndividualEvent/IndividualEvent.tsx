@@ -42,14 +42,14 @@ const IndividualEvent: React.FC = () => {
     IEvent,
     GetEventArgs
   >({
-    name: 'getEvent',
+    operation: 'getEvent',
     query: GET_EVENT,
     schema: Schema.EVENT,
     variables: { eventId }
   });
 
   const { loading: loading2 } = useQuery<IEvent, GetEventArgs>({
-    name: 'getEventGuests',
+    operation: 'getEventGuests',
     query: GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     variables: { eventId }

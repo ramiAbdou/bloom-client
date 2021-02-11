@@ -7,7 +7,7 @@ import { UPDATE_EVENT } from './CreateEvent.gql';
 
 const useUpdateEvent = (eventId: string): OnFormSubmit => {
   const [updateEvent] = useMutation<IEvent, Partial<IEvent>>({
-    name: 'updateEvent',
+    operation: 'updateEvent',
     query: UPDATE_EVENT,
     schema: Schema.EVENT
   });

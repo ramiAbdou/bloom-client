@@ -12,7 +12,7 @@ const useAddMembers = (): OnFormSubmit => {
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   const [addMembers] = useMutation<any, AddMembersArgs>({
-    name: 'addMembers',
+    operation: 'addMembers',
     query: ADD_MEMBERS
   });
 

@@ -12,13 +12,13 @@ import {
 
 const useUpdateUser = (): OnFormSubmit => {
   const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
-    name: 'updateMember',
+    operation: 'updateMember',
     query: UPDATE_MEMBER_BIO,
     schema: Schema.MEMBER
   });
 
   const [updateUser] = useMutation<IMember, UpdateUserArgs>({
-    name: 'updateUser',
+    operation: 'updateUser',
     query: UPDATE_USER,
     schema: Schema.MEMBER
   });

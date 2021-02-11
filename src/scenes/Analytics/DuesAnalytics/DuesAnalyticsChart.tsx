@@ -9,7 +9,7 @@ import { TimeSeriesData } from '../Analytics.types';
 const DuesAnalyticsChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
-    name: 'getTotalDuesSeries'
+    operation: 'getTotalDuesSeries'
   });
 
   return (

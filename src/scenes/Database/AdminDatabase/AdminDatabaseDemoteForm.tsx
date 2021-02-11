@@ -31,7 +31,7 @@ const AdminDatabaseDemoteForm: React.FC = () => {
   );
 
   const [demoteMembers] = useMutation<IMember[], MemberIdsArgs>({
-    name: 'demoteMembers',
+    operation: 'demoteMembers',
     query: DEMOTE_MEMBERS,
     schema: [Schema.MEMBER]
   });

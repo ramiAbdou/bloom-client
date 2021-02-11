@@ -72,7 +72,7 @@ const PaymentFinish: React.FC = () => {
     GetChangePreviewResult,
     GetChangePreviewArgs
   >({
-    name: 'getChangePreview',
+    operation: 'getChangePreview',
     query: GET_CHANGE_PREVIEW
   });
 

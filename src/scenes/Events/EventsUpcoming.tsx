@@ -35,13 +35,13 @@ const EventsUpcomingContent: React.FC = () => {
 
 const EventsUpcoming: React.FC = () => {
   const { loading: loading1 } = useQuery<ICommunity>({
-    name: 'getUpcomingEvents',
+    operation: 'getUpcomingEvents',
     query: GET_UPCOMING_EVENTS,
     schema: [Schema.EVENT]
   });
 
   const { loading: loading2 } = useQuery<ICommunity>({
-    name: 'getUpcomingEventGuests',
+    operation: 'getUpcomingEventGuests',
     query: GET_UPCOMING_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });

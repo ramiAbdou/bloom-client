@@ -10,13 +10,13 @@ import ApplicantsHeader from './ApplicantsHeader';
 
 const Applicants: React.FC = () => {
   const { loading: loading1 } = useQuery<IMember[]>({
-    name: 'getApplicants',
+    operation: 'getApplicants',
     query: GET_APPLICANTS,
     schema: [Schema.MEMBER]
   });
 
   const { loading: loading2 } = useQuery<IMember[]>({
-    name: 'getQuestions',
+    operation: 'getQuestions',
     query: GET_APPLICANTS_QUESTIONS,
     schema: [Schema.QUESTION]
   });

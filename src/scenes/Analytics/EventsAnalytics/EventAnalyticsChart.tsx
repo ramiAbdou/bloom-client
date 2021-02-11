@@ -8,7 +8,7 @@ import { ChartType } from '@organisms/Chart/Chart.types';
 const EventAnalyticsChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
-    name: 'getEventAttendeesSeries'
+    operation: 'getEventAttendeesSeries'
   });
 
   return (

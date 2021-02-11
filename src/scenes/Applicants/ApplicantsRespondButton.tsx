@@ -24,7 +24,7 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [respondToApplicants] = useMutation<boolean, RespondToApplicantsArgs>({
-    name: 'respondToApplicants',
+    operation: 'respondToApplicants',
     query: RESPOND_TO_APPLICANTS,
     schema: [Schema.MEMBER],
     variables: { memberIds: applicantIds, response }

@@ -16,7 +16,7 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
   const pushToMembership = usePush('membership');
 
   const [createSinglePayment] = useMutation<any, CreateLifetimePaymentArgs>({
-    name: 'createLifetimePayment',
+    operation: 'createLifetimePayment',
     query: CREATE_LIFETIME_PAYMENT,
     schema: Schema.MEMBER_PAYMENT
   });

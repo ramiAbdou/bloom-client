@@ -30,21 +30,21 @@ const Application: React.FC = () => {
     ICommunityApplication,
     UrlNameProps
   >({
-    name: 'getApplication',
+    operation: 'getApplication',
     query: GET_APPLICATION,
     schema: Schema.COMMUNITY_APPLICATION,
     variables: { urlName }
   });
 
   const { loading: loading2 } = useQuery<IQuestion[]>({
-    name: 'getQuestions',
+    operation: 'getQuestions',
     query: GET_APPLICATION_QUESTIONS,
     schema: [Schema.QUESTION],
     variables: { urlName }
   });
 
   const { loading: loading3 } = useQuery<IMemberType[]>({
-    name: 'getTypes',
+    operation: 'getTypes',
     query: GET_TYPES,
     schema: [Schema.MEMBER_TYPE],
     variables: { urlName }

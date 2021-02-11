@@ -19,7 +19,7 @@ const useVerifyToken = (): boolean => {
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
   const [verifyToken, { loading }] = useManualQuery<boolean, VerifyTokenArgs>({
-    name: 'verifyToken',
+    operation: 'verifyToken',
     query: VERIFY_TOKEN,
     variables: { token }
   });
@@ -47,7 +47,7 @@ const useIsUserLoggedIn = (): boolean => {
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
   const { loading, data: isAuthenticated } = useQuery<boolean>({
-    name: 'isUserLoggedIn',
+    operation: 'isUserLoggedIn',
     query: IS_USER_LOGGED_IN
   });
 

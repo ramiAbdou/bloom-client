@@ -12,7 +12,7 @@ const useCreateEvent = (): OnFormSubmit => {
     IEvent,
     Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>
   >({
-    name: 'createEvent',
+    operation: 'createEvent',
     query: CREATE_EVENT,
     schema: Schema.EVENT
   });

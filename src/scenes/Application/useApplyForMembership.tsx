@@ -9,7 +9,7 @@ import { IMemberType } from '@store/Db/entities';
 
 const useApplyForMembership = (): OnFormSubmit => {
   const [applyForMembership] = useMutation<any, ApplyForMembershipArgs>({
-    name: 'applyForMembership',
+    operation: 'applyForMembership',
     query: APPLY_FOR_MEMBERSHIP
   });
 

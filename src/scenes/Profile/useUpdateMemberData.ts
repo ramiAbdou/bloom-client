@@ -6,7 +6,7 @@ import { UPDATE_MEMBER_DATA, UpdateMemberDataArgs } from './Profile.gql';
 
 const useUpdateMemberData = (): OnFormSubmit => {
   const [updateMemberData] = useMutation<IMemberData[], UpdateMemberDataArgs>({
-    name: 'updateMemberData',
+    operation: 'updateMemberData',
     query: UPDATE_MEMBER_DATA,
     schema: [Schema.MEMBER_DATA]
   });

@@ -41,7 +41,7 @@ const MemberDatabase: React.FC = () => {
   });
 
   const [updateQuestion] = useMutation<IQuestion, UpdateQuestionArgs>({
-    name: 'updateQuestion',
+    operation: 'updateQuestion',
     query: UPDATE_QUESTION,
     schema: Schema.QUESTION
   });
