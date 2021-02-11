@@ -21,7 +21,7 @@ const LoaderColumn: React.FC<LoaderColumnProps> = ({ images }) => (
         key={delay}
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
-        transition={{ delay, duration: 0.4, yoyo: Infinity }}
+        transition={{ delay, duration: 0.3, yoyo: Infinity }}
       >
         <Loader />
       </motion.div>
@@ -29,7 +29,7 @@ const LoaderColumn: React.FC<LoaderColumnProps> = ({ images }) => (
   </div>
 );
 
-const DELAY = 0.5; // Represents 1500 ms.
+const DELAY = 0.4; // Represents 1500 ms.
 
 /**
  * Hexagon-styled loader that is overlayed over the entire page when the entire

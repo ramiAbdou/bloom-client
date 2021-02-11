@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
-import useQuery from '@hooks/useQuery';
-import useLoader from '@organisms/Loader/useLoader';
+import useManualQuery from '@hooks/useManualQuery';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import {
@@ -14,40 +12,50 @@ import {
 } from './Router.gql';
 
 const useInitCommunity = (): boolean => {
-  const activeUrlName = useStoreState(({ db }) => db.community?.urlName);
+  const communityId = useStoreState(({ db }) => db.community?.id);
   const setActive = useStoreActions(({ db }) => db.setActive);
 
-  const { push } = useHistory();
-
-  const { data: data1, loading: loading1 } = useQuery({
+  const [getCommunity, { data: data1, loading: loading1 }] = useManualQuery({
     name: 'getCommunity',
     query: GET_COMMUNITY,
     schema: Schema.COMMUNITY
   });
 
-  const { loading: loading2 } = useQuery({
+  const [getIntegrations, { loading: loading2 }] = useManualQuery({
     name: 'getIntegrations',
     query: GET_INTEGRATIONS,
     schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
-  const { data: data3, loading: loading3 } = useQuery({
+  const [getMember, { data: data3, loading: loading3 }] = useManualQuery({
     name: 'getMember',
     query: GET_MEMBER,
     schema: Schema.MEMBER
   });
 
-  const { loading: loading4 } = useQuery({
+  const [getQuestions, { loading: loading4 }] = useManualQuery({
     name: 'getQuestions',
     query: GET_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
-  const { loading: loading5 } = useQuery({
+  const [getTypes, { loading: loading5 }] = useManualQuery({
     name: 'getTypes',
     query: GET_TYPES,
     schema: [Schema.MEMBER_TYPE]
   });
+
+  useEffect(() => {
+    (async () => {
+      await Promise.all([
+        getCommunity(),
+        getIntegrations(),
+        getMember(),
+        getQuestions(),
+        getTypes()
+      ]);
+    })();
+  }, [communityId]);
 
   useEffect(() => {
     if (data1) setActive({ id: data1.id, table: 'communities' });
@@ -57,14 +65,7 @@ const useInitCommunity = (): boolean => {
     if (data3) setActive({ id: data3.id, table: 'members' });
   }, [data3]);
 
-  useEffect(() => {
-    if (activeUrlName) push(`/${activeUrlName}`);
-  }, [activeUrlName]);
-
-  const loading = loading1 || loading2 || loading3 || loading4 || loading5;
-  useLoader(loading);
-
-  return loading;
+  return loading1 || loading2 || loading3 || loading4 || loading5;
 };
 
 export default useInitCommunity;

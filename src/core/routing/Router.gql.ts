@@ -72,10 +72,6 @@ export const GET_TYPES = query({
 
 // ## GET USER
 
-export interface GetUserArgs {
-  urlName: string;
-}
-
 export const GET_USER = query({
   fields: [
     'createdAt',
@@ -88,11 +84,9 @@ export const GET_USER = query({
     'linkedInUrl',
     'pictureUrl',
     'twitterUrl',
-    { member: ['id', { community: ['id', 'primaryColor'] }] },
-    { members: ['id', { community: ['id', 'logoUrl', 'urlName'] }] }
+    { members: ['joinedAt', 'id', { community: ['id', 'logoUrl', 'urlName'] }] }
   ],
-  operation: 'getUser',
-  variables: { urlName: { required: false } }
+  operation: 'getUser'
 }).query;
 
 // ## IS LOGGED IN

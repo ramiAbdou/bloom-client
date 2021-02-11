@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-  Redirect,
-  Route,
-  Switch,
-  useParams,
-  useRouteMatch
-} from 'react-router-dom';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import { UrlNameProps } from '@constants';
 import Show from '@containers/Show';
 import useFinalPath from '@hooks/useFinalPath';
 import useQuery from '@hooks/useQuery';
@@ -27,8 +20,9 @@ import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
-import { GET_USER, GetUserArgs } from './Router.gql';
+import { GET_USER } from './Router.gql';
 import useInitCommunity from './useInitCommunity';
+import useKnownCommunity from './useKnownCommunity';
 
 const HomeRouteContent: React.FC = () => {
   const isInitialized: boolean = useStoreState(({ db }) => {
@@ -37,11 +31,13 @@ const HomeRouteContent: React.FC = () => {
 
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
-  useInitCommunity();
+  useKnownCommunity();
+  const loading = useInitCommunity();
   const { url } = useRouteMatch();
+  useLoader(loading);
 
   return (
-    <Show show={isInitialized}>
+    <Show show={isInitialized && !loading}>
       <Nav />
 
       <div className="home-content">
@@ -66,7 +62,6 @@ const HomeRouteContent: React.FC = () => {
 };
 
 const HomeRoute: React.FC = () => {
-  const { urlName }: UrlNameProps = useParams();
   const route = useTopLevelRoute();
   const { url } = useRouteMatch();
   const finalPath = useFinalPath();
@@ -74,11 +69,10 @@ const HomeRoute: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const setActive = useStoreActions(({ db }) => db.setActive);
 
-  const { loading, data, error } = useQuery<IUser, GetUserArgs>({
+  const { loading, data, error } = useQuery<IUser>({
     name: 'getUser',
     query: GET_USER,
-    schema: Schema.USER,
-    variables: { urlName }
+    schema: Schema.USER
   });
 
   useEffect(() => {
@@ -102,6 +96,7 @@ const HomeRoute: React.FC = () => {
       </Switch>
     );
   }
+
   if (error) return <Redirect to="/login" />;
 
   // If they are a member, just return the requested content.
