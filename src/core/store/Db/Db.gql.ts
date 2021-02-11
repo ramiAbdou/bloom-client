@@ -53,7 +53,7 @@ export interface GetMemberDataArgs {
 }
 
 export const GET_MEMBER_DATA = query({
-  fields: ['value', { member: ['id'] }, { question: ['id'] }],
+  fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
   operation: 'getMemberData',
   variables: { memberId: { required: false } }
 }).query;

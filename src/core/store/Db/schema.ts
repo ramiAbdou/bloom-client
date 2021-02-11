@@ -148,6 +148,7 @@ const Member = new schema.Entity(
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.attendeeId, { attendees: [parent.id] }],
+        [!!parent.dataId, { data: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
@@ -166,7 +167,7 @@ const MemberData = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value) => {
-      return { ...value, memberDataId: value.id };
+      return { ...value, dataId: value.id };
     }
   }
 );
@@ -194,7 +195,7 @@ const Question = new schema.Entity(
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [!!parent.memberDataId, { data: [parent.id] }]
+        [!!parent.dataId, { data: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, questionId: value.id };
