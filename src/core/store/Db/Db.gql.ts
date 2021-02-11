@@ -7,23 +7,6 @@ export const GET_COMMUNITY = query({
   operation: 'getCommunity'
 }).query;
 
-// ## GET MEMBER
-
-export const GET_MEMBER = query({
-  fields: [
-    'autoRenew',
-    'bio',
-    'id',
-    'isDuesActive',
-    'role',
-    'status',
-    { community: ['id'] },
-    { type: ['id'] },
-    { user: ['id'] }
-  ],
-  operation: 'getMember'
-}).query;
-
 // ## GET INTEGRATIONS
 
 export const GET_INTEGRATIONS = query({
@@ -37,6 +20,40 @@ export const GET_INTEGRATIONS = query({
     { mailchimpLists: ['id', 'name'] }
   ],
   operation: 'getIntegrations'
+}).query;
+
+// ## GET MEMBER
+
+export interface GetMemberArgs {
+  memberId?: string;
+}
+
+export const GET_MEMBER = query({
+  fields: [
+    'autoRenew',
+    'bio',
+    'id',
+    'isDuesActive',
+    'role',
+    'status',
+    { community: ['id'] },
+    { type: ['id'] },
+    { user: ['id'] }
+  ],
+  operation: 'getMember',
+  variables: { memberId: { required: false } }
+}).query;
+
+// ## GET MEMBER DATA
+
+export interface GetMemberDataArgs {
+  memberId?: string;
+}
+
+export const GET_MEMBER_DATA = query({
+  fields: ['value', { member: ['id'] }, { question: ['id'] }],
+  operation: 'getMemberData',
+  variables: { memberId: { required: false } }
 }).query;
 
 // ## GET QUESTIONS
@@ -72,6 +89,10 @@ export const GET_TYPES = query({
 
 // ## GET USER
 
+export interface GetUserArgs {
+  userId?: string;
+}
+
 export const GET_USER = query({
   fields: [
     'createdAt',
@@ -86,7 +107,8 @@ export const GET_USER = query({
     'twitterUrl',
     { members: ['joinedAt', 'id', { community: ['id', 'logoUrl', 'urlName'] }] }
   ],
-  operation: 'getUser'
+  operation: 'getUser',
+  variables: { userId: { required: false } }
 }).query;
 
 // ## IS LOGGED IN

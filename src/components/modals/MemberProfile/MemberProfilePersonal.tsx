@@ -2,10 +2,14 @@ import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
+import Show from '@containers/Show';
+import useQuery from '@hooks/useQuery';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { IMember, IUser } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { GET_USER, GetUserArgs } from '../../../core/store/Db/Db.gql';
 import MemberProfileStore from './MemberProfile.store';
 import MemberProfileSocialContainer from './MemberProfileSocial';
 
@@ -89,12 +93,25 @@ const MemberProfilePersonalInformation: React.FC = () => (
   </div>
 );
 
-const MemberProfilePersonal: React.FC = () => (
-  <div className="mo-member-profile-user-ctr">
-    <MemberProfilePersonalPicture />
-    <MemberProfilePersonalInformation />
-    <MemberProfileSocialContainer />
-  </div>
-);
+const MemberProfilePersonal: React.FC = () => {
+  const userId = MemberProfileStore.useStoreState((store) => store.userId);
+
+  const { loading } = useQuery<IUser, GetUserArgs>({
+    name: 'getUser',
+    query: GET_USER,
+    schema: Schema.USER,
+    variables: { userId }
+  });
+
+  return (
+    <Show show={!loading}>
+      <div className="mo-member-profile-user-ctr">
+        <MemberProfilePersonalPicture />
+        <MemberProfilePersonalInformation />
+        <MemberProfileSocialContainer />
+      </div>
+    </Show>
+  );
+};
 
 export default MemberProfilePersonal;

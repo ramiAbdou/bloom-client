@@ -7,26 +7,7 @@ export interface GetMemberProfileArgs {
 }
 
 export const GET_MEMBER_PROFILE = query({
-  fields: [
-    'id',
-    'bio',
-    'joinedAt',
-    { data: ['id', 'value', { question: ['id'] }] },
-    { type: ['id', 'name'] },
-    {
-      user: [
-        'id',
-        'email',
-        'facebookUrl',
-        'instagramUrl',
-        'linkedInUrl',
-        'firstName',
-        'lastName',
-        'pictureUrl',
-        'twitterUrl'
-      ]
-    }
-  ],
+  fields: ['id', 'bio', 'joinedAt', { type: ['id'] }, { user: ['id'] }],
   operation: 'getMemberProfile',
   variables: { memberId: { required: true } }
 }).query;

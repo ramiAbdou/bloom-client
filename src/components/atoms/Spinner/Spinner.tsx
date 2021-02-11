@@ -9,7 +9,7 @@ interface SpinnerProps extends LoadingProps {
   dark?: boolean;
 }
 
-const Spinner: React.FC<SpinnerProps> = ({ dark, loading }) => {
+const Spinner: React.FC<SpinnerProps> = ({ dark, loading = true }) => {
   const css = cx('c-spinner', { 'c-spinner--dark': dark });
 
   return (
