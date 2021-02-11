@@ -31,13 +31,13 @@ const HomeRouteContent: React.FC = () => {
 
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
+  const { url } = useRouteMatch();
   useKnownCommunity();
   const loading = useInitCommunity();
-  const { url } = useRouteMatch();
   useLoader(loading);
 
   return (
-    <Show show={isInitialized && !loading}>
+    <Show show={isInitialized && !loading && url !== '/'}>
       <Nav />
 
       <div className="home-content">
