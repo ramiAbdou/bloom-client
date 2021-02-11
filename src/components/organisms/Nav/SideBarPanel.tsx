@@ -1,4 +1,3 @@
-import { LOGOUT } from 'core/routing/Router.gql';
 import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import useMutation from '@hooks/useMutation';
 import { PanelAction } from '@organisms/Panel/Panel.types';
 import PanelOption from '@organisms/Panel/PanelOption';
+import { LOGOUT } from '@store/Db/Db.gql';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const SidebarPanel: React.FC = () => {

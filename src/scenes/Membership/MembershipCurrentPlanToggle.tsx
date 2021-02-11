@@ -6,7 +6,7 @@ import Toggle from '@molecules/Toggle/Toggle';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { UPDATE_AUTO_RENEW, UpdateAutoRenewArgs } from './Membership.gql';
+import { UPDATE_MEMBER_AUTO_RENEW, UpdateMemberArgs } from './Membership.gql';
 
 const MembershipCurrentPlanToggle: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member?.autoRenew);
@@ -17,17 +17,17 @@ const MembershipCurrentPlanToggle: React.FC = () => {
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const [updateAutoRenew] = useMutation<IMember, UpdateAutoRenewArgs>({
-    name: 'updateAutoRenew',
-    query: UPDATE_AUTO_RENEW,
+  const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
+    name: 'updateMember',
+    query: UPDATE_MEMBER_AUTO_RENEW,
     schema: Schema.MEMBER,
-    variables: { status: !autoRenew }
+    variables: { autoRenew: !autoRenew }
   });
 
   if (isLifetime) return null;
 
   const onChange = async () => {
-    const { data } = await updateAutoRenew();
+    const { data } = await updateMember();
     const statusText = data.autoRenew ? 'on' : 'off';
     showToast({ message: `Membership auto-renewal turned ${statusText}.` });
   };

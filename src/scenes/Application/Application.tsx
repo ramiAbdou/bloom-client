@@ -1,4 +1,3 @@
-import { GET_TYPES } from 'core/routing/Router.gql';
 import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
@@ -10,6 +9,7 @@ import {
   GET_APPLICATION,
   GET_APPLICATION_QUESTIONS
 } from '@scenes/Application/Application.gql';
+import { GET_TYPES } from '@store/Db/Db.gql';
 import {
   ICommunityApplication,
   IMemberType,

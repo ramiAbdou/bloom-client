@@ -9,7 +9,7 @@ import {
   GET_MEMBER,
   GET_QUESTIONS,
   GET_TYPES
-} from './Router.gql';
+} from '../store/Db/Db.gql';
 
 const useInitCommunity = (): boolean => {
   const communityId = useStoreState(({ db }) => db.community?.id);

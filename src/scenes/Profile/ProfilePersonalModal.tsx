@@ -20,7 +20,7 @@ const ProfilePersonalModal: React.FC = () => {
   return (
     <Form onSubmit={updateUser}>
       <FormHeader title="Edit Personal Information" />
-      <FormImage id="PROFILE_PICTURE" value={pictureUrl} />
+      <FormImage id="PROFILE_PICTURE" required={false} value={pictureUrl} />
 
       <FormShortText
         category="FIRST_NAME"

@@ -19,8 +19,8 @@ import Profile from '@scenes/Profile/Profile';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { GET_USER } from '../store/Db/Db.gql';
 import AdminRoute from './AdminRoute';
-import { GET_USER } from './Router.gql';
 import useInitCommunity from './useInitCommunity';
 import useKnownCommunity from './useKnownCommunity';
 

@@ -50,24 +50,34 @@ export const UPDATE_MEMBER_DATA = mutation({
   variables: { items: { required: true, type: '[MemberDataArgs!]' } }
 }).query;
 
+// ## UPDATE MEMBER AUTO_RENEW
+
+export interface UpdateMemberArgs {
+  autoRenew?: boolean;
+  bio?: boolean;
+}
+
+export const UPDATE_MEMBER_BIO = mutation({
+  fields: ['id', 'bio'],
+  operation: 'updateMember',
+  variables: {
+    autoRenew: { required: false, type: 'Boolean' },
+    bio: { required: false }
+  }
+}).query;
+
 // ## UPDATE USER
 
 export interface UpdateUserArgs {
-  bio?: string;
   firstName?: string;
   lastName?: string;
   pictureUrl?: string;
 }
 
 export const UPDATE_USER = mutation({
-  fields: [
-    'id',
-    'bio',
-    { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }
-  ],
+  fields: ['id', 'firstName', 'lastName', 'pictureUrl'],
   operation: 'updateUser',
   variables: {
-    bio: { required: false },
     firstName: { required: false },
     lastName: { required: false },
     pictureUrl: { required: false }

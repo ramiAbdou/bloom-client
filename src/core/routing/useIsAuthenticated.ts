@@ -4,7 +4,11 @@ import { useHistory } from 'react-router-dom';
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
 import { useStoreActions } from '@store/Store';
-import { IS_USER_LOGGED_IN, VERIFY_TOKEN, VerifyTokenArgs } from './Router.gql';
+import {
+  IS_USER_LOGGED_IN,
+  VERIFY_TOKEN,
+  VerifyTokenArgs
+} from '../store/Db/Db.gql';
 
 /**
  * Verifies the login token if one is present in the SearchParams. Will exist

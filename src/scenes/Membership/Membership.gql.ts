@@ -27,14 +27,18 @@ export const GET_UPCOMING_PAYMENT = query({
   operation: 'getUpcomingPayment'
 }).query;
 
-// ## UPDATE AUTO RENEW
+// ## UPDATE MEMBER AUTO_RENEW
 
-export interface UpdateAutoRenewArgs {
-  status: boolean;
+export interface UpdateMemberArgs {
+  autoRenew?: boolean;
+  bio?: boolean;
 }
 
-export const UPDATE_AUTO_RENEW = mutation({
+export const UPDATE_MEMBER_AUTO_RENEW = mutation({
   fields: ['id', 'autoRenew'],
-  operation: 'updateAutoRenew',
-  variables: { status: { required: true, type: 'Boolean' } }
+  operation: 'updateMember',
+  variables: {
+    autoRenew: { required: false, type: 'Boolean' },
+    bio: { required: false }
+  }
 }).query;
