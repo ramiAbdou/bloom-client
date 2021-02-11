@@ -1,11 +1,11 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { IS_EMAIL_TAKEN, IsEmailTakenArgs } from './Application.gql';
+import { IsEmailTakenArgs } from './Application.types';
 
 const useValidateEmail = () => {
   const [isEmailTaken] = useMutation<boolean, IsEmailTakenArgs>({
     operation: 'isEmailTaken',
-    query: IS_EMAIL_TAKEN
+    types: { communityId: { required: true }, email: { required: true } }
   });
 
   const onSubmit = async ({

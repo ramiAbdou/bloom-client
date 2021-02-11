@@ -14,7 +14,7 @@ export type UseMutationArgs<T, S> = {
   fields?: Fields;
   format?: (data: T) => any;
   operation: string;
-  query: string;
+  query?: string;
   schema?: Schema;
   types?: VariableOptions;
   variables?: S;
