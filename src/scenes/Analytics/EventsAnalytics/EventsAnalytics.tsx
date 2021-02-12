@@ -12,17 +12,12 @@ import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 const EventsAnalytics: React.FC = () => {
   const { loading: loading1 } = useQuery({
     fields: [
-      'description',
       'endTime',
-      'eventUrl',
       'id',
       'imageUrl',
-      'private',
       'recordingUrl',
       'startTime',
-      'summary',
       'title',
-      'videoUrl',
       { community: ['id'] }
     ],
     operation: 'getPastEvents',

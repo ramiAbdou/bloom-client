@@ -12,17 +12,12 @@ import EventsPastYourSection from './EventsPastYourSection';
 const EventsPast: React.FC = () => {
   const { loading: loading1 } = useQuery<IEvent[]>({
     fields: [
-      'description',
       'endTime',
-      'eventUrl',
       'id',
       'imageUrl',
-      'private',
       'recordingUrl',
       'startTime',
-      'summary',
       'title',
-      'videoUrl',
       { community: ['id'] }
     ],
     operation: 'getPastEvents',
