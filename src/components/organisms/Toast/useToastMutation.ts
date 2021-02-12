@@ -28,11 +28,11 @@ const useToastMutation = ({
   const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
 
   const [mutationOnCompleteFn] = useMutation(
-    mutationArgsOnComplete ?? { operation: null, query: '' }
+    mutationArgsOnComplete ?? { operation: null }
   );
 
   const [mutationOnUndoFn] = useMutation(
-    mutationArgsOnUndo ?? { operation: null, query: '' }
+    mutationArgsOnUndo ?? { operation: null }
   );
 
   useEffect(() => {

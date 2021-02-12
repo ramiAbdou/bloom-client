@@ -1,24 +1,10 @@
-import { mutation, query } from 'gql-query-builder';
+import { query } from 'gql-query-builder';
 
 // ## CREATE EVENT ATTENDEE
 
 export interface CreateEventAttendeeArgs {
   eventId: string;
 }
-
-export const CREATE_EVENT_ATTENDEE = mutation({
-  fields: [
-    'createdAt',
-    'email',
-    'firstName',
-    'id',
-    'lastName',
-    { event: ['id'] },
-    { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
-  ],
-  operation: 'createEventAttendee',
-  variables: { eventId: { required: true } }
-}).query;
 
 // ## CREATE EVENT GUEST
 
@@ -29,35 +15,11 @@ export interface CreateEventGuestArgs {
   lastName?: string;
 }
 
-export const CREATE_EVENT_GUEST = mutation({
-  fields: [
-    'createdAt',
-    'email',
-    'firstName',
-    'id',
-    'lastName',
-    { event: ['id'] },
-    { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
-  ],
-  operation: 'createEventGuest',
-  variables: {
-    email: { required: false },
-    eventId: { required: true },
-    firstName: { required: false },
-    lastName: { required: false }
-  }
-}).query;
-
 // ## DELETE EVENT GUEST
 
 export interface DeleteEventGuestArgs {
   eventId: string;
 }
-
-export const DELETE_EVENT_GUEST = mutation({
-  operation: 'deleteEventGuest',
-  variables: { eventId: { required: true } }
-}).query;
 
 // ## GET EVENT
 
@@ -209,12 +171,4 @@ export const GET_UPCOMING_EVENT_GUESTS = query({
     }
   ],
   operation: 'getUpcomingEventGuests'
-}).query;
-
-// ## UPDATE RECORDING LINK
-
-export const UPDATE_RECORDING_LINK = mutation({
-  fields: ['id', 'recordingUrl'],
-  operation: 'updateRecordingLink',
-  variables: { id: { required: true }, recordingUrl: { required: true } }
 }).query;

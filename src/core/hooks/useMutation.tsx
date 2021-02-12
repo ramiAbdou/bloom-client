@@ -9,8 +9,6 @@ import { UseMutationArgs, UseMutationResult } from './useMutation.types';
 function useMutation<T = any, S = any>({
   deleteArgs,
   fields,
-  format,
-  query,
   operation,
   schema,
   types,
@@ -20,7 +18,7 @@ function useMutation<T = any, S = any>({
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const [mutationFn, { data, error, loading }] = useGraphQlHooksMutation(
-    query ?? queryFn({ fields, operation, variables: types }).query,
+    queryFn({ fields, operation, variables: types }).query,
     initialVariables ? { variables: initialVariables } : {}
   );
 
@@ -49,10 +47,7 @@ function useMutation<T = any, S = any>({
   }, [result.data, deleteArgs]);
 
   useEffect(() => {
-    if (result.data && schema) {
-      const formattedData = format ? format(result.data) : result.data;
-      mergeEntities({ data: formattedData, schema });
-    }
+    if (result.data && schema) mergeEntities({ data: result.data, schema });
   }, [result.data, memoizedSchema]);
 
   return [typedMutationFn, result];

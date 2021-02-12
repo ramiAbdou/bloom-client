@@ -7,7 +7,6 @@ import { ICommunity, IMember } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { cx, sortObjects } from '@util/util';
 import useLoader from '../Loader/useLoader';
-import { SWITCH_MEMBER, SwitchMemberArgs } from './Nav.gql';
 
 const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
   const communityId = useStoreState(({ db }) => db.community.id);
@@ -17,9 +16,9 @@ const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
     return db.byCommunityId[member.community] ?? {};
   }) as ICommunity;
 
-  const [switchMember, { loading }] = useMutation<boolean, SwitchMemberArgs>({
+  const [switchMember, { loading }] = useMutation<boolean>({
     operation: 'switchMember',
-    query: SWITCH_MEMBER,
+    types: { memberId: { required: true } },
     variables: { memberId }
   });
 

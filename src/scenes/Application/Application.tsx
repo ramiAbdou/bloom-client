@@ -5,7 +5,6 @@ import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import Story from '@organisms/Story/Story';
-import { GET_APPLICATION } from '@scenes/Application/Application.gql';
 import {
   ICommunityApplication,
   IMemberType,
@@ -26,9 +25,25 @@ const Application: React.FC = () => {
     ICommunityApplication,
     UrlNameProps
   >({
+    fields: [
+      'description',
+      'id',
+      'title',
+      {
+        community: [
+          'autoAccept',
+          'id',
+          'logoUrl',
+          'name',
+          'primaryColor',
+          'urlName',
+          { integrations: ['stripeAccountId'] }
+        ]
+      }
+    ],
     operation: 'getApplication',
-    query: GET_APPLICATION,
     schema: Schema.COMMUNITY_APPLICATION,
+    types: { urlName: { required: true } },
     variables: { urlName }
   });
 

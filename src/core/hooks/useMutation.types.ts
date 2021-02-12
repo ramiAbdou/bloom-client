@@ -12,9 +12,7 @@ export type UseMutationArgs<T, S> = {
     table: keyof IEntities;
   };
   fields?: Fields;
-  format?: (data: T) => any;
   operation: string;
-  query?: string;
   schema?: Schema;
   types?: VariableOptions;
   variables?: S;

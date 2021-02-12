@@ -8,12 +8,7 @@ import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import {
-  CREATE_EVENT_GUEST,
-  CreateEventGuestArgs,
-  DELETE_EVENT_GUEST,
-  DeleteEventGuestArgs
-} from './Events.gql';
+import { CreateEventGuestArgs, DeleteEventGuestArgs } from './Events.gql';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -40,9 +35,25 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   });
 
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
+    fields: [
+      'createdAt',
+      'email',
+      'firstName',
+      'id',
+      'lastName',
+      { event: ['id'] },
+      {
+        member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }]
+      }
+    ],
     operation: 'createEventGuest',
-    query: CREATE_EVENT_GUEST,
     schema: Schema.EVENT_GUEST,
+    types: {
+      email: { required: false },
+      eventId: { required: true },
+      firstName: { required: false },
+      lastName: { required: false }
+    },
     variables: { eventId }
   });
 
@@ -70,7 +81,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
           table: 'guests'
         },
         operation: 'deleteEventGuest',
-        query: DELETE_EVENT_GUEST,
+        types: { eventId: { required: true } },
         variables: { eventId }
       }
     };

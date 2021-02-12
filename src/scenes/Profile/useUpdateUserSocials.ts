@@ -2,13 +2,19 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { UPDATE_USER_SOCIALS, UpdateUserSocialsArgs } from './Profile.gql';
+import { UpdateUserSocialsArgs } from './Profile.types';
 
 const useUpdateUserSocials = (): OnFormSubmit => {
   const [updateUserSocials] = useMutation<IUser, UpdateUserSocialsArgs>({
+    fields: ['id', 'facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
     operation: 'updateUserSocials',
-    query: UPDATE_USER_SOCIALS,
-    schema: Schema.USER
+    schema: Schema.USER,
+    types: {
+      facebookUrl: { required: false },
+      instagramUrl: { required: false },
+      linkedInUrl: { required: false },
+      twitterUrl: { required: false }
+    }
   });
 
   const onSubmit = async ({

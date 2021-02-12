@@ -8,7 +8,6 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { UPDATE_RECORDING_LINK } from '../Events.gql';
 
 const IndividualEventRecordingForm: React.FC = () => {
   const id = useStoreState(({ panel }) => panel.metadata);
@@ -18,9 +17,10 @@ const IndividualEventRecordingForm: React.FC = () => {
     IEvent,
     Pick<IEvent, 'id' | 'recordingUrl'>
   >({
+    fields: ['id', 'recordingUrl'],
     operation: 'updateRecordingLink',
-    query: UPDATE_RECORDING_LINK,
-    schema: Schema.EVENT
+    schema: Schema.EVENT,
+    types: { id: { required: true }, recordingUrl: { required: true } }
   });
 
   const onSubmit = async ({

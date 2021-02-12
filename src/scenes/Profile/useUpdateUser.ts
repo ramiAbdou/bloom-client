@@ -3,24 +3,25 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { uploadImage } from '@util/imageUtil';
-import {
-  UPDATE_MEMBER_BIO,
-  UPDATE_USER,
-  UpdateMemberArgs,
-  UpdateUserArgs
-} from './Profile.gql';
+import { UpdateMemberArgs, UpdateUserArgs } from './Profile.types';
 
 const useUpdateUser = (): OnFormSubmit => {
   const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
+    fields: ['id', 'bio'],
     operation: 'updateMember',
-    query: UPDATE_MEMBER_BIO,
-    schema: Schema.MEMBER
+    schema: Schema.MEMBER,
+    types: { bio: { required: false } }
   });
 
   const [updateUser] = useMutation<IMember, UpdateUserArgs>({
+    fields: ['id', 'firstName', 'lastName', 'pictureUrl'],
     operation: 'updateUser',
-    query: UPDATE_USER,
-    schema: Schema.MEMBER
+    schema: Schema.MEMBER,
+    types: {
+      firstName: { required: false },
+      lastName: { required: false },
+      pictureUrl: { required: false }
+    }
   });
 
   const onSubmit = async ({

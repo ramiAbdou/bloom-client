@@ -13,7 +13,6 @@ import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
-import { GET_DATABASE } from '@scenes/Database/Database.gql';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -43,8 +42,16 @@ const Analytics: React.FC = () => {
   const { url } = useRouteMatch();
 
   const { loading } = useQuery<IMember[]>({
+    fields: [
+      'id',
+      'isDuesActive',
+      'status',
+      { community: ['id'] },
+      { data: ['id', 'value', { question: ['id'] }] },
+      { type: ['id'] },
+      { user: ['id', 'gender'] }
+    ],
     operation: 'getDatabase',
-    query: GET_DATABASE,
     schema: [Schema.MEMBER]
   });
 

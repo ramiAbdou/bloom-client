@@ -2,13 +2,14 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMemberData } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { UPDATE_MEMBER_DATA, UpdateMemberDataArgs } from './Profile.gql';
+import { UpdateMemberDataArgs } from './Profile.types';
 
 const useUpdateMemberData = (): OnFormSubmit => {
   const [updateMemberData] = useMutation<IMemberData[], UpdateMemberDataArgs>({
+    fields: ['id', 'value', { question: ['id'] }],
     operation: 'updateMemberData',
-    query: UPDATE_MEMBER_DATA,
-    schema: [Schema.MEMBER_DATA]
+    schema: [Schema.MEMBER_DATA],
+    types: { items: { required: true, type: '[MemberDataArgs!]' } }
   });
 
   const onSubmit = async ({
