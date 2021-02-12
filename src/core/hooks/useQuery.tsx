@@ -1,4 +1,4 @@
-import { query as queryFn } from 'gql-query-builder';
+import { query } from 'gql-query-builder';
 import { useQuery as useGQLQuery } from 'graphql-hooks';
 import { useEffect } from 'react';
 
@@ -8,7 +8,6 @@ import { UseQueryArgs, UseQueryResult } from './useQuery.types';
 
 function useQuery<T = any, S = any>({
   fields,
-  query,
   operation,
   schema,
   types,
@@ -17,7 +16,7 @@ function useQuery<T = any, S = any>({
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { data, error, loading } = useGQLQuery(
-    query ?? queryFn({ fields, operation, variables: types }).query,
+    query({ fields, operation, variables: types }).query,
     variables ? { variables } : {}
   );
 

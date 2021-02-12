@@ -1,4 +1,4 @@
-import { query as queryFn } from 'gql-query-builder';
+import { query } from 'gql-query-builder';
 import { useMutation as useGraphQlHooksMutation } from 'graphql-hooks';
 import { useEffect, useMemo } from 'react';
 
@@ -18,7 +18,7 @@ function useMutation<T = any, S = any>({
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const [mutationFn, { data, error, loading }] = useGraphQlHooksMutation(
-    queryFn({ fields, operation, variables: types }).query,
+    query({ fields, operation, variables: types }).query,
     initialVariables ? { variables: initialVariables } : {}
   );
 

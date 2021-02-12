@@ -1,4 +1,4 @@
-import { query as queryFn } from 'gql-query-builder';
+import { query } from 'gql-query-builder';
 import { useManualQuery as useGQLManualQuery } from 'graphql-hooks';
 import { useEffect, useMemo } from 'react';
 
@@ -9,7 +9,6 @@ import { UseQueryArgs, UseQueryResult } from './useQuery.types';
 
 function useManualQuery<T = any, S = any>({
   fields,
-  query,
   operation,
   schema,
   types,
@@ -18,7 +17,7 @@ function useManualQuery<T = any, S = any>({
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const [manualQueryFn, { data, error, loading }] = useGQLManualQuery(
-    query ?? queryFn({ fields, operation, variables: types }).query,
+    query({ fields, operation, variables: types }).query,
     initialVariables ? { variables: initialVariables } : {}
   );
 

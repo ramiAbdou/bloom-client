@@ -4,7 +4,6 @@ import { Schema } from 'normalizr';
 
 export interface UseQueryArgs<T, S> {
   fields?: Fields;
-  query?: string;
   operation: string;
   schema?: Schema;
   types?: VariableOptions;
