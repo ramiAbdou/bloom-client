@@ -5,9 +5,9 @@ import { Schema } from '@store/Db/schema';
 import { UpdateUserSocialsArgs } from './Profile.types';
 
 const useUpdateUserSocials = (): OnFormSubmit => {
-  const [updateUserSocials] = useMutation<IUser, UpdateUserSocialsArgs>({
+  const [updateUser] = useMutation<IUser, UpdateUserSocialsArgs>({
     fields: ['id', 'facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-    operation: 'updateUserSocials',
+    operation: 'updateUser',
     schema: Schema.USER,
     types: {
       facebookUrl: { required: false },
@@ -28,7 +28,7 @@ const useUpdateUserSocials = (): OnFormSubmit => {
     const linkedInUrl = items.LINKED_IN_URL?.value;
     const twitterUrl = items.TWITTER_URL?.value;
 
-    const { error } = await updateUserSocials({
+    const { error } = await updateUser({
       facebookUrl,
       instagramUrl,
       linkedInUrl,
