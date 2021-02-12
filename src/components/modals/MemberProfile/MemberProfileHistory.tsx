@@ -4,11 +4,7 @@ import Separator from '@atoms/Separator';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
-import {
-  GET_EVENT_ATTENDEES,
-  GET_EVENT_GUESTS,
-  GET_EVENT_WATCHES
-} from '@scenes/Events/Events.gql';
+import { eventFields } from '@scenes/Events/Events.types';
 import { IEventGuest, IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -41,23 +37,36 @@ const MemberProfileHistoryContent: React.FC = () => {
   );
 
   const { loading: loading1 } = useQuery<IEventGuest[]>({
+    fields: eventFields,
     operation: 'getEventAttendees',
-    query: GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 
   const { loading: loading2 } = useQuery<IEventGuest[]>({
+    fields: eventFields,
     operation: 'getEventGuests',
-    query: GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 
   const { loading: loading3 } = useQuery<IEventGuest[]>({
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id', 'title'] },
+      {
+        member: [
+          'id',
+          { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+        ]
+      }
+    ],
     operation: 'getEventWatches',
-    query: GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 

@@ -8,7 +8,7 @@ import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { CreateEventGuestArgs, DeleteEventGuestArgs } from './Events.gql';
+import { CreateEventGuestArgs, DeleteEventGuestArgs } from './Events.types';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;

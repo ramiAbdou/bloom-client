@@ -9,7 +9,7 @@ import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import { GET_EVENT, GET_EVENT_GUESTS, GetEventArgs } from '../Events.gql';
+import { eventFields, GetEventArgs } from '../Events.types';
 import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAttendeeList from './IndividualEventAttendeeList';
@@ -42,16 +42,38 @@ const IndividualEvent: React.FC = () => {
     IEvent,
     GetEventArgs
   >({
+    fields: [
+      'description',
+      'endTime',
+      'eventUrl',
+      'id',
+      'imageUrl',
+      'private',
+      'recordingUrl',
+      'startTime',
+      'summary',
+      'title',
+      'videoUrl',
+      {
+        community: [
+          'id',
+          'name',
+          'primaryColor',
+          { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
+        ]
+      }
+    ],
     operation: 'getEvent',
-    query: GET_EVENT,
     schema: Schema.EVENT,
+    types: { eventId: { required: true } },
     variables: { eventId }
   });
 
   const { loading: loading2 } = useQuery<IEvent, GetEventArgs>({
+    fields: eventFields,
     operation: 'getEventGuests',
-    query: GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
+    types: { eventId: { required: false } },
     variables: { eventId }
   });
 

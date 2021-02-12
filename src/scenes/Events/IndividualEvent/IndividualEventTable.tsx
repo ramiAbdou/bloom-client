@@ -15,11 +15,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import {
-  GET_EVENT_ATTENDEES,
-  GET_EVENT_WATCHES,
-  GetEventArgs
-} from '../Events.gql';
+import { eventFields, GetEventArgs } from '../Events.types';
 import { getIndividualEventTableRows } from './IndividualEvent.util';
 import IndividualEventTableActions from './IndividualEventTableActions';
 
@@ -91,9 +87,10 @@ const IndividualEventTable: React.FC = () => {
     IEvent,
     GetEventArgs
   >({
+    fields: eventFields,
     operation: 'getEventAttendees',
-    query: GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
+    types: { eventId: { required: false } },
     variables: { eventId }
   });
 
@@ -101,9 +98,20 @@ const IndividualEventTable: React.FC = () => {
     IEvent,
     GetEventArgs
   >({
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id', 'title'] },
+      {
+        member: [
+          'id',
+          { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+        ]
+      }
+    ],
     operation: 'getEventWatches',
-    query: GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
+    types: { eventId: { required: false } },
     variables: { eventId }
   });
 

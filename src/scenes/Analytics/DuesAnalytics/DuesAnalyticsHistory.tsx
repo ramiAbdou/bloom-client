@@ -17,7 +17,6 @@ import { IMember, IMemberPayment, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
-import { GET_PAYMENTS } from '../Analytics.gql';
 
 interface DuesAnalyticsHistoryTableData {
   amount: string;
@@ -81,8 +80,16 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 
 const DuesAnalyticsHistory: React.FC = () => {
   const { data, loading } = useQuery<IMemberPayment[]>({
+    fields: [
+      'amount',
+      'createdAt',
+      'id',
+      'stripeInvoiceUrl',
+      { community: ['id'] },
+      { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
+      { type: ['id'] }
+    ],
     operation: 'getPayments',
-    query: GET_PAYMENTS,
     schema: [Schema.MEMBER_PAYMENT]
   });
 

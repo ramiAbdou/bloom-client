@@ -7,7 +7,7 @@ import useMutation from '@hooks/useMutation';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { CreateEventAttendeeArgs } from './Events.gql';
+import { CreateEventAttendeeArgs } from './Events.types';
 
 interface EventJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;

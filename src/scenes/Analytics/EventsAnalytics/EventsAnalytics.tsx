@@ -2,13 +2,8 @@ import React from 'react';
 
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
+import { baseEventFields, eventFields } from '@scenes/Events/Events.types';
 import { Schema } from '@store/Db/schema';
-import { GET_PAST_EVENTS } from '../../Events/Events.gql';
-import {
-  GET_PAST_EVENT_ATTENDEES,
-  GET_PAST_EVENT_GUESTS,
-  GET_PAST_EVENT_WATCHES
-} from '../Analytics.gql';
 import EventAnalyticsChart from './EventAnalyticsChart';
 import EventsAnalyticsFrequentAttendees from './EventsAnalyticsFrequentAttendees';
 import EventsAnalyticsOverview from './EventsAnalyticsOverview';
@@ -16,26 +11,39 @@ import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 
 const EventsAnalytics: React.FC = () => {
   const { loading: loading1 } = useQuery({
+    fields: [
+      'description',
+      'endTime',
+      'eventUrl',
+      'id',
+      'imageUrl',
+      'private',
+      'recordingUrl',
+      'startTime',
+      'summary',
+      'title',
+      'videoUrl',
+      { community: ['id'] }
+    ],
     operation: 'getPastEvents',
-    query: GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
   const { loading: loading2 } = useQuery({
+    fields: eventFields,
     operation: 'getPastEventAttendees',
-    query: GET_PAST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 
   const { loading: loading3 } = useQuery({
+    fields: eventFields,
     operation: 'getPastEventGuests',
-    query: GET_PAST_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });
 
   const { loading: loading4 } = useQuery({
+    fields: baseEventFields,
     operation: 'getPastEventWatches',
-    query: GET_PAST_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH]
   });
 
