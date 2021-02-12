@@ -1,3 +1,4 @@
+import { Action } from 'easy-peasy';
 import { MasonryProps } from 'masonic';
 import { MatchSorterOptions } from 'match-sorter';
 
@@ -14,4 +15,11 @@ export interface MasonryListProps<T> extends MasonryProps<T> {
   emptyMessage?: string;
   items: T[];
   options?: MatchSorterOptions<T>;
+}
+
+export interface ListModel {
+  numResults: number;
+  searchString: string;
+  setNumResults: Action<ListModel, number>;
+  setSearchString: Action<ListModel, string>;
 }
