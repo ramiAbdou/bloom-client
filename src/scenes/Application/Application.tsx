@@ -6,7 +6,6 @@ import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import Story from '@organisms/Story/Story';
 import { GET_APPLICATION } from '@scenes/Application/Application.gql';
-import { GET_TYPES } from '@store/Db/Db.gql';
 import {
   ICommunityApplication,
   IMemberType,
@@ -52,9 +51,17 @@ const Application: React.FC = () => {
   });
 
   const { loading: loading3 } = useQuery<IMemberType[]>({
+    fields: [
+      'amount',
+      'id',
+      'isFree',
+      'name',
+      'recurrence',
+      { community: ['id'] }
+    ],
     operation: 'getTypes',
-    query: GET_TYPES,
     schema: [Schema.MEMBER_TYPE],
+    types: { urlName: { required: false } },
     variables: { urlName }
   });
 

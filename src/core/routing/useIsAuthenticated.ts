@@ -4,11 +4,6 @@ import { useHistory } from 'react-router-dom';
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
 import { useStoreActions } from '@store/Store';
-import {
-  IS_USER_LOGGED_IN,
-  VERIFY_TOKEN,
-  VerifyTokenArgs
-} from '../store/Db/Db.gql';
 
 /**
  * Verifies the login token if one is present in the SearchParams. Will exist
@@ -18,9 +13,9 @@ const useVerifyToken = (): boolean => {
   const token = new URLSearchParams(window.location.search).get('token');
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
-  const [verifyToken, { loading }] = useManualQuery<boolean, VerifyTokenArgs>({
+  const [verifyToken, { loading }] = useManualQuery<boolean>({
     operation: 'verifyToken',
-    query: VERIFY_TOKEN,
+    types: { token: { required: true } },
     variables: { token }
   });
 
@@ -47,8 +42,7 @@ const useIsUserLoggedIn = (): boolean => {
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
   const { loading, data: isAuthenticated } = useQuery<boolean>({
-    operation: 'isUserLoggedIn',
-    query: IS_USER_LOGGED_IN
+    operation: 'isUserLoggedIn'
   });
 
   useEffect(() => {

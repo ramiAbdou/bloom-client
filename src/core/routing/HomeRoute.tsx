@@ -19,7 +19,6 @@ import Profile from '@scenes/Profile/Profile';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_USER } from '../store/Db/Db.gql';
 import AdminRoute from './AdminRoute';
 import useInitCommunity from './useInitCommunity';
 import useKnownCommunity from './useKnownCommunity';
@@ -70,9 +69,19 @@ const HomeRoute: React.FC = () => {
   const setActive = useStoreActions(({ db }) => db.setActive);
 
   const { loading, data, error } = useQuery<IUser>({
+    fields: [
+      'email',
+      'firstName',
+      'id',
+      'lastName',
+      'pictureUrl',
+      {
+        members: ['joinedAt', 'id', { community: ['id', 'logoUrl', 'urlName'] }]
+      }
+    ],
     operation: 'getUser',
-    query: GET_USER,
     schema: Schema.USER,
+    types: { populate: { required: false, type: '[String!]' } },
     variables: { populate: ['members.community'] }
   });
 

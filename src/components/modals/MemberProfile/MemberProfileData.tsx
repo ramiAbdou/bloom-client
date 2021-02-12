@@ -6,7 +6,6 @@ import useQuery from '@hooks/useQuery';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import { GetMemberDataArgs } from '@store/Db/Db.gql';
 import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -45,7 +44,7 @@ const MemberProfileDataContent: React.FC = () => {
 const MemberProfileData: React.FC = () => {
   const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
 
-  const { loading } = useQuery<IMemberData[], GetMemberDataArgs>({
+  const { loading } = useQuery<IMemberData[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
     operation: 'getMemberData',
     schema: [Schema.MEMBER_DATA],

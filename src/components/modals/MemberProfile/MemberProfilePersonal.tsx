@@ -5,7 +5,6 @@ import Row from '@containers/Row/Row';
 import useQuery from '@hooks/useQuery';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { GET_USER, GetUserArgs } from '@store/Db/Db.gql';
 import { IMember, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -95,7 +94,7 @@ const MemberProfilePersonalInformation: React.FC = () => (
 const MemberProfilePersonal: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);
 
-  useQuery<IUser, GetUserArgs>({
+  useQuery<IUser>({
     fields: [
       'email',
       'facebookUrl',
