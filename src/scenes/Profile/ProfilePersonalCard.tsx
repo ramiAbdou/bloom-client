@@ -88,7 +88,6 @@ const ProfilePersonalMainContent: React.FC = () => (
 );
 
 const ProfilePersonalPictureRow: React.FC = () => {
-  const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isMobile = useBreakpoint() === 1;
@@ -96,12 +95,7 @@ const ProfilePersonalPictureRow: React.FC = () => {
 
   return (
     <Row spaceBetween>
-      <ProfilePicture
-        circle
-        fontSize={36}
-        href={pictureUrl}
-        size={isMobile ? 84 : 104}
-      />
+      <ProfilePicture fontSize={36} size={isMobile ? 84 : 104} />
       <ProfileEditButton canEdit onEditClick={onClick} />
     </Row>
   );

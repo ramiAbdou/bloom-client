@@ -100,6 +100,7 @@ export type QuestionType =
   | 'LONG_TEXT'
   | 'MULTIPLE_CHOICE'
   | 'MULTIPLE_SELECT'
+  | 'PROFILE_PICTURE'
   | 'SHORT_TEXT'
   | 'TIME'
   | 'TOGGLE'

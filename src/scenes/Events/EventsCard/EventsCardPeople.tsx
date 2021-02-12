@@ -7,31 +7,27 @@ import {
   IEvent,
   IEventAttendee,
   IEventGuest,
-  IMember,
-  IUser
+  IMember
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import { sortObjects } from '@util/util';
 
 interface EventsCardPersonPictures {
-  users?: IUser[];
+  userIds?: string[];
 }
 
 const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
-  users
+  userIds
 }) => {
   return (
     <Row>
-      {users?.map((user: IUser) => {
+      {userIds?.map((userId: string) => {
         return (
           <ProfilePicture
-            key={user.id}
-            circle
+            key={userId}
             fontSize={12}
-            href={user?.pictureUrl}
             size={24}
-            {...user}
+            userId={userId}
           />
         );
       })}
@@ -47,7 +43,7 @@ const EventsCardPeople: React.FC = () => {
     return day().isAfter(day(endTime));
   });
 
-  const users: IUser[] = useStoreState(({ db }) => {
+  const userIds: string[] = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];
     const people = isPast ? event?.attendees : event?.guests;
 
@@ -56,22 +52,20 @@ const EventsCardPeople: React.FC = () => {
       ?.reduce((acc, person: IEventGuest | IEventAttendee) => {
         if (person.member) {
           const member: IMember = db.byMemberId[person.member];
-          const user: IUser = db.byUserId[member.user];
-          return [...acc, { ...user, memberId: member.id }];
+          return [...acc, member.user];
         }
 
-        return [...acc, { ...person }];
-      }, [])
-      ?.sort((a: IUser, b: IUser) => sortObjects(a, b, 'pictureUrl'));
+        return [...acc, person.id];
+      }, []);
   });
 
   return (
-    <Row className="s-events-card-people" show={!!users?.length}>
-      <EventsCardPersonPictures users={users?.slice(0, 3)} />
+    <Row className="s-events-card-people" show={!!userIds?.length}>
+      <EventsCardPersonPictures userIds={userIds?.slice(0, 3)} />
       <p className="meta">
         {isPast
-          ? `${users?.length} people attended`
-          : `${users?.length} people going`}
+          ? `${userIds?.length} people attended`
+          : `${userIds?.length} people going`}
       </p>
     </Row>
   );

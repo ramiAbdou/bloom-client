@@ -40,19 +40,12 @@ const DirectoryCardInformation: React.FC = () => {
 const DirectoryCardPicture: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const user: IUser = useStoreState(({ db }) => {
+  const userId: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    return db.byUserId[member?.user];
+    return member?.user;
   });
 
-  return (
-    <ProfilePicture
-      firstName={user?.firstName}
-      fontSize={60}
-      href={user?.pictureUrl}
-      lastName={user?.lastName}
-    />
-  );
+  return <ProfilePicture circle={false} fontSize={60} userId={userId} />;
 };
 
 const DirectoryCardContent: React.FC = () => {

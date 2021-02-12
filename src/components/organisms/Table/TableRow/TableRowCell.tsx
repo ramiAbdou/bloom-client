@@ -4,6 +4,7 @@ import React from 'react';
 import Attribute from '@atoms/Tag/Attribute';
 import Pill from '@atoms/Tag/Pill';
 import { ValueProps } from '@constants';
+import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
 import { TableColumn } from '../Table.types';
@@ -37,6 +38,8 @@ const TableRowCellContent: React.FC<
       </Pill>
     );
   }
+
+  if (type === 'PROFILE_PICTURE') return <ProfilePicture circle />;
 
   if (type === 'MULTIPLE_CHOICE') return <Attribute>{value}</Attribute>;
 

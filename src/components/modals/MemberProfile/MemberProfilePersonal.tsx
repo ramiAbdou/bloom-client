@@ -14,19 +14,12 @@ import MemberProfileSocialContainer from './MemberProfileSocial';
 const MemberProfilePersonalPicture: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);
 
-  const { pictureUrl, firstName, lastName }: IUser = useStoreState(({ db }) => {
-    return db.byUserId[userId];
-  });
-
   return (
     <ProfilePicture
-      circle
       className="mo-member-profile-pic"
-      firstName={firstName}
       fontSize={36}
-      href={pictureUrl}
-      lastName={lastName}
       size={96}
+      userId={userId}
     />
   );
 };

@@ -12,17 +12,14 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
 interface IndividualEventAttendeeProps
-  extends Pick<
-    IUser,
-    'email' | 'firstName' | 'id' | 'lastName' | 'pictureUrl'
-  > {
+  extends Pick<IUser, 'email' | 'firstName' | 'id' | 'lastName'> {
   memberId: string;
 }
 
 const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
   props
 ) => {
-  const { firstName, lastName, memberId, pictureUrl } = props;
+  const { firstName, lastName, id: userId, memberId } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
@@ -33,13 +30,7 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
 
   return (
     <Button className="s-events-individual-member" onClick={onClick}>
-      <ProfilePicture
-        circle
-        fontSize={16}
-        href={pictureUrl}
-        size={36}
-        {...props}
-      />
+      <ProfilePicture fontSize={16} size={36} userId={userId} />
       <p className="body--bold">{fullName}</p>
     </Button>
   );

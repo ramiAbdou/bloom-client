@@ -10,15 +10,12 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { cx, sortObjects } from '@util/util';
 
 interface IndividualEventGuestProps
-  extends Pick<
-    IUser,
-    'email' | 'firstName' | 'id' | 'lastName' | 'pictureUrl'
-  > {
+  extends Pick<IUser, 'email' | 'firstName' | 'id' | 'lastName'> {
   memberId: string;
 }
 
 const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
-  const { firstName, lastName, memberId, pictureUrl } = props;
+  const { firstName, lastName, id: userId, memberId } = props;
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
@@ -36,13 +33,7 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 
   return (
     <Button className={css} onClick={onClick}>
-      <ProfilePicture
-        circle
-        fontSize={16}
-        href={pictureUrl}
-        size={36}
-        {...props}
-      />
+      <ProfilePicture fontSize={16} size={36} userId={userId} />
       <p className="body--bold">{fullName}</p>
     </Button>
   );
