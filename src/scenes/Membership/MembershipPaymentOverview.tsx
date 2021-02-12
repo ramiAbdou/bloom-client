@@ -5,14 +5,20 @@ import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import { IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { GET_MEMBER_PAYMENTS, GET_UPCOMING_PAYMENT } from './Membership.gql';
 import MembershipPaymentScheduledCard from './MembershipPaymentScheduledCard';
 import MembershipPaymentTable from './MembershipPaymentTable';
 
 const MembershipPaymentOverview: React.FC = () => {
   const { loading } = useQuery<IMemberPayment[]>({
+    fields: [
+      'amount',
+      'createdAt',
+      'id',
+      'stripeInvoiceUrl',
+      { member: ['id'] },
+      { type: ['id'] }
+    ],
     operation: 'getMemberPayments',
-    query: GET_MEMBER_PAYMENTS,
     schema: [Schema.MEMBER_PAYMENT]
   });
 

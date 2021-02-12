@@ -48,23 +48,6 @@ export const CREATE_EVENT_GUEST = mutation({
   }
 }).query;
 
-// ## CREATE EVENT WATCH
-
-export interface CreateEventWatchArgs {
-  eventId: string;
-}
-
-export const CREATE_EVENT_WATCH = mutation({
-  fields: [
-    'createdAt',
-    'id',
-    { event: ['id'] },
-    { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
-  ],
-  operation: 'createEventWatch',
-  variables: { eventId: { required: true } }
-}).query;
-
 // ## DELETE EVENT GUEST
 
 export interface DeleteEventGuestArgs {

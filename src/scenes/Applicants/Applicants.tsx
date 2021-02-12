@@ -4,7 +4,7 @@ import MainContent from '@containers/Main/MainContent';
 import useQuery from '@hooks/useQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { GET_APPLICANTS, GET_APPLICANTS_QUESTIONS } from './Applicants.gql';
+import { GET_APPLICANTS } from './Applicants.gql';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 
@@ -16,8 +16,8 @@ const Applicants: React.FC = () => {
   });
 
   const { loading: loading2 } = useQuery<IMember[]>({
+    fields: ['id', 'inApplicantCard', 'inApplication'],
     operation: 'getQuestions',
-    query: GET_APPLICANTS_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 

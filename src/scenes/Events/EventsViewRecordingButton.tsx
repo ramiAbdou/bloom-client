@@ -7,7 +7,7 @@ import useMutation from '@hooks/useMutation';
 import { IEvent, IEventWatch } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { CREATE_EVENT_WATCH, CreateEventWatchArgs } from './Events.gql';
+import { CreateEventWatchArgs } from './Events.types';
 
 interface EventsViewRecordingButtonProps
   extends Partial<Pick<ButtonProps, 'large'>> {
@@ -19,9 +19,17 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   large
 }) => {
   const [createEventWatch] = useMutation<IEventWatch, CreateEventWatchArgs>({
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      {
+        member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }]
+      }
+    ],
     operation: 'createEventWatch',
-    query: CREATE_EVENT_WATCH,
     schema: Schema.EVENT_WATCH,
+    types: { eventId: { required: true } },
     variables: { eventId }
   });
 

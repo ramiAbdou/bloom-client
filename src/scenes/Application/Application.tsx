@@ -5,10 +5,7 @@ import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import Story from '@organisms/Story/Story';
-import {
-  GET_APPLICATION,
-  GET_APPLICATION_QUESTIONS
-} from '@scenes/Application/Application.gql';
+import { GET_APPLICATION } from '@scenes/Application/Application.gql';
 import { GET_TYPES } from '@store/Db/Db.gql';
 import {
   ICommunityApplication,
@@ -37,9 +34,20 @@ const Application: React.FC = () => {
   });
 
   const { loading: loading2 } = useQuery<IQuestion[]>({
+    fields: [
+      'category',
+      'description',
+      'id',
+      'inApplication',
+      'options',
+      'required',
+      'title',
+      'type',
+      { community: ['id'] }
+    ],
     operation: 'getQuestions',
-    query: GET_APPLICATION_QUESTIONS,
     schema: [Schema.QUESTION],
+    types: { urlName: { required: false } },
     variables: { urlName }
   });
 

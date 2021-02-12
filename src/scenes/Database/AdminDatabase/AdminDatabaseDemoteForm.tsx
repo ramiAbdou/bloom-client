@@ -11,7 +11,7 @@ import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { DEMOTE_MEMBERS, MemberIdsArgs } from '../Database.gql';
+import { MemberIdsArgs } from '../Database.gql';
 
 const AdminDatabaseDemoteFormActions: React.FC = () => {
   return (
@@ -31,9 +31,10 @@ const AdminDatabaseDemoteForm: React.FC = () => {
   );
 
   const [demoteMembers] = useMutation<IMember[], MemberIdsArgs>({
+    fields: ['id', 'role'],
     operation: 'demoteMembers',
-    query: DEMOTE_MEMBERS,
-    schema: [Schema.MEMBER]
+    schema: [Schema.MEMBER],
+    types: { memberIds: { required: true, type: '[String!]' } }
   });
 
   const onSubmit = async ({ closeModal, showToast }: OnFormSubmitArgs) => {

@@ -9,7 +9,6 @@ import {
   GET_EVENT_GUESTS,
   GET_EVENT_WATCHES
 } from '@scenes/Events/Events.gql';
-import { GET_MEMBER_PAYMENTS } from '@scenes/Membership/Membership.gql';
 import { IEventGuest, IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -63,9 +62,10 @@ const MemberProfileHistoryContent: React.FC = () => {
   });
 
   const { loading: loading4 } = useQuery<IMemberPayment[]>({
+    fields: ['amount', 'createdAt', 'id', { member: ['id'] }, { type: ['id'] }],
     operation: 'getMemberPayments',
-    query: GET_MEMBER_PAYMENTS,
     schema: [Schema.MEMBER_PAYMENT],
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 

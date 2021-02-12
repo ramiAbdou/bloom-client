@@ -2,14 +2,14 @@ import { mutation, query } from 'gql-query-builder';
 
 import { PopulateArgs } from '@constants';
 
-// ## GET COMMUNITY
+// ## COMMUNITY
 
 export const GET_COMMUNITY = query({
   fields: ['autoAccept', 'id', 'logoUrl', 'name', 'primaryColor', 'urlName'],
   operation: 'getCommunity'
 }).query;
 
-// ## GET INTEGRATIONS
+// ## INTEGRATIONS
 
 export const GET_INTEGRATIONS = query({
   fields: [
