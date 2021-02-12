@@ -19,6 +19,7 @@ const EventsUpcomingContent: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) => {
     return db.community?.events
       ?.map((eventId: string) => db.byEventId[eventId])
+      ?.filter((event: IEvent) => !event.deletedAt)
       ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
       ?.sort((a, b) => sortObjects(a, b, 'startTime', 'ASC'));
   });

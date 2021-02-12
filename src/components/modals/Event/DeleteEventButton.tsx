@@ -4,22 +4,19 @@ import Button from '@atoms/Button/Button';
 import { IdProps } from '@constants';
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const DeleteEventButton: React.FC = () => {
-  const communityId = useStoreState(({ db }) => db.community.id);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const id: string = useStoreState(({ modal }) => modal.metadata);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const [deleteEvent, { loading }] = useMutation<boolean, IdProps>({
-    deleteArgs: {
-      ids: [id],
-      refs: [{ column: 'events', id: communityId, table: 'communities' }],
-      table: 'events'
-    },
+    fields: ['deletedAt', 'id'],
     operation: 'deleteEvent',
+    schema: Schema.EVENT,
     types: { id: { required: true } },
     variables: { id }
   });

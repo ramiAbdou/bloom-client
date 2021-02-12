@@ -36,7 +36,7 @@ function List<T>({
 
   return (
     <div className={css}>
-      {sortedAndFilteredItems.map((value) => {
+      {sortedAndFilteredItems?.map((value) => {
         // @ts-ignore b/c should have ID.
         return <ListItem key={value?.id ?? nanoid()} {...value} />;
       })}
