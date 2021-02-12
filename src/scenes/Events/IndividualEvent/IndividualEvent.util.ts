@@ -25,6 +25,8 @@ const getIndividualEventTableAttendees = (
 
   return db.event.attendees.reduce((acc, attendeeId: string) => {
     const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
+    const member: IMember = db.byMemberId[attendee?.member];
+
     const { createdAt, firstName, lastName, email } = attendee;
 
     if (acc[email]) return acc;
@@ -34,6 +36,7 @@ const getIndividualEventTableAttendees = (
       fullName: `${firstName} ${lastName}`,
       id: attendee?.member,
       joinedAt: createdAt,
+      userId: member?.user,
       watched: 'No'
     };
 
@@ -53,6 +56,8 @@ const getIndividualEventTableGuests = (
 
   return db.event.guests.reduce((acc, guestId: string) => {
     const guest: IEventGuest = db.byGuestId[guestId];
+    const member: IMember = db.byMemberId[guest?.member];
+
     const { createdAt, firstName, lastName, email } = guest;
 
     if (acc[email]) return acc;
@@ -62,6 +67,7 @@ const getIndividualEventTableGuests = (
       fullName: `${firstName} ${lastName}`,
       id: guest?.member,
       rsvpdAt: createdAt,
+      userId: member?.user,
       watched: 'No'
     };
 
@@ -91,6 +97,7 @@ const getIndividualEventTableViewers = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: member?.id,
+      userId: member?.user,
       watched: 'Yes'
     };
 

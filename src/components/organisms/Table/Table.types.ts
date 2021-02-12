@@ -14,7 +14,7 @@ export type TableColumn = {
   hideTitle?: boolean;
   id: string;
   render?: (value: any) => JSX.Element;
-  title: string;
+  title?: string;
   type?: QuestionType;
 };
 

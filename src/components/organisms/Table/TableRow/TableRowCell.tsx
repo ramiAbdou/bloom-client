@@ -4,6 +4,7 @@ import React from 'react';
 import Attribute from '@atoms/Tag/Attribute';
 import Pill from '@atoms/Tag/Pill';
 import { ValueProps } from '@constants';
+import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
@@ -39,7 +40,14 @@ const TableRowCellContent: React.FC<
     );
   }
 
-  if (type === 'PROFILE_PICTURE') return <ProfilePicture circle />;
+  if (category === 'FULL_NAME') {
+    return (
+      <Row>
+        <p>{value?.fullName}</p>
+        <ProfilePicture circle size={28} userId={value} />;
+      </Row>
+    );
+  }
 
   if (type === 'MULTIPLE_CHOICE') return <Attribute>{value}</Attribute>;
 

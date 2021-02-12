@@ -74,7 +74,7 @@ export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
         const value = getMemberValue({ ...user, ...member, db, questionId });
         return { ...result, [questionId]: value };
       },
-      { id: member?.id }
+      { id: member?.id, userId: user?.id }
     );
   });
 
