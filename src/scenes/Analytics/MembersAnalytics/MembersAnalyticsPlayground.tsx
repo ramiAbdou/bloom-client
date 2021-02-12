@@ -3,12 +3,9 @@ import React, { useEffect } from 'react';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import Show from '@containers/Show';
-import useQuery from '@hooks/useQuery';
 import Dropdown from '@molecules/Dropdown/Dropdown';
 import Chart from '@organisms/Chart/Chart';
-import { GET_DATABASE } from '@scenes/Database/Database.gql';
-import { IMember, IQuestion } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
+import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 
@@ -89,15 +86,9 @@ const MembersAnalyticsPlaygroundChart: React.FC = () => {
  * currently being displayed.
  */
 const MembersAnalyticsPlayground: React.FC = () => {
-  const { loading } = useQuery<IMember[]>({
-    name: 'getDatabase',
-    query: GET_DATABASE,
-    schema: [Schema.MEMBER]
-  });
-
   return (
     <MainSection>
-      <LoadingHeader h2 loading={loading} title="Data Playground" />
+      <LoadingHeader h2 title="Data Playground" />
       <IdStore.Provider>
         <div className="s-analytics-members-playground">
           <MembersAnalyticsPlaygroundHeader />

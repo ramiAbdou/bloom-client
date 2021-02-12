@@ -1,17 +1,16 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType, PopulateArgs } from '@constants';
+import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import useQuery from '@hooks/useQuery';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
-import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
+import { IMemberData, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
-import { GET_MEMBER_DATA, GET_MEMBER_DATA_QUESTIONS } from './Profile.gql';
 import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileMembershipHeader: React.FC = () => {
@@ -66,16 +65,15 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const { loading: loading1 } = useQuery<IMember, PopulateArgs>({
-    name: 'getMember',
-    query: GET_MEMBER_DATA,
-    schema: Schema.MEMBER,
-    variables: { populate: ['community.questions', 'data.question'] }
+  const { loading: loading1 } = useQuery<IMemberData[]>({
+    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
+    operation: 'getMemberData',
+    schema: [Schema.MEMBER_DATA]
   });
 
   const { loading: loading2 } = useQuery<IQuestion[]>({
-    name: 'getQuestions',
-    query: GET_MEMBER_DATA_QUESTIONS,
+    fields: ['id', 'description', 'onlyInApplication', 'required', 'type'],
+    operation: 'getQuestions',
     schema: [Schema.QUESTION]
   });
 

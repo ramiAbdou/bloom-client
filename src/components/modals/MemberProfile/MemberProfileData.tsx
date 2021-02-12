@@ -2,14 +2,16 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import Show from '@containers/Show';
+import useQuery from '@hooks/useQuery';
 import QuestionValueList, {
   QuestionValueItemProps
 } from '@molecules/QuestionValueList';
 import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import MemberProfileStore from './MemberProfile.store';
 
-const MemberProfileData: React.FC = () => {
+const MemberProfileDataContent: React.FC = () => {
   const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
 
   const questions: Set<string> = useStoreState(({ db }) => {
@@ -37,6 +39,21 @@ const MemberProfileData: React.FC = () => {
       <QuestionValueList handleNull="HIDE_ALL" items={items} />
     </Show>
   );
+};
+
+const MemberProfileData: React.FC = () => {
+  const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
+
+  const { loading } = useQuery<IMemberData[]>({
+    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
+    operation: 'getMemberData',
+    schema: [Schema.MEMBER_DATA],
+    types: { memberId: { required: false } },
+    variables: { memberId }
+  });
+
+  if (loading) return null;
+  return <MemberProfileDataContent />;
 };
 
 export default MemberProfileData;

@@ -1,19 +1,22 @@
 import day from 'dayjs';
-import { nanoid } from 'nanoid';
 import React from 'react';
 
+import { ModalType } from '@constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
-import { TableColumn, TableRow } from '@organisms/Table/Table.types';
+import {
+  TableColumn,
+  TableOptions,
+  TableRow
+} from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { IMember, IMemberPayment, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
-import { GET_PAYMENTS } from '../Analytics.gql';
 
 interface DuesAnalyticsHistoryTableData {
   amount: string;
@@ -25,6 +28,8 @@ interface DuesAnalyticsHistoryTableData {
 }
 
 const DuesAnalyticsHistoryTable: React.FC = () => {
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
   const rows: TableRow[] = useStoreState(({ db }) => {
     const result: DuesAnalyticsHistoryTableData[] = db.community.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
@@ -38,7 +43,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
           amount: `$${(amount / 100).toFixed(2)}`,
           email,
           fullName: `${firstName} ${lastName}`,
-          id: nanoid(),
+          id: member.id,
           paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
           type: db.byTypeId[type].name
         };
@@ -59,8 +64,14 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
     }
   ];
 
+  const options: TableOptions = {
+    onRowClick: (row: TableRow) => {
+      showModal({ id: ModalType.MEMBER_PROFILE, metadata: row?.id });
+    }
+  };
+
   return (
-    <Table columns={columns} rows={rows}>
+    <Table columns={columns} options={options} rows={rows}>
       <TableSearchBar className="mb-sm" />
       <TableContent emptyMessage="Looks like nobody has paid dues in the last year." />
     </Table>
@@ -69,8 +80,16 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 
 const DuesAnalyticsHistory: React.FC = () => {
   const { data, loading } = useQuery<IMemberPayment[]>({
-    name: 'getPayments',
-    query: GET_PAYMENTS,
+    fields: [
+      'amount',
+      'createdAt',
+      'id',
+      'stripeInvoiceUrl',
+      { community: ['id'] },
+      { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
+      { type: ['id'] }
+    ],
+    operation: 'getPayments',
     schema: [Schema.MEMBER_PAYMENT]
   });
 

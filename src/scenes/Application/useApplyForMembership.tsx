@@ -1,16 +1,20 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
-import {
-  APPLY_FOR_MEMBERSHIP,
-  ApplyForMembershipArgs
-} from '@scenes/Application/Application.gql';
+import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
 import { IMemberType } from '@store/Db/entities';
 
 const useApplyForMembership = (): OnFormSubmit => {
   const [applyForMembership] = useMutation<any, ApplyForMembershipArgs>({
-    name: 'applyForMembership',
-    query: APPLY_FOR_MEMBERSHIP
+    fields: ['id'],
+    operation: 'applyForMembership',
+    types: {
+      data: { type: '[MemberDataInput!]!' },
+      email: { required: true },
+      memberTypeId: { required: false },
+      paymentMethodId: { required: false },
+      urlName: { required: true }
+    }
   });
 
   const onSubmit = async ({

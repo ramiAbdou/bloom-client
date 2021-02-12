@@ -15,13 +15,12 @@ const SideBarProfileContent: React.FC = () => {
   const role = useStoreState(({ db }) => db.member?.role);
   const firstName = useStoreState(({ db }) => db.user?.firstName);
   const lastName = useStoreState(({ db }) => db.user?.lastName);
-  const pictureUrl = useStoreState(({ db }) => db.user?.pictureUrl);
 
   const fullName = `${firstName} ${lastName}`;
 
   return (
     <div>
-      <ProfilePicture circle href={pictureUrl} size={48} />
+      <ProfilePicture size={48} />
 
       <div className="o-nav-profile-info">
         <p>{fullName}</p>

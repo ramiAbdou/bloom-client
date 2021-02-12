@@ -1,21 +1,21 @@
 import { Action, action } from 'easy-peasy';
 import { normalize } from 'normalizr';
 
+import { DbModel, MergeEntitiesArgs } from './Db.types';
 import { IEntities } from './entities';
 import { mergeStrategy } from './schema';
-import { DbModel, MergeEntitiesArgs } from './Db.types';
 
+/**
+ * Main update function that updates all entities (front-end DB). Uses
+ * the lodash deep merge function to make the updates.
+ */
 const mergeEntities: Action<DbModel, MergeEntitiesArgs> = action(
-  (state, { data, schema, setActiveId }: MergeEntitiesArgs) => {
+  (state, { data, schema }: MergeEntitiesArgs) => {
     const normalizedEntities = normalize(data, schema).entities;
 
     const parsedEntities = Object.entries(normalizedEntities).reduce(
       (acc: Record<string, any>, [key, value]) => {
-        const activeId = setActiveId
-          ? key === 'users' && { activeId: Object.keys(value)[0] }
-          : {};
-
-        return { ...acc, [key]: { ...activeId, byId: value } };
+        return { ...acc, [key]: { byId: value } };
       },
       {}
     );

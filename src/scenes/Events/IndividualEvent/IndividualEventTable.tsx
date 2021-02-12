@@ -15,11 +15,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import {
-  GET_EVENT_ATTENDEES,
-  GET_EVENT_WATCHES,
-  GetEventArgs
-} from '../Events.gql';
+import { eventFields, GetEventArgs } from '../Events.types';
 import { getIndividualEventTableRows } from './IndividualEvent.util';
 import IndividualEventTableActions from './IndividualEventTableActions';
 
@@ -32,17 +28,19 @@ const IndividualEventTableContent: React.FC = () => {
     return getIndividualEventTableRows(db);
   });
 
-  const joinedAtColumn = day().isAfter(day(startTime))
+  const joinedAtColumn: TableColumn[] = day().isAfter(day(startTime))
     ? [
         {
           id: 'joinedAt',
+          render: (value) =>
+            value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
           title: `Joined At`,
-          type: 'SHORT_TEXT' as QuestionType
+          type: 'SHORT_TEXT'
         }
       ]
     : [];
 
-  const recordingClicksColumn = recordingUrl
+  const viewedRecordingColumn: TableColumn[] = recordingUrl
     ? [
         {
           id: 'watched',
@@ -53,15 +51,16 @@ const IndividualEventTableContent: React.FC = () => {
     : [];
 
   const columns: TableColumn[] = [
-    {
-      id: 'fullName',
-      title: 'Full Name',
-      type: 'SHORT_TEXT'
-    },
+    { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
     { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
     ...joinedAtColumn,
-    { id: 'rsvpdAt', title: `RSVP'd At`, type: 'SHORT_TEXT' },
-    ...recordingClicksColumn
+    {
+      id: 'rsvpdAt',
+      render: (value) => value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
+      title: `RSVP'd At`,
+      type: 'SHORT_TEXT'
+    },
+    ...viewedRecordingColumn
   ];
 
   const options: TableOptions = {
@@ -91,9 +90,10 @@ const IndividualEventTable: React.FC = () => {
     IEvent,
     GetEventArgs
   >({
-    name: 'getEventAttendees',
-    query: GET_EVENT_ATTENDEES,
+    fields: eventFields,
+    operation: 'getEventAttendees',
     schema: [Schema.EVENT_ATTENDEE],
+    types: { eventId: { required: false } },
     variables: { eventId }
   });
 
@@ -101,9 +101,20 @@ const IndividualEventTable: React.FC = () => {
     IEvent,
     GetEventArgs
   >({
-    name: 'getEventWatches',
-    query: GET_EVENT_WATCHES,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id', 'title'] },
+      {
+        member: [
+          'id',
+          { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+        ]
+      }
+    ],
+    operation: 'getEventWatches',
     schema: [Schema.EVENT_WATCH],
+    types: { eventId: { required: false } },
     variables: { eventId }
   });
 

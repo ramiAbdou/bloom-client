@@ -4,12 +4,7 @@ import Separator from '@atoms/Separator';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
-import {
-  GET_EVENT_ATTENDEES,
-  GET_EVENT_GUESTS,
-  GET_EVENT_WATCHES
-} from '@scenes/Events/Events.gql';
-import { GET_MEMBER_PAYMENTS } from '@scenes/Membership/Membership.gql';
+import { eventFields } from '@scenes/Events/Events.types';
 import { IEventGuest, IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -42,30 +37,44 @@ const MemberProfileHistoryContent: React.FC = () => {
   );
 
   const { loading: loading1 } = useQuery<IEventGuest[]>({
-    name: 'getEventAttendees',
-    query: GET_EVENT_ATTENDEES,
+    fields: eventFields,
+    operation: 'getEventAttendees',
     schema: [Schema.EVENT_ATTENDEE],
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 
   const { loading: loading2 } = useQuery<IEventGuest[]>({
-    name: 'getEventGuests',
-    query: GET_EVENT_GUESTS,
+    fields: eventFields,
+    operation: 'getEventGuests',
     schema: [Schema.EVENT_GUEST],
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 
   const { loading: loading3 } = useQuery<IEventGuest[]>({
-    name: 'getEventWatches',
-    query: GET_EVENT_WATCHES,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id', 'title'] },
+      {
+        member: [
+          'id',
+          { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+        ]
+      }
+    ],
+    operation: 'getEventWatches',
     schema: [Schema.EVENT_WATCH],
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 
   const { loading: loading4 } = useQuery<IMemberPayment[]>({
-    name: 'getMemberPayments',
-    query: GET_MEMBER_PAYMENTS,
+    fields: ['amount', 'createdAt', 'id', { member: ['id'] }, { type: ['id'] }],
+    operation: 'getMemberPayments',
     schema: [Schema.MEMBER_PAYMENT],
+    types: { memberId: { required: false } },
     variables: { memberId }
   });
 

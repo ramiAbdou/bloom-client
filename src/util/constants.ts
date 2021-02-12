@@ -87,6 +87,7 @@ export type QuestionCategory =
   | 'DUES_STATUS'
   | 'EMAIL'
   | 'FIRST_NAME'
+  | 'FULL_NAME'
   | 'GENDER'
   | 'JOINED_AT'
   | 'LAST_NAME'
@@ -94,7 +95,6 @@ export type QuestionCategory =
 
 export type QuestionType =
   | 'COVER_IMAGE'
-  | 'CUSTOM'
   | 'DATE'
   | 'IMAGE'
   | 'LARGE_TITLE'

@@ -133,7 +133,7 @@ export const getTableCellClass = ({
     'o-table-cell--lg': ['LONG_TEXT'].includes(type),
     'o-table-cell--md':
       !isDuesStatus && ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
-    'o-table-cell--sm': !type || ['SHORT_TEXT', 'CUSTOM'].includes(type),
+    'o-table-cell--sm': !type || type === 'SHORT_TEXT',
     'o-table-cell--xs': isDuesStatus
   });
 };

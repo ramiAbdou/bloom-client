@@ -3,7 +3,7 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { UPDATE_PAYMENT_METHOD, UpdatePaymentMethodArgs } from './Payment.gql';
+import { UpdatePaymentMethodArgs } from './Payment.types';
 
 const useUpdatePaymentMethod = (): OnFormSubmit => {
   const elements = useElements();
@@ -13,9 +13,13 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     Pick<IMember, 'id' | 'paymentMethod'>,
     UpdatePaymentMethodArgs
   >({
-    name: 'updatePaymentMethod',
-    query: UPDATE_PAYMENT_METHOD,
-    schema: Schema.MEMBER
+    fields: [
+      'id',
+      { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
+    ],
+    operation: 'updatePaymentMethod',
+    schema: Schema.MEMBER,
+    types: { paymentMethodId: { required: true } }
   });
 
   if (!stripe) return null;

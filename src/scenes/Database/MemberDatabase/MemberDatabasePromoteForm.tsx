@@ -11,7 +11,7 @@ import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MemberIdsArgs, PROMOTE_MEMBERS } from '../Database.gql';
+import { MemberIdsArgs } from '../Database.types';
 
 const MemberDatabasePromoteFormActions: React.FC = () => {
   return (
@@ -35,9 +35,10 @@ const MemberDatabasePromoteForm: React.FC = () => {
   );
 
   const [promoteMembers] = useMutation<IMember[], MemberIdsArgs>({
-    name: 'promoteMembers',
-    query: PROMOTE_MEMBERS,
-    schema: [Schema.MEMBER]
+    fields: ['id', 'role'],
+    operation: 'promoteMembers',
+    schema: [Schema.MEMBER],
+    types: { memberIds: { required: true, type: '[String!]' } }
   });
 
   const onSubmit = async ({

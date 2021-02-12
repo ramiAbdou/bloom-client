@@ -1,8 +1,6 @@
-import day from 'dayjs';
 import deepmerge from 'deepmerge';
 import { State } from 'easy-peasy';
 
-import { IdProps } from '@constants';
 import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
@@ -13,14 +11,7 @@ import {
   IUser
 } from '@store/Db/entities';
 import { sortObjects } from '@util/util';
-
-interface IndividualEventTableRowProps extends IdProps {
-  fullName: string;
-  email: string;
-  joinedAt?: string;
-  rsvpdAt?: string;
-  watched?: string;
-}
+import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 /**
  * Returns a record of data for everybody who attended the event.
@@ -34,6 +25,8 @@ const getIndividualEventTableAttendees = (
 
   return db.event.attendees.reduce((acc, attendeeId: string) => {
     const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
+    const member: IMember = db.byMemberId[attendee?.member];
+
     const { createdAt, firstName, lastName, email } = attendee;
 
     if (acc[email]) return acc;
@@ -42,7 +35,8 @@ const getIndividualEventTableAttendees = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: attendee?.member,
-      joinedAt: day(createdAt).format('MMM D @ h:mm A'),
+      joinedAt: createdAt,
+      userId: member?.user,
       watched: 'No'
     };
 
@@ -62,6 +56,8 @@ const getIndividualEventTableGuests = (
 
   return db.event.guests.reduce((acc, guestId: string) => {
     const guest: IEventGuest = db.byGuestId[guestId];
+    const member: IMember = db.byMemberId[guest?.member];
+
     const { createdAt, firstName, lastName, email } = guest;
 
     if (acc[email]) return acc;
@@ -70,7 +66,8 @@ const getIndividualEventTableGuests = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: guest?.member,
-      rsvpdAt: day(createdAt).format('MMM D @ h:mm A'),
+      rsvpdAt: createdAt,
+      userId: member?.user,
       watched: 'No'
     };
 
@@ -100,6 +97,7 @@ const getIndividualEventTableViewers = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: member?.id,
+      userId: member?.user,
       watched: 'Yes'
     };
 

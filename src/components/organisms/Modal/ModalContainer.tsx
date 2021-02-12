@@ -17,7 +17,10 @@ const ModalBackground: React.FC = () => {
   const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
-  const onClick = () => !lock && closeModal();
+  const onClick = () => {
+    if (!lock) closeModal();
+  };
+
   const css = cx('c-modal-bg', { 'c-modal-bg--lock': lock });
 
   return <div key="c-modal-bg" className={css} onClick={onClick} />;

@@ -7,7 +7,7 @@ import useMutation from '@hooks/useMutation';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { CREATE_EVENT_ATTENDEE, CreateEventAttendeeArgs } from './Events.gql';
+import { CreateEventAttendeeArgs } from './Events.types';
 
 interface EventJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -28,9 +28,20 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
     IEventAttendee,
     CreateEventAttendeeArgs
   >({
-    name: 'createEventAttendee',
-    query: CREATE_EVENT_ATTENDEE,
+    fields: [
+      'createdAt',
+      'email',
+      'firstName',
+      'id',
+      'lastName',
+      { event: ['id'] },
+      {
+        member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }]
+      }
+    ],
+    operation: 'createEventAttendee',
     schema: Schema.EVENT_ATTENDEE,
+    types: { eventId: { required: true } },
     variables: { eventId }
   });
 

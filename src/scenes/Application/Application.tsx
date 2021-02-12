@@ -1,4 +1,3 @@
-import { GET_TYPES } from 'core/routing/Router.gql';
 import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
@@ -6,10 +5,6 @@ import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import Story from '@organisms/Story/Story';
-import {
-  GET_APPLICATION,
-  GET_APPLICATION_QUESTIONS
-} from '@scenes/Application/Application.gql';
 import {
   ICommunityApplication,
   IMemberType,
@@ -23,30 +18,65 @@ import ApplicationMainPage from './ApplicationMain';
 import ApplicationReviewPage from './ApplicationReview';
 
 const Application: React.FC = () => {
-  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
+  const setActive = useStoreActions(({ db }) => db.setActive);
   const { urlName } = useParams() as UrlNameProps;
 
   const { data, error, loading: loading1 } = useQuery<
     ICommunityApplication,
     UrlNameProps
   >({
-    name: 'getApplication',
-    query: GET_APPLICATION,
+    fields: [
+      'description',
+      'id',
+      'title',
+      {
+        community: [
+          'autoAccept',
+          'id',
+          'logoUrl',
+          'name',
+          'primaryColor',
+          'urlName',
+          { integrations: ['stripeAccountId'] }
+        ]
+      }
+    ],
+    operation: 'getApplication',
     schema: Schema.COMMUNITY_APPLICATION,
+    types: { urlName: { required: true } },
     variables: { urlName }
   });
 
   const { loading: loading2 } = useQuery<IQuestion[]>({
-    name: 'getQuestions',
-    query: GET_APPLICATION_QUESTIONS,
+    fields: [
+      'category',
+      'description',
+      'id',
+      'inApplication',
+      'options',
+      'required',
+      'title',
+      'type',
+      { community: ['id'] }
+    ],
+    operation: 'getQuestions',
     schema: [Schema.QUESTION],
+    types: { urlName: { required: false } },
     variables: { urlName }
   });
 
   const { loading: loading3 } = useQuery<IMemberType[]>({
-    name: 'getTypes',
-    query: GET_TYPES,
+    fields: [
+      'amount',
+      'id',
+      'isFree',
+      'name',
+      'recurrence',
+      { community: ['id'] }
+    ],
+    operation: 'getTypes',
     schema: [Schema.MEMBER_TYPE],
+    types: { urlName: { required: false } },
     variables: { urlName }
   });
 
@@ -57,7 +87,7 @@ const Application: React.FC = () => {
   const communityId = data?.community?.id;
 
   useEffect(() => {
-    if (communityId) setActiveCommunity(communityId);
+    if (communityId) setActive({ id: communityId, table: 'communities' });
   }, [communityId]);
 
   if (error) return <Redirect to="/login" />;

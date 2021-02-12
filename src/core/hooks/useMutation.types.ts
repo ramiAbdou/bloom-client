@@ -1,3 +1,5 @@
+import Fields from 'gql-query-builder/build/Fields';
+import VariableOptions from 'gql-query-builder/build/VariableOptions';
 import { Schema } from 'normalizr';
 
 import { DeleteEntitiesRef } from '../store/Db/Db.types';
@@ -9,10 +11,10 @@ export type UseMutationArgs<T, S> = {
     refs?: DeleteEntitiesRef[];
     table: keyof IEntities;
   };
-  format?: (data: T) => any;
-  name: string;
-  query: string;
+  fields?: Fields;
+  operation: string;
   schema?: Schema;
+  types?: VariableOptions;
   variables?: S;
 };
 

@@ -8,19 +8,19 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { UPDATE_RECORDING_LINK } from '../Events.gql';
 
 const IndividualEventRecordingForm: React.FC = () => {
   const id = useStoreState(({ panel }) => panel.metadata);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
 
-  const [updateRecordingLink] = useMutation<
+  const [updateEvent] = useMutation<
     IEvent,
     Pick<IEvent, 'id' | 'recordingUrl'>
   >({
-    name: 'updateRecordingLink',
-    query: UPDATE_RECORDING_LINK,
-    schema: Schema.EVENT
+    fields: ['id', 'recordingUrl'],
+    operation: 'updateEvent',
+    schema: Schema.EVENT,
+    types: { id: { required: true }, recordingUrl: { required: false } }
   });
 
   const onSubmit = async ({
@@ -29,7 +29,7 @@ const IndividualEventRecordingForm: React.FC = () => {
     showToast
   }: OnFormSubmitArgs) => {
     const value = items.RECORDING_URL?.value;
-    await updateRecordingLink({ id, recordingUrl: value });
+    await updateEvent({ id, recordingUrl: value });
     showToast({ message: 'Event recording link updated.' });
     closePanel();
   };

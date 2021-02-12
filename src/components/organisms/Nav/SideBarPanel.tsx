@@ -1,4 +1,3 @@
-import { LOGOUT } from 'core/routing/Router.gql';
 import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
@@ -16,7 +15,7 @@ const SidebarPanel: React.FC = () => {
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
   const { push } = useHistory();
-  const [logout] = useMutation<boolean>({ name: 'logout', query: LOGOUT });
+  const [logout] = useMutation<boolean>({ operation: 'logout' });
 
   const onLogout = async () => {
     const { error } = await logout();

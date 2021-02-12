@@ -1,19 +1,18 @@
 import { action, computed } from 'easy-peasy';
-import { normalize } from 'normalizr';
 
 import {
   ICommunity,
   ICommunityApplication,
-  IEntities,
   IEvent,
   IIntegrations,
   IMember,
-  initialEntities
+  initialEntities,
+  IUser
 } from '@store/Db/entities';
 import { updateDocumentColors } from '@util/colorUtil';
-import { AddEntitiesArgs, DbModel, MergeEntitiesArgs } from './Db.types';
+import { AddEntitiesArgs, DbModel, SetActiveArgs } from './Db.types';
 import deleteEntities from './deleteEntities';
-import { mergeStrategy } from './schema';
+import mergeEntities from './mergeEntities';
 
 const dbStore: DbModel = {
   addEntities: action(
@@ -69,8 +68,10 @@ const dbStore: DbModel = {
       (typeId: string) => !byTypeId[typeId]?.isFree
     );
 
+    if (!result) return null;
+
     // Updates the primary color (and gray's accordingly).
-    if (result) updateDocumentColors(result.primaryColor ?? '#f58023');
+    updateDocumentColors(result.primaryColor ?? '#f58023');
 
     return {
       ...result,
@@ -99,65 +100,14 @@ const dbStore: DbModel = {
     return byId[activeId] as IMember;
   }),
 
-  /**
-   * Main update function that updates all entities (front-end DB). Uses
-   * the lodash deep merge function to make the updates.
-   */
-  mergeEntities: action(
-    (state, { data, schema, setActiveId }: MergeEntitiesArgs) => {
-      const normalizedEntities = normalize(data, schema).entities;
+  mergeEntities,
 
-      const parsedEntities = Object.entries(normalizedEntities).reduce(
-        (acc: Record<string, any>, [key, value]) => {
-          const activeId = setActiveId
-            ? key === 'users' && { activeId: Object.keys(value)[0] }
-            : {};
-
-          return { ...acc, [key]: { ...activeId, byId: value } };
-        },
-        {}
-      );
-
-      return {
-        ...state,
-        entities: mergeStrategy(state.entities, parsedEntities) as IEntities
-      };
-    }
-  ),
-
-  /**
-   * If a user is a part of multiple communities, this allows a user to switch
-   * between the communities.
-   *
-   * Precondition: The user must be a member of that community in order to
-   * actually join it.
-   */
-  setActiveCommunity: action(
-    ({ entities, user, ...state }, communityId: string) => {
-      const { byId: byMemberId } = entities.members;
-
-      const memberId: string = user?.members.find(
-        (id: string) => byMemberId[id]?.community === communityId
-      );
-
-      return {
-        ...state,
-        entities: {
-          ...entities,
-          communities: { ...entities.communities, activeId: communityId },
-          members: { ...entities.members, activeId: memberId }
-        },
-        user
-      };
-    }
-  ),
-
-  setActiveEvent: action(({ entities, ...state }, eventId: string) => {
+  setActive: action((state, { id, table }: SetActiveArgs) => {
     return {
       ...state,
       entities: {
-        ...entities,
-        events: { ...entities.events, activeId: eventId }
+        ...state.entities,
+        [table]: { ...state.entities[table], activeId: id }
       }
     };
   }),
@@ -173,7 +123,7 @@ const dbStore: DbModel = {
    */
   user: computed(({ entities }) => {
     const { activeId, byId } = entities.users;
-    return byId[activeId];
+    return byId[activeId] as IUser;
   })
 };
 

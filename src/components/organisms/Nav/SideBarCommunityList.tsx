@@ -1,27 +1,39 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { IdProps } from '@constants';
+import useMutation from '@hooks/useMutation';
 import { ICommunity, IMember } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { cx } from '@util/util';
+import { cx, sortObjects } from '@util/util';
+import useLoader from '../Loader/useLoader';
 
-interface SideBarCommunityIconProps {
-  id: string;
-  isActive?: boolean;
-  logoUrl: string;
-  urlName: string;
-}
-
-const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
-  logoUrl,
-  urlName,
-  id,
-  isActive
-}) => {
+const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
   const communityId = useStoreState(({ db }) => db.community.id);
 
+  const { id, logoUrl, urlName } = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    return db.byCommunityId[member.community] ?? {};
+  }) as ICommunity;
+
+  const [switchMember, { loading }] = useMutation<boolean>({
+    operation: 'switchMember',
+    types: { memberId: { required: true } },
+    variables: { memberId }
+  });
+
   const { push } = useHistory();
-  const onClick = () => id !== communityId && push(`/${urlName}`);
+
+  const isActive: boolean = id === communityId;
+
+  const onClick = async () => {
+    if (!isActive) {
+      await switchMember();
+      push(`/${urlName}`);
+    }
+  };
+
+  useLoader(loading);
 
   const css = cx('o-nav-community', {
     'o-nav-community--active': isActive
@@ -35,31 +47,17 @@ const SideBarCommunityIcon: React.FC<SideBarCommunityIconProps> = ({
 };
 
 const SideBarCommunityList: React.FC = () => {
-  const communities: SideBarCommunityIconProps[] = useStoreState(({ db }) => {
-    const { activeId } = db.entities.communities;
-
-    const members: IMember[] = db.user.members?.map((memberId: string) => {
-      return db.byMemberId[memberId];
-    });
-
-    return members.map((member: IMember) => {
-      const { logoUrl, urlName, id }: ICommunity = db.byCommunityId[
-        member.community
-      ];
-
-      return {
-        id,
-        isActive: activeId === member.community,
-        logoUrl,
-        urlName
-      };
-    });
+  const memberIds: string[] = useStoreState(({ db }) => {
+    return db.user.members
+      ?.map((memberId: string) => db.byMemberId[memberId])
+      ?.sort((a, b) => sortObjects(a, b, 'joinedAt', 'ASC'))
+      ?.map((member: IMember) => member.id);
   });
 
   return (
     <div className="o-nav-community-ctr">
-      {communities?.map((props: SideBarCommunityIconProps) => (
-        <SideBarCommunityIcon key={props.logoUrl} {...props} />
+      {memberIds?.map((id: string) => (
+        <SideBarCommunityIcon key={id} id={id} />
       ))}
     </div>
   );

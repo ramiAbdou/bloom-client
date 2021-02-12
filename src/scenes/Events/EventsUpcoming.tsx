@@ -7,11 +7,11 @@ import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { ICommunity, IEvent } from '@store/Db/entities';
+import { eventFields } from '@scenes/Events/Events.types';
+import { ICommunity, IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
-import { GET_UPCOMING_EVENT_GUESTS, GET_UPCOMING_EVENTS } from './Events.gql';
 import EventsCard from './EventsCard/EventsCard';
 import EventsHeader from './EventsHeader';
 
@@ -35,14 +35,22 @@ const EventsUpcomingContent: React.FC = () => {
 
 const EventsUpcoming: React.FC = () => {
   const { loading: loading1 } = useQuery<ICommunity>({
-    name: 'getUpcomingEvents',
-    query: GET_UPCOMING_EVENTS,
+    fields: [
+      'endTime',
+      'id',
+      'imageUrl',
+      'startTime',
+      'title',
+      'videoUrl',
+      { community: ['id'] }
+    ],
+    operation: 'getUpcomingEvents',
     schema: [Schema.EVENT]
   });
 
-  const { loading: loading2 } = useQuery<ICommunity>({
-    name: 'getUpcomingEventGuests',
-    query: GET_UPCOMING_EVENT_GUESTS,
+  const { loading: loading2 } = useQuery<IEventGuest[]>({
+    fields: eventFields,
+    operation: 'getUpcomingEventGuests',
     schema: [Schema.EVENT_GUEST]
   });
 

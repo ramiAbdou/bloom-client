@@ -148,6 +148,7 @@ const Member = new schema.Entity(
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.attendeeId, { attendees: [parent.id] }],
+        [!!parent.dataId, { data: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
@@ -166,7 +167,7 @@ const MemberData = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value) => {
-      return { ...value, memberDataId: value.id };
+      return { ...value, dataId: value.id };
     }
   }
 );
@@ -194,7 +195,7 @@ const Question = new schema.Entity(
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [!!parent.memberDataId, { data: [parent.id] }]
+        [!!parent.dataId, { data: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, questionId: value.id };
@@ -202,7 +203,20 @@ const Question = new schema.Entity(
   }
 );
 
-const User = new schema.Entity('users', {}, { mergeStrategy });
+const User = new schema.Entity(
+  'users',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.memberId, { members: [parent.id] }]
+      ]);
+
+      return { ...value, ...processedData, userId: value.id };
+    }
+  }
+);
 
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.
@@ -252,7 +266,7 @@ MemberPayment.define({
 
 MemberType.define({ community: Community });
 Question.define({ community: Community, data: [MemberData] });
-User.define({ members: [Member] });
+User.define({ member: Member, members: [Member] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations

@@ -14,9 +14,7 @@ const AdminRoute: React.FC<RouteProps> = ({
   ...rest
 }: RouteProps) => {
   const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
-
   const { urlName }: UrlNameProps = useParams();
-
   if (!isAdmin) return <Redirect to={`/${urlName}`} />;
   return <Route exact {...rest} component={component} />;
 };

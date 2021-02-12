@@ -5,16 +5,38 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { uploadImage } from '@util/imageUtil';
-import { CREATE_EVENT } from './CreateEvent.gql';
 
 const useCreateEvent = (): OnFormSubmit => {
   const [createEvent] = useMutation<
     IEvent,
     Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>
   >({
-    name: 'createEvent',
-    query: CREATE_EVENT,
-    schema: Schema.EVENT
+    fields: [
+      'description',
+      'endTime',
+      'eventUrl',
+      'id',
+      'imageUrl',
+      'private',
+      'recordingUrl',
+      'startTime',
+      'summary',
+      'title',
+      'videoUrl',
+      { community: ['id'] }
+    ],
+    operation: 'createEvent',
+    schema: Schema.EVENT,
+    types: {
+      description: { required: true },
+      endTime: { required: true },
+      imageUrl: { required: false },
+      private: { required: false, type: 'Boolean' },
+      startTime: { required: true },
+      summary: { required: false },
+      title: { required: true },
+      videoUrl: { required: true }
+    }
   });
 
   const onSubmit = async ({

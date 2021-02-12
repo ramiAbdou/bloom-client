@@ -6,27 +6,35 @@ import { cx, takeFirst } from '@util/util';
 
 interface ProfilePictureProps extends ClassNameProps {
   circle?: boolean;
-  firstName?: string;
   fontSize?: number;
-  lastName?: string;
-  href?: string;
   size?: number;
+  userId?: string;
 }
 
 const ProfilePicture: React.FC<ProfilePictureProps> = ({
-  circle,
+  circle = true,
   className,
-  firstName: fName,
   fontSize,
-  href,
-  lastName: lName,
-  size
+  size,
+  userId
 }) => {
   const [imageError, setImageError] = useState(false);
 
   // If one of these is null, it means the user isn't fully loaded yet.
-  const firstName = useStoreState(({ db }) => fName ?? db.user?.firstName);
-  const lastName = useStoreState(({ db }) => lName ?? db.user?.lastName);
+  const firstName: string = useStoreState(({ db }) => {
+    if (userId) return db.byUserId[userId]?.firstName;
+    return db.user?.firstName;
+  });
+
+  const lastName: string = useStoreState(({ db }) => {
+    if (userId) return db.byUserId[userId]?.lastName;
+    return db.user?.lastName;
+  });
+
+  const pictureUrl: string = useStoreState(({ db }) => {
+    if (userId) return db.byUserId[userId]?.pictureUrl;
+    return db.user?.pictureUrl;
+  });
 
   if (!firstName || !lastName) return null;
 
@@ -34,14 +42,14 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({
 
   const body = takeFirst([
     [
-      href && !imageError,
+      pictureUrl && !imageError,
       <img
         alt="Profile Avatar"
-        src={href}
+        src={pictureUrl}
         onError={() => setImageError(true)}
       />
     ],
-    <h3 style={{ fontSize }}>{initials}</h3>
+    <h3 style={{ fontSize: fontSize ?? size * 0.4 }}>{initials}</h3>
   ]);
 
   const css = cx('m-profile-picture', {

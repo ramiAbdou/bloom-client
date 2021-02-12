@@ -9,7 +9,7 @@ import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import { GET_EVENT, GET_EVENT_GUESTS, GetEventArgs } from '../Events.gql';
+import { eventFields, GetEventArgs } from '../Events.types';
 import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAttendeeList from './IndividualEventAttendeeList';
@@ -35,24 +35,45 @@ const IndividualEvent: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
   const isMembersOnly = useStoreState(({ db }) => db.event?.private);
-  const setActiveEvent = useStoreActions(({ db }) => db.setActiveEvent);
+  const setActive = useStoreActions(({ db }) => db.setActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const setActiveCommunity = useStoreActions(({ db }) => db.setActiveCommunity);
 
   const { data: data1, loading: loading1, error } = useQuery<
     IEvent,
     GetEventArgs
   >({
-    name: 'getEvent',
-    query: GET_EVENT,
+    fields: [
+      'description',
+      'endTime',
+      'eventUrl',
+      'id',
+      'imageUrl',
+      'private',
+      'recordingUrl',
+      'startTime',
+      'summary',
+      'title',
+      'videoUrl',
+      {
+        community: [
+          'id',
+          'name',
+          'primaryColor',
+          { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
+        ]
+      }
+    ],
+    operation: 'getEvent',
     schema: Schema.EVENT,
+    types: { eventId: { required: true } },
     variables: { eventId }
   });
 
   const { loading: loading2 } = useQuery<IEvent, GetEventArgs>({
-    name: 'getEventGuests',
-    query: GET_EVENT_GUESTS,
+    fields: eventFields,
+    operation: 'getEventGuests',
     schema: [Schema.EVENT_GUEST],
+    types: { eventId: { required: false } },
     variables: { eventId }
   });
 
@@ -63,9 +84,9 @@ const IndividualEvent: React.FC = () => {
 
   useEffect(() => {
     if (data1) {
-      setActiveEvent(data1.id);
+      setActive({ id: data1.id, table: 'events' });
       // @ts-ignore b/c type issues.
-      setActiveCommunity(data1.community?.id);
+      setActive({ id: data1.community?.id, table: 'communities' });
     }
   }, [data1]);
 

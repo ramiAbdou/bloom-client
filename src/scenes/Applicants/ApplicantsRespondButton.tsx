@@ -5,10 +5,7 @@ import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
-import {
-  RESPOND_TO_APPLICANTS,
-  RespondToApplicantsArgs
-} from './Applicants.gql';
+import { RespondToApplicantsArgs } from './Applicants.types';
 
 interface ApplicantsRespondButtonProps {
   all?: boolean;
@@ -24,9 +21,13 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [respondToApplicants] = useMutation<boolean, RespondToApplicantsArgs>({
-    name: 'respondToApplicants',
-    query: RESPOND_TO_APPLICANTS,
+    fields: ['id', 'status'],
+    operation: 'respondToApplicants',
     schema: [Schema.MEMBER],
+    types: {
+      memberIds: { required: true, type: '[String!]' },
+      response: { required: true }
+    },
     variables: { memberIds: applicantIds, response }
   });
 

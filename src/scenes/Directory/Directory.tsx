@@ -6,9 +6,8 @@ import MainHeader from '@containers/Main/MainHeader';
 import useQuery from '@hooks/useQuery';
 import ListStore from '@organisms/List/List.store';
 import ListSearchBar from '@organisms/List/ListSearchBar';
-import { ICommunity } from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { GET_DIRECTORY } from './Directory.gql';
 import DirectoryCardList from './DirectoryCardList';
 
 const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
@@ -26,9 +25,15 @@ const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
 };
 
 const Directory: React.FC = () => {
-  const { loading } = useQuery<ICommunity>({
-    name: 'getDirectory',
-    query: GET_DIRECTORY,
+  const { loading } = useQuery<IMember[]>({
+    fields: [
+      'id',
+      'status',
+      { community: ['id'] },
+      { data: ['id', 'value', { question: ['id'] }] },
+      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+    ],
+    operation: 'getDirectory',
     schema: [Schema.MEMBER]
   });
 

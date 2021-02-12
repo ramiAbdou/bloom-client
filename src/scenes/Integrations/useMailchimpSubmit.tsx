@@ -1,19 +1,17 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import { IIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import {
-  UPDATE_MAILCHIMP_LIST_ID,
-  UpdateMailchimpListIdArgs
-} from './Integrations.gql';
 
 const useMailchimpSubmit = (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
 
-  const [updateMailchimpListId] = useMutation<any, UpdateMailchimpListIdArgs>({
-    name: 'updateMailchimpListId',
-    query: UPDATE_MAILCHIMP_LIST_ID,
-    schema: Schema.COMMUNITY_INTEGRATIONS
+  const [updateIntegrations] = useMutation<IIntegrations>({
+    fields: ['id', 'mailchimpListId', 'mailchimpListName'],
+    operation: 'updateIntegrations',
+    schema: Schema.COMMUNITY_INTEGRATIONS,
+    types: { mailchimpListId: { required: false } }
   });
 
   const onSubmit = async ({
@@ -27,7 +25,7 @@ const useMailchimpSubmit = (): OnFormSubmit => {
       ({ name }) => name === selectedMailchimpList
     );
 
-    const { error } = await updateMailchimpListId({ mailchimpListId });
+    const { error } = await updateIntegrations({ mailchimpListId });
 
     if (error) {
       setError(error);

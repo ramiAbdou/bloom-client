@@ -2,9 +2,11 @@ import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
+import useQuery from '@hooks/useQuery';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { IMember, IUser } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import MemberProfileStore from './MemberProfile.store';
 import MemberProfileSocialContainer from './MemberProfileSocial';
@@ -12,19 +14,12 @@ import MemberProfileSocialContainer from './MemberProfileSocial';
 const MemberProfilePersonalPicture: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);
 
-  const { pictureUrl, firstName, lastName }: IUser = useStoreState(({ db }) => {
-    return db.byUserId[userId];
-  });
-
   return (
     <ProfilePicture
-      circle
       className="mo-member-profile-pic"
-      firstName={firstName}
       fontSize={36}
-      href={pictureUrl}
-      lastName={lastName}
       size={96}
+      userId={userId}
     />
   );
 };
@@ -89,12 +84,31 @@ const MemberProfilePersonalInformation: React.FC = () => (
   </div>
 );
 
-const MemberProfilePersonal: React.FC = () => (
-  <div className="mo-member-profile-user-ctr">
-    <MemberProfilePersonalPicture />
-    <MemberProfilePersonalInformation />
-    <MemberProfileSocialContainer />
-  </div>
-);
+const MemberProfilePersonal: React.FC = () => {
+  const userId = MemberProfileStore.useStoreState((store) => store.userId);
+
+  useQuery<IUser>({
+    fields: [
+      'email',
+      'facebookUrl',
+      'id',
+      'instagramUrl',
+      'linkedInUrl',
+      'twitterUrl'
+    ],
+    operation: 'getUser',
+    schema: Schema.USER,
+    types: { userId: { required: false } },
+    variables: { userId }
+  });
+
+  return (
+    <div className="mo-member-profile-user-ctr">
+      <MemberProfilePersonalPicture />
+      <MemberProfilePersonalInformation />
+      <MemberProfileSocialContainer />
+    </div>
+  );
+};
 
 export default MemberProfilePersonal;

@@ -1,12 +1,13 @@
 import React from 'react';
 
 import Separator from '@atoms/Separator';
+import Show from '@containers/Show';
 import useMutation from '@hooks/useMutation';
 import Toggle from '@molecules/Toggle/Toggle';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { UPDATE_AUTO_RENEW, UpdateAutoRenewArgs } from './Membership.gql';
+import { UpdateMemberArgs } from './Membership.types';
 
 const MembershipCurrentPlanToggle: React.FC = () => {
   const autoRenew = useStoreState(({ db }) => db.member?.autoRenew);
@@ -17,30 +18,29 @@ const MembershipCurrentPlanToggle: React.FC = () => {
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const [updateAutoRenew] = useMutation<IMember, UpdateAutoRenewArgs>({
-    name: 'updateAutoRenew',
-    query: UPDATE_AUTO_RENEW,
+  const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
+    fields: ['id', 'autoRenew'],
+    operation: 'updateMember',
     schema: Schema.MEMBER,
-    variables: { status: !autoRenew }
+    types: { autoRenew: { required: false, type: 'Boolean' } },
+    variables: { autoRenew: !autoRenew }
   });
 
-  if (isLifetime) return null;
-
   const onChange = async () => {
-    const { data } = await updateAutoRenew();
+    const { data } = await updateMember();
     const statusText = data.autoRenew ? 'on' : 'off';
     showToast({ message: `Membership auto-renewal turned ${statusText}.` });
   };
 
   return (
-    <>
+    <Show show={!isLifetime}>
       <Separator margin={16} />
       <Toggle
         on={autoRenew}
         title="Auto Renew Membership"
         onChange={onChange}
       />
-    </>
+    </Show>
   );
 };
 
