@@ -5,7 +5,6 @@ import { IdProps } from '@constants';
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { DELETE_EVENT } from './CreateEvent.gql';
 
 const DeleteEventButton: React.FC = () => {
   const communityId = useStoreState(({ db }) => db.community.id);
@@ -21,7 +20,7 @@ const DeleteEventButton: React.FC = () => {
       table: 'events'
     },
     operation: 'deleteEvent',
-    query: DELETE_EVENT,
+    types: { id: { required: true } },
     variables: { id }
   });
 

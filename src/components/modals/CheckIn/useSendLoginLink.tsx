@@ -5,8 +5,7 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import StoryStore from '@organisms/Story/Story.store';
 import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { SEND_LOGIN_LINK, SendLoginLinkArgs } from './CheckIn.gql';
-import { CheckInError } from './CheckIn.types';
+import { CheckInError, SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmit => {
@@ -24,7 +23,11 @@ const useSendLoginLink = (): OnFormSubmit => {
 
   const [sendLoginLink] = useMutation<boolean, SendLoginLinkArgs>({
     operation: 'sendLoginLink',
-    query: SEND_LOGIN_LINK
+    types: {
+      communityId: { required: false },
+      email: { required: true },
+      pathname: { required: false }
+    }
   });
 
   const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {

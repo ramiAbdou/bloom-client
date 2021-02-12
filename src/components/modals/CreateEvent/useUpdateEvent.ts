@@ -3,13 +3,29 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { uploadImage } from '@util/imageUtil';
-import { UPDATE_EVENT } from './CreateEvent.gql';
 
 const useUpdateEvent = (eventId: string): OnFormSubmit => {
   const [updateEvent] = useMutation<IEvent, Partial<IEvent>>({
+    fields: [
+      'description',
+      'id',
+      'imageUrl',
+      'private',
+      'summary',
+      'title',
+      'videoUrl'
+    ],
     operation: 'updateEvent',
-    query: UPDATE_EVENT,
-    schema: Schema.EVENT
+    schema: Schema.EVENT,
+    types: {
+      description: { required: false },
+      id: { required: true },
+      imageUrl: { required: false },
+      private: { required: false, type: 'Boolean' },
+      summary: { required: false },
+      title: { required: false },
+      videoUrl: { required: false }
+    }
   });
 
   const onSubmit = async ({

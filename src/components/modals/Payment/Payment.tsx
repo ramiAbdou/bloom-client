@@ -3,10 +3,9 @@ import React, { useEffect } from 'react';
 import { ModalType } from '@constants';
 import useQuery from '@hooks/useQuery';
 import Story from '@organisms/Story/Story';
-import { ICommunity } from '@store/Db/entities';
+import { IIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { GET_PAYMENT_INTEGRATIONS } from './Payment.gql';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 import PaymentCardPage from './PaymentCard';
@@ -55,9 +54,9 @@ const PaymentModal: React.FC = () => {
 
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
 
-  const { loading } = useQuery<ICommunity>({
+  const { loading } = useQuery<IIntegrations>({
+    fields: ['id', 'stripeAccountId', { community: ['id'] }],
     operation: 'getIntegrations',
-    query: GET_PAYMENT_INTEGRATIONS,
     schema: Schema.COMMUNITY_INTEGRATIONS
   });
 

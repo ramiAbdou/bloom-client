@@ -5,15 +5,16 @@ import {
   OnFormSubmitArgs
 } from '@organisms/Form/Form.types';
 import { takeFirst } from '@util/util';
-import { ADD_MEMBERS, AddMemberArgs, AddMembersArgs } from './AddMember.gql';
 import AddMemberStore from './AddMember.store';
+import { AddMemberInput, AddMembersArgs } from './AddMember.types';
 
 const useAddMembers = (): OnFormSubmit => {
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   const [addMembers] = useMutation<any, AddMembersArgs>({
+    fields: ['id'],
     operation: 'addMembers',
-    query: ADD_MEMBERS
+    types: { members: { required: true, type: '[AddMemberInput!]' } }
   });
 
   const onSubmit = async ({
@@ -24,9 +25,9 @@ const useAddMembers = (): OnFormSubmit => {
   }: OnFormSubmitArgs) => {
     // In the first pass, format all the values by looking at the item's
     // category and id.
-    const memberData: Record<string, AddMemberArgs> = Object.values(
+    const memberData: Record<string, AddMemberInput> = Object.values(
       items
-    ).reduce((acc: Record<string, AddMemberArgs>, data: FormItemData) => {
+    ).reduce((acc: Record<string, AddMemberInput>, data: FormItemData) => {
       const { category, metadata: inputId, type, value } = data;
 
       const formattedValue = takeFirst([
@@ -39,7 +40,7 @@ const useAddMembers = (): OnFormSubmit => {
       return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };
     }, {});
 
-    const members: AddMemberArgs[] = Object.values(memberData);
+    const members: AddMemberInput[] = Object.values(memberData);
     const { error } = await addMembers({ members: Object.values(members) });
 
     if (error) {

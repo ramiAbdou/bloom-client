@@ -1,13 +1,10 @@
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import { IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import {
-  CREATE_SUBSCRIPTION,
-  CreateSubscriptionArgs,
-  CreateSubscriptionResult
-} from './Payment.gql';
 import PaymentStore from './Payment.store';
+import { CreateSubscriptionArgs } from './Payment.types';
 
 const useCreateSubscription = (): OnFormSubmit => {
   const prorationDate = PaymentStore.useStoreState(
@@ -21,12 +18,21 @@ const useCreateSubscription = (): OnFormSubmit => {
   const pushToMembership = usePush('membership');
 
   const [createSubscription] = useMutation<
-    CreateSubscriptionResult,
+    IMemberPayment,
     CreateSubscriptionArgs
   >({
+    fields: [
+      'amount',
+      'createdAt',
+      'id',
+      { member: ['id', 'autoRenew', 'isDuesActive', { type: ['id', 'name'] }] }
+    ],
     operation: 'createSubscription',
-    query: CREATE_SUBSCRIPTION,
-    schema: Schema.MEMBER_PAYMENT
+    schema: Schema.MEMBER_PAYMENT,
+    types: {
+      autoRenew: { required: false, type: 'Boolean' },
+      memberTypeId: { required: true }
+    }
   });
 
   const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {

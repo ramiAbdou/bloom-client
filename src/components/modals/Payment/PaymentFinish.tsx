@@ -9,12 +9,8 @@ import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType, IPaymentMethod } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import {
-  GET_CHANGE_PREVIEW,
-  GetChangePreviewArgs,
-  GetChangePreviewResult
-} from './Payment.gql';
 import PaymentStore from './Payment.store';
+import { GetChangePreviewArgs, GetChangePreviewResult } from './Payment.types';
 import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
 import PaymentFinishToggle from './PaymentFinishToggle';
@@ -72,8 +68,9 @@ const PaymentFinish: React.FC = () => {
     GetChangePreviewResult,
     GetChangePreviewArgs
   >({
+    fields: ['amount', 'prorationDate'],
     operation: 'getChangePreview',
-    query: GET_CHANGE_PREVIEW
+    types: { memberTypeId: { required: true } }
   });
 
   useEffect(() => {
