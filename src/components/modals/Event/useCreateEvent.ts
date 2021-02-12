@@ -83,7 +83,12 @@ const useCreateEvent = (): OnFormSubmit => {
       videoUrl: items.VIDEO_URL?.value
     };
 
-    await createEvent(args);
+    const { error } = await createEvent(args);
+
+    if (error) {
+      setError(error);
+      return;
+    }
 
     showToast({ message: 'Event created!' });
     closeModal();

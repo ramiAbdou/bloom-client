@@ -86,6 +86,14 @@ const IndividualEventTable: React.FC = () => {
   const eventId = useStoreState(({ db }) => db.event?.id);
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
 
+  const hasContent: boolean = useStoreState(({ db }) => {
+    return (
+      !!db.event?.attendees?.length ||
+      !!db.event?.guests?.length ||
+      !!db.event?.watches?.length
+    );
+  });
+
   const [getEventAttendees, { loading: loading1 }] = useManualQuery<
     IEvent,
     GetEventArgs
@@ -128,7 +136,7 @@ const IndividualEventTable: React.FC = () => {
   }, []);
 
   return (
-    <Show show={!!isAdmin && !loading}>
+    <Show show={!!isAdmin && !loading && hasContent}>
       <IndividualEventTableContent />
     </Show>
   );

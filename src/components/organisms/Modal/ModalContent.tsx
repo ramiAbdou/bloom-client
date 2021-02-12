@@ -3,7 +3,7 @@ import React from 'react';
 import { ModalType } from '@constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CheckInModal from '@modals/CheckIn/CheckIn';
-import CreateEventModal from '@modals/CreateEvent/CreateEvent';
+import CreateEventModal from '@modals/Event/CreateEvent';
 import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
 import PaymentModal from '@modals/Payment/Payment';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
