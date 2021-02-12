@@ -93,7 +93,7 @@ export type TableModel = {
   searchString: string;
   selectedRowIds: string[];
   setFilter: Action<TableModel, TableQuickFilterArgs>;
-  setRange: Action<TableModel, number>;
+  setPage: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
   sortColumn: Action<TableModel, [string, TableSortDirection]>;
   sortDirection: TableSortDirection;

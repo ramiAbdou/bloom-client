@@ -81,7 +81,7 @@ export const tableModel: TableModel = {
     };
   }),
 
-  setRange: action((state, page) => {
+  setPage: action((state, page) => {
     // When going to a new page, we need to ensure that the scroll position is
     // set to 0 so they start at the top of the page.
     const element = document.getElementById('o-table-ctr');

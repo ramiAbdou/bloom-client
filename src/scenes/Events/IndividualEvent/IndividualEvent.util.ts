@@ -1,8 +1,6 @@
-import day from 'dayjs';
 import deepmerge from 'deepmerge';
 import { State } from 'easy-peasy';
 
-import { IdProps } from '@constants';
 import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
@@ -13,14 +11,7 @@ import {
   IUser
 } from '@store/Db/entities';
 import { sortObjects } from '@util/util';
-
-interface IndividualEventTableRowProps extends IdProps {
-  fullName: string;
-  email: string;
-  joinedAt?: string;
-  rsvpdAt?: string;
-  watched?: string;
-}
+import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 /**
  * Returns a record of data for everybody who attended the event.
@@ -42,7 +33,7 @@ const getIndividualEventTableAttendees = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: attendee?.member,
-      joinedAt: day(createdAt).format('MMM D @ h:mm A'),
+      joinedAt: createdAt,
       watched: 'No'
     };
 
@@ -70,7 +61,7 @@ const getIndividualEventTableGuests = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: guest?.member,
-      rsvpdAt: day(createdAt).format('MMM D @ h:mm A'),
+      rsvpdAt: createdAt,
       watched: 'No'
     };
 

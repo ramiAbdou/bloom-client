@@ -94,7 +94,6 @@ export type QuestionCategory =
 
 export type QuestionType =
   | 'COVER_IMAGE'
-  | 'CUSTOM'
   | 'DATE'
   | 'IMAGE'
   | 'LARGE_TITLE'

@@ -12,10 +12,10 @@ import { getPaginationValues } from '../Table.util';
 
 const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
   const active = TableStore.useStoreState(({ page }) => page === value);
-  const setRange = TableStore.useStoreActions((store) => store.setRange);
+  const setPage = TableStore.useStoreActions((store) => store.setPage);
 
   const isEllipses = value === '...';
-  const onClick = () => !isEllipses && setRange(value);
+  const onClick = () => !isEllipses && setPage(value);
 
   const css = cx('o-table-pagination-num', {
     'o-table-pagination-num--active': active,
@@ -31,8 +31,8 @@ const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
 
 const TablePaginationBarBackButton: React.FC = () => {
   const page = TableStore.useStoreState((store) => store.page);
-  const setRange = TableStore.useStoreActions((store) => store.setRange);
-  const onClick = () => page > 0 && setRange(page - 1);
+  const setPage = TableStore.useStoreActions((store) => store.setPage);
+  const onClick = () => page > 0 && setPage(page - 1);
 
   return (
     <Button className="o-table-pagination-chevron" onClick={onClick}>
@@ -43,13 +43,13 @@ const TablePaginationBarBackButton: React.FC = () => {
 
 const TablePaginationBarNextButton: React.FC = () => {
   const page = TableStore.useStoreState((store) => store.page);
-  const setRange = TableStore.useStoreActions((store) => store.setRange);
+  const setPage = TableStore.useStoreActions((store) => store.setPage);
 
   const numPages = TableStore.useStoreState(({ filteredRows }) => {
     return Math.ceil(filteredRows.length / 50);
   });
 
-  const onClick = () => page < numPages - 1 && setRange(page + 1);
+  const onClick = () => page < numPages - 1 && setPage(page + 1);
 
   return (
     <Button className="o-table-pagination-chevron" onClick={onClick}>

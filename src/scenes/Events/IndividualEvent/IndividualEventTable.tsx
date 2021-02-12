@@ -28,17 +28,19 @@ const IndividualEventTableContent: React.FC = () => {
     return getIndividualEventTableRows(db);
   });
 
-  const joinedAtColumn = day().isAfter(day(startTime))
+  const joinedAtColumn: TableColumn[] = day().isAfter(day(startTime))
     ? [
         {
           id: 'joinedAt',
+          render: (value) =>
+            value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
           title: `Joined At`,
-          type: 'SHORT_TEXT' as QuestionType
+          type: 'SHORT_TEXT'
         }
       ]
     : [];
 
-  const recordingClicksColumn = recordingUrl
+  const viewedRecordingColumn: TableColumn[] = recordingUrl
     ? [
         {
           id: 'watched',
@@ -56,8 +58,13 @@ const IndividualEventTableContent: React.FC = () => {
     },
     { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
     ...joinedAtColumn,
-    { id: 'rsvpdAt', title: `RSVP'd At`, type: 'SHORT_TEXT' },
-    ...recordingClicksColumn
+    {
+      id: 'rsvpdAt',
+      render: (value) => value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
+      title: `RSVP'd At`,
+      type: 'SHORT_TEXT'
+    },
+    ...viewedRecordingColumn
   ];
 
   const options: TableOptions = {
