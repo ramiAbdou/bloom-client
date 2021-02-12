@@ -114,6 +114,24 @@ div.#{$PREF}-col-panel { padding: $sm; }
 
 // ## TABLE FILTER
 
+.#{$PREF}-filter-active-tag {
+  > div:last-child {
+    @extend .flex-acc;
+    @extend .meta;
+
+    background-color: $primary;
+    border: 2px white solid;
+    border-radius: 50%;
+    color: white;
+    left: -$sl;
+    position: absolute;
+    top: -$ss;
+    z-index: 12;
+
+    @include SIZE(24px);
+  }
+}
+
 .#{$PREF}-filter-row {
   margin-bottom: $sm;
 
