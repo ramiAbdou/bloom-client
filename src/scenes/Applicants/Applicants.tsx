@@ -4,14 +4,22 @@ import MainContent from '@containers/Main/MainContent';
 import useQuery from '@hooks/useQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { GET_APPLICANTS } from './Applicants.gql';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 
 const Applicants: React.FC = () => {
   const { loading: loading1 } = useQuery<IMember[]>({
+    fields: [
+      'id',
+      'createdAt',
+      'role',
+      'status',
+      { community: ['id'] },
+      { data: ['id', 'value', { question: ['id'] }] },
+      { type: ['id'] },
+      { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
+    ],
     operation: 'getApplicants',
-    query: GET_APPLICANTS,
     schema: [Schema.MEMBER]
   });
 

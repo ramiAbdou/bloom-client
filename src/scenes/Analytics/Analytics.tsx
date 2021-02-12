@@ -14,7 +14,7 @@ import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import Show from '@containers/Show';
 import useQuery from '@hooks/useQuery';
 import { GET_DATABASE } from '@scenes/Database/Database.gql';
-import { ICommunity } from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
@@ -42,10 +42,10 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
 const Analytics: React.FC = () => {
   const { url } = useRouteMatch();
 
-  const { loading } = useQuery<ICommunity>({
+  const { loading } = useQuery<IMember[]>({
     operation: 'getDatabase',
     query: GET_DATABASE,
-    schema: Schema.COMMUNITY
+    schema: [Schema.MEMBER]
   });
 
   return (

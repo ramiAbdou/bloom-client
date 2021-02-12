@@ -5,7 +5,7 @@ import useMutation from '@hooks/useMutation';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
-import { RespondToApplicantsArgs } from './Applicants.gql';
+import { RespondToApplicantsArgs } from './Applicants.types';
 
 interface ApplicantsRespondButtonProps {
   all?: boolean;
