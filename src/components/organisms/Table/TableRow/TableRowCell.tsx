@@ -40,15 +40,6 @@ const TableRowCellContent: React.FC<
     );
   }
 
-  if (category === 'FULL_NAME') {
-    return (
-      <Row>
-        <p>{value?.fullName}</p>
-        <ProfilePicture circle size={28} userId={value} />;
-      </Row>
-    );
-  }
-
   if (type === 'MULTIPLE_CHOICE') return <Attribute>{value}</Attribute>;
 
   if (type === 'MULTIPLE_SELECT' && typeof value === 'string') {

@@ -7,11 +7,11 @@ import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { eventFields } from '@scenes/Events/Events.types';
 import { ICommunity, IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
+import { eventMemberFields } from './Events.types';
 import EventsCard from './EventsCard/EventsCard';
 import EventsHeader from './EventsHeader';
 
@@ -49,7 +49,15 @@ const EventsUpcoming: React.FC = () => {
   });
 
   const { loading: loading2 } = useQuery<IEventGuest[]>({
-    fields: eventFields,
+    fields: [
+      'createdAt',
+      'email',
+      'firstName',
+      'id',
+      'lastName',
+      { event: ['id'] },
+      ...eventMemberFields
+    ],
     operation: 'getUpcomingEventGuests',
     schema: [Schema.EVENT_GUEST]
   });

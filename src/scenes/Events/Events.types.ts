@@ -1,15 +1,14 @@
 import Fields from 'gql-query-builder/build/Fields';
 
+export const eventMemberFields: Fields = [
+  { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
+];
+
 export const baseEventFields: Fields = [
   'createdAt',
   'id',
   { event: ['id'] },
-  {
-    member: [
-      'id',
-      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-    ]
-  }
+  ...eventMemberFields
 ];
 
 export const eventFields: Fields = [
@@ -19,12 +18,7 @@ export const eventFields: Fields = [
   'id',
   'lastName',
   { event: ['id', 'title'] },
-  {
-    member: [
-      'id',
-      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-    ]
-  }
+  ...eventMemberFields
 ];
 
 export interface CreateEventAttendeeArgs {
