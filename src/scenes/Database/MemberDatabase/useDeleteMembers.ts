@@ -1,5 +1,3 @@
-import deepequal from 'fast-deep-equal';
-
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import TableStore from '@organisms/Table/Table.store';
@@ -10,8 +8,7 @@ import { MemberIdsArgs } from '../Database.types';
 
 const useDeleteMembers = () => {
   const memberIds: string[] = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds,
-    deepequal
+    ({ selectedRowIds }) => selectedRowIds
   );
 
   const [deleteMembers] = useMutation<IMember[], MemberIdsArgs>({
@@ -44,8 +41,8 @@ const useDeleteMembers = () => {
       }
     };
 
-    showToast(options);
     closeModal();
+    showToast(options);
   };
 
   return onSubmit;

@@ -3,10 +3,10 @@ import { IoTrash } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
+import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
+import FormShortText from '@organisms/Form/FormShortText';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import FormMultipleSelect from '../../organisms/Form/FormMultipleSelect';
-import FormShortText from '../../organisms/Form/FormShortText';
 import AddMemberStore from './AddMember.store';
 
 const AddMemberInputTrashButton: React.FC = () => {

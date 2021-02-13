@@ -1,13 +1,7 @@
-import { Action, action } from 'easy-peasy';
+import { action } from 'easy-peasy';
 import { nanoid } from 'nanoid';
 
-import { ToastOptions } from './Toast.types';
-
-export type ToastModel = {
-  dequeueToast: Action<ToastModel, string>;
-  queue: ToastOptions[];
-  showToast: Action<ToastModel, ToastOptions>;
-};
+import { ToastModel } from './Toast.types';
 
 const toastModel: ToastModel = {
   dequeueToast: action(({ queue }, id: string) => {

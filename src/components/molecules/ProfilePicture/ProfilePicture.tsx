@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import { BaseProps } from '@constants';
+import Show from '@containers/Show';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import Show from '../../containers/Show';
 
 interface ProfilePictureProps extends BaseProps {
   attendeeId?: string;

@@ -7,7 +7,7 @@ import MemberDatabasePromoteForm from '@scenes/Database/MemberDatabase/MemberDat
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 
-const LocalModalCustomContent: React.FC = () => {
+const ModalLocalCustomContent: React.FC = () => {
   const id: string = useStoreState(({ modal }) => modal.id);
 
   if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteForm />;
@@ -31,7 +31,7 @@ const ModalLocalContent: React.FC = () => {
 
   return (
     <div className={css}>
-      <LocalModalCustomContent />
+      <ModalLocalCustomContent />
     </div>
   );
 };

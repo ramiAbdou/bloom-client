@@ -3,8 +3,8 @@ import React from 'react';
 import { ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
+import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import FormShortText from '../../organisms/Form/FormShortText';
 import useCreatePublicEventGuest from './useCreatePublicEventGuest';
 
 const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {

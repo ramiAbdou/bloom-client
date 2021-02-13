@@ -3,10 +3,10 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
+import FormLabel from '@organisms/Form/FormLabel';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
-import FormLabel from '../../organisms/Form/FormLabel';
 
 const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   const name = useStoreState(({ db }) => {

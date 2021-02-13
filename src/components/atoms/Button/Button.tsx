@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 
 import Spinner from '@atoms/Spinner/Spinner';
 import { ShowProps } from '@constants';
+import Show from '@containers/Show';
 import { cx } from '@util/util';
-import Show from '../../containers/Show';
 
 export interface ButtonProps
   extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>>,
@@ -23,7 +23,7 @@ export interface ButtonProps
 
 const ButtonLoadingContainer: React.FC<
   Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>
-> = ({ loading, loadingText, secondary }) => {
+> = React.memo(({ loading, loadingText, secondary }) => {
   return (
     <Show show={!!loading}>
       <div className="c-btn-loading-ctr">
@@ -32,7 +32,7 @@ const ButtonLoadingContainer: React.FC<
       </div>
     </Show>
   );
-};
+});
 
 const Button = forwardRef(
   (

@@ -41,7 +41,7 @@ const useToastMutation = ({
     };
   }, [wasUndid]);
 
-  return { mutationOnUndoFn };
+  return mutationOnUndoFn;
 };
 
 export default useToastMutation;

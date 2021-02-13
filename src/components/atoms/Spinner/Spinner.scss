@@ -3,11 +3,17 @@ $PREF: 'c-spinner';
 // ## SPINNER
 
 .#{$PREF} {
+  animation: loading 0.75s linear infinite;
   border: 2px $gray-6 solid;
   border-radius: 50%;
   border-top: 2px $gray-3 solid !important;
   height: 18px;
   width: 18px;
+
+  @keyframes loading {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+  }
 
   &--dark { border: 2px $gray-5 solid; }
 }

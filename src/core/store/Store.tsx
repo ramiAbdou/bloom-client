@@ -14,7 +14,8 @@ import { ModalModel } from '@organisms/Modal/Modal.types';
 import nav, { NavModel } from '@organisms/Nav/Nav.store';
 import panel from '@organisms/Panel/Panel.store';
 import { PanelModel } from '@organisms/Panel/Panel.types';
-import toast, { ToastModel } from '@organisms/Toast/Toast.store';
+import toast from '@organisms/Toast/Toast.store';
+import { ToastModel } from '@organisms/Toast/Toast.types';
 import db from './Db/Db.store';
 import { DbModel } from './Db/Db.types';
 
