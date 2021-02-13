@@ -62,9 +62,8 @@ export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
 
   const filteredMembers: IMember[] = db.community.members
     ?.map((memberId: string) => db.byMemberId[memberId])
-    ?.filter((member: IMember) => {
-      return !!member?.user && member?.status === 'ACCEPTED';
-    });
+    ?.filter((member: IMember) => member?.status === 'ACCEPTED')
+    ?.filter((member: IMember) => !member.deletedAt);
 
   const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
     const user: IUser = db.byUserId[member.user];

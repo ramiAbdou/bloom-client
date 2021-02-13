@@ -11,7 +11,6 @@ import useToastMutation from './useToastMutation';
 const Toast: React.FC<ToastOptions> = ({
   id,
   message,
-  mutationArgsOnComplete,
   mutationArgsOnUndo,
   onUndo
 }) => {
@@ -21,7 +20,6 @@ const Toast: React.FC<ToastOptions> = ({
 
   const { mutationOnUndoFn } = useToastMutation({
     id,
-    mutationArgsOnComplete,
     mutationArgsOnUndo,
     wasUndid
   });
