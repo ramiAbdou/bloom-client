@@ -23,18 +23,6 @@ export interface AddEntitiesArgs {
   table: keyof IEntities;
 }
 
-export type DeleteEntitiesRef = {
-  id: string;
-  column: string;
-  table: keyof IEntities;
-};
-
-export interface DeleteEntitiesArgs {
-  ids: string[];
-  refs?: DeleteEntitiesRef[];
-  table: keyof IEntities;
-}
-
 export interface MergeEntitiesArgs {
   data?: any;
   schema?: Schema;
@@ -64,7 +52,6 @@ export type DbModel = {
   application: Computed<DbModel, ICommunityApplication>;
   clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
-  deleteEntities: Action<DbModel, DeleteEntitiesArgs>;
   entities: IEntities;
   event: Computed<DbModel, IEvent>;
   isAuthenticated: boolean;

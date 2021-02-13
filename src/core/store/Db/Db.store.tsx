@@ -11,7 +11,6 @@ import {
 } from '@store/Db/entities';
 import { updateDocumentColors } from '@util/colorUtil';
 import { AddEntitiesArgs, DbModel, SetActiveArgs } from './Db.types';
-import deleteEntities from './deleteEntities';
 import mergeEntities from './mergeEntities';
 
 const dbStore: DbModel = {
@@ -78,8 +77,6 @@ const dbStore: DbModel = {
       canCollectDues: hasPaidMembership && !!integrations?.stripeAccountId
     };
   }),
-
-  deleteEntities,
 
   entities: initialEntities,
 

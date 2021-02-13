@@ -19,7 +19,12 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   }, deepequal);
 
   const isGoing: boolean = useStoreState(({ db }) => {
-    const guests = new Set(db.member?.guests);
+    const guests = new Set(
+      db.member?.guests?.filter(
+        (guestId: string) => !db.byGuestId[guestId]?.deletedAt
+      )
+    );
+
     const event: IEvent = db.byEventId[eventId];
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
