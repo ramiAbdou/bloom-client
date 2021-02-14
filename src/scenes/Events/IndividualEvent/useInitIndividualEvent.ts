@@ -51,16 +51,9 @@ const useInitIndividualEvent = (): boolean => {
     {
       fields: [
         'id',
-        {
-          community: [
-            'id',
-            'name',
-            'primaryColor',
-            {
-              owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }]
-            }
-          ]
-        }
+        'name',
+        'primaryColor',
+        { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
       ],
       operation: 'getCommunityOwner',
       schema: [Schema.COMMUNITY]
