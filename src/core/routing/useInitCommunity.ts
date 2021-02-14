@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import useManualQuery from '@hooks/useManualQuery';
+import useLoader from '@organisms/Loader/useLoader';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 
@@ -92,7 +93,10 @@ const useInitCommunity = (): boolean => {
     if (data3) setActive({ id: data3.id, table: 'members' });
   }, [data3]);
 
-  return loading1 || loading2 || loading3 || loading4 || loading5;
+  const loading = loading1 || loading2 || loading3 || loading4 || loading5;
+  useLoader(loading);
+
+  return loading;
 };
 
 export default useInitCommunity;

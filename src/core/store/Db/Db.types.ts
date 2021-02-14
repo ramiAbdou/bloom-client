@@ -55,6 +55,7 @@ export type DbModel = {
   entities: IEntities;
   event: Computed<DbModel, IEvent>;
   isAuthenticated: boolean;
+  isMember: Computed<DbModel, boolean>;
   integrations: Computed<DbModel, IIntegrations>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;

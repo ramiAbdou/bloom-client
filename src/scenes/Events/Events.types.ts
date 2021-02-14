@@ -5,20 +5,20 @@ export const eventMemberFields: Fields = [
 ];
 
 export const baseEventFields: Fields = [
+  ...eventMemberFields,
   'createdAt',
   'id',
-  { event: ['id'] },
-  ...eventMemberFields
+  { event: ['id'] }
 ];
 
 export const eventFields: Fields = [
+  ...eventMemberFields,
   'createdAt',
   'email',
   'firstName',
   'id',
   'lastName',
-  { event: ['id', 'title'] },
-  ...eventMemberFields
+  { event: ['id', 'title'] }
 ];
 
 export interface CreateEventAttendeeArgs {

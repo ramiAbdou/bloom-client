@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
+import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions } from '@store/Store';
 
 /**
@@ -55,7 +56,11 @@ const useIsUserLoggedIn = (): boolean => {
 const useIsAuthenticated = (): boolean => {
   const loading1 = useIsUserLoggedIn();
   const loading2 = useVerifyToken();
-  return loading1 || loading2;
+  const loading = loading1 || loading2;
+
+  useLoader(loading);
+
+  return loading;
 };
 
 export default useIsAuthenticated;

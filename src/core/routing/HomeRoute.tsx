@@ -1,26 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Show from '@containers/Show';
-import useFinalPath from '@hooks/useFinalPath';
-import useQuery from '@hooks/useQuery';
-import useTopLevelRoute from '@hooks/useTopLevelRoute';
-import useLoader from '@organisms/Loader/useLoader';
 import Nav from '@organisms/Nav/Nav';
 import Analytics from '@scenes/Analytics/Analytics';
 import Applicants from '@scenes/Applicants/Applicants';
 import Database from '@scenes/Database/Database';
 import Directory from '@scenes/Directory/Directory';
 import Events from '@scenes/Events/Events';
-import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import Integrations from '@scenes/Integrations/Integrations';
 import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
-import { IUser } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
 import useInitCommunity from './useInitCommunity';
+import useInitUser from './useInitUser';
 import useKnownCommunity from './useKnownCommunity';
 
 const HomeRouteContent: React.FC = () => {
@@ -33,7 +27,6 @@ const HomeRouteContent: React.FC = () => {
   const { url } = useRouteMatch();
   useKnownCommunity();
   const loading = useInitCommunity();
-  useLoader(loading);
 
   return (
     <Show show={isInitialized && !loading && url !== '/'}>
@@ -61,57 +54,12 @@ const HomeRouteContent: React.FC = () => {
 };
 
 const HomeRoute: React.FC = () => {
-  const route = useTopLevelRoute();
-  const { url } = useRouteMatch();
-  const finalPath = useFinalPath();
-
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-  const setActive = useStoreActions(({ db }) => db.setActive);
-
-  const { loading, data, error } = useQuery<IUser>({
-    fields: [
-      'email',
-      'firstName',
-      'id',
-      'lastName',
-      'pictureUrl',
-      {
-        members: ['joinedAt', 'id', { community: ['id', 'logoUrl', 'urlName'] }]
-      }
-    ],
-    operation: 'getUser',
-    schema: Schema.USER,
-    types: { populate: { required: false, type: '[String!]' } },
-    variables: { populate: ['members.community'] }
-  });
-
-  useEffect(() => {
-    if (data) setActive({ id: data.id, table: 'users' });
-  }, [data]);
-
-  useLoader(loading);
-
-  if (
-    !isAuthenticated &&
-    route === 'events' &&
-    !['past', 'upcoming'].includes(finalPath)
-  ) {
-    return (
-      <Switch>
-        <Route
-          exact
-          component={IndividualEvent}
-          path={`${url}/events/:eventId`}
-        />
-      </Switch>
-    );
-  }
-
-  if (error) return <Redirect to="/login" />;
+  const loading = useInitUser();
 
   // If they are a member, just return the requested content.
   return (
-    <Show show={isAuthenticated}>
+    <Show show={!loading && isAuthenticated}>
       <HomeRouteContent />
     </Show>
   );

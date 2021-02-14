@@ -92,6 +92,20 @@ const dbStore: DbModel = {
 
   isAuthenticated: false,
 
+  /**
+   * Returns true if the authenticated user has a membership with the active
+   * community.
+   *
+   * Useful when going to pages outside of authenticated realm, such as viewing
+   * IndividualEvent.
+   */
+  isMember: computed(({ byMemberId, community, user }) => {
+    return user?.members?.some((memberId: string) => {
+      const member: IMember = byMemberId[memberId];
+      return member.community === community?.id;
+    });
+  }),
+
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
     return byId[activeId] as IMember;
