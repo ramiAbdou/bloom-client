@@ -54,12 +54,10 @@ export type DbModel = {
   community: Computed<DbModel, ICommunity>;
   entities: IEntities;
   event: Computed<DbModel, IEvent>;
-  isAuthenticated: boolean;
   isMember: Computed<DbModel, boolean>;
   integrations: Computed<DbModel, IIntegrations>;
   member: Computed<DbModel, IMember>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
   setActive: Action<DbModel, SetActiveArgs>;
-  setIsAuthenticated: Action<DbModel, boolean>;
   user: Computed<DbModel, IUser>;
 };

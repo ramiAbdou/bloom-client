@@ -22,7 +22,7 @@ const IndividualEventMainHeaderContainer: React.FC = () => {
 };
 
 const IndividualEventMain: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isMember = useStoreState(({ db }) => db.isMember);
   const isPrivate = useStoreState(({ db }) => db.event?.private);
   const summary = useStoreState(({ db }) => db.event?.summary);
   const title = useStoreState(({ db }) => db.event?.title);
@@ -36,7 +36,7 @@ const IndividualEventMain: React.FC = () => {
       <div>
         <IndividualEventMainHeaderContainer />
         <h1>{title}</h1>
-        {!isAuthenticated && <p className="meta">Hosted by {community}</p>}
+        {!isMember && <p className="meta">Hosted by {community}</p>}
         {summary && <p>{summary}</p>}
         <HeaderTag>{isPrivate ? 'Members Only' : 'Open to All'} </HeaderTag>
       </div>

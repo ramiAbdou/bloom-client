@@ -14,14 +14,14 @@ import AuthenticatedRoute from './AuthenticatedRoute';
  * most nested logic within it.
  */
 const Router: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isMember = useStoreState(({ db }) => db.isMember);
   const finalPath = useFinalPath();
 
   return (
     <Switch>
       <LoginRoute path="/login" />
 
-      {!isAuthenticated && !['past', 'upcoming'].includes(finalPath) && (
+      {!isMember && !['past', 'upcoming'].includes(finalPath) && (
         <Route
           exact
           component={IndividualEvent}

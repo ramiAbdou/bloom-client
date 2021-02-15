@@ -18,7 +18,6 @@ interface GetTokensResult {
  */
 const useVerifyToken = (): boolean => {
   const token = new URLSearchParams(window.location.search).get('token');
-  const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
   const [verifyToken, { loading }] = useManualQuery<boolean>({
     operation: 'verifyToken',
@@ -33,7 +32,6 @@ const useVerifyToken = (): boolean => {
 
     (async () => {
       const { data: isVerified } = await verifyToken();
-      setIsAuthenticated(isVerified);
       if (isVerified) push(window.location.pathname);
     })();
   }, [token]);
@@ -49,7 +47,6 @@ const useIsUserLoggedIn = (): boolean => {
   const { urlName }: UrlNameProps = useParams();
 
   const setActive = useStoreActions(({ db }) => db.setActive);
-  const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
   const [getTokens, { loading }] = useManualQuery<GetTokensResult>({
     fields: ['communityId', 'memberId', 'userId'],
@@ -66,7 +63,6 @@ const useIsUserLoggedIn = (): boolean => {
       setActive({ id: data?.communityId, table: 'communities' });
       setActive({ id: data?.memberId, table: 'members' });
       setActive({ id: data?.userId, table: 'users' });
-      setIsAuthenticated(true);
     })();
   }, [urlName]);
 

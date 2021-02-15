@@ -90,8 +90,6 @@ const dbStore: DbModel = {
     return byIntegrationId[community?.integrations] as IIntegrations;
   }),
 
-  isAuthenticated: false,
-
   /**
    * Returns true if the authenticated user has a membership with the active
    * community.
@@ -122,11 +120,6 @@ const dbStore: DbModel = {
       }
     };
   }),
-
-  setIsAuthenticated: action((state, isAuthenticated) => ({
-    ...state,
-    isAuthenticated
-  })),
 
   /**
    * There should only be one user queried in the application, and that is

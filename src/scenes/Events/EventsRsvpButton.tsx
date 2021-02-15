@@ -29,7 +29,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return db.byEventId[eventId]?.startTime;
   });
 
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isMember = useStoreState(({ db }) => db.isMember);
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const guests = new Set(
@@ -68,7 +68,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   ) => {
     e.stopPropagation();
 
-    if (!isAuthenticated) {
+    if (!isMember) {
       showModal({ id: ModalType.CHECK_IN, metadata: eventId });
       return;
     }

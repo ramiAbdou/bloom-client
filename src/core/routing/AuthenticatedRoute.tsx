@@ -55,7 +55,7 @@ const HomeRouteContent: React.FC = () => {
 };
 
 const HomeRoute: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isAuthenticated = useStoreState(({ db }) => !!db.user);
   const loading1 = useInitUser();
   const loading2 = useIsAuthenticated();
 

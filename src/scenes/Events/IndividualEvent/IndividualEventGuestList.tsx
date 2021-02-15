@@ -28,10 +28,10 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
   );
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isMember = useStoreState(({ db }) => db.isMember);
 
   const onClick = () => {
-    if (isAuthenticated && memberId) {
+    if (isMember && memberId) {
       showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
     }
   };
@@ -39,7 +39,7 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
   const fullName = `${firstName} ${lastName}`;
 
   const css = cx('s-events-individual-member', {
-    's-events-individual-member--disabled': !isAuthenticated
+    's-events-individual-member--disabled': !isMember
   });
 
   return (
