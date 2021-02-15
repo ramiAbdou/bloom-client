@@ -34,7 +34,7 @@ const useBackupCommunity = () => {
   });
 
   useEffect(() => {
-    if ((!urlName || isMember === false) && backupUrlName) {
+    if (backupUrlName && (!urlName || isMember === false)) {
       push(`/${backupUrlName}`);
     }
   }, [backupUrlName, isMember, urlName]);

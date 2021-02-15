@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import AuthenticatedRouter from './AuthenticatedRouter';
 import CommunityRouter from './CommunityRouter';
 import LoginRoute from './LoginRoute';
 import useVerifyToken from './useVerifyToken';
@@ -19,7 +18,7 @@ const Router: React.FC = () => {
     <Switch>
       <LoginRoute path="/login" />
       <Route component={CommunityRouter} path="/:urlName" />
-      <Route exact component={AuthenticatedRouter} path="/" />
+      <Route exact component={CommunityRouter} path="/" />
       <Redirect to="/login" />
     </Switch>
   );

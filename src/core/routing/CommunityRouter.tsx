@@ -31,6 +31,7 @@ const CommunityRouter: React.FC = () => {
 
       <Route exact component={Application} path="/:urlName/apply" />
       <Route component={AuthenticatedRouter} path="/:urlName" />
+      <Route exact component={AuthenticatedRouter} path="/" />
       <Redirect to="/:urlName" />
     </Switch>
   );
