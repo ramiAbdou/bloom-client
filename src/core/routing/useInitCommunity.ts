@@ -73,6 +73,8 @@ const useInitCommunity = (): boolean => {
   });
 
   useEffect(() => {
+    if (!communityId) return;
+
     (async () => {
       await Promise.all([
         getCommunity(),

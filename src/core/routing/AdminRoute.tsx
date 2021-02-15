@@ -9,10 +9,7 @@ import { useStoreState } from '@store/Store';
  * token stored in the httpOnly cookies), and if the user exists, we update
  * the global state with the user.
  */
-const AdminRoute: React.FC<RouteProps> = ({
-  component,
-  ...rest
-}: RouteProps) => {
+const AdminRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
   const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
   const { urlName }: UrlNameProps = useParams();
   if (!isAdmin) return <Redirect to={`/${urlName}`} />;

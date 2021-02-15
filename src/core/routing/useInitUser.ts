@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-
 import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { IUser } from '@store/Db/entities';
@@ -13,7 +10,7 @@ import { Schema } from '@store/Db/schema';
  * Updates global loading state.
  */
 const useInitUser = () => {
-  const { loading, error } = useQuery<IUser>({
+  const { loading } = useQuery<IUser>({
     fields: [
       'email',
       'firstName',
@@ -29,12 +26,6 @@ const useInitUser = () => {
     types: { populate: { required: false, type: '[String!]' } },
     variables: { populate: ['members.community'] }
   });
-
-  const { push } = useHistory();
-
-  useEffect(() => {
-    if (error) push('/login');
-  }, [error]);
 
   useLoader(loading);
 

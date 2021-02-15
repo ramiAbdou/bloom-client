@@ -26,8 +26,9 @@ const HomeRouteContent: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
   const { url } = useRouteMatch();
-  useBackupCommunity();
+
   const loading = useInitCommunity();
+  useBackupCommunity();
 
   return (
     <Show show={isInitialized && !loading && url !== '/'}>
@@ -56,6 +57,7 @@ const HomeRouteContent: React.FC = () => {
 
 const HomeRoute: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => !!db.user);
+
   const loading1 = useInitUser();
   const loading2 = useIsAuthenticated();
 
