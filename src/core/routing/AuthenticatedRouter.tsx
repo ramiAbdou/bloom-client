@@ -17,34 +17,37 @@ import useBackupCommunity from './useBackupCommunity';
 import useInitCommunity from './useInitCommunity';
 
 const AuthenticatedRouter: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isInitialized = useStoreState(
+    ({ db }) => !!db.community && !!db.member && !!db.user
+  );
+
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
   const { url } = useRouteMatch();
   const loading = useInitCommunity();
   useBackupCommunity();
 
-  if (!isAuthenticated || loading || url === '/') return null;
+  if (!isInitialized || loading || url === '/') return null;
 
   return (
-    <Show show={isAuthenticated && !loading && url !== '/'}>
+    <Show show={isInitialized && !loading && url !== '/'}>
       <Nav />
 
       <div className="home-content">
         <Switch>
-          <Route component={Directory} path={`${url}/directory`} />
-          <Route component={Events} path={`${url}/events`} />
-          <AdminRoute component={Database} path={`${url}/database`} />
-          <AdminRoute component={Analytics} path={`${url}/analytics`} />
-          <AdminRoute component={Integrations} path={`${url}/integrations`} />
+          <Route component={Directory} path="/:urlName/directory" />
+          <Route component={Events} path="/:urlName/events" />
+          <AdminRoute component={Database} path="/:urlName/database" />
+          <AdminRoute component={Analytics} path="/:urlName/analytics" />
+          <AdminRoute component={Integrations} path="/:urlName/integrations" />
 
           {!autoAccept && (
-            <AdminRoute component={Applicants} path={`${url}/applicants`} />
+            <AdminRoute component={Applicants} path="/:urlName/applicants" />
           )}
 
-          <Route component={Membership} path={`${url}/membership`} />
-          <Route component={Profile} path={`${url}/profile`} />
-          <Redirect to={`${url}/directory`} />
+          <Route component={Membership} path="/:urlName/membership" />
+          <Route component={Profile} path="/:urlName/profile" />
+          <Redirect to="/:urlName/directory" />
         </Switch>
       </div>
     </Show>

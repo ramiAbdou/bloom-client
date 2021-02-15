@@ -7,7 +7,10 @@ import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const NavMemberStatus: React.FC = () => {
-  const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
+  const canCollectDues = useStoreState(
+    ({ db }) => db.community?.canCollectDues
+  );
+
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 

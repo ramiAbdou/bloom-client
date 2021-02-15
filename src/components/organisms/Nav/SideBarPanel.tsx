@@ -10,7 +10,10 @@ import { useStoreActions, useStoreState } from '@store/Store';
 const SidebarPanel: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
 
-  const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
+  const canCollectDues = useStoreState(
+    ({ db }) => db.community?.canCollectDues
+  );
+
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
 
   const { push } = useHistory();

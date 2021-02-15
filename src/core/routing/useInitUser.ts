@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
 import useManualQuery from '@hooks/useManualQuery';
+import useLoader from '@organisms/Loader/useLoader';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
@@ -60,6 +61,8 @@ const useInitUser = (): boolean => {
   }, [urlName]);
 
   const loading = loading1 || loading2;
+
+  useLoader(loading);
 
   return loading;
 };

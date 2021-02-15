@@ -9,7 +9,7 @@ import { cx } from '@util/util';
 
 const SideBarProfileContent: React.FC = () => {
   const memberTypeName: string = useStoreState(({ db }) => {
-    return db.byTypeId[db.member.type]?.name;
+    return db.byTypeId[db.member?.type]?.name;
   });
 
   const role = useStoreState(({ db }) => db.member?.role);
@@ -32,7 +32,7 @@ const SideBarProfileContent: React.FC = () => {
 
 const SideBarProfile: React.FC = () => {
   const isDuesMessageShowing: boolean = useStoreState(({ db }) => {
-    return db.community.canCollectDues && !db.member?.isDuesActive;
+    return db.community?.canCollectDues && !db.member?.isDuesActive;
   });
 
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
