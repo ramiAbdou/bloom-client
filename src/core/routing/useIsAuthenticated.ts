@@ -43,7 +43,7 @@ const useVerifyToken = (): boolean => {
  * Updates the authenticated status of the user by checking the httpOnly
  * cookies stored in the browser.
  */
-const useIsUserLoggedIn = (): boolean => {
+const useInitTokens = (): boolean => {
   const { urlName }: UrlNameProps = useParams();
 
   const setActive = useStoreActions(({ db }) => db.setActive);
@@ -70,7 +70,7 @@ const useIsUserLoggedIn = (): boolean => {
 };
 
 const useIsAuthenticated = (): boolean => {
-  const loading1 = useIsUserLoggedIn();
+  const loading1 = useInitTokens();
   const loading2 = useVerifyToken();
   const loading = loading1 || loading2;
 

@@ -7,6 +7,7 @@ import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import { useStoreState } from '@store/Store';
 import useFinalPath from '../hooks/useFinalPath';
 import AuthenticatedRoute from './AuthenticatedRoute';
+import useIsAuthenticated from './useIsAuthenticated';
 
 /**
  * Core routing logic of the entire application. Nested logic should live
@@ -14,14 +15,17 @@ import AuthenticatedRoute from './AuthenticatedRoute';
  * most nested logic within it.
  */
 const Router: React.FC = () => {
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const finalPath = useFinalPath();
+  const loading = useIsAuthenticated();
+
+  if (loading) return null;
 
   return (
     <Switch>
       <LoginRoute path="/login" />
 
-      {!isMember && !['past', 'upcoming'].includes(finalPath) && (
+      {!isAuthenticated && !['past', 'upcoming'].includes(finalPath) && (
         <Route
           exact
           component={IndividualEvent}

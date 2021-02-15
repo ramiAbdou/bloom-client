@@ -90,6 +90,14 @@ const dbStore: DbModel = {
     return byIntegrationId[community?.integrations] as IIntegrations;
   }),
 
+  isAuthenticated: computed(({ entities }) => {
+    return (
+      !!entities.communities.activeId &&
+      !!entities.members.activeId &&
+      !!entities.users.activeId
+    );
+  }),
+
   /**
    * Returns true if the authenticated user has a membership with the active
    * community.

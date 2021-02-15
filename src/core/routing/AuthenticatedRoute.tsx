@@ -16,7 +16,6 @@ import AdminRoute from './AdminRoute';
 import useBackupCommunity from './useBackupCommunity';
 import useInitCommunity from './useInitCommunity';
 import useInitUser from './useInitUser';
-import useIsAuthenticated from './useIsAuthenticated';
 
 const HomeRouteContent: React.FC = () => {
   const isInitialized: boolean = useStoreState(({ db }) => {
@@ -26,7 +25,6 @@ const HomeRouteContent: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
   const { url } = useRouteMatch();
-
   const loading = useInitCommunity();
   useBackupCommunity();
 
@@ -57,11 +55,7 @@ const HomeRouteContent: React.FC = () => {
 
 const HomeRoute: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => !!db.user);
-
-  const loading1 = useInitUser();
-  const loading2 = useIsAuthenticated();
-
-  const loading = loading1 || loading2;
+  const loading = useInitUser();
 
   // If they are a member, just return the requested content.
   return (
