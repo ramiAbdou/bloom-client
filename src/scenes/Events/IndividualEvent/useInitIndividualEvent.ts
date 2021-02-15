@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { CookieType, ModalType } from '@constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
+import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -13,6 +14,7 @@ import { eventFields, GetEventArgs } from '../Events.types';
 const useInitIndividualEvent = (): boolean => {
   const { eventId } = useParams() as { eventId: string };
 
+  const communityId = useStoreState(({ db }) => db.community?.id);
   const isMember = useStoreState(({ db }) => db.isMember);
   const isMembersOnly = useStoreState(({ db }) => db.event?.private);
   const setActive = useStoreActions(({ db }) => db.setActive);
@@ -47,18 +49,12 @@ const useInitIndividualEvent = (): boolean => {
     variables: { eventId }
   });
 
-  const [getCommunityOwner, { loading: loading3 }] = useManualQuery<ICommunity>(
-    {
-      fields: [
-        'id',
-        'name',
-        'primaryColor',
-        { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
-      ],
-      operation: 'getCommunityOwner',
-      schema: [Schema.COMMUNITY]
-    }
-  );
+  const [getCommunity, { loading: loading3 }] = useManualQuery<ICommunity>({
+    fields: ['id', 'name', 'primaryColor'],
+    operation: 'getCommunity',
+    schema: Schema.COMMUNITY,
+    types: { communityId: { required: false } }
+  });
 
   const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
 
@@ -70,17 +66,30 @@ const useInitIndividualEvent = (): boolean => {
     }
   }, [data1]);
 
+  // If the user isn't a member of the community, and it's a member's only
+  // event or there was an issue logging in, show a locked modal.
   useEffect(() => {
-    (async () => {
-      if (isMember) await getCommunityOwner();
-    })();
-
     if (!isMember && (isMembersOnly || hasCookieError)) {
-      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
+      showModal({
+        id: ModalType.CHECK_IN,
+        metadata: eventId,
+        options: { lock: true }
+      });
     }
   }, [hasCookieError, isMember, isMembersOnly]);
 
-  return loading1 || loading2 || loading3;
+  // If the user isn't a member of the community, then we need to load the
+  // community's name and primary color as well.
+  useEffect(() => {
+    (async () => {
+      if (communityId && !isMember) await getCommunity({ communityId });
+    })();
+  }, [communityId, isMember]);
+
+  const loading = loading1 || loading2 || loading3;
+  useLoader(loading);
+
+  return loading;
 };
 
 export default useInitIndividualEvent;

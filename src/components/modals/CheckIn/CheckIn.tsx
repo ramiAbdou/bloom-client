@@ -8,8 +8,8 @@ import CheckInMainPage from './CheckInMainPage';
 
 const CheckInModal: React.FC = () => {
   const isMembersOnly = useStoreState(({ db }) => db.event?.private);
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-  const lock = isMembersOnly && !isAuthenticated;
+  const isMember = useStoreState(({ db }) => db.isMember);
+  const lock = isMembersOnly && !isMember;
 
   return (
     <Story>

@@ -7,7 +7,7 @@ import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 
 const useCreatePublicEventGuest = () => {
-  const eventId = useStoreState(({ db }) => db.event.id);
+  const eventId = useStoreState(({ db }) => db.event?.id);
 
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
     fields: [

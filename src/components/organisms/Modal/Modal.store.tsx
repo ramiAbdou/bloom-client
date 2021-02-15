@@ -18,11 +18,14 @@ const modalModel: ModalModel = {
   isShowing: false,
 
   showModal: action((state, args: ModalData) => {
+    const defaultOptions = defaultModalOptions[args.id];
+
     return {
       ...state,
       ...args,
-      ...defaultModalOptions[args.id],
-      isShowing: true
+      ...defaultOptions,
+      isShowing: true,
+      options: { ...defaultOptions, ...args.options }
     };
   })
 };

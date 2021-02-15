@@ -32,7 +32,7 @@ export const getCheckInErrorMessage = ({
     return deline`
       This email is not registered as a member of this community. If you
       believe this is an error, please reach out to the owner,
-      ${owner.firstName} ${owner.lastName} (${owner.email}).
+      ${owner?.firstName} ${owner?.lastName} (${owner?.email}).
     `;
   }
 

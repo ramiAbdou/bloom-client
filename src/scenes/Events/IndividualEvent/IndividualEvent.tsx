@@ -1,7 +1,6 @@
 import React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import useLoader from '@organisms/Loader/useLoader';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import EventsAspectBackground from '../EventsAspectBackground';
@@ -27,17 +26,14 @@ const IndividualEventHeader: React.FC = () => {
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
 
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isMember = useStoreState(({ db }) => db.isMember);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
 
   const loading = useInitIndividualEvent();
 
-  useLoader(loading);
-
-  if (!isAuthenticated) return <Redirect to="/login" />;
   if (loading || !isEventActive) return null;
 
-  const css = cx('', { 's-events-individual--public': !isAuthenticated });
+  const css = cx('', { 's-events-individual--public': !isMember });
 
   return (
     <div className={css}>

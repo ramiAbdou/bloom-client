@@ -17,6 +17,7 @@ import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { CheckInError } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
+import useInitCheckInError from './useInitCheckInError';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {
@@ -57,6 +58,8 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
   const error = Cookies.get(CookieType.LOGIN_ERROR) as CheckInError;
   const message = getCheckInErrorMessage({ error, owner });
 
+  const loading = useInitCheckInError();
+
   // After we get the message, we remove the cookie so that the error doesn't
   // get shown again. We set a timeout to ensure that even if the component
   // re-renders, the message still appears.
@@ -69,10 +72,12 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
   }, [error]);
 
   return (
-    <div>
-      <CheckInGoogleButton />
-      <ErrorMessage marginBottom={0}>{message}</ErrorMessage>
-    </div>
+    <Show show={!loading}>
+      <div>
+        <CheckInGoogleButton />
+        <ErrorMessage marginBottom={0}>{message}</ErrorMessage>
+      </div>
+    </Show>
   );
 });
 
