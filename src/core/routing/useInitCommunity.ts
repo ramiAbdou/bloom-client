@@ -8,8 +8,6 @@ import { useStoreState } from '@store/Store';
 const useInitCommunity = (): boolean => {
   const communityId = useStoreState(({ db }) => db.community?.id);
 
-  console.log(communityId);
-
   const [getCommunity, { loading: loading1 }] = useManualQuery({
     fields: ['autoAccept', 'id', 'logoUrl', 'name', 'primaryColor', 'urlName'],
     operation: 'getCommunity',
@@ -84,10 +82,10 @@ const useInitCommunity = (): boolean => {
         getTypes()
       ]);
     })();
-  }, []);
+  }, [communityId]);
 
   const loading = loading1 || loading2 || loading3 || loading4 || loading5;
-  console.log(loading, 'loading');
+
   useLoader(loading);
 
   return loading;
