@@ -5,7 +5,6 @@ import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions } from '@store/Store';
 
 /**
  * Fetches the logged in user including the user's different communities.
@@ -14,11 +13,7 @@ import { useStoreActions } from '@store/Store';
  * Updates global loading state.
  */
 const useInitUser = () => {
-  const setActive = useStoreActions(({ db }) => db.setActive);
-
-  const { push } = useHistory();
-
-  const { loading, data, error } = useQuery<IUser>({
+  const { loading, error } = useQuery<IUser>({
     fields: [
       'email',
       'firstName',
@@ -35,9 +30,7 @@ const useInitUser = () => {
     variables: { populate: ['members.community'] }
   });
 
-  useEffect(() => {
-    if (data) setActive({ id: data.id, table: 'users' });
-  }, [data]);
+  const { push } = useHistory();
 
   useEffect(() => {
     if (error) push('/login');

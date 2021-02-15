@@ -13,9 +13,10 @@ import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
 import { useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
+import useBackupCommunity from './useBackupCommunity';
 import useInitCommunity from './useInitCommunity';
 import useInitUser from './useInitUser';
-import useKnownCommunity from './useKnownCommunity';
+import useIsAuthenticated from './useIsAuthenticated';
 
 const HomeRouteContent: React.FC = () => {
   const isInitialized: boolean = useStoreState(({ db }) => {
@@ -25,7 +26,7 @@ const HomeRouteContent: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
   const { url } = useRouteMatch();
-  useKnownCommunity();
+  useBackupCommunity();
   const loading = useInitCommunity();
 
   return (
@@ -55,7 +56,10 @@ const HomeRouteContent: React.FC = () => {
 
 const HomeRoute: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-  const loading = useInitUser();
+  const loading1 = useInitUser();
+  const loading2 = useIsAuthenticated();
+
+  const loading = loading1 || loading2;
 
   // If they are a member, just return the requested content.
   return (

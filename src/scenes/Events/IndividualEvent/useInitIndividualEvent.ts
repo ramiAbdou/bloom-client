@@ -73,7 +73,7 @@ const useInitIndividualEvent = (): boolean => {
       showModal({
         id: ModalType.CHECK_IN,
         metadata: eventId,
-        options: { lock: true }
+        options: { lock: isMembersOnly }
       });
     }
   }, [hasCookieError, isMember, isMembersOnly]);

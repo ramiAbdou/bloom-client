@@ -26,15 +26,15 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   // If one of these is null, it means the user isn't fully loaded yet.
   const firstName: string = useStoreState(({ db }) => {
     if (userId) return db.byUserId[userId]?.firstName;
-    if (guestId) return db.byGuestId[userId]?.firstName;
-    if (attendeeId) return db.byAttendeeId[userId]?.firstName;
+    if (guestId) return db.byGuestId[guestId]?.firstName;
+    if (attendeeId) return db.byAttendeeId[attendeeId]?.firstName;
     return db.user?.firstName;
   });
 
   const lastName: string = useStoreState(({ db }) => {
     if (userId) return db.byUserId[userId]?.lastName;
-    if (guestId) return db.byGuestId[userId]?.lastName;
-    if (attendeeId) return db.byAttendeeId[userId]?.lastName;
+    if (guestId) return db.byGuestId[guestId]?.lastName;
+    if (attendeeId) return db.byAttendeeId[attendeeId]?.lastName;
     return db.user?.lastName;
   });
 
@@ -64,8 +64,8 @@ const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
 
   const show: boolean = useStoreState(({ db }) => {
     if (userId) return !!db.byUserId[userId];
-    if (guestId) return !!db.byGuestId[userId];
-    if (attendeeId) return !!db.byAttendeeId[userId];
+    if (guestId) return !!db.byGuestId[guestId];
+    if (attendeeId) return !!db.byAttendeeId[attendeeId];
     return !!db.user?.lastName;
   });
 

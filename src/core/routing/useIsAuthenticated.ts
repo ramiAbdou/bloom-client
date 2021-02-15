@@ -1,10 +1,16 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
+import { UrlNameProps } from '@constants';
 import useManualQuery from '@hooks/useManualQuery';
-import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions } from '@store/Store';
+
+interface GetTokensResult {
+  communityId: string;
+  memberId: string;
+  userId: string;
+}
 
 /**
  * Verifies the login token if one is present in the SearchParams. Will exist
@@ -40,15 +46,29 @@ const useVerifyToken = (): boolean => {
  * cookies stored in the browser.
  */
 const useIsUserLoggedIn = (): boolean => {
+  const { urlName }: UrlNameProps = useParams();
+
+  const setActive = useStoreActions(({ db }) => db.setActive);
   const setIsAuthenticated = useStoreActions(({ db }) => db.setIsAuthenticated);
 
-  const { loading, data: isAuthenticated } = useQuery<boolean>({
-    operation: 'isUserLoggedIn'
+  const [getTokens, { loading }] = useManualQuery<GetTokensResult>({
+    fields: ['communityId', 'memberId', 'userId'],
+    operation: 'getTokens',
+    types: { urlName: { required: false } }
   });
 
   useEffect(() => {
-    setIsAuthenticated(isAuthenticated);
-  }, [isAuthenticated]);
+    (async () => {
+      const { data } = await getTokens({ urlName });
+
+      if (!data) return;
+
+      setActive({ id: data?.communityId, table: 'communities' });
+      setActive({ id: data?.memberId, table: 'members' });
+      setActive({ id: data?.userId, table: 'users' });
+      setIsAuthenticated(true);
+    })();
+  }, [urlName]);
 
   return loading;
 };

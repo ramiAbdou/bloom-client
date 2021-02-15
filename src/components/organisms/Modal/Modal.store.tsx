@@ -25,7 +25,7 @@ const modalModel: ModalModel = {
       ...args,
       ...defaultOptions,
       isShowing: true,
-      options: { ...defaultOptions, ...args.options }
+      options: { ...defaultOptions?.options, ...args.options }
     };
   })
 };

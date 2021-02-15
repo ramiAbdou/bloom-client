@@ -3,13 +3,14 @@ import { useEffect } from 'react';
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 
 const useInitCommunity = (): boolean => {
   const communityId = useStoreState(({ db }) => db.community?.id);
-  const setActive = useStoreActions(({ db }) => db.setActive);
 
-  const [getCommunity, { data: data1, loading: loading1 }] = useManualQuery({
+  console.log(communityId);
+
+  const [getCommunity, { loading: loading1 }] = useManualQuery({
     fields: ['autoAccept', 'id', 'logoUrl', 'name', 'primaryColor', 'urlName'],
     operation: 'getCommunity',
     schema: Schema.COMMUNITY
@@ -29,7 +30,7 @@ const useInitCommunity = (): boolean => {
     schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
-  const [getMember, { data: data3, loading: loading3 }] = useManualQuery({
+  const [getMember, { loading: loading3 }] = useManualQuery({
     fields: [
       'autoRenew',
       'bio',
@@ -83,17 +84,10 @@ const useInitCommunity = (): boolean => {
         getTypes()
       ]);
     })();
-  }, [communityId]);
-
-  useEffect(() => {
-    if (data1) setActive({ id: data1.id, table: 'communities' });
-  }, [data1]);
-
-  useEffect(() => {
-    if (data3) setActive({ id: data3.id, table: 'members' });
-  }, [data3]);
+  }, []);
 
   const loading = loading1 || loading2 || loading3 || loading4 || loading5;
+  console.log(loading, 'loading');
   useLoader(loading);
 
   return loading;
