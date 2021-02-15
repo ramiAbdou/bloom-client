@@ -61,7 +61,7 @@ const Loader: React.FC = () => {
     else {
       timeout = setTimeout(() => {
         if (!isShowing && loading) setLoading(false);
-      }, 500);
+      }, 100);
     }
 
     return () => clearTimeout(timeout);

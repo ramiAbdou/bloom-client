@@ -16,8 +16,12 @@ const processFilter = ({
   row,
   value
 }: ProcessFilterArgs) => {
-  if (operator === 'is') return row[columnId] === value;
-  if (operator === 'is not') return row[columnId] !== value;
+  const rowValue = row[columnId]?.toLowerCase();
+  value = value?.toLowerCase();
+
+  if (operator === 'includes') return rowValue?.includes(value);
+  if (operator === 'is') return rowValue === value;
+  if (operator === 'is not') return rowValue !== value;
   return false;
 };
 

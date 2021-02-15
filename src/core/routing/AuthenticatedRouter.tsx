@@ -17,6 +17,9 @@ import useBackupCommunity from './useBackupCommunity';
 import useInitCommunity from './useInitCommunity';
 
 const AuthenticatedRouter: React.FC = () => {
+  const isCommunityInitialized = useStoreState(({ db }) => !!db.community);
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+
   const isInitialized = useStoreState(
     ({ db }) => !!db.community && !!db.member && !!db.user
   );
@@ -27,7 +30,9 @@ const AuthenticatedRouter: React.FC = () => {
   const loading = useInitCommunity();
   useBackupCommunity();
 
-  if (!isInitialized || loading || url === '/') return null;
+  if (isCommunityInitialized && !isAuthenticated) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <Show show={isInitialized && !loading && url !== '/'}>

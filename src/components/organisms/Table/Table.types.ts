@@ -22,7 +22,7 @@ export type TableColumn = {
 
 export type TableFilter = (rows: TableRow) => boolean;
 export type TableFilterJoinOperator = 'and' | 'or';
-export type TableFilterOperator = 'is' | 'is not';
+export type TableFilterOperator = 'includes' | 'is' | 'is not';
 
 export interface TableFilterArgs extends IdProps, ValueProps {
   columnId: string;

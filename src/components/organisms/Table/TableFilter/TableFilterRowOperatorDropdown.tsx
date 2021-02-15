@@ -24,7 +24,7 @@ const TableFilterRowOperatorDropdown: React.FC = () => {
     <Dropdown
       options={{ attribute: false }}
       value={operator}
-      values={['is', 'is not']}
+      values={['includes', 'is', 'is not']}
       onSelect={onOperatorUpdate}
     />
   );
