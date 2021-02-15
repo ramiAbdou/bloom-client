@@ -31,7 +31,7 @@ div.#{$PREF}-card {
 
   > .t-row {
     background-color: hsl(36, 94%, 90%);
-    border-radius: 50%;
+    border-radius: $xxs;
     padding: $xxs;
     right: $xs;
 

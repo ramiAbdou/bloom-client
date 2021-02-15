@@ -78,17 +78,17 @@ const DirectoryCardContent: React.FC = () => {
 
   return (
     <Card noPadding className="s-directory-card" onClick={onClick}>
-      {role && <HeaderTag>{role}</HeaderTag>}
-      {isLifetime && (
-        <Row
-          align="center"
-          className="s-directory-card-star-ctr"
-          justify="center"
-        >
-          <IoStar />
-        </Row>
-      )}
-      {/* {!role && isLifetime && <HeaderTag>Lifetime</HeaderTag>} */}
+      <HeaderTag show={!!role}>{role}</HeaderTag>
+
+      <Row
+        align="center"
+        className="s-directory-card-star-ctr"
+        justify="center"
+        show={isLifetime}
+      >
+        <IoStar />
+      </Row>
+
       <DirectoryCardPicture />
       <DirectoryCardInformation />
     </Card>
