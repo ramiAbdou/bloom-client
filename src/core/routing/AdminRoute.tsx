@@ -10,7 +10,7 @@ import { useStoreState } from '@store/Store';
  * the global state with the user.
  */
 const AdminRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
   const { urlName }: UrlNameProps = useParams();
   if (!isAdmin) return <Redirect to={`/${urlName}`} />;
   return <Route exact {...rest} component={component} />;

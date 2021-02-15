@@ -15,21 +15,19 @@ import { useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
 import useBackupCommunity from './useBackupCommunity';
 import useInitCommunity from './useInitCommunity';
-import useInitUser from './useInitUser';
 
-const HomeRouteContent: React.FC = () => {
-  const isInitialized: boolean = useStoreState(({ db }) => {
-    return !!db.community && !!db.member && !!db.user;
-  });
-
+const AuthenticatedRouter: React.FC = () => {
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
   const { url } = useRouteMatch();
   const loading = useInitCommunity();
   useBackupCommunity();
 
+  if (!isAuthenticated || loading || url === '/') return null;
+
   return (
-    <Show show={isInitialized && !loading && url !== '/'}>
+    <Show show={isAuthenticated && !loading && url !== '/'}>
       <Nav />
 
       <div className="home-content">
@@ -53,16 +51,4 @@ const HomeRouteContent: React.FC = () => {
   );
 };
 
-const HomeRoute: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => !!db.user);
-  const loading = useInitUser();
-
-  // If they are a member, just return the requested content.
-  return (
-    <Show show={!loading && isAuthenticated}>
-      <HomeRouteContent />
-    </Show>
-  );
-};
-
-export default HomeRoute;
+export default AuthenticatedRouter;

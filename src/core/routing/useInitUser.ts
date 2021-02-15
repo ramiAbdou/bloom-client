@@ -1,16 +1,34 @@
-import useQuery from '@hooks/useQuery';
-import useLoader from '@organisms/Loader/useLoader';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { UrlNameProps } from '@constants';
+import useManualQuery from '@hooks/useManualQuery';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { useStoreActions } from '@store/Store';
+
+interface GetTokensResult {
+  communityId: string;
+  memberId: string;
+  userId: string;
+}
 
 /**
- * Fetches the logged in user including the user's different communities.
- * If there is an error, redirects to the login route.
- *
- * Updates global loading state.
+ * Updates the authenticated status of the user by checking the httpOnly
+ * cookies stored in the browser.
  */
-const useInitUser = () => {
-  const { loading } = useQuery<IUser>({
+const useInitUser = (): boolean => {
+  const { urlName }: UrlNameProps = useParams();
+
+  const setActive = useStoreActions(({ db }) => db.setActive);
+
+  const [getTokens, { loading: loading1 }] = useManualQuery<GetTokensResult>({
+    fields: ['communityId', 'memberId', 'userId'],
+    operation: 'getTokens',
+    types: { urlName: { required: false } }
+  });
+
+  const [getUser, { loading: loading2 }] = useManualQuery<IUser>({
     fields: [
       'email',
       'firstName',
@@ -27,7 +45,21 @@ const useInitUser = () => {
     variables: { populate: ['members.community'] }
   });
 
-  useLoader(loading);
+  useEffect(() => {
+    (async () => {
+      const { data } = await getTokens({ urlName });
+
+      if (!data?.userId) return;
+
+      setActive({ id: data?.communityId, table: 'communities' });
+      setActive({ id: data?.memberId, table: 'members' });
+      setActive({ id: data?.userId, table: 'users' });
+
+      await getUser();
+    })();
+  }, [urlName]);
+
+  const loading = loading1 || loading2;
 
   return loading;
 };

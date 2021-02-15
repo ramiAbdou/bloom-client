@@ -35,7 +35,7 @@ const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
 
 const SideBarCommunityList: React.FC = () => {
   const memberIds: string[] = useStoreState(({ db }) => {
-    return db.user.members
+    return db.user?.members
       ?.map((memberId: string) => db.byMemberId[memberId])
       ?.sort((a, b) => sortObjects(a, b, 'joinedAt', 'ASC'))
       ?.map((member: IMember) => member.id);

@@ -1,13 +1,10 @@
-import LoginRoute from 'core/routing/LoginRoute';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import Application from '@scenes/Application/Application';
-import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
-import { useStoreState } from '@store/Store';
-import useFinalPath from '../hooks/useFinalPath';
-import AuthenticatedRoute from './AuthenticatedRoute';
-import useIsAuthenticated from './useIsAuthenticated';
+import AuthenticatedRouter from './AuthenticatedRouter';
+import CommunityRouter from './CommunityRouter';
+import LoginRoute from './LoginRoute';
+import useVerifyToken from './useVerifyToken';
 
 /**
  * Core routing logic of the entire application. Nested logic should live
@@ -15,27 +12,14 @@ import useIsAuthenticated from './useIsAuthenticated';
  * most nested logic within it.
  */
 const Router: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-  const finalPath = useFinalPath();
-  const loading = useIsAuthenticated();
-
+  const loading = useVerifyToken();
   if (loading) return null;
 
   return (
     <Switch>
       <LoginRoute path="/login" />
-
-      {!isAuthenticated && !['past', 'upcoming'].includes(finalPath) && (
-        <Route
-          exact
-          component={IndividualEvent}
-          path="/:urlName/events/:eventId"
-        />
-      )}
-
-      <Route component={Application} path="/:urlName/apply" />
-      <Route component={AuthenticatedRoute} path="/:urlName" />
-      <Route exact component={AuthenticatedRoute} path="/" />
+      <Route component={CommunityRouter} path="/:urlName" />
+      <Route exact component={AuthenticatedRouter} path="/" />
       <Redirect to="/login" />
     </Switch>
   );

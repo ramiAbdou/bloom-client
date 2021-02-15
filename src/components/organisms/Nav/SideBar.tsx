@@ -23,8 +23,8 @@ import SideBarProfile from './SideBarProfile';
 import SideBarSection from './SideBarSection';
 
 const SideBarContent: React.FC = () => {
-  const autoAccept = useStoreState(({ db }) => db.community.autoAccept);
-  const name = useStoreState(({ db }) => db.community.name);
+  const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
+  const name = useStoreState(({ db }) => db.community?.name);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const mainLinks: LinkOptions[] = [
