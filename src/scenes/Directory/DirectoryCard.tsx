@@ -1,9 +1,16 @@
 import React from 'react';
 
+import HeaderTag from '@atoms/Tag/HeaderTag';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import {
+  IMember,
+  IMemberData,
+  IMemberType,
+  IQuestion,
+  IUser
+} from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 
@@ -52,12 +59,25 @@ const DirectoryCardContent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
+  const role = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    return member?.role;
+  });
+
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    const type: IMemberType = db.byTypeId[member?.type];
+    return type?.recurrence === 'LIFETIME';
+  });
+
   const onClick = () => {
     showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
   };
 
   return (
     <Card noPadding className="s-directory-card" onClick={onClick}>
+      {role && <HeaderTag>{role}</HeaderTag>}
+      {!role && isLifetime && <HeaderTag>Lifetime</HeaderTag>}
       <DirectoryCardPicture />
       <DirectoryCardInformation />
     </Card>

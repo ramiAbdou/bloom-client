@@ -13,15 +13,18 @@ $PREF: 's-directory';
   &:focus { outline: none; }
 };
 
-// ## CARD
+// ## DIRECTORY CARD
 
-button.#{$PREF}-card {
+div.#{$PREF}-card {
   @extend .flex-ac;
   
   height: max-content;
   height: 100%;
   padding: 0;
+  position: relative;
   width: 100%;
+
+  > .c-tag-number { left: $xs; position: absolute; top: $xs; z-index: 2; }
 
   &--empty { height: initial; }
 };
@@ -34,13 +37,13 @@ button.#{$PREF}-card {
   font-size: $xxl;
 }
 
-.#{$PREF}-card > div:first-child {
+.#{$PREF}-card > div:first-of-type {
   position: relative;
   width: 100%;
   &::before { aspect-ratio: 1; content: ''; display: block; }
 }
 
-.#{$PREF}-card > div:first-child > * {
+.#{$PREF}-card > div:first-of-type > * {
   border-radius: $xs $xs 0 0;
   bottom: 0;
   left: 0;

@@ -31,6 +31,7 @@ const Directory: React.FC = () => {
       'status',
       { community: ['id'] },
       { data: ['id', 'value', { question: ['id'] }] },
+      { type: ['id'] },
       { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
     ],
     operation: 'getDirectory',
