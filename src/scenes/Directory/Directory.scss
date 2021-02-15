@@ -24,10 +24,26 @@ div.#{$PREF}-card {
   position: relative;
   width: 100%;
 
-  > .c-tag-number { left: $xs; position: absolute; top: $xs; z-index: 2; }
+  > .c-tag-number,
+  > .t-row { position: absolute; top: $xs; z-index: 2; }
+
+  > .c-tag-number { left: $xs; }
+
+  > .t-row {
+    background-color: hsl(36, 94%, 85%);
+    border-radius: 50%;
+    padding: $xxs;
+    right: $xs;
+
+    > svg { color: #faa21e; }
+  }
 
   &--empty { height: initial; }
 };
+
+div.#{$PREF}-card-star-ctr {
+  @extend .flex-acc;
+}
 
 .#{$PREF}-card > div > h1 {
   @extend .flex-acc;
@@ -37,13 +53,13 @@ div.#{$PREF}-card {
   font-size: $xxl;
 }
 
-.#{$PREF}-card > div:first-of-type {
+.#{$PREF}-card > .m-profile-picture {
   position: relative;
   width: 100%;
   &::before { aspect-ratio: 1; content: ''; display: block; }
 }
 
-.#{$PREF}-card > div:first-of-type > * {
+.#{$PREF}-card > .m-profile-picture > * {
   border-radius: $xs $xs 0 0;
   bottom: 0;
   left: 0;

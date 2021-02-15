@@ -1,8 +1,10 @@
 import React from 'react';
+import { IoStar } from 'react-icons/io5';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
+import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import {
   IMember,
@@ -77,7 +79,16 @@ const DirectoryCardContent: React.FC = () => {
   return (
     <Card noPadding className="s-directory-card" onClick={onClick}>
       {role && <HeaderTag>{role}</HeaderTag>}
-      {!role && isLifetime && <HeaderTag>Lifetime</HeaderTag>}
+      {isLifetime && (
+        <Row
+          align="center"
+          className="s-directory-card-star-ctr"
+          justify="center"
+        >
+          <IoStar />
+        </Row>
+      )}
+      {/* {!role && isLifetime && <HeaderTag>Lifetime</HeaderTag>} */}
       <DirectoryCardPicture />
       <DirectoryCardInformation />
     </Card>
