@@ -11,6 +11,9 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
+import useQuery from '@hooks/useQuery';
+import { IUser } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
@@ -77,6 +80,12 @@ const ProfileSocialCard: React.FC = () => {
   const linkedInUrl = useStoreState(({ db }) => db.user.linkedInUrl);
   const twitterUrl = useStoreState(({ db }) => db.user.twitterUrl);
 
+  const { loading } = useQuery<IUser>({
+    fields: ['facebookUrl', 'instagramUrl', 'id', 'linkedInUrl', 'twitterUrl'],
+    operation: 'getUser',
+    schema: Schema.USER
+  });
+
   const isSocialLinked: boolean =
     !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
 
@@ -84,7 +93,7 @@ const ProfileSocialCard: React.FC = () => {
   const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
 
   return (
-    <Card className="s-profile-card--social">
+    <Card className="s-profile-card--social" loading={loading}>
       <ProfileCardHeader
         canEdit={isSocialLinked}
         title="Social Media"

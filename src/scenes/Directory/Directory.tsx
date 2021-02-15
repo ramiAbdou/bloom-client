@@ -3,12 +3,10 @@ import React from 'react';
 import { LoadingProps } from '@constants';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
-import useQuery from '@hooks/useQuery';
 import ListStore from '@organisms/List/List.store';
 import ListSearchBar from '@organisms/List/ListSearchBar';
-import { IMember } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import DirectoryCardList from './DirectoryCardList';
+import useInitDirectory from './useInitDirectory';
 
 const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
   const numResults = ListStore.useStoreState((store) => store.numResults);
@@ -25,18 +23,7 @@ const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
 };
 
 const Directory: React.FC = () => {
-  const { loading } = useQuery<IMember[]>({
-    fields: [
-      'id',
-      'status',
-      { community: ['id'] },
-      { data: ['id', 'value', { question: ['id'] }] },
-      { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-    ],
-    operation: 'getDirectory',
-    schema: [Schema.MEMBER]
-  });
+  const loading = useInitDirectory();
 
   return (
     <ListStore.Provider>

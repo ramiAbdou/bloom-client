@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { UrlNameProps } from '@constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
-import { IUser } from '@store/Db/entities';
+import { IMember, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 
@@ -30,20 +30,20 @@ const useInitUser = (): boolean => {
   });
 
   const [getUser, { loading: loading2 }] = useManualQuery<IUser>({
-    fields: [
-      'email',
-      'firstName',
-      'id',
-      'lastName',
-      'pictureUrl',
-      {
-        members: ['joinedAt', 'id', { community: ['id', 'logoUrl', 'urlName'] }]
-      }
-    ],
+    fields: ['email', 'firstName', 'id', 'lastName', 'pictureUrl'],
     operation: 'getUser',
-    schema: Schema.USER,
-    types: { populate: { required: false, type: '[String!]' } },
-    variables: { populate: ['members.community'] }
+    schema: Schema.USER
+  });
+
+  const [getMembers, { loading: loading3 }] = useManualQuery<IMember[]>({
+    fields: [
+      'joinedAt',
+      'id',
+      { community: ['id', 'logoUrl', 'urlName'] },
+      { user: ['id'] }
+    ],
+    operation: 'getMembers',
+    schema: [Schema.MEMBER]
   });
 
   useEffect(() => {
@@ -56,11 +56,11 @@ const useInitUser = (): boolean => {
       setActive({ id: data?.memberId, table: 'members' });
       setActive({ id: data?.userId, table: 'users' });
 
-      await getUser();
+      await Promise.all([getMembers(), getUser()]);
     })();
   }, [urlName]);
 
-  const loading = loading1 || loading2;
+  const loading = loading1 || loading2 || loading3;
 
   useLoader(loading);
 

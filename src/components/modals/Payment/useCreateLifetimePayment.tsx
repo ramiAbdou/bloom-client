@@ -17,7 +17,7 @@ const useCreateLifetimePayment = (): OnFormSubmit => {
       'amount',
       'createdAt',
       'id',
-      { member: ['id', 'autoRenew', 'isDuesActive', { type: ['id', 'name'] }] }
+      { member: ['id', 'autoRenew', 'isDuesActive', { type: ['id'] }] }
     ],
     operation: 'createLifetimePayment',
     schema: Schema.MEMBER_PAYMENT,

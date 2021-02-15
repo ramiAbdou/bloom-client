@@ -24,7 +24,10 @@ const IntegrationsCardContainer: React.FC = () => {
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId
-  } = useStoreState(({ db }) => db.integrations, deepequal) as IIntegrations;
+  } = useStoreState(
+    ({ db }) => db.integrations ?? {},
+    deepequal
+  ) as IIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
     hasPaidMembership,
