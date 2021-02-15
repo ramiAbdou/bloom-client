@@ -19,7 +19,7 @@ $PREF: 'c-loader';
   > div { @extend .flex-col; margin-left: -8px; margin-right: -8px; }
 
   > div > div {
-    animation: loader 1.25s ease-in infinite;
+    animation: loader 0.75s ease-in infinite;
     margin-top: 4px;
 
     @keyframes loader {
