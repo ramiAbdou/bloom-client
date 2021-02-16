@@ -21,9 +21,16 @@ function MasonryList<T>({
   );
 
   const filteredItems: T[] = [...items]?.filter((entity: T) => {
-    return Object.values(filters)?.every((listFilter: ListFilter<T>) => {
-      return listFilter(prepareForFilter(entity));
-    });
+    return Object.entries(filters)?.every(
+      ([filterId, listFilter]: [string, ListFilter<T>]) => {
+        const preparedEntity =
+          filterId === 'FILTER_CUSTOM' && prepareForFilter
+            ? prepareForFilter(entity)
+            : entity;
+
+        return listFilter(preparedEntity);
+      }
+    );
   });
 
   const sortedItems = searchString
