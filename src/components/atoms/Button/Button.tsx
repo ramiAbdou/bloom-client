@@ -18,6 +18,7 @@ export interface ButtonProps
   primary?: boolean;
   red?: boolean;
   secondary?: boolean;
+  stopPropagation?: boolean;
   tertiary?: boolean;
 }
 
@@ -52,6 +53,7 @@ const Button = forwardRef(
       red,
       secondary,
       show,
+      stopPropagation,
       type,
       tertiary,
       ...props
@@ -67,6 +69,7 @@ const Button = forwardRef(
     const onButtonClick = (
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
+      if (stopPropagation) event.stopPropagation();
       if (type === 'button') event.preventDefault();
       if (disabled) return;
       if (onClick) onClick(event);

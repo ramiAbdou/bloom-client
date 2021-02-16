@@ -4,13 +4,13 @@ import Button from '@atoms/Button/Button';
 import { IdProps, ShowProps, TitleProps } from '@constants';
 import { TableRow } from '@organisms/Table/Table.types';
 import { cx } from '@util/util';
-import TableStore from './Table.store';
+import ListStore from './List.store';
 
-interface TableQuickFilterProps extends IdProps, ShowProps, TitleProps {
+interface ListQuickFilterProps extends IdProps, ShowProps, TitleProps {
   filter: (row: TableRow) => boolean;
 }
 
-const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
+const ListQuickFilter: React.FC<ListQuickFilterProps> = ({
   id: filterId,
   filter,
   show,
@@ -18,12 +18,9 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
 }) => {
   const [active, setActive] = useState<boolean>(false);
 
-  const filters = TableStore.useStoreState((store) => store.filters);
-  const setFilter = TableStore.useStoreActions((store) => store.setFilter);
-
-  const removeFilter = TableStore.useStoreActions(
-    (store) => store.removeFilter
-  );
+  const filters = ListStore.useStoreState((store) => store.filters);
+  const setFilter = ListStore.useStoreActions((store) => store.setFilter);
+  const removeFilter = ListStore.useStoreActions((store) => store.removeFilter);
 
   useEffect(() => {
     if (active && !filters[filterId]) setFilter({ filter, filterId });
@@ -32,8 +29,8 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
 
   const onClick = () => setActive(!active);
 
-  const css = cx('o-table-quick-filter', {
-    'o-table-quick-filter--active': active
+  const css = cx('o-list-quick-filter', {
+    'o-list-quick-filter--active': active
   });
 
   return (
@@ -43,4 +40,4 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
   );
 };
 
-export default TableQuickFilter;
+export default ListQuickFilter;

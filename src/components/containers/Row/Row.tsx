@@ -8,7 +8,7 @@ interface RowProps extends ClassNameProps, ShowProps {
   align?: 'baseline' | 'center' | 'end' | 'start';
   columnBreakpoint?: 'M' | 'T';
   equal?: boolean;
-  justify?: 'center';
+  justify?: 'center' | 'sb';
   marginBottom?: number;
   marginTopAuto?: boolean;
   spaceBetween?: boolean;
@@ -48,6 +48,7 @@ const Row: React.FC<RowProps> = ({
     't-row--col-t': columnBreakpoint === 'T' && breakpoint <= 2,
     't-row--equal': equal,
     't-row--margin-top-auto': marginTopAuto,
+    't-row--sb': justify === 'sb',
     't-row--spacing-sm': spacing === 'sm',
     't-row--spacing-xs': spacing === 'xs'
   });

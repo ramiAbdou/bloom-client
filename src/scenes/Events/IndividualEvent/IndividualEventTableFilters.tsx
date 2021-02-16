@@ -82,8 +82,7 @@ const IndividualEventTableFilters: React.FC = () => {
   });
 
   return (
-    <Row wrap show={show} spacing="xs">
-      <p className="meta">Quick Filters:</p>
+    <Row wrap show={show} spacing="sm">
       <IndividualEventJoinedFilter />
       <IndividualEventRsvpFilter />
       <IndividualEventViewedFilter />

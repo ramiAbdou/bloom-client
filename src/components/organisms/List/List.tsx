@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 
 import { cx } from '@util/util';
 import ListStore from './List.store';
-import { ListProps } from './List.types';
+import { ListFilter, ListProps } from './List.types';
 
 function List<T>({
   className,
@@ -13,18 +13,25 @@ function List<T>({
   items,
   options
 }: ListProps<T>) {
+  const filters = ListStore.useStoreState((store) => store.filters);
   const searchString = ListStore.useStoreState((store) => store.searchString);
 
   const setNumResults = ListStore.useStoreActions(
     (store) => store.setNumResults
   );
 
+  const filteredItems: T[] = items?.filter((row) => {
+    return Object.values(filters)?.every((tableFilter: ListFilter<T>) => {
+      return tableFilter(row);
+    });
+  });
+
   const sortedAndFilteredItems = searchString
-    ? matchSorter(items, searchString, {
+    ? matchSorter(filteredItems, searchString, {
         ...options,
         threshold: matchSorter.rankings.ACRONYM
       })
-    : items;
+    : filteredItems;
 
   useEffect(() => {
     setNumResults(sortedAndFilteredItems?.length);

@@ -4,6 +4,7 @@ $PREF: 't-row';
 
 .#{$PREF} {
   &--c { justify-content: center; }
+  &--sb { justify-content: space-between; }
   &--equal { bottom: $md; position: sticky; width: 100%; }
   &--equal > * { width: 50%; }
 
