@@ -17,11 +17,23 @@ export interface MasonryListProps<T> extends MasonryProps<T> {
   options?: MatchSorterOptions<T>;
 }
 
+// ## LIST FILTER
+
 export type ListFilter<T = any> = (row: T) => boolean;
 
-export interface ListFilterArgs extends IdProps, ValueProps {
-  columnId: string;
+export interface ListFilterArgs extends ValueProps {
+  questionId: string;
 }
+
+export interface ListFilterModel {
+  clearFilters: Action<ListFilterModel>;
+  filterIds: string[];
+  filters: Record<string, ListFilterArgs>;
+  removeFilter: Action<ListFilterModel, string>;
+  setFilter: Action<ListFilterModel, Partial<ListFilterArgs>>;
+}
+
+// ## LIST QUICK FILTER
 
 export type ListQuickFilterArgs<T = any> = {
   filterId: string;

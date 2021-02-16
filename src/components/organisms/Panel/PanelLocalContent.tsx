@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PanelType } from '@constants';
 import { useStoreState } from '@store/Store';
-import ListFilter from '../List/ListFilter';
+import ListFilter from '../List/ListFilter/ListFilter';
 import TableFilter from '../Table/TableFilter/TableFilter';
 import TableRenamePanel from '../Table/TableRenamePanel';
 

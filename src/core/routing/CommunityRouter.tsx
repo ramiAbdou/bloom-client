@@ -20,7 +20,7 @@ const CommunityRouter: React.FC = () => {
   const { urlName }: UrlNameProps = useParams();
   const finalPath = useFinalPath();
 
-  const loading1 = useGetTokens(urlName);
+  const loading1 = useGetTokens(urlName ?? null);
   const loading2 = useInitUser();
 
   if (loading1 || loading2) return null;
