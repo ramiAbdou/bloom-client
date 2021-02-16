@@ -20,9 +20,9 @@ function List<T>({
     (store) => store.setNumResults
   );
 
-  const filteredItems: T[] = items?.filter((row) => {
+  const filteredItems: T[] = items?.filter((entity: T) => {
     return Object.values(filters)?.every((tableFilter: ListFilter<T>) => {
-      return tableFilter(row);
+      return tableFilter(entity);
     });
   });
 

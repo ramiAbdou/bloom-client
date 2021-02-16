@@ -1,25 +1,33 @@
-import { Action } from 'easy-peasy';
+import { Action, State } from 'easy-peasy';
 import { MasonryProps } from 'masonic';
 import { MatchSorterOptions } from 'match-sorter';
 
-import { ClassNameProps, IdProps, ValueProps } from '@constants';
+import { ClassNameProps, ValueProps } from '@constants';
+import { DbModel } from '@store/Db/Db.types';
+
+export interface PrepareForFilterArgs<T> {
+  db?: State<DbModel>;
+  entity: T;
+}
 
 export interface ListProps<T> extends ClassNameProps {
   Item: React.FC<T>;
   emptyMessage?: string;
   items: T[];
   options?: MatchSorterOptions<T>;
+  prepareForFilter?: (entity: T) => Record<string, any>;
 }
 
 export interface MasonryListProps<T> extends MasonryProps<T> {
   emptyMessage?: string;
   items: T[];
   options?: MatchSorterOptions<T>;
+  prepareForFilter?: (entity: T) => Record<string, any>;
 }
 
 // ## LIST FILTER
 
-export type ListFilter<T = any> = (row: T) => boolean;
+export type ListFilter<T = any> = (row: T | Record<string, any>) => boolean;
 
 export interface ListFilterArgs extends ValueProps {
   questionId: string;

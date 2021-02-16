@@ -25,17 +25,15 @@ const listFilterModel: ListFilterModel = {
     return { ...state, filterIds: updatedFilterIds, filters: updatedFilters };
   }),
 
-  setFilter: action(
-    (state, { questionId, ...filterArgs }: Partial<ListFilterArgs>) => {
-      return {
-        ...state,
-        filters: {
-          ...state.filters,
-          [questionId]: { ...state.filters[questionId], ...filterArgs }
-        }
-      };
-    }
-  )
+  setFilter: action((state, args: Partial<ListFilterArgs>) => {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        [args.questionId]: { ...state.filters[args.questionId], ...args }
+      }
+    };
+  })
 };
 
 const ListFilterStore = createContextStore<ListFilterModel>(listFilterModel, {

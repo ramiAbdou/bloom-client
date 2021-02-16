@@ -3,10 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import { useStoreActions } from '@store/Store';
-
-const ListFilterApplyButton: React.FC = () => {
-  return <Button primary>Apply Filters</Button>;
-};
+import ListFilterApplyButton from './ListFilterApplyButton';
 
 const ListFilterCancelButton: React.FC = () => {
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);

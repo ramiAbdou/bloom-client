@@ -5,22 +5,21 @@ import Button, { ButtonProps } from '@atoms/Button/Button';
 import { PanelType } from '@constants';
 import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
-// import ListStore from './List.store';
+import ListStore from '../List.store';
+import ListFilterStore from './ListFilter.store';
 
-// const ListFilterButtonNumActiveTag: React.FC = () => {
-//   const isCustomFilterApplied: boolean = ListStore.useStoreState((state) =>
-//     Object.keys(state.filters).includes('FILTER_CUSTOM')
-//   );
+const ListFilterButtonNumActiveTag: React.FC = () => {
+  const isCustomFilterApplied: boolean = ListStore.useStoreState((state) =>
+    Object.keys(state.filters).includes('FILTER_CUSTOM')
+  );
 
-//   const numActiveFilters = 0;
+  const numActiveFilters: number = ListFilterStore.useStoreState((state) => {
+    return Object.keys(state.filters)?.length;
+  });
 
-//   // const numActiveFilters: number = TableFilterStore.useStoreState((state) => {
-//   //   return state.filterIds.length;
-//   // });
-
-//   if (!isCustomFilterApplied || numActiveFilters === 0) return null;
-//   return <div>{numActiveFilters}</div>;
-// };
+  if (!isCustomFilterApplied || numActiveFilters === 0) return null;
+  return <div>{numActiveFilters}</div>;
+};
 
 const ListFilterButton: React.FC<Partial<ButtonProps>> = () => {
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
@@ -36,7 +35,7 @@ const ListFilterButton: React.FC<Partial<ButtonProps>> = () => {
       onClick={onClick}
     >
       <IoFilter />
-      {/* <ListFilterButtonNumActiveTag /> */}
+      <ListFilterButtonNumActiveTag />
     </Button>
   );
 };

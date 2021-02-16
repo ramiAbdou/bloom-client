@@ -9,6 +9,7 @@ function MasonryList<T>({
   emptyMessage,
   items,
   options,
+  prepareForFilter,
   ...props
 }: MasonryListProps<T>) {
   const filters = ListStore.useStoreState((store) => store.filters);
@@ -19,9 +20,9 @@ function MasonryList<T>({
     (store) => store.setNumResults
   );
 
-  const filteredItems: T[] = [...items]?.filter((row) => {
-    return Object.values(filters)?.every((tableFilter: ListFilter<T>) => {
-      return tableFilter(row);
+  const filteredItems: T[] = [...items]?.filter((entity: T) => {
+    return Object.values(filters)?.every((listFilter: ListFilter<T>) => {
+      return listFilter(prepareForFilter(entity));
     });
   });
 

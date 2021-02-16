@@ -5,6 +5,7 @@ import MasonryList from '@organisms/List/MasonryList';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
+import { prepareMemberForFilter } from './Directory.util';
 import DirectoryCard from './DirectoryCard';
 
 const DirectoryCardList: React.FC = () => {
@@ -45,6 +46,7 @@ const DirectoryCardList: React.FC = () => {
           (item) => item.data.map(({ value }) => value.toString())
         ]
       }}
+      prepareForFilter={prepareMemberForFilter}
       render={DirectoryCard}
     />
   );
