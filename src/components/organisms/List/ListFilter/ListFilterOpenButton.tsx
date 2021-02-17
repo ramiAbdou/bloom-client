@@ -12,7 +12,7 @@ const ListFilterButtonActiveTag: React.FC = () => {
     return Object.keys(state.filters).includes('FILTER_CUSTOM');
   });
 
-  return isCustomFilterApplied ? <div /> : null;
+  return isCustomFilterApplied ? <div>1</div> : null;
 };
 
 const ListFilterOpenButton: React.FC<Partial<ButtonProps>> = () => {

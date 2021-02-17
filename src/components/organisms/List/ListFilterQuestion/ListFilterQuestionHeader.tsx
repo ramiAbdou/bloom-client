@@ -6,7 +6,6 @@ import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ListFilterStore from '../ListFilter/ListFilter.store';
-import ListFilterQuestionDoneButton from './ListFilterQuestionDoneButton';
 
 const ListFilterQuestionHeader: React.FC = () => {
   const questionId: string = IdStore.useStoreState((store) => store.id);
@@ -26,7 +25,6 @@ const ListFilterQuestionHeader: React.FC = () => {
     <Row className="w-fill" justify="sb">
       <h4 className="overflow-ellipses">{title}</h4>
       {!isOpen && <IoAdd />}
-      <ListFilterQuestionDoneButton />
     </Row>
   );
 };
