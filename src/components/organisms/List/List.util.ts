@@ -26,11 +26,10 @@ export const runListFilters = ({
   const filteredItems = [...items]?.filter((entity) => {
     return Object.entries(filters)?.every(
       ([filterId, listFilter]: [string, ListFilter]) => {
-        const preparedEntity = entity;
-        // const preparedEntity =
-        //   filterId === 'FILTER_CUSTOM' && prepareForFilter
-        //     ? prepareForFilter(entity)
-        //     : entity;
+        const preparedEntity =
+          filterId === 'FILTER_CUSTOM' && state.prepareForFilter
+            ? state.prepareForFilter(entity)
+            : entity;
 
         return listFilter(preparedEntity);
       }

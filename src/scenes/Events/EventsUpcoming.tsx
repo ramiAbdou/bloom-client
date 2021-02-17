@@ -24,10 +24,10 @@ const EventsUpcomingContent: React.FC = () => {
 
   return (
     <List
-      Item={EventsCard}
       emptyMessage="Looks like there are no upcoming events."
       items={events}
       options={{ keys: ['title'] }}
+      render={EventsCard}
     />
   );
 };

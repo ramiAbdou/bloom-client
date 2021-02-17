@@ -70,9 +70,9 @@ const IndividualEventGuestListContent: React.FC = () => {
       {!users?.length && <p>No guests have RSVP'd yet.</p>}
 
       <List
-        Item={IndividualEventGuest}
         className="s-events-card-ctr"
         items={users}
+        render={IndividualEventGuest}
       />
     </>
   );

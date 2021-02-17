@@ -12,6 +12,8 @@ const listModel: ListModel = {
 
   options: null,
 
+  prepareForFilter: null,
+
   removeFilter: action((state, filterId: string) => {
     const updatedFilters = { ...state.filters };
     delete updatedFilters[filterId];
@@ -33,6 +35,10 @@ const listModel: ListModel = {
 
   setOptions: action((state, options) => {
     return { ...state, options };
+  }),
+
+  setPrepareForFilter: action((state, prepareForFilter) => {
+    return { ...state, prepareForFilter };
   }),
 
   setSearchString: action((state, searchString) => {

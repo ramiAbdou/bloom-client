@@ -1,9 +1,13 @@
-import { Masonry } from 'masonic';
+import { Masonry, MasonryProps } from 'masonic';
 import React from 'react';
 
 import ListStore from './List.store';
-import { MasonryListProps } from './List.types';
+import { ListProps } from './List.types';
 import useInitList from './useInitList';
+
+interface MasonryListProps<T>
+  extends Omit<ListProps<T>, 'render'>,
+    MasonryProps<T> {}
 
 function MasonryList<T>({
   emptyMessage,
@@ -12,7 +16,7 @@ function MasonryList<T>({
   prepareForFilter,
   ...props
 }: MasonryListProps<T>) {
-  useInitList({ items, options });
+  useInitList({ items, options, prepareForFilter });
 
   const filtersKey: string = ListStore.useStoreState((state) => {
     return Object.keys(state.filters).join(',');

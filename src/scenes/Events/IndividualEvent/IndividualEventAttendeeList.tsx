@@ -65,9 +65,9 @@ const IndividualEventAttendeeListContent: React.FC = () => {
       {!users?.length && <p>No guests attended.</p>}
 
       <List
-        Item={IndividualEventAttendee}
         className="s-events-card-ctr"
         items={users}
+        render={IndividualEventAttendee}
       />
     </>
   );

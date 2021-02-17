@@ -3,16 +3,22 @@ import { MatchSorterOptions } from 'match-sorter';
 import { useEffect } from 'react';
 
 import ListStore from './List.store';
+import { PrepareForFilter } from './List.types';
 
 interface UseInitListArgs<T = any> {
   items: T[];
   options: MatchSorterOptions<T>;
+  prepareForFilter: PrepareForFilter;
 }
 
-const useInitList = ({ items, options }: UseInitListArgs) => {
+const useInitList = ({ items, options, prepareForFilter }: UseInitListArgs) => {
   const storedItems = ListStore.useStoreState((state) => state.items);
   const setItems = ListStore.useStoreActions((state) => state.setItems);
   const setOptions = ListStore.useStoreActions((state) => state.setOptions);
+
+  const setPrepareForFilter = ListStore.useStoreActions(
+    (state) => state.setPrepareForFilter
+  );
 
   // // Used primarily for the removal of rows. This will not update the
   // // data if the number of rows doesn't change.
@@ -22,7 +28,8 @@ const useInitList = ({ items, options }: UseInitListArgs) => {
 
   useEffect(() => {
     setOptions(options);
-  }, [options]);
+    setPrepareForFilter(prepareForFilter);
+  }, []);
 };
 
 export default useInitList;

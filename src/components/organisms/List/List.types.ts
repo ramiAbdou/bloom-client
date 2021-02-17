@@ -1,28 +1,20 @@
-import { Action, State } from 'easy-peasy';
-import { MasonryProps } from 'masonic';
+import { Action } from 'easy-peasy';
 import { MatchSorterOptions } from 'match-sorter';
 
 import { ClassNameProps, ValueProps } from '@constants';
-import { DbModel } from '@store/Db/Db.types';
 
-export interface PrepareForFilterArgs<T> {
-  db?: State<DbModel>;
-  entity: T;
-}
+// ## PREPARE FOR FILTER
+
+export type PrepareForFilter<T = any> = (entity: T) => Record<string, any>;
+
+// ## LIST PROPS
 
 export interface ListProps<T> extends ClassNameProps {
-  Item: React.FC<T>;
   emptyMessage?: string;
   items: T[];
   options?: MatchSorterOptions<T>;
-  prepareForFilter?: (entity: T) => Record<string, any>;
-}
-
-export interface MasonryListProps<T> extends MasonryProps<T> {
-  emptyMessage?: string;
-  items: T[];
-  options?: MatchSorterOptions<T>;
-  prepareForFilter?: (entity: T) => Record<string, any>;
+  prepareForFilter?: PrepareForFilter<T>;
+  render: React.FC<T>;
 }
 
 // ## LIST FILTER
@@ -48,15 +40,19 @@ export type ListQuickFilterArgs<T = any> = {
   filter: (row: T) => boolean;
 };
 
+// ## LIST MODEL
+
 export interface ListModel<T = any> {
   filteredItems: T[];
   filters: Record<string, ListFilter>;
   items: T[];
   options?: MatchSorterOptions<T>;
+  prepareForFilter?: PrepareForFilter;
   removeFilter: Action<ListModel<T>, string>;
   searchString: string;
   setFilter: Action<ListModel<T>, ListQuickFilterArgs>;
   setItems: Action<ListModel<T>, T[]>;
   setOptions: Action<ListModel<T>, MatchSorterOptions<T>>;
+  setPrepareForFilter: Action<ListModel<T>, PrepareForFilter>;
   setSearchString: Action<ListModel<T>, string>;
 }

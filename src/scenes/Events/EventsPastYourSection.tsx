@@ -20,10 +20,10 @@ const EventsPastYourList: React.FC = () => {
 
   return (
     <List
-      Item={EventsCard}
       className="s-events-card-ctr"
       items={events}
       options={{ keys: ['title'] }}
+      render={EventsCard}
     />
   );
 };

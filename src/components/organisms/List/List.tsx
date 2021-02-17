@@ -9,11 +9,12 @@ import useInitList from './useInitList';
 function List<T>({
   className,
   emptyMessage,
-  Item: ListItem,
+  render: ListItem,
   items,
-  options
+  options,
+  prepareForFilter
 }: ListProps<T>) {
-  useInitList({ items, options });
+  useInitList({ items, options, prepareForFilter });
 
   const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
   if (!filteredItems?.length) return <p>{emptyMessage}</p>;
