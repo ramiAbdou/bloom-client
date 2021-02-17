@@ -38,7 +38,7 @@ const MemberDatabaseQuickContainer: React.FC = () => {
 };
 
 const MemberDatabaseActions: React.FC = () => (
-  <Row spaceBetween className="mb-sm">
+  <Row className="mb-sm" justify="sb">
     <MemberDatabaseQuickContainer />
     <TableFilterButton />
     <MemberDatabaseButtons />

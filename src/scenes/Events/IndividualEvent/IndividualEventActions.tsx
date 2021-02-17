@@ -83,7 +83,7 @@ const IndividualEventActions: React.FC = () => {
   });
 
   return (
-    <Row marginTopAuto equal={!isGoing && isUpcoming}>
+    <Row className="mt-auto" equal={!isGoing && isUpcoming}>
       <EventsRsvpButton large eventId={eventId} />
       <EventsJoinButton large eventId={eventId} />
       <EventsEditEventButton />

@@ -16,7 +16,7 @@ const MemberProfileHistoryEvent: React.FC<MemberHistoryData> = ({
         <div />
       </div>
 
-      <Row spaceBetween>
+      <Row justify="sb">
         <div>
           <p className="mb-xxs body--bold">{event}</p>
           <p className="meta c-gray-3">{title}</p>

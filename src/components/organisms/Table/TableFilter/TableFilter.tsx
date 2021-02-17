@@ -10,7 +10,7 @@ import TableFilterRow from './TableFilterRow';
 
 const TableFilterHeader: React.FC = () => {
   return (
-    <Row spaceBetween className="mb-sm">
+    <Row className="mb-sm" justify="sb">
       <h3>Filters</h3>
       <TableFilterClearButton />
     </Row>

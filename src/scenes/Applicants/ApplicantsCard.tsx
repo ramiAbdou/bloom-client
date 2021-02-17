@@ -33,7 +33,7 @@ const ApplicantsCardHeader: React.FC = () => {
   };
 
   return (
-    <Row spaceBetween marginBottom={24}>
+    <Row justify="sb" marginBottom={24}>
       <div>
         <p className="meta">Applied {createdAt}</p>
         <h3>{fullName}</h3>
@@ -50,7 +50,7 @@ const ApplicantsCardActionContainer: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   return (
-    <Row equal marginTopAuto>
+    <Row equal className="mt-auto">
       <ApplicantsRespondButton applicantIds={[memberId]} response="ACCEPTED" />
       <ApplicantsRespondButton applicantIds={[memberId]} response="REJECTED" />
     </Row>

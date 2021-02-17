@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Row from '@containers/Row/Row';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import PanelCloseButton from '../../Panel/PanelCloseButton';
 import ListFilterQuestion from '../ListFilterQuestion/ListFilterQuestion';
+import ListFilterStore from './ListFilter.store';
 import ListFilterApplyButton from './ListFilterApplyButton';
 import ListFilterClearButton from './ListFilterClearButton';
 
@@ -45,6 +46,16 @@ const ListFilterActions: React.FC = () => {
 };
 
 const ListFilter: React.FC = () => {
+  const setOpenQuestionId = ListFilterStore.useStoreActions(
+    (state) => state.setOpenQuestionId
+  );
+
+  // When the panel closes, ensure that no question is expanded when it opens
+  // back up again.
+  useEffect(() => {
+    return () => setOpenQuestionId(null);
+  }, []);
+
   return (
     <>
       <ListFilterHeader />

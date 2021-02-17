@@ -94,7 +94,7 @@ const ProfilePersonalPictureRow: React.FC = () => {
   const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
-    <Row spaceBetween>
+    <Row justify="sb">
       <ProfilePicture fontSize={36} size={isMobile ? 84 : 104} />
       <ProfileEditButton canEdit onEditClick={onClick} />
     </Row>

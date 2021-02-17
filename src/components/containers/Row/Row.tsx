@@ -10,8 +10,6 @@ interface RowProps extends ClassNameProps, ShowProps {
   equal?: boolean;
   justify?: 'center' | 'sb';
   marginBottom?: number;
-  marginTopAuto?: boolean;
-  spaceBetween?: boolean;
   spacing?: 'xs' | 'sm';
   wrap?: boolean;
 }
@@ -24,8 +22,6 @@ const Row: React.FC<RowProps> = ({
   equal,
   justify,
   marginBottom,
-  marginTopAuto,
-  spaceBetween,
   spacing = 'xs',
   show,
   wrap
@@ -38,7 +34,6 @@ const Row: React.FC<RowProps> = ({
     'flex-ac': align === 'center',
     'flex-ae': align === 'end',
     'flex-as': align === 'start',
-    'flex-sb': spaceBetween,
     'flex-w': !!wrap,
     't-row--c': justify === 'center',
     't-row--col':
@@ -47,7 +42,6 @@ const Row: React.FC<RowProps> = ({
     't-row--col-m': columnBreakpoint === 'M' && breakpoint <= 1,
     't-row--col-t': columnBreakpoint === 'T' && breakpoint <= 2,
     't-row--equal': equal,
-    't-row--margin-top-auto': marginTopAuto,
     't-row--sb': justify === 'sb',
     't-row--spacing-sm': spacing === 'sm',
     't-row--spacing-xs': spacing === 'xs'

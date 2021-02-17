@@ -40,7 +40,7 @@ const PaymentFinishForm: React.FC = () => {
 
   return (
     <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-      <Row spaceBetween marginBottom={24} spacing="xs">
+      <Row spaceBejustify="sb"tween marginBottom={24} spacing="xs">
         <InformationCard description={description} title={name} />
 
         <InformationCard

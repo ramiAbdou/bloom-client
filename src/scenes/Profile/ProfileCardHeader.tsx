@@ -30,7 +30,7 @@ const ProfileCardHeader: React.FC<ProfileCardHeaderProps> = ({
   ...editProps
 }) => {
   return (
-    <Row spaceBetween>
+    <Row justify="sb">
       {h2 && <h2>{title}</h2>}
       {!h2 && <h3>{title}</h3>}
       <ProfileEditButton {...editProps} />

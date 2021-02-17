@@ -54,7 +54,7 @@ const MainHeaderContent: React.FC<MainHeaderProps> = ({
 }) => {
   const isDesktop = useBreakpoint() >= 3;
   return (
-    <Row spaceBetween>
+    <Row justify="sb">
       <div>
         <MainHeaderBackButton show={!!backButton} />
         <h1>{title}</h1>

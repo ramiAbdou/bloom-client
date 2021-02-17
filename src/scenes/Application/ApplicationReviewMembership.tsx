@@ -53,7 +53,7 @@ const ApplicationReviewMembeship: React.FC = () => {
 
   return (
     <FormSection title={last4 ? 'Membership & Payment' : 'Membership Plan'}>
-      <Row spaceBetween spacing="xs">
+      <Row justify="sb" spacing="xs">
         <InformationCard description={description} title={selectedTypeName} />
 
         <InformationCard

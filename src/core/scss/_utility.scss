@@ -23,6 +23,7 @@
 // ## MARGIN TOP
 
 .mt {
+  &-auto { margin-top: auto; }
   &-xs { margin-top: $xs; }
   &-sm { margin-top: $sm; }
 }

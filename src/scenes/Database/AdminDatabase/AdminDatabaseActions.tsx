@@ -23,7 +23,7 @@ const AdminDatabaseButtons: React.FC = () => {
 };
 
 const AdminDatabaseActions: React.FC = () => (
-  <Row spaceBetween className="mb-sm">
+  <Row className="mb-sm" justify="sb">
     <SearchBar placeholder="Search admins..." />
     <AdminDatabaseButtons />
   </Row>
