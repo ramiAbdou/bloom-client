@@ -5,7 +5,8 @@ import { ListModel } from './List.types';
 import { ListFilterFunction } from './ListFilter/ListFilter.types';
 
 /**
- * Returns the filtered items in the List.
+ * Returns the filtered items in the List based upon custom filters, quick
+ * filters, and the search string.
  */
 export const runListFilters = (state: State<ListModel>) => {
   const items = [...state.items];

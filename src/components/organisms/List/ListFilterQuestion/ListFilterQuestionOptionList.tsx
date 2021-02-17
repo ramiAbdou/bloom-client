@@ -3,12 +3,17 @@ import React from 'react';
 import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import ListFilterQuestionStore from './ListFilterQuestion.store';
+import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionOption from './ListFilterQuestionOption';
 
 const ListFilterQuestionOptionList: React.FC = () => {
   const questionId: string = IdStore.useStoreState((store) => store.id);
-  const isOpen = ListFilterQuestionStore.useStoreState((state) => state.isOpen);
+
+  const openQuestionId = ListFilterStore.useStoreState(
+    (state) => state.openQuestionId
+  );
+
+  const isOpen = questionId === openQuestionId;
 
   const options: string[] = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];

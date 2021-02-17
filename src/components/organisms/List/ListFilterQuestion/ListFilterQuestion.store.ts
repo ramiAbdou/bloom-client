@@ -1,20 +1,22 @@
-import { Action, action, createContextStore } from 'easy-peasy';
+import { Action, action, createContextStore, State } from 'easy-peasy';
 
 interface ListFilterQuestionModel {
   addValue: Action<ListFilterQuestionModel, string>;
-  isOpen: boolean;
   removeValue: Action<ListFilterQuestionModel, string>;
-  setIsOpen: Action<ListFilterQuestionModel, boolean>;
   setValues: Action<ListFilterQuestionModel, string[]>;
   values: string[];
 }
 
+const listFilterQuestionStateModel: State<ListFilterQuestionModel> = {
+  values: []
+};
+
 const listFilterQuestionModel: ListFilterQuestionModel = {
+  ...listFilterQuestionStateModel,
+
   addValue: action((state, value: string) => {
     return { ...state, values: [...state.values, value] };
   }),
-
-  isOpen: false,
 
   removeValue: action((state, value: string) => {
     return {
@@ -23,15 +25,9 @@ const listFilterQuestionModel: ListFilterQuestionModel = {
     };
   }),
 
-  setIsOpen: action((state, isOpen: boolean) => {
-    return { ...state, isOpen };
-  }),
-
   setValues: action((state, values: string[]) => {
     return { ...state, values };
-  }),
-
-  values: []
+  })
 };
 
 const ListFilterQuestionStore = createContextStore<ListFilterQuestionModel>(

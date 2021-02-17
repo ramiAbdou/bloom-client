@@ -11,11 +11,16 @@ import ListFilterQuestionSelectedOptionList from './ListFilterQuestionSelectedOp
 
 const ListFilterQuestionContent: React.FC = () => {
   const questionId: string = IdStore.useStoreState((store) => store.id);
-  const isOpen = ListFilterQuestionStore.useStoreState((state) => state.isOpen);
 
-  const setIsQuestionOpen = ListFilterQuestionStore.useStoreActions(
-    (state) => state.setIsOpen
+  const openQuestionId = ListFilterStore.useStoreState(
+    (state) => state.openQuestionId
   );
+
+  const setOpenQuestionId = ListFilterStore.useStoreActions(
+    (state) => state.setOpenQuestionId
+  );
+
+  const isOpen = openQuestionId === questionId;
 
   const setQuestionValues = ListFilterQuestionStore.useStoreActions(
     (state) => state.setValues
@@ -29,7 +34,7 @@ const ListFilterQuestionContent: React.FC = () => {
     setQuestionValues(values);
   }, [values]);
 
-  const onClick = () => setIsQuestionOpen(!isOpen);
+  const onClick = () => setOpenQuestionId(questionId);
 
   const css = cx('o-list-filter-question', {
     'o-list-filter-question--active': isOpen

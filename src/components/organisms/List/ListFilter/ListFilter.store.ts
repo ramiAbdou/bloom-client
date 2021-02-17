@@ -3,7 +3,8 @@ import { action, createContextStore, State } from 'easy-peasy';
 import { ListFilterArgs, ListFilterModel } from './ListFilter.types';
 
 const listFilterStateModel: State<ListFilterModel> = {
-  filters: {}
+  filters: {},
+  openQuestionId: null
 };
 
 const listFilterModel: ListFilterModel = {
@@ -28,6 +29,10 @@ const listFilterModel: ListFilterModel = {
     };
 
     return { ...state, filters: updatedFilters };
+  }),
+
+  setOpenQuestionId: action((state, openQuestionId: string) => {
+    return { ...state, openQuestionId };
   })
 };
 

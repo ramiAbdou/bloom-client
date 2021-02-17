@@ -24,6 +24,8 @@ export type ListQuickFilterArgs<T = any> = {
 export interface ListFilterModel {
   clearFilters: Action<ListFilterModel>;
   filters: Record<string, ListFilterArgs>;
+  openQuestionId: string;
   removeFilter: Action<ListFilterModel, string>;
   setFilter: Action<ListFilterModel, Partial<ListFilterArgs>>;
+  setOpenQuestionId: Action<ListFilterModel, string>;
 }

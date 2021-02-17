@@ -7,21 +7,30 @@ import ListFilterQuestionStore from './ListFilterQuestion.store';
 
 const ListFilterQuestionDoneButton: React.FC = () => {
   const questionId: string = IdStore.useStoreState((store) => store.id);
-  const setFilter = ListFilterStore.useStoreActions((state) => state.setFilter);
-  const isOpen = ListFilterQuestionStore.useStoreState((state) => state.isOpen);
   const values = ListFilterQuestionStore.useStoreState((state) => state.values);
 
-  const setIsQuestionOpen = ListFilterQuestionStore.useStoreActions(
-    (state) => state.setIsOpen
+  const openQuestionId = ListFilterStore.useStoreState(
+    (state) => state.openQuestionId
   );
+
+  const setOpenQuestionId = ListFilterStore.useStoreActions(
+    (state) => state.setOpenQuestionId
+  );
+
+  const setFilter = ListFilterStore.useStoreActions((state) => state.setFilter);
 
   const onClick = () => {
     setFilter({ questionId, value: values });
-    setIsQuestionOpen(false);
+    setOpenQuestionId(null);
   };
 
   return (
-    <Button stopPropagation tertiary show={isOpen} onClick={onClick}>
+    <Button
+      stopPropagation
+      tertiary
+      show={openQuestionId === questionId}
+      onClick={onClick}
+    >
       Done
     </Button>
   );
