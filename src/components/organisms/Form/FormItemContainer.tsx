@@ -19,7 +19,7 @@ const FormItemContainer: React.FC<FormItemData> = ({
   const error = FormStore.useStoreState(({ items }) => items[key]?.error);
   const required = FormStore.useStoreState(({ items }) => items[key]?.required);
 
-  const css = cx('o-form-item', { [className]: className });
+  const css = cx('o-form-item', {}, className);
 
   return (
     <div className={css}>

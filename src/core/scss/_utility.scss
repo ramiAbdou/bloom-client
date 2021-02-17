@@ -1,3 +1,10 @@
+// ## FLEX
+
+.f {
+  &-1 { flex: 1; }
+  &-2 { flex: 2; }
+}
+
 // ## MARGIN BOTTOM
 
 .mb {
@@ -64,4 +71,5 @@
 
 .w {
   &-100 { width: 100%; }
+  &-100--t { @include MT { width: 100%; } }
 }

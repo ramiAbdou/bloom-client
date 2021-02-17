@@ -2,13 +2,14 @@ import day from 'dayjs';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
+import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
 import useInitFormItem from './useInitFormItem';
 
-const FormDate: React.FC<FormItemData> = (args) => {
+const FormDate: React.FC<FormItemData> = ({ className, ...args }) => {
   const key = getFormItemKey(args);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const setValue = FormStore.useStoreActions((store) => store.setValue);
@@ -27,8 +28,10 @@ const FormDate: React.FC<FormItemData> = (args) => {
   const minDate =
     key === 'END_DATE' && startDate ? day(startDate).toDate() : new Date();
 
+  const css = cx('o-form-item--date', {}, className);
+
   return (
-    <FormItemContainer className="o-form-item--date" {...args}>
+    <FormItemContainer className={css} {...args}>
       <DatePicker
         dateFormat="MMMM d, yyyy"
         minDate={minDate}

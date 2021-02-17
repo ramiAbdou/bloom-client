@@ -23,14 +23,14 @@ import useUpdateEvent from './useUpdateEvent';
 const CreateEventTimeItems: React.FC<ShowProps> = ({ show }) => {
   return (
     <Show show={show}>
-      <Row align="end" className="mo-create-event-row" spacing="xs">
-        <FormDate id="START_DATE" title="Start Time" />
-        <FormTime id="START_TIME" />
+      <Row wrap align="end" gap="xs">
+        <FormDate className="f-2" id="START_DATE" title="Start Time" />
+        <FormTime className="f-1" id="START_TIME" />
       </Row>
 
-      <Row align="end" className="mo-create-event-row" spacing="xs">
-        <FormDate id="END_DATE" title="End Time" />
-        <FormTime id="END_TIME" />
+      <Row wrap align="end" gap="xs">
+        <FormDate className="f-2" id="END_DATE" title="End Time" />
+        <FormTime className="f-1" id="END_TIME" />
       </Row>
     </Show>
   );

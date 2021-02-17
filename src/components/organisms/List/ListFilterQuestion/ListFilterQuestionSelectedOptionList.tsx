@@ -19,7 +19,7 @@ const ListFilterQuestionSelectedOptionList: React.FC = () => {
   if (isOpen || !values?.length) return null;
 
   return (
-    <Row wrap className="mt-xs" spacing="xs">
+    <Row wrap className="mt-xs" gap="xxs">
       {values.map((value: string) => {
         return <Attribute>{value}</Attribute>;
       })}

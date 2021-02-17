@@ -33,8 +33,8 @@ const ProfilePersonalTagList: React.FC = () => {
   });
 
   return (
-    <Row spacing="xs">
-      {role && <HeaderTag>{role}</HeaderTag>}
+    <Row gap="xs">
+      <HeaderTag show={!!role}>{role}</HeaderTag>
       <HeaderTag>{type}</HeaderTag>
     </Row>
   );

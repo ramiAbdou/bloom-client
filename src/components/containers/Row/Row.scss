@@ -6,32 +6,15 @@ $PREF: 't-row';
   &--equal { bottom: $md; position: sticky; width: 100%; }
   &--equal > * { width: 50%; }
 
-  &--gap-xxs { margin: -$xxs; }
-  &--gap-xxs > * { margin: $xxs; }
+  &--gap-xxs { margin-bottom: -$xxs; margin-right: -$xxs; }
+  &--gap-xxs > * { margin-bottom: $xxs; margin-right: $xxs; }
 
-  &--gap-xs { margin: -$xs; }
-  &--gap-xs > * { margin: $xs; }
+  &--gap-xs { margin-bottom: -$xs; margin-right: -$xs; }
+  &--gap-xs > * { margin-bottom: $xs; margin-right: $xs; }
 
-  &--gap-sm { margin: -$sm; }
-  &--gap-sm > * { margin: $sm; }
+  &--gap-sm { margin-bottom: -$sm; margin-right: -$sm; }
+  &--gap-sm > * { margin-bottom: $sm; margin-right: $sm; }
 
-  &--spacing-xs {
-    &:not(&--col) > *:not(:last-child) { margin-right: $xs; }
-    &.t-row--col-m > *:not(:last-child) { @include M { margin-bottom: $xs; } }
-    &.t-row--col-t > *:not(:last-child) { @include MT { margin-bottom: $xs; } }
-  }
-
-  &--spacing-sm {
-    &:not(&--col) > *:not(:last-child) { margin-right: $sm; }
-    &.t-row--col-m > *:not(:last-child) { @include M { margin-bottom: $sm; } }
-    &.t-row--col-t > *:not(:last-child) { @include MT { margin-bottom: $sm; } }
-  }
-
-  &--col-t {
-    @include MT { display: block; > * { margin-right: 0; width: 100%; } }
-  }
-
-  &--col-m {
-    @include M { display: block; > * { margin-right: 0; width: 100%; } }
-  }
+  &--spacing-xs { > *:not(:last-child) { margin-right: $xs; } }
+  &--spacing-sm { > *:not(:last-child) { margin-right: $sm; } }
 }

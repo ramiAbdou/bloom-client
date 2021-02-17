@@ -8,9 +8,10 @@ import { APIError } from 'graphql-hooks';
  */
 export const cx = (
   baseClass: string,
-  classMap: Record<string, any>
+  classMap: Record<string, any>,
+  customClass?: string
 ): string => {
-  return Object.entries(classMap).reduce(
+  const classes = Object.entries(classMap).reduce(
     (acc: string, [className, addClassName]) => {
       if (!addClassName) return acc;
       if (acc.length) return `${acc} ${className}`;
@@ -18,6 +19,8 @@ export const cx = (
     },
     baseClass ?? ''
   );
+
+  return customClass ? `${classes} ${customClass}` : classes;
 };
 
 /**

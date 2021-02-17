@@ -3,6 +3,7 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 
 import { FormItemData } from '@organisms/Form/Form.types';
+import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';
@@ -35,7 +36,7 @@ const useMinTime = (key: string) => {
   return new Date();
 };
 
-const FormTime: React.FC<FormItemData> = (args) => {
+const FormTime: React.FC<FormItemData> = ({ className, ...args }) => {
   const key = getFormItemKey(args);
   const value = FormStore.useStoreState(({ items }) => items[key]?.value);
   const setValue = FormStore.useStoreActions((store) => store.setValue);
@@ -65,8 +66,10 @@ const FormTime: React.FC<FormItemData> = (args) => {
     .startOf('hour')
     .format('h:mm A');
 
+  const css = cx('o-form-item--date', {}, className);
+
   return (
-    <FormItemContainer className="o-form-item--date" {...args}>
+    <FormItemContainer className={css} {...args}>
       <DatePicker
         showTimeSelect
         showTimeSelectOnly

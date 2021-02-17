@@ -1,12 +1,10 @@
 import React from 'react';
 
 import { ClassNameProps, ShowProps } from '@constants';
-import useBreakpoint from '@hooks/useBreakpoint';
 import { cx } from '@util/util';
 
 interface RowProps extends ClassNameProps, ShowProps {
   align?: 'baseline' | 'center' | 'end' | 'start';
-  columnBreakpoint?: 'M' | 'T';
   equal?: boolean;
   gap?: 'xxs' | 'xs' | 'sm';
   justify?: 'center' | 'sb';
@@ -17,7 +15,6 @@ interface RowProps extends ClassNameProps, ShowProps {
 const Row: React.FC<RowProps> = ({
   align = 'center',
   children,
-  columnBreakpoint,
   className,
   equal,
   gap,
@@ -26,29 +23,25 @@ const Row: React.FC<RowProps> = ({
   show,
   wrap
 }) => {
-  const breakpoint = useBreakpoint();
-
-  const css = cx('flex t-row', {
-    [className]: className,
-    'flex-ab': align === 'baseline',
-    'flex-ac': align === 'center',
-    'flex-ae': align === 'end',
-    'flex-as': align === 'start',
-    'flex-c': justify === 'center',
-    'flex-sb': justify === 'sb',
-    'flex-w': !!wrap,
-    't-row--col':
-      (columnBreakpoint === 'M' && breakpoint <= 1) ||
-      (columnBreakpoint === 'T' && breakpoint <= 2),
-    't-row--col-m': columnBreakpoint === 'M' && breakpoint <= 1,
-    't-row--col-t': columnBreakpoint === 'T' && breakpoint <= 2,
-    't-row--equal': equal,
-    't-row--gap-sm': gap === 'sm',
-    't-row--gap-xs': gap === 'xs',
-    't-row--gap-xxs': gap === 'xxs',
-    't-row--spacing-sm': spacing === 'sm',
-    't-row--spacing-xs': spacing === 'xs'
-  });
+  const css = cx(
+    'flex t-row',
+    {
+      'flex-ab': align === 'baseline',
+      'flex-ac': align === 'center',
+      'flex-ae': align === 'end',
+      'flex-as': align === 'start',
+      'flex-c': justify === 'center',
+      'flex-sb': justify === 'sb',
+      'flex-w': !!wrap,
+      't-row--equal': equal,
+      't-row--gap-sm': wrap && gap === 'sm',
+      't-row--gap-xs': wrap && gap === 'xs',
+      't-row--gap-xxs': wrap && gap === 'xxs',
+      't-row--spacing-sm': spacing === 'sm',
+      't-row--spacing-xs': spacing === 'xs'
+    },
+    className
+  );
 
   return show !== false ? <div className={css}>{children}</div> : null;
 };

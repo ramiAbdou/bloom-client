@@ -24,6 +24,8 @@ $PREF: 't-card';
   position: relative;
   width: $xxl * 4.5;
 
+  @include MT { width: 100%; }
+
   // Wraps the value (number) and the percentage tag.
   > div:first-child {
     @extend .flex-ac;

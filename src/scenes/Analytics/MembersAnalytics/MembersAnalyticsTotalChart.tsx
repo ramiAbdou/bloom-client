@@ -13,6 +13,7 @@ const MembersAnalyticsTotalChart: React.FC = () => {
 
   return (
     <Chart
+      className="f-1 w-100--t"
       data={data}
       show={!loading}
       title="Total Members"

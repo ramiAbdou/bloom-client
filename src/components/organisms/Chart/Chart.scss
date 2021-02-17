@@ -5,6 +5,7 @@ $PREF: 'o-chart';
   border-radius: $xs;
   box-sizing: border-box;
   max-width: 100%;
+  min-width: $xxl * 6;
   overflow: scroll;
   padding: $sm;
 }
