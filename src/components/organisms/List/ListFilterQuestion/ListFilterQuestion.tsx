@@ -34,7 +34,7 @@ const ListFilterQuestionContent: React.FC = () => {
     setQuestionValues(values);
   }, [values]);
 
-  const onClick = () => setOpenQuestionId(questionId);
+  const onClick = () => setOpenQuestionId(!isOpen ? questionId : null);
 
   const css = cx('o-list-filter-question', {
     'o-list-filter-question--active': isOpen
