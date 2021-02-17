@@ -2,7 +2,7 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import ListFilterButton from '@organisms/List/ListFilter/ListFilterButton';
-import ListQuickFilter from '@organisms/List/ListQuickFilter';
+import ListQuickFilter from '@organisms/List/ListFilter/ListQuickFilter';
 import ListSearchBar from '@organisms/List/ListSearchBar';
 import { IMember } from '@store/Db/entities';
 

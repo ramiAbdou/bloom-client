@@ -1,10 +1,11 @@
 import { State } from 'easy-peasy';
 import { matchSorter } from 'match-sorter';
 
-import { ListFilter, ListModel } from './List.types';
+import { ListModel } from './List.types';
+import { ListFilterFunction } from './ListFilter/ListFilter.types';
 
 interface RunListFiltersArgs {
-  filters?: Record<string, ListFilter>;
+  filters?: Record<string, ListFilterFunction>;
   searchString?: string;
   state: State<ListModel>;
 }
@@ -25,7 +26,7 @@ export const runListFilters = ({
 
   const filteredItems = [...items]?.filter((entity) => {
     return Object.entries(filters)?.every(
-      ([filterId, listFilter]: [string, ListFilter]) => {
+      ([filterId, listFilter]: [string, ListFilterFunction]) => {
         const preparedEntity =
           filterId === 'FILTER_CUSTOM' && state.prepareForFilter
             ? state.prepareForFilter(entity)

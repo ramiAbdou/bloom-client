@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import ListQuickFilter from '@organisms/List/ListQuickFilter';
+import ListQuickFilter from '@organisms/List/ListFilter/ListQuickFilter';
 import { IMember } from '@store/Db/entities';
 
 const DirectoryAdminFilters: React.FC = () => {

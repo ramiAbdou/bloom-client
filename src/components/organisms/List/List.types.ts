@@ -1,7 +1,11 @@
 import { Action } from 'easy-peasy';
 import { MatchSorterOptions } from 'match-sorter';
 
-import { ClassNameProps, ValueProps } from '@constants';
+import { ClassNameProps } from '@constants';
+import {
+  ListFilterFunction,
+  ListQuickFilterArgs
+} from './ListFilter/ListFilter.types';
 
 // ## PREPARE FOR FILTER
 
@@ -17,34 +21,11 @@ export interface ListProps<T> extends ClassNameProps {
   render: React.FC<T>;
 }
 
-// ## LIST FILTER
-
-export type ListFilter<T = any> = (row: T | Record<string, any>) => boolean;
-
-export interface ListFilterArgs extends ValueProps {
-  questionId: string;
-}
-
-export interface ListFilterModel {
-  clearFilters: Action<ListFilterModel>;
-  filterIds: string[];
-  filters: Record<string, ListFilterArgs>;
-  removeFilter: Action<ListFilterModel, string>;
-  setFilter: Action<ListFilterModel, Partial<ListFilterArgs>>;
-}
-
-// ## LIST QUICK FILTER
-
-export type ListQuickFilterArgs<T = any> = {
-  filterId: string;
-  filter: (row: T) => boolean;
-};
-
 // ## LIST MODEL
 
 export interface ListModel<T = any> {
   filteredItems: T[];
-  filters: Record<string, ListFilter>;
+  filters: Record<string, ListFilterFunction>;
   items: T[];
   options?: MatchSorterOptions<T>;
   prepareForFilter?: PrepareForFilter;

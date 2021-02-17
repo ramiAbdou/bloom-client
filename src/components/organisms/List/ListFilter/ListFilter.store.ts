@@ -1,6 +1,6 @@
 import { action, createContextStore } from 'easy-peasy';
 
-import { ListFilterArgs, ListFilterModel } from '../List.types';
+import { ListFilterArgs, ListFilterModel } from './ListFilter.types';
 
 const listFilterModel: ListFilterModel = {
   clearFilters: action((state) => {

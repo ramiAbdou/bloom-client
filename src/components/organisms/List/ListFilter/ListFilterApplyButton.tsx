@@ -3,8 +3,8 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { useStoreActions } from '@store/Store';
 import ListStore from '../List.store';
-import { ListFilterArgs } from '../List.types';
 import ListFilterStore from './ListFilter.store';
+import { ListFilterArgs } from './ListFilter.types';
 
 const ListFilterApplyButton: React.FC = () => {
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);

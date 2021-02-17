@@ -1,7 +1,8 @@
 import { action, createContextStore } from 'easy-peasy';
 
-import { ListModel, ListQuickFilterArgs } from './List.types';
+import { ListModel } from './List.types';
 import { runListFilters } from './List.util';
+import { ListQuickFilterArgs } from './ListFilter/ListFilter.types';
 
 const listModel: ListModel = {
   filteredItems: [],
