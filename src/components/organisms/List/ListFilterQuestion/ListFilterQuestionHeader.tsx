@@ -6,7 +6,7 @@ import Row from '@containers/Row/Row';
 import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import ListFilterStore from './ListFilter.store';
+import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
 
 const ListFilterQuestionDoneButton: React.FC = () => {

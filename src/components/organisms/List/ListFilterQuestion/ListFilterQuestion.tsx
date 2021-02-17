@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { IdProps } from '@constants';
 import IdStore from '@store/Id.store';
 import { cx } from '@util/util';
-import ListFilterStore from './ListFilter.store';
+import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
 import ListFilterQuestionHeader from './ListFilterQuestionHeader';
 import ListFilterQuestionOptionList from './ListFilterQuestionOptionList';
