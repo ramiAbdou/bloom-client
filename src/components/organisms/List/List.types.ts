@@ -48,12 +48,15 @@ export type ListQuickFilterArgs<T = any> = {
   filter: (row: T) => boolean;
 };
 
-export interface ListModel {
+export interface ListModel<T = any> {
+  filteredItems: T[];
   filters: Record<string, ListFilter>;
-  numResults: number;
-  removeFilter: Action<ListModel, string>;
+  items: T[];
+  options?: MatchSorterOptions<T>;
+  removeFilter: Action<ListModel<T>, string>;
   searchString: string;
-  setFilter: Action<ListModel, ListQuickFilterArgs>;
-  setNumResults: Action<ListModel, number>;
-  setSearchString: Action<ListModel, string>;
+  setFilter: Action<ListModel<T>, ListQuickFilterArgs>;
+  setItems: Action<ListModel<T>, T[]>;
+  setOptions: Action<ListModel<T>, MatchSorterOptions<T>>;
+  setSearchString: Action<ListModel<T>, string>;
 }
