@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import ListFilterButton from '@organisms/List/ListFilter/ListFilterButton';
+import ListFilterOpenButton from '@organisms/List/ListFilter/ListFilterOpenButton';
 import ListQuickFilter from '@organisms/List/ListFilter/ListQuickFilter';
 import ListSearchBar from '@organisms/List/ListSearchBar';
 import { IMember } from '@store/Db/entities';
@@ -30,7 +30,7 @@ const DirectoryActions: React.FC = () => {
         <DirectoryQuickFilters />
       </Row>
 
-      <ListFilterButton />
+      <ListFilterOpenButton />
     </Row>
   );
 };

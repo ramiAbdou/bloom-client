@@ -3,8 +3,9 @@ import React from 'react';
 import Row from '@containers/Row/Row';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import PanelCloseButton from '../../Panel/PanelCloseButton';
 import ListFilterQuestion from '../ListFilterQuestion/ListFilterQuestion';
-import ListFilterActions from './ListFilterActions';
+import ListFilterApplyButton from './ListFilterApplyButton';
 import ListFilterClearButton from './ListFilterClearButton';
 
 const ListFilterHeader: React.FC = () => {
@@ -31,6 +32,15 @@ const ListFilterQuestionList: React.FC = () => {
         return <ListFilterQuestion key={id} id={id} />;
       })}
     </ul>
+  );
+};
+
+const ListFilterActions: React.FC = () => {
+  return (
+    <Row className="mx-xs my-sm">
+      <ListFilterApplyButton />
+      <PanelCloseButton />
+    </Row>
   );
 };
 

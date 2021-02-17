@@ -6,24 +6,17 @@ import { PanelType } from '@constants';
 import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
 import ListStore from '../List.store';
-import ListFilterStore from './ListFilter.store';
 
-const ListFilterButtonNumActiveTag: React.FC = () => {
-  const isCustomFilterApplied: boolean = ListStore.useStoreState((state) =>
-    Object.keys(state.filters).includes('FILTER_CUSTOM')
-  );
-
-  const numActiveFilters: number = ListFilterStore.useStoreState((state) => {
-    return Object.keys(state.filters)?.length;
+const ListFilterButtonActiveTag: React.FC = () => {
+  const isCustomFilterApplied: boolean = ListStore.useStoreState((state) => {
+    return Object.keys(state.filters).includes('FILTER_CUSTOM');
   });
 
-  if (!isCustomFilterApplied || numActiveFilters === 0) return null;
-  return <div>{numActiveFilters}</div>;
+  return isCustomFilterApplied ? <div /> : null;
 };
 
-const ListFilterButton: React.FC<Partial<ButtonProps>> = () => {
+const ListFilterOpenButton: React.FC<Partial<ButtonProps>> = () => {
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
-
   const onClick = () => showPanel({ id: PanelType.FILTER_LIST });
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
@@ -35,9 +28,9 @@ const ListFilterButton: React.FC<Partial<ButtonProps>> = () => {
       onClick={onClick}
     >
       <IoFilter />
-      <ListFilterButtonNumActiveTag />
+      <ListFilterButtonActiveTag />
     </Button>
   );
 };
 
-export default ListFilterButton;
+export default ListFilterOpenButton;
