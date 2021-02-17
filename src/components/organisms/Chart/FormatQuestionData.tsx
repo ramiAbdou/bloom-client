@@ -7,8 +7,7 @@ import {
   IMember,
   IMemberData,
   IMemberType,
-  IQuestion,
-  IUser
+  IQuestion
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import Chart from './Chart.store';
@@ -42,12 +41,10 @@ const useQuestionData = (): Pick<
     members.forEach((memberId: string) => {
       const member: IMember = db.byMemberId[memberId];
       const type: IMemberType = db.byTypeId[member.type];
-      const user: IUser = db.byUserId[member.user];
 
       let value;
 
       if (category === 'MEMBERSHIP_TYPE') value = type?.name;
-      else if (category === 'GENDER') value = user.gender;
       else if (category === 'DUES_STATUS') {
         value = member.isDuesActive ? 'Active' : 'Inactive';
       } else {

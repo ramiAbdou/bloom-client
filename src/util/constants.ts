@@ -88,7 +88,6 @@ export type QuestionCategory =
   | 'DUES_STATUS'
   | 'EMAIL'
   | 'FIRST_NAME'
-  | 'GENDER'
   | 'JOINED_AT'
   | 'LAST_NAME'
   | 'MEMBERSHIP_TYPE';

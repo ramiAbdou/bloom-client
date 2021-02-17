@@ -29,7 +29,11 @@ const EventsPastList: React.FC = () => {
 
   return (
     <>
-      <ListSearchBar placeholder="Search events..." show={!!events?.length} />
+      <ListSearchBar
+        className="mb-sm"
+        placeholder="Search events..."
+        show={!!events?.length}
+      />
 
       <List
         Item={EventsCard}
@@ -49,9 +53,9 @@ const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => {
       ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
       ?.filter((event: IEvent) => {
-        return !event.attendees?.some((attendeeId: string) =>
-          attendees.has(attendeeId)
-        );
+        return !event.attendees?.some((attendeeId: string) => {
+          return attendees.has(attendeeId);
+        });
       });
   });
 

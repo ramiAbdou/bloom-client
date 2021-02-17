@@ -17,7 +17,7 @@ const Applicants: React.FC = () => {
       { community: ['id'] },
       { data: ['id', 'value', { question: ['id'] }] },
       { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
+      { user: ['id', 'email', 'firstName', 'lastName'] }
     ],
     operation: 'getApplicants',
     schema: [Schema.MEMBER]

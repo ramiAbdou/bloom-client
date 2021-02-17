@@ -172,7 +172,6 @@ export interface IUser extends BaseEntity {
   facebookUrl: string;
   firstName: string;
   fullName?: string;
-  gender?: 'Male' | 'Female' | 'Non-Binary' | 'Prefer Not to Say';
   instagramUrl: string;
   lastName: string;
   linkedInUrl: string;

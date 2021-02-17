@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import SearchBar, { SearchBarProps } from '@molecules/SearchBar/SearchBar';
+import { cx } from '@util/util';
 import ListStore from './List.store';
 
-const ListSearchBar: React.FC<Pick<SearchBarProps, 'placeholder' | 'show'>> = (
-  props
-) => {
+const ListSearchBar: React.FC<Omit<SearchBarProps, 'onChange'>> = ({
+  className,
+  ...props
+}) => {
   const [value, setValue] = useState('');
 
   const setSearchString = ListStore.useStoreActions(
@@ -17,13 +19,10 @@ const ListSearchBar: React.FC<Pick<SearchBarProps, 'placeholder' | 'show'>> = (
     return () => clearTimeout(timeout);
   }, [value]);
 
+  const css = cx('o-list-search', { [className]: className });
+
   return (
-    <SearchBar
-      className="o-list-search"
-      value={value}
-      onChange={setValue}
-      {...props}
-    />
+    <SearchBar className={css} value={value} onChange={setValue} {...props} />
   );
 };
 

@@ -11,7 +11,7 @@ interface GetMemberTableRowArgs {
 
 interface GetMemberValueArgs
   extends Pick<IMember, 'data' | 'isDuesActive' | 'joinedAt' | 'type'>,
-    Pick<IUser, 'email' | 'firstName' | 'gender' | 'lastName'> {
+    Pick<IUser, 'email' | 'firstName' | 'lastName'> {
   db: State<DbModel>;
   questionId: string;
 }
@@ -21,7 +21,6 @@ const getMemberValue = ({
   db,
   email,
   firstName,
-  gender,
   isDuesActive,
   joinedAt,
   lastName,
@@ -32,7 +31,6 @@ const getMemberValue = ({
 
   if (category === 'EMAIL') return email;
   if (category === 'FIRST_NAME') return firstName;
-  if (category === 'GENDER') return gender;
   if (category === 'JOINED_AT') return joinedAt;
   if (category === 'LAST_NAME') return lastName;
   if (category === 'MEMBERSHIP_TYPE') return db.byTypeId[type]?.name;
