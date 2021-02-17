@@ -224,6 +224,7 @@ const User = new schema.Entity(
 Community.define({
   application: CommunityApplication,
   events: [Event],
+  highlightedQuestion: Question,
   integrations: CommunityIntegrations,
   members: [Member],
   owner: Member,

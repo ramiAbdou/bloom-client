@@ -30,7 +30,7 @@ const ProfileMembershipContent: React.FC = () => {
   const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => !question.onlyInApplication)
+      ?.filter((question: IQuestion) => !question.adminOnly)
       ?.filter((question: IQuestion) => !question.category)
       ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'ASC'));
 
@@ -65,19 +65,11 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const { loading: loading1 } = useQuery<IMemberData[]>({
+  const { loading } = useQuery<IMemberData[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
     operation: 'getMemberData',
     schema: [Schema.MEMBER_DATA]
   });
-
-  const { loading: loading2 } = useQuery<IQuestion[]>({
-    fields: ['id', 'description', 'onlyInApplication', 'required', 'type'],
-    operation: 'getQuestions',
-    schema: [Schema.QUESTION]
-  });
-
-  const loading = loading1 && loading2;
 
   return (
     <Card className="s-profile-card--membership" show={!loading}>

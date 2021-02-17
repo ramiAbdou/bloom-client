@@ -31,7 +31,7 @@ const useGetTokens = (urlName?: string): boolean => {
       const { data } = await getTokens({ urlName });
 
       if (!data?.userId) {
-        if (urlName === null) push('/login');
+        if (urlName !== undefined) push('/login');
         return;
       }
 

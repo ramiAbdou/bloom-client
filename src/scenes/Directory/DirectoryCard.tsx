@@ -6,13 +6,7 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import {
-  IMember,
-  IMemberData,
-  IMemberType,
-  IQuestion,
-  IUser
-} from '@store/Db/entities';
+import { IMember, IMemberData, IMemberType, IUser } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 
@@ -32,8 +26,7 @@ const DirectoryCardInformation: React.FC = () => {
     return member.data
       ?.map((dataId: string) => db.byDataId[dataId])
       ?.find((data: IMemberData) => {
-        const question: IQuestion = db.byQuestionId[data?.question];
-        return !!question?.inDirectoryCard;
+        return data?.question === db.community?.highlightedQuestion;
       })?.value;
   });
 

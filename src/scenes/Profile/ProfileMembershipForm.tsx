@@ -14,7 +14,7 @@ const ProfileMembershipForm: React.FC = () => {
   const items: FormItemData[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      .filter((question: IQuestion) => !question.onlyInApplication)
+      .filter((question: IQuestion) => !question.adminOnly)
       .filter((question: IQuestion) => !question.category);
 
     const data: IMemberData[] = db.member.data?.map((dataId: string) => {
