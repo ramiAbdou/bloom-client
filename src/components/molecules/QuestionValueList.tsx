@@ -6,6 +6,16 @@ import Attribute from '../atoms/Tag/Attribute';
 import FormLabel from '../organisms/Form/FormLabel';
 
 const Value = ({ type, value }: Partial<QuestionValueItemProps>) => {
+  if (
+    [QuestionType.MULTIPLE_CHOICE, QuestionType.MULTIPLE_SELECT].includes(
+      type
+    ) &&
+    Array.isArray(value) &&
+    value?.length
+  ) {
+    value = value.toString();
+  }
+
   if (type === 'MULTIPLE_CHOICE' && Array.isArray(value) && value?.length) {
     value = value.toString();
   }

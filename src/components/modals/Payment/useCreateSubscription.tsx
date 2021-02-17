@@ -25,7 +25,7 @@ const useCreateSubscription = (): OnFormSubmit => {
       'amount',
       'createdAt',
       'id',
-      { member: ['id', 'autoRenew', 'isDuesActive', { type: ['id', 'name'] }] }
+      { member: ['id', 'autoRenew', 'isDuesActive', { type: ['id'] }] }
     ],
     operation: 'createSubscription',
     schema: Schema.MEMBER_PAYMENT,

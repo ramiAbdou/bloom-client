@@ -18,7 +18,7 @@ const AddMemberFormActions: React.FC = () => {
   const onSecondaryClick = () => closeModal();
 
   return (
-    <Row gap="xs">
+    <Row wrap gap="xs">
       <FormSubmitButton
         fill={false}
         large={false}

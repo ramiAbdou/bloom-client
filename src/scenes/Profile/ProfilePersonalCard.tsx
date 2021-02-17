@@ -33,7 +33,7 @@ const ProfilePersonalTagList: React.FC = () => {
   });
 
   return (
-    <Row gap="xs">
+    <Row wrap gap="xs">
       <HeaderTag show={!!role}>{role}</HeaderTag>
       <HeaderTag>{type}</HeaderTag>
     </Row>

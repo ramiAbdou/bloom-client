@@ -8,11 +8,11 @@ import { useStoreActions } from '@store/Store';
 import ListStore from '../List.store';
 
 const ListFilterButtonActiveTag: React.FC = () => {
-  const isCustomFilterApplied: boolean = ListStore.useStoreState((state) => {
-    return Object.keys(state.filters).includes('FILTER_CUSTOM');
+  const numCustomFilters: number = ListStore.useStoreState((state) => {
+    return Object.keys(state.customFilters)?.length;
   });
 
-  return isCustomFilterApplied ? <div>1</div> : null;
+  return numCustomFilters ? <div>{numCustomFilters}</div> : null;
 };
 
 const ListFilterOpenButton: React.FC<Partial<ButtonProps>> = () => {

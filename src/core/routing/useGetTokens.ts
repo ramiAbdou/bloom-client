@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
@@ -18,8 +17,6 @@ interface GetTokensResult {
 const useGetTokens = (urlName?: string): boolean => {
   const setActive = useStoreActions(({ db }) => db.setActive);
 
-  const { push } = useHistory();
-
   const [getTokens, { loading }] = useManualQuery<GetTokensResult>({
     fields: ['communityId', 'memberId', 'userId'],
     operation: 'getTokens',
@@ -30,10 +27,7 @@ const useGetTokens = (urlName?: string): boolean => {
     (async () => {
       const { data } = await getTokens({ urlName });
 
-      if (!data?.userId) {
-        if (urlName !== undefined) push('/login');
-        return;
-      }
+      if (!data?.userId) return;
 
       setActive({ id: data?.communityId, table: 'communities' });
       setActive({ id: data?.memberId, table: 'members' });
