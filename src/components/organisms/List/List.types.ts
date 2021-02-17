@@ -3,6 +3,7 @@ import { MatchSorterOptions } from 'match-sorter';
 
 import { ClassNameProps } from '@constants';
 import {
+  ListFilterArgs,
   ListFilterFunction,
   ListQuickFilterArgs
 } from './ListFilter/ListFilter.types';
@@ -24,6 +25,8 @@ export interface ListProps<T = any> extends ClassNameProps {
 // ## LIST MODEL
 
 export interface ListModel<T = any> {
+  cacheKey: string;
+  customFilters: Record<string, ListFilterArgs>;
   filteredItems: T[];
   filters: Record<string, ListFilterFunction>;
   items: T[];
@@ -31,6 +34,7 @@ export interface ListModel<T = any> {
   prepareForFilter?: PrepareForListFilter<T>;
   removeFilter: Action<ListModel<T>, string>;
   searchString: string;
+  setCustomFilters: Action<ListModel<T>, Record<string, ListFilterArgs>>;
   setFilter: Action<ListModel<T>, ListQuickFilterArgs>;
   setItems: Action<ListModel<T>, T[]>;
   setOptions: Action<ListModel<T>, MatchSorterOptions<T>>;

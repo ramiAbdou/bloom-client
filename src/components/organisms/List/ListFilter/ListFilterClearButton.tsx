@@ -13,12 +13,14 @@ const ListFilterClearButton: React.FC = () => {
     (store) => store.setOpenQuestionId
   );
 
-  const removeFilter = ListStore.useStoreActions((store) => store.removeFilter);
+  const setCustomFilters = ListStore.useStoreActions(
+    (store) => store.setCustomFilters
+  );
 
   const onClick: VoidFunction = () => {
     clearFilters();
     setOpenQuestionId(null);
-    removeFilter('FILTER_CUSTOM');
+    setCustomFilters({});
   };
 
   return (

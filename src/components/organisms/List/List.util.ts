@@ -1,28 +1,44 @@
 import { State } from 'easy-peasy';
 import { matchSorter } from 'match-sorter';
+import hash from 'object-hash';
 
 import { ListModel } from './List.types';
-import { ListFilterFunction } from './ListFilter/ListFilter.types';
+import { ListFilterArgs } from './ListFilter/ListFilter.types';
+
+/**
+ * Returns a hashed cache key based on the filters, custom filters, and the
+ * search string.
+ */
+export const getListCacheKey = (state: State<ListModel>) => {
+  const { customFilters, filters, searchString } = state;
+  return hash({ customFilters, filters, searchString });
+};
 
 /**
  * Returns the filtered items in the List based upon custom filters, quick
  * filters, and the search string.
  */
 export const runListFilters = (state: State<ListModel>) => {
-  const items = [...state.items];
+  const filteredItems = [...state.items]
+    ?.filter((entity) => {
+      const customFilters = Object.values(state.customFilters);
 
-  const filteredItems = [...items]?.filter((entity) => {
-    return Object.entries(state.filters)?.every(
-      ([filterId, listFilter]: [string, ListFilterFunction]) => {
-        const preparedEntity =
-          filterId === 'FILTER_CUSTOM' && state.prepareForFilter
-            ? state.prepareForFilter(entity)
-            : entity;
+      const preparedEntity = state.prepareForFilter
+        ? state.prepareForFilter(entity)
+        : entity;
 
-        return listFilter(preparedEntity);
-      }
-    );
-  });
+      return customFilters.every(
+        ({ questionId, value: values }: ListFilterArgs) => {
+          const value = preparedEntity[questionId];
+          return values?.includes(value);
+        }
+      );
+    })
+    ?.filter((entity) => {
+      return Object.values(state.filters)?.every((listFilter) => {
+        return listFilter(entity);
+      });
+    });
 
   if (!state.searchString) return filteredItems;
 

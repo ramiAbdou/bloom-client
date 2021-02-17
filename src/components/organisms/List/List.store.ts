@@ -1,10 +1,12 @@
 import { action, createContextStore, State } from 'easy-peasy';
 
 import { ListModel } from './List.types';
-import { runListFilters } from './List.util';
+import { getListCacheKey, runListFilters } from './List.util';
 import { ListQuickFilterArgs } from './ListFilter/ListFilter.types';
 
 const listStateModel: State<ListModel> = {
+  cacheKey: null,
+  customFilters: {},
   filteredItems: [],
   filters: {},
   items: [],
@@ -25,7 +27,21 @@ const listModel: ListModel = {
       filters: updatedFilters
     };
 
-    return { ...updatedState, filteredItems: runListFilters(updatedState) };
+    return {
+      ...updatedState,
+      cacheKey: getListCacheKey(updatedState),
+      filteredItems: runListFilters(updatedState)
+    };
+  }),
+
+  setCustomFilters: action((state, customFilters) => {
+    const updatedState: State<ListModel> = { ...state, customFilters };
+
+    return {
+      ...updatedState,
+      cacheKey: getListCacheKey(updatedState),
+      filteredItems: runListFilters(updatedState)
+    };
   }),
 
   setFilter: action((state, { filterId, filter }: ListQuickFilterArgs) => {
@@ -36,7 +52,11 @@ const listModel: ListModel = {
       filters: updatedFilters
     };
 
-    return { ...updatedState, filteredItems: runListFilters(updatedState) };
+    return {
+      ...updatedState,
+      cacheKey: getListCacheKey(updatedState),
+      filteredItems: runListFilters(updatedState)
+    };
   }),
 
   setItems: action((state, items) => {
@@ -53,7 +73,12 @@ const listModel: ListModel = {
 
   setSearchString: action((state, searchString) => {
     const updatedState: State<ListModel> = { ...state, searchString };
-    return { ...updatedState, filteredItems: runListFilters(updatedState) };
+
+    return {
+      ...updatedState,
+      cacheKey: getListCacheKey(updatedState),
+      filteredItems: runListFilters(updatedState)
+    };
   })
 };
 

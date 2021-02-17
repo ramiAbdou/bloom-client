@@ -33,7 +33,7 @@ const ApplicantsCardHeader: React.FC = () => {
   };
 
   return (
-    <Row justify="sb" marginBottom={24}>
+    <Row className="mb-md" justify="sb">
       <div>
         <p className="meta">Applied {createdAt}</p>
         <h3>{fullName}</h3>

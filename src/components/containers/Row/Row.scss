@@ -3,12 +3,8 @@ $PREF: 't-row';
 // ## ROW CONTAINER
 
 .#{$PREF} {
-  &--c { justify-content: center; }
-  &--sb { justify-content: space-between; }
   &--equal { bottom: $md; position: sticky; width: 100%; }
   &--equal > * { width: 50%; }
-
-  &--margin-top-auto { margin-top: auto; }
 
   &--spacing-xs {
     &:not(&--col) > *:not(:last-child) { margin-right: $xs; }

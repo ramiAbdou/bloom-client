@@ -4,7 +4,6 @@ import React from 'react';
 import ListStore from './List.store';
 import { ListProps } from './List.types';
 import useInitList from './useInitList';
-import useListCacheKey from './useListCacheKey';
 
 interface MasonryListProps<T>
   extends Omit<ListProps<T>, 'render'>,
@@ -18,7 +17,8 @@ function MasonryList<T>({
   ...props
 }: MasonryListProps<T>) {
   useInitList({ items, options, prepareForFilter });
-  const cacheKey = useListCacheKey();
+
+  const cacheKey = ListStore.useStoreState((state) => state.cacheKey);
   const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
 
   if (!filteredItems?.length) return <p>{emptyMessage}</p>;

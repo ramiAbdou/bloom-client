@@ -9,7 +9,6 @@ interface RowProps extends ClassNameProps, ShowProps {
   columnBreakpoint?: 'M' | 'T';
   equal?: boolean;
   justify?: 'center' | 'sb';
-  marginBottom?: number;
   spacing?: 'xs' | 'sm';
   wrap?: boolean;
 }
@@ -21,7 +20,6 @@ const Row: React.FC<RowProps> = ({
   className,
   equal,
   justify,
-  marginBottom,
   spacing = 'xs',
   show,
   wrap
@@ -34,24 +32,20 @@ const Row: React.FC<RowProps> = ({
     'flex-ac': align === 'center',
     'flex-ae': align === 'end',
     'flex-as': align === 'start',
+    'flex-c': justify === 'center',
+    'flex-sb': justify === 'sb',
     'flex-w': !!wrap,
-    't-row--c': justify === 'center',
     't-row--col':
       (columnBreakpoint === 'M' && breakpoint <= 1) ||
       (columnBreakpoint === 'T' && breakpoint <= 2),
     't-row--col-m': columnBreakpoint === 'M' && breakpoint <= 1,
     't-row--col-t': columnBreakpoint === 'T' && breakpoint <= 2,
     't-row--equal': equal,
-    't-row--sb': justify === 'sb',
     't-row--spacing-sm': spacing === 'sm',
     't-row--spacing-xs': spacing === 'xs'
   });
 
-  return show !== false ? (
-    <div className={css} style={{ marginBottom }}>
-      {children}
-    </div>
-  ) : null;
+  return show !== false ? <div className={css}>{children}</div> : null;
 };
 
 export default Row;
