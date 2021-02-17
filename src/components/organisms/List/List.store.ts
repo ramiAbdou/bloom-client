@@ -1,33 +1,42 @@
-import { action, createContextStore } from 'easy-peasy';
+import { action, createContextStore, State } from 'easy-peasy';
 
 import { ListModel } from './List.types';
 import { runListFilters } from './List.util';
 import { ListQuickFilterArgs } from './ListFilter/ListFilter.types';
 
-const listModel: ListModel = {
+const listStateModel: State<ListModel> = {
   filteredItems: [],
-
   filters: {},
-
   items: [],
-
   options: null,
-
   prepareForFilter: null,
+  searchString: null
+};
+
+const listModel: ListModel = {
+  ...listStateModel,
 
   removeFilter: action((state, filterId: string) => {
     const updatedFilters = { ...state.filters };
     delete updatedFilters[filterId];
-    const filteredItems = runListFilters({ filters: updatedFilters, state });
-    return { ...state, filteredItems, filters: updatedFilters };
-  }),
 
-  searchString: null,
+    const updatedState: State<ListModel> = {
+      ...state,
+      filters: updatedFilters
+    };
+
+    return { ...updatedState, filteredItems: runListFilters(updatedState) };
+  }),
 
   setFilter: action((state, { filterId, filter }: ListQuickFilterArgs) => {
     const updatedFilters = { ...state.filters, [filterId]: filter };
-    const filteredItems = runListFilters({ filters: updatedFilters, state });
-    return { ...state, filteredItems, filters: updatedFilters };
+
+    const updatedState: State<ListModel> = {
+      ...state,
+      filters: updatedFilters
+    };
+
+    return { ...updatedState, filteredItems: runListFilters(updatedState) };
   }),
 
   setItems: action((state, items) => {
@@ -43,8 +52,8 @@ const listModel: ListModel = {
   }),
 
   setSearchString: action((state, searchString) => {
-    const filteredItems = runListFilters({ searchString, state });
-    return { ...state, filteredItems, searchString };
+    const updatedState: State<ListModel> = { ...state, searchString };
+    return { ...updatedState, filteredItems: runListFilters(updatedState) };
   })
 };
 

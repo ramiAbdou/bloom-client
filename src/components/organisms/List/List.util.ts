@@ -4,28 +4,14 @@ import { matchSorter } from 'match-sorter';
 import { ListModel } from './List.types';
 import { ListFilterFunction } from './ListFilter/ListFilter.types';
 
-interface RunListFiltersArgs {
-  filters?: Record<string, ListFilterFunction>;
-  searchString?: string;
-  state: State<ListModel>;
-}
-
 /**
- * Returns the filtered Table rows based on the active filters as well as
- * the Table search string.
+ * Returns the filtered items in the List.
  */
-export const runListFilters = ({
-  filters,
-  searchString,
-  state
-}: RunListFiltersArgs) => {
+export const runListFilters = (state: State<ListModel>) => {
   const items = [...state.items];
 
-  filters = filters ?? state.filters;
-  searchString = searchString ?? state.searchString;
-
   const filteredItems = [...items]?.filter((entity) => {
-    return Object.entries(filters)?.every(
+    return Object.entries(state.filters)?.every(
       ([filterId, listFilter]: [string, ListFilterFunction]) => {
         const preparedEntity =
           filterId === 'FILTER_CUSTOM' && state.prepareForFilter
@@ -37,9 +23,9 @@ export const runListFilters = ({
     );
   });
 
-  if (!searchString) return filteredItems;
+  if (!state.searchString) return filteredItems;
 
-  return matchSorter(filteredItems, searchString, {
+  return matchSorter(filteredItems, state.searchString, {
     ...state.options,
     threshold: matchSorter.rankings.ACRONYM
   });

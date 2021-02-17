@@ -9,15 +9,15 @@ import {
 
 // ## PREPARE FOR FILTER
 
-export type PrepareForFilter<T = any> = (entity: T) => Record<string, any>;
+export type PrepareForListFilter<T = any> = (entity: T) => Record<string, any>;
 
 // ## LIST PROPS
 
-export interface ListProps<T> extends ClassNameProps {
+export interface ListProps<T = any> extends ClassNameProps {
   emptyMessage?: string;
   items: T[];
   options?: MatchSorterOptions<T>;
-  prepareForFilter?: PrepareForFilter<T>;
+  prepareForFilter?: PrepareForListFilter<T>;
   render: React.FC<T>;
 }
 
@@ -28,12 +28,12 @@ export interface ListModel<T = any> {
   filters: Record<string, ListFilterFunction>;
   items: T[];
   options?: MatchSorterOptions<T>;
-  prepareForFilter?: PrepareForFilter;
+  prepareForFilter?: PrepareForListFilter<T>;
   removeFilter: Action<ListModel<T>, string>;
   searchString: string;
   setFilter: Action<ListModel<T>, ListQuickFilterArgs>;
   setItems: Action<ListModel<T>, T[]>;
   setOptions: Action<ListModel<T>, MatchSorterOptions<T>>;
-  setPrepareForFilter: Action<ListModel<T>, PrepareForFilter>;
+  setPrepareForFilter: Action<ListModel<T>, PrepareForListFilter<T>>;
   setSearchString: Action<ListModel<T>, string>;
 }
