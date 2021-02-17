@@ -35,7 +35,7 @@ const IndividualEventTableContent: React.FC = () => {
           render: (value) =>
             value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
           title: `Joined At`,
-          type: 'SHORT_TEXT'
+          type: QuestionType.SHORT_TEXT
         }
       ]
     : [];
@@ -45,20 +45,20 @@ const IndividualEventTableContent: React.FC = () => {
         {
           id: 'watched',
           title: `Viewed Recording`,
-          type: 'TRUE_FALSE' as QuestionType
+          type: QuestionType.TRUE_FALSE
         }
       ]
     : [];
 
   const columns: TableColumn[] = [
-    { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
-    { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
+    { id: 'fullName', title: 'Full Name', type: QuestionType.SHORT_TEXT },
+    { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT },
     ...joinedAtColumn,
     {
       id: 'rsvpdAt',
       render: (value) => value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
       title: `RSVP'd At`,
-      type: 'SHORT_TEXT'
+      type: QuestionType.SHORT_TEXT
     },
     ...viewedRecordingColumn
   ];

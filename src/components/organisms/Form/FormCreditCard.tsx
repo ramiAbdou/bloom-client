@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { QuestionCategory } from '@constants';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import { FormItemData } from './Form.types';
@@ -21,7 +22,7 @@ const options: StripeCardElementOptions = {
 const FormCreditCard: React.FC<FormItemData> = (args) => {
   args = {
     ...args,
-    category: 'CREDIT_OR_DEBIT_CARD',
+    category: QuestionCategory.CREDIT_OR_DEBIT_CARD,
     title: 'Credit or Debit Card',
     value: true
   };

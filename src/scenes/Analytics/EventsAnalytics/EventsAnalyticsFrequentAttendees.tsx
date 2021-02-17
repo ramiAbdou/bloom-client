@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType, QuestionType } from '@constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import Table from '@organisms/Table/Table';
@@ -57,9 +57,13 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   });
 
   const columns: TableColumn[] = [
-    { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
-    { id: 'email', title: 'Email', type: 'LONG_TEXT' },
-    { id: 'value', title: '# of Events Attended', type: 'SHORT_TEXT' }
+    { id: 'fullName', title: 'Full Name', type: QuestionType.SHORT_TEXT },
+    { id: 'email', title: 'Email', type: QuestionType.LONG_TEXT },
+    {
+      id: 'value',
+      title: '# of Events Attended',
+      type: QuestionType.SHORT_TEXT
+    }
   ];
 
   const options: TableOptions = {

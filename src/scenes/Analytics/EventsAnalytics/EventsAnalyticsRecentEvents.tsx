@@ -2,6 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { QuestionType } from '@constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import Table from '@organisms/Table/Table';
@@ -38,11 +39,19 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   });
 
   const columns: TableColumn[] = [
-    { id: 'title', title: 'Title', type: 'LONG_TEXT' },
-    { id: 'date', title: 'Date', type: 'SHORT_TEXT' },
-    { id: 'numAttendees', title: '# of Attendees', type: 'SHORT_TEXT' },
-    { id: 'numGuests', title: `# of RSVP's`, type: 'SHORT_TEXT' },
-    { id: 'numViewers', title: `# of Recording Viewers`, type: 'SHORT_TEXT' }
+    { id: 'title', title: 'Title', type: QuestionType.LONG_TEXT },
+    { id: 'date', title: 'Date', type: QuestionType.SHORT_TEXT },
+    {
+      id: 'numAttendees',
+      title: '# of Attendees',
+      type: QuestionType.SHORT_TEXT
+    },
+    { id: 'numGuests', title: `# of RSVP's`, type: QuestionType.SHORT_TEXT },
+    {
+      id: 'numViewers',
+      title: `# of Recording Viewers`,
+      type: QuestionType.SHORT_TEXT
+    }
   ];
 
   const { push } = useHistory();

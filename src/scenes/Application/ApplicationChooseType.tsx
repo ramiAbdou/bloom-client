@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { QuestionCategory } from '@constants';
 import { RadioOptionProps } from '@molecules/Radio/Radio.types';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
@@ -45,7 +46,10 @@ const ApplicationChooseTypeForm: React.FC = () => {
 
   return (
     <Form>
-      <FormMultipleChoice cardOptions={types} category="MEMBERSHIP_TYPE" />
+      <FormMultipleChoice
+        cardOptions={types}
+        category={QuestionCategory.MEMBERSHIP_TYPE}
+      />
       <ApplicationChooseTypeButton />
     </Form>
   );

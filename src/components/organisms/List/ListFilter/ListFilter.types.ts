@@ -2,7 +2,7 @@ import { Action } from 'easy-peasy';
 
 import { ValueProps } from '@constants';
 
-// ## LIST FILTER
+// ## LIST FILTER FUNCTION
 
 export type ListFilterFunction<T = any> = (
   row: T | Record<string, any>
@@ -23,7 +23,6 @@ export type ListQuickFilterArgs<T = any> = {
 
 export interface ListFilterModel {
   clearFilters: Action<ListFilterModel>;
-  filterIds: string[];
   filters: Record<string, ListFilterArgs>;
   removeFilter: Action<ListFilterModel, string>;
   setFilter: Action<ListFilterModel, Partial<ListFilterArgs>>;

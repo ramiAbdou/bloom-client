@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType, QuestionType } from '@constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
@@ -53,14 +53,14 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
   })?.sort((a, b) => sortObjects(a, b, 'paidOn'));
 
   const columns: TableColumn[] = [
-    { id: 'paidOn', title: 'Paid On', type: 'SHORT_TEXT' },
-    { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
-    { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
-    { id: 'amount', title: 'Amount', type: 'SHORT_TEXT' },
+    { id: 'paidOn', title: 'Paid On', type: QuestionType.SHORT_TEXT },
+    { id: 'fullName', title: 'Full Name', type: QuestionType.SHORT_TEXT },
+    { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT },
+    { id: 'amount', title: 'Amount', type: QuestionType.SHORT_TEXT },
     {
       id: 'type',
       title: 'Membership Plan',
-      type: 'MULTIPLE_CHOICE'
+      type: QuestionType.MULTIPLE_CHOICE
     }
   ];
 

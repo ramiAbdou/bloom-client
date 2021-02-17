@@ -2,6 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
+import { QuestionType } from '@constants';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -33,7 +34,11 @@ const MembershipPaymentTable: React.FC = () => {
   const columns: TableColumn[] = [
     { id: 'paidOn', title: 'Date' },
     { id: 'amount', title: 'Amount' },
-    { id: 'type', title: 'Membership Plan', type: 'MULTIPLE_CHOICE' },
+    {
+      id: 'type',
+      title: 'Membership Plan',
+      type: QuestionType.MULTIPLE_CHOICE
+    },
     {
       hideTitle: true,
       id: 'receipt',

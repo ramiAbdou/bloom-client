@@ -7,7 +7,7 @@ import URLBuilder from 'util/URLBuilder';
 import Button from '@atoms/Button/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
-import { APP, CookieType, ShowProps } from '@constants';
+import { APP, CookieType, QuestionCategory, ShowProps } from '@constants';
 import Show from '@containers/Show';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
@@ -87,7 +87,7 @@ const LoginCardEmailForm: React.FC = () => {
   return (
     <Form onSubmit={sendLoginLink}>
       <FormShortText
-        category="EMAIL"
+        category={QuestionCategory.EMAIL}
         description={deline`
           Or continue with your email address to receive a login link.
         `}

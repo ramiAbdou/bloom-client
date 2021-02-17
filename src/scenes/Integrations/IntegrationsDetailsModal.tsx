@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
+import { QuestionType } from '@constants';
 import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -19,7 +20,7 @@ const IntegrationsDetailsModal: React.FC = () => {
       <QuestionValueList
         items={details.map(({ label, value }) => ({
           title: label,
-          type: 'MULTIPLE_CHOICE',
+          type: QuestionType.MULTIPLE_CHOICE,
           value
         }))}
         marginBottom={24}

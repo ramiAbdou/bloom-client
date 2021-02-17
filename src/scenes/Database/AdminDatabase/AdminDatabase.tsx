@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { QuestionType } from '@constants';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
@@ -25,9 +26,9 @@ const AdminDatabase: React.FC = () => {
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.
   const columns: TableColumn[] = [
-    { id: 'firstName', title: 'First Name', type: 'SHORT_TEXT' },
-    { id: 'lastName', title: 'Last Name', type: 'SHORT_TEXT' },
-    { id: 'email', title: 'Email', type: 'SHORT_TEXT' }
+    { id: 'firstName', title: 'First Name', type: QuestionType.SHORT_TEXT },
+    { id: 'lastName', title: 'Last Name', type: QuestionType.SHORT_TEXT },
+    { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT }
   ];
 
   return (

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { QuestionCategory } from '@constants';
 import Form from '@organisms/Form/Form';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormImage from '@organisms/Form/FormImage';
@@ -23,12 +24,16 @@ const ProfilePersonalModal: React.FC = () => {
       <FormImage id="PROFILE_PICTURE" required={false} value={pictureUrl} />
 
       <FormShortText
-        category="FIRST_NAME"
+        category={QuestionCategory.FIRST_NAME}
         title="First Name"
         value={firstName}
       />
 
-      <FormShortText category="LAST_NAME" title="Last Name" value={lastName} />
+      <FormShortText
+        category={QuestionCategory.LAST_NAME}
+        title="Last Name"
+        value={lastName}
+      />
       <FormLongText id="BIO" required={false} title="Bio" value={bio} />
       <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
     </Form>

@@ -2,6 +2,7 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
+import { QuestionCategory } from '@constants';
 import Row from '@containers/Row/Row';
 import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
 import FormShortText from '@organisms/Form/FormShortText';
@@ -36,19 +37,19 @@ const AddMemberInput: React.FC = () => {
       <AddMemberInputTrashButton />
 
       <FormShortText
-        category="FIRST_NAME"
+        category={QuestionCategory.FIRST_NAME}
         metadata={id}
         placeholder="First Name"
       />
 
       <FormShortText
-        category="LAST_NAME"
+        category={QuestionCategory.LAST_NAME}
         metadata={id}
         placeholder="Last Name"
       />
 
       <FormShortText
-        category="EMAIL"
+        category={QuestionCategory.EMAIL}
         className="mr-sm"
         metadata={id}
         placeholder="Email"

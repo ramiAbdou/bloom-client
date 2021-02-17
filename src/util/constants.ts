@@ -83,27 +83,30 @@ export type RouteType =
  * MISC - Other miscelleaneous types.
  */
 
-export type QuestionCategory =
-  | 'CREDIT_OR_DEBIT_CARD'
-  | 'DUES_STATUS'
-  | 'EMAIL'
-  | 'FIRST_NAME'
-  | 'JOINED_AT'
-  | 'LAST_NAME'
-  | 'MEMBERSHIP_TYPE';
+export enum QuestionCategory {
+  CREDIT_OR_DEBIT_CARD = 'CREDIT_OR_DEBIT_CARD',
+  DUES_STATUS = 'DUES_STATUS',
+  EMAIL = 'EMAIL',
+  FIRST_NAME = 'FIRST_NAME',
+  GENDER = 'GENDER',
+  JOINED_AT = 'JOINED_AT',
+  LAST_NAME = 'LAST_NAME',
+  MEMBERSHIP_TYPE = 'MEMBERSHIP_TYPE'
+}
 
-export type QuestionType =
-  | 'COVER_IMAGE'
-  | 'DATE'
-  | 'IMAGE'
-  | 'LARGE_TITLE'
-  | 'LONG_TEXT'
-  | 'MULTIPLE_CHOICE'
-  | 'MULTIPLE_SELECT'
-  | 'SHORT_TEXT'
-  | 'TIME'
-  | 'TOGGLE'
-  | 'TRUE_FALSE';
+export enum QuestionType {
+  COVER_IMAGE = 'COVER_IMAGE',
+  DATE = 'DATE',
+  IMAGE = 'IMAGE',
+  LARGE_TITLE = 'LARGE_TITLE',
+  LONG_TEXT = 'LONG_TEXT',
+  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
+  MULTIPLE_SELECT = 'MULTIPLE_SELECT',
+  SHORT_TEXT = 'SHORT_TEXT',
+  TIME = 'TIME',
+  TOGGLE = 'TOGGLE',
+  TRUE_FALSE = 'TRUE_FALSE'
+}
 
 export interface PopulateArgs {
   populate?: string[];

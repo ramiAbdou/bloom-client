@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ShowProps } from '@constants';
+import { QuestionCategory, ShowProps } from '@constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormShortText from '@organisms/Form/FormShortText';
@@ -14,11 +14,18 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
   return (
     <Form onSubmit={createPublicEventGuest}>
       <Row equal align="baseline" spacing="xs">
-        <FormShortText category="FIRST_NAME" title="First Name" />
-        <FormShortText category="LAST_NAME" title="Last Name" />
+        <FormShortText
+          category={QuestionCategory.FIRST_NAME}
+          title="First Name"
+        />
+
+        <FormShortText
+          category={QuestionCategory.LAST_NAME}
+          title="Last Name"
+        />
       </Row>
 
-      <FormShortText category="EMAIL" title="Email" />
+      <FormShortText category={QuestionCategory.EMAIL} title="Email" />
       <FormSubmitButton>RSVP</FormSubmitButton>
     </Form>
   );
