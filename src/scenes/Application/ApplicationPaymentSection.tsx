@@ -34,7 +34,7 @@ const ApplicationPaymentForm: React.FC = () => {
       <FormCreditCard />
       <FormShortText id="BILLING_ADDRESS" title="Billing Address" />
 
-      <Row className="mo-payment-billing-ctr" justify="sb">
+      <Row className="mo-payment-billing-ctr" justify="sb" spacing="xs">
         <FormShortText id="CITY" placeholder="Los Angeles" title="City" />
         <FormShortText id="STATE" placeholder="CA" title="State" />
         <FormShortText id="ZIP_CODE" placeholder="00000" title="Zip Code" />

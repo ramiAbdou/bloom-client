@@ -34,7 +34,7 @@ const MembershipCurrentPlanActions: React.FC = () => {
   const onSecondaryClick = () => push(`${url}/change`);
 
   return (
-    <Row equal={!isDuesActive}>
+    <Row equal={!isDuesActive} spacing="xs">
       <Button primary show={!isDuesActive} onClick={onPrimaryClick}>
         Pay Dues
       </Button>

@@ -33,7 +33,7 @@ const AddMemberInput: React.FC = () => {
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   return (
-    <Row align="baseline" className="mo-add-member-input">
+    <Row align="baseline" className="mo-add-member-input" spacing="xs">
       <AddMemberInputTrashButton />
 
       <FormShortText

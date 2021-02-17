@@ -11,7 +11,7 @@ import ListFilterClearButton from './ListFilterClearButton';
 
 const ListFilterHeader: React.FC = () => {
   return (
-    <Row className="mx-xs my-sm" justify="sb">
+    <Row className="mx-xs my-sm" justify="sb" spacing="xs">
       <h3>Filters</h3>
       <ListFilterClearButton />
     </Row>
@@ -38,7 +38,7 @@ const ListFilterQuestionList: React.FC = () => {
 
 const ListFilterActions: React.FC = () => {
   return (
-    <Row className="mx-xs my-sm">
+    <Row className="mx-xs my-sm" spacing="xs">
       <ListFilterApplyButton />
       <PanelCloseButton />
     </Row>

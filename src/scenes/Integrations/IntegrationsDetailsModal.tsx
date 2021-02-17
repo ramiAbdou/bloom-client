@@ -2,7 +2,6 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import { QuestionType } from '@constants';
-import Row from '@containers/Row/Row';
 import QuestionValueList from '@molecules/QuestionValueList';
 import { useStoreActions, useStoreState } from '@store/Store';
 import useIntegrationsDetails from './useIntegrationsDetails';
@@ -26,11 +25,9 @@ const IntegrationsDetailsModal: React.FC = () => {
         marginBottom={24}
       />
 
-      <Row>
-        <Button secondary onClick={() => closeModal()}>
-          Close
-        </Button>
-      </Row>
+      <Button secondary onClick={() => closeModal()}>
+        Close
+      </Button>
     </>
   );
 };

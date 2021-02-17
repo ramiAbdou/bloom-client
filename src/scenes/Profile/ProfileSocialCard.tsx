@@ -64,7 +64,7 @@ const ProfileSocialMediaValue: React.FC<ProfileSocialMediaValueProps> = ({
   });
 
   return (
-    <Row className={css}>
+    <Row className={css} spacing="xs">
       {isFacebook && <IoLogoFacebook />}
       {isInstagram && <IoLogoInstagram />}
       {isLinkedIn && <IoLogoLinkedin />}

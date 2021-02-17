@@ -20,7 +20,7 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
   ids
 }) => {
   return (
-    <Row>
+    <Row spacing="xs">
       {ids?.map((props) => {
         return (
           <ProfilePicture
@@ -63,7 +63,7 @@ const EventsCardPeople: React.FC = () => {
   });
 
   return (
-    <Row className="s-events-card-people" show={!!ids?.length}>
+    <Row className="s-events-card-people" show={!!ids?.length} spacing="xs">
       <EventsCardPersonPictures ids={ids?.slice(0, 3)} />
       <p className="meta">
         {isPast

@@ -15,7 +15,7 @@ import { MemberIdsArgs } from '../Database.types';
 
 const AdminDatabaseDemoteFormActions: React.FC = () => {
   return (
-    <Row>
+    <Row spacing="xs">
       <FormSubmitButton row loadingText="Demoting...">
         Demote
       </FormSubmitButton>

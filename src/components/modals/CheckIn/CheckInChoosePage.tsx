@@ -38,7 +38,7 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
       }}
     >
       <FormLabel marginBottom={16}>{`Are you a member of ${name}?`}</FormLabel>
-      <Row equal>
+      <Row equal spacing="xs">
         <Button primary onClick={onPrimaryClick}>
           Yes
         </Button>

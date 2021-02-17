@@ -11,7 +11,7 @@ import useDeleteMembers from './useDeleteMembers';
 
 const MemberDatabaseDeleteFormActions: React.FC = () => {
   return (
-    <Row>
+    <Row spacing="xs">
       <FormSubmitButton row loadingText="Removing...">
         Remove
       </FormSubmitButton>

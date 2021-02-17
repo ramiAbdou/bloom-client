@@ -13,7 +13,7 @@ import useMailchimpSubmit from './useMailchimpSubmit';
 
 const MailchimpModalActionContainer: React.FC = () => {
   return (
-    <Row>
+    <Row spacing="xs">
       <SubmitButton fill={false} large={false} loadingText="Finishing...">
         Finish
       </SubmitButton>

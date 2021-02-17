@@ -22,7 +22,7 @@ const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
       loading={loading}
       title="Pending Applicants"
     >
-      <Row>
+      <Row spacing="xs">
         <ApplicantsRespondButton
           all
           applicantIds={pendingApplicantIds}

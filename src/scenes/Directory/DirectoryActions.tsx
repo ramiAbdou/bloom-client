@@ -24,7 +24,7 @@ const DirectoryQuickFilters: React.FC = () => {
 
 const DirectoryActions: React.FC = () => {
   return (
-    <Row className="mb-sm" justify="sb">
+    <Row className="mb-sm" justify="sb" spacing="xs">
       <Row spacing="sm">
         <ListSearchBar />
         <DirectoryQuickFilters />

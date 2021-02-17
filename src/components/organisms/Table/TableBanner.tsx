@@ -44,7 +44,7 @@ const TableBannerMessage: React.FC = () => {
 
 const TableBanner: React.FC = () => (
   <Card className="mb-xs">
-    <Row justify="center">
+    <Row justify="center" spacing="xs">
       <TableBannerMessage />
       <TableBannerButton />
     </Row>

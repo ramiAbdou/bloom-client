@@ -59,7 +59,7 @@ const ApplicantsModalActionContainer: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   return (
-    <Row equal>
+    <Row equal spacing="xs">
       <ApplicantsRespondButton applicantIds={[memberId]} response="ACCEPTED" />
       <ApplicantsRespondButton applicantIds={[memberId]} response="REJECTED" />
     </Row>

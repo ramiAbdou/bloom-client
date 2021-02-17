@@ -6,6 +6,15 @@ $PREF: 't-row';
   &--equal { bottom: $md; position: sticky; width: 100%; }
   &--equal > * { width: 50%; }
 
+  &--gap-xxs { margin: -$xxs; }
+  &--gap-xxs > * { margin: $xxs; }
+
+  &--gap-xs { margin: -$xs; }
+  &--gap-xs > * { margin: $xs; }
+
+  &--gap-sm { margin: -$sm; }
+  &--gap-sm > * { margin: $sm; }
+
   &--spacing-xs {
     &:not(&--col) > *:not(:last-child) { margin-right: $xs; }
     &.t-row--col-m > *:not(:last-child) { @include M { margin-bottom: $xs; } }

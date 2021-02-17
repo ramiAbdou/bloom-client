@@ -78,6 +78,7 @@ const DirectoryCardContent: React.FC = () => {
         className="s-directory-card-star-ctr"
         justify="center"
         show={isLifetime}
+        spacing="xs"
       >
         <IoStar />
       </Row>

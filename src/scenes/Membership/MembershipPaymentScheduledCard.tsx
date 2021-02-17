@@ -26,7 +26,7 @@ const MembershipPaymentScheduledCard: React.FC = () => {
     >
       <h4>{autoRenew ? 'Next Scheduled Payment' : 'Next Payment Due'}</h4>
 
-      <Row justify="sb">
+      <Row justify="sb" spacing="xs">
         <p>{date}</p>
         <p>{amount}</p>
       </Row>

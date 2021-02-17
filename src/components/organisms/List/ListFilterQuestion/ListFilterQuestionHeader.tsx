@@ -22,7 +22,7 @@ const ListFilterQuestionHeader: React.FC = () => {
   });
 
   return (
-    <Row className="w-100" justify="sb">
+    <Row className="w-100" justify="sb" spacing="xs">
       <h4 className="overflow-ellipses">{title}</h4>
       {!isOpen && <IoAdd />}
     </Row>

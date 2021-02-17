@@ -14,7 +14,7 @@ const MembershipCurrentPlanHeader: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   return (
-    <Row justify="sb">
+    <Row justify="sb" spacing="xs">
       <h3>Current Plan</h3>
 
       <StatusTag positive={isDuesActive}>

@@ -33,7 +33,7 @@ const ProfilePersonalTagList: React.FC = () => {
   });
 
   return (
-    <Row>
+    <Row spacing="xs">
       {role && <HeaderTag>{role}</HeaderTag>}
       <HeaderTag>{type}</HeaderTag>
     </Row>
@@ -61,7 +61,7 @@ const ProfilePersonalOnboardingContainer: React.FC = () => {
   const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
-    <Row>
+    <Row spacing="xs">
       {!pictureUrl && (
         <Button primary onClick={onClick}>
           + Add Profile Picture

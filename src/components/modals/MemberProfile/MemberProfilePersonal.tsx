@@ -48,7 +48,7 @@ const MemberProfilePersonalTags: React.FC = () => {
   });
 
   return (
-    <Row>
+    <Row spacing="xs">
       {role && <HeaderTag>{role}</HeaderTag>}
       <HeaderTag>{type}</HeaderTag>
     </Row>

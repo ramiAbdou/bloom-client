@@ -19,7 +19,7 @@ const MemberDatabaseButtons: React.FC = () => {
   });
 
   return (
-    <Row show={!!isAnythingSelected}>
+    <Row show={!!isAnythingSelected} spacing="xs">
       <MemberDatabaseCopyButton />
       <MemberDatabaseExportButton />
       {isOwner && <MemberDatabasePromoteButton />}
@@ -38,7 +38,7 @@ const MemberDatabaseQuickContainer: React.FC = () => {
 };
 
 const MemberDatabaseActions: React.FC = () => (
-  <Row className="mb-sm" justify="sb">
+  <Row className="mb-sm" justify="sb" spacing="xs">
     <MemberDatabaseQuickContainer />
     <TableFilterButton />
     <MemberDatabaseButtons />

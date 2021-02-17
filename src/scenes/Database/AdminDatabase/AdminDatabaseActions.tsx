@@ -15,7 +15,7 @@ const AdminDatabaseButtons: React.FC = () => {
   );
 
   return (
-    <Row show={!!isAnythingSelected && !!isOwner}>
+    <Row show={!!isAnythingSelected && !!isOwner} spacing="xs">
       <AdminDatabaseDemoteButton />
       <AdminDatabaseDeleteButton />
     </Row>
@@ -23,7 +23,7 @@ const AdminDatabaseButtons: React.FC = () => {
 };
 
 const AdminDatabaseActions: React.FC = () => (
-  <Row className="mb-sm" justify="sb">
+  <Row className="mb-sm" justify="sb" spacing="xs">
     <SearchBar placeholder="Search admins..." />
     <AdminDatabaseButtons />
   </Row>
