@@ -60,7 +60,7 @@ const listModel: ListModel = {
   }),
 
   setItems: action((state, items) => {
-    return { ...state, items };
+    return { ...state, filteredItems: items, items };
   }),
 
   setOptions: action((state, options) => {
