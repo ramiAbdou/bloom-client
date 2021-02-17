@@ -18,7 +18,7 @@ const ListFilterQuestionOptionList: React.FC = () => {
   if (!isOpen) return null;
 
   return (
-    <ul className="my-xs">
+    <ul className="my-xs o-list-filter-question-option-list">
       {options.map((option: string) => {
         return <ListFilterQuestionOption key={option} value={option} />;
       })}

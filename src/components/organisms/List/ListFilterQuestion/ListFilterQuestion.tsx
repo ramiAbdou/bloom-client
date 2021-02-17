@@ -7,16 +7,17 @@ import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
 import ListFilterQuestionHeader from './ListFilterQuestionHeader';
 import ListFilterQuestionOptionList from './ListFilterQuestionOptionList';
+import ListFilterQuestionSelectedOptionList from './ListFilterQuestionSelectedOptionList';
 
 const ListFilterQuestionContent: React.FC = () => {
   const questionId: string = IdStore.useStoreState((store) => store.id);
   const isOpen = ListFilterQuestionStore.useStoreState((state) => state.isOpen);
 
-  const setIsOpen = ListFilterQuestionStore.useStoreActions(
+  const setIsQuestionOpen = ListFilterQuestionStore.useStoreActions(
     (state) => state.setIsOpen
   );
 
-  const setValues = ListFilterQuestionStore.useStoreActions(
+  const setQuestionValues = ListFilterQuestionStore.useStoreActions(
     (state) => state.setValues
   );
 
@@ -25,10 +26,10 @@ const ListFilterQuestionContent: React.FC = () => {
   });
 
   useEffect(() => {
-    setValues(values);
+    setQuestionValues(values);
   }, [values]);
 
-  const onClick = () => setIsOpen(!isOpen);
+  const onClick = () => setIsQuestionOpen(!isOpen);
 
   const css = cx('o-list-filter-question', {
     'o-list-filter-question--active': isOpen
@@ -37,6 +38,7 @@ const ListFilterQuestionContent: React.FC = () => {
   return (
     <div className={css} onClick={onClick}>
       <ListFilterQuestionHeader />
+      <ListFilterQuestionSelectedOptionList />
       <ListFilterQuestionOptionList />
     </div>
   );

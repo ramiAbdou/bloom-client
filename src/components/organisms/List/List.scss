@@ -42,5 +42,9 @@ $PREF: 'o-list';
   width: $xxl * 6;
 
   &:first-child { border-top: 1px $gray-5 solid; }
-  &:not(&--active) { @include PRIMARY_HOVER; }
+}
+
+.#{$PREF}-filter-question-option-list {
+  max-height: $xxl * 4;
+  overflow: scroll;
 }
