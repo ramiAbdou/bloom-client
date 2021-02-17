@@ -39,7 +39,7 @@ const DeleteEventButton: React.FC = () => {
       large
       red
       secondary
-      className="mo-create-event-delete"
+      className="mt-xs"
       loading={loading}
       show={!!id}
       onClick={onClick}
