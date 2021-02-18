@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
+import { UrlNameProps } from '@constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions } from '@store/Store';
@@ -14,7 +16,8 @@ interface GetTokensResult {
  * Updates the authenticated status of the user by checking the httpOnly
  * cookies stored in the browser.
  */
-const useGetTokens = (urlName?: string): boolean => {
+const useGetTokens = (): boolean => {
+  const { urlName }: UrlNameProps = useParams();
   const setActive = useStoreActions(({ db }) => db.setActive);
 
   const [getTokens, { loading }] = useManualQuery<GetTokensResult>({

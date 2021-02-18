@@ -49,6 +49,20 @@
   &-sm { margin-bottom: $sm; margin-top: $sm; }
 }
 
+// ## MAX HEIGHT
+
+.ma-h {
+  &-4 { max-height: $xxl * 4; }
+  &-5 { max-height: $xxl * 5; }
+}
+
+// ## OVERFLOW
+
+.o {
+  &-hidden { overflow: hidden; }
+  &-scroll { overflow: scroll; }
+}
+
 // ## PADDING
 
 .p {

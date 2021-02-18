@@ -26,7 +26,7 @@ const DropdownOptionList: React.FC = () => {
 
   return (
     <Show show={!!options?.length}>
-      <ul>
+      <ul className="ma-h-4 o-scroll">
         {options.map((value: string) => (
           <DropdownOption key={value} value={value} />
         ))}
@@ -35,7 +35,7 @@ const DropdownOptionList: React.FC = () => {
   );
 };
 
-const DropdownOptions: React.FC = () => {
+const DropdownOptionContainer: React.FC = () => {
   const isOpen = DropdownStore.useStoreState((store) => store.isOpen);
   const width = DropdownStore.useStoreState((store) => store.width);
 
@@ -59,4 +59,4 @@ const DropdownOptions: React.FC = () => {
   );
 };
 
-export default DropdownOptions;
+export default DropdownOptionContainer;

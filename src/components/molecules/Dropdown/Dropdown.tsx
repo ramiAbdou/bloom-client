@@ -7,7 +7,7 @@ import { cx } from '@util/util';
 import DropdownStore, { dropdownModel } from './Dropdown.store';
 import { defaultOptions, DropdownModel } from './Dropdown.types';
 import DropdownClickBar from './DropdownClickBar';
-import DropdownOptions from './DropdownOptions';
+import DropdownOptionContainer from './DropdownOptionContainer';
 
 type DropdownContentProps = Partial<DropdownProps>;
 
@@ -43,7 +43,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   return (
     <div ref={ref} className={css}>
       <DropdownClickBar />
-      <DropdownOptions />
+      <DropdownOptionContainer />
     </div>
   );
 };
