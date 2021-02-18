@@ -3,10 +3,11 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
+import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { CreateEventAttendeeArgs } from './Events.types';
 
 interface EventJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
@@ -17,9 +18,13 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
   eventId,
   large
 }) => {
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
   const { endTime, startTime, videoUrl }: IEvent = useStoreState(({ db }) => {
     return db.byEventId[eventId];
   }, deepequal);
+
+  const isMember = useStoreState(({ db }) => db.isMember);
 
   const isHappeningNow =
     day().isAfter(day(startTime)) && day().isBefore(day(endTime));
@@ -49,6 +54,12 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
+
+    if (!isMember) {
+      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
+      return;
+    }
+
     await createEventAttendee();
   };
 
@@ -56,7 +67,7 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
     <Button
       fill
       primary
-      href={videoUrl}
+      href={isMember ? videoUrl : null}
       large={large}
       show={isHappeningNow}
       onClick={onClick}

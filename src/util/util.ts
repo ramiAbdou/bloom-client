@@ -83,6 +83,18 @@ export function sortObjects<T>(
 }
 
 /**
+ * Opens an href link in a compatible way with all browsers.
+ */
+export const openHref = (href: string, openNewTab = true) => {
+  if (!href?.startsWith('http')) href = `http://${href}`;
+  // If the browser is Safari, just change the location of the current
+  // tab, but if not, open a new window with the URL.
+  if (navigator.vendor === 'Apple Computer, Inc.' || !openNewTab) {
+    window.location.href = href;
+  } else window.open(href);
+};
+
+/**
  * Returns the first value in which the condition is true.
  */
 export const takeFirst = (arr: ([boolean, any] | any)[]) => {

@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import Spinner from '@atoms/Spinner/Spinner';
 import { ShowProps } from '@constants';
 import Show from '@containers/Show';
-import { cx } from '@util/util';
+import { cx, openHref } from '@util/util';
 
 export interface ButtonProps
   extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>>,
@@ -73,15 +73,7 @@ const Button = forwardRef(
       if (type === 'button') event.preventDefault();
       if (disabled) return;
       if (onClick) onClick(event);
-
-      if (href) {
-        if (!href?.startsWith('http')) href = `http://${href}`;
-        // If the browser is Safari, just change the location of the current
-        // tab, but if not, open a new window with the URL.
-        if (navigator.vendor === 'Apple Computer, Inc.' || !openTab) {
-          window.location.href = href;
-        } else window.open(href);
-      }
+      if (href) openHref(href, openTab);
     };
 
     const css = cx('c-btn', {

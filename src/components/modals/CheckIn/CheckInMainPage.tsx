@@ -35,6 +35,12 @@ const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
     <StoryPage
       branchId="FINISH_MEMBER"
       branches={{
+        FINISH_ATTENDEE: {
+          description: deline`
+            We'll redirect you to the event when finished with the form.
+          `,
+          title: 'Finish Checking-In'
+        },
         FINISH_GUEST: {
           description: deline`
             We'll send you an email with a link to join the event 30 minutes
@@ -52,7 +58,9 @@ const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
       id="FINISH"
     >
       <CheckInLoginContent show={branchId === 'FINISH_MEMBER'} />
-      <CheckInGuestForm show={branchId === 'FINISH_GUEST'} />
+      <CheckInGuestForm
+        show={branchId === 'FINISH_GUEST' || branchId === 'FINISH_ATTENDEE'}
+      />
     </StoryPage>
   );
 };
