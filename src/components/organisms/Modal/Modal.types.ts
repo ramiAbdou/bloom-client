@@ -33,8 +33,8 @@ export const globalModals: ModalType[] = [
   ModalType.EDIT_SOCIAL_MEDIA,
   ModalType.INTEGRATIONS_DETAILS,
   ModalType.MAILCHIMP_FLOW,
-  ModalType.MEMBER_PROFILE,
-  ModalType.PAY_DUES
+  ModalType.PAY_DUES,
+  ModalType.PROFILE
 ];
 
 export const localModals: ModalType[] = [
@@ -56,6 +56,7 @@ export const defaultModalOptions: Record<string, Partial<ModalData>> = {
 };
 
 export interface ModalModel extends ModalData {
+  clearOptions: Action<ModalModel>;
   closeModal: Action<ModalModel>;
   isShowing: boolean;
   showModal: Action<ModalModel, ModalData>;

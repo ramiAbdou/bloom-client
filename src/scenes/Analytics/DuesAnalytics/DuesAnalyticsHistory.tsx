@@ -66,7 +66,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 
   const options: TableOptions = {
     onRowClick: (row: TableRow) => {
-      showModal({ id: ModalType.MEMBER_PROFILE, metadata: row?.id });
+      showModal({ id: ModalType.PROFILE, metadata: row?.id });
     }
   };
 

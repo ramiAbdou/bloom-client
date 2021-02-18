@@ -66,7 +66,7 @@ const DirectoryCardContent: React.FC = () => {
   });
 
   const onClick = () => {
-    showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+    showModal({ id: ModalType.PROFILE, metadata: memberId });
   };
 
   return (

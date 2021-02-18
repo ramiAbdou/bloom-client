@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ModalType } from '@constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
@@ -12,8 +12,9 @@ import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchi
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
+import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
   const id: string = useStoreState(({ modal }) => modal.id);
@@ -40,7 +41,7 @@ const ModalCustomContent: React.FC = () => {
   }
 
   if (id === ModalType.MAILCHIMP_FLOW) return <IntegrationsMailchimpModal />;
-  if (id === ModalType.MEMBER_PROFILE) return <ProfileModal />;
+  if (id === ModalType.PROFILE) return <ProfileModal />;
   if (id === ModalType.PAY_DUES) return <PaymentModal />;
 
   return null;
@@ -48,10 +49,15 @@ const ModalCustomContent: React.FC = () => {
 
 const ModalContent: React.FC = () => {
   const className: string = useStoreState(({ modal }) => modal.className);
+  const clearOptions = useStoreActions(({ modal }) => modal.clearOptions);
 
   const confirmation: boolean = useStoreState(
     ({ modal }) => modal.options?.confirmation
   );
+
+  useEffect(() => {
+    return () => clearOptions();
+  }, []);
 
   const css = cx('c-modal', {
     'c-modal--confirmation': confirmation,
@@ -59,9 +65,11 @@ const ModalContent: React.FC = () => {
   });
 
   return (
-    <div className={css}>
-      <ModalCustomContent />
-    </div>
+    <ModalContainer>
+      <div className={css}>
+        <ModalCustomContent />
+      </div>
+    </ModalContainer>
   );
 };
 

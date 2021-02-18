@@ -57,7 +57,7 @@ const MemberDatabase: React.FC = () => {
     hasCheckbox: true,
     onRenameColumn,
     onRowClick: ({ id: memberId }: TableRow) => {
-      showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+      showModal({ id: ModalType.PROFILE, metadata: memberId });
     }
   };
 

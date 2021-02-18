@@ -32,7 +32,7 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 
   const onClick = () => {
     if (isMember && memberId) {
-      showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+      showModal({ id: ModalType.PROFILE, metadata: memberId });
     }
   };
 

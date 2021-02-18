@@ -71,7 +71,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
     fixFirstColumn: false,
     isSortable: false,
     onRowClick: ({ memberId }: TableRow) => {
-      showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+      showModal({ id: ModalType.PROFILE, metadata: memberId });
     },
     showCount: false
   };

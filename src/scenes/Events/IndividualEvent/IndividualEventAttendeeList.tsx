@@ -32,7 +32,7 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
-    showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+    showModal({ id: ModalType.PROFILE, metadata: memberId });
   };
 
   const fullName = `${firstName} ${lastName}`;
