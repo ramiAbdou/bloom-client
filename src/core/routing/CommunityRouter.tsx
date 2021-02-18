@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Application from '@scenes/Application/Application';
 import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
+import { useStoreState } from '@store/Store';
 import useFinalPath from '../hooks/useFinalPath';
 import AuthenticatedRouter from './AuthenticatedRouter';
 import useGetTokens from './useGetTokens';
@@ -13,6 +14,8 @@ import useInitUser from './useInitUser';
  * urlName in the useParams() call in the useInitUser() hook.
  */
 const CommunityRouter: React.FC = () => {
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+
   const finalPath = useFinalPath();
 
   const loading1 = useGetTokens();
@@ -22,7 +25,7 @@ const CommunityRouter: React.FC = () => {
 
   return (
     <Switch>
-      {!['past', 'upcoming'].includes(finalPath) && (
+      {!isAuthenticated && !['past', 'upcoming'].includes(finalPath) && (
         <Route
           exact
           component={IndividualEvent}

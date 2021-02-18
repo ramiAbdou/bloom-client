@@ -39,7 +39,7 @@ const EventsEditEventButton: React.FC = () => {
   const eventId = useStoreState(({ db }) => db.event?.id);
 
   const hasPast = useStoreState(({ db }) => {
-    return day().isAfter(day(db.event.startTime));
+    return day().isAfter(day(db.event.endTime));
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
