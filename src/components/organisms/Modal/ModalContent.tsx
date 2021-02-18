@@ -5,7 +5,7 @@ import AddMemberModal from '@modals/AddMember/AddMember';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import CreateEventModal from '@modals/Event/CreateEvent';
 import PaymentModal from '@modals/Payment/Payment';
-import MemberProfileModal from '@modals/Profile/Profile';
+import ProfileModal from '@modals/Profile/Profile';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
 import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
@@ -40,7 +40,7 @@ const ModalCustomContent: React.FC = () => {
   }
 
   if (id === ModalType.MAILCHIMP_FLOW) return <IntegrationsMailchimpModal />;
-  if (id === ModalType.MEMBER_PROFILE) return <MemberProfileModal />;
+  if (id === ModalType.MEMBER_PROFILE) return <ProfileModal />;
   if (id === ModalType.PAY_DUES) return <PaymentModal />;
 
   return null;

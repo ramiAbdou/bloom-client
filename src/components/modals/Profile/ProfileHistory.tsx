@@ -8,13 +8,13 @@ import { eventFields } from '@scenes/Events/Events.types';
 import { IEventGuest, IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import MemberProfileStore from './Profile.store';
+import ProfileStore from './Profile.store';
 import { MemberHistoryData } from './Profile.types';
 import { getMemberHistory } from './Profile.util';
-import MemberProfileHistoryEvent from './ProfileHistoryEvent';
+import ProfileHistoryEvent from './ProfileHistoryEvent';
 
-const MemberProfileHistoryEvents: React.FC = () => {
-  const memberId: string = MemberProfileStore.useStoreState(
+const ProfileHistoryEvents: React.FC = () => {
+  const memberId: string = ProfileStore.useStoreState(
     (store) => store.memberId
   );
 
@@ -25,14 +25,14 @@ const MemberProfileHistoryEvents: React.FC = () => {
   return (
     <ul>
       {history.map((event) => {
-        return <MemberProfileHistoryEvent key={event?.date} {...event} />;
+        return <ProfileHistoryEvent key={event?.date} {...event} />;
       })}
     </ul>
   );
 };
 
-const MemberProfileHistoryContent: React.FC = () => {
-  const memberId: string = MemberProfileStore.useStoreState(
+const ProfileHistoryContent: React.FC = () => {
+  const memberId: string = ProfileStore.useStoreState(
     (store) => store.memberId
   );
 
@@ -84,19 +84,19 @@ const MemberProfileHistoryContent: React.FC = () => {
     <>
       <Separator margin={24} />
       <LoadingHeader h2 loading={loading} title="History" />
-      {!loading && <MemberProfileHistoryEvents />}
+      {!loading && <ProfileHistoryEvents />}
     </>
   );
 };
 
-const MemberProfileHistory: React.FC = () => {
+const ProfileHistory: React.FC = () => {
   const admin: boolean = useStoreState(({ db }) => !!db.member.role);
 
   return (
     <Show show={admin}>
-      <MemberProfileHistoryContent />
+      <ProfileHistoryContent />
     </Show>
   );
 };
 
-export default MemberProfileHistory;
+export default ProfileHistory;

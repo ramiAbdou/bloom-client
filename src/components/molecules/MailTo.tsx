@@ -1,13 +1,18 @@
 import React from 'react';
 import { IoMail } from 'react-icons/io5';
 
-interface MailToProps {
+import { BaseProps } from '@constants';
+import { cx } from '@util/util';
+
+interface MailToProps extends BaseProps {
   email: string;
 }
 
-const MailTo: React.FC<MailToProps> = ({ email }) => {
+const MailTo: React.FC<MailToProps> = ({ className, email }) => {
+  const css = cx('m-misc-mail-to', {}, className);
+
   return (
-    <a className="m-misc-mail-to" href={`mailto:${email}`}>
+    <a className={css} href={`mailto:${email}`}>
       <IoMail />
       <p>{email}</p>
     </a>

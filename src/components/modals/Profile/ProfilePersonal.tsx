@@ -2,44 +2,40 @@ import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
-import useQuery from '@hooks/useQuery';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { IMember, IUser } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import MemberProfileStore from './Profile.store';
-import MemberProfileSocialContainer from './ProfileSocial';
+import Show from '../../containers/Show';
+import ProfileStore from './Profile.store';
+import ProfileSocialContainer from './ProfileSocial';
+import useInitProfilePersonal from './useInitProfilePersonal';
 
-const MemberProfilePersonalPicture: React.FC = () => {
-  const userId = MemberProfileStore.useStoreState((store) => store.userId);
+const ProfilePersonalPicture: React.FC = () => {
+  const userId = ProfileStore.useStoreState((store) => store.userId);
 
   return (
-    <ProfilePicture
-      className="mo-member-profile-pic"
-      fontSize={36}
-      size={96}
-      userId={userId}
-    />
+    <ProfilePicture className="mb-xs" fontSize={36} size={96} userId={userId} />
   );
 };
 
-const MemberProfilePersonalName: React.FC = () => {
-  const userId = MemberProfileStore.useStoreState((store) => store.userId);
+const ProfilePersonalName: React.FC = () => {
+  const userId = ProfileStore.useStoreState((store) => store.userId);
 
   const fullName: string = useStoreState(({ db }) => {
-    const { firstName, lastName }: IUser = db.byUserId[userId];
-    return `${firstName} ${lastName}`;
+    const user: IUser = db.byUserId[userId];
+    return `${user.firstName} ${user.lastName}`;
   });
 
-  return <h1>{fullName}</h1>;
+  return <h1 className="mb-xs">{fullName}</h1>;
 };
 
-const MemberProfilePersonalTags: React.FC = () => {
-  const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
+const ProfilePersonalTags: React.FC = () => {
+  const memberId = ProfileStore.useStoreState((store) => store.memberId);
 
   const role = useStoreState(({ db }) => {
-    return db.byMemberId[memberId]?.role;
+    const member: IMember = db.byMemberId[memberId];
+    return member?.role;
   });
 
   const type: string = useStoreState(({ db }) => {
@@ -48,68 +44,50 @@ const MemberProfilePersonalTags: React.FC = () => {
   });
 
   return (
-    <Row spacing="xs">
-      {role && <HeaderTag>{role}</HeaderTag>}
+    <Row className="mb-ss" spacing="xs">
+      <HeaderTag show={!!role}>{role}</HeaderTag>
       <HeaderTag>{type}</HeaderTag>
     </Row>
   );
 };
 
-const MemberProfilePersonalEmail: React.FC = () => {
-  const userId = MemberProfileStore.useStoreState((store) => store.userId);
+const ProfilePersonalEmail: React.FC = () => {
+  const userId = ProfileStore.useStoreState((store) => store.userId);
 
   const email: string = useStoreState(({ db }) => {
-    return db.byUserId[userId]?.email;
+    const user: IUser = db.byUserId[userId];
+    return user.email;
   });
 
-  return <MailTo email={email} />;
+  return <MailTo className="mb-sm" email={email} />;
 };
 
-const MemberProfilePersonalBio: React.FC = () => {
-  const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
+const ProfilePersonalBio: React.FC = () => {
+  const memberId = ProfileStore.useStoreState((store) => store.memberId);
 
-  const bio = useStoreState(({ db }) => {
-    return db.byMemberId[memberId]?.bio;
+  const bio: string = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    return member?.bio;
   });
 
-  return <p className="mo-member-profile-bio">{bio}</p>;
+  return <p className="mb-sm">{bio}</p>;
 };
 
-const MemberProfilePersonalInformation: React.FC = () => (
-  <div className="mo-member-profile-personal-ctr">
-    <MemberProfilePersonalName />
-    <MemberProfilePersonalTags />
-    <MemberProfilePersonalEmail />
-    <MemberProfilePersonalBio />
-  </div>
-);
-
-const MemberProfilePersonal: React.FC = () => {
-  const userId = MemberProfileStore.useStoreState((store) => store.userId);
-
-  useQuery<IUser>({
-    fields: [
-      'clubhouseUrl',
-      'email',
-      'facebookUrl',
-      'id',
-      'instagramUrl',
-      'linkedInUrl',
-      'twitterUrl'
-    ],
-    operation: 'getUser',
-    schema: Schema.USER,
-    types: { userId: { required: false } },
-    variables: { userId }
-  });
+const ProfilePersonal: React.FC = () => {
+  const loading = useInitProfilePersonal();
 
   return (
-    <div className="mo-member-profile-user-ctr">
-      <MemberProfilePersonalPicture />
-      <MemberProfilePersonalInformation />
-      <MemberProfileSocialContainer />
-    </div>
+    <Show show={!loading}>
+      <div>
+        <ProfilePersonalPicture />
+        <ProfilePersonalName />
+        <ProfilePersonalTags />
+        <ProfilePersonalEmail />
+        <ProfilePersonalBio />
+        <ProfileSocialContainer />
+      </div>
+    </Show>
   );
 };
 
-export default MemberProfilePersonal;
+export default ProfilePersonal;

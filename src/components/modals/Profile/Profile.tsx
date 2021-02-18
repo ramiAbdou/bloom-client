@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Show from '@containers/Show';
-import useQuery from '@hooks/useQuery';
+import useManualQuery from '@hooks/useManualQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import MemberProfileStore from './Profile.store';
-import MemberProfileData from './ProfileData';
-import MemberProfileHistory from './ProfileHistory';
-import MemberProfilePersonal from './ProfilePersonal';
+import ProfileStore from './Profile.store';
+import ProfileData from './ProfileData';
+import ProfileHistory from './ProfileHistory';
+import ProfilePersonal from './ProfilePersonal';
 
-const MemberProfile: React.FC = () => {
+const Profile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data, error, loading } = useQuery<IMember>({
+  const [getMember, { data }] = useManualQuery<IMember>({
     fields: ['id', 'bio', 'joinedAt', { type: ['id'] }, { user: ['id'] }],
     operation: 'getMember',
     schema: Schema.MEMBER,
@@ -21,18 +21,22 @@ const MemberProfile: React.FC = () => {
     variables: { memberId }
   });
 
+  useEffect(() => {
+    if (memberId) getMember();
+  }, []);
+
   return (
-    <Show show={!loading && !error}>
-      <MemberProfileStore.Provider
+    <Show show={!!data}>
+      <ProfileStore.Provider
         // @ts-ignore b/c user is populated.
         runtimeModel={{ memberId, userId: data?.user?.id }}
       >
-        <MemberProfilePersonal />
-        <MemberProfileData />
-        <MemberProfileHistory />
-      </MemberProfileStore.Provider>
+        <ProfilePersonal />
+        <ProfileData />
+        <ProfileHistory />
+      </ProfileStore.Provider>
     </Show>
   );
 };
 
-export default MemberProfile;
+export default Profile;

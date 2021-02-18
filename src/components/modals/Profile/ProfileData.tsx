@@ -9,10 +9,10 @@ import QuestionValueList, {
 import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import MemberProfileStore from './Profile.store';
+import ProfileStore from './Profile.store';
 
-const MemberProfileDataContent: React.FC = () => {
-  const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
+const ProfileDataContent: React.FC = () => {
+  const memberId = ProfileStore.useStoreState((store) => store.memberId);
 
   const questions: Set<string> = useStoreState(({ db }) => {
     return new Set(db.community?.questions);
@@ -47,8 +47,8 @@ const MemberProfileDataContent: React.FC = () => {
   );
 };
 
-const MemberProfileData: React.FC = () => {
-  const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
+const ProfileData: React.FC = () => {
+  const memberId = ProfileStore.useStoreState((store) => store.memberId);
 
   const { loading } = useQuery<IMemberData[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
@@ -59,7 +59,7 @@ const MemberProfileData: React.FC = () => {
   });
 
   if (loading) return null;
-  return <MemberProfileDataContent />;
+  return <ProfileDataContent />;
 };
 
-export default MemberProfileData;
+export default ProfileData;

@@ -5,58 +5,55 @@ import Row from '@containers/Row/Row';
 import { TableFilter } from '@organisms/Table/Table.types';
 import TableQuickFilter from '@organisms/Table/TableQuickFilter';
 import { useStoreState } from '@store/Store';
+import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 const IndividualEventViewedFilter: React.FC = () => {
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
-  const filter: TableFilter = (row) => row.watched === 'Yes';
+  const show = !!recordingUrl;
+
+  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+    return row.watched === 'Yes';
+  };
 
   return (
-    <TableQuickFilter
-      filter={filter}
-      id="VIEWED_RECORDING"
-      show={!!recordingUrl}
-      title="Viewed Recording"
-    />
+    <TableQuickFilter filter={filter} show={show} title="Viewed Recording" />
   );
 };
 
 const IndividualEventRsvpFilter: React.FC = () => {
   const startTime = useStoreState(({ db }) => db.event?.startTime);
-  const filter: TableFilter = (row) => !!row.rsvpdAt;
+  const show = day().isAfter(day(startTime));
 
-  return (
-    <TableQuickFilter
-      filter={filter}
-      id="RSVP"
-      show={day().isAfter(day(startTime))}
-      title="RSVP'd"
-    />
-  );
+  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+    return !!row.rsvpdAt;
+  };
+
+  return <TableQuickFilter filter={filter} show={show} title="RSVP'd" />;
 };
 
 const IndividualEventJoinedFilter: React.FC = () => {
   const startTime = useStoreState(({ db }) => db.event?.startTime);
-  const filter: TableFilter = (row) => !!row.joinedAt;
+  const show = day().isAfter(day(startTime));
 
-  return (
-    <TableQuickFilter
-      filter={filter}
-      id="RSVP"
-      show={day().isAfter(day(startTime))}
-      title="Joined"
-    />
-  );
+  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+    return !!row.joinedAt;
+  };
+
+  return <TableQuickFilter filter={filter} show={show} title="Joined" />;
 };
 
 const IndividualEventNoShowFilter: React.FC = () => {
   const startTime = useStoreState(({ db }) => db.event?.startTime);
-  const filter: TableFilter = (row) => !!row.rsvpdAt && !row.joinedAt;
+  const show = day().isAfter(day(startTime));
+
+  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+    return !!row.rsvpdAt && !row.joinedAt;
+  };
 
   return (
     <TableQuickFilter
       filter={filter}
-      id="RSVP_NO_SHOW"
-      show={day().isAfter(day(startTime))}
+      show={show}
       title="RSVP'd + Didn't Join"
     />
   );
@@ -64,13 +61,16 @@ const IndividualEventNoShowFilter: React.FC = () => {
 
 const IndividualEventNoShowAndFilter: React.FC = () => {
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
-  const filter: TableFilter = (row) => row.watched === 'Yes' && !row.joinedAt;
+  const show = !!recordingUrl;
+
+  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+    return row.watched === 'Yes' && !row.joinedAt;
+  };
 
   return (
     <TableQuickFilter
       filter={filter}
-      id="NO_SHOW_VIEWED_RECORDING"
-      show={!!recordingUrl}
+      show={show}
       title="No Show + Viewed Recording"
     />
   );

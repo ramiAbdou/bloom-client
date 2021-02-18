@@ -1,7 +1,10 @@
+import day from 'dayjs';
 import deepmerge from 'deepmerge';
 import { State } from 'easy-peasy';
+import React from 'react';
 
-import { TableRow } from '@organisms/Table/Table.types';
+import { QuestionType } from '@constants';
+import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
   IEventAttendee,
@@ -112,7 +115,7 @@ const getIndividualEventTableViewers = (
  *  - Joined the event.
  *  - Viewed the event recording.
  *
- * @param db Entire DB store.
+ * @param db Entire DB state.
  */
 export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
   const attendeesRecord = getIndividualEventTableAttendees(db);
@@ -130,4 +133,55 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
     // @ts-ignore
     sortObjects(a, b, ['joinedAt', 'rsvpdAt'])
   ) as TableRow[];
+};
+
+/**
+ * Returns an array of Table columns to render for the Individual event.
+ * Depends upon the start time of the event whether or not to show joinedAt,
+ * and viewedRecording columns.
+ *
+ * @param db Entire DB state.
+ */
+export const getIndividualEventTableColumns = (
+  db: State<DbModel>
+): TableColumn[] => {
+  const recordingUrl = db.event?.recordingUrl;
+  const startTime = db.event?.startTime;
+
+  const joinedAtColumn: TableColumn[] = day().isAfter(day(startTime))
+    ? [
+        {
+          id: 'joinedAt',
+          render: (value) =>
+            value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
+          title: `Joined At`,
+          type: QuestionType.SHORT_TEXT
+        }
+      ]
+    : [];
+
+  const viewedRecordingColumn: TableColumn[] = recordingUrl
+    ? [
+        {
+          id: 'watched',
+          title: `Viewed Recording`,
+          type: QuestionType.TRUE_FALSE
+        }
+      ]
+    : [];
+
+  const columns: TableColumn[] = [
+    { id: 'fullName', title: 'Full Name', type: QuestionType.SHORT_TEXT },
+    { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT },
+    ...joinedAtColumn,
+    {
+      id: 'rsvpdAt',
+      render: (value) => value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
+      title: `RSVP'd At`,
+      type: QuestionType.SHORT_TEXT
+    },
+    ...viewedRecordingColumn
+  ];
+
+  return columns;
 };

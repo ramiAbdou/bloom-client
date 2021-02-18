@@ -16,6 +16,8 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
   show,
   title
 }) => {
+  filterId = filterId ?? title;
+
   const [active, setActive] = useState<boolean>(false);
 
   const filters = TableStore.useStoreState((store) => store.filters);

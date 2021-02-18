@@ -112,6 +112,14 @@ export interface PopulateArgs {
   populate?: string[];
 }
 
+export enum SocialBrand {
+  CLUBHOUSE = 'CLUBHOUSE',
+  FACEBOOK = 'FACEBOOK',
+  INSTAGRAM = 'INSTAGRAM',
+  LINKED_IN = 'LINKED_IN',
+  TWITTER = 'TWITTER'
+}
+
 export interface TimeSeriesData {
   name: string;
   value: number;

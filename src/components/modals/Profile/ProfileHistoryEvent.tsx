@@ -4,13 +4,13 @@ import React from 'react';
 import Row from '@containers/Row/Row';
 import { MemberHistoryData } from './Profile.types';
 
-const MemberProfileHistoryEvent: React.FC<MemberHistoryData> = ({
+const ProfileHistoryEvent: React.FC<MemberHistoryData> = ({
   date,
   event,
   title
 }) => {
   return (
-    <Row align="start" className="mo-member-profile-history-event" spacing="sm">
+    <Row align="start" className="mo-profile-history-event" spacing="sm">
       <div>
         <div />
         <div />
@@ -28,4 +28,4 @@ const MemberProfileHistoryEvent: React.FC<MemberHistoryData> = ({
   );
 };
 
-export default MemberProfileHistoryEvent;
+export default ProfileHistoryEvent;

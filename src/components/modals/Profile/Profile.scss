@@ -1,44 +1,8 @@
-$PREF: 'mo-member-profile';
-
-// ## MEMBER PROFILE
-
-.#{$PREF}-pic { margin-bottom: $xs; }
-
-.#{$PREF}-user-ctr-header { @extend .flex-sb; width: 100%; }
-.#{$PREF}-user-ctr-header > :last-child {
-  height: fit-content;
-  position: sticky;
-  top: 0;
-}
-
-.#{$PREF}-user-ctr:not(:last-child) { margin-bottom: $sm; }
-
-.#{$PREF}-user-ctr > p { margin-bottom: $sm; text-align: center; }
-
-// Current location of the person.
-.#{$PREF}-user-ctr > p:first-of-type { @extend .meta; color: $gray-2; }
-
-// ### PERSONAL INFORMATION CONTAINER
-
-.#{$PREF}-personal-ctr {
-  > h1 { color: $gray-1; margin-bottom: $xs; }
-  > a:not(:last-child) { margin-bottom: $sm; }
-  > .t-row { margin-bottom: $ss; }
-}
-
-.#{$PREF}-location {
-  @extend .meta;
-
-  color: $gray-2;
-  margin-bottom: $xxs;
-  width: fit-content;
-}
+$PREF: 'mo-profile';
 
 // ### SOCIAL MEDIA CONTAINER
 
 .#{$PREF}-social {
-  margin-top: $sm;
-
   @include HOVER { transform: scale(1.1); }
   &:active { transform: scale(0.9); }
 

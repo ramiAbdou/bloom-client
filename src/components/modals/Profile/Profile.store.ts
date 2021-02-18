@@ -1,13 +1,13 @@
 import { createContextStore } from 'easy-peasy';
 
-export interface MemberProfileModel {
+interface ProfileModel {
   memberId: string;
   userId: string;
 }
 
-const MemberProfileStore = createContextStore<MemberProfileModel>(
+const ProfileStore = createContextStore<ProfileModel>(
   (runtimeModel) => runtimeModel,
   { disableImmer: true }
 );
 
-export default MemberProfileStore;
+export default ProfileStore;
