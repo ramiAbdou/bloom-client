@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { QuestionType } from '@constants';
 import Form from '@organisms/Form/Form';
 import { FormItemData } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
@@ -28,11 +29,15 @@ const ProfileMembershipForm: React.FC = () => {
         (entity: IMemberData) => entity?.question === id
       )?.value;
 
-      const parsedValue: any =
-        type === 'MULTIPLE_SELECT' ||
-        (type === 'MULTIPLE_CHOICE' && options?.length >= 5)
-          ? parseValue(value)
-          : value;
+      let parsedValue: any = value;
+
+      if (type === QuestionType.MULTIPLE_SELECT) {
+        parsedValue = value?.split(',');
+      }
+
+      if (type === QuestionType.MULTIPLE_CHOICE && options?.length >= 5) {
+        parsedValue = parseValue(parsedValue);
+      }
 
       return { ...question, value: parsedValue };
     });
