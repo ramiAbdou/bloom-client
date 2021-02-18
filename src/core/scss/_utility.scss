@@ -45,8 +45,9 @@
 // ## MARGIN Y
 
 .my {
-  &-xs { margin-bottom: $xs; margin-top: $xs; }
-  &-sm { margin-bottom: $sm; margin-top: $sm; }
+  &-xs { margin-top: $xs; &:not(:last-child) { margin-bottom: $xs; } }
+  &-sm { margin-top: $sm; &:not(:last-child) { margin-bottom: $sm; } }
+  &-md { margin-top: $md; &:not(:last-child) { margin-bottom: $md; } }
 }
 
 // ## MAX HEIGHT

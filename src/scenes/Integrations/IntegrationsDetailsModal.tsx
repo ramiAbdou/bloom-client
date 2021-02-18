@@ -17,12 +17,12 @@ const IntegrationsDetailsModal: React.FC = () => {
       <h1>{name} Integration Details</h1>
 
       <QuestionBox
+        className="mb-md"
         items={details.map(({ label, value }) => ({
           title: label,
           type: QuestionType.MULTIPLE_CHOICE,
           value
         }))}
-        marginBottom={24}
       />
 
       <Button secondary onClick={() => closeModal()}>

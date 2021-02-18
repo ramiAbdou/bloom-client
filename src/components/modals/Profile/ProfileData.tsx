@@ -39,8 +39,8 @@ const ProfileDataContent: React.FC = () => {
 
   return (
     <Show show={items?.some(({ value }) => !!value)}>
-      <Separator marginBottom={24} />
-      <QuestionBox handleNull="HIDE_ALL" items={items} />
+      <Separator margin={0} />
+      <QuestionBox className="my-md" handleNull="HIDE_ALL" items={items} />
     </Show>
   );
 };

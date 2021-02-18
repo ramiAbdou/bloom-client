@@ -27,7 +27,7 @@ const ApplicationReviewMain: React.FC = () => {
 
   return (
     <FormSection title="Application">
-      <QuestionBox items={items} marginBottom={24} />
+      <QuestionBox className="mb-md" items={items} />
     </FormSection>
   );
 };

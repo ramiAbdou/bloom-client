@@ -85,7 +85,7 @@ const ApplicantsCardItems: React.FC = () => {
       ?.slice(0, 5);
   });
 
-  return <QuestionBox items={items} marginBottom={24} />;
+  return <QuestionBox className="mb-md" items={items} />;
 };
 
 const ApplicantsCard: React.FC = () => {

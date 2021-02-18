@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { BaseProps } from '@constants';
 import FormLabel from '@organisms/Form/FormLabel';
+import { cx } from '@util/util';
 import { QuestionBoxItemProps } from './QuestionBox.types';
 import QuestionBoxValue from './QuestionBoxValue';
 
@@ -29,20 +31,23 @@ const QuestionBoxItem: React.FC<QuestionBoxItemProps> = ({
   );
 };
 
-interface QuestionBoxProps extends Pick<QuestionBoxItemProps, 'handleNull'> {
+interface QuestionBoxProps
+  extends BaseProps,
+    Pick<QuestionBoxItemProps, 'handleNull'> {
   items: QuestionBoxItemProps[];
-  marginBottom?: number;
 }
 
 const QuestionBox: React.FC<QuestionBoxProps> = ({
+  className,
   items,
-  marginBottom,
   ...props
 }) => {
   if (!items?.length) return null;
 
+  const css = cx('m-misc-question-ctr', {}, className);
+
   return (
-    <div className="m-misc-question-ctr" style={{ marginBottom }}>
+    <div className={css}>
       {items?.map((item: QuestionBoxItemProps) => (
         <QuestionBoxItem key={item.title} {...item} {...props} />
       ))}

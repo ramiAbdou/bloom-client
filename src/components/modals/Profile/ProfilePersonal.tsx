@@ -78,7 +78,7 @@ const ProfilePersonal: React.FC = () => {
 
   return (
     <Show show={!loading}>
-      <div>
+      <div className="mb-sm">
         <ProfilePersonalPicture />
         <ProfilePersonalName />
         <ProfilePersonalTags />
