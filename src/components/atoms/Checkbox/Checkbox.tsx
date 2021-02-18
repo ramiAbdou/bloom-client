@@ -11,6 +11,7 @@ import { cx } from '@util/util';
 
 interface CheckboxProps extends BaseProps {
   checked?: boolean;
+  format?: (value: string) => string;
   plain?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   title?: string;
@@ -19,6 +20,7 @@ interface CheckboxProps extends BaseProps {
 const Checkbox: React.FC<CheckboxProps> = ({
   className,
   checked,
+  format,
   plain,
   onChange,
   show,
@@ -37,7 +39,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
         <span />
         <IoCheckmark color="#FFF" />
         {plain && <p>{title}</p>}
-        {!plain && <Attribute showNullValue={false}>{title}</Attribute>}
+        <Attribute show={!plain} showNullValue={false}>
+          {format ? format(title) : title}
+        </Attribute>
       </label>
     </Show>
   );

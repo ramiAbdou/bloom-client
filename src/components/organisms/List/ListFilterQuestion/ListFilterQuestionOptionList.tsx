@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { IQuestion } from '@store/Db/entities';
+import Show from '@containers/Show';
+import { IMemberData, IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ListFilterStore from '../ListFilter/ListFilter.store';
@@ -17,17 +18,33 @@ const ListFilterQuestionOptionList: React.FC = () => {
 
   const options: string[] = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
-    return question?.options;
+
+    const data: IMemberData[] = question?.data?.map(
+      (dataId: string) => db.byDataId[dataId]
+    );
+
+    return question?.options?.sort((aOption, bOption) => {
+      const aNumOptions: number = data?.filter(
+        (element: IMemberData) => element?.value === aOption
+      )?.length;
+
+      const bNumOptions: number = data?.filter(
+        (element: IMemberData) => element?.value === bOption
+      )?.length;
+
+      if (aNumOptions === bNumOptions) return 0;
+      return aNumOptions < bNumOptions ? 1 : -1;
+    });
   });
 
-  if (!isOpen) return null;
-
   return (
-    <ul className="mt-sm o-list-filter-question-option-list">
-      {options.map((option: string) => {
-        return <ListFilterQuestionOption key={option} value={option} />;
-      })}
-    </ul>
+    <Show show={!!isOpen}>
+      <ul className="mt-sm o-list-filter-question-option-list">
+        {options.map((option: string) => {
+          return <ListFilterQuestionOption key={option} value={option} />;
+        })}
+      </ul>
+    </Show>
   );
 };
 
