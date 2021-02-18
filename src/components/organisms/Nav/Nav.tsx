@@ -16,11 +16,13 @@ const NavBackground: React.FC = () => {
   );
 };
 
-const Nav: React.FC = () => (
-  <>
-    <SideBar />
-    <NavBackground />
-  </>
-);
+const Nav: React.FC = () => {
+  return (
+    <>
+      <SideBar />
+      <NavBackground />
+    </>
+  );
+};
 
 export default Nav;

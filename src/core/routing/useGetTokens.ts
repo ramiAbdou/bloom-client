@@ -20,7 +20,7 @@ const useGetTokens = (): boolean => {
   const { urlName }: UrlNameProps = useParams();
   const setActive = useStoreActions(({ db }) => db.setActive);
 
-  const [getTokens, { loading }] = useManualQuery<GetTokensResult>({
+  const [getTokens, result] = useManualQuery<GetTokensResult>({
     fields: ['communityId', 'memberId', 'userId'],
     operation: 'getTokens',
     types: { urlName: { required: false } }
@@ -30,7 +30,7 @@ const useGetTokens = (): boolean => {
     (async () => {
       const { data } = await getTokens({ urlName });
 
-      if (!data?.userId) return;
+      if (!data.userId) return;
 
       setActive([
         { id: data?.communityId, table: 'communities' },
@@ -40,6 +40,7 @@ const useGetTokens = (): boolean => {
     })();
   }, [urlName]);
 
+  const loading = !result.data || result.loading;
   useLoader(loading);
 
   return loading;

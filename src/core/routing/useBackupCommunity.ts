@@ -11,7 +11,7 @@ import { ICommunity, IMember } from '../store/Db/entities';
  *
  * All of the user's memberships are already loaded at this point.
  */
-const useBackupCommunity = () => {
+const useBackupCommunity = (): boolean => {
   const { urlName }: UrlNameProps = useParams();
 
   const { push } = useHistory();
@@ -38,6 +38,9 @@ const useBackupCommunity = () => {
       push(`/${backupUrlName}`);
     }
   }, [backupUrlName, isMember, urlName]);
+
+  // While the urlName isn't set, it means this hook is still "loading".
+  return !urlName;
 };
 
 export default useBackupCommunity;

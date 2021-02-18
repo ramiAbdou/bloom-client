@@ -176,7 +176,6 @@ export interface IUser extends BaseEntity {
   instagramUrl: string;
   lastName: string;
   linkedInUrl: string;
-  member?: IdString;
   members?: IdString[];
   pictureUrl: string;
   twitterUrl: string;

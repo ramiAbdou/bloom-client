@@ -1,7 +1,6 @@
 import React from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
-import Show from '@containers/Show';
 import Nav from '@organisms/Nav/Nav';
 import Analytics from '@scenes/Analytics/Analytics';
 import Applicants from '@scenes/Applicants/Applicants';
@@ -13,58 +12,44 @@ import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
 import { useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
-import useBackupCommunity from './useBackupCommunity';
 import useInitCommunity from './useInitCommunity';
 
-const AuthenticatedRouter: React.FC = () => {
-  const isCommunityInitialized = useStoreState(({ db }) => !!db.community);
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-
-  const isInitialized = useStoreState(
-    ({ db }) => !!db.community && !!db.member && !!db.user
-  );
-
-  useStoreState(({ db }) => {
-    console.log(
-      db.entities.communities.activeId,
-      db.entities.members.activeId,
-      db.entities.users.activeId,
-      db.isAuthenticated
-    );
-  });
-
+const AuthenticatedRouterSwitch: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
-  const { url } = useRouteMatch();
-  const loading = useInitCommunity();
-  useBackupCommunity();
+  return (
+    <div className="home-content">
+      <Switch>
+        <Route component={Directory} path="/:urlName/directory" />
+        <Route component={Events} path="/:urlName/events" />
+        <AdminRoute component={Database} path="/:urlName/database" />
+        <AdminRoute component={Analytics} path="/:urlName/analytics" />
+        <AdminRoute component={Integrations} path="/:urlName/integrations" />
 
-  if (isCommunityInitialized && !isAuthenticated) {
-    return <Redirect to="/login" />;
-  }
+        {!autoAccept && (
+          <AdminRoute component={Applicants} path="/:urlName/applicants" />
+        )}
+
+        <Route component={Membership} path="/:urlName/membership" />
+        <Route component={Profile} path="/:urlName/profile" />
+        <Redirect to="/:urlName/directory" />
+      </Switch>
+    </div>
+  );
+};
+
+const AuthenticatedRouter: React.FC = () => {
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const loading = useInitCommunity();
+
+  if (!isAuthenticated) return <Redirect to="/login" />;
+  if (loading) return null;
 
   return (
-    <Show show={isInitialized && !loading && url !== '/'}>
+    <>
       <Nav />
-
-      <div className="home-content">
-        <Switch>
-          <Route component={Directory} path="/:urlName/directory" />
-          <Route component={Events} path="/:urlName/events" />
-          <AdminRoute component={Database} path="/:urlName/database" />
-          <AdminRoute component={Analytics} path="/:urlName/analytics" />
-          <AdminRoute component={Integrations} path="/:urlName/integrations" />
-
-          {!autoAccept && (
-            <AdminRoute component={Applicants} path="/:urlName/applicants" />
-          )}
-
-          <Route component={Membership} path="/:urlName/membership" />
-          <Route component={Profile} path="/:urlName/profile" />
-          <Redirect to="/:urlName/directory" />
-        </Switch>
-      </div>
-    </Show>
+      <AuthenticatedRouterSwitch />
+    </>
   );
 };
 
