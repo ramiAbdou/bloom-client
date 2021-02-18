@@ -6,7 +6,6 @@ import Card from '@containers/Card/Card';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
-import ChangePlanStore from './Membership.store';
 
 const MembershipChangeCard: React.FC<IMemberType> = ({
   amount,
@@ -17,13 +16,7 @@ const MembershipChangeCard: React.FC<IMemberType> = ({
   const isCurrent = useStoreState(({ db }) => db.member.type === id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const setSelectedTypeId = ChangePlanStore.useStoreActions(
-    (store) => store.setSelectedTypeId
-  );
-
   const onClick = () => {
-    setSelectedTypeId(id);
-
     showModal({
       id: ModalType.CHANGE_MEMBERSHIP,
       metadata: { selectedTypeId: id, type: 'CHANGE_MEMBERSHIP' }
