@@ -12,7 +12,7 @@ import {
   IMemberType
 } from '@store/Db/entities';
 import { sortObjects } from '@util/util';
-import { MemberHistoryData } from './MemberProfile.types';
+import { MemberHistoryData } from './Profile.types';
 
 interface GetMemberHistoryArgs {
   db: State<DbModel>;

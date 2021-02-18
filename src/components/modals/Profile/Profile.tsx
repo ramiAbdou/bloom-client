@@ -5,10 +5,10 @@ import useQuery from '@hooks/useQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import MemberProfileStore from './MemberProfile.store';
-import MemberProfileData from './MemberProfileData';
-import MemberProfileHistory from './MemberProfileHistory';
-import MemberProfilePersonal from './MemberProfilePersonal';
+import MemberProfileStore from './Profile.store';
+import MemberProfileData from './ProfileData';
+import MemberProfileHistory from './ProfileHistory';
+import MemberProfilePersonal from './ProfilePersonal';
 
 const MemberProfile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);

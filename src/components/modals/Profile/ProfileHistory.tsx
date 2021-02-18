@@ -8,10 +8,10 @@ import { eventFields } from '@scenes/Events/Events.types';
 import { IEventGuest, IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import MemberProfileStore from './MemberProfile.store';
-import { MemberHistoryData } from './MemberProfile.types';
-import { getMemberHistory } from './MemberProfile.util';
-import MemberProfileHistoryEvent from './MemberProfileHistoryEvent';
+import MemberProfileStore from './Profile.store';
+import { MemberHistoryData } from './Profile.types';
+import { getMemberHistory } from './Profile.util';
+import MemberProfileHistoryEvent from './ProfileHistoryEvent';
 
 const MemberProfileHistoryEvents: React.FC = () => {
   const memberId: string = MemberProfileStore.useStoreState(

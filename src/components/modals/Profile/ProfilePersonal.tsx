@@ -8,8 +8,8 @@ import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { IMember, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import MemberProfileStore from './MemberProfile.store';
-import MemberProfileSocialContainer from './MemberProfileSocial';
+import MemberProfileStore from './Profile.store';
+import MemberProfileSocialContainer from './ProfileSocial';
 
 const MemberProfilePersonalPicture: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);

@@ -10,7 +10,7 @@ import Button from '@atoms/Button/Button';
 import { IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import MemberProfileStore from './MemberProfile.store';
+import MemberProfileStore from './Profile.store';
 
 interface MemberProfileSocialButtonProps {
   brand: 'CLUBHOUSE' | 'FACEBOOK' | 'INSTAGRAM' | 'LINKED_IN' | 'TWITTER';

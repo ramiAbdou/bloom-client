@@ -9,7 +9,7 @@ import QuestionValueList, {
 import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import MemberProfileStore from './MemberProfile.store';
+import MemberProfileStore from './Profile.store';
 
 const MemberProfileDataContent: React.FC = () => {
   const memberId = MemberProfileStore.useStoreState((store) => store.memberId);
