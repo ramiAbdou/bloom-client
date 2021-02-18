@@ -112,6 +112,12 @@ export interface PopulateArgs {
   populate?: string[];
 }
 
+export enum RecurrenceType {
+  LIFETIME = 'LIFETIME',
+  MONTHLY = 'MONTHLY',
+  YEARLY = 'YEARLY'
+}
+
 export enum SocialBrand {
   CLUBHOUSE = 'CLUBHOUSE',
   FACEBOOK = 'FACEBOOK',

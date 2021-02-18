@@ -40,10 +40,11 @@ const AuthenticatedRouterSwitch: React.FC = () => {
 
 const AuthenticatedRouter: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isInitialized = useStoreState(({ db }) => db.isInitialized);
   const loading = useInitCommunity();
 
   if (!isAuthenticated) return <Redirect to="/login" />;
-  if (loading) return null;
+  if (!isInitialized || loading) return null;
 
   return (
     <>

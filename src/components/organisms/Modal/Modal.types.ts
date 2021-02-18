@@ -34,7 +34,8 @@ export const globalModals: ModalType[] = [
   ModalType.INTEGRATIONS_DETAILS,
   ModalType.MAILCHIMP_FLOW,
   ModalType.PAY_DUES,
-  ModalType.PROFILE
+  ModalType.PROFILE,
+  ModalType.UPDATE_PAYMENT_METHOD
 ];
 
 export const localModals: ModalType[] = [

@@ -2,6 +2,7 @@ import deline from 'deline';
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
+import { RecurrenceType } from '@constants';
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
 import useManualQuery from '@hooks/useManualQuery';
@@ -36,7 +37,9 @@ const PaymentFinishForm: React.FC = () => {
   const createLifetimePayment = useCreateLifetimePayment();
 
   const onSubmit =
-    recurrence === 'LIFETIME' ? createLifetimePayment : createSubscription;
+    recurrence === RecurrenceType.LIFETIME
+      ? createLifetimePayment
+      : createSubscription;
 
   return (
     <Form options={{ disableValidation: true }} onSubmit={onSubmit}>

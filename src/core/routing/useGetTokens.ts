@@ -30,7 +30,7 @@ const useGetTokens = (): boolean => {
     (async () => {
       const { data } = await getTokens({ urlName });
 
-      if (!data.userId) return;
+      if (!data?.userId) return;
 
       setActive([
         { id: data?.communityId, table: 'communities' },

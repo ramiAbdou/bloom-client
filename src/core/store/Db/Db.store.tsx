@@ -22,6 +22,10 @@ const dbStore: DbModel = {
     );
   }),
 
+  isInitialized: computed(({ community, member, user }) => {
+    return !!community && !!member && !!user;
+  }),
+
   /**
    * Returns true if the authenticated user has a membership with the active
    * community.

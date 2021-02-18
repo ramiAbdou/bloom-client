@@ -22,7 +22,17 @@ const ModalCustomContent: React.FC = () => {
   if (id === ModalType.ADD_ADMINS) return <AddMemberModal admin />;
   if (id === ModalType.ADD_MEMBERS) return <AddMemberModal />;
   if (id === ModalType.APPLICANT) return <ApplicantsModal />;
-  if (id === ModalType.CHANGE_MEMBERSHIP) return <PaymentModal />;
+
+  if (
+    [
+      ModalType.CHANGE_MEMBERSHIP,
+      ModalType.PAY_DUES,
+      ModalType.UPDATE_PAYMENT_METHOD
+    ].includes(id as ModalType)
+  ) {
+    return <PaymentModal />;
+  }
+
   if (id === ModalType.CHECK_IN) return <CheckInModal />;
   if (id === ModalType.CREATE_EVENT) return <CreateEventModal />;
 
@@ -42,7 +52,6 @@ const ModalCustomContent: React.FC = () => {
 
   if (id === ModalType.MAILCHIMP_FLOW) return <IntegrationsMailchimpModal />;
   if (id === ModalType.PROFILE) return <ProfileModal />;
-  if (id === ModalType.PAY_DUES) return <PaymentModal />;
 
   return null;
 };

@@ -11,9 +11,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     (store) => store.changeProrationDate
   );
 
-  const memberTypeId = PaymentStore.useStoreState(
-    (store) => store.selectedTypeId
-  );
+  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
   const pushToMembership = usePush('membership');
 
@@ -43,7 +41,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     // ID. That will be attached to the customer ID associated with the member.
     const { error } = await createSubscription({
       autoRenew,
-      memberTypeId,
+      memberTypeId: typeId,
       prorationDate
     });
 

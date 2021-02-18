@@ -53,6 +53,7 @@ export type DbModel = {
   clearEntities: Action<DbModel>;
   entities: IEntities;
   isAuthenticated: Computed<DbModel, boolean>;
+  isInitialized: Computed<DbModel, boolean>;
   isMember: Computed<DbModel, boolean>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
   setActive: Action<DbModel, SetActiveArgs | SetActiveArgs[]>;
