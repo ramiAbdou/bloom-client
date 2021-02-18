@@ -121,6 +121,7 @@ export interface IMember extends BaseEntity {
   role?: 'ADMIN' | 'OWNER';
   type: IdString;
   status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
+  stripeSubscriptionId?: string;
   user: IdString;
   watches: IdString[];
 }

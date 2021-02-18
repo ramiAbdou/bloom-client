@@ -14,7 +14,15 @@ const useCreateLifetimePayment = () => {
       'amount',
       'createdAt',
       'id',
-      { member: ['id', 'autoRenew', 'isDuesActive', { type: ['id'] }] }
+      {
+        member: [
+          'id',
+          'autoRenew',
+          'isDuesActive',
+          'stripeSubscriptionId',
+          { type: ['id'] }
+        ]
+      }
     ],
     operation: 'createLifetimePayment',
     schema: Schema.MEMBER_PAYMENT,

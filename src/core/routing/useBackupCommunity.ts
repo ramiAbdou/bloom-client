@@ -39,6 +39,8 @@ const useBackupCommunity = (): boolean => {
     }
   }, [backupUrlName, isMember, urlName]);
 
+  console.log(urlName);
+
   // While the urlName isn't set, it means this hook is still "loading".
   return !urlName;
 };

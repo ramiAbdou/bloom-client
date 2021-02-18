@@ -13,7 +13,13 @@ import { useStoreState } from '@store/Store';
 const useInitUser = (): boolean => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
-  const [getMembers, { loading: loading1 }] = useManualQuery<IMember[]>({
+  const [getUser, { loading: loading1 }] = useManualQuery<IUser>({
+    fields: ['email', 'firstName', 'id', 'lastName', 'pictureUrl'],
+    operation: 'getUser',
+    schema: Schema.USER
+  });
+
+  const [getMembers, { loading: loading2 }] = useManualQuery<IMember[]>({
     fields: [
       'joinedAt',
       'id',
@@ -24,21 +30,37 @@ const useInitUser = (): boolean => {
     schema: [Schema.MEMBER]
   });
 
-  const [getUser, { loading: loading2 }] = useManualQuery<IUser>({
-    fields: ['email', 'firstName', 'id', 'lastName', 'pictureUrl'],
-    operation: 'getUser',
-    schema: Schema.USER
+  const [getMember, { data, loading: loading3 }] = useManualQuery({
+    fields: [
+      'autoRenew',
+      'bio',
+      'id',
+      'isDuesActive',
+      'role',
+      'status',
+      { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] },
+      { community: ['id'] },
+      { type: ['id'] },
+      { user: ['id'] }
+    ],
+    operation: 'getMember',
+    schema: Schema.MEMBER
   });
+
+  console.log(data);
 
   useEffect(() => {
     (async () => {
-      if (isAuthenticated) await Promise.all([getMembers(), getUser()]);
+      if (isAuthenticated) {
+        console.log('HERE');
+        await Promise.all([getMembers(), getUser(), getMember()]);
+      }
     })();
   }, [isAuthenticated]);
 
-  useLoader(loading1 || loading2);
+  useLoader(loading1 || loading2 || loading3);
 
-  return loading1 || loading2;
+  return loading1 || loading2 || loading3;
 };
 
 export default useInitUser;
