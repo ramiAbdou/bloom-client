@@ -89,6 +89,7 @@ const MemberProfilePersonal: React.FC = () => {
 
   useQuery<IUser>({
     fields: [
+      'clubhouseUrl',
       'email',
       'facebookUrl',
       'id',

@@ -44,6 +44,7 @@ const useInitCommunity = (): boolean => {
       'isDuesActive',
       'role',
       'status',
+      { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] },
       { community: ['id'] },
       { type: ['id'] },
       { user: ['id'] }

@@ -167,6 +167,7 @@ export interface IQuestion extends BaseEntity {
 // ## USER
 
 export interface IUser extends BaseEntity {
+  clubhouseUrl: string;
   currentLocation: string;
   email: string;
   facebookUrl: string;

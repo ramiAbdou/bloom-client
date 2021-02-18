@@ -6,10 +6,18 @@ import { UpdateUserSocialsArgs } from './Profile.types';
 
 const useUpdateUserSocials = (): OnFormSubmit => {
   const [updateUser] = useMutation<IUser, UpdateUserSocialsArgs>({
-    fields: ['id', 'facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    fields: [
+      'clubhouseUrl',
+      'id',
+      'facebookUrl',
+      'instagramUrl',
+      'linkedInUrl',
+      'twitterUrl'
+    ],
     operation: 'updateUser',
     schema: Schema.USER,
     types: {
+      clubhouseUrl: { required: false },
       facebookUrl: { required: false },
       instagramUrl: { required: false },
       linkedInUrl: { required: false },
@@ -23,12 +31,14 @@ const useUpdateUserSocials = (): OnFormSubmit => {
     setError,
     showToast
   }: OnFormSubmitArgs) => {
+    const clubhouseUrl = items.CLUBHOUSE_URL?.value;
     const facebookUrl = items.FACEBOOK_URL?.value;
     const instagramUrl = items.INSTAGRAM_URL?.value;
     const linkedInUrl = items.LINKED_IN_URL?.value;
     const twitterUrl = items.TWITTER_URL?.value;
 
     const { error } = await updateUser({
+      clubhouseUrl,
       facebookUrl,
       instagramUrl,
       linkedInUrl,

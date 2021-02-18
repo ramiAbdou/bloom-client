@@ -20,8 +20,21 @@ import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
   const isSocialLinked: boolean = useStoreState(({ db }) => {
-    const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = db.user;
-    return !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
+    const {
+      clubhouseUrl,
+      facebookUrl,
+      instagramUrl,
+      linkedInUrl,
+      twitterUrl
+    } = db.user;
+
+    return (
+      !!clubhouseUrl ||
+      !!facebookUrl ||
+      !!instagramUrl ||
+      !!linkedInUrl ||
+      !!twitterUrl
+    );
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -42,7 +55,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 interface ProfileSocialMediaValueProps {
-  brand: 'FACEBOOK' | 'INSTAGRAM' | 'LINKED_IN' | 'TWITTER';
+  brand: 'CLUBHOUSE' | 'FACEBOOK' | 'INSTAGRAM' | 'LINKED_IN' | 'TWITTER';
   url: string;
 }
 
@@ -52,12 +65,14 @@ const ProfileSocialMediaValue: React.FC<ProfileSocialMediaValueProps> = ({
 }) => {
   if (!url) return null;
 
+  const isClubhouse = brand === 'CLUBHOUSE';
   const isFacebook = brand === 'FACEBOOK';
   const isInstagram = brand === 'INSTAGRAM';
   const isLinkedIn = brand === 'LINKED_IN';
   const isTwitter = brand === 'TWITTER';
 
   const css = cx('s-profile-card--social-logo', {
+    's-profile-card--social-logo--clubhouse': isClubhouse,
     's-profile-card--social-logo--facebook': isFacebook,
     's-profile-card--social-logo--linkedin': isLinkedIn,
     's-profile-card--social-logo--twitter': isTwitter
@@ -75,19 +90,31 @@ const ProfileSocialMediaValue: React.FC<ProfileSocialMediaValueProps> = ({
 };
 
 const ProfileSocialCard: React.FC = () => {
+  const clubhouseUrl = useStoreState(({ db }) => db.user.clubhouseUrl);
   const facebookUrl = useStoreState(({ db }) => db.user.facebookUrl);
   const instagramUrl = useStoreState(({ db }) => db.user.instagramUrl);
   const linkedInUrl = useStoreState(({ db }) => db.user.linkedInUrl);
   const twitterUrl = useStoreState(({ db }) => db.user.twitterUrl);
 
   const { loading } = useQuery<IUser>({
-    fields: ['facebookUrl', 'instagramUrl', 'id', 'linkedInUrl', 'twitterUrl'],
+    fields: [
+      'clubhouseUrl',
+      'facebookUrl',
+      'instagramUrl',
+      'id',
+      'linkedInUrl',
+      'twitterUrl'
+    ],
     operation: 'getUser',
     schema: Schema.USER
   });
 
   const isSocialLinked: boolean =
-    !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
+    !!clubhouseUrl ||
+    !!facebookUrl ||
+    !!instagramUrl ||
+    !!linkedInUrl ||
+    !!twitterUrl;
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
@@ -101,6 +128,7 @@ const ProfileSocialCard: React.FC = () => {
       />
 
       <div>
+        <ProfileSocialMediaValue brand="CLUBHOUSE" url={clubhouseUrl} />
         <ProfileSocialMediaValue brand="TWITTER" url={twitterUrl} />
         <ProfileSocialMediaValue brand="LINKED_IN" url={linkedInUrl} />
         <ProfileSocialMediaValue brand="FACEBOOK" url={facebookUrl} />

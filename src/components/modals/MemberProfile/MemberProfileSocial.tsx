@@ -13,7 +13,7 @@ import { cx } from '@util/util';
 import MemberProfileStore from './MemberProfile.store';
 
 interface MemberProfileSocialButtonProps {
-  brand: 'FACEBOOK' | 'INSTAGRAM' | 'LINKED_IN' | 'TWITTER';
+  brand: 'CLUBHOUSE' | 'FACEBOOK' | 'INSTAGRAM' | 'LINKED_IN' | 'TWITTER';
   href: string;
 }
 
@@ -23,12 +23,14 @@ const MemberProfileSocialButton: React.FC<MemberProfileSocialButtonProps> = ({
 }) => {
   if (!href) return null;
 
+  const isClubhouse = brand === 'CLUBHOUSE';
   const isFacebook = brand === 'FACEBOOK';
   const isInstagram = brand === 'INSTAGRAM';
   const isLinkedIn = brand === 'LINKED_IN';
   const isTwitter = brand === 'TWITTER';
 
   const css = cx('mo-member-profile-social', {
+    'mo-member-profile-social--clubhouse': isClubhouse,
     'mo-member-profile-social--facebook': isFacebook,
     'mo-member-profile-social--linkedin': isLinkedIn,
     'mo-member-profile-social--twitter': isTwitter
@@ -48,6 +50,7 @@ const MemberProfileSocialContainer: React.FC = () => {
   const userId = MemberProfileStore.useStoreState((store) => store.userId);
 
   const {
+    clubhouseUrl,
     facebookUrl,
     instagramUrl,
     linkedInUrl,
@@ -56,6 +59,7 @@ const MemberProfileSocialContainer: React.FC = () => {
 
   return (
     <div className="flex-ac">
+      <MemberProfileSocialButton brand="CLUBHOUSE" href={clubhouseUrl} />
       <MemberProfileSocialButton brand="TWITTER" href={twitterUrl} />
       <MemberProfileSocialButton brand="LINKED_IN" href={linkedInUrl} />
       <MemberProfileSocialButton brand="FACEBOOK" href={facebookUrl} />

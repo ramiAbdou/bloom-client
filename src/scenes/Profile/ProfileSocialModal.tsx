@@ -8,6 +8,7 @@ import { useStoreState } from '@store/Store';
 import useUpdateUserSocials from './useUpdateUserSocials';
 
 const ProfileSocialModal: React.FC = () => {
+  const clubhouseUrl = useStoreState(({ db }) => db.user.clubhouseUrl);
   const facebookUrl = useStoreState(({ db }) => db.user.facebookUrl);
   const instagramUrl = useStoreState(({ db }) => db.user.instagramUrl);
   const linkedInUrl = useStoreState(({ db }) => db.user.linkedInUrl);
@@ -18,14 +19,6 @@ const ProfileSocialModal: React.FC = () => {
   return (
     <Form onSubmit={updateUserSocials}>
       <FormHeader title="Edit Social Media" />
-
-      <FormShortText
-        id="TWITTER_URL"
-        required={false}
-        title="Twitter URL"
-        validate="IS_URL"
-        value={twitterUrl}
-      />
 
       <FormShortText
         id="LINKED_IN_URL"
@@ -41,6 +34,22 @@ const ProfileSocialModal: React.FC = () => {
         title="Facebook URL"
         validate="IS_URL"
         value={facebookUrl}
+      />
+
+      <FormShortText
+        id="CLUBHOUSE_URL"
+        required={false}
+        title="Clubhouse URL"
+        validate="IS_URL"
+        value={clubhouseUrl}
+      />
+
+      <FormShortText
+        id="TWITTER_URL"
+        required={false}
+        title="Twitter URL"
+        validate="IS_URL"
+        value={twitterUrl}
       />
 
       <FormShortText
