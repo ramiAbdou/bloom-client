@@ -38,8 +38,8 @@
 // ## MARGIN X
 
 .mx {
-  &-xs { margin-left: $xs; margin-right: $xs; }
-  &-sm { margin-left: $sm; margin-right: $sm; }
+  &-xs { margin-left: $xs; &:not(:last-child) { margin-right: $xs; } }
+  &-sm { margin-left: $sm; &:not(:last-child) { margin-right: $sm; } }
 }
 
 // ## MARGIN Y

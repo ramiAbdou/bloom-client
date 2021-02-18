@@ -6,27 +6,13 @@ $PREF: 'mo-profile';
   @include HOVER { transform: scale(1.1); }
   &:active { transform: scale(0.9); }
 
-  &:not(:last-child) { margin-right: $sm; }
-
   > svg { @extend .react-icon--lg; }
   &--facebook > svg { color: #1877f2; }
   &--linkedin > svg { color: #0a66c2; }
   &--twitter > svg { color: #1da1f2; }
-  &:last-child > a { @extend .flex; }
 }
 
-// ## QUESTIONS
-
-.#{$PREF}-question:not(:last-child) { margin-bottom: $sm; }
-.#{$PREF}-question > p:first-of-type {
-  @extend .body--bold;
-
-  margin-bottom: $xxs;
-}
-.#{$PREF}-question > p:last-of-type { color: $primary; }
-.#{$PREF}-question--choice > p:last-child { @extend .c-tag-attr; }
-
-// ## MEMBER PROFILE HISTORY EVENT
+// ## PROFILE HISTORY EVENT
 
 .#{$PREF}-history-event {
   > div:first-child { @extend .flex-col; align-items: center; }

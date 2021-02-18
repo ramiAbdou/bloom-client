@@ -10,10 +10,8 @@ import { getMemberHistory } from './Profile.util';
 import ProfileHistoryEvent from './ProfileHistoryEvent';
 import useInitProfileHistory from './useInitProfileHistory';
 
-const ProfileHistoryEvents: React.FC = () => {
-  const memberId: string = ProfileStore.useStoreState(
-    (store) => store.memberId
-  );
+const ProfileHistoryEventList: React.FC = () => {
+  const memberId = ProfileStore.useStoreState((store) => store.memberId);
 
   const history: MemberHistoryData[] = useStoreState(({ db }) => {
     return getMemberHistory({ db, memberId });
@@ -21,7 +19,7 @@ const ProfileHistoryEvents: React.FC = () => {
 
   return (
     <ul>
-      {history.map((event) => {
+      {history.map((event: MemberHistoryData) => {
         return <ProfileHistoryEvent key={event?.date} {...event} />;
       })}
     </ul>
@@ -34,16 +32,16 @@ const ProfileHistoryContent: React.FC = () => {
   return (
     <div className="my-md">
       <LoadingHeader h2 className="mb-sm" loading={loading} title="History" />
-      {!loading && <ProfileHistoryEvents />}
+      {!loading && <ProfileHistoryEventList />}
     </div>
   );
 };
 
 const ProfileHistory: React.FC = () => {
-  const admin: boolean = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
 
   return (
-    <Show show={admin}>
+    <Show show={isAdmin}>
       <Separator margin={0} />
       <ProfileHistoryContent />
     </Show>
