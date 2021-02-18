@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import { QuestionType } from '@constants';
-import QuestionValueList from '@molecules/QuestionValueList';
+import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { useStoreActions, useStoreState } from '@store/Store';
 import useIntegrationsDetails from './useIntegrationsDetails';
 
@@ -16,7 +16,7 @@ const IntegrationsDetailsModal: React.FC = () => {
       <img className="s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>
 
-      <QuestionValueList
+      <QuestionBox
         items={details.map(({ label, value }) => ({
           title: label,
           type: QuestionType.MULTIPLE_CHOICE,

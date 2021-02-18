@@ -5,9 +5,8 @@ import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
-import QuestionValueList, {
-  QuestionValueItemProps
-} from '@molecules/QuestionValueList';
+import QuestionBox from '@molecules/QuestionBox/QuestionBox';
+import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -60,7 +59,7 @@ const ApplicantsCardActionContainer: React.FC = () => {
 const ApplicantsCardItems: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
+  const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
     const data: IMemberData[] = member.data?.map(
@@ -86,7 +85,7 @@ const ApplicantsCardItems: React.FC = () => {
       ?.slice(0, 5);
   });
 
-  return <QuestionValueList items={items} marginBottom={24} />;
+  return <QuestionBox items={items} marginBottom={24} />;
 };
 
 const ApplicantsCard: React.FC = () => {

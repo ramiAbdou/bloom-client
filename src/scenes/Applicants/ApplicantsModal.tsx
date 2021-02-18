@@ -1,9 +1,8 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import QuestionValueList, {
-  QuestionValueItemProps
-} from '@molecules/QuestionValueList';
+import QuestionBox from '@molecules/QuestionBox/QuestionBox';
+import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
@@ -23,7 +22,7 @@ const ApplicantsModalTitle: React.FC = () => {
 const ApplicantsModalItems: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
+  const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
     const data: IMemberData[] = member.data?.map(
@@ -50,7 +49,7 @@ const ApplicantsModalItems: React.FC = () => {
 
   return (
     <section className="c-modal-content-ctr">
-      <QuestionValueList items={items} />
+      <QuestionBox items={items} />
     </section>
   );
 };

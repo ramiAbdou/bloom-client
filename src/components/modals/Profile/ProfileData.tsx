@@ -2,14 +2,12 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import Show from '@containers/Show';
-import useQuery from '@hooks/useQuery';
-import QuestionValueList, {
-  QuestionValueItemProps
-} from '@molecules/QuestionValueList';
+import QuestionBox from '@molecules/QuestionBox/QuestionBox';
+import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import ProfileStore from './Profile.store';
+import useInitProfileData from './useInitProfileData';
 
 const ProfileDataContent: React.FC = () => {
   const memberId = ProfileStore.useStoreState((store) => store.memberId);
@@ -18,7 +16,7 @@ const ProfileDataContent: React.FC = () => {
     return new Set(db.community?.questions);
   });
 
-  const items: QuestionValueItemProps[] = useStoreState(({ db }) => {
+  const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
     return member?.data
@@ -42,21 +40,13 @@ const ProfileDataContent: React.FC = () => {
   return (
     <Show show={items?.some(({ value }) => !!value)}>
       <Separator marginBottom={24} />
-      <QuestionValueList handleNull="HIDE_ALL" items={items} />
+      <QuestionBox handleNull="HIDE_ALL" items={items} />
     </Show>
   );
 };
 
 const ProfileData: React.FC = () => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
-
-  const { loading } = useQuery<IMemberData[]>({
-    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: 'getMemberData',
-    schema: [Schema.MEMBER_DATA],
-    types: { memberId: { required: false } },
-    variables: { memberId }
-  });
+  const loading = useInitProfileData();
 
   if (loading) return null;
   return <ProfileDataContent />;
