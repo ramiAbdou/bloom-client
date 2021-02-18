@@ -9,6 +9,13 @@ const CheckInConfirmation: React.FC = () => {
       confirmation
       branchId="GUEST_CONFIRMATION"
       branches={{
+        ATTENDEE_CONFIRMATION: {
+          description: deline`
+            Thanks for attending the event. You should have been redirected to
+            the virtual event URL.
+          `,
+          title: `Attendee Registered`
+        },
         GUEST_CONFIRMATION: {
           description: deline`
             We just emailed you an RSVP confirmation. You'll get a join link 30

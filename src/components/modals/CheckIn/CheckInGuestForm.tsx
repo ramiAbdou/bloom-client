@@ -7,6 +7,7 @@ import Form from '@organisms/Form/Form';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
+import useCreatePublicEventAttendee from './useCreatePublicEventAttendee';
 import useCreatePublicEventGuest from './useCreatePublicEventGuest';
 
 const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
@@ -14,12 +15,15 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
     return day().isBefore(day(db.event?.startTime).subtract(30, 'm'));
   });
 
+  const createPublicEventAttendee = useCreatePublicEventAttendee();
   const createPublicEventGuest = useCreatePublicEventGuest();
 
   if (show === false) return null;
 
   return (
-    <Form onSubmit={createPublicEventGuest}>
+    <Form
+      onSubmit={isUpcoming ? createPublicEventGuest : createPublicEventAttendee}
+    >
       <Row equal align="baseline" spacing="xs">
         <FormShortText
           category={QuestionCategory.FIRST_NAME}
