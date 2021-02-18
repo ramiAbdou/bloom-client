@@ -15,6 +15,8 @@ const MembershipPaymentScheduledCard: React.FC = () => {
     operation: 'getUpcomingPayment'
   });
 
+  console.log(data);
+
   const amount = `$${data?.amount?.toFixed(2)}`;
   const date = day(data?.nextPaymentDate).format('MMMM D, YYYY');
 

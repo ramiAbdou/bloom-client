@@ -13,7 +13,7 @@ interface GetTokensResult {
 }
 
 /**
- * Updates the authenticated status of the user by checking the httpOnly
+ * Updates the authenticated status of the user by checking the decoded httpOnly
  * cookies stored in the browser.
  */
 const useGetTokens = (): boolean => {
@@ -32,9 +32,11 @@ const useGetTokens = (): boolean => {
 
       if (!data?.userId) return;
 
-      setActive({ id: data?.communityId, table: 'communities' });
-      setActive({ id: data?.memberId, table: 'members' });
-      setActive({ id: data?.userId, table: 'users' });
+      setActive([
+        { id: data?.communityId, table: 'communities' },
+        { id: data?.memberId, table: 'members' },
+        { id: data?.userId, table: 'users' }
+      ]);
     })();
   }, [urlName]);
 

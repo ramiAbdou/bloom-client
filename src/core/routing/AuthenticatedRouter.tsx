@@ -24,6 +24,15 @@ const AuthenticatedRouter: React.FC = () => {
     ({ db }) => !!db.community && !!db.member && !!db.user
   );
 
+  useStoreState(({ db }) => {
+    console.log(
+      db.entities.communities.activeId,
+      db.entities.members.activeId,
+      db.entities.users.activeId,
+      db.isAuthenticated
+    );
+  });
+
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
   const { url } = useRouteMatch();

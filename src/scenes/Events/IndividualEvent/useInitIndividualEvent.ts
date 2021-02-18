@@ -60,9 +60,11 @@ const useInitIndividualEvent = (): boolean => {
 
   useEffect(() => {
     if (data1) {
-      setActive({ id: data1.id, table: 'events' });
-      // @ts-ignore b/c type issues.
-      setActive({ id: data1.community?.id, table: 'communities' });
+      setActive([
+        { id: data1.id, table: 'events' },
+        // @ts-ignore b/c type issues.
+        { id: data1.community?.id, table: 'communities' }
+      ]);
     }
   }, [data1]);
 

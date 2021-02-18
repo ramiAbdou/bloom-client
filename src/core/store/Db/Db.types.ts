@@ -18,11 +18,6 @@ import {
   IUser
 } from './entities';
 
-export interface AddEntitiesArgs {
-  entities: IMember[];
-  table: keyof IEntities;
-}
-
 export interface MergeEntitiesArgs {
   data?: any;
   schema?: Schema;
@@ -48,17 +43,17 @@ export type DbModel = {
   byUserId: Computed<DbModel, Record<string, IUser>>;
   byWatchId: Computed<DbModel, Record<string, IEventWatch>>;
 
-  addEntities: Action<DbModel, AddEntitiesArgs>;
   application: Computed<DbModel, ICommunityApplication>;
-  clearEntities: Action<DbModel>;
   community: Computed<DbModel, ICommunity>;
-  entities: IEntities;
   event: Computed<DbModel, IEvent>;
-  isAuthenticated: Computed<DbModel, boolean>;
-  isMember: Computed<DbModel, boolean>;
   integrations: Computed<DbModel, IIntegrations>;
   member: Computed<DbModel, IMember>;
-  mergeEntities: Action<DbModel, MergeEntitiesArgs>;
-  setActive: Action<DbModel, SetActiveArgs>;
   user: Computed<DbModel, IUser>;
+
+  clearEntities: Action<DbModel>;
+  entities: IEntities;
+  isAuthenticated: Computed<DbModel, boolean>;
+  isMember: Computed<DbModel, boolean>;
+  mergeEntities: Action<DbModel, MergeEntitiesArgs>;
+  setActive: Action<DbModel, SetActiveArgs | SetActiveArgs[]>;
 };
