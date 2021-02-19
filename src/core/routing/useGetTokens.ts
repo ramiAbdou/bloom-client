@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
 import useManualQuery from '@hooks/useManualQuery';
@@ -20,6 +20,8 @@ const useGetTokens = (): boolean => {
   const { urlName }: UrlNameProps = useParams();
   const setActive = useStoreActions(({ db }) => db.setActive);
 
+  const { push } = useHistory();
+
   const [getTokens, result] = useManualQuery<GetTokensResult>({
     fields: ['communityId', 'memberId', 'userId'],
     operation: 'getTokens',
@@ -30,7 +32,10 @@ const useGetTokens = (): boolean => {
     (async () => {
       const { data } = await getTokens({ urlName });
 
-      if (!data?.userId) return;
+      if (!data?.userId) {
+        if (!urlName) push('/login');
+        return;
+      }
 
       setActive([
         { id: data?.communityId, table: 'communities' },
