@@ -8,7 +8,6 @@ import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import MembershipCurrentPlanActions from './MembershipCurrentPlanActions';
-import MembershipCurrentPlanToggle from './MembershipCurrentPlanToggle';
 
 const MembershipCurrentPlanHeader: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
@@ -60,7 +59,6 @@ const MembershipCurrentPlan: React.FC = () => (
     <MembershipCurrentPlanHeader />
     <MembershipCurrentPlanDescription />
     <MembershipCurrentPlanActions />
-    <MembershipCurrentPlanToggle />
   </Card>
 );
 

@@ -8,7 +8,6 @@ import FormLongText from './FormLongText';
 import FormMultipleChoice from './FormMultipleChoice';
 import FormMultipleSelect from './FormMultipleSelect';
 import FormShortText from './FormShortText';
-import FormToggle from './FormToggle';
 
 const FormItem: React.FC<FormItemData> = (props: FormItemData) => {
   const { options, type } = props;
@@ -28,7 +27,6 @@ const FormItem: React.FC<FormItemData> = (props: FormItemData) => {
   }
 
   if (type === 'SHORT_TEXT') return <FormShortText {...props} />;
-  if (type === 'TOGGLE') return <FormToggle {...props} />;
 
   return null;
 };

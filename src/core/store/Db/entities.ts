@@ -108,7 +108,6 @@ export interface IPaymentMethod {
 
 export interface IMember extends BaseEntity {
   attendees: IdString[];
-  autoRenew: boolean;
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
   bio: string;
   community: IdString;

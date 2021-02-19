@@ -8,7 +8,6 @@ export interface UpdateMemberDataArgs {
 }
 
 export interface UpdateMemberArgs {
-  autoRenew?: boolean;
   bio?: boolean;
 }
 

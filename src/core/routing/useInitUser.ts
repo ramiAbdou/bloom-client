@@ -30,9 +30,8 @@ const useInitUser = (): boolean => {
     schema: [Schema.MEMBER]
   });
 
-  const [getMember, { data, loading: loading3 }] = useManualQuery({
+  const [getMember, { loading: loading3 }] = useManualQuery({
     fields: [
-      'autoRenew',
       'bio',
       'id',
       'isDuesActive',
@@ -47,12 +46,9 @@ const useInitUser = (): boolean => {
     schema: Schema.MEMBER
   });
 
-  console.log(data);
-
   useEffect(() => {
     (async () => {
       if (isAuthenticated) {
-        console.log('HERE');
         await Promise.all([getMembers(), getUser(), getMember()]);
       }
     })();

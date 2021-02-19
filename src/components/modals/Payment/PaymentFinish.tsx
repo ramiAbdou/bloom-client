@@ -14,7 +14,6 @@ import PaymentStore from './Payment.store';
 import { GetChangePreviewArgs, GetChangePreviewResult } from './Payment.types';
 import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
-import PaymentFinishToggle from './PaymentFinishToggle';
 import useCreateLifetimePayment from './useCreateLifetimePayment';
 import useCreateSubscription from './useCreateSubscription';
 
@@ -53,7 +52,6 @@ const PaymentFinishForm: React.FC = () => {
         />
       </Row>
 
-      <PaymentFinishToggle />
       <PaymentFinishButton />
     </Form>
   );
