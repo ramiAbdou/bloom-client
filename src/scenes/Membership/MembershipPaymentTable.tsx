@@ -23,7 +23,7 @@ const MembershipPaymentTable: React.FC = () => {
         const { createdAt, id, stripeInvoiceUrl: receipt } = payment;
         const type: IMemberType = db.byTypeId[payment.type];
 
-        const amount = `$${(payment.amount / 100).toFixed(2)}`;
+        const amount = `$${payment.amount.toFixed(2)}`;
         const paidOn = day(createdAt).format('MMM DD, YYYY');
 
         return { amount, createdAt, id, paidOn, receipt, type: type?.name };

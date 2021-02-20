@@ -40,7 +40,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
         const { firstName, lastName, email }: IUser = user;
 
         return {
-          amount: `$${(amount / 100).toFixed(2)}`,
+          amount: `$${amount.toFixed(2)}`,
           email,
           fullName: `${firstName} ${lastName}`,
           id: member.id,

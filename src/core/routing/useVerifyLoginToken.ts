@@ -8,11 +8,11 @@ import useLoader from '@organisms/Loader/useLoader';
  * Verifies the login token if one is present in the SearchParams. Will exist
  * if user logs in from email.
  */
-const useVerifyToken = (): boolean => {
+const useVerifyLoginToken = (): boolean => {
   const token = new URLSearchParams(window.location.search).get('token');
 
-  const [verifyToken, result] = useManualQuery<boolean>({
-    operation: 'verifyToken',
+  const [verifyLoginToken, result] = useManualQuery<boolean>({
+    operation: 'verifyLoginToken',
     types: { token: { required: true } },
     variables: { token }
   });
@@ -23,7 +23,7 @@ const useVerifyToken = (): boolean => {
     if (!token) return;
 
     (async () => {
-      const { data: isVerified } = await verifyToken();
+      const { data: isVerified } = await verifyLoginToken();
 
       // If the token is verified, we push to the pathname (essentially just
       // gets rid of the token attached as a query parameter).
@@ -37,4 +37,4 @@ const useVerifyToken = (): boolean => {
   return loading;
 };
 
-export default useVerifyToken;
+export default useVerifyLoginToken;

@@ -13,7 +13,7 @@ const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: typeId }) => {
   }, deepequal);
 
   // Formats the amount with FREE if the amount is 0.
-  const amountString = amount ? `$${amount / 100}` : 'FREE';
+  const amountString = amount ? `$${amount}` : 'FREE';
 
   // Construct string "Per" timespan based on the recurrence.
   const recurrenceString = takeFirst([

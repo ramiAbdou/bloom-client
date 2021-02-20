@@ -62,7 +62,7 @@ export const getMemberHistory = ({
       return {
         date: payment.createdAt,
         event: `Paid Dues`,
-        title: `${type.name}, $${payment.amount / 100}`
+        title: `${type.name}, $${payment.amount}`
       };
     }) ?? [];
 
