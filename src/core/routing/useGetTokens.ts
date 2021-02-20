@@ -17,7 +17,9 @@ interface GetTokensResult {
  * cookies stored in the browser.
  */
 const useGetTokens = (): boolean => {
+  const token = new URLSearchParams(window.location.search).get('token');
   const { urlName }: UrlNameProps = useParams();
+
   const setActive = useStoreActions(({ db }) => db.setActive);
 
   const { push } = useHistory();
@@ -43,7 +45,7 @@ const useGetTokens = (): boolean => {
         { id: data?.userId, table: 'users' }
       ]);
     })();
-  }, [urlName]);
+  }, [token, urlName]);
 
   const loading = !result.data || result.loading;
   useLoader(loading);

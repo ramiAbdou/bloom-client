@@ -11,7 +11,7 @@ import useLoader from '@organisms/Loader/useLoader';
 const useVerifyToken = (): boolean => {
   const token = new URLSearchParams(window.location.search).get('token');
 
-  const [verifyToken, { loading }] = useManualQuery<boolean>({
+  const [verifyToken, result] = useManualQuery<boolean>({
     operation: 'verifyToken',
     types: { token: { required: true } },
     variables: { token }
@@ -31,6 +31,7 @@ const useVerifyToken = (): boolean => {
     })();
   }, [token]);
 
+  const loading = !!token && (result.loading || result.data === null);
   useLoader(loading);
 
   return loading;
