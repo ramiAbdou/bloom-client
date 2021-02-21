@@ -2,11 +2,11 @@ import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
+import Show from '@containers/Show';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { IMember, IUser } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import Show from '../../containers/Show';
 import ProfileStore from './Profile.store';
 import ProfileSocialContainer from './ProfileSocial';
 import useInitProfilePersonal from './useInitProfilePersonal';

@@ -29,8 +29,7 @@ const useInitCommunity = (): boolean => {
       'mailchimpListId',
       'mailchimpListName',
       'stripeAccountId',
-      { community: ['id'] },
-      { mailchimpLists: ['id', 'name'] }
+      { community: ['id'] }
     ],
     operation: 'getIntegrations',
     schema: Schema.COMMUNITY_INTEGRATIONS

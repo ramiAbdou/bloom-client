@@ -2,12 +2,12 @@ import deline from 'deline';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import Show from '@containers/Show';
+import useQuery from '@hooks/useQuery';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
-import { useStoreState } from '@store/Store';
+import { Schema } from '@store/Db/schema';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
@@ -24,12 +24,16 @@ const MailchimpModalActionContainer: React.FC = () => {
 };
 
 const MailchimpModalContent: React.FC = () => {
-  const mailchimpLists = useStoreState(({ db }) => {
-    return db.integrations.mailchimpLists;
+  const { data, loading } = useQuery({
+    fields: ['id', { mailchimpLists: ['id', 'name'] }],
+    operation: 'getIntegrations',
+    schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
+  if (loading || !data.mailchimpLists?.length) return null;
+
   return (
-    <Show show={!!mailchimpLists?.length}>
+    <>
       <img
         alt="Mailchimp Icon"
         className="s-integrations-icon--lg"
@@ -44,12 +48,12 @@ const MailchimpModalContent: React.FC = () => {
           automatically be added to upon joining your community.
         `}
         id="MAILCHIMP_LIST_ID"
-        options={mailchimpLists?.map(({ name }) => name)}
+        options={data.mailchimpLists?.map(({ name }) => name)}
         title="Select Audience/List ID"
       />
 
       <MailchimpModalActionContainer />
-    </Show>
+    </>
   );
 };
 

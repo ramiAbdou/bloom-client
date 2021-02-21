@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
 import Row from '@containers/Row/Row';
+import PanelCloseButton from '@organisms/Panel/PanelCloseButton';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import PanelCloseButton from '../../Panel/PanelCloseButton';
 import ListFilterQuestion from '../ListFilterQuestion/ListFilterQuestion';
 import ListFilterStore from './ListFilter.store';
 import ListFilterApplyButton from './ListFilterApplyButton';
