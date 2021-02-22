@@ -2,7 +2,7 @@ import day from 'dayjs';
 
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { IEvent } from '@store/Db/entities';
+import { EventPrivacy, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { uploadImage } from '@util/imageUtil';
 
@@ -17,7 +17,7 @@ const useCreateEvent = (): OnFormSubmit => {
       'eventUrl',
       'id',
       'imageUrl',
-      'private',
+      'privacy',
       'recordingUrl',
       'startTime',
       'summary',
@@ -31,7 +31,7 @@ const useCreateEvent = (): OnFormSubmit => {
       description: { required: true },
       endTime: { required: true },
       imageUrl: { required: false },
-      private: { required: false, type: 'Boolean' },
+      privacy: { required: false },
       startTime: { required: true },
       summary: { required: false },
       title: { required: true },
@@ -76,7 +76,7 @@ const useCreateEvent = (): OnFormSubmit => {
       description: items.EVENT_DESCRIPTION?.value,
       endTime,
       imageUrl,
-      private: items.PRIVACY_SETTINGS?.value === 'Members Only',
+      privacy: items.PRIVACY?.value,
       startTime,
       summary: items.EVENT_SUMMARY?.value,
       title: items.EVENT_NAME?.value,

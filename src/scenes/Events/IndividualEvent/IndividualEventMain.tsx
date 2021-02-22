@@ -2,6 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
+import { EventPrivacy } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
 
@@ -23,7 +24,11 @@ const IndividualEventMainHeaderContainer: React.FC = () => {
 
 const IndividualEventMain: React.FC = () => {
   const isMember = useStoreState(({ db }) => db.isMember);
-  const isPrivate = useStoreState(({ db }) => db.event?.private);
+
+  const isPrivate = useStoreState(
+    ({ db }) => db.event?.privacy === EventPrivacy.MEMBERS_ONLY
+  );
+
   const summary = useStoreState(({ db }) => db.event?.summary);
   const title = useStoreState(({ db }) => db.event?.title);
 

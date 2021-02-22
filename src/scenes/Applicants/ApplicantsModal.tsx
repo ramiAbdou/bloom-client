@@ -3,7 +3,13 @@ import React from 'react';
 import Row from '@containers/Row/Row';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import {
+  IMember,
+  IMemberData,
+  IQuestion,
+  IUser,
+  MemberStatus
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
@@ -59,8 +65,15 @@ const ApplicantsModalActionContainer: React.FC = () => {
 
   return (
     <Row equal spacing="xs">
-      <ApplicantsRespondButton applicantIds={[memberId]} response="ACCEPTED" />
-      <ApplicantsRespondButton applicantIds={[memberId]} response="REJECTED" />
+      <ApplicantsRespondButton
+        applicantIds={[memberId]}
+        response={MemberStatus.ACCEPTED}
+      />
+
+      <ApplicantsRespondButton
+        applicantIds={[memberId]}
+        response={MemberStatus.REJECTED}
+      />
     </Row>
   );
 };

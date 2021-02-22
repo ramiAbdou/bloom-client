@@ -6,6 +6,7 @@ import { QuestionCategory } from '@constants';
 import Row from '@containers/Row/Row';
 import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
 import FormShortText from '@organisms/Form/FormShortText';
+import { MemberRole } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import AddMemberStore from './AddMember.store';
@@ -29,7 +30,11 @@ const AddMemberInputTrashButton: React.FC = () => {
 
 const AddMemberInput: React.FC = () => {
   const id: string = IdStore.useStoreState((store) => store.id);
-  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
+
+  const isOwner = useStoreState(
+    ({ db }) => db.member?.role === MemberRole.OWNER
+  );
+
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   return (

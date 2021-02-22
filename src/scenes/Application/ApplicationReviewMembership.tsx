@@ -4,7 +4,11 @@ import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
 import FormSection from '@organisms/Form/FormSection';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMemberType, IPaymentMethod } from '@store/Db/entities';
+import {
+  IMemberType,
+  IPaymentMethod,
+  RecurrenceType
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 
@@ -43,9 +47,9 @@ const ApplicationReviewMembeship: React.FC = () => {
 
     // Construct string "Per" timespan based on the recurrence.
     const recurrenceString = takeFirst([
-      [recurrence === 'YEARLY', 'Per Year'],
-      [recurrence === 'MONTHLY', 'Per Month'],
-      [recurrence === 'LIFETIME', 'Lifetime']
+      [recurrence === RecurrenceType.YEARLY, 'Per Year'],
+      [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
+      [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
     ]);
 
     return `${amountString} ${recurrenceString}`;

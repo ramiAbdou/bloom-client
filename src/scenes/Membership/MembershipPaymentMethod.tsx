@@ -1,10 +1,9 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import { RecurrenceType } from '@constants';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
-import { IMemberType, IPaymentMethod } from '@store/Db/entities';
+import { IPaymentMethod, RecurrenceType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';
 
@@ -41,8 +40,7 @@ const MembershipPaymentMethod: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   const isLifetime: boolean = useStoreState(({ db }) => {
-    const type: IMemberType = db.byTypeId[db.member?.type];
-    return type?.recurrence === RecurrenceType.LIFETIME;
+    return db.byTypeId[db.member?.type]?.recurrence === RecurrenceType.LIFETIME;
   });
 
   return (

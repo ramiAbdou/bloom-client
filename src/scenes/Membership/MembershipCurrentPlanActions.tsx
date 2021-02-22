@@ -4,13 +4,14 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Row from '@containers/Row/Row';
+import { RecurrenceType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const MembershipCurrentPlanActions: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   const isLifetime: boolean = useStoreState(({ db }) => {
-    return db.byTypeId[db.member?.type]?.recurrence === 'LIFETIME';
+    return db.byTypeId[db.member?.type]?.recurrence === RecurrenceType.LIFETIME;
   });
 
   const currentTypeId: string = useStoreState(({ db }) => {

@@ -10,7 +10,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
       'description',
       'id',
       'imageUrl',
-      'private',
+      'privacy',
       'summary',
       'title',
       'videoUrl'
@@ -21,7 +21,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
       description: { required: false },
       id: { required: true },
       imageUrl: { required: false },
-      private: { required: false, type: 'Boolean' },
+      privacy: { required: false },
       summary: { required: false },
       title: { required: false },
       videoUrl: { required: false }
@@ -56,7 +56,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
       description: items.EVENT_DESCRIPTION?.value,
       id: eventId,
       imageUrl,
-      private: items.PRIVACY_SETTINGS?.value === 'Members Only',
+      privacy: items.PRIVACY?.value,
       summary: items.EVENT_SUMMARY?.value,
       title: items.EVENT_NAME?.value,
       videoUrl: items.VIDEO_URL?.value

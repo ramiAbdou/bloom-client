@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
-import { IMemberType } from '@store/Db/entities';
+import { IMemberType, RecurrenceType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 
@@ -28,9 +28,9 @@ const MembershipChangeCard: React.FC<IMemberType> = ({
 
   // Construct string "Per" timespan based on the recurrence.
   const recurrenceString = takeFirst([
-    [recurrence === 'YEARLY', 'Per Year'],
-    [recurrence === 'MONTHLY', 'Per Month'],
-    [recurrence === 'LIFETIME', 'Lifetime']
+    [recurrence === RecurrenceType.YEARLY, 'Per Year'],
+    [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
+    [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
   ]);
 
   return (

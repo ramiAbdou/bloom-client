@@ -6,7 +6,7 @@ import { CookieType, ModalType } from '@constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
-import { ICommunity, IEvent } from '@store/Db/entities';
+import { EventPrivacy, ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { eventFields, GetEventArgs } from '../Events.types';
@@ -16,7 +16,11 @@ const useInitIndividualEvent = (): boolean => {
 
   const communityId = useStoreState(({ db }) => db.community?.id);
   const isMember = useStoreState(({ db }) => db.isMember);
-  const isMembersOnly = useStoreState(({ db }) => db.event?.private);
+
+  const isMembersOnly = useStoreState(
+    ({ db }) => db.event?.privacy === EventPrivacy.MEMBERS_ONLY
+  );
+
   const setActive = useStoreActions(({ db }) => db.setActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -27,7 +31,7 @@ const useInitIndividualEvent = (): boolean => {
       'eventUrl',
       'id',
       'imageUrl',
-      'private',
+      'privacy',
       'recordingUrl',
       'startTime',
       'summary',

@@ -2,13 +2,16 @@ import deline from 'deline';
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
-import { RecurrenceType } from '@constants';
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
 import useManualQuery from '@hooks/useManualQuery';
 import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IMemberType, IPaymentMethod } from '@store/Db/entities';
+import {
+  IMemberType,
+  IPaymentMethod,
+  RecurrenceType
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
 import { GetChangePreviewArgs, GetChangePreviewResult } from './Payment.types';

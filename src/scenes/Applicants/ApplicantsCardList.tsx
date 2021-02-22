@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IMember } from '@store/Db/entities';
+import { IMember, MemberStatus } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ApplicantCard from './ApplicantsCard';
@@ -9,7 +9,7 @@ const ApplicantsCardList: React.FC = () => {
   const applicantIds: string[] = useStoreState(({ db }) => {
     return db.community.members?.filter((memberId: string) => {
       const member: IMember = db.byMemberId[memberId];
-      return member?.status === 'PENDING';
+      return member?.status === MemberStatus.PENDING;
     });
   });
 

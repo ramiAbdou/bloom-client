@@ -7,7 +7,13 @@ import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import {
+  IMember,
+  IMemberData,
+  IQuestion,
+  IUser,
+  MemberStatus
+} from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
@@ -50,8 +56,15 @@ const ApplicantsCardActionContainer: React.FC = () => {
 
   return (
     <Row equal className="mt-auto" spacing="xs">
-      <ApplicantsRespondButton applicantIds={[memberId]} response="ACCEPTED" />
-      <ApplicantsRespondButton applicantIds={[memberId]} response="REJECTED" />
+      <ApplicantsRespondButton
+        applicantIds={[memberId]}
+        response={MemberStatus.ACCEPTED}
+      />
+
+      <ApplicantsRespondButton
+        applicantIds={[memberId]}
+        response={MemberStatus.REJECTED}
+      />
     </Row>
   );
 };

@@ -2,7 +2,13 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import MasonryList from '@organisms/List/MasonryList';
-import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import {
+  IMember,
+  IMemberData,
+  IQuestion,
+  IUser,
+  MemberStatus
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { prepareMemberForFilter } from './Directory.util';
@@ -26,7 +32,7 @@ const DirectoryCardList: React.FC = () => {
 
         return { ...member, ...user, data, memberId, userId: user?.id };
       })
-      ?.filter((member) => member?.status === 'ACCEPTED')
+      ?.filter((member) => member?.status === MemberStatus.ACCEPTED)
       ?.filter((member) => !!member?.userId)
       ?.filter((member) => !member?.deletedAt)
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'));

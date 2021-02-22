@@ -14,7 +14,7 @@ import FormSection from '@organisms/Form/FormSection';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import FormTime from '@organisms/Form/FormTime';
-import { IEvent } from '@store/Db/entities';
+import { EventPrivacy, IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import DeleteEventButton from './DeleteEventButton';
 import useCreateEvent from './useCreateEvent';
@@ -42,7 +42,7 @@ const CreateEvent: React.FC = () => {
   const {
     description,
     imageUrl,
-    private: membersOnly,
+    privacy,
     summary,
     title,
     videoUrl
@@ -97,8 +97,12 @@ const CreateEvent: React.FC = () => {
         <FormMultipleChoice
           cardOptions={[{ label: 'Members Only' }, { label: 'Open to All' }]}
           className="mo-create-event-privacy-item"
-          id="PRIVACY_SETTINGS"
-          value={membersOnly === false ? 'Open to All' : 'Members Only'}
+          id="PRIVACY"
+          value={
+            privacy === EventPrivacy.MEMBERS_ONLY
+              ? 'Members Only'
+              : 'Open to All'
+          }
         />
       </FormSection>
 

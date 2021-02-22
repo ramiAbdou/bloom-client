@@ -1,4 +1,4 @@
-import { IMemberType } from '@store/Db/entities';
+import { IMemberType, RecurrenceType } from '@store/Db/entities';
 import { takeFirst } from '@util/util';
 
 /**
@@ -18,9 +18,9 @@ export const getTypeDescription = (
 
   // Construct string "Per" timespan based on the recurrence.
   const recurrenceString = takeFirst([
-    [recurrence === 'YEARLY', 'Per Year'],
-    [recurrence === 'MONTHLY', 'Per Month'],
-    [recurrence === 'LIFETIME', 'Lifetime']
+    [recurrence === RecurrenceType.YEARLY, 'Per Year'],
+    [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
+    [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
   ]);
 
   return `${amountString} ${recurrenceString}`;

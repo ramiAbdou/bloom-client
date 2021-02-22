@@ -39,6 +39,11 @@ export interface ICommunityApplication extends BaseEntity {
 
 // ## EVENT
 
+export enum EventPrivacy {
+  MEMBERS_ONLY = 'Members Only',
+  OPEN_TO_ALL = 'Open to All'
+}
+
 export interface IEvent extends BaseEntity {
   attendees: IdString[];
   attendeesSeries: TimeSeriesData[];
@@ -50,7 +55,7 @@ export interface IEvent extends BaseEntity {
   guestsSeries: TimeSeriesData[];
   imageUrl?: string;
   past?: boolean;
-  private: boolean;
+  privacy: EventPrivacy;
   recordingUrl?: string;
   startTime: string;
   summary: string;
@@ -106,6 +111,18 @@ export interface IPaymentMethod {
   zipCode: string;
 }
 
+export enum MemberRole {
+  ADMIN = 'Admin',
+  OWNER = 'Owner'
+}
+
+export enum MemberStatus {
+  ACCEPTED = 'Accepted',
+  INVITED = 'Invited',
+  PENDING = 'Pending',
+  REJECTED = 'Rejected'
+}
+
 export interface IMember extends BaseEntity {
   attendees: IdString[];
   applicantData: { question?: IQuestion; questionId?: string; value: string }[];
@@ -117,9 +134,9 @@ export interface IMember extends BaseEntity {
   joinedAt: string;
   paymentMethod: IPaymentMethod;
   payments: IdString[];
-  role?: 'ADMIN' | 'OWNER';
+  role?: MemberRole;
   type: IdString;
-  status: 'REJECTED' | 'PENDING' | 'INVITED' | 'ACCEPTED';
+  status: MemberStatus;
   stripeSubscriptionId?: string;
   user: IdString;
   watches: IdString[];
@@ -143,11 +160,17 @@ export interface IMemberPayment extends BaseEntity {
 
 // ## MEMBER TYPE
 
+export enum RecurrenceType {
+  LIFETIME = 'Lifetime',
+  MONTHLY = 'Monthly',
+  YEARLY = 'Yearly'
+}
+
 export interface IMemberType extends BaseEntity {
   amount: number;
   isFree: boolean;
   name: string;
-  recurrence: 'LIFETIME' | 'MONTHLY' | 'YEARLY';
+  recurrence: RecurrenceType;
 }
 
 // ## QUESTION

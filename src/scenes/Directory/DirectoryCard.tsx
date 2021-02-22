@@ -6,7 +6,13 @@ import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMember, IMemberData, IMemberType, IUser } from '@store/Db/entities';
+import {
+  IMember,
+  IMemberData,
+  IMemberType,
+  IUser,
+  RecurrenceType
+} from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 
@@ -62,7 +68,7 @@ const DirectoryCardContent: React.FC = () => {
   const isLifetime: boolean = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
     const type: IMemberType = db.byTypeId[member?.type];
-    return type?.recurrence === 'LIFETIME';
+    return type?.recurrence === RecurrenceType.LIFETIME;
   });
 
   const onClick = () => {

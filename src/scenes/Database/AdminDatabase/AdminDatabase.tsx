@@ -5,7 +5,7 @@ import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMember, IUser } from '@store/Db/entities';
+import { IMember, IUser, MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
@@ -21,7 +21,9 @@ const AdminDatabase: React.FC = () => {
       }, []);
   });
 
-  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
+  const isOwner = useStoreState(
+    ({ db }) => db.member?.role === MemberRole.OWNER
+  );
 
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.

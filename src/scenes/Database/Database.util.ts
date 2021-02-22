@@ -2,7 +2,13 @@ import { State } from 'easy-peasy';
 
 import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
-import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import {
+  IMember,
+  IMemberData,
+  IQuestion,
+  IUser,
+  MemberStatus
+} from '@store/Db/entities';
 import { sortObjects } from '@util/util';
 
 interface GetMemberTableRowArgs {
@@ -60,7 +66,7 @@ export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
 
   const filteredMembers: IMember[] = db.community.members
     ?.map((memberId: string) => db.byMemberId[memberId])
-    ?.filter((member: IMember) => member?.status === 'ACCEPTED')
+    ?.filter((member: IMember) => member?.status === MemberStatus.ACCEPTED)
     ?.filter((member: IMember) => !member.deletedAt);
 
   const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
