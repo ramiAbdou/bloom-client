@@ -28,7 +28,7 @@ const ListFilterQuestionList: React.FC = () => {
   });
 
   return (
-    <ul className="mb-sm">
+    <ul>
       {questions?.map(({ id }: IQuestion) => {
         return <ListFilterQuestion key={id} id={id} />;
       })}
@@ -38,7 +38,7 @@ const ListFilterQuestionList: React.FC = () => {
 
 const ListFilterActions: React.FC = () => {
   return (
-    <Row className="mx-xs my-sm" spacing="xs">
+    <Row className="mx-xs py-sm" spacing="xs">
       <ListFilterApplyButton />
       <PanelCloseButton />
     </Row>
