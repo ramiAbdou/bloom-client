@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
-import { IntegrationsDetailsData } from '../Integrations.types';
+import { IntegrationsDetailsData } from './Integrations.types';
 
 const IntegrationsCardSeeDetailsButton: React.FC<IntegrationsDetailsData> = ({
   connected,
@@ -17,7 +17,13 @@ const IntegrationsCardSeeDetailsButton: React.FC<IntegrationsDetailsData> = ({
   };
 
   return (
-    <Button fill secondary show={connected} onClick={onClick}>
+    <Button
+      fill
+      secondary
+      className="mt-auto"
+      show={connected}
+      onClick={onClick}
+    >
       See Details
     </Button>
   );
@@ -40,7 +46,7 @@ const IntegrationsCardConnectButton: React.FC<IntegrationsDetailsData> = ({
   const aProps = href ? { href, rel: 'noreferrer', target: '_blank' } : {};
 
   return (
-    <a onClick={onClick} {...aProps}>
+    <a className="mt-auto" onClick={onClick} {...aProps}>
       <Button fill secondary>
         {href ? 'Connect +' : 'Finish Connecting +'}
       </Button>

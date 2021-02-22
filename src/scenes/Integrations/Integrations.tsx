@@ -4,7 +4,7 @@ import { ModalType } from '@constants';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import { useStoreActions } from '@store/Store';
-import IntegrationsCardContainer from './IntegrationsCardContainer';
+import IntegrationsCardList from './IntegrationsCardList';
 
 const Integrations: React.FC = () => {
   const searchParam = new URLSearchParams(window.location.search).get('flow');
@@ -19,7 +19,7 @@ const Integrations: React.FC = () => {
   return (
     <MainContent>
       <MainHeader loading={false} title="Integrations" />
-      <IntegrationsCardContainer />
+      <IntegrationsCardList />
     </MainContent>
   );
 };

@@ -13,7 +13,7 @@ const IntegrationsDetailsModal: React.FC = () => {
 
   return (
     <>
-      <img className="s-integrations-icon--lg" src={logo} />
+      <img className="br-xs s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>
 
       <QuestionBox

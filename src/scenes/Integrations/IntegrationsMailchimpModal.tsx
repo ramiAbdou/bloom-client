@@ -36,11 +36,11 @@ const MailchimpModalContent: React.FC = () => {
     <>
       <img
         alt="Mailchimp Icon"
-        className="s-integrations-icon--lg"
+        className="br-xs s-integrations-icon--lg"
         src={mailchimp}
       />
 
-      <h1 style={{ marginBottom: -24 }}>Finish Integrating Mailchimp</h1>
+      <h1>Finish Integrating Mailchimp</h1>
 
       <FormMultipleChoice
         description={deline`
@@ -61,7 +61,7 @@ const IntegrationsMailchimpModal: React.FC = () => {
   const onSubmit = useMailchimpSubmit();
 
   return (
-    <Form className="s-integrations-onboarding-form" onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
       <MailchimpModalContent />
     </Form>
   );

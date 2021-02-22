@@ -1,6 +1,7 @@
 import React from 'react';
 
 import StatusTag from '@atoms/Tag/StatusTag';
+import Row from '@containers/Row/Row';
 
 export type IntegrationCardProps = {
   connected?: boolean;
@@ -13,10 +14,10 @@ export type IntegrationCardProps = {
 const IntegrationCardHeader: React.FC<
   Pick<IntegrationCardProps, 'connected' | 'logo'>
 > = ({ connected, logo }) => (
-  <div className="s-integrations-card-header">
+  <Row className="mb-sm" justify="sb">
     <img alt="Company Logo" className="s-integrations-icon" src={logo} />
     {connected && <StatusTag positive>Connected</StatusTag>}
-  </div>
+  </Row>
 );
 
 const IntegrationCardContent: React.FC<Omit<IntegrationCardProps, 'href'>> = ({
@@ -25,11 +26,11 @@ const IntegrationCardContent: React.FC<Omit<IntegrationCardProps, 'href'>> = ({
   logo,
   name
 }) => (
-  <div>
+  <>
     <IntegrationCardHeader connected={connected} logo={logo} />
-    <h3>{name}</h3>
-    <p>{description}</p>
-  </div>
+    <h3 className="mb-xs">{name}</h3>
+    <p className="mb-sm">{description}</p>
+  </>
 );
 
 export default IntegrationCardContent;

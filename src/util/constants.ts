@@ -126,6 +126,8 @@ export enum SocialBrand {
   TWITTER = 'TWITTER'
 }
 
+export type Spacing = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+
 export interface TimeSeriesData {
   name: string;
   value: number;

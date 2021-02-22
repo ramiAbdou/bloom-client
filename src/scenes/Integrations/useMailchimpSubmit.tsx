@@ -7,11 +7,11 @@ import { useStoreState } from '@store/Store';
 const useMailchimpSubmit = (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
 
-  const [updateIntegrations] = useMutation<IIntegrations>({
+  const [updateMailchimpListId] = useMutation<IIntegrations>({
     fields: ['id', 'mailchimpListId', 'mailchimpListName'],
-    operation: 'updateIntegrations',
+    operation: 'updateMailchimpListId',
     schema: Schema.COMMUNITY_INTEGRATIONS,
-    types: { mailchimpListId: { required: false } }
+    types: { mailchimpListId: { required: true } }
   });
 
   const onSubmit = async ({
@@ -25,7 +25,7 @@ const useMailchimpSubmit = (): OnFormSubmit => {
       ({ name }) => name === selectedMailchimpList
     );
 
-    const { error } = await updateIntegrations({ mailchimpListId });
+    const { error } = await updateMailchimpListId({ mailchimpListId });
 
     if (error) {
       setError(error);

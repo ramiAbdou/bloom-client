@@ -1,16 +1,8 @@
 import React from 'react';
 
-import { ClassNameProps, ShowProps } from '@constants';
+import useBreakpoint from '@hooks/useBreakpoint';
 import { cx } from '@util/util';
-
-interface RowProps extends ClassNameProps, ShowProps {
-  align?: 'baseline' | 'center' | 'end' | 'start';
-  equal?: boolean;
-  gap?: 'xxs' | 'xs' | 'sm';
-  justify?: 'center' | 'sb';
-  spacing?: 'xs' | 'sm';
-  wrap?: boolean;
-}
+import { RowProps } from './Row.types';
 
 const Row: React.FC<RowProps> = ({
   align = 'center',
@@ -23,6 +15,8 @@ const Row: React.FC<RowProps> = ({
   show,
   wrap
 }) => {
+  const isTablet: boolean = useBreakpoint() <= 2;
+
   const css = cx(
     'flex t-row',
     {
@@ -32,18 +26,20 @@ const Row: React.FC<RowProps> = ({
       'flex-as': align === 'start',
       'flex-c': justify === 'center',
       'flex-sb': justify === 'sb',
-      'flex-w': !!wrap,
+      'flex-w': !!wrap || !!gap,
       't-row--equal': equal,
-      't-row--gap-sm': wrap && gap === 'sm',
-      't-row--gap-xs': wrap && gap === 'xs',
-      't-row--gap-xxs': wrap && gap === 'xxs',
+      't-row--fill': isTablet,
+      't-row--gap-sm': gap === 'sm',
+      't-row--gap-xs': gap === 'xs',
+      't-row--gap-xxs': gap === 'xxs',
       't-row--spacing-sm': spacing === 'sm',
       't-row--spacing-xs': spacing === 'xs'
     },
     className
   );
 
-  return show !== false ? <div className={css}>{children}</div> : null;
+  if (show === false) return null;
+  return <div className={css}>{children}</div>;
 };
 
 export default Row;

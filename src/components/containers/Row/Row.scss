@@ -5,6 +5,8 @@ $PREF: 't-row';
 .#{$PREF} {
   &--equal { bottom: $md; position: sticky; width: 100%; }
   &--equal > * { width: 50%; }
+  
+  &--fill > * { width: 100%; }
 
   &--gap-xxs { margin-bottom: -$xxs; margin-right: -$xxs; }
   &--gap-xxs > * { margin-bottom: $xxs; margin-right: $xxs; }

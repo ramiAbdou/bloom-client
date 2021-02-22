@@ -2,22 +2,24 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
+import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import { IIntegrations } from '@store/Db/entities';
+import { IIntegrations, IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
-import IntegrationCard from './IntegrationsCard/IntegrationsCard';
+import IntegrationCard from './IntegrationsCard';
 
 // Responsible for fetching and supplying all the data to the children card
 // components to process and render.
-const IntegrationsCardContainer: React.FC = () => {
+const IntegrationsCardList: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
 
   const hasPaidMembership = useStoreState(({ db }) => {
-    return db.community.types?.some(
-      (typeId: string) => !db.byTypeId[typeId]?.isFree
-    );
+    return db.community.types?.some((typeId: string) => {
+      const type: IMemberType = db.byTypeId[typeId];
+      return !type?.isFree;
+    });
   });
 
   const {
@@ -57,13 +59,13 @@ const IntegrationsCardContainer: React.FC = () => {
         <Separator margin={24} />
       </Show>
 
-      <div className="s-integrations-card-ctr">
+      <Row className="pt-xxs" gap="sm">
         {disconnectedData.map((props: IntegrationsDetailsData) => (
           <IntegrationCard key={props.name} {...props} />
         ))}
-      </div>
+      </Row>
     </>
   );
 };
 
-export default IntegrationsCardContainer;
+export default IntegrationsCardList;
