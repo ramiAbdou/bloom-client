@@ -59,7 +59,7 @@ const IntegrationsCardList: React.FC = () => {
         <Separator margin={24} />
       </Show>
 
-      <Row className="pt-xxs" gap="sm">
+      <Row className="pt-xxs" fillBreakpoint={2} gap="sm">
         {disconnectedData.map((props: IntegrationsDetailsData) => (
           <IntegrationCard key={props.name} {...props} />
         ))}
