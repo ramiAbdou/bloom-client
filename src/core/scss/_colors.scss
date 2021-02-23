@@ -31,8 +31,3 @@ $gray-6: var(--gray-6);
 
 $green: hsl(150, 100%, 27%);
 $red: hsl(9, 99%, 49%);
-
-.c {
-  &-gray-2 { color: $gray-2; }
-  &-gray-3 { color: $gray-3; }
-}

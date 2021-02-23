@@ -5,6 +5,14 @@
   &-xs { border-radius: $xs; }
 }
 
+// ## COLORS
+
+.c {
+  &-primary { color: $primary; }
+  &-gray-2 { color: $gray-2; }
+  &-gray-3 { color: $gray-3; }
+}
+
 // ## FLEX
 
 .f {

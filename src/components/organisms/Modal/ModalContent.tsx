@@ -14,6 +14,7 @@ import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
+import IndividualEventUpcomingModal from '../../../scenes/Events/IndividualEvent/IndividualEventUpcomingModal';
 import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
@@ -45,6 +46,10 @@ const ModalCustomContent: React.FC = () => {
   }
 
   if (id === ModalType.EDIT_SOCIAL_MEDIA) return <ProfileSocialModal />;
+
+  if (id === ModalType.EVENT_HASNT_STARTED) {
+    return <IndividualEventUpcomingModal />;
+  }
 
   if (id === ModalType.INTEGRATIONS_DETAILS) {
     return <IntegrationsDetailsModal />;
