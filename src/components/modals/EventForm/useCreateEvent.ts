@@ -6,11 +6,10 @@ import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { uploadImage } from '@util/imageUtil';
 
+type CreateEventArgs = Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>;
+
 const useCreateEvent = (): OnFormSubmit => {
-  const [createEvent] = useMutation<
-    IEvent,
-    Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>
-  >({
+  const [createEvent] = useMutation<IEvent, CreateEventArgs>({
     fields: [
       'description',
       'endTime',
@@ -18,7 +17,6 @@ const useCreateEvent = (): OnFormSubmit => {
       'id',
       'imageUrl',
       'privacy',
-      'recordingUrl',
       'startTime',
       'summary',
       'title',
@@ -31,6 +29,7 @@ const useCreateEvent = (): OnFormSubmit => {
       description: { required: true },
       endTime: { required: true },
       imageUrl: { required: false },
+      invitees: { required: true, type: '[String!]' },
       privacy: { required: false },
       startTime: { required: true },
       summary: { required: false },
@@ -41,6 +40,7 @@ const useCreateEvent = (): OnFormSubmit => {
 
   const onSubmit = async ({
     closeModal,
+    db,
     items,
     setError,
     showToast
@@ -72,10 +72,16 @@ const useCreateEvent = (): OnFormSubmit => {
       }
     }
 
-    const args: Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'> = {
+    const invitees: string[] =
+      items.EVENT_NOTIFICATION?.value === `Don't Send Email`
+        ? []
+        : db.community.members;
+
+    const args: CreateEventArgs = {
       description: items.EVENT_DESCRIPTION?.value,
       endTime,
       imageUrl,
+      invitees,
       privacy: items.PRIVACY?.value,
       startTime,
       summary: items.EVENT_SUMMARY?.value,

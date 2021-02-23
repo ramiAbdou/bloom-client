@@ -33,6 +33,7 @@ const EventFormNotificationsSection: React.FC = () => {
           Would you like to send an email notification to members upon creating
           the event?
         `}
+        id="EVENT_NOTIFICATION"
         options={[
           `Send Email to All ${data?.length} Members`,
           `Don't Send Email`

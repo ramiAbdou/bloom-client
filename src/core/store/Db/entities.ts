@@ -54,6 +54,7 @@ export interface IEvent extends BaseEntity {
   guests: Identifier[];
   guestsSeries: TimeSeriesData[];
   imageUrl?: string;
+  invitees?: Identifier[];
   past?: boolean;
   privacy: EventPrivacy;
   recordingUrl?: string;
