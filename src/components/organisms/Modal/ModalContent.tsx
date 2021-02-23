@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { ModalType } from '@constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CheckInModal from '@modals/CheckIn/CheckIn';
-import EventForm from '@modals/Event/EventForm';
+import EventForm from '@modals/EventForm/EventForm';
 import PaymentModal from '@modals/Payment/Payment';
 import ProfileModal from '@modals/Profile/Profile';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
