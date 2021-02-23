@@ -5,7 +5,7 @@ import Application from '@scenes/Application/Application';
 import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import { useStoreState } from '@store/Store';
 import useFinalPath from '../hooks/useFinalPath';
-import AuthenticatedRouter from './AuthenticatedRouter';
+import AuthenticatedCommunityRouter from './AuthenticatedCommunityRouter';
 import useBackupCommunity from './useBackupCommunity';
 import useGetTokens from './useGetTokens';
 import useInitUser from './useInitUser';
@@ -19,7 +19,7 @@ const CommunityRouter: React.FC = () => {
 
   const finalPath = useFinalPath();
 
-  const loading1 = useGetTokens();
+  const loading1 = useGetTokens(true);
   const loading2 = useInitUser();
   const loading3 = useBackupCommunity();
 
@@ -36,7 +36,7 @@ const CommunityRouter: React.FC = () => {
       )}
 
       <Route exact component={Application} path="/:urlName/apply" />
-      <Route component={AuthenticatedRouter} path="/:urlName" />
+      <Route component={AuthenticatedCommunityRouter} path="/:urlName" />
       <Redirect to="/:urlName" />
     </Switch>
   );

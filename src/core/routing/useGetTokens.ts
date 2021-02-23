@@ -16,12 +16,11 @@ interface GetTokensResult {
  * Updates the authenticated status of the user by checking the decoded httpOnly
  * cookies stored in the browser.
  */
-const useGetTokens = (): boolean => {
+const useGetTokens = (checkUrlName = false): boolean => {
   const token = new URLSearchParams(window.location.search).get('token');
   const { urlName }: UrlNameProps = useParams();
 
   const setActive = useStoreActions(({ db }) => db.setActive);
-
   const { push } = useHistory();
 
   const [getTokens, result] = useManualQuery<GetTokensResult>({
@@ -35,7 +34,7 @@ const useGetTokens = (): boolean => {
       const { data } = await getTokens({ urlName });
 
       if (!data?.userId) {
-        if (!urlName) push('/login');
+        if (checkUrlName && !urlName) push('/login');
         return;
       }
 
@@ -45,7 +44,7 @@ const useGetTokens = (): boolean => {
         { id: data?.userId, table: 'users' }
       ]);
     })();
-  }, [token, urlName]);
+  }, [checkUrlName, token, urlName]);
 
   const loading = !result.data || result.loading;
   useLoader(loading);

@@ -14,7 +14,7 @@ import { useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
 import useInitCommunity from './useInitCommunity';
 
-const AuthenticatedRouterSwitch: React.FC = () => {
+const AuthenticatedCommunityRouterSwitch: React.FC = () => {
   const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
 
   return (
@@ -38,7 +38,7 @@ const AuthenticatedRouterSwitch: React.FC = () => {
   );
 };
 
-const AuthenticatedRouter: React.FC = () => {
+const AuthenticatedCommunityRouter: React.FC = () => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const isInitialized = useStoreState(({ db }) => db.isInitialized);
   const loading = useInitCommunity();
@@ -49,9 +49,9 @@ const AuthenticatedRouter: React.FC = () => {
   return (
     <>
       <Nav />
-      <AuthenticatedRouterSwitch />
+      <AuthenticatedCommunityRouterSwitch />
     </>
   );
 };
 
-export default AuthenticatedRouter;
+export default AuthenticatedCommunityRouter;
