@@ -1,9 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
-import Show from '@containers/Show';
 import { IIntegrations, IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
@@ -43,28 +41,12 @@ const IntegrationsCardList: React.FC = () => {
     ({ connected }) => !connected
   );
 
-  const connectedData: IntegrationsDetailsData[] = integrationData.filter(
-    ({ connected }) => connected
-  );
-
   return (
-    <>
-      <Show show={!!connectedData.length}>
-        <div className="s-integrations-card-ctr">
-          {connectedData.map((props: IntegrationsDetailsData) => (
-            <IntegrationCard key={props.name} {...props} />
-          ))}
-        </div>
-
-        <Separator margin={24} />
-      </Show>
-
-      <Row className="pt-xxs" fillBreakpoint={2} gap="sm">
-        {disconnectedData.map((props: IntegrationsDetailsData) => (
-          <IntegrationCard key={props.name} {...props} />
-        ))}
-      </Row>
-    </>
+    <Row className="pt-xxs" fillBreakpoint={2} gap="sm">
+      {disconnectedData.map((props: IntegrationsDetailsData) => (
+        <IntegrationCard key={props.name} {...props} />
+      ))}
+    </Row>
   );
 };
 
