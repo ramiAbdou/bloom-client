@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FormSection: React.FC = ({ children }) => {
-  return <div className="mb-lg">{children}</div>;
+  return <div className="o-form-section mb-lg">{children}</div>;
 };
 
 export default FormSection;

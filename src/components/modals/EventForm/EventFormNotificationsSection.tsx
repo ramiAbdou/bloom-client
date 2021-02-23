@@ -1,19 +1,21 @@
 import deline from 'deline';
 import React from 'react';
 
+import useQuery from '@hooks/useQuery';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
-import { IMember, MemberStatus } from '@store/Db/entities';
-import { useStoreState } from '@store/Store';
+import { IMember } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 
 const EventFormNotificationsSection: React.FC = () => {
-  const numMembers: number = useStoreState(({ db }) => {
-    return db.community.members?.filter((memberId: string) => {
-      const member: IMember = db.byMemberId[memberId];
-      return member.status === MemberStatus.ACCEPTED;
-    })?.length;
+  const { data } = useQuery<IMember[]>({
+    fields: ['id', { community: ['id'] }],
+    operation: 'getCommunityMembers',
+    schema: [Schema.MEMBER]
   });
+
+  if (!data) return null;
 
   return (
     <FormSection>
@@ -32,7 +34,7 @@ const EventFormNotificationsSection: React.FC = () => {
           the event?
         `}
         options={[
-          `Send Email to All ${numMembers} Members`,
+          `Send Email to All ${data?.length} Members`,
           `Don't Send Email`
         ]}
         title="Event Creation Email"
