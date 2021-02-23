@@ -3,6 +3,7 @@ import React from 'react';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import FormSection from '@organisms/Form/FormSection';
+import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import StoryStore from '@organisms/Story/Story.store';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -26,7 +27,8 @@ const ApplicationReviewMain: React.FC = () => {
   });
 
   return (
-    <FormSection title="Application">
+    <FormSection>
+      <FormSectionHeader title="Application" />
       <QuestionBox className="mb-md" items={items} />
     </FormSection>
   );

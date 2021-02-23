@@ -9,6 +9,7 @@ import FormShortText from '@organisms/Form/FormShortText';
 import FormTime from '@organisms/Form/FormTime';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import FormSectionHeader from '../../organisms/Form/FormSectionHeader';
 
 const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => {
   return (
@@ -35,7 +36,9 @@ const EventFormDetailsSection: React.FC = () => {
   });
 
   return (
-    <FormSection title="Event Details">
+    <FormSection>
+      <FormSectionHeader title="Event Details" />
+
       <FormShortText
         id="VIDEO_URL"
         title="Event Link"

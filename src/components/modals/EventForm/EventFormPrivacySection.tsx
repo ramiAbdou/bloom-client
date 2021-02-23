@@ -2,6 +2,7 @@ import React from 'react';
 
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
+import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import { EventPrivacy, IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
@@ -14,7 +15,8 @@ const EventFormPrivacySection: React.FC = () => {
   });
 
   return (
-    <FormSection title="Privacy Settings">
+    <FormSection>
+      <FormSectionHeader title="Privacy Settings" />
       <FormMultipleChoice
         cardOptions={[{ label: 'Members Only' }, { label: 'Open to All' }]}
         className="mo-create-event-privacy-item"

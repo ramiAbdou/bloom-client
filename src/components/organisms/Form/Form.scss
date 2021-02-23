@@ -52,14 +52,6 @@ $PREF: 'o-form';
   > h2:first-of-type { margin-bottom: $xs; }
 }
 
-// ## FORM SECTION
-
-.#{$PREF}-section {
-  margin-bottom: $lg;
-
-  > h2:first-of-type { margin-bottom: $md; }
-}
-
 // ## FORM SUBMIT BUTTON
 
 .#{$PREF}-submit {

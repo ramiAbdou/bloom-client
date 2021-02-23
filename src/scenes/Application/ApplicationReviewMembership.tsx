@@ -3,6 +3,7 @@ import React from 'react';
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
 import FormSection from '@organisms/Form/FormSection';
+import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import StoryStore from '@organisms/Story/Story.store';
 import {
   IMemberType,
@@ -56,7 +57,11 @@ const ApplicationReviewMembeship: React.FC = () => {
   });
 
   return (
-    <FormSection title={last4 ? 'Membership & Payment' : 'Membership Plan'}>
+    <FormSection>
+      <FormSectionHeader
+        title={last4 ? 'Membership & Payment' : 'Membership Plan'}
+      />
+
       <Row justify="sb" spacing="xs">
         <InformationCard description={description} title={selectedTypeName} />
 
