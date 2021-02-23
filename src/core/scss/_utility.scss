@@ -46,6 +46,7 @@
 // ## MARGIN X
 
 .mx {
+  &-auto { margin-left: auto; margin-right: auto; }
   &-xs { margin-left: $xs; &:not(:last-child) { margin-right: $xs; } }
   &-sm { margin-left: $sm; &:not(:last-child) { margin-right: $sm; } }
 }
@@ -105,8 +106,9 @@
 // ## WIDTH
 
 .w {
+  &-5 { width: $xxl * 5; }
+  &-10 { width: $xxl * 10; }
+
   &-100 { width: 100%; }
   &-100--t { @include MT { width: 100%; } }
-
-  &-5 { width: $xxl * 5; }
 }

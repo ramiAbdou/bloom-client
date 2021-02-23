@@ -9,18 +9,20 @@ import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 
+interface UpdateRecordingUrlArgs {
+  eventId: string;
+  recordingUrl: string;
+}
+
 const IndividualEventRecordingForm: React.FC = () => {
-  const id = useStoreState(({ panel }) => panel.metadata);
+  const eventId = useStoreState(({ panel }) => panel.metadata);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
 
-  const [updateEvent] = useMutation<
-    IEvent,
-    Pick<IEvent, 'id' | 'recordingUrl'>
-  >({
+  const [updateRecordingUrl] = useMutation<IEvent, UpdateRecordingUrlArgs>({
     fields: ['id', 'recordingUrl'],
-    operation: 'updateEvent',
+    operation: 'updateRecordingUrl',
     schema: Schema.EVENT,
-    types: { id: { required: true }, recordingUrl: { required: false } }
+    types: { eventId: { required: true }, recordingUrl: { required: false } }
   });
 
   const onSubmit = async ({
@@ -28,10 +30,13 @@ const IndividualEventRecordingForm: React.FC = () => {
     items,
     showToast
   }: OnFormSubmitArgs) => {
-    const value = items.RECORDING_URL?.value;
-    await updateEvent({ id, recordingUrl: value });
-    showToast({ message: 'Event recording link updated.' });
+    await updateRecordingUrl({
+      eventId,
+      recordingUrl: items.RECORDING_URL?.value
+    });
+
     closePanel();
+    showToast({ message: 'Event recording link updated.' });
   };
 
   return (

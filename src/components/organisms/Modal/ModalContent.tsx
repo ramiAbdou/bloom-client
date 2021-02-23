@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { ModalType } from '@constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CheckInModal from '@modals/CheckIn/CheckIn';
-import CreateEventModal from '@modals/Event/CreateEvent';
+import EventForm from '@modals/Event/EventForm';
 import PaymentModal from '@modals/Payment/Payment';
 import ProfileModal from '@modals/Profile/Profile';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
@@ -34,7 +34,7 @@ const ModalCustomContent: React.FC = () => {
   }
 
   if (id === ModalType.CHECK_IN) return <CheckInModal />;
-  if (id === ModalType.CREATE_EVENT) return <CreateEventModal />;
+  if (id === ModalType.CREATE_EVENT) return <EventForm />;
 
   if (id === ModalType.EDIT_MEMBERSHIP_INFORMATION) {
     return <ProfileMembershipForm />;

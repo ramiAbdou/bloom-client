@@ -2,7 +2,7 @@ import day from 'dayjs';
 
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { EventPrivacy, IEvent } from '@store/Db/entities';
+import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { uploadImage } from '@util/imageUtil';
 

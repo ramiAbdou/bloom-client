@@ -70,7 +70,7 @@ const FormCoverImage: React.FC<FormItemData> = (args) => {
     : {};
 
   return (
-    <>
+    <div className="o-form-item">
       <Aspect
         className="o-form-item--cover-image"
         ratio={2}
@@ -82,7 +82,7 @@ const FormCoverImage: React.FC<FormItemData> = (args) => {
       </Aspect>
 
       <FormCoverImageMessage />
-    </>
+    </div>
   );
 };
 

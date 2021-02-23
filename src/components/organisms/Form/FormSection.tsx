@@ -5,7 +5,7 @@ import { TitleProps } from '@constants';
 const FormSection: React.FC<TitleProps> = ({ children, title }) => {
   return (
     <div className="o-form-section">
-      <h2>{title}</h2>
+      {title && <h2>{title}</h2>}
       {children}
     </div>
   );
