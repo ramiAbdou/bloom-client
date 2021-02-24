@@ -1,6 +1,9 @@
 import React from 'react';
 
-const FormSection: React.FC = ({ children }) => {
+import { BaseProps } from '@constants';
+
+const FormSection: React.FC<BaseProps> = ({ children, show }) => {
+  if (show === false) return null;
   return <div className="o-form-section mb-lg">{children}</div>;
 };
 
