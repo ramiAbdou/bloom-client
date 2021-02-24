@@ -24,12 +24,12 @@ const useVerifyIndividualEventToken = () => {
     if (!token || !videoUrl) return;
 
     (async () => {
-      const { data: isVerified } = await verifyEventJoinToken();
-      if (!isVerified) showModal({ id: ModalType.EVENT_HASNT_STARTED });
-      else {
-        push(window.location.pathname);
-        openHref(videoUrl, false);
-      }
+      const { data: isVerified, error } = await verifyEventJoinToken();
+
+      if (error) showModal({ id: ModalType.EVENT_ERROR, metadata: error });
+      if (isVerified) openHref(videoUrl, false);
+
+      push(window.location.pathname);
     })();
   }, [token, videoUrl]);
 

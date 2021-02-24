@@ -7,6 +7,7 @@ import EventForm from '@modals/EventForm/EventForm';
 import PaymentModal from '@modals/Payment/Payment';
 import ProfileModal from '@modals/Profile/Profile';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
+import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
 import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
@@ -14,7 +15,6 @@ import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import IndividualEventUpcomingModal from '../../../scenes/Events/IndividualEvent/IndividualEventUpcomingModal';
 import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
@@ -47,8 +47,8 @@ const ModalCustomContent: React.FC = () => {
 
   if (id === ModalType.EDIT_SOCIAL_MEDIA) return <ProfileSocialModal />;
 
-  if (id === ModalType.EVENT_HASNT_STARTED) {
-    return <IndividualEventUpcomingModal />;
+  if (id === ModalType.EVENT_ERROR) {
+    return <IndividualEventErrorModal />;
   }
 
   if (id === ModalType.INTEGRATIONS_DETAILS) {

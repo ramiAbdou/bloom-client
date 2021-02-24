@@ -31,7 +31,7 @@ export const globalModals: ModalType[] = [
   ModalType.EDIT_MEMBERSHIP_INFORMATION,
   ModalType.EDIT_PERSONAL_INFORMATION,
   ModalType.EDIT_SOCIAL_MEDIA,
-  ModalType.EVENT_HASNT_STARTED,
+  ModalType.EVENT_ERROR,
   ModalType.INTEGRATIONS_DETAILS,
   ModalType.MAILCHIMP_FLOW,
   ModalType.PAY_DUES,
