@@ -7,7 +7,7 @@ import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import useApplyForMembership from './useApplyForMembership';
+import useApplyToCommunity from './useApplyToCommunity';
 import useValidateEmail from './useValidateEmail';
 
 const ApplicationMainForm: React.FC = () => {
@@ -24,7 +24,7 @@ const ApplicationMainForm: React.FC = () => {
 
   const items = StoryStore.useStoreState((store) => store.items);
 
-  const applyForMembership = useApplyForMembership();
+  const applyForMembership = useApplyToCommunity();
   const validateEmail = useValidateEmail();
 
   return (

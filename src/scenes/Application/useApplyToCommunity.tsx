@@ -4,10 +4,10 @@ import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
 import { IMemberType } from '@store/Db/entities';
 
-const useApplyForMembership = (): OnFormSubmit => {
-  const [applyForMembership] = useMutation<any, ApplyForMembershipArgs>({
+const useApplyToCommunity = (): OnFormSubmit => {
+  const [applyToCommunity] = useMutation<any, ApplyForMembershipArgs>({
     fields: ['id'],
-    operation: 'applyForMembership',
+    operation: 'applyToCommunity',
     types: {
       data: { type: '[MemberDataInput!]!' },
       email: { required: true },
@@ -46,7 +46,7 @@ const useApplyForMembership = (): OnFormSubmit => {
         value: parseValue(value)
       }));
 
-    const { error } = await applyForMembership({
+    const { error } = await applyToCommunity({
       data,
       email,
       memberTypeId,
@@ -65,4 +65,4 @@ const useApplyForMembership = (): OnFormSubmit => {
   return onSubmit;
 };
 
-export default useApplyForMembership;
+export default useApplyToCommunity;

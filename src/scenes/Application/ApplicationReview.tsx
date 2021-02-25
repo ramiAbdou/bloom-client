@@ -10,7 +10,7 @@ import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 import ApplicationReviewMain from './ApplicationReviewMain';
 import ApplicationReviewMembership from './ApplicationReviewMembership';
-import useApplyForMembership from './useApplyForMembership';
+import useApplyToCommunity from './useApplyToCommunity';
 
 const ApplicationReviewButton: React.FC = () => {
   const hasCreditCard = StoryStore.useStoreState(({ items }) => {
@@ -26,7 +26,7 @@ const ApplicationReviewButton: React.FC = () => {
 };
 
 const ApplicationReviewForm: React.FC = () => {
-  const applyForMembership = useApplyForMembership();
+  const applyForMembership = useApplyToCommunity();
 
   return (
     <Form options={{ disableValidation: true }} onSubmit={applyForMembership}>
