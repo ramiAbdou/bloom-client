@@ -1,4 +1,3 @@
-import deline from 'deline';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
@@ -62,14 +61,8 @@ const PaymentCard: React.FC = () => {
   const type = PaymentStore.useStoreState((store) => store.type);
 
   const description: string = isCardOnFile
-    ? deline`
-      An update to your current subscription will be reflected on your
-      next billing date.
-    `
-    : deline`
-      We don’t have your payment information yet. Please enter your
-      information to continue to the next step.
-    `;
+    ? 'An update to your current subscription will be reflected on your next billing date.'
+    : 'We don’t have your payment information yet. Please enter your information to continue to the next step.';
 
   return (
     <StoryPage

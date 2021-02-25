@@ -1,4 +1,3 @@
-import deline from 'deline';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
@@ -28,11 +27,7 @@ const MemberDatabaseDeleteFormHeader: React.FC = () => {
 
   return (
     <FormHeader
-      description={deline`
-        Are you sure you want to remove these member(s)? They will no longer
-        have access to your community and they will not show up in the member
-        database.
-      `}
+      description="Are you sure you want to remove these member(s)? They will no longer have access to your community and they will not show up in the member database."
       title={`Remove ${memberIds?.length} member(s)?`}
     />
   );

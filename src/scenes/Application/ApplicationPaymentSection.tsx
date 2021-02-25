@@ -1,4 +1,3 @@
-import deline from 'deline';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
@@ -22,11 +21,7 @@ const ApplicationPaymentForm: React.FC = () => {
     <Form onSubmit={savePaymentMethod}>
       <FormHeader
         h2
-        description={deline`
-          You selected a paid plan. Please enter your card and billing
-          information to continue. You will be able to review this information
-          in the next step.
-        `}
+        description="You selected a paid plan. Please enter your card and billing information to continue. You will be able to review this information in the next step."
         title="Payment"
       />
 

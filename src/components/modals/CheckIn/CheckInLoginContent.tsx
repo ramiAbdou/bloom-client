@@ -1,4 +1,3 @@
-import deline from 'deline';
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -88,9 +87,7 @@ const LoginCardEmailForm: React.FC = () => {
     <Form onSubmit={sendLoginLink}>
       <FormShortText
         category={QuestionCategory.EMAIL}
-        description={deline`
-          Or continue with your email address to receive a login link.
-        `}
+        description="Or continue with your email address to receive a login link."
         placeholder="Email"
       />
 

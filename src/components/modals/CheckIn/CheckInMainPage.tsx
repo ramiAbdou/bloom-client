@@ -1,4 +1,3 @@
-import deline from 'deline';
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 
@@ -36,16 +35,11 @@ const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
       branchId="FINISH_MEMBER"
       branches={{
         FINISH_ATTENDEE: {
-          description: deline`
-            We'll redirect you to the event when finished with the form.
-          `,
+          description: `We'll redirect you to the event when finished with the form.`,
           title: 'Finish Checking-In'
         },
         FINISH_GUEST: {
-          description: deline`
-            We'll send you an email with a link to join the event 30 minutes
-            before the event's start time.
-          `,
+          description: `We'll send you an email with a link to join the event 30 minutes before the event's start time.`,
           title: 'Finish Checking-In'
         },
         FINISH_MEMBER: {

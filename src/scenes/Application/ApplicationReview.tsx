@@ -1,4 +1,3 @@
-import deline from 'deline';
 import React from 'react';
 import { IoLockClosed } from 'react-icons/io5';
 
@@ -7,6 +6,7 @@ import Form from '@organisms/Form/Form';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ApplicationReviewMain from './ApplicationReviewMain';
 import ApplicationReviewMembership from './ApplicationReviewMembership';
@@ -38,22 +38,23 @@ const ApplicationReviewForm: React.FC = () => {
 };
 
 const ApplicationReview: React.FC = () => {
-  const showForm: boolean = useStoreState(({ db }) => {
-    const types = db.community?.types;
-    const isMoreThanOneType = types?.length > 1;
-    const isFirstTypePaid = !!types && !db.byTypeId[types[0]]?.isFree;
-    return isMoreThanOneType || isFirstTypePaid;
+  const isMultipleTypesOrPaid: boolean = useStoreState(({ db }) => {
+    const types: string[] = db.community?.types;
+
+    if (!types || (types && types.length <= 1)) return false;
+
+    return types.some((typeId: string) => {
+      const type: IMemberType = db.byTypeId[typeId];
+      return !!type?.amount;
+    });
   });
 
   return (
     <StoryPage
       className="s-application-review"
-      description={deline`
-        You’re almost done! Just review this information to make sure we got
-        everything right.
-      `}
+      description="You’re almost done! Just review this information to make sure we got everything right."
       id="FINISH"
-      show={!!showForm}
+      show={!!isMultipleTypesOrPaid}
       title="Review"
     >
       <Separator marginBottom={24} marginTop={0} />

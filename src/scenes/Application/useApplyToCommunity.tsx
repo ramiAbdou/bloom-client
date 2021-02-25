@@ -46,7 +46,7 @@ const useApplyToCommunity = (): OnFormSubmit => {
         value: parseValue(value)
       }));
 
-    const { error } = await applyToCommunity({
+    const result = await applyToCommunity({
       data,
       email,
       memberTypeId,
@@ -54,8 +54,8 @@ const useApplyToCommunity = (): OnFormSubmit => {
       urlName
     });
 
-    if (error) {
-      setError(error);
+    if (result.error) {
+      setError(result.error);
       return;
     }
 

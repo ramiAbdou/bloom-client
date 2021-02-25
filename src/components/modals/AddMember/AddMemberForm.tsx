@@ -1,4 +1,3 @@
-import deline from 'deline';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
@@ -69,10 +68,9 @@ const AddMemberForm: React.FC = () => {
   return (
     <Form className="mo-add-member-form" onSubmit={addMembers}>
       <FormHeader
-        description={deline`
-          Type in the email address of the ${admin ? 'admin' : 'member'}(s) you
-          want to add to the community. We'll send them an email invite with a
-          login link, where they can finish filling out their profile.
+        description={`Type in the email address of the ${
+          admin ? 'admin' : 'member'
+        }(s) you want to add to the community. We'll send them an email invite with a login link, where they can finish filling out their profile.
         `}
         title={admin ? 'Add Admin(s)' : 'Add Member(s)'}
       />

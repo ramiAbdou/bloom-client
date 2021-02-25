@@ -1,4 +1,3 @@
-import deline from 'deline';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
@@ -43,10 +42,7 @@ const MailchimpModalContent: React.FC = () => {
       <h1>Finish Integrating Mailchimp</h1>
 
       <FormMultipleChoice
-        description={deline`
-          Choose the Mailchimp Audience/List that you would like new members to
-          automatically be added to upon joining your community.
-        `}
+        description="Choose the Mailchimp Audience/List that you would like new members to automatically be added to upon joining your community."
         id="MAILCHIMP_LIST_ID"
         options={data.mailchimpLists?.map(({ name }) => name)}
         title="Select Audience/List ID"

@@ -1,4 +1,3 @@
-import deline from 'deline';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
@@ -61,10 +60,7 @@ const MemberDatabasePromoteForm: React.FC = () => {
   return (
     <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
       <FormHeader
-        description={deline`
-          Are you sure you want to promote this member to admin? They will be
-          granted all admin priviledges. You can undo this action at any time.
-        `}
+        description="Are you sure you want to promote this member to admin? They will be granted all admin priviledges. You can undo this action at any time."
         title="Promote to admin?"
       />
 

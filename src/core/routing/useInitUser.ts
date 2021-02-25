@@ -23,7 +23,7 @@ const useInitUser = (): boolean => {
     fields: [
       'joinedAt',
       'id',
-      { community: ['id', 'logoUrl', 'urlName'] },
+      { community: ['id', 'logoUrl', 'primaryColor', 'urlName'] },
       { user: ['id'] }
     ],
     operation: 'getMembers',

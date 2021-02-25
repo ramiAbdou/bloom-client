@@ -1,4 +1,3 @@
-import deline from 'deline';
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
@@ -93,13 +92,9 @@ const PaymentFinish: React.FC = () => {
   const title: string =
     modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan';
 
-  const description: string = deline`
-    Please review this information to make sure we got everything right.
-  `;
-
   return (
     <StoryPage
-      description={description}
+      description="Please review this information to make sure we got everything right."
       id="FINISH"
       loading={loading}
       show={modalType !== 'UPDATE_PAYMENT_METHOD'}
