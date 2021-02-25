@@ -46,7 +46,7 @@ const useGetTokens = (checkUrlName = false): boolean => {
     })();
   }, [checkUrlName, token, urlName]);
 
-  const loading = !result.data || result.loading;
+  const loading = (!result.data && !result.error) || result.loading;
   useLoader(loading);
 
   return loading;

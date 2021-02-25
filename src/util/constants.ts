@@ -127,3 +127,7 @@ export interface TimeSeriesData {
   name: string;
   value: number;
 }
+
+export enum VerifyEvent {
+  JOIN_EVENT = 'JOIN_EVENT'
+}

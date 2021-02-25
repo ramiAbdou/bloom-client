@@ -31,7 +31,6 @@
     "aws-sdk": "^2.827.0",
     "dayjs": "^1.9.7",
     "deepmerge": "^4.2.2",
-    "deline": "^1.0.4",
     "easy-peasy": "^4.0.1",
     "express": "^4.17.1",
     "fast-deep-equal": "^3.1.3",

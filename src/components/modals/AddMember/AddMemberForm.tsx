@@ -10,7 +10,7 @@ import IdStore from '@store/Id.store';
 import { useStoreActions } from '@store/Store';
 import AddMemberStore from './AddMember.store';
 import AddMemberInput from './AddMemberInput';
-import useAddMembers from './useAddMembers';
+import useInviteMembers from './useInviteMembers';
 
 const AddMemberFormActions: React.FC = () => {
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
@@ -63,7 +63,7 @@ const AddMemberFormRows: React.FC = () => {
 
 const AddMemberForm: React.FC = () => {
   const admin = AddMemberStore.useStoreState((store) => store.admin);
-  const addMembers = useAddMembers();
+  const addMembers = useInviteMembers();
 
   return (
     <Form className="mo-add-member-form" onSubmit={addMembers}>

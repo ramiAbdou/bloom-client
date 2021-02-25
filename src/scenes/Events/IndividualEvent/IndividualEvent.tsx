@@ -11,7 +11,6 @@ import IndividualEventInsights from './IndividualEventInsights';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventTable from './IndividualEventTable';
 import useInitIndividualEvent from './useInitIndividualEvent';
-import useVerifyIndividualEventToken from './useVerifyIndividualEventToken';
 
 const IndividualEventHeader: React.FC = () => {
   const imageUrl = useStoreState(({ db }) => db.event?.imageUrl);
@@ -31,7 +30,6 @@ const IndividualEvent: React.FC = () => {
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
 
   const loading = useInitIndividualEvent();
-  useVerifyIndividualEventToken();
 
   if (loading || !isEventActive) return null;
 

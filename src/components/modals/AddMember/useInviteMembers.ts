@@ -8,13 +8,13 @@ import { takeFirst } from '@util/util';
 import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';
 
-const useAddMembers = (): OnFormSubmit => {
+const useInviteMembers = (): OnFormSubmit => {
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
-  const [addMembers] = useMutation<any, AddMembersArgs>({
+  const [inviteMembers] = useMutation<any, AddMembersArgs>({
     fields: ['id'],
-    operation: 'addMembers',
-    types: { members: { required: true, type: '[AddMemberInput!]' } }
+    operation: 'inviteMembers',
+    types: { members: { required: true, type: '[InviteMemberInput!]' } }
   });
 
   const onSubmit = async ({
@@ -41,7 +41,7 @@ const useAddMembers = (): OnFormSubmit => {
     }, {});
 
     const members: AddMemberInput[] = Object.values(memberData);
-    const { error } = await addMembers({ members: Object.values(members) });
+    const { error } = await inviteMembers({ members: Object.values(members) });
 
     if (error) {
       setError(error);
@@ -55,4 +55,4 @@ const useAddMembers = (): OnFormSubmit => {
   return onSubmit;
 };
 
-export default useAddMembers;
+export default useInviteMembers;
