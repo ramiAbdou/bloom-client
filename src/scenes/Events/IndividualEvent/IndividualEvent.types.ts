@@ -1,4 +1,4 @@
-import { IdProps } from '@constants';
+import { IdProps } from '@util/constants';
 
 export interface IndividualEventTableRowProps extends IdProps {
   fullName: string;

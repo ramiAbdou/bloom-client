@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { IdProps } from '@constants';
+import { IdProps } from '@util/constants';
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { Schema } from '@store/Db/schema';

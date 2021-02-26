@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { UrlNameProps } from '@constants';
+import { UrlNameProps } from '@util/constants';
 import { useStoreState } from '@store/Store';
 import { ICommunity, IMember } from '../store/Db/entities';
 

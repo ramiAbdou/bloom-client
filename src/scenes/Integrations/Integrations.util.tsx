@@ -1,6 +1,6 @@
 import URLBuilder from 'util/URLBuilder';
 
-import { APP, isProduction, UrlNameProps } from '@constants';
+import { APP, isProduction, UrlNameProps } from '@util/constants';
 import { IIntegrations } from '@store/Db/entities';
 import mailchimp from './images/mailchimp.png';
 import stripe from './images/stripe.png';

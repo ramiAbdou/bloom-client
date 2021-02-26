@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import useMutation from '@hooks/useMutation';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@store/Db/entities';

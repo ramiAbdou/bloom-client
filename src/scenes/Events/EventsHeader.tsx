@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
-import { LoadingProps, ModalType } from '@constants';
+import { LoadingProps, ModalType } from '@util/constants';
 import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import { useStoreActions, useStoreState } from '@store/Store';

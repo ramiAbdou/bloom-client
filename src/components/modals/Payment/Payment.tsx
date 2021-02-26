@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import useQuery from '@hooks/useQuery';
 import Story from '@organisms/Story/Story';
 import { IIntegrations } from '@store/Db/entities';

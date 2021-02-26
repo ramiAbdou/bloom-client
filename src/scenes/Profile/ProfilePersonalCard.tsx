@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';

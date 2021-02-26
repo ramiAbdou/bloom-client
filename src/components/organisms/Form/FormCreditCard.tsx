@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { QuestionCategory } from '@constants';
+import { QuestionCategory } from '@util/constants';
 import { CardElement } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import { FormItemData } from './Form.types';

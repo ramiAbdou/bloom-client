@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { QuestionCategory } from '@constants';
+import { QuestionCategory } from '@util/constants';
 import { RadioOptionProps } from '@molecules/Radio/Radio.types';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';

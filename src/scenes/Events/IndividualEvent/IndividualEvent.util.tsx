@@ -3,7 +3,7 @@ import deepmerge from 'deepmerge';
 import { State } from 'easy-peasy';
 import React from 'react';
 
-import { QuestionType } from '@constants';
+import { QuestionType } from '@util/constants';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {

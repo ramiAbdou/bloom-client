@@ -6,7 +6,7 @@ import URLBuilder from 'util/URLBuilder';
 import Button from '@atoms/Button/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
-import { APP, CookieType, QuestionCategory, ShowProps } from '@constants';
+import { APP, CookieType, QuestionCategory, ShowProps } from '@util/constants';
 import Show from '@containers/Show';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';

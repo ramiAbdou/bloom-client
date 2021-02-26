@@ -1,5 +1,5 @@
-import { BaseProps, Spacing } from '@constants';
 import { Breakpoint } from '@hooks/useBreakpoint';
+import { BaseProps, Spacing } from '@util/constants';
 
 type RowAlign = 'baseline' | 'center' | 'end' | 'start';
 type RowJustifyContent = 'center' | 'sb';

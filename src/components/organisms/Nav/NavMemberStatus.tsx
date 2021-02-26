@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import StatusTag from '@atoms/Tag/StatusTag';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
 

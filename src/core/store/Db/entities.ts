@@ -1,4 +1,4 @@
-import { QuestionCategory, QuestionType, TimeSeriesData } from '@constants';
+import { QuestionCategory, QuestionType, TimeSeriesData } from '@util/constants';
 
 type Identifier = string;
 

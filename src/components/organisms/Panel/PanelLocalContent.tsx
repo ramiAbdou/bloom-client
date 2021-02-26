@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PanelType } from '@constants';
+import { PanelType } from '@util/constants';
 import { useStoreState } from '@store/Store';
 import ListFilter from '../List/ListFilter/ListFilter';
 import TableFilter from '../Table/TableFilter/TableFilter';

@@ -1,4 +1,4 @@
-import { QuestionType, ShowProps, ValueProps } from '@constants';
+import { QuestionType, ShowProps, ValueProps } from '@util/constants';
 
 export type QuestionBoxItemHandleNull = 'HIDE_ALL' | 'HIDE_VALUE';
 

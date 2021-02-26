@@ -2,7 +2,7 @@ import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { IdProps } from '@constants';
+import { IdProps } from '@util/constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import TableStore from './Table.store';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 import FormLabel from '@organisms/Form/FormLabel';
 import { cx } from '@util/util';
 import { QuestionBoxItemProps } from './QuestionBox.types';

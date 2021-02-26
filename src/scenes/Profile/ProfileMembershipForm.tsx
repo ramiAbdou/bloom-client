@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { QuestionType } from '@constants';
+import { QuestionType } from '@util/constants';
 import Form from '@organisms/Form/Form';
 import { FormItemData } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';

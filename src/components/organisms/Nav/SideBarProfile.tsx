@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
-import { PanelType } from '@constants';
+import { PanelType } from '@util/constants';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';

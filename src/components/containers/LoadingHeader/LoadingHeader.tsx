@@ -4,7 +4,7 @@ import { IoArrowBack } from 'react-icons/io5';
 import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { BaseProps, LoadingProps } from '@constants';
+import { BaseProps, LoadingProps } from '@util/constants';
 import Show from '@containers/Show';
 import { cx } from '@util/util';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
-import { PanelType } from '@constants';
+import { PanelType } from '@util/constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';

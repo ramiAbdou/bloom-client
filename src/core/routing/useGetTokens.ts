@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { UrlNameProps } from '@constants';
+import { UrlNameProps } from '@util/constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions } from '@store/Store';

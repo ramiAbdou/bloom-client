@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 import Show from '@containers/Show';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';

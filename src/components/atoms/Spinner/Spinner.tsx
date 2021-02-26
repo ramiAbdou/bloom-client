@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ShowProps } from '@constants';
 import Show from '@containers/Show';
+import { ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface SpinnerProps extends ShowProps {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 
 const FormSection: React.FC<BaseProps> = ({ children, show }) => {
   if (show === false) return null;

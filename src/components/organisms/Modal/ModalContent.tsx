@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import EventForm from '@modals/EventForm/EventForm';

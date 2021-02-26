@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import { useStoreActions } from '@store/Store';

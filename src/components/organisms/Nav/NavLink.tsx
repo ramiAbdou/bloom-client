@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-import { OnClickProps } from '@constants';
+import { OnClickProps } from '@util/constants';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { useStoreActions } from '@store/Store';
 import { cx } from '@util/util';

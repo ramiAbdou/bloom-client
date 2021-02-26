@@ -1,6 +1,6 @@
 import { AxisDomain, AxisInterval, TickFormatterFunction } from 'recharts';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 
 export type ChartData = { name: string; value: number | string };
 

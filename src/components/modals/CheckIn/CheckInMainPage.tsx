@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 
-import { CookieType } from '@constants';
+import { CookieType } from '@util/constants';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import CheckInGuestForm from './CheckInGuestForm';

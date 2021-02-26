@@ -1,7 +1,7 @@
 import { State } from 'easy-peasy';
 import { matchSorter } from 'match-sorter';
 
-import { QuestionCategory, QuestionType } from '@constants';
+import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
 import {
   TableColumn,

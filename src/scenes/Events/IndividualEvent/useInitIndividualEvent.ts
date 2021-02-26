@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { CookieType, ModalType } from '@constants';
+import { CookieType, ModalType } from '@util/constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';

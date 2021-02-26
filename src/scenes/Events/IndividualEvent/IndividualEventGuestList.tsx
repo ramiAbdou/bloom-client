@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';

@@ -2,7 +2,7 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { QuestionCategory } from '@constants';
+import { QuestionCategory } from '@util/constants';
 import Row from '@containers/Row/Row';
 import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
 import FormShortText from '@organisms/Form/FormShortText';

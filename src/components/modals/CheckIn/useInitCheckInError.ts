@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 
-import { CookieType } from '@constants';
+import { CookieType } from '@util/constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';

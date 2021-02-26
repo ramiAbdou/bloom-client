@@ -2,7 +2,7 @@ import aws from 'aws-sdk';
 import Jimp from 'jimp';
 import { nanoid } from 'nanoid';
 
-import { isProduction } from '@constants';
+import { isProduction } from '@util/constants';
 
 const bucketName = isProduction
   ? process.env.DIGITAL_OCEAN_BUCKET_NAME

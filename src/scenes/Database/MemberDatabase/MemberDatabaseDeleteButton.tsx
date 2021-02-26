@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import TableStore from '@organisms/Table/Table.store';
 import { MemberRole } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';

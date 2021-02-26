@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { QuestionCategory, ShowProps } from '@constants';
+import { QuestionCategory, ShowProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
 import FormShortText from '@organisms/Form/FormShortText';

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import Row from '@containers/Row/Row';
 import { RecurrenceType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';

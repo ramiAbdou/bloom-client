@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { IoCloseCircle, IoSearch } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { BaseProps, ValueProps } from '@constants';
+import { BaseProps, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 
 export interface SearchBarProps extends BaseProps, ValueProps {

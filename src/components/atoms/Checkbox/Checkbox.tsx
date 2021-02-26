@@ -5,8 +5,8 @@ import React from 'react';
 import { IoCheckmark } from 'react-icons/io5';
 
 import Attribute from '@atoms/Tag/Attribute';
-import { BaseProps } from '@constants';
 import Show from '@containers/Show';
+import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface CheckboxProps extends BaseProps {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ClassNameProps, ShowProps } from '@constants';
+import { ClassNameProps, ShowProps } from '@util/constants';
 import LoadingHeader, {
   LoadingHeaderProps
 } from '@containers/LoadingHeader/LoadingHeader';

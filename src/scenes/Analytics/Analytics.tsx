@@ -7,7 +7,7 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 
-import { LoadingProps } from '@constants';
+import { LoadingProps } from '@util/constants';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';

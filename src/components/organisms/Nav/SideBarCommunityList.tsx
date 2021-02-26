@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { IdProps } from '@constants';
+import { IdProps } from '@util/constants';
 import { ICommunity, IMember } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { cx, sortObjects } from '@util/util';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { QuestionType } from '@constants';
+import { QuestionType } from '@util/constants';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';

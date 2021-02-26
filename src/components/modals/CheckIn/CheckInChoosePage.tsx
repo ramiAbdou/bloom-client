@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ShowProps } from '@constants';
+import { ShowProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import FormLabel from '@organisms/Form/FormLabel';
 import StoryStore from '@organisms/Story/Story.store';

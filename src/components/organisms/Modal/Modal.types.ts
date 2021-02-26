@@ -1,6 +1,6 @@
 import { Action } from 'easy-peasy';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 
 // ## MODAL OPTIONS/DATA
 

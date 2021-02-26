@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LoadingProps } from '@constants';
+import { LoadingProps } from '@util/constants';
 import MainHeader from '@containers/Main/MainHeader';
 import Row from '@containers/Row/Row';
 import { MemberStatus } from '@store/Db/entities';

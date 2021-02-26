@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { IdProps } from '@constants';
+import { IdProps } from '@util/constants';
 import IdStore from '@store/Id.store';
 import { cx } from '@util/util';
 import ListFilterStore from '../ListFilter/ListFilter.store';

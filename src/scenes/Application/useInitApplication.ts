@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { UrlNameProps } from '@constants';
+import { UrlNameProps } from '@util/constants';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';

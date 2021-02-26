@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Attribute from '@atoms/Tag/Attribute';
-import { QuestionType } from '@constants';
+import { QuestionType } from '@util/constants';
 import { QuestionBoxItemProps } from './QuestionBox.types';
 
 const QuestionBoxValue: React.FC<

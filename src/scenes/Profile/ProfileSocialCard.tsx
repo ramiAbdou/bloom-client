@@ -7,7 +7,7 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';

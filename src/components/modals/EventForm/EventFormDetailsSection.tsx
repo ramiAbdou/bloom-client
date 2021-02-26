@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ShowProps } from '@constants';
+import { ShowProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import FormDate from '@organisms/Form/FormDate';

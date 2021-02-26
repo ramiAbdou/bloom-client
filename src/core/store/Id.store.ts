@@ -1,6 +1,6 @@
 import { Action, action, createContextStore } from 'easy-peasy';
 
-import { IdProps } from '@constants';
+import { IdProps } from '@util/constants';
 
 interface IdModel extends IdProps {
   setId?: Action<IdModel, string>;

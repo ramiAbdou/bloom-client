@@ -1,6 +1,6 @@
 import { useHistory, useParams } from 'react-router-dom';
 
-import { RouteType, UrlNameProps } from '@constants';
+import { RouteType, UrlNameProps } from '@util/constants';
 
 /**
  * Returns the first active route of the community. Doesn't care about the

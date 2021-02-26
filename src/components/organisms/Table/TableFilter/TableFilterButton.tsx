@@ -2,7 +2,7 @@ import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { PanelType } from '@constants';
+import { PanelType } from '@util/constants';
 import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
 import TableStore from '../Table.store';

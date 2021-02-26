@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LoadingProps } from '@constants';
+import { LoadingProps } from '@util/constants';
 import MainHeader from '@containers/Main/MainHeader';
 import ListStore from '@organisms/List/List.store';
 

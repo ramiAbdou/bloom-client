@@ -4,7 +4,7 @@ import React from 'react';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { ValueProps } from '@constants';
+import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
 import { TablePaginationValue } from '../Table.types';

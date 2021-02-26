@@ -1,7 +1,7 @@
 import { Action } from 'easy-peasy';
 import { MatchSorterOptions } from 'match-sorter';
 
-import { ClassNameProps } from '@constants';
+import { ClassNameProps } from '@util/constants';
 import {
   ListFilterArgs,
   ListFilterFunction,

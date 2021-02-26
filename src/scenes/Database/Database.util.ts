@@ -1,5 +1,6 @@
 import { State } from 'easy-peasy';
 
+import { QuestionCategory } from '@util/constants';
 import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
@@ -35,12 +36,16 @@ const getMemberValue = ({
 }: GetMemberValueArgs) => {
   const { category }: IQuestion = db.byQuestionId[questionId];
 
-  if (category === 'EMAIL') return email;
-  if (category === 'FIRST_NAME') return firstName;
-  if (category === 'JOINED_AT') return joinedAt;
-  if (category === 'LAST_NAME') return lastName;
-  if (category === 'MEMBERSHIP_TYPE') return db.byTypeId[type]?.name;
-  if (category === 'DUES_STATUS') {
+  if (category === QuestionCategory.EMAIL) return email;
+  if (category === QuestionCategory.FIRST_NAME) return firstName;
+  if (category === QuestionCategory.JOINED_AT) return joinedAt;
+  if (category === QuestionCategory.LAST_NAME) return lastName;
+
+  if (category === QuestionCategory.MEMBERSHIP_TYPE) {
+    return db.byTypeId[type]?.name;
+  }
+
+  if (category === QuestionCategory.DUES_STATUS) {
     return isDuesActive ? 'Active' : 'Inactive';
   }
 

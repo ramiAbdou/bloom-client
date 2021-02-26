@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { ModalType, QuestionType } from '@constants';
+import { ModalType, QuestionType } from '@util/constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';

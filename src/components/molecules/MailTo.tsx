@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoMail } from 'react-icons/io5';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface MailToProps extends BaseProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
-import { UrlNameProps } from '@constants';
+import { UrlNameProps } from '@util/constants';
 import { useStoreState } from '@store/Store';
 
 /**

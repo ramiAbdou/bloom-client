@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 import SearchBar from '@molecules/SearchBar/SearchBar';
 import TableStore from './Table.store';
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { ModalType, VerifyEvent } from '@constants';
+import { ModalType, VerifyEvent } from '@util/constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions, useStoreState } from '@store/Store';

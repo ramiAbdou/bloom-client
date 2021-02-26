@@ -1,4 +1,4 @@
-import { OnClickProps, RouteType } from '@constants';
+import { OnClickProps, RouteType } from '@util/constants';
 
 export interface LinkOptions extends OnClickProps {
   Icon: React.FC;

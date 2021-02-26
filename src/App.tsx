@@ -13,7 +13,7 @@ import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 import { BrowserRouter } from 'react-router-dom';
 
-import { APP } from '@constants';
+import { APP } from '@util/constants';
 import Loader from '@organisms/Loader/Loader';
 import Modal from '@organisms/Modal/Modal';
 import Panel from '@organisms/Panel/Panel';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
-import { PanelType } from '@constants';
+import { PanelType } from '@util/constants';
 import TableStore from '@organisms/Table/Table.store';
 import { useStoreActions } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';

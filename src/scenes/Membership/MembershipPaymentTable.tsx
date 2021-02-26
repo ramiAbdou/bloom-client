@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { QuestionType } from '@constants';
+import { QuestionType } from '@util/constants';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -13,6 +13,23 @@ import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment, IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
+
+const columns: TableColumn[] = [
+  { id: 'paidOn', title: 'Date' },
+  { id: 'amount', title: 'Amount' },
+  { id: 'type', title: 'Membership Plan', type: QuestionType.MULTIPLE_CHOICE },
+  { id: 'status', title: 'Status' },
+  {
+    hideTitle: true,
+    id: 'receipt',
+    render: (receiptUrl: string) => (
+      <Button tertiary href={receiptUrl}>
+        Receipt
+      </Button>
+    ),
+    title: 'Receipt'
+  }
+];
 
 const MembershipPaymentTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
@@ -30,26 +47,6 @@ const MembershipPaymentTable: React.FC = () => {
       })
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'));
   });
-
-  const columns: TableColumn[] = [
-    { id: 'paidOn', title: 'Date' },
-    { id: 'amount', title: 'Amount' },
-    {
-      id: 'type',
-      title: 'Membership Plan',
-      type: QuestionType.MULTIPLE_CHOICE
-    },
-    {
-      hideTitle: true,
-      id: 'receipt',
-      render: (receiptUrl: string) => (
-        <Button tertiary href={receiptUrl}>
-          Receipt
-        </Button>
-      ),
-      title: 'Receipt'
-    }
-  ];
 
   const options: TableOptions = {
     alignEndRight: true,

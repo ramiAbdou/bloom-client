@@ -13,7 +13,7 @@ import {
 } from 'react-icons/io5';
 
 import Separator from '@atoms/Separator';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LinkOptions } from './Nav.types';

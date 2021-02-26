@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import { useEffect } from 'react';
 import sw from 'stopword';
 
-import { QuestionType } from '@constants';
+import { QuestionType } from '@util/constants';
 import {
   IMember,
   IMemberData,

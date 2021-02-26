@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
 const HeaderTag: React.FC<BaseProps> = ({ children, className, show }) => {

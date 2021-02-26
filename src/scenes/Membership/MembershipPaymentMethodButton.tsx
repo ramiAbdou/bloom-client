@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const MembershipPaymentMethodButton: React.FC = () => {

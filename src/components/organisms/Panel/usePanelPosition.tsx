@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { IdProps } from '@constants';
+import { IdProps } from '@util/constants';
 import { takeFirst } from '@util/util';
 import { PanelAlign } from './Panel.types';
 

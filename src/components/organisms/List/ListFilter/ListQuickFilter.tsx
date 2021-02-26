@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from '@atoms/Button/Button';
-import { IdProps, ShowProps, TitleProps } from '@constants';
+import { IdProps, ShowProps, TitleProps } from '@util/constants';
 import { TableRow } from '@organisms/Table/Table.types';
 import { cx } from '@util/util';
 import ListStore from '../List.store';

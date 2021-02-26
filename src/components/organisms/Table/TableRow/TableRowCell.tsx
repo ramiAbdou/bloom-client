@@ -3,7 +3,7 @@ import React from 'react';
 
 import Attribute from '@atoms/Tag/Attribute';
 import Pill from '@atoms/Tag/Pill';
-import { ValueProps } from '@constants';
+import { ValueProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { cx } from '@util/util';

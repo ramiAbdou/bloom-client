@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { QuestionType } from '@constants';
+import { QuestionType } from '@util/constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import Table from '@organisms/Table/Table';

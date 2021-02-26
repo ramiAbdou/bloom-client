@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import MainSection from '@containers/Main/MainSection';
 import Show from '@containers/Show';
 import Table from '@organisms/Table/Table';

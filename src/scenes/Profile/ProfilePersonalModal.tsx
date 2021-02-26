@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { QuestionCategory } from '@constants';
+import { QuestionCategory } from '@util/constants';
 import Form from '@organisms/Form/Form';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormImage from '@organisms/Form/FormImage';

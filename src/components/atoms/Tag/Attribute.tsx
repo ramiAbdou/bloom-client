@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 
 interface AttributeProps extends BaseProps {
   // If the value is null, this determines whether or not the "N/A" text is

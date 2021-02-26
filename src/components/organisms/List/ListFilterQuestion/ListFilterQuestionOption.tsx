@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
-import { ValueProps } from '@constants';
+import { ValueProps } from '@util/constants';
 import { IMemberData, IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';

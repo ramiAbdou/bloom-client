@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Pill from '@atoms/Tag/Pill';
-import { BaseProps, ValueProps } from '@constants';
+import { BaseProps, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface GrayCardProps extends BaseProps, ValueProps {

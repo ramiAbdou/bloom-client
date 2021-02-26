@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TimeSeriesData } from '@constants';
+import { TimeSeriesData } from '@util/constants';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';

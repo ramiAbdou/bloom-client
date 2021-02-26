@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import AdminDatabaseDemoteForm from '@scenes/Database/AdminDatabase/AdminDatabaseDemoteForm';
 import MemberDatabaseDeleteForm from '@scenes/Database/MemberDatabase/MemberDatabaseDeleteForm';
 import MemberDatabasePromoteForm from '@scenes/Database/MemberDatabase/MemberDatabasePromoteForm';

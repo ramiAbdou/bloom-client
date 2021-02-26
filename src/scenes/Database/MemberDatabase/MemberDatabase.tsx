@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType, QuestionCategory } from '@util/constants';
 import useMutation from '@hooks/useMutation';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
@@ -26,13 +26,16 @@ const MemberDatabase: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => getMemberTableRow({ db }));
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
-    const integrations: IIntegrations =
-      db.byIntegrationsId[db.community?.integrations];
+    const integrationsId: string = db.community?.integrations;
+    const integrations: IIntegrations = db.byIntegrationsId[integrationsId];
 
     return db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter(({ category }: IQuestion) => {
-        if (category === 'DUES_STATUS' && !integrations.stripeAccountId) {
+      ?.filter((question: IQuestion) => {
+        if (
+          question.category === QuestionCategory.DUES_STATUS &&
+          !integrations.stripeAccountId
+        ) {
           return false;
         }
 

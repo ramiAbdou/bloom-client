@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ClassNameProps } from '@constants';
+import { ClassNameProps } from '@util/constants';
 import Aspect from '@containers/Aspect/Aspect';
 import Network from '@images/network.svg';
 

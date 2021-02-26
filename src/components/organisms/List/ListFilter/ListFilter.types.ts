@@ -1,6 +1,6 @@
 import { Action } from 'easy-peasy';
 
-import { ValueProps } from '@constants';
+import { ValueProps } from '@util/constants';
 
 // ## LIST FILTER FUNCTION
 

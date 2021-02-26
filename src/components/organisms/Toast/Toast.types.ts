@@ -1,7 +1,7 @@
 import { Action } from 'easy-peasy';
 
-import { IdProps } from '@constants';
 import { UseMutationArgs } from '@hooks/useMutation.types';
+import { IdProps } from '@util/constants';
 
 export interface ToastOptions<T = any, S = any> extends Partial<IdProps> {
   message?: string;

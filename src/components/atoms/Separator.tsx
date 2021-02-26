@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ShowProps } from '@constants';
+import { ShowProps } from '@util/constants';
 import { takeFirst } from '@util/util';
 
 interface SeparatorProps extends ShowProps {

@@ -109,10 +109,6 @@ export enum QuestionType {
   TRUE_FALSE = 'TRUE_FALSE'
 }
 
-export interface PopulateArgs {
-  populate?: string[];
-}
-
 export enum SocialBrand {
   CLUBHOUSE = 'CLUBHOUSE',
   FACEBOOK = 'FACEBOOK',

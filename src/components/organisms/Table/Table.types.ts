@@ -5,7 +5,7 @@ import {
   QuestionCategory,
   QuestionType,
   ValueProps
-} from '@constants';
+} from '@util/constants';
 
 // ## TABLE COLUMN
 

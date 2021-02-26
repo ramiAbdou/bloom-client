@@ -3,7 +3,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import useMutation from '@hooks/useMutation';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';

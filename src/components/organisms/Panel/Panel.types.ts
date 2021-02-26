@@ -1,6 +1,6 @@
 import { Action } from 'easy-peasy';
 
-import { BaseProps, PanelType } from '@constants';
+import { BaseProps, PanelType } from '@util/constants';
 
 // ## PANEL OPTIONS/DATA
 
