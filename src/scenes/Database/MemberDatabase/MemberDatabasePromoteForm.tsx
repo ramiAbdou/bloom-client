@@ -52,9 +52,9 @@ const MemberDatabasePromoteForm: React.FC = () => {
       return;
     }
 
-    clearSelectedRows();
-    showToast({ message: `${memberIds.length} member(s) promoted to admin.` });
     closeModal();
+    showToast({ message: `${memberIds.length} member(s) promoted to admin.` });
+    clearSelectedRows();
   };
 
   return (

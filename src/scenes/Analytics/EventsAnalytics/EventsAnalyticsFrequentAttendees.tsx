@@ -85,7 +85,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
 
 const EventsAnalyticsFrequentAttendees: React.FC = () => (
   <MainSection>
-    <LoadingHeader h2 title="Top 10 Event Goers" />
+    <LoadingHeader h2 title="Top Event Goers" />
     <EventsAnalyticsFrequentAttendeesTable />
   </MainSection>
 );
