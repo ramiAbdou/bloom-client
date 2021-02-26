@@ -5,18 +5,21 @@ import MainContent from '@containers/Main/MainContent';
 import MembershipChangeList from './MembershipChangeList';
 import MembershipCurrentPlan from './MembershipCurrentPlan';
 import MembershipHeader from './MembershipHeader';
+import MembershipPaymentHistory from './MembershipPaymentHistory';
 import MembershipPaymentMethod from './MembershipPaymentMethod';
-import PaymentOverview from './MembershipPaymentOverview';
+import MembershipRenewsCard from './MembershipRenewsCard';
 
 const MembershipContent: React.FC = () => {
   return (
     <>
-      <div className="s-membership-card-ctr">
+      <MembershipRenewsCard />
+
+      <div className="s-membership-card-ctr mb-md">
         <MembershipCurrentPlan />
         <MembershipPaymentMethod />
       </div>
 
-      <PaymentOverview />
+      <MembershipPaymentHistory />
     </>
   );
 };

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { UrlNameProps } from '@constants';
 import useQuery from '@hooks/useQuery';
-import { UseQueryResult } from '@hooks/useQuery.types';
+import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import {
   ICommunityApplication,
@@ -13,7 +13,7 @@ import {
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 
-const useInitApplication = (): Pick<UseQueryResult, 'error' | 'loading'> => {
+const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   const setActive = useStoreActions(({ db }) => db.setActive);
   const { urlName } = useParams() as UrlNameProps;
 

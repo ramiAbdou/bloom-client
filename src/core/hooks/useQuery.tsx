@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-import { UseQueryArgs, UseQueryResult } from './useQuery.types';
+import { QueryResult, UseQueryArgs } from './useQuery.types';
 
 function useQuery<T = any, S = any>({
   fields,
@@ -12,7 +12,7 @@ function useQuery<T = any, S = any>({
   schema,
   types,
   variables
-}: UseQueryArgs<T, S>): UseQueryResult<T, S> {
+}: UseQueryArgs<T, S>): QueryResult<T, S> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { data, error, loading } = useGQLQuery(
@@ -20,7 +20,7 @@ function useQuery<T = any, S = any>({
     variables ? { variables } : {}
   );
 
-  const result: UseQueryResult<T, S> = {
+  const result: QueryResult<T, S> = {
     data: data ? (data[operation] as T) : (null as T),
     error: getGraphQLError(error),
     loading

@@ -1,9 +1,10 @@
 import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 
-const useInitMemberPayments = (): boolean => {
-  const { loading } = useQuery<IMemberPayment[]>({
+const useInitMemberPayments = (): QueryResult<IMemberPayment[]> => {
+  const result = useQuery<IMemberPayment[]>({
     fields: [
       'amount',
       'createdAt',
@@ -16,7 +17,7 @@ const useInitMemberPayments = (): boolean => {
     schema: [Schema.MEMBER_PAYMENT]
   });
 
-  return loading;
+  return result;
 };
 
 export default useInitMemberPayments;

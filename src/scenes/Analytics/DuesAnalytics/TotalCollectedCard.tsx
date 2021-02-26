@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AnalyticsCard from '@containers/Card/AnalyticsCard';
+import GrayCard from '@containers/Card/GrayCard';
 import useQuery from '@hooks/useQuery';
 
 const DuesAnalyticsTotalCollectedCard: React.FC = () => {
@@ -9,7 +9,7 @@ const DuesAnalyticsTotalCollectedCard: React.FC = () => {
   });
 
   return (
-    <AnalyticsCard
+    <GrayCard
       label="Total Dues Collected"
       show={!loading}
       value={data && `$${data}`}

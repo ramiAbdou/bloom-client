@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import AnalyticsCard from '@containers/Card/AnalyticsCard';
+import GrayCard from '@containers/Card/GrayCard';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
@@ -22,7 +22,7 @@ const EventsAnalyticsWatchesCard: React.FC = () => {
   });
 
   return (
-    <AnalyticsCard
+    <GrayCard
       label="Avg # of Recording Viewers"
       show={numViews !== null}
       value={numViews}
