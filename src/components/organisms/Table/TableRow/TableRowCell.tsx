@@ -3,9 +3,9 @@ import React from 'react';
 
 import Attribute from '@atoms/Tag/Attribute';
 import Pill from '@atoms/Tag/Pill';
-import { ValueProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import { QuestionCategory, QuestionType, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
 import { TableColumn } from '../Table.types';
@@ -28,21 +28,28 @@ const TableRowCellContent: React.FC<
     return columns[columnIndex];
   }, deepequal);
 
-  const { category, render, type } = column ?? {};
+  const { category, format, render, type } = column ?? {};
 
   if (render) return <>{render(value)}</>;
 
-  if (category === 'DUES_STATUS' || type === 'TRUE_FALSE') {
+  const formattedValue = format ? format(value) : value;
+
+  if (
+    category === QuestionCategory.DUES_STATUS ||
+    type === QuestionType.TRUE_FALSE
+  ) {
     return (
-      <Pill positive={['Active', 'Yes'].includes(value)} show={!!value}>
-        {value}
+      <Pill positive={['Active', 'Yes', true].includes(value)} show={!!value}>
+        {formattedValue}
       </Pill>
     );
   }
 
-  if (type === 'MULTIPLE_CHOICE') return <Attribute>{value}</Attribute>;
+  if (type === QuestionType.MULTIPLE_CHOICE) {
+    return <Attribute>{formattedValue}</Attribute>;
+  }
 
-  if (type === 'MULTIPLE_SELECT' && typeof value === 'string') {
+  if (type === QuestionType.MULTIPLE_SELECT && typeof value === 'string') {
     return (
       <>
         {value.split(',').map((element: string) => (
@@ -52,7 +59,7 @@ const TableRowCellContent: React.FC<
     );
   }
 
-  return <p>{value}</p>;
+  return <p>{formattedValue}</p>;
 };
 
 const TableRowCell: React.FC<TableRowCellProps> = (props) => {

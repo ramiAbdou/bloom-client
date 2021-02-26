@@ -18,7 +18,12 @@ const columns: TableColumn[] = [
   { id: 'paidOn', title: 'Date' },
   { id: 'amount', title: 'Amount' },
   { id: 'type', title: 'Membership Plan', type: QuestionType.MULTIPLE_CHOICE },
-  { id: 'status', title: 'Status' },
+  {
+    format: (value: boolean) => (value ? 'Succeeded' : 'Failed'),
+    id: 'status',
+    title: 'Status',
+    type: QuestionType.TRUE_FALSE
+  },
   {
     hideTitle: true,
     id: 'receipt',
@@ -43,7 +48,15 @@ const MembershipPaymentTable: React.FC = () => {
         const amount = `$${payment.amount.toFixed(2)}`;
         const paidOn = day(createdAt).format('MMM DD, YYYY');
 
-        return { amount, createdAt, id, paidOn, receipt, type: type?.name };
+        return {
+          amount,
+          createdAt,
+          id,
+          paidOn,
+          receipt,
+          status: true,
+          type: type?.name
+        };
       })
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'));
   });

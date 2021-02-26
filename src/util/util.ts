@@ -43,6 +43,18 @@ export const getGraphQLError = (error: APIError): string => {
 };
 
 /**
+ * Opens an href link in a compatible way with all browsers.
+ */
+export const openHref = (href: string, openNewTab = true) => {
+  if (!href?.startsWith('http')) href = `http://${href}`;
+  // If the browser is Safari, just change the location of the current
+  // tab, but if not, open a new window with the URL.
+  if (navigator.vendor === 'Apple Computer, Inc.' || !openNewTab) {
+    window.location.href = href;
+  } else window.open(href);
+};
+
+/**
  * Returns the array in descending order based on the createdAt.
  *
  * @example sortByDescendingCreatedAt({ createdAt: 1 }, { createdAt: 2 }) => 1
@@ -81,18 +93,6 @@ export function sortObjects<T>(
 
   return 0;
 }
-
-/**
- * Opens an href link in a compatible way with all browsers.
- */
-export const openHref = (href: string, openNewTab = true) => {
-  if (!href?.startsWith('http')) href = `http://${href}`;
-  // If the browser is Safari, just change the location of the current
-  // tab, but if not, open a new window with the URL.
-  if (navigator.vendor === 'Apple Computer, Inc.' || !openNewTab) {
-    window.location.href = href;
-  } else window.open(href);
-};
 
 /**
  * Returns the first value in which the condition is true.

@@ -3,7 +3,6 @@ import deepmerge from 'deepmerge';
 import { State } from 'easy-peasy';
 import React from 'react';
 
-import { QuestionType } from '@util/constants';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
@@ -13,6 +12,7 @@ import {
   IMember,
   IUser
 } from '@store/Db/entities';
+import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
 

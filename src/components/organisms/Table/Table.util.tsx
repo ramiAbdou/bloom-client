@@ -132,8 +132,13 @@ export const getTableCellClass = ({
   return cx('', {
     'o-table-cell--lg': ['LONG_TEXT'].includes(type),
     'o-table-cell--md':
-      !isDuesStatus && ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
-    'o-table-cell--sm': !type || type === 'SHORT_TEXT',
+      !isDuesStatus &&
+      (type === QuestionType.MULTIPLE_CHOICE ||
+        type === QuestionType.MULTIPLE_SELECT),
+    'o-table-cell--sm':
+      !type ||
+      type === QuestionType.SHORT_TEXT ||
+      type === QuestionType.TRUE_FALSE,
     'o-table-cell--xs': isDuesStatus
   });
 };

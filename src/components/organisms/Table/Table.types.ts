@@ -11,6 +11,7 @@ import {
 
 export type TableColumn = {
   category?: QuestionCategory;
+  format?: (value: any) => any;
   hideTitle?: boolean;
   id: string;
   render?: (value: any) => JSX.Element;
