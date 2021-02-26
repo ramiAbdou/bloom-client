@@ -14,10 +14,10 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   // name aren't very meaningful.
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community.questions
-      ?.map((id: string) => db.byQuestionId[id])
-      ?.filter(({ category }) => {
+      ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.filter((question: IQuestion) => {
         return !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(
-          category
+          question.category
         );
       });
   });

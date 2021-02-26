@@ -45,8 +45,6 @@ const useCreateSubscription = (): OnFormSubmit => {
       return;
     }
 
-    console.log(data);
-
     goForward();
     pushToMembership();
   };

@@ -130,7 +130,7 @@ export const getTableCellClass = ({
   const isDuesStatus = category === 'DUES_STATUS';
 
   return cx('', {
-    'o-table-cell--lg': ['LONG_TEXT'].includes(type),
+    'o-table-cell--lg': type === QuestionType.LONG_TEXT,
     'o-table-cell--md':
       !isDuesStatus &&
       (type === QuestionType.MULTIPLE_CHOICE ||
