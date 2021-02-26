@@ -29,7 +29,7 @@ const MemberDatabase: React.FC = () => {
     const integrationsId: string = db.community?.integrations;
     const integrations: IIntegrations = db.byIntegrationsId[integrationsId];
 
-    return db.community.questions
+    const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter((question: IQuestion) => {
         if (
@@ -41,6 +41,8 @@ const MemberDatabase: React.FC = () => {
 
         return true;
       });
+
+    return [...questions];
   });
 
   const [updateQuestion] = useMutation<IQuestion, UpdateQuestionArgs>({

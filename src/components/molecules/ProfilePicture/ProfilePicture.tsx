@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { BaseProps } from '@util/constants';
 import Show from '@containers/Show';
 import { useStoreState } from '@store/Store';
+import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface ProfilePictureProps extends BaseProps {

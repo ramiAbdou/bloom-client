@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import { cx } from '@util/util';
@@ -34,11 +33,7 @@ const TableRow: React.FC<TableRowProps> = (row) => {
             key={columnId + row.id}
             columnId={columnId}
             rowId={row.id}
-            value={
-              column.category === 'JOINED_AT'
-                ? day(row[columnId]).format('M/D/YY')
-                : row[columnId]
-            }
+            value={row[columnId]}
           />
         );
       })}

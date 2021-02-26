@@ -45,6 +45,10 @@ const TableRowCellContent: React.FC<
     );
   }
 
+  if (category === QuestionCategory.PROFILE_PICTURE) {
+    return <ProfilePicture size={24} />;
+  }
+
   if (type === QuestionType.MULTIPLE_CHOICE) {
     return <Attribute>{formattedValue}</Attribute>;
   }
