@@ -2,13 +2,13 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ShowProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import FormLabel from '@organisms/Form/FormLabel';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { ICommunity } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { ShowProps } from '@util/constants';
 
 const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   const name: string = useStoreState(({ db }) => {

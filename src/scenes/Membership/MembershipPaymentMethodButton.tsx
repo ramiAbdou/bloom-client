@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@util/constants';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 
 const MembershipPaymentMethodButton: React.FC = () => {
   const isCardOnFile: boolean = useStoreState(

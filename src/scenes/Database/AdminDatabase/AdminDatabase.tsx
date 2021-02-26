@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { QuestionType } from '@util/constants';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IMember, IUser, MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
 const AdminDatabase: React.FC = () => {

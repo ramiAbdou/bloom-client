@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ModalType, QuestionCategory } from '@util/constants';
 import useMutation from '@hooks/useMutation';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
@@ -14,6 +13,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { IIntegrations, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType, QuestionCategory } from '@util/constants';
 import { UpdateQuestionArgs } from '../Database.types';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';

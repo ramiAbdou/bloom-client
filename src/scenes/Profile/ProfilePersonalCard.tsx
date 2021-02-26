@@ -2,13 +2,13 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {

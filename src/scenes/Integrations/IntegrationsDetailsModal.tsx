@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { QuestionType } from '@util/constants';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { QuestionType } from '@util/constants';
 import useIntegrationsDetails from './useIntegrationsDetails';
 
 const IntegrationsDetailsModal: React.FC = () => {

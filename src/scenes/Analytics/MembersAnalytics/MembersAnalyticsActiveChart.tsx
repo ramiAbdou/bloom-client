@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { TimeSeriesData } from '@util/constants';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
+import { TimeSeriesData } from '@util/constants';
 
 const MembersAnalyticsActiveChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({

@@ -2,7 +2,6 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { QuestionType } from '@util/constants';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -12,6 +11,7 @@ import {
 import TableContent from '@organisms/Table/TableContent';
 import { IMemberPayment, IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const columns: TableColumn[] = [

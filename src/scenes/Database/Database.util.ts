@@ -1,6 +1,5 @@
 import { State } from 'easy-peasy';
 
-import { QuestionCategory } from '@util/constants';
 import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
@@ -10,6 +9,7 @@ import {
   IUser,
   MemberStatus
 } from '@store/Db/entities';
+import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 interface GetMemberTableRowArgs {

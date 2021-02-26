@@ -1,7 +1,6 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { ModalType, QuestionType } from '@util/constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
@@ -16,6 +15,7 @@ import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { IMember, IMemberPayment, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 interface DuesAnalyticsHistoryTableData {

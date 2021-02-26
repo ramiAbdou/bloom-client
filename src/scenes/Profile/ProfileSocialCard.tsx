@@ -7,7 +7,6 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
@@ -15,6 +14,7 @@ import useQuery from '@hooks/useQuery';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
 
