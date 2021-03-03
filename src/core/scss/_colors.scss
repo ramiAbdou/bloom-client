@@ -17,7 +17,6 @@
 $primary: var(--primary);
 $primary-hex: var(--primary-hex);
 $primary-hue: var(--primary-hue);
-$primary-light: rgba($color: $primary-hex, $alpha: 0.15);
 $primary-bg: hsl($primary-hue, 35%, 93%);
 $gray-bg: hsl($primary-hue, 5%, 92%);
 $gray-1: var(--gray-1);

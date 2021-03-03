@@ -18,10 +18,10 @@ $PREF: 'o-list';
 
 .#{$PREF}-quick-filter {
   @extend .flex-ac;
-  @extend .body--sm;
+  @extend .meta;
 
-  background-color: rgba($color: $primary-hex, $alpha: 0.05);
-  border: 1px rgba($color: $primary-hex, $alpha: 0.2) solid;
+  background-color: $primary-bg;
+  border: 1px rgba($color: $primary-hex, $alpha: 0.5) solid;
   border-radius: $sm;
   margin-right: $xxs;
   padding: 6px;
