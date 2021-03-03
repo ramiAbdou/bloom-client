@@ -1,18 +1,28 @@
+import day from 'dayjs';
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import useQuery from '@hooks/useQuery';
+import { IMemberPayment } from '@store/Db/entities';
+import { useStoreState } from '@store/Store';
 
 const DuesAnalyticsTotalCollectedCard: React.FC = () => {
-  const { data, loading } = useQuery<number>({
-    operation: 'getTotalDuesGrowth'
+  const totalCollected: number = useStoreState(({ db }) => {
+    return db.community.payments
+      ?.map((paymentId: string) => db.byPaymentId[paymentId])
+      ?.filter((payment: IMemberPayment) => {
+        const yearAgoDate = day().subtract(1, 'year');
+        return day(payment.createdAt).isAfter(yearAgoDate);
+      })
+      ?.reduce((acc: number, payment: IMemberPayment) => {
+        return acc + payment.amount;
+      }, 0);
   });
 
   return (
     <GrayCard
       label="Total Dues Collected"
-      show={!loading}
-      value={data && `$${data}`}
+      show={totalCollected !== undefined}
+      value={`$${totalCollected}`}
     />
   );
 };

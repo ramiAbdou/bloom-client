@@ -3,32 +3,34 @@ import React from 'react';
 
 import Attribute from '@atoms/Tag/Attribute';
 import Pill from '@atoms/Tag/Pill';
-import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { QuestionCategory, QuestionType, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from '../Table.store';
-import { TableColumn } from '../Table.types';
-import { getTableCellClass } from '../Table.util';
-import SelectRowCheckbox from './TableRowCheckbox';
+import TableStore from './Table.store';
+import { TableColumn } from './Table.types';
+import { getTableCellClass } from './Table.util';
+import SelectRowCheckbox from './TableRow/TableRowCheckbox';
 
-interface TableRowCellProps extends ValueProps {
+interface TableCellProps extends ValueProps {
   columnId: string;
   rowId: string;
 }
 
-const TableRowCellContent: React.FC<
-  Pick<TableRowCellProps, 'columnId' | 'value'>
+const TableCellContent: React.FC<
+  Pick<TableCellProps, 'columnId' | 'value'>
 > = ({ columnId, value }) => {
   const columnIndex: number = TableStore.useStoreState(({ columns }) => {
     return columns.findIndex((element: TableColumn) => element.id === columnId);
   });
 
-  const column: TableColumn = TableStore.useStoreState(({ columns }) => {
-    return columns[columnIndex];
+  const {
+    category,
+    format,
+    render,
+    type
+  }: TableColumn = TableStore.useStoreState(({ columns }) => {
+    return columns[columnIndex] ?? {};
   }, deepequal);
-
-  const { category, format, render, type } = column ?? {};
 
   if (render) return <>{render(value)}</>;
 
@@ -66,21 +68,23 @@ const TableRowCellContent: React.FC<
   return <p>{formattedValue}</p>;
 };
 
-const TableRowCell: React.FC<TableRowCellProps> = (props) => {
+const TableCell: React.FC<TableCellProps> = (props) => {
   const { columnId } = props;
 
   const columnIndex: number = TableStore.useStoreState(({ columns }) => {
-    return columns.findIndex((element: TableColumn) => element.id === columnId);
+    return columns.findIndex((column: TableColumn) => column.id === columnId);
   });
 
-  const column: TableColumn = TableStore.useStoreState(({ columns }) => {
-    return columns[columnIndex];
-  }, deepequal);
+  const category: QuestionCategory = TableStore.useStoreState(
+    ({ columns }) => columns[columnIndex]?.category
+  );
 
-  const { category, type } = column ?? {};
+  const type: QuestionType = TableStore.useStoreState(
+    ({ columns }) => columns[columnIndex]?.type
+  );
 
   const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
-    const isLastCell = columnIndex === columns.length - 1;
+    const isLastCell: boolean = columnIndex === columns.length - 1;
     return options.alignEndRight && isLastCell;
   });
 
@@ -98,10 +102,10 @@ const TableRowCell: React.FC<TableRowCellProps> = (props) => {
     <td className={css}>
       <div>
         <SelectRowCheckbox {...props} />
-        <TableRowCellContent {...props} />
+        <TableCellContent {...props} />
       </div>
     </td>
   );
 };
 
-export default TableRowCell;
+export default TableCell;

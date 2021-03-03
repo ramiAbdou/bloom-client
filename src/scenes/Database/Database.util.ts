@@ -18,28 +18,36 @@ interface GetMemberTableRowArgs {
 
 interface GetMemberValueArgs
   extends Pick<IMember, 'data' | 'isDuesActive' | 'joinedAt' | 'type'>,
-    Pick<IUser, 'email' | 'firstName' | 'lastName'> {
+    Pick<IUser, 'email' | 'firstName' | 'lastName' | 'pictureUrl'> {
   db: State<DbModel>;
   questionId: string;
 }
 
-const getMemberValue = ({
-  data,
-  db,
-  email,
-  firstName,
-  isDuesActive,
-  joinedAt,
-  lastName,
-  questionId,
-  type
-}: GetMemberValueArgs) => {
+/**
+ * Returns the appropriate value based on the IMember data as well as the
+ * IUser attached.
+ */
+const getMemberValue = (args: GetMemberValueArgs) => {
+  const {
+    data,
+    db,
+    email,
+    firstName,
+    isDuesActive,
+    joinedAt,
+    lastName,
+    pictureUrl,
+    questionId,
+    type
+  } = args;
+
   const { category }: IQuestion = db.byQuestionId[questionId];
 
   if (category === QuestionCategory.EMAIL) return email;
   if (category === QuestionCategory.FIRST_NAME) return firstName;
   if (category === QuestionCategory.JOINED_AT) return joinedAt;
   if (category === QuestionCategory.LAST_NAME) return lastName;
+  if (category === QuestionCategory.PROFILE_PICTURE) return pictureUrl;
 
   if (category === QuestionCategory.MEMBERSHIP_TYPE) {
     return db.byTypeId[type]?.name;
@@ -60,12 +68,12 @@ const getMemberValue = ({
 };
 
 export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
-  if (!db.community.types?.length) return [];
+  if (!db.community.types?.length || !db.community.questions?.length) return [];
 
   const sortQuestionId: string = db.community?.questions?.find(
     (questionId: string) => {
       const question: IQuestion = db.byQuestionId[questionId];
-      return question?.category === 'JOINED_AT';
+      return question?.category === QuestionCategory.JOINED_AT;
     }
   );
 
@@ -77,7 +85,10 @@ export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
   const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
     const user: IUser = db.byUserId[member.user];
 
-    return db.community?.questions?.reduce(
+    return [
+      // { category: QuestionCategory.PROFILE_PICTURE },
+      ...db.community?.questions
+    ].reduce(
       (result: TableRow, questionId: string) => {
         const value = getMemberValue({ ...user, ...member, db, questionId });
         return { ...result, [questionId]: value };

@@ -9,7 +9,7 @@ import {
 
 // ## TABLE COLUMN
 
-export type TableColumn = {
+export interface TableColumn {
   category?: QuestionCategory;
   format?: (value: any) => any;
   hideTitle?: boolean;
@@ -17,7 +17,7 @@ export type TableColumn = {
   render?: (value: any) => JSX.Element;
   title?: string;
   type?: QuestionType;
-};
+}
 
 // ## TABLE FILTER
 

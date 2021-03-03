@@ -1,18 +1,36 @@
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import useQuery from '@hooks/useQuery';
+import { IMember, MemberStatus } from '@store/Db/entities';
+import { useStoreState } from '@store/Store';
 
 const DuesAnalyticsPercentPaidCard: React.FC = () => {
-  const { data, loading } = useQuery<number>({
-    operation: 'getActiveDuesGrowth'
+  const numActiveMembers: number = useStoreState(({ db }) => {
+    return db.community.members
+      ?.map((memberId: string) => db.byMemberId[memberId])
+      ?.filter((member: IMember) => member.status === MemberStatus.ACCEPTED)
+      ?.filter((member: IMember) => member.isDuesActive)?.length;
   });
+
+  const numTotalMembers: number = useStoreState(({ db }) => {
+    return db.community.members
+      ?.map((memberId: string) => db.byMemberId[memberId])
+      ?.filter((member: IMember) => member.status === MemberStatus.ACCEPTED)
+      ?.length;
+  });
+
+  // Equivalent of doing a loading check.
+  if (!numTotalMembers) return null;
+
+  const ratioOfPaidMembers: string = (
+    (numActiveMembers / numTotalMembers) *
+    100
+  ).toFixed(1);
 
   return (
     <GrayCard
       label="Percent of Members Paid"
-      show={!loading}
-      value={data && `${data}%`}
+      value={`${ratioOfPaidMembers}%`}
     />
   );
 };

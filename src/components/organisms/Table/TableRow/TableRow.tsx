@@ -3,7 +3,7 @@ import React from 'react';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
 import { TableColumn, TableRow as TableRowProps } from '../Table.types';
-import TableRowCell from './TableRowCell';
+import TableRowCell from '../TableCell';
 
 const TableRow: React.FC<TableRowProps> = (row) => {
   const onRowClick = TableStore.useStoreState(

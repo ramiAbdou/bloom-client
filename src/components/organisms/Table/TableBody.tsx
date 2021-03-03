@@ -1,3 +1,4 @@
+import hash from 'object-hash';
 import React from 'react';
 
 import TableStore from './Table.store';
@@ -17,7 +18,7 @@ const TableBody: React.FC = () => {
   return (
     <tbody>
       {filteredRows.slice(floor, ceiling).map((row: TableRowProps) => (
-        <TableRow key={row.id} {...row} />
+        <TableRow key={hash(row)} {...row} />
       ))}
     </tbody>
   );
