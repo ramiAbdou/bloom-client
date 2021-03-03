@@ -78,7 +78,7 @@ div.#{$PREF}-col-panel { padding: $sm; }
   @extend .meta;
 
   background-color: $primary-bg;
-  border: 1px rgba($color: $primary-hex, $alpha: 0.5) solid;
+  border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid;
   border-radius: $sm;
   margin-right: $xxs;
   padding: 6px;

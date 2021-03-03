@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { QuestionCategory } from '@util/constants';
 import { RadioOptionProps } from '@molecules/Radio/Radio.types';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
@@ -10,6 +9,7 @@ import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentForm from './ApplicationPaymentSection';
 
@@ -63,9 +63,7 @@ const ApplicationChooseType: React.FC = () => {
   const isMultipleTypesOrPaid: boolean = useStoreState(({ db }) => {
     const types: string[] = db.community?.types;
 
-    if (!types || (types && types.length <= 1)) return false;
-
-    return types.some((typeId: string) => {
+    return types?.some((typeId: string) => {
       const type: IMemberType = db.byTypeId[typeId];
       return !!type?.amount;
     });

@@ -41,9 +41,7 @@ const ApplicationReview: React.FC = () => {
   const isMultipleTypesOrPaid: boolean = useStoreState(({ db }) => {
     const types: string[] = db.community?.types;
 
-    if (!types || (types && types.length <= 1)) return false;
-
-    return types.some((typeId: string) => {
+    return types?.some((typeId: string) => {
       const type: IMemberType = db.byTypeId[typeId];
       return !!type?.amount;
     });
