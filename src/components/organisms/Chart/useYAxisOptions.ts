@@ -12,7 +12,7 @@ const useYAxisOptions = (): Partial<YAxisProps> => {
       'auto'
     ],
     padding: { bottom: 16 },
-    tickFormatter: (value) => (format === 'MONEY' ? `$${value / 100}` : value),
+    tickFormatter: (value) => (format === 'MONEY' ? `$${value}` : value),
     width: yOptions?.width ?? 48
   };
 };

@@ -58,8 +58,7 @@ const MemberDatabaseQuickFilters: React.FC = () => {
   const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
 
   return (
-    <Row wrap show={show} spacing="xs">
-      <p className="meta">Quick Filters:</p>
+    <Row wrap show={show} spacing="sm">
       <MemberDatabaseActiveFilter />
       <MemberDatabaseInactiveFilter />
     </Row>

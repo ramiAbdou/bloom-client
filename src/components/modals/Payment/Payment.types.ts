@@ -8,7 +8,6 @@ export interface CreateLifetimePaymentArgs {
 }
 
 export interface CreateSubscriptionArgs {
-  autoRenew?: boolean;
   memberTypeId: string;
   prorationDate?: number;
 }

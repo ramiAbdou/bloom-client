@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { TimeSeriesData } from '@constants';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
+import { TimeSeriesData } from '@util/constants';
 
 const MembersAnalyticsActiveChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
@@ -13,6 +13,7 @@ const MembersAnalyticsActiveChart: React.FC = () => {
 
   return (
     <Chart
+      className="f-1 w-100--t"
       data={data}
       show={!loading}
       title="Active Users in Last 30 Days"

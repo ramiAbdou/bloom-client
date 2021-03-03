@@ -8,7 +8,7 @@ import MembersAnalyticsTotalMembersCard from './MembersAnalyticsTotalCard';
 const MembersAnalyticsOverview: React.FC = () => {
   return (
     <MainSection>
-      <Row columnBreakpoint="M" spacing="sm">
+      <Row wrap gap="xs">
         <MembersAnalyticsTotalMembersCard />
         <MembersAnalyticsActiveMembersCard />
       </Row>

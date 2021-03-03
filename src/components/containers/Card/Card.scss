@@ -16,13 +16,15 @@ $PREF: 't-card';
 // ## ANALYTICS CARD
 
 .#{$PREF}--analytics {
-  background-color: hsla($primary-hue, 5%, 88%, 0.4);
+  background-color: $gray-bg;
   border-radius: $xs;
   box-sizing: border-box;
   height: fit-content;
   padding: $sm;
   position: relative;
   width: $xxl * 4.5;
+
+  @include MT { width: 100%; }
 
   // Wraps the value (number) and the percentage tag.
   > div:first-child {

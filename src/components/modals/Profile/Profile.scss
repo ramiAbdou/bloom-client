@@ -1,0 +1,37 @@
+$PREF: 'mo-profile';
+
+// ### SOCIAL MEDIA CONTAINER
+
+.#{$PREF}-social {
+  @include HOVER { transform: scale(1.1); }
+  &:active { transform: scale(0.9); }
+
+  > svg { @extend .react-icon--lg; }
+  &--facebook > svg { color: #1877f2; }
+  &--linkedin > svg { color: #0a66c2; }
+  &--twitter > svg { color: #1da1f2; }
+}
+
+// ## PROFILE HISTORY EVENT
+
+.#{$PREF}-history-event {
+  > div:first-child { @extend .flex-col; align-items: center; }
+
+  > div:first-child > div:first-child {
+    background-color: $primary-bg;
+    border: 1px $primary solid;
+    border-radius: 50%;
+
+    @include SIZE(16px);
+  }
+
+  > .t-row:nth-child(2) { flex: 1; }
+}
+
+.#{$PREF}-history-event:not(:last-child) {
+  > div:first-child > div:last-child {
+    background-color: $primary;
+    height: $xl;
+    width: 1px;
+  }
+}

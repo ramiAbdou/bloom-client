@@ -1,5 +1,3 @@
-import deline from 'deline';
-
 import { IUser } from '@store/Db/entities';
 import { CheckInError } from './CheckIn.types';
 
@@ -16,30 +14,22 @@ export const getCheckInErrorMessage = ({
   owner
 }: GetCheckInErrorMessageArgs) => {
   if (error === 'APPLICATION_REJECTED') {
-    return deline`
-      You must be accepted into a commmunity before logging in.
-    `;
+    return 'You must be accepted into a commmunity before logging in.';
   }
 
   if (error === 'APPLICATION_PENDING') {
-    return deline`
-      You have pending member applications. Once they are accepted, you will be
-      able to log in.
-    `;
+    return 'You have pending member applications. Once they are accepted, you will be able to log in.';
   }
 
   if (error === 'NOT_MEMBER') {
-    return deline`
-      This email is not registered as a member of this community. If you
+    return `This email is not registered as a member of this community. If you
       believe this is an error, please reach out to the owner,
-      ${owner.firstName} ${owner.lastName} (${owner.email}).
+      ${owner?.firstName} ${owner?.lastName} (${owner?.email}).
     `;
   }
 
   if (error === 'USER_NOT_FOUND') {
-    return deline`
-      You must apply and be accepted into a commmunity before logging in.
-    `;
+    return 'You must apply and be accepted into a commmunity before logging in.';
   }
 
   return error;

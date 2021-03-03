@@ -1,4 +1,4 @@
-import { IdProps } from '@constants';
+import { IdProps } from '@util/constants';
 
 export interface IndividualEventTableRowProps extends IdProps {
   fullName: string;
@@ -6,5 +6,5 @@ export interface IndividualEventTableRowProps extends IdProps {
   joinedAt?: string;
   rsvpdAt?: string;
   userId?: string;
-  watched?: string;
+  watched?: 'Yes' | 'No';
 }

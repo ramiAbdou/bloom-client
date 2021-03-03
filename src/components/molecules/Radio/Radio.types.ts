@@ -1,4 +1,4 @@
-import { ValueProps } from '@constants';
+import { ValueProps } from '@util/constants';
 
 export interface RadioOptionProps {
   checked?: boolean;

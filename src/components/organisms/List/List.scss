@@ -14,6 +14,37 @@ $PREF: 'o-list';
   @include LTE(788) { grid-template-columns: auto; }
 }
 
-// ## LIST SEARCH
+// ## LIST QUICK FILTER
 
-.#{$PREF}-search { margin-bottom: $sm; }
+.#{$PREF}-quick-filter {
+  @extend .flex-ac;
+  @extend .meta;
+
+  background-color: $primary-bg;
+  border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid;
+  border-radius: $sm;
+  margin-right: $xxs;
+  padding: 6px;
+  text-align: left;
+  width: max-content;
+
+  &--active { background-color: $primary; color: white; }
+}
+
+// ## LIST FILTER
+
+.#{$PREF}-filter-question {
+  border-bottom: 1px $gray-5 solid;
+  border-radius: 0;
+  cursor: pointer;
+  display: block;
+  padding: $sm $xs;
+  width: $xxl * 6;
+
+  &:first-child { border-top: 1px $gray-5 solid; }
+}
+
+.#{$PREF}-filter-question-option-list {
+  max-height: $xxl * 4;
+  overflow: scroll;
+}

@@ -4,8 +4,9 @@ import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMember, IUser } from '@store/Db/entities';
+import { IMember, IUser, MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
 const AdminDatabase: React.FC = () => {
@@ -20,14 +21,16 @@ const AdminDatabase: React.FC = () => {
       }, []);
   });
 
-  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
+  const isOwner = useStoreState(
+    ({ db }) => db.member?.role === MemberRole.OWNER
+  );
 
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.
   const columns: TableColumn[] = [
-    { id: 'firstName', title: 'First Name', type: 'SHORT_TEXT' },
-    { id: 'lastName', title: 'Last Name', type: 'SHORT_TEXT' },
-    { id: 'email', title: 'Email', type: 'SHORT_TEXT' }
+    { id: 'firstName', title: 'First Name', type: QuestionType.SHORT_TEXT },
+    { id: 'lastName', title: 'Last Name', type: QuestionType.SHORT_TEXT },
+    { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT }
   ];
 
   return (

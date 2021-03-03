@@ -14,7 +14,7 @@ const SideBarSection: React.FC<LinkSectionProps> = ({
   links,
   title
 }: LinkSectionProps) => {
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
 
   if (['Admin', 'Quick Actions'].includes(title) && !isAdmin) return null;
 

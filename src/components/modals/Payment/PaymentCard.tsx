@@ -1,4 +1,3 @@
-import deline from 'deline';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
@@ -40,7 +39,12 @@ const PaymentCardForm: React.FC = () => {
       <FormCreditCard />
       <FormShortText id="BILLING_ADDRESS" title="Billing Address" />
 
-      <Row spaceBetween align="baseline" className="mo-payment-billing-ctr">
+      <Row
+        align="baseline"
+        className="mo-payment-billing-ctr"
+        justify="sb"
+        spacing="xs"
+      >
         <FormShortText id="CITY" placeholder="Los Angeles" title="City" />
         <FormShortText id="STATE" placeholder="CA" title="State" />
         <FormShortText id="ZIP_CODE" placeholder="00000" title="Zip Code" />
@@ -57,14 +61,8 @@ const PaymentCard: React.FC = () => {
   const type = PaymentStore.useStoreState((store) => store.type);
 
   const description: string = isCardOnFile
-    ? deline`
-      An update to your current subscription will be reflected on your
-      next billing date.
-    `
-    : deline`
-      We don’t have your payment information yet. Please enter your
-      information to continue to the next step.
-    `;
+    ? 'An update to your current subscription will be reflected on your next billing date.'
+    : 'We don’t have your payment information yet. Please enter your information to continue to the next step.';
 
   return (
     <StoryPage

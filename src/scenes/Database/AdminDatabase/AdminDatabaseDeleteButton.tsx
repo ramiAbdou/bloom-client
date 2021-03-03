@@ -1,8 +1,8 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
-import { ModalType } from '@constants';
 import { useStoreActions } from '@store/Store';
+import { ModalType } from '@util/constants';
 import DatabaseAction from '../DatabaseAction';
 
 const AdminDatabaseDeleteButton: React.FC = () => {

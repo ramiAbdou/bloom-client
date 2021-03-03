@@ -1,42 +1,29 @@
-import { matchSorter } from 'match-sorter';
 import { nanoid } from 'nanoid';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { cx } from '@util/util';
 import ListStore from './List.store';
 import { ListProps } from './List.types';
+import useInitList from './useInitList';
 
 function List<T>({
   className,
   emptyMessage,
-  Item: ListItem,
+  render: ListItem,
   items,
-  options
+  options,
+  prepareForFilter
 }: ListProps<T>) {
-  const searchString = ListStore.useStoreState((store) => store.searchString);
+  useInitList({ items, options, prepareForFilter });
 
-  const setNumResults = ListStore.useStoreActions(
-    (store) => store.setNumResults
-  );
-
-  const sortedAndFilteredItems = searchString
-    ? matchSorter(items, searchString, {
-        ...options,
-        threshold: matchSorter.rankings.ACRONYM
-      })
-    : items;
-
-  useEffect(() => {
-    setNumResults(sortedAndFilteredItems?.length);
-  }, [sortedAndFilteredItems?.length]);
-
-  if (!sortedAndFilteredItems?.length) return <p>{emptyMessage}</p>;
+  const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
+  if (!filteredItems?.length) return <p>{emptyMessage}</p>;
 
   const css = cx('o-list', { [className]: className });
 
   return (
     <div className={css}>
-      {sortedAndFilteredItems.map((value) => {
+      {filteredItems?.map((value) => {
         // @ts-ignore b/c should have ID.
         return <ListItem key={value?.id ?? nanoid()} {...value} />;
       })}

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import AdminDatabaseDemoteForm from '@scenes/Database/AdminDatabase/AdminDatabaseDemoteForm';
 import MemberDatabaseDeleteForm from '@scenes/Database/MemberDatabase/MemberDatabaseDeleteForm';
 import MemberDatabasePromoteForm from '@scenes/Database/MemberDatabase/MemberDatabasePromoteForm';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
+import ModalContainer from './ModalContainer';
 
-const LocalModalCustomContent: React.FC = () => {
+const ModalLocalCustomContent: React.FC = () => {
   const id: string = useStoreState(({ modal }) => modal.id);
 
   if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteForm />;
@@ -19,20 +20,28 @@ const LocalModalCustomContent: React.FC = () => {
 
 const ModalLocalContent: React.FC = () => {
   const className: string = useStoreState(({ modal }) => modal.className);
+  const clearOptions = useStoreActions(({ modal }) => modal.clearOptions);
 
   const confirmation: boolean = useStoreState(
     ({ modal }) => modal.options?.confirmation
   );
 
-  const css = cx('c-modal', {
-    'c-modal--confirmation': confirmation,
-    [className]: className
-  });
+  useEffect(() => {
+    return () => clearOptions();
+  }, []);
+
+  const css = cx(
+    'c-modal',
+    { 'c-modal--confirmation': confirmation },
+    className
+  );
 
   return (
-    <div className={css}>
-      <LocalModalCustomContent />
-    </div>
+    <ModalContainer>
+      <div className={css}>
+        <ModalLocalCustomContent />
+      </div>
+    </ModalContainer>
   );
 };
 

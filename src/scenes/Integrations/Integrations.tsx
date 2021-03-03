@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@constants';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import { useStoreActions } from '@store/Store';
-import IntegrationsCardContainer from './IntegrationsCardContainer';
+import { ModalType } from '@util/constants';
+import IntegrationsConnectedList from './IntegrationsConnectedList';
+import IntegrationsDisconnectedList from './IntegrationsDisconnectedList';
 
 const Integrations: React.FC = () => {
   const searchParam = new URLSearchParams(window.location.search).get('flow');
@@ -19,7 +20,8 @@ const Integrations: React.FC = () => {
   return (
     <MainContent>
       <MainHeader loading={false} title="Integrations" />
-      <IntegrationsCardContainer />
+      <IntegrationsConnectedList />
+      <IntegrationsDisconnectedList />
     </MainContent>
   );
 };

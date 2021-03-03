@@ -3,8 +3,13 @@ import React from 'react';
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
 import FormSection from '@organisms/Form/FormSection';
+import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMemberType, IPaymentMethod } from '@store/Db/entities';
+import {
+  IMemberType,
+  IPaymentMethod,
+  RecurrenceType
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 
@@ -39,21 +44,25 @@ const ApplicationReviewMembeship: React.FC = () => {
     const { amount, recurrence } = selectedType;
 
     // Formats the amount with FREE if the amount is 0.
-    const amountString = amount ? `$${amount / 100}` : 'FREE';
+    const amountString = amount ? `$${amount}` : 'FREE';
 
     // Construct string "Per" timespan based on the recurrence.
     const recurrenceString = takeFirst([
-      [recurrence === 'YEARLY', 'Per Year'],
-      [recurrence === 'MONTHLY', 'Per Month'],
-      [recurrence === 'LIFETIME', 'Lifetime']
+      [recurrence === RecurrenceType.YEARLY, 'Per Year'],
+      [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
+      [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
     ]);
 
     return `${amountString} ${recurrenceString}`;
   });
 
   return (
-    <FormSection title={last4 ? 'Membership & Payment' : 'Membership Plan'}>
-      <Row spaceBetween spacing="xs">
+    <FormSection>
+      <FormSectionHeader
+        title={last4 ? 'Membership & Payment' : 'Membership Plan'}
+      />
+
+      <Row justify="sb" spacing="xs">
         <InformationCard description={description} title={selectedTypeName} />
 
         <InformationCard

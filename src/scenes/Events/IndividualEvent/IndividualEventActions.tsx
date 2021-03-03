@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { ModalType, PanelType } from '@constants';
+import { ModalType, PanelType } from '@util/constants';
 import Row from '@containers/Row/Row';
 import { IEventGuest } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -39,7 +39,7 @@ const EventsEditEventButton: React.FC = () => {
   const eventId = useStoreState(({ db }) => db.event?.id);
 
   const hasPast = useStoreState(({ db }) => {
-    return day().isAfter(day(db.event.startTime));
+    return day().isAfter(day(db.event.endTime));
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -83,7 +83,7 @@ const IndividualEventActions: React.FC = () => {
   });
 
   return (
-    <Row marginTopAuto equal={!isGoing && isUpcoming}>
+    <Row className="mt-auto" equal={!isGoing && isUpcoming} spacing="xs">
       <EventsRsvpButton large eventId={eventId} />
       <EventsJoinButton large eventId={eventId} />
       <EventsEditEventButton />

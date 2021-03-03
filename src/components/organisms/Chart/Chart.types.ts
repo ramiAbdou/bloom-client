@@ -1,6 +1,6 @@
 import { AxisDomain, AxisInterval, TickFormatterFunction } from 'recharts';
 
-import { ShowProps } from '@constants';
+import { BaseProps } from '@util/constants';
 
 export type ChartData = { name: string; value: number | string };
 
@@ -28,7 +28,7 @@ export enum ChartType {
   TIME_SERIES = 'TIME_SERIES'
 }
 
-export interface ChartModelInitArgs extends ShowProps {
+export interface ChartModelInitArgs extends BaseProps {
   data?: ChartData[];
   interval?: number;
   options?: ChartOptions;

@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { LoadingProps } from '@constants';
+import { LoadingProps } from '@util/constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import List from '@organisms/List/List';
@@ -29,13 +29,17 @@ const EventsPastList: React.FC = () => {
 
   return (
     <>
-      <ListSearchBar placeholder="Search events..." show={!!events?.length} />
+      <ListSearchBar
+        className="mb-sm"
+        placeholder="Search events..."
+        show={!!events?.length}
+      />
 
       <List
-        Item={EventsCard}
         emptyMessage="Looks like there are no past events."
         items={events}
         options={{ keys: ['title'] }}
+        render={EventsCard}
       />
     </>
   );
@@ -49,9 +53,9 @@ const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => {
       ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
       ?.filter((event: IEvent) => {
-        return !event.attendees?.some((attendeeId: string) =>
-          attendees.has(attendeeId)
-        );
+        return !event.attendees?.some((attendeeId: string) => {
+          return attendees.has(attendeeId);
+        });
       });
   });
 

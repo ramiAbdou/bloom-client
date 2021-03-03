@@ -1,4 +1,4 @@
-import { action } from 'easy-peasy';
+import { action, State } from 'easy-peasy';
 
 import {
   defaultModalOptions,
@@ -7,22 +7,32 @@ import {
   ModalModel
 } from './Modal.types';
 
-const modalModel: ModalModel = {
+const modalStateModel: State<ModalModel> = {
   ...initialModalModel,
+  id: null,
+  isShowing: false
+};
 
-  closeModal: action((state) => {
-    return { ...state, ...initialModalModel, isShowing: false };
+const modalModel: ModalModel = {
+  ...modalStateModel,
+
+  clearOptions: action((state) => {
+    return { ...state, ...initialModalModel };
   }),
 
-  id: null,
-  isShowing: false,
+  closeModal: action((state) => {
+    return { ...state, isShowing: false };
+  }),
 
   showModal: action((state, args: ModalData) => {
+    const defaultOptions = defaultModalOptions[args.id];
+
     return {
       ...state,
       ...args,
-      ...defaultModalOptions[args.id],
-      isShowing: true
+      ...defaultOptions,
+      isShowing: true,
+      options: { ...defaultOptions?.options, ...args.options }
     };
   })
 };

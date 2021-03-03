@@ -1,9 +1,9 @@
-import useMutation from '@hooks/useMutation';
+import useManualQuery from '@hooks/useManualQuery';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IsEmailTakenArgs } from './Application.types';
 
 const useValidateEmail = () => {
-  const [isEmailTaken] = useMutation<boolean, IsEmailTakenArgs>({
+  const [isEmailTaken] = useManualQuery<boolean, IsEmailTakenArgs>({
     operation: 'isEmailTaken',
     types: { communityId: { required: true }, email: { required: true } }
   });

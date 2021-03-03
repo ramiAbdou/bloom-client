@@ -1,0 +1,51 @@
+import React from 'react';
+
+import Separator from '@atoms/Separator';
+import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
+import Show from '@containers/Show';
+import { useStoreState } from '@store/Store';
+import ProfileStore from './Profile.store';
+import { MemberHistoryData } from './Profile.types';
+import { getMemberHistory } from './Profile.util';
+import ProfileHistoryEvent from './ProfileHistoryEvent';
+import useInitProfileHistory from './useInitProfileHistory';
+
+const ProfileHistoryEventList: React.FC = () => {
+  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+
+  const history: MemberHistoryData[] = useStoreState(({ db }) => {
+    return getMemberHistory({ db, memberId });
+  });
+
+  return (
+    <ul>
+      {history.map((event: MemberHistoryData) => {
+        return <ProfileHistoryEvent key={event?.date} {...event} />;
+      })}
+    </ul>
+  );
+};
+
+const ProfileHistoryContent: React.FC = () => {
+  const loading = useInitProfileHistory();
+
+  return (
+    <div className="my-md">
+      <LoadingHeader h2 className="mb-sm" loading={loading} title="History" />
+      {!loading && <ProfileHistoryEventList />}
+    </div>
+  );
+};
+
+const ProfileHistory: React.FC = () => {
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
+
+  return (
+    <Show show={isAdmin}>
+      <Separator margin={0} />
+      <ProfileHistoryContent />
+    </Show>
+  );
+};
+
+export default ProfileHistory;

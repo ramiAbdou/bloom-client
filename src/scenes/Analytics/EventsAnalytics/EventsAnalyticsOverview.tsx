@@ -10,7 +10,7 @@ import EventsAnalyticsWatchesCard from './EventsAnalyticsWatchesCard';
 const EventsAnalyticsOverview: React.FC = () => {
   return (
     <MainSection>
-      <Row columnBreakpoint="T" spacing="sm">
+      <Row wrap gap="xs">
         <EventsAnalyticsTotalCard />
         <EventsAnalyticsAttendanceCard />
         <EventsAnalyticsGuestCard />

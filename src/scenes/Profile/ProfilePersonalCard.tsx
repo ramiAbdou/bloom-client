@@ -2,13 +2,13 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
@@ -33,8 +33,8 @@ const ProfilePersonalTagList: React.FC = () => {
   });
 
   return (
-    <Row>
-      {role && <HeaderTag>{role}</HeaderTag>}
+    <Row wrap gap="xs">
+      <HeaderTag show={!!role}>{role}</HeaderTag>
       <HeaderTag>{type}</HeaderTag>
     </Row>
   );
@@ -61,7 +61,7 @@ const ProfilePersonalOnboardingContainer: React.FC = () => {
   const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
-    <Row>
+    <Row spacing="xs">
       {!pictureUrl && (
         <Button primary onClick={onClick}>
           + Add Profile Picture
@@ -94,7 +94,7 @@ const ProfilePersonalPictureRow: React.FC = () => {
   const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
-    <Row spaceBetween>
+    <Row justify="sb">
       <ProfilePicture fontSize={36} size={isMobile ? 84 : 104} />
       <ProfileEditButton canEdit onEditClick={onClick} />
     </Row>

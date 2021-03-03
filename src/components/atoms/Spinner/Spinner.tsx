@@ -1,8 +1,7 @@
-import { motion } from 'framer-motion';
 import React from 'react';
 
-import { ShowProps } from '@constants';
 import Show from '@containers/Show';
+import { ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface SpinnerProps extends ShowProps {
@@ -14,11 +13,7 @@ const Spinner: React.FC<SpinnerProps> = ({ dark, show }) => {
 
   return (
     <Show show={!!show}>
-      <motion.div
-        animate={{ rotate: 360 }}
-        className={css}
-        transition={{ duration: 0.75, ease: 'linear', loop: Infinity }}
-      />
+      <div className={css} />
     </Show>
   );
 };

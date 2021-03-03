@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { OnClickProps, TitleProps } from '@constants';
+import { OnClickProps, TitleProps } from '@util/constants';
 import { cx } from '@util/util';
 
 export interface NavigationOptionProps extends OnClickProps, TitleProps {

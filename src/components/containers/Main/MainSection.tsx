@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ClassNameProps, ShowProps } from '@constants';
 import Show from '@containers/Show';
+import { ClassNameProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface MainSectionProps extends ClassNameProps, ShowProps {}

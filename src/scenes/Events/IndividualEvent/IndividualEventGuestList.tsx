@@ -2,38 +2,49 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import List from '@organisms/List/List';
+import ListStore from '@organisms/List/List.store';
 import { IEventGuest, IMember, IUser } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx, sortObjects } from '@util/util';
 
-interface IndividualEventGuestProps
-  extends Pick<IUser, 'email' | 'firstName' | 'id' | 'lastName'> {
-  memberId: string;
+interface IndividualEventGuestProps {
+  guestId?: string;
+  memberId?: string;
+  userId?: string;
 }
 
 const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
-  const { firstName, lastName, id: userId, memberId } = props;
+  const { guestId, memberId, userId } = props;
+
+  const { firstName, lastName }: IEventGuest | IUser = useStoreState(
+    ({ db }) => {
+      if (userId) return db.byUserId[userId];
+      return db.byGuestId[guestId];
+    }
+  );
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isMember = useStoreState(({ db }) => db.isMember);
 
   const onClick = () => {
-    if (isAuthenticated && memberId) {
-      showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+    if (isMember && memberId) {
+      showModal({ id: ModalType.PROFILE, metadata: memberId });
     }
   };
 
   const fullName = `${firstName} ${lastName}`;
 
   const css = cx('s-events-individual-member', {
-    's-events-individual-member--disabled': !isAuthenticated
+    's-events-individual-member--disabled': !isMember
   });
 
   return (
     <Button className={css} onClick={onClick}>
-      <ProfilePicture fontSize={16} size={36} userId={userId} />
+      <ProfilePicture fontSize={16} size={36} {...props} />
       <p className="body--bold">{fullName}</p>
     </Button>
   );
@@ -47,11 +58,10 @@ const IndividualEventGuestListContent: React.FC = () => {
       ?.reduce((acc, guest: IEventGuest) => {
         if (guest.member) {
           const member: IMember = db.byMemberId[guest.member];
-          const user: IUser = db.byUserId[member.user];
-          return [...acc, { ...user, memberId: member.id }];
+          return [...acc, { memberId: member.id, userId: member.user }];
         }
 
-        return [...acc, { ...guest }];
+        return [...acc, { guestId: guest.id }];
       }, []);
   });
 
@@ -59,15 +69,11 @@ const IndividualEventGuestListContent: React.FC = () => {
     <>
       {!users?.length && <p>No guests have RSVP'd yet.</p>}
 
-      <div>
-        {users?.map((user: IndividualEventGuestProps) => {
-          return (
-            <React.Fragment key={user?.email}>
-              <IndividualEventGuest key={user?.id} {...user} />
-            </React.Fragment>
-          );
-        })}
-      </div>
+      <List
+        className="s-events-card-ctr"
+        items={users}
+        render={IndividualEventGuest}
+      />
     </>
   );
 };
@@ -83,7 +89,9 @@ const IndividualEventGuestList: React.FC = () => {
       show={day().isBefore(day(endTime))}
       title="Guest List"
     >
-      <IndividualEventGuestListContent />
+      <ListStore.Provider>
+        <IndividualEventGuestListContent />
+      </ListStore.Provider>
     </Card>
   );
 };

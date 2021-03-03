@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import useQuery from '@hooks/useQuery';
 import Story from '@organisms/Story/Story';
 import { IIntegrations } from '@store/Db/entities';
@@ -17,8 +17,6 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   selectedTypeId
 }) => {
   const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
-  // const type = PaymentStore.useStoreState((store) => store.type);
-  // const clearOptions = PaymentStore.useStoreActions((store) => store.clear);
 
   const setSelectedTypeId = PaymentStore.useStoreActions(
     (store) => store.setSelectedTypeId
@@ -27,8 +25,6 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   useEffect(() => {
     if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
   }, [typeId, selectedTypeId]);
-
-  // const onClose = () => clearOptions();
 
   return (
     <Story>

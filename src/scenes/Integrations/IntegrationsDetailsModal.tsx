@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import Row from '@containers/Row/Row';
-import QuestionValueList from '@molecules/QuestionValueList';
+import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { QuestionType } from '@util/constants';
 import useIntegrationsDetails from './useIntegrationsDetails';
 
 const IntegrationsDetailsModal: React.FC = () => {
@@ -13,23 +13,21 @@ const IntegrationsDetailsModal: React.FC = () => {
 
   return (
     <>
-      <img className="s-integrations-icon--lg" src={logo} />
+      <img className="br-xs s-integrations-icon--lg" src={logo} />
       <h1>{name} Integration Details</h1>
 
-      <QuestionValueList
+      <QuestionBox
+        className="mb-md"
         items={details.map(({ label, value }) => ({
           title: label,
-          type: 'MULTIPLE_CHOICE',
+          type: QuestionType.MULTIPLE_CHOICE,
           value
         }))}
-        marginBottom={24}
       />
 
-      <Row>
-        <Button secondary onClick={() => closeModal()}>
-          Close
-        </Button>
-      </Row>
+      <Button secondary onClick={() => closeModal()}>
+        Close
+      </Button>
     </>
   );
 };

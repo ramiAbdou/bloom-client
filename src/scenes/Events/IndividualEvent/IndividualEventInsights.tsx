@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
-import AnalyticsCard from '@containers/Card/AnalyticsCard';
+import GrayCard from '@containers/Card/GrayCard';
 import MainSection from '@containers/Main/MainSection';
 import Row from '@containers/Row/Row';
 import { useStoreState } from '@store/Store';
@@ -12,7 +12,7 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
   const numAttendees = useStoreState(({ db }) => db.event.attendees?.length);
 
   return (
-    <AnalyticsCard
+    <GrayCard
       label="# of Attendees"
       show={!!day().isAfter(day(startTime))}
       value={numAttendees ?? 0}
@@ -22,7 +22,7 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
   const numGuests = useStoreState(({ db }) => db.event.guests?.length);
-  return <AnalyticsCard label="# of RSVPs" value={numGuests ?? 0} />;
+  return <GrayCard label="# of RSVPs" value={numGuests ?? 0} />;
 };
 
 const IndividualEventInsightsWatchesCard: React.FC = () => {
@@ -30,7 +30,7 @@ const IndividualEventInsightsWatchesCard: React.FC = () => {
   const numWatches = useStoreState(({ db }) => db.event.watches?.length);
 
   return (
-    <AnalyticsCard
+    <GrayCard
       label="# of Recording Viewers"
       show={!!recordingUrl}
       value={numWatches ?? 0}

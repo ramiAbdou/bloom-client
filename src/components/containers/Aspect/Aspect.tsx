@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface AspectProps extends BaseProps {

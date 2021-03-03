@@ -5,7 +5,7 @@ $PREF: 'c-tag';
 .#{$PREF}-attr {
   @extend .body--sm;
 
-  background-color: $primary-light;
+  background-color: $primary-bg;
   border-radius: $sm;
   color: $gray-1;
   margin-right: $xxs;

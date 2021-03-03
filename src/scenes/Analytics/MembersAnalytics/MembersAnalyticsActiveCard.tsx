@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AnalyticsCard from '@containers/Card/AnalyticsCard';
+import GrayCard from '@containers/Card/GrayCard';
 import useQuery from '@hooks/useQuery';
 
 const MembersAnalyticsActiveCard: React.FC = () => {
@@ -9,7 +9,7 @@ const MembersAnalyticsActiveCard: React.FC = () => {
   });
 
   return (
-    <AnalyticsCard
+    <GrayCard
       label="Active Users"
       percentage={data && data[1]}
       show={!loading}

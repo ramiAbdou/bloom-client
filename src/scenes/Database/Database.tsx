@@ -3,31 +3,14 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import MainContent from '@containers/Main/MainContent';
 import Show from '@containers/Show';
-import useQuery from '@hooks/useQuery';
-import { IMember } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import AdminDatabase from './AdminDatabase/AdminDatabase';
 import DatabaseHeader from './DatabaseHeader';
 import MemberDatabase from './MemberDatabase/MemberDatabase';
+import useInitDatabase from './useInitDatabase';
 
 const Database: React.FC = () => {
   const { url } = useRouteMatch();
-
-  const { loading } = useQuery<IMember[]>({
-    fields: [
-      'id',
-      'isDuesActive',
-      'joinedAt',
-      'role',
-      'status',
-      { community: ['id'] },
-      { data: ['id', 'value', { question: ['id'] }] },
-      { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
-    ],
-    operation: 'getDatabase',
-    schema: [Schema.MEMBER]
-  });
+  const { loading } = useInitDatabase();
 
   return (
     <MainContent>

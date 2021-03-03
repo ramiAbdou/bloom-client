@@ -18,7 +18,7 @@ $primary: var(--primary);
 $primary-hex: var(--primary-hex);
 $primary-hue: var(--primary-hue);
 $primary-bg: hsl($primary-hue, 35%, 93%);
-$primary-light: rgba($color: $primary-hex, $alpha: 0.15);
+$gray-bg: hsl($primary-hue, 5%, 92%);
 $gray-1: var(--gray-1);
 $gray-2: var(--gray-2);
 $gray-3: var(--gray-3);
@@ -30,8 +30,3 @@ $gray-6: var(--gray-6);
 
 $green: hsl(150, 100%, 27%);
 $red: hsl(9, 99%, 49%);
-
-.c {
-  &-gray-2 { color: $gray-2; }
-  &-gray-3 { color: $gray-3; }
-}

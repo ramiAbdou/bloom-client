@@ -1,15 +1,8 @@
-import Cookies from 'js-cookie';
-import React, { useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
-import { CookieType, ModalType } from '@constants';
-import useQuery from '@hooks/useQuery';
-import useLoader from '@organisms/Loader/useLoader';
-import { IEvent } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
-import { eventFields, GetEventArgs } from '../Events.types';
 import EventsAspectBackground from '../EventsAspectBackground';
 import IndividualEventAbout from './IndividualEventAbout';
 import IndividualEventAttendeeList from './IndividualEventAttendeeList';
@@ -17,6 +10,7 @@ import IndividualEventGuestList from './IndividualEventGuestList';
 import IndividualEventInsights from './IndividualEventInsights';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventTable from './IndividualEventTable';
+import useInitIndividualEvent from './useInitIndividualEvent';
 
 const IndividualEventHeader: React.FC = () => {
   const imageUrl = useStoreState(({ db }) => db.event?.imageUrl);
@@ -32,74 +26,14 @@ const IndividualEventHeader: React.FC = () => {
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
 
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isMember = useStoreState(({ db }) => db.isMember);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
-  const isMembersOnly = useStoreState(({ db }) => db.event?.private);
-  const setActive = useStoreActions(({ db }) => db.setActive);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { data: data1, loading: loading1, error } = useQuery<
-    IEvent,
-    GetEventArgs
-  >({
-    fields: [
-      'description',
-      'endTime',
-      'eventUrl',
-      'id',
-      'imageUrl',
-      'private',
-      'recordingUrl',
-      'startTime',
-      'summary',
-      'title',
-      'videoUrl',
-      {
-        community: [
-          'id',
-          'name',
-          'primaryColor',
-          { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
-        ]
-      }
-    ],
-    operation: 'getEvent',
-    schema: Schema.EVENT,
-    types: { eventId: { required: true } },
-    variables: { eventId }
-  });
+  const loading = useInitIndividualEvent();
 
-  const { loading: loading2 } = useQuery<IEvent, GetEventArgs>({
-    fields: eventFields,
-    operation: 'getEventGuests',
-    schema: [Schema.EVENT_GUEST],
-    types: { eventId: { required: false } },
-    variables: { eventId }
-  });
-
-  const loading = loading1 || loading2;
-  const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
-
-  useLoader(loading);
-
-  useEffect(() => {
-    if (data1) {
-      setActive({ id: data1.id, table: 'events' });
-      // @ts-ignore b/c type issues.
-      setActive({ id: data1.community?.id, table: 'communities' });
-    }
-  }, [data1]);
-
-  useEffect(() => {
-    if (!isAuthenticated && (isMembersOnly || hasCookieError)) {
-      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
-    }
-  }, [hasCookieError, isMembersOnly, isAuthenticated]);
-
-  if (error && !isAuthenticated) return <Redirect to="/login" />;
   if (loading || !isEventActive) return null;
 
-  const css = cx('', { 's-events-individual--public': !isAuthenticated });
+  const css = cx('', { 's-events-individual--public': !isMember });
 
   return (
     <div className={css}>

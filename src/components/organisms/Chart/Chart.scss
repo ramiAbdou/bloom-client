@@ -1,10 +1,11 @@
 $PREF: 'o-chart';
 
 .#{$PREF} {
-  background-color: hsla($primary-hue, 5%, 88%, 0.4);
+  background-color: $gray-bg;
   border-radius: $xs;
   box-sizing: border-box;
   max-width: 100%;
+  min-width: $xxl * 6;
   overflow: scroll;
   padding: $sm;
 }

@@ -1,42 +1,33 @@
-import { Masonry } from 'masonic';
-import { matchSorter } from 'match-sorter';
-import React, { useEffect } from 'react';
+import { Masonry, MasonryProps } from 'masonic';
+import React from 'react';
 
 import ListStore from './List.store';
-import { MasonryListProps } from './List.types';
+import { ListProps } from './List.types';
+import useInitList from './useInitList';
+
+interface MasonryListProps<T>
+  extends Omit<ListProps<T>, 'render'>,
+    MasonryProps<T> {}
 
 function MasonryList<T>({
   emptyMessage,
   items,
   options,
+  prepareForFilter,
   ...props
 }: MasonryListProps<T>) {
-  const numResults = ListStore.useStoreState((store) => store.numResults);
-  const searchString = ListStore.useStoreState((store) => store.searchString);
+  useInitList({ items, options, prepareForFilter });
 
-  const setNumResults = ListStore.useStoreActions(
-    (store) => store.setNumResults
-  );
+  const cacheKey = ListStore.useStoreState((state) => state.cacheKey);
+  const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
 
-  const sortedItems = searchString
-    ? matchSorter(items, searchString, {
-        ...options,
-        threshold: matchSorter.rankings.ACRONYM
-      })
-    : items;
-
-  useEffect(() => {
-    const { length } = sortedItems ?? [];
-    if (length !== numResults) setNumResults(length);
-  }, [sortedItems?.length]);
-
-  if (!numResults) return <p>{emptyMessage}</p>;
+  if (!filteredItems?.length) return <p>{emptyMessage}</p>;
 
   return (
     <Masonry
-      key={`${searchString}-${numResults}`}
+      key={cacheKey}
       columnGutter={16}
-      items={sortedItems}
+      items={[...filteredItems]}
       overscanBy={5}
       style={{ outline: 'none' }}
       {...props}

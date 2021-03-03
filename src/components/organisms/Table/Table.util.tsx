@@ -1,7 +1,7 @@
 import { State } from 'easy-peasy';
 import { matchSorter } from 'match-sorter';
 
-import { QuestionCategory, QuestionType } from '@constants';
+import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
 import {
   TableColumn,
@@ -130,10 +130,15 @@ export const getTableCellClass = ({
   const isDuesStatus = category === 'DUES_STATUS';
 
   return cx('', {
-    'o-table-cell--lg': ['LONG_TEXT'].includes(type),
+    'o-table-cell--lg': type === QuestionType.LONG_TEXT,
     'o-table-cell--md':
-      !isDuesStatus && ['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(type),
-    'o-table-cell--sm': !type || type === 'SHORT_TEXT',
+      !isDuesStatus &&
+      (type === QuestionType.MULTIPLE_CHOICE ||
+        type === QuestionType.MULTIPLE_SELECT),
+    'o-table-cell--sm':
+      !type ||
+      type === QuestionType.SHORT_TEXT ||
+      type === QuestionType.TRUE_FALSE,
     'o-table-cell--xs': isDuesStatus
   });
 };

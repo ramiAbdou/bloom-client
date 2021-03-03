@@ -2,7 +2,14 @@ import { State } from 'easy-peasy';
 
 import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
-import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import {
+  IMember,
+  IMemberData,
+  IQuestion,
+  IUser,
+  MemberStatus
+} from '@store/Db/entities';
+import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 interface GetMemberTableRowArgs {
@@ -11,32 +18,42 @@ interface GetMemberTableRowArgs {
 
 interface GetMemberValueArgs
   extends Pick<IMember, 'data' | 'isDuesActive' | 'joinedAt' | 'type'>,
-    Pick<IUser, 'email' | 'firstName' | 'gender' | 'lastName'> {
+    Pick<IUser, 'email' | 'firstName' | 'lastName' | 'pictureUrl'> {
   db: State<DbModel>;
   questionId: string;
 }
 
-const getMemberValue = ({
-  data,
-  db,
-  email,
-  firstName,
-  gender,
-  isDuesActive,
-  joinedAt,
-  lastName,
-  questionId,
-  type
-}: GetMemberValueArgs) => {
+/**
+ * Returns the appropriate value based on the IMember data as well as the
+ * IUser attached.
+ */
+const getMemberValue = (args: GetMemberValueArgs) => {
+  const {
+    data,
+    db,
+    email,
+    firstName,
+    isDuesActive,
+    joinedAt,
+    lastName,
+    pictureUrl,
+    questionId,
+    type
+  } = args;
+
   const { category }: IQuestion = db.byQuestionId[questionId];
 
-  if (category === 'EMAIL') return email;
-  if (category === 'FIRST_NAME') return firstName;
-  if (category === 'GENDER') return gender;
-  if (category === 'JOINED_AT') return joinedAt;
-  if (category === 'LAST_NAME') return lastName;
-  if (category === 'MEMBERSHIP_TYPE') return db.byTypeId[type]?.name;
-  if (category === 'DUES_STATUS') {
+  if (category === QuestionCategory.EMAIL) return email;
+  if (category === QuestionCategory.FIRST_NAME) return firstName;
+  if (category === QuestionCategory.JOINED_AT) return joinedAt;
+  if (category === QuestionCategory.LAST_NAME) return lastName;
+  if (category === QuestionCategory.PROFILE_PICTURE) return pictureUrl;
+
+  if (category === QuestionCategory.MEMBERSHIP_TYPE) {
+    return db.byTypeId[type]?.name;
+  }
+
+  if (category === QuestionCategory.DUES_STATUS) {
     return isDuesActive ? 'Active' : 'Inactive';
   }
 
@@ -51,25 +68,27 @@ const getMemberValue = ({
 };
 
 export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
-  if (!db.community.types?.length) return [];
+  if (!db.community.types?.length || !db.community.questions?.length) return [];
 
   const sortQuestionId: string = db.community?.questions?.find(
     (questionId: string) => {
       const question: IQuestion = db.byQuestionId[questionId];
-      return question?.category === 'JOINED_AT';
+      return question?.category === QuestionCategory.JOINED_AT;
     }
   );
 
   const filteredMembers: IMember[] = db.community.members
     ?.map((memberId: string) => db.byMemberId[memberId])
-    ?.filter((member: IMember) => {
-      return !!member?.user && member?.status === 'ACCEPTED';
-    });
+    ?.filter((member: IMember) => member?.status === MemberStatus.ACCEPTED)
+    ?.filter((member: IMember) => !member.deletedAt);
 
   const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
     const user: IUser = db.byUserId[member.user];
 
-    return db.community?.questions?.reduce(
+    return [
+      // { category: QuestionCategory.PROFILE_PICTURE },
+      ...db.community?.questions
+    ].reduce(
       (result: TableRow, questionId: string) => {
         const value = getMemberValue({ ...user, ...member, db, questionId });
         return { ...result, [questionId]: value };

@@ -4,7 +4,7 @@ import {
   LoadingProps,
   ShowProps,
   TitleProps
-} from '@constants';
+} from '@util/constants';
 
 export interface StoryPageBranch extends IdProps, LoadingProps, TitleProps {
   description?: string;

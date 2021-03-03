@@ -1,10 +1,9 @@
-import day from 'dayjs';
 import React from 'react';
 
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
 import { TableColumn, TableRow as TableRowProps } from '../Table.types';
-import TableRowCell from './TableRowCell';
+import TableRowCell from '../TableCell';
 
 const TableRow: React.FC<TableRowProps> = (row) => {
   const onRowClick = TableStore.useStoreState(
@@ -34,11 +33,7 @@ const TableRow: React.FC<TableRowProps> = (row) => {
             key={columnId + row.id}
             columnId={columnId}
             rowId={row.id}
-            value={
-              column.category === 'JOINED_AT'
-                ? day(row[columnId]).format('M/D/YY')
-                : row[columnId]
-            }
+            value={row[columnId]}
           />
         );
       })}

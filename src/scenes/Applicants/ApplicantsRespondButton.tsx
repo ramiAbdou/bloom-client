@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import useMutation from '@hooks/useMutation';
+import { MemberStatus } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { takeFirst } from '@util/util';
@@ -10,7 +11,7 @@ import { RespondToApplicantsArgs } from './Applicants.types';
 interface ApplicantsRespondButtonProps {
   all?: boolean;
   applicantIds: string[];
-  response: 'ACCEPTED' | 'REJECTED';
+  response: MemberStatus.ACCEPTED | MemberStatus.REJECTED;
 }
 
 const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
@@ -40,16 +41,16 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
   };
 
   const buttonText = takeFirst([
-    [response === 'ACCEPTED' && all, 'Accept All'],
-    [response === 'ACCEPTED', 'Accept'],
-    [response === 'REJECTED' && all, 'Reject All'],
-    [response === 'REJECTED', 'Reject']
+    [response === MemberStatus.ACCEPTED && all, 'Accept All'],
+    [response === MemberStatus.ACCEPTED, 'Accept'],
+    [response === MemberStatus.REJECTED && all, 'Reject All'],
+    [response === MemberStatus.REJECTED, 'Reject']
   ]);
 
   return (
     <Button
-      primary={response === 'ACCEPTED'}
-      secondary={response === 'REJECTED'}
+      primary={response === MemberStatus.ACCEPTED}
+      secondary={response === MemberStatus.REJECTED}
       onClick={onClick}
     >
       {buttonText}

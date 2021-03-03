@@ -1,12 +1,10 @@
-import LoginRoute from 'core/routing/LoginRoute';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import Show from '@containers/Show';
-import useLoader from '@organisms/Loader/useLoader';
-import Application from '@scenes/Application/Application';
-import HomeRoute from './HomeRoute';
-import useIsAuthenticated from './useIsAuthenticated';
+import CommunityRouter from './CommunityRouter';
+import LoginRoute from './LoginRoute';
+import useGetTokens from './useGetTokens';
+import useVerifyToken from './useVerifyToken';
 
 /**
  * Core routing logic of the entire application. Nested logic should live
@@ -14,19 +12,18 @@ import useIsAuthenticated from './useIsAuthenticated';
  * most nested logic within it.
  */
 const Router: React.FC = () => {
-  const loading = useIsAuthenticated();
-  useLoader(loading);
+  const loading1 = useGetTokens();
+  const loading2 = useVerifyToken();
+
+  if (loading1 || loading2) return null;
 
   return (
-    <Show show={!loading}>
-      <Switch>
-        <LoginRoute path="/login" />
-        <Route component={Application} path="/:urlName/apply" />
-        <Route component={HomeRoute} path="/:urlName" />
-        <Route exact component={HomeRoute} path="/" />
-        <Redirect to="/login" />
-      </Switch>
-    </Show>
+    <Switch>
+      <LoginRoute exact path="/login" />
+      <Route component={CommunityRouter} path="/:urlName" />
+      <Route exact component={CommunityRouter} path="/" />
+      <Redirect to="/login" />
+    </Switch>
   );
 };
 

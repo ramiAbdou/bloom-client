@@ -5,24 +5,25 @@ import {
   QuestionCategory,
   QuestionType,
   ValueProps
-} from '@constants';
+} from '@util/constants';
 
 // ## TABLE COLUMN
 
-export type TableColumn = {
+export interface TableColumn {
   category?: QuestionCategory;
+  format?: (value: any) => any;
   hideTitle?: boolean;
   id: string;
   render?: (value: any) => JSX.Element;
   title?: string;
   type?: QuestionType;
-};
+}
 
 // ## TABLE FILTER
 
 export type TableFilter = (rows: TableRow) => boolean;
 export type TableFilterJoinOperator = 'and' | 'or';
-export type TableFilterOperator = 'is' | 'is not';
+export type TableFilterOperator = 'includes' | 'is' | 'is not';
 
 export interface TableFilterArgs extends IdProps, ValueProps {
   columnId: string;

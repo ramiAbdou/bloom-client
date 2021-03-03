@@ -5,9 +5,11 @@ import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentForm from './ApplicationPaymentSection';
 
@@ -43,28 +45,35 @@ const ApplicationChooseTypeForm: React.FC = () => {
     });
   });
 
+  const goForward = StoryStore.useStoreActions((state) => state.goForward);
+  const onSubmit = async () => goForward();
+
   return (
-    <Form>
-      <FormMultipleChoice cardOptions={types} category="MEMBERSHIP_TYPE" />
+    <Form onSubmit={onSubmit}>
+      <FormMultipleChoice
+        cardOptions={types}
+        category={QuestionCategory.MEMBERSHIP_TYPE}
+      />
       <ApplicationChooseTypeButton />
     </Form>
   );
 };
 
 const ApplicationChooseType: React.FC = () => {
-  const show: boolean = useStoreState(({ db }) => {
-    const types = db.community?.types;
+  const isMultipleTypesOrPaid: boolean = useStoreState(({ db }) => {
+    const types: string[] = db.community?.types;
 
-    const isMoreThanOneType = types?.length > 1;
-    const isFirstTypePaid = !!types && !db.byTypeId[types[0]]?.isFree;
-    return isMoreThanOneType || isFirstTypePaid;
+    return types?.some((typeId: string) => {
+      const type: IMemberType = db.byTypeId[typeId];
+      return !!type?.amount;
+    });
   });
 
   return (
     <StoryPage
       description="Choose your membership type."
       id="SELECT_TYPE"
-      show={!!show}
+      show={!!isMultipleTypesOrPaid}
       title="Membership Selection"
     >
       <ApplicationChooseTypeForm />

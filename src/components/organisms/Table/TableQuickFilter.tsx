@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from '@atoms/Button/Button';
-import { IdProps, ShowProps, TitleProps } from '@constants';
+import { IdProps, ShowProps, TitleProps } from '@util/constants';
 import { TableRow } from '@organisms/Table/Table.types';
 import { cx } from '@util/util';
 import TableStore from './Table.store';
@@ -16,6 +16,8 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
   show,
   title
 }) => {
+  filterId = filterId ?? title;
+
   const [active, setActive] = useState<boolean>(false);
 
   const filters = TableStore.useStoreState((store) => store.filters);
@@ -38,7 +40,7 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
 
   return (
     <Button className={css} show={show} onClick={onClick}>
-      {title}
+      + {title}
     </Button>
   );
 };

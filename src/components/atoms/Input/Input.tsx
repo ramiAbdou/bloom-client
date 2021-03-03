@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ValueProps } from '@constants';
+import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface InputProps extends ValueProps {

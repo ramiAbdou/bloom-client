@@ -1,6 +1,6 @@
 $PREF: 'c-loader';
 
-// ## FULL SCREEN LOADER
+// ## LOADER
 
 .#{$PREF}-ctr {
   @extend .flex-acc;
@@ -15,7 +15,26 @@ $PREF: 'c-loader';
   column-gap: -$sl;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-}
 
-.#{$PREF} > div { @extend .flex-col; margin-left: -8px; margin-right: -8px; }
-.#{$PREF} > div > div { margin-top: 4px; }
+  > div { @extend .flex-col; margin-left: -8px; margin-right: -8px; }
+
+  > div > div {
+    animation: loader 0.75s ease-in infinite;
+    margin-top: 4px;
+
+    @keyframes loader {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  }
+
+  > div:nth-child(1) > div:nth-child(1) { animation-delay: 0.28s; }
+  > div:nth-child(1) > div:nth-child(2) { animation-delay: 0.22s; }
+
+  > div:nth-child(2) > div:nth-child(1) { animation-delay: 0s; }
+  > div:nth-child(2) > div:nth-child(2) { animation-delay: 0.34s; }
+  > div:nth-child(2) > div:nth-child(3) { animation-delay: 0.17s; }
+
+  > div:nth-child(3) > div:nth-child(1) { animation-delay: 0.05s; }
+  > div:nth-child(3) > div:nth-child(2) { animation-delay: 0.11s; }
+}

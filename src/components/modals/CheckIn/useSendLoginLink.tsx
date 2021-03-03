@@ -1,9 +1,11 @@
 import { useLocation } from 'react-router-dom';
 
+import useManualQuery from '@hooks/useManualQuery';
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMember, IUser } from '@store/Db/entities';
+import { ICommunity } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { CheckInError, SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
@@ -12,14 +14,19 @@ const useSendLoginLink = (): OnFormSubmit => {
   const communityId = useStoreState(({ db }) => db.community?.id);
   const { pathname } = useLocation();
 
-  const owner: IUser = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[db.community?.owner];
-    return db.byUserId[member?.user];
-  });
-
   const setCurrentPage = StoryStore.useStoreActions(
     (store) => store.setCurrentPage
   );
+
+  const [getCommunityOwner] = useManualQuery<ICommunity>({
+    fields: [
+      'id',
+      { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
+    ],
+    operation: 'getCommunityOwner',
+    schema: Schema.COMMUNITY,
+    types: { communityId: { required: true } }
+  });
 
   const [sendLoginLink] = useMutation<boolean, SendLoginLinkArgs>({
     operation: 'sendLoginLink',
@@ -40,7 +47,16 @@ const useSendLoginLink = (): OnFormSubmit => {
     });
 
     if (error) {
-      setError(getCheckInErrorMessage({ error: error as CheckInError, owner }));
+      const { data } = await getCommunityOwner({ communityId });
+
+      setError(
+        getCheckInErrorMessage({
+          error: error as CheckInError,
+          // @ts-ignore b/c type error.
+          owner: data?.owner?.user
+        })
+      );
+
       return;
     }
 

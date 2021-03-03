@@ -6,7 +6,7 @@ import {
   QuestionType,
   ShowProps,
   ValueProps
-} from '@constants';
+} from '@util/constants';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { DbModel } from '@store/Db/Db.types';
 

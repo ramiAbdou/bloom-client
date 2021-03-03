@@ -8,9 +8,10 @@ import { APIError } from 'graphql-hooks';
  */
 export const cx = (
   baseClass: string,
-  classMap: Record<string, any>
+  classMap: Record<string, any>,
+  customClass?: string
 ): string => {
-  return Object.entries(classMap).reduce(
+  const classes = Object.entries(classMap).reduce(
     (acc: string, [className, addClassName]) => {
       if (!addClassName) return acc;
       if (acc.length) return `${acc} ${className}`;
@@ -18,6 +19,8 @@ export const cx = (
     },
     baseClass ?? ''
   );
+
+  return customClass ? `${classes} ${customClass}` : classes;
 };
 
 /**
@@ -37,6 +40,18 @@ export const getGraphQLError = (error: APIError): string => {
 
   // @ts-ignore b/c the message must exist on the GraphQL error object.
   return graphQLErrors[0]?.message;
+};
+
+/**
+ * Opens an href link in a compatible way with all browsers.
+ */
+export const openHref = (href: string, openNewTab = true) => {
+  if (!href?.startsWith('http')) href = `http://${href}`;
+  // If the browser is Safari, just change the location of the current
+  // tab, but if not, open a new window with the URL.
+  if (navigator.vendor === 'Apple Computer, Inc.' || !openNewTab) {
+    window.location.href = href;
+  } else window.open(href);
 };
 
 /**

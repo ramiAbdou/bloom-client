@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { QuestionType } from '@util/constants';
 import Form from '@organisms/Form/Form';
 import { FormItemData } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
@@ -14,7 +15,7 @@ const ProfileMembershipForm: React.FC = () => {
   const items: FormItemData[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      .filter((question: IQuestion) => !question.onlyInApplication)
+      .filter((question: IQuestion) => !question.adminOnly)
       .filter((question: IQuestion) => !question.category);
 
     const data: IMemberData[] = db.member.data?.map((dataId: string) => {
@@ -28,11 +29,15 @@ const ProfileMembershipForm: React.FC = () => {
         (entity: IMemberData) => entity?.question === id
       )?.value;
 
-      const parsedValue: any =
-        type === 'MULTIPLE_SELECT' ||
-        (type === 'MULTIPLE_CHOICE' && options?.length >= 5)
-          ? parseValue(value)
-          : value;
+      let parsedValue: any = value;
+
+      if (type === QuestionType.MULTIPLE_SELECT) {
+        parsedValue = value?.split(',');
+      }
+
+      if (type === QuestionType.MULTIPLE_CHOICE && options?.length >= 5) {
+        parsedValue = parseValue(parsedValue);
+      }
 
       return { ...question, value: parsedValue };
     });

@@ -1,9 +1,18 @@
 import React from 'react';
+import { IoStar } from 'react-icons/io5';
 
-import { ModalType } from '@constants';
+import HeaderTag from '@atoms/Tag/HeaderTag';
+import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
+import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMember, IMemberData, IQuestion, IUser } from '@store/Db/entities';
+import {
+  IMember,
+  IMemberData,
+  IMemberType,
+  IUser,
+  RecurrenceType
+} from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 
@@ -23,8 +32,7 @@ const DirectoryCardInformation: React.FC = () => {
     return member.data
       ?.map((dataId: string) => db.byDataId[dataId])
       ?.find((data: IMemberData) => {
-        const question: IQuestion = db.byQuestionId[data?.question];
-        return !!question?.inDirectoryCard;
+        return data?.question === db.community?.highlightedQuestion;
       })?.value;
   });
 
@@ -52,12 +60,35 @@ const DirectoryCardContent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
+  const role = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    return member?.role;
+  });
+
+  const isLifetime: boolean = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    const type: IMemberType = db.byTypeId[member?.type];
+    return type?.recurrence === RecurrenceType.LIFETIME;
+  });
+
   const onClick = () => {
-    showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+    showModal({ id: ModalType.PROFILE, metadata: memberId });
   };
 
   return (
     <Card noPadding className="s-directory-card" onClick={onClick}>
+      <HeaderTag show={!!role}>{role}</HeaderTag>
+
+      <Row
+        align="center"
+        className="s-directory-card-star-ctr"
+        justify="center"
+        show={isLifetime}
+        spacing="xs"
+      >
+        <IoStar />
+      </Row>
+
       <DirectoryCardPicture />
       <DirectoryCardInformation />
     </Card>

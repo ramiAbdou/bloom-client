@@ -1,4 +1,3 @@
-import deline from 'deline';
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
@@ -7,13 +6,16 @@ import Row from '@containers/Row/Row';
 import useManualQuery from '@hooks/useManualQuery';
 import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IMemberType, IPaymentMethod } from '@store/Db/entities';
+import {
+  IMemberType,
+  IPaymentMethod,
+  RecurrenceType
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
 import { GetChangePreviewArgs, GetChangePreviewResult } from './Payment.types';
 import { getTypeDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
-import PaymentFinishToggle from './PaymentFinishToggle';
 import useCreateLifetimePayment from './useCreateLifetimePayment';
 import useCreateSubscription from './useCreateSubscription';
 
@@ -36,11 +38,13 @@ const PaymentFinishForm: React.FC = () => {
   const createLifetimePayment = useCreateLifetimePayment();
 
   const onSubmit =
-    recurrence === 'LIFETIME' ? createLifetimePayment : createSubscription;
+    recurrence === RecurrenceType.LIFETIME
+      ? createLifetimePayment
+      : createSubscription;
 
   return (
     <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-      <Row spaceBetween marginBottom={24} spacing="xs">
+      <Row className="mb-md" justify="sb" spacing="xs">
         <InformationCard description={description} title={name} />
 
         <InformationCard
@@ -50,7 +54,6 @@ const PaymentFinishForm: React.FC = () => {
         />
       </Row>
 
-      <PaymentFinishToggle />
       <PaymentFinishButton />
     </Form>
   );
@@ -89,13 +92,9 @@ const PaymentFinish: React.FC = () => {
   const title: string =
     modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan';
 
-  const description: string = deline`
-    Please review this information to make sure we got everything right.
-  `;
-
   return (
     <StoryPage
-      description={description}
+      description="Please review this information to make sure we got everything right."
       id="FINISH"
       loading={loading}
       show={modalType !== 'UPDATE_PAYMENT_METHOD'}

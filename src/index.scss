@@ -3,7 +3,8 @@
 @import './core/scss/funcs';
 @import './core/scss/misc';
 @import './core/scss/spacing';
-@import './core/scss/_typography';
+@import './core/scss/typography';
+@import './core/scss/utility';
 
 // 
 
@@ -28,8 +29,8 @@
 
 @import './components/modals/AddMember/AddMember.scss';
 @import './components/modals/CheckIn/CheckIn.scss';
-@import './components/modals/CreateEvent/CreateEvent.scss';
-@import './components/modals/MemberProfile/MemberProfile.scss';
+@import './components/modals/EventForm/EventForm.scss';
+@import './components/modals/Profile/Profile.scss';
 @import './components/modals/Payment/Payment.scss';
 
 // 
@@ -39,7 +40,6 @@
 @import './components/molecules/Misc.scss';
 @import './components/molecules/ProfilePicture/ProfilePicture.scss';
 @import './components/molecules/SearchBar/SearchBar.scss';
-@import './components/molecules/Toggle/Toggle.scss';
 
 // 
 
@@ -81,7 +81,6 @@
 // 
 
 @import './scenes/Integrations/Integrations.scss';
-@import './scenes/Integrations/IntegrationsCard/IntegrationsCard.scss';
 
 // 
 

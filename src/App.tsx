@@ -13,12 +13,12 @@ import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 import { BrowserRouter } from 'react-router-dom';
 
-import { APP } from '@constants';
 import Loader from '@organisms/Loader/Loader';
 import Modal from '@organisms/Modal/Modal';
 import Panel from '@organisms/Panel/Panel';
 import ToastQueue from '@organisms/Toast/Toast';
 import { store } from '@store/Store';
+import { APP } from '@util/constants';
 import Router from './core/routing/Router';
 
 day.extend(advancedFormat);

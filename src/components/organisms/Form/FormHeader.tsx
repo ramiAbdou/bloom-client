@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TitleProps } from '@constants';
+import { TitleProps } from '@util/constants';
 
 interface FormHeaderProps extends TitleProps {
   h2?: boolean;

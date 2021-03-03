@@ -2,35 +2,44 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@constants';
 import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEventAttendee, IMember, IUser } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
-interface IndividualEventAttendeeProps
-  extends Pick<IUser, 'email' | 'firstName' | 'id' | 'lastName'> {
-  memberId: string;
+interface IndividualEventAttendeeProps {
+  attendeeId?: string;
+  memberId?: string;
+  userId?: string;
 }
 
 const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
   props
 ) => {
-  const { firstName, lastName, id: userId, memberId } = props;
+  const { attendeeId, memberId, userId } = props;
+
+  const { firstName, lastName }: IEventAttendee | IUser = useStoreState(
+    ({ db }) => {
+      if (userId) return db.byUserId[userId];
+      return db.byAttendeeId[attendeeId];
+    }
+  );
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
-    showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+    showModal({ id: ModalType.PROFILE, metadata: memberId });
   };
 
   const fullName = `${firstName} ${lastName}`;
 
   return (
     <Button className="s-events-individual-member" onClick={onClick}>
-      <ProfilePicture fontSize={16} size={36} userId={userId} />
+      <ProfilePicture fontSize={16} size={36} {...props} />
       <p className="body--bold">{fullName}</p>
     </Button>
   );
@@ -44,11 +53,10 @@ const IndividualEventAttendeeListContent: React.FC = () => {
       ?.reduce((acc, attendee: IEventAttendee) => {
         if (attendee.member) {
           const member: IMember = db.byMemberId[attendee.member];
-          const user: IUser = db.byUserId[member.user];
-          return [...acc, { ...user, memberId: member.id }];
+          return [...acc, { memberId: member.id, userId: member.user }];
         }
 
-        return [...acc, { ...attendee }];
+        return [...acc, { attendeeId: attendee.id }];
       }, []);
   });
 
@@ -57,11 +65,9 @@ const IndividualEventAttendeeListContent: React.FC = () => {
       {!users?.length && <p>No guests attended.</p>}
 
       <List
-        Item={(user: IndividualEventAttendeeProps) => (
-          <IndividualEventAttendee key={user?.email} {...user} />
-        )}
         className="s-events-card-ctr"
         items={users}
+        render={IndividualEventAttendee}
       />
     </>
   );

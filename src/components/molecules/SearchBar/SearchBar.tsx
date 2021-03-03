@@ -2,10 +2,10 @@ import React, { memo } from 'react';
 import { IoCloseCircle, IoSearch } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { ClassNameProps, ShowProps, ValueProps } from '@constants';
+import { BaseProps, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 
-export interface SearchBarProps extends ClassNameProps, ShowProps, ValueProps {
+export interface SearchBarProps extends BaseProps, ValueProps {
   placeholder?: string;
   onChange: (value: string) => any;
 }

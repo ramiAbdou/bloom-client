@@ -1,8 +1,9 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import TableStore from '@organisms/Table/Table.store';
+import { MemberRole } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
@@ -21,7 +22,7 @@ const useDeleteTooltip = (): string => {
   });
 
   const hasPermissions: boolean = useStoreState(({ db }) => {
-    if (db.member?.role === 'OWNER') return true;
+    if (db.member?.role === MemberRole.OWNER) return true;
 
     if (
       selectedRowIds.some((memberId: string) => !!db.byMemberId[memberId]?.role)

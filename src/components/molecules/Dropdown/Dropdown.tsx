@@ -2,12 +2,12 @@ import deepequal from 'fast-deep-equal';
 import React, { useEffect, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { BaseProps } from '@constants';
+import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 import DropdownStore, { dropdownModel } from './Dropdown.store';
 import { defaultOptions, DropdownModel } from './Dropdown.types';
 import DropdownClickBar from './DropdownClickBar';
-import DropdownOptions from './DropdownOptions';
+import DropdownOptionContainer from './DropdownOptionContainer';
 
 type DropdownContentProps = Partial<DropdownProps>;
 
@@ -43,7 +43,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   return (
     <div ref={ref} className={css}>
       <DropdownClickBar />
-      <DropdownOptions />
+      <DropdownOptionContainer />
     </div>
   );
 };

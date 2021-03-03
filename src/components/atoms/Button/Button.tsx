@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 
 import Spinner from '@atoms/Spinner/Spinner';
-import { ShowProps } from '@constants';
-import { cx } from '@util/util';
-import Show from '../../containers/Show';
+import { ShowProps } from '@util/constants';
+import Show from '@containers/Show';
+import { cx, openHref } from '@util/util';
 
 export interface ButtonProps
   extends Partial<React.ButtonHTMLAttributes<HTMLButtonElement>>,
@@ -18,12 +18,13 @@ export interface ButtonProps
   primary?: boolean;
   red?: boolean;
   secondary?: boolean;
+  stopPropagation?: boolean;
   tertiary?: boolean;
 }
 
 const ButtonLoadingContainer: React.FC<
   Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>
-> = ({ loading, loadingText, secondary }) => {
+> = React.memo(({ loading, loadingText, secondary }) => {
   return (
     <Show show={!!loading}>
       <div className="c-btn-loading-ctr">
@@ -32,7 +33,7 @@ const ButtonLoadingContainer: React.FC<
       </div>
     </Show>
   );
-};
+});
 
 const Button = forwardRef(
   (
@@ -52,6 +53,7 @@ const Button = forwardRef(
       red,
       secondary,
       show,
+      stopPropagation,
       type,
       tertiary,
       ...props
@@ -67,18 +69,11 @@ const Button = forwardRef(
     const onButtonClick = (
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
+      if (stopPropagation) event.stopPropagation();
       if (type === 'button') event.preventDefault();
       if (disabled) return;
       if (onClick) onClick(event);
-
-      if (href) {
-        if (!href?.startsWith('http')) href = `http://${href}`;
-        // If the browser is Safari, just change the location of the current
-        // tab, but if not, open a new window with the URL.
-        if (navigator.vendor === 'Apple Computer, Inc.' || !openTab) {
-          window.location.href = href;
-        } else window.open(href);
-      }
+      if (href) openHref(href, openTab);
     };
 
     const css = cx('c-btn', {

@@ -1,7 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React, { useEffect } from 'react';
 
-import { ShowProps } from '@constants';
+import { ShowProps } from '@util/constants';
 import PanelLocal from '../Panel/PanelLocal';
 import TableStore, { tableModel } from './Table.store';
 import {

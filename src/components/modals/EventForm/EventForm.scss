@@ -1,0 +1,8 @@
+$PREF: 'mo-create-event';
+
+// ## CREATE EVENT
+
+div.#{$PREF}-privacy-item {
+  > div { flex-direction: row; }
+  > div > div:first-child { margin: 0 $xs 0 0; }
+}

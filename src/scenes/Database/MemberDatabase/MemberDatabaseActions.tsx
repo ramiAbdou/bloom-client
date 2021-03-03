@@ -4,6 +4,7 @@ import Row from '@containers/Row/Row';
 import TableStore from '@organisms/Table/Table.store';
 import TableFilterButton from '@organisms/Table/TableFilter/TableFilterButton';
 import SearchBar from '@organisms/Table/TableSeachBar';
+import { MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
 import DeleteMembersButton from './MemberDatabaseDeleteButton';
@@ -12,14 +13,16 @@ import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 
 const MemberDatabaseButtons: React.FC = () => {
-  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
+  const isOwner = useStoreState(
+    ({ db }) => db.member?.role === MemberRole.OWNER
+  );
 
   const isAnythingSelected = TableStore.useStoreState(({ selectedRowIds }) => {
     return !!selectedRowIds.length;
   });
 
   return (
-    <Row show={!!isAnythingSelected}>
+    <Row show={!!isAnythingSelected} spacing="xs">
       <MemberDatabaseCopyButton />
       <MemberDatabaseExportButton />
       {isOwner && <MemberDatabasePromoteButton />}
@@ -38,7 +41,7 @@ const MemberDatabaseQuickContainer: React.FC = () => {
 };
 
 const MemberDatabaseActions: React.FC = () => (
-  <Row spaceBetween className="mb-sm">
+  <Row className="mb-sm" justify="sb" spacing="xs">
     <MemberDatabaseQuickContainer />
     <TableFilterButton />
     <MemberDatabaseButtons />

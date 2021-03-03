@@ -8,50 +8,43 @@ import { cx } from '@util/util';
 import { ToastOptions } from './Toast.types';
 import useToastMutation from './useToastMutation';
 
-const Toast: React.FC<ToastOptions> = ({
-  id,
-  message,
-  mutationArgsOnComplete,
-  mutationArgsOnUndo,
-  onUndo
-}) => {
-  // Tracks the option to undo the action that created the Toast.
-  const [wasUndid, setWasUndid] = useState(false);
-  const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
+const Toast: React.FC<ToastOptions> = React.memo(
+  ({ id, message, mutationArgsOnUndo }) => {
+    // Tracks the option to undo the action that created the Toast.
+    const [wasUndid, setWasUndid] = useState(false);
+    const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
 
-  const { mutationOnUndoFn } = useToastMutation({
-    id,
-    mutationArgsOnComplete,
-    mutationArgsOnUndo,
-    wasUndid
-  });
+    const mutationOnUndoFn = useToastMutation({
+      id,
+      mutationArgsOnUndo,
+      wasUndid
+    });
 
-  const onUndoClick = async () => {
-    setWasUndid(true);
-    dequeueToast(id);
-    if (mutationArgsOnUndo) await mutationOnUndoFn();
-    if (onUndo) onUndo();
-  };
+    const onUndoClick = async () => {
+      setWasUndid(true);
+      dequeueToast(id);
+      if (mutationArgsOnUndo) await mutationOnUndoFn();
+    };
 
-  const showUndoButton = !!onUndo || !!mutationArgsOnUndo;
-  const css = cx('c-toast', { 'c-toast--undo': showUndoButton });
+    const css = cx('c-toast', { 'c-toast--undo': !!mutationArgsOnUndo });
 
-  return (
-    <motion.div
-      key="toast"
-      animate={{ x: 0 }}
-      className={css}
-      exit={{ opacity: 0, x: 250 }}
-      initial={{ x: 150 }}
-    >
-      <p>{message}</p>
+    return (
+      <motion.div
+        key="toast"
+        animate={{ x: 0 }}
+        className={css}
+        exit={{ opacity: 0, x: 250 }}
+        initial={{ x: 150 }}
+      >
+        <p>{message}</p>
 
-      <Button tertiary show={showUndoButton} onClick={onUndoClick}>
-        Undo
-      </Button>
-    </motion.div>
-  );
-};
+        <Button tertiary show={!!mutationArgsOnUndo} onClick={onUndoClick}>
+          Undo
+        </Button>
+      </motion.div>
+    );
+  }
+);
 
 const ToastList: React.FC = () => {
   const queue = useStoreState(({ toast }) => toast.queue);

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 // 2: Tablet
 // 3: Desktop
 // 4: Monitor
-type Breakpoint = 1 | 2 | 3 | 4;
+export type Breakpoint = 1 | 2 | 3 | 4;
 
 /**
  * Returns the appropriate breakpoint based on window width.

@@ -1,10 +1,8 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { ModalType } from '@constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
-import useQuery from '@hooks/useQuery';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -14,9 +12,10 @@ import {
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { IMember, IMemberPayment, IUser } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
+import useInitDuesAnalyticsHistory from './useInitDuesAnalyticsHistory';
 
 interface DuesAnalyticsHistoryTableData {
   amount: string;
@@ -26,6 +25,18 @@ interface DuesAnalyticsHistoryTableData {
   paidOn: string;
   type: string;
 }
+
+const columns: TableColumn[] = [
+  { id: 'paidOn', title: 'Paid On', type: QuestionType.SHORT_TEXT },
+  { id: 'fullName', title: 'Full Name', type: QuestionType.SHORT_TEXT },
+  { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT },
+  { id: 'amount', title: 'Amount', type: QuestionType.SHORT_TEXT },
+  {
+    id: 'type',
+    title: 'Membership Plan',
+    type: QuestionType.MULTIPLE_CHOICE
+  }
+];
 
 const DuesAnalyticsHistoryTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -40,7 +51,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
         const { firstName, lastName, email }: IUser = user;
 
         return {
-          amount: `$${(amount / 100).toFixed(2)}`,
+          amount: `$${amount.toFixed(2)}`,
           email,
           fullName: `${firstName} ${lastName}`,
           id: member.id,
@@ -52,21 +63,9 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
     return result;
   })?.sort((a, b) => sortObjects(a, b, 'paidOn'));
 
-  const columns: TableColumn[] = [
-    { id: 'paidOn', title: 'Paid On', type: 'SHORT_TEXT' },
-    { id: 'fullName', title: 'Full Name', type: 'SHORT_TEXT' },
-    { id: 'email', title: 'Email', type: 'SHORT_TEXT' },
-    { id: 'amount', title: 'Amount', type: 'SHORT_TEXT' },
-    {
-      id: 'type',
-      title: 'Membership Plan',
-      type: 'MULTIPLE_CHOICE'
-    }
-  ];
-
   const options: TableOptions = {
     onRowClick: (row: TableRow) => {
-      showModal({ id: ModalType.MEMBER_PROFILE, metadata: row?.id });
+      showModal({ id: ModalType.PROFILE, metadata: row?.id });
     }
   };
 
@@ -79,19 +78,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
 };
 
 const DuesAnalyticsHistory: React.FC = () => {
-  const { data, loading } = useQuery<IMemberPayment[]>({
-    fields: [
-      'amount',
-      'createdAt',
-      'id',
-      'stripeInvoiceUrl',
-      { community: ['id'] },
-      { member: ['id', { user: ['id', 'firstName', 'lastName', 'email'] }] },
-      { type: ['id'] }
-    ],
-    operation: 'getPayments',
-    schema: [Schema.MEMBER_PAYMENT]
-  });
+  const { data, loading } = useInitDuesAnalyticsHistory();
 
   return (
     <MainSection className="s-analytics-dues-history" show={!!data?.length}>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { isProduction } from '@constants';
+import { isProduction } from '@util/constants';
 import { useStoreState } from '@store/Store';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';

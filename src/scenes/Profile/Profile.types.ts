@@ -8,7 +8,6 @@ export interface UpdateMemberDataArgs {
 }
 
 export interface UpdateMemberArgs {
-  autoRenew?: boolean;
   bio?: boolean;
 }
 
@@ -19,6 +18,7 @@ export interface UpdateUserArgs {
 }
 
 export interface UpdateUserSocialsArgs {
+  clubhouseUrl?: string;
   facebookUrl?: string;
   instagramUrl?: string;
   linkedInUrl?: string;

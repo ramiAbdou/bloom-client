@@ -2,13 +2,17 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import useMutation from '@hooks/useMutation';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { CreateEventGuestArgs, DeleteEventGuestArgs } from './Events.types';
+import {
+  CreateEventGuestArgs,
+  DeleteEventGuestArgs,
+  eventMemberFields
+} from './Events.types';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -25,11 +29,15 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return db.byEventId[eventId]?.startTime;
   });
 
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-  const memberId = useStoreState(({ db }) => db.member?.id);
+  const isMember = useStoreState(({ db }) => db.isMember);
 
   const isGoing: boolean = useStoreState(({ db }) => {
-    const guests = new Set(db.member?.guests);
+    const guests = new Set(
+      db.member?.guests?.filter(
+        (guestId: string) => !db.byGuestId[guestId]?.deletedAt
+      )
+    );
+
     const event: IEvent = db.byEventId[eventId];
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
@@ -42,9 +50,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       'id',
       'lastName',
       { event: ['id'] },
-      {
-        member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }]
-      }
+      ...eventMemberFields
     ],
     operation: 'createEventGuest',
     schema: Schema.EVENT_GUEST,
@@ -62,25 +68,19 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   ) => {
     e.stopPropagation();
 
-    if (!isAuthenticated) {
+    if (!isMember) {
       showModal({ id: ModalType.CHECK_IN, metadata: eventId });
       return;
     }
 
-    const { data } = await createEventGuest();
+    await createEventGuest();
 
     const options: ToastOptions<boolean, DeleteEventGuestArgs> = {
       message: 'RSVP was registered.',
       mutationArgsOnUndo: {
-        deleteArgs: {
-          ids: [data.id],
-          refs: [
-            { column: 'guests', id: eventId, table: 'events' },
-            { column: 'guests', id: memberId, table: 'members' }
-          ],
-          table: 'guests'
-        },
+        fields: ['deletedAt', 'id'],
         operation: 'deleteEventGuest',
+        schema: Schema.EVENT_GUEST,
         types: { eventId: { required: true } },
         variables: { eventId }
       }

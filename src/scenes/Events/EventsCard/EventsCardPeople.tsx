@@ -13,21 +13,21 @@ import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 
 interface EventsCardPersonPictures {
-  userIds?: string[];
+  ids?: { attendeeId?: string; guestId?: string; userId?: string }[];
 }
 
 const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
-  userIds
+  ids
 }) => {
   return (
-    <Row>
-      {userIds?.map((userId: string) => {
+    <Row spacing="xs">
+      {ids?.map((props) => {
         return (
           <ProfilePicture
-            key={userId}
+            key={props?.attendeeId || props?.guestId || props?.userId}
             fontSize={12}
             size={24}
-            userId={userId}
+            {...props}
           />
         );
       })}
@@ -43,7 +43,7 @@ const EventsCardPeople: React.FC = () => {
     return day().isAfter(day(endTime));
   });
 
-  const userIds: string[] = useStoreState(({ db }) => {
+  const ids = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];
     const people = isPast ? event?.attendees : event?.guests;
 
@@ -52,20 +52,23 @@ const EventsCardPeople: React.FC = () => {
       ?.reduce((acc, person: IEventGuest | IEventAttendee) => {
         if (person.member) {
           const member: IMember = db.byMemberId[person.member];
-          return [...acc, member.user];
+          return [...acc, { userId: member.user }];
         }
 
-        return [...acc, person.id];
+        return [
+          ...acc,
+          isPast ? { attendeeId: person.id } : { guestId: person.id }
+        ];
       }, []);
   });
 
   return (
-    <Row className="s-events-card-people" show={!!userIds?.length}>
-      <EventsCardPersonPictures userIds={userIds?.slice(0, 3)} />
+    <Row className="s-events-card-people" show={!!ids?.length} spacing="xs">
+      <EventsCardPersonPictures ids={ids?.slice(0, 3)} />
       <p className="meta">
         {isPast
-          ? `${userIds?.length} people attended`
-          : `${userIds?.length} people going`}
+          ? `${ids?.length} people attended`
+          : `${ids?.length} people going`}
       </p>
     </Row>
   );

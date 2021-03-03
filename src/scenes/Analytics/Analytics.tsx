@@ -7,7 +7,6 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 
-import { LoadingProps } from '@constants';
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
@@ -16,6 +15,7 @@ import useQuery from '@hooks/useQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { LoadingProps } from '@util/constants';
 import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
 import EventsAnalytics from './EventsAnalytics/EventsAnalytics';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
@@ -48,8 +48,7 @@ const Analytics: React.FC = () => {
       'status',
       { community: ['id'] },
       { data: ['id', 'value', { question: ['id'] }] },
-      { type: ['id'] },
-      { user: ['id', 'gender'] }
+      { type: ['id'] }
     ],
     operation: 'getDatabase',
     schema: [Schema.MEMBER]

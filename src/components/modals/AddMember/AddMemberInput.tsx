@@ -2,11 +2,13 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
+import { QuestionCategory } from '@util/constants';
 import Row from '@containers/Row/Row';
+import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
+import FormShortText from '@organisms/Form/FormShortText';
+import { MemberRole } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import FormMultipleSelect from '../../organisms/Form/FormMultipleSelect';
-import FormShortText from '../../organisms/Form/FormShortText';
 import AddMemberStore from './AddMember.store';
 
 const AddMemberInputTrashButton: React.FC = () => {
@@ -28,27 +30,31 @@ const AddMemberInputTrashButton: React.FC = () => {
 
 const AddMemberInput: React.FC = () => {
   const id: string = IdStore.useStoreState((store) => store.id);
-  const isOwner = useStoreState(({ db }) => db.member?.role === 'OWNER');
+
+  const isOwner = useStoreState(
+    ({ db }) => db.member?.role === MemberRole.OWNER
+  );
+
   const admin = AddMemberStore.useStoreState((store) => store.admin);
 
   return (
-    <Row align="baseline" className="mo-add-member-input">
+    <Row align="baseline" className="mo-add-member-input" spacing="xs">
       <AddMemberInputTrashButton />
 
       <FormShortText
-        category="FIRST_NAME"
+        category={QuestionCategory.FIRST_NAME}
         metadata={id}
         placeholder="First Name"
       />
 
       <FormShortText
-        category="LAST_NAME"
+        category={QuestionCategory.LAST_NAME}
         metadata={id}
         placeholder="Last Name"
       />
 
       <FormShortText
-        category="EMAIL"
+        category={QuestionCategory.EMAIL}
         className="mr-sm"
         metadata={id}
         placeholder="Email"

@@ -1,0 +1,122 @@
+// ## BORDER RADIUS
+
+.br {
+  &-xxs { border-radius: $xxs; }
+  &-xs { border-radius: $xs; }
+}
+
+// ## COLORS
+
+.c {
+  &-primary { color: $primary; }
+  &-gray-2 { color: $gray-2; }
+  &-gray-3 { color: $gray-3; }
+}
+
+// ## FLEX
+
+.f {
+  &-1 { flex: 1; }
+  &-2 { flex: 2; }
+}
+
+// ## MARGIN BOTTOM
+
+.mb {
+  &-auto { margin-bottom: auto; }
+  &-xxs:not(:last-child) { margin-bottom: $xxs; }
+  &-xs:not(:last-child) { margin-bottom: $xs; }
+  &-ss:not(:last-child) { margin-bottom: $ss; }
+  &-sm:not(:last-child) { margin-bottom: $sm; }
+  &-sl:not(:last-child) { margin-bottom: $sl; }
+  &-md:not(:last-child) { margin-bottom: $md; }
+  &-lg:not(:last-child) { margin-bottom: $lg; }
+}
+
+// ## MARGIN RIGHT
+
+.mr {
+  &-xxs:not(:last-child) { margin-right: $xxs; }
+  &-xs:not(:last-child) { margin-right: $xs; }
+  &-sm:not(:last-child) { margin-right: $sm; }
+  &-md:not(:last-child) { margin-right: $md; }
+  &-lg:not(:last-child) { margin-right: $lg; }
+}
+
+// ## MARGIN TOP
+
+.mt {
+  &-auto { margin-top: auto; }
+  &-xs { margin-top: $xs; }
+  &-sm { margin-top: $sm; }
+}
+
+// ## MARGIN X
+
+.mx {
+  &-auto { margin-left: auto; margin-right: auto; }
+  &-xs { margin-left: $xs; &:not(:last-child) { margin-right: $xs; } }
+  &-sm { margin-left: $sm; &:not(:last-child) { margin-right: $sm; } }
+}
+
+// ## MARGIN Y
+
+.my {
+  &-xs { margin-top: $xs; &:not(:last-child) { margin-bottom: $xs; } }
+  &-sm { margin-top: $sm; &:not(:last-child) { margin-bottom: $sm; } }
+  &-md { margin-top: $md; &:not(:last-child) { margin-bottom: $md; } }
+}
+
+// ## MIN WIDTH
+
+.mi-w {
+  &-5 { min-width: $xxl * 5; }
+}
+
+// ## MAX HEIGHT
+
+.ma-h {
+  &-4 { max-height: $xxl * 4; }
+  &-5 { max-height: $xxl * 5; }
+}
+
+// ## OVERFLOW
+
+.o {
+  &-hidden { overflow: hidden; }
+  &-scroll { overflow: scroll; }
+}
+
+// ## PADDING
+
+.p {
+  &-sm { padding: $sm; }
+}
+
+// ## PADDING TOP
+
+.pt {
+  &-xxs { padding-top: $xxs; }
+}
+
+// ## PADDING X
+
+.px {
+  &-xs { padding-left: $xs; padding-right: $xs; }
+}
+
+// ## PADDING Y
+
+.py {
+  &-sm { padding-bottom: $sm; padding-top: $sm; }
+}
+
+// ## WIDTH
+
+.w {
+  &-5 { width: $xxl * 5; }
+  &-10 { width: $xxl * 10; }
+
+  &-100 { width: 100%; }
+  &-100--t { @include MT { width: 100%; } }
+}

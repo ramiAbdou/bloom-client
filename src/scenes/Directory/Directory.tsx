@@ -1,48 +1,27 @@
 import React from 'react';
 
-import { LoadingProps } from '@constants';
 import MainContent from '@containers/Main/MainContent';
-import MainHeader from '@containers/Main/MainHeader';
-import useQuery from '@hooks/useQuery';
 import ListStore from '@organisms/List/List.store';
-import ListSearchBar from '@organisms/List/ListSearchBar';
-import { IMember } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
+import ListFilterStore from '@organisms/List/ListFilter/ListFilter.store';
+import PanelLocal from '@organisms/Panel/PanelLocal';
+import DirectoryActions from './DirectoryActions';
 import DirectoryCardList from './DirectoryCardList';
-
-const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const numResults = ListStore.useStoreState((store) => store.numResults);
-
-  return (
-    <MainHeader
-      headerTag={`${numResults} Members`}
-      loading={loading}
-      title="Directory"
-    >
-      <ListSearchBar />
-    </MainHeader>
-  );
-};
+import DirectoryHeader from './DirectoryHeader';
+import useInitDirectory from './useInitDirectory';
 
 const Directory: React.FC = () => {
-  const { loading } = useQuery<IMember[]>({
-    fields: [
-      'id',
-      'status',
-      { community: ['id'] },
-      { data: ['id', 'value', { question: ['id'] }] },
-      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-    ],
-    operation: 'getDirectory',
-    schema: [Schema.MEMBER]
-  });
+  const loading = useInitDirectory();
 
   return (
     <ListStore.Provider>
-      <MainContent>
-        <DirectoryHeader loading={loading} />
-        {!loading && <DirectoryCardList />}
-      </MainContent>
+      <ListFilterStore.Provider>
+        <MainContent>
+          <DirectoryHeader loading={loading} />
+          {!loading && <DirectoryActions />}
+          {!loading && <DirectoryCardList />}
+          <PanelLocal />
+        </MainContent>
+      </ListFilterStore.Provider>
     </ListStore.Provider>
   );
 };

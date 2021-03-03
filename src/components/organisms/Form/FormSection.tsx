@@ -1,14 +1,10 @@
 import React from 'react';
 
-import { TitleProps } from '@constants';
+import { BaseProps } from '@util/constants';
 
-const FormSection: React.FC<TitleProps> = ({ children, title }) => {
-  return (
-    <div className="o-form-section">
-      <h2>{title}</h2>
-      {children}
-    </div>
-  );
+const FormSection: React.FC<BaseProps> = ({ children, show }) => {
+  if (show === false) return null;
+  return <div className="o-form-section mb-lg">{children}</div>;
 };
 
 export default FormSection;

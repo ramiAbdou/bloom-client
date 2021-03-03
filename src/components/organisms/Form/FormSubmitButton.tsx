@@ -23,7 +23,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   ...props
 }) => {
   const isCompleted = FormStore.useStoreState((store) => store.isCompleted);
-  const isLoading = FormStore.useStoreState((store) => store.isLoading);
+  const loading = FormStore.useStoreState((store) => store.isLoading);
 
   if (row) {
     fill = false;
@@ -46,7 +46,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
         disabled={disabled || !isCompleted}
         fill={fill ?? true}
         large={large ?? true}
-        loading={isLoading}
+        loading={loading}
         loadingText={loadingText ?? 'Submitting...'}
         type="submit"
         {...props}

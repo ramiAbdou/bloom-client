@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CheckInModal from '@modals/CheckIn/CheckIn';
-import CreateEventModal from '@modals/CreateEvent/CreateEvent';
-import MemberProfileModal from '@modals/MemberProfile/MemberProfile';
+import EventForm from '@modals/EventForm/EventForm';
 import PaymentModal from '@modals/Payment/Payment';
+import ProfileModal from '@modals/Profile/Profile';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
+import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
 import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
-import { useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
+import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
   const id: string = useStoreState(({ modal }) => modal.id);
@@ -21,9 +23,19 @@ const ModalCustomContent: React.FC = () => {
   if (id === ModalType.ADD_ADMINS) return <AddMemberModal admin />;
   if (id === ModalType.ADD_MEMBERS) return <AddMemberModal />;
   if (id === ModalType.APPLICANT) return <ApplicantsModal />;
-  if (id === ModalType.CHANGE_MEMBERSHIP) return <PaymentModal />;
+
+  if (
+    [
+      ModalType.CHANGE_MEMBERSHIP,
+      ModalType.PAY_DUES,
+      ModalType.UPDATE_PAYMENT_METHOD
+    ].includes(id as ModalType)
+  ) {
+    return <PaymentModal />;
+  }
+
   if (id === ModalType.CHECK_IN) return <CheckInModal />;
-  if (id === ModalType.CREATE_EVENT) return <CreateEventModal />;
+  if (id === ModalType.CREATE_EVENT) return <EventForm />;
 
   if (id === ModalType.EDIT_MEMBERSHIP_INFORMATION) {
     return <ProfileMembershipForm />;
@@ -35,23 +47,31 @@ const ModalCustomContent: React.FC = () => {
 
   if (id === ModalType.EDIT_SOCIAL_MEDIA) return <ProfileSocialModal />;
 
+  if (id === ModalType.EVENT_ERROR) {
+    return <IndividualEventErrorModal />;
+  }
+
   if (id === ModalType.INTEGRATIONS_DETAILS) {
     return <IntegrationsDetailsModal />;
   }
 
   if (id === ModalType.MAILCHIMP_FLOW) return <IntegrationsMailchimpModal />;
-  if (id === ModalType.MEMBER_PROFILE) return <MemberProfileModal />;
-  if (id === ModalType.PAY_DUES) return <PaymentModal />;
+  if (id === ModalType.PROFILE) return <ProfileModal />;
 
   return null;
 };
 
 const ModalContent: React.FC = () => {
   const className: string = useStoreState(({ modal }) => modal.className);
+  const clearOptions = useStoreActions(({ modal }) => modal.clearOptions);
 
   const confirmation: boolean = useStoreState(
     ({ modal }) => modal.options?.confirmation
   );
+
+  useEffect(() => {
+    return () => clearOptions();
+  }, []);
 
   const css = cx('c-modal', {
     'c-modal--confirmation': confirmation,
@@ -59,9 +79,11 @@ const ModalContent: React.FC = () => {
   });
 
   return (
-    <div className={css}>
-      <ModalCustomContent />
-    </div>
+    <ModalContainer>
+      <div className={css}>
+        <ModalCustomContent />
+      </div>
+    </ModalContainer>
   );
 };
 

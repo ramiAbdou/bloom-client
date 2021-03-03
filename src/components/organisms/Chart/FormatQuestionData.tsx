@@ -2,15 +2,14 @@ import deepequal from 'fast-deep-equal';
 import { useEffect } from 'react';
 import sw from 'stopword';
 
-import { QuestionType } from '@constants';
 import {
   IMember,
   IMemberData,
   IMemberType,
-  IQuestion,
-  IUser
+  IQuestion
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory, QuestionType } from '@util/constants';
 import Chart from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
 
@@ -20,9 +19,10 @@ const useQuestionData = (): Pick<
 > => {
   const questionId = Chart.useStoreState((store) => store.questionId);
 
-  const questionType: QuestionType = useStoreState(
-    ({ db }) => db.byQuestionId[questionId]?.type
-  );
+  const questionType: QuestionType = useStoreState(({ db }) => {
+    const question: IQuestion = db.byQuestionId[questionId];
+    return question?.type;
+  });
 
   // Construct the data array and calculate the number of responses that
   // were valid for the question (not null).
@@ -42,13 +42,11 @@ const useQuestionData = (): Pick<
     members.forEach((memberId: string) => {
       const member: IMember = db.byMemberId[memberId];
       const type: IMemberType = db.byTypeId[member.type];
-      const user: IUser = db.byUserId[member.user];
 
       let value;
 
-      if (category === 'MEMBERSHIP_TYPE') value = type?.name;
-      else if (category === 'GENDER') value = user.gender;
-      else if (category === 'DUES_STATUS') {
+      if (category === QuestionCategory.MEMBERSHIP_TYPE) value = type?.name;
+      else if (category === QuestionCategory.DUES_STATUS) {
         value = member.isDuesActive ? 'Active' : 'Inactive';
       } else {
         const d = member.data.find((dataId: string) => {
@@ -62,7 +60,7 @@ const useQuestionData = (): Pick<
 
       if (!value) return;
 
-      if (questionType === 'LONG_TEXT') {
+      if (questionType === QuestionType.LONG_TEXT) {
         // We use stopwords to remove all of the common English words (ie: the).
         const wordArray: string[] = sw.removeStopwords(value.trim().split(' '));
 
@@ -71,7 +69,7 @@ const useQuestionData = (): Pick<
           if (record[word]) record[word]++;
           else record[word] = 1;
         });
-      } else if (questionType === 'MULTIPLE_SELECT') {
+      } else if (questionType === QuestionType.MULTIPLE_SELECT) {
         value.split(',').forEach((element: string) => {
           // If for whatever reason the splitted array returns a value that
           // is empty (has happened before), don't add it, just go to next.
@@ -93,7 +91,9 @@ const useQuestionData = (): Pick<
 
     return {
       data:
-        questionType === 'LONG_TEXT' ? sortedData.slice(0, 100) : sortedData,
+        questionType === QuestionType.LONG_TEXT
+          ? sortedData.slice(0, 100)
+          : sortedData,
       totalResponses
     };
   }, deepequal);
@@ -125,7 +125,7 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
   // the props when the chart was created, not here.
   useEffect(() => {
     if (
-      (['LONG_TEXT', 'SHORT_TEXT'].includes(type) ||
+      ([QuestionType.LONG_TEXT, QuestionType.SHORT_TEXT].includes(type) ||
         (type === 'MULTIPLE_CHOICE' && data.length >= 8)) &&
       currentType !== ChartType.BAR
     ) {

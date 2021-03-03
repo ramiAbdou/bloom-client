@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { TimeSeriesData } from '@constants';
+import { TimeSeriesData } from '@util/constants';
+import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
@@ -11,13 +12,16 @@ const EventAnalyticsChart: React.FC = () => {
     operation: 'getEventAttendeesSeries'
   });
 
+  if (loading) return null;
+
   return (
-    <Chart
-      data={data}
-      show={!loading}
-      title="Event Attendees in Last 30 Days"
-      type={ChartType.TIME_SERIES}
-    />
+    <MainSection>
+      <Chart
+        data={data}
+        title="Event Attendees in Last 30 Days"
+        type={ChartType.TIME_SERIES}
+      />
+    </MainSection>
   );
 };
 

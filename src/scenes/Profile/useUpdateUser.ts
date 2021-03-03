@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMember } from '@store/Db/entities';
@@ -16,7 +18,7 @@ const useUpdateUser = (): OnFormSubmit => {
   const [updateUser] = useMutation<IMember, UpdateUserArgs>({
     fields: ['id', 'firstName', 'lastName', 'pictureUrl'],
     operation: 'updateUser',
-    schema: Schema.MEMBER,
+    schema: Schema.USER,
     types: {
       firstName: { required: false },
       lastName: { required: false },
@@ -38,7 +40,7 @@ const useUpdateUser = (): OnFormSubmit => {
 
     let pictureUrl: string;
 
-    if (base64String) {
+    if (base64String && !validator.isURL(base64String)) {
       try {
         pictureUrl = await uploadImage({
           base64String,

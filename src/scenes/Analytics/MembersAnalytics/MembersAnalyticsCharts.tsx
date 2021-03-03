@@ -7,7 +7,7 @@ import MembersAnalyticsTotalMembersChart from './MembersAnalyticsTotalChart';
 
 const MembersAnalyticsCharts: React.FC = () => (
   <MainSection>
-    <Row equal columnBreakpoint="T" spacing="sm">
+    <Row wrap gap="sm">
       <MembersAnalyticsTotalMembersChart />
       <MembersAnalyticsActiveMembersChart />
     </Row>

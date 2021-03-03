@@ -1,25 +1,43 @@
+import day from 'dayjs';
 import React from 'react';
 
-import { ShowProps } from '@constants';
+import { QuestionCategory, ShowProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
+import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import FormShortText from '../../organisms/Form/FormShortText';
+import { useStoreState } from '@store/Store';
+import useCreatePublicEventAttendee from './useCreatePublicEventAttendee';
 import useCreatePublicEventGuest from './useCreatePublicEventGuest';
 
 const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
+  const isUpcoming: boolean = useStoreState(({ db }) => {
+    return day().isBefore(day(db.event?.startTime).subtract(30, 'm'));
+  });
+
+  const createPublicEventAttendee = useCreatePublicEventAttendee();
   const createPublicEventGuest = useCreatePublicEventGuest();
+
   if (show === false) return null;
 
   return (
-    <Form onSubmit={createPublicEventGuest}>
+    <Form
+      onSubmit={isUpcoming ? createPublicEventGuest : createPublicEventAttendee}
+    >
       <Row equal align="baseline" spacing="xs">
-        <FormShortText category="FIRST_NAME" title="First Name" />
-        <FormShortText category="LAST_NAME" title="Last Name" />
+        <FormShortText
+          category={QuestionCategory.FIRST_NAME}
+          title="First Name"
+        />
+
+        <FormShortText
+          category={QuestionCategory.LAST_NAME}
+          title="Last Name"
+        />
       </Row>
 
-      <FormShortText category="EMAIL" title="Email" />
-      <FormSubmitButton>RSVP</FormSubmitButton>
+      <FormShortText category={QuestionCategory.EMAIL} title="Email" />
+      <FormSubmitButton>{isUpcoming ? 'RSVP' : 'Join'}</FormSubmitButton>
     </Form>
   );
 };

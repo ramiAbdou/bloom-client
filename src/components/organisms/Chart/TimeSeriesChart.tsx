@@ -35,7 +35,7 @@ const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
   ]);
 
   const formattedValue: string = takeFirst([
-    [format === 'MONEY', `$${(value as number) / 100}`],
+    [format === 'MONEY', `$${value as number}`],
     [true, value]
   ]);
 

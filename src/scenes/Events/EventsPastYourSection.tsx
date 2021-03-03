@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { LoadingProps } from '@constants';
+import { LoadingProps } from '@util/constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import List from '@organisms/List/List';
@@ -20,10 +20,10 @@ const EventsPastYourList: React.FC = () => {
 
   return (
     <List
-      Item={EventsCard}
       className="s-events-card-ctr"
       items={events}
       options={{ keys: ['title'] }}
+      render={EventsCard}
     />
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ModalType } from '@constants';
 import useMutation from '@hooks/useMutation';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
@@ -14,6 +13,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { IIntegrations, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType, QuestionCategory } from '@util/constants';
 import { UpdateQuestionArgs } from '../Database.types';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
@@ -26,18 +26,23 @@ const MemberDatabase: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => getMemberTableRow({ db }));
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
-    const integrations: IIntegrations =
-      db.byIntegrationsId[db.community?.integrations];
+    const integrationsId: string = db.community?.integrations;
+    const integrations: IIntegrations = db.byIntegrationsId[integrationsId];
 
-    return db.community.questions
+    const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter(({ category }: IQuestion) => {
-        if (category === 'DUES_STATUS' && !integrations.stripeAccountId) {
+      ?.filter((question: IQuestion) => {
+        if (
+          question.category === QuestionCategory.DUES_STATUS &&
+          !integrations.stripeAccountId
+        ) {
           return false;
         }
 
         return true;
       });
+
+    return [...questions];
   });
 
   const [updateQuestion] = useMutation<IQuestion, UpdateQuestionArgs>({
@@ -57,7 +62,7 @@ const MemberDatabase: React.FC = () => {
     hasCheckbox: true,
     onRenameColumn,
     onRowClick: ({ id: memberId }: TableRow) => {
-      showModal({ id: ModalType.MEMBER_PROFILE, metadata: memberId });
+      showModal({ id: ModalType.PROFILE, metadata: memberId });
     }
   };
 

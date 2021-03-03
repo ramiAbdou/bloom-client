@@ -10,7 +10,7 @@ $PREF: 'o-table-pagination';
   height: $md;
   width: $md;
 
-  @include HOVER { background-color: $primary-light; }
+  @include HOVER { background-color: $primary-bg; }
 
   &:not(:last-child) { margin-right: $xxs; }
 

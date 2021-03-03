@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import React from 'react';
 
-import { ShowProps } from '@constants';
+import { ShowProps } from '@util/constants';
 import Show from '@containers/Show';
 import useTooltip from '@hooks/useTooltip';
 import { cx } from '@util/util';

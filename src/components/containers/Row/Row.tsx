@@ -1,62 +1,46 @@
 import React from 'react';
 
-import { ClassNameProps, ShowProps } from '@constants';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { cx } from '@util/util';
-
-interface RowProps extends ClassNameProps, ShowProps {
-  align?: 'baseline' | 'center' | 'end' | 'start';
-  columnBreakpoint?: 'M' | 'T';
-  equal?: boolean;
-  justify?: 'center';
-  marginBottom?: number;
-  marginTopAuto?: boolean;
-  spaceBetween?: boolean;
-  spacing?: 'xs' | 'sm';
-  wrap?: boolean;
-}
+import { RowProps } from './Row.types';
 
 const Row: React.FC<RowProps> = ({
   align = 'center',
   children,
-  columnBreakpoint,
   className,
   equal,
+  fillBreakpoint,
+  gap,
   justify,
-  marginBottom,
-  marginTopAuto,
-  spaceBetween,
-  spacing = 'xs',
+  spacing,
   show,
   wrap
 }) => {
-  const breakpoint = useBreakpoint();
+  const isTablet: boolean = useBreakpoint() <= 2;
 
-  const css = cx('flex t-row', {
-    [className]: className,
-    'flex-ab': align === 'baseline',
-    'flex-ac': align === 'center',
-    'flex-ae': align === 'end',
-    'flex-as': align === 'start',
-    'flex-sb': spaceBetween,
-    'flex-w': !!wrap,
-    't-row--c': justify === 'center',
-    't-row--col':
-      (columnBreakpoint === 'M' && breakpoint <= 1) ||
-      (columnBreakpoint === 'T' && breakpoint <= 2),
-    't-row--col-m': columnBreakpoint === 'M' && breakpoint <= 1,
-    't-row--col-t': columnBreakpoint === 'T' && breakpoint <= 2,
-    't-row--equal': equal,
-    't-row--margin-top-auto': marginTopAuto,
-    't-row--spacing-sm': spacing === 'sm',
-    't-row--spacing-xs': spacing === 'xs'
-  });
+  const css = cx(
+    'flex t-row',
+    {
+      'flex-ab': align === 'baseline',
+      'flex-ac': align === 'center',
+      'flex-ae': align === 'end',
+      'flex-as': align === 'start',
+      'flex-c': justify === 'center',
+      'flex-sb': justify === 'sb',
+      'flex-w': !!wrap || !!gap,
+      't-row--equal': equal,
+      't-row--fill': fillBreakpoint === 2 && isTablet,
+      't-row--gap-sm': gap === 'sm',
+      't-row--gap-xs': gap === 'xs',
+      't-row--gap-xxs': gap === 'xxs',
+      't-row--spacing-sm': spacing === 'sm',
+      't-row--spacing-xs': spacing === 'xs'
+    },
+    className
+  );
 
-  return show !== false ? (
-    <div className={css} style={{ marginBottom }}>
-      {children}
-    </div>
-  ) : null;
+  if (show === false) return null;
+  return <div className={css}>{children}</div>;
 };
 
 export default Row;

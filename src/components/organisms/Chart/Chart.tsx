@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { cx } from '@util/util';
 import BarChart from './BarChart';
 import ChartStore, { chartModel } from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
@@ -27,12 +28,19 @@ const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
   );
 };
 
-const Chart: React.FC<ChartModelInitArgs> = ({ options, show, ...args }) => {
+const Chart: React.FC<ChartModelInitArgs> = ({
+  className,
+  options,
+  show,
+  ...args
+}) => {
   if (show === false) return null;
+
+  const css = cx('o-chart', {}, className);
 
   return (
     <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
-      <div className="o-chart">
+      <div className={css}>
         <ChartHeader />
         <ChartContent {...args} />
       </div>

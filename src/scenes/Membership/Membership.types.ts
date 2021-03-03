@@ -4,6 +4,5 @@ export interface GetUpcomingPaymentResult {
 }
 
 export interface UpdateMemberArgs {
-  autoRenew?: boolean;
   bio?: boolean;
 }

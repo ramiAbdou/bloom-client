@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 
 import { useStoreState } from '@store/Store';
 import { globalModals } from './Modal.types';
-import ModalContainer from './ModalContainer';
 import ModalContent from './ModalContent';
 
 const Modal: React.FC = () => {
@@ -13,13 +12,7 @@ const Modal: React.FC = () => {
 
   return createPortal(
     <AnimatePresence>
-      {isShowing && globalModals.includes(modalId) && (
-        <>
-          <ModalContainer>
-            <ModalContent />
-          </ModalContainer>
-        </>
-      )}
+      {isShowing && globalModals.includes(modalId) && <ModalContent />}
     </AnimatePresence>,
     document.body
   );

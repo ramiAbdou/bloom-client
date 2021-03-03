@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ClassNameProps } from '@constants';
+import { ClassNameProps } from '@util/constants';
 import { cx } from '@util/util';
 
 const MainContent: React.FC<ClassNameProps> = ({ children, className }) => {

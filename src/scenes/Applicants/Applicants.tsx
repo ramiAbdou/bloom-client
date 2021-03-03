@@ -8,7 +8,7 @@ import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 
 const Applicants: React.FC = () => {
-  const { loading: loading1 } = useQuery<IMember[]>({
+  const { loading } = useQuery<IMember[]>({
     fields: [
       'id',
       'createdAt',
@@ -17,19 +17,11 @@ const Applicants: React.FC = () => {
       { community: ['id'] },
       { data: ['id', 'value', { question: ['id'] }] },
       { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'gender', 'lastName'] }
+      { user: ['id', 'email', 'firstName', 'lastName'] }
     ],
     operation: 'getApplicants',
     schema: [Schema.MEMBER]
   });
-
-  const { loading: loading2 } = useQuery<IMember[]>({
-    fields: ['id', 'inApplicantCard', 'inApplication'],
-    operation: 'getQuestions',
-    schema: [Schema.QUESTION]
-  });
-
-  const loading = loading1 && loading2;
 
   return (
     <MainContent>

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { RouteType } from '@constants';
+import { RouteType } from '@util/constants';
 import { useStoreState } from '@store/Store';
 
 const usePush = (to: RouteType, path?: string) => {

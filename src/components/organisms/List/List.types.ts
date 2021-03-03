@@ -1,25 +1,43 @@
 import { Action } from 'easy-peasy';
-import { MasonryProps } from 'masonic';
 import { MatchSorterOptions } from 'match-sorter';
 
-import { ClassNameProps } from '@constants';
+import { ClassNameProps } from '@util/constants';
+import {
+  ListFilterArgs,
+  ListFilterFunction,
+  ListQuickFilterArgs
+} from './ListFilter/ListFilter.types';
 
-export interface ListProps<T> extends ClassNameProps {
-  Item: React.FC<T>;
+// ## PREPARE FOR FILTER
+
+export type PrepareForListFilter<T = any> = (entity: T) => Record<string, any>;
+
+// ## LIST PROPS
+
+export interface ListProps<T = any> extends ClassNameProps {
   emptyMessage?: string;
   items: T[];
   options?: MatchSorterOptions<T>;
+  prepareForFilter?: PrepareForListFilter<T>;
+  render: React.FC<T>;
 }
 
-export interface MasonryListProps<T> extends MasonryProps<T> {
-  emptyMessage?: string;
+// ## LIST MODEL
+
+export interface ListModel<T = any> {
+  cacheKey: string;
+  customFilters: Record<string, ListFilterArgs>;
+  filteredItems: T[];
+  filters: Record<string, ListFilterFunction>;
   items: T[];
   options?: MatchSorterOptions<T>;
-}
-
-export interface ListModel {
-  numResults: number;
+  prepareForFilter?: PrepareForListFilter<T>;
+  removeFilter: Action<ListModel<T>, string>;
   searchString: string;
-  setNumResults: Action<ListModel, number>;
-  setSearchString: Action<ListModel, string>;
+  setCustomFilters: Action<ListModel<T>, Record<string, ListFilterArgs>>;
+  setFilter: Action<ListModel<T>, ListQuickFilterArgs>;
+  setItems: Action<ListModel<T>, T[]>;
+  setOptions: Action<ListModel<T>, MatchSorterOptions<T>>;
+  setPrepareForFilter: Action<ListModel<T>, PrepareForListFilter<T>>;
+  setSearchString: Action<ListModel<T>, string>;
 }

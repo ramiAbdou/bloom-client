@@ -1,6 +1,6 @@
 import { Action } from 'easy-peasy';
 
-import { ModalType } from '@constants';
+import { ModalType } from '@util/constants';
 
 // ## MODAL OPTIONS/DATA
 
@@ -31,10 +31,12 @@ export const globalModals: ModalType[] = [
   ModalType.EDIT_MEMBERSHIP_INFORMATION,
   ModalType.EDIT_PERSONAL_INFORMATION,
   ModalType.EDIT_SOCIAL_MEDIA,
+  ModalType.EVENT_ERROR,
   ModalType.INTEGRATIONS_DETAILS,
   ModalType.MAILCHIMP_FLOW,
-  ModalType.MEMBER_PROFILE,
-  ModalType.PAY_DUES
+  ModalType.PAY_DUES,
+  ModalType.PROFILE,
+  ModalType.UPDATE_PAYMENT_METHOD
 ];
 
 export const localModals: ModalType[] = [
@@ -56,6 +58,7 @@ export const defaultModalOptions: Record<string, Partial<ModalData>> = {
 };
 
 export interface ModalModel extends ModalData {
+  clearOptions: Action<ModalModel>;
   closeModal: Action<ModalModel>;
   isShowing: boolean;
   showModal: Action<ModalModel, ModalData>;
