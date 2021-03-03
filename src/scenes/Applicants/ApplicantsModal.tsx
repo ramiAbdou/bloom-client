@@ -11,6 +11,7 @@ import {
   MemberStatus
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
@@ -30,6 +31,7 @@ const ApplicantsModalItems: React.FC = () => {
 
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
+    const user: IUser = db.byUserId[member?.user];
 
     const data: IMemberData[] = member.data?.map(
       (dataId: string) => db.byDataId[dataId]
@@ -38,7 +40,9 @@ const ApplicantsModalItems: React.FC = () => {
     return db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter((question: IQuestion) => {
-        return !question?.category || question?.category === 'EMAIL';
+        return (
+          !question?.category || question?.category === QuestionCategory.EMAIL
+        );
       })
       ?.map((question: IQuestion) => {
         const element: IMemberData = data?.find((entity: IMemberData) => {
@@ -48,7 +52,10 @@ const ApplicantsModalItems: React.FC = () => {
         return {
           title: question?.title,
           type: question?.type,
-          value: element?.value
+          value:
+            question.category === QuestionCategory.EMAIL
+              ? user.email
+              : element?.value
         };
       });
   });

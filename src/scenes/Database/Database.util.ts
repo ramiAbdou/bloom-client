@@ -85,10 +85,7 @@ export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
   const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
     const user: IUser = db.byUserId[member.user];
 
-    return [
-      // { category: QuestionCategory.PROFILE_PICTURE },
-      ...db.community?.questions
-    ].reduce(
+    return [...db.community?.questions].reduce(
       (result: TableRow, questionId: string) => {
         const value = getMemberValue({ ...user, ...member, db, questionId });
         return { ...result, [questionId]: value };
