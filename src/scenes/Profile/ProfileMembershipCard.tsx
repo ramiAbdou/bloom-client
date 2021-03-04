@@ -29,7 +29,6 @@ const ProfileMembershipContent: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => !question.adminOnly)
       ?.filter((question: IQuestion) => !question.category)
       ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'ASC'));
 
