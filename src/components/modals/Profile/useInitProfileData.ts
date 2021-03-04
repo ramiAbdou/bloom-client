@@ -1,15 +1,15 @@
 import useQuery from '@hooks/useQuery';
-import { IMemberData } from '@store/Db/entities';
+import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import ProfileStore from './Profile.store';
 
 const useInitProfileData = (): boolean => {
   const memberId = ProfileStore.useStoreState((store) => store.memberId);
 
-  const { loading } = useQuery<IMemberData[]>({
+  const { loading } = useQuery<IMemberValue[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: 'getMemberData',
-    schema: [Schema.MEMBER_DATA],
+    operation: 'getMemberValues',
+    schema: [Schema.MEMBER_VALUE],
     types: { memberId: { required: false } },
     variables: { memberId }
   });

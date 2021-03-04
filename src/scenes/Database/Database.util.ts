@@ -4,7 +4,7 @@ import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
   IMember,
-  IMemberData,
+  IMemberValue,
   IQuestion,
   IUser,
   MemberStatus
@@ -17,7 +17,7 @@ interface GetMemberTableRowArgs {
 }
 
 interface GetMemberValueArgs
-  extends Pick<IMember, 'data' | 'isDuesActive' | 'joinedAt' | 'type'>,
+  extends Pick<IMember, 'isDuesActive' | 'joinedAt' | 'type' | 'values'>,
     Pick<IUser, 'email' | 'firstName' | 'lastName' | 'pictureUrl'> {
   db: State<DbModel>;
   questionId: string;
@@ -29,7 +29,6 @@ interface GetMemberValueArgs
  */
 const getMemberValue = (args: GetMemberValueArgs) => {
   const {
-    data,
     db,
     email,
     firstName,
@@ -38,7 +37,8 @@ const getMemberValue = (args: GetMemberValueArgs) => {
     lastName,
     pictureUrl,
     questionId,
-    type
+    type,
+    values
   } = args;
 
   const { category }: IQuestion = db.byQuestionId[questionId];
@@ -57,9 +57,9 @@ const getMemberValue = (args: GetMemberValueArgs) => {
     return isDuesActive ? 'Active' : 'Inactive';
   }
 
-  const value = data
-    ?.map((dataId: string) => db.byDataId[dataId])
-    ?.find((entity: IMemberData) => {
+  const value = values
+    ?.map((valueId: string) => db.byValuesId[valueId])
+    ?.find((entity: IMemberValue) => {
       const question: IQuestion = db.byQuestionId[entity.question];
       return question.id === questionId;
     })?.value;

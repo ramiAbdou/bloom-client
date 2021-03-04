@@ -5,7 +5,7 @@ import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import {
   IMember,
-  IMemberData,
+  IMemberValue,
   IQuestion,
   IUser,
   MemberStatus
@@ -33,8 +33,8 @@ const ApplicantsModalItems: React.FC = () => {
     const member: IMember = db.byMemberId[memberId];
     const user: IUser = db.byUserId[member?.user];
 
-    const data: IMemberData[] = member.data?.map(
-      (dataId: string) => db.byDataId[dataId]
+    const data: IMemberValue[] = member.values?.map(
+      (valueId: string) => db.byValuesId[valueId]
     );
 
     return db.community.questions
@@ -45,7 +45,7 @@ const ApplicantsModalItems: React.FC = () => {
         );
       })
       ?.map((question: IQuestion) => {
-        const element: IMemberData = data?.find((entity: IMemberData) => {
+        const element: IMemberValue = data?.find((entity: IMemberValue) => {
           return entity.question === question.id;
         });
 

@@ -9,7 +9,7 @@ const useApplyToCommunity = (): OnFormSubmit => {
     fields: ['id'],
     operation: 'applyToCommunity',
     types: {
-      data: { type: '[MemberDataInput!]!' },
+      data: { type: '[MemberValueInput!]!' },
       email: { required: true },
       memberTypeId: { required: false },
       paymentMethodId: { required: false },

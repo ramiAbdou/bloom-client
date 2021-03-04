@@ -1,14 +1,14 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import useQuery from '@hooks/useQuery';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import { IMemberData, IQuestion } from '@store/Db/entities';
+import { IMemberValue, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
 
@@ -33,13 +33,13 @@ const ProfileMembershipContent: React.FC = () => {
       ?.filter((question: IQuestion) => !question.category)
       ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'ASC'));
 
-    const data: IMemberData[] = db.member.data?.map(
-      (dataId: string) => db.byDataId[dataId]
+    const data: IMemberValue[] = db.member.values?.map(
+      (valueId: string) => db.byValuesId[valueId]
     );
 
     return questions?.map(({ id, title, type }: IQuestion) => {
       const value: any = data?.find(
-        (entity: IMemberData) => entity?.question === id
+        (entity: IMemberValue) => entity?.question === id
       )?.value;
 
       return { title, type, value };
@@ -50,7 +50,7 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const hasData: boolean = useStoreState(({ db }) => !!db.member.data);
+  const hasData: boolean = useStoreState(({ db }) => !!db.member.values);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () =>
@@ -64,10 +64,10 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const { loading } = useQuery<IMemberData[]>({
+  const { loading } = useQuery<IMemberValue[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: 'getMemberData',
-    schema: [Schema.MEMBER_DATA]
+    operation: 'getMemberValues',
+    schema: [Schema.MEMBER_VALUE]
   });
 
   return (

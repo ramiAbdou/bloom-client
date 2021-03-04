@@ -2,19 +2,19 @@ import React from 'react';
 import { IoStar } from 'react-icons/io5';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import {
   IMember,
-  IMemberData,
   IMemberType,
+  IMemberValue,
   IUser,
   RecurrenceType
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 
 const DirectoryCardInformation: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
@@ -29,9 +29,9 @@ const DirectoryCardInformation: React.FC = () => {
   const highlightedValue = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
-    return member.data
-      ?.map((dataId: string) => db.byDataId[dataId])
-      ?.find((data: IMemberData) => {
+    return member.values
+      ?.map((valueId: string) => db.byValuesId[valueId])
+      ?.find((data: IMemberValue) => {
         return data?.question === db.community?.highlightedQuestion;
       })?.value;
   });

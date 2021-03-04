@@ -148,10 +148,10 @@ const Member = new schema.Entity(
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.attendeeId, { attendees: [parent.id] }],
-        [!!parent.dataId, { data: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
+        [!!parent.valueId, { values: [parent.id] }],
         [!!parent.watchId, { watches: [parent.id] }],
         {}
       ]);
@@ -161,13 +161,13 @@ const Member = new schema.Entity(
   }
 );
 
-const MemberData = new schema.Entity(
-  'data',
+const MemberValue = new schema.Entity(
+  'values',
   {},
   {
     mergeStrategy,
     processStrategy: (value) => {
-      return { ...value, dataId: value.id };
+      return { ...value, valueId: value.id };
     }
   }
 );
@@ -195,7 +195,7 @@ const Question = new schema.Entity(
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [!!parent.dataId, { data: [parent.id] }]
+        [!!parent.valueId, { values: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, questionId: value.id };
@@ -249,15 +249,15 @@ EventWatch.define({ event: Event, member: Member });
 
 Member.define({
   community: Community,
-  data: [MemberData],
   guests: [EventGuest],
   payments: [MemberPayment],
   type: MemberType,
   user: User,
+  values: [MemberValue],
   watches: [EventWatch]
 });
 
-MemberData.define({ member: Member, question: Question });
+MemberValue.define({ member: Member, question: Question });
 
 MemberPayment.define({
   community: Community,
@@ -266,8 +266,8 @@ MemberPayment.define({
 });
 
 MemberType.define({ community: Community });
-Question.define({ community: Community, data: [MemberData] });
-User.define({ member: Member, members: [Member] });
+Question.define({ community: Community, values: [MemberValue] });
+User.define({ members: [Member] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
@@ -281,9 +281,9 @@ export const Schema = {
   EVENT_GUEST: EventGuest,
   EVENT_WATCH: EventWatch,
   MEMBER: Member,
-  MEMBER_DATA: MemberData,
   MEMBER_PAYMENT: MemberPayment,
   MEMBER_TYPE: MemberType,
+  MEMBER_VALUE: MemberValue,
   QUESTION: Question,
   USER: User
 };

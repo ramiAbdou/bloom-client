@@ -7,7 +7,6 @@ const dbByIdStore: Pick<
   | 'byApplicationId'
   | 'byAttendeeId'
   | 'byCommunityId'
-  | 'byDataId'
   | 'byEventId'
   | 'byGuestId'
   | 'byIntegrationsId'
@@ -16,12 +15,12 @@ const dbByIdStore: Pick<
   | 'byQuestionId'
   | 'byTypeId'
   | 'byUserId'
+  | 'byValuesId'
   | 'byWatchId'
 > = {
   byApplicationId: computed(({ entities }) => entities.applications?.byId),
   byAttendeeId: computed(({ entities }) => entities.attendees?.byId),
   byCommunityId: computed(({ entities }) => entities.communities?.byId),
-  byDataId: computed(({ entities }) => entities.data?.byId),
   byEventId: computed(({ entities }) => entities.events?.byId),
   byGuestId: computed(({ entities }) => entities.guests?.byId),
   byIntegrationsId: computed(({ entities }) => entities.integrations?.byId),
@@ -30,6 +29,7 @@ const dbByIdStore: Pick<
   byQuestionId: computed(({ entities }) => entities.questions?.byId),
   byTypeId: computed(({ entities }) => entities.types?.byId),
   byUserId: computed(({ entities }) => entities.users?.byId),
+  byValuesId: computed(({ entities }) => entities.values?.byId),
   byWatchId: computed(({ entities }) => entities.watches?.byId)
 };
 

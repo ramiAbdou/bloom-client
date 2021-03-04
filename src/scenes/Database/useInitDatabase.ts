@@ -12,9 +12,9 @@ const useInitDatabase = () => {
       'role',
       'status',
       { community: ['id'] },
-      { data: ['id', 'value', { question: ['id'] }] },
       { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getDatabase',
     schema: [Schema.MEMBER]

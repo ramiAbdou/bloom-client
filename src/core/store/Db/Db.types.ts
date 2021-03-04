@@ -11,9 +11,9 @@ import {
   IEventWatch,
   IIntegrations,
   IMember,
-  IMemberData,
   IMemberPayment,
   IMemberType,
+  IMemberValue,
   IQuestion,
   IUser
 } from './entities';
@@ -32,7 +32,6 @@ export type DbModel = {
   byApplicationId: Computed<DbModel, Record<string, ICommunityApplication>>;
   byAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
   byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
-  byDataId: Computed<DbModel, Record<string, IMemberData>>;
   byEventId: Computed<DbModel, Record<string, IEvent>>;
   byGuestId: Computed<DbModel, Record<string, IEventGuest>>;
   byIntegrationsId: Computed<DbModel, Record<string, IIntegrations>>;
@@ -41,6 +40,7 @@ export type DbModel = {
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
   byTypeId: Computed<DbModel, Record<string, IMemberType>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
+  byValuesId: Computed<DbModel, Record<string, IMemberValue>>;
   byWatchId: Computed<DbModel, Record<string, IEventWatch>>;
 
   application: Computed<DbModel, ICommunityApplication>;

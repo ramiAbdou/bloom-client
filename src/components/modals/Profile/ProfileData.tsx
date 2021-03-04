@@ -4,7 +4,7 @@ import Separator from '@atoms/Separator';
 import Show from '@containers/Show';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import { IMember, IMemberData, IQuestion } from '@store/Db/entities';
+import { IMember, IMemberValue, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ProfileStore from './Profile.store';
 import useInitProfileData from './useInitProfileData';
@@ -19,9 +19,9 @@ const ProfileDataContent: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
-    return member?.data
-      ?.map((dataId: string) => db.byDataId[dataId])
-      ?.filter((data: IMemberData) => {
+    return member?.values
+      ?.map((valueId: string) => db.byValuesId[valueId])
+      ?.filter((data: IMemberValue) => {
         const question: IQuestion = db.byQuestionId[data.question];
 
         return (
@@ -31,7 +31,7 @@ const ProfileDataContent: React.FC = () => {
           !question?.category
         );
       })
-      ?.map((element: IMemberData) => {
+      ?.map((element: IMemberValue) => {
         const { title, type }: IQuestion = db.byQuestionId[element.question];
         return { title, type, value: element.value };
       });

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Show from '@containers/Show';
-import { IMemberData, IQuestion } from '@store/Db/entities';
+import { IMemberValue, IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ListFilterStore from '../ListFilter/ListFilter.store';
@@ -19,17 +19,17 @@ const ListFilterQuestionOptionList: React.FC = () => {
   const options: string[] = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
 
-    const data: IMemberData[] = question?.data?.map(
-      (dataId: string) => db.byDataId[dataId]
+    const data: IMemberValue[] = question?.values?.map(
+      (valueId: string) => db.byValuesId[valueId]
     );
 
     return question?.options?.sort((aOption, bOption) => {
       const aNumOptions: number = data?.filter(
-        (element: IMemberData) => element?.value === aOption
+        (element: IMemberValue) => element?.value === aOption
       )?.length;
 
       const bNumOptions: number = data?.filter(
-        (element: IMemberData) => element?.value === bOption
+        (element: IMemberValue) => element?.value === bOption
       )?.length;
 
       if (aNumOptions === bNumOptions) return 0;

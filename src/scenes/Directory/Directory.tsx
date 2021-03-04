@@ -10,7 +10,7 @@ import DirectoryHeader from './DirectoryHeader';
 import useInitDirectory from './useInitDirectory';
 
 const Directory: React.FC = () => {
-  const loading = useInitDirectory();
+  const { loading } = useInitDirectory();
 
   return (
     <ListStore.Provider>

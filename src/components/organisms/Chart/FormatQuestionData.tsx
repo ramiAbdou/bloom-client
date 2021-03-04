@@ -4,8 +4,8 @@ import sw from 'stopword';
 
 import {
   IMember,
-  IMemberData,
   IMemberType,
+  IMemberValue,
   IQuestion
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -49,13 +49,13 @@ const useQuestionData = (): Pick<
       else if (category === QuestionCategory.DUES_STATUS) {
         value = member.isDuesActive ? 'Active' : 'Inactive';
       } else {
-        const d = member.data.find((dataId: string) => {
-          const data: IMemberData = db.byDataId[dataId];
+        const d = member.values.find((valueId: string) => {
+          const data: IMemberValue = db.byValuesId[valueId];
           const question: IQuestion = db.byQuestionId[data.question];
           return question.id === questionId;
         });
 
-        value = db.byDataId[d]?.value;
+        value = db.byValuesId[d]?.value;
       }
 
       if (!value) return;
