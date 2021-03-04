@@ -12,6 +12,7 @@ import {
   IIntegrations,
   IMember,
   IMemberPayment,
+  IMemberSocials,
   IMemberType,
   IMemberValue,
   IQuestion,
@@ -38,6 +39,7 @@ export type DbModel = {
   byMemberId: Computed<DbModel, Record<string, IMember>>;
   byPaymentId: Computed<DbModel, Record<string, IMemberPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
+  bySocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
   byTypeId: Computed<DbModel, Record<string, IMemberType>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
   byValuesId: Computed<DbModel, Record<string, IMemberValue>>;
@@ -48,6 +50,7 @@ export type DbModel = {
   event: Computed<DbModel, IEvent>;
   integrations: Computed<DbModel, IIntegrations>;
   member: Computed<DbModel, IMember>;
+  socials: Computed<DbModel, IMemberSocials>;
   user: Computed<DbModel, IUser>;
 
   clearEntities: Action<DbModel>;

@@ -6,6 +6,7 @@ import {
   IEvent,
   IIntegrations,
   IMember,
+  IMemberSocials,
   IUser
 } from '@store/Db/entities';
 import { updateDocumentColors } from '@util/colorUtil';
@@ -13,7 +14,13 @@ import { DbModel } from './Db.types';
 
 const dbActiveStore: Pick<
   DbModel,
-  'application' | 'community' | 'event' | 'integrations' | 'member' | 'user'
+  | 'application'
+  | 'community'
+  | 'event'
+  | 'integrations'
+  | 'member'
+  | 'socials'
+  | 'user'
 > = {
   application: computed(({ community, entities }) => {
     const { byId: byApplicationId } = entities.applications;
@@ -58,10 +65,14 @@ const dbActiveStore: Pick<
     return byId[activeId] as IMember;
   }),
 
-  /**
-   * There should only be one user queried in the application, and that is
-   * the logged-in user.
-   */
+  socials: computed(({ entities }) => {
+    const { activeId, byId } = entities.members;
+    const { byId: bySocialsId } = entities.socials;
+
+    const member: IMember = byId[activeId];
+    return bySocialsId[member?.socials] as IMemberSocials;
+  }),
+
   user: computed(({ entities }) => {
     const { activeId, byId } = entities.users;
     return byId[activeId] as IUser;

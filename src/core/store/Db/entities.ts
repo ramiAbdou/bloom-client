@@ -142,6 +142,7 @@ export interface IMember extends BaseEntity {
   pictureUrl: string;
   role?: MemberRole;
   type: Identifier;
+  socials: Identifier;
   status: MemberStatus;
   stripeSubscriptionId?: string;
   user: Identifier;
@@ -164,6 +165,14 @@ export interface IMemberPayment extends BaseEntity {
   stripeInvoiceUrl: string;
   member: Identifier;
   type: Identifier;
+}
+
+export interface IMemberSocials extends BaseEntity {
+  clubhouseUrl: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  linkedInUrl: string;
+  twitterUrl: string;
 }
 
 // ## MEMBER TYPE
@@ -196,14 +205,8 @@ export interface IQuestion extends BaseEntity {
 // ## USER
 
 export interface IUser extends BaseEntity {
-  clubhouseUrl: string;
-  currentLocation: string;
   email: string;
-  facebookUrl: string;
-  instagramUrl: string;
-  linkedInUrl: string;
   members?: Identifier[];
-  twitterUrl: string;
 }
 
 export interface EntityRecord<T> {
@@ -221,6 +224,7 @@ export interface IEntities {
   members: EntityRecord<IMember>;
   payments: EntityRecord<IMemberPayment>;
   questions: EntityRecord<IQuestion>;
+  socials: EntityRecord<IMemberSocials>;
   types: EntityRecord<IMemberType>;
   users: EntityRecord<IUser>;
   values: EntityRecord<IMemberValue>;
@@ -238,6 +242,7 @@ export const initialEntities: IEntities = {
   members: { activeId: null, byId: {} },
   payments: { byId: {} },
   questions: { byId: {} },
+  socials: { byId: {} },
   types: { byId: {} },
   users: { activeId: null, byId: {} },
   values: { byId: {} },

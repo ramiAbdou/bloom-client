@@ -8,11 +8,11 @@ import { useStoreState } from '@store/Store';
 import useUpdateUserSocials from './useUpdateUserSocials';
 
 const ProfileSocialModal: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => db.user.clubhouseUrl);
-  const facebookUrl = useStoreState(({ db }) => db.user.facebookUrl);
-  const instagramUrl = useStoreState(({ db }) => db.user.instagramUrl);
-  const linkedInUrl = useStoreState(({ db }) => db.user.linkedInUrl);
-  const twitterUrl = useStoreState(({ db }) => db.user.twitterUrl);
+  const clubhouseUrl = useStoreState(({ db }) => db.socials.clubhouseUrl);
+  const facebookUrl = useStoreState(({ db }) => db.socials.facebookUrl);
+  const instagramUrl = useStoreState(({ db }) => db.socials.instagramUrl);
+  const linkedInUrl = useStoreState(({ db }) => db.socials.linkedInUrl);
+  const twitterUrl = useStoreState(({ db }) => db.socials.twitterUrl);
 
   const updateUserSocials = useUpdateUserSocials();
 
