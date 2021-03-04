@@ -6,6 +6,7 @@ import { Schema } from '@store/Db/schema';
 const useInitDirectory = (): QueryResult<IMember[]> => {
   const result: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: [
+      'email',
       'id',
       'firstName',
       'lastName',
@@ -14,7 +15,7 @@ const useInitDirectory = (): QueryResult<IMember[]> => {
       'status',
       { community: ['id'] },
       { type: ['id'] },
-      { user: ['id', 'email'] },
+      { user: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getDirectory',

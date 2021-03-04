@@ -21,7 +21,7 @@ const useInitCheckInError = (): boolean => {
   const [getCommunityOwner, { loading }] = useManualQuery<ICommunity>({
     fields: [
       'id',
-      { owner: ['id', 'firstName', 'lastName', { user: ['id', 'email'] }] }
+      { owner: ['id', 'email', 'firstName', 'lastName', { user: ['id'] }] }
     ],
     operation: 'getCommunityOwner',
     schema: Schema.COMMUNITY,

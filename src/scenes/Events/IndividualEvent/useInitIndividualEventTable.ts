@@ -31,11 +31,12 @@ const useInitIndividualEventTable = (): boolean => {
       { event: ['id', 'title'] },
       {
         member: [
+          'email',
           'id',
           'firstName',
           'lastName',
           'pictureUrl',
-          { user: ['id', 'email'] }
+          { user: ['id'] }
         ]
       }
     ],

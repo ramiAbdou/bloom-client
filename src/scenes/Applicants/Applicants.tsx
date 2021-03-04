@@ -10,6 +10,7 @@ import ApplicantsHeader from './ApplicantsHeader';
 const Applicants: React.FC = () => {
   const { loading } = useQuery<IMember[]>({
     fields: [
+      'email',
       'id',
       'createdAt',
       'firstName',
@@ -18,7 +19,7 @@ const Applicants: React.FC = () => {
       'status',
       { community: ['id'] },
       { type: ['id'] },
-      { user: ['id', 'email'] },
+      { user: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getApplicants',

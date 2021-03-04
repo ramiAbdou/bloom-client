@@ -13,11 +13,12 @@ const useInitDuesAnalyticsHistory = () => {
       { community: ['id'] },
       {
         member: [
+          'email',
           'id',
           'isDuesActive',
           'firstName',
           'lastName',
-          { user: ['id', 'email'] }
+          { user: ['id'] }
         ]
       },
       { type: ['id'] }

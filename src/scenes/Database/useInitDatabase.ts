@@ -6,6 +6,7 @@ import { Schema } from '@store/Db/schema';
 const useInitDatabase = () => {
   const result: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: [
+      'email',
       'id',
       'isDuesActive',
       'firstName',
@@ -16,7 +17,7 @@ const useInitDatabase = () => {
       'status',
       { community: ['id'] },
       { type: ['id'] },
-      { user: ['id', 'email'] },
+      { user: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getDatabase',
