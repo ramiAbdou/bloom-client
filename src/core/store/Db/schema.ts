@@ -178,6 +178,16 @@ const MemberPayment = new schema.Entity(
   { processStrategy: (value) => ({ ...value, paymentId: value.id }) }
 );
 
+const MemberSocials = new schema.Entity(
+  'socials',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, socialsId: value.id };
+    }
+  }
+);
+
 const MemberType = new schema.Entity(
   'types',
   {},
@@ -251,13 +261,12 @@ Member.define({
   community: Community,
   guests: [EventGuest],
   payments: [MemberPayment],
+  socials: MemberSocials,
   type: MemberType,
   user: User,
   values: [MemberValue],
   watches: [EventWatch]
 });
-
-MemberValue.define({ member: Member, question: Question });
 
 MemberPayment.define({
   community: Community,
@@ -265,7 +274,9 @@ MemberPayment.define({
   type: MemberType
 });
 
+MemberSocials.define({ member: Member });
 MemberType.define({ community: Community });
+MemberValue.define({ member: Member, question: Question });
 Question.define({ community: Community, values: [MemberValue] });
 User.define({ members: [Member] });
 
@@ -282,6 +293,7 @@ export const Schema = {
   EVENT_WATCH: EventWatch,
   MEMBER: Member,
   MEMBER_PAYMENT: MemberPayment,
+  MEMBER_SOCIALS: MemberSocials,
   MEMBER_TYPE: MemberType,
   MEMBER_VALUE: MemberValue,
   QUESTION: Question,

@@ -5,12 +5,12 @@ import Show from '@containers/Show';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { IMember, IMemberValue, IQuestion } from '@store/Db/entities';
+import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import ProfileStore from './Profile.store';
 import useInitProfileData from './useInitProfileData';
 
 const ProfileDataContent: React.FC = () => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+  const memberId: string = IdStore.useStoreState((store) => store.id);
 
   const questions: Set<string> = useStoreState(({ db }) => {
     return new Set(db.community?.questions);

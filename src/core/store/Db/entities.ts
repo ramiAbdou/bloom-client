@@ -132,6 +132,7 @@ export interface IMember extends BaseEntity {
   attendees: Identifier[];
   bio: string;
   community: Identifier;
+  email: string;
   firstName: string;
   guests: Identifier[];
   isDuesActive: boolean;

@@ -3,15 +3,15 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
+import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import ProfileStore from './Profile.store';
 import { MemberHistoryData } from './Profile.types';
 import { getMemberHistory } from './Profile.util';
 import ProfileHistoryEvent from './ProfileHistoryEvent';
 import useInitProfileHistory from './useInitProfileHistory';
 
 const ProfileHistoryEventList: React.FC = () => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+  const memberId: string = IdStore.useStoreState((store) => store.id);
 
   const history: MemberHistoryData[] = useStoreState(({ db }) => {
     return getMemberHistory({ db, memberId });

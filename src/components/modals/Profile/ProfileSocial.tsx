@@ -8,10 +8,10 @@ import {
 
 import Button from '@atoms/Button/Button';
 import { IMember, IMemberSocials } from '@store/Db/entities';
+import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { SocialBrand } from '@util/constants';
 import { cx } from '@util/util';
-import ProfileStore from './Profile.store';
 
 interface ProfileSocialButtonProps {
   brand: SocialBrand;
@@ -46,7 +46,7 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
 };
 
 const ProfileSocialContainer: React.FC = () => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+  const memberId = IdStore.useStoreState((store) => store.id);
 
   const {
     clubhouseUrl,

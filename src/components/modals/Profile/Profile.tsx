@@ -5,10 +5,10 @@ import useManualQuery from '@hooks/useManualQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import ProfileStore from './Profile.store';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
+import IdStore from '@store/Id.store';
 
 const Profile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
@@ -27,14 +27,14 @@ const Profile: React.FC = () => {
 
   return (
     <Show show={!!data}>
-      <ProfileStore.Provider
+      <IdStore.Provider
         // @ts-ignore b/c user is populated.
-        runtimeModel={{ memberId, userId: data?.user?.id }}
+        runtimeModel={{ id: memberId }}
       >
         <ProfilePersonal />
         <ProfileData />
         <ProfileHistory />
-      </ProfileStore.Provider>
+      </IdStore.Provider>
     </Show>
   );
 };

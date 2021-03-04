@@ -7,10 +7,10 @@ import {
   IMemberPayment
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import ProfileStore from './Profile.store';
+import IdStore from '@store/Id.store';
 
 const useInitProfileHistory = (): boolean => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+  const memberId = IdStore.useStoreState((store) => store.id);
 
   const { loading: loading1 } = useQuery<IEventAttendee[]>({
     fields: eventFields,

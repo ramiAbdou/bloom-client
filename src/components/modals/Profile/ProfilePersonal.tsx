@@ -5,14 +5,14 @@ import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMember, IUser } from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import ProfileStore from './Profile.store';
 import ProfileSocialContainer from './ProfileSocial';
 import useInitProfilePersonal from './useInitProfilePersonal';
+import IdStore from '@store/Id.store';
 
 const ProfilePersonalPicture: React.FC = () => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+  const memberId = IdStore.useStoreState((store) => store.id);
 
   return (
     <ProfilePicture
@@ -25,7 +25,7 @@ const ProfilePersonalPicture: React.FC = () => {
 };
 
 const ProfilePersonalName: React.FC = () => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+  const memberId = IdStore.useStoreState((store) => store.id);
 
   const fullName: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -36,7 +36,7 @@ const ProfilePersonalName: React.FC = () => {
 };
 
 const ProfilePersonalTags: React.FC = () => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+  const memberId = IdStore.useStoreState((store) => store.id);
 
   const role = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -57,18 +57,18 @@ const ProfilePersonalTags: React.FC = () => {
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const userId = ProfileStore.useStoreState((store) => store.userId);
+  const memberId = IdStore.useStoreState((store) => store.id);
 
   const email: string = useStoreState(({ db }) => {
-    const user: IUser = db.byUserId[userId];
-    return user.email;
+    const member: IMember = db.byMemberId[memberId];
+    return member.email;
   });
 
   return <MailTo className="mb-sm" email={email} />;
 };
 
 const ProfilePersonalBio: React.FC = () => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+  const memberId = IdStore.useStoreState((store) => store.id);
 
   const bio: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];

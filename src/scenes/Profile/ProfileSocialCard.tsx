@@ -103,10 +103,11 @@ const ProfileSocialCard: React.FC = () => {
       'instagramUrl',
       'id',
       'linkedInUrl',
-      'twitterUrl'
+      'twitterUrl',
+      { member: ['id'] }
     ],
-    operation: 'getUser',
-    schema: Schema.USER
+    operation: 'getMemberSocials',
+    schema: Schema.MEMBER_SOCIALS
   });
 
   const isSocialLinked: boolean =
