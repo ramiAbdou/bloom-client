@@ -13,8 +13,7 @@ import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
   const fullName = useStoreState(({ db }) => {
-    const { firstName, lastName } = db.user;
-    return `${firstName} ${lastName}`;
+    return `${db.member.firstName} ${db.member.lastName}`;
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -53,7 +52,7 @@ const ProfilePersonalBio: React.FC = () => {
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
   const bio = useStoreState(({ db }) => db.member.bio);
-  const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
+  const pictureUrl = useStoreState(({ db }) => db.member.pictureUrl);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   if (bio && pictureUrl) return null;

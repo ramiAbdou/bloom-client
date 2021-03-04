@@ -1,9 +1,9 @@
-import { IUser } from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { CheckInError } from './CheckIn.types';
 
 interface GetCheckInErrorMessageArgs {
   error: CheckInError;
-  owner?: IUser;
+  owner?: IMember;
 }
 
 /**
@@ -24,9 +24,11 @@ export const getCheckInErrorMessage = ({
   if (error === 'NOT_MEMBER') {
     return `This email is not registered as a member of this community. If you
       believe this is an error, please reach out to the owner,
-      ${owner?.firstName} ${owner?.lastName} (${owner?.email}).
+      ${owner?.firstName} ${owner?.lastName} (${null}).
     `;
   }
+
+  // owner?.email ??
 
   if (error === 'USER_NOT_FOUND') {
     return 'You must apply and be accepted into a commmunity before logging in.';

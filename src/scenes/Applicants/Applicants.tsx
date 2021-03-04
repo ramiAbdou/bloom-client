@@ -12,11 +12,13 @@ const Applicants: React.FC = () => {
     fields: [
       'id',
       'createdAt',
+      'firstName',
+      'lastName',
       'role',
       'status',
       { community: ['id'] },
       { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'lastName'] },
+      { user: ['id', 'email'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getApplicants',

@@ -17,8 +17,17 @@ interface GetMemberTableRowArgs {
 }
 
 interface GetMemberValueArgs
-  extends Pick<IMember, 'isDuesActive' | 'joinedAt' | 'type' | 'values'>,
-    Pick<IUser, 'email' | 'firstName' | 'lastName' | 'pictureUrl'> {
+  extends Pick<
+      IMember,
+      | 'isDuesActive'
+      | 'firstName'
+      | 'lastName'
+      | 'joinedAt'
+      | 'pictureUrl'
+      | 'type'
+      | 'values'
+    >,
+    Pick<IUser, 'email'> {
   db: State<DbModel>;
   questionId: string;
 }

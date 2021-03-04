@@ -15,7 +15,9 @@ const useInitDuesAnalyticsHistory = () => {
         member: [
           'id',
           'isDuesActive',
-          { user: ['id', 'firstName', 'lastName', 'email'] }
+          'firstName',
+          'lastName',
+          { user: ['id', 'email'] }
         ]
       },
       { type: ['id'] }

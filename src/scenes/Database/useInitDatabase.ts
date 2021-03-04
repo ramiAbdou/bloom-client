@@ -8,12 +8,15 @@ const useInitDatabase = () => {
     fields: [
       'id',
       'isDuesActive',
+      'firstName',
+      'lastName',
       'joinedAt',
+      'pictureUrl',
       'role',
       'status',
       { community: ['id'] },
       { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { user: ['id', 'email'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getDatabase',

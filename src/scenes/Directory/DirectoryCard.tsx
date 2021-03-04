@@ -9,7 +9,6 @@ import {
   IMember,
   IMemberType,
   IMemberValue,
-  IUser,
   RecurrenceType
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
@@ -21,9 +20,7 @@ const DirectoryCardInformation: React.FC = () => {
 
   const fullName: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    const user: IUser = db.byUserId[member?.user];
-
-    return `${user?.firstName} ${user?.lastName}`;
+    return `${member?.firstName} ${member?.lastName}`;
   });
 
   const highlightedValue = useStoreState(({ db }) => {
@@ -47,13 +44,7 @@ const DirectoryCardInformation: React.FC = () => {
 
 const DirectoryCardPicture: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
-
-  const userId: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return member?.user;
-  });
-
-  return <ProfilePicture circle={false} fontSize={60} userId={userId} />;
+  return <ProfilePicture circle={false} fontSize={60} memberId={memberId} />;
 };
 
 const DirectoryCardContent: React.FC = () => {

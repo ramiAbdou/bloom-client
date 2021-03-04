@@ -2,12 +2,12 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { ModalType } from '@util/constants';
 import useMutation from '@hooks/useMutation';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import {
   CreateEventGuestArgs,
   DeleteEventGuestArgs,

@@ -48,12 +48,12 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
         const { amount, createdAt, type }: IMemberPayment = payment;
         const member: IMember = db.byMemberId[payment?.member];
         const user: IUser = db.byUserId[member?.user];
-        const { firstName, lastName, email }: IUser = user;
+        const { email }: IUser = user;
 
         return {
           amount: `$${amount.toFixed(2)}`,
           email,
-          fullName: `${firstName} ${lastName}`,
+          fullName: `${member?.firstName} ${member?.lastName}`,
           id: member.id,
           paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
           type: db.byTypeId[type].name

@@ -24,7 +24,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
       'id',
       { event: ['id'] },
       {
-        member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }]
+        member: ['id', 'firstName', 'lastName', 'pictureUrl', { user: ['id'] }]
       }
     ],
     operation: 'createEventWatch',

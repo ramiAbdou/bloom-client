@@ -15,8 +15,9 @@ const AdminDatabase: React.FC = () => {
       ?.map((memberId: string) => db.byMemberId[memberId])
       ?.filter((member: IMember) => !!member?.role && !!member?.user)
       ?.map((member: IMember) => {
+        const { firstName, lastName } = member;
         const user: IUser = db.byUserId[member.user];
-        const { email, firstName, lastName } = user ?? {};
+        const { email } = user ?? {};
         return { email, firstName, id: member.id, lastName };
       }, []);
   });

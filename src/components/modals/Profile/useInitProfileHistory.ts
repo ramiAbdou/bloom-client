@@ -36,7 +36,10 @@ const useInitProfileHistory = (): boolean => {
       {
         member: [
           'id',
-          { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+          'firstName',
+          'lastName',
+          'pictureUrl',
+          { user: ['id', 'email'] }
         ]
       }
     ],

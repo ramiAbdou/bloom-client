@@ -13,8 +13,8 @@ const SideBarProfileContent: React.FC = () => {
   });
 
   const role = useStoreState(({ db }) => db.member?.role);
-  const firstName = useStoreState(({ db }) => db.user?.firstName);
-  const lastName = useStoreState(({ db }) => db.user?.lastName);
+  const firstName = useStoreState(({ db }) => db.member?.firstName);
+  const lastName = useStoreState(({ db }) => db.member?.lastName);
 
   const fullName = `${firstName} ${lastName}`;
 

@@ -93,12 +93,12 @@ const getIndividualEventTableViewers = (
     const member: IMember = db.byMemberId[watch?.member];
     const user: IUser = db.byUserId[member?.user];
 
-    const { firstName, lastName, email } = user ?? {};
+    const { email } = user ?? {};
     if (acc[email]) return acc;
 
     const data: IndividualEventTableRowProps = {
       email,
-      fullName: `${firstName} ${lastName}`,
+      fullName: `${member.firstName} ${member.lastName}`,
       id: member?.id,
       userId: member?.user,
       watched: 'Yes'

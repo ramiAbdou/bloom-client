@@ -7,11 +7,14 @@ const useInitDirectory = (): QueryResult<IMember[]> => {
   const result: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: [
       'id',
+      'firstName',
+      'lastName',
+      'pictureUrl',
       'role',
       'status',
       { community: ['id'] },
       { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { user: ['id', 'email'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getDirectory',

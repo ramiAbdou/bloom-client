@@ -13,7 +13,12 @@ import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 
 interface EventsCardPersonPictures {
-  ids?: { attendeeId?: string; guestId?: string; userId?: string }[];
+  ids?: {
+    attendeeId?: string;
+    guestId?: string;
+    memberId?: string;
+    userId?: string;
+  }[];
 }
 
 const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
@@ -24,7 +29,12 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
       {ids?.map((props) => {
         return (
           <ProfilePicture
-            key={props?.attendeeId || props?.guestId || props?.userId}
+            key={
+              props?.attendeeId ||
+              props?.guestId ||
+              props?.memberId ||
+              props?.userId
+            }
             fontSize={12}
             size={24}
             {...props}

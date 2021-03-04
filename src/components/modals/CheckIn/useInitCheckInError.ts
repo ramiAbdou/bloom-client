@@ -1,12 +1,12 @@
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 
-import { CookieType } from '@util/constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { CookieType } from '@util/constants';
 
 /**
  * If a LOGIN_ERROR exists via cookie, then we need to load the community's
@@ -21,7 +21,7 @@ const useInitCheckInError = (): boolean => {
   const [getCommunityOwner, { loading }] = useManualQuery<ICommunity>({
     fields: [
       'id',
-      { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
+      { owner: ['id', 'firstName', 'lastName', { user: ['id', 'email'] }] }
     ],
     operation: 'getCommunityOwner',
     schema: Schema.COMMUNITY,

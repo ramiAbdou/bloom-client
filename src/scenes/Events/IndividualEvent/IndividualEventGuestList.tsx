@@ -2,13 +2,13 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { IEventGuest, IMember, IUser } from '@store/Db/entities';
+import { IEventGuest, IMember } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { cx, sortObjects } from '@util/util';
 
 interface IndividualEventGuestProps {
@@ -20,9 +20,9 @@ interface IndividualEventGuestProps {
 const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
   const { guestId, memberId, userId } = props;
 
-  const { firstName, lastName }: IEventGuest | IUser = useStoreState(
+  const { firstName, lastName }: IEventGuest | IMember = useStoreState(
     ({ db }) => {
-      if (userId) return db.byUserId[userId];
+      if (userId) return db.byMemberId[userId];
       return db.byGuestId[guestId];
     }
   );

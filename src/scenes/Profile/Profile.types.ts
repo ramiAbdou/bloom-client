@@ -9,9 +9,6 @@ export interface UpdateMemberValueArgs {
 
 export interface UpdateMemberArgs {
   bio?: boolean;
-}
-
-export interface UpdateUserArgs {
   firstName?: string;
   lastName?: string;
   pictureUrl?: string;

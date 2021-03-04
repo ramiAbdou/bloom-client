@@ -12,19 +12,24 @@ import ProfileSocialContainer from './ProfileSocial';
 import useInitProfilePersonal from './useInitProfilePersonal';
 
 const ProfilePersonalPicture: React.FC = () => {
-  const userId = ProfileStore.useStoreState((store) => store.userId);
+  const memberId = ProfileStore.useStoreState((store) => store.memberId);
 
   return (
-    <ProfilePicture className="mb-xs" fontSize={36} size={96} userId={userId} />
+    <ProfilePicture
+      className="mb-xs"
+      fontSize={36}
+      memberId={memberId}
+      size={96}
+    />
   );
 };
 
 const ProfilePersonalName: React.FC = () => {
-  const userId = ProfileStore.useStoreState((store) => store.userId);
+  const memberId = ProfileStore.useStoreState((store) => store.memberId);
 
   const fullName: string = useStoreState(({ db }) => {
-    const user: IUser = db.byUserId[userId];
-    return `${user.firstName} ${user.lastName}`;
+    const member: IMember = db.byMemberId[memberId];
+    return `${member.firstName} ${member.lastName}`;
   });
 
   return <h1 className="mb-xs">{fullName}</h1>;

@@ -14,14 +14,17 @@ const useInitUser = (): boolean => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
 
   const [getUser, { loading: loading1 }] = useManualQuery<IUser>({
-    fields: ['email', 'firstName', 'id', 'lastName', 'pictureUrl'],
+    fields: ['email', 'id'],
     operation: 'getUser',
     schema: Schema.USER
   });
 
   const [getMembers, { loading: loading2 }] = useManualQuery<IMember[]>({
     fields: [
+      'firstName',
+      'lastName',
       'joinedAt',
+      'pictureUrl',
       'id',
       { community: ['id', 'logoUrl', 'primaryColor', 'urlName'] },
       { user: ['id'] }

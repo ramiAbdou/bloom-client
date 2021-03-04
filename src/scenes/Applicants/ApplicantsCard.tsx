@@ -29,8 +29,7 @@ const ApplicantsCardHeader: React.FC = () => {
 
   const fullName: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    const user: IUser = db.byUserId[member?.user];
-    return `${user?.firstName} ${user?.lastName}`;
+    return `${member?.firstName} ${member?.lastName}`;
   });
 
   const onClick = () => {

@@ -1,7 +1,7 @@
 import Fields from 'gql-query-builder/build/Fields';
 
 export const eventMemberFields: Fields = [
-  { member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }] }
+  { member: ['id', 'firstName', 'lastName', 'pictureUrl', { user: ['id'] }] }
 ];
 
 export const baseEventFields: Fields = [

@@ -21,7 +21,7 @@ const useSendLoginLink = (): OnFormSubmit => {
   const [getCommunityOwner] = useManualQuery<ICommunity>({
     fields: [
       'id',
-      { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
+      { owner: ['id', 'firstName', 'lastName', { user: ['id', 'email'] }] }
     ],
     operation: 'getCommunityOwner',
     schema: Schema.COMMUNITY,

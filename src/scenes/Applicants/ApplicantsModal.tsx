@@ -19,8 +19,7 @@ const ApplicantsModalTitle: React.FC = () => {
 
   const fullName = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    const user: IUser = db.byUserId[member?.user];
-    return `${user?.firstName} ${user?.lastName}`;
+    return `${member?.firstName} ${member?.lastName}`;
   });
 
   return <h1>{fullName}</h1>;

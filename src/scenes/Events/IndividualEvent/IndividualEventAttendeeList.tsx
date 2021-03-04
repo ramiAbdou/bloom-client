@@ -6,7 +6,7 @@ import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { IEventAttendee, IMember, IUser } from '@store/Db/entities';
+import { IEventAttendee, IMember } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -22,9 +22,9 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
 ) => {
   const { attendeeId, memberId, userId } = props;
 
-  const { firstName, lastName }: IEventAttendee | IUser = useStoreState(
+  const { firstName, lastName }: IEventAttendee | IMember = useStoreState(
     ({ db }) => {
-      if (userId) return db.byUserId[userId];
+      if (userId) return db.byMemberId[userId];
       return db.byAttendeeId[attendeeId];
     }
   );

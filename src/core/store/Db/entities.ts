@@ -4,7 +4,7 @@ import {
   TimeSeriesData
 } from '@util/constants';
 
-type Identifier = string;
+export type Identifier = string;
 
 export interface BaseEntity {
   createdAt: Identifier;
@@ -132,11 +132,14 @@ export interface IMember extends BaseEntity {
   attendees: Identifier[];
   bio: string;
   community: Identifier;
+  firstName: string;
   guests: Identifier[];
   isDuesActive: boolean;
   joinedAt: string;
+  lastName: string;
   paymentMethod: IPaymentMethod;
   payments: Identifier[];
+  pictureUrl: string;
   role?: MemberRole;
   type: Identifier;
   status: MemberStatus;
@@ -198,13 +201,9 @@ export interface IUser extends BaseEntity {
   currentLocation: string;
   email: string;
   facebookUrl: string;
-  firstName: string;
-  fullName?: string;
   instagramUrl: string;
-  lastName: string;
   linkedInUrl: string;
   members?: Identifier[];
-  pictureUrl: string;
   twitterUrl: string;
 }
 
