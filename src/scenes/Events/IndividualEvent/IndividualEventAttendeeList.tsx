@@ -14,17 +14,16 @@ import { sortObjects } from '@util/util';
 interface IndividualEventAttendeeProps {
   attendeeId?: string;
   memberId?: string;
-  userId?: string;
 }
 
 const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
   props
 ) => {
-  const { attendeeId, memberId, userId } = props;
+  const { attendeeId, memberId } = props;
 
   const { firstName, lastName }: IEventAttendee | IMember = useStoreState(
     ({ db }) => {
-      if (userId) return db.byMemberId[userId];
+      if (memberId) return db.byMemberId[memberId];
       return db.byAttendeeId[attendeeId];
     }
   );

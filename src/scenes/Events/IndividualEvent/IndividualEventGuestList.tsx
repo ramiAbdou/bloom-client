@@ -14,18 +14,19 @@ import { cx, sortObjects } from '@util/util';
 interface IndividualEventGuestProps {
   guestId?: string;
   memberId?: string;
-  userId?: string;
 }
 
 const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
-  const { guestId, memberId, userId } = props;
+  const { guestId, memberId } = props;
 
   const { firstName, lastName }: IEventGuest | IMember = useStoreState(
     ({ db }) => {
-      if (userId) return db.byMemberId[userId];
+      if (memberId) return db.byMemberId[memberId];
       return db.byGuestId[guestId];
     }
   );
+
+  console.log(firstName, lastName);
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMember = useStoreState(({ db }) => db.isMember);

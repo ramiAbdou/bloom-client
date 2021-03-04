@@ -7,7 +7,7 @@ import { Schema } from '@store/Db/schema';
 import { uploadImage } from '@util/imageUtil';
 import { UpdateMemberArgs } from './Profile.types';
 
-const useUpdateUser = (): OnFormSubmit => {
+const useUpdateMember = (): OnFormSubmit => {
   const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
     fields: ['id', 'bio', 'firstName', 'lastName', 'pictureUrl'],
     operation: 'updateMember',
@@ -66,4 +66,4 @@ const useUpdateUser = (): OnFormSubmit => {
   return onSubmit;
 };
 
-export default useUpdateUser;
+export default useUpdateMember;

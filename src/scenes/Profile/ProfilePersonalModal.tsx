@@ -8,7 +8,7 @@ import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
-import useUpdateUser from './useUpdateUser';
+import useUpdateMember from './useUpdateMember';
 
 const ProfilePersonalModal: React.FC = () => {
   const bio = useStoreState(({ db }) => db.member.bio);
@@ -16,10 +16,10 @@ const ProfilePersonalModal: React.FC = () => {
   const lastName = useStoreState(({ db }) => db.member.lastName);
   const pictureUrl = useStoreState(({ db }) => db.member.pictureUrl);
 
-  const updateUser = useUpdateUser();
+  const updateMember = useUpdateMember();
 
   return (
-    <Form onSubmit={updateUser}>
+    <Form onSubmit={updateMember}>
       <FormHeader title="Edit Personal Information" />
       <FormImage id="PROFILE_PICTURE" required={false} value={pictureUrl} />
 
