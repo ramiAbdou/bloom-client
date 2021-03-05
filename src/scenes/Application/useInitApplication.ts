@@ -4,11 +4,7 @@ import { useParams } from 'react-router-dom';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
-import {
-  ICommunityApplication,
-  IMemberPlan,
-  IQuestion
-} from '@store/Db/entities';
+import { IApplication, IMemberPlan, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
@@ -18,7 +14,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   const { urlName } = useParams() as UrlNameProps;
 
   const { data, error, loading: loading1 } = useQuery<
-    ICommunityApplication,
+    IApplication,
     UrlNameProps
   >({
     fields: [
@@ -38,7 +34,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       }
     ],
     operation: 'getApplication',
-    schema: Schema.COMMUNITY_APPLICATION,
+    schema: Schema.APPLICATION,
     types: { urlName: { required: true } },
     variables: { urlName }
   });

@@ -1,8 +1,8 @@
 import { computed } from 'easy-peasy';
 
 import {
+  IApplication,
   ICommunity,
-  ICommunityApplication,
   IEvent,
   IIntegrations,
   IMember,
@@ -24,7 +24,7 @@ const dbActiveStore: Pick<
 > = {
   application: computed(({ community, entities }) => {
     const { byId: byApplicationId } = entities.applications;
-    return byApplicationId[community?.application] as ICommunityApplication;
+    return byApplicationId[community?.application] as IApplication;
   }),
 
   community: computed(({ entities }) => {

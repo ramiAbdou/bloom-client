@@ -36,8 +36,8 @@ export interface ICommunity extends BaseEntity {
 
 // ## COMMUNITY APPLICATION
 
-export interface ICommunityApplication extends BaseEntity {
-  community?: Identifier;
+export interface IApplication extends BaseEntity {
+  community: Identifier;
   description: string;
   title: string;
 }
@@ -225,7 +225,7 @@ export interface EntityRecord<T> {
 }
 
 export interface IEntities {
-  applications: EntityRecord<ICommunityApplication>;
+  applications: EntityRecord<IApplication>;
   attendees: EntityRecord<IEventAttendee>;
   communities: EntityRecord<ICommunity>;
   events: EntityRecord<IEvent>;

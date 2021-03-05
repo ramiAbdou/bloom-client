@@ -2,8 +2,8 @@ import { Action, Computed } from 'easy-peasy';
 import { Schema } from 'normalizr';
 
 import {
+  IApplication,
   ICommunity,
-  ICommunityApplication,
   IEntities,
   IEvent,
   IEventAttendee,
@@ -31,7 +31,7 @@ export interface SetActiveArgs {
 }
 
 export type DbModel = {
-  byApplicationId: Computed<DbModel, Record<string, ICommunityApplication>>;
+  byApplicationId: Computed<DbModel, Record<string, IApplication>>;
   byAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
   byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
   byEventId: Computed<DbModel, Record<string, IEvent>>;
@@ -47,7 +47,7 @@ export type DbModel = {
   byValuesId: Computed<DbModel, Record<string, IMemberValue>>;
   byWatchId: Computed<DbModel, Record<string, IEventWatch>>;
 
-  application: Computed<DbModel, ICommunityApplication>;
+  application: Computed<DbModel, IApplication>;
   community: Computed<DbModel, ICommunity>;
   event: Computed<DbModel, IEvent>;
   integrations: Computed<DbModel, IIntegrations>;

@@ -32,6 +32,12 @@ export const mergeStrategy = (a: Partial<any>, b: Partial<any>) => {
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
+const Application = new schema.Entity(
+  'applications',
+  {},
+  { processStrategy: (value) => ({ ...value, applicationId: value.id }) }
+);
+
 const Community = new schema.Entity(
   'communities',
   {},
@@ -50,16 +56,6 @@ const Community = new schema.Entity(
       ]);
 
       return { ...community, ...processedData };
-    }
-  }
-);
-
-const CommunityApplication = new schema.Entity(
-  'applications',
-  {},
-  {
-    processStrategy: (value) => {
-      return { ...value, applicationId: value.id };
     }
   }
 );
@@ -233,7 +229,7 @@ const User = new schema.Entity(
 // ciruclar dependencies in our code.
 
 Community.define({
-  application: CommunityApplication,
+  application: Application,
   events: [Event],
   highlightedQuestion: Question,
   integrations: CommunityIntegrations,
@@ -245,7 +241,7 @@ Community.define({
   supporters: [Supporter]
 });
 
-CommunityApplication.define({ community: Community });
+Application.define({ community: Community });
 CommunityIntegrations.define({ community: Community });
 
 Event.define({
@@ -286,8 +282,8 @@ User.define({ members: [Member], supporters: [Supporter] });
 // centralized and to reduce confusion with the Interface declarations
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
+  APPLICATION: Application,
   COMMUNITY: Community,
-  COMMUNITY_APPLICATION: CommunityApplication,
   COMMUNITY_INTEGRATIONS: CommunityIntegrations,
   EVENT: Event,
   EVENT_ATTENDEE: EventAttendee,
