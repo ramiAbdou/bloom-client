@@ -32,6 +32,10 @@ const TableCellContent: React.FC<
     return columns[columnIndex] ?? {};
   }, deepequal);
 
+  if (category === QuestionCategory.EVENTS_ATTENDED) {
+    console.log('YERRRRRR', value);
+  }
+
   if (render) return <>{render(value)}</>;
 
   const formattedValue = format ? format(value) : value;

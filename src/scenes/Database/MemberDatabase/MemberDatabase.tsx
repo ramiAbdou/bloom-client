@@ -1,6 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
+import HeaderTag from '@atoms/Tag/HeaderTag';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
@@ -29,7 +30,7 @@ const MemberDatabase: React.FC = () => {
     const integrationsId: string = db.community?.integrations;
     const integrations: IIntegrations = db.byIntegrationsId[integrationsId];
 
-    return db.community.questions
+    const filteredColumns: TableColumn[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter((question: IQuestion) => {
@@ -41,24 +42,25 @@ const MemberDatabase: React.FC = () => {
         }
 
         return true;
-      })
-      ?.map((question: IQuestion) => {
-        if (question.category === QuestionCategory.DUES_STATUS) {
-          return {
-            ...question,
-            format: (value: boolean) => (value ? 'Paid' : 'Not Paid')
-          };
-        }
-
-        if (question.category === QuestionCategory.JOINED_AT) {
-          return {
-            ...question,
-            format: (value) => day(value).format('MMMM, D, YYYY')
-          };
-        }
-
-        return question;
       });
+
+    return filteredColumns?.map((question: IQuestion) => {
+      if (question.category === QuestionCategory.DUES_STATUS) {
+        return {
+          ...question,
+          format: (value: boolean) => (value ? 'Paid' : 'Not Paid')
+        };
+      }
+
+      if (question.category === QuestionCategory.JOINED_AT) {
+        return {
+          ...question,
+          format: (value) => day(value).format('MMMM, D, YYYY')
+        };
+      }
+
+      return question;
+    });
   });
 
   const updateQuestion = useUpdateQuestion();
