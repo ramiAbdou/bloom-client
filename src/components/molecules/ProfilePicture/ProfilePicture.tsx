@@ -62,7 +62,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
   const show: boolean = useStoreState(({ db }) => {
     if (memberId) return !!db.byMemberId[memberId];
     if (supporterId) return !!db.bySupporterId[supporterId];
-    return true;
+    return !!db.member?.firstName && !!db.member?.lastName;
   });
 
   const css = cx('m-profile-picture', {

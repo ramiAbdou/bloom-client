@@ -14,7 +14,15 @@ const Profile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const [getMember, { data }] = useManualQuery<IMember>({
-    fields: ['id', 'bio', 'joinedAt', { plan: ['id'] }, { user: ['id'] }],
+    fields: [
+      'id',
+      'bio',
+      'email',
+      'joinedAt',
+      { plan: ['id'] },
+      { socials: ['id'] },
+      { user: ['id'] }
+    ],
     operation: 'getMember',
     schema: Schema.MEMBER,
     types: { memberId: { required: false } },

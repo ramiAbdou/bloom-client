@@ -43,9 +43,9 @@ const Community = new schema.Entity(
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.integrationsId, { integrations: parent.id }],
         [!!parent.memberId, { members: [parent.id] }],
+        [!!parent.memberPlanId, { plans: [parent.id] }],
         [!!parent.questionId, { questions: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
-        [!!parent.planId, { types: [parent.id] }],
         {}
       ]);
 
@@ -151,6 +151,7 @@ const Member = new schema.Entity(
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
+        [!!parent.socialsId, { socials: parent.id }],
         [!!parent.valueId, { values: [parent.id] }],
         [!!parent.watchId, { watches: [parent.id] }],
         {}
@@ -189,11 +190,11 @@ const MemberSocials = new schema.Entity(
 );
 
 const MemberPlan = new schema.Entity(
-  'plans',
+  'memberPlans',
   {},
   {
     processStrategy: (value) => {
-      return { ...value, planId: value.id };
+      return { ...value, memberPlanId: value.id };
     }
   }
 );

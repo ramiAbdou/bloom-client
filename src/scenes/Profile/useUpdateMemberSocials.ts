@@ -4,8 +4,8 @@ import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { UpdateUserSocialsArgs } from './Profile.types';
 
-const useUpdateUserSocials = (): OnFormSubmit => {
-  const [updateUser] = useMutation<IUser, UpdateUserSocialsArgs>({
+const useUpdateMemberSocials = (): OnFormSubmit => {
+  const [updateMemberSocials] = useMutation<IUser, UpdateUserSocialsArgs>({
     fields: [
       'clubhouseUrl',
       'id',
@@ -14,8 +14,8 @@ const useUpdateUserSocials = (): OnFormSubmit => {
       'linkedInUrl',
       'twitterUrl'
     ],
-    operation: 'updateUser',
-    schema: Schema.USER,
+    operation: 'updateMemberSocials',
+    schema: Schema.MEMBER_SOCIALS,
     types: {
       clubhouseUrl: { required: false },
       facebookUrl: { required: false },
@@ -37,7 +37,7 @@ const useUpdateUserSocials = (): OnFormSubmit => {
     const linkedInUrl = items.LINKED_IN_URL?.value;
     const twitterUrl = items.TWITTER_URL?.value;
 
-    const { error } = await updateUser({
+    const { error } = await updateMemberSocials({
       clubhouseUrl,
       facebookUrl,
       instagramUrl,
@@ -50,11 +50,11 @@ const useUpdateUserSocials = (): OnFormSubmit => {
       return;
     }
 
-    showToast({ message: 'Personal information updated.' });
     closeModal();
+    showToast({ message: 'Social media updated.' });
   };
 
   return onSubmit;
 };
 
-export default useUpdateUserSocials;
+export default useUpdateMemberSocials;

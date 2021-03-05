@@ -10,23 +10,16 @@ import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import useQuery from '@hooks/useQuery';
-import { IUser } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
+import useInitProfileSocial from './useInitProfileSocial';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
   const isSocialLinked: boolean = useStoreState(({ db }) => {
-    const {
-      clubhouseUrl,
-      facebookUrl,
-      instagramUrl,
-      linkedInUrl,
-      twitterUrl
-    } = db.socials;
+    const { clubhouseUrl, facebookUrl, instagramUrl, linkedInUrl, twitterUrl } =
+      db.socials ?? {};
 
     return (
       !!clubhouseUrl ||
@@ -90,25 +83,13 @@ const ProfileSocialMediaValue: React.FC<ProfileSocialMediaValueProps> = ({
 };
 
 const ProfileSocialCard: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => db.socials.clubhouseUrl);
-  const facebookUrl = useStoreState(({ db }) => db.socials.facebookUrl);
-  const instagramUrl = useStoreState(({ db }) => db.socials.instagramUrl);
-  const linkedInUrl = useStoreState(({ db }) => db.socials.linkedInUrl);
-  const twitterUrl = useStoreState(({ db }) => db.socials.twitterUrl);
+  const clubhouseUrl = useStoreState(({ db }) => db.socials?.clubhouseUrl);
+  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
+  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
+  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
+  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
 
-  const { loading } = useQuery<IUser>({
-    fields: [
-      'clubhouseUrl',
-      'facebookUrl',
-      'instagramUrl',
-      'id',
-      'linkedInUrl',
-      'twitterUrl',
-      { member: ['id'] }
-    ],
-    operation: 'getMemberSocials',
-    schema: Schema.MEMBER_SOCIALS
-  });
+  const { loading } = useInitProfileSocial();
 
   const isSocialLinked: boolean =
     !!clubhouseUrl ||

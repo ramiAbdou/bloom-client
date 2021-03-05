@@ -5,19 +5,19 @@ import FormHeader from '@organisms/Form/FormHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
-import useUpdateUserSocials from './useUpdateUserSocials';
+import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => db.socials.clubhouseUrl);
-  const facebookUrl = useStoreState(({ db }) => db.socials.facebookUrl);
-  const instagramUrl = useStoreState(({ db }) => db.socials.instagramUrl);
-  const linkedInUrl = useStoreState(({ db }) => db.socials.linkedInUrl);
-  const twitterUrl = useStoreState(({ db }) => db.socials.twitterUrl);
+  const clubhouseUrl = useStoreState(({ db }) => db.socials?.clubhouseUrl);
+  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
+  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
+  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
+  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
 
-  const updateUserSocials = useUpdateUserSocials();
+  const updateMemberSocials = useUpdateMemberSocials();
 
   return (
-    <Form onSubmit={updateUserSocials}>
+    <Form onSubmit={updateMemberSocials}>
       <FormHeader title="Edit Social Media" />
 
       <FormShortText

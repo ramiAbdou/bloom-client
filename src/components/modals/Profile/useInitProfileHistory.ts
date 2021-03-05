@@ -15,7 +15,7 @@ const useInitProfileHistory = (): boolean => {
     fields: [
       'createdAt',
       'id',
-      { event: ['id'] },
+      { event: ['id', 'title'] },
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
@@ -29,7 +29,7 @@ const useInitProfileHistory = (): boolean => {
     fields: [
       'createdAt',
       'id',
-      { event: ['id'] },
+      { event: ['id', 'title'] },
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
