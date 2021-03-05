@@ -239,8 +239,8 @@ Community.define({
   members: [Member],
   owner: Member,
   payments: [MemberPayment],
-  questions: [Question],
-  types: [MemberPlan]
+  plans: [MemberPlan],
+  questions: [Question]
 });
 
 CommunityApplication.define({ community: Community });
