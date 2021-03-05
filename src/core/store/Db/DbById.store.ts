@@ -5,7 +5,6 @@ import { DbModel } from './Db.types';
 const dbByIdStore: Pick<
   DbModel,
   | 'byApplicationId'
-  | 'byApplicationQuestionId'
   | 'byAttendeeId'
   | 'byCommunityId'
   | 'byEventId'
@@ -16,15 +15,13 @@ const dbByIdStore: Pick<
   | 'byQuestionId'
   | 'bySocialsId'
   | 'byMemberPlanId'
+  | 'byRankedQuestionId'
   | 'bySupporterId'
   | 'byUserId'
   | 'byValuesId'
   | 'byWatchId'
 > = {
   byApplicationId: computed(({ entities }) => entities.applications?.byId),
-  byApplicationQuestionId: computed(
-    ({ entities }) => entities.applicationQuestions?.byId
-  ),
   byAttendeeId: computed(({ entities }) => entities.attendees?.byId),
   byCommunityId: computed(({ entities }) => entities.communities?.byId),
   byEventId: computed(({ entities }) => entities.events?.byId),
@@ -34,6 +31,9 @@ const dbByIdStore: Pick<
   byMemberPlanId: computed(({ entities }) => entities.memberPlans?.byId),
   byPaymentId: computed(({ entities }) => entities.payments?.byId),
   byQuestionId: computed(({ entities }) => entities.questions?.byId),
+  byRankedQuestionId: computed(
+    ({ entities }) => entities.rankedQuestions?.byId
+  ),
   bySocialsId: computed(({ entities }) => entities.socials?.byId),
   bySupporterId: computed(({ entities }) => entities.supporters?.byId),
   byUserId: computed(({ entities }) => entities.users?.byId),

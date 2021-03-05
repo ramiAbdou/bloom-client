@@ -4,11 +4,7 @@ import { useParams } from 'react-router-dom';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
-import {
-  IApplication,
-  IApplicationQuestion,
-  IMemberPlan
-} from '@store/Db/entities';
+import { IApplication, IMemberPlan, IRankedQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
@@ -43,7 +39,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     variables: { urlName }
   });
 
-  const { loading: loading2 } = useQuery<IApplicationQuestion[], UrlNameProps>({
+  const { loading: loading2 } = useQuery<IRankedQuestion[], UrlNameProps>({
     fields: [
       'id',
       'rank',
@@ -60,7 +56,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
         ]
       }
     ],
-    operation: 'getApplicationQuestions',
+    operation: 'getRankedQuestions',
     schema: [Schema.APPLICATION_QUESTION],
     types: { urlName: { required: false } },
     variables: { urlName }

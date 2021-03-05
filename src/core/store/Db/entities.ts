@@ -22,14 +22,6 @@ export interface IApplication extends BaseEntity {
   title: string;
 }
 
-// APPLICATION QUESTION
-
-export interface IApplicationQuestion extends BaseEntity {
-  application: Identifier;
-  rank: number;
-  question: Identifier;
-}
-
 // ## COMMUNITY
 
 export interface ICommunity extends BaseEntity {
@@ -196,6 +188,7 @@ export interface IQuestion extends BaseEntity {
   category: QuestionCategory;
   locked: boolean;
   options: string[];
+  rank?: number;
   required: boolean;
   title: QuestionType;
   type: QuestionType;
@@ -209,6 +202,14 @@ export interface IPayment extends BaseEntity {
   stripeInvoiceUrl: string;
   member: Identifier;
   plan: Identifier;
+}
+
+// RANKED QUESTION
+
+export interface IRankedQuestion extends BaseEntity {
+  application?: Identifier;
+  rank: number;
+  question: Identifier;
 }
 
 // ## SUPPORTER
@@ -235,7 +236,6 @@ export interface EntityRecord<T> {
 
 export interface IEntities {
   applications: EntityRecord<IApplication>;
-  applicationQuestions: EntityRecord<IApplicationQuestion>;
   attendees: EntityRecord<IEventAttendee>;
   communities: EntityRecord<ICommunity>;
   events: EntityRecord<IEvent>;
@@ -245,6 +245,7 @@ export interface IEntities {
   memberPlans: EntityRecord<IMemberPlan>;
   payments: EntityRecord<IPayment>;
   questions: EntityRecord<IQuestion>;
+  rankedQuestions: EntityRecord<IRankedQuestion>;
   socials: EntityRecord<IMemberSocials>;
   supporters: EntityRecord<ISupporter>;
   users: EntityRecord<IUser>;
@@ -254,7 +255,6 @@ export interface IEntities {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
-  applicationQuestions: { byId: {} },
   applications: { byId: {} },
   attendees: { byId: {} },
   communities: { activeId: null, byId: {} },
@@ -265,6 +265,7 @@ export const initialEntities: IEntities = {
   members: { activeId: null, byId: {} },
   payments: { byId: {} },
   questions: { byId: {} },
+  rankedQuestions: { byId: {} },
   socials: { byId: {} },
   supporters: { byId: {} },
   users: { activeId: null, byId: {} },

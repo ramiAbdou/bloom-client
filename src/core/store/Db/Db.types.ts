@@ -3,7 +3,6 @@ import { Schema } from 'normalizr';
 
 import {
   IApplication,
-  IApplicationQuestion,
   ICommunity,
   IEntities,
   IEvent,
@@ -17,6 +16,7 @@ import {
   IMemberValue,
   IPayment,
   IQuestion,
+  IRankedQuestion,
   ISupporter,
   IUser
 } from './entities';
@@ -33,10 +33,6 @@ export interface SetActiveArgs {
 
 export type DbModel = {
   byApplicationId: Computed<DbModel, Record<string, IApplication>>;
-  byApplicationQuestionId: Computed<
-    DbModel,
-    Record<string, IApplicationQuestion>
-  >;
   byAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
   byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
   byEventId: Computed<DbModel, Record<string, IEvent>>;
@@ -46,6 +42,7 @@ export type DbModel = {
   byMemberPlanId: Computed<DbModel, Record<string, IMemberPlan>>;
   byPaymentId: Computed<DbModel, Record<string, IPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
+  byRankedQuestionId: Computed<DbModel, Record<string, IRankedQuestion>>;
   bySocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
   bySupporterId: Computed<DbModel, Record<string, ISupporter>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;

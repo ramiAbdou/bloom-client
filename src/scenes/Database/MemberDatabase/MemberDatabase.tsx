@@ -14,6 +14,7 @@ import { IIntegrations, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
+import { sortObjects } from '@util/util';
 import { UpdateQuestionArgs } from '../Database.types';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
@@ -31,6 +32,7 @@ const MemberDatabase: React.FC = () => {
 
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter((question: IQuestion) => {
         if (
           question.category === QuestionCategory.DUES_STATUS &&

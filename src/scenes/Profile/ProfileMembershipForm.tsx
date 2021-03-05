@@ -9,12 +9,14 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IMemberValue, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
+import { sortObjects } from '@util/util';
 import useUpdateMemberValues from './useUpdateMemberValues';
 
 const ProfileMembershipForm: React.FC = () => {
   const items: FormItemData[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       .filter((question: IQuestion) => !question.category);
 
     const data: IMemberValue[] = db.member.values?.map((valueId: string) => {

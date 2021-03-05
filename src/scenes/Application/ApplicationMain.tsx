@@ -5,7 +5,7 @@ import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IApplicationQuestion, IQuestion } from '@store/Db/entities';
+import { IRankedQuestion, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';
@@ -14,10 +14,10 @@ import useValidateEmail from './useValidateEmail';
 const ApplicationMainForm: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.application?.questions
-      ?.map((questionId: string) => db.byApplicationQuestionId[questionId])
+      ?.map((questionId: string) => db.byRankedQuestionId[questionId])
       ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
-      ?.map((applicationQuestion: IApplicationQuestion) => {
-        return db.byQuestionId[applicationQuestion.question];
+      ?.map((rankedQuestion: IRankedQuestion) => {
+        return db.byQuestionId[rankedQuestion.question];
       });
   });
 

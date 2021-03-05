@@ -39,7 +39,7 @@ const Application = new schema.Entity(
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [!!parent.applicationQuestionId, { questions: [parent.id] }],
+        [!!parent.rankedQuestionId, { questions: [parent.id] }],
         {}
       ]);
 
@@ -48,12 +48,12 @@ const Application = new schema.Entity(
   }
 );
 
-const ApplicationQuestion = new schema.Entity(
-  'applicationQuestions',
+const RankedQuestion = new schema.Entity(
+  'rankedQuestions',
   {},
   {
     processStrategy: (value) => {
-      return { ...value, applicationQuestionId: value.id };
+      return { ...value, rankedQuestionId: value.id };
     }
   }
 );
@@ -248,8 +248,8 @@ const User = new schema.Entity(
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.
 
-Application.define({ community: Community, questions: [ApplicationQuestion] });
-ApplicationQuestion.define({ application: Application, question: Question });
+Application.define({ community: Community, questions: [RankedQuestion] });
+RankedQuestion.define({ application: Application, question: Question });
 
 Community.define({
   application: Application,
@@ -305,7 +305,7 @@ User.define({ members: [Member], supporters: [Supporter] });
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
   APPLICATION: Application,
-  APPLICATION_QUESTION: ApplicationQuestion,
+  APPLICATION_QUESTION: RankedQuestion,
   COMMUNITY: Community,
   COMMUNITY_INTEGRATIONS: CommunityIntegrations,
   EVENT: Event,

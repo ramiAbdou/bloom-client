@@ -42,6 +42,7 @@ const useInitCommunity = (): boolean => {
       'id',
       'locked',
       'options',
+      'rank',
       'required',
       'title',
       'type',

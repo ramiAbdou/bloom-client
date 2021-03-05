@@ -12,6 +12,7 @@ import {
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
+import { sortObjects } from '@util/util';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
@@ -43,6 +44,7 @@ const ApplicantsModalItems: React.FC = () => {
           !question?.category || question?.category === QuestionCategory.EMAIL
         );
       })
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.map((question: IQuestion) => {
         const element: IMemberValue = data?.find((entity: IMemberValue) => {
           return entity.question === question.id;

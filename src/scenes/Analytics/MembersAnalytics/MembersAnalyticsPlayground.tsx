@@ -8,6 +8,7 @@ import Chart from '@organisms/Chart/Chart';
 import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 
 const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   // We only want the questions that are meaningful, and things like first/last
@@ -15,6 +16,7 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter((question: IQuestion) => {
         return !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(
           question.category

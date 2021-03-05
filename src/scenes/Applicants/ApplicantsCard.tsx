@@ -16,6 +16,7 @@ import {
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
+import { sortObjects } from '@util/util';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsCardHeader: React.FC = () => {
@@ -80,9 +81,8 @@ const ApplicantsCardItems: React.FC = () => {
 
     return db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => {
-        return !question?.locked && !question?.category;
-      })
+      ?.filter((question: IQuestion) => !question?.category)
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.map((question: IQuestion) => {
         const element: IMemberValue = data?.find((entity: IMemberValue) => {
           return entity.question === question.id;

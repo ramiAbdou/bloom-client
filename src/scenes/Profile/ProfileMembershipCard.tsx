@@ -30,6 +30,7 @@ const ProfileMembershipContent: React.FC = () => {
     const questions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter((question: IQuestion) => !question.category)
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'ASC'));
 
     const data: IMemberValue[] = db.member.values?.map(
