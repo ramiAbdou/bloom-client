@@ -3,7 +3,7 @@ import {
   IEventAttendee,
   IEventGuest,
   IEventWatch,
-  IMemberPayment
+  IPayment
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
@@ -61,10 +61,10 @@ const useInitProfileHistory = (): boolean => {
     variables: { memberId }
   });
 
-  const { loading: loading4 } = useQuery<IMemberPayment[]>({
+  const { loading: loading4 } = useQuery<IPayment[]>({
     fields: ['amount', 'createdAt', 'id', { member: ['id'] }, { plan: ['id'] }],
-    operation: 'getMemberPayments',
-    schema: [Schema.MEMBER_PAYMENT],
+    operation: 'getPayments',
+    schema: [Schema.PAYMENT],
     types: { memberId: { required: false } },
     variables: { memberId }
   });

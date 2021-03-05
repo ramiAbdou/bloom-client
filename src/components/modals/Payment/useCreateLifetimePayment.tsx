@@ -19,7 +19,7 @@ const useCreateLifetimePayment = () => {
       }
     ],
     operation: 'createLifetimePayment',
-    schema: Schema.MEMBER_PAYMENT,
+    schema: Schema.PAYMENT,
     types: { memberPlanId: { required: true } }
   });
 

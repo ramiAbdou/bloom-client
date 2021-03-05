@@ -11,7 +11,7 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
-import { IMember, IMemberPayment, IUser } from '@store/Db/entities';
+import { IMember, IPayment, IUser } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -44,8 +44,8 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
     const result: DuesAnalyticsHistoryTableData[] = db.community.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
-      ?.map((payment: IMemberPayment) => {
-        const { amount, createdAt, plan }: IMemberPayment = payment;
+      ?.map((payment: IPayment) => {
+        const { amount, createdAt, plan }: IPayment = payment;
         const member: IMember = db.byMemberId[payment?.member];
         const user: IUser = db.byUserId[member?.user];
         const { email }: IUser = user;

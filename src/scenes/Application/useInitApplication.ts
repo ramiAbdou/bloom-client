@@ -70,7 +70,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       'recurrence',
       { community: ['id'] }
     ],
-    operation: 'getTypes',
+    operation: 'getMemberPlans',
     schema: [Schema.MEMBER_PLAN],
     types: { urlName: { required: false } },
     variables: { urlName }

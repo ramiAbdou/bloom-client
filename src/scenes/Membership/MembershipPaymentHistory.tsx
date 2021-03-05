@@ -3,10 +3,10 @@ import React from 'react';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import MembershipPaymentTable from './MembershipPaymentTable';
-import useInitMemberPayments from './useInitMemberPayments';
+import useInitPayments from './useInitPayments';
 
 const MembershipPaymentHistory: React.FC = () => {
-  const { loading } = useInitMemberPayments();
+  const { loading } = useInitPayments();
 
   return (
     <MainSection className="s-membership-overview-ctr">

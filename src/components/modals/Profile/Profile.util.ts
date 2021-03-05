@@ -8,8 +8,8 @@ import {
   IEventGuest,
   IEventWatch,
   IMember,
-  IMemberPayment,
-  IMemberPlan
+  IMemberPlan,
+  IPayment
 } from '@store/Db/entities';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
@@ -56,7 +56,7 @@ export const getMemberHistory = ({
 
   const paymentEvents: MemberHistoryData[] =
     member.payments?.map((paymentId: string) => {
-      const payment: IMemberPayment = db.byPaymentId[paymentId];
+      const payment: IPayment = db.byPaymentId[paymentId];
       const type: IMemberPlan = db.byMemberPlanId[payment?.plan];
 
       return {

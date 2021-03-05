@@ -1,10 +1,10 @@
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import { IMemberPayment } from '@store/Db/entities';
+import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 
-const useInitMemberPayments = (): QueryResult<IMemberPayment[]> => {
-  const result = useQuery<IMemberPayment[]>({
+const useInitPayments = (): QueryResult<IPayment[]> => {
+  const result = useQuery<IPayment[]>({
     fields: [
       'amount',
       'createdAt',
@@ -13,11 +13,11 @@ const useInitMemberPayments = (): QueryResult<IMemberPayment[]> => {
       { member: ['id'] },
       { plan: ['id'] }
     ],
-    operation: 'getMemberPayments',
-    schema: [Schema.MEMBER_PAYMENT]
+    operation: 'getPayments',
+    schema: [Schema.PAYMENT]
   });
 
   return result;
 };
 
-export default useInitMemberPayments;
+export default useInitPayments;

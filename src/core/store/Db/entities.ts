@@ -148,15 +148,6 @@ export interface IMember extends BaseEntity {
   watches: Identifier[];
 }
 
-// ## MEMBER PAYMENT
-
-export interface IMemberPayment extends BaseEntity {
-  amount: number;
-  stripeInvoiceUrl: string;
-  member: Identifier;
-  plan: Identifier;
-}
-
 // ## MEMBER PLAN
 
 export enum RecurrenceType {
@@ -202,6 +193,15 @@ export interface IQuestion extends BaseEntity {
   values?: Identifier[];
 }
 
+// ## PAYMENT
+
+export interface IPayment extends BaseEntity {
+  amount: number;
+  stripeInvoiceUrl: string;
+  member: Identifier;
+  plan: Identifier;
+}
+
 // ## SUPPORTER
 
 export interface ISupporter extends BaseEntity {
@@ -233,7 +233,7 @@ export interface IEntities {
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
   memberPlans: EntityRecord<IMemberPlan>;
-  payments: EntityRecord<IMemberPayment>;
+  payments: EntityRecord<IPayment>;
   questions: EntityRecord<IQuestion>;
   socials: EntityRecord<IMemberSocials>;
   supporters: EntityRecord<ISupporter>;

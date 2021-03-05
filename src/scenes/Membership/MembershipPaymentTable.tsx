@@ -9,7 +9,7 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMemberPayment, IMemberPlan } from '@store/Db/entities';
+import { IPayment, IMemberPlan } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -40,8 +40,8 @@ const MembershipPaymentTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
     return db.member.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
-      ?.filter((payment: IMemberPayment) => !!payment?.plan)
-      ?.map((payment: IMemberPayment) => {
+      ?.filter((payment: IPayment) => !!payment?.plan)
+      ?.map((payment: IPayment) => {
         const { createdAt, id, stripeInvoiceUrl: receipt } = payment;
         const plan: IMemberPlan = db.byMemberPlanId[payment.plan];
 

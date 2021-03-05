@@ -44,8 +44,8 @@ const Community = new schema.Entity(
         [!!parent.integrationsId, { integrations: parent.id }],
         [!!parent.memberId, { members: [parent.id] }],
         [!!parent.memberPlanId, { plans: [parent.id] }],
-        [!!parent.questionId, { questions: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
+        [!!parent.questionId, { questions: [parent.id] }],
         {}
       ]);
 
@@ -167,36 +167,26 @@ const MemberValue = new schema.Entity(
   {},
   {
     mergeStrategy,
-    processStrategy: (value) => {
-      return { ...value, valueId: value.id };
-    }
+    processStrategy: (value) => ({ ...value, valueId: value.id })
   }
-);
-
-const MemberPayment = new schema.Entity(
-  'payments',
-  {},
-  { processStrategy: (value) => ({ ...value, paymentId: value.id }) }
 );
 
 const MemberSocials = new schema.Entity(
   'socials',
   {},
-  {
-    processStrategy: (value) => {
-      return { ...value, socialsId: value.id };
-    }
-  }
+  { processStrategy: (value) => ({ ...value, socialsId: value.id }) }
 );
 
 const MemberPlan = new schema.Entity(
   'memberPlans',
   {},
-  {
-    processStrategy: (value) => {
-      return { ...value, memberPlanId: value.id };
-    }
-  }
+  { processStrategy: (value) => ({ ...value, memberPlanId: value.id }) }
+);
+
+const Payment = new schema.Entity(
+  'payments',
+  {},
+  { processStrategy: (value) => ({ ...value, paymentId: value.id }) }
 );
 
 const Question = new schema.Entity(
@@ -249,7 +239,7 @@ Community.define({
   integrations: CommunityIntegrations,
   members: [Member],
   owner: Member,
-  payments: [MemberPayment],
+  payments: [Payment],
   plans: [MemberPlan],
   questions: [Question],
   supporters: [Supporter]
@@ -272,7 +262,7 @@ EventWatch.define({ event: Event, member: Member });
 Member.define({
   community: Community,
   guests: [EventGuest],
-  payments: [MemberPayment],
+  payments: [Payment],
   plan: MemberPlan,
   socials: MemberSocials,
   user: User,
@@ -280,7 +270,7 @@ Member.define({
   watches: [EventWatch]
 });
 
-MemberPayment.define({
+Payment.define({
   community: Community,
   member: Member,
   plan: MemberPlan
@@ -304,10 +294,10 @@ export const Schema = {
   EVENT_GUEST: EventGuest,
   EVENT_WATCH: EventWatch,
   MEMBER: Member,
-  MEMBER_PAYMENT: MemberPayment,
   MEMBER_PLAN: MemberPlan,
   MEMBER_SOCIALS: MemberSocials,
   MEMBER_VALUE: MemberValue,
+  PAYMENT: Payment,
   QUESTION: Question,
   USER: User
 };

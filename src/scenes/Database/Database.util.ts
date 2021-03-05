@@ -92,14 +92,12 @@ export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
     ?.filter((member: IMember) => !member.deletedAt);
 
   const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
-    const user: IUser = db.byUserId[member.user];
-
-    return [...db.community?.questions].reduce(
+    return db.community?.questions.reduce(
       (result: TableRow, questionId: string) => {
-        const value = getMemberValue({ ...user, ...member, db, questionId });
+        const value = getMemberValue({ ...member, db, questionId });
         return { ...result, [questionId]: value };
       },
-      { id: member?.id, userId: user?.id }
+      { id: member?.id }
     );
   });
 

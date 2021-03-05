@@ -1,7 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { IMemberPayment } from '@store/Db/entities';
+import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import PaymentStore from './Payment.store';
 import { CreateSubscriptionArgs } from './Payment.types';
@@ -15,10 +15,7 @@ const useCreateSubscription = (): OnFormSubmit => {
 
   const pushToMembership = usePush('membership');
 
-  const [createSubscription] = useMutation<
-    IMemberPayment,
-    CreateSubscriptionArgs
-  >({
+  const [createSubscription] = useMutation<IPayment, CreateSubscriptionArgs>({
     fields: [
       'amount',
       'createdAt',
@@ -27,7 +24,7 @@ const useCreateSubscription = (): OnFormSubmit => {
       { plan: ['id'] }
     ],
     operation: 'createSubscription',
-    schema: Schema.MEMBER_PAYMENT,
+    schema: Schema.PAYMENT,
     types: { memberPlanId: { required: true } }
   });
 

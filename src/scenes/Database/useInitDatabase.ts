@@ -17,7 +17,6 @@ const useInitDatabase = () => {
       'status',
       { community: ['id'] },
       { plan: ['id'] },
-      { user: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getDatabase',

@@ -51,7 +51,7 @@ const useInitCommunity = (): boolean => {
     schema: [Schema.QUESTION]
   });
 
-  const [getTypes, { loading: loading4 }] = useManualQuery({
+  const [getMemberPlans, { loading: loading4 }] = useManualQuery({
     fields: [
       'amount',
       'id',
@@ -60,7 +60,7 @@ const useInitCommunity = (): boolean => {
       'recurrence',
       { community: ['id'] }
     ],
-    operation: 'getTypes',
+    operation: 'getMemberPlans',
     schema: [Schema.MEMBER_PLAN]
   });
 
@@ -72,7 +72,7 @@ const useInitCommunity = (): boolean => {
         getCommunity(),
         getIntegrations(),
         getQuestions(),
-        getTypes()
+        getMemberPlans()
       ]);
     })();
   }, [communityId]);

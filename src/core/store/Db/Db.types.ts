@@ -11,10 +11,10 @@ import {
   IEventWatch,
   IIntegrations,
   IMember,
-  IMemberPayment,
   IMemberPlan,
   IMemberSocials,
   IMemberValue,
+  IPayment,
   IQuestion,
   ISupporter,
   IUser
@@ -39,7 +39,7 @@ export type DbModel = {
   byIntegrationsId: Computed<DbModel, Record<string, IIntegrations>>;
   byMemberId: Computed<DbModel, Record<string, IMember>>;
   byMemberPlanId: Computed<DbModel, Record<string, IMemberPlan>>;
-  byPaymentId: Computed<DbModel, Record<string, IMemberPayment>>;
+  byPaymentId: Computed<DbModel, Record<string, IPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
   bySocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
   bySupporterId: Computed<DbModel, Record<string, ISupporter>>;
