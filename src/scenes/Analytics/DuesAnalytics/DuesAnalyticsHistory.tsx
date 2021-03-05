@@ -23,7 +23,7 @@ interface DuesAnalyticsHistoryTableData {
   email: string;
   fullName: string;
   paidOn: string;
-  type: string;
+  plan: string;
 }
 
 const columns: TableColumn[] = [
@@ -32,7 +32,7 @@ const columns: TableColumn[] = [
   { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT },
   { id: 'amount', title: 'Amount', type: QuestionType.SHORT_TEXT },
   {
-    id: 'type',
+    id: 'plan',
     title: 'Membership Plan',
     type: QuestionType.MULTIPLE_CHOICE
   }
@@ -56,7 +56,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
           fullName: `${member?.firstName} ${member?.lastName}`,
           id: member.id,
           paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
-          type: db.byMemberPlanId[plan].name
+          plan: db.byMemberPlanId[plan].name
         };
       }, []);
 

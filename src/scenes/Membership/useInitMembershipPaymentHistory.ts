@@ -3,13 +3,14 @@ import { QueryResult } from '@hooks/useQuery.types';
 import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 
-const useInitPayments = (): QueryResult<IPayment[]> => {
+const useInitMembershipPaymentHistory = (): QueryResult<IPayment[]> => {
   const result = useQuery<IPayment[]>({
     fields: [
       'amount',
       'createdAt',
       'id',
       'stripeInvoiceUrl',
+      'type',
       { member: ['id'] },
       { plan: ['id'] }
     ],
@@ -20,4 +21,4 @@ const useInitPayments = (): QueryResult<IPayment[]> => {
   return result;
 };
 
-export default useInitPayments;
+export default useInitMembershipPaymentHistory;

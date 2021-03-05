@@ -62,7 +62,14 @@ const useInitProfileHistory = (): boolean => {
   });
 
   const { loading: loading4 } = useQuery<IPayment[]>({
-    fields: ['amount', 'createdAt', 'id', { member: ['id'] }, { plan: ['id'] }],
+    fields: [
+      'amount',
+      'createdAt',
+      'id',
+      'type',
+      { member: ['id'] },
+      { plan: ['id'] }
+    ],
     operation: 'getPayments',
     schema: [Schema.PAYMENT],
     types: { memberId: { required: false } },

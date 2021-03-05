@@ -182,6 +182,21 @@ export interface IMemberValue extends BaseEntity {
   value: string | string[];
 }
 
+// ## PAYMENT
+
+export enum PaymentType {
+  DONATION = 'DONATION',
+  DUES = 'DUES'
+}
+
+export interface IPayment extends BaseEntity {
+  amount: number;
+  stripeInvoiceUrl: string;
+  member: Identifier;
+  plan: Identifier;
+  type: PaymentType;
+}
+
 // ## QUESTION
 
 export interface IQuestion extends BaseEntity {
@@ -193,15 +208,6 @@ export interface IQuestion extends BaseEntity {
   title: QuestionType;
   type: QuestionType;
   values?: Identifier[];
-}
-
-// ## PAYMENT
-
-export interface IPayment extends BaseEntity {
-  amount: number;
-  stripeInvoiceUrl: string;
-  member: Identifier;
-  plan: Identifier;
 }
 
 // RANKED QUESTION
