@@ -2,14 +2,14 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { CookieType, ModalType } from '@util/constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { EventPrivacy, ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { eventFields, GetEventArgs } from '../Events.types';
+import { CookieType, ModalType } from '@util/constants';
+import { GetEventArgs } from '../Events.types';
 
 const useInitIndividualEvent = (): boolean => {
   const { eventId } = useParams() as { eventId: string };
@@ -46,7 +46,13 @@ const useInitIndividualEvent = (): boolean => {
   });
 
   const { loading: loading2 } = useQuery<IEvent, GetEventArgs>({
-    fields: eventFields,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
     operation: 'getEventGuests',
     schema: [Schema.EVENT_GUEST],
     types: { eventId: { required: false } },

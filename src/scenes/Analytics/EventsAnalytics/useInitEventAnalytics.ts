@@ -1,5 +1,4 @@
 import useQuery from '@hooks/useQuery';
-import { baseEventFields, eventFields } from '@scenes/Events/Events.types';
 import { Schema } from '@store/Db/schema';
 
 /**
@@ -14,19 +13,36 @@ const useInitEventAnalytics = () => {
   });
 
   const { loading: loading2 } = useQuery({
-    fields: eventFields,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
     operation: 'getPastEventAttendees',
     schema: [Schema.EVENT_ATTENDEE]
   });
 
   const { loading: loading3 } = useQuery({
-    fields: eventFields,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
     operation: 'getPastEventGuests',
     schema: [Schema.EVENT_GUEST]
   });
 
   const { loading: loading4 } = useQuery({
-    fields: baseEventFields,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+    ],
     operation: 'getPastEventWatches',
     schema: [Schema.EVENT_WATCH]
   });

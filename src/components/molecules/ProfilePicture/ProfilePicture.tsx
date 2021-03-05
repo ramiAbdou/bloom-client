@@ -7,19 +7,17 @@ import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface ProfilePictureProps extends BaseProps {
-  attendeeId?: Identifier;
   circle?: boolean;
   fontSize?: number;
-  guestId?: Identifier;
   memberId?: Identifier;
+  supporterId?: Identifier;
   size?: number;
 }
 
 const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
-  attendeeId,
   fontSize,
-  guestId,
   memberId,
+  supporterId,
   size
 }) => {
   const [imageError, setImageError] = useState(false);
@@ -27,21 +25,19 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   // If one of these is null, it means the user isn't fully loaded yet.
   const firstName: string = useStoreState(({ db }) => {
     if (memberId) return db.byMemberId[memberId]?.firstName;
-    if (guestId) return db.byGuestId[guestId]?.firstName;
-    if (attendeeId) return db.byAttendeeId[attendeeId]?.firstName;
+    if (supporterId) return db.bySupporterId[supporterId]?.firstName;
     return db.member?.firstName;
   });
 
   const lastName: string = useStoreState(({ db }) => {
     if (memberId) return db.byMemberId[memberId]?.lastName;
-    if (guestId) return db.byGuestId[guestId]?.lastName;
-    if (attendeeId) return db.byAttendeeId[attendeeId]?.lastName;
+    if (supporterId) return db.bySupporterId[supporterId]?.lastName;
     return db.member?.lastName;
   });
 
   const pictureUrl: string = useStoreState(({ db }) => {
-    if (attendeeId || guestId) return null;
     if (memberId) return db.byMemberId[memberId]?.pictureUrl;
+    if (supporterId) return db.bySupporterId[supporterId]?.pictureUrl;
     return db.member?.pictureUrl;
   });
 
@@ -61,12 +57,12 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
 };
 
 const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
-  const { attendeeId, circle = true, className, guestId, size } = props;
+  const { circle = true, className, memberId, size, supporterId } = props;
 
   const show: boolean = useStoreState(({ db }) => {
-    if (guestId) return !!db.byGuestId[guestId];
-    if (attendeeId) return !!db.byAttendeeId[attendeeId];
-    return !!db.member?.lastName;
+    if (memberId) return !!db.byMemberId[memberId];
+    if (supporterId) return !!db.bySupporterId[supporterId];
+    return true;
   });
 
   const css = cx('m-profile-picture', {

@@ -16,6 +16,7 @@ import {
   IMemberSocials,
   IMemberValue,
   IQuestion,
+  ISupporter,
   IUser
 } from './entities';
 
@@ -41,6 +42,7 @@ export type DbModel = {
   byPaymentId: Computed<DbModel, Record<string, IMemberPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
   bySocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
+  bySupporterId: Computed<DbModel, Record<string, ISupporter>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
   byValuesId: Computed<DbModel, Record<string, IMemberValue>>;
   byWatchId: Computed<DbModel, Record<string, IEventWatch>>;

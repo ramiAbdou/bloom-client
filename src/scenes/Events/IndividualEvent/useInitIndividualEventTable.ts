@@ -4,7 +4,7 @@ import useManualQuery from '@hooks/useManualQuery';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { eventFields, GetEventArgs } from '../Events.types';
+import { GetEventArgs } from '../Events.types';
 
 const useInitIndividualEventTable = (): boolean => {
   const eventId = useStoreState(({ db }) => db.event?.id);
@@ -14,7 +14,13 @@ const useInitIndividualEventTable = (): boolean => {
     IEvent,
     GetEventArgs
   >({
-    fields: eventFields,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
     operation: 'getEventAttendees',
     schema: [Schema.EVENT_ATTENDEE],
     types: { eventId: { required: false } },

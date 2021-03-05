@@ -1,5 +1,4 @@
 import useQuery from '@hooks/useQuery';
-import { eventFields } from '@scenes/Events/Events.types';
 import {
   IEventAttendee,
   IEventGuest,
@@ -13,7 +12,13 @@ const useInitProfileHistory = (): boolean => {
   const memberId = IdStore.useStoreState((store) => store.id);
 
   const { loading: loading1 } = useQuery<IEventAttendee[]>({
-    fields: eventFields,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
     operation: 'getEventAttendees',
     schema: [Schema.EVENT_ATTENDEE],
     types: { memberId: { required: false } },
@@ -21,7 +26,13 @@ const useInitProfileHistory = (): boolean => {
   });
 
   const { loading: loading2 } = useQuery<IEventGuest[]>({
-    fields: eventFields,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
     operation: 'getEventGuests',
     schema: [Schema.EVENT_GUEST],
     types: { memberId: { required: false } },

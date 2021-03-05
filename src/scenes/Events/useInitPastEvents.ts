@@ -1,5 +1,4 @@
 import useQuery from '@hooks/useQuery';
-import { eventFields } from '@scenes/Events/Events.types';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 
@@ -19,7 +18,13 @@ const useInitPastEvents = () => {
   });
 
   const { loading: loading2 } = useQuery<IEventAttendee[]>({
-    fields: eventFields,
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
     operation: 'getPastEventAttendees',
     schema: [Schema.EVENT_ATTENDEE]
   });

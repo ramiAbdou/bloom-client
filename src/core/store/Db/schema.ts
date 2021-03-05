@@ -213,6 +213,16 @@ const Question = new schema.Entity(
   }
 );
 
+const Supporter = new schema.Entity(
+  'supporter',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, supporterId: value.id };
+    }
+  }
+);
+
 const User = new schema.Entity(
   'users',
   {},
@@ -240,7 +250,8 @@ Community.define({
   owner: Member,
   payments: [MemberPayment],
   plans: [MemberPlan],
-  questions: [Question]
+  questions: [Question],
+  supporters: [Supporter]
 });
 
 CommunityApplication.define({ community: Community });
@@ -253,8 +264,8 @@ Event.define({
   watches: [EventWatch]
 });
 
-EventAttendee.define({ event: Event, member: Member });
-EventGuest.define({ event: Event, member: Member });
+EventAttendee.define({ event: Event, member: Member, supporter: Supporter });
+EventGuest.define({ event: Event, member: Member, supporter: Supporter });
 EventWatch.define({ event: Event, member: Member });
 
 Member.define({
@@ -278,7 +289,7 @@ MemberSocials.define({ member: Member });
 MemberPlan.define({ community: Community });
 MemberValue.define({ member: Member, question: Question });
 Question.define({ community: Community, values: [MemberValue] });
-User.define({ members: [Member] });
+User.define({ members: [Member], supporters: [Supporter] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations

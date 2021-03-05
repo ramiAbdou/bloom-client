@@ -6,35 +6,40 @@ import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { IEventAttendee, IMember } from '@store/Db/entities';
+import { IEventAttendee, IMember, ISupporter } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 interface IndividualEventAttendeeProps {
   attendeeId?: string;
-  memberId?: string;
 }
 
 const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
   props
 ) => {
-  const { attendeeId, memberId } = props;
+  const { attendeeId } = props;
 
-  const { firstName, lastName }: IEventAttendee | IMember = useStoreState(
-    ({ db }) => {
-      if (memberId) return db.byMemberId[memberId];
-      return db.byAttendeeId[attendeeId];
-    }
-  );
+  const memberId: string = useStoreState(({ db }) => {
+    const guest: IEventAttendee = db.byAttendeeId[attendeeId];
+    return guest?.member;
+  });
+
+  const fullName: string = useStoreState(({ db }) => {
+    const guest: IEventAttendee = db.byAttendeeId[attendeeId];
+    const member: IMember = db.byMemberId[guest?.member];
+    const supporter: ISupporter = db.bySupporterId[guest?.supporter];
+
+    const firstName = member?.firstName ?? supporter?.firstName;
+    const lastName = member?.lastName ?? supporter?.lastName;
+    return `${firstName} ${lastName}`;
+  });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({ id: ModalType.PROFILE, metadata: memberId });
   };
-
-  const fullName = `${firstName} ${lastName}`;
 
   return (
     <Button className="s-events-individual-member" onClick={onClick}>

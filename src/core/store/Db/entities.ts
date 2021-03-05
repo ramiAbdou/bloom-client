@@ -30,6 +30,7 @@ export interface ICommunity extends BaseEntity {
   owner?: Identifier;
   plans: Identifier[];
   primaryColor: string;
+  supporters: Identifier[];
   urlName: string;
 }
 
@@ -73,21 +74,17 @@ export interface IEvent extends BaseEntity {
 // ## EVENT ATTENDEE
 
 export interface IEventAttendee extends BaseEntity {
-  email?: string;
   event: Identifier;
-  firstName?: string;
-  lastName?: string;
-  member: Identifier;
+  member?: Identifier;
+  supporter?: Identifier;
 }
 
 // ## EVENT GUEST
 
 export interface IEventGuest extends BaseEntity {
-  email?: string;
   event: Identifier;
-  firstName?: string;
-  lastName?: string;
-  member: Identifier;
+  member?: Identifier;
+  supporter?: Identifier;
 }
 
 // ## EVENT WATCH
@@ -205,11 +202,21 @@ export interface IQuestion extends BaseEntity {
   values?: Identifier[];
 }
 
+// ## SUPPORTER
+
+export interface ISupporter extends BaseEntity {
+  email: string;
+  firstName: string;
+  lastName: string;
+  pictureUrl: string;
+}
+
 // ## USER
 
 export interface IUser extends BaseEntity {
   email: string;
-  members?: Identifier[];
+  members: Identifier[];
+  supporters: Identifier[];
 }
 
 export interface EntityRecord<T> {
@@ -229,6 +236,7 @@ export interface IEntities {
   payments: EntityRecord<IMemberPayment>;
   questions: EntityRecord<IQuestion>;
   socials: EntityRecord<IMemberSocials>;
+  supporters: EntityRecord<ISupporter>;
   users: EntityRecord<IUser>;
   values: EntityRecord<IMemberValue>;
   watches: EntityRecord<IEventWatch>;
@@ -247,6 +255,7 @@ export const initialEntities: IEntities = {
   payments: { byId: {} },
   questions: { byId: {} },
   socials: { byId: {} },
+  supporters: { byId: {} },
   users: { activeId: null, byId: {} },
   values: { byId: {} },
   watches: { byId: {} }

@@ -1,7 +1,6 @@
 import useQuery from '@hooks/useQuery';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { eventMemberFields } from './Events.types';
 
 const useInitUpcomingEvents = () => {
   const { loading: loading1 } = useQuery<IEvent[]>({
@@ -20,13 +19,11 @@ const useInitUpcomingEvents = () => {
 
   const { loading: loading2 } = useQuery<IEventGuest[]>({
     fields: [
-      ...eventMemberFields,
       'createdAt',
-      'email',
-      'firstName',
       'id',
-      'lastName',
-      { event: ['id'] }
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
     ],
     operation: 'getUpcomingEventGuests',
     schema: [Schema.EVENT_GUEST]

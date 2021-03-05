@@ -8,11 +8,7 @@ import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
-import {
-  CreateEventGuestArgs,
-  DeleteEventGuestArgs,
-  eventMemberFields
-} from './Events.types';
+import { CreateEventGuestArgs, DeleteEventGuestArgs } from './Events.types';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -45,12 +41,10 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
     fields: [
       'createdAt',
-      'email',
-      'firstName',
       'id',
-      'lastName',
       { event: ['id'] },
-      ...eventMemberFields
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
     ],
     operation: 'createEventGuest',
     schema: Schema.EVENT_GUEST,

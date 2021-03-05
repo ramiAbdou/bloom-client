@@ -15,6 +15,7 @@ const dbByIdStore: Pick<
   | 'byQuestionId'
   | 'bySocialsId'
   | 'byMemberPlanId'
+  | 'bySupporterId'
   | 'byUserId'
   | 'byValuesId'
   | 'byWatchId'
@@ -30,6 +31,7 @@ const dbByIdStore: Pick<
   byPaymentId: computed(({ entities }) => entities.payments?.byId),
   byQuestionId: computed(({ entities }) => entities.questions?.byId),
   bySocialsId: computed(({ entities }) => entities.socials?.byId),
+  bySupporterId: computed(({ entities }) => entities.supporters?.byId),
   byUserId: computed(({ entities }) => entities.users?.byId),
   byValuesId: computed(({ entities }) => entities.values?.byId),
   byWatchId: computed(({ entities }) => entities.watches?.byId)

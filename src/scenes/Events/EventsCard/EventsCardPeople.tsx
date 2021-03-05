@@ -3,22 +3,12 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import {
-  IEvent,
-  IEventAttendee,
-  IEventGuest,
-  IMember
-} from '@store/Db/entities';
+import { IEvent, IEventAttendee, IEventGuest } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 
 interface EventsCardPersonPictures {
-  ids?: {
-    attendeeId?: string;
-    guestId?: string;
-    memberId?: string;
-    userId?: string;
-  }[];
+  ids?: { memberId?: string; supporterId?: string }[];
 }
 
 const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
@@ -29,12 +19,7 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
       {ids?.map((props) => {
         return (
           <ProfilePicture
-            key={
-              props?.attendeeId ||
-              props?.guestId ||
-              props?.memberId ||
-              props?.userId
-            }
+            key={props?.memberId ?? props?.supporterId}
             fontSize={12}
             size={24}
             {...props}
@@ -60,14 +45,11 @@ const EventsCardPeople: React.FC = () => {
     return people
       ?.map((id: string) => (isPast ? db.byAttendeeId[id] : db.byGuestId[id]))
       ?.reduce((acc, person: IEventGuest | IEventAttendee) => {
-        if (person.member) {
-          const member: IMember = db.byMemberId[person.member];
-          return [...acc, { userId: member.user }];
-        }
-
         return [
           ...acc,
-          isPast ? { attendeeId: person.id } : { guestId: person.id }
+          person.member
+            ? { memberId: person.member }
+            : { supporterId: person.supporter }
         ];
       }, []);
   });

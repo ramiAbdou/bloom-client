@@ -10,6 +10,7 @@ import {
   IEventGuest,
   IEventWatch,
   IMember,
+  ISupporter,
   IUser
 } from '@store/Db/entities';
 import { QuestionType } from '@util/constants';
@@ -29,8 +30,11 @@ const getIndividualEventTableAttendees = (
   return db.event.attendees.reduce((acc, attendeeId: string) => {
     const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
     const member: IMember = db.byMemberId[attendee?.member];
+    const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
 
-    const { createdAt, firstName, lastName, email } = attendee;
+    const email = member?.email ?? supporter?.email;
+    const firstName = member?.firstName ?? supporter?.firstName;
+    const lastName = member?.lastName ?? supporter?.lastName;
 
     if (acc[email]) return acc;
 
@@ -38,7 +42,7 @@ const getIndividualEventTableAttendees = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: attendee?.member,
-      joinedAt: createdAt,
+      joinedAt: attendee.createdAt,
       userId: member?.user,
       watched: 'No'
     };
@@ -60,8 +64,11 @@ const getIndividualEventTableGuests = (
   return db.event.guests.reduce((acc, guestId: string) => {
     const guest: IEventGuest = db.byGuestId[guestId];
     const member: IMember = db.byMemberId[guest?.member];
+    const supporter: ISupporter = db.bySupporterId[guest?.supporter];
 
-    const { createdAt, firstName, lastName, email } = guest;
+    const email = member?.email ?? supporter?.email;
+    const firstName = member?.firstName ?? supporter?.firstName;
+    const lastName = member?.lastName ?? supporter?.lastName;
 
     if (acc[email]) return acc;
 
@@ -69,7 +76,7 @@ const getIndividualEventTableGuests = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: guest?.member,
-      rsvpdAt: createdAt,
+      rsvpdAt: guest.createdAt,
       userId: member?.user,
       watched: 'No'
     };

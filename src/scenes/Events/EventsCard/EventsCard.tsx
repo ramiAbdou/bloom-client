@@ -3,11 +3,11 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { IdProps } from '@util/constants';
 import Card from '@containers/Card/Card';
 import { IEvent } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { IdProps } from '@util/constants';
 import { cx } from '@util/util';
 import EventsAspectBackground from '../EventsAspectBackground';
 import EventsJoinButton from '../EventsJoinButton';
