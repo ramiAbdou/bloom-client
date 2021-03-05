@@ -5,16 +5,20 @@ import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IQuestion } from '@store/Db/entities';
+import { IApplicationQuestion, IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';
 import useValidateEmail from './useValidateEmail';
 
 const ApplicationMainForm: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
-    return db.community?.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => !question.locked);
+    return db.application?.questions
+      ?.map((questionId: string) => db.byApplicationQuestionId[questionId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.map((applicationQuestion: IApplicationQuestion) => {
+        return db.byQuestionId[applicationQuestion.question];
+      });
   });
 
   const isSolo = StoryStore.useStoreState(

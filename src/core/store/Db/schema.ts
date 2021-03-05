@@ -35,7 +35,27 @@ export const mergeStrategy = (a: Partial<any>, b: Partial<any>) => {
 const Application = new schema.Entity(
   'applications',
   {},
-  { processStrategy: (value) => ({ ...value, applicationId: value.id }) }
+  {
+    mergeStrategy,
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.applicationQuestionId, { questions: [parent.id] }],
+        {}
+      ]);
+
+      return { ...value, ...processedData, applicationId: value.id };
+    }
+  }
+);
+
+const ApplicationQuestion = new schema.Entity(
+  'applicationQuestions',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, applicationQuestionId: value.id };
+    }
+  }
 );
 
 const Community = new schema.Entity(
@@ -228,6 +248,9 @@ const User = new schema.Entity(
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.
 
+Application.define({ community: Community, questions: [ApplicationQuestion] });
+ApplicationQuestion.define({ application: Application, question: Question });
+
 Community.define({
   application: Application,
   events: [Event],
@@ -241,7 +264,6 @@ Community.define({
   supporters: [Supporter]
 });
 
-Application.define({ community: Community });
 CommunityIntegrations.define({ community: Community });
 
 Event.define({
@@ -283,6 +305,7 @@ User.define({ members: [Member], supporters: [Supporter] });
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
   APPLICATION: Application,
+  APPLICATION_QUESTION: ApplicationQuestion,
   COMMUNITY: Community,
   COMMUNITY_INTEGRATIONS: CommunityIntegrations,
   EVENT: Event,

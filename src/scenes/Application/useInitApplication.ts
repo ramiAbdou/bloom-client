@@ -4,7 +4,11 @@ import { useParams } from 'react-router-dom';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
-import { IApplication, IMemberPlan, IQuestion } from '@store/Db/entities';
+import {
+  IApplication,
+  IApplicationQuestion,
+  IMemberPlan
+} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
@@ -39,20 +43,25 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     variables: { urlName }
   });
 
-  const { loading: loading2 } = useQuery<IQuestion[]>({
+  const { loading: loading2 } = useQuery<IApplicationQuestion[], UrlNameProps>({
     fields: [
-      'locked',
-      'category',
-      'description',
       'id',
-      'options',
-      'required',
-      'title',
-      'type',
-      { community: ['id'] }
+      'rank',
+      { application: ['id'] },
+      {
+        question: [
+          'category',
+          'description',
+          'id',
+          'options',
+          'required',
+          'title',
+          'type'
+        ]
+      }
     ],
-    operation: 'getQuestions',
-    schema: [Schema.QUESTION],
+    operation: 'getApplicationQuestions',
+    schema: [Schema.APPLICATION_QUESTION],
     types: { urlName: { required: false } },
     variables: { urlName }
   });

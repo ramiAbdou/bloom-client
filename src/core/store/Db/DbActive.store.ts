@@ -6,6 +6,7 @@ import {
   IEvent,
   IIntegrations,
   IMember,
+  IMemberPlan,
   IMemberSocials,
   IUser
 } from '@store/Db/entities';
@@ -35,9 +36,9 @@ const dbActiveStore: Pick<
     const result: ICommunity = byId[activeId];
     const integrations: IIntegrations = byIntegrationsId[result?.integrations];
 
-    const hasPaidMembership: boolean = result?.plans?.some(
-      (planId: string) => !byMemberPlanId[planId]?.isFree
-    );
+    const hasPaidMembership: boolean = result?.plans
+      ?.map((planId: string) => byMemberPlanId[planId])
+      ?.some((plan: IMemberPlan) => !plan?.isFree);
 
     if (!result) return null;
 

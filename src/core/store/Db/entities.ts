@@ -13,6 +13,23 @@ export interface BaseEntity {
   updatedAt: Identifier;
 }
 
+// ## APPLICATION
+
+export interface IApplication extends BaseEntity {
+  community: Identifier;
+  description: string;
+  questions: Identifier[];
+  title: string;
+}
+
+// APPLICATION QUESTION
+
+export interface IApplicationQuestion extends BaseEntity {
+  application: Identifier;
+  rank: number;
+  question: Identifier;
+}
+
 // ## COMMUNITY
 
 export interface ICommunity extends BaseEntity {
@@ -32,14 +49,6 @@ export interface ICommunity extends BaseEntity {
   primaryColor: string;
   supporters: Identifier[];
   urlName: string;
-}
-
-// ## COMMUNITY APPLICATION
-
-export interface IApplication extends BaseEntity {
-  community: Identifier;
-  description: string;
-  title: string;
 }
 
 // ## EVENT
@@ -226,6 +235,7 @@ export interface EntityRecord<T> {
 
 export interface IEntities {
   applications: EntityRecord<IApplication>;
+  applicationQuestions: EntityRecord<IApplicationQuestion>;
   attendees: EntityRecord<IEventAttendee>;
   communities: EntityRecord<ICommunity>;
   events: EntityRecord<IEvent>;
@@ -244,6 +254,7 @@ export interface IEntities {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
+  applicationQuestions: { byId: {} },
   applications: { byId: {} },
   attendees: { byId: {} },
   communities: { activeId: null, byId: {} },

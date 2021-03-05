@@ -3,6 +3,7 @@ import { Schema } from 'normalizr';
 
 import {
   IApplication,
+  IApplicationQuestion,
   ICommunity,
   IEntities,
   IEvent,
@@ -32,6 +33,10 @@ export interface SetActiveArgs {
 
 export type DbModel = {
   byApplicationId: Computed<DbModel, Record<string, IApplication>>;
+  byApplicationQuestionId: Computed<
+    DbModel,
+    Record<string, IApplicationQuestion>
+  >;
   byAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
   byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
   byEventId: Computed<DbModel, Record<string, IEvent>>;

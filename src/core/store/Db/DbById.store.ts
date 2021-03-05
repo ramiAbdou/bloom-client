@@ -5,6 +5,7 @@ import { DbModel } from './Db.types';
 const dbByIdStore: Pick<
   DbModel,
   | 'byApplicationId'
+  | 'byApplicationQuestionId'
   | 'byAttendeeId'
   | 'byCommunityId'
   | 'byEventId'
@@ -21,6 +22,9 @@ const dbByIdStore: Pick<
   | 'byWatchId'
 > = {
   byApplicationId: computed(({ entities }) => entities.applications?.byId),
+  byApplicationQuestionId: computed(
+    ({ entities }) => entities.applicationQuestions?.byId
+  ),
   byAttendeeId: computed(({ entities }) => entities.attendees?.byId),
   byCommunityId: computed(({ entities }) => entities.communities?.byId),
   byEventId: computed(({ entities }) => entities.events?.byId),
