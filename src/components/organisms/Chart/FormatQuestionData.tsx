@@ -41,13 +41,13 @@ const useQuestionData = (): Pick<
 
     members.forEach((memberId: string) => {
       const member: IMember = db.byMemberId[memberId];
-      const type: IMemberPlan = db.byMemberPlanId[member.plan];
+      const plan: IMemberPlan = db.byMemberPlanId[member.plan];
 
       let value;
 
-      if (category === QuestionCategory.MEMBER_PLAN) value = type?.name;
+      if (category === QuestionCategory.MEMBER_PLAN) value = plan?.name;
       else if (category === QuestionCategory.DUES_STATUS) {
-        value = member.isDuesActive ? 'Active' : 'Inactive';
+        value = member.isDuesActive ? 'Paid' : 'Not Paid';
       } else {
         const d = member.values.find((valueId: string) => {
           const data: IMemberValue = db.byValuesId[valueId];

@@ -9,7 +9,7 @@ import FormatQuestionData from './FormatQuestionData';
 import PieChart from './PieChart';
 import TimeSeriesChart from './TimeSeriesChart';
 
-const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
+const ChartContent = (data: ChartModelInitArgs) => {
   const chartType = ChartStore.useStoreState((store) => store.type);
   const setData = ChartStore.useStoreActions((store) => store.setData);
 
@@ -20,7 +20,6 @@ const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
 
   return (
     <>
-      {questionId && <FormatQuestionData questionId={questionId} />}
       {chartType === ChartType.BAR && <BarChart />}
       {chartType === ChartType.PIE && <PieChart />}
       {chartType === ChartType.TIME_SERIES && <TimeSeriesChart />}
@@ -31,6 +30,7 @@ const ChartContent = ({ questionId, ...data }: ChartModelInitArgs) => {
 const Chart: React.FC<ChartModelInitArgs> = ({
   className,
   options,
+  questionId,
   show,
   ...args
 }) => {
@@ -40,6 +40,8 @@ const Chart: React.FC<ChartModelInitArgs> = ({
 
   return (
     <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>
+      {questionId && <FormatQuestionData questionId={questionId} />}
+
       <div className={css}>
         <ChartHeader />
         <ChartContent {...args} />
