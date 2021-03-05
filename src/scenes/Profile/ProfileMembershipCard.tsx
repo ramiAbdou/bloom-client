@@ -27,18 +27,17 @@ const ProfileMembershipHeader: React.FC = () => {
 
 const ProfileMembershipContent: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
-    const questions: IQuestion[] = db.community.questions
+    const sortedQuestions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter((question: IQuestion) => !question.category)
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
-      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'ASC'));
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'));
 
-    const data: IMemberValue[] = db.member.values?.map(
+    const values: IMemberValue[] = db.member.values?.map(
       (valueId: string) => db.byValuesId[valueId]
     );
 
-    return questions?.map(({ id, title, type }: IQuestion) => {
-      const value: any = data?.find(
+    return sortedQuestions?.map(({ id, title, type }: IQuestion) => {
+      const value: any = values?.find(
         (entity: IMemberValue) => entity?.question === id
       )?.value;
 

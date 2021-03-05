@@ -7,33 +7,32 @@ import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { IMember, IMemberValue, IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { sortObjects } from '@util/util';
 import useInitProfileData from './useInitProfileData';
 
 const ProfileDataContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((store) => store.id);
 
-  const questions: Set<string> = useStoreState(({ db }) => {
-    return new Set(db.community?.questions);
-  });
-
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
-    return member?.values
+    const filteredValues: IMemberValue[] = member?.values
       ?.map((valueId: string) => db.byValuesId[valueId])
       ?.filter((data: IMemberValue) => {
         const question: IQuestion = db.byQuestionId[data.question];
-
-        return (
-          questions.has(question?.id) &&
-          !question?.category &&
-          !question?.locked
-        );
-      })
-      ?.map((element: IMemberValue) => {
-        const { title, type }: IQuestion = db.byQuestionId[element.question];
-        return { title, type, value: element.value };
+        return !question?.category;
       });
+
+    const sortedValues: IMemberValue[] = filteredValues?.sort((a, b) => {
+      const aQuestion: IQuestion = db.byQuestionId[a.question];
+      const bQuestion: IQuestion = db.byQuestionId[b.question];
+      return sortObjects(aQuestion, bQuestion, 'rank', 'ASC');
+    });
+
+    return sortedValues?.map((element: IMemberValue) => {
+      const { title, type }: IQuestion = db.byQuestionId[element.question];
+      return { title, type, value: element.value };
+    });
   });
 
   return (
