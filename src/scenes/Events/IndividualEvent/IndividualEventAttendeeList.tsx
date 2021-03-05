@@ -43,7 +43,7 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
 
   return (
     <Button className="s-events-individual-member" onClick={onClick}>
-      <ProfilePicture fontSize={16} size={36} {...props} />
+      <ProfilePicture fontSize={16} memberId={memberId} size={36} />
       <p className="body--bold">{fullName}</p>
     </Button>
   );

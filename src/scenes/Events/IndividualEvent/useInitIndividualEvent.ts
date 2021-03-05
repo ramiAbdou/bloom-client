@@ -50,8 +50,8 @@ const useInitIndividualEvent = (): boolean => {
       'createdAt',
       'id',
       { event: ['id'] },
-      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'firstName', 'lastName'] }
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
     operation: 'getEventGuests',
     schema: [Schema.EVENT_GUEST],

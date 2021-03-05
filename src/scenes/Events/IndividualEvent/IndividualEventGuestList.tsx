@@ -48,7 +48,7 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 
   return (
     <Button className={css} onClick={onClick}>
-      <ProfilePicture fontSize={16} size={36} {...props} />
+      <ProfilePicture fontSize={16} memberId={memberId} size={36} />
       <p className="body--bold">{fullName}</p>
     </Button>
   );
