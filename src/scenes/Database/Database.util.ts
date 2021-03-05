@@ -62,9 +62,7 @@ const getMemberValue = (args: GetMemberValueArgs) => {
     return db.byMemberPlanId[plan]?.name;
   }
 
-  if (category === QuestionCategory.DUES_STATUS) {
-    return isDuesActive ? 'Active' : 'Inactive';
-  }
+  if (category === QuestionCategory.DUES_STATUS) return isDuesActive;
 
   const value = values
     ?.map((valueId: string) => db.byValuesId[valueId])

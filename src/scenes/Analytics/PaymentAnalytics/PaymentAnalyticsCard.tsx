@@ -4,7 +4,7 @@ import GrayCard from '@containers/Card/GrayCard';
 import { IMember, MemberStatus } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
-const DuesAnalyticsPercentPaidCard: React.FC = () => {
+const PaymentAnalyticsPercentPaidCard: React.FC = () => {
   const numActiveMembers: number = useStoreState(({ db }) => {
     return db.community.members
       ?.map((memberId: string) => db.byMemberId[memberId])
@@ -35,4 +35,4 @@ const DuesAnalyticsPercentPaidCard: React.FC = () => {
   );
 };
 
-export default DuesAnalyticsPercentPaidCard;
+export default PaymentAnalyticsPercentPaidCard;

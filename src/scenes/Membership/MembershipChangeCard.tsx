@@ -19,7 +19,7 @@ const MembershipChangeCard: React.FC<IMemberPlan> = ({
   const onClick = () => {
     showModal({
       id: ModalType.CHANGE_MEMBERSHIP,
-      metadata: { selectedTypeId: id, type: 'CHANGE_MEMBERSHIP' }
+      metadata: { selectedPlanId: id, type: 'CHANGE_MEMBERSHIP' }
     });
   };
 

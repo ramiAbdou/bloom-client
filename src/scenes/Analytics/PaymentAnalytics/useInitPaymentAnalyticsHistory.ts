@@ -3,7 +3,7 @@ import { QueryResult } from '@hooks/useQuery.types';
 import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 
-const useInitDuesAnalyticsHistory = () => {
+const useInitPaymentAnalyticsHistory = () => {
   const result: QueryResult<IPayment[]> = useQuery<IPayment[]>({
     fields: [
       'amount',
@@ -21,4 +21,4 @@ const useInitDuesAnalyticsHistory = () => {
   return result;
 };
 
-export default useInitDuesAnalyticsHistory;
+export default useInitPaymentAnalyticsHistory;

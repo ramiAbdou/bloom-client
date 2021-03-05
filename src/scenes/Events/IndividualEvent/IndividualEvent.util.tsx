@@ -44,7 +44,7 @@ const getIndividualEventTableAttendees = (
       id: attendee?.member,
       joinedAt: attendee.createdAt,
       userId: member?.user,
-      watched: 'No'
+      watched: false
     };
 
     return { ...acc, [email]: data };
@@ -78,7 +78,7 @@ const getIndividualEventTableGuests = (
       id: guest?.member,
       rsvpdAt: guest.createdAt,
       userId: member?.user,
-      watched: 'No'
+      watched: false
     };
 
     return { ...acc, [email]: data };
@@ -108,7 +108,7 @@ const getIndividualEventTableViewers = (
       fullName: `${member.firstName} ${member.lastName}`,
       id: member?.id,
       userId: member?.user,
-      watched: 'Yes'
+      watched: true
     };
 
     return { ...acc, [email]: data };
@@ -170,6 +170,7 @@ export const getIndividualEventTableColumns = (
   const viewedRecordingColumn: TableColumn[] = recordingUrl
     ? [
         {
+          format: (watched: boolean) => (watched ? 'Yes' : 'No'),
           id: 'watched',
           title: `Viewed Recording`,
           type: QuestionType.TRUE_FALSE

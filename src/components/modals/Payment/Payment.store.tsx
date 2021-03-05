@@ -11,7 +11,7 @@ export type PaymentModel = {
   changeAmount: number;
   changeProrationDate: number;
   clear: Action<PaymentModel>;
-  selectedTypeId: string;
+  selectedPlanId: string;
   setChangeData: Action<PaymentModel, SetChangeDataArgs>;
   setSelectedTypeId: Action<PaymentModel, string>;
   type: PaymentModalType;
@@ -27,10 +27,10 @@ export const paymentModel: PaymentModel = {
     changeAmount: null,
     changeProrationDate: null,
     screen: null,
-    selectedTypeId: null
+    selectedPlanId: null
   })),
 
-  selectedTypeId: null,
+  selectedPlanId: null,
 
   setChangeData: action((state, args) => ({
     ...state,
@@ -38,9 +38,9 @@ export const paymentModel: PaymentModel = {
     changeProrationDate: args?.changeProrationDate
   })),
 
-  setSelectedTypeId: action((state, selectedTypeId: string) => ({
+  setSelectedTypeId: action((state, selectedPlanId: string) => ({
     ...state,
-    selectedTypeId
+    selectedPlanId
   })),
 
   type: 'PAY_DUES'

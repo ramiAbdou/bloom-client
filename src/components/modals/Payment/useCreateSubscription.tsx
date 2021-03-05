@@ -11,7 +11,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     (store) => store.changeProrationDate
   );
 
-  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedPlanId);
 
   const pushToMembership = usePush('membership');
 

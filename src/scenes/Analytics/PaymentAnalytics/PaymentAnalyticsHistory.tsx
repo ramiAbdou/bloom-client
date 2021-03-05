@@ -15,9 +15,9 @@ import { IMember, IPayment, IUser } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
-import useInitDuesAnalyticsHistory from './useInitDuesAnalyticsHistory';
+import useInitPaymentAnalyticsHistory from './useInitPaymentAnalyticsHistory';
 
-interface DuesAnalyticsHistoryTableData {
+interface PaymentAnalyticsHistoryTableData {
   amount: string;
   id: string;
   email: string;
@@ -38,11 +38,11 @@ const columns: TableColumn[] = [
   }
 ];
 
-const DuesAnalyticsHistoryTable: React.FC = () => {
+const PaymentAnalyticsHistoryTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
-    const result: DuesAnalyticsHistoryTableData[] = db.community.payments
+    const result: PaymentAnalyticsHistoryTableData[] = db.community.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
       ?.map((payment: IPayment) => {
         const { amount, createdAt, plan }: IPayment = payment;
@@ -77,15 +77,15 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
   );
 };
 
-const DuesAnalyticsHistory: React.FC = () => {
-  const { data, loading } = useInitDuesAnalyticsHistory();
+const PaymentAnalyticsHistory: React.FC = () => {
+  const { data, loading } = useInitPaymentAnalyticsHistory();
 
   return (
     <MainSection className="s-analytics-dues-history" show={!!data?.length}>
       <LoadingHeader h2 loading={loading} title="Dues History" />
-      {!loading && <DuesAnalyticsHistoryTable />}
+      {!loading && <PaymentAnalyticsHistoryTable />}
     </MainSection>
   );
 };
 
-export default DuesAnalyticsHistory;
+export default PaymentAnalyticsHistory;

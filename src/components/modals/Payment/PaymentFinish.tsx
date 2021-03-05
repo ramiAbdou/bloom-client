@@ -20,7 +20,7 @@ import useCreateLifetimePayment from './useCreateLifetimePayment';
 import useCreateSubscription from './useCreateSubscription';
 
 const PaymentFinishForm: React.FC = () => {
-  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedPlanId);
 
   const { amount, isFree, name, recurrence }: IMemberPlan = useStoreState(
     ({ db }) => db.byMemberPlanId[planId],
@@ -60,7 +60,7 @@ const PaymentFinishForm: React.FC = () => {
 };
 
 const PaymentFinish: React.FC = () => {
-  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedPlanId);
   const modalType = PaymentStore.useStoreState((store) => store.type);
 
   const setChangeData = PaymentStore.useStoreActions(

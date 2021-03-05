@@ -40,11 +40,7 @@ const TableCellContent: React.FC<
     category === QuestionCategory.DUES_STATUS ||
     type === QuestionType.TRUE_FALSE
   ) {
-    return (
-      <Pill positive={['Active', 'Yes', true].includes(value)} show={!!value}>
-        {formattedValue}
-      </Pill>
-    );
+    return <Pill positive={value === true}>{formattedValue}</Pill>;
   }
 
   if (category === QuestionCategory.PROFILE_PICTURE) {

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ModalType } from '@util/constants';
 import MainSection from '@containers/Main/MainSection';
 import Show from '@containers/Show';
 import Table from '@organisms/Table/Table';
@@ -11,6 +10,7 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import {
   getIndividualEventTableColumns,
   getIndividualEventTableRows

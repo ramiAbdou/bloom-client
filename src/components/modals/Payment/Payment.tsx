@@ -14,17 +14,17 @@ import PaymentFinishPage from './PaymentFinish';
 import PaymentStripeProvider from './PaymentStripeProvider';
 
 const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
-  selectedTypeId
+  selectedPlanId
 }) => {
-  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedPlanId);
 
   const setSelectedTypeId = PaymentStore.useStoreActions(
     (store) => store.setSelectedTypeId
   );
 
   useEffect(() => {
-    if (selectedTypeId !== planId) setSelectedTypeId(selectedTypeId);
-  }, [planId, selectedTypeId]);
+    if (selectedPlanId !== planId) setSelectedTypeId(selectedPlanId);
+  }, [planId, selectedPlanId]);
 
   return (
     <Story>
@@ -40,8 +40,8 @@ const PaymentModal: React.FC = () => {
     ({ modal }) => modal.metadata?.type
   ) as PaymentModalType;
 
-  const selectedTypeId = useStoreState(
-    ({ modal }) => modal.metadata?.selectedTypeId
+  const selectedPlanId = useStoreState(
+    ({ modal }) => modal.metadata?.selectedPlanId
   ) as string;
 
   const currentTypeId: string = useStoreState(({ db }) => {
@@ -64,19 +64,19 @@ const PaymentModal: React.FC = () => {
     if (!isAdmin && !isDuesActive) {
       showModal({
         id: ModalType.PAY_DUES,
-        metadata: { selectedTypeId: currentTypeId, type: 'PAY_DUES' }
+        metadata: { selectedPlanId: currentTypeId, type: 'PAY_DUES' }
       });
     }
   }, [isDuesActive]);
 
-  if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId)) {
+  if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedPlanId)) {
     return null;
   }
 
   return (
     <PaymentStore.Provider runtimeModel={{ ...paymentModel, type }}>
       <PaymentStripeProvider>
-        <PaymentModalContainer selectedTypeId={selectedTypeId} />
+        <PaymentModalContainer selectedPlanId={selectedPlanId} />
       </PaymentStripeProvider>
     </PaymentStore.Provider>
   );

@@ -5,7 +5,7 @@ import GrayCard from '@containers/Card/GrayCard';
 import { IPayment } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
-const DuesAnalyticsTotalCollectedCard: React.FC = () => {
+const PaymentAnalyticsTotalCollectedCard: React.FC = () => {
   const totalCollected: number = useStoreState(({ db }) => {
     return db.community.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
@@ -20,11 +20,11 @@ const DuesAnalyticsTotalCollectedCard: React.FC = () => {
 
   return (
     <GrayCard
-      label="Total Dues Collected"
+      label="Total Revenue"
       show={totalCollected !== undefined}
       value={`$${totalCollected}`}
     />
   );
 };
 
-export default DuesAnalyticsTotalCollectedCard;
+export default PaymentAnalyticsTotalCollectedCard;

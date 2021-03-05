@@ -30,7 +30,7 @@ const MembershipCurrentPlanActions: React.FC = () => {
   const onPrimaryClick = () => {
     showModal({
       id: ModalType.PAY_DUES,
-      metadata: { selectedTypeId: currentTypeId, type: 'PAY_DUES' }
+      metadata: { selectedPlanId: currentTypeId, type: 'PAY_DUES' }
     });
   };
 

@@ -16,9 +16,9 @@ import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
-import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
 import EventsAnalytics from './EventsAnalytics/EventsAnalytics';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
+import PaymentAnalytics from './PaymentAnalytics/PaymentAnalytics';
 
 const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
@@ -26,7 +26,13 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const { push } = useHistory();
 
   const duesOptions: NavigationOptionProps[] = canCollectDues
-    ? [{ onClick: () => push('dues'), pathname: 'dues', title: 'Dues' }]
+    ? [
+        {
+          onClick: () => push('payments'),
+          pathname: 'payments',
+          title: 'Payments'
+        }
+      ]
     : [];
 
   const options: NavigationOptionProps[] = [
@@ -60,9 +66,9 @@ const Analytics: React.FC = () => {
 
       <Show show={!loading}>
         <Switch>
-          <Route component={DuesAnalytics} path={`${url}/dues`} />
           <Route component={EventsAnalytics} path={`${url}/events`} />
           <Route component={MembersAnalytics} path={`${url}/members`} />
+          <Route component={PaymentAnalytics} path={`${url}/payments`} />
           <Redirect to={`${url}/members`} />
         </Switch>
       </Show>

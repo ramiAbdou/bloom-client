@@ -6,5 +6,5 @@ export interface IndividualEventTableRowProps extends IdProps {
   joinedAt?: string;
   rsvpdAt?: string;
   userId?: string;
-  watched?: 'Yes' | 'No';
+  watched?: boolean;
 }

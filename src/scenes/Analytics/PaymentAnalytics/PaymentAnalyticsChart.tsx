@@ -6,7 +6,7 @@ import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { TimeSeriesData } from '../Analytics.types';
 
-const DuesAnalyticsChart: React.FC = () => {
+const PaymentAnalyticsChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
     operation: 'getTotalDuesSeries'
@@ -25,4 +25,4 @@ const DuesAnalyticsChart: React.FC = () => {
   );
 };
 
-export default DuesAnalyticsChart;
+export default PaymentAnalyticsChart;
