@@ -4,7 +4,7 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import { IIntegrations, IMemberPlan } from '@store/Db/entities';
+import { IIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -14,13 +14,6 @@ import IntegrationCard from './IntegrationsCard';
 // components to process and render.
 const IntegrationsConnectedList: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
-
-  const hasPaidMembership = useStoreState(({ db }) => {
-    return db.community.plans?.some((planId: string) => {
-      const type: IMemberPlan = db.byMemberPlanId[planId];
-      return !type?.isFree;
-    });
-  });
 
   const {
     isMailchimpAuthenticated,
@@ -32,7 +25,6 @@ const IntegrationsConnectedList: React.FC = () => {
   ) as IIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
-    hasPaidMembership,
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId,

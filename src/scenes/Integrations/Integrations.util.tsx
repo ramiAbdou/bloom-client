@@ -3,6 +3,7 @@ import URLBuilder from 'util/URLBuilder';
 import { IIntegrations } from '@store/Db/entities';
 import { APP, isProduction, UrlNameProps } from '@util/constants';
 import mailchimp from './images/mailchimp.png';
+import slack from './images/slack.png';
 import stripe from './images/stripe.png';
 import zapier from './images/zapier.png';
 import { IntegrationsDetailsData } from './Integrations.types';
@@ -16,9 +17,7 @@ interface BuildIntegrationDataProps
       IIntegrations,
       'isMailchimpAuthenticated' | 'mailchimpListId' | 'stripeAccountId'
     >,
-    UrlNameProps {
-  hasPaidMembership: boolean;
-}
+    UrlNameProps {}
 
 /**
  * Returns an array of data points per integration (ie: Mailchimp, Stripe,
@@ -27,40 +26,36 @@ interface BuildIntegrationDataProps
  */
 export const buildIntegrationData = ({
   urlName,
-  hasPaidMembership,
   isMailchimpAuthenticated,
   mailchimpListId,
   stripeAccountId
 }: BuildIntegrationDataProps): IntegrationsDetailsData[] => {
-  const stripeCardProps: IntegrationsDetailsData[] = hasPaidMembership
-    ? [
-        {
-          connected: !!stripeAccountId,
-          description:
-            'Collect monthly or yearly dues payments from your members.',
-          href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
-            .addParam('response_type', 'code')
-            .addParam(
-              'client_id',
-              isProduction
-                ? process.env.STRIPE_CLIENT_ID
-                : process.env.STRIPE_TEST_CLIENT_ID
-            )
-            .addParam('scope', 'read_write')
-            .addParam(
-              'redirect_uri',
-              isProduction
-                ? `${APP.SERVER_URL}/stripe/auth`
-                : `${APP.NGROK_SERVER_URL}/stripe/auth`
-            )
-            .addParam('state', urlName).url,
-          logo: stripe,
-          name: 'Stripe'
-        }
-      ]
-    : [];
-
   return [
+    // ## SLACK
+    {
+      connected: false,
+      description:
+        'Paywall your Slack community and see in-depth engagement analytics.',
+      href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
+        .addParam('response_type', 'code')
+        .addParam(
+          'client_id',
+          isProduction
+            ? process.env.STRIPE_CLIENT_ID
+            : process.env.STRIPE_TEST_CLIENT_ID
+        )
+        .addParam('scope', 'read_write')
+        .addParam(
+          'redirect_uri',
+          isProduction
+            ? `${APP.SERVER_URL}/stripe/auth`
+            : `${APP.NGROK_SERVER_URL}/stripe/auth`
+        )
+        .addParam('state', urlName).url,
+      logo: slack,
+      name: 'Slack'
+    },
+
     // ## MAILCHIMP
     {
       connected: !!mailchimpListId,
@@ -78,7 +73,28 @@ export const buildIntegrationData = ({
     },
 
     // ## STRIPE
-    ...stripeCardProps,
+    {
+      connected: !!stripeAccountId,
+      description: 'Collect monthly or yearly dues payments from your members.',
+      href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
+        .addParam('response_type', 'code')
+        .addParam(
+          'client_id',
+          isProduction
+            ? process.env.STRIPE_CLIENT_ID
+            : process.env.STRIPE_TEST_CLIENT_ID
+        )
+        .addParam('scope', 'read_write')
+        .addParam(
+          'redirect_uri',
+          isProduction
+            ? `${APP.SERVER_URL}/stripe/auth`
+            : `${APP.NGROK_SERVER_URL}/stripe/auth`
+        )
+        .addParam('state', urlName).url,
+      logo: stripe,
+      name: 'Stripe'
+    },
 
     // ## ZAPIER
     {

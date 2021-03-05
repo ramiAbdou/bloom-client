@@ -1,6 +1,5 @@
 import React from 'react';
 
-import useMutation from '@hooks/useMutation';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
@@ -11,13 +10,12 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { IIntegrations, IQuestion } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
-import { UpdateQuestionArgs } from '../Database.types';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
+import useUpdateQuestion from './useUpdateQuestion';
 
 const MemberDatabase: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -47,12 +45,7 @@ const MemberDatabase: React.FC = () => {
     return [...questions];
   });
 
-  const [updateQuestion] = useMutation<IQuestion, UpdateQuestionArgs>({
-    fields: ['id', 'title'],
-    operation: 'updateQuestion',
-    schema: Schema.QUESTION,
-    types: { questionId: { required: true }, title: { required: true } }
-  });
+  const updateQuestion = useUpdateQuestion();
 
   const onRenameColumn: OnRenameColumn = async ({ column, updateColumn }) => {
     const { title, id } = column;

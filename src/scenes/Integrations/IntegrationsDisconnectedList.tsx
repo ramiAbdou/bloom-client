@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import { IIntegrations, IMemberPlan } from '@store/Db/entities';
+import { IIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -12,13 +12,6 @@ import IntegrationCard from './IntegrationsCard';
 // components to process and render.
 const IntegrationsCardList: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
-
-  const hasPaidMembership = useStoreState(({ db }) => {
-    return db.community.plans?.some((planId: string) => {
-      const type: IMemberPlan = db.byMemberPlanId[planId];
-      return !type?.isFree;
-    });
-  });
 
   const {
     isMailchimpAuthenticated,
@@ -30,7 +23,6 @@ const IntegrationsCardList: React.FC = () => {
   ) as IIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
-    hasPaidMembership,
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId,
