@@ -73,10 +73,10 @@ const ProfileSocialMediaValue: React.FC<ProfileSocialMediaValueProps> = ({
 
   return (
     <Row className={css} spacing="xs">
-      {isFacebook && <IoLogoFacebook />}
-      {isInstagram && <IoLogoInstagram />}
       {isLinkedIn && <IoLogoLinkedin />}
       {isTwitter && <IoLogoTwitter />}
+      {isFacebook && <IoLogoFacebook />}
+      {isInstagram && <IoLogoInstagram />}
       <p>{url}</p>
     </Row>
   );
@@ -110,10 +110,10 @@ const ProfileSocialCard: React.FC = () => {
       />
 
       <div>
-        <ProfileSocialMediaValue brand="CLUBHOUSE" url={clubhouseUrl} />
-        <ProfileSocialMediaValue brand="TWITTER" url={twitterUrl} />
         <ProfileSocialMediaValue brand="LINKED_IN" url={linkedInUrl} />
+        <ProfileSocialMediaValue brand="TWITTER" url={twitterUrl} />
         <ProfileSocialMediaValue brand="FACEBOOK" url={facebookUrl} />
+        <ProfileSocialMediaValue brand="CLUBHOUSE" url={clubhouseUrl} />
         <ProfileSocialMediaValue brand="INSTAGRAM" url={instagramUrl} />
       </div>
 

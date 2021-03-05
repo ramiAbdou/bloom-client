@@ -18,6 +18,8 @@ const PaymentAnalyticsTotalCollectedCard: React.FC = () => {
       }, 0);
   });
 
+  console.log(totalCollected);
+
   return (
     <GrayCard
       label="Total Revenue"

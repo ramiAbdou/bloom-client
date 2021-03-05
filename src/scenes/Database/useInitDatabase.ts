@@ -1,11 +1,12 @@
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import { IMember, IMemberSocials } from '@store/Db/entities';
+import { IEventAttendee, IMember, IMemberSocials } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 
 const useInitDatabase = () => {
   const result1: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: [
+      'bio',
       'email',
       'id',
       'isDuesActive',
@@ -40,7 +41,16 @@ const useInitDatabase = () => {
     schema: [Schema.MEMBER_SOCIALS]
   });
 
-  return { ...result1, loading: result1.loading || result2.loading };
+  const result3 = useQuery<IEventAttendee[]>({
+    fields: ['id', { member: ['id'] }],
+    operation: 'getPastEventAttendees',
+    schema: [Schema.EVENT_ATTENDEE]
+  });
+
+  return {
+    ...result1,
+    loading: result1.loading || result2.loading || result3.loading
+  };
 };
 
 export default useInitDatabase;

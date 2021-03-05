@@ -52,7 +52,8 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
           'options',
           'required',
           'title',
-          'type'
+          'type',
+          { community: ['id'] }
         ]
       }
     ],

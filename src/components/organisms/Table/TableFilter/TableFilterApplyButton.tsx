@@ -16,8 +16,8 @@ const processFilter = ({
   row,
   value
 }: ProcessFilterArgs) => {
-  const rowValue = row[columnId]?.toLowerCase();
-  value = value?.toLowerCase();
+  const rowValue: any = row[columnId]?.toString()?.toLowerCase();
+  value = value?.toString()?.toLowerCase();
 
   if (operator === 'includes') return rowValue?.includes(value);
   if (operator === 'is') return rowValue === value;

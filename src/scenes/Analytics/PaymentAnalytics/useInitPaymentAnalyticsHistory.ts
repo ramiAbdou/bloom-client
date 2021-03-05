@@ -14,9 +14,11 @@ const useInitPaymentAnalyticsHistory = () => {
       { member: ['email', 'id', 'isDuesActive', 'firstName', 'lastName'] },
       { plan: ['id'] }
     ],
-    operation: 'getPayments',
+    operation: 'getAllPayments',
     schema: [Schema.PAYMENT]
   });
+
+  console.log(result);
 
   return result;
 };

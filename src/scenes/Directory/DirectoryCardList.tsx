@@ -6,7 +6,6 @@ import {
   IMember,
   IMemberValue,
   IQuestion,
-  IUser,
   MemberStatus
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -21,7 +20,6 @@ const DirectoryCardList: React.FC = () => {
     return db.community.members
       ?.map((memberId: string) => {
         const member: IMember = db.byMemberId[memberId];
-        const user: IUser = db.byUserId[member?.user];
 
         const values: IMemberValue[] = member.values
           ?.map((valueId: string) => db.byValuesId[valueId])
@@ -30,12 +28,10 @@ const DirectoryCardList: React.FC = () => {
             return !question?.locked;
           });
 
-        return { ...member, ...user, memberId, userId: user?.id, values };
+        return { ...member, memberId, values };
       })
       ?.filter((member) => member?.status === MemberStatus.ACCEPTED)
-      ?.filter((member) => !!member?.userId)
-      ?.filter((member) => !member?.deletedAt)
-      ?.sort((a, b) => sortObjects(a, b, 'createdAt'));
+      ?.sort((a, b) => sortObjects(a, b, 'joinedAt'));
   }, deepequal);
 
   return (
@@ -44,12 +40,14 @@ const DirectoryCardList: React.FC = () => {
       items={members}
       options={{
         keys: [
-          (item) => `${item.firstName} ${item.lastName}`,
           'firstName',
           'lastName',
           'email',
           'bio',
-          (item) => item.values.map(({ value }) => value.toString())
+          (item) => `${item.firstName} ${item.lastName}`,
+          (item) => {
+            return item.values.map(({ value }) => value?.toString());
+          }
         ]
       }}
       prepareForFilter={prepareMemberForFilter}
