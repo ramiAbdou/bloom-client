@@ -77,7 +77,6 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   ];
 
   const options: TableOptions = {
-    alignEndRight: true,
     fixFirstColumn: false,
     isSortable: false,
     onRowClick: ({ memberId }: TableRow) => {

@@ -1,4 +1,10 @@
 import useQuery from '@hooks/useQuery';
+import {
+  IEvent,
+  IEventAttendee,
+  IEventGuest,
+  IEventWatch
+} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 
 /**
@@ -6,25 +12,25 @@ import { Schema } from '@store/Db/schema';
  * past attendees, past guest and past event watches.
  */
 const useInitEventAnalytics = () => {
-  const { loading: loading1 } = useQuery({
+  const { loading: loading1 } = useQuery<IEvent[]>({
     fields: ['endTime', 'id', 'startTime', 'title', { community: ['id'] }],
     operation: 'getPastEvents',
     schema: [Schema.EVENT]
   });
 
-  const { loading: loading2 } = useQuery({
+  const { loading: loading2 } = useQuery<IEventAttendee[]>({
     fields: [
       'createdAt',
       'id',
       { event: ['id'] },
-      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'firstName', 'lastName'] }
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
     operation: 'getPastEventAttendees',
     schema: [Schema.EVENT_ATTENDEE]
   });
 
-  const { loading: loading3 } = useQuery({
+  const { loading: loading3 } = useQuery<IEventGuest[]>({
     fields: [
       'createdAt',
       'id',
@@ -36,7 +42,7 @@ const useInitEventAnalytics = () => {
     schema: [Schema.EVENT_GUEST]
   });
 
-  const { loading: loading4 } = useQuery({
+  const { loading: loading4 } = useQuery<IEventWatch[]>({
     fields: [
       'createdAt',
       'id',

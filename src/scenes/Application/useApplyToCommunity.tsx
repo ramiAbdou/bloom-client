@@ -35,7 +35,7 @@ const useApplyToCommunity = (): OnFormSubmit => {
 
     const email = storyItems[emailId]?.value;
     const { paymentMethodId } = storyItems.CREDIT_OR_DEBIT_CARD?.value ?? {};
-    const typeName = storyItems.MEMBERSHIP_TYPE?.value;
+    const typeName = storyItems.MEMBER_PLAN?.value;
     const memberPlanId = types.find((type) => type.name === typeName)?.id;
 
     const data = Object.values(storyItems)

@@ -45,7 +45,7 @@ const useQuestionData = (): Pick<
 
       let value;
 
-      if (category === QuestionCategory.MEMBERSHIP_TYPE) value = type?.name;
+      if (category === QuestionCategory.MEMBER_PLAN) value = type?.name;
       else if (category === QuestionCategory.DUES_STATUS) {
         value = member.isDuesActive ? 'Active' : 'Inactive';
       } else {

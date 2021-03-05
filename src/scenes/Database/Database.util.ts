@@ -58,7 +58,7 @@ const getMemberValue = (args: GetMemberValueArgs) => {
   if (category === QuestionCategory.LAST_NAME) return lastName;
   if (category === QuestionCategory.PROFILE_PICTURE) return pictureUrl;
 
-  if (category === QuestionCategory.MEMBERSHIP_TYPE) {
+  if (category === QuestionCategory.MEMBER_PLAN) {
     return db.byMemberPlanId[plan]?.name;
   }
 

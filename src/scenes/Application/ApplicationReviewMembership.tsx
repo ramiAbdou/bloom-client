@@ -15,7 +15,7 @@ import { takeFirst } from '@util/util';
 
 const ApplicationReviewMembeship: React.FC = () => {
   const selectedTypeName: string = StoryStore.useStoreState(({ items }) => {
-    return items.MEMBERSHIP_TYPE?.value;
+    return items.MEMBER_PLAN?.value;
   });
 
   const {
