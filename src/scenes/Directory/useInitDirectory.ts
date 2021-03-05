@@ -14,7 +14,7 @@ const useInitDirectory = (): QueryResult<IMember[]> => {
       'role',
       'status',
       { community: ['id'] },
-      { type: ['id'] },
+      { plan: ['id'] },
       { user: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],

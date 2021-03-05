@@ -18,7 +18,7 @@ const Applicants: React.FC = () => {
       'role',
       'status',
       { community: ['id'] },
-      { type: ['id'] },
+      { plan: ['id'] },
       { user: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],

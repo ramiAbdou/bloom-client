@@ -42,7 +42,7 @@ const useInitUser = (): boolean => {
       'status',
       { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] },
       { community: ['id'] },
-      { type: ['id'] },
+      { plan: ['id'] },
       { user: ['id'] }
     ],
     operation: 'getMember',

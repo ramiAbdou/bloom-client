@@ -11,7 +11,7 @@ const useInitMemberPayments = (): QueryResult<IMemberPayment[]> => {
       'id',
       'stripeInvoiceUrl',
       { member: ['id'] },
-      { type: ['id'] }
+      { plan: ['id'] }
     ],
     operation: 'getMemberPayments',
     schema: [Schema.MEMBER_PAYMENT]

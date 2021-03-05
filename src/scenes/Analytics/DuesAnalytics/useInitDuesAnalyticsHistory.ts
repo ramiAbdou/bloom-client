@@ -21,7 +21,7 @@ const useInitDuesAnalyticsHistory = () => {
           { user: ['id'] }
         ]
       },
-      { type: ['id'] }
+      { plan: ['id'] }
     ],
     operation: 'getPayments',
     schema: [Schema.MEMBER_PAYMENT]

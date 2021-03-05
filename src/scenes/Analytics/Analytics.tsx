@@ -47,7 +47,7 @@ const Analytics: React.FC = () => {
       'isDuesActive',
       'status',
       { community: ['id'] },
-      { type: ['id'] },
+      { plan: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getDatabase',

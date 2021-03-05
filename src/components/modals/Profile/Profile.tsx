@@ -4,17 +4,17 @@ import Show from '@containers/Show';
 import useManualQuery from '@hooks/useManualQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
-import IdStore from '@store/Id.store';
 
 const Profile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const [getMember, { data }] = useManualQuery<IMember>({
-    fields: ['id', 'bio', 'joinedAt', { type: ['id'] }, { user: ['id'] }],
+    fields: ['id', 'bio', 'joinedAt', { plan: ['id'] }, { user: ['id'] }],
     operation: 'getMember',
     schema: Schema.MEMBER,
     types: { memberId: { required: false } },

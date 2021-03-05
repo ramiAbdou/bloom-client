@@ -24,7 +24,7 @@ const useCreateSubscription = (): OnFormSubmit => {
       'createdAt',
       'id',
       { member: ['id', 'isDuesActive', 'stripeSubscriptionId'] },
-      { type: ['id'] }
+      { plan: ['id'] }
     ],
     operation: 'createSubscription',
     schema: Schema.MEMBER_PAYMENT,
