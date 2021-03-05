@@ -4,16 +4,16 @@ export type PaymentModalType =
   | 'UPDATE_PAYMENT_METHOD';
 
 export interface CreateLifetimePaymentArgs {
-  memberTypeId: string;
+  memberPlanId: string;
 }
 
 export interface CreateSubscriptionArgs {
-  memberTypeId: string;
+  memberPlanId: string;
   prorationDate?: number;
 }
 
 export interface GetChangePreviewArgs {
-  memberTypeId: string;
+  memberPlanId: string;
 }
 
 export interface GetChangePreviewResult {

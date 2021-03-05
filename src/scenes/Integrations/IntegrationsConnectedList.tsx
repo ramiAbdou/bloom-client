@@ -4,7 +4,7 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import { IIntegrations, IMemberType } from '@store/Db/entities';
+import { IIntegrations, IMemberPlan } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -16,8 +16,8 @@ const IntegrationsConnectedList: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
 
   const hasPaidMembership = useStoreState(({ db }) => {
-    return db.community.types?.some((typeId: string) => {
-      const type: IMemberType = db.byTypeId[typeId];
+    return db.community.plans?.some((planId: string) => {
+      const type: IMemberPlan = db.byMemberPlanId[planId];
       return !type?.isFree;
     });
   });

@@ -61,7 +61,7 @@ const useInitCommunity = (): boolean => {
       { community: ['id'] }
     ],
     operation: 'getTypes',
-    schema: [Schema.MEMBER_TYPE]
+    schema: [Schema.MEMBER_PLAN]
   });
 
   useEffect(() => {

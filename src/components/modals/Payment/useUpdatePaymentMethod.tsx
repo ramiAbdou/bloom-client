@@ -48,7 +48,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
       return;
     }
 
-    // Create the actual subscription. Pass the MemberType ID to know what
+    // Create the actual subscription. Pass the MemberPlan ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod
     // ID. That will be attached to the customer ID associated with the member.
     const { error: updateError } = await updatePaymentMethod({

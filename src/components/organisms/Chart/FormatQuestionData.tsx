@@ -4,7 +4,7 @@ import sw from 'stopword';
 
 import {
   IMember,
-  IMemberType,
+  IMemberPlan,
   IMemberValue,
   IQuestion
 } from '@store/Db/entities';
@@ -41,7 +41,7 @@ const useQuestionData = (): Pick<
 
     members.forEach((memberId: string) => {
       const member: IMember = db.byMemberId[memberId];
-      const type: IMemberType = db.byTypeId[member.type];
+      const type: IMemberPlan = db.byMemberPlanId[member.plan];
 
       let value;
 

@@ -6,10 +6,10 @@ import Show from '@containers/Show';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { IMember } from '@store/Db/entities';
+import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ProfileSocialContainer from './ProfileSocial';
 import useInitProfilePersonal from './useInitProfilePersonal';
-import IdStore from '@store/Id.store';
 
 const ProfilePersonalPicture: React.FC = () => {
   const memberId = IdStore.useStoreState((store) => store.id);
@@ -45,7 +45,7 @@ const ProfilePersonalTags: React.FC = () => {
 
   const type: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    return db.byTypeId[member.type]?.name;
+    return db.byMemberPlanId[member.plan]?.name;
   });
 
   return (

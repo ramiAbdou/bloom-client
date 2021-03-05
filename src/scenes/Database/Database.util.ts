@@ -24,7 +24,7 @@ interface GetMemberValueArgs
       | 'lastName'
       | 'joinedAt'
       | 'pictureUrl'
-      | 'type'
+      | 'plan'
       | 'values'
     >,
     Pick<IUser, 'email'> {
@@ -46,7 +46,7 @@ const getMemberValue = (args: GetMemberValueArgs) => {
     lastName,
     pictureUrl,
     questionId,
-    type,
+    plan,
     values
   } = args;
 
@@ -59,7 +59,7 @@ const getMemberValue = (args: GetMemberValueArgs) => {
   if (category === QuestionCategory.PROFILE_PICTURE) return pictureUrl;
 
   if (category === QuestionCategory.MEMBERSHIP_TYPE) {
-    return db.byTypeId[type]?.name;
+    return db.byMemberPlanId[plan]?.name;
   }
 
   if (category === QuestionCategory.DUES_STATUS) {
@@ -77,7 +77,7 @@ const getMemberValue = (args: GetMemberValueArgs) => {
 };
 
 export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
-  if (!db.community.types?.length || !db.community.questions?.length) return [];
+  if (!db.community.plans?.length || !db.community.questions?.length) return [];
 
   const sortQuestionId: string = db.community?.questions?.find(
     (questionId: string) => {

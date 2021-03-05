@@ -6,7 +6,7 @@ import PaymentStore from './Payment.store';
 import { CreateLifetimePaymentArgs } from './Payment.types';
 
 const useCreateLifetimePayment = () => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
   const pushToMembership = usePush('membership');
 
   const [createLifetimePayment] = useMutation<any, CreateLifetimePaymentArgs>({
@@ -20,11 +20,11 @@ const useCreateLifetimePayment = () => {
     ],
     operation: 'createLifetimePayment',
     schema: Schema.MEMBER_PAYMENT,
-    types: { memberTypeId: { required: true } }
+    types: { memberPlanId: { required: true } }
   });
 
   const onSubmit = async ({ goForward, setError }: OnFormSubmitArgs) => {
-    const { error } = await createLifetimePayment({ memberTypeId: typeId });
+    const { error } = await createLifetimePayment({ memberPlanId: planId });
 
     if (error) {
       setError(error);
@@ -35,7 +35,7 @@ const useCreateLifetimePayment = () => {
     pushToMembership();
   };
 
-  return typeId ? onSubmit : null;
+  return planId ? onSubmit : null;
 };
 
 export default useCreateLifetimePayment;

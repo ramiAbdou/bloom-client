@@ -6,7 +6,7 @@ import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import {
   ICommunityApplication,
-  IMemberType,
+  IMemberPlan,
   IQuestion
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -61,7 +61,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     variables: { urlName }
   });
 
-  const { loading: loading3 } = useQuery<IMemberType[]>({
+  const { loading: loading3 } = useQuery<IMemberPlan[]>({
     fields: [
       'amount',
       'id',
@@ -71,7 +71,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       { community: ['id'] }
     ],
     operation: 'getTypes',
-    schema: [Schema.MEMBER_TYPE],
+    schema: [Schema.MEMBER_PLAN],
     types: { urlName: { required: false } },
     variables: { urlName }
   });

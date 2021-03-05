@@ -45,7 +45,7 @@ const Community = new schema.Entity(
         [!!parent.memberId, { members: [parent.id] }],
         [!!parent.questionId, { questions: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
-        [!!parent.typeId, { types: [parent.id] }],
+        [!!parent.planId, { types: [parent.id] }],
         {}
       ]);
 
@@ -188,12 +188,12 @@ const MemberSocials = new schema.Entity(
   }
 );
 
-const MemberType = new schema.Entity(
-  'types',
+const MemberPlan = new schema.Entity(
+  'plans',
   {},
   {
     processStrategy: (value) => {
-      return { ...value, typeId: value.id };
+      return { ...value, planId: value.id };
     }
   }
 );
@@ -240,7 +240,7 @@ Community.define({
   owner: Member,
   payments: [MemberPayment],
   questions: [Question],
-  types: [MemberType]
+  types: [MemberPlan]
 });
 
 CommunityApplication.define({ community: Community });
@@ -261,8 +261,8 @@ Member.define({
   community: Community,
   guests: [EventGuest],
   payments: [MemberPayment],
+  plan: MemberPlan,
   socials: MemberSocials,
-  type: MemberType,
   user: User,
   values: [MemberValue],
   watches: [EventWatch]
@@ -271,11 +271,11 @@ Member.define({
 MemberPayment.define({
   community: Community,
   member: Member,
-  type: MemberType
+  plan: MemberPlan
 });
 
 MemberSocials.define({ member: Member });
-MemberType.define({ community: Community });
+MemberPlan.define({ community: Community });
 MemberValue.define({ member: Member, question: Question });
 Question.define({ community: Community, values: [MemberValue] });
 User.define({ members: [Member] });
@@ -293,8 +293,8 @@ export const Schema = {
   EVENT_WATCH: EventWatch,
   MEMBER: Member,
   MEMBER_PAYMENT: MemberPayment,
+  MEMBER_PLAN: MemberPlan,
   MEMBER_SOCIALS: MemberSocials,
-  MEMBER_TYPE: MemberType,
   MEMBER_VALUE: MemberValue,
   QUESTION: Question,
   USER: User

@@ -30,13 +30,13 @@ const dbActiveStore: Pick<
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
     const { byId: byIntegrationsId } = entities.integrations;
-    const { byId: byTypeId } = entities.types;
+    const { byId: byMemberPlanId } = entities.memberPlans;
 
     const result: ICommunity = byId[activeId];
     const integrations: IIntegrations = byIntegrationsId[result?.integrations];
 
-    const hasPaidMembership: boolean = result?.types?.some(
-      (typeId: string) => !byTypeId[typeId]?.isFree
+    const hasPaidMembership: boolean = result?.plans?.some(
+      (planId: string) => !byMemberPlanId[planId]?.isFree
     );
 
     if (!result) return null;

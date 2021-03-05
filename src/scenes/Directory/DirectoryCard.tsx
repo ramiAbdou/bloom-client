@@ -7,7 +7,7 @@ import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import {
   IMember,
-  IMemberType,
+  IMemberPlan,
   IMemberValue,
   RecurrenceType
 } from '@store/Db/entities';
@@ -58,7 +58,7 @@ const DirectoryCardContent: React.FC = () => {
 
   const isLifetime: boolean = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    const type: IMemberType = db.byTypeId[member?.type];
+    const type: IMemberPlan = db.byMemberPlanId[member?.plan];
     return type?.recurrence === RecurrenceType.LIFETIME;
   });
 

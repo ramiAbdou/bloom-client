@@ -2,7 +2,7 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
-import { IMemberType } from '@store/Db/entities';
+import { IMemberPlan } from '@store/Db/entities';
 
 const useApplyToCommunity = (): OnFormSubmit => {
   const [applyToCommunity] = useMutation<any, ApplyForMembershipArgs>({
@@ -11,7 +11,7 @@ const useApplyToCommunity = (): OnFormSubmit => {
     types: {
       data: { type: '[MemberValueInput!]!' },
       email: { required: true },
-      memberTypeId: { required: false },
+      memberPlanId: { required: false },
       paymentMethodId: { required: false },
       urlName: { required: true }
     }
@@ -25,8 +25,8 @@ const useApplyToCommunity = (): OnFormSubmit => {
   }: OnFormSubmitArgs) => {
     const urlName: string = db.community?.urlName;
 
-    const types: IMemberType[] = db.community?.types?.map((typeId: string) => {
-      return db.byTypeId[typeId];
+    const types: IMemberPlan[] = db.community?.plans?.map((planId: string) => {
+      return db.byMemberPlanId[planId];
     });
 
     const emailId = db.community?.questions?.find((questionId: string) => {
@@ -36,7 +36,7 @@ const useApplyToCommunity = (): OnFormSubmit => {
     const email = storyItems[emailId]?.value;
     const { paymentMethodId } = storyItems.CREDIT_OR_DEBIT_CARD?.value ?? {};
     const typeName = storyItems.MEMBERSHIP_TYPE?.value;
-    const memberTypeId = types.find((type) => type.name === typeName)?.id;
+    const memberPlanId = types.find((type) => type.name === typeName)?.id;
 
     const data = Object.values(storyItems)
       .filter(({ questionId }) => !!questionId)
@@ -49,7 +49,7 @@ const useApplyToCommunity = (): OnFormSubmit => {
     const result = await applyToCommunity({
       data,
       email,
-      memberTypeId,
+      memberPlanId,
       paymentMethodId,
       urlName
     });

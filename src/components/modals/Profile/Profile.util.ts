@@ -9,7 +9,7 @@ import {
   IEventWatch,
   IMember,
   IMemberPayment,
-  IMemberType
+  IMemberPlan
 } from '@store/Db/entities';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
@@ -57,7 +57,7 @@ export const getMemberHistory = ({
   const paymentEvents: MemberHistoryData[] =
     member.payments?.map((paymentId: string) => {
       const payment: IMemberPayment = db.byPaymentId[paymentId];
-      const type: IMemberType = db.byTypeId[payment?.type];
+      const type: IMemberPlan = db.byMemberPlanId[payment?.plan];
 
       return {
         date: payment.createdAt,

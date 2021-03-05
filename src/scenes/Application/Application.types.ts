@@ -1,7 +1,7 @@
 export interface ApplyForMembershipArgs {
   data: { questionId: string; value: any }[];
   email: string;
-  memberTypeId?: string;
+  memberPlanId?: string;
   paymentMethodId?: string;
   urlName: string;
 }

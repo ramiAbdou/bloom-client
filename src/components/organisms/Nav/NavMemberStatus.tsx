@@ -2,9 +2,9 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import StatusTag from '@atoms/Tag/StatusTag';
-import { ModalType } from '@util/constants';
 import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 
 const NavMemberStatus: React.FC = () => {
   const canCollectDues = useStoreState(
@@ -15,7 +15,7 @@ const NavMemberStatus: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const currentTypeId: string = useStoreState(({ db }) => {
-    return db.member?.type;
+    return db.member?.plan;
   });
 
   const onClick = () => {

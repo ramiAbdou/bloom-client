@@ -28,7 +28,7 @@ const ProfilePersonalTagList: React.FC = () => {
   const role = useStoreState(({ db }) => db.member.role);
 
   const type: string = useStoreState(({ db }) => {
-    return db.byTypeId[db.member.type]?.name;
+    return db.byMemberPlanId[db.member.plan]?.name;
   });
 
   return (

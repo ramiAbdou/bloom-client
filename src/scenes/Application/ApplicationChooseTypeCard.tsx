@@ -1,15 +1,15 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import { IdProps } from '@util/constants';
 import Show from '@containers/Show';
-import { IMemberType, RecurrenceType } from '@store/Db/entities';
+import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { IdProps } from '@util/constants';
 import { takeFirst } from '@util/util';
 
-const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: typeId }) => {
-  const { amount, recurrence }: IMemberType = useStoreState(({ db }) => {
-    return db.byTypeId[typeId];
+const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: planId }) => {
+  const { amount, recurrence }: IMemberPlan = useStoreState(({ db }) => {
+    return db.byMemberPlanId[planId];
   }, deepequal);
 
   // Formats the amount with FREE if the amount is 0.

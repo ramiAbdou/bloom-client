@@ -28,8 +28,8 @@ export interface ICommunity extends BaseEntity {
   questions: Identifier[];
   name: string;
   owner?: Identifier;
+  plans: Identifier[];
   primaryColor: string;
-  types: Identifier[];
   urlName: string;
 }
 
@@ -141,8 +141,8 @@ export interface IMember extends BaseEntity {
   paymentMethod: IPaymentMethod;
   payments: Identifier[];
   pictureUrl: string;
+  plan: Identifier;
   role?: MemberRole;
-  type: Identifier;
   socials: Identifier;
   status: MemberStatus;
   stripeSubscriptionId?: string;
@@ -151,22 +151,31 @@ export interface IMember extends BaseEntity {
   watches: Identifier[];
 }
 
-// ## MEMBER VALUE
-
-export interface IMemberValue extends BaseEntity {
-  member: Identifier;
-  question: Identifier;
-  value: string | string[];
-}
-
 // ## MEMBER PAYMENT
 
 export interface IMemberPayment extends BaseEntity {
   amount: number;
   stripeInvoiceUrl: string;
   member: Identifier;
-  type: Identifier;
+  plan: Identifier;
 }
+
+// ## MEMBER PLAN
+
+export enum RecurrenceType {
+  LIFETIME = 'Lifetime',
+  MONTHLY = 'Monthly',
+  YEARLY = 'Yearly'
+}
+
+export interface IMemberPlan extends BaseEntity {
+  amount: number;
+  isFree: boolean;
+  name: string;
+  recurrence: RecurrenceType;
+}
+
+// MEMBER SOCIALS
 
 export interface IMemberSocials extends BaseEntity {
   clubhouseUrl: string;
@@ -176,19 +185,12 @@ export interface IMemberSocials extends BaseEntity {
   twitterUrl: string;
 }
 
-// ## MEMBER TYPE
+// ## MEMBER VALUE
 
-export enum RecurrenceType {
-  LIFETIME = 'Lifetime',
-  MONTHLY = 'Monthly',
-  YEARLY = 'Yearly'
-}
-
-export interface IMemberType extends BaseEntity {
-  amount: number;
-  isFree: boolean;
-  name: string;
-  recurrence: RecurrenceType;
+export interface IMemberValue extends BaseEntity {
+  member: Identifier;
+  question: Identifier;
+  value: string | string[];
 }
 
 // ## QUESTION
@@ -223,10 +225,10 @@ export interface IEntities {
   guests: EntityRecord<IEventGuest>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
+  memberPlans: EntityRecord<IMemberPlan>;
   payments: EntityRecord<IMemberPayment>;
   questions: EntityRecord<IQuestion>;
   socials: EntityRecord<IMemberSocials>;
-  types: EntityRecord<IMemberType>;
   users: EntityRecord<IUser>;
   values: EntityRecord<IMemberValue>;
   watches: EntityRecord<IEventWatch>;
@@ -240,11 +242,11 @@ export const initialEntities: IEntities = {
   events: { activeId: null, byId: {} },
   guests: { byId: {} },
   integrations: { byId: {} },
+  memberPlans: { byId: {} },
   members: { activeId: null, byId: {} },
   payments: { byId: {} },
   questions: { byId: {} },
   socials: { byId: {} },
-  types: { byId: {} },
   users: { activeId: null, byId: {} },
   values: { byId: {} },
   watches: { byId: {} }

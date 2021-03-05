@@ -40,7 +40,9 @@ const MembershipPaymentMethod: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   const isLifetime: boolean = useStoreState(({ db }) => {
-    return db.byTypeId[db.member?.type]?.recurrence === RecurrenceType.LIFETIME;
+    return (
+      db.byMemberPlanId[db.member?.plan]?.recurrence === RecurrenceType.LIFETIME
+    );
   });
 
   return (

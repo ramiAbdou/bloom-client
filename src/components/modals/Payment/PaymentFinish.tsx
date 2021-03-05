@@ -7,7 +7,7 @@ import useManualQuery from '@hooks/useManualQuery';
 import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
 import {
-  IMemberType,
+  IMemberPlan,
   IPaymentMethod,
   RecurrenceType
 } from '@store/Db/entities';
@@ -20,10 +20,10 @@ import useCreateLifetimePayment from './useCreateLifetimePayment';
 import useCreateSubscription from './useCreateSubscription';
 
 const PaymentFinishForm: React.FC = () => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
-  const { amount, isFree, name, recurrence }: IMemberType = useStoreState(
-    ({ db }) => db.byTypeId[typeId],
+  const { amount, isFree, name, recurrence }: IMemberPlan = useStoreState(
+    ({ db }) => db.byMemberPlanId[planId],
     deepequal
   );
 
@@ -60,7 +60,7 @@ const PaymentFinishForm: React.FC = () => {
 };
 
 const PaymentFinish: React.FC = () => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
   const modalType = PaymentStore.useStoreState((store) => store.type);
 
   const setChangeData = PaymentStore.useStoreActions(
@@ -73,21 +73,21 @@ const PaymentFinish: React.FC = () => {
   >({
     fields: ['amount', 'prorationDate'],
     operation: 'getChangePreview',
-    types: { memberTypeId: { required: true } }
+    types: { memberPlanId: { required: true } }
   });
 
   useEffect(() => {
     if (modalType !== 'CHANGE_MEMBERSHIP') return;
 
     (async () => {
-      const { data } = await getChangePreview({ memberTypeId: typeId });
+      const { data } = await getChangePreview({ memberPlanId: planId });
 
       setChangeData({
         changeAmount: data?.amount,
         changeProrationDate: data?.prorationDate
       });
     })();
-  }, [modalType, typeId]);
+  }, [modalType, planId]);
 
   const title: string =
     modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan';

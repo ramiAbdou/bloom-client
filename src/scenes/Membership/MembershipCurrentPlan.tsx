@@ -4,7 +4,7 @@ import React from 'react';
 import StatusTag from '@atoms/Tag/StatusTag';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
-import { IMemberType, RecurrenceType } from '@store/Db/entities';
+import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { takeFirst } from '@util/util';
 import MembershipCurrentPlanActions from './MembershipCurrentPlanActions';
@@ -24,8 +24,8 @@ const MembershipCurrentPlanHeader: React.FC = () => {
 };
 
 const MembershipCurrentPlanDescription: React.FC = () => {
-  const currentType: IMemberType = useStoreState(({ db }) => {
-    return db.byTypeId[db.member.type];
+  const currentType: IMemberPlan = useStoreState(({ db }) => {
+    return db.byMemberPlanId[db.member.plan];
   }, deepequal);
 
   if (!currentType) return null;

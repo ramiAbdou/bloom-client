@@ -11,16 +11,16 @@ const PaymentFinishButton: React.FC = () => {
   const changeAmount = PaymentStore.useStoreState((s) => s.changeAmount);
 
   const amount: number = useStoreState(({ db }) => {
-    return changeAmount ?? db.byTypeId[selectedTypeId]?.amount;
+    return changeAmount ?? db.byMemberPlanId[selectedTypeId]?.amount;
   });
 
   const isLessThanCurrentType = useStoreState(({ db }) => {
-    const selectedAmount: number = db.byTypeId[selectedTypeId]?.amount;
-    const currentAmount: number = db.byTypeId[db.member.type]?.amount;
+    const selectedAmount: number = db.byMemberPlanId[selectedTypeId]?.amount;
+    const currentAmount: number = db.byMemberPlanId[db.member.plan]?.amount;
 
     return (
       db.member.isDuesActive &&
-      !db.byTypeId[selectedTypeId]?.isFree &&
+      !db.byMemberPlanId[selectedTypeId]?.isFree &&
       selectedAmount < currentAmount
     );
   });

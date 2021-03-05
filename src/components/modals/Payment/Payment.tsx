@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@util/constants';
 import useQuery from '@hooks/useQuery';
 import Story from '@organisms/Story/Story';
 import { IIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 import PaymentCardPage from './PaymentCard';
@@ -16,15 +16,15 @@ import PaymentStripeProvider from './PaymentStripeProvider';
 const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   selectedTypeId
 }) => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
   const setSelectedTypeId = PaymentStore.useStoreActions(
     (store) => store.setSelectedTypeId
   );
 
   useEffect(() => {
-    if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
-  }, [typeId, selectedTypeId]);
+    if (selectedTypeId !== planId) setSelectedTypeId(selectedTypeId);
+  }, [planId, selectedTypeId]);
 
   return (
     <Story>
@@ -45,7 +45,7 @@ const PaymentModal: React.FC = () => {
   ) as string;
 
   const currentTypeId: string = useStoreState(({ db }) => {
-    return db.member?.type;
+    return db.member?.plan;
   });
 
   const isAdmin = useStoreState(({ db }) => !!db.member.role);

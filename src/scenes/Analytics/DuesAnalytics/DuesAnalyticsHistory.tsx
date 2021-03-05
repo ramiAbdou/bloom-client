@@ -45,7 +45,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
     const result: DuesAnalyticsHistoryTableData[] = db.community.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
       ?.map((payment: IMemberPayment) => {
-        const { amount, createdAt, type }: IMemberPayment = payment;
+        const { amount, createdAt, plan }: IMemberPayment = payment;
         const member: IMember = db.byMemberId[payment?.member];
         const user: IUser = db.byUserId[member?.user];
         const { email }: IUser = user;
@@ -56,7 +56,7 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
           fullName: `${member?.firstName} ${member?.lastName}`,
           id: member.id,
           paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
-          type: db.byTypeId[type].name
+          type: db.byMemberPlanId[plan].name
         };
       }, []);
 

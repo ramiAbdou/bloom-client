@@ -6,7 +6,7 @@ import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import StoryStore from '@organisms/Story/Story.store';
 import {
-  IMemberType,
+  IMemberPlan,
   IPaymentMethod,
   RecurrenceType
 } from '@store/Db/entities';
@@ -27,17 +27,17 @@ const ApplicationReviewMembeship: React.FC = () => {
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const selectedType: IMemberType = db.community?.types
-      ?.map((typeId: string) => db.byTypeId[typeId])
-      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+    const selectedType: IMemberPlan = db.community?.plans
+      ?.map((planId: string) => db.byMemberPlanId[planId])
+      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
 
     return !!selectedType?.amount;
   });
 
   const description: string = useStoreState(({ db }) => {
-    const selectedType: IMemberType = db.community?.types
-      ?.map((typeId: string) => db.byTypeId[typeId])
-      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+    const selectedType: IMemberPlan = db.community?.plans
+      ?.map((planId: string) => db.byMemberPlanId[planId])
+      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
 
     if (!selectedType) return null;
 

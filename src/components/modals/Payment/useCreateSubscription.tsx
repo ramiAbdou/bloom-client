@@ -11,7 +11,7 @@ const useCreateSubscription = (): OnFormSubmit => {
     (store) => store.changeProrationDate
   );
 
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((store) => store.selectedTypeId);
 
   const pushToMembership = usePush('membership');
 
@@ -28,15 +28,15 @@ const useCreateSubscription = (): OnFormSubmit => {
     ],
     operation: 'createSubscription',
     schema: Schema.MEMBER_PAYMENT,
-    types: { memberTypeId: { required: true } }
+    types: { memberPlanId: { required: true } }
   });
 
   const onSubmit = async ({ goForward, setError }: OnFormSubmitArgs) => {
-    // Create the actual subscription. Pass the MemberType ID to know what
+    // Create the actual subscription. Pass the MemberPlan ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod
     // ID. That will be attached to the customer ID associated with the member.
-    const { data, error } = await createSubscription({
-      memberTypeId: typeId,
+    const { error } = await createSubscription({
+      memberPlanId: planId,
       prorationDate
     });
 
