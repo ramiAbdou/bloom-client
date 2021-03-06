@@ -23,7 +23,6 @@ export enum QueryEvent {
   GET_MEMBERS = 'getMembers',
   GET_OWNER = 'getOwner',
   GET_PAST_EVENTS = 'getPastEvents',
-  GET_PAST_EVENT_ATTENDEES = 'getPastEventAttendees',
   GET_PAST_EVENT_GUESTS = 'getPastEventGuests',
   GET_PAST_EVENT_WATCHES = 'getPastEventWatches',
   GET_PAYMENTS = 'getPayments',

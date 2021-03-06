@@ -42,7 +42,7 @@ const useInitDatabase = () => {
 
   const result3 = useQuery<IEventAttendee[]>({
     fields: ['id', { member: ['id'] }],
-    operation: QueryEvent.GET_PAST_EVENT_ATTENDEES,
+    operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 

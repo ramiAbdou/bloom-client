@@ -27,7 +27,7 @@ const useInitEventAnalytics = () => {
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_PAST_EVENT_ATTENDEES,
+    operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 

@@ -26,7 +26,7 @@ const useInitPastEvents = () => {
       { member: ['id', 'firstName', 'lastName'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_PAST_EVENT_ATTENDEES,
+    operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 

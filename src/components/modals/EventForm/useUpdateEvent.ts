@@ -5,7 +5,7 @@ import { Schema } from '@store/Db/schema';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (eventId: string): OnFormSubmit => {
-  const [updateEvent] = useMutation<IEvent, Partial<IEvent>>({
+  const [updateEvent] = useMutation<IEvent>({
     fields: [
       'description',
       'id',
@@ -19,7 +19,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
     schema: Schema.EVENT,
     types: {
       description: { required: false },
-      id: { required: true },
+      eventId: { required: true },
       imageUrl: { required: false },
       privacy: { required: false },
       summary: { required: false },
@@ -52,9 +52,9 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
       }
     }
 
-    const args: Partial<IEvent> = {
+    const args = {
       description: items.EVENT_DESCRIPTION?.value,
-      id: eventId,
+      eventId,
       imageUrl,
       privacy: items.PRIVACY?.value,
       summary: items.EVENT_SUMMARY?.value,
