@@ -40,7 +40,7 @@ const ProfilePersonalTagList: React.FC = () => {
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const email = useStoreState(({ db }) => db.user.email);
+  const email = useStoreState(({ db }) => db.member.email);
   return <MailTo email={email} />;
 };
 

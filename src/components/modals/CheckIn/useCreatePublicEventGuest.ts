@@ -17,9 +17,7 @@ const useCreatePublicEventGuest = () => {
       'id',
       'lastName',
       { event: ['id'] },
-      {
-        member: ['id', 'pictureUrl', { user: ['id'] }]
-      }
+      { member: ['id', 'pictureUrl'] }
     ],
     operation: 'createEventGuest',
     schema: Schema.EVENT_GUEST,

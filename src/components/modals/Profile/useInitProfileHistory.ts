@@ -44,16 +44,7 @@ const useInitProfileHistory = (): boolean => {
       'createdAt',
       'id',
       { event: ['id', 'title'] },
-      {
-        member: [
-          'id',
-          'email',
-          'firstName',
-          'lastName',
-          'pictureUrl',
-          { user: ['id'] }
-        ]
-      }
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
     ],
     operation: 'getEventWatches',
     schema: [Schema.EVENT_WATCH],

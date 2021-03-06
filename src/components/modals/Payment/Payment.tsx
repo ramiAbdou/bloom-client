@@ -56,7 +56,7 @@ const PaymentModal: React.FC = () => {
     schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
-  // Get the user and see if they've paid their dues or not.
+  // Get the member and see if they've paid their dues or not.
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 

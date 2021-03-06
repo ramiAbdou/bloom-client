@@ -55,7 +55,7 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 };
 
 const IndividualEventGuestListContent: React.FC = () => {
-  const users: IndividualEventGuestProps[] = useStoreState(({ db }) => {
+  const guests: IndividualEventGuestProps[] = useStoreState(({ db }) => {
     return db.event?.guests
       ?.map((guestId: string) => db.byGuestId[guestId])
       ?.sort((a: IEventGuest, b) => sortObjects(a, b, 'createdAt'))
@@ -66,11 +66,11 @@ const IndividualEventGuestListContent: React.FC = () => {
 
   return (
     <>
-      {!users?.length && <p>No guests have RSVP'd yet.</p>}
+      {!guests?.length && <p>No guests have RSVP'd yet.</p>}
 
       <List
         className="s-events-card-ctr"
-        items={users}
+        items={guests}
         render={IndividualEventGuest}
       />
     </>

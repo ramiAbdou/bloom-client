@@ -20,8 +20,7 @@ const Profile: React.FC = () => {
       'email',
       'joinedAt',
       { plan: ['id'] },
-      { socials: ['id'] },
-      { user: ['id'] }
+      { socials: ['id'] }
     ],
     operation: 'getMember',
     schema: Schema.MEMBER,
@@ -36,7 +35,7 @@ const Profile: React.FC = () => {
   return (
     <Show show={!!data}>
       <IdStore.Provider
-        // @ts-ignore b/c user is populated.
+        // @ts-ignore b/c member is populated.
         runtimeModel={{ id: memberId }}
       >
         <ProfilePersonal />

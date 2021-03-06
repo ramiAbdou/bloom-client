@@ -19,7 +19,6 @@ const Applicants: React.FC = () => {
       'status',
       { community: ['id'] },
       { plan: ['id'] },
-      { user: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: 'getApplicants',

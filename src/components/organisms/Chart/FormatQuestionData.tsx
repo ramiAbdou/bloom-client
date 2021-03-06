@@ -121,7 +121,7 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
   // Controls the type of the chart, based on the type of the question.
   // - If the question is LONG_TEXT or SHORT_TEXT, the chart should be BAR.
   // - If the question is MULTIPLE_*, the chart should be PIE.
-  // - If the users wants a time-series, that would be manually specified in
+  // - If the members wants a time-series, that would be manually specified in
   // the props when the chart was created, not here.
   useEffect(() => {
     if (

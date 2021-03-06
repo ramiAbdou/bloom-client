@@ -31,7 +31,6 @@ const ApplicantsModalItems: React.FC = () => {
 
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    const user: IUser = db.byUserId[member?.user];
 
     const data: IMemberValue[] = member.values?.map(
       (valueId: string) => db.byValuesId[valueId]
@@ -55,7 +54,7 @@ const ApplicantsModalItems: React.FC = () => {
           type: question?.type,
           value:
             question.category === QuestionCategory.EMAIL
-              ? user.email
+              ? member.email
               : element?.value
         };
       });

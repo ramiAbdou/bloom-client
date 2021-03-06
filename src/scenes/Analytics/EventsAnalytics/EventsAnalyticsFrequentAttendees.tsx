@@ -50,7 +50,6 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
           fullName: `${firstName} ${lastName}`,
           id: email,
           memberId: member.id ?? supporter.id,
-          userId: member?.user,
           value: previousValue ? previousValue?.value + 1 : 1
         }
       };

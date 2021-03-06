@@ -35,16 +35,7 @@ const useInitIndividualEventTable = (): boolean => {
       'createdAt',
       'id',
       { event: ['id', 'title'] },
-      {
-        member: [
-          'email',
-          'id',
-          'firstName',
-          'lastName',
-          'pictureUrl',
-          { user: ['id'] }
-        ]
-      }
+      { member: ['email', 'id', 'firstName', 'lastName', 'pictureUrl'] }
     ],
     operation: 'getEventWatches',
     schema: [Schema.EVENT_WATCH],

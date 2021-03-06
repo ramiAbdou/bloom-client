@@ -10,8 +10,7 @@ import {
   IEventGuest,
   IEventWatch,
   IMember,
-  ISupporter,
-  IUser
+  ISupporter
 } from '@store/Db/entities';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -43,7 +42,6 @@ const getIndividualEventTableAttendees = (
       fullName: `${firstName} ${lastName}`,
       id: attendee?.member,
       joinedAt: attendee.createdAt,
-      userId: member?.user,
       watched: false
     };
 
@@ -77,7 +75,6 @@ const getIndividualEventTableGuests = (
       fullName: `${firstName} ${lastName}`,
       id: guest?.member,
       rsvpdAt: guest.createdAt,
-      userId: member?.user,
       watched: false
     };
 
@@ -98,16 +95,14 @@ const getIndividualEventTableViewers = (
   return db.event.watches.reduce((acc, watchId: string) => {
     const watch: IEventWatch = db.byWatchId[watchId];
     const member: IMember = db.byMemberId[watch?.member];
-    const user: IUser = db.byUserId[member?.user];
+    const { email } = member ?? {};
 
-    const { email } = user ?? {};
     if (acc[email]) return acc;
 
     const data: IndividualEventTableRowProps = {
       email,
       fullName: `${member.firstName} ${member.lastName}`,
       id: member?.id,
-      userId: member?.user,
       watched: true
     };
 

@@ -79,7 +79,7 @@ const useInitIndividualEvent = (): boolean => {
     }
   }, [data1]);
 
-  // If the user isn't a member of the community, and it's a member's only
+  // If not a member of the community, and it's a member's only
   // event or there was an issue logging in, show a locked modal.
   useEffect(() => {
     if (!isMember && (isMembersOnly || hasCookieError)) {
@@ -91,7 +91,7 @@ const useInitIndividualEvent = (): boolean => {
     }
   }, [hasCookieError, isMember, isMembersOnly]);
 
-  // If the user isn't a member of the community, then we need to load the
+  // If not a member of the community, then we need to load the
   // community's name and primary color as well.
   useEffect(() => {
     (async () => {
