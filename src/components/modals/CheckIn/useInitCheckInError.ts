@@ -6,7 +6,6 @@ import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { CookieType } from '@util/constants';
 import { ErrorContext } from '@util/errors';
 
 /**
@@ -20,7 +19,14 @@ const useInitCheckInError = (): boolean => {
   const isMember = useStoreState(({ db }) => db.isMember);
 
   const [getOwner, { loading }] = useManualQuery<ICommunity>({
-    fields: ['id', 'email', 'firstName', 'lastName', { community: ['id'] }],
+    fields: [
+      'id',
+      'email',
+      'firstName',
+      'lastName',
+      'role',
+      { community: ['id'] }
+    ],
     operation: 'getOwner',
     schema: Schema.MEMBER,
     types: { communityId: { required: true } }
@@ -31,7 +37,7 @@ const useInitCheckInError = (): boolean => {
   useEffect(() => {
     (async () => {
       if (hasCookieError && communityId && !isMember) {
-        const a = await getOwner({ communityId });
+        await getOwner({ communityId });
       }
     })();
   }, [communityId, hasCookieError, isMember]);

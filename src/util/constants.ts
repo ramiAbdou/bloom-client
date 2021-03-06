@@ -34,10 +34,6 @@ export interface BaseProps extends ClassNameProps, ShowProps, StyleProps {}
  * SYSTEM TYPES - Includes modal, panel and more.
  */
 
-export enum CookieType {
-  LOGIN_ERROR = 'LOGIN_ERROR'
-}
-
 export enum ModalType {
   ADD_ADMINS = 'ADD_ADMINS',
   ADD_MEMBERS = 'ADD_MEMBERS',
@@ -87,7 +83,6 @@ export type RouteType =
 export enum QuestionCategory {
   BIO = 'BIO',
   CLUBHOUSE_URL = 'CLUBHOUSE_URL',
-  CREDIT_OR_DEBIT_CARD = 'CREDIT_OR_DEBIT_CARD',
   DUES_STATUS = 'DUES_STATUS',
   EMAIL = 'EMAIL',
   EVENTS_ATTENDED = 'EVENTS_ATTENDED',
@@ -107,7 +102,6 @@ export enum QuestionType {
   COVER_IMAGE = 'COVER_IMAGE',
   DATE = 'DATE',
   IMAGE = 'IMAGE',
-  LARGE_TITLE = 'LARGE_TITLE',
   LONG_TEXT = 'LONG_TEXT',
   MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
   MULTIPLE_SELECT = 'MULTIPLE_SELECT',

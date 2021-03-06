@@ -20,7 +20,14 @@ const useSendLoginLink = (): OnFormSubmit => {
   );
 
   const [getOwner] = useManualQuery<IMember>({
-    fields: ['id', 'email', 'firstName', 'lastName', { community: ['id'] }],
+    fields: [
+      'id',
+      'email',
+      'firstName',
+      'lastName',
+      'role',
+      { community: ['id'] }
+    ],
     operation: 'getOwner',
     schema: Schema.MEMBER,
     types: { communityId: { required: true } }

@@ -11,9 +11,9 @@ import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { IMember } from '@store/Db/entities';
+import { IMember, MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { APP, CookieType, QuestionCategory, ShowProps } from '@util/constants';
+import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/errors';
 import { getCheckInErrorMessage } from './CheckIn.util';
 import useInitCheckInError from './useInitCheckInError';
@@ -49,7 +49,9 @@ const CheckInGoogleButton: React.FC = () => {
 
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
   const owner: IMember = useStoreState(({ db }) => {
-    return db.byMemberId[db.community?.owner];
+    return db.community?.members
+      ?.map((memberId: string) => db.byMemberId[memberId])
+      ?.find((member: IMember) => member.role === MemberRole.OWNER);
   });
 
   // We store the error code in a cookie.

@@ -8,7 +8,7 @@ import useLoader from '@organisms/Loader/useLoader';
 import { EventPrivacy, ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { CookieType, ModalType } from '@util/constants';
+import { ModalType } from '@util/constants';
 import { ErrorContext } from '@util/errors';
 import { GetEventArgs } from '../Events.types';
 
