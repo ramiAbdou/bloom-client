@@ -18,8 +18,6 @@ const useInitPaymentAnalyticsHistory = () => {
     schema: [Schema.PAYMENT]
   });
 
-  console.log(result);
-
   return result;
 };
 

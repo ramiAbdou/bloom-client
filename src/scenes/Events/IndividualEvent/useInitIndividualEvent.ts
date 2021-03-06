@@ -9,6 +9,7 @@ import { EventPrivacy, ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { CookieType, ModalType } from '@util/constants';
+import { ErrorContext } from '@util/errors';
 import { GetEventArgs } from '../Events.types';
 
 const useInitIndividualEvent = (): boolean => {
@@ -66,7 +67,7 @@ const useInitIndividualEvent = (): boolean => {
     types: { communityId: { required: false } }
   });
 
-  const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
+  const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 
   useEffect(() => {
     if (data1) {

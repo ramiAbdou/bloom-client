@@ -26,6 +26,7 @@ const useInitUser = (): boolean => {
       'joinedAt',
       'pictureUrl',
       'id',
+      'isDuesActive',
       { community: ['id', 'logoUrl', 'primaryColor', 'urlName'] },
       { user: ['id'] }
     ],
@@ -37,7 +38,6 @@ const useInitUser = (): boolean => {
     fields: [
       'bio',
       'id',
-      'isDuesActive',
       'role',
       'status',
       { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] },

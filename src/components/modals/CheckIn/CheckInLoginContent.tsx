@@ -14,7 +14,7 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IMember } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { APP, CookieType, QuestionCategory, ShowProps } from '@util/constants';
-import { CheckInError } from './CheckIn.types';
+import { ErrorContext, ErrorType } from '@util/errors';
 import { getCheckInErrorMessage } from './CheckIn.util';
 import useInitCheckInError from './useInitCheckInError';
 import useSendLoginLink from './useSendLoginLink';
@@ -53,7 +53,7 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
   });
 
   // We store the error code in a cookie.
-  const error = Cookies.get(CookieType.LOGIN_ERROR) as CheckInError;
+  const error = Cookies.get(ErrorContext.LOGIN_ERROR) as ErrorType;
   const message = getCheckInErrorMessage({ error, owner });
 
   const loading = useInitCheckInError();
@@ -63,7 +63,7 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
   // re-renders, the message still appears.
   useEffect(() => {
     const timeout: NodeJS.Timeout = setTimeout(() => {
-      if (error) Cookies.remove(CookieType.LOGIN_ERROR);
+      if (error) Cookies.remove(ErrorContext.LOGIN_ERROR);
     }, 5000);
 
     return () => clearTimeout(timeout);

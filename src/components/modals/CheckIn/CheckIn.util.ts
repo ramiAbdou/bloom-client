@@ -1,8 +1,8 @@
 import { IMember } from '@store/Db/entities';
-import { CheckInError } from './CheckIn.types';
+import { ErrorType } from '@util/errors';
 
 interface GetCheckInErrorMessageArgs {
-  error: CheckInError;
+  error: ErrorType;
   owner?: IMember;
 }
 
@@ -13,24 +13,22 @@ export const getCheckInErrorMessage = ({
   error,
   owner
 }: GetCheckInErrorMessageArgs) => {
-  if (error === 'APPLICATION_REJECTED') {
+  if (error === ErrorType.APPLICATION_REJECTED) {
     return 'You must be accepted into a commmunity before logging in.';
   }
 
-  if (error === 'APPLICATION_PENDING') {
+  if (error === ErrorType.APPLICATION_PENDING) {
     return 'You have pending member applications. Once they are accepted, you will be able to log in.';
   }
 
-  if (error === 'NOT_MEMBER') {
+  if (error === ErrorType.NOT_MEMBER) {
     return `This email is not registered as a member of this community. If you
       believe this is an error, please reach out to the owner,
-      ${owner?.firstName} ${owner?.lastName} (${null}).
+      ${owner?.firstName} ${owner?.lastName} (${owner?.email}).
     `;
   }
 
-  // owner?.email ??
-
-  if (error === 'USER_NOT_FOUND') {
+  if (error === ErrorType.USER_NOT_FOUND) {
     return 'You must apply and be accepted into a commmunity before logging in.';
   }
 

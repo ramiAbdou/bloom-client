@@ -1,7 +1,6 @@
 import day from 'dayjs';
 import React from 'react';
 
-import HeaderTag from '@atoms/Tag/HeaderTag';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
@@ -11,7 +10,7 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IIntegrations, IQuestion } from '@store/Db/entities';
+import { IQuestion } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -22,21 +21,22 @@ import useUpdateQuestion from './useUpdateQuestion';
 const MemberDatabase: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
+  const canCollectDues: boolean = useStoreState(
+    ({ db }) => db.community.canCollectDues
+  );
+
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: TableRow[] = useStoreState(({ db }) => getMemberTableRow({ db }));
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
-    const integrationsId: string = db.community?.integrations;
-    const integrations: IIntegrations = db.byIntegrationsId[integrationsId];
-
     const filteredColumns: TableColumn[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter((question: IQuestion) => {
         if (
           question.category === QuestionCategory.DUES_STATUS &&
-          !integrations.stripeAccountId
+          !canCollectDues
         ) {
           return false;
         }
