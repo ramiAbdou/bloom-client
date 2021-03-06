@@ -2,15 +2,17 @@ import Fields from 'gql-query-builder/build/Fields';
 import VariableOptions from 'gql-query-builder/build/VariableOptions';
 import { Schema } from 'normalizr';
 
+import { QueryEvent } from '@util/events';
+
 export interface UseQueryArgs<T, S> {
   fields?: Fields;
-  operation: string;
+  operation: QueryEvent;
   schema?: Schema;
   types?: VariableOptions;
   variables?: S;
 }
 
-export interface QueryResult<T = any, S = any> {
+export interface QueryResult<T = any> {
   data: T;
   error: string;
   loading: boolean;

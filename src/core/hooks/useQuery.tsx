@@ -12,7 +12,7 @@ function useQuery<T = any, S = any>({
   schema,
   types,
   variables
-}: UseQueryArgs<T, S>): QueryResult<T, S> {
+}: UseQueryArgs<T, S>): QueryResult<T> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const { data, error, loading } = useGQLQuery(
@@ -20,7 +20,7 @@ function useQuery<T = any, S = any>({
     variables ? { variables } : {}
   );
 
-  const result: QueryResult<T, S> = {
+  const result: QueryResult<T> = {
     data: data ? (data[operation] as T) : (null as T),
     error: getGraphQLError(error),
     loading

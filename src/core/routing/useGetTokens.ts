@@ -5,6 +5,7 @@ import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
+import { QueryEvent } from '@util/events';
 
 interface GetTokensResult {
   communityId: string;
@@ -25,7 +26,7 @@ const useGetTokens = (checkUrlName = false): boolean => {
 
   const [getTokens, result] = useManualQuery<GetTokensResult>({
     fields: ['communityId', 'memberId', 'userId'],
-    operation: 'getTokens',
+    operation: QueryEvent.GET_TOKENS,
     types: { urlName: { required: false } }
   });
 

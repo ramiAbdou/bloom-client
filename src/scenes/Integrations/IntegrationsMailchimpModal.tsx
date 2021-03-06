@@ -7,6 +7,7 @@ import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import { Schema } from '@store/Db/schema';
+import { QueryEvent } from '@util/events';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
@@ -25,7 +26,7 @@ const MailchimpModalActionContainer: React.FC = () => {
 const MailchimpModalContent: React.FC = () => {
   const { data, loading } = useQuery({
     fields: ['id', { mailchimpLists: ['id', 'name'] }],
-    operation: 'getIntegrations',
+    operation: QueryEvent.GET_INTEGRATIONS,
     schema: Schema.INTEGRATIONS
   });
 

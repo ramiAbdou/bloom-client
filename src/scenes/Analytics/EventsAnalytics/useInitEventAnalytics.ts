@@ -50,7 +50,7 @@ const useInitEventAnalytics = () => {
       { event: ['id'] },
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: 'getPastEventWatches',
+    operation: QueryEvent.GET_PAST_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH]
   });
 

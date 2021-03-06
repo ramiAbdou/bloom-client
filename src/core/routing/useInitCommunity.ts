@@ -32,7 +32,7 @@ const useInitCommunity = (): boolean => {
       'stripeAccountId',
       { community: ['id'] }
     ],
-    operation: 'getIntegrations',
+    operation: QueryEvent.GET_INTEGRATIONS,
     schema: Schema.INTEGRATIONS
   });
 

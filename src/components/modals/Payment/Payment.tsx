@@ -6,6 +6,7 @@ import { IIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
+import { QueryEvent } from '@util/events';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 import PaymentCardPage from './PaymentCard';
@@ -52,7 +53,7 @@ const PaymentModal: React.FC = () => {
 
   const { loading } = useQuery<IIntegrations>({
     fields: ['id', 'stripeAccountId', { community: ['id'] }],
-    operation: 'getIntegrations',
+    operation: QueryEvent.GET_INTEGRATIONS,
     schema: Schema.INTEGRATIONS
   });
 

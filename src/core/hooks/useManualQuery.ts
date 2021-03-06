@@ -5,7 +5,7 @@ import { useEffect, useMemo } from 'react';
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { UseMutationResult } from './useMutation.types';
-import { UseQueryArgs, QueryResult } from './useQuery.types';
+import { QueryResult, UseQueryArgs } from './useQuery.types';
 
 function useManualQuery<T = any, S = any>({
   fields,
@@ -33,7 +33,7 @@ function useManualQuery<T = any, S = any>({
     };
   };
 
-  const result: QueryResult<T, S> = {
+  const result: QueryResult<T> = {
     data: data ? (data[operation] as T) : (null as T),
     error: getGraphQLError(error),
     loading
