@@ -126,7 +126,7 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
   useEffect(() => {
     if (
       ([QuestionType.LONG_TEXT, QuestionType.SHORT_TEXT].includes(type) ||
-        (type === 'MULTIPLE_CHOICE' && data.length >= 8)) &&
+        (type === QuestionType.MULTIPLE_CHOICE && data.length >= 8)) &&
       currentType !== ChartType.BAR
     ) {
       setType(ChartType.BAR);
@@ -134,7 +134,9 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
     }
 
     if (
-      ['MULTIPLE_SELECT', 'MULTIPLE_CHOICE'].includes(type) &&
+      [QuestionType.MULTIPLE_SELECT, QuestionType.MULTIPLE_CHOICE].includes(
+        type
+      ) &&
       currentType !== ChartType.PIE
     ) {
       setType(ChartType.PIE);

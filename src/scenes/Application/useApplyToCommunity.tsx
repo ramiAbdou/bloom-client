@@ -2,7 +2,8 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
-import { IMemberPlan } from '@store/Db/entities';
+import { IMemberPlan, IQuestion } from '@store/Db/entities';
+import { QuestionCategory } from '@util/constants';
 
 const useApplyToCommunity = (): OnFormSubmit => {
   const [applyToCommunity] = useMutation<any, ApplyForMembershipArgs>({
@@ -30,7 +31,8 @@ const useApplyToCommunity = (): OnFormSubmit => {
     });
 
     const emailId = db.community?.questions?.find((questionId: string) => {
-      return db.byQuestionId[questionId]?.category === 'EMAIL';
+      const question: IQuestion = db.byQuestionId[questionId];
+      return question?.category === QuestionCategory.EMAIL;
     });
 
     const email = storyItems[emailId]?.value;

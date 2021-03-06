@@ -4,6 +4,7 @@ import { IoCopy } from 'react-icons/io5';
 import TableStore from '@organisms/Table/Table.store';
 import { TableRow } from '@organisms/Table/Table.types';
 import { useStoreActions } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
 import DatabaseAction from '../DatabaseAction';
 
 /**
@@ -16,7 +17,9 @@ const MemberDatabaseCopyButton: React.FC = () => {
   const emails = TableStore.useStoreState(
     ({ columns, rows, selectedRowIds }) => {
       // Get the column that has EMAIL as the category.
-      const columnId = columns.find(({ category }) => category === 'EMAIL')?.id;
+      const columnId = columns.find(({ category }) => {
+        return category === QuestionCategory.EMAIL;
+      })?.id;
 
       return selectedRowIds.map((rowId: string) => {
         const selectedRow =

@@ -4,6 +4,7 @@ import {
   OnFormSubmit,
   OnFormSubmitArgs
 } from '@organisms/Form/Form.types';
+import { QuestionCategory, QuestionType } from '@util/constants';
 import { takeFirst } from '@util/util';
 import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';
@@ -31,10 +32,13 @@ const useInviteMembers = (): OnFormSubmit => {
       const { category, metadata: inputId, type, value } = data;
 
       const formattedValue = takeFirst([
-        [category === 'FIRST_NAME', { firstName: value }],
-        [category === 'LAST_NAME', { lastName: value }],
-        [category === 'EMAIL', { email: value }],
-        [type === 'MULTIPLE_SELECT', { isAdmin: admin || !!value.length }]
+        [category === QuestionCategory.FIRST_NAME, { firstName: value }],
+        [category === QuestionCategory.LAST_NAME, { lastName: value }],
+        [category === QuestionCategory.EMAIL, { email: value }],
+        [
+          type === QuestionType.MULTIPLE_SELECT,
+          { isAdmin: admin || !!value.length }
+        ]
       ]);
 
       return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };

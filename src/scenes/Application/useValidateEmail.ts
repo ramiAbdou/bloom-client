@@ -1,5 +1,7 @@
 import useManualQuery from '@hooks/useManualQuery';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import { IQuestion } from '@store/Db/entities';
+import { QuestionCategory } from '@util/constants';
 import { IsEmailTakenArgs } from './Application.types';
 
 const useValidateEmail = () => {
@@ -16,7 +18,8 @@ const useValidateEmail = () => {
   }: OnFormSubmitArgs) => {
     const emailId: string = db.community.questions.find(
       (questionId: string) => {
-        return db.byQuestionId[questionId]?.category === 'EMAIL';
+        const question: IQuestion = db.byQuestionId[questionId];
+        return question?.category === QuestionCategory.EMAIL;
       }
     );
 

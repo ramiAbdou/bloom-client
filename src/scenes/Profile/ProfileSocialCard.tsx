@@ -11,7 +11,7 @@ import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
+import { ModalType, SocialBrand } from '@util/constants';
 import { cx } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
 import useInitProfileSocial from './useInitProfileSocial';
@@ -48,7 +48,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 interface ProfileSocialMediaValueProps {
-  brand: 'CLUBHOUSE' | 'FACEBOOK' | 'INSTAGRAM' | 'LINKED_IN' | 'TWITTER';
+  brand: SocialBrand;
   url: string;
 }
 
@@ -58,11 +58,11 @@ const ProfileSocialMediaValue: React.FC<ProfileSocialMediaValueProps> = ({
 }) => {
   if (!url) return null;
 
-  const isClubhouse = brand === 'CLUBHOUSE';
-  const isFacebook = brand === 'FACEBOOK';
-  const isInstagram = brand === 'INSTAGRAM';
-  const isLinkedIn = brand === 'LINKED_IN';
-  const isTwitter = brand === 'TWITTER';
+  const isClubhouse = brand === SocialBrand.CLUBHOUSE;
+  const isFacebook = brand === SocialBrand.FACEBOOK;
+  const isInstagram = brand === SocialBrand.INSTAGRAM;
+  const isLinkedIn = brand === SocialBrand.LINKED_IN;
+  const isTwitter = brand === SocialBrand.TWITTER;
 
   const css = cx('s-profile-card--social-logo', {
     's-profile-card--social-logo--clubhouse': isClubhouse,
@@ -110,11 +110,27 @@ const ProfileSocialCard: React.FC = () => {
       />
 
       <div>
-        <ProfileSocialMediaValue brand="LINKED_IN" url={linkedInUrl} />
-        <ProfileSocialMediaValue brand="TWITTER" url={twitterUrl} />
-        <ProfileSocialMediaValue brand="FACEBOOK" url={facebookUrl} />
-        <ProfileSocialMediaValue brand="CLUBHOUSE" url={clubhouseUrl} />
-        <ProfileSocialMediaValue brand="INSTAGRAM" url={instagramUrl} />
+        <ProfileSocialMediaValue
+          brand={SocialBrand.LINKED_IN}
+          url={linkedInUrl}
+        />
+
+        <ProfileSocialMediaValue brand={SocialBrand.TWITTER} url={twitterUrl} />
+
+        <ProfileSocialMediaValue
+          brand={SocialBrand.FACEBOOK}
+          url={facebookUrl}
+        />
+
+        <ProfileSocialMediaValue
+          brand={SocialBrand.CLUBHOUSE}
+          url={clubhouseUrl}
+        />
+
+        <ProfileSocialMediaValue
+          brand={SocialBrand.INSTAGRAM}
+          url={instagramUrl}
+        />
       </div>
 
       <ProfileSocialOnboardingContainer />
