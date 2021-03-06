@@ -6,6 +6,7 @@ import { QueryResult } from '@hooks/useQuery.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 import { GetUpcomingPaymentResult } from './Membership.types';
 
 const useInitScheduledPayment = (): QueryResult<GetUpcomingPaymentResult> => {
@@ -15,7 +16,7 @@ const useInitScheduledPayment = (): QueryResult<GetUpcomingPaymentResult> => {
 
   const { loading: loading1 } = useQuery<IMember>({
     fields: ['id', 'stripeSubscriptionId'],
-    operation: 'getMember',
+    operation: QueryEvent.GET_MEMBER,
     schema: Schema.MEMBER
   });
 
@@ -24,7 +25,7 @@ const useInitScheduledPayment = (): QueryResult<GetUpcomingPaymentResult> => {
     { data, loading: loading2 }
   ] = useManualQuery<GetUpcomingPaymentResult>({
     fields: ['amount', 'nextPaymentDate'],
-    operation: 'getUpcomingPayment'
+    operation: QueryEvent.GET_UPCOMING_PAYMENT
   });
 
   useEffect(() => {

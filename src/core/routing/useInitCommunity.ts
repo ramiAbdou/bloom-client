@@ -49,7 +49,7 @@ const useInitCommunity = (): boolean => {
       'type',
       { community: ['id'] }
     ],
-    operation: 'getQuestions',
+    operation: QueryEvent.GET_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
@@ -62,7 +62,7 @@ const useInitCommunity = (): boolean => {
       'recurrence',
       { community: ['id'] }
     ],
-    operation: 'getMemberPlans',
+    operation: QueryEvent.GET_MEMBER_PLANS,
     schema: [Schema.MEMBER_PLAN]
   });
 

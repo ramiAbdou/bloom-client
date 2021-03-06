@@ -9,6 +9,7 @@ import { IMemberValue, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
+import { QueryEvent } from '@util/events';
 import { sortObjects } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
 
@@ -65,7 +66,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 const ProfileMembershipCard: React.FC = () => {
   const { loading } = useQuery<IMemberValue[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: 'getMemberValues',
+    operation: QueryEvent.GET_MEMBER_VALUES,
     schema: [Schema.MEMBER_VALUE]
   });
 

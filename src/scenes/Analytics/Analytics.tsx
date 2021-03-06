@@ -16,6 +16,7 @@ import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
+import { QueryEvent } from '@util/events';
 import EventsAnalytics from './EventsAnalytics/EventsAnalytics';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
 import PaymentAnalytics from './PaymentAnalytics/PaymentAnalytics';
@@ -56,7 +57,7 @@ const Analytics: React.FC = () => {
       { plan: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
-    operation: 'getDatabase',
+    operation: QueryEvent.GET_DATABASE,
     schema: [Schema.MEMBER]
   });
 

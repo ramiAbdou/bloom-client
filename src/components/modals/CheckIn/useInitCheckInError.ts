@@ -7,6 +7,7 @@ import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { ErrorContext } from '@util/errors';
+import { QueryEvent } from '@util/events';
 
 /**
  * If a LOGIN_ERROR exists via cookie, then we need to load the community's
@@ -27,7 +28,7 @@ const useInitCheckInError = (): boolean => {
       'role',
       { community: ['id'] }
     ],
-    operation: 'getOwner',
+    operation: QueryEvent.GET_OWNER,
     schema: Schema.MEMBER,
     types: { communityId: { required: true } }
   });

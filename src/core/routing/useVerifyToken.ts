@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { ModalType, VerifyEvent } from '@util/constants';
-import useManualQuery from '@hooks/useManualQuery';
+import useMutation from '@hooks/useMutation';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType, VerifyEvent } from '@util/constants';
 import { ErrorType } from '@util/errors';
 import { openHref } from '@util/util';
 
@@ -25,7 +25,7 @@ const useVerifyToken = (): boolean => {
   const videoUrl = useStoreState(({ db }) => db.event?.videoUrl);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const [verifyToken, result] = useManualQuery<VerifiedToken>({
+  const [verifyToken, result] = useMutation<VerifiedToken>({
     fields: ['event'],
     operation: 'verifyToken',
     types: { token: { required: true } }

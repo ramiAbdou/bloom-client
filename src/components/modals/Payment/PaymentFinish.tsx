@@ -12,6 +12,7 @@ import {
   RecurrenceType
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 import PaymentStore from './Payment.store';
 import { GetChangePreviewArgs, GetChangePreviewResult } from './Payment.types';
 import { getTypeDescription } from './Payment.util';
@@ -72,7 +73,7 @@ const PaymentFinish: React.FC = () => {
     GetChangePreviewArgs
   >({
     fields: ['amount', 'prorationDate'],
-    operation: 'getChangePreview',
+    operation: QueryEvent.GET_CHANGE_PREVIEW,
     types: { memberPlanId: { required: true } }
   });
 

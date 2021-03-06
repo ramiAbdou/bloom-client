@@ -2,6 +2,7 @@ import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { QueryEvent } from '@util/events';
 
 const useInitDirectory = (): QueryResult<IMember[]> => {
   const result: QueryResult<IMember[]> = useQuery<IMember[]>({
@@ -19,7 +20,7 @@ const useInitDirectory = (): QueryResult<IMember[]> => {
       { plan: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
-    operation: 'getDirectory',
+    operation: QueryEvent.GET_DIRECTORY,
     schema: [Schema.MEMBER]
   });
 

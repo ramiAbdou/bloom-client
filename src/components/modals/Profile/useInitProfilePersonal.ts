@@ -2,6 +2,7 @@ import useQuery from '@hooks/useQuery';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
+import { QueryEvent } from '@util/events';
 
 const useInitProfilePersonal = (): boolean => {
   const memberId = IdStore.useStoreState((store) => store.id);
@@ -16,7 +17,7 @@ const useInitProfilePersonal = (): boolean => {
       'twitterUrl',
       { member: ['id'] }
     ],
-    operation: 'getMemberSocials',
+    operation: QueryEvent.GET_MEMBER_SOCIALS,
     schema: Schema.MEMBER_SOCIALS,
     types: { memberId: { required: false } },
     variables: { memberId }

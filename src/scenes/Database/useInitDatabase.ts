@@ -19,12 +19,10 @@ const useInitDatabase = () => {
       'status',
       { community: ['id'] },
       { plan: ['id'] },
-      {
-        socials: ['id']
-      },
+      { socials: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
-    operation: 'getDatabase',
+    operation: QueryEvent.GET_DATABASE,
     schema: [Schema.MEMBER]
   });
 
@@ -38,7 +36,7 @@ const useInitDatabase = () => {
       'twitterUrl',
       { member: ['id'] }
     ],
-    operation: 'getAllMemberSocials',
+    operation: QueryEvent.GET_ALL_MEMBER_SOCIALS,
     schema: [Schema.MEMBER_SOCIALS]
   });
 

@@ -6,6 +6,7 @@ import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
@@ -22,7 +23,7 @@ const Profile: React.FC = () => {
       { plan: ['id'] },
       { socials: ['id'] }
     ],
-    operation: 'getMember',
+    operation: QueryEvent.GET_MEMBER,
     schema: Schema.MEMBER,
     types: { memberId: { required: false } },
     variables: { memberId }

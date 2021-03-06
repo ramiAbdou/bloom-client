@@ -7,13 +7,14 @@ import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 
 const EventFormNotificationsSection: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
   const { data } = useQuery<IMember[]>({
     fields: ['id', { community: ['id'] }],
-    operation: 'getCommunityMembers',
+    operation: QueryEvent.GET_ALL_MEMBERS,
     schema: [Schema.MEMBER]
   });
 

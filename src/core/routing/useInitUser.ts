@@ -5,6 +5,7 @@ import useLoader from '@organisms/Loader/useLoader';
 import { IMember, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 
 /**
  * Updates the authenticated status of the user by checking the httpOnly
@@ -15,7 +16,7 @@ const useInitUser = (): boolean => {
 
   const [getUser, { loading: loading1 }] = useManualQuery<IUser>({
     fields: ['email', 'id'],
-    operation: 'getUser',
+    operation: QueryEvent.GET_USER,
     schema: Schema.USER
   });
 
@@ -30,7 +31,7 @@ const useInitUser = (): boolean => {
       { community: ['id', 'logoUrl', 'primaryColor', 'urlName'] },
       { user: ['id'] }
     ],
-    operation: 'getMembers',
+    operation: QueryEvent.GET_MEMBERS,
     schema: [Schema.MEMBER]
   });
 
@@ -45,7 +46,7 @@ const useInitUser = (): boolean => {
       { plan: ['id'] },
       { user: ['id'] }
     ],
-    operation: 'getMember',
+    operation: QueryEvent.GET_MEMBER,
     schema: Schema.MEMBER
   });
 

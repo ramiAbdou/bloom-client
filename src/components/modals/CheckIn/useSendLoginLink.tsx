@@ -8,6 +8,7 @@ import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { ErrorType } from '@util/errors';
+import { QueryEvent } from '@util/events';
 import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
@@ -28,7 +29,7 @@ const useSendLoginLink = (): OnFormSubmit => {
       'role',
       { community: ['id'] }
     ],
-    operation: 'getOwner',
+    operation: QueryEvent.GET_OWNER,
     schema: Schema.MEMBER,
     types: { communityId: { required: true } }
   });

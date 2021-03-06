@@ -62,7 +62,7 @@ const useInitProfileHistory = (): boolean => {
       { member: ['id'] },
       { plan: ['id'] }
     ],
-    operation: 'getPayments',
+    operation: QueryEvent.GET_PAYMENTS,
     schema: [Schema.PAYMENT],
     types: { memberId: { required: false } },
     variables: { memberId }
