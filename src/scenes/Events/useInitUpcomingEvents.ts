@@ -1,6 +1,7 @@
 import useQuery from '@hooks/useQuery';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { QueryEvent } from '@util/events';
 
 const useInitUpcomingEvents = () => {
   const { loading: loading1 } = useQuery<IEvent[]>({
@@ -13,7 +14,7 @@ const useInitUpcomingEvents = () => {
       'videoUrl',
       { community: ['id'] }
     ],
-    operation: 'getUpcomingEvents',
+    operation: QueryEvent.GET_UPCOMING_EVENTS,
     schema: [Schema.EVENT]
   });
 
@@ -25,7 +26,7 @@ const useInitUpcomingEvents = () => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: 'getUpcomingEventGuests',
+    operation: QueryEvent.GET_UPCOMING_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });
 

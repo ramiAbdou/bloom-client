@@ -1,45 +1,70 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
-import { IApplication, IMemberPlan, IRankedQuestion } from '@store/Db/entities';
+import {
+  IApplication,
+  ICommunity,
+  IMemberPlan,
+  IRankedQuestion
+} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
+import { QueryEvent } from '@util/events';
+
+interface CommunityIdArgs {
+  communityId: string;
+}
 
 const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   const setActive = useStoreActions(({ db }) => db.setActive);
   const { urlName } = useParams() as UrlNameProps;
 
-  const { data, error, loading: loading1 } = useQuery<
+  const { data, error, loading: loading1 } = useQuery<ICommunity, UrlNameProps>(
+    {
+      fields: [
+        'autoAccept',
+        'id',
+        'logoUrl',
+        'name',
+        'primaryColor',
+        'urlName'
+      ],
+      operation: QueryEvent.GET_COMMUNITY,
+      schema: Schema.COMMUNITY,
+      types: { urlName: { required: false } },
+      variables: { urlName }
+    }
+  );
+
+  const [getApplication, { loading: loading2 }] = useManualQuery<
     IApplication,
-    UrlNameProps
+    CommunityIdArgs
   >({
-    fields: [
-      'description',
-      'id',
-      'title',
-      {
-        community: [
-          'autoAccept',
-          'id',
-          'logoUrl',
-          'name',
-          'primaryColor',
-          'urlName',
-          { integrations: ['stripeAccountId'] }
-        ]
-      }
-    ],
-    operation: 'getApplication',
+    fields: ['description', 'id', 'title', { community: ['id'] }],
+    operation: QueryEvent.GET_APPLICATION,
     schema: Schema.APPLICATION,
-    types: { urlName: { required: true } },
-    variables: { urlName }
+    types: { communityId: { required: true } }
   });
 
-  const { loading: loading2 } = useQuery<IRankedQuestion[], UrlNameProps>({
+  const [getIntegrations, { loading: loading3 }] = useManualQuery<
+    IApplication,
+    CommunityIdArgs
+  >({
+    fields: ['id', 'stripeAccountId', { community: ['id'] }],
+    operation: QueryEvent.GET_INTEGRATIONS,
+    schema: Schema.INTEGRATIONS,
+    types: { communityId: { required: true } }
+  });
+
+  const [getRankedQuestions, { loading: loading4 }] = useManualQuery<
+    IRankedQuestion[],
+    CommunityIdArgs
+  >({
     fields: [
       'id',
       'rank',
@@ -59,11 +84,13 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     ],
     operation: 'getRankedQuestions',
     schema: [Schema.APPLICATION_QUESTION],
-    types: { urlName: { required: false } },
-    variables: { urlName }
+    types: { communityId: { required: false } }
   });
 
-  const { loading: loading3 } = useQuery<IMemberPlan[]>({
+  const [getMemberPlans, { loading: loading5 }] = useManualQuery<
+    IMemberPlan[],
+    CommunityIdArgs
+  >({
     fields: [
       'amount',
       'id',
@@ -74,20 +101,32 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     ],
     operation: 'getMemberPlans',
     schema: [Schema.MEMBER_PLAN],
-    types: { urlName: { required: false } },
-    variables: { urlName }
+    types: { communityId: { required: false } }
   });
 
-  // @ts-ignore b/c community is entire entity, not ID.
-  const communityId = data?.community?.id;
+  const communityId: string = data?.id;
 
   useEffect(() => {
-    if (communityId) setActive({ id: communityId, table: 'communities' });
+    if (!communityId) return;
+
+    setActive({ id: communityId, table: 'communities' });
+
+    (async () => {
+      await Promise.all([
+        getApplication({ communityId }),
+        getIntegrations({ communityId }),
+        getMemberPlans({ communityId }),
+        getRankedQuestions({ communityId })
+      ]);
+    })();
   }, [communityId]);
 
-  useLoader(loading1 || loading2 || loading3);
+  const loading: boolean =
+    loading1 || loading2 || loading3 || loading4 || loading5;
 
-  return { error, loading: loading1 || loading2 || loading3 };
+  useLoader(loading);
+
+  return { error, loading };
 };
 
 export default useInitApplication;

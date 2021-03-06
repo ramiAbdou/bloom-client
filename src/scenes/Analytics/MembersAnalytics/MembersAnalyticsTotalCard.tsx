@@ -2,10 +2,11 @@ import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
 import useQuery from '@hooks/useQuery';
+import { QueryEvent } from '@util/events';
 
 const MembersAnalyticsTotalCard: React.FC = () => {
   const { data, loading } = useQuery<[number, number]>({
-    operation: 'getTotalMembersGrowth'
+    operation: QueryEvent.GET_TOTAL_MEMBERS_GROWTH
   });
 
   return (

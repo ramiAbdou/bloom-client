@@ -6,6 +6,7 @@ import {
   IEventWatch
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { QueryEvent } from '@util/events';
 
 /**
  * Initializes the event analytics page by fetching all of the past events,
@@ -14,7 +15,7 @@ import { Schema } from '@store/Db/schema';
 const useInitEventAnalytics = () => {
   const { loading: loading1 } = useQuery<IEvent[]>({
     fields: ['endTime', 'id', 'startTime', 'title', { community: ['id'] }],
-    operation: 'getPastEvents',
+    operation: QueryEvent.GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
@@ -26,7 +27,7 @@ const useInitEventAnalytics = () => {
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: 'getPastEventAttendees',
+    operation: QueryEvent.GET_PAST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 
@@ -38,7 +39,7 @@ const useInitEventAnalytics = () => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: 'getPastEventGuests',
+    operation: QueryEvent.GET_PAST_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });
 

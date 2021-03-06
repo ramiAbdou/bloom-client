@@ -2,6 +2,7 @@ import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IEventAttendee, IMember, IMemberSocials } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { QueryEvent } from '@util/events';
 
 const useInitDatabase = () => {
   const result1: QueryResult<IMember[]> = useQuery<IMember[]>({
@@ -43,7 +44,7 @@ const useInitDatabase = () => {
 
   const result3 = useQuery<IEventAttendee[]>({
     fields: ['id', { member: ['id'] }],
-    operation: 'getPastEventAttendees',
+    operation: QueryEvent.GET_PAST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 

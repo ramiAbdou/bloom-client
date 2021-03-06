@@ -1,6 +1,7 @@
 import useQuery from '@hooks/useQuery';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { QueryEvent } from '@util/events';
 
 const useInitPastEvents = () => {
   const { loading: loading1 } = useQuery<IEvent[]>({
@@ -13,7 +14,7 @@ const useInitPastEvents = () => {
       'title',
       { community: ['id'] }
     ],
-    operation: 'getPastEvents',
+    operation: QueryEvent.GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
@@ -25,7 +26,7 @@ const useInitPastEvents = () => {
       { member: ['id', 'firstName', 'lastName'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: 'getPastEventAttendees',
+    operation: QueryEvent.GET_PAST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 

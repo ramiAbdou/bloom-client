@@ -4,6 +4,7 @@ import useManualQuery from '@hooks/useManualQuery';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 import { GetEventArgs } from '../Events.types';
 
 const useInitIndividualEventTable = (): boolean => {
@@ -21,7 +22,7 @@ const useInitIndividualEventTable = (): boolean => {
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: 'getEventAttendees',
+    operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     types: { eventId: { required: false } },
     variables: { eventId }
@@ -34,10 +35,10 @@ const useInitIndividualEventTable = (): boolean => {
     fields: [
       'createdAt',
       'id',
-      { event: ['id', 'title'] },
+      { event: ['id'] },
       { member: ['email', 'id', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: 'getEventWatches',
+    operation: QueryEvent.GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     types: { eventId: { required: false } },
     variables: { eventId }

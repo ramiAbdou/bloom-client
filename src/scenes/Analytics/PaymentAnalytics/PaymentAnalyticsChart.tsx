@@ -4,12 +4,13 @@ import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
+import { QueryEvent } from '@util/events';
 import { TimeSeriesData } from '../Analytics.types';
 
 const PaymentAnalyticsChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
-    operation: 'getTotalDuesSeries'
+    operation: QueryEvent.GET_TOTAL_DUES_SERIES
   });
 
   return (

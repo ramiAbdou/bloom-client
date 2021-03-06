@@ -10,7 +10,7 @@ const useMailchimpSubmit = (): OnFormSubmit => {
   const [updateMailchimpListId] = useMutation<IIntegrations>({
     fields: ['id', 'mailchimpListId', 'mailchimpListName'],
     operation: 'updateMailchimpListId',
-    schema: Schema.COMMUNITY_INTEGRATIONS,
+    schema: Schema.INTEGRATIONS,
     types: { mailchimpListId: { required: true } }
   });
 

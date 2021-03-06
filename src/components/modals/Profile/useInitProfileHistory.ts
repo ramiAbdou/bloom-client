@@ -7,6 +7,7 @@ import {
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
+import { QueryEvent } from '@util/events';
 
 const useInitProfileHistory = (): boolean => {
   const memberId = IdStore.useStoreState((store) => store.id);
@@ -19,7 +20,7 @@ const useInitProfileHistory = (): boolean => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: 'getEventAttendees',
+    operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     types: { memberId: { required: false } },
     variables: { memberId }
@@ -33,7 +34,7 @@ const useInitProfileHistory = (): boolean => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: 'getEventGuests',
+    operation: QueryEvent.GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     types: { memberId: { required: false } },
     variables: { memberId }
@@ -46,7 +47,7 @@ const useInitProfileHistory = (): boolean => {
       { event: ['id', 'title'] },
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: 'getEventWatches',
+    operation: QueryEvent.GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     types: { memberId: { required: false } },
     variables: { memberId }

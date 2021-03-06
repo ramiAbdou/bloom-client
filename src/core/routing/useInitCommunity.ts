@@ -4,6 +4,7 @@ import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 
 const useInitCommunity = (): boolean => {
   const communityId = useStoreState(({ db }) => db.community?.id);
@@ -18,7 +19,7 @@ const useInitCommunity = (): boolean => {
       'urlName',
       { highlightedQuestion: ['id'] }
     ],
-    operation: 'getCommunity',
+    operation: QueryEvent.GET_COMMUNITY,
     schema: Schema.COMMUNITY
   });
 
@@ -32,7 +33,7 @@ const useInitCommunity = (): boolean => {
       { community: ['id'] }
     ],
     operation: 'getIntegrations',
-    schema: Schema.COMMUNITY_INTEGRATIONS
+    schema: Schema.INTEGRATIONS
   });
 
   const [getQuestions, { loading: loading3 }] = useManualQuery({

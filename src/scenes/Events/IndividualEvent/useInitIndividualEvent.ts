@@ -10,6 +10,7 @@ import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { ErrorContext } from '@util/errors';
+import { QueryEvent } from '@util/events';
 import { GetEventArgs } from '../Events.types';
 
 const useInitIndividualEvent = (): boolean => {
@@ -40,7 +41,7 @@ const useInitIndividualEvent = (): boolean => {
       'videoUrl',
       { community: ['id'] }
     ],
-    operation: 'getEvent',
+    operation: QueryEvent.GET_EVENT,
     schema: Schema.EVENT,
     types: { eventId: { required: true } },
     variables: { eventId }
@@ -54,7 +55,7 @@ const useInitIndividualEvent = (): boolean => {
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: 'getEventGuests',
+    operation: QueryEvent.GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     types: { eventId: { required: false } },
     variables: { eventId }
@@ -62,7 +63,7 @@ const useInitIndividualEvent = (): boolean => {
 
   const [getCommunity, { loading: loading3 }] = useManualQuery<ICommunity>({
     fields: ['id', 'name', 'primaryColor'],
-    operation: 'getCommunity',
+    operation: QueryEvent.GET_COMMUNITY,
     schema: Schema.COMMUNITY,
     types: { communityId: { required: false } }
   });

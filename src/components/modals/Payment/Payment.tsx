@@ -53,7 +53,7 @@ const PaymentModal: React.FC = () => {
   const { loading } = useQuery<IIntegrations>({
     fields: ['id', 'stripeAccountId', { community: ['id'] }],
     operation: 'getIntegrations',
-    schema: Schema.COMMUNITY_INTEGRATIONS
+    schema: Schema.INTEGRATIONS
   });
 
   // Get the member and see if they've paid their dues or not.

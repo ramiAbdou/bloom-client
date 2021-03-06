@@ -80,14 +80,10 @@ const Community = new schema.Entity(
   }
 );
 
-const CommunityIntegrations = new schema.Entity(
+const Integrations = new schema.Entity(
   'integrations',
   {},
-  {
-    processStrategy: (value) => {
-      return { ...value, integrationsId: value.id };
-    }
-  }
+  { processStrategy: (value) => ({ ...value, integrationsId: value.id }) }
 );
 
 const Event = new schema.Entity(
@@ -255,7 +251,7 @@ Community.define({
   application: Application,
   events: [Event],
   highlightedQuestion: Question,
-  integrations: CommunityIntegrations,
+  integrations: Integrations,
   members: [Member],
   owner: Member,
   payments: [Payment],
@@ -263,8 +259,6 @@ Community.define({
   questions: [Question],
   supporters: [Supporter]
 });
-
-CommunityIntegrations.define({ community: Community });
 
 Event.define({
   attendees: [EventAttendee],
@@ -276,6 +270,7 @@ Event.define({
 EventAttendee.define({ event: Event, member: Member, supporter: Supporter });
 EventGuest.define({ event: Event, member: Member, supporter: Supporter });
 EventWatch.define({ event: Event, member: Member });
+Integrations.define({ community: Community });
 
 Member.define({
   community: Community,
@@ -307,11 +302,11 @@ export const Schema = {
   APPLICATION: Application,
   APPLICATION_QUESTION: RankedQuestion,
   COMMUNITY: Community,
-  COMMUNITY_INTEGRATIONS: CommunityIntegrations,
   EVENT: Event,
   EVENT_ATTENDEE: EventAttendee,
   EVENT_GUEST: EventGuest,
   EVENT_WATCH: EventWatch,
+  INTEGRATIONS: Integrations,
   MEMBER: Member,
   MEMBER_PLAN: MemberPlan,
   MEMBER_SOCIALS: MemberSocials,
