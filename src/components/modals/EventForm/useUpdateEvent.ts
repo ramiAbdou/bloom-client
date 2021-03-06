@@ -2,6 +2,7 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (eventId: string): OnFormSubmit => {
@@ -15,7 +16,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmit => {
       'title',
       'videoUrl'
     ],
-    operation: 'updateEvent',
+    operation: MutationEvent.UPDATE_EVENT,
     schema: Schema.EVENT,
     types: {
       description: { required: false },

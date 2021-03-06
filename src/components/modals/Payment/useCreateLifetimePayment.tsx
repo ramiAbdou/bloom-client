@@ -2,6 +2,7 @@ import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import PaymentStore from './Payment.store';
 import { CreateLifetimePaymentArgs } from './Payment.types';
 
@@ -18,7 +19,7 @@ const useCreateLifetimePayment = () => {
         member: ['id', 'isDuesActive', 'stripeSubscriptionId', { plan: ['id'] }]
       }
     ],
-    operation: 'createLifetimePayment',
+    operation: MutationEvent.CREATE_LIFETIME_PAYMENT,
     schema: Schema.PAYMENT,
     types: { memberPlanId: { required: true } }
   });

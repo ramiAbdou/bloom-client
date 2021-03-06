@@ -5,6 +5,7 @@ import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { MutationEvent } from '@util/events';
 
 const DeleteEventButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
@@ -14,7 +15,7 @@ const DeleteEventButton: React.FC = () => {
 
   const [deleteEvent, { loading }] = useMutation<boolean>({
     fields: ['deletedAt', 'id'],
-    operation: 'deleteEvent',
+    operation: MutationEvent.DELETE_EVENT,
     schema: Schema.EVENT,
     types: { eventId: { required: true } },
     variables: { eventId }

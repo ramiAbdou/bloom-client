@@ -4,13 +4,14 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { uploadImage } from '@util/imageUtil';
 import { UpdateMemberArgs } from './Profile.types';
 
 const useUpdateMember = (): OnFormSubmit => {
   const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
     fields: ['id', 'bio', 'firstName', 'lastName', 'pictureUrl'],
-    operation: 'updateMember',
+    operation: MutationEvent.UPDATE_MEMBER,
     schema: Schema.MEMBER,
     types: {
       bio: { required: false },

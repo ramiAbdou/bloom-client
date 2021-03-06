@@ -8,7 +8,7 @@ import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { ErrorType } from '@util/errors';
-import { QueryEvent } from '@util/events';
+import { MutationEvent, QueryEvent } from '@util/events';
 import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
@@ -35,7 +35,7 @@ const useSendLoginLink = (): OnFormSubmit => {
   });
 
   const [sendLoginLink] = useMutation<boolean, SendLoginLinkArgs>({
-    operation: 'sendLoginLink',
+    operation: MutationEvent.SEND_LOGIN_LINK,
     types: {
       communityId: { required: false },
       email: { required: true },

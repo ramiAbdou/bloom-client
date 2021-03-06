@@ -6,6 +6,7 @@ import useMutation from '@hooks/useMutation';
 import { PanelAction } from '@organisms/Panel/Panel.types';
 import PanelOption from '@organisms/Panel/PanelOption';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { MutationEvent } from '@util/events';
 
 const SidebarPanel: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
@@ -17,7 +18,7 @@ const SidebarPanel: React.FC = () => {
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
 
   const { push } = useHistory();
-  const [logout] = useMutation<boolean>({ operation: 'logout' });
+  const [logout] = useMutation<boolean>({ operation: MutationEvent.LOGOUT });
 
   const onLogout = async () => {
     const { error } = await logout();

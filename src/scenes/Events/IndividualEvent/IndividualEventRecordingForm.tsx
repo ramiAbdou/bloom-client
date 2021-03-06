@@ -8,6 +8,7 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { MutationEvent } from '@util/events';
 
 interface UpdateRecordingUrlArgs {
   eventId: string;
@@ -20,7 +21,7 @@ const IndividualEventRecordingForm: React.FC = () => {
 
   const [updateRecordingUrl] = useMutation<IEvent, UpdateRecordingUrlArgs>({
     fields: ['id', 'recordingUrl'],
-    operation: 'updateRecordingUrl',
+    operation: MutationEvent.UPDATE_RECORDING_URL,
     schema: Schema.EVENT,
     types: { eventId: { required: true }, recordingUrl: { required: false } }
   });

@@ -1,6 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import { IEventWatch } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 
 const useCreateEventWatch = () => {
   const [createEventWatch] = useMutation<IEventWatch>({
@@ -10,7 +11,7 @@ const useCreateEventWatch = () => {
       { event: ['id'] },
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: 'createEventWatch',
+    operation: MutationEvent.CREATE_EVENT_WATCH,
     schema: Schema.EVENT_WATCH,
     types: { eventId: { required: true } }
   });

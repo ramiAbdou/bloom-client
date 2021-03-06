@@ -3,6 +3,7 @@ import usePush from '@hooks/usePush';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import PaymentStore from './Payment.store';
 import { CreateSubscriptionArgs } from './Payment.types';
 
@@ -23,7 +24,7 @@ const useCreateSubscription = (): OnFormSubmit => {
       { member: ['id', 'isDuesActive', 'stripeSubscriptionId'] },
       { plan: ['id'] }
     ],
-    operation: 'createSubscription',
+    operation: MutationEvent.CREATE_SUBSCRIPTION,
     schema: Schema.PAYMENT,
     types: { memberPlanId: { required: true } }
   });

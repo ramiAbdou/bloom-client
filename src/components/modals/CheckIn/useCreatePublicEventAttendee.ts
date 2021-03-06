@@ -4,6 +4,7 @@ import StoryStore from '@organisms/Story/Story.store';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { openHref } from '@util/util';
 
 const useCreatePublicEventAttendee = () => {
@@ -21,7 +22,7 @@ const useCreatePublicEventAttendee = () => {
       { event: ['id'] },
       { member: ['id', 'pictureUrl'] }
     ],
-    operation: 'createEventAttendee',
+    operation: MutationEvent.CREATE_EVENT_ATTENDEE,
     schema: Schema.EVENT_ATTENDEE,
     types: {
       email: { required: false },

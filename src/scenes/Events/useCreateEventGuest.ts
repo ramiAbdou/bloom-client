@@ -1,6 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import { IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { CreateEventGuestArgs } from './Events.types';
 
 const useCreateEventGuest = () => {
@@ -12,7 +13,7 @@ const useCreateEventGuest = () => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: 'createEventGuest',
+    operation: MutationEvent.CREATE_EVENT_GUEST,
     schema: Schema.EVENT_GUEST,
     types: {
       email: { required: false },

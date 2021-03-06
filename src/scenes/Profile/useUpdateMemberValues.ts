@@ -2,6 +2,7 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { UpdateMemberValueArgs } from './Profile.types';
 
 const useUpdateMemberValues = (): OnFormSubmit => {
@@ -10,7 +11,7 @@ const useUpdateMemberValues = (): OnFormSubmit => {
     UpdateMemberValueArgs
   >({
     fields: ['id', 'value', { question: ['id'] }],
-    operation: 'updateMemberValues',
+    operation: MutationEvent.UPDATE_MEMBER_VALUES,
     schema: [Schema.MEMBER_VALUE],
     types: { items: { required: true, type: '[MemberValueArgs!]' } }
   });

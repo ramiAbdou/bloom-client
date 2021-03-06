@@ -5,6 +5,7 @@ import {
   OnFormSubmitArgs
 } from '@organisms/Form/Form.types';
 import { QuestionCategory, QuestionType } from '@util/constants';
+import { MutationEvent } from '@util/events';
 import { takeFirst } from '@util/util';
 import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';
@@ -14,7 +15,7 @@ const useInviteMembers = (): OnFormSubmit => {
 
   const [inviteMembers] = useMutation<any, AddMembersArgs>({
     fields: ['id'],
-    operation: 'inviteMembers',
+    operation: MutationEvent.INVITE_MEMBERS,
     types: { members: { required: true, type: '[InviteMemberInput!]' } }
   });
 

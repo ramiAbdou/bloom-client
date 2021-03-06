@@ -2,6 +2,7 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { UpdateUserSocialsArgs } from './Profile.types';
 
 const useUpdateMemberSocials = (): OnFormSubmit => {
@@ -14,7 +15,7 @@ const useUpdateMemberSocials = (): OnFormSubmit => {
       'linkedInUrl',
       'twitterUrl'
     ],
-    operation: 'updateMemberSocials',
+    operation: MutationEvent.UPDATE_MEMBER_SOCIALS,
     schema: Schema.MEMBER_SOCIALS,
     types: {
       clubhouseUrl: { required: false },

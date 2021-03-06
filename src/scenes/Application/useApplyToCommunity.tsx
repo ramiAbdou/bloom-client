@@ -4,11 +4,12 @@ import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
 import { IMemberPlan, IQuestion } from '@store/Db/entities';
 import { QuestionCategory } from '@util/constants';
+import { MutationEvent } from '@util/events';
 
 const useApplyToCommunity = (): OnFormSubmit => {
   const [applyToCommunity] = useMutation<any, ApplyForMembershipArgs>({
     fields: ['id'],
-    operation: 'applyToCommunity',
+    operation: MutationEvent.APPLY_TO_COMMUNITY,
     types: {
       data: { type: '[MemberValueInput!]!' },
       email: { required: true },

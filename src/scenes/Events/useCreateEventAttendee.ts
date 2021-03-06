@@ -1,6 +1,7 @@
 import useMutation from '@hooks/useMutation';
 import { IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { CreateEventAttendeeArgs } from './Events.types';
 
 const useCreateEventAttendee = () => {
@@ -15,7 +16,7 @@ const useCreateEventAttendee = () => {
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: 'createEventAttendee',
+    operation: MutationEvent.CREATE_EVENT_ATTENDEE,
     schema: Schema.EVENT_ATTENDEE,
     types: { eventId: { required: true } }
   });

@@ -6,6 +6,7 @@ import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, VerifyEvent } from '@util/constants';
 import { ErrorType } from '@util/errors';
+import { MutationEvent } from '@util/events';
 import { openHref } from '@util/util';
 
 interface VerifiedToken {
@@ -27,7 +28,7 @@ const useVerifyToken = (): boolean => {
 
   const [verifyToken, result] = useMutation<VerifiedToken>({
     fields: ['event'],
-    operation: 'verifyToken',
+    operation: MutationEvent.VERIFY_TOKEN,
     types: { token: { required: true } }
   });
 

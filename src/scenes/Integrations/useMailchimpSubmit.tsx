@@ -3,13 +3,14 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { MutationEvent } from '@util/events';
 
 const useMailchimpSubmit = (): OnFormSubmit => {
   const options = useStoreState(({ db }) => db.integrations?.mailchimpLists);
 
   const [updateMailchimpListId] = useMutation<IIntegrations>({
     fields: ['id', 'mailchimpListId', 'mailchimpListName'],
-    operation: 'updateMailchimpListId',
+    operation: MutationEvent.UPDATE_MAILCHIMP_LIST_ID,
     schema: Schema.INTEGRATIONS,
     types: { mailchimpListId: { required: true } }
   });

@@ -7,6 +7,7 @@ import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
+import { MutationEvent } from '@util/events';
 import { DeleteEventGuestArgs } from './Events.types';
 import useCreateEventGuest from './useCreateEventGuest';
 
@@ -56,7 +57,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       message: 'RSVP was registered.',
       mutationArgsOnUndo: {
         fields: ['deletedAt', 'id'],
-        operation: 'deleteEventGuest',
+        operation: MutationEvent.DELETE_EVENT_GUEST,
         schema: Schema.EVENT_GUEST,
         types: { eventId: { required: true } },
         variables: { eventId }

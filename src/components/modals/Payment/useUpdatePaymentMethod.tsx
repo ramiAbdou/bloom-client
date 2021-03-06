@@ -3,6 +3,7 @@ import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { MutationEvent } from '@util/events';
 import { UpdatePaymentMethodArgs } from './Payment.types';
 
 const useUpdatePaymentMethod = (): OnFormSubmit => {
@@ -17,7 +18,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
       'id',
       { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
     ],
-    operation: 'updatePaymentMethod',
+    operation: MutationEvent.UPDATE_PAYMENT_METHOD,
     schema: Schema.MEMBER,
     types: { paymentMethodId: { required: true } }
   });
