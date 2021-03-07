@@ -10,12 +10,15 @@ import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
 
 const EventFormNotificationsSection: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
   const { data } = useQuery<IMember[]>({
     fields: ['id', { community: ['id'] }],
-    operation: QueryEvent.GET_ALL_MEMBERS,
-    schema: [Schema.MEMBER]
+    operation: QueryEvent.GET_MEMBERS,
+    schema: [Schema.MEMBER],
+    types: { communityId: { required: false } },
+    variables: { communityId }
   });
 
   if (!data) return null;

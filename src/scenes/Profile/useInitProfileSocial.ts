@@ -2,9 +2,12 @@ import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberSocials } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
 
 const useInitProfileSocial = (): QueryResult<IMemberSocials> => {
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
   const result: QueryResult<IMemberSocials> = useQuery<IMemberSocials>({
     fields: [
       'clubhouseUrl',
@@ -16,7 +19,9 @@ const useInitProfileSocial = (): QueryResult<IMemberSocials> => {
       { member: ['id'] }
     ],
     operation: QueryEvent.GET_MEMBER_SOCIALS,
-    schema: Schema.MEMBER_SOCIALS
+    schema: [Schema.MEMBER_SOCIALS],
+    types: { memberId: { required: false } },
+    variables: { memberId }
   });
 
   return result;

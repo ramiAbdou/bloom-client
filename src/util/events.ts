@@ -47,13 +47,10 @@ export enum MutationEvent {
 export enum QueryEvent {
   GET_ACTIVE_MEMBERS_GROWTH = 'getActiveMembersGrowth',
   GET_ACTIVE_MEMBERS_SERIES = 'getActiveMembersSeries',
-  GET_ALL_MEMBER_SOCIALS = 'getAllMemberSocials',
-  GET_ALL_MEMBERS = 'getAllMembers',
   GET_APPLICANTS = 'getApplicants',
   GET_APPLICATION = 'getApplication',
   GET_CHANGE_PREVIEW = 'getChangePreview',
   GET_COMMUNITY = 'getCommunity',
-  GET_DATABASE = 'getDatabase',
   GET_EVENT = 'getEvent',
   GET_EVENT_ATTENDEES = 'getEventAttendees',
   GET_EVENT_ATTENDEES_SERIES = 'getEventAttendeesSeries',

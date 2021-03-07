@@ -18,7 +18,7 @@ const useInitProfilePersonal = (): boolean => {
       { member: ['id'] }
     ],
     operation: QueryEvent.GET_MEMBER_SOCIALS,
-    schema: Schema.MEMBER_SOCIALS,
+    schema: [Schema.MEMBER_SOCIALS],
     types: { memberId: { required: false } },
     variables: { memberId }
   });

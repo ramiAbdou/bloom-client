@@ -16,8 +16,10 @@ const useInitAnalytics = (): Partial<QueryResult> => {
       { community: ['id'] },
       { plan: ['id'] }
     ],
-    operation: QueryEvent.GET_DATABASE,
-    schema: [Schema.MEMBER]
+    operation: QueryEvent.GET_MEMBERS,
+    schema: [Schema.MEMBER],
+    types: { communityId: { required: false } },
+    variables: { communityId }
   });
 
   const { loading: loading2 }: QueryResult<IMemberValue[]> = useQuery<

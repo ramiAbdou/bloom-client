@@ -10,10 +10,10 @@ import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
 
-const useInitDatabase = () => {
+const useInitDatabase = (): Partial<QueryResult> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const result1: QueryResult<IMember[]> = useQuery<IMember[]>({
+  const { loading: loading1 }: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: [
       'bio',
       'email',
@@ -29,11 +29,15 @@ const useInitDatabase = () => {
       { plan: ['id'] },
       { socials: ['id'] }
     ],
-    operation: QueryEvent.GET_DATABASE,
-    schema: [Schema.MEMBER]
+    operation: QueryEvent.GET_MEMBERS,
+    schema: [Schema.MEMBER],
+    types: { communityId: { required: false } },
+    variables: { communityId }
   });
 
-  const result2: QueryResult<IMemberSocials[]> = useQuery<IMemberSocials[]>({
+  const { loading: loading2 }: QueryResult<IMemberSocials[]> = useQuery<
+    IMemberSocials[]
+  >({
     fields: [
       'id',
       'clubhouseUrl',
@@ -43,17 +47,33 @@ const useInitDatabase = () => {
       'twitterUrl',
       { member: ['id'] }
     ],
-    operation: QueryEvent.GET_ALL_MEMBER_SOCIALS,
-    schema: [Schema.MEMBER_SOCIALS]
+    operation: QueryEvent.GET_MEMBER_SOCIALS,
+    schema: [Schema.MEMBER_SOCIALS],
+    types: { communityId: { required: false } },
+    variables: { communityId }
   });
 
-  const result3 = useQuery<IEventAttendee[]>({
+  const { loading: loading3 }: QueryResult<IEventAttendee[]> = useQuery<
+    IEventAttendee[]
+  >({
     fields: ['id', { member: ['id'] }],
     operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 
-  const result4: QueryResult<IMemberValue[]> = useQuery<IMemberValue[]>({
+  const { loading: loading4 }: QueryResult<IMemberValue[]> = useQuery<
+    IMemberValue[]
+  >({
+    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
+    operation: QueryEvent.GET_MEMBER_VALUES,
+    schema: [Schema.MEMBER_VALUE],
+    types: { communityId: { required: false } },
+    variables: { communityId }
+  });
+
+  const { loading: loading5 }: QueryResult<IMemberValue[]> = useQuery<
+    IMemberValue[]
+  >({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
     operation: QueryEvent.GET_MEMBER_VALUES,
     schema: [Schema.MEMBER_VALUE],
@@ -62,9 +82,7 @@ const useInitDatabase = () => {
   });
 
   return {
-    ...result1,
-    loading:
-      result1.loading || result2.loading || result3.loading || result4.loading
+    loading: loading1 || loading2 || loading3 || loading4 || loading5
   };
 };
 
