@@ -15,7 +15,7 @@ const useInitScheduledPayment = (): QueryResult<GetUpcomingPaymentResult> => {
   });
 
   const { loading: loading1 } = useQuery<IMember>({
-    fields: ['id', 'stripeSubscriptionId'],
+    fields: ['id', 'stripeSubscriptionId', { member: ['id'] }],
     operation: QueryEvent.GET_MEMBER_INTEGRATIONS,
     schema: [Schema.MEMBER_INTEGRATIONS]
   });
