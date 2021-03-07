@@ -64,10 +64,14 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
   const { loading } = useQuery<IMemberValue[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
     operation: QueryEvent.GET_MEMBER_VALUES,
-    schema: [Schema.MEMBER_VALUE]
+    schema: [Schema.MEMBER_VALUE],
+    types: { memberId: { required: false } },
+    variables: { memberId }
   });
 
   return (

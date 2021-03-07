@@ -6,6 +6,7 @@ import {
   IEventWatch
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
 
 /**
@@ -13,6 +14,8 @@ import { QueryEvent } from '@util/events';
  * past attendees, past guest and past event watches.
  */
 const useInitEventAnalytics = () => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
   const { loading: loading1 } = useQuery<IEvent[]>({
     fields: ['endTime', 'id', 'startTime', 'title', { community: ['id'] }],
     operation: QueryEvent.GET_PAST_EVENTS,
@@ -47,11 +50,13 @@ const useInitEventAnalytics = () => {
     fields: [
       'createdAt',
       'id',
-      { event: ['id'] },
+      { event: ['id', { community: ['id'] }] },
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: QueryEvent.GET_PAST_EVENT_WATCHES,
-    schema: [Schema.EVENT_WATCH]
+    operation: QueryEvent.GET_EVENT_WATCHES,
+    schema: [Schema.EVENT_WATCH],
+    types: { communityId: { required: false } },
+    variables: { communityId }
   });
 
   return loading1 || loading2 || loading3 || loading4;

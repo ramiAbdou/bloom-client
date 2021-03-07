@@ -5,27 +5,19 @@ import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
 
-const useInitDirectory = (): Partial<QueryResult> => {
+const useInitAnalytics = (): Partial<QueryResult> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
   const { loading: loading1 }: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: [
-      'bio',
-      'email',
-      'firstName',
       'id',
-      'joinedAt',
-      'lastName',
-      'pictureUrl',
-      'role',
+      'isDuesActive',
       'status',
       { community: ['id'] },
       { plan: ['id'] }
     ],
-    operation: QueryEvent.GET_MEMBERS,
-    schema: [Schema.MEMBER],
-    types: { communityId: { required: false } },
-    variables: { communityId }
+    operation: QueryEvent.GET_DATABASE,
+    schema: [Schema.MEMBER]
   });
 
   const { loading: loading2 }: QueryResult<IMemberValue[]> = useQuery<
@@ -41,4 +33,4 @@ const useInitDirectory = (): Partial<QueryResult> => {
   return { loading: loading1 || loading2 };
 };
 
-export default useInitDirectory;
+export default useInitAnalytics;

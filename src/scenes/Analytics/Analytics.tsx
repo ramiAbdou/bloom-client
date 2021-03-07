@@ -11,15 +11,12 @@ import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import Show from '@containers/Show';
-import useQuery from '@hooks/useQuery';
-import { IMember } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
-import { QueryEvent } from '@util/events';
 import EventsAnalytics from './EventsAnalytics/EventsAnalytics';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
 import PaymentAnalytics from './PaymentAnalytics/PaymentAnalytics';
+import useInitAnalytics from './useInitAnalytics';
 
 const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
@@ -47,19 +44,7 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
 
 const Analytics: React.FC = () => {
   const { url } = useRouteMatch();
-
-  const { loading } = useQuery<IMember[]>({
-    fields: [
-      'id',
-      'isDuesActive',
-      'status',
-      { community: ['id'] },
-      { plan: ['id'] },
-      { values: ['id', 'value', { question: ['id'] }] }
-    ],
-    operation: QueryEvent.GET_DATABASE,
-    schema: [Schema.MEMBER]
-  });
+  const { loading } = useInitAnalytics();
 
   return (
     <MainContent>

@@ -13,6 +13,7 @@ import { QueryEvent } from '@util/events';
  */
 const useInitUser = (): boolean => {
   const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const userId: string = useStoreState(({ db }) => db.user?.id);
 
   const [getUser, { loading: loading1 }] = useManualQuery<IUser>({
     fields: ['email', 'id'],
@@ -32,7 +33,8 @@ const useInitUser = (): boolean => {
       { user: ['id'] }
     ],
     operation: QueryEvent.GET_MEMBERS,
-    schema: [Schema.MEMBER]
+    schema: [Schema.MEMBER],
+    types: { userId: { required: false } }
   });
 
   const [getMember, { loading: loading3 }] = useManualQuery({
@@ -53,10 +55,10 @@ const useInitUser = (): boolean => {
   useEffect(() => {
     (async () => {
       if (isAuthenticated) {
-        await Promise.all([getMembers(), getUser(), getMember()]);
+        await Promise.all([getMembers({ userId }), getUser(), getMember()]);
       }
     })();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, userId]);
 
   useLoader(loading1 || loading2 || loading3);
 
