@@ -48,8 +48,8 @@ const useInitUser = (): boolean => {
       { plan: ['id'] },
       { user: ['id'] }
     ],
-    operation: QueryEvent.GET_MEMBER,
-    schema: Schema.MEMBER
+    operation: QueryEvent.GET_MEMBERS,
+    schema: [Schema.MEMBER]
   });
 
   useEffect(() => {

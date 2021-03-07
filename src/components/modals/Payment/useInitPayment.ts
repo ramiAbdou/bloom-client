@@ -19,7 +19,7 @@ const useInitPayment = (): Partial<QueryResult> => {
       { member: ['id'] }
     ],
     operation: QueryEvent.GET_MEMBER_INTEGRATIONS,
-    schema: Schema.MEMBER_INTEGRATIONS
+    schema: [Schema.MEMBER_INTEGRATIONS]
   });
 
   return { loading: loading1 || loading2 };

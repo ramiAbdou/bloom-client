@@ -23,8 +23,8 @@ const Profile: React.FC = () => {
       { plan: ['id'] },
       { socials: ['id'] }
     ],
-    operation: QueryEvent.GET_MEMBER,
-    schema: Schema.MEMBER,
+    operation: QueryEvent.GET_MEMBERS,
+    schema: [Schema.MEMBER],
     types: { memberId: { required: false } },
     variables: { memberId }
   });

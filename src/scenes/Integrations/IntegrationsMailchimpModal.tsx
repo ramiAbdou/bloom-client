@@ -25,7 +25,7 @@ const MailchimpModalActionContainer: React.FC = () => {
 
 const MailchimpModalContent: React.FC = () => {
   const { data, loading } = useQuery({
-    fields: ['id', { mailchimpLists: ['id', 'name'] }],
+    fields: ['id', { mailchimpLists: ['id', 'name'] }, { community: ['id'] }],
     operation: QueryEvent.GET_INTEGRATIONS,
     schema: Schema.INTEGRATIONS
   });
