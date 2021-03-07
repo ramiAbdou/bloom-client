@@ -73,11 +73,8 @@ const dbActiveStore: Pick<
     return byId[member?.memberIntegrations] as IMemberIntegrations;
   }),
 
-  socials: computed(({ entities }) => {
-    const { activeId, byId } = entities.members;
+  socials: computed(({ entities, member }) => {
     const { byId: bySocialsId } = entities.socials;
-
-    const member: IMember = byId[activeId];
     return bySocialsId[member?.socials] as IMemberSocials;
   }),
 
