@@ -21,7 +21,13 @@ const useCreateSubscription = (): OnFormSubmit => {
       'amount',
       'createdAt',
       'id',
-      { member: ['id', 'isDuesActive', 'stripeSubscriptionId'] },
+      {
+        member: [
+          'id',
+          'isDuesActive',
+          { memberIntegrations: ['id', 'stripeSubscriptionId'] }
+        ]
+      },
       { plan: ['id'] }
     ],
     operation: MutationEvent.CREATE_SUBSCRIPTION,

@@ -9,7 +9,7 @@ import { QueryEvent } from '@util/events';
 const MembersAnalyticsTotalChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
-    operation: QueryEvent.GET_TOTAL_MEMBERS_SERIES
+    operation: QueryEvent.GET_MEMBERS_SERIES
   });
 
   return (

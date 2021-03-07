@@ -16,7 +16,12 @@ const useCreateLifetimePayment = () => {
       'createdAt',
       'id',
       {
-        member: ['id', 'isDuesActive', 'stripeSubscriptionId', { plan: ['id'] }]
+        member: [
+          'id',
+          'isDuesActive',
+          { memberIntegrations: ['id', 'stripeSubscriptionId'] },
+          { plan: ['id'] }
+        ]
       }
     ],
     operation: MutationEvent.CREATE_LIFETIME_PAYMENT,

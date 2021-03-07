@@ -10,7 +10,7 @@ import { TimeSeriesData } from '../Analytics.types';
 const PaymentAnalyticsChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
-    operation: QueryEvent.GET_TOTAL_DUES_SERIES
+    operation: QueryEvent.GET_PAYMENTS_SERIES
   });
 
   return (

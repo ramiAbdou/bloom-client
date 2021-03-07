@@ -6,7 +6,7 @@ import { QueryEvent } from '@util/events';
 
 const MembersAnalyticsTotalCard: React.FC = () => {
   const { data, loading } = useQuery<[number, number]>({
-    operation: QueryEvent.GET_TOTAL_MEMBERS_GROWTH
+    operation: QueryEvent.GET_MEMBERS_GROWTH
   });
 
   return (
