@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 /**
  * @fileoverview Store: Schema
  * - Defines the normalizr schema needed to normalize all of the data based
@@ -285,7 +287,7 @@ Integrations.define({ community: Community });
 Member.define({
   community: Community,
   guests: [EventGuest],
-  integrations: MemberIntegrations,
+  memberIntegrations: MemberIntegrations,
   payments: [Payment],
   plan: MemberPlan,
   socials: MemberSocials,

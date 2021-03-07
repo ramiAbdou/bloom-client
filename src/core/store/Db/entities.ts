@@ -126,10 +126,10 @@ export interface IMember extends BaseEntity {
   email: string;
   firstName: string;
   guests: Identifier[];
-  integrations: Identifier;
   isDuesActive: boolean;
   joinedAt: string;
   lastName: string;
+  memberIntegrations: Identifier;
   payments: Identifier[];
   pictureUrl: string;
   plan: Identifier;

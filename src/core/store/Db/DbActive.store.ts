@@ -70,7 +70,7 @@ const dbActiveStore: Pick<
 
   memberIntegrations: computed(({ entities, member }) => {
     const { byId } = entities.memberIntegrations;
-    return byId[member?.integrations] as IMemberIntegrations;
+    return byId[member?.memberIntegrations] as IMemberIntegrations;
   }),
 
   socials: computed(({ entities }) => {

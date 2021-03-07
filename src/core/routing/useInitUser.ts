@@ -44,6 +44,7 @@ const useInitUser = (): boolean => {
       'role',
       'status',
       { community: ['id'] },
+      { memberIntegrations: ['id'] },
       { plan: ['id'] },
       { user: ['id'] }
     ],
