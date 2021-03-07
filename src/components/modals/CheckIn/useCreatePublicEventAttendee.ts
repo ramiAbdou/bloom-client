@@ -12,7 +12,7 @@ const useCreatePublicEventAttendee = () => {
     (store) => store.setCurrentPage
   );
 
-  const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
+  const [createEventAttendee] = useMutation<IEventGuest, CreateEventGuestArgs>({
     fields: [
       'createdAt',
       'email',
@@ -44,7 +44,7 @@ const useCreatePublicEventAttendee = () => {
     const lastName = items.LAST_NAME?.value;
     const email = items.EMAIL?.value;
 
-    const { error } = await createEventGuest({
+    const { error } = await createEventAttendee({
       email,
       eventId,
       firstName,

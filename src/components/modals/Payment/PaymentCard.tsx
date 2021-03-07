@@ -57,7 +57,10 @@ const PaymentCardForm: React.FC = () => {
 };
 
 const PaymentCard: React.FC = () => {
-  const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
+  const isCardOnFile = useStoreState(({ db }) => {
+    return !!db.memberIntegrations.paymentMethod;
+  });
+
   const type = PaymentStore.useStoreState((store) => store.type);
 
   const description: string = isCardOnFile

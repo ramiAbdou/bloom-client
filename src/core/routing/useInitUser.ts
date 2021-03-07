@@ -43,7 +43,6 @@ const useInitUser = (): boolean => {
       'id',
       'role',
       'status',
-      { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] },
       { community: ['id'] },
       { plan: ['id'] },
       { user: ['id'] }

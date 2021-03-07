@@ -31,7 +31,7 @@ const PaymentFinishForm: React.FC = () => {
   const description = getTypeDescription({ amount, recurrence });
 
   const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
-    ({ db }) => db.member.paymentMethod,
+    ({ db }) => db.memberIntegrations.paymentMethod,
     deepequal
   );
 

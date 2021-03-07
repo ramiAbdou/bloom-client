@@ -8,9 +8,9 @@ import { useStoreState } from '@store/Store';
 import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';
 
 const MembershipPaymentMethodEmpty: React.FC = () => {
-  const isCardOnFile: boolean = useStoreState(
-    ({ db }) => !!db.member.paymentMethod
-  );
+  const isCardOnFile: boolean = useStoreState(({ db }) => {
+    return !!db.memberIntegrations.paymentMethod;
+  });
 
   return (
     <Show show={!isCardOnFile}>
@@ -21,7 +21,7 @@ const MembershipPaymentMethodEmpty: React.FC = () => {
 
 const MembershipPaymentMethodContent: React.FC = () => {
   const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
-    ({ db }) => db.member.paymentMethod ?? {},
+    ({ db }) => db.memberIntegrations.paymentMethod ?? {},
     deepequal
   );
 

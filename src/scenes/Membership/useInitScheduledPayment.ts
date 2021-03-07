@@ -10,14 +10,14 @@ import { QueryEvent } from '@util/events';
 import { GetUpcomingPaymentResult } from './Membership.types';
 
 const useInitScheduledPayment = (): QueryResult<GetUpcomingPaymentResult> => {
-  const stripeSubscriptionId = useStoreState(
-    ({ db }) => db.member.stripeSubscriptionId
-  );
+  const stripeSubscriptionId = useStoreState(({ db }) => {
+    return db.memberIntegrations.stripeSubscriptionId;
+  });
 
   const { loading: loading1 } = useQuery<IMember>({
     fields: ['id', 'stripeSubscriptionId'],
-    operation: QueryEvent.GET_MEMBER,
-    schema: Schema.MEMBER
+    operation: QueryEvent.GET_MEMBER_INTEGRATIONS,
+    schema: [Schema.MEMBER_INTEGRATIONS]
   });
 
   const [

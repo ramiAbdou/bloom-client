@@ -6,6 +6,7 @@ import {
   IEvent,
   IIntegrations,
   IMember,
+  IMemberIntegrations,
   IMemberPlan,
   IMemberSocials,
   IUser
@@ -20,6 +21,7 @@ const dbActiveStore: Pick<
   | 'event'
   | 'integrations'
   | 'member'
+  | 'memberIntegrations'
   | 'socials'
   | 'user'
 > = {
@@ -64,6 +66,11 @@ const dbActiveStore: Pick<
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
     return byId[activeId] as IMember;
+  }),
+
+  memberIntegrations: computed(({ entities, member }) => {
+    const { byId } = entities.memberIntegrations;
+    return byId[member?.integrations] as IMemberIntegrations;
   }),
 
   socials: computed(({ entities }) => {

@@ -107,13 +107,6 @@ export interface IIntegrations extends BaseEntity {
 
 // ## MEMBER
 
-export interface IPaymentMethod {
-  brand: string;
-  expirationDate: string;
-  last4: string;
-  zipCode: string;
-}
-
 export enum MemberRole {
   ADMIN = 'Admin',
   OWNER = 'Owner'
@@ -133,20 +126,34 @@ export interface IMember extends BaseEntity {
   email: string;
   firstName: string;
   guests: Identifier[];
+  integrations: Identifier;
   isDuesActive: boolean;
   joinedAt: string;
   lastName: string;
-  paymentMethod: IPaymentMethod;
   payments: Identifier[];
   pictureUrl: string;
   plan: Identifier;
   role?: MemberRole;
   socials: Identifier;
   status: MemberStatus;
-  stripeSubscriptionId?: string;
   user: Identifier;
   values: Identifier[];
   watches: Identifier[];
+}
+
+// ## MEMBER INTEGRATIONS
+
+export interface IPaymentMethod {
+  brand: string;
+  expirationDate: string;
+  last4: string;
+  zipCode: string;
+}
+
+export interface IMemberIntegrations extends BaseEntity {
+  member: Identifier;
+  paymentMethod: IPaymentMethod;
+  stripeSubscriptionId?: string;
 }
 
 // ## MEMBER PLAN
@@ -248,6 +255,7 @@ export interface IEntities {
   guests: EntityRecord<IEventGuest>;
   integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
+  memberIntegrations: EntityRecord<IMemberIntegrations>;
   memberPlans: EntityRecord<IMemberPlan>;
   payments: EntityRecord<IPayment>;
   questions: EntityRecord<IQuestion>;
@@ -267,6 +275,7 @@ export const initialEntities: IEntities = {
   events: { activeId: null, byId: {} },
   guests: { byId: {} },
   integrations: { byId: {} },
+  memberIntegrations: { byId: {} },
   memberPlans: { byId: {} },
   members: { activeId: null, byId: {} },
   payments: { byId: {} },

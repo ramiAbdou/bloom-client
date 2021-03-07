@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react';
 
-import useQuery from '@hooks/useQuery';
 import Story from '@organisms/Story/Story';
-import { IIntegrations } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
-import { QueryEvent } from '@util/events';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 import PaymentCardPage from './PaymentCard';
 import PaymentConfirmationPage from './PaymentConfirmation';
 import PaymentFinishPage from './PaymentFinish';
 import PaymentStripeProvider from './PaymentStripeProvider';
+import useInitPayment from './useInitPayment';
 
 const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   selectedPlanId
@@ -37,25 +34,21 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 };
 
 const PaymentModal: React.FC = () => {
-  const type = useStoreState(
-    ({ modal }) => modal.metadata?.type
-  ) as PaymentModalType;
+  const type: PaymentModalType = useStoreState(({ modal }) => {
+    return modal.metadata?.type;
+  });
 
-  const selectedPlanId = useStoreState(
-    ({ modal }) => modal.metadata?.selectedPlanId
-  ) as string;
+  const selectedPlanId: string = useStoreState(({ modal }) => {
+    return modal.metadata?.selectedPlanId;
+  });
 
-  const currentTypeId: string = useStoreState(({ db }) => {
+  const currentPlanId: string = useStoreState(({ db }) => {
     return db.member?.plan;
   });
 
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
 
-  const { loading } = useQuery<IIntegrations>({
-    fields: ['id', 'stripeAccountId', { community: ['id'] }],
-    operation: QueryEvent.GET_INTEGRATIONS,
-    schema: Schema.INTEGRATIONS
-  });
+  const { loading } = useInitPayment();
 
   // Get the member and see if they've paid their dues or not.
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
@@ -65,7 +58,7 @@ const PaymentModal: React.FC = () => {
     if (!isAdmin && !isDuesActive) {
       showModal({
         id: ModalType.PAY_DUES,
-        metadata: { selectedPlanId: currentTypeId, type: 'PAY_DUES' }
+        metadata: { selectedPlanId: currentPlanId, type: 'PAY_DUES' }
       });
     }
   }, [isDuesActive]);

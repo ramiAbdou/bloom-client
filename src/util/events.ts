@@ -58,6 +58,7 @@ export enum QueryEvent {
   GET_EVENT_WATCHES = 'getEventWatches',
   GET_INTEGRATIONS = 'getIntegrations',
   GET_MEMBER = 'getMember',
+  GET_MEMBER_INTEGRATIONS = 'getMemberIntegrations',
   GET_MEMBER_PLANS = 'getMemberPlans',
   GET_MEMBER_SOCIALS = 'getMemberSocials',
   GET_MEMBER_VALUES = 'getMemberValues',
