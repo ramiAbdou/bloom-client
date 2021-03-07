@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import useManualQuery from '@hooks/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
-import { IMember, IUser } from '@store/Db/entities';
+import { ICommunity, IMember, IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
@@ -30,7 +30,7 @@ const useInitUser = (): boolean => {
       'pictureUrl',
       'id',
       'isDuesActive',
-      { community: ['id', 'logoUrl', 'primaryColor', 'urlName'] },
+      { community: ['id'] },
       { user: ['id'] }
     ],
     operation: QueryEvent.GET_MEMBERS,
@@ -38,7 +38,14 @@ const useInitUser = (): boolean => {
     types: { userId: { required: false } }
   });
 
-  const [getMember, { loading: loading3 }] = useManualQuery({
+  const [getCommunities, { loading: loading3 }] = useManualQuery<ICommunity[]>({
+    fields: ['id', 'logoUrl', 'primaryColor', 'urlName'],
+    operation: QueryEvent.GET_COMMUNITIES,
+    schema: [Schema.COMMUNITY],
+    types: { userId: { required: false } }
+  });
+
+  const [getMember, { loading: loading4 }] = useManualQuery({
     fields: [
       'bio',
       'id',
@@ -56,14 +63,21 @@ const useInitUser = (): boolean => {
   useEffect(() => {
     (async () => {
       if (isAuthenticated) {
-        await Promise.all([getMembers({ userId }), getUser(), getMember()]);
+        await Promise.all([
+          getCommunities({ userId }),
+          getMember(),
+          getMembers({ userId }),
+          getUser()
+        ]);
       }
     })();
   }, [isAuthenticated, memberId, userId]);
 
-  useLoader(loading1 || loading2 || loading3);
+  const loading: boolean = loading1 || loading2 || loading3 || loading4;
 
-  return loading1 || loading2 || loading3;
+  useLoader(loading);
+
+  return loading;
 };
 
 export default useInitUser;

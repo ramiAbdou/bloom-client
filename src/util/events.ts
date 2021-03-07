@@ -35,6 +35,7 @@ export enum QueryEvent {
   GET_APPLICATION = 'getApplication',
   GET_CHANGE_PREVIEW = 'getChangePreview',
   GET_COMMUNITY = 'getCommunity',
+  GET_COMMUNITIES = 'getCommunities',
   GET_EVENT = 'getEvent',
   GET_EVENT_ATTENDEES = 'getEventAttendees',
   GET_EVENT_ATTENDEES_SERIES = 'getEventAttendeesSeries',
