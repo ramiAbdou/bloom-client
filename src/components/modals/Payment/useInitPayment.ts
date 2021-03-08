@@ -11,12 +11,12 @@ const useInitPayment = (): Partial<QueryResult> => {
     schema: Schema.INTEGRATIONS
   });
 
-  const { loading: loading2 } = useQuery<IMemberIntegrations>({
+  const { loading: loading2 } = useQuery<IMemberIntegrations[]>({
     fields: [
       'id',
       'stripeSubscriptionId',
-      { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] },
-      { member: ['id'] }
+      { member: ['id'] },
+      { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
     ],
     operation: QueryEvent.GET_MEMBER_INTEGRATIONS,
     schema: [Schema.MEMBER_INTEGRATIONS]

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { QueryResult } from '@hooks/useQuery.types';
 import Story from '@organisms/Story/Story';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
@@ -48,7 +49,7 @@ const PaymentModal: React.FC = () => {
 
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
 
-  const { loading } = useInitPayment();
+  const { loading }: Partial<QueryResult> = useInitPayment();
 
   // Get the member and see if they've paid their dues or not.
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
