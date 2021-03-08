@@ -48,12 +48,14 @@ const useInitUser = (): boolean => {
   const [getMember, { loading: loading4 }] = useManualQuery({
     fields: [
       'bio',
+      'email',
       'id',
       'role',
       'status',
       { community: ['id'] },
       { memberIntegrations: ['id'] },
       { plan: ['id'] },
+      { socials: ['id'] },
       { user: ['id'] }
     ],
     operation: QueryEvent.GET_MEMBER,

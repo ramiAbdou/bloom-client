@@ -13,12 +13,10 @@ const useCreatePublicEventGuest = () => {
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
     fields: [
       'createdAt',
-      'email',
-      'firstName',
       'id',
-      'lastName',
       { event: ['id'] },
-      { member: ['id', 'pictureUrl'] }
+      { member: ['id', 'pictureUrl'] },
+      { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
     operation: MutationEvent.CREATE_EVENT_GUEST,
     schema: Schema.EVENT_GUEST,

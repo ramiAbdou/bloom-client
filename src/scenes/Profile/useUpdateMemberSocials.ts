@@ -26,12 +26,9 @@ const useUpdateMemberSocials = (): OnFormSubmit => {
     }
   });
 
-  const onSubmit = async ({
-    closeModal,
-    items,
-    setError,
-    showToast
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async (args: OnFormSubmitArgs) => {
+    const { closeModal, items, setError, showToast } = args;
+
     const clubhouseUrl = items.CLUBHOUSE_URL?.value;
     const facebookUrl = items.FACEBOOK_URL?.value;
     const instagramUrl = items.INSTAGRAM_URL?.value;

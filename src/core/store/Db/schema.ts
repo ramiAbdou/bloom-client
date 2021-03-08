@@ -165,7 +165,6 @@ const Member = new schema.Entity(
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
-        [!!parent.socialsId, { socials: parent.id }],
         [!!parent.valueId, { values: [parent.id] }],
         [!!parent.watchId, { watches: [parent.id] }],
         {}
@@ -189,7 +188,10 @@ const MemberIntegrations = new schema.Entity(
 const MemberSocials = new schema.Entity(
   'socials',
   {},
-  { processStrategy: (value) => ({ ...value, socialsId: value.id }) }
+  {
+    mergeStrategy,
+    processStrategy: (value) => ({ ...value, socialsId: value.id })
+  }
 );
 
 const MemberPlan = new schema.Entity(
