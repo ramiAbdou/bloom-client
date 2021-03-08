@@ -11,7 +11,12 @@ import { mergeStrategy } from './schema';
  */
 export const mergeEntities: Action<DbModel, MergeEntitiesArgs> = action(
   (state, { data, schema }: MergeEntitiesArgs) => {
+    // console.log('schema', schema);
+    // console.log('data', data);
+
     const normalizedEntities = normalize(data, schema).entities;
+
+    // console.log('normalizedEntities', normalizedEntities);
 
     const parsedEntities = Object.entries(normalizedEntities).reduce(
       (acc: Record<string, any>, [key, value]) => {
@@ -19,6 +24,8 @@ export const mergeEntities: Action<DbModel, MergeEntitiesArgs> = action(
       },
       {}
     );
+
+    // console.log('parsedEntities', parsedEntities);
 
     return {
       ...state,

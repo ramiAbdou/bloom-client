@@ -82,7 +82,7 @@ const ProfileSocialMediaValue: React.FC<ProfileSocialMediaValueProps> = ({
   );
 };
 
-const ProfileSocialCard: React.FC = () => {
+const ProfileSocialCard: React.FC = React.memo(() => {
   const clubhouseUrl = useStoreState(({ db }) => db.socials?.clubhouseUrl);
   const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
   const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
@@ -136,6 +136,6 @@ const ProfileSocialCard: React.FC = () => {
       <ProfileSocialOnboardingContainer />
     </Card>
   );
-};
+});
 
 export default ProfileSocialCard;
