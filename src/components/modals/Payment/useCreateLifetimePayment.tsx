@@ -22,14 +22,17 @@ const useCreateLifetimePayment = () => {
           { memberIntegrations: ['id', 'stripeSubscriptionId'] },
           { plan: ['id'] }
         ]
-      }
+      },
+      { plan: ['id'] }
     ],
     operation: MutationEvent.CREATE_LIFETIME_PAYMENT,
     schema: Schema.PAYMENT,
     types: { memberPlanId: { required: true } }
   });
 
-  const onSubmit = async ({ goForward, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async (args: OnFormSubmitArgs) => {
+    const { goForward, setError } = args;
+
     const { error } = await createLifetimePayment({ memberPlanId: planId });
 
     if (error) {

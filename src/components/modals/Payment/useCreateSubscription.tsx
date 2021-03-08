@@ -25,7 +25,8 @@ const useCreateSubscription = (): OnFormSubmit => {
         member: [
           'id',
           'isDuesActive',
-          { memberIntegrations: ['id', 'stripeSubscriptionId'] }
+          { memberIntegrations: ['id', 'stripeSubscriptionId'] },
+          { plan: ['id'] }
         ]
       },
       { plan: ['id'] }

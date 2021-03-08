@@ -4,21 +4,21 @@ import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { MutationEvent } from '@util/events';
-import { UpdatePaymentMethodArgs } from './Payment.types';
+import { UpdateStripePaymentMethodIdArgs } from './Payment.types';
 
-const useUpdatePaymentMethod = (): OnFormSubmit => {
+const useUpdateStripePaymentMethodId = (): OnFormSubmit => {
   const elements = useElements();
   const stripe = useStripe();
 
-  const [updatePaymentMethod] = useMutation<
+  const [updateStripePaymentMethodId] = useMutation<
     Pick<IMemberIntegrations, 'id' | 'paymentMethod'>,
-    UpdatePaymentMethodArgs
+    UpdateStripePaymentMethodIdArgs
   >({
     fields: [
       'id',
       { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
     ],
-    operation: MutationEvent.UPDATE_PAYMENT_METHOD,
+    operation: MutationEvent.UPDATE_STRIPE_PAYMENT_METHOD_ID,
     schema: Schema.MEMBER_INTEGRATIONS,
     types: { paymentMethodId: { required: true } }
   });
@@ -52,7 +52,7 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
     // Create the actual subscription. Pass the MemberPlan ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod
     // ID. That will be attached to the customer ID associated with the member.
-    const { error: updateError } = await updatePaymentMethod({
+    const { error: updateError } = await updateStripePaymentMethodId({
       paymentMethodId: stripeResult.paymentMethod.id
     });
 
@@ -69,4 +69,4 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
   return onSubmit;
 };
 
-export default useUpdatePaymentMethod;
+export default useUpdateStripePaymentMethodId;

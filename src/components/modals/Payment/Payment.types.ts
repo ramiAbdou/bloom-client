@@ -21,6 +21,6 @@ export interface GetChangePreviewResult {
   prorationDate: number;
 }
 
-export interface UpdatePaymentMethodArgs {
+export interface UpdateStripePaymentMethodIdArgs {
   paymentMethodId: string;
 }
