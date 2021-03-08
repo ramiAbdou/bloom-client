@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import useMutation from '@hooks/useMutation';
-import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, VerifyEvent } from '@util/constants';
 import { ErrorType } from '@util/errors';
@@ -56,7 +55,6 @@ const useVerifyToken = (): boolean => {
   }, [token, videoUrl]);
 
   const loading = (!!token && !result.data && !result.error) || result.loading;
-  useLoader(loading);
 
   return loading;
 };

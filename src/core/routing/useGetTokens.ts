@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import useManualQuery from '@hooks/useManualQuery';
-import useLoader from '@organisms/Loader/useLoader';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 import { QueryEvent } from '@util/events';
@@ -48,7 +47,6 @@ const useGetTokens = (checkUrlName = false): boolean => {
   }, [checkUrlName, token, urlName]);
 
   const loading = (!result.data && !result.error) || result.loading;
-  useLoader(loading);
 
   return loading;
 };

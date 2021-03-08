@@ -79,9 +79,11 @@ const useInitCommunity = (): boolean => {
     })();
   }, [communityId]);
 
-  useLoader(loading1 || loading2 || loading3 || loading4);
+  const loading: boolean = loading1 || loading2 || loading3 || loading4;
 
-  return loading1 || loading2 || loading3 || loading4;
+  useLoader(loading);
+
+  return loading;
 };
 
 export default useInitCommunity;
