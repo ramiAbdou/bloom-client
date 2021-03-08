@@ -10,7 +10,7 @@ const TableRow: React.FC<TableRowProps> = (row) => {
     ({ options }) => options.onRowClick
   );
 
-  const columns = TableStore.useStoreState((store) => store.columns);
+  const columns = TableStore.useStoreState((state) => state.columns);
 
   const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) => {
     return selectedRowIds.includes(row?.id);

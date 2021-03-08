@@ -35,7 +35,7 @@ const AddMemberFormActions: React.FC = () => {
 };
 
 const AddMemberFormAddAnotherButton: React.FC = () => {
-  const addRow = AddMemberStore.useStoreActions((store) => store.addRow);
+  const addRow = AddMemberStore.useStoreActions((state) => state.addRow);
   const onClick = () => addRow();
 
   return (
@@ -46,7 +46,7 @@ const AddMemberFormAddAnotherButton: React.FC = () => {
 };
 
 const AddMemberFormRows: React.FC = () => {
-  const rows = AddMemberStore.useStoreState((store) => store.rows);
+  const rows = AddMemberStore.useStoreState((state) => state.rows);
 
   return (
     <ul>
@@ -62,7 +62,7 @@ const AddMemberFormRows: React.FC = () => {
 };
 
 const AddMemberForm: React.FC = () => {
-  const admin = AddMemberStore.useStoreState((store) => store.admin);
+  const admin = AddMemberStore.useStoreState((state) => state.admin);
   const addMembers = useInviteMembers();
 
   return (

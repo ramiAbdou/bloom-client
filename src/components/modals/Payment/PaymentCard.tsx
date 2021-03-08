@@ -14,7 +14,7 @@ import PaymentFinishButton from './PaymentFinishButton';
 import useUpdatePaymentMethod from './useUpdatePaymentMethod';
 
 const PaymentCardButton: React.FC = () => {
-  const type = PaymentStore.useStoreState((store) => store.type);
+  const type = PaymentStore.useStoreState((state) => state.type);
   const stripe = useStripe();
 
   if (type === 'UPDATE_PAYMENT_METHOD') return <PaymentFinishButton />;
@@ -61,7 +61,7 @@ const PaymentCard: React.FC = () => {
     return !!db.memberIntegrations.paymentMethod;
   });
 
-  const type = PaymentStore.useStoreState((store) => store.type);
+  const type = PaymentStore.useStoreState((state) => state.type);
 
   const description: string = isCardOnFile
     ? 'An update to your current subscription will be reflected on your next billing date.'

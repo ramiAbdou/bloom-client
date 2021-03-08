@@ -8,8 +8,8 @@ import StoryStore from './Story.store';
  * is.
  */
 const useUpdateDisabledPage = (id: string) => {
-  const pageId = StoryStore.useStoreState((store) => store.pageId);
-  const pages = StoryStore.useStoreState((store) => store.pages);
+  const pageId = StoryStore.useStoreState((state) => state.pageId);
+  const pages = StoryStore.useStoreState((state) => state.pages);
 
   const setPageDisabled = StoryStore.useStoreActions(
     (store) => store.setPageDisabled

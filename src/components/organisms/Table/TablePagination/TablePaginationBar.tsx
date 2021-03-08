@@ -30,7 +30,7 @@ const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
 };
 
 const TablePaginationBarBackButton: React.FC = () => {
-  const page = TableStore.useStoreState((store) => store.page);
+  const page = TableStore.useStoreState((state) => state.page);
   const setPage = TableStore.useStoreActions((store) => store.setPage);
   const onClick = () => page > 0 && setPage(page - 1);
 
@@ -42,7 +42,7 @@ const TablePaginationBarBackButton: React.FC = () => {
 };
 
 const TablePaginationBarNextButton: React.FC = () => {
-  const page = TableStore.useStoreState((store) => store.page);
+  const page = TableStore.useStoreState((state) => state.page);
   const setPage = TableStore.useStoreActions((store) => store.setPage);
 
   const numPages = TableStore.useStoreState(({ filteredRows }) => {

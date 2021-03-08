@@ -17,7 +17,7 @@ import useYAxisOptions from './useYAxisOptions';
 
 const BarChart: React.FC = () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
-  const data = Chart.useStoreState((store) => store.data);
+  const data = Chart.useStoreState((state) => state.data);
 
   const xAxisOptions = useXAxisOptions();
   const yAxisOptions = useYAxisOptions();

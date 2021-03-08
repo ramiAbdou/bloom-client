@@ -36,8 +36,8 @@ const DropdownOptionList: React.FC = () => {
 };
 
 const DropdownOptionContainer: React.FC = () => {
-  const isOpen = DropdownStore.useStoreState((store) => store.isOpen);
-  const width = DropdownStore.useStoreState((store) => store.width);
+  const isOpen = DropdownStore.useStoreState((state) => state.isOpen);
+  const width = DropdownStore.useStoreState((state) => state.width);
 
   const noOptionsFound = DropdownStore.useStoreState(
     (store) => !store.filteredValues.length

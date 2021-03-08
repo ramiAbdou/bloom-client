@@ -17,7 +17,7 @@ const useQuestionData = (): Pick<
   ChartModelInitArgs,
   'data' | 'totalResponses'
 > => {
-  const questionId = Chart.useStoreState((store) => store.questionId);
+  const questionId = Chart.useStoreState((state) => state.questionId);
 
   const questionType: QuestionType = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
@@ -102,8 +102,8 @@ const useQuestionData = (): Pick<
 };
 
 export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
-  const currentQuestionId = Chart.useStoreState((store) => store.questionId);
-  const currentType = Chart.useStoreState((store) => store.type);
+  const currentQuestionId = Chart.useStoreState((state) => state.questionId);
+  const currentType = Chart.useStoreState((state) => state.type);
   const setData = Chart.useStoreActions((store) => store.setData);
   const setQuestionId = Chart.useStoreActions((store) => store.setQuestionId);
   const setType = Chart.useStoreActions((store) => store.setType);

@@ -5,7 +5,7 @@ import ChartStore from './Chart.store';
 import { ChartType } from './Chart.types';
 
 const useXAxisOptions = (): Partial<XAxisProps> => {
-  const type = ChartStore.useStoreState((store) => store.type);
+  const type = ChartStore.useStoreState((state) => state.type);
   const format = ChartStore.useStoreState(({ options }) => options?.format);
   const xAxis = ChartStore.useStoreState(({ options }) => options?.xAxis);
 

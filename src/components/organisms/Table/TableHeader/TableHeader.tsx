@@ -1,8 +1,8 @@
 import React from 'react';
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 
-import { PanelType } from '@util/constants';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
 import { TableColumn } from '../Table.types';
@@ -26,8 +26,8 @@ const HeaderCell = ({
     return options.alignEndRight && isLastCell;
   });
 
-  const sortColumnId = TableStore.useStoreState((store) => store.sortColumnId);
-  const direction = TableStore.useStoreState((store) => store.sortDirection);
+  const sortColumnId = TableStore.useStoreState((state) => state.sortColumnId);
+  const direction = TableStore.useStoreState((state) => state.sortDirection);
 
   const hasCheckbox = TableStore.useStoreState(
     ({ options }) => options.hasCheckbox

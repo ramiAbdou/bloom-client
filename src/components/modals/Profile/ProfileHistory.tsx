@@ -11,7 +11,7 @@ import ProfileHistoryEvent from './ProfileHistoryEvent';
 import useInitProfileHistory from './useInitProfileHistory';
 
 const ProfileHistoryEventList: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((store) => store.id);
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const history: MemberHistoryData[] = useStoreState(({ db }) => {
     return getMemberHistory({ db, memberId });

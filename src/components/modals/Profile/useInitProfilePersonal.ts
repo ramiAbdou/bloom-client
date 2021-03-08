@@ -5,7 +5,7 @@ import IdStore from '@store/Id.store';
 import { QueryEvent } from '@util/events';
 
 const useInitProfilePersonal = (): boolean => {
-  const memberId = IdStore.useStoreState((store) => store.id);
+  const memberId = IdStore.useStoreState((state) => state.id);
 
   const { loading } = useQuery<IUser>({
     fields: [

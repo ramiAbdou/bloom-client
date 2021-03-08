@@ -12,7 +12,7 @@ interface CheckInMainPageProps {
 }
 
 const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
-  const pageId = StoryStore.useStoreState((store) => store.pageId);
+  const pageId = StoryStore.useStoreState((state) => state.pageId);
 
   const branchId = StoryStore.useStoreState(({ getPage }) => {
     return getPage('FINISH')?.branchId;

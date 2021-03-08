@@ -26,7 +26,7 @@ const ApplicationMainForm: React.FC = () => {
       pages?.filter(({ id }) => id !== 'CONFIRMATION')?.length === 1
   );
 
-  const items = StoryStore.useStoreState((store) => store.items);
+  const items = StoryStore.useStoreState((state) => state.items);
 
   const applyForMembership = useApplyToCommunity();
   const validateEmail = useValidateEmail();

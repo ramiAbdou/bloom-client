@@ -9,10 +9,10 @@ import { CreateSubscriptionArgs } from './Payment.types';
 
 const useCreateSubscription = (): OnFormSubmit => {
   const prorationDate = PaymentStore.useStoreState(
-    (store) => store.changeProrationDate
+    (state) => state.changeProrationDate
   );
 
-  const planId = PaymentStore.useStoreState((store) => store.selectedPlanId);
+  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
 
   const pushToMembership = usePush('membership');
 
@@ -35,7 +35,9 @@ const useCreateSubscription = (): OnFormSubmit => {
     types: { memberPlanId: { required: true } }
   });
 
-  const onSubmit = async ({ goForward, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async (args: OnFormSubmitArgs) => {
+    const { goForward, setError } = args;
+
     // Create the actual subscription. Pass the MemberPlan ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod
     // ID. That will be attached to the customer ID associated with the member.

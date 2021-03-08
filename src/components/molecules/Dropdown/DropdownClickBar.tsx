@@ -7,11 +7,11 @@ import { cx } from '@util/util';
 import Dropdown from './Dropdown.store';
 
 const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
-  const isOpen = Dropdown.useStoreState((store) => store.isOpen);
-  const attribute = Dropdown.useStoreState((store) => store.options.attribute);
-  const multiple = Dropdown.useStoreState((store) => store.options.multiple);
-  const storedValue = Dropdown.useStoreState((store) => store.value);
-  const onSelect = Dropdown.useStoreState((store) => store.onSelect);
+  const isOpen = Dropdown.useStoreState((state) => state.isOpen);
+  const attribute = Dropdown.useStoreState((state) => state.options.attribute);
+  const multiple = Dropdown.useStoreState((state) => state.options.multiple);
+  const storedValue = Dropdown.useStoreState((state) => state.value);
+  const onSelect = Dropdown.useStoreState((state) => state.onSelect);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
 
   const deleteValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -41,7 +41,7 @@ const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
 };
 
 const DropdownClickBarValues: React.FC = () => {
-  const value = Dropdown.useStoreState((store) => store.value);
+  const value = Dropdown.useStoreState((state) => state.value);
 
   let values: string[] = [];
 
@@ -60,7 +60,7 @@ const DropdownClickBarValues: React.FC = () => {
 };
 
 const DropdownClickBar: React.FC = () => {
-  const isOpen = Dropdown.useStoreState((store) => store.isOpen);
+  const isOpen = Dropdown.useStoreState((state) => state.isOpen);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
   const setWidth = Dropdown.useStoreActions((store) => store.setWidth);
 

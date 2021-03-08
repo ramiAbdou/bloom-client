@@ -22,7 +22,7 @@ import useYAxisOptions from './useYAxisOptions';
 const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
   label
 }) => {
-  const data = ChartStore.useStoreState((store) => store.data);
+  const data = ChartStore.useStoreState((state) => state.data);
   const format = ChartStore.useStoreState(({ options }) => options?.format);
 
   if (!label) return null;
@@ -49,7 +49,7 @@ const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
 
 const TimeSeriesChart: React.FC = () => {
   const color = useStoreState(({ db }) => db.community.primaryColor);
-  const data = ChartStore.useStoreState((store) => store.data, deepequal);
+  const data = ChartStore.useStoreState((state) => state.data, deepequal);
   const isMonitor = useBreakpoint() === 4;
 
   const xAxisOptions = useXAxisOptions();

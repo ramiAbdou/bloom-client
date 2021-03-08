@@ -7,7 +7,7 @@ import PaymentStore from './Payment.store';
 import { CreateLifetimePaymentArgs } from './Payment.types';
 
 const useCreateLifetimePayment = () => {
-  const planId = PaymentStore.useStoreState((store) => store.selectedPlanId);
+  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
   const pushToMembership = usePush('membership');
 
   const [createLifetimePayment] = useMutation<any, CreateLifetimePaymentArgs>({

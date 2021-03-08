@@ -2,23 +2,23 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { QuestionCategory } from '@util/constants';
 import Row from '@containers/Row/Row';
 import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
 import FormShortText from '@organisms/Form/FormShortText';
 import { MemberRole } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
 import AddMemberStore from './AddMember.store';
 
 const AddMemberInputTrashButton: React.FC = () => {
-  const id: string = IdStore.useStoreState((store) => store.id);
+  const id: string = IdStore.useStoreState((state) => state.id);
 
   const show: boolean = AddMemberStore.useStoreState(
-    (store) => store.rows.length >= 2
+    (state) => state.rows.length >= 2
   );
 
-  const deleteRow = AddMemberStore.useStoreActions((store) => store.deleteRow);
+  const deleteRow = AddMemberStore.useStoreActions((state) => state.deleteRow);
   const onClick = () => deleteRow(id);
 
   return (
@@ -29,13 +29,13 @@ const AddMemberInputTrashButton: React.FC = () => {
 };
 
 const AddMemberInput: React.FC = () => {
-  const id: string = IdStore.useStoreState((store) => store.id);
+  const id: string = IdStore.useStoreState((state) => state.id);
 
   const isOwner = useStoreState(
     ({ db }) => db.member?.role === MemberRole.OWNER
   );
 
-  const admin = AddMemberStore.useStoreState((store) => store.admin);
+  const admin = AddMemberStore.useStoreState((state) => state.admin);
 
   return (
     <Row align="baseline" className="mo-add-member-input" spacing="xs">

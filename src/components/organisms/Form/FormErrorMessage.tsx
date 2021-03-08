@@ -8,7 +8,7 @@ import FormStore from './Form.store';
  * individual element.
  */
 const FormErrorMessage: React.FC<ErrorMessageProps> = (props) => {
-  const error = FormStore.useStoreState((store) => store.error);
+  const error = FormStore.useStoreState((state) => state.error);
   return <ErrorMessage {...props}>{error}</ErrorMessage>;
 };
 

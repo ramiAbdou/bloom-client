@@ -15,7 +15,7 @@ import useInitPayment from './useInitPayment';
 const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
   selectedPlanId
 }) => {
-  const planId = PaymentStore.useStoreState((store) => store.selectedPlanId);
+  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
 
   const setSelectedTypeId = PaymentStore.useStoreActions(
     (store) => store.setSelectedTypeId

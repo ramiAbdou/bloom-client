@@ -9,7 +9,7 @@ import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
 
 const ListFilterQuestionOption: React.FC<ValueProps> = ({ value: option }) => {
-  const questionId: string = IdStore.useStoreState((store) => store.id);
+  const questionId: string = IdStore.useStoreState((state) => state.id);
 
   const addValue = ListFilterQuestionStore.useStoreActions(
     (state) => state.addValue

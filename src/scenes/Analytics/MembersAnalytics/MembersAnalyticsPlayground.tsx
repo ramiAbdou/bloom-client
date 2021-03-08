@@ -30,7 +30,7 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
       });
   });
 
-  const questionId = IdStore.useStoreState((store) => store.id);
+  const questionId = IdStore.useStoreState((state) => state.id);
   const setId = IdStore.useStoreActions((store) => store.setId);
 
   const onSelect = (result: string) => {
@@ -70,7 +70,7 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
       })[0].id;
   });
 
-  const questionId = IdStore.useStoreState((store) => store.id);
+  const questionId = IdStore.useStoreState((state) => state.id);
   const setId = IdStore.useStoreActions((store) => store.setId);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
 };
 
 const MembersAnalyticsPlaygroundChart: React.FC = () => {
-  const questionId = IdStore.useStoreState((store) => store.id);
+  const questionId = IdStore.useStoreState((state) => state.id);
   return <Chart questionId={questionId} />;
 };
 

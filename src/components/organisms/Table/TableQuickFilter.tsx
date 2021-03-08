@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from '@atoms/Button/Button';
-import { IdProps, ShowProps, TitleProps } from '@util/constants';
 import { TableRow } from '@organisms/Table/Table.types';
+import { IdProps, ShowProps, TitleProps } from '@util/constants';
 import { cx } from '@util/util';
 import TableStore from './Table.store';
 
@@ -20,7 +20,7 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
 
   const [active, setActive] = useState<boolean>(false);
 
-  const filters = TableStore.useStoreState((store) => store.filters);
+  const filters = TableStore.useStoreState((state) => state.filters);
   const setFilter = TableStore.useStoreActions((store) => store.setFilter);
 
   const removeFilter = TableStore.useStoreActions(

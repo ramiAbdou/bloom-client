@@ -10,7 +10,7 @@ import IdStore from '@store/Id.store';
 import { QueryEvent } from '@util/events';
 
 const useInitProfileHistory = (): boolean => {
-  const memberId = IdStore.useStoreState((store) => store.id);
+  const memberId = IdStore.useStoreState((state) => state.id);
 
   const { loading: loading1 } = useQuery<IEventAttendee[]>({
     fields: [

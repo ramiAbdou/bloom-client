@@ -11,7 +11,7 @@ import { sortObjects } from '@util/util';
 import useInitProfileData from './useInitProfileData';
 
 const ProfileDataContent: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((store) => store.id);
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];

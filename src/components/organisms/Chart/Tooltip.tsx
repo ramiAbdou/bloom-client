@@ -12,8 +12,8 @@ export type ChartTooltipProps = {
 // The tooltip data that we need will either come from the label if it is a bar
 // chart, or from the payload if it is a pie chart. Subject to change.
 export default ({ active, label, payload }: ChartTooltipProps) => {
-  const data = Chart.useStoreState((store) => store.data);
-  const totalResponses = Chart.useStoreState((store) => store.totalResponses);
+  const data = Chart.useStoreState((state) => state.data);
+  const totalResponses = Chart.useStoreState((state) => state.totalResponses);
 
   // Only show the tooltip if it active.
   if (!active || (!label && !payload?.length)) return null;

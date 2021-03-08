@@ -10,7 +10,7 @@ import PieChart from './PieChart';
 import TimeSeriesChart from './TimeSeriesChart';
 
 const ChartContent = (data: ChartModelInitArgs) => {
-  const chartType = ChartStore.useStoreState((store) => store.type);
+  const chartType = ChartStore.useStoreState((state) => state.type);
   const setData = ChartStore.useStoreActions((store) => store.setData);
 
   useEffect(() => {
