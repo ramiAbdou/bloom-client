@@ -3,6 +3,12 @@ import { useEffect } from 'react';
 import useManualQuery from '@hooks/useManualQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
+import {
+  ICommunity,
+  ICommunityIntegrations,
+  IMemberPlan,
+  IQuestion
+} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
@@ -10,7 +16,7 @@ import { QueryEvent } from '@util/events';
 const useInitCommunity = (): Partial<QueryResult> => {
   const communityId = useStoreState(({ db }) => db.community?.id);
 
-  const [getCommunity, { loading: loading1 }] = useManualQuery({
+  const [getCommunity, { loading: loading1 }] = useManualQuery<ICommunity>({
     fields: [
       'autoAccept',
       'id',
@@ -24,7 +30,10 @@ const useInitCommunity = (): Partial<QueryResult> => {
     schema: Schema.COMMUNITY
   });
 
-  const [getCommunityIntegrations, { loading: loading2 }] = useManualQuery({
+  const [
+    getCommunityIntegrations,
+    { loading: loading2 }
+  ] = useManualQuery<ICommunityIntegrations>({
     fields: [
       'id',
       'isMailchimpAuthenticated',
@@ -37,7 +46,7 @@ const useInitCommunity = (): Partial<QueryResult> => {
     schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
-  const [getQuestions, { loading: loading3 }] = useManualQuery({
+  const [getQuestions, { loading: loading3 }] = useManualQuery<IQuestion[]>({
     fields: [
       'category',
       'description',
@@ -54,18 +63,20 @@ const useInitCommunity = (): Partial<QueryResult> => {
     schema: [Schema.QUESTION]
   });
 
-  const [getMemberPlans, { loading: loading4 }] = useManualQuery({
-    fields: [
-      'amount',
-      'id',
-      'isFree',
-      'name',
-      'recurrence',
-      { community: ['id'] }
-    ],
-    operation: QueryEvent.GET_MEMBER_PLANS,
-    schema: [Schema.MEMBER_PLAN]
-  });
+  const [getMemberPlans, { loading: loading4 }] = useManualQuery<IMemberPlan[]>(
+    {
+      fields: [
+        'amount',
+        'id',
+        'isFree',
+        'name',
+        'recurrence',
+        { community: ['id'] }
+      ],
+      operation: QueryEvent.GET_MEMBER_PLANS,
+      schema: [Schema.MEMBER_PLAN]
+    }
+  );
 
   useEffect(() => {
     if (!communityId) return;
