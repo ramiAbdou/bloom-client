@@ -25,6 +25,7 @@
 .f {
   &-1 { flex: 1; }
   &-2 { flex: 2; }
+  &-ac { align-items: center; }
 }
 
 // ## MARGIN BOTTOM
@@ -50,6 +51,7 @@
 
 .mr {
   &-auto { margin-right: auto; }
+  &-auto--t { @include T { margin-right: auto; } }
   &-xxs:not(:last-child) { margin-right: $xxs; }
   &-xs:not(:last-child) { margin-right: $xs; }
   &-sm:not(:last-child) { margin-right: $sm; }
@@ -133,5 +135,5 @@
 
   &-100 { width: 100%; }
   &-100--m { @include M { width: 100%; } }
-  &-100--t { @include MT { width: 100%; } }
+  &-100--mt { @include MT { width: 100%; } }
 }

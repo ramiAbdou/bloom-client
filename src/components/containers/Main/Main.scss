@@ -15,8 +15,6 @@ $PREF: 't-main';
 }
 
 .#{$PREF}-header > .t-row {
-  > div:first-child { @extend .flex-ac; }
-  > div:first-child > h1 { margin-right: $sm; }
   > div:first-child > .c-tag-number ~ .c-spinner { margin-left: $xs; }
 
   > div:first-child > button:first-of-type > svg {
@@ -64,13 +62,11 @@ $PREF: 't-main';
   > .t-loading-header { margin-bottom: $sm; }
 }
 
-// ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but
+// ## NAV BUTTON - Only use a border-top, border-bottom and border-right, but
 // not border-left, so we avoid stacking pixels (1px * 2 = 2px). However,
 // the first button will have a border-left.
 
-.#{$PREF}-multi-ctr { @extend .flex-ac; }
-
-.#{$PREF}-multi {
+.#{$PREF}-nav {
   @extend .meta--lg;
   
   background-color: inherit;

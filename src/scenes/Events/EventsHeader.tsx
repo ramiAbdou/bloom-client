@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
 import MainHeader from '@containers/Main/MainHeader';
-import { NavigationOptionProps } from '@containers/Main/MainNavigation';
+import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
@@ -22,7 +22,7 @@ const CreateEventButton: React.FC = () => {
 const EventsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const { push } = useHistory();
 
-  const options: NavigationOptionProps[] = [
+  const options: MainNavigationOptionProps[] = [
     {
       onClick: () => push('upcoming'),
       pathname: 'upcoming',

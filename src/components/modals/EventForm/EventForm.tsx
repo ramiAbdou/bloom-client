@@ -18,7 +18,7 @@ const EventForm: React.FC = () => {
 
   return (
     <Form
-      className="mx-auto w-10 w-100--t"
+      className="mx-auto w-10 w-100--mt"
       spacing="lg"
       onSubmit={eventId ? updateEvent : createEvent}
     >

@@ -10,12 +10,12 @@ import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions } from '@store/Store';
 import { ClassNameProps, LoadingProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
-import MainNavigation, { NavigationProps } from './MainNavigation';
+import MainNavigation, { MainNavigationProps } from './MainNavigation';
 
 export interface MainHeaderProps
   extends ClassNameProps,
     LoadingProps,
-    NavigationProps {
+    MainNavigationProps {
   backButton?: boolean;
   headerTag?: string;
   title: string;
@@ -44,25 +44,20 @@ const MainHeaderHamburger: React.FC = () => {
   );
 };
 
-const MainHeaderContent: React.FC<MainHeaderProps> = ({
-  backButton,
-  children,
-  loading,
-  headerTag,
-  options,
-  title
-}) => {
+const MainHeaderContent: React.FC<MainHeaderProps> = (props) => {
+  const { backButton, children, loading, headerTag, options, title } = props;
   const isDesktop = useBreakpoint() >= 3;
+
   return (
     <Row justify="sb" spacing="xs">
-      <div>
+      <Row>
         <MainHeaderBackButton show={!!backButton} />
-        <h1>{title}</h1>
+        <h1 className="mr-sm">{title}</h1>
         <HeaderTag show={!loading && !!headerTag}>{headerTag}</HeaderTag>
         <Spinner dark show={loading} />
-      </div>
+      </Row>
 
-      {!loading && <MainNavigation options={options} />}
+      <MainNavigation options={options} show={!loading} />
       <div>{!loading && isDesktop && children}</div>
     </Row>
   );
