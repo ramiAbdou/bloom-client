@@ -38,7 +38,7 @@ const EventsPastList: React.FC = () => {
       <List
         emptyMessage="Looks like there were no past events found."
         items={pastEvents}
-        options={{ keys: ['title'] }}
+        options={{ keys: ['title', 'summary', 'description'] }}
         render={EventsCard}
       />
     </>

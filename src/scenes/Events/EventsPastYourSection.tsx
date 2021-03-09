@@ -1,13 +1,13 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { LoadingProps } from '@util/constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { LoadingProps } from '@util/constants';
 import EventsCard from './EventsCard/EventsCard';
 
 const EventsPastYourList: React.FC = () => {
@@ -22,7 +22,7 @@ const EventsPastYourList: React.FC = () => {
     <List
       className="s-events-card-ctr"
       items={events}
-      options={{ keys: ['title'] }}
+      options={{ keys: ['title', 'summary', 'description'] }}
       render={EventsCard}
     />
   );
