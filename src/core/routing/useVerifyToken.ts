@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { ModalType, VerifyEvent } from '@util/constants';
-import useManualQuery from '@hooks/useManualQuery';
-import useLoader from '@organisms/Loader/useLoader';
+import useMutation from '@hooks/useMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType, VerifyEvent } from '@util/constants';
 import { ErrorType } from '@util/errors';
+import { MutationEvent } from '@util/events';
 import { openHref } from '@util/util';
 
 interface VerifiedToken {
@@ -25,9 +25,9 @@ const useVerifyToken = (): boolean => {
   const videoUrl = useStoreState(({ db }) => db.event?.videoUrl);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const [verifyToken, result] = useManualQuery<VerifiedToken>({
+  const [verifyToken, result] = useMutation<VerifiedToken>({
     fields: ['event'],
-    operation: 'verifyToken',
+    operation: MutationEvent.VERIFY_TOKEN,
     types: { token: { required: true } }
   });
 
@@ -55,7 +55,6 @@ const useVerifyToken = (): boolean => {
   }, [token, videoUrl]);
 
   const loading = (!!token && !result.data && !result.error) || result.loading;
-  useLoader(loading);
 
   return loading;
 };

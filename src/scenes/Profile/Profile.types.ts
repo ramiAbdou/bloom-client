@@ -1,17 +1,14 @@
-interface MemberDataInput {
+interface MemberValueInput {
   questionId: string;
   value: string[];
 }
 
-export interface UpdateMemberDataArgs {
-  items: MemberDataInput[];
+export interface UpdateMemberValueArgs {
+  items: MemberValueInput[];
 }
 
 export interface UpdateMemberArgs {
   bio?: boolean;
-}
-
-export interface UpdateUserArgs {
   firstName?: string;
   lastName?: string;
   pictureUrl?: string;

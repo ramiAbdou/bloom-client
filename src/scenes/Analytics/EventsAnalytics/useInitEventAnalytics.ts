@@ -1,37 +1,66 @@
 import useQuery from '@hooks/useQuery';
-import { baseEventFields, eventFields } from '@scenes/Events/Events.types';
+import { QueryResult } from '@hooks/useQuery.types';
+import {
+  IEvent,
+  IEventAttendee,
+  IEventGuest,
+  IEventWatch
+} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 
 /**
  * Initializes the event analytics page by fetching all of the past events,
  * past attendees, past guest and past event watches.
  */
-const useInitEventAnalytics = () => {
-  const { loading: loading1 } = useQuery({
+const useInitEventAnalytics = (): Partial<QueryResult> => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const { loading: loading1 } = useQuery<IEvent[]>({
     fields: ['endTime', 'id', 'startTime', 'title', { community: ['id'] }],
-    operation: 'getPastEvents',
+    operation: QueryEvent.GET_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
-  const { loading: loading2 } = useQuery({
-    fields: eventFields,
-    operation: 'getPastEventAttendees',
+  const { loading: loading2 } = useQuery<IEventAttendee[]>({
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'email', 'firstName', 'lastName'] }
+    ],
+    operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 
-  const { loading: loading3 } = useQuery({
-    fields: eventFields,
-    operation: 'getPastEventGuests',
+  const { loading: loading3 } = useQuery<IEventGuest[]>({
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
+    operation: QueryEvent.GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });
 
-  const { loading: loading4 } = useQuery({
-    fields: baseEventFields,
-    operation: 'getPastEventWatches',
-    schema: [Schema.EVENT_WATCH]
+  const { loading: loading4 } = useQuery<IEventWatch[]>({
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id', { community: ['id'] }] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+    ],
+    operation: QueryEvent.GET_EVENT_WATCHES,
+    schema: [Schema.EVENT_WATCH],
+    types: { communityId: { required: false } },
+    variables: { communityId }
   });
 
-  return loading1 || loading2 || loading3 || loading4;
+  return { loading: loading1 || loading2 || loading3 || loading4 };
 };
 
 export default useInitEventAnalytics;

@@ -1,45 +1,44 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
-import useQuery from '@hooks/useQuery';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import { IMemberData, IQuestion } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
+import { IMemberValue, IQuestion } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
+import useInitProfileMembership from './useInitProfileMembership';
 
 const ProfileMembershipHeader: React.FC = () => {
-  const title = useStoreState(({ db }) => {
+  const title: string = useStoreState(({ db }) => {
     return `${db.community.name} Membership Information`;
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () =>
+  const onClick = () => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
+  };
 
   return <ProfileCardHeader canEdit title={title} onEditClick={onClick} />;
 };
 
 const ProfileMembershipContent: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
-    const questions: IQuestion[] = db.community.questions
+    const sortedQuestions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => !question.adminOnly)
       ?.filter((question: IQuestion) => !question.category)
-      ?.sort((a, b) => sortObjects(a, b, 'createdAt', 'ASC'));
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'));
 
-    const data: IMemberData[] = db.member.data?.map(
-      (dataId: string) => db.byDataId[dataId]
+    const values: IMemberValue[] = db.member.values?.map(
+      (valueId: string) => db.byValuesId[valueId]
     );
 
-    return questions?.map(({ id, title, type }: IQuestion) => {
-      const value: any = data?.find(
-        (entity: IMemberData) => entity?.question === id
+    return sortedQuestions?.map(({ id, title, type }: IQuestion) => {
+      const value: any = values?.find(
+        (entity: IMemberValue) => entity?.question === id
       )?.value;
 
       return { title, type, value };
@@ -50,11 +49,12 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const hasData: boolean = useStoreState(({ db }) => !!db.member.data);
+  const hasData: boolean = useStoreState(({ db }) => !!db.member.values);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () =>
+  const onClick = () => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
+  };
 
   return (
     <Button fill primary show={!hasData} onClick={onClick}>
@@ -64,11 +64,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const { loading } = useQuery<IMemberData[]>({
-    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: 'getMemberData',
-    schema: [Schema.MEMBER_DATA]
-  });
+  const { loading } = useInitProfileMembership();
 
   return (
     <Card className="s-profile-card--membership" show={!loading}>

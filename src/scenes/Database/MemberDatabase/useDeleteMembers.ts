@@ -4,6 +4,7 @@ import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { MemberIdsArgs } from '../Database.types';
 
 const useDeleteMembers = () => {
@@ -13,7 +14,7 @@ const useDeleteMembers = () => {
 
   const [deleteMembers] = useMutation<IMember[], MemberIdsArgs>({
     fields: ['deletedAt', 'id'],
-    operation: 'deleteMembers',
+    operation: MutationEvent.DELETE_MEMBERS,
     schema: [Schema.MEMBER],
     types: { memberIds: { required: true, type: '[String!]' } }
   });
@@ -34,7 +35,7 @@ const useDeleteMembers = () => {
       message: `${memberIds?.length} member(s) removed from the community.`,
       mutationArgsOnUndo: {
         fields: ['deletedAt', 'id'],
-        operation: 'restoreMembers',
+        operation: MutationEvent.RESTORE_MEMBERS,
         schema: [Schema.MEMBER],
         types: { memberIds: { required: true, type: '[String!]' } },
         variables: { memberIds }

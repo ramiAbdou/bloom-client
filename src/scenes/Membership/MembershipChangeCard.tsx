@@ -1,25 +1,25 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
-import { ModalType } from '@util/constants';
 import Card from '@containers/Card/Card';
-import { IMemberType, RecurrenceType } from '@store/Db/entities';
+import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { takeFirst } from '@util/util';
 
-const MembershipChangeCard: React.FC<IMemberType> = ({
+const MembershipChangeCard: React.FC<IMemberPlan> = ({
   amount,
   id,
   name,
   recurrence
 }) => {
-  const isCurrent = useStoreState(({ db }) => db.member.type === id);
+  const isCurrent = useStoreState(({ db }) => db.member.plan === id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({
       id: ModalType.CHANGE_MEMBERSHIP,
-      metadata: { selectedTypeId: id, type: 'CHANGE_MEMBERSHIP' }
+      metadata: { selectedPlanId: id, type: 'CHANGE_MEMBERSHIP' }
     });
   };
 

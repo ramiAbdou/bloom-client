@@ -21,7 +21,7 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   });
 
   const setCurrentPage = StoryStore.useStoreActions(
-    (store) => store.setCurrentPage
+    (state) => state.setCurrentPage
   );
 
   if (show === false) return null;

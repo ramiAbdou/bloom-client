@@ -8,7 +8,7 @@ const DropdownSearch: React.FC = () => {
     ({ values }) => values?.length >= 5
   );
 
-  const value = DropdownStore.useStoreState((store) => store.searchString);
+  const value = DropdownStore.useStoreState((state) => state.searchString);
 
   const setSearchString = DropdownStore.useStoreActions(
     (store) => store.setSearchString

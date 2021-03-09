@@ -1,36 +1,48 @@
 import { computed } from 'easy-peasy';
 
 import {
+  IApplication,
   ICommunity,
-  ICommunityApplication,
+  ICommunityIntegrations,
   IEvent,
-  IIntegrations,
   IMember,
+  IMemberIntegrations,
+  IMemberPlan,
+  IMemberSocials,
   IUser
 } from '@store/Db/entities';
-import { updateDocumentColors } from '@util/colorUtil';
 import { DbModel } from './Db.types';
+import { updateDocumentColors } from './Db.util';
 
 const dbActiveStore: Pick<
   DbModel,
-  'application' | 'community' | 'event' | 'integrations' | 'member' | 'user'
+  | 'application'
+  | 'community'
+  | 'communityIntegrations'
+  | 'event'
+  | 'member'
+  | 'memberIntegrations'
+  | 'socials'
+  | 'user'
 > = {
   application: computed(({ community, entities }) => {
     const { byId: byApplicationId } = entities.applications;
-    return byApplicationId[community?.application] as ICommunityApplication;
+    return byApplicationId[community?.application] as IApplication;
   }),
 
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
-    const { byId: byIntegrationsId } = entities.integrations;
-    const { byId: byTypeId } = entities.types;
+    const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
+    const { byId: byMemberPlanId } = entities.memberPlans;
 
     const result: ICommunity = byId[activeId];
-    const integrations: IIntegrations = byIntegrationsId[result?.integrations];
 
-    const hasPaidMembership: boolean = result?.types?.some(
-      (typeId: string) => !byTypeId[typeId]?.isFree
-    );
+    const communityIntegrations: ICommunityIntegrations =
+      byCommunityIntegrationsId[result?.communityIntegrations];
+
+    const hasPaidMembership: boolean = result?.plans
+      ?.map((planId: string) => byMemberPlanId[planId])
+      ?.some((plan: IMemberPlan) => !plan?.isFree);
 
     if (!result) return null;
 
@@ -39,8 +51,17 @@ const dbActiveStore: Pick<
 
     return {
       ...result,
-      canCollectDues: hasPaidMembership && !!integrations?.stripeAccountId
+      canCollectDues:
+        hasPaidMembership && !!communityIntegrations?.stripeAccountId
     };
+  }),
+
+  communityIntegrations: computed(({ community, entities }) => {
+    const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
+
+    return byCommunityIntegrationsId[
+      community?.communityIntegrations
+    ] as ICommunityIntegrations;
   }),
 
   event: computed(({ entities }) => {
@@ -48,20 +69,21 @@ const dbActiveStore: Pick<
     return byId[activeId] as IEvent;
   }),
 
-  integrations: computed(({ community, entities }) => {
-    const { byId: byIntegrationId } = entities.integrations;
-    return byIntegrationId[community?.integrations] as IIntegrations;
-  }),
-
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
     return byId[activeId] as IMember;
   }),
 
-  /**
-   * There should only be one user queried in the application, and that is
-   * the logged-in user.
-   */
+  memberIntegrations: computed(({ entities, member }) => {
+    const { byId } = entities.memberIntegrations;
+    return byId[member?.memberIntegrations] as IMemberIntegrations;
+  }),
+
+  socials: computed(({ entities, member }) => {
+    const { byId: bySocialsId } = entities.socials;
+    return bySocialsId[member?.socials] as IMemberSocials;
+  }),
+
   user: computed(({ entities }) => {
     const { activeId, byId } = entities.users;
     return byId[activeId] as IUser;

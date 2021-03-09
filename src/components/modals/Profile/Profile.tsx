@@ -4,8 +4,9 @@ import Show from '@containers/Show';
 import useManualQuery from '@hooks/useManualQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import ProfileStore from './Profile.store';
+import { QueryEvent } from '@util/events';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
@@ -14,8 +15,15 @@ const Profile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
   const [getMember, { data }] = useManualQuery<IMember>({
-    fields: ['id', 'bio', 'joinedAt', { type: ['id'] }, { user: ['id'] }],
-    operation: 'getMember',
+    fields: [
+      'id',
+      'bio',
+      'email',
+      'joinedAt',
+      { plan: ['id'] },
+      { socials: ['id'] }
+    ],
+    operation: QueryEvent.GET_MEMBER,
     schema: Schema.MEMBER,
     types: { memberId: { required: false } },
     variables: { memberId }
@@ -27,14 +35,14 @@ const Profile: React.FC = () => {
 
   return (
     <Show show={!!data}>
-      <ProfileStore.Provider
-        // @ts-ignore b/c user is populated.
-        runtimeModel={{ memberId, userId: data?.user?.id }}
+      <IdStore.Provider
+        // @ts-ignore b/c member is populated.
+        runtimeModel={{ id: memberId }}
       >
         <ProfilePersonal />
         <ProfileData />
         <ProfileHistory />
-      </ProfileStore.Provider>
+      </IdStore.Provider>
     </Show>
   );
 };

@@ -22,7 +22,7 @@ const TableUpdateRows: React.FC<Pick<TableProps, 'rows'>> = ({
   children,
   rows
 }) => {
-  const storedRows = TableStore.useStoreState((store) => store.rows);
+  const storedRows = TableStore.useStoreState((state) => state.rows);
   const setRows = TableStore.useStoreActions((store) => store.setRows);
 
   // // Used primarily for the removal of rows. This will not update the

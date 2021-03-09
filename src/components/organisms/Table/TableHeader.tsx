@@ -5,7 +5,7 @@ import { TableColumn } from './Table.types';
 import HeaderCell from './TableHeader/TableHeader';
 
 const TableHeader: React.FC = () => {
-  const columns = TableStore.useStoreState((store) => store.columns);
+  const columns = TableStore.useStoreState((state) => state.columns);
 
   const hasData = TableStore.useStoreState(
     (store) => !!store.filteredRows.length

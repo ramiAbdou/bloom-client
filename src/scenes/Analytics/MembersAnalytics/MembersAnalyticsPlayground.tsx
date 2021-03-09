@@ -8,6 +8,8 @@ import Chart from '@organisms/Chart/Chart';
 import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
+import { sortObjects } from '@util/util';
 
 const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   // We only want the questions that are meaningful, and things like first/last
@@ -15,14 +17,20 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter((question: IQuestion) => {
-        return !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(
-          question.category
+        return (
+          !question.category ||
+          [
+            QuestionCategory.DUES_STATUS,
+            QuestionCategory.GENDER,
+            QuestionCategory.MEMBER_PLAN
+          ].includes(question.category)
         );
       });
   });
 
-  const questionId = IdStore.useStoreState((store) => store.id);
+  const questionId = IdStore.useStoreState((state) => state.id);
   const setId = IdStore.useStoreActions((store) => store.setId);
 
   const onSelect = (result: string) => {
@@ -50,13 +58,19 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
   const initialQuestionId: string = useStoreState(({ db }) => {
     return db.community.questions
       ?.map((id: string) => db.byQuestionId[id])
-      .filter(
-        ({ category }) =>
-          !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(category)
-      )[0].id;
+      ?.filter((question: IQuestion) => {
+        return (
+          !question.category ||
+          [
+            QuestionCategory.DUES_STATUS,
+            QuestionCategory.GENDER,
+            QuestionCategory.MEMBER_PLAN
+          ].includes(question.category)
+        );
+      })[0].id;
   });
 
-  const questionId = IdStore.useStoreState((store) => store.id);
+  const questionId = IdStore.useStoreState((state) => state.id);
   const setId = IdStore.useStoreActions((store) => store.setId);
 
   useEffect(() => {
@@ -77,7 +91,7 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
 };
 
 const MembersAnalyticsPlaygroundChart: React.FC = () => {
-  const questionId = IdStore.useStoreState((store) => store.id);
+  const questionId = IdStore.useStoreState((state) => state.id);
   return <Chart questionId={questionId} />;
 };
 

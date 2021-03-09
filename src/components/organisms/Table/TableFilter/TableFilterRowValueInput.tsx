@@ -6,6 +6,7 @@ import Dropdown from '@molecules/Dropdown/Dropdown';
 import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { QuestionType } from '@util/constants';
 import TableFilterStore from './TableFilter.store';
 
 const TableFilterRowValueInput: React.FC = () => {
@@ -29,7 +30,11 @@ const TableFilterRowValueInput: React.FC = () => {
 
   const onInputChange = (value: string) => setFilter({ id, value });
 
-  if (['MULTIPLE_CHOICE', 'MULTIPLE_SELECT'].includes(question?.type)) {
+  if (
+    [QuestionType.MULTIPLE_SELECT, QuestionType.MULTIPLE_CHOICE].includes(
+      question?.type
+    )
+  ) {
     return (
       <Dropdown
         options={{ attribute: false }}

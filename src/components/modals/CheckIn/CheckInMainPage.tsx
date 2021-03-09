@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 
-import { CookieType } from '@util/constants';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
+import { ErrorContext } from '@util/errors';
 import CheckInGuestForm from './CheckInGuestForm';
 import CheckInLoginContent from './CheckInLoginContent';
 
@@ -12,7 +12,7 @@ interface CheckInMainPageProps {
 }
 
 const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
-  const pageId = StoryStore.useStoreState((store) => store.pageId);
+  const pageId = StoryStore.useStoreState((state) => state.pageId);
 
   const branchId = StoryStore.useStoreState(({ getPage }) => {
     return getPage('FINISH')?.branchId;
@@ -22,7 +22,7 @@ const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
     (store) => store.setCurrentPage
   );
 
-  const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
+  const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 
   useEffect(() => {
     if (hasCookieError && !!branchId && pageId !== 'FINISH') {

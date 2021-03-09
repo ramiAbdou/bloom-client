@@ -12,7 +12,7 @@ const IndividualEventViewedFilter: React.FC = () => {
   const show = !!recordingUrl;
 
   const filter: TableFilter = (row: IndividualEventTableRowProps) => {
-    return row.watched === 'Yes';
+    return !!row.watched;
   };
 
   return (
@@ -64,7 +64,7 @@ const IndividualEventNoShowAndFilter: React.FC = () => {
   const show = !!recordingUrl;
 
   const filter: TableFilter = (row: IndividualEventTableRowProps) => {
-    return row.watched === 'Yes' && !row.joinedAt;
+    return !!row.watched && !row.joinedAt;
   };
 
   return (

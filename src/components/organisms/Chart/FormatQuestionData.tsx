@@ -4,8 +4,8 @@ import sw from 'stopword';
 
 import {
   IMember,
-  IMemberData,
-  IMemberType,
+  IMemberPlan,
+  IMemberValue,
   IQuestion
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -17,7 +17,7 @@ const useQuestionData = (): Pick<
   ChartModelInitArgs,
   'data' | 'totalResponses'
 > => {
-  const questionId = Chart.useStoreState((store) => store.questionId);
+  const questionId = Chart.useStoreState((state) => state.questionId);
 
   const questionType: QuestionType = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
@@ -41,21 +41,21 @@ const useQuestionData = (): Pick<
 
     members.forEach((memberId: string) => {
       const member: IMember = db.byMemberId[memberId];
-      const type: IMemberType = db.byTypeId[member.type];
+      const plan: IMemberPlan = db.byMemberPlanId[member.plan];
 
       let value;
 
-      if (category === QuestionCategory.MEMBERSHIP_TYPE) value = type?.name;
+      if (category === QuestionCategory.MEMBER_PLAN) value = plan?.name;
       else if (category === QuestionCategory.DUES_STATUS) {
-        value = member.isDuesActive ? 'Active' : 'Inactive';
+        value = member.isDuesActive ? 'Paid' : 'Not Paid';
       } else {
-        const d = member.data.find((dataId: string) => {
-          const data: IMemberData = db.byDataId[dataId];
+        const d = member.values.find((valueId: string) => {
+          const data: IMemberValue = db.byValuesId[valueId];
           const question: IQuestion = db.byQuestionId[data.question];
           return question.id === questionId;
         });
 
-        value = db.byDataId[d]?.value;
+        value = db.byValuesId[d]?.value;
       }
 
       if (!value) return;
@@ -102,8 +102,8 @@ const useQuestionData = (): Pick<
 };
 
 export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
-  const currentQuestionId = Chart.useStoreState((store) => store.questionId);
-  const currentType = Chart.useStoreState((store) => store.type);
+  const currentQuestionId = Chart.useStoreState((state) => state.questionId);
+  const currentType = Chart.useStoreState((state) => state.type);
   const setData = Chart.useStoreActions((store) => store.setData);
   const setQuestionId = Chart.useStoreActions((store) => store.setQuestionId);
   const setType = Chart.useStoreActions((store) => store.setType);
@@ -121,12 +121,12 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
   // Controls the type of the chart, based on the type of the question.
   // - If the question is LONG_TEXT or SHORT_TEXT, the chart should be BAR.
   // - If the question is MULTIPLE_*, the chart should be PIE.
-  // - If the users wants a time-series, that would be manually specified in
+  // - If the members wants a time-series, that would be manually specified in
   // the props when the chart was created, not here.
   useEffect(() => {
     if (
       ([QuestionType.LONG_TEXT, QuestionType.SHORT_TEXT].includes(type) ||
-        (type === 'MULTIPLE_CHOICE' && data.length >= 8)) &&
+        (type === QuestionType.MULTIPLE_CHOICE && data.length >= 8)) &&
       currentType !== ChartType.BAR
     ) {
       setType(ChartType.BAR);
@@ -134,7 +134,9 @@ export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
     }
 
     if (
-      ['MULTIPLE_SELECT', 'MULTIPLE_CHOICE'].includes(type) &&
+      [QuestionType.MULTIPLE_SELECT, QuestionType.MULTIPLE_CHOICE].includes(
+        type
+      ) &&
       currentType !== ChartType.PIE
     ) {
       setType(ChartType.PIE);

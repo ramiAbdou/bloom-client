@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { getFormItemKey } from '@organisms/Form/Form.util';
 import StoryStore from '@organisms/Story/Story.store';
+import { QuestionType } from '@util/constants';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 
@@ -19,7 +20,9 @@ const useInitFormItem = (props: FormItemData) => {
 
   useEffect(() => {
     const emptyValue =
-      (type === 'MULTIPLE_SELECT' && []) || (type === 'TOGGLE' && false) || '';
+      (type === QuestionType.MULTIPLE_SELECT && []) ||
+      (type === QuestionType.TOGGLE && false) ||
+      '';
 
     setItem({
       ...props,

@@ -1,15 +1,15 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
-import { ModalType } from '@util/constants';
 import TableStore from '@organisms/Table/Table.store';
 import { MemberRole } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { takeFirst } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
 /**
- * Returns the appropriate tooltip message based on the user's permissions
+ * Returns the appropriate tooltip message based on the Member's permissions
  * to delete another person in the community.
  */
 const useDeleteTooltip = (): string => {

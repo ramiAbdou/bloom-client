@@ -1,4 +1,4 @@
-import { IMemberType, RecurrenceType } from '@store/Db/entities';
+import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
 import { takeFirst } from '@util/util';
 
 /**
@@ -9,7 +9,7 @@ import { takeFirst } from '@util/util';
  * @example getTypeDescription(args) => $325 Lifetime
  */
 export const getTypeDescription = (
-  type: Pick<IMemberType, 'amount' | 'recurrence'>
+  type: Pick<IMemberPlan, 'amount' | 'recurrence'>
 ) => {
   const { amount, recurrence } = type;
 

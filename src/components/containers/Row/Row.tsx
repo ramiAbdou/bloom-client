@@ -4,18 +4,20 @@ import useBreakpoint from '@hooks/useBreakpoint';
 import { cx } from '@util/util';
 import { RowProps } from './Row.types';
 
-const Row: React.FC<RowProps> = ({
-  align = 'center',
-  children,
-  className,
-  equal,
-  fillBreakpoint,
-  gap,
-  justify,
-  spacing,
-  show,
-  wrap
-}) => {
+const Row: React.FC<RowProps> = (props) => {
+  const {
+    align = 'center',
+    children,
+    className,
+    equal,
+    fillBreakpoint,
+    gap,
+    justify,
+    spacing,
+    show,
+    wrap
+  } = props;
+
   const isTablet: boolean = useBreakpoint() <= 2;
 
   const css = cx(

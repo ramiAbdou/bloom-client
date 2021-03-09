@@ -5,7 +5,7 @@ import StoryPage from '@organisms/Story/StoryPage';
 import PaymentStore from './Payment.store';
 
 const PaymentConfirmation: React.FC = () => {
-  const modalType = PaymentStore.useStoreState((store) => store.type);
+  const modalType = PaymentStore.useStoreState((state) => state.type);
 
   let pageProps: Pick<StoryPageProps, 'description' | 'title'>;
 

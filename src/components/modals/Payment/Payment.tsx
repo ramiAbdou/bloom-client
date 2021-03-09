@@ -1,30 +1,29 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@util/constants';
-import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import Story from '@organisms/Story/Story';
-import { IIntegrations } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 import PaymentCardPage from './PaymentCard';
 import PaymentConfirmationPage from './PaymentConfirmation';
 import PaymentFinishPage from './PaymentFinish';
 import PaymentStripeProvider from './PaymentStripeProvider';
+import useInitPayment from './useInitPayment';
 
 const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
-  selectedTypeId
+  selectedPlanId
 }) => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
 
   const setSelectedTypeId = PaymentStore.useStoreActions(
     (store) => store.setSelectedTypeId
   );
 
   useEffect(() => {
-    if (selectedTypeId !== typeId) setSelectedTypeId(selectedTypeId);
-  }, [typeId, selectedTypeId]);
+    if (selectedPlanId !== planId) setSelectedTypeId(selectedPlanId);
+  }, [planId, selectedPlanId]);
 
   return (
     <Story>
@@ -36,27 +35,23 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 };
 
 const PaymentModal: React.FC = () => {
-  const type = useStoreState(
-    ({ modal }) => modal.metadata?.type
-  ) as PaymentModalType;
+  const type: PaymentModalType = useStoreState(({ modal }) => {
+    return modal.metadata?.type;
+  });
 
-  const selectedTypeId = useStoreState(
-    ({ modal }) => modal.metadata?.selectedTypeId
-  ) as string;
+  const selectedPlanId: string = useStoreState(({ modal }) => {
+    return modal.metadata?.selectedPlanId;
+  });
 
-  const currentTypeId: string = useStoreState(({ db }) => {
-    return db.member?.type;
+  const currentPlanId: string = useStoreState(({ db }) => {
+    return db.member?.plan;
   });
 
   const isAdmin = useStoreState(({ db }) => !!db.member.role);
 
-  const { loading } = useQuery<IIntegrations>({
-    fields: ['id', 'stripeAccountId', { community: ['id'] }],
-    operation: 'getIntegrations',
-    schema: Schema.COMMUNITY_INTEGRATIONS
-  });
+  const { loading }: Partial<QueryResult> = useInitPayment();
 
-  // Get the user and see if they've paid their dues or not.
+  // Get the member and see if they've paid their dues or not.
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -64,19 +59,19 @@ const PaymentModal: React.FC = () => {
     if (!isAdmin && !isDuesActive) {
       showModal({
         id: ModalType.PAY_DUES,
-        metadata: { selectedTypeId: currentTypeId, type: 'PAY_DUES' }
+        metadata: { selectedPlanId: currentPlanId, type: 'PAY_DUES' }
       });
     }
   }, [isDuesActive]);
 
-  if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedTypeId)) {
+  if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedPlanId)) {
     return null;
   }
 
   return (
     <PaymentStore.Provider runtimeModel={{ ...paymentModel, type }}>
       <PaymentStripeProvider>
-        <PaymentModalContainer selectedTypeId={selectedTypeId} />
+        <PaymentModalContainer selectedPlanId={selectedPlanId} />
       </PaymentStripeProvider>
     </PaymentStore.Provider>
   );

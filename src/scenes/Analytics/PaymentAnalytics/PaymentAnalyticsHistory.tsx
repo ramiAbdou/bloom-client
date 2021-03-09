@@ -11,19 +11,19 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
-import { IMember, IMemberPayment, IUser } from '@store/Db/entities';
+import { IMember, IPayment } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
-import useInitDuesAnalyticsHistory from './useInitDuesAnalyticsHistory';
+import useInitPaymentAnalyticsHistory from './useInitPaymentAnalyticsHistory';
 
-interface DuesAnalyticsHistoryTableData {
+interface PaymentAnalyticsHistoryTableData {
   amount: string;
   id: string;
   email: string;
   fullName: string;
   paidOn: string;
-  type: string;
+  plan: string;
 }
 
 const columns: TableColumn[] = [
@@ -32,31 +32,29 @@ const columns: TableColumn[] = [
   { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT },
   { id: 'amount', title: 'Amount', type: QuestionType.SHORT_TEXT },
   {
-    id: 'type',
+    id: 'plan',
     title: 'Membership Plan',
     type: QuestionType.MULTIPLE_CHOICE
   }
 ];
 
-const DuesAnalyticsHistoryTable: React.FC = () => {
+const PaymentAnalyticsHistoryTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
-    const result: DuesAnalyticsHistoryTableData[] = db.community.payments
+    const result: PaymentAnalyticsHistoryTableData[] = db.community.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
-      ?.map((payment: IMemberPayment) => {
-        const { amount, createdAt, type }: IMemberPayment = payment;
+      ?.map((payment: IPayment) => {
+        const { amount, createdAt, plan }: IPayment = payment;
         const member: IMember = db.byMemberId[payment?.member];
-        const user: IUser = db.byUserId[member?.user];
-        const { firstName, lastName, email }: IUser = user;
 
         return {
           amount: `$${amount.toFixed(2)}`,
-          email,
-          fullName: `${firstName} ${lastName}`,
+          email: member?.email,
+          fullName: `${member?.firstName} ${member?.lastName}`,
           id: member.id,
           paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
-          type: db.byTypeId[type].name
+          plan: db.byMemberPlanId[plan].name
         };
       }, []);
 
@@ -77,15 +75,15 @@ const DuesAnalyticsHistoryTable: React.FC = () => {
   );
 };
 
-const DuesAnalyticsHistory: React.FC = () => {
-  const { data, loading } = useInitDuesAnalyticsHistory();
+const PaymentAnalyticsHistory: React.FC = () => {
+  const { data, loading } = useInitPaymentAnalyticsHistory();
 
   return (
     <MainSection className="s-analytics-dues-history" show={!!data?.length}>
       <LoadingHeader h2 loading={loading} title="Dues History" />
-      {!loading && <DuesAnalyticsHistoryTable />}
+      {!loading && <PaymentAnalyticsHistoryTable />}
     </MainSection>
   );
 };
 
-export default DuesAnalyticsHistory;
+export default PaymentAnalyticsHistory;

@@ -10,6 +10,7 @@ import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { MemberIdsArgs } from '../Database.types';
 
 const AdminDatabaseDemoteFormActions: React.FC = () => {
@@ -31,7 +32,7 @@ const AdminDatabaseDemoteForm: React.FC = () => {
 
   const [demoteMembers] = useMutation<IMember[], MemberIdsArgs>({
     fields: ['id', 'role'],
-    operation: 'demoteMembers',
+    operation: MutationEvent.DEMOTE_MEMBERS,
     schema: [Schema.MEMBER],
     types: { memberIds: { required: true, type: '[String!]' } }
   });

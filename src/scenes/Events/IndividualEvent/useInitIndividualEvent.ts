@@ -2,16 +2,19 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { CookieType, ModalType } from '@util/constants';
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { EventPrivacy, ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { eventFields, GetEventArgs } from '../Events.types';
+import { ModalType } from '@util/constants';
+import { ErrorContext } from '@util/errors';
+import { QueryEvent } from '@util/events';
+import { GetEventArgs } from '../Events.types';
 
-const useInitIndividualEvent = (): boolean => {
+const useInitIndividualEvent = (): Partial<QueryResult> => {
   const { eventId } = useParams() as { eventId: string };
 
   const communityId = useStoreState(({ db }) => db.community?.id);
@@ -39,15 +42,21 @@ const useInitIndividualEvent = (): boolean => {
       'videoUrl',
       { community: ['id'] }
     ],
-    operation: 'getEvent',
+    operation: QueryEvent.GET_EVENT,
     schema: Schema.EVENT,
     types: { eventId: { required: true } },
     variables: { eventId }
   });
 
   const { loading: loading2 } = useQuery<IEvent, GetEventArgs>({
-    fields: eventFields,
-    operation: 'getEventGuests',
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'email', 'firstName', 'lastName'] }
+    ],
+    operation: QueryEvent.GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     types: { eventId: { required: false } },
     variables: { eventId }
@@ -55,12 +64,12 @@ const useInitIndividualEvent = (): boolean => {
 
   const [getCommunity, { loading: loading3 }] = useManualQuery<ICommunity>({
     fields: ['id', 'name', 'primaryColor'],
-    operation: 'getCommunity',
+    operation: QueryEvent.GET_COMMUNITY,
     schema: Schema.COMMUNITY,
     types: { communityId: { required: false } }
   });
 
-  const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
+  const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 
   useEffect(() => {
     if (data1) {
@@ -72,7 +81,7 @@ const useInitIndividualEvent = (): boolean => {
     }
   }, [data1]);
 
-  // If the user isn't a member of the community, and it's a member's only
+  // If not a member of the community, and it's a member's only
   // event or there was an issue logging in, show a locked modal.
   useEffect(() => {
     if (!isMember && (isMembersOnly || hasCookieError)) {
@@ -84,7 +93,7 @@ const useInitIndividualEvent = (): boolean => {
     }
   }, [hasCookieError, isMember, isMembersOnly]);
 
-  // If the user isn't a member of the community, then we need to load the
+  // If not a member of the community, then we need to load the
   // community's name and primary color as well.
   useEffect(() => {
     (async () => {
@@ -92,10 +101,9 @@ const useInitIndividualEvent = (): boolean => {
     })();
   }, [communityId, isMember]);
 
-  const loading = loading1 || loading2 || loading3;
-  useLoader(loading);
+  useLoader(loading1 || loading2 || loading3);
 
-  return loading;
+  return { loading: loading1 || loading2 || loading3 };
 };
 
 export default useInitIndividualEvent;

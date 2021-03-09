@@ -1,6 +1,10 @@
-import { QuestionCategory, QuestionType, TimeSeriesData } from '@util/constants';
+import {
+  QuestionCategory,
+  QuestionType,
+  TimeSeriesData
+} from '@util/constants';
 
-type Identifier = string;
+export type Identifier = string;
 
 export interface BaseEntity {
   createdAt: Identifier;
@@ -9,32 +13,45 @@ export interface BaseEntity {
   updatedAt: Identifier;
 }
 
+// ## APPLICATION
+
+export interface IApplication extends BaseEntity {
+  community: Identifier;
+  description: string;
+  questions: Identifier[];
+  title: string;
+}
+
 // ## COMMUNITY
 
 export interface ICommunity extends BaseEntity {
   application?: Identifier;
   autoAccept?: boolean;
   canCollectDues?: boolean;
+  communityIntegrations: Identifier;
   events?: Identifier[];
   highlightedQuestion: Identifier;
-  integrations: Identifier;
   logoUrl: string;
   members: Identifier[];
   payments: Identifier[];
   questions: Identifier[];
   name: string;
   owner?: Identifier;
+  plans: Identifier[];
   primaryColor: string;
-  types: Identifier[];
+  supporters: Identifier[];
   urlName: string;
 }
 
-// ## COMMUNITY APPLICATION
+// ## COMMUNITY INTEGRATIONS
 
-export interface ICommunityApplication extends BaseEntity {
-  community?: Identifier;
-  description: string;
-  title: string;
+export interface ICommunityIntegrations extends BaseEntity {
+  community: Identifier;
+  isMailchimpAuthenticated: boolean;
+  mailchimpLists: { name: string; id: string }[];
+  mailchimpListId: string;
+  mailchimpListName: string;
+  stripeAccountId: string;
 }
 
 // ## EVENT
@@ -69,21 +86,17 @@ export interface IEvent extends BaseEntity {
 // ## EVENT ATTENDEE
 
 export interface IEventAttendee extends BaseEntity {
-  email?: string;
   event: Identifier;
-  firstName?: string;
-  lastName?: string;
-  member: Identifier;
+  member?: Identifier;
+  supporter?: Identifier;
 }
 
 // ## EVENT GUEST
 
 export interface IEventGuest extends BaseEntity {
-  email?: string;
   event: Identifier;
-  firstName?: string;
-  lastName?: string;
-  member: Identifier;
+  member?: Identifier;
+  supporter?: Identifier;
 }
 
 // ## EVENT WATCH
@@ -93,24 +106,7 @@ export interface IEventWatch extends BaseEntity {
   member: Identifier;
 }
 
-// ## INTEGRATIONS
-
-export interface IIntegrations extends BaseEntity {
-  isMailchimpAuthenticated: boolean;
-  mailchimpLists: { name: string; id: string }[];
-  mailchimpListId: string;
-  mailchimpListName: string;
-  stripeAccountId: string;
-}
-
 // ## MEMBER
-
-export interface IPaymentMethod {
-  brand: string;
-  expirationDate: string;
-  last4: string;
-  zipCode: string;
-}
 
 export enum MemberRole {
   ADMIN = 'Admin',
@@ -128,37 +124,41 @@ export interface IMember extends BaseEntity {
   attendees: Identifier[];
   bio: string;
   community: Identifier;
-  data: Identifier[];
+  email: string;
+  firstName: string;
   guests: Identifier[];
   isDuesActive: boolean;
   joinedAt: string;
-  paymentMethod: IPaymentMethod;
+  lastName: string;
+  memberIntegrations: Identifier;
   payments: Identifier[];
+  pictureUrl: string;
+  plan: Identifier;
   role?: MemberRole;
-  type: Identifier;
+  socials: Identifier;
   status: MemberStatus;
-  stripeSubscriptionId?: string;
   user: Identifier;
+  values: Identifier[];
   watches: Identifier[];
 }
 
-// ## MEMBER DATA
+// ## MEMBER COMMUNITY INTEGRATIONS
 
-export interface IMemberData extends BaseEntity {
-  question: Identifier;
-  value: string | string[];
+export interface IPaymentMethod {
+  brand: string;
+  expirationDate: string;
+  last4: string;
+  zipCode: string;
 }
 
-// ## MEMBER PAYMENT
-
-export interface IMemberPayment extends BaseEntity {
-  amount: number;
-  stripeInvoiceUrl: string;
+export interface IMemberIntegrations extends BaseEntity {
   member: Identifier;
-  type: Identifier;
+  paymentMethod: IPaymentMethod;
+  renewalDate?: string;
+  stripeSubscriptionId?: string;
 }
 
-// ## MEMBER TYPE
+// ## MEMBER PLAN
 
 export enum RecurrenceType {
   LIFETIME = 'Lifetime',
@@ -166,41 +166,82 @@ export enum RecurrenceType {
   YEARLY = 'Yearly'
 }
 
-export interface IMemberType extends BaseEntity {
+export interface IMemberPlan extends BaseEntity {
   amount: number;
   isFree: boolean;
   name: string;
   recurrence: RecurrenceType;
 }
 
+// MEMBER SOCIALS
+
+export interface IMemberSocials extends BaseEntity {
+  clubhouseUrl: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  linkedInUrl: string;
+  twitterUrl: string;
+}
+
+// ## MEMBER VALUE
+
+export interface IMemberValue extends BaseEntity {
+  member: Identifier;
+  question: Identifier;
+  value: string | string[];
+}
+
+// ## PAYMENT
+
+export enum PaymentType {
+  DONATION = 'DONATION',
+  DUES = 'DUES'
+}
+
+export interface IPayment extends BaseEntity {
+  amount: number;
+  stripeInvoiceUrl: string;
+  member: Identifier;
+  plan: Identifier;
+  type: PaymentType;
+}
+
 // ## QUESTION
 
 export interface IQuestion extends BaseEntity {
-  adminOnly: boolean;
-  autoGenerated: boolean;
   category: QuestionCategory;
-  data?: Identifier[];
+  locked: boolean;
   options: string[];
+  rank?: number;
   required: boolean;
   title: QuestionType;
   type: QuestionType;
+  values?: Identifier[];
+}
+
+// RANKED QUESTION
+
+export interface IRankedQuestion extends BaseEntity {
+  application?: Identifier;
+  rank: number;
+  question: Identifier;
+}
+
+// ## SUPPORTER
+
+export interface ISupporter extends BaseEntity {
+  email: string;
+  firstName: string;
+  lastName: string;
+  pictureUrl: string;
 }
 
 // ## USER
 
 export interface IUser extends BaseEntity {
-  clubhouseUrl: string;
-  currentLocation: string;
   email: string;
-  facebookUrl: string;
-  firstName: string;
-  fullName?: string;
-  instagramUrl: string;
-  lastName: string;
-  linkedInUrl: string;
-  members?: Identifier[];
-  pictureUrl: string;
-  twitterUrl: string;
+  members: Identifier[];
+  supporters: Identifier[];
 }
 
 export interface EntityRecord<T> {
@@ -209,18 +250,22 @@ export interface EntityRecord<T> {
 }
 
 export interface IEntities {
-  applications: EntityRecord<ICommunityApplication>;
+  applications: EntityRecord<IApplication>;
   attendees: EntityRecord<IEventAttendee>;
   communities: EntityRecord<ICommunity>;
-  data: EntityRecord<IMemberData>;
+  communityIntegrations: EntityRecord<ICommunityIntegrations>;
   events: EntityRecord<IEvent>;
   guests: EntityRecord<IEventGuest>;
-  integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
-  payments: EntityRecord<IMemberPayment>;
+  memberIntegrations: EntityRecord<IMemberIntegrations>;
+  memberPlans: EntityRecord<IMemberPlan>;
+  payments: EntityRecord<IPayment>;
   questions: EntityRecord<IQuestion>;
-  types: EntityRecord<IMemberType>;
+  rankedQuestions: EntityRecord<IRankedQuestion>;
+  socials: EntityRecord<IMemberSocials>;
+  supporters: EntityRecord<ISupporter>;
   users: EntityRecord<IUser>;
+  values: EntityRecord<IMemberValue>;
   watches: EntityRecord<IEventWatch>;
 }
 
@@ -229,14 +274,18 @@ export const initialEntities: IEntities = {
   applications: { byId: {} },
   attendees: { byId: {} },
   communities: { activeId: null, byId: {} },
-  data: { byId: {} },
+  communityIntegrations: { byId: {} },
   events: { activeId: null, byId: {} },
   guests: { byId: {} },
-  integrations: { byId: {} },
+  memberIntegrations: { byId: {} },
+  memberPlans: { byId: {} },
   members: { activeId: null, byId: {} },
   payments: { byId: {} },
   questions: { byId: {} },
-  types: { byId: {} },
+  rankedQuestions: { byId: {} },
+  socials: { byId: {} },
+  supporters: { byId: {} },
   users: { activeId: null, byId: {} },
+  values: { byId: {} },
   watches: { byId: {} }
 };

@@ -10,7 +10,7 @@ import ListFilterQuestionOptionList from './ListFilterQuestionOptionList';
 import ListFilterQuestionSelectedOptionList from './ListFilterQuestionSelectedOptionList';
 
 const ListFilterQuestionContent: React.FC = () => {
-  const questionId: string = IdStore.useStoreState((store) => store.id);
+  const questionId: string = IdStore.useStoreState((state) => state.id);
 
   const openQuestionId = ListFilterStore.useStoreState(
     (state) => state.openQuestionId

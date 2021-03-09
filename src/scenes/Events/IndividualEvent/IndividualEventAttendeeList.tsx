@@ -6,28 +6,34 @@ import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { IEventAttendee, IMember, IUser } from '@store/Db/entities';
+import { IEventAttendee, IMember, ISupporter } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 interface IndividualEventAttendeeProps {
   attendeeId?: string;
-  memberId?: string;
-  userId?: string;
 }
 
 const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
   props
 ) => {
-  const { attendeeId, memberId, userId } = props;
+  const { attendeeId } = props;
 
-  const { firstName, lastName }: IEventAttendee | IUser = useStoreState(
-    ({ db }) => {
-      if (userId) return db.byUserId[userId];
-      return db.byAttendeeId[attendeeId];
-    }
-  );
+  const memberId: string = useStoreState(({ db }) => {
+    const guest: IEventAttendee = db.byAttendeeId[attendeeId];
+    return guest?.member;
+  });
+
+  const fullName: string = useStoreState(({ db }) => {
+    const guest: IEventAttendee = db.byAttendeeId[attendeeId];
+    const member: IMember = db.byMemberId[guest?.member];
+    const supporter: ISupporter = db.bySupporterId[guest?.supporter];
+
+    const firstName = member?.firstName ?? supporter?.firstName;
+    const lastName = member?.lastName ?? supporter?.lastName;
+    return `${firstName} ${lastName}`;
+  });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -35,38 +41,31 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
     showModal({ id: ModalType.PROFILE, metadata: memberId });
   };
 
-  const fullName = `${firstName} ${lastName}`;
-
   return (
     <Button className="s-events-individual-member" onClick={onClick}>
-      <ProfilePicture fontSize={16} size={36} {...props} />
+      <ProfilePicture fontSize={16} memberId={memberId} size={36} />
       <p className="body--bold">{fullName}</p>
     </Button>
   );
 };
 
 const IndividualEventAttendeeListContent: React.FC = () => {
-  const users: IndividualEventAttendeeProps[] = useStoreState(({ db }) => {
+  const attendees: IndividualEventAttendeeProps[] = useStoreState(({ db }) => {
     return db.event?.attendees
       ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'))
       ?.reduce((acc, attendee: IEventAttendee) => {
-        if (attendee.member) {
-          const member: IMember = db.byMemberId[attendee.member];
-          return [...acc, { memberId: member.id, userId: member.user }];
-        }
-
         return [...acc, { attendeeId: attendee.id }];
       }, []);
   });
 
   return (
     <>
-      {!users?.length && <p>No guests attended.</p>}
+      {!attendees?.length && <p>No guests attended.</p>}
 
       <List
         className="s-events-card-ctr"
-        items={users}
+        items={attendees}
         render={IndividualEventAttendee}
       />
     </>

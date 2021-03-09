@@ -1,9 +1,9 @@
 import { nanoid } from 'nanoid';
 import React from 'react';
 
-import { ShowProps } from '@util/constants';
 import Show from '@containers/Show';
 import useTooltip from '@hooks/useTooltip';
+import { ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 import StoryStore from './Story.store';
 import { StoryPageProps } from './Story.types';
@@ -26,7 +26,7 @@ const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
 };
 
 const StoryNavigation: React.FC<ShowProps> = ({ show }) => {
-  const pageId = StoryStore.useStoreState((store) => store.pageId);
+  const pageId = StoryStore.useStoreState((state) => state.pageId);
 
   const pages = StoryStore.useStoreState((store) =>
     store.pages.filter(({ id }) => id !== 'CONFIRMATION')

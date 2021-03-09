@@ -4,16 +4,18 @@ import {
   OnFormSubmit,
   OnFormSubmitArgs
 } from '@organisms/Form/Form.types';
+import { QuestionCategory, QuestionType } from '@util/constants';
+import { MutationEvent } from '@util/events';
 import { takeFirst } from '@util/util';
 import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';
 
 const useInviteMembers = (): OnFormSubmit => {
-  const admin = AddMemberStore.useStoreState((store) => store.admin);
+  const admin = AddMemberStore.useStoreState((state) => state.admin);
 
   const [inviteMembers] = useMutation<any, AddMembersArgs>({
     fields: ['id'],
-    operation: 'inviteMembers',
+    operation: MutationEvent.INVITE_MEMBERS,
     types: { members: { required: true, type: '[InviteMemberInput!]' } }
   });
 
@@ -31,10 +33,13 @@ const useInviteMembers = (): OnFormSubmit => {
       const { category, metadata: inputId, type, value } = data;
 
       const formattedValue = takeFirst([
-        [category === 'FIRST_NAME', { firstName: value }],
-        [category === 'LAST_NAME', { lastName: value }],
-        [category === 'EMAIL', { email: value }],
-        [type === 'MULTIPLE_SELECT', { isAdmin: admin || !!value.length }]
+        [category === QuestionCategory.FIRST_NAME, { firstName: value }],
+        [category === QuestionCategory.LAST_NAME, { lastName: value }],
+        [category === QuestionCategory.EMAIL, { email: value }],
+        [
+          type === QuestionType.MULTIPLE_SELECT,
+          { isAdmin: admin || !!value.length }
+        ]
       ]);
 
       return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };

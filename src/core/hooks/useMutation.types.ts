@@ -2,9 +2,11 @@ import Fields from 'gql-query-builder/build/Fields';
 import VariableOptions from 'gql-query-builder/build/VariableOptions';
 import { Schema } from 'normalizr';
 
+import { MutationEvent } from '@util/events';
+
 export type UseMutationArgs<T, S> = {
   fields?: Fields;
-  operation: string;
+  operation: MutationEvent;
   schema?: Schema;
   types?: VariableOptions;
   variables?: S;

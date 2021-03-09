@@ -1,24 +1,25 @@
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import { IMember } from '@store/Db/entities';
+import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { UpdatePaymentMethodArgs } from './Payment.types';
+import { MutationEvent } from '@util/events';
+import { UpdateStripePaymentMethodIdArgs } from './Payment.types';
 
-const useUpdatePaymentMethod = (): OnFormSubmit => {
+const useUpdateStripePaymentMethodId = (): OnFormSubmit => {
   const elements = useElements();
   const stripe = useStripe();
 
-  const [updatePaymentMethod] = useMutation<
-    Pick<IMember, 'id' | 'paymentMethod'>,
-    UpdatePaymentMethodArgs
+  const [updateStripePaymentMethodId] = useMutation<
+    Pick<IMemberIntegrations, 'id' | 'paymentMethod'>,
+    UpdateStripePaymentMethodIdArgs
   >({
     fields: [
       'id',
       { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
     ],
-    operation: 'updatePaymentMethod',
-    schema: Schema.MEMBER,
+    operation: MutationEvent.UPDATE_STRIPE_PAYMENT_METHOD_ID,
+    schema: Schema.MEMBER_INTEGRATIONS,
     types: { paymentMethodId: { required: true } }
   });
 
@@ -48,10 +49,10 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
       return;
     }
 
-    // Create the actual subscription. Pass the MemberType ID to know what
+    // Create the actual subscription. Pass the MemberPlan ID to know what
     // Stripe price ID to look up, as well as the newly created IPaymentMethod
     // ID. That will be attached to the customer ID associated with the member.
-    const { error: updateError } = await updatePaymentMethod({
+    const { error: updateError } = await updateStripePaymentMethodId({
       paymentMethodId: stripeResult.paymentMethod.id
     });
 
@@ -68,4 +69,4 @@ const useUpdatePaymentMethod = (): OnFormSubmit => {
   return onSubmit;
 };
 
-export default useUpdatePaymentMethod;
+export default useUpdateStripePaymentMethodId;

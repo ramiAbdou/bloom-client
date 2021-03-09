@@ -6,9 +6,9 @@ const useSelectOption = (option: string) => {
     (store) => store.filteredValues
   );
 
-  const multiple = Dropdown.useStoreState((store) => store.options.multiple);
-  const value = Dropdown.useStoreState((store) => store.value);
-  const onSelect = Dropdown.useStoreState((store) => store.onSelect);
+  const multiple = Dropdown.useStoreState((state) => state.options.multiple);
+  const value = Dropdown.useStoreState((state) => state.value);
+  const onSelect = Dropdown.useStoreState((state) => state.onSelect);
   const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
 
   const setSearchString = Dropdown.useStoreActions(

@@ -40,11 +40,7 @@ const TableCellContent: React.FC<
     category === QuestionCategory.DUES_STATUS ||
     type === QuestionType.TRUE_FALSE
   ) {
-    return (
-      <Pill positive={['Active', 'Yes', true].includes(value)} show={!!value}>
-        {formattedValue}
-      </Pill>
-    );
+    return <Pill positive={value === true}>{formattedValue}</Pill>;
   }
 
   if (category === QuestionCategory.PROFILE_PICTURE) {
@@ -94,7 +90,7 @@ const TableCell: React.FC<TableCellProps> = (props) => {
 
   const css = cx(getTableCellClass({ category, type }), {
     'o-table-td--fixed': fixFirstColumn && columnIndex === 0,
-    'o-table-td--multiple-select': type === 'MULTIPLE_SELECT',
+    'o-table-td--multiple-select': type === QuestionType.MULTIPLE_SELECT,
     'o-table-td--right': alignEndRight
   });
 

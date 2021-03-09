@@ -13,8 +13,7 @@ import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
   const fullName = useStoreState(({ db }) => {
-    const { firstName, lastName } = db.user;
-    return `${firstName} ${lastName}`;
+    return `${db.member.firstName} ${db.member.lastName}`;
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -29,7 +28,7 @@ const ProfilePersonalTagList: React.FC = () => {
   const role = useStoreState(({ db }) => db.member.role);
 
   const type: string = useStoreState(({ db }) => {
-    return db.byTypeId[db.member.type]?.name;
+    return db.byMemberPlanId[db.member.plan]?.name;
   });
 
   return (
@@ -41,7 +40,7 @@ const ProfilePersonalTagList: React.FC = () => {
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const email = useStoreState(({ db }) => db.user.email);
+  const email = useStoreState(({ db }) => db.member.email);
   return <MailTo email={email} />;
 };
 
@@ -53,7 +52,7 @@ const ProfilePersonalBio: React.FC = () => {
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
   const bio = useStoreState(({ db }) => db.member.bio);
-  const pictureUrl = useStoreState(({ db }) => db.user.pictureUrl);
+  const pictureUrl = useStoreState(({ db }) => db.member.pictureUrl);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   if (bio && pictureUrl) return null;

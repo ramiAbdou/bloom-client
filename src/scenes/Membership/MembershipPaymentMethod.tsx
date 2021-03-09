@@ -3,14 +3,18 @@ import React from 'react';
 
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
-import { IPaymentMethod, RecurrenceType } from '@store/Db/entities';
+import {
+  IMemberPlan,
+  IPaymentMethod,
+  RecurrenceType
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';
 
 const MembershipPaymentMethodEmpty: React.FC = () => {
-  const isCardOnFile: boolean = useStoreState(
-    ({ db }) => !!db.member.paymentMethod
-  );
+  const isCardOnFile: boolean = useStoreState(({ db }) => {
+    return !!db.memberIntegrations.paymentMethod;
+  });
 
   return (
     <Show show={!isCardOnFile}>
@@ -21,7 +25,7 @@ const MembershipPaymentMethodEmpty: React.FC = () => {
 
 const MembershipPaymentMethodContent: React.FC = () => {
   const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
-    ({ db }) => db.member.paymentMethod ?? {},
+    ({ db }) => db.memberIntegrations.paymentMethod ?? {},
     deepequal
   );
 
@@ -40,7 +44,8 @@ const MembershipPaymentMethod: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   const isLifetime: boolean = useStoreState(({ db }) => {
-    return db.byTypeId[db.member?.type]?.recurrence === RecurrenceType.LIFETIME;
+    const plan: IMemberPlan = db.byMemberPlanId[db.member?.plan];
+    return plan?.recurrence === RecurrenceType.LIFETIME;
   });
 
   return (

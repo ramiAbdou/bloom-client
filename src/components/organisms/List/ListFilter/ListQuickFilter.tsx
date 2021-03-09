@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from '@atoms/Button/Button';
-import { IdProps, ShowProps, TitleProps } from '@util/constants';
 import { TableRow } from '@organisms/Table/Table.types';
+import { IdProps, ShowProps, TitleProps } from '@util/constants';
 import { cx } from '@util/util';
 import ListStore from '../List.store';
 
@@ -18,7 +18,7 @@ const ListQuickFilter: React.FC<ListQuickFilterProps> = ({
 }) => {
   const [active, setActive] = useState<boolean>(false);
 
-  const filters = ListStore.useStoreState((store) => store.filters);
+  const filters = ListStore.useStoreState((state) => state.filters);
   const setFilter = ListStore.useStoreActions((store) => store.setFilter);
   const removeFilter = ListStore.useStoreActions((store) => store.removeFilter);
 

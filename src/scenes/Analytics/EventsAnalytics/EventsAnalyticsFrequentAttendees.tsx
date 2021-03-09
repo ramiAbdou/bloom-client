@@ -1,7 +1,6 @@
 import day from 'dayjs';
 import React from 'react';
 
-import { ModalType, QuestionType } from '@util/constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import Table from '@organisms/Table/Table';
@@ -11,8 +10,14 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IEvent, IEventAttendee, IMember } from '@store/Db/entities';
+import {
+  IEvent,
+  IEventAttendee,
+  IMember,
+  ISupporter
+} from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType, QuestionType } from '@util/constants';
 
 const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -29,8 +34,13 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
       ?.map((attendeeId: string) => db.byAttendeeId[attendeeId]);
 
     const result = pastAttendees?.reduce((acc, attendee: IEventAttendee) => {
-      const { email, firstName, lastName, member: memberId } = attendee ?? {};
-      const member: IMember = db.byMemberId[memberId];
+      const member: IMember = db.byMemberId[attendee?.member];
+      const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
+
+      const email = member?.email ?? supporter?.email;
+      const firstName = member?.firstName ?? supporter?.firstName;
+      const lastName = member?.lastName ?? supporter?.lastName;
+
       const previousValue = acc[email];
 
       return {
@@ -39,8 +49,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
           email,
           fullName: `${firstName} ${lastName}`,
           id: email,
-          memberId,
-          userId: member?.user,
+          memberId: member.id ?? supporter.id,
           value: previousValue ? previousValue?.value + 1 : 1
         }
       };
@@ -67,7 +76,6 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   ];
 
   const options: TableOptions = {
-    alignEndRight: true,
     fixFirstColumn: false,
     isSortable: false,
     onRowClick: ({ memberId }: TableRow) => {

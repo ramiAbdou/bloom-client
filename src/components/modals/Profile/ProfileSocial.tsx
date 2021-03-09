@@ -7,11 +7,11 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { IUser } from '@store/Db/entities';
+import { IMember, IMemberSocials } from '@store/Db/entities';
+import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { SocialBrand } from '@util/constants';
 import { cx } from '@util/util';
-import ProfileStore from './Profile.store';
 
 interface ProfileSocialButtonProps {
   brand: SocialBrand;
@@ -46,7 +46,7 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
 };
 
 const ProfileSocialContainer: React.FC = () => {
-  const userId = ProfileStore.useStoreState((store) => store.userId);
+  const memberId = IdStore.useStoreState((state) => state.id);
 
   const {
     clubhouseUrl,
@@ -54,7 +54,10 @@ const ProfileSocialContainer: React.FC = () => {
     instagramUrl,
     linkedInUrl,
     twitterUrl
-  }: IUser = useStoreState(({ db }) => db.byUserId[userId]);
+  }: IMemberSocials = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    return db.bySocialsId[member?.socials];
+  });
 
   return (
     <div className="flex-ac">

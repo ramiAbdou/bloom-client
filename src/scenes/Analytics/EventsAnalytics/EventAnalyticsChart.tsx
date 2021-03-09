@@ -1,15 +1,16 @@
 import React from 'react';
 
-import { TimeSeriesData } from '@util/constants';
 import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
+import { TimeSeriesData } from '@util/constants';
+import { QueryEvent } from '@util/events';
 
 const EventAnalyticsChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
-    operation: 'getEventAttendeesSeries'
+    operation: QueryEvent.GET_EVENT_ATTENDEES_SERIES
   });
 
   if (loading) return null;

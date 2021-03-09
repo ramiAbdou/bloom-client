@@ -2,11 +2,12 @@ import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import PaymentStore from './Payment.store';
 import { CreateLifetimePaymentArgs } from './Payment.types';
 
 const useCreateLifetimePayment = () => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
   const pushToMembership = usePush('membership');
 
   const [createLifetimePayment] = useMutation<any, CreateLifetimePaymentArgs>({
@@ -15,16 +16,24 @@ const useCreateLifetimePayment = () => {
       'createdAt',
       'id',
       {
-        member: ['id', 'isDuesActive', 'stripeSubscriptionId', { type: ['id'] }]
-      }
+        member: [
+          'id',
+          'isDuesActive',
+          { memberIntegrations: ['id', 'stripeSubscriptionId'] },
+          { plan: ['id'] }
+        ]
+      },
+      { plan: ['id'] }
     ],
-    operation: 'createLifetimePayment',
-    schema: Schema.MEMBER_PAYMENT,
-    types: { memberTypeId: { required: true } }
+    operation: MutationEvent.CREATE_LIFETIME_PAYMENT,
+    schema: Schema.PAYMENT,
+    types: { memberPlanId: { required: true } }
   });
 
-  const onSubmit = async ({ goForward, setError }: OnFormSubmitArgs) => {
-    const { error } = await createLifetimePayment({ memberTypeId: typeId });
+  const onSubmit = async (args: OnFormSubmitArgs) => {
+    const { goForward, setError } = args;
+
+    const { error } = await createLifetimePayment({ memberPlanId: planId });
 
     if (error) {
       setError(error);
@@ -35,7 +44,7 @@ const useCreateLifetimePayment = () => {
     pushToMembership();
   };
 
-  return typeId ? onSubmit : null;
+  return planId ? onSubmit : null;
 };
 
 export default useCreateLifetimePayment;

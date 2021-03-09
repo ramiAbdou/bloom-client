@@ -11,14 +11,12 @@ import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
 import { NavigationOptionProps } from '@containers/Main/MainNavigation';
 import Show from '@containers/Show';
-import useQuery from '@hooks/useQuery';
-import { IMember } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
-import DuesAnalytics from './DuesAnalytics/DuesAnalytics';
 import EventsAnalytics from './EventsAnalytics/EventsAnalytics';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';
+import PaymentAnalytics from './PaymentAnalytics/PaymentAnalytics';
+import useInitAnalytics from './useInitAnalytics';
 
 const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
@@ -26,7 +24,13 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
   const { push } = useHistory();
 
   const duesOptions: NavigationOptionProps[] = canCollectDues
-    ? [{ onClick: () => push('dues'), pathname: 'dues', title: 'Dues' }]
+    ? [
+        {
+          onClick: () => push('payments'),
+          pathname: 'payments',
+          title: 'Payments'
+        }
+      ]
     : [];
 
   const options: NavigationOptionProps[] = [
@@ -40,19 +44,7 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
 
 const Analytics: React.FC = () => {
   const { url } = useRouteMatch();
-
-  const { loading } = useQuery<IMember[]>({
-    fields: [
-      'id',
-      'isDuesActive',
-      'status',
-      { community: ['id'] },
-      { data: ['id', 'value', { question: ['id'] }] },
-      { type: ['id'] }
-    ],
-    operation: 'getDatabase',
-    schema: [Schema.MEMBER]
-  });
+  const { loading } = useInitAnalytics();
 
   return (
     <MainContent>
@@ -60,9 +52,9 @@ const Analytics: React.FC = () => {
 
       <Show show={!loading}>
         <Switch>
-          <Route component={DuesAnalytics} path={`${url}/dues`} />
           <Route component={EventsAnalytics} path={`${url}/events`} />
           <Route component={MembersAnalytics} path={`${url}/members`} />
+          <Route component={PaymentAnalytics} path={`${url}/payments`} />
           <Redirect to={`${url}/members`} />
         </Switch>
       </Show>

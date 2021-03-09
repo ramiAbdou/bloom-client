@@ -6,15 +6,15 @@ import URLBuilder from 'util/URLBuilder';
 import Button from '@atoms/Button/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
-import { APP, CookieType, QuestionCategory, ShowProps } from '@util/constants';
 import Show from '@containers/Show';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { IMember, IUser } from '@store/Db/entities';
+import { IMember, MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { CheckInError } from './CheckIn.types';
+import { APP, QuestionCategory, ShowProps } from '@util/constants';
+import { ErrorContext, ErrorType } from '@util/errors';
 import { getCheckInErrorMessage } from './CheckIn.util';
 import useInitCheckInError from './useInitCheckInError';
 import useSendLoginLink from './useSendLoginLink';
@@ -48,23 +48,24 @@ const CheckInGoogleButton: React.FC = () => {
 };
 
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
-  const owner: IUser = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[db.community?.owner];
-    return db.byUserId[member?.user];
+  const owner: IMember = useStoreState(({ db }) => {
+    return db.community?.members
+      ?.map((memberId: string) => db.byMemberId[memberId])
+      ?.find((member: IMember) => member.role === MemberRole.OWNER);
   });
 
   // We store the error code in a cookie.
-  const error = Cookies.get(CookieType.LOGIN_ERROR) as CheckInError;
+  const error = Cookies.get(ErrorContext.LOGIN_ERROR) as ErrorType;
   const message = getCheckInErrorMessage({ error, owner });
 
-  const loading = useInitCheckInError();
+  const { loading } = useInitCheckInError();
 
   // After we get the message, we remove the cookie so that the error doesn't
   // get shown again. We set a timeout to ensure that even if the component
   // re-renders, the message still appears.
   useEffect(() => {
     const timeout: NodeJS.Timeout = setTimeout(() => {
-      if (error) Cookies.remove(CookieType.LOGIN_ERROR);
+      if (error) Cookies.remove(ErrorContext.LOGIN_ERROR);
     }, 5000);
 
     return () => clearTimeout(timeout);

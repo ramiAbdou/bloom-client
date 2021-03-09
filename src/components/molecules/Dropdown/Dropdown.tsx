@@ -17,9 +17,9 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   value,
   values
 }) => {
-  const isOpen = DropdownStore.useStoreState((store) => store.isOpen);
-  const storedValue = DropdownStore.useStoreState((store) => store.value);
-  const storedValues = DropdownStore.useStoreState((store) => store.values);
+  const isOpen = DropdownStore.useStoreState((state) => state.isOpen);
+  const storedValue = DropdownStore.useStoreState((state) => state.value);
+  const storedValues = DropdownStore.useStoreState((state) => state.values);
   const setIsOpen = DropdownStore.useStoreActions((store) => store.setIsOpen);
   const setValue = DropdownStore.useStoreActions((store) => store.setValue);
   const setValues = DropdownStore.useStoreActions((store) => store.setValues);

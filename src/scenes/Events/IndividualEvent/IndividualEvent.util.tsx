@@ -10,7 +10,7 @@ import {
   IEventGuest,
   IEventWatch,
   IMember,
-  IUser
+  ISupporter
 } from '@store/Db/entities';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -29,8 +29,11 @@ const getIndividualEventTableAttendees = (
   return db.event.attendees.reduce((acc, attendeeId: string) => {
     const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
     const member: IMember = db.byMemberId[attendee?.member];
+    const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
 
-    const { createdAt, firstName, lastName, email } = attendee;
+    const email = member?.email ?? supporter?.email;
+    const firstName = member?.firstName ?? supporter?.firstName;
+    const lastName = member?.lastName ?? supporter?.lastName;
 
     if (acc[email]) return acc;
 
@@ -38,9 +41,8 @@ const getIndividualEventTableAttendees = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: attendee?.member,
-      joinedAt: createdAt,
-      userId: member?.user,
-      watched: 'No'
+      joinedAt: attendee.createdAt,
+      watched: false
     };
 
     return { ...acc, [email]: data };
@@ -60,8 +62,11 @@ const getIndividualEventTableGuests = (
   return db.event.guests.reduce((acc, guestId: string) => {
     const guest: IEventGuest = db.byGuestId[guestId];
     const member: IMember = db.byMemberId[guest?.member];
+    const supporter: ISupporter = db.bySupporterId[guest?.supporter];
 
-    const { createdAt, firstName, lastName, email } = guest;
+    const email = member?.email ?? supporter?.email;
+    const firstName = member?.firstName ?? supporter?.firstName;
+    const lastName = member?.lastName ?? supporter?.lastName;
 
     if (acc[email]) return acc;
 
@@ -69,9 +74,8 @@ const getIndividualEventTableGuests = (
       email,
       fullName: `${firstName} ${lastName}`,
       id: guest?.member,
-      rsvpdAt: createdAt,
-      userId: member?.user,
-      watched: 'No'
+      rsvpdAt: guest.createdAt,
+      watched: false
     };
 
     return { ...acc, [email]: data };
@@ -91,17 +95,15 @@ const getIndividualEventTableViewers = (
   return db.event.watches.reduce((acc, watchId: string) => {
     const watch: IEventWatch = db.byWatchId[watchId];
     const member: IMember = db.byMemberId[watch?.member];
-    const user: IUser = db.byUserId[member?.user];
+    const { email } = member ?? {};
 
-    const { firstName, lastName, email } = user ?? {};
     if (acc[email]) return acc;
 
     const data: IndividualEventTableRowProps = {
       email,
-      fullName: `${firstName} ${lastName}`,
+      fullName: `${member.firstName} ${member.lastName}`,
       id: member?.id,
-      userId: member?.user,
-      watched: 'Yes'
+      watched: true
     };
 
     return { ...acc, [email]: data };
@@ -163,6 +165,7 @@ export const getIndividualEventTableColumns = (
   const viewedRecordingColumn: TableColumn[] = recordingUrl
     ? [
         {
+          format: (watched: boolean) => (watched ? 'Yes' : 'No'),
           id: 'watched',
           title: `Viewed Recording`,
           type: QuestionType.TRUE_FALSE

@@ -40,7 +40,7 @@ const PieChartLegend: React.FC<PieChartLegendProps> = ({ payload }) => (
 );
 
 const PieChart: React.FC = () => {
-  const data = Chart.useStoreState((store) => store.data);
+  const data = Chart.useStoreState((state) => state.data);
 
   if (!data?.length) return null;
 

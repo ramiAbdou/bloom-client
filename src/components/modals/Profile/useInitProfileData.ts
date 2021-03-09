@@ -1,20 +1,22 @@
 import useQuery from '@hooks/useQuery';
-import { IMemberData } from '@store/Db/entities';
+import { QueryResult } from '@hooks/useQuery.types';
+import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import ProfileStore from './Profile.store';
+import IdStore from '@store/Id.store';
+import { QueryEvent } from '@util/events';
 
-const useInitProfileData = (): boolean => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+const useInitProfileData = (): Partial<QueryResult> => {
+  const memberId = IdStore.useStoreState((state) => state.id);
 
-  const { loading } = useQuery<IMemberData[]>({
+  const { loading } = useQuery<IMemberValue[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: 'getMemberData',
-    schema: [Schema.MEMBER_DATA],
+    operation: QueryEvent.GET_MEMBER_VALUES,
+    schema: [Schema.MEMBER_VALUE],
     types: { memberId: { required: false } },
     variables: { memberId }
   });
 
-  return loading;
+  return { loading };
 };
 
 export default useInitProfileData;

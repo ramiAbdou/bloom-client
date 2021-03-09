@@ -2,17 +2,14 @@ import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { ModalType } from '@util/constants';
-import useMutation from '@hooks/useMutation';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
-import { IEvent, IEventGuest } from '@store/Db/entities';
+import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import {
-  CreateEventGuestArgs,
-  DeleteEventGuestArgs,
-  eventMemberFields
-} from './Events.types';
+import { ModalType } from '@util/constants';
+import { MutationEvent } from '@util/events';
+import { DeleteEventGuestArgs } from './Events.types';
+import useCreateEventGuest from './useCreateEventGuest';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -42,26 +39,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
 
-  const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
-    fields: [
-      'createdAt',
-      'email',
-      'firstName',
-      'id',
-      'lastName',
-      { event: ['id'] },
-      ...eventMemberFields
-    ],
-    operation: 'createEventGuest',
-    schema: Schema.EVENT_GUEST,
-    types: {
-      email: { required: false },
-      eventId: { required: true },
-      firstName: { required: false },
-      lastName: { required: false }
-    },
-    variables: { eventId }
-  });
+  const createEventGuest = useCreateEventGuest();
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -73,13 +51,13 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       return;
     }
 
-    await createEventGuest();
+    await createEventGuest({ eventId });
 
     const options: ToastOptions<boolean, DeleteEventGuestArgs> = {
       message: 'RSVP was registered.',
       mutationArgsOnUndo: {
         fields: ['deletedAt', 'id'],
-        operation: 'deleteEventGuest',
+        operation: MutationEvent.DELETE_EVENT_GUEST,
         schema: Schema.EVENT_GUEST,
         types: { eventId: { required: true } },
         variables: { eventId }

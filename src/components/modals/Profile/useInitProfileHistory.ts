@@ -1,28 +1,41 @@
 import useQuery from '@hooks/useQuery';
-import { eventFields } from '@scenes/Events/Events.types';
+import { QueryResult } from '@hooks/useQuery.types';
 import {
   IEventAttendee,
   IEventGuest,
   IEventWatch,
-  IMemberPayment
+  IPayment
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import ProfileStore from './Profile.store';
+import IdStore from '@store/Id.store';
+import { QueryEvent } from '@util/events';
 
-const useInitProfileHistory = (): boolean => {
-  const memberId = ProfileStore.useStoreState((store) => store.memberId);
+const useInitProfileHistory = (): Partial<QueryResult> => {
+  const memberId = IdStore.useStoreState((state) => state.id);
 
   const { loading: loading1 } = useQuery<IEventAttendee[]>({
-    fields: eventFields,
-    operation: 'getEventAttendees',
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id', 'title'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
+    operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     types: { memberId: { required: false } },
     variables: { memberId }
   });
 
   const { loading: loading2 } = useQuery<IEventGuest[]>({
-    fields: eventFields,
-    operation: 'getEventGuests',
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id', 'title'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
+    ],
+    operation: QueryEvent.GET_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     types: { memberId: { required: false } },
     variables: { memberId }
@@ -33,28 +46,30 @@ const useInitProfileHistory = (): boolean => {
       'createdAt',
       'id',
       { event: ['id', 'title'] },
-      {
-        member: [
-          'id',
-          { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-        ]
-      }
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: 'getEventWatches',
+    operation: QueryEvent.GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     types: { memberId: { required: false } },
     variables: { memberId }
   });
 
-  const { loading: loading4 } = useQuery<IMemberPayment[]>({
-    fields: ['amount', 'createdAt', 'id', { member: ['id'] }, { type: ['id'] }],
-    operation: 'getMemberPayments',
-    schema: [Schema.MEMBER_PAYMENT],
+  const { loading: loading4 } = useQuery<IPayment[]>({
+    fields: [
+      'amount',
+      'createdAt',
+      'id',
+      'type',
+      { member: ['id'] },
+      { plan: ['id'] }
+    ],
+    operation: QueryEvent.GET_PAYMENTS,
+    schema: [Schema.PAYMENT],
     types: { memberId: { required: false } },
     variables: { memberId }
   });
 
-  return loading1 || loading2 || loading3 || loading4;
+  return { loading: loading1 || loading2 || loading3 || loading4 };
 };
 
 export default useInitProfileHistory;

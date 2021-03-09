@@ -5,6 +5,7 @@ import useMutation from '@hooks/useMutation';
 import { MemberStatus } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
+import { MutationEvent } from '@util/events';
 import { takeFirst } from '@util/util';
 import { RespondToApplicantsArgs } from './Applicants.types';
 
@@ -23,7 +24,7 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = ({
 
   const [respondToApplicants] = useMutation<boolean, RespondToApplicantsArgs>({
     fields: ['id', 'status'],
-    operation: 'respondToApplicants',
+    operation: MutationEvent.RESPOND_TO_APPLICANTS,
     schema: [Schema.MEMBER],
     types: {
       memberIds: { required: true, type: '[String!]' },

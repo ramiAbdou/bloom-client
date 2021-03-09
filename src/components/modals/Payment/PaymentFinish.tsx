@@ -7,11 +7,12 @@ import useManualQuery from '@hooks/useManualQuery';
 import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
 import {
-  IMemberType,
+  IMemberPlan,
   IPaymentMethod,
   RecurrenceType
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 import PaymentStore from './Payment.store';
 import { GetChangePreviewArgs, GetChangePreviewResult } from './Payment.types';
 import { getTypeDescription } from './Payment.util';
@@ -20,17 +21,17 @@ import useCreateLifetimePayment from './useCreateLifetimePayment';
 import useCreateSubscription from './useCreateSubscription';
 
 const PaymentFinishForm: React.FC = () => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
+  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
 
-  const { amount, isFree, name, recurrence }: IMemberType = useStoreState(
-    ({ db }) => db.byTypeId[typeId],
+  const { amount, isFree, name, recurrence }: IMemberPlan = useStoreState(
+    ({ db }) => db.byMemberPlanId[planId],
     deepequal
   );
 
   const description = getTypeDescription({ amount, recurrence });
 
   const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
-    ({ db }) => db.member.paymentMethod,
+    ({ db }) => db.memberIntegrations.paymentMethod,
     deepequal
   );
 
@@ -60,8 +61,8 @@ const PaymentFinishForm: React.FC = () => {
 };
 
 const PaymentFinish: React.FC = () => {
-  const typeId = PaymentStore.useStoreState((store) => store.selectedTypeId);
-  const modalType = PaymentStore.useStoreState((store) => store.type);
+  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
+  const modalType = PaymentStore.useStoreState((state) => state.type);
 
   const setChangeData = PaymentStore.useStoreActions(
     (store) => store.setChangeData
@@ -72,22 +73,22 @@ const PaymentFinish: React.FC = () => {
     GetChangePreviewArgs
   >({
     fields: ['amount', 'prorationDate'],
-    operation: 'getChangePreview',
-    types: { memberTypeId: { required: true } }
+    operation: QueryEvent.GET_CHANGE_PREVIEW,
+    types: { memberPlanId: { required: true } }
   });
 
   useEffect(() => {
     if (modalType !== 'CHANGE_MEMBERSHIP') return;
 
     (async () => {
-      const { data } = await getChangePreview({ memberTypeId: typeId });
+      const { data } = await getChangePreview({ memberPlanId: planId });
 
       setChangeData({
         changeAmount: data?.amount,
         changeProrationDate: data?.prorationDate
       });
     })();
-  }, [modalType, typeId]);
+  }, [modalType, planId]);
 
   const title: string =
     modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan';

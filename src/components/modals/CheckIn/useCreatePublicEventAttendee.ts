@@ -4,6 +4,7 @@ import StoryStore from '@organisms/Story/Story.store';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { openHref } from '@util/util';
 
 const useCreatePublicEventAttendee = () => {
@@ -11,19 +12,15 @@ const useCreatePublicEventAttendee = () => {
     (store) => store.setCurrentPage
   );
 
-  const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
+  const [createEventAttendee] = useMutation<IEventGuest, CreateEventGuestArgs>({
     fields: [
       'createdAt',
-      'email',
-      'firstName',
       'id',
-      'lastName',
       { event: ['id'] },
-      {
-        member: ['id', { user: ['id', 'firstName', 'lastName', 'pictureUrl'] }]
-      }
+      { member: ['id', 'pictureUrl'] },
+      { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: 'createEventAttendee',
+    operation: MutationEvent.CREATE_EVENT_ATTENDEE,
     schema: Schema.EVENT_ATTENDEE,
     types: {
       email: { required: false },
@@ -45,7 +42,7 @@ const useCreatePublicEventAttendee = () => {
     const lastName = items.LAST_NAME?.value;
     const email = items.EMAIL?.value;
 
-    const { error } = await createEventGuest({
+    const { error } = await createEventAttendee({
       email,
       eventId,
       firstName,

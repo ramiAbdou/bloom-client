@@ -4,7 +4,7 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import { IIntegrations, IMemberType } from '@store/Db/entities';
+import { ICommunityIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -15,24 +15,16 @@ import IntegrationCard from './IntegrationsCard';
 const IntegrationsConnectedList: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
 
-  const hasPaidMembership = useStoreState(({ db }) => {
-    return db.community.types?.some((typeId: string) => {
-      const type: IMemberType = db.byTypeId[typeId];
-      return !type?.isFree;
-    });
-  });
-
   const {
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId
   } = useStoreState(
-    ({ db }) => db.integrations ?? {},
+    ({ db }) => db.communityIntegrations ?? {},
     deepequal
-  ) as IIntegrations;
+  ) as ICommunityIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
-    hasPaidMembership,
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId,

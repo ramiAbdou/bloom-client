@@ -11,11 +11,13 @@ const MembershipCurrentPlanActions: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   const isLifetime: boolean = useStoreState(({ db }) => {
-    return db.byTypeId[db.member?.type]?.recurrence === RecurrenceType.LIFETIME;
+    return (
+      db.byMemberPlanId[db.member?.plan]?.recurrence === RecurrenceType.LIFETIME
+    );
   });
 
   const currentTypeId: string = useStoreState(({ db }) => {
-    return db.member?.type;
+    return db.member?.plan;
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -28,7 +30,7 @@ const MembershipCurrentPlanActions: React.FC = () => {
   const onPrimaryClick = () => {
     showModal({
       id: ModalType.PAY_DUES,
-      metadata: { selectedTypeId: currentTypeId, type: 'PAY_DUES' }
+      metadata: { selectedPlanId: currentTypeId, type: 'PAY_DUES' }
     });
   };
 

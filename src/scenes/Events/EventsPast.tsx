@@ -7,7 +7,7 @@ import EventsPastYourSection from './EventsPastYourSection';
 import useInitPastEvents from './useInitPastEvents';
 
 const EventsPast: React.FC = () => {
-  const loading = useInitPastEvents();
+  const { loading } = useInitPastEvents();
 
   return (
     <MainContent>

@@ -4,6 +4,8 @@ import Dropdown from '@molecules/Dropdown/Dropdown';
 import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
+import { sortObjects } from '@util/util';
 import TableFilterStore from './TableFilter.store';
 
 const TableFilterRowQuestionDropdown: React.FC = () => {
@@ -18,20 +20,28 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
   const defaultQuestionId: string = useStoreState(({ db }) => {
     return db.community.questions
       ?.map((entityId: string) => db.byQuestionId[entityId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter((question: IQuestion) => {
-        return !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(
-          question.category
-        );
+        return ![
+          QuestionCategory.FIRST_NAME,
+          QuestionCategory.LAST_NAME,
+          QuestionCategory.EMAIL,
+          QuestionCategory.JOINED_AT
+        ].includes(question.category);
       })[0]?.id;
   });
 
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community.questions
       ?.map((entityId: string) => db.byQuestionId[entityId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter((question: IQuestion) => {
-        return !['FIRST_NAME', 'LAST_NAME', 'EMAIL', 'JOINED_AT'].includes(
-          question.category
-        );
+        return ![
+          QuestionCategory.FIRST_NAME,
+          QuestionCategory.LAST_NAME,
+          QuestionCategory.EMAIL,
+          QuestionCategory.JOINED_AT
+        ].includes(question.category);
       });
   });
 

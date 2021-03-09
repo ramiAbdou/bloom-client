@@ -127,7 +127,7 @@ export const getTableCellClass = ({
   category,
   type
 }: GetTableCellClassArgs) => {
-  const isDuesStatus = category === 'DUES_STATUS';
+  const isDuesStatus = category === QuestionCategory.DUES_STATUS;
 
   return cx('', {
     'o-table-cell--lg': type === QuestionType.LONG_TEXT,
@@ -174,11 +174,11 @@ export const runFilters = ({
   const columns: TableColumn[] = [...state.columns];
 
   const firstNameColumnId: string = columns.find(({ category }) => {
-    return category === 'FIRST_NAME';
+    return category === QuestionCategory.FIRST_NAME;
   })?.id;
 
   const lastNameColumnId: string = columns.find(({ category }) => {
-    return category === 'LAST_NAME';
+    return category === QuestionCategory.LAST_NAME;
   })?.id;
 
   return matchSorter(filteredRows, searchString, {

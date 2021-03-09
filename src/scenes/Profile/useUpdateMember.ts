@@ -4,22 +4,17 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { uploadImage } from '@util/imageUtil';
-import { UpdateMemberArgs, UpdateUserArgs } from './Profile.types';
+import { UpdateMemberArgs } from './Profile.types';
 
-const useUpdateUser = (): OnFormSubmit => {
+const useUpdateMember = (): OnFormSubmit => {
   const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
-    fields: ['id', 'bio'],
-    operation: 'updateMember',
+    fields: ['id', 'bio', 'firstName', 'lastName', 'pictureUrl'],
+    operation: MutationEvent.UPDATE_MEMBER,
     schema: Schema.MEMBER,
-    types: { bio: { required: false } }
-  });
-
-  const [updateUser] = useMutation<IMember, UpdateUserArgs>({
-    fields: ['id', 'firstName', 'lastName', 'pictureUrl'],
-    operation: 'updateUser',
-    schema: Schema.USER,
     types: {
+      bio: { required: false },
       firstName: { required: false },
       lastName: { required: false },
       pictureUrl: { required: false }
@@ -45,7 +40,7 @@ const useUpdateUser = (): OnFormSubmit => {
         pictureUrl = await uploadImage({
           base64String,
           key: 'PROFILE',
-          previousImageUrl: db.user?.pictureUrl
+          previousImageUrl: db.member?.pictureUrl
         });
       } catch (e) {
         setError('Failed to upload image.');
@@ -53,8 +48,12 @@ const useUpdateUser = (): OnFormSubmit => {
       }
     }
 
-    const { error } = await updateUser({ firstName, lastName, pictureUrl });
-    if (bio) await updateMember({ bio });
+    const { error } = await updateMember({
+      bio,
+      firstName,
+      lastName,
+      pictureUrl
+    });
 
     if (error) {
       setError(error);
@@ -68,4 +67,4 @@ const useUpdateUser = (): OnFormSubmit => {
   return onSubmit;
 };
 
-export default useUpdateUser;
+export default useUpdateMember;

@@ -2,10 +2,11 @@ import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { MutationEvent } from '@util/events';
 import { UpdateUserSocialsArgs } from './Profile.types';
 
-const useUpdateUserSocials = (): OnFormSubmit => {
-  const [updateUser] = useMutation<IUser, UpdateUserSocialsArgs>({
+const useUpdateMemberSocials = (): OnFormSubmit => {
+  const [updateMemberSocials] = useMutation<IUser, UpdateUserSocialsArgs>({
     fields: [
       'clubhouseUrl',
       'id',
@@ -14,8 +15,8 @@ const useUpdateUserSocials = (): OnFormSubmit => {
       'linkedInUrl',
       'twitterUrl'
     ],
-    operation: 'updateUser',
-    schema: Schema.USER,
+    operation: MutationEvent.UPDATE_MEMBER_SOCIALS,
+    schema: Schema.MEMBER_SOCIALS,
     types: {
       clubhouseUrl: { required: false },
       facebookUrl: { required: false },
@@ -25,19 +26,16 @@ const useUpdateUserSocials = (): OnFormSubmit => {
     }
   });
 
-  const onSubmit = async ({
-    closeModal,
-    items,
-    setError,
-    showToast
-  }: OnFormSubmitArgs) => {
+  const onSubmit = async (args: OnFormSubmitArgs) => {
+    const { closeModal, items, setError, showToast } = args;
+
     const clubhouseUrl = items.CLUBHOUSE_URL?.value;
     const facebookUrl = items.FACEBOOK_URL?.value;
     const instagramUrl = items.INSTAGRAM_URL?.value;
     const linkedInUrl = items.LINKED_IN_URL?.value;
     const twitterUrl = items.TWITTER_URL?.value;
 
-    const { error } = await updateUser({
+    const { error } = await updateMemberSocials({
       clubhouseUrl,
       facebookUrl,
       instagramUrl,
@@ -50,11 +48,11 @@ const useUpdateUserSocials = (): OnFormSubmit => {
       return;
     }
 
-    showToast({ message: 'Personal information updated.' });
     closeModal();
+    showToast({ message: 'Social media updated.' });
   };
 
   return onSubmit;
 };
 
-export default useUpdateUserSocials;
+export default useUpdateMemberSocials;

@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import { IIntegrations, IMemberType } from '@store/Db/entities';
+import { ICommunityIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -13,24 +13,16 @@ import IntegrationCard from './IntegrationsCard';
 const IntegrationsCardList: React.FC = () => {
   const urlName = useStoreState(({ db }) => db.community.urlName);
 
-  const hasPaidMembership = useStoreState(({ db }) => {
-    return db.community.types?.some((typeId: string) => {
-      const type: IMemberType = db.byTypeId[typeId];
-      return !type?.isFree;
-    });
-  });
-
   const {
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId
   } = useStoreState(
-    ({ db }) => db.integrations ?? {},
+    ({ db }) => db.communityIntegrations ?? {},
     deepequal
-  ) as IIntegrations;
+  ) as ICommunityIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
-    hasPaidMembership,
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId,

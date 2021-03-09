@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { ClassNameProps, ShowProps } from '@util/constants';
 import LoadingHeader, {
   LoadingHeaderProps
 } from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
+import { ClassNameProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 
 interface CardProps
@@ -15,21 +15,23 @@ interface CardProps
   onClick?: VoidFunction;
 }
 
-const Card: React.FC<CardProps> = ({
-  children,
-  className,
-  headerTag,
-  loading,
-  noPadding,
-  onClick,
-  show,
-  title
-}) => {
-  const css = cx('t-card', {
-    [className]: className,
-    't-card--clickable': !!onClick,
-    't-card--no-padding': noPadding
-  });
+const Card: React.FC<CardProps> = (props) => {
+  const {
+    children,
+    className,
+    headerTag,
+    loading,
+    noPadding,
+    onClick,
+    show,
+    title
+  } = props;
+
+  const css: string = cx(
+    't-card',
+    { 't-card--clickable': !!onClick, 't-card--no-padding': noPadding },
+    className
+  );
 
   return (
     <Show show={show}>

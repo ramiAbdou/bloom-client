@@ -4,10 +4,12 @@ import useManualQuery from '@hooks/useManualQuery';
 import useMutation from '@hooks/useMutation';
 import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import StoryStore from '@organisms/Story/Story.store';
-import { ICommunity } from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { CheckInError, SendLoginLinkArgs } from './CheckIn.types';
+import { ErrorType } from '@util/errors';
+import { MutationEvent, QueryEvent } from '@util/events';
+import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmit => {
@@ -18,18 +20,22 @@ const useSendLoginLink = (): OnFormSubmit => {
     (store) => store.setCurrentPage
   );
 
-  const [getCommunityOwner] = useManualQuery<ICommunity>({
+  const [getOwner] = useManualQuery<IMember>({
     fields: [
       'id',
-      { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
+      'email',
+      'firstName',
+      'lastName',
+      'role',
+      { community: ['id'] }
     ],
-    operation: 'getCommunityOwner',
-    schema: Schema.COMMUNITY,
+    operation: QueryEvent.GET_OWNER,
+    schema: Schema.MEMBER,
     types: { communityId: { required: true } }
   });
 
   const [sendLoginLink] = useMutation<boolean, SendLoginLinkArgs>({
-    operation: 'sendLoginLink',
+    operation: MutationEvent.SEND_LOGIN_LINK,
     types: {
       communityId: { required: false },
       email: { required: true },
@@ -47,14 +53,10 @@ const useSendLoginLink = (): OnFormSubmit => {
     });
 
     if (error) {
-      const { data } = await getCommunityOwner({ communityId });
+      const { data } = await getOwner({ communityId });
 
       setError(
-        getCheckInErrorMessage({
-          error: error as CheckInError,
-          // @ts-ignore b/c type error.
-          owner: data?.owner?.user
-        })
+        getCheckInErrorMessage({ error: error as ErrorType, owner: data })
       );
 
       return;

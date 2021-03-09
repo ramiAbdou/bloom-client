@@ -5,20 +5,20 @@ import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { IdProps } from '@util/constants';
+import { MutationEvent } from '@util/events';
 
 const DeleteEventButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const id: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useStoreState(({ modal }) => modal.metadata);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
-  const [deleteEvent, { loading }] = useMutation<boolean, IdProps>({
+  const [deleteEvent, { loading }] = useMutation<boolean>({
     fields: ['deletedAt', 'id'],
-    operation: 'deleteEvent',
+    operation: MutationEvent.DELETE_EVENT,
     schema: Schema.EVENT,
-    types: { id: { required: true } },
-    variables: { id }
+    types: { eventId: { required: true } },
+    variables: { eventId }
   });
 
   const pushToEvents = usePush('events');
@@ -41,7 +41,7 @@ const DeleteEventButton: React.FC = () => {
       secondary
       className="mt-xs"
       loading={loading}
-      show={!!id}
+      show={!!eventId}
       onClick={onClick}
     >
       Delete Event

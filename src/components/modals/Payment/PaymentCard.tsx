@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
@@ -6,15 +6,16 @@ import FormCreditCard from '@organisms/Form/FormCreditCard';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 import { useStripe } from '@stripe/react-stripe-js';
 import PaymentStore from './Payment.store';
 import PaymentFinishButton from './PaymentFinishButton';
-import useUpdatePaymentMethod from './useUpdatePaymentMethod';
+import useUpdateStripePaymentMethodId from './useUpdateStripePaymentMethodId';
 
 const PaymentCardButton: React.FC = () => {
-  const type = PaymentStore.useStoreState((store) => store.type);
+  const type = PaymentStore.useStoreState((state) => state.type);
   const stripe = useStripe();
 
   if (type === 'UPDATE_PAYMENT_METHOD') return <PaymentFinishButton />;
@@ -31,10 +32,10 @@ const PaymentCardButton: React.FC = () => {
 };
 
 const PaymentCardForm: React.FC = () => {
-  const updatePaymentMethod = useUpdatePaymentMethod();
+  const updateStripePaymentMethodId = useUpdateStripePaymentMethodId();
 
   return (
-    <Form onSubmit={updatePaymentMethod}>
+    <Form onSubmit={updateStripePaymentMethodId}>
       <FormShortText id="NAME_ON_CARD" title="Name on Card" />
       <FormCreditCard />
       <FormShortText id="BILLING_ADDRESS" title="Billing Address" />
@@ -57,8 +58,16 @@ const PaymentCardForm: React.FC = () => {
 };
 
 const PaymentCard: React.FC = () => {
-  const isCardOnFile = useStoreState(({ db }) => !!db.member.paymentMethod);
-  const type = PaymentStore.useStoreState((store) => store.type);
+  const isCardOnFile = useStoreState(({ db }) => {
+    return !!db.memberIntegrations.paymentMethod;
+  });
+
+  const type = PaymentStore.useStoreState((state) => state.type);
+  const goForward = StoryStore.useStoreActions((actions) => actions.goForward);
+
+  useEffect(() => {
+    if (isCardOnFile && type !== 'UPDATE_PAYMENT_METHOD') goForward();
+  }, [isCardOnFile, type]);
 
   const description: string = isCardOnFile
     ? 'An update to your current subscription will be reflected on your next billing date.'

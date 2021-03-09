@@ -10,7 +10,7 @@ import FormHeader from '@organisms/Form/FormHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMemberType } from '@store/Db/entities';
+import { IMemberPlan } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import useSavePaymentMethod from './useSavePaymentMethod';
 
@@ -42,13 +42,13 @@ const ApplicationPaymentForm: React.FC = () => {
 
 const ApplicationPaymentSection: React.FC = () => {
   const selectedTypeName: string = StoryStore.useStoreState(({ items }) => {
-    return items.MEMBERSHIP_TYPE?.value;
+    return items.MEMBER_PLAN?.value;
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const selectedType: IMemberType = db.community?.types
-      ?.map((typeId: string) => db.byTypeId[typeId])
-      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+    const selectedType: IMemberPlan = db.community?.plans
+      ?.map((planId: string) => db.byMemberPlanId[planId])
+      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
 
     return !!selectedType?.amount;
   });

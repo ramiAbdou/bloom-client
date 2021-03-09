@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 /**
  * @fileoverview Store: Schema
  * - Defines the normalizr schema needed to normalize all of the data based
@@ -32,6 +34,32 @@ export const mergeStrategy = (a: Partial<any>, b: Partial<any>) => {
 
 // ## NORMALIZR SCHEMA DECLARATIONS
 
+const Application = new schema.Entity(
+  'applications',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (value, parent) => {
+      const processedData = takeFirst([
+        [!!parent.rankedQuestionId, { questions: [parent.id] }],
+        {}
+      ]);
+
+      return { ...value, ...processedData, applicationId: value.id };
+    }
+  }
+);
+
+const RankedQuestion = new schema.Entity(
+  'rankedQuestions',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, rankedQuestionId: value.id };
+    }
+  }
+);
+
 const Community = new schema.Entity(
   'communities',
   {},
@@ -41,11 +69,10 @@ const Community = new schema.Entity(
       const processedData = takeFirst([
         [!!parent.applicationId, { application: parent.id }],
         [!!parent.eventId, { events: [parent.id] }],
-        [!!parent.integrationsId, { integrations: parent.id }],
         [!!parent.memberId, { members: [parent.id] }],
-        [!!parent.questionId, { questions: [parent.id] }],
+        [!!parent.memberPlanId, { plans: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
-        [!!parent.typeId, { types: [parent.id] }],
+        [!!parent.questionId, { questions: [parent.id] }],
         {}
       ]);
 
@@ -54,23 +81,14 @@ const Community = new schema.Entity(
   }
 );
 
-const CommunityApplication = new schema.Entity(
-  'applications',
-  {},
-  {
-    processStrategy: (value) => {
-      return { ...value, applicationId: value.id };
-    }
-  }
-);
-
 const CommunityIntegrations = new schema.Entity(
-  'integrations',
+  'communityIntegrations',
   {},
   {
-    processStrategy: (value) => {
-      return { ...value, integrationsId: value.id };
-    }
+    processStrategy: (value) => ({
+      ...value,
+      communityIntegrationsId: value.id
+    })
   }
 );
 
@@ -148,10 +166,10 @@ const Member = new schema.Entity(
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
         [!!parent.attendeeId, { attendees: [parent.id] }],
-        [!!parent.dataId, { data: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
+        [!!parent.valueId, { values: [parent.id] }],
         [!!parent.watchId, { watches: [parent.id] }],
         {}
       ]);
@@ -161,31 +179,44 @@ const Member = new schema.Entity(
   }
 );
 
-const MemberData = new schema.Entity(
-  'data',
+const MemberIntegrations = new schema.Entity(
+  'memberIntegrations',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, memberIntegrationsId: value.id };
+    }
+  }
+);
+
+const MemberSocials = new schema.Entity(
+  'socials',
   {},
   {
     mergeStrategy,
-    processStrategy: (value) => {
-      return { ...value, dataId: value.id };
-    }
+    processStrategy: (value) => ({ ...value, socialsId: value.id })
   }
 );
 
-const MemberPayment = new schema.Entity(
+const MemberPlan = new schema.Entity(
+  'memberPlans',
+  {},
+  { processStrategy: (value) => ({ ...value, memberPlanId: value.id }) }
+);
+
+const MemberValue = new schema.Entity(
+  'values',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (value) => ({ ...value, valueId: value.id })
+  }
+);
+
+const Payment = new schema.Entity(
   'payments',
   {},
   { processStrategy: (value) => ({ ...value, paymentId: value.id }) }
-);
-
-const MemberType = new schema.Entity(
-  'types',
-  {},
-  {
-    processStrategy: (value) => {
-      return { ...value, typeId: value.id };
-    }
-  }
 );
 
 const Question = new schema.Entity(
@@ -195,10 +226,20 @@ const Question = new schema.Entity(
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = takeFirst([
-        [!!parent.dataId, { data: [parent.id] }]
+        [!!parent.valueId, { values: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, questionId: value.id };
+    }
+  }
+);
+
+const Supporter = new schema.Entity(
+  'supporter',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, supporterId: value.id };
     }
   }
 );
@@ -221,19 +262,22 @@ const User = new schema.Entity(
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.
 
+Application.define({ community: Community, questions: [RankedQuestion] });
+RankedQuestion.define({ application: Application, question: Question });
+
 Community.define({
-  application: CommunityApplication,
+  application: Application,
+  communityIntegrations: CommunityIntegrations,
   events: [Event],
   highlightedQuestion: Question,
-  integrations: CommunityIntegrations,
   members: [Member],
   owner: Member,
-  payments: [MemberPayment],
+  payments: [Payment],
+  plans: [MemberPlan],
   questions: [Question],
-  types: [MemberType]
+  supporters: [Supporter]
 });
 
-CommunityApplication.define({ community: Community });
 CommunityIntegrations.define({ community: Community });
 
 Event.define({
@@ -243,47 +287,54 @@ Event.define({
   watches: [EventWatch]
 });
 
-EventAttendee.define({ event: Event, member: Member });
-EventGuest.define({ event: Event, member: Member });
+EventAttendee.define({ event: Event, member: Member, supporter: Supporter });
+EventGuest.define({ event: Event, member: Member, supporter: Supporter });
 EventWatch.define({ event: Event, member: Member });
 
 Member.define({
   community: Community,
-  data: [MemberData],
   guests: [EventGuest],
-  payments: [MemberPayment],
-  type: MemberType,
+  memberIntegrations: MemberIntegrations,
+  payments: [Payment],
+  plan: MemberPlan,
+  socials: MemberSocials,
   user: User,
+  values: [MemberValue],
   watches: [EventWatch]
 });
 
-MemberData.define({ member: Member, question: Question });
+MemberIntegrations.define({ member: Member });
+MemberSocials.define({ member: Member });
+MemberPlan.define({ community: Community });
+MemberValue.define({ member: Member, question: Question });
 
-MemberPayment.define({
+Payment.define({
   community: Community,
   member: Member,
-  type: MemberType
+  plan: MemberPlan
 });
 
-MemberType.define({ community: Community });
-Question.define({ community: Community, data: [MemberData] });
-User.define({ member: Member, members: [Member] });
+Question.define({ community: Community, values: [MemberValue] });
+User.define({ members: [Member], supporters: [Supporter] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
+  APPLICATION: Application,
+  APPLICATION_QUESTION: RankedQuestion,
   COMMUNITY: Community,
-  COMMUNITY_APPLICATION: CommunityApplication,
   COMMUNITY_INTEGRATIONS: CommunityIntegrations,
   EVENT: Event,
   EVENT_ATTENDEE: EventAttendee,
   EVENT_GUEST: EventGuest,
   EVENT_WATCH: EventWatch,
   MEMBER: Member,
-  MEMBER_DATA: MemberData,
-  MEMBER_PAYMENT: MemberPayment,
-  MEMBER_TYPE: MemberType,
+  MEMBER_INTEGRATIONS: MemberIntegrations,
+  MEMBER_PLAN: MemberPlan,
+  MEMBER_SOCIALS: MemberSocials,
+  MEMBER_VALUE: MemberValue,
+  PAYMENT: Payment,
   QUESTION: Question,
   USER: User
 };

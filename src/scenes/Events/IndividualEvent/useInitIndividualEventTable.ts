@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 
 import useManualQuery from '@hooks/useManualQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { eventFields, GetEventArgs } from '../Events.types';
+import { QueryEvent } from '@util/events';
+import { GetEventArgs } from '../Events.types';
 
-const useInitIndividualEventTable = (): boolean => {
+const useInitIndividualEventTable = (): Partial<QueryResult> => {
   const eventId = useStoreState(({ db }) => db.event?.id);
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
 
@@ -14,8 +16,14 @@ const useInitIndividualEventTable = (): boolean => {
     IEvent,
     GetEventArgs
   >({
-    fields: eventFields,
-    operation: 'getEventAttendees',
+    fields: [
+      'createdAt',
+      'id',
+      { event: ['id'] },
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'email', 'firstName', 'lastName'] }
+    ],
+    operation: QueryEvent.GET_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     types: { eventId: { required: false } },
     variables: { eventId }
@@ -28,15 +36,10 @@ const useInitIndividualEventTable = (): boolean => {
     fields: [
       'createdAt',
       'id',
-      { event: ['id', 'title'] },
-      {
-        member: [
-          'id',
-          { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-        ]
-      }
+      { event: ['id'] },
+      { member: ['email', 'id', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: 'getEventWatches',
+    operation: QueryEvent.GET_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     types: { eventId: { required: false } },
     variables: { eventId }
@@ -49,7 +52,7 @@ const useInitIndividualEventTable = (): boolean => {
     }
   }, []);
 
-  return loading1 || loading2;
+  return { loading: loading1 || loading2 };
 };
 
 export default useInitIndividualEventTable;

@@ -4,7 +4,7 @@ import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMember, IUser, MemberRole } from '@store/Db/entities';
+import { IMember, MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';
@@ -13,15 +13,14 @@ const AdminDatabase: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
     return db.community.members
       ?.map((memberId: string) => db.byMemberId[memberId])
-      ?.filter((member: IMember) => !!member?.role && !!member?.user)
+      ?.filter((member: IMember) => !!member?.role)
       ?.map((member: IMember) => {
-        const user: IUser = db.byUserId[member.user];
-        const { email, firstName, lastName } = user ?? {};
+        const { email, firstName, lastName }: IMember = member;
         return { email, firstName, id: member.id, lastName };
       }, []);
   });
 
-  const isOwner = useStoreState(
+  const isOwner: boolean = useStoreState(
     ({ db }) => db.member?.role === MemberRole.OWNER
   );
 

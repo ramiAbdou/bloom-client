@@ -1,28 +1,30 @@
 import useQuery from '@hooks/useQuery';
-import { IUser } from '@store/Db/entities';
+import { QueryResult } from '@hooks/useQuery.types';
+import { IMemberSocials } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import ProfileStore from './Profile.store';
+import IdStore from '@store/Id.store';
+import { QueryEvent } from '@util/events';
 
-const useInitProfilePersonal = (): boolean => {
-  const userId = ProfileStore.useStoreState((store) => store.userId);
+const useInitProfilePersonal = (): QueryResult<IMemberSocials> => {
+  const memberId = IdStore.useStoreState((state) => state.id);
 
-  const { loading } = useQuery<IUser>({
+  const result: QueryResult<IMemberSocials> = useQuery<IMemberSocials>({
     fields: [
       'clubhouseUrl',
-      'email',
       'facebookUrl',
       'id',
       'instagramUrl',
       'linkedInUrl',
-      'twitterUrl'
+      'twitterUrl',
+      { member: ['id'] }
     ],
-    operation: 'getUser',
-    schema: Schema.USER,
-    types: { userId: { required: false } },
-    variables: { userId }
+    operation: QueryEvent.GET_MEMBER_SOCIALS,
+    schema: [Schema.MEMBER_SOCIALS],
+    types: { memberId: { required: false } },
+    variables: { memberId }
   });
 
-  return loading;
+  return result;
 };
 
 export default useInitProfilePersonal;

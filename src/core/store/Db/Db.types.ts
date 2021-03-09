@@ -2,19 +2,23 @@ import { Action, Computed } from 'easy-peasy';
 import { Schema } from 'normalizr';
 
 import {
+  IApplication,
   ICommunity,
-  ICommunityApplication,
+  ICommunityIntegrations,
   IEntities,
   IEvent,
   IEventAttendee,
   IEventGuest,
   IEventWatch,
-  IIntegrations,
   IMember,
-  IMemberData,
-  IMemberPayment,
-  IMemberType,
+  IMemberIntegrations,
+  IMemberPlan,
+  IMemberSocials,
+  IMemberValue,
+  IPayment,
   IQuestion,
+  IRankedQuestion,
+  ISupporter,
   IUser
 } from './entities';
 
@@ -28,27 +32,45 @@ export interface SetActiveArgs {
   table: keyof IEntities;
 }
 
-export type DbModel = {
-  byApplicationId: Computed<DbModel, Record<string, ICommunityApplication>>;
+export interface DbModel {
+  // BY ID STORE
+
+  byApplicationId: Computed<DbModel, Record<string, IApplication>>;
   byAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
   byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
-  byDataId: Computed<DbModel, Record<string, IMemberData>>;
+  byCommunityIntegrationsId: Computed<
+    DbModel,
+    Record<string, ICommunityIntegrations>
+  >;
   byEventId: Computed<DbModel, Record<string, IEvent>>;
   byGuestId: Computed<DbModel, Record<string, IEventGuest>>;
-  byIntegrationsId: Computed<DbModel, Record<string, IIntegrations>>;
   byMemberId: Computed<DbModel, Record<string, IMember>>;
-  byPaymentId: Computed<DbModel, Record<string, IMemberPayment>>;
+  byMemberIntegrationsId: Computed<
+    DbModel,
+    Record<string, IMemberIntegrations>
+  >;
+  byMemberPlanId: Computed<DbModel, Record<string, IMemberPlan>>;
+  byPaymentId: Computed<DbModel, Record<string, IPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
-  byTypeId: Computed<DbModel, Record<string, IMemberType>>;
+  byRankedQuestionId: Computed<DbModel, Record<string, IRankedQuestion>>;
+  bySocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
+  bySupporterId: Computed<DbModel, Record<string, ISupporter>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
+  byValuesId: Computed<DbModel, Record<string, IMemberValue>>;
   byWatchId: Computed<DbModel, Record<string, IEventWatch>>;
 
-  application: Computed<DbModel, ICommunityApplication>;
+  // ACTIVE STORE
+
+  application: Computed<DbModel, IApplication>;
   community: Computed<DbModel, ICommunity>;
+  communityIntegrations: Computed<DbModel, ICommunityIntegrations>;
   event: Computed<DbModel, IEvent>;
-  integrations: Computed<DbModel, IIntegrations>;
   member: Computed<DbModel, IMember>;
+  memberIntegrations: Computed<DbModel, IMemberIntegrations>;
+  socials: Computed<DbModel, IMemberSocials>;
   user: Computed<DbModel, IUser>;
+
+  // UTILITY
 
   clearEntities: Action<DbModel>;
   entities: IEntities;
@@ -57,4 +79,4 @@ export type DbModel = {
   isMember: Computed<DbModel, boolean>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
   setActive: Action<DbModel, SetActiveArgs | SetActiveArgs[]>;
-};
+}

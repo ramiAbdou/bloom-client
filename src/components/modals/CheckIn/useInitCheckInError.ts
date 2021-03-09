@@ -1,12 +1,14 @@
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 
-import { CookieType } from '@util/constants';
 import useManualQuery from '@hooks/useManualQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
+import { ErrorContext } from '@util/errors';
+import { QueryEvent } from '@util/events';
 
 /**
  * If a LOGIN_ERROR exists via cookie, then we need to load the community's
@@ -14,32 +16,37 @@ import { useStoreState } from '@store/Store';
  *
  * Uses global loading state.
  */
-const useInitCheckInError = (): boolean => {
+const useInitCheckInError = (): Partial<QueryResult> => {
   const communityId = useStoreState(({ db }) => db.community?.id);
   const isMember = useStoreState(({ db }) => db.isMember);
 
-  const [getCommunityOwner, { loading }] = useManualQuery<ICommunity>({
+  const [getOwner, { loading }] = useManualQuery<ICommunity>({
     fields: [
       'id',
-      { owner: ['id', { user: ['id', 'email', 'firstName', 'lastName'] }] }
+      'email',
+      'firstName',
+      'lastName',
+      'role',
+      { community: ['id'] }
     ],
-    operation: 'getCommunityOwner',
-    schema: Schema.COMMUNITY,
+    operation: QueryEvent.GET_OWNER,
+    schema: Schema.MEMBER,
     types: { communityId: { required: true } }
   });
 
-  const hasCookieError = !!Cookies.get(CookieType.LOGIN_ERROR);
+  const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 
   useEffect(() => {
     (async () => {
       if (hasCookieError && communityId && !isMember) {
-        await getCommunityOwner({ communityId });
+        await getOwner({ communityId });
       }
     })();
   }, [communityId, hasCookieError, isMember]);
 
   useLoader(loading);
-  return loading;
+
+  return { loading };
 };
 
 export default useInitCheckInError;

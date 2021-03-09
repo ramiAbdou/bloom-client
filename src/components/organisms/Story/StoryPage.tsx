@@ -30,7 +30,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
   branchId = branchId ?? id;
   branches = branches ?? { [branchId]: { description, iconUrl, title } };
 
-  const pageId = StoryStore.useStoreState((store) => store.pageId);
+  const pageId = StoryStore.useStoreState((state) => state.pageId);
   const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
   const setPage = StoryStore.useStoreActions((store) => store.setPage);
 

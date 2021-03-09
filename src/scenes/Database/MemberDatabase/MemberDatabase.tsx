@@ -1,6 +1,6 @@
+import day from 'dayjs';
 import React from 'react';
 
-import useMutation from '@hooks/useMutation';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
@@ -10,31 +10,33 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IIntegrations, IQuestion } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
+import { IQuestion } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
-import { UpdateQuestionArgs } from '../Database.types';
+import { sortObjects } from '@util/util';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
+import useUpdateQuestion from './useUpdateQuestion';
 
 const MemberDatabase: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  const canCollectDues: boolean = useStoreState(
+    ({ db }) => db.community.canCollectDues
+  );
 
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: TableRow[] = useStoreState(({ db }) => getMemberTableRow({ db }));
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
-    const integrationsId: string = db.community?.integrations;
-    const integrations: IIntegrations = db.byIntegrationsId[integrationsId];
-
-    const questions: IQuestion[] = db.community.questions
+    const filteredColumns: TableColumn[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter((question: IQuestion) => {
         if (
           question.category === QuestionCategory.DUES_STATUS &&
-          !integrations.stripeAccountId
+          !canCollectDues
         ) {
           return false;
         }
@@ -42,15 +44,26 @@ const MemberDatabase: React.FC = () => {
         return true;
       });
 
-    return [...questions];
+    return filteredColumns?.map((question: IQuestion) => {
+      if (question.category === QuestionCategory.DUES_STATUS) {
+        return {
+          ...question,
+          format: (value: boolean) => (value ? 'Paid' : 'Not Paid')
+        };
+      }
+
+      if (question.category === QuestionCategory.JOINED_AT) {
+        return {
+          ...question,
+          format: (value) => day(value).format('MMMM, D, YYYY')
+        };
+      }
+
+      return question;
+    });
   });
 
-  const [updateQuestion] = useMutation<IQuestion, UpdateQuestionArgs>({
-    fields: ['id', 'title'],
-    operation: 'updateQuestion',
-    schema: Schema.QUESTION,
-    types: { questionId: { required: true }, title: { required: true } }
-  });
+  const updateQuestion = useUpdateQuestion();
 
   const onRenameColumn: OnRenameColumn = async ({ column, updateColumn }) => {
     const { title, id } = column;

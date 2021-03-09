@@ -19,21 +19,21 @@ const EventsUpcomingContent: React.FC = () => {
       ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => !event.deletedAt)
       ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
-      ?.sort((a, b) => sortObjects(a, b, 'startTime', 'ASC'));
+      ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime', 'ASC'));
   });
 
   return (
     <List
       emptyMessage="Looks like there are no upcoming events."
       items={events}
-      options={{ keys: ['title'] }}
+      options={{ keys: ['title', 'summary', 'description'] }}
       render={EventsCard}
     />
   );
 };
 
 const EventsUpcoming: React.FC = () => {
-  const loading = useInitUpcomingEvents();
+  const { loading } = useInitUpcomingEvents();
 
   return (
     <MainContent>

@@ -1,9 +1,10 @@
 import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { eventMemberFields } from './Events.types';
+import { QueryEvent } from '@util/events';
 
-const useInitUpcomingEvents = () => {
+const useInitUpcomingEvents = (): Partial<QueryResult> => {
   const { loading: loading1 } = useQuery<IEvent[]>({
     fields: [
       'endTime',
@@ -14,25 +15,23 @@ const useInitUpcomingEvents = () => {
       'videoUrl',
       { community: ['id'] }
     ],
-    operation: 'getUpcomingEvents',
+    operation: QueryEvent.GET_UPCOMING_EVENTS,
     schema: [Schema.EVENT]
   });
 
   const { loading: loading2 } = useQuery<IEventGuest[]>({
     fields: [
-      ...eventMemberFields,
       'createdAt',
-      'email',
-      'firstName',
       'id',
-      'lastName',
-      { event: ['id'] }
+      { event: ['id'] },
+      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: 'getUpcomingEventGuests',
+    operation: QueryEvent.GET_UPCOMING_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });
 
-  return loading1 || loading2;
+  return { loading: loading1 || loading2 };
 };
 
 export default useInitUpcomingEvents;

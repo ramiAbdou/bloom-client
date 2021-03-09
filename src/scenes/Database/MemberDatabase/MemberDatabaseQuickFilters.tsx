@@ -5,6 +5,7 @@ import { TableFilter, TableRow } from '@organisms/Table/Table.types';
 import TableQuickFilter from '@organisms/Table/TableQuickFilter';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
 
 const MemberDatabaseInactiveFilter: React.FC = () => {
   const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
@@ -12,7 +13,7 @@ const MemberDatabaseInactiveFilter: React.FC = () => {
   const duesStatusQuestionId: string = useStoreState(({ db }) => {
     return db.community.questions?.find((questionId: string) => {
       const question: IQuestion = db.byQuestionId[questionId];
-      return question?.category === 'DUES_STATUS';
+      return question?.category === QuestionCategory.DUES_STATUS;
     });
   });
 
@@ -36,7 +37,7 @@ const MemberDatabaseActiveFilter: React.FC = () => {
   const duesStatusQuestionId: string = useStoreState(({ db }) => {
     return db.community.questions?.find((questionId: string) => {
       const question: IQuestion = db.byQuestionId[questionId];
-      return question?.category === 'DUES_STATUS';
+      return question?.category === QuestionCategory.DUES_STATUS;
     });
   });
 

@@ -7,20 +7,20 @@ import PaymentStore from './Payment.store';
 
 const PaymentFinishButton: React.FC = () => {
   const type = PaymentStore.useStoreState((s) => s.type);
-  const selectedTypeId = PaymentStore.useStoreState((s) => s.selectedTypeId);
+  const selectedPlanId = PaymentStore.useStoreState((s) => s.selectedPlanId);
   const changeAmount = PaymentStore.useStoreState((s) => s.changeAmount);
 
   const amount: number = useStoreState(({ db }) => {
-    return changeAmount ?? db.byTypeId[selectedTypeId]?.amount;
+    return changeAmount ?? db.byMemberPlanId[selectedPlanId]?.amount;
   });
 
   const isLessThanCurrentType = useStoreState(({ db }) => {
-    const selectedAmount: number = db.byTypeId[selectedTypeId]?.amount;
-    const currentAmount: number = db.byTypeId[db.member.type]?.amount;
+    const selectedAmount: number = db.byMemberPlanId[selectedPlanId]?.amount;
+    const currentAmount: number = db.byMemberPlanId[db.member.plan]?.amount;
 
     return (
       db.member.isDuesActive &&
-      !db.byTypeId[selectedTypeId]?.isFree &&
+      !db.byMemberPlanId[selectedPlanId]?.isFree &&
       selectedAmount < currentAmount
     );
   });

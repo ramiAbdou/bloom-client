@@ -29,7 +29,7 @@ const IndividualEvent: React.FC = () => {
   const isMember = useStoreState(({ db }) => db.isMember);
   const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
 
-  const loading = useInitIndividualEvent();
+  const { loading } = useInitIndividualEvent();
 
   if (loading || !isEventActive) return null;
 

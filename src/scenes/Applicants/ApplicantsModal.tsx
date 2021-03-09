@@ -5,12 +5,14 @@ import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import {
   IMember,
-  IMemberData,
+  IMemberValue,
   IQuestion,
   IUser,
   MemberStatus
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionCategory } from '@util/constants';
+import { sortObjects } from '@util/util';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
@@ -18,8 +20,7 @@ const ApplicantsModalTitle: React.FC = () => {
 
   const fullName = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    const user: IUser = db.byUserId[member?.user];
-    return `${user?.firstName} ${user?.lastName}`;
+    return `${member?.firstName} ${member?.lastName}`;
   });
 
   return <h1>{fullName}</h1>;
@@ -31,24 +32,30 @@ const ApplicantsModalItems: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
-    const data: IMemberData[] = member.data?.map(
-      (dataId: string) => db.byDataId[dataId]
+    const data: IMemberValue[] = member.values?.map(
+      (valueId: string) => db.byValuesId[valueId]
     );
 
     return db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter((question: IQuestion) => {
-        return !question?.category || question?.category === 'EMAIL';
+        return (
+          !question?.category || question?.category === QuestionCategory.EMAIL
+        );
       })
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.map((question: IQuestion) => {
-        const element: IMemberData = data?.find((entity: IMemberData) => {
+        const element: IMemberValue = data?.find((entity: IMemberValue) => {
           return entity.question === question.id;
         });
 
         return {
           title: question?.title,
           type: question?.type,
-          value: element?.value
+          value:
+            question.category === QuestionCategory.EMAIL
+              ? member.email
+              : element?.value
         };
       });
   });

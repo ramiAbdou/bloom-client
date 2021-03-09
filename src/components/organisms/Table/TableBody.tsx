@@ -6,14 +6,14 @@ import { TableRow as TableRowProps } from './Table.types';
 import TableRow from './TableRow/TableRow';
 
 const TableBody: React.FC = () => {
-  const filteredRows = TableStore.useStoreState((store) => store.filteredRows);
-  const floor = TableStore.useStoreState((store) => store.range[0]);
-  const ceiling = TableStore.useStoreState((store) => store.range[1]);
+  const filteredRows = TableStore.useStoreState((state) => state.filteredRows);
+  const floor = TableStore.useStoreState((state) => state.range[0]);
+  const ceiling = TableStore.useStoreState((state) => state.range[1]);
 
   // Fetching these values forces React to re-render, which in the case of
   // sorting, we do want to re-render our data.
-  TableStore.useStoreState((store) => store.sortColumnId);
-  TableStore.useStoreState((store) => store.sortDirection);
+  TableStore.useStoreState((state) => state.sortColumnId);
+  TableStore.useStoreState((state) => state.sortDirection);
 
   return (
     <tbody>

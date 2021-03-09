@@ -1,15 +1,15 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
-import { ValueProps } from '@util/constants';
-import { IMemberData, IQuestion } from '@store/Db/entities';
+import { IMemberValue, IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
+import { ValueProps } from '@util/constants';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
 
 const ListFilterQuestionOption: React.FC<ValueProps> = ({ value: option }) => {
-  const questionId: string = IdStore.useStoreState((store) => store.id);
+  const questionId: string = IdStore.useStoreState((state) => state.id);
 
   const addValue = ListFilterQuestionStore.useStoreActions(
     (state) => state.addValue
@@ -22,9 +22,9 @@ const ListFilterQuestionOption: React.FC<ValueProps> = ({ value: option }) => {
   const numResponses: number = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
 
-    return question?.data
-      ?.map((dataId: string) => db.byDataId[dataId])
-      ?.filter((data: IMemberData) => data?.value === option)?.length;
+    return question?.values
+      ?.map((valueId: string) => db.byValuesId[valueId])
+      ?.filter((data: IMemberValue) => data?.value === option)?.length;
   });
 
   const setFilter = ListFilterStore.useStoreActions((state) => state.setFilter);

@@ -4,9 +4,10 @@ import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
   IMember,
-  IMemberData,
+  IMemberPlan,
+  IMemberSocials,
+  IMemberValue,
   IQuestion,
-  IUser,
   MemberStatus
 } from '@store/Db/entities';
 import { QuestionCategory } from '@util/constants';
@@ -16,10 +17,9 @@ interface GetMemberTableRowArgs {
   db: State<DbModel>;
 }
 
-interface GetMemberValueArgs
-  extends Pick<IMember, 'data' | 'isDuesActive' | 'joinedAt' | 'type'>,
-    Pick<IUser, 'email' | 'firstName' | 'lastName' | 'pictureUrl'> {
+interface GetMemberValueArgs {
   db: State<DbModel>;
+  member: IMember;
   questionId: string;
 }
 
@@ -27,39 +27,35 @@ interface GetMemberValueArgs
  * Returns the appropriate value based on the IMember data as well as the
  * IUser attached.
  */
-const getMemberValue = (args: GetMemberValueArgs) => {
-  const {
-    data,
-    db,
-    email,
-    firstName,
-    isDuesActive,
-    joinedAt,
-    lastName,
-    pictureUrl,
-    questionId,
-    type
-  } = args;
-
+const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
+  const socials: IMemberSocials = db.bySocialsId[member.socials];
   const { category }: IQuestion = db.byQuestionId[questionId];
 
-  if (category === QuestionCategory.EMAIL) return email;
-  if (category === QuestionCategory.FIRST_NAME) return firstName;
-  if (category === QuestionCategory.JOINED_AT) return joinedAt;
-  if (category === QuestionCategory.LAST_NAME) return lastName;
-  if (category === QuestionCategory.PROFILE_PICTURE) return pictureUrl;
+  if (category === QuestionCategory.BIO) return member.bio;
+  if (category === QuestionCategory.CLUBHOUSE_URL) return socials.clubhouseUrl;
+  if (category === QuestionCategory.DUES_STATUS) return member.isDuesActive;
+  if (category === QuestionCategory.EMAIL) return member.email;
+  if (category === QuestionCategory.FACEBOOK_URL) return socials.facebookUrl;
+  if (category === QuestionCategory.FIRST_NAME) return member.firstName;
+  if (category === QuestionCategory.INSTAGRAM_URL) return socials.instagramUrl;
+  if (category === QuestionCategory.JOINED_AT) return member.joinedAt;
+  if (category === QuestionCategory.LAST_NAME) return member.lastName;
+  if (category === QuestionCategory.LINKED_IN_URL) return socials.linkedInUrl;
+  if (category === QuestionCategory.PROFILE_PICTURE) return member.pictureUrl;
+  if (category === QuestionCategory.TWITTER_URL) return socials.twitterUrl;
 
-  if (category === QuestionCategory.MEMBERSHIP_TYPE) {
-    return db.byTypeId[type]?.name;
+  if (category === QuestionCategory.MEMBER_PLAN) {
+    const plan: IMemberPlan = db.byMemberPlanId[member.plan];
+    return plan?.name;
   }
 
-  if (category === QuestionCategory.DUES_STATUS) {
-    return isDuesActive ? 'Active' : 'Inactive';
+  if (category === QuestionCategory.EVENTS_ATTENDED) {
+    return member.attendees?.length ?? 0;
   }
 
-  const value = data
-    ?.map((dataId: string) => db.byDataId[dataId])
-    ?.find((entity: IMemberData) => {
+  const value = member.values
+    ?.map((valueId: string) => db.byValuesId[valueId])
+    ?.find((entity: IMemberValue) => {
       const question: IQuestion = db.byQuestionId[entity.question];
       return question.id === questionId;
     })?.value;
@@ -68,7 +64,7 @@ const getMemberValue = (args: GetMemberValueArgs) => {
 };
 
 export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
-  if (!db.community.types?.length || !db.community.questions?.length) return [];
+  if (!db.community.plans?.length || !db.community.questions?.length) return [];
 
   const sortQuestionId: string = db.community?.questions?.find(
     (questionId: string) => {
@@ -83,17 +79,12 @@ export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
     ?.filter((member: IMember) => !member.deletedAt);
 
   const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
-    const user: IUser = db.byUserId[member.user];
-
-    return [
-      // { category: QuestionCategory.PROFILE_PICTURE },
-      ...db.community?.questions
-    ].reduce(
+    return db.community?.questions.reduce(
       (result: TableRow, questionId: string) => {
-        const value = getMemberValue({ ...user, ...member, db, questionId });
+        const value = getMemberValue({ db, member, questionId });
         return { ...result, [questionId]: value };
       },
-      { id: member?.id, userId: user?.id }
+      { id: member?.id }
     );
   });
 

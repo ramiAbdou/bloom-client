@@ -1,23 +1,44 @@
 import useQuery from '@hooks/useQuery';
-import { IMember } from '@store/Db/entities';
+import { QueryResult } from '@hooks/useQuery.types';
+import { IMember, IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { useStoreState } from '@store/Store';
+import { QueryEvent } from '@util/events';
 
-const useInitDirectory = (): boolean => {
-  const { loading } = useQuery<IMember[]>({
+const useInitDirectory = (): Partial<QueryResult> => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const { loading: loading1 }: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: [
+      'bio',
+      'email',
+      'firstName',
       'id',
+      'joinedAt',
+      'lastName',
+      'pictureUrl',
       'role',
       'status',
       { community: ['id'] },
-      { data: ['id', 'value', { question: ['id'] }] },
-      { type: ['id'] },
-      { user: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
+      { plan: ['id'] }
     ],
-    operation: 'getDirectory',
-    schema: [Schema.MEMBER]
+    operation: QueryEvent.GET_MEMBERS,
+    schema: [Schema.MEMBER],
+    types: { communityId: { required: false } },
+    variables: { communityId }
   });
 
-  return loading;
+  const { loading: loading2 }: QueryResult<IMemberValue[]> = useQuery<
+    IMemberValue[]
+  >({
+    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
+    operation: QueryEvent.GET_MEMBER_VALUES,
+    schema: [Schema.MEMBER_VALUE],
+    types: { communityId: { required: false } },
+    variables: { communityId }
+  });
+
+  return { loading: loading1 || loading2 };
 };
 
 export default useInitDirectory;
