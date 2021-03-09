@@ -58,7 +58,7 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
   const error = Cookies.get(ErrorContext.LOGIN_ERROR) as ErrorType;
   const message = getCheckInErrorMessage({ error, owner });
 
-  const loading = useInitCheckInError();
+  const { loading } = useInitCheckInError();
 
   // After we get the message, we remove the cookie so that the error doesn't
   // get shown again. We set a timeout to ensure that even if the component

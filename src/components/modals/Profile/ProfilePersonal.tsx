@@ -80,7 +80,7 @@ const ProfilePersonalBio: React.FC = () => {
 };
 
 const ProfilePersonal: React.FC = () => {
-  const loading = useInitProfilePersonal();
+  const { loading } = useInitProfilePersonal();
 
   return (
     <Show show={!loading}>

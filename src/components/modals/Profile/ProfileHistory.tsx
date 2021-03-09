@@ -27,7 +27,7 @@ const ProfileHistoryEventList: React.FC = () => {
 };
 
 const ProfileHistoryContent: React.FC = () => {
-  const loading = useInitProfileHistory();
+  const { loading } = useInitProfileHistory();
 
   return (
     <div className="my-md">

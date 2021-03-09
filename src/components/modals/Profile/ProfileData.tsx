@@ -44,7 +44,7 @@ const ProfileDataContent: React.FC = () => {
 };
 
 const ProfileData: React.FC = () => {
-  const loading = useInitProfileData();
+  const { loading } = useInitProfileData();
 
   if (loading) return null;
   return <ProfileDataContent />;

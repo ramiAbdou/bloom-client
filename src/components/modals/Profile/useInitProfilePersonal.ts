@@ -1,13 +1,14 @@
 import useQuery from '@hooks/useQuery';
-import { IUser } from '@store/Db/entities';
+import { QueryResult } from '@hooks/useQuery.types';
+import { IMemberSocials } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
 import { QueryEvent } from '@util/events';
 
-const useInitProfilePersonal = (): boolean => {
+const useInitProfilePersonal = (): QueryResult<IMemberSocials> => {
   const memberId = IdStore.useStoreState((state) => state.id);
 
-  const { loading } = useQuery<IUser>({
+  const result: QueryResult<IMemberSocials> = useQuery<IMemberSocials>({
     fields: [
       'clubhouseUrl',
       'facebookUrl',
@@ -23,7 +24,7 @@ const useInitProfilePersonal = (): boolean => {
     variables: { memberId }
   });
 
-  return loading;
+  return result;
 };
 
 export default useInitProfilePersonal;

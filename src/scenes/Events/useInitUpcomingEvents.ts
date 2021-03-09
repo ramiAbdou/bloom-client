@@ -1,9 +1,10 @@
 import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import { IEvent, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { QueryEvent } from '@util/events';
 
-const useInitUpcomingEvents = () => {
+const useInitUpcomingEvents = (): Partial<QueryResult> => {
   const { loading: loading1 } = useQuery<IEvent[]>({
     fields: [
       'endTime',
@@ -30,7 +31,7 @@ const useInitUpcomingEvents = () => {
     schema: [Schema.EVENT_GUEST]
   });
 
-  return loading1 || loading2;
+  return { loading: loading1 || loading2 };
 };
 
 export default useInitUpcomingEvents;

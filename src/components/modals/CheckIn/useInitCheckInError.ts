@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 
 import useManualQuery from '@hooks/useManualQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -15,7 +16,7 @@ import { QueryEvent } from '@util/events';
  *
  * Uses global loading state.
  */
-const useInitCheckInError = (): boolean => {
+const useInitCheckInError = (): Partial<QueryResult> => {
   const communityId = useStoreState(({ db }) => db.community?.id);
   const isMember = useStoreState(({ db }) => db.isMember);
 
@@ -44,7 +45,8 @@ const useInitCheckInError = (): boolean => {
   }, [communityId, hasCookieError, isMember]);
 
   useLoader(loading);
-  return loading;
+
+  return { loading };
 };
 
 export default useInitCheckInError;

@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 
 import useManualQuery from '@hooks/useManualQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
 import { GetEventArgs } from '../Events.types';
 
-const useInitIndividualEventTable = (): boolean => {
+const useInitIndividualEventTable = (): Partial<QueryResult> => {
   const eventId = useStoreState(({ db }) => db.event?.id);
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
 
@@ -51,7 +52,7 @@ const useInitIndividualEventTable = (): boolean => {
     }
   }, []);
 
-  return loading1 || loading2;
+  return { loading: loading1 || loading2 };
 };
 
 export default useInitIndividualEventTable;

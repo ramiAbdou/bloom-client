@@ -8,7 +8,7 @@ import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 import useInitEventAnalytics from './useInitEventAnalytics';
 
 const EventsAnalytics: React.FC = () => {
-  const loading = useInitEventAnalytics();
+  const { loading } = useInitEventAnalytics();
 
   return (
     <Show show={!loading}>

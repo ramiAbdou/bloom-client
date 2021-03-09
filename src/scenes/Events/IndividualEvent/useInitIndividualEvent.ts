@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { EventPrivacy, ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -13,7 +14,7 @@ import { ErrorContext } from '@util/errors';
 import { QueryEvent } from '@util/events';
 import { GetEventArgs } from '../Events.types';
 
-const useInitIndividualEvent = (): boolean => {
+const useInitIndividualEvent = (): Partial<QueryResult> => {
   const { eventId } = useParams() as { eventId: string };
 
   const communityId = useStoreState(({ db }) => db.community?.id);
@@ -100,10 +101,9 @@ const useInitIndividualEvent = (): boolean => {
     })();
   }, [communityId, isMember]);
 
-  const loading = loading1 || loading2 || loading3;
-  useLoader(loading);
+  useLoader(loading1 || loading2 || loading3);
 
-  return loading;
+  return { loading: loading1 || loading2 || loading3 };
 };
 
 export default useInitIndividualEvent;

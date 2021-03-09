@@ -1,10 +1,11 @@
 import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
 import { QueryEvent } from '@util/events';
 
-const useInitProfileData = (): boolean => {
+const useInitProfileData = (): Partial<QueryResult> => {
   const memberId = IdStore.useStoreState((state) => state.id);
 
   const { loading } = useQuery<IMemberValue[]>({
@@ -15,7 +16,7 @@ const useInitProfileData = (): boolean => {
     variables: { memberId }
   });
 
-  return loading;
+  return { loading };
 };
 
 export default useInitProfileData;

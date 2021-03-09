@@ -1,4 +1,5 @@
 import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import {
   IEvent,
   IEventAttendee,
@@ -13,7 +14,7 @@ import { QueryEvent } from '@util/events';
  * Initializes the event analytics page by fetching all of the past events,
  * past attendees, past guest and past event watches.
  */
-const useInitEventAnalytics = () => {
+const useInitEventAnalytics = (): Partial<QueryResult> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
   const { loading: loading1 } = useQuery<IEvent[]>({
@@ -59,7 +60,7 @@ const useInitEventAnalytics = () => {
     variables: { communityId }
   });
 
-  return loading1 || loading2 || loading3 || loading4;
+  return { loading: loading1 || loading2 || loading3 || loading4 };
 };
 
 export default useInitEventAnalytics;

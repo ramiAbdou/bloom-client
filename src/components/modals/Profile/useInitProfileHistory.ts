@@ -1,4 +1,5 @@
 import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import {
   IEventAttendee,
   IEventGuest,
@@ -9,7 +10,7 @@ import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
 import { QueryEvent } from '@util/events';
 
-const useInitProfileHistory = (): boolean => {
+const useInitProfileHistory = (): Partial<QueryResult> => {
   const memberId = IdStore.useStoreState((state) => state.id);
 
   const { loading: loading1 } = useQuery<IEventAttendee[]>({
@@ -68,7 +69,7 @@ const useInitProfileHistory = (): boolean => {
     variables: { memberId }
   });
 
-  return loading1 || loading2 || loading3 || loading4;
+  return { loading: loading1 || loading2 || loading3 || loading4 };
 };
 
 export default useInitProfileHistory;

@@ -59,7 +59,7 @@ const IndividualEventTable: React.FC = () => {
     );
   });
 
-  const loading = useInitIndividualEventTable();
+  const { loading } = useInitIndividualEventTable();
 
   return (
     <Show show={!!isAdmin && !loading && hasContent}>

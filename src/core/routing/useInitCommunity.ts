@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 
 import useManualQuery from '@hooks/useManualQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/events';
 
-const useInitCommunity = (): boolean => {
+const useInitCommunity = (): Partial<QueryResult> => {
   const communityId = useStoreState(({ db }) => db.community?.id);
 
   const [getCommunity, { loading: loading1 }] = useManualQuery({
@@ -83,7 +84,7 @@ const useInitCommunity = (): boolean => {
 
   useLoader(loading);
 
-  return loading;
+  return { loading };
 };
 
 export default useInitCommunity;

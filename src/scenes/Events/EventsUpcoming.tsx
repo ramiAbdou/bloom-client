@@ -33,7 +33,7 @@ const EventsUpcomingContent: React.FC = () => {
 };
 
 const EventsUpcoming: React.FC = () => {
-  const loading = useInitUpcomingEvents();
+  const { loading } = useInitUpcomingEvents();
 
   return (
     <MainContent>
