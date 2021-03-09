@@ -43,7 +43,7 @@ export interface ICommunity extends BaseEntity {
   urlName: string;
 }
 
-// ## COMMUNITY_INTEGRATIONS
+// ## COMMUNITY INTEGRATIONS
 
 export interface ICommunityIntegrations extends BaseEntity {
   community: Identifier;
@@ -142,7 +142,7 @@ export interface IMember extends BaseEntity {
   watches: Identifier[];
 }
 
-// ## MEMBER COMMUNITY_INTEGRATIONS
+// ## MEMBER COMMUNITY INTEGRATIONS
 
 export interface IPaymentMethod {
   brand: string;
