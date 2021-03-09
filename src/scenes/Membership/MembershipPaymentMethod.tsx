@@ -3,7 +3,11 @@ import React from 'react';
 
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
-import { IPaymentMethod, RecurrenceType } from '@store/Db/entities';
+import {
+  IMemberPlan,
+  IPaymentMethod,
+  RecurrenceType
+} from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';
 
@@ -40,9 +44,8 @@ const MembershipPaymentMethod: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   const isLifetime: boolean = useStoreState(({ db }) => {
-    return (
-      db.byMemberPlanId[db.member?.plan]?.recurrence === RecurrenceType.LIFETIME
-    );
+    const plan: IMemberPlan = db.byMemberPlanId[db.member?.plan];
+    return plan?.recurrence === RecurrenceType.LIFETIME;
   });
 
   return (

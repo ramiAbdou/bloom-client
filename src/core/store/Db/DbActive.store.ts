@@ -3,8 +3,8 @@ import { computed } from 'easy-peasy';
 import {
   IApplication,
   ICommunity,
+  ICommunityIntegrations,
   IEvent,
-  IIntegrations,
   IMember,
   IMemberIntegrations,
   IMemberPlan,
@@ -18,8 +18,8 @@ const dbActiveStore: Pick<
   DbModel,
   | 'application'
   | 'community'
+  | 'communityIntegrations'
   | 'event'
-  | 'integrations'
   | 'member'
   | 'memberIntegrations'
   | 'socials'
@@ -32,11 +32,13 @@ const dbActiveStore: Pick<
 
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
-    const { byId: byIntegrationsId } = entities.integrations;
+    const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
     const { byId: byMemberPlanId } = entities.memberPlans;
 
     const result: ICommunity = byId[activeId];
-    const integrations: IIntegrations = byIntegrationsId[result?.integrations];
+
+    const communityIntegrations: ICommunityIntegrations =
+      byCommunityIntegrationsId[result?.communityIntegrations];
 
     const hasPaidMembership: boolean = result?.plans
       ?.map((planId: string) => byMemberPlanId[planId])
@@ -49,18 +51,22 @@ const dbActiveStore: Pick<
 
     return {
       ...result,
-      canCollectDues: hasPaidMembership && !!integrations?.stripeAccountId
+      canCollectDues:
+        hasPaidMembership && !!communityIntegrations?.stripeAccountId
     };
+  }),
+
+  communityIntegrations: computed(({ community, entities }) => {
+    const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
+
+    return byCommunityIntegrationsId[
+      community?.communityIntegrations
+    ] as ICommunityIntegrations;
   }),
 
   event: computed(({ entities }) => {
     const { activeId, byId } = entities.events;
     return byId[activeId] as IEvent;
-  }),
-
-  integrations: computed(({ community, entities }) => {
-    const { byId: byIntegrationId } = entities.integrations;
-    return byIntegrationId[community?.integrations] as IIntegrations;
   }),
 
   member: computed(({ entities }) => {

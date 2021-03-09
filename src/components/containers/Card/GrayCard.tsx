@@ -16,6 +16,8 @@ const GrayCardNumberContainer: React.FC<
 > = (props) => {
   const { percentage, value } = props;
 
+  if (value === undefined || value === null) return null;
+
   return (
     <Row className="mb-xxs">
       <p className="display mr-xs">{value}</p>

@@ -28,9 +28,9 @@ export interface ICommunity extends BaseEntity {
   application?: Identifier;
   autoAccept?: boolean;
   canCollectDues?: boolean;
+  communityIntegrations: Identifier;
   events?: Identifier[];
   highlightedQuestion: Identifier;
-  integrations: Identifier;
   logoUrl: string;
   members: Identifier[];
   payments: Identifier[];
@@ -41,6 +41,17 @@ export interface ICommunity extends BaseEntity {
   primaryColor: string;
   supporters: Identifier[];
   urlName: string;
+}
+
+// ## COMMUNITY_INTEGRATIONS
+
+export interface ICommunityIntegrations extends BaseEntity {
+  community: Identifier;
+  isMailchimpAuthenticated: boolean;
+  mailchimpLists: { name: string; id: string }[];
+  mailchimpListId: string;
+  mailchimpListName: string;
+  stripeAccountId: string;
 }
 
 // ## EVENT
@@ -95,16 +106,6 @@ export interface IEventWatch extends BaseEntity {
   member: Identifier;
 }
 
-// ## INTEGRATIONS
-
-export interface IIntegrations extends BaseEntity {
-  isMailchimpAuthenticated: boolean;
-  mailchimpLists: { name: string; id: string }[];
-  mailchimpListId: string;
-  mailchimpListName: string;
-  stripeAccountId: string;
-}
-
 // ## MEMBER
 
 export enum MemberRole {
@@ -141,7 +142,7 @@ export interface IMember extends BaseEntity {
   watches: Identifier[];
 }
 
-// ## MEMBER INTEGRATIONS
+// ## MEMBER COMMUNITY_INTEGRATIONS
 
 export interface IPaymentMethod {
   brand: string;
@@ -252,9 +253,9 @@ export interface IEntities {
   applications: EntityRecord<IApplication>;
   attendees: EntityRecord<IEventAttendee>;
   communities: EntityRecord<ICommunity>;
+  communityIntegrations: EntityRecord<ICommunityIntegrations>;
   events: EntityRecord<IEvent>;
   guests: EntityRecord<IEventGuest>;
-  integrations: EntityRecord<IIntegrations>;
   members: EntityRecord<IMember>;
   memberIntegrations: EntityRecord<IMemberIntegrations>;
   memberPlans: EntityRecord<IMemberPlan>;
@@ -273,9 +274,9 @@ export const initialEntities: IEntities = {
   applications: { byId: {} },
   attendees: { byId: {} },
   communities: { activeId: null, byId: {} },
+  communityIntegrations: { byId: {} },
   events: { activeId: null, byId: {} },
   guests: { byId: {} },
-  integrations: { byId: {} },
   memberIntegrations: { byId: {} },
   memberPlans: { byId: {} },
   members: { activeId: null, byId: {} },

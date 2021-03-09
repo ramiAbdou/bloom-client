@@ -1,13 +1,17 @@
 import React from 'react';
 
-import { isProduction } from '@util/constants';
+import { ICommunityIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { isProduction } from '@util/constants';
 
 const StripeProvider: React.FC = ({ children }) => {
   const stripeAccount: string = useStoreState(({ db }) => {
-    return db.byIntegrationsId[db.community.integrations]?.stripeAccountId;
+    const communityIntegrations: ICommunityIntegrations =
+      db.byCommunityIntegrationsId[db.community.communityIntegrations];
+
+    return communityIntegrations?.stripeAccountId;
   });
 
   if (!stripeAccount) return null;

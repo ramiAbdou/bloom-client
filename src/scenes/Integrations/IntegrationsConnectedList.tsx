@@ -4,7 +4,7 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import { IIntegrations } from '@store/Db/entities';
+import { ICommunityIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -20,9 +20,9 @@ const IntegrationsConnectedList: React.FC = () => {
     mailchimpListId,
     stripeAccountId
   } = useStoreState(
-    ({ db }) => db.integrations ?? {},
+    ({ db }) => db.communityIntegrations ?? {},
     deepequal
-  ) as IIntegrations;
+  ) as ICommunityIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
     isMailchimpAuthenticated,

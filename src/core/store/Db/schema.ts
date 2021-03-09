@@ -69,7 +69,6 @@ const Community = new schema.Entity(
       const processedData = takeFirst([
         [!!parent.applicationId, { application: parent.id }],
         [!!parent.eventId, { events: [parent.id] }],
-        [!!parent.integrationsId, { integrations: parent.id }],
         [!!parent.memberId, { members: [parent.id] }],
         [!!parent.memberPlanId, { plans: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
@@ -82,10 +81,15 @@ const Community = new schema.Entity(
   }
 );
 
-const Integrations = new schema.Entity(
-  'integrations',
+const CommunityIntegrations = new schema.Entity(
+  'communityIntegrations',
   {},
-  { processStrategy: (value) => ({ ...value, integrationsId: value.id }) }
+  {
+    processStrategy: (value) => ({
+      ...value,
+      communityIntegrationsId: value.id
+    })
+  }
 );
 
 const Event = new schema.Entity(
@@ -263,9 +267,9 @@ RankedQuestion.define({ application: Application, question: Question });
 
 Community.define({
   application: Application,
+  communityIntegrations: CommunityIntegrations,
   events: [Event],
   highlightedQuestion: Question,
-  integrations: Integrations,
   members: [Member],
   owner: Member,
   payments: [Payment],
@@ -273,6 +277,8 @@ Community.define({
   questions: [Question],
   supporters: [Supporter]
 });
+
+CommunityIntegrations.define({ community: Community });
 
 Event.define({
   attendees: [EventAttendee],
@@ -284,7 +290,6 @@ Event.define({
 EventAttendee.define({ event: Event, member: Member, supporter: Supporter });
 EventGuest.define({ event: Event, member: Member, supporter: Supporter });
 EventWatch.define({ event: Event, member: Member });
-Integrations.define({ community: Community });
 
 Member.define({
   community: Community,
@@ -319,11 +324,11 @@ export const Schema = {
   APPLICATION: Application,
   APPLICATION_QUESTION: RankedQuestion,
   COMMUNITY: Community,
+  COMMUNITY_INTEGRATIONS: CommunityIntegrations,
   EVENT: Event,
   EVENT_ATTENDEE: EventAttendee,
   EVENT_GUEST: EventGuest,
   EVENT_WATCH: EventWatch,
-  INTEGRATIONS: Integrations,
   MEMBER: Member,
   MEMBER_INTEGRATIONS: MemberIntegrations,
   MEMBER_PLAN: MemberPlan,

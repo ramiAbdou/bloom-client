@@ -57,7 +57,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   >({
     fields: ['id', 'stripeAccountId', { community: ['id'] }],
     operation: QueryEvent.GET_INTEGRATIONS,
-    schema: Schema.INTEGRATIONS,
+    schema: Schema.COMMUNITY_INTEGRATIONS,
     types: { communityId: { required: true } }
   });
 

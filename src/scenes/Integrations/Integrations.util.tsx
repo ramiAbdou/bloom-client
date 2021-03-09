@@ -1,6 +1,6 @@
 import URLBuilder from 'util/URLBuilder';
 
-import { IIntegrations } from '@store/Db/entities';
+import { ICommunityIntegrations } from '@store/Db/entities';
 import { APP, isProduction, UrlNameProps } from '@util/constants';
 import mailchimp from './images/mailchimp.png';
 import slack from './images/slack.png';
@@ -14,7 +14,7 @@ const MAILCHIMP_BASE_URI = isProduction
 
 interface BuildIntegrationDataProps
   extends Pick<
-      IIntegrations,
+      ICommunityIntegrations,
       'isMailchimpAuthenticated' | 'mailchimpListId' | 'stripeAccountId'
     >,
     UrlNameProps {}

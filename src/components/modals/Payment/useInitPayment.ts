@@ -1,14 +1,17 @@
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import { IIntegrations, IMemberIntegrations } from '@store/Db/entities';
+import {
+  ICommunityIntegrations,
+  IMemberIntegrations
+} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { QueryEvent } from '@util/events';
 
 const useInitPayment = (): Partial<QueryResult> => {
-  const { loading: loading1 } = useQuery<IIntegrations>({
+  const { loading: loading1 } = useQuery<ICommunityIntegrations>({
     fields: ['id', 'stripeAccountId', { community: ['id'] }],
     operation: QueryEvent.GET_INTEGRATIONS,
-    schema: Schema.INTEGRATIONS
+    schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
   const { loading: loading2 } = useQuery<IMemberIntegrations[]>({

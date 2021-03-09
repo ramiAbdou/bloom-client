@@ -34,7 +34,7 @@ const useInitCommunity = (): Partial<QueryResult> => {
       { community: ['id'] }
     ],
     operation: QueryEvent.GET_INTEGRATIONS,
-    schema: Schema.INTEGRATIONS
+    schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
   const [getQuestions, { loading: loading3 }] = useManualQuery({

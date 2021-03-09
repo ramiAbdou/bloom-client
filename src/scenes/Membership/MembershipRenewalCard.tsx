@@ -3,14 +3,15 @@ import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
 import { useStoreState } from '@store/Store';
-import useInitScheduledPayment from './useInitScheduledPayment';
+import useInitMembershipRenewal from './useInitMembershipRenewal';
 
 const MembershipRenewalCard: React.FC = () => {
   const renewalDate: string = useStoreState(({ db }) => {
-    return day(db.memberIntegrations?.renewalDate).format('M/D/YY');
+    const date: string = db.memberIntegrations?.renewalDate;
+    return date ? day(date).format('M/D/YY') : null;
   });
 
-  const { loading } = useInitScheduledPayment();
+  const { loading } = useInitMembershipRenewal();
 
   return (
     <GrayCard

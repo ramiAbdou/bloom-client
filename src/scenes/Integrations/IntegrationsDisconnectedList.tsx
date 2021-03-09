@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import { IIntegrations } from '@store/Db/entities';
+import { ICommunityIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -18,9 +18,9 @@ const IntegrationsCardList: React.FC = () => {
     mailchimpListId,
     stripeAccountId
   } = useStoreState(
-    ({ db }) => db.integrations ?? {},
+    ({ db }) => db.communityIntegrations ?? {},
     deepequal
-  ) as IIntegrations;
+  ) as ICommunityIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
     isMailchimpAuthenticated,
