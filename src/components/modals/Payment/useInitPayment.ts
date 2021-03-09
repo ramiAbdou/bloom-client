@@ -10,7 +10,7 @@ import { QueryEvent } from '@util/events';
 const useInitPayment = (): Partial<QueryResult> => {
   const { loading: loading1 } = useQuery<ICommunityIntegrations>({
     fields: ['id', 'stripeAccountId', { community: ['id'] }],
-    operation: QueryEvent.GET_INTEGRATIONS,
+    operation: QueryEvent.GET_COMMUNITY_INTEGRATIONS,
     schema: Schema.COMMUNITY_INTEGRATIONS
   });
 

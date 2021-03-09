@@ -24,7 +24,7 @@ const useInitCommunity = (): Partial<QueryResult> => {
     schema: Schema.COMMUNITY
   });
 
-  const [getIntegrations, { loading: loading2 }] = useManualQuery({
+  const [getCommunityIntegrations, { loading: loading2 }] = useManualQuery({
     fields: [
       'id',
       'isMailchimpAuthenticated',
@@ -33,7 +33,7 @@ const useInitCommunity = (): Partial<QueryResult> => {
       'stripeAccountId',
       { community: ['id'] }
     ],
-    operation: QueryEvent.GET_INTEGRATIONS,
+    operation: QueryEvent.GET_COMMUNITY_INTEGRATIONS,
     schema: Schema.COMMUNITY_INTEGRATIONS
   });
 
@@ -73,9 +73,9 @@ const useInitCommunity = (): Partial<QueryResult> => {
     (async () => {
       await Promise.all([
         getCommunity(),
-        getIntegrations(),
-        getQuestions(),
-        getMemberPlans()
+        getCommunityIntegrations(),
+        getMemberPlans(),
+        getQuestions()
       ]);
     })();
   }, [communityId]);

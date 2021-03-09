@@ -51,12 +51,12 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     types: { communityId: { required: true } }
   });
 
-  const [getIntegrations, { loading: loading3 }] = useManualQuery<
+  const [getCommunityIntegrations, { loading: loading3 }] = useManualQuery<
     IApplication,
     CommunityIdArgs
   >({
     fields: ['id', 'stripeAccountId', { community: ['id'] }],
-    operation: QueryEvent.GET_INTEGRATIONS,
+    operation: QueryEvent.GET_COMMUNITY_INTEGRATIONS,
     schema: Schema.COMMUNITY_INTEGRATIONS,
     types: { communityId: { required: true } }
   });
@@ -114,7 +114,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     (async () => {
       await Promise.all([
         getApplication({ communityId }),
-        getIntegrations({ communityId }),
+        getCommunityIntegrations({ communityId }),
         getMemberPlans({ communityId }),
         getRankedQuestions({ communityId })
       ]);

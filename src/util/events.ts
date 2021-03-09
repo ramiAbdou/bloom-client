@@ -45,6 +45,7 @@ export enum MutationEvent {
   VERIFY_TOKEN = 'verifyToken'
 }
 
+// Used for caching purposes (building the keys).
 export enum QueryEvent {
   GET_ACTIVE_MEMBERS_GROWTH = 'getActiveMembersGrowth',
   GET_ACTIVE_MEMBERS_SERIES = 'getActiveMembersSeries',
@@ -52,18 +53,18 @@ export enum QueryEvent {
   GET_APPLICATION = 'getApplication',
   GET_CHANGE_PREVIEW = 'getChangePreview',
   GET_COMMUNITY = 'getCommunity',
+  GET_COMMUNITY_INTEGRATIONS = 'getCommunityIntegrations',
   GET_COMMUNITIES = 'getCommunities',
   GET_EVENT = 'getEvent',
   GET_EVENT_ATTENDEES = 'getEventAttendees',
   GET_EVENT_ATTENDEES_SERIES = 'getEventAttendeesSeries',
   GET_EVENT_GUESTS = 'getEventGuests',
   GET_EVENT_WATCHES = 'getEventWatches',
-  GET_INTEGRATIONS = 'getIntegrations',
-  GET_MEMBER = 'getMember',
   GET_MEMBER_INTEGRATIONS = 'getMemberIntegrations',
   GET_MEMBER_PLANS = 'getMemberPlans',
   GET_MEMBER_SOCIALS = 'getMemberSocials',
   GET_MEMBER_VALUES = 'getMemberValues',
+  GET_MEMBER = 'getMember',
   GET_MEMBERS = 'getMembers',
   GET_MEMBERS_GROWTH = 'getMembersGrowth',
   GET_MEMBERS_SERIES = 'getMembersSeries',
