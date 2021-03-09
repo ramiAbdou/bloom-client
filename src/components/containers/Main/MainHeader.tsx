@@ -49,7 +49,7 @@ const MainHeaderContent: React.FC<MainHeaderProps> = (props) => {
   const isDesktop = useBreakpoint() >= 3;
 
   return (
-    <Row justify="sb" spacing="xs">
+    <Row justify="sb" spacing="sm">
       <Row>
         <MainHeaderBackButton show={!!backButton} />
         <h1 className="mr-sm">{title}</h1>
@@ -58,7 +58,7 @@ const MainHeaderContent: React.FC<MainHeaderProps> = (props) => {
       </Row>
 
       <MainNavigation options={options} show={!loading} />
-      <div>{!loading && isDesktop && children}</div>
+      {!loading && isDesktop && <div>{children}</div>}
     </Row>
   );
 };

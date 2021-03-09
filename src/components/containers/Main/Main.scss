@@ -57,10 +57,7 @@ $PREF: 't-main';
 
 // ## MAIN SECTION
 
-.#{$PREF}-section {
-  margin-bottom: $md;
-  > .t-loading-header { margin-bottom: $sm; }
-}
+.#{$PREF}-section > .t-loading-header { margin-bottom: $sm; }
 
 // ## NAV BUTTON - Only use a border-top, border-bottom and border-right, but
 // not border-left, so we avoid stacking pixels (1px * 2 = 2px). However,
