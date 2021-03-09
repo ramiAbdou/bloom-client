@@ -15,7 +15,7 @@ const Icon = memo(() => <IoSearch />);
 const ClearButton = ({ onChange, value }: Partial<SearchBarProps>) => {
   const onClick = () => onChange('');
 
-  const css = cx('c-misc-search-close', {
+  const css: string = cx('c-misc-search-close', {
     'c-misc-search-close--empty': !value
   });
 
@@ -33,7 +33,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   show,
   value
 }: SearchBarProps) => {
-  const css = cx('c-misc-search', { [className]: className });
+  const css: string = cx('c-misc-search', { [className]: className });
   if (show === false) return null;
 
   return (

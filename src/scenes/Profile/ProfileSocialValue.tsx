@@ -27,7 +27,7 @@ const ProfileSocialValue: React.FC<ProfileSocialMediaValueProps> = ({
   const isLinkedIn = brand === SocialBrand.LINKED_IN;
   const isTwitter = brand === SocialBrand.TWITTER;
 
-  const css = cx('s-profile-card--social-logo', {
+  const css: string = cx('s-profile-card--social-logo', {
     's-profile-card--social-logo--clubhouse': isClubhouse,
     's-profile-card--social-logo--facebook': isFacebook,
     's-profile-card--social-logo--linkedin': isLinkedIn,

@@ -26,7 +26,7 @@ const Toast: React.FC<ToastOptions> = React.memo(
       if (mutationArgsOnUndo) await mutationOnUndoFn();
     };
 
-    const css = cx('c-toast', { 'c-toast--undo': !!mutationArgsOnUndo });
+    const css: string = cx('c-toast', { 'c-toast--undo': !!mutationArgsOnUndo });
 
     return (
       <motion.div

@@ -44,7 +44,7 @@ const QuestionBox: React.FC<QuestionBoxProps> = ({
 }) => {
   if (!items?.length) return null;
 
-  const css = cx('m-misc-question-ctr', {}, className);
+  const css: string = cx('m-misc-question-ctr', {}, className);
 
   return (
     <div className={css}>

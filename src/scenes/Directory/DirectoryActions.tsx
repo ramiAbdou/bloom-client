@@ -6,31 +6,17 @@ import ListQuickFilter from '@organisms/List/ListFilter/ListQuickFilter';
 import ListSearchBar from '@organisms/List/ListSearchBar';
 import { IMember } from '@store/Db/entities';
 
-const DirectoryAdminFilters: React.FC = () => {
-  const filter = (member: Partial<IMember>) => !!member?.role;
-
-  return (
-    <ListQuickFilter filter={filter} id="FILTER_IS_ADMIN" title="Admins Only" />
-  );
-};
-
-const DirectoryQuickFilters: React.FC = () => {
-  return (
-    <Row wrap spacing="xs">
-      <DirectoryAdminFilters />
-    </Row>
-  );
+const DirectoryAdminQuickFilter: React.FC = () => {
+  const filter = (member: Partial<IMember>): boolean => !!member?.role;
+  return <ListQuickFilter filter={filter} title="Admins Only" />;
 };
 
 const DirectoryActions: React.FC = () => {
   return (
-    <Row className="mb-sm" justify="sb" spacing="xs">
-      <Row spacing="sm">
-        <ListSearchBar />
-        <DirectoryQuickFilters />
-      </Row>
-
-      <ListFilterOpenButton />
+    <Row wrap className="mb-sm" gap="sm" justify="sb">
+      <ListSearchBar className="w-100--m" />
+      <DirectoryAdminQuickFilter />
+      <ListFilterOpenButton className="ml-auto" />
     </Row>
   );
 };

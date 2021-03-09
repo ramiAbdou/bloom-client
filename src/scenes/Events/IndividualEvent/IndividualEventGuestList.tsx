@@ -42,7 +42,7 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
     }
   };
 
-  const css = cx('s-events-individual-member', {
+  const css: string = cx('s-events-individual-member', {
     's-events-individual-member--disabled': !isMember
   });
 

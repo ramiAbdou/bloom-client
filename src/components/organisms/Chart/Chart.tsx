@@ -36,7 +36,7 @@ const Chart: React.FC<ChartModelInitArgs> = ({
 }) => {
   if (show === false) return null;
 
-  const css = cx('o-chart', {}, className);
+  const css: string = cx('o-chart', {}, className);
 
   return (
     <ChartStore.Provider runtimeModel={{ ...chartModel, options }}>

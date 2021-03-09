@@ -13,7 +13,7 @@ const Aspect: React.FC<AspectProps> = ({
   ratio,
   style
 }) => {
-  const css = cx('t-aspect', {
+  const css: string = cx('t-aspect', {
     [className]: className,
     't-aspect--1': ratio === 1,
     't-aspect--2': ratio === 2

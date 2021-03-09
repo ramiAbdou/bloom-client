@@ -23,7 +23,7 @@ const Input: React.FC<InputProps> = ({
     onChange(event.target.value);
   };
 
-  const css = cx('c-misc-input', { 'c-misc-input--error': error });
+  const css: string = cx('c-misc-input', { 'c-misc-input--error': error });
 
   return (
     <input

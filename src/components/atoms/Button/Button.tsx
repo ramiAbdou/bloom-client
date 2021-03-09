@@ -76,7 +76,7 @@ const Button = forwardRef(
       if (href) openHref(href, openTab);
     };
 
-    const css = cx('c-btn', {
+    const css: string = cx('c-btn', {
       'c-btn--fill': fill,
       'c-btn--fit': fit,
       'c-btn--lg': large,

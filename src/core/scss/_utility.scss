@@ -1,8 +1,15 @@
+// ## BACKGROUND COLOR
+
+.bg {
+  &-gray-5 { background-color: $gray-5; }
+}
+
 // ## BORDER RADIUS
 
 .br {
   &-xxs { border-radius: $xxs; }
   &-xs { border-radius: $xs; }
+  &-sl { border-radius: $sl; }
 }
 
 // ## COLORS
@@ -33,9 +40,16 @@
   &-lg:not(:last-child) { margin-bottom: $lg; }
 }
 
+// ## MARGIN LEFT
+
+.ml {
+  &-auto { margin-left: auto; }
+}
+
 // ## MARGIN RIGHT
 
 .mr {
+  &-auto { margin-right: auto; }
   &-xxs:not(:last-child) { margin-right: $xxs; }
   &-xs:not(:last-child) { margin-right: $xs; }
   &-sm:not(:last-child) { margin-right: $sm; }
@@ -46,7 +60,7 @@
 // ## MARGIN TOP
 
 .mt {
-  &-auto { margin-top: auto; }
+  &-auto { margin-right: auto; }
   &-xs { margin-top: $xs; }
   &-sm { margin-top: $sm; }
 }
@@ -118,5 +132,6 @@
   &-10 { width: $xxl * 10; }
 
   &-100 { width: 100%; }
+  &-100--m { @include M { width: 100%; } }
   &-100--t { @include MT { width: 100%; } }
 }

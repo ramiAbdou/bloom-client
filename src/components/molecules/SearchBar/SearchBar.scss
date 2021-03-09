@@ -6,12 +6,8 @@ $PREF: 'c-misc-search';
 .#{$PREF} {
   @extend .flex-ac;
 
-  background-color: $gray-5;
-  border-radius: $sl;
   box-sizing: border-box;
-  color: $gray-3;
   padding: $xs $sm;
-  width: $xxl * 5;
 
   // Refers to the search icon.
   > svg { color: $gray-3; margin-right: $xs; min-height: $sl; min-width: $sl; }

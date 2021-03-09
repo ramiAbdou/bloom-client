@@ -27,7 +27,7 @@ const FormLongText: React.FC<FormLongTextProps> = ({
     setValue({ key, value: target.value });
   };
 
-  const css = cx('c-misc-input c-misc-input--lg', {
+  const css: string = cx('c-misc-input c-misc-input--lg', {
     'c-misc-input--error': !!error
   });
 

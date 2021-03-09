@@ -19,7 +19,7 @@ function List<T>({
   const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
   if (!filteredItems?.length) return <p>{emptyMessage}</p>;
 
-  const css = cx('o-list', { [className]: className });
+  const css: string = cx('o-list', { [className]: className });
 
   return (
     <div className={css}>

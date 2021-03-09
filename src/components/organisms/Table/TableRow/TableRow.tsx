@@ -16,7 +16,7 @@ const TableRow: React.FC<TableRowProps> = (row) => {
     return selectedRowIds.includes(row?.id);
   });
 
-  const css = cx('', {
+  const css: string = cx('', {
     'o-table-tr--active': isSelected,
     'o-table-tr--clickable': !!onRowClick
   });

@@ -35,7 +35,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   useOnClickOutside(ref, () => isOpen && setIsOpen(false));
 
-  const css = cx('', {
+  const css: string = cx('', {
     [className]: className,
     'm-dropdown--fit': fit
   });

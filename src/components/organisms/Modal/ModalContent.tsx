@@ -73,7 +73,7 @@ const ModalContent: React.FC = () => {
     return () => clearOptions();
   }, []);
 
-  const css = cx('c-modal', {
+  const css: string = cx('c-modal', {
     'c-modal--confirmation': confirmation,
     [className]: className
   });

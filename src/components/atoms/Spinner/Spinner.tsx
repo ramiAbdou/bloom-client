@@ -9,7 +9,7 @@ interface SpinnerProps extends ShowProps {
 }
 
 const Spinner: React.FC<SpinnerProps> = ({ dark, show }) => {
-  const css = cx('c-spinner', { 'c-spinner--dark': dark });
+  const css: string = cx('c-spinner', { 'c-spinner--dark': dark });
 
   return (
     <Show show={!!show}>

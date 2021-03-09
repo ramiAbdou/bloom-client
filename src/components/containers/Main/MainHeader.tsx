@@ -5,10 +5,10 @@ import { useHistory } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { ClassNameProps, LoadingProps, ShowProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions } from '@store/Store';
+import { ClassNameProps, LoadingProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 import MainNavigation, { NavigationProps } from './MainNavigation';
 
@@ -69,7 +69,7 @@ const MainHeaderContent: React.FC<MainHeaderProps> = ({
 };
 
 const MainHeader: React.FC<MainHeaderProps> = ({ className, ...props }) => {
-  const css = cx('t-main-header', { [className]: className });
+  const css: string = cx('t-main-header', { [className]: className });
 
   return (
     <header className={css}>

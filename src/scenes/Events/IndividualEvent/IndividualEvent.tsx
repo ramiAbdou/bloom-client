@@ -33,7 +33,7 @@ const IndividualEvent: React.FC = () => {
 
   if (loading || !isEventActive) return null;
 
-  const css = cx('', { 's-events-individual--public': !isMember });
+  const css: string = cx('', { 's-events-individual--public': !isMember });
 
   return (
     <div className={css}>

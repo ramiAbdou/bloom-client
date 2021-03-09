@@ -66,7 +66,7 @@ const FormTime: React.FC<FormItemData> = ({ className, ...args }) => {
     .startOf('hour')
     .format('h:mm A');
 
-  const css = cx('o-form-item--date', {}, className);
+  const css: string = cx('o-form-item--date', {}, className);
 
   return (
     <FormItemContainer className={css} {...args}>

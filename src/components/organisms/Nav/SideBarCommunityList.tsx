@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { IdProps } from '@util/constants';
 import { ICommunity, IMember } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { IdProps } from '@util/constants';
 import { cx, sortObjects } from '@util/util';
 
 const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
@@ -22,7 +22,7 @@ const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
     if (!isActive) push(`/${urlName}`);
   };
 
-  const css = cx('o-nav-community', {
+  const css: string = cx('o-nav-community', {
     'o-nav-community--active': isActive
   });
 

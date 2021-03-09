@@ -48,7 +48,7 @@ const GrayCard: React.FC<GrayCardProps> = (props) => {
 
   if (show === false) return null;
 
-  const css = cx('t-card--analytics', {}, className);
+  const css: string = cx('t-card--analytics', {}, className);
 
   return (
     <div className={css}>

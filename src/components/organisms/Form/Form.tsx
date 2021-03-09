@@ -73,7 +73,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
     [items, ...(onSubmitDeps || [])]
   );
 
-  const css = cx('o-form', {
+  const css: string = cx('o-form', {
     [className]: className,
     'o-form--spacing-lg': spacing === 'lg',
     'o-form--spacing-md': !spacing || spacing === 'md'

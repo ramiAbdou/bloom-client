@@ -43,7 +43,7 @@ const EventsCardContent: React.FC = () => {
     ? 'Happening Now'
     : day(startTime).format('ddd, MMM D @ hA z');
 
-  const css = cx('s-events-card-content', {
+  const css: string = cx('s-events-card-content', {
     's-events-card-content--now': isHappeningNow
   });
 

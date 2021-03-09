@@ -88,7 +88,7 @@ const TableCell: React.FC<TableCellProps> = (props) => {
     ({ options }) => options.fixFirstColumn
   );
 
-  const css = cx(getTableCellClass({ category, type }), {
+  const css: string = cx(getTableCellClass({ category, type }), {
     'o-table-td--fixed': fixFirstColumn && columnIndex === 0,
     'o-table-td--multiple-select': type === QuestionType.MULTIPLE_SELECT,
     'o-table-td--right': alignEndRight

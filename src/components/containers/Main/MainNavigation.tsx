@@ -22,7 +22,7 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
   children,
   onClick
 }) => {
-  const css = cx('t-main-multi', { 't-main-multi--active': active });
+  const css: string = cx('t-main-multi', { 't-main-multi--active': active });
 
   return (
     <button className={css} onClick={onClick}>

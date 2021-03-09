@@ -20,7 +20,7 @@ const Row: React.FC<RowProps> = (props) => {
 
   const isTablet: boolean = useBreakpoint() <= 2;
 
-  const css = cx(
+  const css: string = cx(
     'flex t-row',
     {
       'flex-ab': align === 'baseline',

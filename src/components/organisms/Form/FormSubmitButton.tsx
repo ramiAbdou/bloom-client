@@ -31,7 +31,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
     showError = false;
   }
 
-  const css = cx('', {
+  const css: string = cx('', {
     [className]: className,
     'o-form-submit--invisible': invisible
   });

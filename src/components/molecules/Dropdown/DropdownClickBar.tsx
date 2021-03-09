@@ -29,7 +29,7 @@ const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
 
   if (!attribute) return <p className="overflow-ellipses">{value}</p>;
 
-  const css = cx('c-tag-attr m-dropdown-value', {
+  const css: string = cx('c-tag-attr m-dropdown-value', {
     'm-dropdown-value--cancel': multiple
   });
 
@@ -73,7 +73,7 @@ const DropdownClickBar: React.FC = () => {
 
   const onClick = () => setIsOpen(!isOpen);
 
-  const css = cx('m-dropdown-bar', {
+  const css: string = cx('m-dropdown-bar', {
     'm-dropdown-bar--open': isOpen
   });
 

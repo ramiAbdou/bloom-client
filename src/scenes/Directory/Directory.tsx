@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
+import { QueryResult } from '@hooks/useQuery.types';
 import ListStore from '@organisms/List/List.store';
 import ListFilterStore from '@organisms/List/ListFilter/ListFilter.store';
 import PanelLocal from '@organisms/Panel/PanelLocal';
@@ -10,7 +11,7 @@ import DirectoryHeader from './DirectoryHeader';
 import useInitDirectory from './useInitDirectory';
 
 const Directory: React.FC = () => {
-  const { loading } = useInitDirectory();
+  const { loading }: Partial<QueryResult> = useInitDirectory();
 
   return (
     <ListStore.Provider>

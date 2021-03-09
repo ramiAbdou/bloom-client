@@ -9,7 +9,7 @@ interface MailToProps extends BaseProps {
 }
 
 const MailTo: React.FC<MailToProps> = ({ className, email }) => {
-  const css = cx('m-misc-mail-to', {}, className);
+  const css: string = cx('m-misc-mail-to', {}, className);
 
   return (
     <a className={css} href={`mailto:${email}`}>

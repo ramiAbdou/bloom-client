@@ -42,7 +42,7 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
   // If onClick is supplied, means it is an action.
   if (onClick) return <NavLinkAction {...props} />;
 
-  const css = cx('o-nav-link', {
+  const css: string = cx('o-nav-link', {
     'o-nav-link--active': isActive
   });
 

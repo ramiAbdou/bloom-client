@@ -17,7 +17,7 @@ const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
   const isEllipses = value === '...';
   const onClick = () => !isEllipses && setPage(value);
 
-  const css = cx('o-table-pagination-num', {
+  const css: string = cx('o-table-pagination-num', {
     'o-table-pagination-num--active': active,
     'o-table-pagination-num--ellipses': isEllipses
   });

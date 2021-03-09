@@ -28,7 +28,7 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
     setValue({ key, value: target.value });
   };
 
-  const css = cx('o-form-item--large-title', {
+  const css: string = cx('o-form-item--large-title', {
     'o-form-item--large-title--error': !!error
   });
 

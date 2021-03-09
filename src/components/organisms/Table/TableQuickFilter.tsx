@@ -34,7 +34,7 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = ({
 
   const onClick = () => setActive(!active);
 
-  const css = cx('o-table-quick-filter', {
+  const css: string = cx('o-table-quick-filter', {
     'o-table-quick-filter--active': active
   });
 
