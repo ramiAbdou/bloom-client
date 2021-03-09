@@ -153,6 +153,7 @@ export interface IPaymentMethod {
 export interface IMemberIntegrations extends BaseEntity {
   member: Identifier;
   paymentMethod: IPaymentMethod;
+  renewalDate?: string;
   stripeSubscriptionId?: string;
 }
 

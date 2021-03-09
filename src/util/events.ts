@@ -76,7 +76,6 @@ export enum QueryEvent {
   GET_TOKENS = 'getTokens',
   GET_UPCOMING_EVENTS = 'getUpcomingEvents',
   GET_UPCOMING_EVENT_GUESTS = 'getUpcomingEventGuests',
-  GET_UPCOMING_PAYMENT = 'getUpcomingPayment',
   GET_USER = 'getUser',
   IS_EMAIL_TAKEN = 'isEmailTaken'
 }

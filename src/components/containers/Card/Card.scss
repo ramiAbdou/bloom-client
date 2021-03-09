@@ -25,22 +25,6 @@ $PREF: 't-card';
   width: $xxl * 4.5;
 
   @include MT { width: 100%; }
-
-  // Wraps the value (number) and the percentage tag.
-  > div:first-child {
-    @extend .flex-ac;
-  
-    margin-bottom: $xxs;
-  
-    > p:first-child { @extend .display; margin-right: $xs; }
-  }
-
-  // Label of the simple card (etc: TOTAL MEMBERS).
-  > h4 {
-    color: $gray-2;
-
-    @include OVERFLOW_ELLIPSES;
-  }
 }
 
 // ## INFORMATION CARD
