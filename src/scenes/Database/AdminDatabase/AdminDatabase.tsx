@@ -15,12 +15,12 @@ const AdminDatabase: React.FC = () => {
       ?.map((memberId: string) => db.byMemberId[memberId])
       ?.filter((member: IMember) => !!member?.role)
       ?.map((member: IMember) => {
-        const { email, firstName, lastName } = member;
+        const { email, firstName, lastName }: IMember = member;
         return { email, firstName, id: member.id, lastName };
       }, []);
   });
 
-  const isOwner = useStoreState(
+  const isOwner: boolean = useStoreState(
     ({ db }) => db.member?.role === MemberRole.OWNER
   );
 

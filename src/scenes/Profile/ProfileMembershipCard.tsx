@@ -2,26 +2,25 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
-import useQuery from '@hooks/useQuery';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { IMemberValue, IQuestion } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
-import { QueryEvent } from '@util/events';
 import { sortObjects } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
+import useInitProfileMembership from './useInitProfileMembership';
 
 const ProfileMembershipHeader: React.FC = () => {
-  const title = useStoreState(({ db }) => {
+  const title: string = useStoreState(({ db }) => {
     return `${db.community.name} Membership Information`;
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () =>
+  const onClick = () => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
+  };
 
   return <ProfileCardHeader canEdit title={title} onEditClick={onClick} />;
 };
@@ -53,8 +52,9 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
   const hasData: boolean = useStoreState(({ db }) => !!db.member.values);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () =>
+  const onClick = () => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
+  };
 
   return (
     <Button fill primary show={!hasData} onClick={onClick}>
@@ -64,15 +64,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
-
-  const { loading } = useQuery<IMemberValue[]>({
-    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: QueryEvent.GET_MEMBER_VALUES,
-    schema: [Schema.MEMBER_VALUE],
-    types: { memberId: { required: false } },
-    variables: { memberId }
-  });
+  const { loading } = useInitProfileMembership();
 
   return (
     <Card className="s-profile-card--membership" show={!loading}>
