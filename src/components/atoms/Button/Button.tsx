@@ -77,7 +77,7 @@ const Button = forwardRef(
     };
 
     const css: string = cx(
-      'c-btn',
+      'c-btn ta-center',
       {
         'c-btn--fill': fill,
         'c-btn--fit': fit,

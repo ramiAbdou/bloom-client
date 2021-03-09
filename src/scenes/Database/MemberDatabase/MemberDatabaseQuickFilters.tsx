@@ -22,12 +22,7 @@ const MemberDatabaseInactiveFilter: React.FC = () => {
   };
 
   return (
-    <TableQuickFilter
-      filter={filter}
-      id="FILTER_DUES_INACTIVE"
-      show={show}
-      title="Hasn't Paid Dues"
-    />
+    <TableQuickFilter filter={filter} show={show} title="Hasn't Paid Dues" />
   );
 };
 
@@ -45,14 +40,7 @@ const MemberDatabaseActiveFilter: React.FC = () => {
     return row[duesStatusQuestionId] === 'Active';
   };
 
-  return (
-    <TableQuickFilter
-      filter={filter}
-      id="FILTER_DUES_ACTIVE"
-      show={show}
-      title="Paid Dues"
-    />
-  );
+  return <TableQuickFilter filter={filter} show={show} title="Paid Dues" />;
 };
 
 const MemberDatabaseQuickFilters: React.FC = () => {

@@ -75,14 +75,9 @@ div.#{$PREF}-col-panel { padding: $sm; }
 // ## TABLE QUICK FILTER
 
 .#{$PREF}-quick-filter {
-  @extend .f;
-  @extend .f-ac;
-  @extend .meta;
-
   background-color: $primary-bg;
   border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid;
   border-radius: $sm;
-  margin-right: $xxs;
   padding: 6px;
   text-align: left;
   width: max-content;
