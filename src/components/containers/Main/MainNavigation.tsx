@@ -29,7 +29,7 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
 
   return (
     <Show show={show}>
-      <nav className="f-ac">
+      <nav className="f f-ac">
         {options.map((optionProps: MainNavigationOptionProps) => {
           return (
             <MainNavigationButton

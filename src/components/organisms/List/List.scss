@@ -17,7 +17,8 @@ $PREF: 'o-list';
 // ## LIST QUICK FILTER
 
 .#{$PREF}-quick-filter {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
   @extend .meta;
 
   background-color: $primary-bg;

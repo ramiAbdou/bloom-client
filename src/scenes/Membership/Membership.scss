@@ -24,7 +24,8 @@ $PREF: 's-membership';
   }
 
   > div:first-child {
-    @extend .flex-ac;
+    @extend .f;
+    @extend .f-ac;
 
     margin-bottom: $xs;
     
@@ -70,5 +71,5 @@ $PREF: 's-membership';
   @include LTE(730) { width: 100%; }
 
   > h4 { margin-bottom: $xs; }
-  > .flex-ac > p:first-child { @extend .body--bold; }
+  > .f-ac > p:first-child { @extend .body--bold; }
 }

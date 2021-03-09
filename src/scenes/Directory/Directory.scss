@@ -16,7 +16,8 @@ $PREF: 's-directory';
 // ## DIRECTORY CARD
 
 div.#{$PREF}-card {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
   
   height: max-content;
   height: 100%;

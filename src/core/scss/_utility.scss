@@ -20,11 +20,22 @@
   &-gray-3 { color: $gray-3; }
 }
 
+// ## DISPLAY
+
+.d {
+  &-block { display: block; }
+  &-block--m { @include M { display: block; } }
+}
+
 // ## FLEX
 
 .f {
+  display: flex;
+
   &-1 { flex: 1; }
   &-2 { flex: 2; }
+
+  &-ab { align-items: baseline; }
   &-ac { align-items: center; }
 }
 
@@ -37,6 +48,7 @@
   &-xs { margin-bottom: $xs; }
   &-ss { margin-bottom: $ss; }
   &-sm { margin-bottom: $sm; }
+  &-sm--m { @include M { margin-bottom: $sm; } }
   &-md { margin-bottom: $md; }
   &-lg { margin-bottom: $lg; }
 

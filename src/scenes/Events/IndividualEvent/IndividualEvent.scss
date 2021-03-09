@@ -88,7 +88,7 @@ $PREF: 's-events-individual';
   > div:first-child > h1 { margin-bottom: $xxs; }
   > div:first-child > .meta { margin-bottom: $ss; }
   > div:first-child > .c-tag-number { margin-top: $ss; }
-  > div:first-child > .flex-ac { margin-bottom: $md; }
+  > div:first-child > .f-ac { margin-bottom: $md; }
 
   > .t-action-ctr { margin-top: auto; }
 }
@@ -120,7 +120,8 @@ $PREF: 's-events-individual';
 // // ## INDIVIDUAL EVENT GUEST - In the guest list.
 
 .#{$PREF}-member {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   border-radius: $xs;
   justify-content: flex-start;

@@ -49,8 +49,8 @@ const MainHeaderContent: React.FC<MainHeaderProps> = (props) => {
   const isDesktop = useBreakpoint() >= 3;
 
   return (
-    <Row justify="sb" spacing="sm">
-      <Row>
+    <Row className="d-block--m" justify="sb" spacing="sm">
+      <Row className="mb-sm--m">
         <MainHeaderBackButton show={!!backButton} />
         <h1 className="mr-sm--nlc">{title}</h1>
         <HeaderTag show={!loading && !!headerTag}>{headerTag}</HeaderTag>

@@ -60,7 +60,7 @@ const ProfileSocialContainer: React.FC = () => {
   });
 
   return (
-    <div className="flex-ac">
+    <div className="f f-ac">
       <ProfileSocialButton brand={SocialBrand.CLUBHOUSE} href={clubhouseUrl} />
       <ProfileSocialButton brand={SocialBrand.TWITTER} href={twitterUrl} />
       <ProfileSocialButton brand={SocialBrand.LINKED_IN} href={linkedInUrl} />

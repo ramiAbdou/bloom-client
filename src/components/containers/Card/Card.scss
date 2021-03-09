@@ -39,7 +39,7 @@ $PREF: 't-card';
   > p { @extend .meta; }
 }
 
-.flex-ac > .#{$PREF}--information {
+.f-ac > .#{$PREF}--information {
   width: -webkit-fill-available;
 
   &:first-child:not(:only-child) { margin-right: $xs; }

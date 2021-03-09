@@ -81,7 +81,8 @@ $PREF: 'o-nav';
 // ## SIDEBAR LINK
 
 .#{$PREF}-link {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   border-left: 3px white solid;
   border-radius: 0 $lg $lg 0;
@@ -156,7 +157,7 @@ $PREF: 'o-nav';
     color: $primary;
   }
 
-  > div { @extend .flex-ac; }
+  > div { @extend .f-ac; }
   > svg { margin-right: $sm; }
 }
 

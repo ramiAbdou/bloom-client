@@ -23,8 +23,8 @@ const Row: React.FC<RowProps> = (props) => {
   const css: string = cx(
     'flex t-row',
     {
-      'flex-ab': align === 'baseline',
-      'flex-ac': align === 'center',
+      'f-ab': align === 'baseline',
+      'f-ac': align === 'center',
       'flex-ae': align === 'end',
       'flex-as': align === 'start',
       'flex-c': justify === 'center',

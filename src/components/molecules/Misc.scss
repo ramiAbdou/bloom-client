@@ -14,7 +14,8 @@ $PREF: 'm-misc';
 // ## MAIL TO - Mail to link that automatically opens email.
 
 .#{$PREF}-mail-to {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   color: $primary;
   width: fit-content;

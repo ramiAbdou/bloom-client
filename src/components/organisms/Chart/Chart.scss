@@ -14,7 +14,8 @@ $PREF: 'o-chart';
 // says number of responses.
 
 .#{$PREF} > div:first-child {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   left: 0;
   margin-bottom: $sm;
@@ -51,7 +52,7 @@ $PREF: 'o-chart';
 // ## CHART LEGEND - Customized legend that follows Bloom style guide.
 
 .#{$PREF}-legend-item {
-  @extend .flex-ac;
+  @extend .f-ac;
   
   &:not(:last-child) { margin-bottom: $xs; }
   > div { border-radius: $xxs; height: $md; width: $md; }

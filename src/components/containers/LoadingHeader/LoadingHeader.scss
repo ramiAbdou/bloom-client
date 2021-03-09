@@ -3,7 +3,8 @@ $PREF: 't-loading-header';
 // LOADING HEADER
 
 .#{$PREF} {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
   
   > h1,
   > h2,

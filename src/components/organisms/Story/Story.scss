@@ -38,7 +38,8 @@ $PREF: 'o-story';
 // ## STORY CONFIRMATION
 
 .#{$PREF}-confirmation > div:first-child {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   margin-bottom: $sm;
 

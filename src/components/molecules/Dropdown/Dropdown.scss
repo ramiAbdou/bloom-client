@@ -32,7 +32,8 @@ $PREF: 'm-dropdown';
 
 // No results message.
 .#{$PREF}-option-ctr > p {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   color: $gray-3;
   height: $lg;
@@ -43,7 +44,8 @@ $PREF: 'm-dropdown';
 // ## DROPDOWN OPTION
 
 .#{$PREF}-option {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
   
   height: $lg;
   overflow: hidden;
@@ -76,7 +78,7 @@ div.#{$PREF}-bar {
 }
 
 // When a user selects an option, it displays in this container.
-.#{$PREF}-value-ctr { @extend .flex-ac; }
+.#{$PREF}-value-ctr { @extend .f-ac; }
 .#{$PREF}-value-ctr > * { overflow: visible; }
 
 // The value that displays is just a tag except with no margin-left and that

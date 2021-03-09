@@ -30,7 +30,8 @@ $PREF: 'o-form';
 // ## FORM LABEL
 
 .#{$PREF}-label {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   color: $gray-2;
   margin-bottom: $xs;

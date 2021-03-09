@@ -4,7 +4,7 @@ $PREF: 'o-table-pagination';
 // pages. Also controls the displaying text of which rows are being shown.
 
 .#{$PREF}-ctr { @extend .flex-acsb; margin-top: $sm; }
-.#{$PREF}-row { @extend .flex-ac; }
+.#{$PREF}-row { @extend .f; @extend .f-ac; }
 .#{$PREF}-num {
   border-radius: 50%;
   height: $md;
