@@ -7,7 +7,7 @@ const HeaderTag: React.FC<BaseProps> = ({ children, className, show }) => {
   // Do an explicit null check, because if the value is 0, we still want it to
   // show.
   if (!children || show === false) return null;
-  const css: string = cx('c-tag-number', { [className]: className });
+  const css: string = cx('c-tag-number', {}, className);
   return <p className={css}>{children}</p>;
 };
 

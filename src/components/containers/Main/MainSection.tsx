@@ -11,7 +11,7 @@ const MainSection: React.FC<MainSectionProps> = ({
   className,
   show
 }) => {
-  const css: string = cx('t-main-section', { [className]: className });
+  const css: string = cx('t-main-section', {}, className);
 
   return (
     <Show show={show}>

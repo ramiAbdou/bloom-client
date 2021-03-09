@@ -18,10 +18,11 @@ const DatabaseAction: React.FC<DatabaseActionProps> = ({
   const { disabled } = props;
   const ref: MutableRefObject<HTMLElement> = useTooltip(tooltip);
 
-  const css: string = cx('o-table-action', {
-    [className]: className,
-    'o-table-action--disabled': disabled
-  });
+  const css: string = cx(
+    'o-table-action',
+    { 'o-table-action--disabled': disabled },
+    className
+  );
 
   return (
     <Button ref={ref} className={css} disabled={disabled} {...props}>

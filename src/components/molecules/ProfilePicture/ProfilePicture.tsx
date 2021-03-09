@@ -65,10 +65,11 @@ const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
     return !!db.member?.firstName && !!db.member?.lastName;
   });
 
-  const css: string = cx('m-profile-picture', {
-    [className]: className,
-    'm-profile-picture--circle': circle
-  });
+  const css: string = cx(
+    'm-profile-picture',
+    { 'm-profile-picture--circle': circle },
+    className
+  );
 
   return (
     <Show show={show}>

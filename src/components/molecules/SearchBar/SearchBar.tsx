@@ -33,7 +33,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   show,
   value
 }: SearchBarProps) => {
-  const css: string = cx('c-misc-search', { [className]: className });
+  const css: string = cx('c-misc-search', {}, className);
   if (show === false) return null;
 
   return (
