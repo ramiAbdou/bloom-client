@@ -38,7 +38,7 @@ const ApplicantsCardHeader: React.FC = () => {
   };
 
   return (
-    <Row className="mb-md" justify="sb" spacing="xs">
+    <Row className="mb-md--nlc" justify="sb" spacing="xs">
       <div>
         <p className="meta">Applied {createdAt}</p>
         <h3>{fullName}</h3>
@@ -97,7 +97,7 @@ const ApplicantsCardItems: React.FC = () => {
       ?.slice(0, 5);
   });
 
-  return <QuestionBox className="mb-md" items={items} />;
+  return <QuestionBox className="mb-md--nlc" items={items} />;
 };
 
 const ApplicantsCard: React.FC = () => {

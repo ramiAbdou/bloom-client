@@ -16,7 +16,7 @@ const ProfilePersonalPicture: React.FC = () => {
 
   return (
     <ProfilePicture
-      className="mb-xs"
+      className="mb-xs--nlc"
       fontSize={36}
       memberId={memberId}
       size={96}
@@ -32,7 +32,7 @@ const ProfilePersonalName: React.FC = () => {
     return `${member.firstName} ${member.lastName}`;
   });
 
-  return <h1 className="mb-xs">{fullName}</h1>;
+  return <h1 className="mb-xs--nlc">{fullName}</h1>;
 };
 
 const ProfilePersonalTags: React.FC = () => {
@@ -50,7 +50,7 @@ const ProfilePersonalTags: React.FC = () => {
   });
 
   return (
-    <Row className="mb-ss" spacing="xs">
+    <Row className="mb-ss--nlc" spacing="xs">
       <HeaderTag show={!!role}>{role}</HeaderTag>
       <HeaderTag>{planName}</HeaderTag>
     </Row>
@@ -65,7 +65,7 @@ const ProfilePersonalEmail: React.FC = () => {
     return member.email;
   });
 
-  return <MailTo className="mb-sm" email={email} />;
+  return <MailTo className="mb-sm--nlc" email={email} />;
 };
 
 const ProfilePersonalBio: React.FC = () => {
@@ -76,7 +76,7 @@ const ProfilePersonalBio: React.FC = () => {
     return member.bio;
   });
 
-  return <p className="mb-sm">{bio}</p>;
+  return <p className="mb-sm--nlc">{bio}</p>;
 };
 
 const ProfilePersonal: React.FC = () => {
@@ -84,7 +84,7 @@ const ProfilePersonal: React.FC = () => {
 
   return (
     <Show show={!loading}>
-      <div className="mb-sm">
+      <div className="mb-sm--nlc">
         <ProfilePersonalPicture />
         <ProfilePersonalName />
         <ProfilePersonalTags />

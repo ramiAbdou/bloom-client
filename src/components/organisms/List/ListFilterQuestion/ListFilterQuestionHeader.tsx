@@ -25,7 +25,7 @@ const ListFilterQuestionHeader: React.FC = () => {
     return question?.title;
   });
 
-  const css: string = cx('w-100', { 'mb-ss': areValuesSelected });
+  const css: string = cx('w-100', { 'mb-ss--nlc': areValuesSelected });
 
   return (
     <Row className={css} justify="sb" spacing="xs">

@@ -6,7 +6,7 @@ import IndividualEventTableFilters from './IndividualEventTableFilters';
 
 const IndividualEventTableActions: React.FC = () => {
   return (
-    <Row className="mb-sm" spacing="sm">
+    <Row className="mb-sm--nlc" spacing="sm">
       <TableSeachBar placeholder="Search..." />
       <IndividualEventTableFilters />
     </Row>

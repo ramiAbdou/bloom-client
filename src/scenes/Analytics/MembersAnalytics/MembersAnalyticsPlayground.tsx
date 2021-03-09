@@ -44,7 +44,7 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   return (
     <Dropdown
       fit
-      className="mb-sm"
+      className="mb-sm--nlc"
       value={questions?.find(({ id }) => id === questionId)?.title}
       values={questions?.map(({ title }) => title)}
       onSelect={onSelect}
@@ -81,7 +81,7 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
 
   return (
     <Show show={!!questionId}>
-      <p className="mb-xs">
+      <p className="mb-xs--nlc">
         Choose any piece of data that you'd like to explore.
       </p>
 

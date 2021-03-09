@@ -10,7 +10,7 @@ import TableFilterRow from './TableFilterRow';
 
 const TableFilterHeader: React.FC = () => {
   return (
-    <Row className="mb-sm" justify="sb" spacing="xs">
+    <Row className="mb-sm--nlc" justify="sb" spacing="xs">
       <h3>Filters</h3>
       <TableFilterClearButton />
     </Row>
@@ -23,7 +23,7 @@ const TableFilterRows: React.FC = () => {
   });
 
   return (
-    <ul className="mb-sm">
+    <ul className="mb-sm--nlc">
       {filterIds.map((id: string) => {
         return (
           <IdStore.Provider key={id} runtimeModel={{ id }}>

@@ -57,6 +57,7 @@ $PREF: 't-main';
 
 // ## MAIN SECTION
 
+.#{$PREF}-section { margin-bottom: $md; }
 .#{$PREF}-section > .t-loading-header { margin-bottom: $sm; }
 
 // ## NAV BUTTON - Only use a border-top, border-bottom and border-right, but

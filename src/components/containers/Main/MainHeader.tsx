@@ -52,7 +52,7 @@ const MainHeaderContent: React.FC<MainHeaderProps> = (props) => {
     <Row justify="sb" spacing="sm">
       <Row>
         <MainHeaderBackButton show={!!backButton} />
-        <h1 className="mr-sm">{title}</h1>
+        <h1 className="mr-sm--nlc">{title}</h1>
         <HeaderTag show={!loading && !!headerTag}>{headerTag}</HeaderTag>
         <Spinner dark show={loading} />
       </Row>

@@ -13,7 +13,7 @@ const DirectoryAdminQuickFilter: React.FC = () => {
 
 const DirectoryActions: React.FC = () => {
   return (
-    <Row wrap className="mb-sm" gap="sm" justify="sb">
+    <Row wrap className="mb-sm--nlc" gap="sm" justify="sb">
       <ListSearchBar className="w-100--m" />
       <DirectoryAdminQuickFilter />
       <ListFilterOpenButton className="ml-auto" />

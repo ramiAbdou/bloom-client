@@ -4,13 +4,8 @@ $PREF: 'c-misc-search';
 // icon, and this bar is rounded and darker gray with no focused state.
 
 .#{$PREF} {
-  @extend .flex-ac;
-
   box-sizing: border-box;
   padding: $xs $sm;
-
-  // Refers to the search icon.
-  > svg { color: $gray-3; margin-right: $xs; min-height: $sl; min-width: $sl; }
 
   > input {
     background-color: inherit;
@@ -19,16 +14,4 @@ $PREF: 'c-misc-search';
 
     &::selection { background-color: rgba($color: $primary-hex, $alpha: 0.2); }
   }
-}
-
-// Button that wraps around the close icon.
-.#{$PREF}-close {
-  color: $gray-3;
-
-  // If no input text is present, hide the icon.
-  &--empty { visibility: hidden; }
-
-  // Specify min-height and min-width in order to ensure that long text doesn't
-  // affect the size of the icon.
-  > svg { color: $gray-3; min-height: $sl; min-width: $sl; }
 }

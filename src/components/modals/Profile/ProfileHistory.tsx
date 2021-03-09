@@ -31,7 +31,12 @@ const ProfileHistoryContent: React.FC = () => {
 
   return (
     <div className="my-md">
-      <LoadingHeader h2 className="mb-sm" loading={loading} title="History" />
+      <LoadingHeader
+        h2
+        className="mb-sm--nlc"
+        loading={loading}
+        title="History"
+      />
       {!loading && <ProfileHistoryEventList />}
     </div>
   );

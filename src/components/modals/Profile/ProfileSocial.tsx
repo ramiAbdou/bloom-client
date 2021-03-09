@@ -28,7 +28,7 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
   const isLinkedIn = brand === SocialBrand.LINKED_IN;
   const isTwitter = brand === SocialBrand.TWITTER;
 
-  const css: string = cx('mo-profile-social mr-sm', {
+  const css: string = cx('mo-profile-social mr-sm--nlc', {
     'mo-profile-social--clubhouse': isClubhouse,
     'mo-profile-social--facebook': isFacebook,
     'mo-profile-social--linkedin': isLinkedIn,

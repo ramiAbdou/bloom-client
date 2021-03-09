@@ -29,7 +29,7 @@ const ApplicationReviewMain: React.FC = () => {
   return (
     <FormSection>
       <FormSectionHeader title="Application" />
-      <QuestionBox className="mb-md" items={items} />
+      <QuestionBox className="mb-md--nlc" items={items} />
     </FormSection>
   );
 };

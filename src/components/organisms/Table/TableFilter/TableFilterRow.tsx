@@ -9,7 +9,7 @@ import TableFilterRowValueInput from './TableFilterRowValueInput';
 
 const TableFilterRow: React.FC = () => {
   return (
-    <Row className="o-table-filter-row mb-md" spacing="sm">
+    <Row className="o-table-filter-row mb-md--nlc" spacing="sm">
       <TableFilterRowJoinOperator />
 
       <Row spacing="xs">

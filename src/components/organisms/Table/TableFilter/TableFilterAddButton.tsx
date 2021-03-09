@@ -11,7 +11,7 @@ const TableFilterAddButton: React.FC = () => {
   const onClick = () => addFilter();
 
   return (
-    <Button tertiary className="mb-sm" onClick={onClick}>
+    <Button tertiary className="mb-sm--nlc" onClick={onClick}>
       + Add Filter
     </Button>
   );

@@ -14,7 +14,7 @@ const MembershipContent: React.FC = () => {
     <>
       <MembershipRenewalCard />
 
-      <div className="s-membership-card-ctr mb-md">
+      <div className="s-membership-card-ctr mb-md--nlc">
         <MembershipCurrentPlan />
         <MembershipPaymentMethod />
       </div>

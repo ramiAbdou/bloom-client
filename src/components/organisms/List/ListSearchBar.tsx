@@ -19,11 +19,7 @@ const ListSearchBar: React.FC<Omit<SearchBarProps, 'onChange'>> = ({
     return () => clearTimeout(timeout);
   }, [value]);
 
-  const css: string = cx(
-    'o-list-search bg-gray-5 br-sl c-gray-3 w-5',
-    {},
-    className
-  );
+  const css: string = cx('o-list-search', {}, className);
 
   return (
     <SearchBar className={css} value={value} onChange={setValue} {...props} />
