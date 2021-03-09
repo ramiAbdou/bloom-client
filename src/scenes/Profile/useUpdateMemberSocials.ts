@@ -35,8 +35,6 @@ const useUpdateMemberSocials = (): OnFormSubmit => {
     const linkedInUrl = items.LINKED_IN_URL?.value;
     const twitterUrl = items.TWITTER_URL?.value;
 
-    console.log('HEREEEE');
-
     const { error } = await updateMemberSocials({
       clubhouseUrl,
       facebookUrl,

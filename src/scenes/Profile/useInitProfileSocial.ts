@@ -15,16 +15,13 @@ const useInitProfileSocial = (): QueryResult<IMemberSocials[]> => {
       'instagramUrl',
       'id',
       'linkedInUrl',
-      'twitterUrl',
-      { member: ['id'] }
+      'twitterUrl'
     ],
     operation: QueryEvent.GET_MEMBER_SOCIALS,
     schema: [Schema.MEMBER_SOCIALS],
     types: { memberId: { required: false } },
     variables: { memberId }
   });
-
-  // console.log(result);
 
   return result;
 };
