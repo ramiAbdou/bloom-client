@@ -81,8 +81,8 @@ $PREF: 't-main';
     border-radius: $xxs 0 0 $xxs;
   }
 
-  &:last-child { border-radius: 0 $xxs $xxs 0; }
-
-  // Disables the scaling transition that all buttons typically have.
-  &:active { transform: none; transition: none; }
+  &:last-child {
+    border-radius: 0 $xxs $xxs 0;
+    border-right: 1px $primary solid;
+  }
 }

@@ -145,6 +145,12 @@
   &-sm { padding-bottom: $sm; padding-top: $sm; }
 }
 
+// ## TEXT ALIGN
+
+.ta {
+  &-center { text-align: center; }
+}
+
 // VISIBILITY
 
 .v {

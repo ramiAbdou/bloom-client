@@ -157,7 +157,7 @@ $PREF: 'o-nav';
     color: $primary;
   }
 
-  > div { @extend .f-ac; }
+  > div { @extend .f; @extend .f-ac; }
   > svg { margin-right: $sm; }
 }
 
