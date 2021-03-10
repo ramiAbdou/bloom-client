@@ -13,6 +13,12 @@
   &-sl { border-radius: $sl; }
 }
 
+// ## BOX SIZING
+
+.bs {
+  &-bb { box-sizing: border-box; }
+}
+
 // ## COLORS
 
 .c {

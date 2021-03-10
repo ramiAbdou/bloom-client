@@ -3,5 +3,10 @@ $PREF: 's-applicants';
 // ## APPLICANTS CARD CONTAINER
 
 .#{$PREF}-card-ctr {
-  grid-template-columns: repeat(auto-fill, minmax($xxl * 7.5, 1fr));
+  @include TD {
+    grid-template-columns: repeat(auto-fill, minmax($xxl * 7.5, 1fr));
+  }
+  @include M {
+    grid-template-columns: repeat(auto-fill, 1fr);
+  }
 };
