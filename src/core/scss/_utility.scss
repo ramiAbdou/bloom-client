@@ -37,6 +37,14 @@
 
   &-ab { align-items: baseline; }
   &-ac { align-items: center; }
+
+  &-col { flex-direction: column; }
+}
+
+// ## HEIGHT
+
+.h {
+  &-md { height: $md; }
 }
 
 // ## MARGIN BOTTOM
@@ -64,6 +72,7 @@
 
 .ml {
   &-auto { margin-left: auto; }
+  &-xs { margin-left: $xs; }
 }
 
 // ## MARGIN RIGHT
@@ -92,6 +101,7 @@
 .mx {
   &-auto { margin-left: auto; margin-right: auto; }
   &-xs { margin-left: $xs; &:not(:last-child) { margin-right: $xs; } }
+  &-md { margin-left: $md; margin-right: $md; }
 }
 
 // ## MARGIN Y
@@ -160,6 +170,9 @@
 // ## WIDTH
 
 .w {
+  &-md { width: $md; }
+
+  // Uses multiples of $xxl (60px).
   &-5 { width: $xxl * 5; }
   &-10 { width: $xxl * 10; }
 

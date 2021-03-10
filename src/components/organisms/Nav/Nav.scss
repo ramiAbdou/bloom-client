@@ -58,17 +58,6 @@ $PREF: 'o-nav';
   > img { @extend .fill; border-radius: $xxs; }
 }
 
-// ## SIDEBAR MAIN
-
-.#{$PREF}-main {
-  @extend .flex-col;
-
-  width: 100%;
-
-  // The active community name.
-  > h3 { color: $primary; margin: $md $sm; }
-}
-
 // ## SIDEBAR SECTION
 
 .#{$PREF}-section {

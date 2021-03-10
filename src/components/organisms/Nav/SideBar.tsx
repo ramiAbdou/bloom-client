@@ -13,9 +13,9 @@ import {
 } from 'react-icons/io5';
 
 import Separator from '@atoms/Separator';
-import { ModalType } from '@util/constants';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { LinkOptions } from './Nav.types';
 import SideBarDuesContent from './NavMemberStatus';
 import SideBarCommunityList from './SideBarCommunityList';
@@ -66,8 +66,8 @@ const SideBarContent: React.FC = () => {
   ];
 
   return (
-    <div className="o-nav-main">
-      <h3>{name}</h3>
+    <div className="f f-col w-100 o-nav-main o-scroll">
+      <h3 className="c-primary mx-sm my-md">{name}</h3>
       <Separator noMargin />
       <SideBarSection links={mainLinks} title="Main" />
       <SideBarSection links={adminLinks} title="Admin" />

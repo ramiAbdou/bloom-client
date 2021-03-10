@@ -49,16 +49,6 @@ $PREF: 'o-chart';
   > p { @extend .meta; color: white; }
 }
 
-// ## CHART LEGEND - Customized legend that follows Bloom style guide.
-
-.#{$PREF}-legend-item {
-  @extend .f-ac;
-  
-  &:not(:last-child) { margin-bottom: $xs; }
-  > div { border-radius: $xxs; height: $md; width: $md; }
-  > p { @extend .meta; margin-left: $xs; }
-}
-
 // ## RECHARTS OVERRIDING - In order to properly customize our components,
 // we have to override/extend some of the existing classes.
 
