@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
+import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -57,9 +58,13 @@ const SidebarProfile: React.FC = () => {
     return db.community?.canCollectDues && !db.member?.isDuesActive;
   });
 
+  const isTablet: boolean = useBreakpoint() <= 2;
+
   const css: string = cx('o-nav-profile-ctr', {
     'o-nav-profile-ctr--no-auto': isDuesMessageShowing
   });
+
+  if (isTablet) return null;
 
   return (
     <div className={css}>

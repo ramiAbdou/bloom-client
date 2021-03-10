@@ -10,18 +10,28 @@ import SidebarCommunityList from './SidebarCommunityList';
 import SidebarMainSection from './SidebarMainSection';
 import SidebarDuesContent from './SidebarMemberStatus';
 import SidebarProfile from './SidebarProfile';
+import SidebarProfileSection from './SidebarProfileSection';
 import SidebarQuickActionsSection from './SidebarQuickActionsSection';
 
-const SidebarContent: React.FC = () => {
+const SidebarCommunityName: React.FC = () => {
   const name: string = useStoreState(({ db }) => db.community?.name);
 
   return (
-    <div className="f f-col o-scroll w-100">
+    <>
       <h3 className="c-primary mx-sm my-md">{name}</h3>
       <Separator noMargin />
+    </>
+  );
+};
+
+const SidebarContent: React.FC = () => {
+  return (
+    <div className="f f-col o-scroll w-100">
+      <SidebarCommunityName />
       <SidebarMainSection />
       <SidebarAdminSection />
       <SidebarQuickActionsSection />
+      <SidebarProfileSection />
       <SidebarDuesContent />
       <SidebarProfile />
     </div>

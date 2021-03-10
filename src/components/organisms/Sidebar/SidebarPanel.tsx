@@ -2,45 +2,20 @@ import React from 'react';
 import { IoCard, IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import useMutation from '@hooks/useMutation';
 import { PanelAction } from '@organisms/Panel/Panel.types';
 import PanelOption from '@organisms/Panel/PanelOption';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { MutationEvent } from '@util/events';
+import { useStoreState } from '@store/Store';
+import useLogout from './useLogout';
 
 const SidebarPanel: React.FC = () => {
-  const urlName = useStoreState(({ db }) => db.community.urlName);
+  const urlName: string = useStoreState(({ db }) => db.community.urlName);
 
-  const canCollectDues = useStoreState(
-    ({ db }) => db.community?.canCollectDues
-  );
-
-  const clearEntities = useStoreActions(({ db }) => db.clearEntities);
+  const canCollectDues: boolean = useStoreState(({ db }) => {
+    return db.community?.canCollectDues;
+  });
 
   const { push } = useHistory();
-  const [logout] = useMutation<boolean>({ operation: MutationEvent.LOGOUT });
-
-  const onLogout = async () => {
-    const { error } = await logout();
-    if (error) return;
-
-    // Clear the entities that we've fetched and reset the Bloom style guide
-    // primary color.
-    clearEntities();
-
-    const { style } = document.documentElement;
-    style.setProperty('--primary', '#f58023');
-    style.setProperty('--primary-hex', `245, 128, 35`);
-    style.setProperty('--primary-hue', `27`);
-    style.setProperty('--gray-1', `hsl(27, 5%, 20%)`);
-    style.setProperty('--gray-2', `hsl(27, 5%, 31%)`);
-    style.setProperty('--gray-3', `hsl(27, 5%, 51%)`);
-    style.setProperty('--gray-4', `hsl(27, 5%, 74%)`);
-    style.setProperty('--gray-5', `hsl(27, 5%, 88%)`);
-    style.setProperty('--gray-6', `hsl(27, 5%, 96%)`);
-
-    push('/login');
-  };
+  const logout = useLogout();
 
   // Show a panel that either allows them to view their profile or log out.
   const actions: PanelAction[] = [
@@ -58,7 +33,7 @@ const SidebarPanel: React.FC = () => {
       onClick: () => push(`/${urlName}/profile`),
       text: 'Your Profile'
     },
-    { Icon: IoExit, onClick: onLogout, text: 'Log Out' }
+    { Icon: IoExit, onClick: logout, text: 'Log Out' }
   ];
 
   return (
