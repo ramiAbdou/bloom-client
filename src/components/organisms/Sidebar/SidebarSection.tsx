@@ -20,7 +20,7 @@ const SidebarSection: React.FC<LinkSectionProps> = ({
 
   return (
     <div className="o-nav-section">
-      <h5>{title}</h5>
+      <h5 className="c-gray-3 mb-xs ml-sm">{title}</h5>
       {links.map((link) => (
         <SidebarLink key={link.to ?? nanoid()} {...link} />
       ))}

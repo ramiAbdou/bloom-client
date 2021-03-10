@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
@@ -56,4 +56,4 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   );
 };
 
-export default memo(SidebarLink);
+export default SidebarLink;
