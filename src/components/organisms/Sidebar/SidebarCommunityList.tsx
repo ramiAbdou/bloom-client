@@ -6,7 +6,7 @@ import { useStoreState } from '@store/Store';
 import { IdProps } from '@util/constants';
 import { cx, sortObjects } from '@util/util';
 
-const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
+const SidebarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
   const communityId = useStoreState(({ db }) => db.community.id);
 
   const { id, logoUrl, urlName } = useStoreState(({ db }) => {
@@ -33,7 +33,7 @@ const SideBarCommunityIcon: React.FC<IdProps> = ({ id: memberId }) => {
   );
 };
 
-const SideBarCommunityList: React.FC = () => {
+const SidebarCommunityList: React.FC = () => {
   const memberIds: string[] = useStoreState(({ db }) => {
     return db.user?.members
       ?.map((memberId: string) => db.byMemberId[memberId])
@@ -44,10 +44,10 @@ const SideBarCommunityList: React.FC = () => {
   return (
     <div className="o-nav-community-ctr">
       {memberIds?.map((id: string) => (
-        <SideBarCommunityIcon key={id} id={id} />
+        <SidebarCommunityIcon key={id} id={id} />
       ))}
     </div>
   );
 };
 
-export default SideBarCommunityList;
+export default SidebarCommunityList;

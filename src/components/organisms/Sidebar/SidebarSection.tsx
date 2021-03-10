@@ -3,14 +3,14 @@ import React from 'react';
 
 import { useStoreState } from '@store/Store';
 import { LinkOptions } from './Nav.types';
-import NavLink from './NavLink';
+import SidebarLinkLink from './SidebarLink';
 
 interface LinkSectionProps {
   links: LinkOptions[];
   title: string;
 }
 
-const SideBarSection: React.FC<LinkSectionProps> = ({
+const SidebarSection: React.FC<LinkSectionProps> = ({
   links,
   title
 }: LinkSectionProps) => {
@@ -22,10 +22,10 @@ const SideBarSection: React.FC<LinkSectionProps> = ({
     <div className="o-nav-section">
       <h5>{title}</h5>
       {links.map((link) => (
-        <NavLink key={link.to ?? nanoid()} {...link} />
+        <SidebarLinkLink key={link.to ?? nanoid()} {...link} />
       ))}
     </div>
   );
 };
 
-export default SideBarSection;
+export default SidebarSection;

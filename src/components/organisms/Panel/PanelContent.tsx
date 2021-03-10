@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { PanelType } from '@util/constants';
 import IndividualEventRecordingForm from '@scenes/Events/IndividualEvent/IndividualEventRecordingForm';
 import { useStoreState } from '@store/Store';
-import SidebarPanel from '../Nav/SideBarPanel';
+import { PanelType } from '@util/constants';
+import SidebarPanel from '../Sidebar/SidebarPanel';
 
 const PanelContent: React.FC = () => {
   const panelId: string = useStoreState(({ panel }) => panel.id);

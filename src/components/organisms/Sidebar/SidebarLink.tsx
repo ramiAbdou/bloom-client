@@ -7,10 +7,10 @@ import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
 import { LinkOptions } from './Nav.types';
 
-interface NavLinkProps extends LinkOptions, OnClickProps {}
+interface SidebarLinkProps extends LinkOptions, OnClickProps {}
 
-const NavLinkAction: React.FC<
-  Pick<NavLinkProps, 'Icon' | 'onClick' | 'title'>
+const SidebarLinkAction: React.FC<
+  Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
   const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
 
@@ -32,7 +32,7 @@ const NavLinkAction: React.FC<
  * If onClick is defined, then we don't render a link, we simply render a
  * Button that opens up a modal.
  */
-const NavLink: React.FC<NavLinkProps> = (props) => {
+const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
   const { Icon, onClick, to, title } = props;
 
@@ -40,7 +40,7 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
   const isActive = useTopLevelRoute() === to;
 
   // If onClick is supplied, means it is an action.
-  if (onClick) return <NavLinkAction {...props} />;
+  if (onClick) return <SidebarLinkAction {...props} />;
 
   const css: string = cx('o-nav-link', {
     'o-nav-link--active': isActive
@@ -56,4 +56,4 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
   );
 };
 
-export default memo(NavLink);
+export default memo(SidebarLink);

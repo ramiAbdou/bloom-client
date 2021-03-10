@@ -7,7 +7,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
 
-const SideBarProfileContent: React.FC = () => {
+const SidebarProfileContent: React.FC = () => {
   const memberTypeName: string = useStoreState(({ db }) => {
     return db.byMemberPlanId[db.member?.plan]?.name;
   });
@@ -30,7 +30,7 @@ const SideBarProfileContent: React.FC = () => {
   );
 };
 
-const SideBarProfile: React.FC = () => {
+const SidebarProfile: React.FC = () => {
   const isDuesMessageShowing: boolean = useStoreState(({ db }) => {
     return db.community?.canCollectDues && !db.member?.isDuesActive;
   });
@@ -52,11 +52,11 @@ const SideBarProfile: React.FC = () => {
   return (
     <div className={containerCss}>
       <button className={buttonCss} id={PanelType.PROFILE} onClick={onClick}>
-        <SideBarProfileContent />
+        <SidebarProfileContent />
         <IoChevronForwardOutline />
       </button>
     </div>
   );
 };
 
-export default SideBarProfile;
+export default SidebarProfile;
