@@ -4,7 +4,7 @@ import { QueryResult } from '@hooks/useQuery.types';
 import Story from '@organisms/Story/Story';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
-import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
+import PaymentStore, { paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 import PaymentCardPage from './PaymentCardPage';
 import PaymentConfirmationPage from './PaymentConfirmationPage';
@@ -12,19 +12,7 @@ import PaymentFinishPage from './PaymentFinishPage';
 import PaymentStripeProvider from './PaymentStripeProvider';
 import useInitPayment from './useInitPayment';
 
-const PaymentModalContent: React.FC<Partial<PaymentModel>> = (args) => {
-  const { selectedPlanId } = args;
-
-  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
-
-  const setSelectedTypeId = PaymentStore.useStoreActions(
-    (store) => store.setSelectedTypeId
-  );
-
-  useEffect(() => {
-    if (selectedPlanId !== planId) setSelectedTypeId(selectedPlanId);
-  }, [planId, selectedPlanId]);
-
+const PaymentModalStory: React.FC = () => {
   return (
     <Story>
       <PaymentCardPage />
@@ -68,9 +56,11 @@ const PaymentModal: React.FC = () => {
   if (modalType !== 'UPDATE_PAYMENT_METHOD' && !selectedPlanId) return null;
 
   return (
-    <PaymentStore.Provider runtimeModel={{ ...paymentModel, type: modalType }}>
+    <PaymentStore.Provider
+      runtimeModel={{ ...paymentModel, selectedPlanId, type: modalType }}
+    >
       <PaymentStripeProvider>
-        <PaymentModalContent selectedPlanId={selectedPlanId} />
+        <PaymentModalStory />
       </PaymentStripeProvider>
     </PaymentStore.Provider>
   );

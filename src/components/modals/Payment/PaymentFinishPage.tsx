@@ -90,16 +90,13 @@ const PaymentFinishPage: React.FC = () => {
     })();
   }, [modalType, planId]);
 
-  const title: string =
-    modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan';
-
   return (
     <StoryPage
       description="Please review this information to make sure we got everything right."
       id="FINISH"
       loading={loading}
       show={modalType !== 'UPDATE_PAYMENT_METHOD'}
-      title={title}
+      title={modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan'}
     >
       <PaymentFinishForm />
     </StoryPage>

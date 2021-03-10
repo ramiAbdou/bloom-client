@@ -1,3 +1,5 @@
+import { Action } from 'easy-peasy';
+
 export type PaymentModalType =
   | 'CHANGE_MEMBERSHIP'
   | 'PAY_DUES'
@@ -23,4 +25,17 @@ export interface GetChangePreviewResult {
 
 export interface UpdateStripePaymentMethodIdArgs {
   paymentMethodId: string;
+}
+
+// ## PAYMENT STORE MODEL
+
+export interface PaymentModel {
+  changeAmount: number;
+  changeProrationDate: number;
+  selectedPlanId: string;
+  setChangeData: Action<
+    PaymentModel,
+    Pick<PaymentModel, 'changeAmount' | 'changeProrationDate'>
+  >;
+  type: PaymentModalType;
 }
