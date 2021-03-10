@@ -57,7 +57,7 @@ const PaymentCardForm: React.FC = () => {
   );
 };
 
-const PaymentCard: React.FC = () => {
+const PaymentCardPage: React.FC = () => {
   const isCardOnFile: boolean = useStoreState(({ db }) => {
     return !!db.memberIntegrations.paymentMethod;
   });
@@ -85,4 +85,4 @@ const PaymentCard: React.FC = () => {
   );
 };
 
-export default PaymentCard;
+export default PaymentCardPage;

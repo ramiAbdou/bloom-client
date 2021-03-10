@@ -6,15 +6,15 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import PaymentStore, { PaymentModel, paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
-import PaymentCardPage from './PaymentCard';
-import PaymentConfirmationPage from './PaymentConfirmation';
-import PaymentFinishPage from './PaymentFinish';
+import PaymentCardPage from './PaymentCardPage';
+import PaymentConfirmationPage from './PaymentConfirmationPage';
+import PaymentFinishPage from './PaymentFinishPage';
 import PaymentStripeProvider from './PaymentStripeProvider';
 import useInitPayment from './useInitPayment';
 
-const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
-  selectedPlanId
-}) => {
+const PaymentModalContent: React.FC<Partial<PaymentModel>> = (args) => {
+  const { selectedPlanId } = args;
+
   const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
 
   const setSelectedTypeId = PaymentStore.useStoreActions(
@@ -35,7 +35,7 @@ const PaymentModalContainer: React.FC<Partial<PaymentModel>> = ({
 };
 
 const PaymentModal: React.FC = () => {
-  const type: PaymentModalType = useStoreState(({ modal }) => {
+  const modalType: PaymentModalType = useStoreState(({ modal }) => {
     return modal.metadata?.type;
   });
 
@@ -47,31 +47,30 @@ const PaymentModal: React.FC = () => {
     return db.member?.plan;
   });
 
-  const isAdmin = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
+  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { loading }: Partial<QueryResult> = useInitPayment();
 
   // Get the member and see if they've paid their dues or not.
-  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   useEffect(() => {
-    if (!isAdmin && !isDuesActive) {
-      showModal({
-        id: ModalType.PAY_DUES,
-        metadata: { selectedPlanId: currentPlanId, type: 'PAY_DUES' }
-      });
-    }
+    if (isAdmin || isDuesActive) return;
+
+    showModal({
+      id: ModalType.PAY_DUES,
+      metadata: { selectedPlanId: currentPlanId, type: 'PAY_DUES' }
+    });
   }, [isDuesActive]);
 
-  if (loading || (type !== 'UPDATE_PAYMENT_METHOD' && !selectedPlanId)) {
-    return null;
-  }
+  if (loading) return null;
+  if (modalType !== 'UPDATE_PAYMENT_METHOD' && !selectedPlanId) return null;
 
   return (
-    <PaymentStore.Provider runtimeModel={{ ...paymentModel, type }}>
+    <PaymentStore.Provider runtimeModel={{ ...paymentModel, type: modalType }}>
       <PaymentStripeProvider>
-        <PaymentModalContainer selectedPlanId={selectedPlanId} />
+        <PaymentModalContent selectedPlanId={selectedPlanId} />
       </PaymentStripeProvider>
     </PaymentStore.Provider>
   );

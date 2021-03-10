@@ -60,7 +60,7 @@ const PaymentFinishForm: React.FC = () => {
   );
 };
 
-const PaymentFinish: React.FC = () => {
+const PaymentFinishPage: React.FC = () => {
   const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
   const modalType = PaymentStore.useStoreState((state) => state.type);
 
@@ -106,4 +106,4 @@ const PaymentFinish: React.FC = () => {
   );
 };
 
-export default PaymentFinish;
+export default PaymentFinishPage;
