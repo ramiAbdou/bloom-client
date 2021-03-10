@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoArrowBack, IoMenuOutline } from 'react-icons/io5';
+import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
@@ -7,7 +7,7 @@ import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
-import { useStoreActions } from '@store/Store';
+import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
 import { ClassNameProps, LoadingProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 import MainNavigation, { MainNavigationProps } from './MainNavigation';
@@ -28,19 +28,6 @@ const MainHeaderBackButton: React.FC<ShowProps> = ({ show }) => {
     <Button show={show} onClick={goBack}>
       <IoArrowBack />
     </Button>
-  );
-};
-
-const MainHeaderHamburger: React.FC = () => {
-  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
-  const onClick = () => setIsOpen(true);
-
-  return (
-    <div className="t-main-hamburger">
-      <Button onClick={onClick}>
-        <IoMenuOutline />
-      </Button>
-    </div>
   );
 };
 
@@ -70,7 +57,7 @@ const MainHeader: React.FC<MainHeaderProps> = (props) => {
 
   return (
     <header className={css}>
-      <MainHeaderHamburger />
+      <SidebarHamburgerButton />
       <MainHeaderContent {...props} />
     </header>
   );

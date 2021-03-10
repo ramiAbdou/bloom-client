@@ -39,6 +39,8 @@
   &-block { display: block; }
   &-block--m { @include M { display: block; } }
   &-grid { display: grid; }
+  &-none { display: none; }
+  &-none--d { @include D { display: none; } }
 }
 
 // ## FLEX

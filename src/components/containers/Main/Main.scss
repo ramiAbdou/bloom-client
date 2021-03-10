@@ -46,15 +46,6 @@ $PREF: 't-main';
   @include M { margin: 0 $sm; }
 }
 
-// ## MAIN HAMBURGER
-
-.#{$PREF}-hamburger {
-  margin-bottom: $sm;
-
-  @include D { display: none; }
-  > button > svg { @extend .react-icon--lg; }
-}
-
 // ## MAIN SECTION
 
 .#{$PREF}-section { margin-bottom: $md; }

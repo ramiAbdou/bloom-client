@@ -5,6 +5,7 @@ import Separator from '@atoms/Separator';
 import GrayCard from '@containers/Card/GrayCard';
 import MainSection from '@containers/Main/MainSection';
 import Row from '@containers/Row/Row';
+import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
@@ -43,6 +44,8 @@ const IndividualEventInsights: React.FC = () => {
 
   return (
     <MainSection className="s-events-individual-insights" show={!!isAdmin}>
+      <SidebarHamburgerButton />
+
       <Row spacing="sm">
         <IndividualEventInsightsAttendeesCard />
         <IndividualEventInsightsGuestsCard />
