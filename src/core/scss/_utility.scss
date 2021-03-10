@@ -21,11 +21,18 @@
   &-gray-3 { color: $gray-3; }
 }
 
+// ## COLUMN GAP
+
+.cg {
+  &-md { column-gap: $md; }
+}
+
 // ## DISPLAY
 
 .d {
   &-block { display: block; }
   &-block--m { @include M { display: block; } }
+  &-grid { display: grid; }
 }
 
 // ## FLEX
@@ -42,6 +49,12 @@
   &-col { flex-direction: column; }
 
   &-sb { justify-content: space-between; }
+}
+
+// ## GAP
+
+.g {
+  &-md { column-gap: $md; row-gap: $md; }
 }
 
 // ## HEIGHT
@@ -157,7 +170,14 @@
 // ## PADDING Y
 
 .py {
+  &-xxs { padding-bottom: $xxs; padding-top: $xxs; }
   &-sm { padding-bottom: $sm; padding-top: $sm; }
+}
+
+// ## COLUMN GAP
+
+.rg {
+  &-md { row-gap: $md; }
 }
 
 // ## TEXT ALIGN

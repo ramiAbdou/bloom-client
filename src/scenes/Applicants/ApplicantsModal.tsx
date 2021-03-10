@@ -7,7 +7,6 @@ import {
   IMember,
   IMemberValue,
   IQuestion,
-  IUser,
   MemberStatus
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';

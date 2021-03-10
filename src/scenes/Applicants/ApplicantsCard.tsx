@@ -10,7 +10,6 @@ import {
   IMember,
   IMemberValue,
   IQuestion,
-  IUser,
   MemberStatus
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
@@ -40,7 +39,7 @@ const ApplicantsCardHeader: React.FC = () => {
   return (
     <Row className="mb-md--nlc" justify="sb" spacing="xs">
       <div>
-        <p className="meta">Applied {createdAt}</p>
+        <p className="c-gray-2 mb-xxs meta">Applied {createdAt}</p>
         <h3>{fullName}</h3>
       </div>
 

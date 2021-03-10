@@ -27,7 +27,6 @@ $PREF: 's-events-individual';
 // ## INDIVIDUAL EVENT GRID
 
 .#{$PREF}-grid {
-  column-gap: $md;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   padding: $md;

@@ -41,7 +41,7 @@ const IndividualEvent: React.FC = () => {
       <IndividualEventHeader />
       <IndividualEventTable />
 
-      <div className="s-events-individual-grid">
+      <div className="cg-md s-events-individual-grid">
         <IndividualEventAbout />
         <IndividualEventAttendeeList />
         <IndividualEventGuestList />
