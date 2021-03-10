@@ -54,6 +54,7 @@
 
   &-col { flex-direction: column; }
 
+  &-c { justify-content: center; }
   &-sb { justify-content: space-between; }
 }
 
@@ -67,6 +68,9 @@
 
 .h {
   &-md { height: $md; }
+  &-xl { height: $xl; }
+
+  &-100 { height: 100%; }
 }
 
 // ## MARGIN BOTTOM
@@ -158,6 +162,7 @@
 // ## PADDING
 
 .p {
+  &-2 { padding: 2px; }
   &-sm { padding: $sm; }
   &-md { padding: $md; }
 }
@@ -203,6 +208,7 @@
 
 .w {
   &-md { width: $md; }
+  &-xl { width: $xl; }
 
   // Uses multiples of $xxl (60px).
   &-5 { width: $xxl * 5; }

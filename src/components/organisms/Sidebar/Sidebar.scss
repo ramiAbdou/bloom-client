@@ -28,22 +28,7 @@ $PREF: 'o-nav';
 
 // ## SIDEBAR COMMUNITY LIST
 
-.#{$PREF}-community-ctr {
-  @extend .flex-accol;
-
-  border-right: 1px $gray-5 solid;
-  padding: $sm $xs;
-
-  > button {
-    border-radius: $xs;
-    height: $xl;
-    margin-bottom: $sm;
-    padding: 2px;
-    width: $xl;
-  }
-
-  > button > img { @extend .fill; border-radius: $xxs; }
-}
+.#{$PREF}-community-ctr { border-right: 1px $gray-5 solid; }
 
 .#{$PREF}-community {
   border: 2px white solid;
