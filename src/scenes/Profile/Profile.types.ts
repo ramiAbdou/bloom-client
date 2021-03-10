@@ -1,4 +1,4 @@
-interface MemberValueInput {
+export interface MemberValueInput {
   questionId: string;
   value: string[];
 }
