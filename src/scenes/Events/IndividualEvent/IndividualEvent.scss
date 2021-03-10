@@ -27,9 +27,7 @@ $PREF: 's-events-individual';
 // ## INDIVIDUAL EVENT GRID
 
 .#{$PREF}-grid {
-  display: grid;
   grid-template-columns: repeat(12, 1fr);
-  padding: $md;
 
   @include LTE(1300) { display: block; }
   @include T { display: grid; }

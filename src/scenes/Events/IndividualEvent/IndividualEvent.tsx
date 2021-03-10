@@ -16,7 +16,7 @@ const IndividualEventHeader: React.FC = () => {
   const imageUrl = useStoreState(({ db }) => db.event?.imageUrl);
 
   return (
-    <div className="s-events-individual-header">
+    <div className="cg-md d-grid p-md s-events-individual-header">
       <EventsAspectBackground imageUrl={imageUrl} />
       <IndividualEventMain />
     </div>
@@ -41,7 +41,7 @@ const IndividualEvent: React.FC = () => {
       <IndividualEventHeader />
       <IndividualEventTable />
 
-      <div className="cg-md s-events-individual-grid">
+      <div className="cg-md d-grid p-md s-events-individual-grid">
         <IndividualEventAbout />
         <IndividualEventAttendeeList />
         <IndividualEventGuestList />
