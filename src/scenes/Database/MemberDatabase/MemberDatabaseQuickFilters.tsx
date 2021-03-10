@@ -18,7 +18,8 @@ const MemberDatabaseInactiveFilter: React.FC = () => {
   });
 
   const filter: TableFilter = (row: TableRow) => {
-    return row[duesStatusQuestionId] === 'Inactive';
+    const isDuesActive: boolean = row[duesStatusQuestionId];
+    return !isDuesActive;
   };
 
   return (
@@ -37,7 +38,8 @@ const MemberDatabaseActiveFilter: React.FC = () => {
   });
 
   const filter: TableFilter = (row: TableRow) => {
-    return row[duesStatusQuestionId] === 'Active';
+    const isDuesActive: boolean = row[duesStatusQuestionId];
+    return isDuesActive;
   };
 
   return <TableQuickFilter filter={filter} show={show} title="Paid Dues" />;

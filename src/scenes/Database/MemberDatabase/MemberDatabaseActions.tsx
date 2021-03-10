@@ -34,7 +34,7 @@ const MemberDatabaseButtons: React.FC = () => {
 };
 
 const MemberDatabaseActions: React.FC = () => (
-  <Row wrap className="mb-sm--nlc" gap="sm" justify="sb">
+  <Row noMarginBottom wrap className="mb-sm--nlc" gap="sm" justify="sb">
     <SearchBar placeholder="Search members..." />
     <MemberDatabaseQuickFilters />
     <TableFilterButton className="ml-auto" />

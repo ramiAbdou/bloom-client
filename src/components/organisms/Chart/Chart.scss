@@ -8,6 +8,8 @@ $PREF: 'o-chart';
   min-width: $xxl * 6;
   overflow: scroll;
   padding: $sm;
+
+  @include M { min-width: max-content; }
 }
 
 // ## INNER HEADER - Inlcudes the h4 title as well as the HeaderTag that

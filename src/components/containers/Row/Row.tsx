@@ -13,6 +13,7 @@ const Row: React.FC<RowProps> = (props) => {
     fillBreakpoint,
     gap,
     justify,
+    noMarginBottom,
     spacing,
     show,
     wrap
@@ -42,7 +43,12 @@ const Row: React.FC<RowProps> = (props) => {
   );
 
   if (show === false) return null;
-  return <div className={css}>{children}</div>;
+
+  return (
+    <div className={css} style={noMarginBottom ? { marginBottom: 0 } : {}}>
+      {children}
+    </div>
+  );
 };
 
 export default Row;
