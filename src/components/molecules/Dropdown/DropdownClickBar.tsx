@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 
+import Row from '@containers/Row/Row';
 import { ValueProps } from '@util/constants';
-import Show from '@containers/Show';
 import { cx } from '@util/util';
 import Dropdown from './Dropdown.store';
 
@@ -29,7 +29,7 @@ const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
 
   if (!attribute) return <p className="overflow-ellipses">{value}</p>;
 
-  const css: string = cx('c-tag-attr m-dropdown-value', {
+  const css: string = cx('c-tag-attr m-dropdown-value o-visible', {
     'm-dropdown-value--cancel': multiple
   });
 
@@ -49,13 +49,11 @@ const DropdownClickBarValues: React.FC = () => {
   else if (value) values = [value];
 
   return (
-    <Show show={!!values?.length}>
-      <ul className="m-dropdown-value-ctr">
-        {values.map((element: string) => (
-          <DropdownClickBarValue key={element} value={element} />
-        ))}
-      </ul>
-    </Show>
+    <Row className="m-dropdown-value-ctr" show={!!values?.length}>
+      {values.map((element: string) => (
+        <DropdownClickBarValue key={element} value={element} />
+      ))}
+    </Row>
   );
 };
 

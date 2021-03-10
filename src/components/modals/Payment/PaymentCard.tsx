@@ -58,7 +58,7 @@ const PaymentCardForm: React.FC = () => {
 };
 
 const PaymentCard: React.FC = () => {
-  const isCardOnFile = useStoreState(({ db }) => {
+  const isCardOnFile: boolean = useStoreState(({ db }) => {
     return !!db.memberIntegrations.paymentMethod;
   });
 

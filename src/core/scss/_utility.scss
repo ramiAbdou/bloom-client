@@ -2,6 +2,7 @@
 
 .bg {
   &-gray-5 { background-color: $gray-5; }
+  &-white { background-color: $white; }
 }
 
 // ## BORDER RADIUS
@@ -103,6 +104,7 @@
 .mx {
   &-auto { margin-left: auto; margin-right: auto; }
   &-xs { margin-left: $xs; &:not(:last-child) { margin-right: $xs; } }
+  &-sm { margin-left: $sm; margin-right: $sm; }
   &-md { margin-left: $md; margin-right: $md; }
 }
 
@@ -131,6 +133,7 @@
 .o {
   &-hidden { overflow: hidden; }
   &-scroll { overflow: scroll; }
+  &-visible { overflow: visible; }
 }
 
 // ## PADDING

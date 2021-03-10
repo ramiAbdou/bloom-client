@@ -18,6 +18,7 @@ const MembershipRenewalCard: React.FC = () => {
       className="mb-md--nlc"
       label="Membership Renews On"
       loading={loading}
+      show={!!renewalDate}
       value={renewalDate}
     />
   );
