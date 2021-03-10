@@ -49,7 +49,7 @@ const DropdownClickBarValues: React.FC = () => {
   else if (value) values = [value];
 
   return (
-    <Row className="m-dropdown-value-ctr" show={!!values?.length}>
+    <Row className="m-dropdown-value-ctr o-scroll" show={!!values?.length}>
       {values.map((element: string) => (
         <DropdownClickBarValue key={element} value={element} />
       ))}

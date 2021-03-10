@@ -81,6 +81,7 @@ div.#{$PREF}-bar {
 // has an option to delete, shown by the 'x' in the ::after rule.
 button.#{$PREF}-value {
   margin-left: 0;
+  min-width: max-content;
 
   &--cancel::after { content: 'x'; margin-left: $xs; }
 }
