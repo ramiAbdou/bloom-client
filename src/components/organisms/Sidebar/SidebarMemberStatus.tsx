@@ -6,7 +6,7 @@ import Show from '@containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
-const NavMemberStatus: React.FC = () => {
+const SidebarMemberStatus: React.FC = () => {
   const canCollectDues = useStoreState(
     ({ db }) => db.community?.canCollectDues
   );
@@ -37,4 +37,4 @@ const NavMemberStatus: React.FC = () => {
   );
 };
 
-export default NavMemberStatus;
+export default SidebarMemberStatus;

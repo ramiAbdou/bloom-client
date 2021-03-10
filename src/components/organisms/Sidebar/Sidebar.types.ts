@@ -10,7 +10,7 @@ export interface LinkOptions extends OnClickProps {
 
 // ## NAV MODEL
 
-export interface NavModel {
+export interface SidebarModel {
   isOpen: boolean;
-  setIsOpen: Action<NavModel, boolean>;
+  setIsOpen: Action<SidebarModel, boolean>;
 }

@@ -5,14 +5,14 @@ import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { useStoreActions } from '@store/Store';
 import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
-import { LinkOptions } from './Nav.types';
+import { LinkOptions } from './Sidebar.types';
 
 interface SidebarLinkProps extends LinkOptions, OnClickProps {}
 
 const SidebarLinkAction: React.FC<
   Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
-  const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
 
   const onUpdatedClick = () => {
     setIsOpen(false);
@@ -33,7 +33,7 @@ const SidebarLinkAction: React.FC<
  * Button that opens up a modal.
  */
 const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
-  const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
   const { Icon, onClick, to, title } = props;
 
   const { url } = useRouteMatch();

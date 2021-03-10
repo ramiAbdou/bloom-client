@@ -1,8 +1,8 @@
 import { action } from 'easy-peasy';
 
-import { NavModel } from './Nav.types';
+import { SidebarModel } from './Sidebar.types';
 
-const navModel: NavModel = {
+const navModel: SidebarModel = {
   isOpen: false,
   setIsOpen: action((state, isOpen: boolean) => ({ ...state, isOpen }))
 };

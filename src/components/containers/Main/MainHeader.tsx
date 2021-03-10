@@ -32,7 +32,7 @@ const MainHeaderBackButton: React.FC<ShowProps> = ({ show }) => {
 };
 
 const MainHeaderHamburger: React.FC = () => {
-  const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
   const onClick = () => setIsOpen(true);
 
   return (
