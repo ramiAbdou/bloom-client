@@ -5,9 +5,9 @@ import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { useStoreActions } from '@store/Store';
 import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
-import { LinkOptions } from './Sidebar.types';
+import { SidebarLinkOptions } from './Sidebar.types';
 
-interface SidebarLinkProps extends LinkOptions, OnClickProps {}
+interface SidebarLinkProps extends SidebarLinkOptions, OnClickProps {}
 
 const SidebarLinkAction: React.FC<
   Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>

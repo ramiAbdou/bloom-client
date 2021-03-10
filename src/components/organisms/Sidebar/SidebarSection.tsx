@@ -2,11 +2,11 @@ import { nanoid } from 'nanoid';
 import React from 'react';
 
 import { useStoreState } from '@store/Store';
-import { LinkOptions } from './Sidebar.types';
+import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLink from './SidebarLink';
 
 interface LinkSectionProps {
-  links: LinkOptions[];
+  links: SidebarLinkOptions[];
   title: string;
 }
 

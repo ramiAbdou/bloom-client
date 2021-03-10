@@ -1,11 +1,11 @@
 import React from 'react';
 import { IoCalendar, IoCloud, IoPeople } from 'react-icons/io5';
 
-import { LinkOptions } from './Sidebar.types';
+import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarSection from './SidebarSection';
 
 const SidebarMainSection: React.FC = () => {
-  const mainLinks: LinkOptions[] = [
+  const mainLinks: SidebarLinkOptions[] = [
     { Icon: IoPeople, title: 'Directory', to: 'directory' },
     { Icon: IoCalendar, title: 'Events', to: 'events' },
     {
