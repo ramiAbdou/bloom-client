@@ -3,6 +3,7 @@ import React from 'react';
 
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
+import { QueryResult } from '@hooks/useQuery.types';
 import {
   IMemberPlan,
   IPaymentMethod,
@@ -10,6 +11,7 @@ import {
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';
+import useInitMembershipPaymentMethod from './useInitMembershipPaymentMethod';
 
 const MembershipPaymentMethodEmpty: React.FC = () => {
   const isCardOnFile: boolean = useStoreState(({ db }) => {
@@ -48,9 +50,12 @@ const MembershipPaymentMethod: React.FC = () => {
     return plan?.recurrence === RecurrenceType.LIFETIME;
   });
 
+  const { loading }: QueryResult = useInitMembershipPaymentMethod();
+
   return (
     <Card
       className="s-membership-card s-membership-card--payment"
+      loading={loading}
       show={!isDuesActive || !isLifetime}
       title="Payment Method"
     >
