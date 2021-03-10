@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { IMember, MemberStatus } from '@store/Db/entities';
-import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ApplicantCard from './ApplicantsCard';
 
@@ -17,10 +16,17 @@ const ApplicantsCardList: React.FC = () => {
 
   return (
     <div className="g-md d-grid py-xxs rg-md s-applicants-card-ctr">
-      {applicantIds?.map((applicantId: string) => (
-        <IdStore.Provider key={applicantId} runtimeModel={{ id: applicantId }}>
-          <ApplicantCard />
-        </IdStore.Provider>
+      {[
+        ...applicantIds,
+        ...applicantIds,
+        ...applicantIds,
+        ...applicantIds,
+        ...applicantIds,
+        ...applicantIds,
+        ...applicantIds,
+        ...applicantIds
+      ].map((applicantId: string) => (
+        <ApplicantCard key={applicantId} id={applicantId} />
       ))}
     </div>
   );

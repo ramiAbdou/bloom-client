@@ -14,7 +14,7 @@ import {
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
+import { IdProps, ModalType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
@@ -50,7 +50,7 @@ const ApplicantsCardHeader: React.FC = () => {
   );
 };
 
-const ApplicantsCardActionContainer: React.FC = () => {
+const ApplicantsCardActions: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   return (
@@ -99,13 +99,17 @@ const ApplicantsCardItems: React.FC = () => {
   return <QuestionBox className="mb-md--nlc" items={items} />;
 };
 
-const ApplicantsCard: React.FC = () => {
+const ApplicantsCard: React.FC<IdProps> = (args) => {
+  const { id } = args;
+
   return (
-    <Card>
-      <ApplicantsCardHeader />
-      <ApplicantsCardItems />
-      <ApplicantsCardActionContainer />
-    </Card>
+    <IdStore.Provider runtimeModel={{ id }}>
+      <Card>
+        <ApplicantsCardHeader />
+        <ApplicantsCardItems />
+        <ApplicantsCardActions />
+      </Card>
+    </IdStore.Provider>
   );
 };
 

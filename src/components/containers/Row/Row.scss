@@ -3,7 +3,7 @@ $PREF: 't-row';
 // ## ROW CONTAINER
 
 .#{$PREF} {
-  &--equal { bottom: $md; position: sticky; width: 100%; }
+  &--equal { width: 100%; }
   &--equal > * { width: 50%; }
   
   &--fill > * { width: 100%; }

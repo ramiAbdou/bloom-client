@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-import { UseMutationResult } from './useMutation.types';
+import { MutationResult } from './useMutation.types';
 import { QueryResult, UseQueryArgs } from './useQuery.types';
 
 function useManualQuery<T = any, S = any>({
@@ -13,7 +13,7 @@ function useManualQuery<T = any, S = any>({
   schema,
   types,
   variables: initialVariables
-}: UseQueryArgs<T, S>): UseMutationResult<T, S> {
+}: UseQueryArgs<T, S>): MutationResult<T, S> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const [manualQueryFn, { data, error, loading }] = useGQLManualQuery(
