@@ -6,7 +6,6 @@ $PREF: 's-profile';
   column-gap: $sm;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  padding-top: $md;
   row-gap: $sm;
 
   @include LTE(1300) { display: block; }
