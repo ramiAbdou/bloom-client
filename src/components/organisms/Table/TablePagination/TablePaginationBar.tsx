@@ -4,6 +4,7 @@ import React from 'react';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
+import Row from '@containers/Row/Row';
 import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
@@ -68,7 +69,7 @@ const TablePaginationBar: React.FC = () => {
   );
 
   return (
-    <div className="o-table-pagination-row">
+    <Row>
       <TablePaginationBarBackButton />
 
       {nums.map((value: any) => (
@@ -76,7 +77,7 @@ const TablePaginationBar: React.FC = () => {
       ))}
 
       <TablePaginationBarNextButton />
-    </div>
+    </Row>
   );
 };
 

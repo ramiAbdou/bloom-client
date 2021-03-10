@@ -10,18 +10,15 @@ interface ProcessFilterArgs extends TableFilterArgs {
   row: TableRow;
 }
 
-const processFilter = ({
-  columnId,
-  operator,
-  row,
-  value
-}: ProcessFilterArgs) => {
-  const rowValue: any = row[columnId]?.toString()?.toLowerCase();
-  value = value?.toString()?.toLowerCase();
+const processFilter = (args: ProcessFilterArgs) => {
+  const { columnId, operator, row, value } = args;
 
-  if (operator === 'includes') return rowValue?.includes(value);
-  if (operator === 'is') return rowValue === value;
-  if (operator === 'is not') return rowValue !== value;
+  const rowValue: any = row[columnId]?.toString()?.toLowerCase();
+  const processedValue: string = value?.toString()?.toLowerCase();
+
+  if (operator === 'includes') return rowValue?.includes(processedValue);
+  if (operator === 'is') return rowValue === processedValue;
+  if (operator === 'is not') return rowValue !== processedValue;
   return false;
 };
 

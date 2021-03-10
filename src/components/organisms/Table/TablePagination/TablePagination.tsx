@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import TableStore from '../Table.store';
 import PaginationBar from './TablePaginationBar';
@@ -8,7 +9,7 @@ const TablePaginationMessage: React.FC = () => {
   const floor = TableStore.useStoreState(({ range }) => range[0] + 1);
   const ceiling = TableStore.useStoreState(({ range }) => range[1]);
 
-  const numRows = TableStore.useStoreState(
+  const rowsCount: number = TableStore.useStoreState(
     (store) => store.filteredRows?.length
   );
 
@@ -16,8 +17,8 @@ const TablePaginationMessage: React.FC = () => {
     ({ options }) => options.showCount
   );
 
-  const message = numRows
-    ? `Displaying ${floor}-${ceiling} of ${numRows} results.`
+  const message = rowsCount
+    ? `Displaying ${floor}-${ceiling} of ${rowsCount} results.`
     : 'No results found.';
 
   return (
@@ -28,15 +29,15 @@ const TablePaginationMessage: React.FC = () => {
 };
 
 const TablePagination: React.FC = () => {
-  const numRows = TableStore.useStoreState(
+  const rowsCount: number = TableStore.useStoreState(
     (store) => store.filteredRows?.length
   );
 
   return (
-    <div className="o-table-pagination-ctr">
+    <Row wrap className="mt-sm" gap="sm" justify="sb">
       <TablePaginationMessage />
-      {numRows >= 50 && <PaginationBar />}
-    </div>
+      {rowsCount >= 50 && <PaginationBar />}
+    </Row>
   );
 };
 

@@ -2,9 +2,10 @@ import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { PanelType } from '@util/constants';
 import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
+import { PanelType } from '@util/constants';
+import { cx } from '@util/util';
 import TableStore from '../Table.store';
 import TableFilterStore from './TableFilter.store';
 
@@ -21,7 +22,9 @@ const TableFilterButtonNumActiveTag: React.FC = () => {
   return <div>{numActiveFilters}</div>;
 };
 
-const TableFilterButton: React.FC<Partial<ButtonProps>> = () => {
+const TableFilterButton: React.FC<Partial<ButtonProps>> = (props) => {
+  const { className } = props;
+
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
   const isAnythingSelected: boolean = TableStore.useStoreState(
@@ -31,10 +34,16 @@ const TableFilterButton: React.FC<Partial<ButtonProps>> = () => {
   const onClick = () => showPanel({ id: PanelType.FILTER_TABLE });
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
+  const css: string = cx(
+    'o-table-action o-table-filter-active-tag',
+    {},
+    className
+  );
+
   return (
     <Button
       ref={ref}
-      className="o-table-action o-table-filter-active-tag"
+      className={css}
       id={PanelType.FILTER_TABLE}
       show={!isAnythingSelected}
       onClick={onClick}

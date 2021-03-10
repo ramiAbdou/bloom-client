@@ -13,16 +13,18 @@ import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 
 const MemberDatabaseButtons: React.FC = () => {
-  const isOwner = useStoreState(
+  const isOwner: boolean = useStoreState(
     ({ db }) => db.member?.role === MemberRole.OWNER
   );
 
-  const isAnythingSelected = TableStore.useStoreState(({ selectedRowIds }) => {
-    return !!selectedRowIds.length;
-  });
+  const isAnythingSelected: boolean = TableStore.useStoreState(
+    ({ selectedRowIds }) => {
+      return !!selectedRowIds.length;
+    }
+  );
 
   return (
-    <Row show={!!isAnythingSelected} spacing="xs">
+    <Row className="ml-auto" show={!!isAnythingSelected} spacing="xs">
       <MemberDatabaseCopyButton />
       <MemberDatabaseExportButton />
       {isOwner && <MemberDatabasePromoteButton />}
@@ -31,19 +33,11 @@ const MemberDatabaseButtons: React.FC = () => {
   );
 };
 
-const MemberDatabaseQuickContainer: React.FC = () => {
-  return (
-    <Row spacing="sm">
-      <SearchBar placeholder="Search members..." />
-      <MemberDatabaseQuickFilters />
-    </Row>
-  );
-};
-
 const MemberDatabaseActions: React.FC = () => (
-  <Row className="mb-sm--nlc" justify="sb" spacing="xs">
-    <MemberDatabaseQuickContainer />
-    <TableFilterButton />
+  <Row wrap className="mb-sm--nlc" gap="sm" justify="sb">
+    <SearchBar placeholder="Search members..." />
+    <MemberDatabaseQuickFilters />
+    <TableFilterButton className="ml-auto" />
     <MemberDatabaseButtons />
   </Row>
 );
