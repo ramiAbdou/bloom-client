@@ -23,7 +23,7 @@ const ProfileContent: React.FC = () => {
 const Profile: React.FC = () => {
   return (
     <MainContent>
-      <SidebarHamburgerButton />
+      <SidebarHamburgerButton className="pt-md" />
       <ProfileContent />
     </MainContent>
   );

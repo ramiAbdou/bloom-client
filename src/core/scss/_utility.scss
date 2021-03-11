@@ -174,6 +174,7 @@
 
 .pt {
   &-xxs { padding-top: $xxs; }
+  &-md { padding-top: $md; }
   &-md--d { @include D { padding-top: $md; } }
 }
 
