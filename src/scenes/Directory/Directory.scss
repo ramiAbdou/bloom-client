@@ -57,7 +57,7 @@ div.#{$PREF}-card-star-ctr {
 .#{$PREF}-card > .m-profile-picture {
   position: relative;
   width: 100%;
-  &::before { aspect-ratio: 1; content: ''; display: block; }
+  &::before { content: ''; display: block; padding-top: 100%; }
 }
 
 .#{$PREF}-card > .m-profile-picture > * {

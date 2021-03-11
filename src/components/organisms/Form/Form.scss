@@ -92,7 +92,7 @@ $PREF: 'o-form';
   padding: $sm;
   width: 100%;
 
-  @include MT { aspect-ratio: 2; height: initial; }
+  // @include MT { aspect-ratio: 2; height: initial; }
 
   > .c-btn--secondary {
     background-color: white;
