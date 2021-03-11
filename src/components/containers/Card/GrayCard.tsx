@@ -19,8 +19,8 @@ const GrayCardNumberContainer: React.FC<
   if (value === undefined || value === null) return null;
 
   return (
-    <Row className="mb-xxs">
-      <p className="display mr-xs">{value}</p>
+    <Row className="mb-xxs--nlc">
+      <p className="display mr-xs--nlc">{value}</p>
       <Pill percentage={percentage} />
     </Row>
   );
@@ -48,7 +48,7 @@ const GrayCard: React.FC<GrayCardProps> = (props) => {
 
   if (show === false) return null;
 
-  const css = cx('t-card--analytics', {}, className);
+  const css: string = cx('t-card--analytics', {}, className);
 
   return (
     <div className={css}>

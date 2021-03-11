@@ -1,21 +1,21 @@
 import React from 'react';
-import { IoArrowBack, IoMenuOutline } from 'react-icons/io5';
+import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
 import Spinner from '@atoms/Spinner/Spinner';
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { ClassNameProps, LoadingProps, ShowProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
-import { useStoreActions } from '@store/Store';
+import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
+import { ClassNameProps, LoadingProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
-import MainNavigation, { NavigationProps } from './MainNavigation';
+import MainNavigation, { MainNavigationProps } from './MainNavigation';
 
 export interface MainHeaderProps
   extends ClassNameProps,
     LoadingProps,
-    NavigationProps {
+    MainNavigationProps {
   backButton?: boolean;
   headerTag?: string;
   title: string;
@@ -31,49 +31,33 @@ const MainHeaderBackButton: React.FC<ShowProps> = ({ show }) => {
   );
 };
 
-const MainHeaderHamburger: React.FC = () => {
-  const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
-  const onClick = () => setIsOpen(true);
-
-  return (
-    <div className="t-main-hamburger">
-      <Button onClick={onClick}>
-        <IoMenuOutline />
-      </Button>
-    </div>
-  );
-};
-
-const MainHeaderContent: React.FC<MainHeaderProps> = ({
-  backButton,
-  children,
-  loading,
-  headerTag,
-  options,
-  title
-}) => {
+const MainHeaderContent: React.FC<MainHeaderProps> = (props) => {
+  const { backButton, children, loading, headerTag, options, title } = props;
   const isDesktop = useBreakpoint() >= 3;
+
   return (
-    <Row justify="sb" spacing="xs">
-      <div>
+    <Row className="d-block--m" justify="sb" spacing="sm">
+      <Row className="mb-sm--m">
         <MainHeaderBackButton show={!!backButton} />
-        <h1>{title}</h1>
+        <h1 className="mr-sm--nlc">{title}</h1>
         <HeaderTag show={!loading && !!headerTag}>{headerTag}</HeaderTag>
         <Spinner dark show={loading} />
-      </div>
+      </Row>
 
-      {!loading && <MainNavigation options={options} />}
-      <div>{!loading && isDesktop && children}</div>
+      <MainNavigation options={options} show={!loading} />
+      {!loading && isDesktop && <div>{children}</div>}
     </Row>
   );
 };
 
-const MainHeader: React.FC<MainHeaderProps> = ({ className, ...props }) => {
-  const css = cx('t-main-header', { [className]: className });
+const MainHeader: React.FC<MainHeaderProps> = (props) => {
+  const { className } = props;
+
+  const css: string = cx('t-main-header', {}, className);
 
   return (
     <header className={css}>
-      <MainHeaderHamburger />
+      <SidebarHamburgerButton />
       <MainHeaderContent {...props} />
     </header>
   );

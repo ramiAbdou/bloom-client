@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 
-import { ModalType } from '@util/constants';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import EventForm from '@modals/EventForm/EventForm';
@@ -14,6 +13,7 @@ import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
 import ModalContainer from './ModalContainer';
 
@@ -73,10 +73,11 @@ const ModalContent: React.FC = () => {
     return () => clearOptions();
   }, []);
 
-  const css = cx('c-modal', {
-    'c-modal--confirmation': confirmation,
-    [className]: className
-  });
+  const css: string = cx(
+    'c-modal',
+    { 'c-modal--confirmation': confirmation },
+    className
+  );
 
   return (
     <ModalContainer>

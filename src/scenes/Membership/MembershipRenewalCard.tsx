@@ -15,9 +15,10 @@ const MembershipRenewalCard: React.FC = () => {
 
   return (
     <GrayCard
-      className="mb-md"
+      className="mb-md--nlc"
       label="Membership Renews On"
       loading={loading}
+      show={!!renewalDate}
       value={renewalDate}
     />
   );

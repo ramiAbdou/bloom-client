@@ -8,5 +8,5 @@ $PREF: 'mo-add-member';
   > .o-form-item:nth-of-type(3) { flex: 1.25; }
 
   // This div wraps the Make Admin checkbox button and text.
-  > div:last-child { @extend .flex-ac; }
+  > div:last-child { @extend .f; @extend .f-ac; }
 }

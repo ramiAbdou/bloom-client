@@ -1,7 +1,5 @@
-import day from 'dayjs';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
@@ -10,48 +8,16 @@ import {
   IMember,
   IMemberValue,
   IQuestion,
-  IUser,
   MemberStatus
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
+import { useStoreState } from '@store/Store';
+import { IdProps } from '@util/constants';
 import { sortObjects } from '@util/util';
+import ApplicantsCardHeader from './ApplicantsCardHeader';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
-const ApplicantsCardHeader: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
-
-  const createdAt: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return day(member?.createdAt).format('M/D/YY');
-  });
-
-  const fullName: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return `${member?.firstName} ${member?.lastName}`;
-  });
-
-  const onClick = () => {
-    showModal({ id: ModalType.APPLICANT, metadata: memberId });
-  };
-
-  return (
-    <Row className="mb-md" justify="sb" spacing="xs">
-      <div>
-        <p className="meta">Applied {createdAt}</p>
-        <h3>{fullName}</h3>
-      </div>
-
-      <Button tertiary onClick={onClick}>
-        See Full Application
-      </Button>
-    </Row>
-  );
-};
-
-const ApplicantsCardActionContainer: React.FC = () => {
+const ApplicantsCardActions: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   return (
@@ -97,16 +63,20 @@ const ApplicantsCardItems: React.FC = () => {
       ?.slice(0, 5);
   });
 
-  return <QuestionBox className="mb-md" items={items} />;
+  return <QuestionBox className="mb-md--nlc" items={items} />;
 };
 
-const ApplicantsCard: React.FC = () => {
+const ApplicantsCard: React.FC<IdProps> = (args) => {
+  const { id } = args;
+
   return (
-    <Card>
-      <ApplicantsCardHeader />
-      <ApplicantsCardItems />
-      <ApplicantsCardActionContainer />
-    </Card>
+    <IdStore.Provider runtimeModel={{ id }}>
+      <Card className="bs-bb w-100--m">
+        <ApplicantsCardHeader />
+        <ApplicantsCardItems />
+        <ApplicantsCardActions />
+      </Card>
+    </IdStore.Provider>
   );
 };
 

@@ -22,7 +22,7 @@ const AddMemberInputTrashButton: React.FC = () => {
   const onClick = () => deleteRow(id);
 
   return (
-    <Button className="mr-sm misc-trash" show={show} onClick={onClick}>
+    <Button className="mr-sm--nlc misc-trash" show={show} onClick={onClick}>
       <IoTrash />
     </Button>
   );
@@ -55,7 +55,7 @@ const AddMemberInput: React.FC = () => {
 
       <FormShortText
         category={QuestionCategory.EMAIL}
-        className="mr-sm"
+        className="mr-sm--nlc"
         metadata={id}
         placeholder="Email"
       />

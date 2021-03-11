@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-import { UseMutationArgs, UseMutationResult } from './useMutation.types';
+import { UseMutationArgs, MutationResult } from './useMutation.types';
 
 function useMutation<T = any, S = any>({
   fields,
@@ -12,7 +12,7 @@ function useMutation<T = any, S = any>({
   schema,
   types,
   variables: initialVariables
-}: UseMutationArgs<T, S>): UseMutationResult<T, S> {
+}: UseMutationArgs<T, S>): MutationResult<T, S> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const [mutationFn, { data, error, loading }] = useGraphQlHooksMutation(

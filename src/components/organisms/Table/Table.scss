@@ -35,7 +35,7 @@ $PREF: 'o-table';
   &--md { max-width: $xxl * 4; width: $xxl * 4; }
   &--lg { max-width: $xxl * 5; width: $xxl * 5; }
 
-  &:first-child > div { @extend .flex-ac; max-width: 100%; }
+  &:first-child > div { @extend .f; @extend .f-ac; max-width: 100%; }
   &:last-child { width: -webkit-fill-available; }
 }
 
@@ -50,7 +50,8 @@ $PREF: 'o-table';
 div.#{$PREF}-col-panel { padding: $sm; }
 .#{$PREF}-col-panel > form { margin-bottom: $sm; }
 .#{$PREF}-col-panel > button {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   justify-content: left;
   padding: $xs 0;
@@ -74,13 +75,9 @@ div.#{$PREF}-col-panel { padding: $sm; }
 // ## TABLE QUICK FILTER
 
 .#{$PREF}-quick-filter {
-  @extend .flex-ac;
-  @extend .meta;
-
   background-color: $primary-bg;
   border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid;
   border-radius: $sm;
-  margin-right: $xxs;
   padding: 6px;
   text-align: left;
   width: max-content;

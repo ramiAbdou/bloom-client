@@ -3,14 +3,8 @@ $PREF: 's-applicants';
 // ## APPLICANTS CARD CONTAINER
 
 .#{$PREF}-card-ctr {
-  column-gap: $md;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax($xxl * 7.5, 1fr));
-  padding: $xxs 0;
-  row-gap: $md;
-
-  > .t-card > .t-row:first-child > div > p {
-    color: $gray-2;
-    margin-bottom: $xxs;
+  @include TD {
+    grid-template-columns: repeat(auto-fill, minmax($xxl * 7.5, 1fr));
   }
+  @include M { grid-template-columns: repeat(auto-fill, 1fr); }
 };

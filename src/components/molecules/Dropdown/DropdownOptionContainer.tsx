@@ -10,7 +10,7 @@ import useSelectOption from './useSelectOption';
 
 const DropdownOption: React.FC<ValueProps> = ({ value }) => {
   const selectOption = useSelectOption(value);
-  const css = cx('m-dropdown-option', {});
+  const css: string = cx('m-dropdown-option', {});
 
   return (
     <button className={css} type="button" onClick={selectOption}>

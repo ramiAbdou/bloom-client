@@ -16,7 +16,8 @@ $PREF: 's-directory';
 // ## DIRECTORY CARD
 
 div.#{$PREF}-card {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
   
   height: max-content;
   height: 100%;
@@ -56,7 +57,7 @@ div.#{$PREF}-card-star-ctr {
 .#{$PREF}-card > .m-profile-picture {
   position: relative;
   width: 100%;
-  &::before { aspect-ratio: 1; content: ''; display: block; }
+  &::before { content: ''; display: block; padding-top: 100%; }
 }
 
 .#{$PREF}-card > .m-profile-picture > * {

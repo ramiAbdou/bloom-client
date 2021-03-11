@@ -13,6 +13,7 @@ const Row: React.FC<RowProps> = (props) => {
     fillBreakpoint,
     gap,
     justify,
+    noMarginBottom,
     spacing,
     show,
     wrap
@@ -20,11 +21,11 @@ const Row: React.FC<RowProps> = (props) => {
 
   const isTablet: boolean = useBreakpoint() <= 2;
 
-  const css = cx(
+  const css: string = cx(
     'flex t-row',
     {
-      'flex-ab': align === 'baseline',
-      'flex-ac': align === 'center',
+      'f-ab': align === 'baseline',
+      'f-ac': align === 'center',
       'flex-ae': align === 'end',
       'flex-as': align === 'start',
       'flex-c': justify === 'center',
@@ -42,7 +43,12 @@ const Row: React.FC<RowProps> = (props) => {
   );
 
   if (show === false) return null;
-  return <div className={css}>{children}</div>;
+
+  return (
+    <div className={css} style={noMarginBottom ? { marginBottom: 0 } : {}}>
+      {children}
+    </div>
+  );
 };
 
 export default Row;

@@ -55,7 +55,8 @@ $PREF: 'c-tag';
 // the Bloom $green or $red color being used.
 
 .#{$PREF}-status {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   > div {
     border-radius: 50%;

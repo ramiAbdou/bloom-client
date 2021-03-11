@@ -76,7 +76,7 @@ $PREF: 'c-modal';
 // ## CONFIRMATION MODAL
 
 .#{$PREF}--confirmation > p { margin-bottom: $md; }
-.#{$PREF}--confirmation > div { @extend .flex-ac; }
+.#{$PREF}--confirmation > div { @extend .f; @extend .f-ac; }
 .#{$PREF}--confirmation > div > button:first-of-type { margin-right: $xs; }
 
 // ## MODAL CONTENT CONTAINER

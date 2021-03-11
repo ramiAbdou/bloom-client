@@ -15,8 +15,6 @@ $PREF: 't-main';
 }
 
 .#{$PREF}-header > .t-row {
-  > div:first-child { @extend .flex-ac; }
-  > div:first-child > h1 { margin-right: $sm; }
   > div:first-child > .c-tag-number ~ .c-spinner { margin-left: $xs; }
 
   > div:first-child > button:first-of-type > svg {
@@ -48,29 +46,16 @@ $PREF: 't-main';
   @include M { margin: 0 $sm; }
 }
 
-// ## MAIN HAMBURGER
-
-.#{$PREF}-hamburger {
-  margin-bottom: $sm;
-
-  @include D { display: none; }
-  > button > svg { @extend .react-icon--lg; }
-}
-
 // ## MAIN SECTION
 
-.#{$PREF}-section {
-  margin-bottom: $md;
-  > .t-loading-header { margin-bottom: $sm; }
-}
+.#{$PREF}-section { margin-bottom: $md; }
+.#{$PREF}-section > .t-loading-header { margin-bottom: $sm; }
 
-// ## MULTI BUTTON - Only use a border-top, border-bottom and border-right, but
+// ## NAV BUTTON - Only use a border-top, border-bottom and border-right, but
 // not border-left, so we avoid stacking pixels (1px * 2 = 2px). However,
 // the first button will have a border-left.
 
-.#{$PREF}-multi-ctr { @extend .flex-ac; }
-
-.#{$PREF}-multi {
+.#{$PREF}-nav {
   @extend .meta--lg;
   
   background-color: inherit;
@@ -87,8 +72,8 @@ $PREF: 't-main';
     border-radius: $xxs 0 0 $xxs;
   }
 
-  &:last-child { border-radius: 0 $xxs $xxs 0; }
-
-  // Disables the scaling transition that all buttons typically have.
-  &:active { transform: none; transition: none; }
+  &:last-child {
+    border-radius: 0 $xxs $xxs 0;
+    border-right: 1px $primary solid;
+  }
 }

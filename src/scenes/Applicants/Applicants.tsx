@@ -1,30 +1,14 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
-import useQuery from '@hooks/useQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import { IMember } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
-import { QueryEvent } from '@util/events';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
+import useInitApplicants from './useInitApplicants';
 
 const Applicants: React.FC = () => {
-  const { loading } = useQuery<IMember[]>({
-    fields: [
-      'email',
-      'id',
-      'createdAt',
-      'firstName',
-      'lastName',
-      'role',
-      'status',
-      { community: ['id'] },
-      { plan: ['id'] },
-      { values: ['id', 'value', { question: ['id'] }] }
-    ],
-    operation: QueryEvent.GET_APPLICANTS,
-    schema: [Schema.MEMBER]
-  });
+  const { loading }: QueryResult<IMember[]> = useInitApplicants();
 
   return (
     <MainContent>

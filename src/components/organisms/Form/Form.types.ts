@@ -1,5 +1,7 @@
 import { ActionCreator, State } from 'easy-peasy';
 
+import { ToastOptions } from '@organisms/Toast/Toast.types';
+import { DbModel } from '@store/Db/Db.types';
 import {
   ClassNameProps,
   QuestionCategory,
@@ -7,8 +9,6 @@ import {
   ShowProps,
   ValueProps
 } from '@util/constants';
-import { ToastOptions } from '@organisms/Toast/Toast.types';
-import { DbModel } from '@store/Db/Db.types';
 
 export type FormQuestion = {
   category?: QuestionCategory;

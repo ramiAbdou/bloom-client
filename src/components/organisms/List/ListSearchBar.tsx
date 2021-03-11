@@ -8,7 +8,7 @@ const ListSearchBar: React.FC<Omit<SearchBarProps, 'onChange'>> = ({
   className,
   ...props
 }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string>('');
 
   const setSearchString = ListStore.useStoreActions(
     (store) => store.setSearchString
@@ -19,7 +19,7 @@ const ListSearchBar: React.FC<Omit<SearchBarProps, 'onChange'>> = ({
     return () => clearTimeout(timeout);
   }, [value]);
 
-  const css = cx('o-list-search', { [className]: className });
+  const css: string = cx('o-list-search', {}, className);
 
   return (
     <SearchBar className={css} value={value} onChange={setValue} {...props} />

@@ -27,7 +27,7 @@ const Pill: React.FC<PillProps> = ({
     [percentage && !isPositive, `${percentage}%`]
   ]);
 
-  const css = cx('c-tag-pill', {
+  const css: string = cx('c-tag-pill', {
     'c-tag-pill--negative': !isPositive,
     'c-tag-pill--positive': isPositive
   });

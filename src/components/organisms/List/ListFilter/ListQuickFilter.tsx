@@ -2,20 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 import Button from '@atoms/Button/Button';
 import { TableRow } from '@organisms/Table/Table.types';
-import { IdProps, ShowProps, TitleProps } from '@util/constants';
+import { BaseProps, IdProps, TitleProps } from '@util/constants';
 import { cx } from '@util/util';
 import ListStore from '../List.store';
 
-interface ListQuickFilterProps extends IdProps, ShowProps, TitleProps {
+interface ListQuickFilterProps extends BaseProps, IdProps, TitleProps {
   filter: (row: TableRow) => boolean;
 }
 
-const ListQuickFilter: React.FC<ListQuickFilterProps> = ({
-  id: filterId,
-  filter,
-  show,
-  title
-}) => {
+const ListQuickFilter: React.FC<ListQuickFilterProps> = (props) => {
+  const { className, id, filter, show, title } = props;
+  const filterId: string = id ?? title;
+
   const [active, setActive] = useState<boolean>(false);
 
   const filters = ListStore.useStoreState((state) => state.filters);
@@ -29,9 +27,11 @@ const ListQuickFilter: React.FC<ListQuickFilterProps> = ({
 
   const onClick = () => setActive(!active);
 
-  const css = cx('o-list-quick-filter', {
-    'o-list-quick-filter--active': active
-  });
+  const css: string = cx(
+    'o-list-quick-filter',
+    { 'o-list-quick-filter--active': active },
+    className
+  );
 
   return (
     <Button className={css} show={show} onClick={onClick}>

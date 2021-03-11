@@ -1,13 +1,14 @@
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
+import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { PanelType } from '@util/constants';
+import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';
 
-const SideBarProfileContent: React.FC = () => {
+const SidebarProfileContent: React.FC = () => {
   const memberTypeName: string = useStoreState(({ db }) => {
     return db.byMemberPlanId[db.member?.plan]?.name;
   });
@@ -30,33 +31,46 @@ const SideBarProfileContent: React.FC = () => {
   );
 };
 
-const SideBarProfile: React.FC = () => {
-  const isDuesMessageShowing: boolean = useStoreState(({ db }) => {
-    return db.community?.canCollectDues && !db.member?.isDuesActive;
-  });
-
+const SidebarProfileButton: React.FC = () => {
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
-  const activeRoute = useTopLevelRoute();
-  const isActive = ['membership', 'profile'].includes(activeRoute);
 
-  const onClick = () => showPanel({ id: PanelType.PROFILE });
+  const activeRoute: RouteType = useTopLevelRoute();
+  const isActive: boolean = ['membership', 'profile'].includes(activeRoute);
 
-  const containerCss = cx('o-nav-profile-ctr', {
-    'o-nav-profile-ctr--no-auto': isDuesMessageShowing
-  });
+  const onClick = () => {
+    showPanel({ id: PanelType.PROFILE });
+  };
 
-  const buttonCss = cx('o-nav-profile', {
+  const css: string = cx('o-nav-profile', {
     'o-nav-profile--active': isActive
   });
 
   return (
-    <div className={containerCss}>
-      <button className={buttonCss} id={PanelType.PROFILE} onClick={onClick}>
-        <SideBarProfileContent />
-        <IoChevronForwardOutline />
-      </button>
+    <button className={css} id={PanelType.PROFILE} onClick={onClick}>
+      <SidebarProfileContent />
+      <IoChevronForwardOutline />
+    </button>
+  );
+};
+
+const SidebarProfile: React.FC = () => {
+  const isDuesMessageShowing: boolean = useStoreState(({ db }) => {
+    return db.community?.canCollectDues && !db.member?.isDuesActive;
+  });
+
+  const isTablet: boolean = useBreakpoint() <= 2;
+
+  const css: string = cx('o-nav-profile-ctr', {
+    'o-nav-profile-ctr--no-auto': isDuesMessageShowing
+  });
+
+  if (isTablet) return null;
+
+  return (
+    <div className={css}>
+      <SidebarProfileButton />
     </div>
   );
 };
 
-export default SideBarProfile;
+export default SidebarProfile;

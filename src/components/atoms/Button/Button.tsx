@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 
 import Spinner from '@atoms/Spinner/Spinner';
-import { ShowProps } from '@util/constants';
 import Show from '@containers/Show';
+import { ShowProps } from '@util/constants';
 import { cx, openHref } from '@util/util';
 
 export interface ButtonProps
@@ -76,16 +76,19 @@ const Button = forwardRef(
       if (href) openHref(href, openTab);
     };
 
-    const css = cx('c-btn', {
-      'c-btn--fill': fill,
-      'c-btn--fit': fit,
-      'c-btn--lg': large,
-      'c-btn--primary': primary,
-      'c-btn--secondary': secondary,
-      'c-btn--secondary--red': red,
-      'c-btn--tertiary': tertiary,
-      [className]: className
-    });
+    const css: string = cx(
+      'c-btn ta-center',
+      {
+        'c-btn--fill': fill,
+        'c-btn--fit': fit,
+        'c-btn--lg': large,
+        'c-btn--primary': primary,
+        'c-btn--secondary': secondary,
+        'c-btn--secondary--red': red,
+        'c-btn--tertiary': tertiary
+      },
+      className
+    );
 
     return (
       <button

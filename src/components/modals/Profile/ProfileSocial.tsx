@@ -28,7 +28,7 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
   const isLinkedIn = brand === SocialBrand.LINKED_IN;
   const isTwitter = brand === SocialBrand.TWITTER;
 
-  const css = cx('mo-profile-social mr-sm', {
+  const css: string = cx('mo-profile-social mr-sm--nlc', {
     'mo-profile-social--clubhouse': isClubhouse,
     'mo-profile-social--facebook': isFacebook,
     'mo-profile-social--linkedin': isLinkedIn,
@@ -60,7 +60,7 @@ const ProfileSocialContainer: React.FC = () => {
   });
 
   return (
-    <div className="flex-ac">
+    <div className="f f-ac">
       <ProfileSocialButton brand={SocialBrand.CLUBHOUSE} href={clubhouseUrl} />
       <ProfileSocialButton brand={SocialBrand.TWITTER} href={twitterUrl} />
       <ProfileSocialButton brand={SocialBrand.LINKED_IN} href={linkedInUrl} />

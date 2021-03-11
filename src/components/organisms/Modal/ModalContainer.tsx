@@ -21,7 +21,7 @@ const ModalBackground: React.FC = () => {
     if (!lock) closeModal();
   };
 
-  const css = cx('c-modal-bg', { 'c-modal-bg--lock': lock });
+  const css: string = cx('c-modal-bg', { 'c-modal-bg--lock': lock });
 
   return <div key="c-modal-bg" className={css} onClick={onClick} />;
 };
@@ -64,7 +64,7 @@ const ModalContainer: React.FC = ({ children }) => {
   const initial: MotionProps['initial'] =
     sheet ?? isMobile ? { opacity: 0.25 } : { opacity: 0.25, scale: 0.5 };
 
-  const css = cx('c-modal-ctr', {
+  const css: string = cx('c-modal-ctr', {
     'c-modal-ctr--modal': !sheet && !isMobile,
     'c-modal-ctr--sheet': sheet ?? isMobile
   });

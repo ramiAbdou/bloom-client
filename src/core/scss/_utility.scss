@@ -1,8 +1,22 @@
+// ## BACKGROUND COLOR
+
+.bg {
+  &-gray-5 { background-color: $gray-5; }
+  &-white { background-color: white; }
+}
+
 // ## BORDER RADIUS
 
 .br {
   &-xxs { border-radius: $xxs; }
   &-xs { border-radius: $xs; }
+  &-sl { border-radius: $sl; }
+}
+
+// ## BOX SIZING
+
+.bs {
+  &-bb { box-sizing: border-box; }
 }
 
 // ## COLORS
@@ -13,34 +27,94 @@
   &-gray-3 { color: $gray-3; }
 }
 
+// ## COLUMN GAP
+
+.cg {
+  &-md { column-gap: $md; }
+}
+
+// ## DISPLAY
+
+.d {
+  &-block { display: block; }
+  &-block--m { @include M { display: block; } }
+  &-grid { display: grid; }
+  &-none { display: none; }
+  &-none--d { @include D { display: none; } }
+}
+
 // ## FLEX
 
 .f {
+  display: flex;
+
   &-1 { flex: 1; }
   &-2 { flex: 2; }
+
+  &-ab { align-items: baseline; }
+  &-ac { align-items: center; }
+
+  &-col { flex-direction: column; }
+
+  &-c { justify-content: center; }
+  &-sb { justify-content: space-between; }
+}
+
+// ## GAP
+
+.g {
+  &-md { column-gap: $md; row-gap: $md; }
+}
+
+// ## HEIGHT
+
+.h {
+  &-md { height: $md; }
+  &-xl { height: $xl; }
+
+  &-100 { height: 100%; }
 }
 
 // ## MARGIN BOTTOM
 
 .mb {
   &-auto { margin-bottom: auto; }
-  &-xxs:not(:last-child) { margin-bottom: $xxs; }
-  &-xs:not(:last-child) { margin-bottom: $xs; }
-  &-ss:not(:last-child) { margin-bottom: $ss; }
-  &-sm:not(:last-child) { margin-bottom: $sm; }
-  &-sl:not(:last-child) { margin-bottom: $sl; }
-  &-md:not(:last-child) { margin-bottom: $md; }
-  &-lg:not(:last-child) { margin-bottom: $lg; }
+
+  &-xxs { margin-bottom: $xxs; }
+  &-xs { margin-bottom: $xs; }
+  &-ss { margin-bottom: $ss; }
+  &-sm { margin-bottom: $sm; }
+  &-sm--m { @include M { margin-bottom: $sm; } }
+  &-md { margin-bottom: $md; }
+  &-lg { margin-bottom: $lg; }
+
+  &-xxs--nlc:not(:last-child) { margin-bottom: $xxs; }
+  &-xs--nlc:not(:last-child) { margin-bottom: $xs; }
+  &-ss--nlc:not(:last-child) { margin-bottom: $ss; }
+  &-sm--nlc:not(:last-child) { margin-bottom: $sm; }
+  &-md--nlc:not(:last-child) { margin-bottom: $md; }
+  &-lg--nlc:not(:last-child) { margin-bottom: $lg; }
+}
+
+// ## MARGIN LEFT
+
+.ml {
+  &-auto { margin-left: auto; }
+  &-xs { margin-left: $xs; }
+  &-sm { margin-left: $sm; }
 }
 
 // ## MARGIN RIGHT
 
 .mr {
-  &-xxs:not(:last-child) { margin-right: $xxs; }
-  &-xs:not(:last-child) { margin-right: $xs; }
-  &-sm:not(:last-child) { margin-right: $sm; }
-  &-md:not(:last-child) { margin-right: $md; }
-  &-lg:not(:last-child) { margin-right: $lg; }
+  &-auto { margin-right: auto; }
+  &-auto--t { @include T { margin-right: auto; } }
+
+  &-xs { margin-right: $xs; }
+  &-sm { margin-right: $sm; }
+
+  &-xs--nlc:not(:last-child) { margin-right: $xs; }
+  &-sm--nlc:not(:last-child) { margin-right: $sm; }
 }
 
 // ## MARGIN TOP
@@ -56,13 +130,13 @@
 .mx {
   &-auto { margin-left: auto; margin-right: auto; }
   &-xs { margin-left: $xs; &:not(:last-child) { margin-right: $xs; } }
-  &-sm { margin-left: $sm; &:not(:last-child) { margin-right: $sm; } }
+  &-sm { margin-left: $sm; margin-right: $sm; }
+  &-md { margin-left: $md; margin-right: $md; }
 }
 
 // ## MARGIN Y
 
 .my {
-  &-xs { margin-top: $xs; &:not(:last-child) { margin-bottom: $xs; } }
   &-sm { margin-top: $sm; &:not(:last-child) { margin-bottom: $sm; } }
   &-md { margin-top: $md; &:not(:last-child) { margin-bottom: $md; } }
 }
@@ -85,18 +159,23 @@
 .o {
   &-hidden { overflow: hidden; }
   &-scroll { overflow: scroll; }
+  &-visible { overflow: visible; }
 }
 
 // ## PADDING
 
 .p {
+  &-2 { padding: 2px; }
   &-sm { padding: $sm; }
+  &-md { padding: $md; }
 }
 
 // ## PADDING TOP
 
 .pt {
   &-xxs { padding-top: $xxs; }
+  &-md { padding-top: $md; }
+  &-md--d { @include D { padding-top: $md; } }
 }
 
 // ## PADDING X
@@ -108,15 +187,39 @@
 // ## PADDING Y
 
 .py {
+  &-xxs { padding-bottom: $xxs; padding-top: $xxs; }
   &-sm { padding-bottom: $sm; padding-top: $sm; }
+}
+
+// ## COLUMN GAP
+
+.rg {
+  &-md { row-gap: $md; }
+}
+
+// ## TEXT ALIGN
+
+.ta {
+  &-center { text-align: center; }
+}
+
+// VISIBILITY
+
+.v {
+  &-hidden { visibility: hidden; }
 }
 
 // ## WIDTH
 
 .w {
+  &-md { width: $md; }
+  &-xl { width: $xl; }
+
+  // Uses multiples of $xxl (60px).
   &-5 { width: $xxl * 5; }
   &-10 { width: $xxl * 10; }
 
   &-100 { width: 100%; }
-  &-100--t { @include MT { width: 100%; } }
+  &-100--m { @include M { width: 100%; } }
+  &-100--mt { @include MT { width: 100%; } }
 }

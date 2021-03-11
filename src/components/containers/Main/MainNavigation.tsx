@@ -1,37 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { OnClickProps, TitleProps } from '@util/constants';
-import { cx } from '@util/util';
+import Show from '@containers/Show';
+import { BaseProps } from '@util/constants';
+import MainNavigationButton, {
+  MainNavigationOptionProps
+} from './MainNavigationButton';
 
-export interface NavigationOptionProps extends OnClickProps, TitleProps {
-  pathname: string;
+export interface MainNavigationProps extends BaseProps {
+  options?: MainNavigationOptionProps[];
 }
 
-export interface NavigationProps {
-  options?: NavigationOptionProps[];
-}
+const MainNavigation: React.FC<MainNavigationProps> = (props) => {
+  const { options, show } = props;
 
-interface NavigationButtonProps {
-  active?: boolean;
-  onClick: VoidFunction;
-}
-
-const NavigationButton: React.FC<NavigationButtonProps> = ({
-  active,
-  children,
-  onClick
-}) => {
-  const css = cx('t-main-multi', { 't-main-multi--active': active });
-
-  return (
-    <button className={css} onClick={onClick}>
-      {children}
-    </button>
-  );
-};
-
-const HeaderNavigation: React.FC<NavigationProps> = ({ options }) => {
   const { location } = useHistory();
   const { pathname } = location;
 
@@ -43,25 +25,23 @@ const HeaderNavigation: React.FC<NavigationProps> = ({ options }) => {
 
   if (activeIndex < 0 || !options?.length) return null;
 
-  const activeOption: NavigationOptionProps = options[activeIndex];
+  const activeOption: MainNavigationOptionProps = options[activeIndex];
 
   return (
-    <nav className="t-main-multi-ctr">
-      {options.map(({ title, onClick }: NavigationOptionProps) => {
-        const onButtonClick = () => onClick && onClick();
-
-        return (
-          <NavigationButton
-            key={title}
-            active={activeOption.title === title}
-            onClick={onButtonClick}
-          >
-            {title}
-          </NavigationButton>
-        );
-      })}
-    </nav>
+    <Show show={show}>
+      <nav className="f f-ac">
+        {options.map((optionProps: MainNavigationOptionProps) => {
+          return (
+            <MainNavigationButton
+              key={optionProps.title}
+              activeTitle={activeOption.title}
+              {...optionProps}
+            />
+          );
+        })}
+      </nav>
+    </Show>
   );
 };
 
-export default HeaderNavigation;
+export default MainNavigation;

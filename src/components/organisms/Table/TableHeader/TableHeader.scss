@@ -55,7 +55,7 @@ th {
   }
 
   &--sorted {
-    > div { @extend .flex-ac; }
+    > div { @extend .f; @extend .f-ac; }
     > div > p { color: $primary; max-width: 85%; }
     // Caret up or caret down SVG, React controls the displaying of this
     // element.

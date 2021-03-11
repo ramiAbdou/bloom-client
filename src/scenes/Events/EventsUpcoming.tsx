@@ -14,7 +14,7 @@ import EventsHeader from './EventsHeader';
 import useInitUpcomingEvents from './useInitUpcomingEvents';
 
 const EventsUpcomingContent: React.FC = () => {
-  const events: IEvent[] = useStoreState(({ db }) => {
+  const upcomingEvents: IEvent[] = useStoreState(({ db }) => {
     return db.community?.events
       ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => !event.deletedAt)
@@ -25,7 +25,7 @@ const EventsUpcomingContent: React.FC = () => {
   return (
     <List
       emptyMessage="Looks like there are no upcoming events."
-      items={events}
+      items={upcomingEvents}
       options={{ keys: ['title', 'summary', 'description'] }}
       render={EventsCard}
     />

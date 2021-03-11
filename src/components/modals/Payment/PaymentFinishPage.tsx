@@ -45,7 +45,7 @@ const PaymentFinishForm: React.FC = () => {
 
   return (
     <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-      <Row className="mb-md" justify="sb" spacing="xs">
+      <Row className="mb-md--nlc" justify="sb" spacing="xs">
         <InformationCard description={description} title={name} />
 
         <InformationCard
@@ -60,7 +60,7 @@ const PaymentFinishForm: React.FC = () => {
   );
 };
 
-const PaymentFinish: React.FC = () => {
+const PaymentFinishPage: React.FC = () => {
   const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
   const modalType = PaymentStore.useStoreState((state) => state.type);
 
@@ -90,20 +90,17 @@ const PaymentFinish: React.FC = () => {
     })();
   }, [modalType, planId]);
 
-  const title: string =
-    modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan';
-
   return (
     <StoryPage
       description="Please review this information to make sure we got everything right."
       id="FINISH"
       loading={loading}
       show={modalType !== 'UPDATE_PAYMENT_METHOD'}
-      title={title}
+      title={modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan'}
     >
       <PaymentFinishForm />
     </StoryPage>
   );
 };
 
-export default PaymentFinish;
+export default PaymentFinishPage;

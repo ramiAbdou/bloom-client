@@ -30,6 +30,7 @@ const useInitUser = (): boolean => {
       'pictureUrl',
       'id',
       'isDuesActive',
+      'status',
       { community: ['id'] },
       { user: ['id'] }
     ],

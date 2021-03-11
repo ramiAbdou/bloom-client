@@ -2,7 +2,6 @@ import day from 'dayjs';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { QuestionType } from '@util/constants';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import Table from '@organisms/Table/Table';
@@ -15,6 +14,7 @@ import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsRecentEventsTable: React.FC = () => {
@@ -65,7 +65,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
 
   return (
     <Table columns={columns} options={options} rows={rows}>
-      <TableSearchBar className="mb-sm" />
+      <TableSearchBar className="mb-sm--nlc" />
       <TableContent emptyMessage="Looks like nobody has attended an event yet." />
     </Table>
   );

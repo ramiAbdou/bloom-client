@@ -1,26 +1,22 @@
 import React from 'react';
 
-import { ICommunityIntegrations } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { isProduction } from '@util/constants';
 
-const StripeProvider: React.FC = ({ children }) => {
-  const stripeAccount: string = useStoreState(({ db }) => {
-    const communityIntegrations: ICommunityIntegrations =
-      db.byCommunityIntegrationsId[db.community.communityIntegrations];
-
-    return communityIntegrations?.stripeAccountId;
+const PaymentStripeProvider: React.FC = ({ children }) => {
+  const stripeAccountId: string = useStoreState(({ db }) => {
+    return db.communityIntegrations?.stripeAccountId;
   });
 
-  if (!stripeAccount) return null;
+  if (!stripeAccountId) return null;
 
-  const stripePromise = loadStripe(
+  const stripePromise: Promise<Stripe> = loadStripe(
     isProduction
       ? process.env.STRIPE_PUBLISHABLE_KEY
       : process.env.STRIPE_TEST_PUBLISHABLE_KEY,
-    { stripeAccount }
+    { stripeAccount: stripeAccountId }
   );
 
   return (
@@ -35,4 +31,4 @@ const StripeProvider: React.FC = ({ children }) => {
   );
 };
 
-export default StripeProvider;
+export default PaymentStripeProvider;

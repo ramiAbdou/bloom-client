@@ -11,8 +11,8 @@ const FormSectionHeader: React.FC<FormSectionHeaderProps> = ({
   title
 }) => {
   return (
-    <div className="mb-md">
-      {title && <h2 className="mb-xs">{title}</h2>}
+    <div className="mb-md--nlc">
+      {title && <h2 className="mb-xs--nlc">{title}</h2>}
       {description && <p>{description}</p>}
     </div>
   );

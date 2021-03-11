@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { LoadingProps } from '@util/constants';
 import MainHeader from '@containers/Main/MainHeader';
 import Row from '@containers/Row/Row';
 import { MemberStatus } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { LoadingProps } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
@@ -15,7 +15,7 @@ const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
   });
 
   const numApplicants: number = pendingApplicantIds?.length;
-  const headerTag = !!numApplicants && `${numApplicants} Total`;
+  const headerTag: string = !!numApplicants && `${numApplicants} Total`;
 
   return (
     <MainHeader

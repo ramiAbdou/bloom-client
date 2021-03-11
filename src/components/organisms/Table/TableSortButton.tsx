@@ -2,8 +2,8 @@ import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { IdProps } from '@util/constants';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { IdProps } from '@util/constants';
 import { cx } from '@util/util';
 import TableStore from './Table.store';
 import { TableSortDirection } from './Table.types';
@@ -29,7 +29,7 @@ const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
     closePanel();
   };
 
-  const css = cx('', { 'o-table-col-panel-button--active': isSorted });
+  const css: string = cx('', { 'o-table-col-panel-button--active': isSorted });
   const isAscending = direction === 'ASC';
 
   return (

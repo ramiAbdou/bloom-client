@@ -42,7 +42,8 @@ input[type="radio"]:checked ~ div > span {
   @extend .flex-col;
 
   > div:not(.c-misc-radio-option-card) {
-    @extend .flex-ac;
+    @extend .f;
+    @extend .f-ac;
 
     cursor: pointer;
     width: fit-content;

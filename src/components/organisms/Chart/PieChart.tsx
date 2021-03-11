@@ -9,6 +9,7 @@ import {
   Tooltip
 } from 'recharts';
 
+import Row from '@containers/Row/Row';
 import Chart from './Chart.store';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 
@@ -31,10 +32,10 @@ interface PieChartLegendProps {
 const PieChartLegend: React.FC<PieChartLegendProps> = ({ payload }) => (
   <>
     {payload.map(({ color, value }: LegendPayload) => (
-      <div key={value} className="o-chart-legend-item">
-        <div style={{ backgroundColor: color }} />
-        <p>{value}</p>
-      </div>
+      <Row key={value} className="mb-xs--nlc">
+        <div className="br-xxs h-md w-md" style={{ backgroundColor: color }} />
+        <p className="meta ml-xs">{value}</p>
+      </Row>
     ))}
   </>
 );

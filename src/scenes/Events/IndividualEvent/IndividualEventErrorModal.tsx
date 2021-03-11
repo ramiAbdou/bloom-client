@@ -20,7 +20,7 @@ const IndividualEventErrorModal: React.FC = () => {
 
   return (
     <>
-      <h1 className="c-primary mb-sm">
+      <h1 className="c-primary mb-sm--nlc">
         {error === ErrorType.EVENT_HASNT_STARTED
           ? `Event Hasn't Started`
           : `Event Finished`}

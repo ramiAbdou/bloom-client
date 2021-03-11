@@ -50,7 +50,7 @@ const LoadingHeader: React.FC<LoadingHeaderProps> = ({
 }) => {
   if (show === false) return null;
 
-  const css = cx('t-loading-header', {}, className);
+  const css: string = cx('t-loading-header', {}, className);
 
   return (
     <header className={css}>

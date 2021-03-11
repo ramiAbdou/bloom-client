@@ -50,16 +50,6 @@ const Application = new schema.Entity(
   }
 );
 
-const RankedQuestion = new schema.Entity(
-  'rankedQuestions',
-  {},
-  {
-    processStrategy: (value) => {
-      return { ...value, rankedQuestionId: value.id };
-    }
-  }
-);
-
 const Community = new schema.Entity(
   'communities',
   {},
@@ -68,6 +58,10 @@ const Community = new schema.Entity(
     processStrategy: (community, parent) => {
       const processedData = takeFirst([
         [!!parent.applicationId, { application: parent.id }],
+        [
+          !!parent.communityIntegrationsId,
+          { communityIntegrations: parent.id }
+        ],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.memberId, { members: [parent.id] }],
         [!!parent.memberPlanId, { plans: [parent.id] }],
@@ -230,6 +224,16 @@ const Question = new schema.Entity(
       ]);
 
       return { ...value, ...processedData, questionId: value.id };
+    }
+  }
+);
+
+const RankedQuestion = new schema.Entity(
+  'rankedQuestions',
+  {},
+  {
+    processStrategy: (value) => {
+      return { ...value, rankedQuestionId: value.id };
     }
   }
 );

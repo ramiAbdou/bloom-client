@@ -9,7 +9,7 @@ import {
 
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
-import { NavigationOptionProps } from '@containers/Main/MainNavigation';
+import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
 import Show from '@containers/Show';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
@@ -23,7 +23,7 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
 
   const { push } = useHistory();
 
-  const duesOptions: NavigationOptionProps[] = canCollectDues
+  const duesOptions: MainNavigationOptionProps[] = canCollectDues
     ? [
         {
           onClick: () => push('payments'),
@@ -33,7 +33,7 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
       ]
     : [];
 
-  const options: NavigationOptionProps[] = [
+  const options: MainNavigationOptionProps[] = [
     { onClick: () => push('members'), pathname: 'members', title: 'Members' },
     ...duesOptions,
     { onClick: () => push('events'), pathname: 'events', title: 'Events' }

@@ -8,11 +8,11 @@ import { ListProps } from './List.types';
  * Initializes the list by setting the items, match sorter options and
  * prepareForFilter arguments.
  */
-const useInitList = ({
-  items,
-  options,
-  prepareForFilter
-}: Pick<ListProps, 'items' | 'options' | 'prepareForFilter'>) => {
+const useInitList = (
+  props: Pick<ListProps, 'items' | 'options' | 'prepareForFilter'>
+) => {
+  const { items, options, prepareForFilter } = props;
+
   const storedItems = ListStore.useStoreState((state) => state.items);
   const setItems = ListStore.useStoreActions((state) => state.setItems);
   const setOptions = ListStore.useStoreActions((state) => state.setOptions);

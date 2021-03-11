@@ -28,7 +28,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 
   return (
     <Show show={!isSocialLinked}>
-      <p className="mb-sm">
+      <p className="mb-sm--nlc">
         Strengthen your relationships with other community members by adding
         your social profiles!
       </p>

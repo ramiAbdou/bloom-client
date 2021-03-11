@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { IoCloseCircle, IoSearch } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
+import Row from '@containers/Row/Row';
 import { BaseProps, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 
@@ -10,35 +11,34 @@ export interface SearchBarProps extends BaseProps, ValueProps {
   onChange: (value: string) => any;
 }
 
-const Icon = memo(() => <IoSearch />);
+const SearchBarClearButton: React.FC<Partial<SearchBarProps>> = (props) => {
+  const { onChange, value } = props;
 
-const ClearButton = ({ onChange, value }: Partial<SearchBarProps>) => {
   const onClick = () => onChange('');
-
-  const css = cx('c-misc-search-close', {
-    'c-misc-search-close--empty': !value
-  });
+  const css: string = cx('', { 'v-hidden': !value });
 
   return (
     <Button className={css} onClick={onClick}>
-      <IoCloseCircle />
+      <IoCloseCircle className="c-gray-3" />
     </Button>
   );
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({
-  className,
-  placeholder,
-  onChange,
-  show,
-  value
-}: SearchBarProps) => {
-  const css = cx('c-misc-search', { [className]: className });
+const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
+  const { className, placeholder, onChange, show, value } = props;
+
   if (show === false) return null;
 
+  const css: string = cx(
+    'c-misc-search bg-gray-5 br-sl c-gray-3 w-5 w-100--m',
+    {},
+    className
+  );
+
   return (
-    <div className={css}>
-      <Icon />
+    <Row className={css}>
+      <IoSearch className="c-gray-3 mr-xs--nlc" />
+
       <input
         placeholder={placeholder ?? 'Search...'}
         type="text"
@@ -46,8 +46,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
         onChange={({ target }) => onChange(target.value)}
       />
 
-      <ClearButton value={value} onChange={onChange} />
-    </div>
+      <SearchBarClearButton value={value} onChange={onChange} />
+    </Row>
   );
 };
 

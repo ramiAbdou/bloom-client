@@ -47,6 +47,7 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
     return (
       <img
         alt="Profile Avatar"
+        referrerPolicy="no-referrer"
         src={pictureUrl}
         onError={() => setImageError(true)}
       />
@@ -65,10 +66,11 @@ const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
     return !!db.member?.firstName && !!db.member?.lastName;
   });
 
-  const css = cx('m-profile-picture', {
-    [className]: className,
-    'm-profile-picture--circle': circle
-  });
+  const css: string = cx(
+    'm-profile-picture',
+    { 'm-profile-picture--circle': circle },
+    className
+  );
 
   return (
     <Show show={show}>

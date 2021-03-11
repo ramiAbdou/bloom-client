@@ -6,12 +6,9 @@ import { cx } from '@util/util';
 
 interface MainSectionProps extends ClassNameProps, ShowProps {}
 
-const MainSection: React.FC<MainSectionProps> = ({
-  children,
-  className,
-  show
-}) => {
-  const css = cx('t-main-section', { [className]: className });
+const MainSection: React.FC<MainSectionProps> = (props) => {
+  const { children, className, show } = props;
+  const css: string = cx('t-main-section mb-md', {}, className);
 
   return (
     <Show show={show}>

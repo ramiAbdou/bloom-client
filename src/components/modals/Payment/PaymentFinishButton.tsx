@@ -6,9 +6,15 @@ import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
 
 const PaymentFinishButton: React.FC = () => {
-  const type = PaymentStore.useStoreState((s) => s.type);
-  const selectedPlanId = PaymentStore.useStoreState((s) => s.selectedPlanId);
-  const changeAmount = PaymentStore.useStoreState((s) => s.changeAmount);
+  const type = PaymentStore.useStoreState((state) => state.type);
+
+  const selectedPlanId = PaymentStore.useStoreState(
+    (state) => state.selectedPlanId
+  );
+
+  const changeAmount = PaymentStore.useStoreState(
+    (state) => state.changeAmount
+  );
 
   const amount: number = useStoreState(({ db }) => {
     return changeAmount ?? db.byMemberPlanId[selectedPlanId]?.amount;

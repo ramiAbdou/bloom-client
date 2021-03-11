@@ -7,11 +7,13 @@ import { QueryEvent } from '@util/events';
 const useInitPastEvents = (): Partial<QueryResult> => {
   const { loading: loading1 } = useQuery<IEvent[]>({
     fields: [
+      'description',
       'endTime',
       'id',
       'imageUrl',
       'recordingUrl',
       'startTime',
+      'summary',
       'title',
       { community: ['id'] }
     ],

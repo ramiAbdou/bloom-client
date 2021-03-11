@@ -11,9 +11,10 @@ import { createStore, createTypedHooks } from 'easy-peasy';
 import loader, { LoaderModel } from '@organisms/Loader/Loader.store';
 import modal from '@organisms/Modal/Modal.store';
 import { ModalModel } from '@organisms/Modal/Modal.types';
-import nav, { NavModel } from '@organisms/Nav/Nav.store';
 import panel from '@organisms/Panel/Panel.store';
 import { PanelModel } from '@organisms/Panel/Panel.types';
+import sidebar from '@organisms/Sidebar/Sidebar.store';
+import { SidebarModel } from '@organisms/Sidebar/Sidebar.types';
 import toast from '@organisms/Toast/Toast.store';
 import { ToastModel } from '@organisms/Toast/Toast.types';
 import db from './Db/Db.store';
@@ -23,13 +24,13 @@ export type StoreModel = {
   db: DbModel;
   loader: LoaderModel;
   modal: ModalModel;
-  nav: NavModel;
   panel: PanelModel;
+  sidebar: SidebarModel;
   toast: ToastModel;
 };
 
 export const store = createStore<StoreModel>(
-  { db, loader, modal, nav, panel, toast },
+  { db, loader, modal, panel, sidebar, toast },
   { disableImmer: true }
 );
 

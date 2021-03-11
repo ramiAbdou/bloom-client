@@ -39,7 +39,7 @@ const AddMemberFormAddAnotherButton: React.FC = () => {
   const onClick = () => addRow();
 
   return (
-    <Button tertiary className="mb-md" onClick={onClick}>
+    <Button tertiary className="mb-md--nlc" onClick={onClick}>
       + Add Another
     </Button>
   );

@@ -55,7 +55,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
     );
   }
 
-  const css = cx('o-story-page', { [className]: className });
+  const css: string = cx('o-story-page', {}, className);
 
   return (
     <motion.div

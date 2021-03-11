@@ -28,22 +28,7 @@ $PREF: 'o-nav';
 
 // ## SIDEBAR COMMUNITY LIST
 
-.#{$PREF}-community-ctr {
-  @extend .flex-accol;
-
-  border-right: 1px $gray-5 solid;
-  padding: $sm $xs;
-
-  > button {
-    border-radius: $xs;
-    height: $xl;
-    margin-bottom: $sm;
-    padding: 2px;
-    width: $xl;
-  }
-
-  > button > img { @extend .fill; border-radius: $xxs; }
-}
+.#{$PREF}-community-ctr { border-right: 1px $gray-5 solid; }
 
 .#{$PREF}-community {
   border: 2px white solid;
@@ -58,30 +43,19 @@ $PREF: 'o-nav';
   > img { @extend .fill; border-radius: $xxs; }
 }
 
-// ## SIDEBAR MAIN
-
-.#{$PREF}-main {
-  @extend .flex-col;
-
-  width: 100%;
-
-  // The active community name.
-  > h3 { color: $primary; margin: $md $sm; }
-}
-
 // ## SIDEBAR SECTION
 
 .#{$PREF}-section {
   margin: $sm $ss 0 0;
 
-  > h5 { color: $gray-3; margin: 0 0 $xs $sm; }
-  > h4 { color: $gray-3; margin: 0 0 $xs $sm; }
+  > h5 { margin: 0 0 $xs $sm; }
 }
 
 // ## SIDEBAR LINK
 
 .#{$PREF}-link {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
 
   border-left: 3px white solid;
   border-radius: 0 $lg $lg 0;
@@ -156,7 +130,7 @@ $PREF: 'o-nav';
     color: $primary;
   }
 
-  > div { @extend .flex-ac; }
+  > div { @extend .f; @extend .f-ac; }
   > svg { margin-right: $sm; }
 }
 

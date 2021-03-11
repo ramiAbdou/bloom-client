@@ -23,7 +23,8 @@ $PREF: 'c-panel';
 // ## PANEL OPTION
 
 .#{$PREF}-option {
-  @extend .flex-ac;
+  @extend .f;
+  @extend .f-ac;
   @extend .fill;
   @extend .body;
   

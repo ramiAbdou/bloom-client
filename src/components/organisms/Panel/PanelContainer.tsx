@@ -109,10 +109,11 @@ const PanelContainer: React.FC = ({ children }) => {
 
   // ## END: CALCULATE PICKER COORDINATES
 
-  const css = cx('card c-panel', {
-    'c-panel--lg': size === 'lg',
-    [className]: className
-  });
+  const css: string = cx(
+    'card c-panel',
+    { 'c-panel--lg': size === 'lg' },
+    className
+  );
 
   return (
     <motion.div

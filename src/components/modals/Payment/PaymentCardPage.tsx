@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
@@ -6,7 +6,6 @@ import FormCreditCard from '@organisms/Form/FormCreditCard';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 import { useStripe } from '@stripe/react-stripe-js';
@@ -15,10 +14,10 @@ import PaymentFinishButton from './PaymentFinishButton';
 import useUpdateStripePaymentMethodId from './useUpdateStripePaymentMethodId';
 
 const PaymentCardButton: React.FC = () => {
-  const type = PaymentStore.useStoreState((state) => state.type);
+  const modalType = PaymentStore.useStoreState((state) => state.type);
   const stripe = useStripe();
 
-  if (type === 'UPDATE_PAYMENT_METHOD') return <PaymentFinishButton />;
+  if (modalType === 'UPDATE_PAYMENT_METHOD') return <PaymentFinishButton />;
 
   return (
     <FormSubmitButton
@@ -57,17 +56,12 @@ const PaymentCardForm: React.FC = () => {
   );
 };
 
-const PaymentCard: React.FC = () => {
-  const isCardOnFile = useStoreState(({ db }) => {
+const PaymentCardPage: React.FC = () => {
+  const isCardOnFile: boolean = useStoreState(({ db }) => {
     return !!db.memberIntegrations.paymentMethod;
   });
 
-  const type = PaymentStore.useStoreState((state) => state.type);
-  const goForward = StoryStore.useStoreActions((actions) => actions.goForward);
-
-  useEffect(() => {
-    if (isCardOnFile && type !== 'UPDATE_PAYMENT_METHOD') goForward();
-  }, [isCardOnFile, type]);
+  const modalType = PaymentStore.useStoreState((state) => state.type);
 
   const description: string = isCardOnFile
     ? 'An update to your current subscription will be reflected on your next billing date.'
@@ -77,7 +71,7 @@ const PaymentCard: React.FC = () => {
     <StoryPage
       description={description}
       id="CARD_FORM"
-      show={type === 'UPDATE_PAYMENT_METHOD' || !isCardOnFile}
+      show={modalType === 'UPDATE_PAYMENT_METHOD' || !isCardOnFile}
       title="Update Payment Method"
     >
       <PaymentCardForm />
@@ -85,4 +79,4 @@ const PaymentCard: React.FC = () => {
   );
 };
 
-export default PaymentCard;
+export default PaymentCardPage;

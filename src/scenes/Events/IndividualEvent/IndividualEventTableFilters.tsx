@@ -11,7 +11,7 @@ const IndividualEventViewedFilter: React.FC = () => {
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
   const show = !!recordingUrl;
 
-  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+  const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {
     return !!row.watched;
   };
 
@@ -35,7 +35,7 @@ const IndividualEventJoinedFilter: React.FC = () => {
   const startTime = useStoreState(({ db }) => db.event?.startTime);
   const show = day().isAfter(day(startTime));
 
-  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+  const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {
     return !!row.joinedAt;
   };
 
@@ -46,7 +46,7 @@ const IndividualEventNoShowFilter: React.FC = () => {
   const startTime = useStoreState(({ db }) => db.event?.startTime);
   const show = day().isAfter(day(startTime));
 
-  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+  const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {
     return !!row.rsvpdAt && !row.joinedAt;
   };
 
@@ -59,35 +59,17 @@ const IndividualEventNoShowFilter: React.FC = () => {
   );
 };
 
-const IndividualEventNoShowAndFilter: React.FC = () => {
-  const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
-  const show = !!recordingUrl;
-
-  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
-    return !!row.watched && !row.joinedAt;
-  };
-
-  return (
-    <TableQuickFilter
-      filter={filter}
-      show={show}
-      title="No Show + Viewed Recording"
-    />
-  );
-};
-
 const IndividualEventTableFilters: React.FC = () => {
   const show: boolean = useStoreState(({ db }) => {
     return !!db.event?.recordingUrl || day().isAfter(day(db.event.startTime));
   });
 
   return (
-    <Row wrap show={show} spacing="sm">
+    <Row wrap gap="sm" show={show}>
       <IndividualEventJoinedFilter />
       <IndividualEventRsvpFilter />
       <IndividualEventViewedFilter />
       <IndividualEventNoShowFilter />
-      <IndividualEventNoShowAndFilter />
     </Row>
   );
 };

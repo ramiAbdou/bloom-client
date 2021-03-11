@@ -20,7 +20,7 @@ const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
 
   const ref: React.LegacyRef<any> = useTooltip(title);
   const onClick = () => !disabled && setCurrentPage({ branchId, id });
-  const css = cx('o-story-nav', { 'o-story-nav--disabled': disabled });
+  const css: string = cx('o-story-nav', { 'o-story-nav--disabled': disabled });
 
   return <div ref={ref} className={css} onClick={onClick} />;
 };

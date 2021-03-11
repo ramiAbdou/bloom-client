@@ -2,12 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
-import { LoadingProps, ModalType } from '@util/constants';
 import MainHeader from '@containers/Main/MainHeader';
-import { NavigationOptionProps } from '@containers/Main/MainNavigation';
+import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
 import useFinalPath from '@hooks/useFinalPath';
 import { MemberRole } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { LoadingProps, ModalType } from '@util/constants';
 
 const DatbaseHeaderAddButton: React.FC = () => {
   const isOwner = useStoreState(
@@ -34,7 +34,7 @@ const DatbaseHeaderAddButton: React.FC = () => {
 const DatabaseHeader: React.FC<LoadingProps> = ({ loading }) => {
   const { push } = useHistory();
 
-  const options: NavigationOptionProps[] = [
+  const options: MainNavigationOptionProps[] = [
     { onClick: () => push('members'), pathname: 'members', title: 'Members' },
     { onClick: () => push('admins'), pathname: 'admins', title: 'Admins' }
   ];

@@ -1,18 +1,18 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { useStoreActions } from '@store/Store';
 import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
-import { LinkOptions } from './Nav.types';
+import { SidebarLinkOptions } from './Sidebar.types';
 
-interface NavLinkProps extends LinkOptions, OnClickProps {}
+interface SidebarLinkProps extends SidebarLinkOptions, OnClickProps {}
 
-const NavLinkAction: React.FC<
-  Pick<NavLinkProps, 'Icon' | 'onClick' | 'title'>
+const SidebarLinkAction: React.FC<
+  Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
-  const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
 
   const onUpdatedClick = () => {
     setIsOpen(false);
@@ -32,17 +32,17 @@ const NavLinkAction: React.FC<
  * If onClick is defined, then we don't render a link, we simply render a
  * Button that opens up a modal.
  */
-const NavLink: React.FC<NavLinkProps> = (props) => {
-  const setIsOpen = useStoreActions(({ nav }) => nav.setIsOpen);
+const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
   const { Icon, onClick, to, title } = props;
 
   const { url } = useRouteMatch();
   const isActive = useTopLevelRoute() === to;
 
   // If onClick is supplied, means it is an action.
-  if (onClick) return <NavLinkAction {...props} />;
+  if (onClick) return <SidebarLinkAction {...props} />;
 
-  const css = cx('o-nav-link', {
+  const css: string = cx('o-nav-link', {
     'o-nav-link--active': isActive
   });
 
@@ -56,4 +56,4 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
   );
 };
 
-export default memo(NavLink);
+export default SidebarLink;

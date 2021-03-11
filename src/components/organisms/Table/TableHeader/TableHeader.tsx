@@ -52,7 +52,7 @@ const HeaderCell = ({
 
   const isSortedColumn = sortColumnId === id;
 
-  const css = cx(getTableCellClass({ category, type }), {
+  const css: string = cx(getTableCellClass({ category, type }), {
     'o-table-td--right': alignEndRight,
     'o-table-th--fixed': fixFirstColumn && i === 0,
     'o-table-th--panel': isPanelShowing,
