@@ -43,12 +43,7 @@ export const buildIntegrationData = ({
         'Paywall your Slack community and see in-depth engagement analytics.',
       href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
         .addParam('response_type', 'code')
-        .addParam(
-          'client_id',
-          isProduction
-            ? process.env.STRIPE_CLIENT_ID
-            : process.env.STRIPE_TEST_CLIENT_ID
-        )
+        .addParam('client_id', null)
         .addParam('scope', 'read_write')
         .addParam(
           'redirect_uri',
@@ -86,8 +81,8 @@ export const buildIntegrationData = ({
         .addParam(
           'client_id',
           isProduction
-            ? process.env.STRIPE_CLIENT_ID
-            : process.env.STRIPE_TEST_CLIENT_ID
+            ? process.env.STRIPE_PROD_CLIENT_ID
+            : process.env.STRIPE_DEV_CLIENT_ID
         )
         .addParam('scope', 'read_write')
         .addParam(
