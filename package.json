@@ -6,7 +6,7 @@
     "build:dev": "NODE_ENV=dev webpack --config ./webpack.config.ts",
     "build:stage": "NODE_ENV=stage webpack --config ./webpack.config.ts",
     "build:prod": "NODE_ENV=prod webpack --config ./webpack.config.ts",
-    "prod": "pm2 start server.ts -i max"
+    "dev": "webpack-dev-server --config ./webpack.config.ts"
   },
   "engines": {
     "node": "12.16.3"
