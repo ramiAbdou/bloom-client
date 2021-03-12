@@ -7,7 +7,11 @@ import path from 'path';
 import StylelintPlugin from 'stylelint-webpack-plugin';
 import webpack, { Configuration } from 'webpack';
 
-import { isDevelopment } from './src/util/constants';
+let dotEnvName: string;
+
+if (process.env.APP_ENV === 'dev') dotEnvName = '.env.dev';
+else if (process.env.APP_ENV === 'stage') dotEnvName = '.env.stage';
+else if (process.env.APP_ENV === 'prod') dotEnvName = '.env.prod';
 
 const baseConfig: Configuration = {
   entry: path.join(__dirname, '/src/App.tsx'),
@@ -43,14 +47,14 @@ const baseConfig: Configuration = {
     new CopyWebpackPlugin([
       { from: 'public/manifest.json', to: 'manifest.json' }
     ]),
-    new Dotenv(),
+    new Dotenv({ path: path.resolve(__dirname, dotEnvName) }),
     new HtmlWebpackPlugin({
       favicon: './public/favicon.ico',
       filename: 'index.html',
       template: path.join(__dirname, '/public/index.html')
     }),
     new MiniCssExtractPlugin(),
-    new StylelintPlugin({ fix: true }),
+    new StylelintPlugin({ files: '**/*.scss', fix: true }),
     new webpack.HotModuleReplacementPlugin()
   ],
 
@@ -60,28 +64,4 @@ const baseConfig: Configuration = {
   }
 };
 
-const devConfig = {
-  devServer: {
-    disableHostCheck: true,
-    historyApiFallback: true,
-    hot: true,
-    open: true,
-    port: 3000
-  }
-};
-
-const config: Configuration = {
-  ...baseConfig,
-  ...(isDevelopment ? devConfig : {}),
-  mode: !isDevelopment ? 'production' : 'development',
-  module: {
-    rules: [
-      ...baseConfig.module.rules,
-      ...(!isDevelopment
-        ? [{ test: /\.html$/, use: [{ loader: 'html-loader' }] }]
-        : [])
-    ]
-  }
-};
-
-export default config;
+export default baseConfig;

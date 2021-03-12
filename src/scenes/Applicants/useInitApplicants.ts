@@ -22,8 +22,6 @@ const useInitApplicants = (): QueryResult<IMember[]> => {
     schema: [Schema.MEMBER]
   });
 
-  console.log(result);
-
   return result;
 };
 
