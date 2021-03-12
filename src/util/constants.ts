@@ -1,4 +1,4 @@
-import { take } from '@util/util';
+import { take } from './util';
 
 export const isDevelopment = process.env.NODE_ENV === 'dev';
 export const isProduction = process.env.NODE_ENV === 'prod';
