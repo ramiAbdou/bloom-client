@@ -1,26 +1,16 @@
-import { take } from './util';
-
-export const isDevelopment = process.env.NODE_ENV === 'dev';
-export const isProduction = process.env.NODE_ENV === 'prod';
-export const isStage = process.env.NODE_ENV === 'stage';
-export const isTest = process.env.NODE_ENV === 'test';
+export const isDevelopment = process.env.APP_ENV === 'dev';
+export const isProduction = process.env.APP_ENV === 'prod';
+export const isStage = process.env.APP_ENV === 'stage';
+export const isTest = process.env.APP_ENV === 'test';
 
 /**
  * APP - Application and Bloom-specific constants.
  */
 
 export const APP = {
-  CLIENT_URL: take([
-    [isDevelopment, process.env.APP_DEV_CLIENT_URL],
-    [isStage, process.env.APP_STAGE_CLIENT_URL],
-    [isProduction, process.env.APP_PROD_CLIENT_URL]
-  ]),
+  CLIENT_URL: process.env.APP_CLIENT_URL,
   NGROK_SERVER_URL: process.env.APP_NGROK_SERVER_URL,
-  SERVER_URL: take([
-    [isDevelopment, process.env.APP_DEV_SERVER_URL],
-    [isStage, process.env.APP_STAGE_SERVER_URL],
-    [isProduction, process.env.APP_PROD_SERVER_URL]
-  ])
+  SERVER_URL: process.env.APP_SERVER_URL
 };
 
 /**
