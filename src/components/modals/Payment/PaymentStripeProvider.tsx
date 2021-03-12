@@ -14,8 +14,8 @@ const PaymentStripeProvider: React.FC = ({ children }) => {
 
   const stripePromise: Promise<Stripe> = loadStripe(
     isProduction
-      ? process.env.STRIPE_PUBLISHABLE_KEY
-      : process.env.STRIPE_TEST_PUBLISHABLE_KEY,
+      ? process.env.STRIPE_PROD_PUBLISHABLE_KEY
+      : process.env.STRIPE_DEV_PUBLISHABLE_KEY,
     { stripeAccount: stripeAccountId }
   );
 

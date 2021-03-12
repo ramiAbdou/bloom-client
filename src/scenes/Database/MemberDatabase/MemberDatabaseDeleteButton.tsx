@@ -5,7 +5,7 @@ import TableStore from '@organisms/Table/Table.store';
 import { MemberRole } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
 /**
@@ -33,7 +33,7 @@ const useDeleteTooltip = (): string => {
     return true;
   });
 
-  const tooltip: string = takeFirst([
+  const tooltip: string = take([
     [isSelfSelected, `Can't delete member(s) because you selected yourself.`],
     [!hasPermissions, `You don't have the permissions to delete other admins.`],
     'Delete Member(s)'

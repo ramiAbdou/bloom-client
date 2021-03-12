@@ -4,7 +4,7 @@ import { IoArrowUpCircle } from 'react-icons/io5';
 import TableStore from '@organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabasePromoteButton: React.FC = () => {
@@ -19,7 +19,7 @@ const MemberDatabasePromoteButton: React.FC = () => {
     selectedRowIds.includes(memberId)
   );
 
-  const tooltip: string = takeFirst([
+  const tooltip: string = take([
     [tooManySelected, 'Can only promote 15 members admins at a time.'],
     [selfSelected, `Can't promote yourself.`],
     'Promote to Admin(s)'

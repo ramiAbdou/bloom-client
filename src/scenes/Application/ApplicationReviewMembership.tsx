@@ -11,7 +11,7 @@ import {
   RecurrenceType
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 
 const ApplicationReviewMembeship: React.FC = () => {
   const selectedTypeName: string = StoryStore.useStoreState(({ items }) => {
@@ -47,7 +47,7 @@ const ApplicationReviewMembeship: React.FC = () => {
     const amountString = amount ? `$${amount}` : 'FREE';
 
     // Construct string "Per" timespan based on the recurrence.
-    const recurrenceString = takeFirst([
+    const recurrenceString = take([
       [recurrence === RecurrenceType.YEARLY, 'Per Year'],
       [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
       [recurrence === RecurrenceType.LIFETIME, 'Lifetime']

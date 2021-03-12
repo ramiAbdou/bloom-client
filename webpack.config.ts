@@ -7,10 +7,11 @@ import path from 'path';
 import StylelintPlugin from 'stylelint-webpack-plugin';
 import webpack, { Configuration } from 'webpack';
 
-import { isProduction } from './src/util/constants';
+import { isDevelopment } from './src/util/constants';
 
 const baseConfig: Configuration = {
   entry: path.join(__dirname, '/src/App.tsx'),
+
   module: {
     rules: [
       {
@@ -29,23 +30,15 @@ const baseConfig: Configuration = {
         options: { context: 'src', name: 'images/[name].[ext]' },
         test: /\.(png|ico)$/
       },
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack']
-      },
-      {
-        exclude: /node_modules/,
-        loader: 'ts-loader',
-        test: /\.(ts|tsx)$/
-      }
+      { test: /\.svg$/, use: ['@svgr/webpack'] },
+      { exclude: /node_modules/, loader: 'ts-loader', test: /\.(ts|tsx)$/ }
     ]
   },
+
   node: { fs: 'empty' },
-  output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, '/dist'),
-    publicPath: '/'
-  },
+
+  output: { filename: 'index.js', path: path.join(__dirname, '/dist') },
+
   plugins: [
     new CopyWebpackPlugin([
       { from: 'public/manifest.json', to: 'manifest.json' }
@@ -60,6 +53,7 @@ const baseConfig: Configuration = {
     new StylelintPlugin({ fix: true }),
     new webpack.HotModuleReplacementPlugin()
   ],
+
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.scss'],
     plugins: [new TsConfigPathsPlugin()]
@@ -78,12 +72,12 @@ const devConfig = {
 
 const config: Configuration = {
   ...baseConfig,
-  ...(!isProduction ? devConfig : {}),
-  mode: isProduction ? 'production' : 'development',
+  ...(isDevelopment ? devConfig : {}),
+  mode: !isDevelopment ? 'production' : 'development',
   module: {
     rules: [
       ...baseConfig.module.rules,
-      ...(isProduction
+      ...(!isDevelopment
         ? [{ test: /\.html$/, use: [{ loader: 'html-loader' }] }]
         : [])
     ]

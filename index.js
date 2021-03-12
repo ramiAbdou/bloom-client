@@ -1,10 +1,6 @@
-/**
- * @fileoverview Entry: Server
- * Entry point of the application in the production environment.
- */
-
-import express from 'express';
-import path from 'path';
+// @ts-ignore b/c we don't need this to included in the build.
+const express = require('express');
+const path = require('path');
 
 const app = express();
 const pathToBuild = path.join(__dirname, 'dist');

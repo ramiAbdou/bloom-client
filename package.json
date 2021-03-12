@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "description": "Bloom's Client Web Application",
   "scripts": {
-    "build": "NODE_ENV=production webpack --config ./webpack.config.ts",
-    "postinstall": "pm2 install typescript",
-    "dev": "webpack-dev-server --config ./webpack.config.ts",
-    "start": "pm2 start server.ts -i max",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build:dev": "NODE_ENV=dev webpack --config ./webpack.config.ts",
+    "build:stage": "NODE_ENV=stage webpack --config ./webpack.config.ts",
+    "build:prod": "NODE_ENV=prod webpack --config ./webpack.config.ts",
+    "dev": "webpack-dev-server --config ./webpack.config.ts"
   },
   "engines": {
     "node": "12.16.3"
@@ -60,13 +58,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@storybook/addon-actions": "^6.1.11",
-    "@storybook/addon-docs": "^6.1.11",
-    "@storybook/addon-essentials": "^6.1.11",
-    "@storybook/addon-links": "^6.1.11",
-    "@storybook/preset-scss": "^1.0.3",
-    "@storybook/react": "^6.1.11",
-    "@storybook/theming": "^6.1.11",
     "@svgr/webpack": "^5.5.0",
     "@types/copy-webpack-plugin": "^5.0.1",
     "@types/deline": "^1.0.1",

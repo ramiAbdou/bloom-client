@@ -1,14 +1,19 @@
 import URLBuilder from 'util/URLBuilder';
 
 import { ICommunityIntegrations } from '@store/Db/entities';
-import { APP, isProduction, UrlNameProps } from '@util/constants';
+import {
+  APP,
+  isDevelopment,
+  isProduction,
+  UrlNameProps
+} from '@util/constants';
 import mailchimp from './images/mailchimp.png';
 import slack from './images/slack.png';
 import stripe from './images/stripe.png';
 import zapier from './images/zapier.png';
 import { IntegrationsDetailsData } from './Integrations.types';
 
-const MAILCHIMP_BASE_URI = isProduction
+const MAILCHIMP_BASE_URI = !isDevelopment
   ? APP.SERVER_URL
   : 'http://127.0.0.1:8080';
 
@@ -38,12 +43,7 @@ export const buildIntegrationData = ({
         'Paywall your Slack community and see in-depth engagement analytics.',
       href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
         .addParam('response_type', 'code')
-        .addParam(
-          'client_id',
-          isProduction
-            ? process.env.STRIPE_CLIENT_ID
-            : process.env.STRIPE_TEST_CLIENT_ID
-        )
+        .addParam('client_id', null)
         .addParam('scope', 'read_write')
         .addParam(
           'redirect_uri',
@@ -81,8 +81,8 @@ export const buildIntegrationData = ({
         .addParam(
           'client_id',
           isProduction
-            ? process.env.STRIPE_CLIENT_ID
-            : process.env.STRIPE_TEST_CLIENT_ID
+            ? process.env.STRIPE_PROD_CLIENT_ID
+            : process.env.STRIPE_DEV_CLIENT_ID
         )
         .addParam('scope', 'read_write')
         .addParam(

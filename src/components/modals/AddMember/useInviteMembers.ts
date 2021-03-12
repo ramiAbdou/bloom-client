@@ -6,7 +6,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { MutationEvent } from '@util/events';
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';
 
@@ -32,7 +32,7 @@ const useInviteMembers = (): OnFormSubmit => {
     ).reduce((acc: Record<string, AddMemberInput>, data: FormItemData) => {
       const { category, metadata: inputId, type, value } = data;
 
-      const formattedValue = takeFirst([
+      const formattedValue = take([
         [category === QuestionCategory.FIRST_NAME, { firstName: value }],
         [category === QuestionCategory.LAST_NAME, { lastName: value }],
         [category === QuestionCategory.EMAIL, { email: value }],
