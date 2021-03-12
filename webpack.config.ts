@@ -50,7 +50,7 @@ const baseConfig: Configuration = {
       template: path.join(__dirname, '/public/index.html')
     }),
     new MiniCssExtractPlugin(),
-    new StylelintPlugin({ fix: true }),
+    new StylelintPlugin({ files: '**/*.scss', fix: true }),
     new webpack.HotModuleReplacementPlugin()
   ],
 
