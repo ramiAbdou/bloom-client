@@ -2,32 +2,10 @@ import aws from 'aws-sdk';
 import Jimp from 'jimp';
 import { nanoid } from 'nanoid';
 
-import { take } from '@util/util';
-import { isDevelopment, isProduction, isStage } from './constants';
-
-const accessKeyId: string = take([
-  [isDevelopment, process.env.DIGITAL_OCEAN_DEV_KEY],
-  [isStage, process.env.DIGITAL_OCEAN_STAGE_KEY],
-  [isProduction, process.env.DIGITAL_OCEAN_PROD_KEY]
-]);
-
-const bucketName: string = take([
-  [isDevelopment, process.env.DIGITAL_OCEAN_DEV_BUCKET_NAME],
-  [isStage, process.env.DIGITAL_OCEAN_STAGE_BUCKET_NAME],
-  [isProduction, process.env.DIGITAL_OCEAN_PROD_BUCKET_NAME]
-]);
-
-const bucketUrl: string = take([
-  [isDevelopment, process.env.DIGITAL_OCEAN_DEV_BUCKET_URL],
-  [isStage, process.env.DIGITAL_OCEAN_STAGE_BUCKET_URL],
-  [isProduction, process.env.DIGITAL_OCEAN_PROD_BUCKET_URL]
-]);
-
-const secretAccessKey: string = take([
-  [isDevelopment, process.env.DIGITAL_OCEAN_DEV_SECRET],
-  [isStage, process.env.DIGITAL_OCEAN_STAGE_SECRET],
-  [isProduction, process.env.DIGITAL_OCEAN_PROD_SECRET]
-]);
+const accessKeyId: string = process.env.DIGITAL_OCEAN_KEY;
+const bucketName: string = process.env.DIGITAL_OCEAN_BUCKET_NAME;
+const bucketUrl: string = process.env.DIGITAL_OCEAN_BUCKET_URL;
+const secretAccessKey: string = process.env.DIGITAL_OCEAN_SECRET;
 
 const s3 = new aws.S3({
   accessKeyId,
