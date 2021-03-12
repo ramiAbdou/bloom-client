@@ -13,7 +13,7 @@ import {
 
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 import ChartStore from './Chart.store';
 import { ChartTooltipProps } from './Tooltip';
 import useXAxisOptions from './useXAxisOptions';
@@ -29,12 +29,12 @@ const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
 
   const value = data.find(({ name }) => name === label)?.value;
 
-  const formattedLabel: string = takeFirst([
+  const formattedLabel: string = take([
     [format === 'HOUR', day(label).format('dddd, MMMM D @ h:mm A')],
     [true, day(label).format('dddd, MMMM D, YYYY')]
   ]);
 
-  const formattedValue: string = takeFirst([
+  const formattedValue: string = take([
     [format === 'MONEY', `$${value as number}`],
     [true, value]
   ]);

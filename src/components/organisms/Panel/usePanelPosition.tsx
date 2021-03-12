@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { IdProps } from '@util/constants';
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 import { PanelAlign } from './Panel.types';
 
 interface UsePanelPositionProps extends IdProps {
@@ -29,7 +29,7 @@ const usePanelPosition = ({
     const { left: updatedTargetLeft, top: updatedTargetTop } =
       element?.getBoundingClientRect() ?? {};
 
-    const updatedAlign: PanelAlign = takeFirst([
+    const updatedAlign: PanelAlign = take([
       [
         align === 'BOTTOM_LEFT' && innerWidth - updatedTargetLeft <= 300,
         'BOTTOM_RIGHT'

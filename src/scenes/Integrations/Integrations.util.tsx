@@ -1,14 +1,19 @@
 import URLBuilder from 'util/URLBuilder';
 
 import { ICommunityIntegrations } from '@store/Db/entities';
-import { APP, isProduction, UrlNameProps } from '@util/constants';
+import {
+  APP,
+  isDevelopment,
+  isProduction,
+  UrlNameProps
+} from '@util/constants';
 import mailchimp from './images/mailchimp.png';
 import slack from './images/slack.png';
 import stripe from './images/stripe.png';
 import zapier from './images/zapier.png';
 import { IntegrationsDetailsData } from './Integrations.types';
 
-const MAILCHIMP_BASE_URI = isProduction
+const MAILCHIMP_BASE_URI = !isDevelopment
   ? APP.SERVER_URL
   : 'http://127.0.0.1:8080';
 

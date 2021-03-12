@@ -1,5 +1,5 @@
 import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 
 /**
  * Returns the type description based on the amount, recurrence and such.
@@ -17,7 +17,7 @@ export const getTypeDescription = (
   const amountString = amount ? `$${amount}` : 'FREE';
 
   // Construct string "Per" timespan based on the recurrence.
-  const recurrenceString = takeFirst([
+  const recurrenceString = take([
     [recurrence === RecurrenceType.YEARLY, 'Per Year'],
     [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
     [recurrence === RecurrenceType.LIFETIME, 'Lifetime']

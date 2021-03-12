@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { MemberStatus } from '@store/Db/entities';
 import { useStoreActions } from '@store/Store';
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 import useRespondToApplicants from './useRespondToApplicants';
 
 interface ApplicantsRespondButtonProps {
@@ -32,7 +32,7 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = (
     showToast({ message: `Member(s) have been ${response.toLowerCase()}.` });
   };
 
-  const buttonText: string = takeFirst([
+  const buttonText: string = take([
     [response === MemberStatus.ACCEPTED && all, 'Accept All'],
     [response === MemberStatus.ACCEPTED, 'Accept'],
     [response === MemberStatus.REJECTED && all, 'Reject All'],

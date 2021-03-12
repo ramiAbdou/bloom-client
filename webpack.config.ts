@@ -7,7 +7,7 @@ import path from 'path';
 import StylelintPlugin from 'stylelint-webpack-plugin';
 import webpack, { Configuration } from 'webpack';
 
-import { isProduction } from './src/util/constants';
+import { isDevelopment } from './src/util/constants';
 
 const baseConfig: Configuration = {
   entry: path.join(__dirname, '/src/App.tsx'),
@@ -78,12 +78,12 @@ const devConfig = {
 
 const config: Configuration = {
   ...baseConfig,
-  ...(!isProduction ? devConfig : {}),
-  mode: isProduction ? 'production' : 'development',
+  ...(isDevelopment ? devConfig : {}),
+  mode: !isDevelopment ? 'production' : 'development',
   module: {
     rules: [
       ...baseConfig.module.rules,
-      ...(isProduction
+      ...(!isDevelopment
         ? [{ test: /\.html$/, use: [{ loader: 'html-loader' }] }]
         : [])
     ]

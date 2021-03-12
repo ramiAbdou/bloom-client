@@ -2,7 +2,7 @@ import React from 'react';
 
 import Show from '@containers/Show';
 import { ShowProps } from '@util/constants';
-import { cx, takeFirst } from '@util/util';
+import { cx, take } from '@util/util';
 
 interface PillProps extends ShowProps {
   percentage?: number;
@@ -21,7 +21,7 @@ const Pill: React.FC<PillProps> = ({
 
   // If positive, add the "+" character, but otherwise TS will automatically
   // add a "-" character.
-  const value = takeFirst([
+  const value = take([
     [percentage === undefined, children],
     [percentage && isPositive, `+${percentage}%`],
     [percentage && !isPositive, `${percentage}%`]

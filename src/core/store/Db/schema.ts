@@ -10,7 +10,7 @@
 import deepmerge from 'deepmerge';
 import { schema } from 'normalizr';
 
-import { takeFirst } from '@util/util';
+import { take } from '@util/util';
 
 /**
  * Merges the two entities according to the deepmerge strategy, except handles
@@ -40,7 +40,7 @@ const Application = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = takeFirst([
+      const processedData = take([
         [!!parent.rankedQuestionId, { questions: [parent.id] }],
         {}
       ]);
@@ -56,7 +56,7 @@ const Community = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (community, parent) => {
-      const processedData = takeFirst([
+      const processedData = take([
         [!!parent.applicationId, { application: parent.id }],
         [
           !!parent.communityIntegrationsId,
@@ -92,7 +92,7 @@ const Event = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = takeFirst([
+      const processedData = take([
         [!!parent.attendeeId, { attendees: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.watchId, { watches: [parent.id] }],
@@ -110,7 +110,7 @@ const EventAttendee = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = takeFirst([
+      const processedData = take([
         [!!parent.eventId, { event: parent.id }],
         {}
       ]);
@@ -126,7 +126,7 @@ const EventGuest = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = takeFirst([
+      const processedData = take([
         [!!parent.eventId, { event: parent.id }],
         {}
       ]);
@@ -142,7 +142,7 @@ const EventWatch = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = takeFirst([
+      const processedData = take([
         [!!parent.eventId, { event: parent.id }],
         {}
       ]);
@@ -158,7 +158,7 @@ const Member = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = takeFirst([
+      const processedData = take([
         [!!parent.attendeeId, { attendees: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
@@ -219,9 +219,7 @@ const Question = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = takeFirst([
-        [!!parent.valueId, { values: [parent.id] }]
-      ]);
+      const processedData = take([[!!parent.valueId, { values: [parent.id] }]]);
 
       return { ...value, ...processedData, questionId: value.id };
     }
@@ -254,7 +252,7 @@ const User = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = takeFirst([
+      const processedData = take([
         [!!parent.memberId, { members: [parent.id] }]
       ]);
 

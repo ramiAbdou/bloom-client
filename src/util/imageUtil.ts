@@ -2,26 +2,37 @@ import aws from 'aws-sdk';
 import Jimp from 'jimp';
 import { nanoid } from 'nanoid';
 
-import { isProduction } from '@util/constants';
+import { take } from '@util/util';
+import { isDevelopment, isProduction, isStage } from './constants';
 
-const bucketName = isProduction
-  ? process.env.DIGITAL_OCEAN_BUCKET_NAME
-  : process.env.DIGITAL_OCEAN_TEST_BUCKET_NAME;
+const accessKeyId: string = take([
+  [isDevelopment, process.env.DIGITAL_OCEAN_DEV_KEY],
+  [isStage, process.env.DIGITAL_OCEAN_STAGE_KEY],
+  [isProduction, process.env.DIGITAL_OCEAN_PROD_KEY]
+]);
 
-const bucketUrl = isProduction
-  ? process.env.DIGITAL_OCEAN_BUCKET_URL
-  : process.env.DIGITAL_OCEAN_TEST_BUCKET_URL;
+const bucketName: string = take([
+  [isDevelopment, process.env.DIGITAL_OCEAN_DEV_BUCKET_NAME],
+  [isStage, process.env.DIGITAL_OCEAN_STAGE_BUCKET_NAME],
+  [isProduction, process.env.DIGITAL_OCEAN_PROD_BUCKET_NAME]
+]);
 
-const spacesEndpoint = 'sfo3.digitaloceanspaces.com';
+const bucketUrl: string = take([
+  [isDevelopment, process.env.DIGITAL_OCEAN_DEV_BUCKET_URL],
+  [isStage, process.env.DIGITAL_OCEAN_STAGE_BUCKET_URL],
+  [isProduction, process.env.DIGITAL_OCEAN_PROD_BUCKET_URL]
+]);
+
+const secretAccessKey: string = take([
+  [isDevelopment, process.env.DIGITAL_OCEAN_DEV_SECRET],
+  [isStage, process.env.DIGITAL_OCEAN_STAGE_SECRET],
+  [isProduction, process.env.DIGITAL_OCEAN_PROD_SECRET]
+]);
 
 const s3 = new aws.S3({
-  accessKeyId: isProduction
-    ? process.env.DIGITAL_OCEAN_KEY
-    : process.env.DIGITAL_OCEAN_TEST_KEY,
-  endpoint: spacesEndpoint,
-  secretAccessKey: isProduction
-    ? process.env.DIGITAL_OCEAN_SECRET
-    : process.env.DIGITAL_OCEAN_TEST_SECRET
+  accessKeyId,
+  endpoint: 'sfo3.digitaloceanspaces.com',
+  secretAccessKey
 });
 
 interface ConvertImageToBase64Args {
