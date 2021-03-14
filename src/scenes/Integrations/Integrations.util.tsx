@@ -5,6 +5,7 @@ import {
   APP,
   isDevelopment,
   isProduction,
+  isStage,
   UrlNameProps
 } from '@util/constants';
 import mailchimp from './images/mailchimp.png';
@@ -41,17 +42,7 @@ export const buildIntegrationData = ({
       connected: false,
       description:
         'Paywall your Slack community and see in-depth engagement analytics.',
-      href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
-        .addParam('response_type', 'code')
-        .addParam('client_id', null)
-        .addParam('scope', 'read_write')
-        .addParam(
-          'redirect_uri',
-          isProduction
-            ? `${APP.SERVER_URL}/stripe/auth`
-            : `${APP.NGROK_SERVER_URL}/stripe/auth`
-        )
-        .addParam('state', urlName).url,
+      href: '',
       logo: slack,
       name: 'Slack'
     },
@@ -82,7 +73,7 @@ export const buildIntegrationData = ({
         .addParam('scope', 'read_write')
         .addParam(
           'redirect_uri',
-          isProduction
+          isProduction || isStage
             ? `${APP.SERVER_URL}/stripe/auth`
             : `${APP.NGROK_SERVER_URL}/stripe/auth`
         )
