@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import URLBuilder from 'util/URLBuilder';
 
 import Button from '@atoms/Button/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
@@ -15,6 +14,7 @@ import { IMember, MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/errors';
+import { buildUrl } from '@util/util';
 import { getCheckInErrorMessage } from './CheckIn.util';
 import useInitCheckInError from './useInitCheckInError';
 import useSendLoginLink from './useSendLoginLink';
@@ -23,15 +23,13 @@ const CheckInGoogleButton: React.FC = () => {
   const communityId = useStoreState(({ db }) => db.community?.id);
   const { pathname } = useLocation();
 
-  const { url } = new URLBuilder('https://accounts.google.com/o/oauth2/v2/auth')
-    .addParam('scope', 'https://www.googleapis.com/auth/userinfo.email')
-    .addParam('response_type', 'code')
-    .addParam('redirect_uri', `${APP.SERVER_URL}/google/auth`)
-    .addParam('client_id', process.env.GOOGLE_CLIENT_ID)
-    .addParam(
-      'state',
-      communityId && JSON.stringify({ communityId, pathname })
-    );
+  const url: string = buildUrl('https://accounts.google.com/o/oauth2/v2/auth', {
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    redirect_uri: `${APP.SERVER_URL}/google/auth`,
+    response_type: 'code',
+    scope: 'https://www.googleapis.com/auth/userinfo.email',
+    state: communityId && JSON.stringify({ communityId, pathname })
+  });
 
   return (
     <Button

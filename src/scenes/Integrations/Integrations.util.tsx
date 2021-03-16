@@ -1,5 +1,3 @@
-import URLBuilder from 'util/URLBuilder';
-
 import { ICommunityIntegrations } from '@store/Db/entities';
 import {
   APP,
@@ -8,6 +6,7 @@ import {
   isStage,
   UrlNameProps
 } from '@util/constants';
+import { buildUrl } from '@util/util';
 import mailchimp from './images/mailchimp.png';
 import slack from './images/slack.png';
 import stripe from './images/stripe.png';
@@ -54,11 +53,12 @@ export const buildIntegrationData = ({
       Mailchimp listserv.`,
       href:
         !isMailchimpAuthenticated &&
-        new URLBuilder('https://login.mailchimp.com/oauth2/authorize')
-          .addParam('response_type', 'code')
-          .addParam('client_id', process.env.MAILCHIMP_CLIENT_ID)
-          .addParam('redirect_uri', `${MAILCHIMP_BASE_URI}/mailchimp/auth`)
-          .addParam('state', urlName).url,
+        buildUrl('https://login.mailchimp.com/oauth2/authorize', {
+          client_id: process.env.MAILCHIMP_CLIENT_ID,
+          redirect_uri: `${MAILCHIMP_BASE_URI}/mailchimp/auth`,
+          response_type: 'code',
+          state: urlName
+        }),
       logo: mailchimp,
       name: 'Mailchimp'
     },
@@ -67,17 +67,16 @@ export const buildIntegrationData = ({
     {
       connected: !!stripeAccountId,
       description: 'Collect monthly or yearly dues payments from your members.',
-      href: new URLBuilder('https://connect.stripe.com/oauth/authorize')
-        .addParam('response_type', 'code')
-        .addParam('client_id', process.env.STRIPE_CLIENT_ID)
-        .addParam('scope', 'read_write')
-        .addParam(
-          'redirect_uri',
+      href: buildUrl('https://connect.stripe.com/oauth/authorize', {
+        client_id: process.env.STRIPE_CLIENT_ID,
+        redirect_uri:
           isProduction || isStage
             ? `${APP.SERVER_URL}/stripe/auth`
-            : `${APP.NGROK_SERVER_URL}/stripe/auth`
-        )
-        .addParam('state', urlName).url,
+            : `${APP.NGROK_SERVER_URL}/stripe/auth`,
+        response_type: 'code',
+        scope: 'read_write',
+        state: urlName
+      }),
       logo: stripe,
       name: 'Stripe'
     },
