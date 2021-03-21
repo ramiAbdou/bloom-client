@@ -6,7 +6,7 @@
     "build:dev": "APP_ENV=dev webpack --config ./webpack.config.dev.ts",
     "build:stage": "APP_ENV=stage webpack --config ./webpack.config.prod.ts",
     "build:prod": "APP_ENV=prod webpack --config ./webpack.config.prod.ts",
-    "dev": "APP_ENV=dev webpack-dev-server --config ./webpack.config.ts"
+    "dev": "APP_ENV=dev webpack-dev-server --config ./webpack.config.dev.ts"
   },
   "engines": {
     "node": "12.16.3"

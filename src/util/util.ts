@@ -1,6 +1,25 @@
 import { APIError } from 'graphql-hooks';
 
 /**
+ * Returns the URL with the URL params.
+ *
+ * @param url - URL to start with.
+ * @param params - URL param object to build the URL.
+ */
+ export const buildUrl = (
+  url: string,
+  params: Record<string, string>
+): string => {
+  return Object.entries(params).reduce(
+    (acc: string, [key, value]: [string, string], i: number) => {
+      const paramChar: string = i === 0 ? '?' : '&';
+      return `${acc}${paramChar}${key}=${value}`;
+    },
+    url
+  );
+};
+
+/**
  * Returns a string of classes based on the conditional flags set on each of
  * the class names.
  *

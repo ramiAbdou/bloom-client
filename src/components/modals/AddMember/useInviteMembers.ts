@@ -4,7 +4,7 @@ import {
   OnFormSubmit,
   OnFormSubmitArgs
 } from '@organisms/Form/Form.types';
-import { QuestionCategory, QuestionType } from '@util/constants';
+import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/events';
 import { take } from '@util/util';
 import AddMemberStore from './AddMember.store';
@@ -30,16 +30,13 @@ const useInviteMembers = (): OnFormSubmit => {
     const memberData: Record<string, AddMemberInput> = Object.values(
       items
     ).reduce((acc: Record<string, AddMemberInput>, data: FormItemData) => {
-      const { category, metadata: inputId, type, value } = data;
+      const { category, metadata: inputId, value } = data;
 
       const formattedValue = take([
         [category === QuestionCategory.FIRST_NAME, { firstName: value }],
         [category === QuestionCategory.LAST_NAME, { lastName: value }],
         [category === QuestionCategory.EMAIL, { email: value }],
-        [
-          type === QuestionType.MULTIPLE_SELECT,
-          { isAdmin: admin || !!value.length }
-        ]
+        [true, { isAdmin: admin || !!value.length }]
       ]);
 
       return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };

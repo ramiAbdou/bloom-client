@@ -5,8 +5,6 @@ const useSavePaymentMethod = (): OnFormSubmit => {
   const elements = useElements();
   const stripe = useStripe();
 
-  if (!stripe) return null;
-
   const onSubmit = async ({
     goForward,
     items,

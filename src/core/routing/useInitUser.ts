@@ -29,7 +29,6 @@ const useInitUser = (): boolean => {
       'joinedAt',
       'pictureUrl',
       'id',
-      'isDuesActive',
       'status',
       { community: ['id'] },
       { user: ['id'] }
@@ -51,6 +50,7 @@ const useInitUser = (): boolean => {
       'bio',
       'email',
       'id',
+      'isDuesActive',
       'role',
       'status',
       { community: ['id'] },

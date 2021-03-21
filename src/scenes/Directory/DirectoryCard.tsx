@@ -9,11 +9,12 @@ import {
   IMember,
   IMemberPlan,
   IMemberValue,
+  IQuestion,
   RecurrenceType
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
+import { ModalType, QuestionCategory } from '@util/constants';
 
 const DirectoryCardInformation: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
@@ -25,6 +26,14 @@ const DirectoryCardInformation: React.FC = () => {
 
   const highlightedValue = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
+
+    const highlightedQuestion: IQuestion =
+      db.byQuestionId[db.community?.highlightedQuestion];
+
+    if (highlightedQuestion.category === QuestionCategory.MEMBER_PLAN) {
+      const memberPlan: IMemberPlan = db.byMemberPlanId[member.plan];
+      return memberPlan.name;
+    }
 
     return member.values
       ?.map((valueId: string) => db.byValuesId[valueId])

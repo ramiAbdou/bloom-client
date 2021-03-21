@@ -53,10 +53,11 @@ const useSendLoginLink = (): OnFormSubmit => {
     });
 
     if (error) {
-      const { data } = await getOwner({ communityId });
-
       setError(
-        getCheckInErrorMessage({ error: error as ErrorType, owner: data })
+        getCheckInErrorMessage({
+          error: error as ErrorType,
+          owner: communityId ? (await getOwner({ communityId }))?.data : null
+        })
       );
 
       return;
