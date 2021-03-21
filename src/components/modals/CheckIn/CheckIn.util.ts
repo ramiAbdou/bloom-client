@@ -9,10 +9,9 @@ interface GetCheckInErrorMessageArgs {
 /**
  * Returns the login error message based on the cookie.
  */
-export const getCheckInErrorMessage = ({
-  error,
-  owner
-}: GetCheckInErrorMessageArgs) => {
+export const getCheckInErrorMessage = (args: GetCheckInErrorMessageArgs) => {
+  const { error, owner } = args;
+
   if (error === ErrorType.APPLICATION_REJECTED) {
     return 'You must be accepted into a commmunity before logging in.';
   }

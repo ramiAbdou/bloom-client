@@ -28,7 +28,7 @@ const CheckInGoogleButton: React.FC = () => {
     redirect_uri: `${APP.SERVER_URL}/google/auth`,
     response_type: 'code',
     scope: 'https://www.googleapis.com/auth/userinfo.email',
-    state: communityId && JSON.stringify({ communityId, pathname })
+    state: communityId ? JSON.stringify({ communityId, pathname }) : ''
   });
 
   return (
