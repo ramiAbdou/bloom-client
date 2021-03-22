@@ -24,7 +24,7 @@ import Router from './core/routing/Router';
 day.extend(advancedFormat);
 day.extend(timezone);
 
-const client = new GraphQLClient({
+const client: GraphQLClient = new GraphQLClient({
   fetchOptions: { credentials: 'include' },
   url: `${APP.SERVER_URL}/graphql`
 });

@@ -16,16 +16,7 @@ const ApplicantsCardList: React.FC = () => {
 
   return (
     <div className="g-md d-grid py-xxs rg-md s-applicants-card-ctr">
-      {[
-        ...applicantIds,
-        ...applicantIds,
-        ...applicantIds,
-        ...applicantIds,
-        ...applicantIds,
-        ...applicantIds,
-        ...applicantIds,
-        ...applicantIds
-      ].map((applicantId: string) => (
+      {applicantIds.map((applicantId: string) => (
         <ApplicantCard key={applicantId} id={applicantId} />
       ))}
     </div>

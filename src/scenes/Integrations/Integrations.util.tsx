@@ -8,9 +8,7 @@ import {
 } from '@util/constants';
 import { buildUrl } from '@util/util';
 import mailchimp from './images/mailchimp.png';
-import slack from './images/slack.png';
 import stripe from './images/stripe.png';
-import zapier from './images/zapier.png';
 import { IntegrationsDetailsData } from './Integrations.types';
 
 const MAILCHIMP_BASE_URI = !isDevelopment
@@ -36,16 +34,6 @@ export const buildIntegrationData = ({
   stripeAccountId
 }: BuildIntegrationDataProps): IntegrationsDetailsData[] => {
   return [
-    // ## SLACK
-    {
-      connected: false,
-      description:
-        'Paywall your Slack community and see in-depth engagement analytics.',
-      href: '',
-      logo: slack,
-      name: 'Slack'
-    },
-
     // ## MAILCHIMP
     {
       connected: !!mailchimpListId,
@@ -79,14 +67,6 @@ export const buildIntegrationData = ({
       }),
       logo: stripe,
       name: 'Stripe'
-    },
-
-    // ## ZAPIER
-    {
-      description: 'For just about any other integration you want.',
-      href: 'https://zapier.com/',
-      logo: zapier,
-      name: 'Zapier'
     }
   ];
 };
