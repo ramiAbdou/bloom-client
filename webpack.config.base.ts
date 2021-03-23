@@ -61,12 +61,18 @@ const webpackBaseConfig: WebpackConfiguration = {
     new CopyWebpackPlugin([
       { from: 'public/manifest.json', to: 'manifest.json' }
     ]),
+
+    // Loads the appropriate .env file based on the APP_ENV.
     new Dotenv({ path: path.resolve(__dirname, dotEnvName) }),
+
+    // Allows manifest.json to be read properly which effectively allows the
+    // browser to load our favicon very easily.
     new HtmlWebpackPlugin({
       favicon: './public/favicon.ico',
       filename: 'index.html',
       template: path.join(__dirname, '/public/index.html')
     }),
+
     new MiniCssExtractPlugin(),
     new StylelintPlugin({ files: '**/*.scss', fix: true }),
     new webpack.HotModuleReplacementPlugin()
