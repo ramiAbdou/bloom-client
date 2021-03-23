@@ -3,20 +3,29 @@ import React from 'react';
 import Row from '@containers/Row/Row';
 import { QueryResult } from '@hooks/useQuery.types';
 import Form from '@organisms/Form/Form';
+import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import StoryPage from '@organisms/Story/StoryPage';
 import PaymentStore from './Payment.store';
 import { GetChangePreviewResult, PaymentModalType } from './Payment.types';
 import PaymentFinishButton from './PaymentFinishButton';
 import PaymentFinishMethodInformationCard from './PaymentFinishMethodInformationCard';
 import PaymentFinishPlanInformationCard from './PaymentFinishPlanInformationCard';
-import useCreateSubscription from './useCreateSubscription';
 import useInitChangePreview from './useInitChangePreview';
+import useUpdateStripeSubscriptionId from './useUpdateStripeSubscriptionId';
 
 const PaymentFinishForm: React.FC = () => {
-  const createSubscription = useCreateSubscription();
+  const prorationDate: number = PaymentStore.useStoreState((state) => {
+    return state.changeProrationDate;
+  });
+
+  const updateStripeSubscriptionId: OnFormSubmitFunction = useUpdateStripeSubscriptionId();
 
   return (
-    <Form options={{ disableValidation: true }} onSubmit={createSubscription}>
+    <Form
+      options={{ disableValidation: true }}
+      onSubmit={updateStripeSubscriptionId}
+      onSubmitDeps={[prorationDate]}
+    >
       <Row className="mb-md--nlc" justify="sb" spacing="xs">
         <PaymentFinishPlanInformationCard />
         <PaymentFinishMethodInformationCard />
@@ -36,9 +45,12 @@ const PaymentFinishPage: React.FC = () => {
     loading
   }: QueryResult<GetChangePreviewResult> = useInitChangePreview();
 
+  const description =
+    'Please review this information to make sure we got everything right.';
+
   return (
     <StoryPage
-      description="Please review this information to make sure we got everything right."
+      description={description}
       id="FINISH"
       loading={loading}
       show={modalType !== PaymentModalType.UPDATE_PAYMENT_METHOD}
