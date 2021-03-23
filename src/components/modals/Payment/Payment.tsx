@@ -48,12 +48,17 @@ const PaymentModal: React.FC = () => {
 
     showModal({
       id: ModalType.PAY_DUES,
-      metadata: { selectedPlanId: currentPlanId, type: 'PAY_DUES' }
+      metadata: {
+        selectedPlanId: currentPlanId,
+        type: PaymentModalType.PAY_DUES
+      }
     });
   }, [isDuesActive]);
 
   if (loading) return null;
-  if (modalType !== 'UPDATE_PAYMENT_METHOD' && !selectedPlanId) return null;
+  if (modalType !== PaymentModalType.UPDATE_PAYMENT_METHOD && !selectedPlanId) {
+    return null;
+  }
 
   return (
     <PaymentStore.Provider

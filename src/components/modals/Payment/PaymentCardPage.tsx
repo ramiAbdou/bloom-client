@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
+import { PaymentModalType } from '@modals/Payment/Payment.types';
 import Form from '@organisms/Form/Form';
 import FormCreditCard from '@organisms/Form/FormCreditCard';
 import PaymentFormErrorMessage from '@organisms/Form/FormErrorMessage';
@@ -17,7 +18,9 @@ const PaymentCardButton: React.FC = () => {
   const modalType = PaymentStore.useStoreState((state) => state.type);
   const stripe = useStripe();
 
-  if (modalType === 'UPDATE_PAYMENT_METHOD') return <PaymentFinishButton />;
+  if (modalType === PaymentModalType.UPDATE_PAYMENT_METHOD) {
+    return <PaymentFinishButton />;
+  }
 
   return (
     <FormSubmitButton
@@ -71,7 +74,9 @@ const PaymentCardPage: React.FC = () => {
     <StoryPage
       description={description}
       id="CARD_FORM"
-      show={modalType === 'UPDATE_PAYMENT_METHOD' || !isCardOnFile}
+      show={
+        modalType === PaymentModalType.UPDATE_PAYMENT_METHOD || !isCardOnFile
+      }
       title="Update Payment Method"
     >
       <PaymentCardForm />

@@ -1,6 +1,6 @@
 import { action, createContextStore } from 'easy-peasy';
 
-import { PaymentModel } from './Payment.types';
+import { PaymentModalType, PaymentModel } from './Payment.types';
 
 export const paymentModel: PaymentModel = {
   changeAmount: null,
@@ -13,7 +13,7 @@ export const paymentModel: PaymentModel = {
     changeProrationDate: args?.changeProrationDate
   })),
 
-  type: 'PAY_DUES'
+  type: PaymentModalType.PAY_DUES
 };
 
 const PaymentStore = createContextStore<PaymentModel>(

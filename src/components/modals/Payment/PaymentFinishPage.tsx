@@ -1,9 +1,8 @@
 import deepequal from 'fast-deep-equal';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
-import useManualQuery from '@hooks/useManualQuery';
 import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
 import {
@@ -12,13 +11,13 @@ import {
   RecurrenceType
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/events';
 import PaymentStore from './Payment.store';
-import { GetChangePreviewArgs, GetChangePreviewResult } from './Payment.types';
-import { getTypeDescription } from './Payment.util';
+import { PaymentModalType } from './Payment.types';
+import { getPlanDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
 import useCreateLifetimePayment from './useCreateLifetimePayment';
 import useCreateSubscription from './useCreateSubscription';
+import useInitChangePreview from './useInitChangePreview';
 
 const PaymentFinishForm: React.FC = () => {
   const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
@@ -28,7 +27,7 @@ const PaymentFinishForm: React.FC = () => {
     deepequal
   );
 
-  const description = getTypeDescription({ amount, recurrence });
+  const description = getPlanDescription({ amount, recurrence });
 
   const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
     ({ db }) => db.memberIntegrations.paymentMethod,
@@ -61,42 +60,23 @@ const PaymentFinishForm: React.FC = () => {
 };
 
 const PaymentFinishPage: React.FC = () => {
-  const planId = PaymentStore.useStoreState((state) => state.selectedPlanId);
-  const modalType = PaymentStore.useStoreState((state) => state.type);
-
-  const setChangeData = PaymentStore.useStoreActions(
-    (store) => store.setChangeData
-  );
-
-  const [getChangePreview, { loading }] = useManualQuery<
-    GetChangePreviewResult,
-    GetChangePreviewArgs
-  >({
-    fields: ['amount', 'prorationDate'],
-    operation: QueryEvent.GET_CHANGE_PREVIEW,
-    types: { memberPlanId: { required: true } }
+  const modalType: PaymentModalType = PaymentStore.useStoreState((state) => {
+    return state.type;
   });
 
-  useEffect(() => {
-    if (modalType !== 'CHANGE_MEMBERSHIP') return;
-
-    (async () => {
-      const { data } = await getChangePreview({ memberPlanId: planId });
-
-      setChangeData({
-        changeAmount: data?.amount,
-        changeProrationDate: data?.prorationDate
-      });
-    })();
-  }, [modalType, planId]);
+  const { loading } = useInitChangePreview();
 
   return (
     <StoryPage
       description="Please review this information to make sure we got everything right."
       id="FINISH"
       loading={loading}
-      show={modalType !== 'UPDATE_PAYMENT_METHOD'}
-      title={modalType === 'PAY_DUES' ? 'Pay Dues' : 'Change Membership Plan'}
+      show={modalType !== PaymentModalType.UPDATE_PAYMENT_METHOD}
+      title={
+        modalType === PaymentModalType.PAY_DUES
+          ? 'Pay Dues'
+          : 'Change Membership Plan'
+      }
     >
       <PaymentFinishForm />
     </StoryPage>

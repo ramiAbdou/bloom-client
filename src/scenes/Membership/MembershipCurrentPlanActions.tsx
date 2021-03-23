@@ -3,6 +3,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
+import { PaymentModalType } from '@modals/Payment/Payment.types';
 import { RecurrenceType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
@@ -30,7 +31,10 @@ const MembershipCurrentPlanActions: React.FC = () => {
   const onPrimaryClick = () => {
     showModal({
       id: ModalType.PAY_DUES,
-      metadata: { selectedPlanId: currentTypeId, type: 'PAY_DUES' }
+      metadata: {
+        selectedPlanId: currentTypeId,
+        type: PaymentModalType.PAY_DUES
+      }
     });
   };
 
