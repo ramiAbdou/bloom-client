@@ -23,9 +23,9 @@ const StoryPage: React.FC<StoryPageProps> = ({
   title
 }) => {
   id = take([
-    [!!confirmation, 'CONFIRMATION'],
-    [!!id, id],
-    [!!branches, Object.keys(branches)[0]]
+    [confirmation, 'CONFIRMATION'],
+    [id, id],
+    [branches, branches && Object.keys(branches)[0]]
   ]);
 
   branchId = branchId ?? id;

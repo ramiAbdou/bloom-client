@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { QueryResult } from '@hooks/useQuery.types';
 import Story from '@organisms/Story/Story';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
+import { useStoreState } from '@store/Store';
 import PaymentStore, { paymentModel } from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 import PaymentCardPage from './PaymentCardPage';
@@ -31,34 +30,15 @@ const PaymentModal: React.FC = () => {
     return modal.metadata?.selectedPlanId;
   });
 
-  const currentPlanId: string = useStoreState(({ db }) => {
-    return db.member?.plan;
-  });
-
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
-  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
   const { loading }: Partial<QueryResult> = useInitPayment();
 
-  // Get the member and see if they've paid their dues or not.
+  // If CHANGE_MEMBERSHIP or PAY_DUES, there should be a selectedPlanId!
+  const missingSelectedPlan: boolean =
+    (modalType === PaymentModalType.CHANGE_MEMBERSHIP ||
+      modalType === PaymentModalType.PAY_DUES) &&
+    !selectedPlanId;
 
-  useEffect(() => {
-    if (isAdmin || isDuesActive) return;
-
-    showModal({
-      id: ModalType.PAY_DUES,
-      metadata: {
-        selectedPlanId: currentPlanId,
-        type: PaymentModalType.PAY_DUES
-      }
-    });
-  }, [isDuesActive]);
-
-  if (loading) return null;
-  if (modalType !== PaymentModalType.UPDATE_PAYMENT_METHOD && !selectedPlanId) {
-    return null;
-  }
+  if (loading || missingSelectedPlan) return null;
 
   return (
     <PaymentStore.Provider

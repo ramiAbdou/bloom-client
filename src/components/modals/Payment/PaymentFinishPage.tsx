@@ -3,6 +3,7 @@ import React from 'react';
 
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
+import { QueryResult } from '@hooks/useQuery.types';
 import Form from '@organisms/Form/Form';
 import StoryPage from '@organisms/Story/StoryPage';
 import {
@@ -12,7 +13,7 @@ import {
 } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
-import { PaymentModalType } from './Payment.types';
+import { GetChangePreviewResult, PaymentModalType } from './Payment.types';
 import { getPlanDescription } from './Payment.util';
 import PaymentFinishButton from './PaymentFinishButton';
 import useCreateLifetimePayment from './useCreateLifetimePayment';
@@ -64,7 +65,9 @@ const PaymentFinishPage: React.FC = () => {
     return state.type;
   });
 
-  const { loading } = useInitChangePreview();
+  const {
+    loading
+  }: QueryResult<GetChangePreviewResult> = useInitChangePreview();
 
   return (
     <StoryPage
