@@ -1,6 +1,7 @@
 import { TsConfigPathsPlugin } from 'awesome-typescript-loader';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
+import DuplicatePackageCheckerPlugin from 'duplicate-package-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
@@ -51,8 +52,8 @@ const webpackBaseConfig: WebpackConfiguration = {
     ]
   },
 
-  // Hanldes a "Cannot find module 'fs'" error we've seen before.
-  node: { fs: 'empty' },
+  // Hanldes a "Cannot find module 'fs'/'net'" error we've seen before.
+  node: { fs: 'empty', net: 'empty' },
 
   // Outputs the file to dist/index.js.
   output: { filename: 'index.js', path: path.join(__dirname, '/dist') },
@@ -64,6 +65,10 @@ const webpackBaseConfig: WebpackConfiguration = {
 
     // Loads the appropriate .env file based on the APP_ENV.
     new Dotenv({ path: path.resolve(__dirname, dotEnvName) }),
+
+    // Checks to see if there are any duplicate packages in our node_modules,
+    // and gives a warning so we can fix them if needed.
+    new DuplicatePackageCheckerPlugin(),
 
     // Allows manifest.json to be read properly which effectively allows the
     // browser to load our favicon very easily.
