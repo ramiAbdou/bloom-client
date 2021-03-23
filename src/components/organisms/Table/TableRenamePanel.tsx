@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
-import { OnFormSubmit } from '@organisms/Form/Form.types';
+import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 import FormShortText from '../Form/FormShortText';
@@ -25,7 +25,7 @@ const TableRenameForm: React.FC = () => {
     (store) => store.updateColumn
   );
 
-  const onSubmit: OnFormSubmit = async ({ closePanel, items }) => {
+  const onSubmit: OnFormSubmitFunction = async ({ closePanel, items }) => {
     // Only one form item, so just index first element.
     const updatedTitle: string = items.TABLE_COLUMN?.value;
 

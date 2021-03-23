@@ -1,11 +1,14 @@
 import useMutation from '@hooks/useMutation';
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import { ICommunityIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/events';
 
-const useMailchimpSubmit = (): OnFormSubmit => {
+const useMailchimpSubmit = (): OnFormSubmitFunction => {
   const options = useStoreState(
     ({ db }) => db.communityIntegrations?.mailchimpLists
   );

@@ -48,7 +48,7 @@ const PaymentAnalyticsHistoryTable: React.FC = () => {
         const { amount, createdAt, plan }: IPayment = payment;
         const member: IMember = db.byMemberId[payment?.member];
 
-        return {
+        const row: PaymentAnalyticsHistoryTableData = {
           amount: `$${amount.toFixed(2)}`,
           email: member?.email,
           fullName: `${member?.firstName} ${member?.lastName}`,
@@ -56,6 +56,8 @@ const PaymentAnalyticsHistoryTable: React.FC = () => {
           paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
           plan: db.byMemberPlanId[plan].name
         };
+
+        return row;
       }, []);
 
     return result;

@@ -1,11 +1,14 @@
 import useMutation from '@hooks/useMutation';
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/events';
 import { UpdateUserSocialsArgs } from './Profile.types';
 
-const useUpdateMemberSocials = (): OnFormSubmit => {
+const useUpdateMemberSocials = (): OnFormSubmitFunction => {
   const [updateMemberSocials] = useMutation<IUser, UpdateUserSocialsArgs>({
     fields: [
       'clubhouseUrl',

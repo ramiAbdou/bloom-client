@@ -4,7 +4,7 @@ import useMutation from '@hooks/useMutation';
 import { useStoreActions } from '@store/Store';
 import { MutationEvent } from '@util/events';
 
-const useLogout = () => {
+const useLogout = (): VoidFunction => {
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
 
   const { push } = useHistory();

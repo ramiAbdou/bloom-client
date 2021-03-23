@@ -54,7 +54,7 @@ export interface FormOptions {
 export interface FormProps extends ClassNameProps, ShowProps {
   questions?: FormItemData[];
   options?: FormOptions;
-  onSubmit?: OnFormSubmit;
+  onSubmit?: OnFormSubmitFunction;
   onSubmitDeps?: any[];
   spacing?: 'md' | 'lg';
 }
@@ -71,4 +71,4 @@ export type OnFormSubmitArgs = {
   storyItems?: Record<string, FormItemData>;
 };
 
-export type OnFormSubmit = (args: OnFormSubmitArgs) => Promise<void>;
+export type OnFormSubmitFunction = (args: OnFormSubmitArgs) => Promise<void>;

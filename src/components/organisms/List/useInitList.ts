@@ -10,7 +10,7 @@ import { ListProps } from './List.types';
  */
 const useInitList = (
   props: Pick<ListProps, 'items' | 'options' | 'prepareForFilter'>
-) => {
+): void => {
   const { items, options, prepareForFilter } = props;
 
   const storedItems = ListStore.useStoreState((state) => state.items);

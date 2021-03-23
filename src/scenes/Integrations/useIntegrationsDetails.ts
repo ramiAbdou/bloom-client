@@ -1,17 +1,22 @@
 import { useStoreState } from '@store/Store';
 
-const useIntegrationsDetails = (name: string) => {
-  const listName = useStoreState(
-    ({ db }) => db.communityIntegrations.mailchimpListName
-  );
+interface IntegrationsDetails {
+  label: string;
+  value: string;
+}
 
-  const listId = useStoreState(
-    ({ db }) => db.communityIntegrations.mailchimpListId
-  );
+const useIntegrationsDetails = (name: string): IntegrationsDetails[] => {
+  const listName: string = useStoreState(({ db }) => {
+    return db.communityIntegrations.mailchimpListName;
+  });
 
-  const value = useStoreState(
-    ({ db }) => db.communityIntegrations.stripeAccountId
-  );
+  const listId: string = useStoreState(({ db }) => {
+    return db.communityIntegrations.mailchimpListId;
+  });
+
+  const value: string = useStoreState(({ db }) => {
+    return db.communityIntegrations.stripeAccountId;
+  });
 
   if (name === 'Mailchimp') {
     return [

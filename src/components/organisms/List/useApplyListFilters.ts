@@ -2,7 +2,7 @@ import { useStoreActions } from '@store/Store';
 import ListStore from './List.store';
 import ListFilterStore from './ListFilter/ListFilter.store';
 
-const useApplyListFilters = () => {
+const useApplyListFilters = (): VoidFunction => {
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
   const setCustomFilters = ListStore.useStoreActions(

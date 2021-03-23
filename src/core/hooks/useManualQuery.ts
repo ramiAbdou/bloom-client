@@ -13,7 +13,7 @@ function useManualQuery<T = any, S = any>({
   schema,
   types,
   variables: initialVariables
-}: UseQueryArgs<T, S>): MutationResult<T, S> {
+}: UseQueryArgs<S>): MutationResult<T, S> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const [manualQueryFn, { data, error, loading }] = useGQLManualQuery(

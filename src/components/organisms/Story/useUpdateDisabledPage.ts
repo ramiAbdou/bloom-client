@@ -7,7 +7,7 @@ import StoryStore from './Story.store';
  * If the page is before the current page, it isn't disabled, otherwise it
  * is.
  */
-const useUpdateDisabledPage = (id: string) => {
+const useUpdateDisabledPage = (id: string): void => {
   const pageId = StoryStore.useStoreState((state) => state.pageId);
   const pages = StoryStore.useStoreState((state) => state.pages);
 

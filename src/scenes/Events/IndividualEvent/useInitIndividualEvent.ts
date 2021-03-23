@@ -27,7 +27,7 @@ const useInitIndividualEvent = (): Partial<QueryResult> => {
   const setActive = useStoreActions(({ db }) => db.setActive);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { data: data1, loading: loading1 } = useQuery<IEvent, GetEventArgs>({
+  const { data: data1, loading: loading1 } = useQuery<any, GetEventArgs>({
     fields: [
       'description',
       'endTime',
@@ -75,8 +75,7 @@ const useInitIndividualEvent = (): Partial<QueryResult> => {
     if (data1) {
       setActive([
         { id: data1.id, table: 'events' },
-        // @ts-ignore b/c type issues.
-        { id: data1.community?.id, table: 'communities' }
+        { id: data1.community.id, table: 'communities' }
       ]);
     }
   }, [data1]);

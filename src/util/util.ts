@@ -6,7 +6,7 @@ import { APIError } from 'graphql-hooks';
  * @param url - URL to start with.
  * @param params - URL param object to build the URL.
  */
- export const buildUrl = (
+export const buildUrl = (
   url: string,
   params: Record<string, string>
 ): string => {
@@ -42,6 +42,10 @@ export const cx = (
   return customClass ? `${classes} ${customClass}` : classes;
 };
 
+interface GraphQLError {
+  message: string;
+}
+
 /**
  * Returns the GraphQL error from the APIError object returned after a GraphQL
  * query or mutation runs.
@@ -57,14 +61,13 @@ export const getGraphQLError = (error: APIError): string => {
   if (fetchError) return 'Failed to connect to Bloom servers.';
   if (httpError) return 'Request failed.';
 
-  // @ts-ignore b/c the message must exist on the GraphQL error object.
-  return graphQLErrors[0]?.message;
+  return (graphQLErrors[0] as GraphQLError)?.message;
 };
 
 /**
  * Opens an href link in a compatible way with all browsers.
  */
-export const openHref = (href: string, openNewTab = true) => {
+export const openHref = (href: string, openNewTab = true): void => {
   if (!href?.startsWith('http')) href = `http://${href}`;
   // If the browser is Safari, just change the location of the current
   // tab, but if not, open a new window with the URL.
@@ -84,7 +87,7 @@ export function sortObjects<T>(
   b: T,
   keys: keyof T | (keyof T)[],
   direction: 'ASC' | 'DESC' = 'DESC'
-) {
+): number {
   const order = direction === 'ASC' ? 1 : -1;
 
   if (!Array.isArray(keys)) {
@@ -116,7 +119,7 @@ export function sortObjects<T>(
 /**
  * Returns the first value in which the condition is true.
  */
-export const take = (arr: ([boolean, any] | any)[]) => {
+export const take = (arr: ([boolean, any] | any)[]): any => {
   for (let i = 0; i < arr.length; i++) {
     const element = arr[i];
     if (!Array.isArray(element) && !!element) return element;

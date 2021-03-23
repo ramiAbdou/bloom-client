@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -10,28 +10,20 @@
     "moduleResolution": "node",
     "outDir": "./dist/",
     "paths": {
-      "@atoms/*": ["components/atoms/*"],
-      "@containers/*": ["components/containers/*"],
-      "@hooks/*": ["core/hooks/*"],
-      "@images/*": ["components/images/*"],
-      "@modals/*": ["components/modals/*"],
-      "@molecules/*": ["components/molecules/*"],
-      "@organisms/*": ["components/organisms/*"],
-      "@scenes/*": ["scenes/*"],
-      "@store/*": ["core/store/*"],
-      "@util/*": ["util/*"]
+      "@atoms/*": ["./src/components/atoms/*"],
+      "@containers/*": ["./src/components/containers/*"],
+      "@hooks/*": ["./src/core/hooks/*"],
+      "@images/*": ["./src/components/images/*"],
+      "@modals/*": ["./src/components/modals/*"],
+      "@molecules/*": ["./src/components/molecules/*"],
+      "@organisms/*": ["./src/components/organisms/*"],
+      "@scenes/*": ["./src/scenes/*"],
+      "@store/*": ["./src/core/store/*"],
+      "@util/*": ["./src/util/*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,
     "strictPropertyInitialization": false,
-    "typeRoots": ["./node_modules/@types", "./src/index.d.ts"]
-  },
-  "include": [
-    "./src/**/*",
-    "server.js",
-    "webpack.config.base.ts",
-    "webpack.config.dev.ts",
-    "webpack.config.prod.ts"
-  ],
-  "exclude": ["./node_modules"]
+    "typeRoots": ["./node_modules/@types", "./src/types.d.ts"]
+  }
 }

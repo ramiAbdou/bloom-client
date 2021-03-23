@@ -6,7 +6,7 @@ import { QuestionType } from '@util/constants';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 
-const useInitFormItem = (props: FormItemData) => {
+const useInitFormItem = (props: FormItemData): void => {
   const key = getFormItemKey(props);
 
   const storedValue = FormStore.useStoreState(({ items }) => items[key]?.value);

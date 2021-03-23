@@ -1,7 +1,10 @@
 import day from 'dayjs';
 
 import useMutation from '@hooks/useMutation';
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/events';
@@ -9,7 +12,7 @@ import { uploadImage } from '@util/imageUtil';
 
 type CreateEventArgs = Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>;
 
-const useCreateEvent = (): OnFormSubmit => {
+const useCreateEvent = (): OnFormSubmitFunction => {
   const [createEvent] = useMutation<IEvent, CreateEventArgs>({
     fields: [
       'description',

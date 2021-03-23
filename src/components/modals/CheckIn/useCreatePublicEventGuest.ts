@@ -1,5 +1,8 @@
 import useMutation from '@hooks/useMutation';
-import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import StoryStore from '@organisms/Story/Story.store';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { IEventGuest } from '@store/Db/entities';
@@ -7,7 +10,7 @@ import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/events';
 
-const useCreatePublicEventGuest = () => {
+const useCreatePublicEventGuest = (): OnFormSubmitFunction => {
   const eventId = useStoreState(({ db }) => db.event?.id);
 
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({

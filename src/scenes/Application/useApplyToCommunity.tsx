@@ -1,12 +1,15 @@
 import useMutation from '@hooks/useMutation';
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
 import { IMemberPlan, IQuestion } from '@store/Db/entities';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/events';
 
-const useApplyToCommunity = (): OnFormSubmit => {
+const useApplyToCommunity = (): OnFormSubmitFunction => {
   const [applyToCommunity] = useMutation<any, ApplyForMembershipArgs>({
     fields: ['id'],
     operation: MutationEvent.APPLY_TO_COMMUNITY,

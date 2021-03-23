@@ -4,7 +4,7 @@ import { Schema } from 'normalizr';
 
 import { MutationEvent } from '@util/events';
 
-export type UseMutationArgs<T, S> = {
+export type UseMutationArgs<S> = {
   fields?: Fields;
   operation: MutationEvent;
   schema?: Schema;
@@ -12,7 +12,15 @@ export type UseMutationArgs<T, S> = {
   variables?: S;
 };
 
-type UseMutationFnResult<T> = { data: T; error: string; loading: boolean };
+export type UseMutationFnResult<T> = {
+  data: T;
+  error: string;
+  loading: boolean;
+};
+
+export type MutationResultVariablesFunction<T, S> = (
+  variables?: S
+) => Promise<UseMutationFnResult<T>>;
 
 export type MutationResult<T, S> = [
   (variables?: S) => Promise<UseMutationFnResult<T>>,

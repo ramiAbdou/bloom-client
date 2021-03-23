@@ -17,7 +17,9 @@ const FormLabel: React.FC<FormLabelProps> = ({
 }) => {
   if (!children) return null;
 
-  const css: string = cx('o-form-label', { 'o-form-label--required': required });
+  const css: string = cx('o-form-label', {
+    'o-form-label--required': required
+  });
 
   return (
     <div className={css} style={{ marginBottom }}>

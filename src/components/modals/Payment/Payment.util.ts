@@ -10,7 +10,7 @@ import { take } from '@util/util';
  */
 export const getTypeDescription = (
   type: Pick<IMemberPlan, 'amount' | 'recurrence'>
-) => {
+): string => {
   const { amount, recurrence } = type;
 
   // Formats the amount with FREE if the amount is 0.
