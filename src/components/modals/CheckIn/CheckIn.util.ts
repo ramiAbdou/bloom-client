@@ -9,7 +9,9 @@ interface GetCheckInErrorMessageArgs {
 /**
  * Returns the login error message based on the cookie.
  */
-export const getCheckInErrorMessage = (args: GetCheckInErrorMessageArgs) => {
+export const getCheckInErrorMessage = (
+  args: GetCheckInErrorMessageArgs
+): string => {
   const { error, owner } = args;
 
   if (error === ErrorType.APPLICATION_REJECTED) {

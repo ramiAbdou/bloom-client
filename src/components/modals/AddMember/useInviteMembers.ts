@@ -1,8 +1,8 @@
 import useMutation from '@hooks/useMutation';
 import {
   FormItemData,
-  OnFormSubmit,
-  OnFormSubmitArgs
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/events';
@@ -10,7 +10,7 @@ import { take } from '@util/util';
 import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';
 
-const useInviteMembers = (): OnFormSubmit => {
+const useInviteMembers = (): OnFormSubmitFunction => {
   const admin = AddMemberStore.useStoreState((state) => state.admin);
 
   const [inviteMembers] = useMutation<any, AddMembersArgs>({

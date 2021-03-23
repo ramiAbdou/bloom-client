@@ -7,7 +7,7 @@
     "build:stage": "APP_ENV=stage webpack --config ./webpack.config.prod.ts",
     "build:prod": "APP_ENV=prod webpack --config ./webpack.config.prod.ts",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json|md)\"",
-    "format:check": "prettier --ignore-path .gitignore --list-different \"**/*.+(js|ts|json|md)\"",
+    "format:check": "prettier --ignore-path .gitignore --list-different \"**/*.+(js|ts|tsx|json|)\"",
     "lint": "eslint --ignore-path .gitignore . --ext .ts",
     "lint:fix": "eslint --ignore-path .gitignore . --ext .ts --fix",
     "start:dev": "APP_ENV=dev webpack-dev-server --config ./webpack.config.dev.ts",

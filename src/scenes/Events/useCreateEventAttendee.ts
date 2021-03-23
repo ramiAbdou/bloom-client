@@ -1,10 +1,13 @@
 import useMutation from '@hooks/useMutation';
+import { UseMutationFnResult } from '@hooks/useMutation.types';
 import { IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/events';
 import { CreateEventAttendeeArgs } from './Events.types';
 
-const useCreateEventAttendee = () => {
+const useCreateEventAttendee = (): ((
+  variables?: CreateEventAttendeeArgs
+) => Promise<UseMutationFnResult<IEventAttendee>>) => {
   const [createEventAttendee] = useMutation<
     IEventAttendee,
     CreateEventAttendeeArgs

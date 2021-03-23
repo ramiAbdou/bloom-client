@@ -1,13 +1,16 @@
 import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/events';
 import PaymentStore from './Payment.store';
 import { CreateSubscriptionArgs } from './Payment.types';
 
-const useCreateSubscription = (): OnFormSubmit => {
+const useCreateSubscription = (): OnFormSubmitFunction => {
   const prorationDate = PaymentStore.useStoreState(
     (state) => state.changeProrationDate
   );

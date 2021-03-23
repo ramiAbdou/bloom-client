@@ -1,7 +1,7 @@
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import { OnFormSubmitFunction, OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
-const useSavePaymentMethod = (): OnFormSubmit => {
+const useSavePaymentMethod = (): OnFormSubmitFunction => {
   const elements = useElements();
   const stripe = useStripe();
 

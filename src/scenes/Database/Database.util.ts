@@ -63,7 +63,9 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
   return value;
 };
 
-export const getMemberTableRow = ({ db }: GetMemberTableRowArgs) => {
+export const getMemberTableRow = (args: GetMemberTableRowArgs): TableRow[] => {
+  const { db } = args;
+
   if (!db.community.plans?.length || !db.community.questions?.length) return [];
 
   const sortQuestionId: string = db.community?.questions?.find(

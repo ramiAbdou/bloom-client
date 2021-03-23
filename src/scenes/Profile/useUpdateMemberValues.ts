@@ -1,15 +1,15 @@
 import useMutation from '@hooks/useMutation';
 import {
   FormItemData,
-  OnFormSubmit,
-  OnFormSubmitArgs
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/events';
 import { MemberValueInput, UpdateMemberValueArgs } from './Profile.types';
 
-const useUpdateMemberValues = (): OnFormSubmit => {
+const useUpdateMemberValues = (): OnFormSubmitFunction => {
   const [updateMemberValues] = useMutation<
     IMemberValue[],
     UpdateMemberValueArgs

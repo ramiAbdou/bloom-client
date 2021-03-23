@@ -7,7 +7,7 @@ import path from 'path';
  */
 const startServer = (): void => {
   const app: express.Express = express();
-  const pathToBuild = path.join(__dirname, 'dist');
+  const pathToBuild = path.join(__dirname);
 
   app.use('/', express.static(pathToBuild));
   app.get('/*', (_, res) => res.sendFile(`${pathToBuild}/index.html`));

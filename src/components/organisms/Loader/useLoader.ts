@@ -8,7 +8,7 @@ import { useStoreActions } from '@store/Store';
  *
  * @param loading True if the application is loading.
  */
-const useLoader = (loading: boolean) => {
+const useLoader = (loading: boolean): void => {
   const closeLoader = useStoreActions(({ loader }) => loader.closeLoader);
   const showLoader = useStoreActions(({ loader }) => loader.showLoader);
 

@@ -4,7 +4,7 @@ import { Schema } from 'normalizr';
 
 import { QueryEvent } from '@util/events';
 
-export interface UseQueryArgs<T, S> {
+export interface UseQueryArgs<S> {
   fields?: Fields;
   operation: QueryEvent;
   schema?: Schema;

@@ -1,11 +1,14 @@
 import useManualQuery from '@hooks/useManualQuery';
-import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import { IQuestion } from '@store/Db/entities';
 import { QuestionCategory } from '@util/constants';
 import { QueryEvent } from '@util/events';
 import { IsEmailTakenArgs } from './Application.types';
 
-const useValidateEmail = () => {
+const useValidateEmail = (): OnFormSubmitFunction => {
   const [isEmailTaken] = useManualQuery<boolean, IsEmailTakenArgs>({
     operation: QueryEvent.IS_EMAIL_TAKEN,
     types: { communityId: { required: true }, email: { required: true } }

@@ -75,7 +75,7 @@ const getHueFromRGB = ([r, g, b]: number[]): number => {
  * @param color Hexadecimal representation of the color including the #.
  * @see https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
  */
-export const updateDocumentColors = (color: string) => {
+export const updateDocumentColors = (color: string): void => {
   // If the document's primary color is up to date, return early.
   const { style } = document.documentElement;
   if (style.getPropertyValue('--primary') === color) return;

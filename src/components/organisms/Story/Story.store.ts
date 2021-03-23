@@ -14,7 +14,11 @@ import { StoryPageProps } from './Story.types';
 export type StoryModel = {
   currentPage: Computed<StoryModel, StoryPageProps>;
   items: Record<string, FormItemData>;
-  getPage: Computed<StoryModel, (pageId: string) => StoryPageProps, {}>;
+  getPage: Computed<
+    StoryModel,
+    (pageId: string) => StoryPageProps,
+    Record<string, unknown>
+  >;
   goForward: Action<StoryModel>;
   pageId: string;
   pages: StoryPageProps[];

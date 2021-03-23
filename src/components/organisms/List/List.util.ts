@@ -9,7 +9,7 @@ import { ListFilterArgs } from './ListFilter/ListFilter.types';
  * Returns a hashed cache key based on the filters, custom filters, and the
  * search string.
  */
-export const getListCacheKey = (state: State<ListModel>) => {
+export const getListCacheKey = (state: State<ListModel>): string => {
   const { customFilters, filters, searchString } = state;
   return hash({ customFilters, filters, searchString });
 };
@@ -18,7 +18,7 @@ export const getListCacheKey = (state: State<ListModel>) => {
  * Returns the filtered items in the List based upon custom filters, quick
  * filters, and the search string.
  */
-export const runListFilters = (state: State<ListModel>) => {
+export const runListFilters = (state: State<ListModel>): any[] => {
   const filteredItems = [...state.items]
     ?.filter((entity) => {
       const customFilters = Object.values(state.customFilters);

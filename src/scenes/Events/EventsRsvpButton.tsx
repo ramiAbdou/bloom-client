@@ -53,7 +53,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
 
     await createEventGuest({ eventId });
 
-    const options: ToastOptions<boolean, DeleteEventGuestArgs> = {
+    const options: ToastOptions<DeleteEventGuestArgs> = {
       message: 'RSVP was registered.',
       mutationArgsOnUndo: {
         fields: ['deletedAt', 'id'],

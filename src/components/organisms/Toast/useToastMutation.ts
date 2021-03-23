@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import useMutation from '@hooks/useMutation';
+import { MutationResultVariablesFunction } from '@hooks/useMutation.types';
 import { useStoreActions } from '@store/Store';
 import { ToastOptions } from './Toast.types';
 
@@ -16,11 +17,10 @@ interface UseMutationOnCompleteArgs
  * args. If they exist and the toast hasn't been undone, then it executes
  * in the cleanup function. Otherwise, it doens't run.
  */
-const useToastMutation = ({
-  id,
-  mutationArgsOnUndo,
-  wasUndid
-}: UseMutationOnCompleteArgs) => {
+const useToastMutation = (
+  args: UseMutationOnCompleteArgs
+): MutationResultVariablesFunction<any, any> => {
+  const { id, mutationArgsOnUndo, wasUndid } = args;
   const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
 
   const [mutationOnUndoFn] = useMutation(

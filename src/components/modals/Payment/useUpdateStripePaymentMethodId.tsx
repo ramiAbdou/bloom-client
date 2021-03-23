@@ -1,12 +1,15 @@
 import useMutation from '@hooks/useMutation';
-import { OnFormSubmit, OnFormSubmitArgs } from '@organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { MutationEvent } from '@util/events';
 import { UpdateStripePaymentMethodIdArgs } from './Payment.types';
 
-const useUpdateStripePaymentMethodId = (): OnFormSubmit => {
+const useUpdateStripePaymentMethodId = (): OnFormSubmitFunction => {
   const elements = useElements();
   const stripe = useStripe();
 
