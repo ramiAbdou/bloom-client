@@ -1,9 +1,11 @@
+import { Configuration as WebpackConfiguration } from 'webpack';
+
 import baseConfig from './webpack.config.base';
 
-export default {
+// Also used for stage builds, despite that we call this "prodConfig".
+const webpackProdConfig: WebpackConfiguration = {
   ...baseConfig,
   mode: 'production',
-
   module: {
     rules: [
       ...baseConfig.module.rules,
@@ -11,3 +13,5 @@ export default {
     ]
   }
 };
+
+export default webpackProdConfig;

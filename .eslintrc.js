@@ -30,6 +30,7 @@ module.exports = {
     ],
     curly: ['error', 'multi-line'],
     'import/newline-after-import': 2,
+    'import/no-extraneous-dependencies': 0,
     'import/prefer-default-export': 0,
     'jsx-a11y/accessible-emoji': 0,
     'jsx-a11y/alt-text': 0,

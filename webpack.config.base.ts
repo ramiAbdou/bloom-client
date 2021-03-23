@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import StylelintPlugin from 'stylelint-webpack-plugin';
-import webpack, { Configuration } from 'webpack';
+import webpack, { Configuration as WebpackConfiguration } from 'webpack';
 
 let dotEnvName: string;
 
@@ -13,12 +13,13 @@ if (process.env.APP_ENV === 'dev') dotEnvName = '.env.dev';
 else if (process.env.APP_ENV === 'stage') dotEnvName = '.env.stage';
 else if (process.env.APP_ENV === 'prod') dotEnvName = '.env.prod';
 
-const baseConfig: Configuration = {
+const webpackBaseConfig: WebpackConfiguration = {
   entry: path.join(__dirname, '/src/App.tsx'),
 
   module: {
     rules: [
       {
+        // Handles stylesheets: .css, .scss
         test: /\.(css|scss)$/,
         use: [
           'style-loader',
@@ -29,18 +30,31 @@ const baseConfig: Configuration = {
         ]
       },
       {
+        // Handles images: .ico, .png
         exclude: /node_modules/,
         loader: 'file-loader',
         options: { context: 'src', name: 'images/[name].[ext]' },
         test: /\.(png|ico)$/
       },
-      { test: /\.svg$/, use: ['@svgr/webpack'] },
-      { exclude: /node_modules/, loader: 'ts-loader', test: /\.(ts|tsx)$/ }
+      {
+        // Handles SVG files and allows them to be treated like React components
+        // where you can import them as a component.
+        test: /\.svg$/,
+        use: ['@svgr/webpack']
+      },
+      {
+        // Handles the loading of Typescript files.
+        exclude: /node_modules/,
+        loader: 'ts-loader',
+        test: /\.(ts|tsx)$/
+      }
     ]
   },
 
+  // Hanldes a "Cannot find module 'fs'" error we've seen before.
   node: { fs: 'empty' },
 
+  // Outputs the file to dist/index.js.
   output: { filename: 'index.js', path: path.join(__dirname, '/dist') },
 
   plugins: [
@@ -60,8 +74,12 @@ const baseConfig: Configuration = {
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.scss'],
-    plugins: [new TsConfigPathsPlugin()]
+    plugins: [
+      // Reads the tsconfig.json file and automatically imports all of the
+      // aliases that we've defined there.
+      new TsConfigPathsPlugin()
+    ]
   }
 };
 
-export default baseConfig;
+export default webpackBaseConfig;
