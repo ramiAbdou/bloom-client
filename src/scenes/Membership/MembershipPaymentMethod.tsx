@@ -4,11 +4,7 @@ import React from 'react';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
 import { QueryResult } from '@hooks/useQuery.types';
-import {
-  IMemberPlan,
-  IPaymentMethod,
-  RecurrenceType
-} from '@store/Db/entities';
+import { IPaymentMethod } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';
 import useInitMembershipPaymentMethod from './useInitMembershipPaymentMethod';
@@ -43,20 +39,12 @@ const MembershipPaymentMethodContent: React.FC = () => {
 };
 
 const MembershipPaymentMethod: React.FC = () => {
-  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
-
-  const isLifetime: boolean = useStoreState(({ db }) => {
-    const plan: IMemberPlan = db.byMemberPlanId[db.member?.plan];
-    return plan?.recurrence === RecurrenceType.LIFETIME;
-  });
-
   const { loading }: QueryResult = useInitMembershipPaymentMethod();
 
   return (
     <Card
       className="s-membership-card s-membership-card--payment"
       loading={loading}
-      show={!isDuesActive || !isLifetime}
       title="Payment Method"
     >
       <MembershipPaymentMethodContent />

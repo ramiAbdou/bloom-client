@@ -4,18 +4,11 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import { PaymentModalType } from '@modals/Payment/Payment.types';
-import { RecurrenceType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
 const MembershipCurrentPlanActions: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
-
-  const isLifetime: boolean = useStoreState(({ db }) => {
-    return (
-      db.byMemberPlanId[db.member?.plan]?.recurrence === RecurrenceType.LIFETIME
-    );
-  });
 
   const currentTypeId: string = useStoreState(({ db }) => {
     return db.member?.plan;
@@ -25,8 +18,6 @@ const MembershipCurrentPlanActions: React.FC = () => {
 
   const { url } = useRouteMatch();
   const { push } = useHistory();
-
-  if (isDuesActive && isLifetime) return null;
 
   const onPrimaryClick = () => {
     showModal({

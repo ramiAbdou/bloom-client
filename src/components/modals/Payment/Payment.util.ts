@@ -6,7 +6,6 @@ import { take } from '@util/util';
  *
  * @example getPlanDescription(args) => FREE Per Month
  * @example getPlanDescription(args) => $20 Per Year
- * @example getPlanDescription(args) => $325 Lifetime
  */
 export const getPlanDescription = (
   type: Pick<IMemberPlan, 'amount' | 'recurrence'>
@@ -19,8 +18,7 @@ export const getPlanDescription = (
   // Construct string "Per" timespan based on the recurrence.
   const recurrenceString = take([
     [recurrence === RecurrenceType.YEARLY, 'Per Year'],
-    [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
-    [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
+    [recurrence === RecurrenceType.MONTHLY, 'Per Month']
   ]);
 
   return `${amountString} ${recurrenceString}`;

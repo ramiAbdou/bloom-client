@@ -8,17 +8,21 @@ $PREF: 's-directory';
   display: grid;
   padding: $xxs 0;
 
-  @include MT { padding-bottom: $xxl + $sm; }
+  @include MT {
+    padding-bottom: $xxl + $sm;
+  }
 
-  &:focus { outline: none; }
-};
+  &:focus {
+    outline: none;
+  }
+}
 
 // ## DIRECTORY CARD
 
 div.#{$PREF}-card {
   @extend .f;
   @extend .f-ac;
-  
+
   height: max-content;
   height: 100%;
   padding: 0;
@@ -26,24 +30,19 @@ div.#{$PREF}-card {
   width: 100%;
 
   > .c-tag-number,
-  > .t-row { position: absolute; top: $xs; z-index: 2; }
-
-  > .c-tag-number { left: $xs; }
-
   > .t-row {
-    background-color: hsl(36, 94%, 90%);
-    border-radius: $xxs;
-    padding: $xxs;
-    right: $xs;
-
-    > svg { color: #faa21e; }
+    position: absolute;
+    top: $xs;
+    z-index: 2;
   }
 
-  &--empty { height: initial; }
-};
+  > .c-tag-number {
+    left: $xs;
+  }
 
-div.#{$PREF}-card-star-ctr {
-  @extend .flex-acc;
+  &--empty {
+    height: initial;
+  }
 }
 
 .#{$PREF}-card > div > h1 {
@@ -57,7 +56,12 @@ div.#{$PREF}-card-star-ctr {
 .#{$PREF}-card > .m-profile-picture {
   position: relative;
   width: 100%;
-  &::before { content: ''; display: block; padding-top: 100%; }
+
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
 }
 
 .#{$PREF}-card > .m-profile-picture > * {
@@ -73,7 +77,10 @@ div.#{$PREF}-card-star-ctr {
 // ## CARD CONTENT - Refers to the text within the card (name and highlighted
 // field).
 
-.#{$PREF}-card-content { height: $xxl; padding: $sm $xs; }
+.#{$PREF}-card-content {
+  height: $xxl;
+  padding: $sm $xs;
+}
 .#{$PREF}-card-content > p {
   @extend .body--bold;
 

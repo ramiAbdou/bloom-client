@@ -161,7 +161,6 @@ export interface IMemberIntegrations extends BaseEntity {
 // ## MEMBER PLAN
 
 export enum RecurrenceType {
-  LIFETIME = 'Lifetime',
   MONTHLY = 'Monthly',
   YEARLY = 'Yearly'
 }

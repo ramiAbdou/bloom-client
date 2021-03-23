@@ -6,10 +6,6 @@ export enum PaymentModalType {
   UPDATE_PAYMENT_METHOD = 'UPDATE_PAYMENT_METHOD'
 }
 
-export interface CreateLifetimePaymentArgs {
-  memberPlanId: string;
-}
-
 export interface CreateSubscriptionArgs {
   memberPlanId: string;
   prorationDate?: number;

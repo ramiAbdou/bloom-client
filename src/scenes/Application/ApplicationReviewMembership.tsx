@@ -49,8 +49,7 @@ const ApplicationReviewMembeship: React.FC = () => {
     // Construct string "Per" timespan based on the recurrence.
     const recurrenceString = take([
       [recurrence === RecurrenceType.YEARLY, 'Per Year'],
-      [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
-      [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
+      [recurrence === RecurrenceType.MONTHLY, 'Per Month']
     ]);
 
     return `${amountString} ${recurrenceString}`;
