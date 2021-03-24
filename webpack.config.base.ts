@@ -8,6 +8,8 @@ import path from 'path';
 import StylelintPlugin from 'stylelint-webpack-plugin';
 import webpack, { Configuration as WebpackConfiguration } from 'webpack';
 
+import SentryWebpackPlugin from '@sentry/webpack-plugin';
+
 let dotEnvName: string;
 
 if (process.env.APP_ENV === 'dev') dotEnvName = '.env.dev';
@@ -79,7 +81,17 @@ const webpackBaseConfig: WebpackConfiguration = {
     }),
 
     new MiniCssExtractPlugin(),
+
+    new SentryWebpackPlugin({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      ignore: ['node_modules', 'webpack.config.*.ts'],
+      include: '.',
+      org: 'bloom-community',
+      project: 'bloom-client'
+    }),
+
     new StylelintPlugin({ files: '**/*.scss', fix: true }),
+
     new webpack.HotModuleReplacementPlugin()
   ],
 
