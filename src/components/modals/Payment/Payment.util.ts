@@ -4,11 +4,10 @@ import { take } from '@util/util';
 /**
  * Returns the type description based on the amount, recurrence and such.
  *
- * @example getTypeDescription(args) => FREE Per Month
- * @example getTypeDescription(args) => $20 Per Year
- * @example getTypeDescription(args) => $325 Lifetime
+ * @example getPlanDescription(args) => FREE Per Month
+ * @example getPlanDescription(args) => $20 Per Year
  */
-export const getTypeDescription = (
+export const getPlanDescription = (
   type: Pick<IMemberPlan, 'amount' | 'recurrence'>
 ): string => {
   const { amount, recurrence } = type;
@@ -19,8 +18,7 @@ export const getTypeDescription = (
   // Construct string "Per" timespan based on the recurrence.
   const recurrenceString = take([
     [recurrence === RecurrenceType.YEARLY, 'Per Year'],
-    [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
-    [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
+    [recurrence === RecurrenceType.MONTHLY, 'Per Month']
   ]);
 
   return `${amountString} ${recurrenceString}`;

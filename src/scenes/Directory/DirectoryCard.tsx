@@ -1,16 +1,13 @@
 import React from 'react';
-import { IoStar } from 'react-icons/io5';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Card from '@containers/Card/Card';
-import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import {
   IMember,
   IMemberPlan,
   IMemberValue,
-  IQuestion,
-  RecurrenceType
+  IQuestion
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -65,12 +62,6 @@ const DirectoryCardContent: React.FC = () => {
     return member?.role;
   });
 
-  const isLifetime: boolean = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    const type: IMemberPlan = db.byMemberPlanId[member?.plan];
-    return type?.recurrence === RecurrenceType.LIFETIME;
-  });
-
   const onClick = () => {
     showModal({ id: ModalType.PROFILE, metadata: memberId });
   };
@@ -78,17 +69,6 @@ const DirectoryCardContent: React.FC = () => {
   return (
     <Card noPadding className="s-directory-card" onClick={onClick}>
       <HeaderTag show={!!role}>{role}</HeaderTag>
-
-      <Row
-        align="center"
-        className="s-directory-card-star-ctr"
-        justify="center"
-        show={isLifetime}
-        spacing="xs"
-      >
-        <IoStar />
-      </Row>
-
       <DirectoryCardPicture />
       <DirectoryCardInformation />
     </Card>

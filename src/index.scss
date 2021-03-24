@@ -6,7 +6,7 @@
 @import './core/scss/typography';
 @import './core/scss/utility';
 
-// 
+//
 
 @import './components/atoms/Button/Button.scss';
 @import './components/atoms/Checkbox/Checkbox.scss';
@@ -16,11 +16,10 @@
 @import './components/atoms/Spinner/Spinner.scss';
 @import './components/atoms/Tag/Tag.scss';
 
-// 
+//
 
 @import './components/containers/Aspect/Aspect.scss';
 @import './components/containers/Card/Card.scss';
-@import './components/containers/Grid/Grid.scss';
 @import './components/containers/LoadingHeader/LoadingHeader.scss';
 @import './components/containers/Main/Main.scss';
 @import './components/containers/Row/Row.scss';
@@ -33,7 +32,7 @@
 @import './components/modals/Profile/Profile.scss';
 @import './components/modals/Payment/Payment.scss';
 
-// 
+//
 
 @import './components/molecules/Dropdown/Dropdown.scss';
 @import './components/molecules/Radio/Radio.scss';
@@ -41,7 +40,7 @@
 @import './components/molecules/ProfilePicture/ProfilePicture.scss';
 @import './components/molecules/SearchBar/SearchBar.scss';
 
-// 
+//
 
 @import './components/organisms/Chart/Chart.scss';
 @import './components/organisms/Form/Form.scss';
@@ -57,11 +56,11 @@
 @import './components/organisms/Table/TablePagination/TablePagination.scss';
 @import './components/organisms/Toast/Toast.scss';
 
-// 
+//
 
 @import './scenes/Analytics/MembersAnalytics/MembersAnalytics.scss';
 
-// 
+//
 
 @import './scenes/Application/Application.scss';
 
@@ -69,24 +68,24 @@
 
 @import './scenes/Applicants/Applicants.scss';
 
-// 
+//
 
 @import './scenes/Directory/Directory.scss';
 
-// 
+//
 
 @import './scenes/Events/EventsCard/EventsCard.scss';
 @import './scenes/Events/IndividualEvent/IndividualEvent.scss';
 
-// 
+//
 
 @import './scenes/Integrations/Integrations.scss';
 
-// 
+//
 
 @import './scenes/Login/Login.scss';
 
-// 
+//
 
 @import './scenes/Membership/Membership.scss';
 

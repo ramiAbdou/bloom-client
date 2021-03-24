@@ -22,7 +22,7 @@ const MemberDatabasePromoteButton: React.FC = () => {
   const tooltip: string = take([
     [tooManySelected, 'Can only promote 15 members admins at a time.'],
     [selfSelected, `Can't promote yourself.`],
-    'Promote to Admin(s)'
+    [true, 'Promote to Admin(s)']
   ]);
 
   const onClick = () => showModal({ id: ModalType.PROMOTE_MEMBERS });

@@ -13,13 +13,12 @@ const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: planId }) => {
   }, deepequal);
 
   // Formats the amount with FREE if the amount is 0.
-  const amountString = amount ? `$${amount}` : 'FREE';
+  const amountString: string = amount ? `$${amount}` : 'FREE';
 
   // Construct string "Per" timespan based on the recurrence.
-  const recurrenceString = take([
+  const recurrenceString: string = take([
     [recurrence === RecurrenceType.YEARLY, 'Per Year'],
-    [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
-    [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
+    [recurrence === RecurrenceType.MONTHLY, 'Per Month']
   ]);
 
   return (

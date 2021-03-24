@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { useStoreState } from '@store/Store';
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { Stripe } from '@stripe/stripe-js';
+import useLoadStripe from './useLoadStripe';
 
 const PaymentStripeProvider: React.FC = ({ children }) => {
-  const [stripe, setStripe] = useState<Stripe>(null);
+  const stripe: Stripe = useLoadStripe();
 
-  const stripeAccountId: string = useStoreState(({ db }) => {
-    return db.communityIntegrations?.stripeAccountId;
-  });
-
-  useEffect(() => {
-    if (!stripeAccountId) return;
-
-    (async () => {
-      const result: Stripe = await loadStripe(
-        process.env.STRIPE_PUBLISHABLE_KEY,
-        { stripeAccount: stripeAccountId }
-      );
-
-      if (result) setStripe(result);
-    })();
-  }, [stripeAccountId]);
-
+  // We don't even render the children until the Stripe object has been loaded,
+  // and this ensures that when we submit a payment it will reach Stripe.
   if (!stripe) return null;
 
   return (

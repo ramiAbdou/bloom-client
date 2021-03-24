@@ -5,7 +5,7 @@ import useMutation from '@hooks/useMutation';
 import usePush from '@hooks/usePush';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 
 const DeleteEventButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);

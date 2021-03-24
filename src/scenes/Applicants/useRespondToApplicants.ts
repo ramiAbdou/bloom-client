@@ -2,7 +2,7 @@ import useMutation from '@hooks/useMutation';
 import { MutationResult } from '@hooks/useMutation.types';
 import { IMember, MemberStatus } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 
 export interface RespondToApplicantsArgs {
   memberIds: string[];

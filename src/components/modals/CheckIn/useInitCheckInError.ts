@@ -7,8 +7,8 @@ import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { ErrorContext } from '@util/errors';
-import { QueryEvent } from '@util/events';
+import { ErrorContext } from '@util/constants.errors';
+import { QueryEvent } from '@util/constants.events';
 
 /**
  * If a LOGIN_ERROR exists via cookie, then we need to load the community's

@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 
 import useMutation from '@hooks/useMutation';
 import { useStoreActions } from '@store/Store';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 
 const useLogout = (): VoidFunction => {
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);

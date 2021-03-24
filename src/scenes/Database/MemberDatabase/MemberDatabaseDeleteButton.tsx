@@ -36,7 +36,7 @@ const useDeleteTooltip = (): string => {
   const tooltip: string = take([
     [isSelfSelected, `Can't delete member(s) because you selected yourself.`],
     [!hasPermissions, `You don't have the permissions to delete other admins.`],
-    'Delete Member(s)'
+    [true, 'Delete Member(s)']
   ]);
 
   return tooltip;

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
+import { PaymentModalType } from '@modals/Payment/Payment.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
@@ -14,7 +15,7 @@ const MembershipPaymentMethodButton: React.FC = () => {
   const onClick = () => {
     showModal({
       id: ModalType.UPDATE_PAYMENT_METHOD,
-      metadata: { type: 'UPDATE_PAYMENT_METHOD' }
+      metadata: { type: PaymentModalType.UPDATE_PAYMENT_METHOD }
     });
   };
 

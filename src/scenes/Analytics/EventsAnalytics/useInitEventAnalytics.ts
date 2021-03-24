@@ -8,7 +8,7 @@ import {
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 /**
  * Initializes the event analytics page by fetching all of the past events,

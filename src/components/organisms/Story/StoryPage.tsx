@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import { cx } from '@util/util';
+import { cx, take } from '@util/util';
 import StoryStore from './Story.store';
 import { StoryPageBranch, StoryPageProps } from './Story.types';
 import StoryConfirmation from './StoryConfirmation';
@@ -22,10 +22,11 @@ const StoryPage: React.FC<StoryPageProps> = ({
   show,
   title
 }) => {
-  id =
-    (!!confirmation && 'CONFIRMATION') ||
-    (!!id && id) ||
-    (!!branches && Object.keys(branches)[0]);
+  id = take([
+    [confirmation, 'CONFIRMATION'],
+    [id, id],
+    [branches, branches && Object.keys(branches)[0]]
+  ]);
 
   branchId = branchId ?? id;
   branches = branches ?? { [branchId]: { description, iconUrl, title } };

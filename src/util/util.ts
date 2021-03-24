@@ -117,12 +117,14 @@ export function sortObjects<T>(
 }
 
 /**
- * Returns the first value in which the condition is true.
+ * Returns the second value of the 2-tuple who's first value returns true.
+ *
+ * @param arr - Array of 2-tuples in which the first value gets evaluated to a
+ * boolean.
  */
-export const take = (arr: ([boolean, any] | any)[]): any => {
+export const take = (arr: [any, any][]): any => {
   for (let i = 0; i < arr.length; i++) {
-    const element = arr[i];
-    if (!Array.isArray(element) && !!element) return element;
+    const element: [any, any] = arr[i];
     if (element[0]) return element[1];
   }
 

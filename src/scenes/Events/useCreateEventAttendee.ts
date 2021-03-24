@@ -2,7 +2,7 @@ import useMutation from '@hooks/useMutation';
 import { UseMutationFnResult } from '@hooks/useMutation.types';
 import { IEventAttendee } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { CreateEventAttendeeArgs } from './Events.types';
 
 const useCreateEventAttendee = (): ((

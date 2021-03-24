@@ -2,7 +2,7 @@ import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 const useInitApplicants = (): QueryResult<IMember[]> => {
   const result: QueryResult<IMember[]> = useQuery<IMember[]>({

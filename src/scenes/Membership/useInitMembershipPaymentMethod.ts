@@ -2,7 +2,7 @@ import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 const useInitMembershipPaymentMethod = (): QueryResult<
   IMemberIntegrations[]

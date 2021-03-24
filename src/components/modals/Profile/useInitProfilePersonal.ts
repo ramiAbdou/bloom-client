@@ -3,7 +3,7 @@ import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberSocials } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 const useInitProfilePersonal = (): QueryResult<IMemberSocials> => {
   const memberId = IdStore.useStoreState((state) => state.id);

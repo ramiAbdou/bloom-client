@@ -5,7 +5,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { UpdateUserSocialsArgs } from './Profile.types';
 
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {

@@ -7,7 +7,7 @@ import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 
 const useDeleteMembers = (): OnFormSubmitFunction => {

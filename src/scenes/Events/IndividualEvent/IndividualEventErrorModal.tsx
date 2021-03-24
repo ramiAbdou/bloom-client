@@ -3,7 +3,7 @@ import React from 'react';
 
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import { useStoreState } from '@store/Store';
-import { ErrorType } from '@util/errors';
+import { ErrorType } from '@util/constants.errors';
 
 const IndividualEventErrorModal: React.FC = () => {
   const error:

@@ -4,7 +4,7 @@ import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { TimeSeriesData } from '@util/constants';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 const MembersAnalyticsActiveChart: React.FC = () => {
   const { data, loading } = useQuery<TimeSeriesData[]>({

@@ -7,9 +7,7 @@ export enum MutationEvent {
   CREATE_EVENT_ATTENDEE = 'createEventAttendee',
   CREATE_EVENT_GUEST = 'createEventGuest',
   CREATE_EVENT_WATCH = 'createEventWatch',
-  CREATE_LIFETIME_PAYMENT = 'createLifetimePayment',
   CREATE_MEMBER_PLANS = 'createMemberPlans',
-  CREATE_SUBSCRIPTION = 'createSubscription',
   DELETE_EVENT = 'deleteEvent',
   DELETE_EVENT_GUEST = 'deleteEventGuest',
   DELETE_MEMBERS = 'deleteMembers',
@@ -29,6 +27,7 @@ export enum MutationEvent {
   UPDATE_QUESTION = 'updateQuestion',
   UPDATE_RECORDING_URL = 'updateRecordingUrl',
   UPDATE_STRIPE_PAYMENT_METHOD_ID = 'updateStripePaymentMethodId',
+  UPDATE_STRIPE_SUBSCRIPTION_ID = 'updateStripeSubscriptionId',
   VERIFY_TOKEN = 'verifyToken'
 }
 

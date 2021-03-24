@@ -41,8 +41,7 @@ const Application = new schema.Entity(
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = take([
-        [!!parent.rankedQuestionId, { questions: [parent.id] }],
-        {}
+        [!!parent.rankedQuestionId, { questions: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, applicationId: value.id };
@@ -66,8 +65,7 @@ const Community = new schema.Entity(
         [!!parent.memberId, { members: [parent.id] }],
         [!!parent.memberPlanId, { plans: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
-        [!!parent.questionId, { questions: [parent.id] }],
-        {}
+        [!!parent.questionId, { questions: [parent.id] }]
       ]);
 
       return { ...community, ...processedData };
@@ -95,8 +93,7 @@ const Event = new schema.Entity(
       const processedData = take([
         [!!parent.attendeeId, { attendees: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
-        [!!parent.watchId, { watches: [parent.id] }],
-        {}
+        [!!parent.watchId, { watches: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, eventId: value.id };
@@ -110,10 +107,7 @@ const EventAttendee = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = take([
-        [!!parent.eventId, { event: parent.id }],
-        {}
-      ]);
+      const processedData = take([[!!parent.eventId, { event: parent.id }]]);
 
       return { ...value, ...processedData, attendeeId: value.id };
     }
@@ -126,10 +120,7 @@ const EventGuest = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = take([
-        [!!parent.eventId, { event: parent.id }],
-        {}
-      ]);
+      const processedData = take([[!!parent.eventId, { event: parent.id }]]);
 
       return { ...value, ...processedData, guestId: value.id };
     }
@@ -142,10 +133,7 @@ const EventWatch = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = take([
-        [!!parent.eventId, { event: parent.id }],
-        {}
-      ]);
+      const processedData = take([[!!parent.eventId, { event: parent.id }]]);
 
       return { ...value, ...processedData, watchId: value.id };
     }
@@ -164,8 +152,7 @@ const Member = new schema.Entity(
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
         [!!parent.valueId, { values: [parent.id] }],
-        [!!parent.watchId, { watches: [parent.id] }],
-        {}
+        [!!parent.watchId, { watches: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, memberId: value.id };

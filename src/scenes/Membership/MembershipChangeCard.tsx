@@ -2,40 +2,42 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
+import { PaymentModalType } from '@modals/Payment/Payment.types';
 import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
+import { IdProps, ModalType } from '@util/constants';
 import { take } from '@util/util';
 
-const MembershipChangeCard: React.FC<IMemberPlan> = ({
-  amount,
-  id,
-  name,
-  recurrence
-}) => {
-  const isCurrent = useStoreState(({ db }) => db.member.plan === id);
+const MembershipChangeCard: React.FC<IdProps> = ({ id: planId }) => {
+  const plan: IMemberPlan = useStoreState(({ db }) => {
+    return db.byMemberPlanId[planId];
+  });
+
+  const isCurrent = useStoreState(({ db }) => db.member.plan === planId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({
       id: ModalType.CHANGE_MEMBERSHIP,
-      metadata: { selectedPlanId: id, type: 'CHANGE_MEMBERSHIP' }
+      metadata: {
+        selectedPlanId: planId,
+        type: PaymentModalType.CHANGE_MEMBERSHIP
+      }
     });
   };
 
   // Formats the amount with FREE if the amount is 0.
-  const amountString = amount ? `$${amount}` : 'FREE';
+  const amountString: string = plan.amount ? `$${plan.amount}` : 'FREE';
 
   // Construct string "Per" timespan based on the recurrence.
-  const recurrenceString = take([
-    [recurrence === RecurrenceType.YEARLY, 'Per Year'],
-    [recurrence === RecurrenceType.MONTHLY, 'Per Month'],
-    [recurrence === RecurrenceType.LIFETIME, 'Lifetime']
+  const recurrenceString: string = take([
+    [plan.recurrence === RecurrenceType.YEARLY, 'Per Year'],
+    [plan.recurrence === RecurrenceType.MONTHLY, 'Per Month']
   ]);
 
   return (
     <Card className="s-membership-card">
-      <h4>{name}</h4>
+      <h4>{plan.name}</h4>
 
       <p>
         <span>{amountString}</span>

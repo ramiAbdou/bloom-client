@@ -7,7 +7,7 @@ import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { DeleteEventGuestArgs } from './Events.types';
 import useCreateEventGuest from './useCreateEventGuest';
 

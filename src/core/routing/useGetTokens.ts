@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import useManualQuery from '@hooks/useManualQuery';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 interface GetTokensResult {
   communityId: string;

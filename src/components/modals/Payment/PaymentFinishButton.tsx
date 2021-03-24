@@ -3,24 +3,28 @@ import { IoLockClosed } from 'react-icons/io5';
 
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
+import { take } from '@util/util';
 import PaymentStore from './Payment.store';
+import { PaymentModalType } from './Payment.types';
 
 const PaymentFinishButton: React.FC = () => {
-  const type = PaymentStore.useStoreState((state) => state.type);
+  const type: PaymentModalType = PaymentStore.useStoreState((state) => {
+    return state.type;
+  });
 
-  const selectedPlanId = PaymentStore.useStoreState(
-    (state) => state.selectedPlanId
-  );
+  const selectedPlanId: string = PaymentStore.useStoreState((state) => {
+    return state.selectedPlanId;
+  });
 
-  const changeAmount = PaymentStore.useStoreState(
-    (state) => state.changeAmount
-  );
+  const changeAmount: number = PaymentStore.useStoreState((state) => {
+    return state.changeAmount;
+  });
 
   const amount: number = useStoreState(({ db }) => {
     return changeAmount ?? db.byMemberPlanId[selectedPlanId]?.amount;
   });
 
-  const isLessThanCurrentType = useStoreState(({ db }) => {
+  const isLessThanCurrentType: boolean = useStoreState(({ db }) => {
     const selectedAmount: number = db.byMemberPlanId[selectedPlanId]?.amount;
     const currentAmount: number = db.byMemberPlanId[db.member.plan]?.amount;
 
@@ -31,15 +35,17 @@ const PaymentFinishButton: React.FC = () => {
     );
   });
 
-  const buttonTitle =
-    (type === 'UPDATE_PAYMENT_METHOD' && 'Update Payment Method') ||
-    (!amount && 'Change Membership') ||
-    `Finish and Pay $${amount}`;
+  const buttonTitle: string = take([
+    [type === PaymentModalType.UPDATE_PAYMENT_METHOD, 'Update Payment Method'],
+    [!amount, 'Change Membership'],
+    [true, `Finish and Pay $${amount}`]
+  ]);
 
-  const buttonLoadingText =
-    (type === 'UPDATE_PAYMENT_METHOD' && 'Saving...') ||
-    ((!amount || isLessThanCurrentType) && 'Changing...') ||
-    `Paying...`;
+  const buttonLoadingText: string = take([
+    [type === PaymentModalType.UPDATE_PAYMENT_METHOD, 'Saving...'],
+    [!amount || isLessThanCurrentType, 'Changing...'],
+    [true, 'Paying...']
+  ]);
 
   // Use a traditional checkout form.
   return (
@@ -47,7 +53,9 @@ const PaymentFinishButton: React.FC = () => {
       className="mo-payment-button"
       loadingText={buttonLoadingText}
     >
-      {(type === 'UPDATE_PAYMENT_METHOD' || !!amount) && <IoLockClosed />}
+      {(type === PaymentModalType.UPDATE_PAYMENT_METHOD || !!amount) && (
+        <IoLockClosed />
+      )}
       {buttonTitle}
     </FormSubmitButton>
   );
