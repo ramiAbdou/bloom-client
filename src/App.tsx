@@ -32,8 +32,7 @@ const client: GraphQLClient = new GraphQLClient({
 });
 
 Sentry.init({
-  dsn:
-    'https://8c37eb0a17bf42efa6f58a21daed9fcf@o558124.ingest.sentry.io/5691215',
+  dsn: process.env.SENTRY_DSN,
   environment: process.env.APP_ENV,
   integrations: [new Integrations.BrowserTracing()],
 

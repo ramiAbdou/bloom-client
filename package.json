@@ -66,7 +66,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@sentry/webpack-plugin": "^1.14.2",
     "@svgr/webpack": "^5.5.0",
     "@types/copy-webpack-plugin": "^5.0.1",
     "@types/deline": "^1.0.1",
