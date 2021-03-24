@@ -32,17 +32,17 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
   const { category }: IQuestion = db.byQuestionId[questionId];
 
   if (category === QuestionCategory.BIO) return member.bio;
-  if (category === QuestionCategory.CLUBHOUSE_URL) return socials.clubhouseUrl;
+  if (category === QuestionCategory.CLUBHOUSE_URL) return socials?.clubhouseUrl;
   if (category === QuestionCategory.DUES_STATUS) return member.isDuesActive;
   if (category === QuestionCategory.EMAIL) return member.email;
-  if (category === QuestionCategory.FACEBOOK_URL) return socials.facebookUrl;
+  if (category === QuestionCategory.FACEBOOK_URL) return socials?.facebookUrl;
   if (category === QuestionCategory.FIRST_NAME) return member.firstName;
-  if (category === QuestionCategory.INSTAGRAM_URL) return socials.instagramUrl;
+  if (category === QuestionCategory.INSTAGRAM_URL) return socials?.instagramUrl;
   if (category === QuestionCategory.JOINED_AT) return member.joinedAt;
   if (category === QuestionCategory.LAST_NAME) return member.lastName;
-  if (category === QuestionCategory.LINKED_IN_URL) return socials.linkedInUrl;
+  if (category === QuestionCategory.LINKED_IN_URL) return socials?.linkedInUrl;
   if (category === QuestionCategory.PROFILE_PICTURE) return member.pictureUrl;
-  if (category === QuestionCategory.TWITTER_URL) return socials.twitterUrl;
+  if (category === QuestionCategory.TWITTER_URL) return socials?.twitterUrl;
 
   if (category === QuestionCategory.MEMBER_PLAN) {
     const plan: IMemberPlan = db.byMemberPlanId[member.plan];

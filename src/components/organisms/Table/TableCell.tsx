@@ -61,7 +61,7 @@ const TableCellContent: React.FC<
     );
   }
 
-  return <p>{formattedValue}</p>;
+  return <p>{formattedValue ?? ''}</p>;
 };
 
 const TableCell: React.FC<TableCellProps> = (props) => {
