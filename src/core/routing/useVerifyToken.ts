@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import useMutation from '@hooks/useMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, VerifyEvent } from '@util/constants';
-import { ErrorType } from '@util/errors';
-import { MutationEvent } from '@util/events';
+import { ErrorType } from '@util/constants.errors';
+import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
 interface VerifiedToken {

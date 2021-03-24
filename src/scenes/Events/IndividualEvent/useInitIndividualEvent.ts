@@ -10,8 +10,8 @@ import { EventPrivacy, ICommunity, IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
-import { ErrorContext } from '@util/errors';
-import { QueryEvent } from '@util/events';
+import { ErrorContext } from '@util/constants.errors';
+import { QueryEvent } from '@util/constants.events';
 import { GetEventArgs } from '../Events.types';
 
 const useInitIndividualEvent = (): Partial<QueryResult> => {

@@ -6,7 +6,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import PaymentStore from './Payment.store';
 import { CreateSubscriptionArgs } from './Payment.types';
 

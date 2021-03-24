@@ -7,7 +7,7 @@ import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 const EventFormNotificationsSection: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.community.id);

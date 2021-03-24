@@ -6,7 +6,7 @@ import {
 import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { UpdateStripePaymentMethodIdArgs } from './Payment.types';
 
 const useUpdateStripePaymentMethodId = (): OnFormSubmitFunction => {

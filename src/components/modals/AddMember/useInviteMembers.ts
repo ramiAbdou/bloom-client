@@ -5,7 +5,7 @@ import {
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import { QuestionCategory } from '@util/constants';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { take } from '@util/util';
 import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';

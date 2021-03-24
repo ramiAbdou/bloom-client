@@ -10,8 +10,8 @@ import StoryStore from '@organisms/Story/Story.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { ErrorType } from '@util/errors';
-import { MutationEvent, QueryEvent } from '@util/events';
+import { ErrorType } from '@util/constants.errors';
+import { MutationEvent, QueryEvent } from '@util/constants.events';
 import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 

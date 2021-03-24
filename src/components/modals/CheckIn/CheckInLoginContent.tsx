@@ -13,7 +13,7 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IMember, MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
-import { ErrorContext, ErrorType } from '@util/errors';
+import { ErrorContext, ErrorType } from '@util/constants.errors';
 import { buildUrl } from '@util/util';
 import { getCheckInErrorMessage } from './CheckIn.util';
 import useInitCheckInError from './useInitCheckInError';

@@ -4,7 +4,7 @@ import MainSection from '@containers/Main/MainSection';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 import { TimeSeriesData } from '../Analytics.types';
 
 const PaymentAnalyticsChart: React.FC = () => {

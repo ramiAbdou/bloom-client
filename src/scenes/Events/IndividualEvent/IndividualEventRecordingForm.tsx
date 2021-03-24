@@ -8,7 +8,7 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 
 interface UpdateRecordingUrlArgs {
   eventId: string;

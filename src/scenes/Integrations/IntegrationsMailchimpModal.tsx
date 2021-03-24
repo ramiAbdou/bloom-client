@@ -7,7 +7,7 @@ import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import { Schema } from '@store/Db/schema';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 

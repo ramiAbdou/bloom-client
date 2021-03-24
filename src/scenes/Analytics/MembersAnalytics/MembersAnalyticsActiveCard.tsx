@@ -2,7 +2,7 @@ import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
 import useQuery from '@hooks/useQuery';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 const MembersAnalyticsActiveCard: React.FC = () => {
   const { data, loading } = useQuery<[number, number]>({

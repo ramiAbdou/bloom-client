@@ -7,7 +7,7 @@ import StoryStore from '@organisms/Story/Story.store';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
 const useCreatePublicEventAttendee = (): OnFormSubmitFunction => {

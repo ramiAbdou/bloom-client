@@ -14,7 +14,7 @@ import {
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 
 interface CommunityIdArgs {
   communityId: string;

@@ -7,7 +7,7 @@ import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
 import { IMemberPlan, IQuestion } from '@store/Db/entities';
 import { QuestionCategory } from '@util/constants';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 
 const useApplyToCommunity = (): OnFormSubmitFunction => {
   const [applyToCommunity] = useMutation<any, ApplyForMembershipArgs>({

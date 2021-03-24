@@ -6,7 +6,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { MemberValueInput, UpdateMemberValueArgs } from './Profile.types';
 
 const useUpdateMemberValues = (): OnFormSubmitFunction => {

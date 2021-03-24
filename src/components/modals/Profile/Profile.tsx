@@ -6,7 +6,7 @@ import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/events';
+import { QueryEvent } from '@util/constants.events';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';

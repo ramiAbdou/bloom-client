@@ -7,7 +7,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/events';
+import { MutationEvent } from '@util/constants.events';
 import { uploadImage } from '@util/imageUtil';
 import { UpdateMemberArgs } from './Profile.types';
 
