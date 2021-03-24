@@ -71,6 +71,7 @@
     "@types/copy-webpack-plugin": "^5.0.1",
     "@types/deline": "^1.0.1",
     "@types/dotenv-webpack": "^3.0.0",
+    "@types/duplicate-package-checker-webpack-plugin": "^2.1.0",
     "@types/express": "^4.17.6",
     "@types/html-webpack-plugin": "^3.2.3",
     "@types/jest": "^25.2.3",
