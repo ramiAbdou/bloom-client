@@ -23,7 +23,7 @@ const useInitIndividualEventTable = (): Partial<QueryResult> => {
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_EVENT_ATTENDEES,
+    operation: QueryEvent.LIST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     types: { eventId: { required: false } },
     variables: { eventId }
@@ -39,7 +39,7 @@ const useInitIndividualEventTable = (): Partial<QueryResult> => {
       { event: ['id'] },
       { member: ['email', 'id', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: QueryEvent.GET_EVENT_WATCHES,
+    operation: QueryEvent.LIST_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     types: { eventId: { required: false } },
     variables: { eventId }

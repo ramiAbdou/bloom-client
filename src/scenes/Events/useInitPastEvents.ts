@@ -17,7 +17,7 @@ const useInitPastEvents = (): Partial<QueryResult> => {
       'title',
       { community: ['id'] }
     ],
-    operation: QueryEvent.GET_PAST_EVENTS,
+    operation: QueryEvent.LIST_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
@@ -29,7 +29,7 @@ const useInitPastEvents = (): Partial<QueryResult> => {
       { member: ['id', 'firstName', 'lastName'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_EVENT_ATTENDEES,
+    operation: QueryEvent.LIST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 

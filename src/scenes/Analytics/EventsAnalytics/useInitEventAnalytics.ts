@@ -19,7 +19,7 @@ const useInitEventAnalytics = (): Partial<QueryResult> => {
 
   const { loading: loading1 } = useQuery<IEvent[]>({
     fields: ['endTime', 'id', 'startTime', 'title', { community: ['id'] }],
-    operation: QueryEvent.GET_PAST_EVENTS,
+    operation: QueryEvent.LIST_PAST_EVENTS,
     schema: [Schema.EVENT]
   });
 
@@ -31,7 +31,7 @@ const useInitEventAnalytics = (): Partial<QueryResult> => {
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_EVENT_ATTENDEES,
+    operation: QueryEvent.LIST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 
@@ -43,7 +43,7 @@ const useInitEventAnalytics = (): Partial<QueryResult> => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_EVENT_GUESTS,
+    operation: QueryEvent.LIST_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });
 
@@ -54,7 +54,7 @@ const useInitEventAnalytics = (): Partial<QueryResult> => {
       { event: ['id', { community: ['id'] }] },
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: QueryEvent.GET_EVENT_WATCHES,
+    operation: QueryEvent.LIST_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     types: { communityId: { required: false } },
     variables: { communityId }

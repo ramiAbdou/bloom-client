@@ -59,24 +59,24 @@ const useInitCommunity = (): Partial<QueryResult> => {
       'type',
       { community: ['id'] }
     ],
-    operation: QueryEvent.GET_QUESTIONS,
+    operation: QueryEvent.LIST_QUESTIONS,
     schema: [Schema.QUESTION]
   });
 
-  const [getMemberPlans, { loading: loading4 }] = useManualQuery<IMemberPlan[]>(
-    {
-      fields: [
-        'amount',
-        'id',
-        'isFree',
-        'name',
-        'recurrence',
-        { community: ['id'] }
-      ],
-      operation: QueryEvent.GET_MEMBER_PLANS,
-      schema: [Schema.MEMBER_PLAN]
-    }
-  );
+  const [listMemberPlans, { loading: loading4 }] = useManualQuery<
+    IMemberPlan[]
+  >({
+    fields: [
+      'amount',
+      'id',
+      'isFree',
+      'name',
+      'recurrence',
+      { community: ['id'] }
+    ],
+    operation: QueryEvent.LIST_MEMBER_PLANS,
+    schema: [Schema.MEMBER_PLAN]
+  });
 
   useEffect(() => {
     if (!communityId) return;
@@ -85,7 +85,7 @@ const useInitCommunity = (): Partial<QueryResult> => {
       await Promise.all([
         getCommunity(),
         getCommunityIntegrations(),
-        getMemberPlans(),
+        listMemberPlans(),
         getQuestions()
       ]);
     })();

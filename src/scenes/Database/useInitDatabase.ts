@@ -29,7 +29,7 @@ const useInitDatabase = (): Partial<QueryResult> => {
       { plan: ['id'] },
       { socials: ['id'] }
     ],
-    operation: QueryEvent.GET_MEMBERS,
+    operation: QueryEvent.LIST_MEMBERS,
     schema: [Schema.MEMBER],
     types: { communityId: { required: false } },
     variables: { communityId }
@@ -46,7 +46,7 @@ const useInitDatabase = (): Partial<QueryResult> => {
       'twitterUrl',
       { member: ['id'] }
     ],
-    operation: QueryEvent.GET_MEMBER_SOCIALS,
+    operation: QueryEvent.LIST_MEMBER_SOCIALS,
     schema: [Schema.MEMBER_SOCIALS],
     types: { communityId: { required: false } },
     variables: { communityId }
@@ -56,7 +56,7 @@ const useInitDatabase = (): Partial<QueryResult> => {
     IEventAttendee[]
   >({
     fields: ['id', { member: ['id'] }],
-    operation: QueryEvent.GET_EVENT_ATTENDEES,
+    operation: QueryEvent.LIST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE]
   });
 
@@ -64,25 +64,13 @@ const useInitDatabase = (): Partial<QueryResult> => {
     IMemberValue[]
   >({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: QueryEvent.GET_MEMBER_VALUES,
+    operation: QueryEvent.LIST_MEMBER_VALUES,
     schema: [Schema.MEMBER_VALUE],
     types: { communityId: { required: false } },
     variables: { communityId }
   });
 
-  const { loading: loading5 }: QueryResult<IMemberValue[]> = useQuery<
-    IMemberValue[]
-  >({
-    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: QueryEvent.GET_MEMBER_VALUES,
-    schema: [Schema.MEMBER_VALUE],
-    types: { communityId: { required: false } },
-    variables: { communityId }
-  });
-
-  return {
-    loading: loading1 || loading2 || loading3 || loading4 || loading5
-  };
+  return { loading: loading1 || loading2 || loading3 || loading4 };
 };
 
 export default useInitDatabase;

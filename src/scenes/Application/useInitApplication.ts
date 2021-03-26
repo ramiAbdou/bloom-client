@@ -82,12 +82,12 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
         ]
       }
     ],
-    operation: QueryEvent.GET_RANKED_QUESTIONS,
+    operation: QueryEvent.LIST_RANKED_QUESTIONS,
     schema: [Schema.APPLICATION_QUESTION],
     types: { communityId: { required: false } }
   });
 
-  const [getMemberPlans, { loading: loading5 }] = useManualQuery<
+  const [listMemberPlans, { loading: loading5 }] = useManualQuery<
     IMemberPlan[],
     CommunityIdArgs
   >({
@@ -99,7 +99,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       'recurrence',
       { community: ['id'] }
     ],
-    operation: QueryEvent.GET_MEMBER_PLANS,
+    operation: QueryEvent.LIST_MEMBER_PLANS,
     schema: [Schema.MEMBER_PLAN],
     types: { communityId: { required: false } }
   });
@@ -115,7 +115,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       await Promise.all([
         getApplication({ communityId }),
         getCommunityIntegrations({ communityId }),
-        getMemberPlans({ communityId }),
+        listMemberPlans({ communityId }),
         getRankedQuestions({ communityId })
       ]);
     })();

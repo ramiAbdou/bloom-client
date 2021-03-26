@@ -21,7 +21,7 @@ const useInitProfileHistory = (): Partial<QueryResult> => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_EVENT_ATTENDEES,
+    operation: QueryEvent.LIST_EVENT_ATTENDEES,
     schema: [Schema.EVENT_ATTENDEE],
     types: { memberId: { required: false } },
     variables: { memberId }
@@ -35,7 +35,7 @@ const useInitProfileHistory = (): Partial<QueryResult> => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_EVENT_GUESTS,
+    operation: QueryEvent.LIST_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     types: { memberId: { required: false } },
     variables: { memberId }
@@ -48,7 +48,7 @@ const useInitProfileHistory = (): Partial<QueryResult> => {
       { event: ['id', 'title'] },
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: QueryEvent.GET_EVENT_WATCHES,
+    operation: QueryEvent.LIST_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],
     types: { memberId: { required: false } },
     variables: { memberId }
@@ -63,7 +63,7 @@ const useInitProfileHistory = (): Partial<QueryResult> => {
       { member: ['id'] },
       { plan: ['id'] }
     ],
-    operation: QueryEvent.GET_PAYMENTS,
+    operation: QueryEvent.LIST_PAYMENTS,
     schema: [Schema.PAYMENT],
     types: { memberId: { required: false } },
     variables: { memberId }

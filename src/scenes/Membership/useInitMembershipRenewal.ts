@@ -10,7 +10,7 @@ const useInitMembershipRenewal = (): QueryResult<IMemberIntegrations[]> => {
   >({
     fields: ['id', 'renewalDate'],
     operation: QueryEvent.GET_MEMBER_INTEGRATIONS,
-    schema: [Schema.MEMBER_INTEGRATIONS]
+    schema: Schema.MEMBER_INTEGRATIONS
   });
 
   return result;

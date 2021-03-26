@@ -18,7 +18,7 @@ const useInitApplicants = (): QueryResult<IMember[]> => {
       { plan: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
-    operation: QueryEvent.GET_APPLICANTS,
+    operation: QueryEvent.LIST_APPLICANTS,
     schema: [Schema.MEMBER]
   });
 

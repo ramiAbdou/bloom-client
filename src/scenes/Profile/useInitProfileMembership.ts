@@ -10,7 +10,7 @@ const useInitProfileMembership = (): QueryResult<IMemberValue[]> => {
 
   const result: QueryResult<IMemberValue[]> = useQuery<IMemberValue[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: QueryEvent.GET_MEMBER_VALUES,
+    operation: QueryEvent.LIST_MEMBER_VALUES,
     schema: [Schema.MEMBER_VALUE],
     types: { memberId: { required: false } },
     variables: { memberId }
