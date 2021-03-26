@@ -19,9 +19,9 @@ const IndividualEventRecordingForm: React.FC = () => {
   const eventId = useStoreState(({ panel }) => panel.metadata);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
 
-  const [updateRecordingUrl] = useMutation<IEvent, UpdateRecordingUrlArgs>({
+  const [updateEvent] = useMutation<IEvent, UpdateRecordingUrlArgs>({
     fields: ['id', 'recordingUrl'],
-    operation: MutationEvent.UPDATE_RECORDING_URL,
+    operation: MutationEvent.UPDATE_EVENT,
     schema: Schema.EVENT,
     types: { eventId: { required: true }, recordingUrl: { required: false } }
   });
@@ -31,7 +31,7 @@ const IndividualEventRecordingForm: React.FC = () => {
     items,
     showToast
   }: OnFormSubmitArgs) => {
-    await updateRecordingUrl({
+    await updateEvent({
       eventId,
       recordingUrl: items.RECORDING_URL?.value
     });

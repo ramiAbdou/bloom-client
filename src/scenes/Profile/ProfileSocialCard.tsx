@@ -11,16 +11,10 @@ import useInitProfileSocial from './useInitProfileSocial';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
   const isSocialLinked: boolean = useStoreState(({ db }) => {
-    const { clubhouseUrl, facebookUrl, instagramUrl, linkedInUrl, twitterUrl } =
+    const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } =
       db.socials ?? {};
 
-    return (
-      !!clubhouseUrl ||
-      !!facebookUrl ||
-      !!instagramUrl ||
-      !!linkedInUrl ||
-      !!twitterUrl
-    );
+    return !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
@@ -41,7 +35,6 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 const ProfileSocialHeader: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => db.socials?.clubhouseUrl);
   const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
   const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
   const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
@@ -49,11 +42,7 @@ const ProfileSocialHeader: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isSocialLinked: boolean =
-    !!clubhouseUrl ||
-    !!facebookUrl ||
-    !!instagramUrl ||
-    !!linkedInUrl ||
-    !!twitterUrl;
+    !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
 
   const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
 
@@ -63,14 +52,6 @@ const ProfileSocialHeader: React.FC = () => {
       title="Social Media"
       onEditClick={onClick}
     />
-  );
-};
-
-const ProfileSocialClubhouse: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => db.socials?.clubhouseUrl);
-
-  return (
-    <ProfileSocialValue brand={SocialBrand.CLUBHOUSE} url={clubhouseUrl} />
   );
 };
 
@@ -108,7 +89,6 @@ const ProfileSocialCard: React.FC = () => {
         <ProfileSocialLinkedIn />
         <ProfileSocialTwitter />
         <ProfileSocialFacebook />
-        <ProfileSocialClubhouse />
         <ProfileSocialInstagram />
       </div>
 

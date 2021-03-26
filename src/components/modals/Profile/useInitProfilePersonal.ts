@@ -10,7 +10,6 @@ const useInitProfilePersonal = (): QueryResult<IMemberSocials> => {
 
   const result: QueryResult<IMemberSocials> = useQuery<IMemberSocials>({
     fields: [
-      'clubhouseUrl',
       'facebookUrl',
       'id',
       'instagramUrl',

@@ -40,7 +40,6 @@ const useInitDatabase = (): Partial<QueryResult> => {
   >({
     fields: [
       'id',
-      'clubhouseUrl',
       'facebookUrl',
       'instagramUrl',
       'linkedInUrl',

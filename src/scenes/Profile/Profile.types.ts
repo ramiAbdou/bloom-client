@@ -15,7 +15,6 @@ export interface UpdateMemberArgs {
 }
 
 export interface UpdateUserSocialsArgs {
-  clubhouseUrl?: string;
   facebookUrl?: string;
   instagramUrl?: string;
   linkedInUrl?: string;

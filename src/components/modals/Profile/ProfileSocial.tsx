@@ -49,7 +49,6 @@ const ProfileSocialContainer: React.FC = () => {
   const memberId = IdStore.useStoreState((state) => state.id);
 
   const {
-    clubhouseUrl,
     facebookUrl,
     instagramUrl,
     linkedInUrl,
@@ -61,7 +60,6 @@ const ProfileSocialContainer: React.FC = () => {
 
   return (
     <div className="f f-ac">
-      <ProfileSocialButton brand={SocialBrand.CLUBHOUSE} href={clubhouseUrl} />
       <ProfileSocialButton brand={SocialBrand.TWITTER} href={twitterUrl} />
       <ProfileSocialButton brand={SocialBrand.LINKED_IN} href={linkedInUrl} />
       <ProfileSocialButton brand={SocialBrand.FACEBOOK} href={facebookUrl} />

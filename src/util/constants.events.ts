@@ -25,7 +25,6 @@ export enum MutationEvent {
   UPDATE_MEMBER_SOCIALS = 'updateMemberSocials',
   UPDATE_MEMBER_VALUES = 'updateMemberValues',
   UPDATE_QUESTION = 'updateQuestion',
-  UPDATE_RECORDING_URL = 'updateRecordingUrl',
   UPDATE_STRIPE_PAYMENT_METHOD_ID = 'updateStripePaymentMethodId',
   UPDATE_STRIPE_SUBSCRIPTION_ID = 'updateStripeSubscriptionId',
   VERIFY_TOKEN = 'verifyToken'
