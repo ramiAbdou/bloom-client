@@ -2,6 +2,7 @@ import React from 'react';
 
 import MainSection from '@containers/Main/MainSection';
 import Show from '@containers/Show';
+import { QueryResult } from '@hooks/useQuery.types';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -59,7 +60,7 @@ const IndividualEventTable: React.FC = () => {
     );
   });
 
-  const { loading } = useInitIndividualEventTable();
+  const { loading }: Partial<QueryResult> = useInitIndividualEventTable();
 
   return (
     <Show show={!!isAdmin && !loading && hasContent}>

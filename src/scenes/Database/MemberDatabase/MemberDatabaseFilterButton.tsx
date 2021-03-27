@@ -9,11 +9,15 @@ import DatabaseAction from '../DatabaseAction';
 const FilterButton: React.FC = () => {
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const isAnythingSelected = TableStore.useStoreState(
-    ({ selectedRowIds }) => !!selectedRowIds.length
+  const isAnythingSelected: boolean = TableStore.useStoreState(
+    ({ selectedRowIds }) => {
+      return !!selectedRowIds.length;
+    }
   );
 
-  const onClick = () => showPanel({ id: PanelType.FILTER_TABLE });
+  const onClick: VoidFunction = () => {
+    showPanel({ id: PanelType.FILTER_TABLE });
+  };
 
   return (
     <DatabaseAction

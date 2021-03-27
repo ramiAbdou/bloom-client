@@ -25,7 +25,10 @@ const TableBannerButton: React.FC = () => {
   });
 
   const toggleRows = TableStore.useStoreActions((store) => store.toggleAllRows);
-  const onClick = () => toggleRows();
+
+  const onClick = (): void => {
+    toggleRows();
+  };
 
   return (
     <Button tertiary onClick={onClick}>

@@ -31,10 +31,11 @@ const getIndividualEventTableAttendees = (
     const member: IMember = db.byMemberId[attendee?.member];
     const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
 
-    const email = member?.email ?? supporter?.email;
-    const firstName = member?.firstName ?? supporter?.firstName;
-    const lastName = member?.lastName ?? supporter?.lastName;
+    const email: string = member?.email ?? supporter?.email;
+    const firstName: string = member?.firstName ?? supporter?.firstName;
+    const lastName: string = member?.lastName ?? supporter?.lastName;
 
+    // If the email already exists in the record, don't go again.
     if (acc[email]) return acc;
 
     const data: IndividualEventTableRowProps = {
@@ -131,10 +132,9 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
 
   if (!totalRecord) return null;
 
-  return Object.values(totalRecord)?.sort((a, b) =>
-    // @ts-ignore
-    sortObjects(a, b, ['joinedAt', 'rsvpdAt'])
-  ) as TableRow[];
+  return Object.values(totalRecord)?.sort((a, b) => {
+    return sortObjects(a, b, ['joinedAt', 'rsvpdAt']);
+  }) as TableRow[];
 };
 
 /**
