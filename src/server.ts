@@ -10,7 +10,10 @@ const startServer = (): void => {
   const pathToBuild = path.join(__dirname);
 
   app.use('/', express.static(pathToBuild));
-  app.get('/*', (_, res) => res.sendFile(`${pathToBuild}/index.html`));
+
+  app.get('/*', (_, res) => {
+    return res.sendFile(`${pathToBuild}/index.html`);
+  });
 
   app.listen(3000, () => {
     console.log(`Running on port 3000.`);

@@ -7,7 +7,9 @@ import { PanelType } from '@util/constants';
 import DatabaseAction from '../DatabaseAction';
 
 const FilterButton: React.FC = () => {
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const showPanel = useStoreActions(({ panel }) => {
+    return panel.showPanel;
+  });
 
   const isAnythingSelected: boolean = TableStore.useStoreState(
     ({ selectedRowIds }) => {

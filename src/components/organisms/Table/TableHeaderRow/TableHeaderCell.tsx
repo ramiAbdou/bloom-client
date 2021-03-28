@@ -26,23 +26,33 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
     return options.alignEndRight && isLastCell;
   });
 
-  const sortColumnId = TableStore.useStoreState((state) => state.sortColumnId);
-  const direction = TableStore.useStoreState((state) => state.sortDirection);
+  const sortColumnId = TableStore.useStoreState((state) => {
+    return state.sortColumnId;
+  });
 
-  const hasCheckbox = TableStore.useStoreState(
-    ({ options }) => options.hasCheckbox
-  );
+  const direction = TableStore.useStoreState((state) => {
+    return state.sortDirection;
+  });
 
-  const isSortable = TableStore.useStoreState(
-    ({ options }) => options.isSortable
-  );
+  const hasCheckbox = TableStore.useStoreState(({ options }) => {
+    return options.hasCheckbox;
+  });
 
-  const fixFirstColumn = TableStore.useStoreState(
-    ({ options }) => options.fixFirstColumn
-  );
+  const isSortable = TableStore.useStoreState(({ options }) => {
+    return options.isSortable;
+  });
 
-  const isPanelShowing = useStoreState(({ panel }) => panel.id === id);
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const fixFirstColumn = TableStore.useStoreState(({ options }) => {
+    return options.fixFirstColumn;
+  });
+
+  const isPanelShowing = useStoreState(({ panel }) => {
+    return panel.id === id;
+  });
+
+  const showPanel = useStoreActions(({ panel }) => {
+    return panel.showPanel;
+  });
 
   const onClick = () => {
     if (isSortable) {

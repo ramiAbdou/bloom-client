@@ -17,8 +17,13 @@ import { QueryEvent } from '@util/constants.events';
  * Uses global loading state.
  */
 const useInitCheckInError = (): Partial<QueryResult> => {
-  const communityId = useStoreState(({ db }) => db.community?.id);
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const communityId: string = useStoreState(({ db }) => {
+    return db.community?.id;
+  });
+
+  const isMember: boolean = useStoreState(({ db }) => {
+    return db.isMember;
+  });
 
   const [getOwner, { loading }] = useManualQuery<ICommunity>({
     fields: [

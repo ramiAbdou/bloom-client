@@ -1,8 +1,8 @@
 import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
-import { UrlNameProps } from '@util/constants';
 import { useStoreState } from '@store/Store';
+import { UrlNameProps } from '@util/constants';
 
 /**
  * For an authenticated route, we first try to retrieve the user (by using the
@@ -10,7 +10,10 @@ import { useStoreState } from '@store/Store';
  * the global state with the user.
  */
 const AdminRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
-  const role = useStoreState(({ db }) => db.member?.role);
+  const role = useStoreState(({ db }) => {
+    return db.member?.role;
+  });
+
   const { urlName }: UrlNameProps = useParams();
 
   // If role is undefined, means it hasn't been loaded yet.

@@ -12,17 +12,21 @@ import AdminDatabaseActions from './AdminDatabaseActions';
 const AdminDatabase: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
     return db.community.members
-      ?.map((memberId: string) => db.byMemberId[memberId])
-      ?.filter((member: IMember) => !!member?.role)
+      ?.map((memberId: string) => {
+        return db.byMemberId[memberId];
+      })
+      ?.filter((member: IMember) => {
+        return !!member?.role;
+      })
       ?.map((member: IMember) => {
         const { email, firstName, lastName }: IMember = member;
         return { email, firstName, id: member.id, lastName };
       }, []);
   });
 
-  const isOwner: boolean = useStoreState(
-    ({ db }) => db.member?.role === MemberRole.OWNER
-  );
+  const isOwner: boolean = useStoreState(({ db }) => {
+    return db.member?.role === MemberRole.OWNER;
+  });
 
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.

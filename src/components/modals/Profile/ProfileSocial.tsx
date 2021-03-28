@@ -46,7 +46,9 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
 };
 
 const ProfileSocialContainer: React.FC = () => {
-  const memberId = IdStore.useStoreState((state) => state.id);
+  const memberId = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
   const {
     facebookUrl,

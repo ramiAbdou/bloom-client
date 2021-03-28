@@ -7,7 +7,9 @@ import { IdProps } from '@util/constants';
 import { cx } from '@util/util';
 
 const SidebarCommunityButton: React.FC<IdProps> = ({ id: memberId }) => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => {
+    return db.community.id;
+  });
 
   const { id, logoUrl, urlName }: ICommunity = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -26,7 +28,7 @@ const SidebarCommunityButton: React.FC<IdProps> = ({ id: memberId }) => {
 
   return (
     <button className={css} type="button" onClick={onClick}>
-      <img className="br-xxs h-100 w-100" src={logoUrl} />
+      <img alt="Community Logo" className="br-xxs h-100 w-100" src={logoUrl} />
     </button>
   );
 };

@@ -27,7 +27,7 @@ export const buildUrl = (
  */
 export const cx = (
   baseClass: string,
-  classMap: Record<string, any>,
+  classMap: Record<string, boolean>,
   customClass?: string
 ): string => {
   const classes = Object.entries(classMap).reduce(
@@ -123,7 +123,7 @@ export function sortObjects<T>(
  * boolean.
  */
 export const take = (arr: [any, any][]): any => {
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i += 1) {
     const element: [any, any] = arr[i];
     if (element[0]) return element[1];
   }

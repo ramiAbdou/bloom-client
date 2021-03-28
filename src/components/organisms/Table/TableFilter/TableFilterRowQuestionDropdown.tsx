@@ -9,18 +9,24 @@ import { sortObjects } from '@util/util';
 import TableFilterStore from './TableFilter.store';
 
 const TableFilterRowQuestionDropdown: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => state.id);
+  const id: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
-  const columnId: string = TableFilterStore.useStoreState(
-    (store) => store.filters[id]?.columnId
-  );
+  const columnId: string = TableFilterStore.useStoreState((store) => {
+    return store.filters[id]?.columnId;
+  });
 
   const [questionId, setQuestionId] = useState<string>(columnId);
 
   const defaultQuestionId: string = useStoreState(({ db }) => {
     return db.community.questions
-      ?.map((entityId: string) => db.byQuestionId[entityId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.map((entityId: string) => {
+        return db.byQuestionId[entityId];
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      })
       ?.filter((question: IQuestion) => {
         return ![
           QuestionCategory.FIRST_NAME,
@@ -33,8 +39,12 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
 
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community.questions
-      ?.map((entityId: string) => db.byQuestionId[entityId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.map((entityId: string) => {
+        return db.byQuestionId[entityId];
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      })
       ?.filter((question: IQuestion) => {
         return ![
           QuestionCategory.FIRST_NAME,
@@ -45,9 +55,9 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
       });
   });
 
-  const setFilter = TableFilterStore.useStoreActions(
-    (store) => store.setFilter
-  );
+  const setFilter = TableFilterStore.useStoreActions((store) => {
+    return store.setFilter;
+  });
 
   useEffect(() => {
     if (!questionId && defaultQuestionId) {
@@ -57,9 +67,9 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
   }, [columnId, defaultQuestionId]);
 
   const onQuestionUpdate = (result: string) => {
-    const updatedColumnId = questions.find(
-      (question) => question.title === result
-    )?.id;
+    const updatedColumnId = questions.find((question) => {
+      return question.title === result;
+    })?.id;
 
     setFilter({ columnId: updatedColumnId, id, operator: 'is', value: null });
     setQuestionId(updatedColumnId);
@@ -68,8 +78,14 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
   return (
     <Dropdown
       options={{ attribute: false }}
-      value={questions?.find((question) => question.id === questionId)?.title}
-      values={questions?.map(({ title }) => title)}
+      value={
+        questions?.find((question) => {
+          return question.id === questionId;
+        })?.title
+      }
+      values={questions?.map(({ title }) => {
+        return title;
+      })}
       onSelect={onQuestionUpdate}
     />
   );

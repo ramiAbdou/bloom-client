@@ -28,13 +28,18 @@ const Checkbox: React.FC<CheckboxProps> = ({
 }) => {
   const css: string = cx(
     'c-misc-checkbox',
-    { 'c-misc-checkbox--label': title, 'c-misc-checkbox--plain': plain },
+    { 'c-misc-checkbox--label': !!title, 'c-misc-checkbox--plain': plain },
     className
   );
 
   return (
     <Show show={show}>
-      <label className={css} onClick={(e) => e.stopPropagation()}>
+      <label
+        className={css}
+        onClick={(e) => {
+          return e.stopPropagation();
+        }}
+      >
         <input checked={checked} type="checkbox" onChange={onChange} />
         <span />
         <IoCheckmark color="#FFF" />

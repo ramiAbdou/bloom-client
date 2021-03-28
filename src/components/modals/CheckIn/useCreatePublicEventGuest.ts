@@ -3,7 +3,6 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import StoryStore from '@organisms/Story/Story.store';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -11,7 +10,9 @@ import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const useCreatePublicEventGuest = (): OnFormSubmitFunction => {
-  const eventId = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => {
+    return db.event?.id;
+  });
 
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
     fields: [
@@ -31,12 +32,10 @@ const useCreatePublicEventGuest = (): OnFormSubmitFunction => {
     }
   });
 
-  const goForward = StoryStore.useStoreActions((store) => store.goForward);
-
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
-    const firstName = items.FIRST_NAME?.value;
-    const lastName = items.LAST_NAME?.value;
-    const email = items.EMAIL?.value;
+  const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {
+    const firstName: string = items.FIRST_NAME?.value as string;
+    const lastName: string = items.LAST_NAME?.value as string;
+    const email: string = items.EMAIL?.value as string;
 
     const { error } = await createEventGuest({
       email,

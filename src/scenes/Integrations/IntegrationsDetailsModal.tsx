@@ -7,25 +7,43 @@ import { QuestionType } from '@util/constants';
 import useIntegrationsDetails from './useIntegrationsDetails';
 
 const IntegrationsDetailsModal: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const { name, logo } = useStoreState(({ modal }) => modal.metadata ?? {});
+  const closeModal = useStoreActions(({ modal }) => {
+    return modal.closeModal;
+  });
+
+  const { name, logo } = useStoreState(({ modal }) => {
+    return modal.metadata ?? {};
+  });
+
   const details = useIntegrationsDetails(name);
 
   return (
     <>
-      <img className="br-xs s-integrations-icon--lg" src={logo} />
+      <img
+        alt="Integration Logo"
+        className="br-xs s-integrations-icon--lg"
+        src={logo}
+      />
+
       <h1>{name} Integration Details</h1>
 
       <QuestionBox
         className="mb-md--nlc"
-        items={details.map(({ label, value }) => ({
-          title: label,
-          type: QuestionType.MULTIPLE_CHOICE,
-          value
-        }))}
+        items={details.map(({ label, value }) => {
+          return {
+            title: label,
+            type: QuestionType.MULTIPLE_CHOICE,
+            value
+          };
+        })}
       />
 
-      <Button secondary onClick={() => closeModal()}>
+      <Button
+        secondary
+        onClick={() => {
+          return closeModal();
+        }}
+      >
         Close
       </Button>
     </>

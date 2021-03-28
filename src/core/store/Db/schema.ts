@@ -21,9 +21,9 @@ import { take } from '@util/util';
  */
 export const mergeStrategy = (a: Partial<any>, b: Partial<any>): any => {
   const arrayMerge = (target: any[], source: any[]) => {
-    const updatedSource = source.filter(
-      (value: any) => !target.includes(value)
-    );
+    const updatedSource = source.filter((value: any) => {
+      return !target.includes(value);
+    });
 
     // Concat the source to the target.
     return target.concat(updatedSource);
@@ -77,10 +77,12 @@ const CommunityIntegrations = new schema.Entity(
   'communityIntegrations',
   {},
   {
-    processStrategy: (value) => ({
-      ...value,
-      communityIntegrationsId: value.id
-    })
+    processStrategy: (value) => {
+      return {
+        ...value,
+        communityIntegrationsId: value.id
+      };
+    }
   }
 );
 
@@ -175,14 +177,20 @@ const MemberSocials = new schema.Entity(
   {},
   {
     mergeStrategy,
-    processStrategy: (value) => ({ ...value, socialsId: value.id })
+    processStrategy: (value) => {
+      return { ...value, socialsId: value.id };
+    }
   }
 );
 
 const MemberPlan = new schema.Entity(
   'memberPlans',
   {},
-  { processStrategy: (value) => ({ ...value, memberPlanId: value.id }) }
+  {
+    processStrategy: (value) => {
+      return { ...value, memberPlanId: value.id };
+    }
+  }
 );
 
 const MemberValue = new schema.Entity(
@@ -190,14 +198,20 @@ const MemberValue = new schema.Entity(
   {},
   {
     mergeStrategy,
-    processStrategy: (value) => ({ ...value, valueId: value.id })
+    processStrategy: (value) => {
+      return { ...value, valueId: value.id };
+    }
   }
 );
 
 const Payment = new schema.Entity(
   'payments',
   {},
-  { processStrategy: (value) => ({ ...value, paymentId: value.id }) }
+  {
+    processStrategy: (value) => {
+      return { ...value, paymentId: value.id };
+    }
+  }
 );
 
 const Question = new schema.Entity(

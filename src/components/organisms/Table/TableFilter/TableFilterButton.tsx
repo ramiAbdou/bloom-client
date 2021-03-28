@@ -10,9 +10,9 @@ import TableStore from '../Table.store';
 import TableFilterStore from './TableFilter.store';
 
 const TableFilterButtonNumActiveTag: React.FC = () => {
-  const isCustomFilterApplied: boolean = TableStore.useStoreState((state) =>
-    Object.keys(state.filters).includes('FILTER_CUSTOM')
-  );
+  const isCustomFilterApplied: boolean = TableStore.useStoreState((state) => {
+    return Object.keys(state.filters).includes('FILTER_CUSTOM');
+  });
 
   const numActiveFilters: number = TableFilterStore.useStoreState((state) => {
     return state.filterIds.length;
@@ -25,13 +25,20 @@ const TableFilterButtonNumActiveTag: React.FC = () => {
 const TableFilterButton: React.FC<Partial<ButtonProps>> = (props) => {
   const { className } = props;
 
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const showPanel = useStoreActions(({ panel }) => {
+    return panel.showPanel;
+  });
 
   const isAnythingSelected: boolean = TableStore.useStoreState(
-    ({ selectedRowIds }) => !!selectedRowIds.length
+    ({ selectedRowIds }) => {
+      return !!selectedRowIds.length;
+    }
   );
 
-  const onClick = () => showPanel({ id: PanelType.FILTER_TABLE });
+  const onClick = () => {
+    return showPanel({ id: PanelType.FILTER_TABLE });
+  };
+
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   const css: string = cx(

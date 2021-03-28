@@ -6,7 +6,9 @@ import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitMembershipPaymentHistory = (): QueryResult<IPayment[]> => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => {
+    return db.member.id;
+  });
 
   const result = useQuery<IPayment[]>({
     fields: [

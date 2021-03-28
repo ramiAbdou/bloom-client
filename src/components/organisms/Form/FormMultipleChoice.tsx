@@ -22,8 +22,15 @@ const FormMultipleChoice: React.FC<FormMultipleChoiceProps> = ({
   const { options, title } = args;
 
   const key = getFormItemKey(args);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((store) => store.setValue);
+
+  const value = FormStore.useStoreState(({ items }) => {
+    return items[key]?.value;
+  });
+
+  const setValue = FormStore.useStoreActions((store) => {
+    return store.setValue;
+  });
+
   useInitFormItem(args);
 
   return (
@@ -32,10 +39,15 @@ const FormMultipleChoice: React.FC<FormMultipleChoiceProps> = ({
         card={!!card || !!cardOptions}
         name={`o-form-mc-${title}`}
         options={
-          cardOptions ?? options.map((option: string) => ({ label: option }))
+          cardOptions ??
+          options.map((option: string) => {
+            return { label: option };
+          })
         }
         value={value}
-        onSelect={(v) => setValue({ key, value: v })}
+        onSelect={(v) => {
+          return setValue({ key, value: v });
+        }}
       />
     </FormItemContainer>
   );

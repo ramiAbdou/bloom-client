@@ -12,14 +12,21 @@ import { QuestionCategory } from '@util/constants';
 import AddMemberStore from './AddMember.store';
 
 const AddMemberInputTrashButton: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => state.id);
+  const id: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
-  const show: boolean = AddMemberStore.useStoreState(
-    (state) => state.rows.length >= 2
-  );
+  const show: boolean = AddMemberStore.useStoreState((state) => {
+    return state.rows.length >= 2;
+  });
 
-  const deleteRow = AddMemberStore.useStoreActions((state) => state.deleteRow);
-  const onClick = () => deleteRow(id);
+  const deleteRow = AddMemberStore.useStoreActions((state) => {
+    return state.deleteRow;
+  });
+
+  const onClick = () => {
+    return deleteRow(id);
+  };
 
   return (
     <Button className="mr-sm--nlc misc-trash" show={show} onClick={onClick}>
@@ -29,13 +36,17 @@ const AddMemberInputTrashButton: React.FC = () => {
 };
 
 const AddMemberInput: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => state.id);
+  const id: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
-  const isOwner = useStoreState(
-    ({ db }) => db.member?.role === MemberRole.OWNER
-  );
+  const isOwner = useStoreState(({ db }) => {
+    return db.member?.role === MemberRole.OWNER;
+  });
 
-  const admin = AddMemberStore.useStoreState((state) => state.admin);
+  const admin = AddMemberStore.useStoreState((state) => {
+    return state.admin;
+  });
 
   return (
     <Row align="baseline" className="mo-add-member-input" spacing="xs">

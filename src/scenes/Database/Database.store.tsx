@@ -8,7 +8,9 @@ type DatabaseModel = {
 export default createContextStore<DatabaseModel>(
   {
     loading: true,
-    setLoading: action((state, loading) => ({ ...state, loading }))
+    setLoading: action((state, loading) => {
+      return { ...state, loading };
+    })
   },
   { disableImmer: true }
 );

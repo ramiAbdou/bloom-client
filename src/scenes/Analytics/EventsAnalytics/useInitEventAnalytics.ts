@@ -15,7 +15,9 @@ import { QueryEvent } from '@util/constants.events';
  * past attendees, past guest and past event watches.
  */
 const useInitEventAnalytics = (): Partial<QueryResult> => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => {
+    return db.community.id;
+  });
 
   const { loading: loading1 } = useQuery<IEvent[]>({
     fields: ['endTime', 'id', 'startTime', 'title', { community: ['id'] }],

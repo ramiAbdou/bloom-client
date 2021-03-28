@@ -5,7 +5,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
-import { IMemberPlan, IQuestion } from '@store/Db/entities';
+import { IMemberPlan, IPaymentMethod, IQuestion } from '@store/Db/entities';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 
@@ -39,18 +39,28 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
       return question?.category === QuestionCategory.EMAIL;
     });
 
-    const email = storyItems[emailId]?.value;
-    const { paymentMethodId } = storyItems.CREDIT_OR_DEBIT_CARD?.value ?? {};
+    const email: string = storyItems[emailId]?.value as string;
+
+    const paymentMethodId: string = (storyItems.CREDIT_OR_DEBIT_CARD
+      ?.value as IPaymentMethod)?.paymentMethodId as string;
+
     const typeName = storyItems.MEMBER_PLAN?.value;
-    const memberPlanId = types.find((type) => type.name === typeName)?.id;
+
+    const memberPlanId = types.find((type) => {
+      return type.name === typeName;
+    })?.id;
 
     const data = Object.values(storyItems)
-      .filter(({ questionId }) => !!questionId)
-      .map(({ category, id, value }) => ({
-        category,
-        questionId: id,
-        value: parseValue(value)
-      }));
+      .filter(({ questionId }) => {
+        return !!questionId;
+      })
+      .map(({ category, id, value }) => {
+        return {
+          category,
+          questionId: id,
+          value: parseValue(value as string[])
+        };
+      });
 
     const result = await applyToCommunity({
       data,

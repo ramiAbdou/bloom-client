@@ -12,11 +12,19 @@ import { TablePaginationValue } from '../Table.types';
 import { getPaginationValues } from '../Table.util';
 
 const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
-  const active = TableStore.useStoreState(({ page }) => page === value);
-  const setPage = TableStore.useStoreActions((store) => store.setPage);
+  const active = TableStore.useStoreState(({ page }) => {
+    return page === value;
+  });
+
+  const setPage = TableStore.useStoreActions((store) => {
+    return store.setPage;
+  });
 
   const isEllipses = value === '...';
-  const onClick = () => !isEllipses && setPage(value);
+
+  const onClick = () => {
+    return !isEllipses && setPage(value);
+  };
 
   const css: string = cx('o-table-pagination-num', {
     'o-table-pagination-num--active': active,
@@ -31,9 +39,17 @@ const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
 };
 
 const TablePaginationBarBackButton: React.FC = () => {
-  const page = TableStore.useStoreState((state) => state.page);
-  const setPage = TableStore.useStoreActions((store) => store.setPage);
-  const onClick = () => page > 0 && setPage(page - 1);
+  const page = TableStore.useStoreState((state) => {
+    return state.page;
+  });
+
+  const setPage = TableStore.useStoreActions((store) => {
+    return store.setPage;
+  });
+
+  const onClick = () => {
+    return page > 0 && setPage(page - 1);
+  };
 
   return (
     <Button className="o-table-pagination-chevron" onClick={onClick}>
@@ -43,14 +59,21 @@ const TablePaginationBarBackButton: React.FC = () => {
 };
 
 const TablePaginationBarNextButton: React.FC = () => {
-  const page = TableStore.useStoreState((state) => state.page);
-  const setPage = TableStore.useStoreActions((store) => store.setPage);
+  const page = TableStore.useStoreState((state) => {
+    return state.page;
+  });
+
+  const setPage = TableStore.useStoreActions((store) => {
+    return store.setPage;
+  });
 
   const numPages = TableStore.useStoreState(({ filteredRows }) => {
     return Math.ceil(filteredRows.length / 50);
   });
 
-  const onClick = () => page < numPages - 1 && setPage(page + 1);
+  const onClick = () => {
+    return page < numPages - 1 && setPage(page + 1);
+  };
 
   return (
     <Button className="o-table-pagination-chevron" onClick={onClick}>
@@ -72,9 +95,9 @@ const TablePaginationBar: React.FC = () => {
     <Row>
       <TablePaginationBarBackButton />
 
-      {nums.map((value: any) => (
-        <TablePaginationBarNumber key={nanoid()} value={value} />
-      ))}
+      {nums.map((value: any) => {
+        return <TablePaginationBarNumber key={nanoid()} value={value} />;
+      })}
 
       <TablePaginationBarNextButton />
     </Row>

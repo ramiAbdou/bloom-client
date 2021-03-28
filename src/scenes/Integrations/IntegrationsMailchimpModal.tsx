@@ -45,7 +45,9 @@ const MailchimpModalContent: React.FC = () => {
       <FormMultipleChoice
         description="Choose the Mailchimp Audience/List that you would like new members to automatically be added to upon joining your community."
         id="MAILCHIMP_LIST_ID"
-        options={data.mailchimpLists?.map(({ name }) => name)}
+        options={data.mailchimpLists?.map(({ name }) => {
+          return name;
+        })}
         title="Select Audience/List ID"
       />
 

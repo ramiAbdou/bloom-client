@@ -31,10 +31,10 @@ const useUpdateMember = (): OnFormSubmitFunction => {
     setError,
     showToast
   }: OnFormSubmitArgs) => {
-    const bio = items.BIO?.value;
-    const firstName = items.FIRST_NAME?.value;
-    const lastName = items.LAST_NAME?.value;
-    const base64String = items.PROFILE_PICTURE?.value;
+    const bio: string = items.BIO?.value as string;
+    const firstName: string = items.FIRST_NAME?.value as string;
+    const lastName: string = items.LAST_NAME?.value as string;
+    const base64String: string = items.PROFILE_PICTURE?.value as string;
 
     let pictureUrl: string;
 

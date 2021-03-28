@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { BaseProps } from '@util/constants';
 import FormLabel from '@organisms/Form/FormLabel';
+import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 import { QuestionBoxItemProps } from './QuestionBox.types';
 import QuestionBoxValue from './QuestionBoxValue';
@@ -48,9 +48,9 @@ const QuestionBox: React.FC<QuestionBoxProps> = ({
 
   return (
     <div className={css}>
-      {items?.map((item: QuestionBoxItemProps) => (
-        <QuestionBoxItem key={item.title} {...item} {...props} />
-      ))}
+      {items?.map((item: QuestionBoxItemProps) => {
+        return <QuestionBoxItem key={item.title} {...item} {...props} />;
+      })}
     </div>
   );
 };

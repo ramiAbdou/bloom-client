@@ -11,14 +11,22 @@ import useInitFormItem from './useInitFormItem';
 
 const FormImage: React.FC<FormItemData> = (args) => {
   const key = getFormItemKey(args);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((store) => store.setValue);
+
+  const value = FormStore.useStoreState(({ items }) => {
+    return items[key]?.value;
+  });
+
+  const setValue = FormStore.useStoreActions((store) => {
+    return store.setValue;
+  });
 
   useInitFormItem(args);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
 
   // Opens the file uploader by "clicking" the invisible file input tag.
-  const openFileUploader = () => ref.current.click();
+  const openFileUploader = () => {
+    return ref.current.click();
+  };
 
   const onChange = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const base64String = await convertImageToBase64({

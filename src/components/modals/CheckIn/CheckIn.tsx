@@ -8,11 +8,14 @@ import CheckInConfirmation from './CheckInConfirmation';
 import CheckInMainPage from './CheckInMainPage';
 
 const CheckInModal: React.FC = () => {
-  const isMembersOnly = useStoreState(
-    ({ db }) => db.event?.privacy === EventPrivacy.MEMBERS_ONLY
-  );
+  const isMembersOnly = useStoreState(({ db }) => {
+    return db.event?.privacy === EventPrivacy.MEMBERS_ONLY;
+  });
 
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const isMember = useStoreState(({ db }) => {
+    return db.isMember;
+  });
+
   const lock = isMembersOnly && !isMember;
 
   return (

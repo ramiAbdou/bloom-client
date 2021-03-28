@@ -24,10 +24,12 @@ const TableBannerButton: React.FC = () => {
     return getBannerButtonTitle(state);
   });
 
-  const toggleRows = TableStore.useStoreActions((store) => store.toggleAllRows);
+  const toggleRows = TableStore.useStoreActions((store) => {
+    return store.toggleAllRows;
+  });
 
-  const onClick = (): void => {
-    toggleRows();
+  const onClick = () => {
+    return toggleRows();
   };
 
   return (

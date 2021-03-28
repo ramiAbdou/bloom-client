@@ -5,9 +5,17 @@ import { useStoreState } from '@store/Store';
 import Chart from './Chart.store';
 
 const ChartHeader: React.FC = () => {
-  const questionId = Chart.useStoreState((state) => state.questionId);
-  const totalResponses = Chart.useStoreState((state) => state.totalResponses);
-  const currentTitle = Chart.useStoreState((state) => state.title);
+  const questionId = Chart.useStoreState((state) => {
+    return state.questionId;
+  });
+
+  const totalResponses = Chart.useStoreState((state) => {
+    return state.totalResponses;
+  });
+
+  const currentTitle = Chart.useStoreState((state) => {
+    return state.title;
+  });
 
   const title = useStoreState(({ db }) => {
     return db.byQuestionId[questionId]?.title;

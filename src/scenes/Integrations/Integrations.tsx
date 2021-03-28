@@ -9,7 +9,10 @@ import IntegrationsDisconnectedList from './IntegrationsDisconnectedList';
 
 const Integrations: React.FC = () => {
   const searchParam = new URLSearchParams(window.location.search).get('flow');
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   useEffect(() => {
     if (searchParam === 'mailchimp') {

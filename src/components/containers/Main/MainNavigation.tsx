@@ -21,7 +21,10 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
   if (!options?.length) return null;
 
   const page = pathname.substring(pathname.lastIndexOf('/') + 1);
-  const activeIndex = options.findIndex((option) => option.pathname === page);
+
+  const activeIndex = options.findIndex((option) => {
+    return option.pathname === page;
+  });
 
   if (activeIndex < 0 || !options?.length) return null;
 

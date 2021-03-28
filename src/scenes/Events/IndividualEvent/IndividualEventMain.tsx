@@ -7,8 +7,13 @@ import { useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
 
 const IndividualEventMainHeaderContainer: React.FC = () => {
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const startTime = useStoreState(({ db }) => db.event?.startTime);
+  const endTime = useStoreState(({ db }) => {
+    return db.event?.endTime;
+  });
+
+  const startTime = useStoreState(({ db }) => {
+    return db.event?.startTime;
+  });
 
   const startDay = day(startTime).format('dddd, MMMM Do');
   const startHour = day(startTime).format('h:mm A');
@@ -23,14 +28,21 @@ const IndividualEventMainHeaderContainer: React.FC = () => {
 };
 
 const IndividualEventMain: React.FC = () => {
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const isMember = useStoreState(({ db }) => {
+    return db.isMember;
+  });
 
-  const isPrivate = useStoreState(
-    ({ db }) => db.event?.privacy === EventPrivacy.MEMBERS_ONLY
-  );
+  const isPrivate = useStoreState(({ db }) => {
+    return db.event?.privacy === EventPrivacy.MEMBERS_ONLY;
+  });
 
-  const summary = useStoreState(({ db }) => db.event?.summary);
-  const title = useStoreState(({ db }) => db.event?.title);
+  const summary = useStoreState(({ db }) => {
+    return db.event?.summary;
+  });
+
+  const title = useStoreState(({ db }) => {
+    return db.event?.title;
+  });
 
   const community = useStoreState(({ db }) => {
     return db.byCommunityId[db.event?.community]?.name;

@@ -14,7 +14,14 @@ const PaymentAnalyticsChart: React.FC = () => {
   });
 
   return (
-    <MainSection show={!loading && data?.some(({ value }) => !!value)}>
+    <MainSection
+      show={
+        !loading &&
+        data?.some(({ value }) => {
+          return !!value;
+        })
+      }
+    >
       <Chart
         data={data}
         interval={2}

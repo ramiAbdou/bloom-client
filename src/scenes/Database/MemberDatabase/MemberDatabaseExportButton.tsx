@@ -7,25 +7,36 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabaseExportButton: React.FC = () => {
-  const filename = useStoreState(({ db }) => `${db.community.urlName}.csv`);
+  const filename = useStoreState(({ db }) => {
+    return `${db.community.urlName}.csv`;
+  });
 
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const showToast = useStoreActions(({ toast }) => {
+    return toast.showToast;
+  });
 
   // Formatted in a way that CSV Link can properly read it.
-  const headers = TableStore.useStoreState(({ columns }) =>
-    columns.map(({ id, title }) => ({ key: id, label: title }))
-  );
+  const headers = TableStore.useStoreState(({ columns }) => {
+    return columns.map(({ id, title }) => {
+      return { key: id, label: title };
+    });
+  });
 
   const data = TableStore.useStoreState(({ filteredRows, selectedRowIds }) => {
     return selectedRowIds.map((rowId: string) => {
       // We return every piece of data in the selected row except for the
       // ID of the row, which is just the member ID in this case.
-      const { id: _, ...rest } = filteredRows.find(({ id }) => id === rowId);
+      const { id: _, ...rest } = filteredRows.find(({ id }) => {
+        return id === rowId;
+      });
+
       return rest;
     });
   });
 
-  const onClick = () => showToast({ message: 'Member(s) data exported.' });
+  const onClick = () => {
+    return showToast({ message: 'Member(s) data exported.' });
+  };
 
   return (
     <CSVLink

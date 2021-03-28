@@ -7,7 +7,9 @@ export const dropdownModel: DropdownModel = {
   isOpen: false,
   options: { attribute: true, multiple: false },
   searchString: '',
-  setIsOpen: action((state, isOpen: boolean) => ({ ...state, isOpen })),
+  setIsOpen: action((state, isOpen: boolean) => {
+    return { ...state, isOpen };
+  }),
 
   setSearchString: action((state, searchString: string) => {
     return {
@@ -19,22 +21,30 @@ export const dropdownModel: DropdownModel = {
     };
   }),
 
-  setValue: action((state, value) => ({ ...state, value })),
+  setValue: action((state, value) => {
+    return { ...state, value };
+  }),
 
-  setValues: action((state, values) => ({
-    ...state,
-    filteredValues: values,
-    values
-  })),
+  setValues: action((state, values) => {
+    return {
+      ...state,
+      filteredValues: values,
+      values
+    };
+  }),
 
-  setWidth: action((state, width: number) => ({ ...state, width })),
+  setWidth: action((state, width: number) => {
+    return { ...state, width };
+  }),
   value: null,
   values: [],
   width: 0
 };
 
 const DropdownStore = createContextStore<DropdownModel>(
-  (runtimeModel: DropdownModel) => runtimeModel,
+  (runtimeModel: DropdownModel) => {
+    return runtimeModel;
+  },
   { disableImmer: true }
 );
 

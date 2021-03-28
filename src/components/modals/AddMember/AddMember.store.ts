@@ -10,18 +10,32 @@ export interface AddMemberModel {
 }
 
 export const addMemberModel: AddMemberModel = {
-  addRow: action((state) => ({ ...state, rows: [...state.rows, nanoid()] })),
+  addRow: action((state) => {
+    return { ...state, rows: [...state.rows, nanoid()] };
+  }),
+
   admin: false,
-  clearRows: action((state) => ({ ...state, rows: [nanoid()] })),
-  deleteRow: action((state, rowId: string) => ({
-    ...state,
-    rows: state.rows.filter((id: string) => id !== rowId)
-  })),
+
+  clearRows: action((state) => {
+    return { ...state, rows: [nanoid()] };
+  }),
+
+  deleteRow: action((state, rowId: string) => {
+    return {
+      ...state,
+      rows: state.rows.filter((id: string) => {
+        return id !== rowId;
+      })
+    };
+  }),
+
   rows: [nanoid()]
 };
 
 const AddMemberStore = createContextStore<AddMemberModel>(
-  (runtimeModel) => runtimeModel,
+  (runtimeModel) => {
+    return runtimeModel;
+  },
   { disableImmer: true }
 );
 

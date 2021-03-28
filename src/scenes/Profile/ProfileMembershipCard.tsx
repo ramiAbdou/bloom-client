@@ -16,7 +16,9 @@ const ProfileMembershipHeader: React.FC = () => {
     return `${db.community.name} Membership Information`;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const onClick = () => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
@@ -28,18 +30,24 @@ const ProfileMembershipHeader: React.FC = () => {
 const ProfileMembershipContent: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const sortedQuestions: IQuestion[] = db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => !question.category)
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'));
+      ?.map((questionId: string) => {
+        return db.byQuestionId[questionId];
+      })
+      ?.filter((question: IQuestion) => {
+        return !question.category;
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      });
 
-    const values: IMemberValue[] = db.member.values?.map(
-      (valueId: string) => db.byValuesId[valueId]
-    );
+    const values: IMemberValue[] = db.member.values?.map((valueId: string) => {
+      return db.byValuesId[valueId];
+    });
 
     return sortedQuestions?.map(({ id, title, type }: IQuestion) => {
-      const value: any = values?.find(
-        (entity: IMemberValue) => entity?.question === id
-      )?.value;
+      const value: any = values?.find((entity: IMemberValue) => {
+        return entity?.question === id;
+      })?.value;
 
       return { title, type, value };
     });
@@ -49,8 +57,13 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const hasData: boolean = useStoreState(({ db }) => !!db.member.values);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const hasData: boolean = useStoreState(({ db }) => {
+    return !!db.member.values;
+  });
+
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const onClick = () => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });

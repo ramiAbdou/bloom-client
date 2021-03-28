@@ -6,7 +6,9 @@ import IdStore from '@store/Id.store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitProfilePersonal = (): QueryResult<IMemberSocials> => {
-  const memberId = IdStore.useStoreState((state) => state.id);
+  const memberId: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
   const result: QueryResult<IMemberSocials> = useQuery<IMemberSocials>({
     fields: [

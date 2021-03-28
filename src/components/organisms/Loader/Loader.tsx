@@ -8,43 +8,45 @@ import Loader3 from './images/loader-3.svg';
 import Loader4 from './images/loader-4.svg';
 import Loader5 from './images/loader-5.svg';
 
-const LoaderContent: React.FC = () => (
-  <>
-    <div>
+const LoaderContent: React.FC = () => {
+  return (
+    <>
       <div>
-        <Loader2 />
+        <div>
+          <Loader2 />
+        </div>
+
+        <div>
+          <Loader4 />
+        </div>
       </div>
 
       <div>
-        <Loader4 />
-      </div>
-    </div>
+        <div>
+          <Loader1 />
+        </div>
 
-    <div>
-      <div>
-        <Loader1 />
-      </div>
+        <div>
+          <Loader3 />
+        </div>
 
-      <div>
-        <Loader3 />
-      </div>
-
-      <div>
-        <Loader5 />
-      </div>
-    </div>
-
-    <div>
-      <div>
-        <Loader2 />
+        <div>
+          <Loader5 />
+        </div>
       </div>
 
       <div>
-        <Loader4 />
+        <div>
+          <Loader2 />
+        </div>
+
+        <div>
+          <Loader4 />
+        </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 /**
  * Hexagon-styled loader that is overlayed over the entire page when the entire
@@ -52,7 +54,10 @@ const LoaderContent: React.FC = () => (
  */
 const Loader: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const isShowing = useStoreState(({ loader }) => loader.isShowing);
+
+  const isShowing = useStoreState(({ loader }) => {
+    return loader.isShowing;
+  });
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -64,7 +69,9 @@ const Loader: React.FC = () => {
       }, 100);
     }
 
-    return () => clearTimeout(timeout);
+    return () => {
+      return clearTimeout(timeout);
+    };
   }, [isShowing, loading]);
 
   return (

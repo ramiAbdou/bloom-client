@@ -7,8 +7,13 @@ import { localModals } from './Modal.types';
 import LocalModalContent from './ModalLocalContent';
 
 const ModalLocal: React.FC = () => {
-  const isShowing = useStoreState(({ modal }) => modal.isShowing);
-  const modalId = useStoreState(({ modal }) => modal.id);
+  const isShowing = useStoreState(({ modal }) => {
+    return modal.isShowing;
+  });
+
+  const modalId = useStoreState(({ modal }) => {
+    return modal.id;
+  });
 
   return createPortal(
     <AnimatePresence>

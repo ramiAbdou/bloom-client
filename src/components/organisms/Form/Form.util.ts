@@ -12,7 +12,7 @@ export const getError = (item: FormItemData): string => {
   const { required, value, validate } = item;
   if (required && !value) return 'Value cannot be empty.';
 
-  if (validate === 'IS_URL' && !validator.isURL(value)) {
+  if (validate === 'IS_URL' && !validator.isURL(value as string)) {
     return 'Value must be a URL.';
   }
 

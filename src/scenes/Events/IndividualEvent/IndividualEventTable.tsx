@@ -20,7 +20,9 @@ import IndividualEventTableActions from './IndividualEventTableActions';
 import useInitIndividualEventTable from './useInitIndividualEventTable';
 
 const IndividualEventTableContent: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const rows: TableRow[] = useStoreState(({ db }) => {
     return getIndividualEventTableRows(db);
@@ -50,7 +52,9 @@ const IndividualEventTableContent: React.FC = () => {
 };
 
 const IndividualEventTable: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
+  const isAdmin = useStoreState(({ db }) => {
+    return !!db.member?.role;
+  });
 
   const hasContent: boolean = useStoreState(({ db }) => {
     return (

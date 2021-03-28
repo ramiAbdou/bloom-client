@@ -49,22 +49,34 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     setError,
     showToast
   }: OnFormSubmitArgs) => {
-    const endDateOnly = day(items.END_DATE?.value)?.format('MMM D, YYYY');
-    const endTimeOnly = day(items.END_TIME?.value)?.format('h:mm A');
-    const startDateOnly = day(items.START_DATE?.value)?.format('MMM D, YYYY');
-    const startTimeOnly = day(items.START_TIME?.value)?.format('h:mm A');
+    const endDateOnly: string = day(items.END_DATE?.value as string)?.format(
+      'MMM D, YYYY'
+    );
 
-    const endTime = day(
+    const endTimeOnly: string = day(items.END_TIME?.value as string)?.format(
+      'h:mm A'
+    );
+
+    const startDateOnly: string = day(
+      items.START_DATE?.value as string
+    )?.format('MMM D, YYYY');
+
+    const startTimeOnly: string = day(
+      items.START_TIME?.value as string
+    )?.format('h:mm A');
+
+    const endTime: string = day(
       `${endDateOnly} @ ${endTimeOnly}`,
       'MMMM D, YYYY @ h:mm A'
     ).format();
 
-    const startTime = day(
+    const startTime: string = day(
       `${startDateOnly} @ ${startTimeOnly}`,
       'MMMM D, YYYY @ h:mm A'
     ).format();
 
-    const base64String = items.COVER_IMAGE?.value;
+    const base64String: string = items.COVER_IMAGE?.value as string;
+
     let imageUrl: string;
 
     if (base64String) {
@@ -82,15 +94,15 @@ const useCreateEvent = (): OnFormSubmitFunction => {
         : db.community.members;
 
     const args: CreateEventArgs = {
-      description: items.EVENT_DESCRIPTION?.value,
+      description: items.EVENT_DESCRIPTION?.value as string,
       endTime,
       imageUrl,
       invitees,
-      privacy: items.PRIVACY?.value,
+      privacy: items.PRIVACY?.value as any,
       startTime,
-      summary: items.EVENT_SUMMARY?.value,
-      title: items.EVENT_NAME?.value,
-      videoUrl: items.VIDEO_URL?.value
+      summary: items.EVENT_SUMMARY?.value as string,
+      title: items.EVENT_NAME?.value as string,
+      videoUrl: items.VIDEO_URL?.value as string
     };
 
     const { error } = await createEvent(args);

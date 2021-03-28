@@ -10,7 +10,9 @@ import { take } from '@util/util';
 import MembershipCurrentPlanActions from './MembershipCurrentPlanActions';
 
 const MembershipCurrentPlanHeader: React.FC = () => {
-  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
+  const isDuesActive = useStoreState(({ db }) => {
+    return db.member?.isDuesActive;
+  });
 
   return (
     <Row justify="sb" spacing="xs">
@@ -53,12 +55,14 @@ const MembershipCurrentPlanDescription: React.FC = () => {
   );
 };
 
-const MembershipCurrentPlan: React.FC = () => (
-  <Card className="s-membership-card s-membership-card--plan">
-    <MembershipCurrentPlanHeader />
-    <MembershipCurrentPlanDescription />
-    <MembershipCurrentPlanActions />
-  </Card>
-);
+const MembershipCurrentPlan: React.FC = () => {
+  return (
+    <Card className="s-membership-card s-membership-card--plan">
+      <MembershipCurrentPlanHeader />
+      <MembershipCurrentPlanDescription />
+      <MembershipCurrentPlanActions />
+    </Card>
+  );
+};
 
 export default MembershipCurrentPlan;

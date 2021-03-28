@@ -39,7 +39,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
     setError,
     showToast
   }: OnFormSubmitArgs) => {
-    const base64String = items.COVER_IMAGE?.value;
+    const base64String: string = items.COVER_IMAGE?.value as string;
 
     let imageUrl: string;
 

@@ -12,13 +12,18 @@ const TableSearchBar: React.FC<
 > = (props) => {
   const [value, setValue] = useState<string>('');
 
-  const setSearchString = TableStore.useStoreActions(
-    (store) => store.setSearchString
-  );
+  const setSearchString = TableStore.useStoreActions((store) => {
+    return store.setSearchString;
+  });
 
   useEffect(() => {
-    const timeout = setTimeout(() => setSearchString(value), 300);
-    return () => clearTimeout(timeout);
+    const timeout = setTimeout(() => {
+      return setSearchString(value);
+    }, 300);
+
+    return () => {
+      return clearTimeout(timeout);
+    };
   }, [value]);
 
   return <SearchBar value={value} onChange={setValue} {...props} />;

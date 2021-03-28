@@ -14,7 +14,10 @@ export interface SearchBarProps extends BaseProps, ValueProps {
 const SearchBarClearButton: React.FC<Partial<SearchBarProps>> = (props) => {
   const { onChange, value } = props;
 
-  const onClick = () => onChange('');
+  const onClick = () => {
+    onChange('');
+  };
+
   const css: string = cx('', { 'v-hidden': !value });
 
   return (
@@ -43,7 +46,9 @@ const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         placeholder={placeholder ?? 'Search...'}
         type="text"
         value={value}
-        onChange={({ target }) => onChange(target.value)}
+        onChange={({ target }) => {
+          return onChange(target.value);
+        }}
       />
 
       <SearchBarClearButton value={value} onChange={onChange} />

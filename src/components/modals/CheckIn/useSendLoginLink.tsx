@@ -16,12 +16,15 @@ import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmitFunction => {
-  const communityId = useStoreState(({ db }) => db.community?.id);
+  const communityId = useStoreState(({ db }) => {
+    return db.community?.id;
+  });
+
   const { pathname } = useLocation();
 
-  const setCurrentPage = StoryStore.useStoreActions(
-    (store) => store.setCurrentPage
-  );
+  const setCurrentPage = StoryStore.useStoreActions((store) => {
+    return store.setCurrentPage;
+  });
 
   const [getOwner] = useManualQuery<IMember>({
     fields: [
@@ -47,7 +50,7 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
   });
 
   const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
-    const email = items.EMAIL?.value;
+    const email: string = items.EMAIL?.value as string;
 
     const { error } = await sendLoginLink({
       communityId,

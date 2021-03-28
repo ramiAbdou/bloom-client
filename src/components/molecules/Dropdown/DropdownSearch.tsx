@@ -4,15 +4,17 @@ import Show from '@containers/Show';
 import DropdownStore from './Dropdown.store';
 
 const DropdownSearch: React.FC = () => {
-  const show: boolean = DropdownStore.useStoreState(
-    ({ values }) => values?.length >= 5
-  );
+  const show: boolean = DropdownStore.useStoreState(({ values }) => {
+    return values?.length >= 5;
+  });
 
-  const value = DropdownStore.useStoreState((state) => state.searchString);
+  const value = DropdownStore.useStoreState((state) => {
+    return state.searchString;
+  });
 
-  const setSearchString = DropdownStore.useStoreActions(
-    (store) => store.setSearchString
-  );
+  const setSearchString = DropdownStore.useStoreActions((store) => {
+    return store.setSearchString;
+  });
 
   const onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setSearchString(target.value);

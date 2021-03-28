@@ -20,7 +20,10 @@ import useInitCheckInError from './useInitCheckInError';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {
-  const communityId = useStoreState(({ db }) => db.community?.id);
+  const communityId = useStoreState(({ db }) => {
+    return db.community?.id;
+  });
+
   const { pathname } = useLocation();
 
   const url: string = buildUrl('https://accounts.google.com/o/oauth2/v2/auth', {
@@ -48,8 +51,12 @@ const CheckInGoogleButton: React.FC = () => {
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
   const owner: IMember = useStoreState(({ db }) => {
     return db.community?.members
-      ?.map((memberId: string) => db.byMemberId[memberId])
-      ?.find((member: IMember) => member.role === MemberRole.OWNER);
+      ?.map((memberId: string) => {
+        return db.byMemberId[memberId];
+      })
+      ?.find((member: IMember) => {
+        return member.role === MemberRole.OWNER;
+      });
   });
 
   // We store the error code in a cookie.
@@ -66,7 +73,9 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
       if (error) Cookies.remove(ErrorContext.LOGIN_ERROR);
     }, 5000);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      return clearTimeout(timeout);
+    };
   }, [error]);
 
   return (

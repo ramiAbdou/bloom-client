@@ -14,7 +14,9 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
   rowId
 }) => {
   const columnIndex: number = TableStore.useStoreState(({ columns }) => {
-    return columns.findIndex((element: TableColumn) => element.id === columnId);
+    return columns.findIndex((element: TableColumn) => {
+      return element.id === columnId;
+    });
   });
 
   const hasCheckbox: boolean = TableStore.useStoreState(({ options }) => {
@@ -25,7 +27,9 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
     return selectedRowIds.includes(rowId);
   });
 
-  const toggleRow = TableStore.useStoreActions((store) => store.toggleRow);
+  const toggleRow = TableStore.useStoreActions((store) => {
+    return store.toggleRow;
+  });
 
   const onChange = (): void => {
     toggleRow(rowId);

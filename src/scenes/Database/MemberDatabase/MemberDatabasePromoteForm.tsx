@@ -26,13 +26,13 @@ const MemberDatabasePromoteFormActions: React.FC = () => {
 };
 
 const MemberDatabasePromoteForm: React.FC = () => {
-  const memberIds = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const memberIds = TableStore.useStoreState(({ selectedRowIds }) => {
+    return selectedRowIds;
+  });
 
-  const clearSelectedRows = TableStore.useStoreActions(
-    (store) => store.clearSelectedRows
-  );
+  const clearSelectedRows = TableStore.useStoreActions((store) => {
+    return store.clearSelectedRows;
+  });
 
   const [promoteMembers] = useMutation<IMember[], MemberIdsArgs>({
     fields: ['id', 'role'],

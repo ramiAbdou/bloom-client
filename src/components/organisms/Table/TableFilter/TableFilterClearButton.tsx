@@ -5,13 +5,13 @@ import TableStore from '../Table.store';
 import TableFilterStore from './TableFilter.store';
 
 const TableFilterClearButton: React.FC = () => {
-  const clearCustomFilters = TableFilterStore.useStoreActions(
-    (store) => store.clearFilters
-  );
+  const clearCustomFilters = TableFilterStore.useStoreActions((store) => {
+    return store.clearFilters;
+  });
 
-  const removeFilter = TableStore.useStoreActions(
-    (store) => store.removeFilter
-  );
+  const removeFilter = TableStore.useStoreActions((store) => {
+    return store.removeFilter;
+  });
 
   const onClick = () => {
     clearCustomFilters();

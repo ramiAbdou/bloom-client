@@ -11,7 +11,9 @@ import IdStore from '@store/Id.store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitProfileHistory = (): Partial<QueryResult> => {
-  const memberId = IdStore.useStoreState((state) => state.id);
+  const memberId: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
   const { loading: loading1 } = useQuery<IEventAttendee[]>({
     fields: [

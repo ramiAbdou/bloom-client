@@ -24,10 +24,10 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
   const onSubmit = async (args: OnFormSubmitArgs) => {
     const { closeModal, items, setError, showToast } = args;
 
-    const facebookUrl = items.FACEBOOK_URL?.value;
-    const instagramUrl = items.INSTAGRAM_URL?.value;
-    const linkedInUrl = items.LINKED_IN_URL?.value;
-    const twitterUrl = items.TWITTER_URL?.value;
+    const facebookUrl: string = items.FACEBOOK_URL?.value as string;
+    const instagramUrl: string = items.INSTAGRAM_URL?.value as string;
+    const linkedInUrl: string = items.LINKED_IN_URL?.value as string;
+    const twitterUrl: string = items.TWITTER_URL?.value as string;
 
     const { error } = await updateMemberSocials({
       facebookUrl,

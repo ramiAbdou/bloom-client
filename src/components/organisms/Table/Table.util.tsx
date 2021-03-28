@@ -55,9 +55,9 @@ export const getBannerMessage = (state: State<TableModel>): string => {
   }
 
   if (
-    filteredRows
-      .slice(range[0], range[1])
-      .every(({ id }) => selectedRowIds.includes(id))
+    filteredRows.slice(range[0], range[1]).every(({ id }) => {
+      return selectedRowIds.includes(id);
+    })
   ) {
     return `All 50 rows on this page are selected.`;
   }
@@ -181,8 +181,12 @@ export const runFilters = (args: RunFiltersArgs): TableRow[] => {
 
   return matchSorter(filteredRows, searchString, {
     keys: [
-      ...[...state.columns].map(({ id }) => id),
-      (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
+      ...[...state.columns].map(({ id }) => {
+        return id;
+      }),
+      (row: TableRow) => {
+        return `${row[firstNameColumnId]} ${row[lastNameColumnId]}`;
+      }
     ],
     threshold: matchSorter.rankings.ACRONYM
   });

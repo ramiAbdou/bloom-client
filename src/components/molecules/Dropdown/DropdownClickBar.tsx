@@ -7,12 +7,29 @@ import { cx } from '@util/util';
 import Dropdown from './Dropdown.store';
 
 const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
-  const isOpen = Dropdown.useStoreState((state) => state.isOpen);
-  const attribute = Dropdown.useStoreState((state) => state.options.attribute);
-  const multiple = Dropdown.useStoreState((state) => state.options.multiple);
-  const storedValue = Dropdown.useStoreState((state) => state.value);
-  const onSelect = Dropdown.useStoreState((state) => state.onSelect);
-  const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
+  const isOpen = Dropdown.useStoreState((state) => {
+    return state.isOpen;
+  });
+
+  const attribute = Dropdown.useStoreState((state) => {
+    return state.options.attribute;
+  });
+
+  const multiple = Dropdown.useStoreState((state) => {
+    return state.options.multiple;
+  });
+
+  const storedValue = Dropdown.useStoreState((state) => {
+    return state.value;
+  });
+
+  const onSelect = Dropdown.useStoreState((state) => {
+    return state.onSelect;
+  });
+
+  const setIsOpen = Dropdown.useStoreActions((store) => {
+    return store.setIsOpen;
+  });
 
   const deleteValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
@@ -22,7 +39,9 @@ const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
 
     onSelect(
       multiple
-        ? (storedValue as string[]).filter((option) => option !== value)
+        ? (storedValue as string[]).filter((option) => {
+            return option !== value;
+          })
         : (storedValue as string)
     );
   };
@@ -41,7 +60,9 @@ const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
 };
 
 const DropdownClickBarValues: React.FC = () => {
-  const value = Dropdown.useStoreState((state) => state.value);
+  const value = Dropdown.useStoreState((state) => {
+    return state.value;
+  });
 
   let values: string[] = [];
 
@@ -50,17 +71,25 @@ const DropdownClickBarValues: React.FC = () => {
 
   return (
     <Row className="m-dropdown-value-ctr o-scroll" show={!!values?.length}>
-      {values.map((element: string) => (
-        <DropdownClickBarValue key={element} value={element} />
-      ))}
+      {values.map((element: string) => {
+        return <DropdownClickBarValue key={element} value={element} />;
+      })}
     </Row>
   );
 };
 
 const DropdownClickBar: React.FC = () => {
-  const isOpen = Dropdown.useStoreState((state) => state.isOpen);
-  const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
-  const setWidth = Dropdown.useStoreActions((store) => store.setWidth);
+  const isOpen = Dropdown.useStoreState((state) => {
+    return state.isOpen;
+  });
+
+  const setIsOpen = Dropdown.useStoreActions((store) => {
+    return store.setIsOpen;
+  });
+
+  const setWidth = Dropdown.useStoreActions((store) => {
+    return store.setWidth;
+  });
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
   const width = ref?.current?.offsetWidth;
@@ -69,7 +98,9 @@ const DropdownClickBar: React.FC = () => {
     if (width) setWidth(width);
   }, [width]);
 
-  const onClick = () => setIsOpen(!isOpen);
+  const onClick = () => {
+    return setIsOpen(!isOpen);
+  };
 
   const css: string = cx('m-dropdown-bar', {
     'm-dropdown-bar--open': isOpen
