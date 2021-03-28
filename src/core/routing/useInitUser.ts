@@ -12,9 +12,17 @@ import { QueryEvent } from '@util/constants.events';
  * cookies stored in the browser.
  */
 const useInitUser = (): boolean => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
-  const userId: string = useStoreState(({ db }) => db.user?.id);
+  const isAuthenticated: boolean = useStoreState(({ db }) => {
+    return db.isAuthenticated;
+  });
+
+  const memberId: string = useStoreState(({ db }) => {
+    return db.member?.id;
+  });
+
+  const userId: string = useStoreState(({ db }) => {
+    return db.user?.id;
+  });
 
   const [getUser, { loading: loading1 }] = useManualQuery<IUser>({
     fields: ['email', 'id'],

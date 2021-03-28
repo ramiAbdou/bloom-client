@@ -19,9 +19,14 @@ const ListFilterButtonActiveTag: React.FC = () => {
 const ListFilterOpenButton: React.FC<Partial<ButtonProps>> = (props) => {
   const { className } = props;
 
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const showPanel = useStoreActions(({ panel }) => {
+    return panel.showPanel;
+  });
 
-  const onClick = () => showPanel({ id: PanelType.FILTER_LIST });
+  const onClick = () => {
+    return showPanel({ id: PanelType.FILTER_LIST });
+  };
+
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   const css: string = cx(

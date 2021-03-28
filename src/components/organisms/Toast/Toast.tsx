@@ -12,7 +12,10 @@ const Toast: React.FC<ToastOptions> = React.memo(
   ({ id, message, mutationArgsOnUndo }) => {
     // Tracks the option to undo the action that created the Toast.
     const [wasUndid, setWasUndid] = useState(false);
-    const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
+
+    const dequeueToast = useStoreActions(({ toast }) => {
+      return toast.dequeueToast;
+    });
 
     const mutationOnUndoFn = useToastMutation({
       id,
@@ -49,14 +52,16 @@ const Toast: React.FC<ToastOptions> = React.memo(
 );
 
 const ToastList: React.FC = () => {
-  const queue = useStoreState(({ toast }) => toast.queue);
+  const queue = useStoreState(({ toast }) => {
+    return toast.queue;
+  });
 
   return createPortal(
     <div className="c-toast-ctr">
       <AnimatePresence>
-        {queue.map((toast) => (
-          <Toast key={toast.id} {...toast} />
-        ))}
+        {queue.map((toast) => {
+          return <Toast key={toast.id} {...toast} />;
+        })}
       </AnimatePresence>
     </div>,
     document.body

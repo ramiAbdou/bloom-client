@@ -18,14 +18,20 @@ export const chartModel: ChartModel = {
 
   questionId: null,
 
-  setData: action((state, args: ChartModelInitArgs) => ({ ...state, ...args })),
+  setData: action((state, args: ChartModelInitArgs) => {
+    return { ...state, ...args };
+  }),
 
-  setQuestionId: action((state, questionId: string) => ({
-    ...state,
-    questionId
-  })),
+  setQuestionId: action((state, questionId: string) => {
+    return {
+      ...state,
+      questionId
+    };
+  }),
 
-  setType: action((state, type: ChartType) => ({ ...state, type })),
+  setType: action((state, type: ChartType) => {
+    return { ...state, type };
+  }),
 
   title: null,
 
@@ -35,6 +41,8 @@ export const chartModel: ChartModel = {
 };
 
 export default createContextStore<ChartModel>(
-  (runtimeModel) => ({ ...runtimeModel, options: runtimeModel.options }),
+  (runtimeModel) => {
+    return { ...runtimeModel, options: runtimeModel.options };
+  },
   { disableImmer: true }
 );

@@ -10,25 +10,29 @@ import { QuestionType } from '@util/constants';
 import TableFilterStore from './TableFilter.store';
 
 const TableFilterRowValueInput: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => state.id);
+  const id: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
-  const columnId: string = TableFilterStore.useStoreState(
-    (store) => store.filters[id]?.columnId
-  );
+  const columnId: string = TableFilterStore.useStoreState((store) => {
+    return store.filters[id]?.columnId;
+  });
 
   const question: IQuestion = useStoreState(({ db }) => {
     return db.byQuestionId[columnId];
   }, deepequal);
 
-  const storedValue: any = TableFilterStore.useStoreState(
-    (store) => store.filters[id]?.value
-  );
+  const storedValue: any = TableFilterStore.useStoreState((store) => {
+    return store.filters[id]?.value;
+  });
 
-  const setFilter = TableFilterStore.useStoreActions(
-    (store) => store.setFilter
-  );
+  const setFilter = TableFilterStore.useStoreActions((store) => {
+    return store.setFilter;
+  });
 
-  const onInputChange = (value: string) => setFilter({ id, value });
+  const onInputChange = (value: string) => {
+    return setFilter({ id, value });
+  };
 
   if (
     [QuestionType.MULTIPLE_SELECT, QuestionType.MULTIPLE_CHOICE].includes(
@@ -38,7 +42,9 @@ const TableFilterRowValueInput: React.FC = () => {
     return (
       <Dropdown
         options={{ attribute: false }}
-        value={question?.options?.find((option) => option === storedValue)}
+        value={question?.options?.find((option) => {
+          return option === storedValue;
+        })}
         values={question?.options}
         onSelect={onInputChange}
       />

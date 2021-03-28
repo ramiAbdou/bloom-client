@@ -4,12 +4,14 @@ import MembersAnalyticsCharts from './MembersAnalyticsCharts';
 import MembersAnalyticsOverview from './MembersAnalyticsOverview';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';
 
-const MembersAnalytics: React.FC = () => (
-  <div className="s-analytics-page s-analytics-members">
-    <MembersAnalyticsOverview />
-    <MembersAnalyticsCharts />
-    <MembersAnalyticsPlayground />
-  </div>
-);
+const MembersAnalytics: React.FC = () => {
+  return (
+    <div className="s-analytics-page s-analytics-members">
+      <MembersAnalyticsOverview />
+      <MembersAnalyticsCharts />
+      <MembersAnalyticsPlayground />
+    </div>
+  );
+};
 
 export default MembersAnalytics;

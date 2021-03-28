@@ -21,9 +21,9 @@ const MemberDatabaseDeleteFormActions: React.FC = () => {
 };
 
 const MemberDatabaseDeleteFormHeader: React.FC = () => {
-  const memberIds = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const memberIds = TableStore.useStoreState(({ selectedRowIds }) => {
+    return selectedRowIds;
+  });
 
   return (
     <FormHeader

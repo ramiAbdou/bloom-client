@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
+import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
@@ -8,13 +9,27 @@ import { useStoreState } from '@store/Store';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => db.socials?.clubhouseUrl);
-  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
-  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
-  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
-  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
+  const clubhouseUrl: string = useStoreState(({ db }) => {
+    return db.socials?.clubhouseUrl;
+  });
 
-  const updateMemberSocials = useUpdateMemberSocials();
+  const facebookUrl: string = useStoreState(({ db }) => {
+    return db.socials?.facebookUrl;
+  });
+
+  const instagramUrl: string = useStoreState(({ db }) => {
+    return db.socials?.instagramUrl;
+  });
+
+  const linkedInUrl: string = useStoreState(({ db }) => {
+    return db.socials?.linkedInUrl;
+  });
+
+  const twitterUrl: string = useStoreState(({ db }) => {
+    return db.socials?.twitterUrl;
+  });
+
+  const updateMemberSocials: OnFormSubmitFunction = useUpdateMemberSocials();
 
   return (
     <Form onSubmit={updateMemberSocials}>

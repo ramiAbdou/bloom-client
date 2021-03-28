@@ -7,10 +7,15 @@ interface IdModel extends IdProps {
 }
 
 const IdStore = createContextStore<IdModel>(
-  (runtimeModel) => ({
-    ...runtimeModel,
-    setId: action((state, id: string) => ({ ...state, id }))
-  }),
+  (runtimeModel) => {
+    return {
+      ...runtimeModel,
+
+      setId: action((state, id: string) => {
+        return { ...state, id };
+      })
+    };
+  },
   { disableImmer: true }
 );
 

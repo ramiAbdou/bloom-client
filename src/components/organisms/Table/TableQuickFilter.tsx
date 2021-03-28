@@ -15,19 +15,26 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = (props) => {
 
   const [active, setActive] = useState<boolean>(false);
 
-  const filters = TableStore.useStoreState((state) => state.filters);
-  const setFilter = TableStore.useStoreActions((store) => store.setFilter);
+  const filters = TableStore.useStoreState((state) => {
+    return state.filters;
+  });
 
-  const removeFilter = TableStore.useStoreActions(
-    (store) => store.removeFilter
-  );
+  const setFilter = TableStore.useStoreActions((store) => {
+    return store.setFilter;
+  });
+
+  const removeFilter = TableStore.useStoreActions((store) => {
+    return store.removeFilter;
+  });
 
   useEffect(() => {
     if (active && !filters[title]) setFilter({ filter, filterId: title });
     else if (!active && !!filters[title]) removeFilter(title);
   }, [active]);
 
-  const onClick = () => setActive(!active);
+  const onClick = () => {
+    return setActive(!active);
+  };
 
   const css: string = cx('f f-ac meta o-table-quick-filter', {
     'o-table-quick-filter--active': active

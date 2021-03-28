@@ -148,6 +148,7 @@ export interface IPaymentMethod {
   brand: string;
   expirationDate: string;
   last4: string;
+  paymentMethodId?: string;
   zipCode: string;
 }
 

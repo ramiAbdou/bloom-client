@@ -42,13 +42,17 @@ const ApplicationPaymentForm: React.FC = () => {
 
 const ApplicationPaymentSection: React.FC = () => {
   const selectedTypeName: string = StoryStore.useStoreState(({ items }) => {
-    return items.MEMBER_PLAN?.value;
+    return items.MEMBER_PLAN?.value as string;
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
     const selectedType: IMemberPlan = db.community?.plans
-      ?.map((planId: string) => db.byMemberPlanId[planId])
-      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
+      ?.map((planId: string) => {
+        return db.byMemberPlanId[planId];
+      })
+      ?.find((type: IMemberPlan) => {
+        return type?.name === selectedTypeName;
+      });
 
     return !!selectedType?.amount;
   });

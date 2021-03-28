@@ -5,7 +5,10 @@ import useApplyListFilters from '../useApplyListFilters';
 
 const ListFilterApplyButton: React.FC = () => {
   const applyListFilters = useApplyListFilters();
-  const onClick = () => applyListFilters();
+
+  const onClick = () => {
+    return applyListFilters();
+  };
 
   return (
     <Button primary onClick={onClick}>

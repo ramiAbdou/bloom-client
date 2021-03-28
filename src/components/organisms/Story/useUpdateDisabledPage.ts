@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import StoryStore from './Story.store';
+import { StoryPageProps } from './Story.types';
 
 /**
  * Updates the story page's disabled status based on the current page index.
@@ -8,15 +9,26 @@ import StoryStore from './Story.store';
  * is.
  */
 const useUpdateDisabledPage = (id: string): void => {
-  const pageId = StoryStore.useStoreState((state) => state.pageId);
-  const pages = StoryStore.useStoreState((state) => state.pages);
+  const pageId: string = StoryStore.useStoreState((state) => {
+    return state.pageId;
+  });
 
-  const setPageDisabled = StoryStore.useStoreActions(
-    (store) => store.setPageDisabled
-  );
+  const pages: StoryPageProps[] = StoryStore.useStoreState((state) => {
+    return state.pages;
+  });
 
-  const currentPageIndex = pages.findIndex((element) => element.id === pageId);
-  const pageIndex = pages.findIndex((element) => element.id === id);
+  const setPageDisabled = StoryStore.useStoreActions((store) => {
+    return store.setPageDisabled;
+  });
+
+  const currentPageIndex: number = pages.findIndex((element) => {
+    return element.id === pageId;
+  });
+
+  const pageIndex: number = pages.findIndex((element) => {
+    return element.id === id;
+  });
+
   const { disabled } = pages[pageIndex] ?? {};
 
   useEffect(() => {

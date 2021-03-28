@@ -16,7 +16,7 @@ const BloomLogo: React.FC<LogoProps> = ({ multiplier }) => {
   };
 
   return (
-    <button>
+    <button type="button">
       <Logo className="c-misc-logo" style={style} />
     </button>
   );

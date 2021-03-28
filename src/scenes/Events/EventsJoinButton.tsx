@@ -15,13 +15,17 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
   eventId,
   large
 }) => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const { endTime, startTime, videoUrl }: IEvent = useStoreState(({ db }) => {
     return db.byEventId[eventId];
   });
 
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const isMember = useStoreState(({ db }) => {
+    return db.isMember;
+  });
 
   const isHappeningNow =
     day().isAfter(day(startTime)) && day().isBefore(day(endTime));

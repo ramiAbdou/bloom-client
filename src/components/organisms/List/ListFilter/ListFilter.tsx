@@ -22,8 +22,12 @@ const ListFilterHeader: React.FC = () => {
 const ListFilterQuestionList: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.map((questionId: string) => {
+        return db.byQuestionId[questionId];
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      })
       ?.filter((question: IQuestion) => {
         return !question.locked && !!question.options?.length;
       });
@@ -48,14 +52,16 @@ const ListFilterActions: React.FC = () => {
 };
 
 const ListFilter: React.FC = () => {
-  const setOpenQuestionId = ListFilterStore.useStoreActions(
-    (state) => state.setOpenQuestionId
-  );
+  const setOpenQuestionId = ListFilterStore.useStoreActions((state) => {
+    return state.setOpenQuestionId;
+  });
 
   // When the panel closes, ensure that no question is expanded when it opens
   // back up again.
   useEffect(() => {
-    return () => setOpenQuestionId(null);
+    return () => {
+      return setOpenQuestionId(null);
+    };
   }, []);
 
   return (

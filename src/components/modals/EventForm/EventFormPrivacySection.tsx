@@ -7,7 +7,9 @@ import { EventPrivacy, IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
 const EventFormPrivacySection: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useStoreState(({ modal }) => {
+    return modal.metadata;
+  });
 
   const privacy: EventPrivacy = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];

@@ -8,8 +8,13 @@ import PanelContainer from './PanelContainer';
 import PanelLocalContent from './PanelLocalContent';
 
 const PanelLocal: React.FC = () => {
-  const isShowing = useStoreState(({ panel }) => panel.isShowing);
-  const panelId = useStoreState(({ panel }) => panel.id);
+  const isShowing = useStoreState(({ panel }) => {
+    return panel.isShowing;
+  });
+
+  const panelId = useStoreState(({ panel }) => {
+    return panel.id;
+  });
 
   return createPortal(
     <AnimatePresence>

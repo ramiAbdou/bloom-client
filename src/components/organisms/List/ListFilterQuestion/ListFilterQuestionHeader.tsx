@@ -10,14 +10,18 @@ import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
 
 const ListFilterQuestionHeader: React.FC = () => {
-  const questionId: string = IdStore.useStoreState((state) => state.id);
+  const questionId: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
-  const openQuestionId = ListFilterStore.useStoreState(
-    (state) => state.openQuestionId
-  );
+  const openQuestionId = ListFilterStore.useStoreState((state) => {
+    return state.openQuestionId;
+  });
 
   const areValuesSelected: boolean = ListFilterQuestionStore.useStoreState(
-    (state) => !!state.values?.length
+    (state) => {
+      return !!state.values?.length;
+    }
   );
 
   const title: string = useStoreState(({ db }) => {

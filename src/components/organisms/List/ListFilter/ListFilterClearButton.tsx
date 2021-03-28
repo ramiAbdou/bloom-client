@@ -5,17 +5,17 @@ import ListStore from '../List.store';
 import ListFilterStore from './ListFilter.store';
 
 const ListFilterClearButton: React.FC = () => {
-  const clearFilters = ListFilterStore.useStoreActions(
-    (store) => store.clearFilters
-  );
+  const clearFilters = ListFilterStore.useStoreActions((store) => {
+    return store.clearFilters;
+  });
 
-  const setOpenQuestionId = ListFilterStore.useStoreActions(
-    (store) => store.setOpenQuestionId
-  );
+  const setOpenQuestionId = ListFilterStore.useStoreActions((store) => {
+    return store.setOpenQuestionId;
+  });
 
-  const setCustomFilters = ListStore.useStoreActions(
-    (store) => store.setCustomFilters
-  );
+  const setCustomFilters = ListStore.useStoreActions((store) => {
+    return store.setCustomFilters;
+  });
 
   const onClick: VoidFunction = () => {
     clearFilters();

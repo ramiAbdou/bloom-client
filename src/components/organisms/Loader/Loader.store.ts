@@ -7,9 +7,15 @@ export type LoaderModel = {
 };
 
 const loaderModel: LoaderModel = {
-  closeLoader: action((state) => ({ ...state, isShowing: false })),
+  closeLoader: action((state) => {
+    return { ...state, isShowing: false };
+  }),
+
   isShowing: false,
-  showLoader: action((state) => ({ ...state, isShowing: true }))
+
+  showLoader: action((state) => {
+    return { ...state, isShowing: true };
+  })
 };
 
 export default loaderModel;

@@ -8,9 +8,17 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const CreateEventButton: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member.role);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal({ id: ModalType.CREATE_EVENT });
+  const isAdmin = useStoreState(({ db }) => {
+    return !!db.member.role;
+  });
+
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
+
+  const onClick = () => {
+    return showModal({ id: ModalType.CREATE_EVENT });
+  };
 
   return (
     <Button primary show={isAdmin} onClick={onClick}>
@@ -24,11 +32,19 @@ const EventsHeader: React.FC<LoadingProps> = ({ loading }) => {
 
   const options: MainNavigationOptionProps[] = [
     {
-      onClick: () => push('upcoming'),
+      onClick: () => {
+        return push('upcoming');
+      },
       pathname: 'upcoming',
       title: 'Upcoming'
     },
-    { onClick: () => push('past'), pathname: 'past', title: 'Past' }
+    {
+      onClick: () => {
+        return push('past');
+      },
+      pathname: 'past',
+      title: 'Past'
+    }
   ];
 
   return (

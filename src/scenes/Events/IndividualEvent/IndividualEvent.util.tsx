@@ -131,10 +131,9 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
 
   if (!totalRecord) return null;
 
-  return Object.values(totalRecord)?.sort((a, b) =>
-    // @ts-ignore
-    sortObjects(a, b, ['joinedAt', 'rsvpdAt'])
-  ) as TableRow[];
+  return (Object.values(totalRecord)?.sort((a, b) => {
+    return sortObjects(a, b, ['joinedAt', 'rsvpdAt']);
+  }) as any) as TableRow[];
 };
 
 /**
@@ -154,8 +153,11 @@ export const getIndividualEventTableColumns = (
     ? [
         {
           id: 'joinedAt',
-          render: (value) =>
-            value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
+          render: (value) => {
+            return (
+              value && <p>{day(value as string).format('MMM D @ h:mm A')}</p>
+            );
+          },
           title: `Joined At`,
           type: QuestionType.SHORT_TEXT
         }
@@ -165,7 +167,9 @@ export const getIndividualEventTableColumns = (
   const viewedRecordingColumn: TableColumn[] = recordingUrl
     ? [
         {
-          format: (watched: boolean) => (watched ? 'Yes' : 'No'),
+          format: (watched: boolean) => {
+            return watched ? 'Yes' : 'No';
+          },
           id: 'watched',
           title: `Viewed Recording`,
           type: QuestionType.TRUE_FALSE
@@ -179,7 +183,9 @@ export const getIndividualEventTableColumns = (
     ...joinedAtColumn,
     {
       id: 'rsvpdAt',
-      render: (value) => value && <p>{day(value).format('MMM D @ h:mm A')}</p>,
+      render: (value) => {
+        return value && <p>{day(value as string).format('MMM D @ h:mm A')}</p>;
+      },
       title: `RSVP'd At`,
       type: QuestionType.SHORT_TEXT
     },

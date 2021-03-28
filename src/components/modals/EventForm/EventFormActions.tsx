@@ -5,7 +5,9 @@ import { useStoreState } from '@store/Store';
 import EventFormDeleteButton from './EventFormDeleteButton';
 
 const EventFormActions: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useStoreState(({ modal }) => {
+    return modal.metadata;
+  });
 
   return (
     <>

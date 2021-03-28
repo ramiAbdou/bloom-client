@@ -8,18 +8,20 @@ const TableHeaderCheckbox: React.FC = () => {
     ({ filteredRows, range, selectedRowIds }) => {
       return (
         !!selectedRowIds.length &&
-        filteredRows
-          .slice(range[0], range[1])
-          .every(({ id: rowId }) => selectedRowIds.includes(rowId))
+        filteredRows.slice(range[0], range[1]).every(({ id: rowId }) => {
+          return selectedRowIds.includes(rowId);
+        })
       );
     }
   );
 
-  const toggleAllPageRows = TableStore.useStoreActions(
-    (store) => store.toggleAllPageRows
-  );
+  const toggleAllPageRows = TableStore.useStoreActions((store) => {
+    return store.toggleAllPageRows;
+  });
 
-  const onChange = () => toggleAllPageRows();
+  const onChange = () => {
+    return toggleAllPageRows();
+  };
 
   return (
     <Checkbox

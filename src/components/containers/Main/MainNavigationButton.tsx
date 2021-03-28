@@ -22,7 +22,7 @@ const MainNavigationButton: React.FC<MainNavigationButtonProps> = (props) => {
   });
 
   return (
-    <button className={css} onClick={onClick && onClick}>
+    <button className={css} type="button" onClick={onClick && onClick}>
       {title}
     </button>
   );

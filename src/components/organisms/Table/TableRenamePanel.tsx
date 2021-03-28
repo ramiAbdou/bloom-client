@@ -11,23 +11,29 @@ import { TableColumn } from './Table.types';
 import TableSortButton from './TableSortButton';
 
 const TableRenameForm: React.FC = () => {
-  const columnId = useStoreState(({ panel }) => panel.metadata);
+  const columnId = useStoreState(({ panel }) => {
+    return panel.metadata;
+  });
 
   const { id, title }: TableColumn = TableStore.useStoreState(({ columns }) => {
-    return columns.find((column) => column.id === columnId) ?? {};
+    return (
+      columns.find((column) => {
+        return column.id === columnId;
+      }) ?? {}
+    );
   }, deepequal);
 
   const onRenameColumn = TableStore.useStoreState(({ options }) => {
     return options.onRenameColumn;
   });
 
-  const updateColumn = TableStore.useStoreActions(
-    (store) => store.updateColumn
-  );
+  const updateColumn = TableStore.useStoreActions((store) => {
+    return store.updateColumn;
+  });
 
   const onSubmit: OnFormSubmitFunction = async ({ closePanel, items }) => {
     // Only one form item, so just index first element.
-    const updatedTitle: string = items.TABLE_COLUMN?.value;
+    const updatedTitle: string = items.TABLE_COLUMN?.value as string;
 
     // If the column name didn't change, don't send to backend.
     if (updatedTitle === title) return;

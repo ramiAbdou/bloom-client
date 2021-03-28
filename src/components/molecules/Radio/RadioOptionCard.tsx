@@ -12,7 +12,9 @@ const RadioOptionCard: React.FC<RadioOptionProps> = ({
   name,
   onSelect
 }) => {
-  const onClick = () => onSelect(label);
+  const onClick = () => {
+    return onSelect(label);
+  };
 
   const css: string = cx('c-misc-radio-option-card', {
     'c-misc-radio-option-card--active': checked

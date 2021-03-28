@@ -6,15 +6,19 @@ import { TableFilterOperator } from '../Table.types';
 import TableFilterStore from './TableFilter.store';
 
 const TableFilterRowOperatorDropdown: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => state.id);
+  const id: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
   const operator: TableFilterOperator = TableFilterStore.useStoreState(
-    (store) => store.filters[id]?.operator
+    (store) => {
+      return store.filters[id]?.operator;
+    }
   );
 
-  const setFilter = TableFilterStore.useStoreActions(
-    (store) => store.setFilter
-  );
+  const setFilter = TableFilterStore.useStoreActions((store) => {
+    return store.setFilter;
+  });
 
   const onOperatorUpdate = (result: TableFilterOperator) => {
     setFilter({ id, operator: result });

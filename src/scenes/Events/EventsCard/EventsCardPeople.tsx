@@ -31,7 +31,9 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
 };
 
 const EventsCardPeople: React.FC = () => {
-  const eventId = IdStore.useStoreState((event) => event.id);
+  const eventId = IdStore.useStoreState((event) => {
+    return event.id;
+  });
 
   const isPast: boolean = useStoreState(({ db }) => {
     const endTime = db.byEventId[eventId]?.endTime;
@@ -43,7 +45,9 @@ const EventsCardPeople: React.FC = () => {
     const people = isPast ? event?.attendees : event?.guests;
 
     return people
-      ?.map((id: string) => (isPast ? db.byAttendeeId[id] : db.byGuestId[id]))
+      ?.map((id: string) => {
+        return isPast ? db.byAttendeeId[id] : db.byGuestId[id];
+      })
       ?.reduce((acc, person: IEventGuest | IEventAttendee) => {
         return [
           ...acc,

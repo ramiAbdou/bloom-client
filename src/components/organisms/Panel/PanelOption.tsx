@@ -8,8 +8,10 @@ import { PanelAction } from './Panel.types';
  * click. Only has text showing. If customization is needed, won't be able
  * to use this component.
  */
-const PanelOption = ({ Icon, onClick, text }: PanelAction) => {
-  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
+const PanelOption: React.FC<PanelAction> = ({ Icon, onClick, text }) => {
+  const closePanel = useStoreActions(({ panel }) => {
+    return panel.closePanel;
+  });
 
   // After the passed-in onClick is executed, close the panel. This component
   // should not be used as a Flow. It is meant to be a one-time action panel.
@@ -19,7 +21,7 @@ const PanelOption = ({ Icon, onClick, text }: PanelAction) => {
   };
 
   return (
-    <button className="c-panel-option" onClick={onOptionClick}>
+    <button className="c-panel-option" type="button" onClick={onOptionClick}>
       <Icon />
       {text}
     </button>

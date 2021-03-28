@@ -8,7 +8,9 @@ import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 
 const ApplicationConfirmationDefaultMessage: React.FC = () => {
-  const name = useStoreState(({ db }) => db.community?.name);
+  const name = useStoreState(({ db }) => {
+    return db.community?.name;
+  });
 
   return (
     <>
@@ -23,9 +25,15 @@ const ApplicationConfirmationDefaultMessage: React.FC = () => {
 };
 
 const ApplicationConfirmationAutoAcceptedMessage: React.FC = () => {
-  const name = useStoreState(({ db }) => db.community?.name);
+  const name = useStoreState(({ db }) => {
+    return db.community?.name;
+  });
+
   const { push } = useHistory();
-  const onClick = () => push('/login');
+
+  const onClick = () => {
+    return push('/login');
+  };
 
   return (
     <>
@@ -42,8 +50,13 @@ const ApplicationConfirmationAutoAcceptedMessage: React.FC = () => {
 };
 
 const ApplicationConfirmationContent: React.FC = () => {
-  const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
-  const name = useStoreState(({ db }) => db.community?.name);
+  const autoAccept = useStoreState(({ db }) => {
+    return db.community?.autoAccept;
+  });
+
+  const name = useStoreState(({ db }) => {
+    return db.community?.name;
+  });
 
   if (!name) return null;
   if (autoAccept) return <ApplicationConfirmationAutoAcceptedMessage />;
@@ -51,8 +64,13 @@ const ApplicationConfirmationContent: React.FC = () => {
 };
 
 const ApplicationConfirmation: React.FC = () => {
-  const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
-  const name = useStoreState(({ db }) => db.community?.name);
+  const autoAccept = useStoreState(({ db }) => {
+    return db.community?.autoAccept;
+  });
+
+  const name = useStoreState(({ db }) => {
+    return db.community?.name;
+  });
 
   const show: boolean = useStoreState(({ db }) => {
     return !!db.community?.questions?.length && !!db.community?.plans?.length;

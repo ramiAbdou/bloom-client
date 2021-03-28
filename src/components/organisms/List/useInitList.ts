@@ -13,13 +13,21 @@ const useInitList = (
 ): void => {
   const { items, options, prepareForFilter } = props;
 
-  const storedItems = ListStore.useStoreState((state) => state.items);
-  const setItems = ListStore.useStoreActions((state) => state.setItems);
-  const setOptions = ListStore.useStoreActions((state) => state.setOptions);
+  const storedItems: any[] = ListStore.useStoreState((state) => {
+    return state.items;
+  });
 
-  const setPrepareForFilter = ListStore.useStoreActions(
-    (state) => state.setPrepareForFilter
-  );
+  const setItems = ListStore.useStoreActions((state) => {
+    return state.setItems;
+  });
+
+  const setOptions = ListStore.useStoreActions((state) => {
+    return state.setOptions;
+  });
+
+  const setPrepareForFilter = ListStore.useStoreActions((state) => {
+    return state.setPrepareForFilter;
+  });
 
   useEffect(() => {
     setOptions(options);

@@ -8,7 +8,9 @@ import { useStoreState } from '@store/Store';
 import useLogout from './useLogout';
 
 const SidebarPanel: React.FC = () => {
-  const urlName: string = useStoreState(({ db }) => db.community.urlName);
+  const urlName: string = useStoreState(({ db }) => {
+    return db.community.urlName;
+  });
 
   const canCollectDues: boolean = useStoreState(({ db }) => {
     return db.community?.canCollectDues;
@@ -23,14 +25,18 @@ const SidebarPanel: React.FC = () => {
       ? [
           {
             Icon: IoCard,
-            onClick: () => push(`/${urlName}/membership`),
+            onClick: () => {
+              return push(`/${urlName}/membership`);
+            },
             text: 'Manage Membership'
           }
         ]
       : []),
     {
       Icon: IoPerson,
-      onClick: () => push(`/${urlName}/profile`),
+      onClick: () => {
+        return push(`/${urlName}/profile`);
+      },
       text: 'Your Profile'
     },
     { Icon: IoExit, onClick: logout, text: 'Log Out' }
@@ -38,9 +44,9 @@ const SidebarPanel: React.FC = () => {
 
   return (
     <>
-      {actions.map((action) => (
-        <PanelOption key={action.text} {...action} />
-      ))}
+      {actions.map((action) => {
+        return <PanelOption key={action.text} {...action} />;
+      })}
     </>
   );
 };

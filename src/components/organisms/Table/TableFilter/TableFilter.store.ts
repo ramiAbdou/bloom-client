@@ -52,7 +52,9 @@ const tableFilterModel: TableFilterModel = {
     delete updatedFilters[filterId];
 
     const updatedFilterIds: string[] = [...state.filterIds].filter(
-      (id: string) => id !== filterId
+      (id: string) => {
+        return id !== filterId;
+      }
     );
 
     return { ...state, filterIds: updatedFilterIds, filters: updatedFilters };

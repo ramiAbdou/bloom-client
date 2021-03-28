@@ -7,15 +7,41 @@ import { cx } from '@util/util';
 import usePanelPosition from './usePanelPosition';
 
 const PanelContainer: React.FC = ({ children }) => {
-  const initialAlign = useStoreState(({ panel }) => panel.align);
-  const className = useStoreState(({ panel }) => panel.className);
-  const id = useStoreState(({ panel }) => panel.id);
-  const metadata = useStoreState(({ panel }) => panel.metadata);
-  const scrollId = useStoreState(({ panel }) => panel.scrollId);
-  const size = useStoreState(({ panel }) => panel.size);
-  const style = useStoreState(({ panel }) => panel.style);
-  const useMetadataInId = useStoreState(({ panel }) => panel.useMetadataInId);
-  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
+  const initialAlign = useStoreState(({ panel }) => {
+    return panel.align;
+  });
+
+  const className = useStoreState(({ panel }) => {
+    return panel.className;
+  });
+
+  const id = useStoreState(({ panel }) => {
+    return panel.id;
+  });
+
+  const metadata = useStoreState(({ panel }) => {
+    return panel.metadata;
+  });
+
+  const scrollId = useStoreState(({ panel }) => {
+    return panel.scrollId;
+  });
+
+  const size = useStoreState(({ panel }) => {
+    return panel.size;
+  });
+
+  const style = useStoreState(({ panel }) => {
+    return panel.style;
+  });
+
+  const useMetadataInId = useStoreState(({ panel }) => {
+    return panel.useMetadataInId;
+  });
+
+  const closePanel = useStoreActions(({ panel }) => {
+    return panel.closePanel;
+  });
 
   const elementId = useMetadataInId ? `${id}-${metadata}` : id;
 
@@ -36,8 +62,7 @@ const PanelContainer: React.FC = ({ children }) => {
       return;
     }
 
-    // @ts-ignore b/c we know that clientX and clientY exist on the HTML Event.
-    const { clientX, clientY } = event;
+    const { clientX, clientY } = event as any;
     const { offsetLeft, offsetTop, offsetHeight, offsetWidth } = ref?.current;
 
     if (
@@ -55,9 +80,9 @@ const PanelContainer: React.FC = ({ children }) => {
   // ## START: CALCULATE PICKER COORDINATES AND ANIMATION STYLING
 
   let positionStyle: Partial<CSSProperties> = {};
-  let exit: any = {};
-  let initial: any = { opacity: 0.5 };
-  let animate: any = { opacity: 1 };
+  let exit: Record<string, string | number> = {};
+  let initial: Record<string, string | number> = { opacity: 0.5 };
+  let animate: Record<string, string | number> = { opacity: 1 };
 
   // ## CASE #1: RIGHT_BOTTOM
 

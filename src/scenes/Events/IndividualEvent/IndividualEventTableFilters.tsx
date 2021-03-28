@@ -8,7 +8,10 @@ import { useStoreState } from '@store/Store';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 const IndividualEventViewedFilter: React.FC = () => {
-  const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
+  const recordingUrl = useStoreState(({ db }) => {
+    return db.event?.recordingUrl;
+  });
+
   const show = !!recordingUrl;
 
   const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {
@@ -21,7 +24,10 @@ const IndividualEventViewedFilter: React.FC = () => {
 };
 
 const IndividualEventRsvpFilter: React.FC = () => {
-  const startTime = useStoreState(({ db }) => db.event?.startTime);
+  const startTime = useStoreState(({ db }) => {
+    return db.event?.startTime;
+  });
+
   const show = day().isAfter(day(startTime));
 
   const filter: TableFilter = (row: IndividualEventTableRowProps) => {
@@ -32,7 +38,10 @@ const IndividualEventRsvpFilter: React.FC = () => {
 };
 
 const IndividualEventJoinedFilter: React.FC = () => {
-  const startTime = useStoreState(({ db }) => db.event?.startTime);
+  const startTime = useStoreState(({ db }) => {
+    return db.event?.startTime;
+  });
+
   const show = day().isAfter(day(startTime));
 
   const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {
@@ -43,7 +52,10 @@ const IndividualEventJoinedFilter: React.FC = () => {
 };
 
 const IndividualEventNoShowFilter: React.FC = () => {
-  const startTime = useStoreState(({ db }) => db.event?.startTime);
+  const startTime = useStoreState(({ db }) => {
+    return db.event?.startTime;
+  });
+
   const show = day().isAfter(day(startTime));
 
   const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {

@@ -24,8 +24,13 @@ const TableBannerButton: React.FC = () => {
     return getBannerButtonTitle(state);
   });
 
-  const toggleRows = TableStore.useStoreActions((store) => store.toggleAllRows);
-  const onClick = () => toggleRows();
+  const toggleRows = TableStore.useStoreActions((store) => {
+    return store.toggleAllRows;
+  });
+
+  const onClick = () => {
+    return toggleRows();
+  };
 
   return (
     <Button tertiary onClick={onClick}>
@@ -42,13 +47,15 @@ const TableBannerMessage: React.FC = () => {
   return <p>{message}</p>;
 };
 
-const TableBanner: React.FC = () => (
-  <Card className="mb-xs--nlc">
-    <Row justify="center" spacing="xs">
-      <TableBannerMessage />
-      <TableBannerButton />
-    </Row>
-  </Card>
-);
+const TableBanner: React.FC = () => {
+  return (
+    <Card className="mb-xs--nlc">
+      <Row justify="center" spacing="xs">
+        <TableBannerMessage />
+        <TableBannerButton />
+      </Row>
+    </Card>
+  );
+};
 
 export default TableBanner;

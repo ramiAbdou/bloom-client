@@ -17,7 +17,9 @@ const useQuestionData = (): Pick<
   ChartModelInitArgs,
   'data' | 'totalResponses'
 > => {
-  const questionId = Chart.useStoreState((state) => state.questionId);
+  const questionId = Chart.useStoreState((state) => {
+    return state.questionId;
+  });
 
   const questionType: QuestionType = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
@@ -66,7 +68,7 @@ const useQuestionData = (): Pick<
 
         // Increment the record accordingly.
         wordArray.forEach((word: string) => {
-          if (record[word]) record[word]++;
+          if (record[word]) record[word] += 1;
           else record[word] = 1;
         });
       } else if (questionType === QuestionType.MULTIPLE_SELECT) {
@@ -76,18 +78,22 @@ const useQuestionData = (): Pick<
           if (!element) return;
 
           // Increment the value accordingly.
-          if (record[element]) record[element]++;
+          if (record[element]) record[element] += 1;
           else record[element] = 1;
         });
-      } else if (record[value]) record[value]++;
+      } else if (record[value]) record[value] += 1;
       else record[value] = 1;
 
-      totalResponses++;
+      totalResponses += 1;
     });
 
     const sortedData = Object.entries(record)
-      .map(([name, value]) => ({ name, value }))
-      .sort((a, b) => (a.value < b.value ? 1 : -1));
+      .map(([name, value]) => {
+        return { name, value };
+      })
+      .sort((a, b) => {
+        return a.value < b.value ? 1 : -1;
+      });
 
     return {
       data:
@@ -101,16 +107,32 @@ const useQuestionData = (): Pick<
   return result;
 };
 
-export default ({ questionId }: Pick<ChartModelInitArgs, 'questionId'>) => {
-  const currentQuestionId = Chart.useStoreState((state) => state.questionId);
-  const currentType = Chart.useStoreState((state) => state.type);
-  const setData = Chart.useStoreActions((store) => store.setData);
-  const setQuestionId = Chart.useStoreActions((store) => store.setQuestionId);
-  const setType = Chart.useStoreActions((store) => store.setType);
+export default ({
+  questionId
+}: Pick<ChartModelInitArgs, 'questionId'>): any => {
+  const currentQuestionId = Chart.useStoreState((state) => {
+    return state.questionId;
+  });
 
-  const type: QuestionType = useStoreState(
-    ({ db }) => db.byQuestionId[questionId]?.type
-  );
+  const currentType = Chart.useStoreState((state) => {
+    return state.type;
+  });
+
+  const setData = Chart.useStoreActions((store) => {
+    return store.setData;
+  });
+
+  const setQuestionId = Chart.useStoreActions((store) => {
+    return store.setQuestionId;
+  });
+
+  const setType = Chart.useStoreActions((store) => {
+    return store.setType;
+  });
+
+  const type: QuestionType = useStoreState(({ db }) => {
+    return db.byQuestionId[questionId]?.type;
+  });
 
   const { data, totalResponses } = useQuestionData();
 

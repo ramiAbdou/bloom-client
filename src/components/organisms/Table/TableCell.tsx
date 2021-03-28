@@ -20,7 +20,9 @@ const TableCellContent: React.FC<
   Pick<TableCellProps, 'columnId' | 'value'>
 > = ({ columnId, value }) => {
   const columnIndex: number = TableStore.useStoreState(({ columns }) => {
-    return columns.findIndex((element: TableColumn) => element.id === columnId);
+    return columns.findIndex((element: TableColumn) => {
+      return element.id === columnId;
+    });
   });
 
   const {
@@ -54,9 +56,9 @@ const TableCellContent: React.FC<
   if (type === QuestionType.MULTIPLE_SELECT && typeof value === 'string') {
     return (
       <>
-        {value.split(',').map((element: string) => (
-          <Attribute key={element}>{element}</Attribute>
-        ))}
+        {value.split(',').map((element: string) => {
+          return <Attribute key={element}>{element}</Attribute>;
+        })}
       </>
     );
   }
@@ -68,25 +70,27 @@ const TableCell: React.FC<TableCellProps> = (props) => {
   const { columnId } = props;
 
   const columnIndex: number = TableStore.useStoreState(({ columns }) => {
-    return columns.findIndex((column: TableColumn) => column.id === columnId);
+    return columns.findIndex((column: TableColumn) => {
+      return column.id === columnId;
+    });
   });
 
-  const category: QuestionCategory = TableStore.useStoreState(
-    ({ columns }) => columns[columnIndex]?.category
-  );
+  const category: QuestionCategory = TableStore.useStoreState(({ columns }) => {
+    return columns[columnIndex]?.category;
+  });
 
-  const type: QuestionType = TableStore.useStoreState(
-    ({ columns }) => columns[columnIndex]?.type
-  );
+  const type: QuestionType = TableStore.useStoreState(({ columns }) => {
+    return columns[columnIndex]?.type;
+  });
 
   const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
     const isLastCell: boolean = columnIndex === columns.length - 1;
     return options.alignEndRight && isLastCell;
   });
 
-  const fixFirstColumn = TableStore.useStoreState(
-    ({ options }) => options.fixFirstColumn
-  );
+  const fixFirstColumn = TableStore.useStoreState(({ options }) => {
+    return options.fixFirstColumn;
+  });
 
   const css: string = cx(getTableCellClass({ category, type }), {
     'o-table-td--fixed': fixFirstColumn && columnIndex === 0,

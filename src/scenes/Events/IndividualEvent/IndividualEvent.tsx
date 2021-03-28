@@ -13,7 +13,9 @@ import IndividualEventTable from './IndividualEventTable';
 import useInitIndividualEvent from './useInitIndividualEvent';
 
 const IndividualEventHeader: React.FC = () => {
-  const imageUrl = useStoreState(({ db }) => db.event?.imageUrl);
+  const imageUrl = useStoreState(({ db }) => {
+    return db.event?.imageUrl;
+  });
 
   return (
     <div className="cg-md d-grid p-md s-events-individual-header">
@@ -26,8 +28,13 @@ const IndividualEventHeader: React.FC = () => {
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
 
-  const isMember = useStoreState(({ db }) => db.isMember);
-  const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
+  const isMember = useStoreState(({ db }) => {
+    return db.isMember;
+  });
+
+  const isEventActive = useStoreState(({ db }) => {
+    return db.event?.id === eventId;
+  });
 
   const { loading } = useInitIndividualEvent();
 

@@ -11,16 +11,17 @@ import IntegrationCard from './IntegrationsCard';
 // Responsible for fetching and supplying all the data to the children card
 // components to process and render.
 const IntegrationsCardList: React.FC = () => {
-  const urlName = useStoreState(({ db }) => db.community.urlName);
+  const urlName = useStoreState(({ db }) => {
+    return db.community.urlName;
+  });
 
   const {
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId
-  } = useStoreState(
-    ({ db }) => db.communityIntegrations ?? {},
-    deepequal
-  ) as ICommunityIntegrations;
+  } = useStoreState(({ db }) => {
+    return db.communityIntegrations ?? {};
+  }, deepequal) as ICommunityIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
     isMailchimpAuthenticated,
@@ -30,14 +31,16 @@ const IntegrationsCardList: React.FC = () => {
   });
 
   const disconnectedData: IntegrationsDetailsData[] = integrationData.filter(
-    ({ connected }) => !connected
+    ({ connected }) => {
+      return !connected;
+    }
   );
 
   return (
     <Row className="pt-xxs" fillBreakpoint={2} gap="sm">
-      {disconnectedData.map((props: IntegrationsDetailsData) => (
-        <IntegrationCard key={props.name} {...props} />
-      ))}
+      {disconnectedData.map((props: IntegrationsDetailsData) => {
+        return <IntegrationCard key={props.name} {...props} />;
+      })}
     </Row>
   );
 };

@@ -28,11 +28,13 @@ const QuestionBoxValue: React.FC<
   if (type === QuestionType.MULTIPLE_SELECT) {
     body = (
       <>
-        {value?.split(',').map((element: string) => (
-          <Attribute key={element} showNullValue>
-            {element?.trim()}
-          </Attribute>
-        ))}
+        {value?.split(',').map((element: string) => {
+          return (
+            <Attribute key={element} showNullValue>
+              {element?.trim()}
+            </Attribute>
+          );
+        })}
       </>
     );
   }

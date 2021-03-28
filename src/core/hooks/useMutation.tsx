@@ -13,7 +13,9 @@ function useMutation<T = any, S = any>({
   types,
   variables: initialVariables
 }: UseMutationArgs<S>): MutationResult<T, S> {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => {
+    return db.mergeEntities;
+  });
 
   const [mutationFn, { data, error, loading }] = useGraphQlHooksMutation(
     mutation({ fields, operation, variables: types }).query,
@@ -38,7 +40,9 @@ function useMutation<T = any, S = any>({
     loading
   };
 
-  const memoizedSchema = useMemo(() => schema, []);
+  const memoizedSchema = useMemo(() => {
+    return schema;
+  }, []);
 
   useEffect(() => {
     if (result.data && schema) mergeEntities({ data: result.data, schema });

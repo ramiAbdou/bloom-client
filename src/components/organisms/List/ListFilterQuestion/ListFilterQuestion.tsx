@@ -10,21 +10,23 @@ import ListFilterQuestionOptionList from './ListFilterQuestionOptionList';
 import ListFilterQuestionSelectedOptionList from './ListFilterQuestionSelectedOptionList';
 
 const ListFilterQuestionContent: React.FC = () => {
-  const questionId: string = IdStore.useStoreState((state) => state.id);
+  const questionId: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
-  const openQuestionId = ListFilterStore.useStoreState(
-    (state) => state.openQuestionId
-  );
+  const openQuestionId = ListFilterStore.useStoreState((state) => {
+    return state.openQuestionId;
+  });
 
-  const setOpenQuestionId = ListFilterStore.useStoreActions(
-    (state) => state.setOpenQuestionId
-  );
+  const setOpenQuestionId = ListFilterStore.useStoreActions((state) => {
+    return state.setOpenQuestionId;
+  });
 
   const isOpen = openQuestionId === questionId;
 
-  const setQuestionValues = ListFilterQuestionStore.useStoreActions(
-    (state) => state.setValues
-  );
+  const setQuestionValues = ListFilterQuestionStore.useStoreActions((state) => {
+    return state.setValues;
+  });
 
   const values = ListFilterStore.useStoreState((state) => {
     return state.filters[questionId]?.value ?? [];
@@ -34,7 +36,9 @@ const ListFilterQuestionContent: React.FC = () => {
     setQuestionValues(values);
   }, [values]);
 
-  const onClick = () => setOpenQuestionId(!isOpen ? questionId : null);
+  const onClick = () => {
+    return setOpenQuestionId(!isOpen ? questionId : null);
+  };
 
   const css: string = cx('o-list-filter-question', {
     'o-list-filter-question--active': isOpen

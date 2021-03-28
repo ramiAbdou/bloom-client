@@ -21,7 +21,10 @@ interface CommunityIdArgs {
 }
 
 const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
-  const setActive = useStoreActions(({ db }) => db.setActive);
+  const setActive = useStoreActions(({ db }) => {
+    return db.setActive;
+  });
+
   const { urlName } = useParams() as UrlNameProps;
 
   const { data, error, loading: loading1 } = useQuery<ICommunity, UrlNameProps>(

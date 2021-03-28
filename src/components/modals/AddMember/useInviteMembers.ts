@@ -11,7 +11,9 @@ import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';
 
 const useInviteMembers = (): OnFormSubmitFunction => {
-  const admin = AddMemberStore.useStoreState((state) => state.admin);
+  const admin: boolean = AddMemberStore.useStoreState((state) => {
+    return state.admin;
+  });
 
   const [inviteMembers] = useMutation<any, AddMembersArgs>({
     fields: ['id'],
@@ -36,7 +38,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
         [category === QuestionCategory.FIRST_NAME, { firstName: value }],
         [category === QuestionCategory.LAST_NAME, { lastName: value }],
         [category === QuestionCategory.EMAIL, { email: value }],
-        [true, { isAdmin: admin || !!value.length }]
+        [true, { isAdmin: admin || !!(value as string[]).length }]
       ]);
 
       return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };

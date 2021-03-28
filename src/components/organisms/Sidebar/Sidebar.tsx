@@ -14,7 +14,9 @@ import SidebarProfileSection from './SidebarProfileSection';
 import SidebarQuickActionsSection from './SidebarQuickActionsSection';
 
 const SidebarCommunityName: React.FC = () => {
-  const name: string = useStoreState(({ db }) => db.community?.name);
+  const name: string = useStoreState(({ db }) => {
+    return db.community?.name;
+  });
 
   return (
     <>
@@ -39,7 +41,10 @@ const SidebarContent: React.FC = () => {
 };
 
 const Sidebar: React.FC = () => {
-  const isOpen: boolean = useStoreState(({ sidebar }) => sidebar.isOpen);
+  const isOpen: boolean = useStoreState(({ sidebar }) => {
+    return sidebar.isOpen;
+  });
+
   const isDesktop: boolean = useBreakpoint() >= 3;
 
   return (

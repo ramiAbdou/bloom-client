@@ -17,9 +17,18 @@ const FormLongText: React.FC<FormLongTextProps> = ({
   ...args
 }) => {
   const key = getFormItemKey(args);
-  const error = FormStore.useStoreState(({ items }) => items[key]?.error);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((store) => store.setValue);
+
+  const error = FormStore.useStoreState(({ items }) => {
+    return items[key]?.error;
+  });
+
+  const value = FormStore.useStoreState(({ items }) => {
+    return items[key]?.value;
+  });
+
+  const setValue = FormStore.useStoreActions((store) => {
+    return store.setValue;
+  });
 
   useInitFormItem(args);
 
@@ -37,7 +46,7 @@ const FormLongText: React.FC<FormLongTextProps> = ({
         className={css}
         minRows={4}
         placeholder={placeholder}
-        value={value ?? ''}
+        value={(value as string) ?? ''}
         onChange={updateText}
       />
     </FormItemContainer>

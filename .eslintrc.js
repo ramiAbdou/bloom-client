@@ -18,9 +18,7 @@ module.exports = {
     }
   ],
   rules: {
-    '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/interface-name-prefix': 0,
-    '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-unused-vars': [
       2,
       {
@@ -28,12 +26,11 @@ module.exports = {
         varsIgnorePattern: '_' // Allow underscores not to be treated as vars.
       }
     ],
+    'arrow-body-style': ['error', 'always'],
     curly: ['error', 'multi-line'],
     'import/newline-after-import': 2,
     'import/no-extraneous-dependencies': 0,
     'import/prefer-default-export': 0,
-    'jsx-a11y/accessible-emoji': 0,
-    'jsx-a11y/alt-text': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
     'max-len': ['error'],
@@ -41,7 +38,6 @@ module.exports = {
     // Refers to the entire file.
     'max-lines': ['error', { max: 300, skipComments: true }],
     'no-param-reassign': 0,
-    'no-plusplus': 0, // Allow the plus-plus syntax: i++.
     'one-var': 0,
     'padding-line-between-statements': [
       'error',
@@ -58,8 +54,6 @@ module.exports = {
         next: 'return'
       }
     ],
-    'react/button-has-type': 0,
-    'react/jsx-filename-extension': 0,
     'react/jsx-props-no-spreading': 0,
     'react/jsx-sort-props': [
       2,
@@ -73,8 +67,6 @@ module.exports = {
       }
     ],
     'react/no-unescaped-entities': 0,
-    'react/prop-types': 0, // Don't require prop type specification.
-    'react/require-default-props': 0, // Don't require default props.
     'react-hooks/rules-of-hooks': 2,
     'react-hooks/exhaustive-deps': 0,
     semi: 2, // Require a semicolon.

@@ -6,16 +6,21 @@ import TableStore from '../Table.store';
 import PaginationBar from './TablePaginationBar';
 
 const TablePaginationMessage: React.FC = () => {
-  const floor = TableStore.useStoreState(({ range }) => range[0] + 1);
-  const ceiling = TableStore.useStoreState(({ range }) => range[1]);
+  const floor = TableStore.useStoreState(({ range }) => {
+    return range[0] + 1;
+  });
 
-  const rowsCount: number = TableStore.useStoreState(
-    (store) => store.filteredRows?.length
-  );
+  const ceiling = TableStore.useStoreState(({ range }) => {
+    return range[1];
+  });
 
-  const showCount = TableStore.useStoreState(
-    ({ options }) => options.showCount
-  );
+  const rowsCount: number = TableStore.useStoreState((store) => {
+    return store.filteredRows?.length;
+  });
+
+  const showCount = TableStore.useStoreState(({ options }) => {
+    return options.showCount;
+  });
 
   const message = rowsCount
     ? `Displaying ${floor}-${ceiling} of ${rowsCount} results.`
@@ -29,9 +34,9 @@ const TablePaginationMessage: React.FC = () => {
 };
 
 const TablePagination: React.FC = () => {
-  const rowsCount: number = TableStore.useStoreState(
-    (store) => store.filteredRows?.length
-  );
+  const rowsCount: number = TableStore.useStoreState((store) => {
+    return store.filteredRows?.length;
+  });
 
   return (
     <Row wrap className="mt-sm" gap="sm" justify="sb">

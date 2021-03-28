@@ -8,16 +8,21 @@ import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabasePromoteButton: React.FC = () => {
-  const memberId = useStoreState(({ db }) => db.member.id);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const memberId = useStoreState(({ db }) => {
+    return db.member.id;
+  });
 
-  const tooManySelected = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds.length > 15
-  );
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
-  const selfSelected = TableStore.useStoreState(({ selectedRowIds }) =>
-    selectedRowIds.includes(memberId)
-  );
+  const tooManySelected = TableStore.useStoreState(({ selectedRowIds }) => {
+    return selectedRowIds.length > 15;
+  });
+
+  const selfSelected = TableStore.useStoreState(({ selectedRowIds }) => {
+    return selectedRowIds.includes(memberId);
+  });
 
   const tooltip: string = take([
     [tooManySelected, 'Can only promote 15 members admins at a time.'],
@@ -25,7 +30,9 @@ const MemberDatabasePromoteButton: React.FC = () => {
     [true, 'Promote to Admin(s)']
   ]);
 
-  const onClick = () => showModal({ id: ModalType.PROMOTE_MEMBERS });
+  const onClick = () => {
+    return showModal({ id: ModalType.PROMOTE_MEMBERS });
+  };
 
   return (
     <DatabaseAction

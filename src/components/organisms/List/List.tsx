@@ -6,7 +6,7 @@ import ListStore from './List.store';
 import { ListProps } from './List.types';
 import useInitList from './useInitList';
 
-function List<T>(props: ListProps<T>) {
+function List<T>(props: ListProps<T>): JSX.Element {
   const {
     className,
     emptyMessage,
@@ -18,7 +18,9 @@ function List<T>(props: ListProps<T>) {
 
   useInitList({ items, options, prepareForFilter });
 
-  const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
+  const filteredItems = ListStore.useStoreState((state) => {
+    return state.filteredItems;
+  });
 
   if (!filteredItems?.length) return <p>{emptyMessage}</p>;
 

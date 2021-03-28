@@ -13,7 +13,9 @@ function useQuery<T = any, S = any>({
   types,
   variables
 }: UseQueryArgs<S>): QueryResult<T> {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => {
+    return db.mergeEntities;
+  });
 
   const { data, error, loading } = useGQLQuery(
     query({ fields, operation, variables: types }).query,

@@ -7,16 +7,25 @@ import { useStoreState } from '@store/Store';
 const PaymentAnalyticsPercentPaidCard: React.FC = () => {
   const numActiveMembers: number = useStoreState(({ db }) => {
     return db.community.members
-      ?.map((memberId: string) => db.byMemberId[memberId])
-      ?.filter((member: IMember) => member.status === MemberStatus.ACCEPTED)
-      ?.filter((member: IMember) => member.isDuesActive)?.length;
+      ?.map((memberId: string) => {
+        return db.byMemberId[memberId];
+      })
+      ?.filter((member: IMember) => {
+        return member.status === MemberStatus.ACCEPTED;
+      })
+      ?.filter((member: IMember) => {
+        return member.isDuesActive;
+      })?.length;
   });
 
   const numTotalMembers: number = useStoreState(({ db }) => {
     return db.community.members
-      ?.map((memberId: string) => db.byMemberId[memberId])
-      ?.filter((member: IMember) => member.status === MemberStatus.ACCEPTED)
-      ?.length;
+      ?.map((memberId: string) => {
+        return db.byMemberId[memberId];
+      })
+      ?.filter((member: IMember) => {
+        return member.status === MemberStatus.ACCEPTED;
+      })?.length;
   });
 
   // Equivalent of doing a loading check.

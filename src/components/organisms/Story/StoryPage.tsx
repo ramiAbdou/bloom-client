@@ -26,14 +26,22 @@ const StoryPage: React.FC<StoryPageProps> = ({
     [confirmation, 'CONFIRMATION'],
     [id, id],
     [branches, branches && Object.keys(branches)[0]]
-  ]);
+  ]) as string;
 
   branchId = branchId ?? id;
   branches = branches ?? { [branchId]: { description, iconUrl, title } };
 
-  const pageId = StoryStore.useStoreState((state) => state.pageId);
-  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
-  const setPage = StoryStore.useStoreActions((store) => store.setPage);
+  const pageId = StoryStore.useStoreState((state) => {
+    return state.pageId;
+  });
+
+  const page = StoryStore.useStoreState(({ getPage }) => {
+    return getPage(id);
+  });
+
+  const setPage = StoryStore.useStoreActions((store) => {
+    return store.setPage;
+  });
 
   useUpdateDisabledPage(id);
 
@@ -66,7 +74,7 @@ const StoryPage: React.FC<StoryPageProps> = ({
       transition={{ duration: 0.2 }}
     >
       <div>
-        {iconUrl && <img src={iconUrl} />}
+        {iconUrl && <img alt="Community Logo" src={iconUrl} />}
         <LoadingHeader loading={loading} title={title} />
         {description && <p>{description}</p>}
       </div>

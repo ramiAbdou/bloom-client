@@ -2,12 +2,20 @@ import day from 'dayjs';
 import { XAxisProps } from 'recharts';
 
 import ChartStore from './Chart.store';
-import { ChartType } from './Chart.types';
+import { ChartFormat, ChartType, ChartXAxisOptions } from './Chart.types';
 
 const useXAxisOptions = (): Partial<XAxisProps> => {
-  const type = ChartStore.useStoreState((state) => state.type);
-  const format = ChartStore.useStoreState(({ options }) => options?.format);
-  const xAxis = ChartStore.useStoreState(({ options }) => options?.xAxis);
+  const type: ChartType = ChartStore.useStoreState((state) => {
+    return state.type;
+  });
+
+  const format: ChartFormat = ChartStore.useStoreState(({ options }) => {
+    return options?.format;
+  });
+
+  const xAxis: ChartXAxisOptions = ChartStore.useStoreState(({ options }) => {
+    return options?.xAxis;
+  });
 
   return {
     allowDuplicatedCategory: false,

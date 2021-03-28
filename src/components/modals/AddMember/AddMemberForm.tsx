@@ -13,8 +13,13 @@ import AddMemberInput from './AddMemberInput';
 import useInviteMembers from './useInviteMembers';
 
 const AddMemberFormActions: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const onSecondaryClick = () => closeModal();
+  const closeModal = useStoreActions(({ modal }) => {
+    return modal.closeModal;
+  });
+
+  const onSecondaryClick = () => {
+    return closeModal();
+  };
 
   return (
     <Row wrap gap="xs">
@@ -35,8 +40,13 @@ const AddMemberFormActions: React.FC = () => {
 };
 
 const AddMemberFormAddAnotherButton: React.FC = () => {
-  const addRow = AddMemberStore.useStoreActions((state) => state.addRow);
-  const onClick = () => addRow();
+  const addRow = AddMemberStore.useStoreActions((state) => {
+    return state.addRow;
+  });
+
+  const onClick = () => {
+    return addRow();
+  };
 
   return (
     <Button tertiary className="mb-md--nlc" onClick={onClick}>
@@ -46,7 +56,9 @@ const AddMemberFormAddAnotherButton: React.FC = () => {
 };
 
 const AddMemberFormRows: React.FC = () => {
-  const rows = AddMemberStore.useStoreState((state) => state.rows);
+  const rows = AddMemberStore.useStoreState((state) => {
+    return state.rows;
+  });
 
   return (
     <ul>
@@ -62,7 +74,10 @@ const AddMemberFormRows: React.FC = () => {
 };
 
 const AddMemberForm: React.FC = () => {
-  const admin = AddMemberStore.useStoreState((state) => state.admin);
+  const admin = AddMemberStore.useStoreState((state) => {
+    return state.admin;
+  });
+
   const addMembers = useInviteMembers();
 
   return (

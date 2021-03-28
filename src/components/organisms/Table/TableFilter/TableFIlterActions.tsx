@@ -7,8 +7,13 @@ import TableFilterStore from './TableFilter.store';
 import TableFilterApplyButton from './TableFilterApplyButton';
 
 const TableFilterCloseButton: React.FC = () => {
-  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
-  const onClick = () => closePanel();
+  const closePanel = useStoreActions(({ panel }) => {
+    return panel.closePanel;
+  });
+
+  const onClick = () => {
+    return closePanel();
+  };
 
   return (
     <Button secondary onClick={onClick}>

@@ -8,7 +8,9 @@ import { useStoreState } from '@store/Store';
 const PaymentAnalyticsTotalCollectedCard: React.FC = () => {
   const totalCollected: number = useStoreState(({ db }) => {
     return db.community.payments
-      ?.map((paymentId: string) => db.byPaymentId[paymentId])
+      ?.map((paymentId: string) => {
+        return db.byPaymentId[paymentId];
+      })
       ?.filter((payment: IPayment) => {
         const yearAgoDate = day().subtract(1, 'year');
         return day(payment.createdAt).isAfter(yearAgoDate);

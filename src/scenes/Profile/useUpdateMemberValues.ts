@@ -26,7 +26,7 @@ const useUpdateMemberValues = (): OnFormSubmitFunction => {
     const data: MemberValueInput[] = Object.values(items).map(
       (item: FormItemData) => {
         const { questionId, value } = item;
-        return { questionId, value };
+        return { questionId, value: value as string[] };
       }
     );
 

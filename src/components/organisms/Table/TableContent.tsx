@@ -38,9 +38,9 @@ const TableContent: React.FC<TableContentProps> = ({
     ({ filteredRows, range, selectedRowIds }) => {
       return (
         !!selectedRowIds.length &&
-        filteredRows
-          .slice(range[0], range[1])
-          .every(({ id: rowId }) => selectedRowIds.includes(rowId))
+        filteredRows.slice(range[0], range[1]).every(({ id: rowId }) => {
+          return selectedRowIds.includes(rowId);
+        })
       );
     }
   );

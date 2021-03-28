@@ -15,7 +15,9 @@ import AdminRoute from './AdminRoute';
 import useInitCommunity from './useInitCommunity';
 
 const AuthenticatedCommunityRouterSwitch: React.FC = () => {
-  const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
+  const autoAccept = useStoreState(({ db }) => {
+    return db.community?.autoAccept;
+  });
 
   return (
     <div className="home-content">
@@ -39,8 +41,14 @@ const AuthenticatedCommunityRouterSwitch: React.FC = () => {
 };
 
 const AuthenticatedCommunityRouter: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-  const isInitialized = useStoreState(({ db }) => db.isInitialized);
+  const isAuthenticated = useStoreState(({ db }) => {
+    return db.isAuthenticated;
+  });
+
+  const isInitialized = useStoreState(({ db }) => {
+    return db.isInitialized;
+  });
+
   const { loading } = useInitCommunity();
 
   if (!isAuthenticated) return <Redirect to="/login" />;

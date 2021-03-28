@@ -14,11 +14,11 @@ const useSavePaymentMethod = (): OnFormSubmitFunction => {
     setError,
     setStoryValue
   }: OnFormSubmitArgs) => {
-    const city = items.CITY.value;
-    const line1 = items.BILLING_ADDRESS.value;
-    const nameOnCard = items.NAME_ON_CARD.value;
-    const postalCode = items.ZIP_CODE.value;
-    const state = items.STATE.value;
+    const city: string = items.CITY.value as string;
+    const line1: string = items.BILLING_ADDRESS.value as string;
+    const nameOnCard: string = items.NAME_ON_CARD.value as string;
+    const postalCode: string = items.ZIP_CODE.value as string;
+    const state: string = items.STATE.value as string;
 
     // Create the payment method via the Stripe SDK.
     const { error, paymentMethod } = await stripe.createPaymentMethod({
