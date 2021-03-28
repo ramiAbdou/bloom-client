@@ -16,10 +16,6 @@ export const tableModel: TableModel = {
 
   columns: [],
 
-  /**
-   * Returns the filtered data by running all of the filter functions on every
-   * row. Returns all the data if there are no filters present.
-   */
   filteredRows: [],
 
   filters: {},

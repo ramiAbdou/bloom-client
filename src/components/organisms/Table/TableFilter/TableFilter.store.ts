@@ -1,18 +1,12 @@
-import { Action, action, createContextStore } from 'easy-peasy';
+import { action, createContextStore } from 'easy-peasy';
 import { nanoid } from 'nanoid';
 
-import { TableFilterArgs, TableFilterJoinOperator } from '../Table.types';
-
-interface TableFilterModel {
-  addFilter: Action<TableFilterModel>;
-  clearFilters: Action<TableFilterModel>;
-  filterIds: string[];
-  filters: Record<string, TableFilterArgs>;
-  joinOperator: TableFilterJoinOperator;
-  removeFilter: Action<TableFilterModel, string>;
-  setFilter: Action<TableFilterModel, Partial<TableFilterArgs>>;
-  setJoinOperator: Action<TableFilterModel, TableFilterJoinOperator>;
-}
+import {
+  TableFilterArgs,
+  TableFilterJoinOperatorType,
+  TableFilterModel,
+  TableFilterOperatorType
+} from './TableFilter.types';
 
 const tableFilterModel: TableFilterModel = {
   addFilter: action((state) => {
@@ -23,7 +17,7 @@ const tableFilterModel: TableFilterModel = {
       filterIds: [...state.filterIds, id],
       filters: {
         ...state.filters,
-        [id]: { columnId: null, operator: 'is' }
+        [id]: { columnId: null, operator: TableFilterOperatorType.IS }
       }
     };
   }),
@@ -34,7 +28,9 @@ const tableFilterModel: TableFilterModel = {
     return {
       ...state,
       filterIds: [id],
-      filters: { [id]: { columnId: null, operator: 'is' } }
+      filters: {
+        [id]: { columnId: null, operator: TableFilterOperatorType.IS }
+      }
     };
   }),
 
@@ -42,7 +38,7 @@ const tableFilterModel: TableFilterModel = {
 
   filters: {},
 
-  joinOperator: 'and',
+  joinOperator: TableFilterJoinOperatorType.AND,
 
   removeFilter: action((state, filterId: string) => {
     const updatedFilters: Record<string, TableFilterArgs> = {
@@ -74,9 +70,11 @@ const tableFilterModel: TableFilterModel = {
     }
   ),
 
-  setJoinOperator: action((state, joinOperator: TableFilterJoinOperator) => {
-    return { ...state, joinOperator };
-  })
+  setJoinOperator: action(
+    (state, joinOperator: TableFilterJoinOperatorType) => {
+      return { ...state, joinOperator };
+    }
+  )
 };
 
 const TableFilterStore = createContextStore<TableFilterModel>(
@@ -87,7 +85,9 @@ const TableFilterStore = createContextStore<TableFilterModel>(
       ...runtimeModel,
       ...tableFilterModel,
       filterIds: [id],
-      filters: { [id]: { columnId: null, operator: 'is' } }
+      filters: {
+        [id]: { columnId: null, operator: TableFilterOperatorType.IS }
+      }
     };
   },
   { disableImmer: true }

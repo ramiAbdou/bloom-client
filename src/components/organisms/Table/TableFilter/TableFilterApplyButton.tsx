@@ -3,8 +3,9 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { useStoreActions } from '@store/Store';
 import TableStore from '../Table.store';
-import { TableFilter, TableFilterArgs, TableRow } from '../Table.types';
+import { TableRow } from '../Table.types';
 import TableFilterStore from './TableFilter.store';
+import { TableFilterArgs, TableFilterFunction } from './TableFilter.types';
 
 interface ProcessFilterArgs extends TableFilterArgs {
   row: TableRow;
@@ -40,7 +41,7 @@ const TableFilterApplyButton: React.FC = () => {
   });
 
   const onClick = () => {
-    const filter: TableFilter = (row: TableRow) => {
+    const filter: TableFilterFunction = (row: TableRow) => {
       if (joinOperator === 'and') {
         return filters?.every((filterArgs: TableFilterArgs) => {
           return processFilter({ ...filterArgs, row });

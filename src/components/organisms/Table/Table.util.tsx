@@ -3,7 +3,8 @@ import { matchSorter } from 'match-sorter';
 
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
-import { TableColumn, TableFilter, TableModel, TableRow } from './Table.types';
+import { TableColumn, TableModel, TableRow } from './Table.types';
+import { TableFilterFunction } from './TableFilter/TableFilter.types';
 import { TablePaginationValue } from './TablePagination/TablePagination.types';
 
 /**
@@ -146,7 +147,7 @@ export const getTableCellClass = (args: GetTableCellClassArgs): string => {
 };
 
 interface RunFiltersArgs {
-  filters?: Record<string, TableFilter>;
+  filters?: Record<string, TableFilterFunction>;
   searchString?: string;
   state: State<TableModel>;
 }
@@ -156,7 +157,7 @@ interface RunFiltersArgs {
  * the Table search string.
  */
 export const runFilters = (args: RunFiltersArgs): TableRow[] => {
-  const filters: Record<string, TableFilter> =
+  const filters: Record<string, TableFilterFunction> =
     args.filters ?? args.state.filters;
 
   const searchString: string = args.searchString ?? args.state.searchString;
@@ -165,7 +166,7 @@ export const runFilters = (args: RunFiltersArgs): TableRow[] => {
   const rows: TableRow[] = [...state.rows];
 
   const filteredRows: TableRow[] = rows?.filter((row) => {
-    return Object.values(filters)?.every((tableFilter: TableFilter) => {
+    return Object.values(filters)?.every((tableFilter: TableFilterFunction) => {
       return tableFilter(row);
     });
   });

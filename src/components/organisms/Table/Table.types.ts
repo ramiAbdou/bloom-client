@@ -1,11 +1,6 @@
 import { Action, ActionCreator } from 'easy-peasy';
 
-import {
-  IdProps,
-  QuestionCategory,
-  QuestionType,
-  ValueProps
-} from '@util/constants';
+import { IdProps, QuestionCategory, QuestionType } from '@util/constants';
 
 // ## TABLE COLUMN
 
@@ -20,15 +15,6 @@ export interface TableColumn {
 }
 
 // ## TABLE FILTER
-
-export type TableFilter = (rows: TableRow) => boolean;
-export type TableFilterJoinOperator = 'and' | 'or';
-export type TableFilterOperator = 'includes' | 'is' | 'is not';
-
-export interface TableFilterArgs extends IdProps, ValueProps {
-  columnId: string;
-  operator: TableFilterOperator;
-}
 
 export type TableQuickFilterArgs = {
   filterId: string;
@@ -71,7 +57,7 @@ export type TableModel = {
   clearSelectedRows: Action<TableModel>;
   columns: TableColumn[];
   filteredRows: TableRow[];
-  filters: Record<string, TableFilter>;
+  filters: Record<string, any>;
   options: TableOptions;
   removeFilter: Action<TableModel, string>;
   rows: TableRow[];

@@ -2,15 +2,15 @@ import React from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
-import { TableFilterOperator } from '../Table.types';
 import TableFilterStore from './TableFilter.store';
+import { TableFilterOperatorType } from './TableFilter.types';
 
 const TableFilterRowOperatorDropdown: React.FC = () => {
   const id: string = IdStore.useStoreState((state) => {
     return state.id;
   });
 
-  const operator: TableFilterOperator = TableFilterStore.useStoreState(
+  const operator: TableFilterOperatorType = TableFilterStore.useStoreState(
     (store) => {
       return store.filters[id]?.operator;
     }
@@ -20,7 +20,7 @@ const TableFilterRowOperatorDropdown: React.FC = () => {
     return store.setFilter;
   });
 
-  const onOperatorUpdate = (result: TableFilterOperator) => {
+  const onOperatorUpdate = (result: TableFilterOperatorType) => {
     setFilter({ id, operator: result });
   };
 

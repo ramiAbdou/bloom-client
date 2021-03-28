@@ -2,8 +2,8 @@ import React from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
-import { TableFilterJoinOperator } from '../Table.types';
 import TableFilterStore from './TableFilter.store';
+import { TableFilterJoinOperatorType } from './TableFilter.types';
 
 const TableFilterRowJoinOperator: React.FC = () => {
   const id: string = IdStore.useStoreState((state) => {
@@ -24,8 +24,8 @@ const TableFilterRowJoinOperator: React.FC = () => {
     return store.setJoinOperator;
   });
 
-  const onSelect = (result: string) => {
-    setJoinOperator(result as TableFilterJoinOperator);
+  const onSelect = (result: TableFilterJoinOperatorType) => {
+    setJoinOperator(result);
   };
 
   if (rowIndex === 0) return <h5>Where</h5>;
