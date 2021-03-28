@@ -1,6 +1,5 @@
 import { action, createContextStore } from 'easy-peasy';
 
-import { sortObjects } from '@util/util';
 import {
   defaultTableOptions,
   TableColumn,
@@ -80,30 +79,17 @@ export const tableModel: TableModel = {
   /**
    * Sets the sorted column ID and direction of the column to be sorted.
    */
-  sortColumn: action((state, [id, direction]) => {
+  sortColumn: action((state, [sortColumnId, sortDirection]) => {
     // If the column ID is the same and the direction is the same direction,
     // we should effectively unapply the sorting.
-    if (state.sortColumnId === id && direction === state.sortDirection) {
-      return {
-        ...state,
-        filteredRows: [...state.rows],
-        sortColumnId: null,
-        sortDirection: null
-      };
+    if (
+      state.sortColumnId === sortColumnId &&
+      state.sortDirection === sortDirection
+    ) {
+      return { ...state, sortColumnId: null, sortDirection: null };
     }
 
-    const sortedFilteredRows: TableRow[] = [...state.filteredRows].sort(
-      (a: TableRow, b: TableRow) => {
-        return sortObjects(a, b, id, direction);
-      }
-    );
-
-    return {
-      ...state,
-      filteredRows: sortedFilteredRows,
-      sortColumnId: id,
-      sortDirection: direction
-    };
+    return { ...state, sortColumnId, sortDirection };
   }),
 
   sortColumnId: null,
@@ -162,7 +148,12 @@ export const tableModel: TableModel = {
 
 const TableStore = createContextStore<TableModel>(
   (model: TableModel) => {
-    return model;
+    return {
+      ...model,
+      columns: [...model.columns]?.map((column: TableColumn) => {
+        return { ...column, id: column.id ?? column.title };
+      })
+    };
   },
   { disableImmer: true }
 );

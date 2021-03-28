@@ -2,11 +2,10 @@ import hash from 'object-hash';
 import React from 'react';
 
 import Show from '@containers/Show';
+import { sortObjects } from '@util/util';
 import TableStore from './Table.store';
 import { TableRow as TableRowProps } from './Table.types';
-import TableBanner from './TableBanner';
 import TableHeaderRow from './TableHeaderRow';
-import TablePagination from './TablePagination/TablePagination';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 import TableRow from './TableRow';
 import useUpdateTableRows from './useUpdateTableRows';
@@ -16,16 +15,6 @@ interface TableContentProps {
   small?: boolean;
   rows?: TableRowProps[];
 }
-
-const TableContentEmptyMessage: React.FC<
-  Pick<TableContentProps, 'emptyMessage'>
-> = ({ emptyMessage }) => {
-  return (
-    <Show show={!!emptyMessage}>
-      <p>{emptyMessage}</p>
-    </Show>
-  );
-};
 
 const TableBody: React.FC = () => {
   const floor: number = TablePaginationStore.useStoreState((state) => {
@@ -38,7 +27,13 @@ const TableBody: React.FC = () => {
 
   const filteredRowsOnPage: TableRowProps = TableStore.useStoreState(
     (state) => {
-      return state.filteredRows.slice(floor, ceiling);
+      const sortedRows: TableRowProps[] = [...state.filteredRows].sort(
+        (a: TableRowProps, b: TableRowProps) => {
+          return sortObjects(a, b, state.sortColumnId, state.sortDirection);
+        }
+      );
+
+      return sortedRows.slice(floor, ceiling);
     }
   );
 
@@ -78,8 +73,6 @@ const TableContent: React.FC<TableContentProps> = ({
 
   return (
     <Show show={show}>
-      <TableBanner />
-
       <Show show={!emptyMessage}>
         <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
           <table className="o-table">
@@ -89,8 +82,7 @@ const TableContent: React.FC<TableContentProps> = ({
         </div>
       </Show>
 
-      <TablePagination />
-      <TableContentEmptyMessage emptyMessage={emptyMessage} />
+      {emptyMessage && <p>{emptyMessage}</p>}
     </Show>
   );
 };

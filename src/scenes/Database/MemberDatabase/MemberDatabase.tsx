@@ -94,8 +94,12 @@ const MemberDatabase: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options} show={!!columns?.length}>
-      <MemberDatabaseActions />
+    <Table
+      TableActions={MemberDatabaseActions}
+      columns={columns}
+      options={options}
+      show={!!columns?.length}
+    >
       <TableContent rows={rows} />
       <ModalLocal />
     </Table>
