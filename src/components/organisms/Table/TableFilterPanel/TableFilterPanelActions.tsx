@@ -1,3 +1,4 @@
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
@@ -7,11 +8,11 @@ import TableFilterPanelStore from './TableFilterPanel.store';
 import TableFilterPanelApplyButton from './TableFilterPanelApplyButton';
 
 const TableFilterPanelCloseButton: React.FC = () => {
-  const closePanel = useStoreActions(({ panel }) => {
+  const closePanel: ActionCreator<void> = useStoreActions(({ panel }) => {
     return panel.closePanel;
   });
 
-  const onClick = () => {
+  const onClick = (): void => {
     closePanel();
   };
 

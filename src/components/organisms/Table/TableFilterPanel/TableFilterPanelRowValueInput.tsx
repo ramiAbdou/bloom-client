@@ -1,4 +1,4 @@
-import deepequal from 'fast-deep-equal';
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Input from '@atoms/Input/Input';
@@ -8,44 +8,54 @@ import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import TableFilterStore from './TableFilterPanel.store';
+import { TableFilterArgs } from './TableFilterPanel.types';
 
 const TableFilterPanelRowValueInput: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => {
+  const filterId: string = IdStore.useStoreState((state) => {
     return state.id;
   });
 
   const columnId: string = TableFilterStore.useStoreState((state) => {
-    return state.filters[id]?.columnId;
+    const tableFilter: TableFilterArgs = state.filters[filterId];
+    return tableFilter?.columnId;
   });
 
-  const question: IQuestion = useStoreState(({ db }) => {
-    return db.byQuestionId[columnId];
-  }, deepequal);
-
-  const storedValue: any = TableFilterStore.useStoreState((state) => {
-    return state.filters[id]?.value;
+  const questionType: QuestionType = useStoreState(({ db }) => {
+    const question: IQuestion = db.byQuestionId[columnId];
+    return question?.type;
   });
 
-  const setFilter = TableFilterStore.useStoreActions((state) => {
+  const questionOptions: string[] = useStoreState(({ db }) => {
+    const question: IQuestion = db.byQuestionId[columnId];
+    return question?.options;
+  });
+
+  const storedValue: string = TableFilterStore.useStoreState((state) => {
+    const tableFilter: TableFilterArgs = state.filters[filterId];
+    return tableFilter?.value;
+  });
+
+  const setFilter: ActionCreator<
+    Partial<TableFilterArgs>
+  > = TableFilterStore.useStoreActions((state) => {
     return state.setFilter;
   });
 
-  const onInputChange = (value: string) => {
-    return setFilter({ id, value });
+  const onInputChange = (value: string): void => {
+    setFilter({ id: filterId, value });
   };
 
   if (
-    [QuestionType.MULTIPLE_SELECT, QuestionType.MULTIPLE_CHOICE].includes(
-      question?.type
-    )
+    questionType === QuestionType.MULTIPLE_CHOICE ||
+    questionType === QuestionType.MULTIPLE_SELECT
   ) {
     return (
       <Dropdown
         options={{ attribute: false }}
-        value={question?.options?.find((option) => {
+        value={questionOptions?.find((option: string) => {
           return option === storedValue;
         })}
-        values={question?.options}
+        values={questionOptions}
         onSelect={onInputChange}
       />
     );
