@@ -9,7 +9,7 @@ import useUpdateRange from './useUpdateRange';
 
 const TablePaginationMessage: React.FC = () => {
   const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.floor + 1;
+    return state.floor;
   });
 
   const ceiling: number = TablePaginationStore.useStoreState((state) => {
@@ -25,7 +25,7 @@ const TablePaginationMessage: React.FC = () => {
   });
 
   const message: string = rowsCount
-    ? `Displaying ${floor}-${ceiling} of ${rowsCount} results.`
+    ? `Displaying ${floor + 1}-${ceiling} of ${rowsCount} results.`
     : 'No results found.';
 
   return (
@@ -45,7 +45,7 @@ const TablePagination: React.FC = () => {
   return (
     <Row wrap className="mt-sm" gap="sm" justify="sb">
       <TablePaginationMessage />
-      {rowsCount >= 50 && <PaginationBar />}
+      {rowsCount >= 25 && <PaginationBar />}
     </Row>
   );
 };

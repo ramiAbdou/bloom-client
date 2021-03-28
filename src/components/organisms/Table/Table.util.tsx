@@ -62,7 +62,7 @@ export const getBannerMessage = (args: GetBannerMessageArgs): string => {
       return selectedRowIds.includes(id);
     })
   ) {
-    return `All 50 rows on this page are selected.`;
+    return `All 25 rows on this page are selected.`;
   }
 
   return null;

@@ -76,11 +76,13 @@ const TableCell: React.FC<TableCellProps> = (props) => {
   });
 
   const category: QuestionCategory = TableStore.useStoreState(({ columns }) => {
-    return columns[columnIndex]?.category;
+    const column: TableColumn = columns[columnIndex];
+    return column?.category;
   });
 
   const type: QuestionType = TableStore.useStoreState(({ columns }) => {
-    return columns[columnIndex]?.type;
+    const column: TableColumn = columns[columnIndex];
+    return column?.type;
   });
 
   const css: string = cx(getTableCellClass({ category, type }), {

@@ -3,7 +3,7 @@ import { action, createContextStore } from 'easy-peasy';
 import { TablePaginationModel } from './TablePagination.types';
 
 const TablePaginationStore = createContextStore<TablePaginationModel>({
-  ceiling: 50,
+  ceiling: 25,
   floor: 0,
   page: 0,
 

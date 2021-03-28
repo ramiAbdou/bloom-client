@@ -28,10 +28,6 @@ const TableContentEmptyMessage: React.FC<
 };
 
 const TableBody: React.FC = () => {
-  const filteredRows: TableRowProps = TableStore.useStoreState((state) => {
-    return state.filteredRows;
-  });
-
   const floor: number = TablePaginationStore.useStoreState((state) => {
     return state.floor;
   });
@@ -39,6 +35,12 @@ const TableBody: React.FC = () => {
   const ceiling: number = TablePaginationStore.useStoreState((state) => {
     return state.ceiling;
   });
+
+  const filteredRowsOnPage: TableRowProps = TableStore.useStoreState(
+    (state) => {
+      return state.filteredRows.slice(floor, ceiling);
+    }
+  );
 
   // Fetching these values forces React to re-render, which in the case of
   // sorting, we do want to re-render our data.
@@ -52,7 +54,7 @@ const TableBody: React.FC = () => {
 
   return (
     <tbody>
-      {filteredRows.slice(floor, ceiling).map((row: TableRowProps) => {
+      {filteredRowsOnPage.map((row: TableRowProps) => {
         return <TableRow key={hash(row)} {...row} />;
       })}
     </tbody>
@@ -66,36 +68,17 @@ const TableContent: React.FC<TableContentProps> = ({
 }) => {
   useUpdateTableRows(rows);
 
-  const emptyMessage = TableStore.useStoreState((state) => {
+  const emptyMessage: string = TableStore.useStoreState((state) => {
     return !state.rows?.length ? eMessage : null;
   });
 
   const show: boolean = TableStore.useStoreState((state) => {
-    return !state.options.hideIfEmpty || !!state.rows?.length;
+    return !!state.rows?.length || !state.options.hideIfEmpty;
   });
-
-  const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.floor;
-  });
-
-  const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.ceiling;
-  });
-
-  const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredRows, selectedRowIds }) => {
-      return (
-        !!selectedRowIds.length &&
-        filteredRows.slice(floor, ceiling).every(({ id: rowId }) => {
-          return selectedRowIds.includes(rowId as string);
-        })
-      );
-    }
-  );
 
   return (
     <Show show={show}>
-      {isAllPageSelected && <TableBanner />}
+      <TableBanner />
 
       <Show show={!emptyMessage}>
         <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>

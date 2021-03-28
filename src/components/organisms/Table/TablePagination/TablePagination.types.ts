@@ -8,9 +8,8 @@ export type TablePaginationModel = {
   floor: number;
 
   /**
-   * Represents the page (currently in 100s) that the table is currently
-   * paginated on. In other words, 0 represents 1-50, 1 represents 51-100,
-   * 2 represents 200-299, etc.
+   * Represents the page (currently in 25s) that the table is currently
+   * paginated on. In other words, 0 represents 1-25, 1 represents 26-50, etc.
    */
   page: number;
 

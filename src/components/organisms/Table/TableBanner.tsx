@@ -64,8 +64,27 @@ const TableBannerMessage: React.FC = () => {
 };
 
 const TableBanner: React.FC = () => {
+  const floor: number = TablePaginationStore.useStoreState((state) => {
+    return state.floor;
+  });
+
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
+    return state.ceiling;
+  });
+
+  const isAllPageSelected: boolean = TableStore.useStoreState(
+    ({ filteredRows, selectedRowIds }) => {
+      return (
+        !!selectedRowIds.length &&
+        filteredRows.slice(floor, ceiling).every(({ id: rowId }) => {
+          return selectedRowIds.includes(rowId as string);
+        })
+      );
+    }
+  );
+
   return (
-    <Card className="mb-xs--nlc">
+    <Card className="mb-xs--nlc" show={isAllPageSelected}>
       <Row justify="center" spacing="xs">
         <TableBannerMessage />
         <TableBannerButton />

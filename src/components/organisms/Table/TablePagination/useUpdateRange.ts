@@ -9,8 +9,8 @@ const useUpdateRange = (): void => {
     return state.filteredRows.length;
   });
 
-  const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.page * 50;
+  const page: number = TablePaginationStore.useStoreState((state) => {
+    return state.page;
   });
 
   const setRange: ActionCreator<
@@ -19,14 +19,16 @@ const useUpdateRange = (): void => {
     return state.setRange;
   });
 
-  // If the page is the last page, then the filteredRows length - floor will
-  // be less than 50, in which case we just show the length as the ceiling.
-  const ceiling: number =
-    numFilteredRows - floor >= 50 ? floor + 50 : numFilteredRows;
-
   useEffect(() => {
+    const floor: number = page * 25;
+
+    // If the page is the last page, then the filteredRows length - floor will
+    // be less than 50, in which case we just show the length as the ceiling.
+    const ceiling: number =
+      numFilteredRows - floor >= 25 ? floor + 25 : numFilteredRows;
+
     setRange([floor, ceiling]);
-  }, [floor, ceiling]);
+  }, [numFilteredRows, page]);
 };
 
 export default useUpdateRange;

@@ -65,7 +65,7 @@ const TablePaginationBarNextButton: React.FC = () => {
   });
 
   const numPages: number = TableStore.useStoreState(({ filteredRows }) => {
-    return Math.ceil(filteredRows.length / 50);
+    return Math.ceil(filteredRows.length / 25);
   });
 
   const setPage = TablePaginationStore.useStoreActions((store) => {
@@ -90,7 +90,7 @@ const TablePaginationBar: React.FC = () => {
 
   const nums: TablePaginationValue[] = TableStore.useStoreState(
     ({ filteredRows }) => {
-      const numPages = Math.ceil(filteredRows.length / 50);
+      const numPages = Math.ceil(filteredRows.length / 25);
       return getPaginationValues(Array.from(Array(numPages).keys()), page);
     },
     deepequal
