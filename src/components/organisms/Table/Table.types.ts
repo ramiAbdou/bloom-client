@@ -65,10 +65,6 @@ export const defaultTableOptions: TableOptions = {
   showCount: true
 };
 
-// ## TABLE SORTING
-
-export type TableSortDirection = 'ASC' | 'DESC';
-
 // ## TABLE MODEL
 
 export type TableModel = {
@@ -83,9 +79,6 @@ export type TableModel = {
   selectedRowIds: string[];
   setFilter: Action<TableModel, TableQuickFilterArgs>;
   setSearchString: Action<TableModel, string>;
-  sortColumn: Action<TableModel, [string, TableSortDirection]>;
-  sortDirection: TableSortDirection;
-  sortColumnId: string;
   toggleRow: Action<TableModel, string>;
   toggleRows: Action<TableModel, string[]>;
   updateColumn: Action<TableModel, Partial<TableColumn>>;

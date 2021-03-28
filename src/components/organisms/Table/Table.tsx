@@ -13,6 +13,7 @@ import TableBanner from './TableBanner';
 import TableFilterStore from './TableFilter/TableFilter.store';
 import TablePagination from './TablePagination/TablePagination';
 import TablePaginationStore from './TablePagination/TablePagination.store';
+import TableSortStore from './TableSort/TableSort.store';
 
 interface TableProps extends ShowProps {
   columns: TableColumn[];
@@ -38,13 +39,15 @@ const Table: React.FC<TableProps> = ({
   return (
     <TableStore.Provider runtimeModel={runtimeModel}>
       <TablePaginationStore.Provider>
-        <TableFilterStore.Provider>
-          {TableActions && <TableActions />}
-          <TableBanner />
-          {children}
-          <TablePagination />
-          <PanelLocal />
-        </TableFilterStore.Provider>
+        <TableSortStore.Provider>
+          <TableFilterStore.Provider>
+            {TableActions && <TableActions />}
+            <TableBanner />
+            {children}
+            <TablePagination />
+            <PanelLocal />
+          </TableFilterStore.Provider>
+        </TableSortStore.Provider>
       </TablePaginationStore.Provider>
     </TableStore.Provider>
   );

@@ -8,7 +8,7 @@ import { useStoreState } from '@store/Store';
 import FormShortText from '../Form/FormShortText';
 import TableStore from './Table.store';
 import { TableColumn } from './Table.types';
-import TableSortButton from './TableSortButton';
+import TableSortButton from './TableSort/TableSortButton';
 
 const TableRenameForm: React.FC = () => {
   const columnId = useStoreState(({ panel }) => {

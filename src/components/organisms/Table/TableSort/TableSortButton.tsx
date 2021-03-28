@@ -1,19 +1,19 @@
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { IdProps } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from './Table.store';
-import { TableSortDirection } from './Table.types';
+import TableSortStore from './TableSort.store';
+import { TableSortDirection } from './TableSort.types';
 
-interface TableSortButtonProps extends IdProps {
+interface TableSortButtonProps {
   direction: TableSortDirection;
 }
 
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
-  const columnId = useStoreState(({ panel }) => {
+  const columnId: string = useStoreState(({ panel }) => {
     return panel.metadata;
   });
 
@@ -21,23 +21,25 @@ const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
     return panel.closePanel;
   });
 
-  const isSorted = TableStore.useStoreState(
+  const isSorted: boolean = TableSortStore.useStoreState(
     ({ sortDirection, sortColumnId }) => {
       return sortDirection === direction && sortColumnId === columnId;
     }
   );
 
-  const sortColumn = TableStore.useStoreActions((store) => {
-    return store.sortColumn;
+  const sortColumn: ActionCreator<
+    [string, TableSortDirection]
+  > = TableSortStore.useStoreActions((state) => {
+    return state.sortColumn;
   });
 
-  const onClick = () => {
+  const onClick = (): void => {
     sortColumn([columnId, direction]);
     closePanel();
   };
 
+  const isAscending: boolean = direction === 'ASC';
   const css: string = cx('', { 'o-table-col-panel-button--active': isSorted });
-  const isAscending = direction === 'ASC';
 
   return (
     <Button className={css} onClick={onClick}>

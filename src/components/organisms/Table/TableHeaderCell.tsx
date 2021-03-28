@@ -8,6 +8,7 @@ import TableStore from './Table.store';
 import { TableColumn } from './Table.types';
 import { getTableCellClass } from './Table.util';
 import TableHeaderCheckbox from './TableHeaderCheckbox';
+import TableSortStore from './TableSort/TableSort.store';
 
 interface TableHeaderCellProps extends TableColumn {
   i: number;
@@ -21,11 +22,11 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   id,
   title
 }) => {
-  const sortColumnId = TableStore.useStoreState((state) => {
+  const sortColumnId: string = TableSortStore.useStoreState((state) => {
     return state.sortColumnId;
   });
 
-  const direction = TableStore.useStoreState((state) => {
+  const direction = TableSortStore.useStoreState((state) => {
     return state.sortDirection;
   });
 
