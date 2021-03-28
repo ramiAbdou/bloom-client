@@ -55,24 +55,8 @@ const PanelContainer: React.FC = ({ children }) => {
 
   // If the click happened within the element that was used to open the
   // Picker, then we don't close the panel.
-  useOnClickOutside(ref, (event) => {
-    // If the element doesn't exist, then just close the panel.
-    if (!element) {
-      closePanel();
-      return;
-    }
-
-    const { clientX, clientY } = event as any;
-    const { offsetLeft, offsetTop, offsetHeight, offsetWidth } = ref?.current;
-
-    if (
-      clientX < offsetLeft ||
-      clientX > offsetLeft + offsetWidth ||
-      clientY < offsetTop ||
-      clientY > offsetTop + offsetHeight
-    ) {
-      closePanel();
-    }
+  useOnClickOutside(ref, () => {
+    closePanel();
   });
 
   if (!element) return null;

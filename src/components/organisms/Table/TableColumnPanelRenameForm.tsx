@@ -1,4 +1,4 @@
-import deepequal from 'fast-deep-equal';
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Form from '@organisms/Form/Form';
@@ -7,27 +7,30 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 import FormShortText from '../Form/FormShortText';
 import TableStore from './Table.store';
-import { TableColumn } from './Table.types';
-import TableSortButton from './TableSort/TableSortButton';
+import { RenameColumnFunction, TableColumn } from './Table.types';
 
-const TableRenameForm: React.FC = () => {
-  const columnId = useStoreState(({ panel }) => {
+const TableColumnPanelRenameForm: React.FC = () => {
+  const columnId: string = useStoreState(({ panel }) => {
     return panel.metadata;
   });
 
-  const { id, title }: TableColumn = TableStore.useStoreState(({ columns }) => {
-    return (
-      columns.find((column) => {
-        return column.id === columnId;
-      }) ?? {}
-    );
-  }, deepequal);
+  const title: string = TableStore.useStoreState(({ columns }) => {
+    const result: TableColumn = columns.find((column: TableColumn) => {
+      return column.id === columnId;
+    });
 
-  const onRenameColumn = TableStore.useStoreState(({ options }) => {
-    return options.onRenameColumn;
+    return result?.title;
   });
 
-  const updateColumn = TableStore.useStoreActions((store) => {
+  const onRenameColumn: RenameColumnFunction = TableStore.useStoreState(
+    ({ options }) => {
+      return options.onRenameColumn;
+    }
+  );
+
+  const updateColumn: ActionCreator<
+    Partial<TableColumn>
+  > = TableStore.useStoreActions((store) => {
     return store.updateColumn;
   });
 
@@ -39,7 +42,7 @@ const TableRenameForm: React.FC = () => {
     if (updatedTitle === title) return;
 
     await onRenameColumn({
-      column: { id, title: updatedTitle },
+      column: { id: columnId, title: updatedTitle },
       updateColumn
     });
 
@@ -54,14 +57,4 @@ const TableRenameForm: React.FC = () => {
   );
 };
 
-const TableRenamePanel: React.FC = () => {
-  return (
-    <>
-      <TableRenameForm />
-      <TableSortButton direction="ASC" />
-      <TableSortButton direction="DESC" />
-    </>
-  );
-};
-
-export default TableRenamePanel;
+export default TableColumnPanelRenameForm;

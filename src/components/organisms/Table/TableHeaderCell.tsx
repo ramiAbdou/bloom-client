@@ -48,7 +48,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
 
   const onClick = () => {
     if (isSortable) {
-      showPanel({ id: PanelType.RENAME_TABLE_COLUMN, metadata: id });
+      showPanel({ id: PanelType.TABLE_COLUMN, metadata: id });
     }
   };
 
@@ -66,7 +66,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   return (
     <th
       className={css}
-      id={`${PanelType.RENAME_TABLE_COLUMN}-${id}`}
+      id={`${PanelType.TABLE_COLUMN}-${id}`}
       onClick={onClick}
     >
       <div>

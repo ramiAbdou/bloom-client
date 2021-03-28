@@ -35,7 +35,7 @@ export const globalPanels: PanelType[] = [
 export const localPanels: PanelType[] = [
   PanelType.FILTER_LIST,
   PanelType.FILTER_TABLE,
-  PanelType.RENAME_TABLE_COLUMN
+  PanelType.TABLE_COLUMN
 ];
 
 export const defaultPanelOptions: Record<string, Partial<PanelData>> = {
@@ -46,7 +46,7 @@ export const defaultPanelOptions: Record<string, Partial<PanelData>> = {
     align: 'RIGHT_BOTTOM',
     style: { marginLeft: 24, minWidth: 270, padding: 8 }
   },
-  [PanelType.RENAME_TABLE_COLUMN]: {
+  [PanelType.TABLE_COLUMN]: {
     align: 'BOTTOM_LEFT',
     className: 'o-table-col-panel',
     scrollId: 'o-table-ctr',

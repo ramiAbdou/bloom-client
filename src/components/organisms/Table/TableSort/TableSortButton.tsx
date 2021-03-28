@@ -17,15 +17,13 @@ const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
     return panel.metadata;
   });
 
-  const closePanel = useStoreActions(({ panel }) => {
+  const closePanel: ActionCreator<void> = useStoreActions(({ panel }) => {
     return panel.closePanel;
   });
 
-  const isSorted: boolean = TableSortStore.useStoreState(
-    ({ sortDirection, sortColumnId }) => {
-      return sortDirection === direction && sortColumnId === columnId;
-    }
-  );
+  const isSorted: boolean = TableSortStore.useStoreState((state) => {
+    return state.sortDirection === direction && state.sortColumnId === columnId;
+  });
 
   const sortColumn: ActionCreator<
     [string, TableSortDirection]

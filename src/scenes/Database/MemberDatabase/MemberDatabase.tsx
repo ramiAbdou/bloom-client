@@ -6,7 +6,7 @@ import { ModalData } from '@organisms/Modal/Modal.types';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
-  OnRenameColumn,
+  RenameColumnFunction,
   TableColumn,
   TableOptions,
   TableRow
@@ -79,7 +79,10 @@ const MemberDatabase: React.FC = () => {
 
   const updateQuestion = useUpdateQuestion();
 
-  const onRenameColumn: OnRenameColumn = async ({ column, updateColumn }) => {
+  const onRenameColumn: RenameColumnFunction = async ({
+    column,
+    updateColumn
+  }) => {
     const { title, id } = column;
     const { error } = await updateQuestion({ questionId: id, title });
     if (!error) updateColumn({ id, title });

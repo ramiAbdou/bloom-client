@@ -42,7 +42,7 @@ export type OnRenameColumnArgs = {
   updateColumn: ActionCreator<Partial<TableColumn>>;
 };
 
-export type OnRenameColumn = (args: OnRenameColumnArgs) => Promise<void>;
+export type RenameColumnFunction = (args: OnRenameColumnArgs) => Promise<void>;
 
 // ## TABLE ROW
 
@@ -54,7 +54,7 @@ export type TableOptions = {
   hasCheckbox?: boolean;
   hideIfEmpty?: boolean;
   isSortable?: boolean;
-  onRenameColumn?: (args: OnRenameColumnArgs) => Promise<void>;
+  onRenameColumn?: RenameColumnFunction;
   onRowClick?: (row: TableRow) => void;
   showCount?: boolean;
 };
