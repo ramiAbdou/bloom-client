@@ -54,11 +54,11 @@ const IndividualEventTableContent: React.FC = () => {
 };
 
 const IndividualEventTable: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => {
+  const isAdmin: boolean = useStoreState(({ db }) => {
     return !!db.member?.role;
   });
 
-  const hasContent: boolean = useStoreState(({ db }) => {
+  const hasEventContent: boolean = useStoreState(({ db }) => {
     return (
       !!db.event?.attendees?.length ||
       !!db.event?.guests?.length ||
@@ -69,7 +69,7 @@ const IndividualEventTable: React.FC = () => {
   const { loading }: Partial<QueryResult> = useInitIndividualEventTable();
 
   return (
-    <Show show={!!isAdmin && !loading && hasContent}>
+    <Show show={!!isAdmin && !loading && hasEventContent}>
       <IndividualEventTableContent />
     </Show>
   );

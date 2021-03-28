@@ -12,11 +12,11 @@ import EventsShareButton from '../EventsShareButton';
 import EventsViewRecordingButton from '../EventsViewRecordingButton';
 
 const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
-  const eventId = useStoreState(({ db }) => {
+  const eventId: string = useStoreState(({ db }) => {
     return db.event?.id;
   });
 
-  const recordingUrl = useStoreState(({ db }) => {
+  const recordingUrl: string = useStoreState(({ db }) => {
     return db.event?.recordingUrl;
   });
 

@@ -4,7 +4,7 @@ import Card from '@containers/Card/Card';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventAbout: React.FC = () => {
-  const description = useStoreState(({ db }) => {
+  const description: string = useStoreState(({ db }) => {
     return db.event?.description;
   });
 
