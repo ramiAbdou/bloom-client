@@ -4,9 +4,9 @@ import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from '../Table.store';
-import { TableColumn } from '../Table.types';
-import { getTableCellClass } from '../Table.util';
+import TableStore from './Table.store';
+import { TableColumn } from './Table.types';
+import { getTableCellClass } from './Table.util';
 import TableHeaderCheckbox from './TableHeaderCheckbox';
 
 interface TableHeaderCellProps extends TableColumn {

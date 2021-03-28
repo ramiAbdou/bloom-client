@@ -5,9 +5,10 @@ import Show from '@containers/Show';
 import TableStore from './Table.store';
 import { TableRow as TableRowProps } from './Table.types';
 import TableBanner from './TableBanner';
-import TableHeaderRow from './TableHeaderRow/TableHeaderRow';
+import TableHeaderRow from './TableHeaderRow';
 import TablePagination from './TablePagination/TablePagination';
-import TableRow from './TableRow/TableRow';
+import TablePaginationStore from './TablePagination/TablePagination.store';
+import TableRow from './TableRow';
 import useUpdateTableRows from './useUpdateTableRows';
 
 interface TableContentProps {
@@ -31,11 +32,11 @@ const TableBody: React.FC = () => {
     return state.filteredRows;
   });
 
-  const floor: number = TableStore.useStoreState((state) => {
+  const floor: number = TablePaginationStore.useStoreState((state) => {
     return state.range[0];
   });
 
-  const ceiling: number = TableStore.useStoreState((state) => {
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
     return state.range[1];
   });
 
@@ -73,11 +74,19 @@ const TableContent: React.FC<TableContentProps> = ({
     return !state.options.hideIfEmpty || !!state.rows?.length;
   });
 
+  const floor: number = TablePaginationStore.useStoreState((state) => {
+    return state.range[0];
+  });
+
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
+    return state.range[1];
+  });
+
   const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredRows, range, selectedRowIds }) => {
+    ({ filteredRows, selectedRowIds }) => {
       return (
         !!selectedRowIds.length &&
-        filteredRows.slice(range[0], range[1]).every(({ id: rowId }) => {
+        filteredRows.slice(floor, ceiling).every(({ id: rowId }) => {
           return selectedRowIds.includes(rowId as string);
         })
       );

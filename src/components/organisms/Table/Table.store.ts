@@ -1,4 +1,4 @@
-import { action, computed, createContextStore } from 'easy-peasy';
+import { action, createContextStore } from 'easy-peasy';
 
 import { sortObjects } from '@util/util';
 import {
@@ -26,25 +26,6 @@ export const tableModel: TableModel = {
   filters: {},
 
   options: defaultTableOptions,
-
-  /**
-   * Represents the page (currently in 100s) that the table is currently
-   * paginated on. In other words, 0 represents 1-50, 1 represents 51-100,
-   * 2 represents 200-299, etc.
-   */
-  page: 0,
-
-  range: computed((state) => {
-    const numFilteredRows = state.filteredRows.length;
-    const floor = state.page * 50;
-
-    // If the page is the last page, then the filteredRows length - floor will
-    // be less than 50, in which case we just show the length as the ceiling.
-    const ceiling =
-      numFilteredRows - floor >= 50 ? floor + 50 : numFilteredRows;
-
-    return [floor, ceiling];
-  }),
 
   removeFilter: action((state, filterId: string) => {
     const updatedFilters = { ...state.filters };
@@ -81,14 +62,6 @@ export const tableModel: TableModel = {
       filteredRows: updatedFilteredRows,
       filters: updatedFilters
     };
-  }),
-
-  setPage: action((state, page) => {
-    // When going to a new page, we need to ensure that the scroll position is
-    // set to 0 so they start at the top of the page.
-    const element = document.getElementById('o-table-ctr');
-    element.scroll({ top: 0 });
-    return { ...state, page };
   }),
 
   setRows: action((state, rows: TableRow[]) => {
@@ -138,22 +111,23 @@ export const tableModel: TableModel = {
   sortDirection: null,
 
   toggleAllPageRows: action((state) => {
-    const { range } = state;
+    return state;
+    // const { range } = state;
 
-    const isPageSelected = [...state.filteredRows]
-      .slice(range[0], range[1])
-      .every(({ id: rowId }) => {
-        return [...state.selectedRowIds].includes(rowId);
-      });
+    // const isPageSelected = [...state.filteredRows]
+    //   .slice(range[0], range[1])
+    //   .every(({ id: rowId }) => {
+    //     return [...state.selectedRowIds].includes(rowId);
+    //   });
 
-    return {
-      ...state,
-      selectedRowIds: !isPageSelected
-        ? [...state.filteredRows].slice(range[0], range[1]).map(({ id }) => {
-            return id;
-          })
-        : []
-    };
+    // return {
+    //   ...state,
+    //   selectedRowIds: !isPageSelected
+    //     ? [...state.filteredRows].slice(range[0], range[1]).map(({ id }) => {
+    //         return id;
+    //       })
+    //     : []
+    // };
   }),
 
   toggleAllRows: action((state) => {

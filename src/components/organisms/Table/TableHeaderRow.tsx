@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TableStore from '../Table.store';
-import { TableColumn } from '../Table.types';
+import TableStore from './Table.store';
+import { TableColumn } from './Table.types';
 import HeaderCell from './TableHeaderCell';
 
 const TableHeaderRow: React.FC = () => {

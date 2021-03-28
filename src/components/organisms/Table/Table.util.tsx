@@ -33,14 +33,22 @@ export const getBannerButtonTitle = (state: State<TableModel>): string => {
   return `Select All ${numFilteredMembers} Filtered Rows`;
 };
 
+interface GetBannerMessageArgs {
+  ceiling: number;
+  filteredRows: TableRow[];
+  floor: number;
+  rows: TableRow[];
+  selectedRowIds: string[];
+}
+
 /**
  * Returns the appropriate Table banner message based on the current state of
  * selectedRowIds.
  *
  * @param state Entire table state.
  */
-export const getBannerMessage = (state: State<TableModel>): string => {
-  const { filteredRows, range, rows, selectedRowIds } = state;
+export const getBannerMessage = (args: GetBannerMessageArgs): string => {
+  const { ceiling, filteredRows, floor, rows, selectedRowIds } = args;
 
   const numTotalRows = rows.length;
   const numFilteredRows = filteredRows.length;
@@ -55,7 +63,7 @@ export const getBannerMessage = (state: State<TableModel>): string => {
   }
 
   if (
-    filteredRows.slice(range[0], range[1]).every(({ id }) => {
+    filteredRows.slice(floor, ceiling).every(({ id }) => {
       return selectedRowIds.includes(id);
     })
   ) {

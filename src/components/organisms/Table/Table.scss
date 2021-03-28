@@ -30,25 +30,55 @@ $PREF: 'o-table';
   position: sticky;
   text-align: left;
 
-  &--xs { max-width: $xxl * 2.5; width: $xxl * 2.5; }
-  &--sm { max-width: $xxl * 3.25; width: $xxl * 3.25; }
-  &--md { max-width: $xxl * 4; width: $xxl * 4; }
-  &--lg { max-width: $xxl * 5; width: $xxl * 5; }
+  &--xs {
+    max-width: $xxl * 2.5;
+    width: $xxl * 2.5;
+  }
 
-  &:first-child > div { @extend .f; @extend .f-ac; max-width: 100%; }
-  &:last-child { width: -webkit-fill-available; }
+  &--sm {
+    max-width: $xxl * 3.25;
+    width: $xxl * 3.25;
+  }
+
+  &--md {
+    max-width: $xxl * 4;
+    width: $xxl * 4;
+  }
+
+  &--lg {
+    max-width: $xxl * 5;
+    width: $xxl * 5;
+  }
+
+  &:first-child > div {
+    @extend .f;
+    @extend .f-ac;
+
+    max-width: 100%;
+  }
+
+  &:last-child {
+    width: -webkit-fill-available;
+  }
 }
 
 // ## SELECT CHECKBOX - The HTML applied the .c-misc-checkbox class, we don't
 // extend it in here for overriding purposes of the margin and background-color.
 
-.#{$PREF}-select { background-color: inherit; margin: 0 $lg 0 0; }
+.#{$PREF}-select {
+  background-color: inherit;
+  margin: 0 $lg 0 0;
+}
 
 // ## COLUMN PANEL
 
 // Added a div before the name to make it take higher precedence.
-div.#{$PREF}-col-panel { padding: $sm; }
-.#{$PREF}-col-panel > form { margin-bottom: $sm; }
+div.#{$PREF}-col-panel {
+  padding: $sm;
+}
+.#{$PREF}-col-panel > form {
+  margin-bottom: $sm;
+}
 .#{$PREF}-col-panel > button {
   @extend .f;
   @extend .f-ac;
@@ -60,12 +90,18 @@ div.#{$PREF}-col-panel { padding: $sm; }
   @include PRIMARY_HOVER;
 }
 
-.#{$PREF}-col-panel > button:first-of-type { margin-bottom: $xs; }
+.#{$PREF}-col-panel > button:first-of-type {
+  margin-bottom: $xs;
+}
 
-.#{$PREF}-col-panel > button > svg { margin-right: $xs; }
+.#{$PREF}-col-panel > button > svg {
+  margin-right: $xs;
+}
 
 .#{$PREF}-col-panel-button--active > svg,
-.#{$PREF}-col-panel-button--active > p { color: $primary; }
+.#{$PREF}-col-panel-button--active > p {
+  color: $primary;
+}
 
 .#{$PREF}-col-panel > form > .o-form-item {
   margin-bottom: $sm;
@@ -82,7 +118,10 @@ div.#{$PREF}-col-panel { padding: $sm; }
   text-align: left;
   width: max-content;
 
-  &--active { background-color: $primary; color: white; }
+  &--active {
+    background-color: $primary;
+    color: white;
+  }
 }
 
 // ## TABLE ACTION
@@ -95,19 +134,44 @@ div.#{$PREF}-col-panel { padding: $sm; }
 
   // !important overrides the normal .c-btn styling for hover state.
 
-  @include HOVER { opacity: 1 !important; }
+  @include HOVER {
+    opacity: 1 !important;
+  }
 
-  &--demote { &::before { margin-left: -$xxs; } }
-  &--promote { @extend .tooltip--right; &::before { margin-right: -44px; } }
-  &--delete > svg { color: $red; }
-  &--disabled > svg { color: $gray-3; }
+  &--demote {
+    &::before {
+      margin-left: -$xxs;
+    }
+  }
 
-  > svg { @extend .react-icon--lg; }
+  &--promote {
+    @extend .tooltip--right;
+
+    &::before {
+      margin-right: -44px;
+    }
+  }
+
+  &--delete > svg {
+    color: $red;
+  }
+
+  &--disabled > svg {
+    color: $gray-3;
+  }
+
+  > svg {
+    @extend .react-icon--lg;
+  }
 }
 
 // For all buttons that are not the Promote to Admin button, we set the tooltip
 // to be to the right side of the icon.
-:not(a) > .#{$PREF}-action { &:last-of-type { @extend .tooltip--right; } }
+:not(a) > .#{$PREF}-action {
+  &:last-of-type {
+    @extend .tooltip--right;
+  }
+}
 
 // ## TABLE FILTER
 
@@ -133,15 +197,223 @@ div.#{$PREF}-col-panel { padding: $sm; }
   margin-bottom: $sm;
 
   // Join operator: WHERE, AND, OR.
-  > *:first-child { flex: 1; }
+  > *:first-child {
+    flex: 1;
+  }
 
   // Contains main dropdowns/input for filter.
   > *:nth-child(2) {
     flex: 4;
 
-    > *:nth-child(1) { max-width: 200px; min-width: 200px; }
-    > *:nth-child(2) { max-width: 100px; min-width: 100px; }
-    > *:nth-child(3) { max-width: 200px; min-width: 200px; }
-    > button:nth-child(4) { > svg { color: $red; } }
+    > *:nth-child(1) {
+      max-width: 200px;
+      min-width: 200px;
+    }
+
+    > *:nth-child(2) {
+      max-width: 100px;
+      min-width: 100px;
+    }
+
+    > *:nth-child(3) {
+      max-width: 200px;
+      min-width: 200px;
+    }
+
+    > button:nth-child(4) {
+      > svg {
+        color: $red;
+      }
+    }
+  }
+}
+
+// ## TABLE DATA CELL
+
+td {
+  @extend .#{$PREF}-cell;
+
+  background-color: white;
+  color: $gray-1;
+  vertical-align: top;
+
+  > div > .c-misc-checkbox {
+    z-index: 10;
+  }
+
+  > div > p {
+    @include OVERFLOW_ELLIPSES(3);
+  }
+
+  > div > .c-tag-attr {
+    margin: 0 $xxs $xxs 0;
+  }
+}
+
+.#{$PREF}-td {
+  &--multiple-select > div {
+    @extend .flex-w;
+  }
+}
+
+// ## TABLE DATA ROW
+
+tr {
+  &:not(:last-child) {
+    border-bottom: 1px $gray-5 solid;
+  }
+}
+
+.#{$PREF}-tr {
+  // Applied if the table row is selected.
+  &--active {
+    > td {
+      background-color: $primary-bg;
+    }
+  }
+
+  &--clickable {
+    cursor: pointer;
+
+    @include HOVER {
+      // Can't extend within an include, so manually write shadow--2.
+
+      box-shadow: 0 0 8px 2px hsla($primary-hue, 99%, 17%, 0.15);
+      position: relative;
+      transform: scale(1); // Required to push to higher stacking context.
+      z-index: 10;
+    }
+  }
+}
+
+th {
+  @extend .#{$PREF}-cell;
+  @extend .meta--lg;
+
+  background-color: $gray-6;
+  top: 0;
+  vertical-align: middle;
+  z-index: 11;
+
+  // Header select option should have a darker border and higher z-index.
+  > div > .c-misc-checkbox {
+    z-index: 12;
+  }
+
+  > div > .c-misc-checkbox > span {
+    border: 2px $gray-3 solid;
+  }
+
+  // The header title content.
+  > div > p {
+    @extend .meta--lg;
+
+    color: $gray-3;
+
+    @include OVERFLOW_ELLIPSES;
+  }
+
+  // We need to make the border bottom and border right position absolute to
+  // achieve the scrolling functionality that we want.
+  &::after {
+    border-bottom: 1px solid $gray-5;
+    bottom: 0;
+    content: '';
+    height: 100%;
+    left: -1px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &:not(:last-child)::after {
+    border-right: 1px solid $gray-5;
+  }
+}
+
+.#{$PREF}-th {
+  // When the panel is showing, we keep the background-color dark.
+  &--panel {
+    background-color: $gray-5;
+  }
+
+  &--sortable {
+    cursor: pointer;
+
+    @include HOVER {
+      background-color: $gray-5;
+      cursor: pointer;
+    }
+  }
+
+  &--sorted {
+    > div {
+      @extend .f;
+      @extend .f-ac;
+    }
+
+    > div > p {
+      color: $primary;
+      max-width: 85%;
+    }
+    // Caret up or caret down SVG, React controls the displaying of this
+    // element.
+    > div > svg {
+      @extend .react-icon--sm;
+
+      color: $primary;
+      margin-left: $xs;
+    }
+  }
+}
+
+// ## PAGINATION - Controls all of the table pagination by selecting different
+// pages. Also controls the displaying text of which rows are being shown.
+
+.#{$PREF}-pagination-num {
+  border-radius: 50%;
+  height: $md;
+  width: $md;
+
+  @include HOVER {
+    background-color: $primary-bg;
+  }
+
+  &:not(:last-child) {
+    margin-right: $xxs;
+  }
+
+  &--active {
+    background-color: $primary;
+    color: white;
+
+    @include HOVER {
+      background-color: $primary;
+      color: white;
+    }
+  }
+
+  &--ellipses {
+    @include HOVER {
+      background-color: initial;
+      cursor: default;
+    }
+  }
+}
+
+.#{$PREF}-pagination-chevron {
+  border-radius: 50%;
+  padding: 2px;
+
+  @include HOVER {
+    background-color: rgba($color: $primary-hex, $alpha: 0.15);
+  }
+
+  &:first-child {
+    margin-right: $xs;
+  }
+
+  &:last-child {
+    margin-left: $xs;
   }
 }

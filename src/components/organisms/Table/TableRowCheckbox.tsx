@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
-import TableStore from '../Table.store';
-import { TableColumn } from '../Table.types';
+import TableStore from './Table.store';
+import { TableColumn } from './Table.types';
 
 interface TableRowCheckboxProps {
   columnId: string;

@@ -1,4 +1,4 @@
-import { Action, ActionCreator, Computed } from 'easy-peasy';
+import { Action, ActionCreator } from 'easy-peasy';
 
 import {
   IdProps,
@@ -81,14 +81,11 @@ export type TableModel = {
   filteredRows: TableRow[];
   filters: Record<string, TableFilter>;
   options: TableOptions;
-  page: number;
-  range: Computed<TableModel, [number, number]>;
   removeFilter: Action<TableModel, string>;
   rows: TableRow[];
   searchString: string;
   selectedRowIds: string[];
   setFilter: Action<TableModel, TableQuickFilterArgs>;
-  setPage: Action<TableModel, number>;
   setSearchString: Action<TableModel, string>;
   sortColumn: Action<TableModel, [string, TableSortDirection]>;
   sortDirection: TableSortDirection;

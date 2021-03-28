@@ -6,9 +6,9 @@ import Pill from '@atoms/Tag/Pill';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { QuestionCategory, QuestionType, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from '../Table.store';
-import { TableColumn } from '../Table.types';
-import { getTableCellClass } from '../Table.util';
+import TableStore from './Table.store';
+import { TableColumn } from './Table.types';
+import { getTableCellClass } from './Table.util';
 import SelectRowCheckbox from './TableRowCheckbox';
 
 interface TableCellProps extends ValueProps {

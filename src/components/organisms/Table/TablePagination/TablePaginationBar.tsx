@@ -10,17 +10,18 @@ import { cx } from '@util/util';
 import TableStore from '../Table.store';
 import { TablePaginationValue } from '../Table.types';
 import { getPaginationValues } from '../Table.util';
+import TablePaginationStore from './TablePagination.store';
 
 const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
-  const active = TableStore.useStoreState(({ page }) => {
+  const active: boolean = TablePaginationStore.useStoreState(({ page }) => {
     return page === value;
   });
 
-  const setPage = TableStore.useStoreActions((store) => {
-    return store.setPage;
+  const setPage = TablePaginationStore.useStoreActions((state) => {
+    return state.setPage;
   });
 
-  const isEllipses = value === '...';
+  const isEllipses: boolean = value === '...';
 
   const onClick = () => {
     return !isEllipses && setPage(value);
@@ -39,11 +40,11 @@ const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
 };
 
 const TablePaginationBarBackButton: React.FC = () => {
-  const page = TableStore.useStoreState((state) => {
+  const page: number = TablePaginationStore.useStoreState((state) => {
     return state.page;
   });
 
-  const setPage = TableStore.useStoreActions((store) => {
+  const setPage = TablePaginationStore.useStoreActions((store) => {
     return store.setPage;
   });
 
@@ -59,15 +60,15 @@ const TablePaginationBarBackButton: React.FC = () => {
 };
 
 const TablePaginationBarNextButton: React.FC = () => {
-  const page = TableStore.useStoreState((state) => {
+  const page: number = TablePaginationStore.useStoreState((state) => {
     return state.page;
   });
 
-  const setPage = TableStore.useStoreActions((store) => {
+  const setPage = TablePaginationStore.useStoreActions((store) => {
     return store.setPage;
   });
 
-  const numPages = TableStore.useStoreState(({ filteredRows }) => {
+  const numPages: number = TableStore.useStoreState(({ filteredRows }) => {
     return Math.ceil(filteredRows.length / 50);
   });
 
@@ -83,8 +84,12 @@ const TablePaginationBarNextButton: React.FC = () => {
 };
 
 const TablePaginationBar: React.FC = () => {
+  const page: number = TablePaginationStore.useStoreState((state) => {
+    return state.page;
+  });
+
   const nums: TablePaginationValue[] = TableStore.useStoreState(
-    ({ filteredRows, page }) => {
+    ({ filteredRows }) => {
       const numPages = Math.ceil(filteredRows.length / 50);
       return getPaginationValues(Array.from(Array(numPages).keys()), page);
     },
@@ -95,7 +100,7 @@ const TablePaginationBar: React.FC = () => {
     <Row>
       <TablePaginationBarBackButton />
 
-      {nums.map((value: any) => {
+      {nums.map((value: TablePaginationValue) => {
         return <TablePaginationBarNumber key={nanoid()} value={value} />;
       })}
 

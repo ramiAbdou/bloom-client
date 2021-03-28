@@ -1,11 +1,18 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
-import TableStore from '../Table.store';
+import TableStore from './Table.store';
+import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableHeaderCheckbox: React.FC = () => {
+  const range: [number, number] = TablePaginationStore.useStoreState(
+    (state) => {
+      return state.range;
+    }
+  );
+
   const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredRows, range, selectedRowIds }) => {
+    ({ filteredRows, selectedRowIds }) => {
       return (
         !!selectedRowIds.length &&
         filteredRows.slice(range[0], range[1]).every(({ id: rowId }) => {

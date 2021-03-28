@@ -3,26 +3,28 @@ import React from 'react';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import TableStore from '../Table.store';
+import TablePaginationStore from './TablePagination.store';
 import PaginationBar from './TablePaginationBar';
+import useUpdateRange from './useUpdateRange';
 
 const TablePaginationMessage: React.FC = () => {
-  const floor = TableStore.useStoreState(({ range }) => {
+  const floor: number = TablePaginationStore.useStoreState(({ range }) => {
     return range[0] + 1;
   });
 
-  const ceiling = TableStore.useStoreState(({ range }) => {
+  const ceiling: number = TablePaginationStore.useStoreState(({ range }) => {
     return range[1];
   });
 
-  const rowsCount: number = TableStore.useStoreState((store) => {
-    return store.filteredRows?.length;
+  const rowsCount: number = TableStore.useStoreState(({ filteredRows }) => {
+    return filteredRows?.length;
   });
 
-  const showCount = TableStore.useStoreState(({ options }) => {
+  const showCount: boolean = TableStore.useStoreState(({ options }) => {
     return options.showCount;
   });
 
-  const message = rowsCount
+  const message: string = rowsCount
     ? `Displaying ${floor}-${ceiling} of ${rowsCount} results.`
     : 'No results found.';
 
@@ -34,8 +36,10 @@ const TablePaginationMessage: React.FC = () => {
 };
 
 const TablePagination: React.FC = () => {
-  const rowsCount: number = TableStore.useStoreState((store) => {
-    return store.filteredRows?.length;
+  useUpdateRange();
+
+  const rowsCount: number = TableStore.useStoreState((state) => {
+    return state.filteredRows?.length;
   });
 
   return (

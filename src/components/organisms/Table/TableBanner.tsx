@@ -18,6 +18,7 @@ import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import TableStore from './Table.store';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';
+import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableBannerButton: React.FC = () => {
   const title: string = TableStore.useStoreState((state) => {
@@ -40,8 +41,16 @@ const TableBannerButton: React.FC = () => {
 };
 
 const TableBannerMessage: React.FC = () => {
+  const floor: number = TablePaginationStore.useStoreState((state) => {
+    return state.range[0];
+  });
+
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
+    return state.range[1];
+  });
+
   const message: string = TableStore.useStoreState((state) => {
-    return getBannerMessage(state);
+    return getBannerMessage({ ...state, ceiling, floor });
   });
 
   return <p>{message}</p>;
