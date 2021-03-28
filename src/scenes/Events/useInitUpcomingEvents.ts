@@ -15,7 +15,7 @@ const useInitUpcomingEvents = (): Partial<QueryResult> => {
       'videoUrl',
       { community: ['id'] }
     ],
-    operation: QueryEvent.GET_UPCOMING_EVENTS,
+    operation: QueryEvent.LIST_UPCOMING_EVENTS,
     schema: [Schema.EVENT]
   });
 
@@ -27,7 +27,7 @@ const useInitUpcomingEvents = (): Partial<QueryResult> => {
       { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_UPCOMING_EVENT_GUESTS,
+    operation: QueryEvent.LIST_UPCOMING_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
   });
 

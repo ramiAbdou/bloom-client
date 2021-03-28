@@ -3,16 +3,17 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { useStoreState } from '@store/Store';
+import { PanelType } from '@util/constants';
 import { localPanels } from './Panel.types';
 import PanelContainer from './PanelContainer';
 import PanelLocalContent from './PanelLocalContent';
 
 const PanelLocal: React.FC = () => {
-  const isShowing = useStoreState(({ panel }) => {
+  const isShowing: boolean = useStoreState(({ panel }) => {
     return panel.isShowing;
   });
 
-  const panelId = useStoreState(({ panel }) => {
+  const panelId: PanelType = useStoreState(({ panel }) => {
     return panel.id;
   });
 

@@ -4,16 +4,17 @@ import { IoCaretDown, IoCaretUp } from 'react-icons/io5';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from '../Table.store';
-import { TableColumn } from '../Table.types';
-import { getTableCellClass } from '../Table.util';
+import TableStore from './Table.store';
+import { TableColumn } from './Table.types';
+import { getTableCellClass } from './Table.util';
 import TableHeaderCheckbox from './TableHeaderCheckbox';
+import TableSortStore from './TableSort/TableSort.store';
 
-interface HeaderCellProps extends TableColumn {
+interface TableHeaderCellProps extends TableColumn {
   i: number;
 }
 
-const HeaderCell: React.FC<HeaderCellProps> = ({
+const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   category,
   hideTitle,
   i,
@@ -21,16 +22,11 @@ const HeaderCell: React.FC<HeaderCellProps> = ({
   id,
   title
 }) => {
-  const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
-    const isLastCell = i === columns.length - 1;
-    return options.alignEndRight && isLastCell;
-  });
-
-  const sortColumnId = TableStore.useStoreState((state) => {
+  const sortColumnId: string = TableSortStore.useStoreState((state) => {
     return state.sortColumnId;
   });
 
-  const direction = TableStore.useStoreState((state) => {
+  const direction = TableSortStore.useStoreState((state) => {
     return state.sortDirection;
   });
 
@@ -40,10 +36,6 @@ const HeaderCell: React.FC<HeaderCellProps> = ({
 
   const isSortable = TableStore.useStoreState(({ options }) => {
     return options.isSortable;
-  });
-
-  const fixFirstColumn = TableStore.useStoreState(({ options }) => {
-    return options.fixFirstColumn;
   });
 
   const isPanelShowing = useStoreState(({ panel }) => {
@@ -56,15 +48,13 @@ const HeaderCell: React.FC<HeaderCellProps> = ({
 
   const onClick = () => {
     if (isSortable) {
-      showPanel({ id: PanelType.RENAME_TABLE_COLUMN, metadata: id });
+      showPanel({ id: PanelType.TABLE_COLUMN, metadata: id });
     }
   };
 
   const isSortedColumn = sortColumnId === id;
 
   const css: string = cx(getTableCellClass({ category, type }), {
-    'o-table-td--right': alignEndRight,
-    'o-table-th--fixed': fixFirstColumn && i === 0,
     'o-table-th--panel': isPanelShowing,
     'o-table-th--sortable': isSortable,
     'o-table-th--sorted': isSortedColumn
@@ -76,7 +66,7 @@ const HeaderCell: React.FC<HeaderCellProps> = ({
   return (
     <th
       className={css}
-      id={`${PanelType.RENAME_TABLE_COLUMN}-${id}`}
+      id={`${PanelType.TABLE_COLUMN}-${id}`}
       onClick={onClick}
     >
       <div>
@@ -89,4 +79,4 @@ const HeaderCell: React.FC<HeaderCellProps> = ({
   );
 };
 
-export default HeaderCell;
+export default TableHeaderCell;

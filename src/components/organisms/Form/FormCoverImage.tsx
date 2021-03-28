@@ -10,6 +10,8 @@ import { FormItemData } from './Form.types';
 import useInitFormItem from './useInitFormItem';
 
 const FormCoverImageContent: React.FC<FormItemData> = (args) => {
+  const { title } = args;
+
   const key: string = getFormItemKey(args);
 
   const setValue = FormStore.useStoreActions((store) => {
@@ -44,7 +46,7 @@ const FormCoverImageContent: React.FC<FormItemData> = (args) => {
       />
 
       <Button secondary onClick={openFileUploader}>
-        {args?.title}
+        {title}
       </Button>
     </>
   );

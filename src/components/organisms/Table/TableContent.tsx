@@ -1,65 +1,90 @@
+import hash from 'object-hash';
 import React from 'react';
 
 import Show from '@containers/Show';
+import { sortObjects } from '@util/util';
 import TableStore from './Table.store';
-import TableBanner from './TableBanner';
-import TableBodyContainer from './TableBody';
-import TableHeaderContainer from './TableHeader';
-import TablePagination from './TablePagination/TablePagination';
+import { TableRow as TableRowProps } from './Table.types';
+import TableHeaderRow from './TableHeaderRow';
+import TablePaginationStore from './TablePagination/TablePagination.store';
+import TableRow from './TableRow';
+import TableSortStore from './TableSort/TableSort.store';
+import { TableSortDirection } from './TableSort/TableSort.types';
+import useUpdateTableRows from './useUpdateTableRows';
 
 interface TableContentProps {
   emptyMessage?: string;
   small?: boolean;
+  rows?: TableRowProps[];
 }
 
-const TableContentEmptyMessage: React.FC<
-  Pick<TableContentProps, 'emptyMessage'>
-> = ({ emptyMessage }) => {
-  return (
-    <Show show={!!emptyMessage}>
-      <p>{emptyMessage}</p>
-    </Show>
+const TableBody: React.FC = () => {
+  const floor: number = TablePaginationStore.useStoreState((state) => {
+    return state.floor;
+  });
+
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
+    return state.ceiling;
+  });
+
+  // Fetching these values forces React to re-render, which in the case of
+  // sorting, we do want to re-render our data.
+  const sortColumnId: string = TableSortStore.useStoreState((state) => {
+    return state.sortColumnId;
+  });
+
+  const sortDirection: TableSortDirection = TableSortStore.useStoreState(
+    (state) => {
+      return state.sortDirection;
+    }
   );
-};
 
-const TableContent: React.FC<TableContentProps> = ({
-  emptyMessage: eMessage,
-  small
-}) => {
-  const emptyMessage = TableStore.useStoreState(({ rows }) => {
-    return !rows?.length ? eMessage : null;
-  });
-
-  const show: boolean = TableStore.useStoreState(({ rows, options }) => {
-    return !options.hideIfEmpty || !!rows?.length;
-  });
-
-  const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredRows, range, selectedRowIds }) => {
-      return (
-        !!selectedRowIds.length &&
-        filteredRows.slice(range[0], range[1]).every(({ id: rowId }) => {
-          return selectedRowIds.includes(rowId);
-        })
+  const filteredRowsOnPage: TableRowProps = TableStore.useStoreState(
+    (state) => {
+      const sortedRows: TableRowProps[] = [...state.filteredRows].sort(
+        (a: TableRowProps, b: TableRowProps) => {
+          return sortObjects(a, b, sortColumnId, sortDirection);
+        }
       );
+
+      return sortedRows.slice(floor, ceiling);
     }
   );
 
   return (
+    <tbody>
+      {filteredRowsOnPage.map((row: TableRowProps) => {
+        return <TableRow key={hash(row)} {...row} />;
+      })}
+    </tbody>
+  );
+};
+
+const TableContent: React.FC<TableContentProps> = ({
+  emptyMessage: eMessage = `Couldn't find any table data.`,
+  small,
+  rows
+}) => {
+  useUpdateTableRows(rows);
+
+  const emptyMessage: string = TableStore.useStoreState((state) => {
+    return !state.rows?.length ? eMessage : null;
+  });
+
+  const show: boolean = TableStore.useStoreState((state) => {
+    return !!state.rows?.length || !state.options.hideIfEmpty;
+  });
+
+  return (
     <Show show={show}>
-      {isAllPageSelected && <TableBanner />}
+      <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
+        <table className="o-table">
+          <TableHeaderRow />
+          <TableBody />
+        </table>
+      </div>
 
-      <Show show={!emptyMessage}>
-        <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
-          <table className="o-table">
-            <TableHeaderContainer />
-            <TableBodyContainer />
-          </table>
-        </div>
-      </Show>
-
-      {!emptyMessage && <TablePagination />}
-      <TableContentEmptyMessage emptyMessage={emptyMessage} />
+      {emptyMessage && <p>{emptyMessage}</p>}
     </Show>
   );
 };

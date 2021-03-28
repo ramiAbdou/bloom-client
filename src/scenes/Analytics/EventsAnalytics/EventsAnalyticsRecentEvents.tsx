@@ -65,7 +65,6 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   const { push } = useHistory();
 
   const options: TableOptions = {
-    fixFirstColumn: false,
     isSortable: false,
     onRowClick: ({ id }: TableRow) => {
       return push(`/${urlName}/events/${id}`);
@@ -74,9 +73,12 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows}>
+    <Table columns={columns} options={options}>
       <TableSearchBar className="mb-sm--nlc" />
-      <TableContent emptyMessage="Looks like nobody has attended an event yet." />
+      <TableContent
+        emptyMessage="Looks like nobody has attended an event yet."
+        rows={rows}
+      />
     </Table>
   );
 };

@@ -1,10 +1,12 @@
 import day from 'dayjs';
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
+import { ModalData } from '@organisms/Modal/Modal.types';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
-  OnRenameColumn,
+  RenameColumnFunction,
   TableColumn,
   TableOptions,
   TableRow
@@ -19,12 +21,12 @@ import MemberDatabaseActions from './MemberDatabaseActions';
 import useUpdateQuestion from './useUpdateQuestion';
 
 const MemberDatabase: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
-
   const canCollectDues: boolean = useStoreState(({ db }) => {
     return db.community.canCollectDues;
+  });
+
+  const showModal: ActionCreator<ModalData> = useStoreActions(({ modal }) => {
+    return modal.showModal;
   });
 
   // Massage the member data into valid row data by mapping the question ID
@@ -65,7 +67,7 @@ const MemberDatabase: React.FC = () => {
       if (question.category === QuestionCategory.JOINED_AT) {
         return {
           ...question,
-          format: (value) => {
+          format: (value: string) => {
             return day(value).format('MMMM, D, YYYY');
           }
         };
@@ -77,7 +79,10 @@ const MemberDatabase: React.FC = () => {
 
   const updateQuestion = useUpdateQuestion();
 
-  const onRenameColumn: OnRenameColumn = async ({ column, updateColumn }) => {
+  const onRenameColumn: RenameColumnFunction = async ({
+    column,
+    updateColumn
+  }) => {
     const { title, id } = column;
     const { error } = await updateQuestion({ questionId: id, title });
     if (!error) updateColumn({ id, title });
@@ -93,13 +98,12 @@ const MemberDatabase: React.FC = () => {
 
   return (
     <Table
+      TableActions={MemberDatabaseActions}
       columns={columns}
       options={options}
-      rows={rows}
       show={!!columns?.length}
     >
-      <MemberDatabaseActions />
-      <TableContent />
+      <TableContent rows={rows} />
       <ModalLocal />
     </Table>
   );

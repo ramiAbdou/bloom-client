@@ -83,7 +83,6 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   ];
 
   const options: TableOptions = {
-    fixFirstColumn: false,
     isSortable: false,
     onRowClick: ({ memberId }: TableRow) => {
       showModal({ id: ModalType.PROFILE, metadata: memberId });
@@ -92,8 +91,11 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows}>
-      <TableContent emptyMessage="Looks like nobody has attended an event yet." />
+    <Table columns={columns} options={options}>
+      <TableContent
+        emptyMessage="Looks like nobody has attended an event yet."
+        rows={rows}
+      />
     </Table>
   );
 };

@@ -10,7 +10,7 @@ import TableStore from './Table.store';
 const TableSearchBar: React.FC<
   Pick<SearchBarProps, 'className' | 'placeholder'>
 > = (props) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string>('');
 
   const setSearchString = TableStore.useStoreActions((store) => {
     return store.setSearchString;

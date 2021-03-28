@@ -2,6 +2,7 @@ import React from 'react';
 
 import MainSection from '@containers/Main/MainSection';
 import Show from '@containers/Show';
+import { QueryResult } from '@hooks/useQuery.types';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -32,7 +33,6 @@ const IndividualEventTableContent: React.FC = () => {
   });
 
   const options: TableOptions = {
-    fixFirstColumn: false,
     hideIfEmpty: true,
     onRowClick: (row: TableRow) => {
       showModal({ id: ModalType.PROFILE, metadata: row?.id });
@@ -42,20 +42,23 @@ const IndividualEventTableContent: React.FC = () => {
 
   return (
     <MainSection className="s-events-individual-table-ctr">
-      <Table columns={columns} options={options} rows={rows}>
-        <IndividualEventTableActions />
-        <TableContent small />
+      <Table
+        TableActions={IndividualEventTableActions}
+        columns={columns}
+        options={options}
+      >
+        <TableContent small rows={rows} />
       </Table>
     </MainSection>
   );
 };
 
 const IndividualEventTable: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => {
+  const isAdmin: boolean = useStoreState(({ db }) => {
     return !!db.member?.role;
   });
 
-  const hasContent: boolean = useStoreState(({ db }) => {
+  const hasEventContent: boolean = useStoreState(({ db }) => {
     return (
       !!db.event?.attendees?.length ||
       !!db.event?.guests?.length ||
@@ -63,10 +66,10 @@ const IndividualEventTable: React.FC = () => {
     );
   });
 
-  const { loading } = useInitIndividualEventTable();
+  const { loading }: Partial<QueryResult> = useInitIndividualEventTable();
 
   return (
-    <Show show={!!isAdmin && !loading && hasContent}>
+    <Show show={!!isAdmin && !loading && hasEventContent}>
       <IndividualEventTableContent />
     </Show>
   );

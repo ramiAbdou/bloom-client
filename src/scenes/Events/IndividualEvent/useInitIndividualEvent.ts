@@ -66,7 +66,7 @@ const useInitIndividualEvent = (): Partial<QueryResult> => {
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: QueryEvent.GET_EVENT_GUESTS,
+    operation: QueryEvent.LIST_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST],
     types: { eventId: { required: false } },
     variables: { eventId }

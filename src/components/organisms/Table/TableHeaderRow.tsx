@@ -2,18 +2,20 @@ import React from 'react';
 
 import TableStore from './Table.store';
 import { TableColumn } from './Table.types';
-import HeaderCell from './TableHeader/TableHeader';
+import HeaderCell from './TableHeaderCell';
 
-const TableHeader: React.FC = () => {
-  const columns = TableStore.useStoreState((state) => {
+const TableHeaderRow: React.FC = () => {
+  const columns: TableColumn[] = TableStore.useStoreState((state) => {
     return state.columns;
   });
 
-  const hasData = TableStore.useStoreState((store) => {
+  const hasData: boolean = TableStore.useStoreState((store) => {
     return !!store.filteredRows.length;
   });
 
-  const customStyle = !hasData ? { borderBottom: 'none' } : {};
+  const customStyle: React.CSSProperties = !hasData
+    ? { borderBottom: 'none' }
+    : {};
 
   return (
     <thead>
@@ -26,4 +28,4 @@ const TableHeader: React.FC = () => {
   );
 };
 
-export default TableHeader;
+export default TableHeaderRow;

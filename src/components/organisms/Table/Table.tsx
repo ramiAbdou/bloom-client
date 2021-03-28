@@ -1,5 +1,4 @@
-import deepequal from 'fast-deep-equal';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { ShowProps } from '@util/constants';
 import PanelLocal from '../Panel/PanelLocal';
@@ -7,64 +6,49 @@ import TableStore, { tableModel } from './Table.store';
 import {
   defaultTableOptions,
   TableColumn,
-  TableOptions,
-  TableRow
+  TableModel,
+  TableOptions
 } from './Table.types';
+import TableBanner from './TableBanner';
 import TableFilterStore from './TableFilter/TableFilter.store';
+import TablePagination from './TablePagination/TablePagination';
+import TablePaginationStore from './TablePagination/TablePagination.store';
+import TableSortStore from './TableSort/TableSort.store';
 
 interface TableProps extends ShowProps {
   columns: TableColumn[];
   options?: TableOptions;
-  rows: TableRow[];
+  TableActions?: React.FC;
 }
-
-const TableUpdateRows: React.FC<Pick<TableProps, 'rows'>> = ({
-  children,
-  rows
-}) => {
-  const storedRows = TableStore.useStoreState((state) => {
-    return state.rows;
-  });
-
-  const setRows = TableStore.useStoreActions((store) => {
-    return store.setRows;
-  });
-
-  // // Used primarily for the removal of rows. This will not update the
-  // // data if the number of rows doesn't change.
-  useEffect(() => {
-    if (!deepequal(storedRows, rows)) setRows(rows ?? []);
-  }, [rows]);
-
-  return <>{children}</>;
-};
 
 const Table: React.FC<TableProps> = ({
   children,
   columns,
   options,
-  rows,
-  show
+  show,
+  TableActions
 }) => {
   if (show === false) return null;
 
+  const runtimeModel: TableModel = {
+    ...tableModel,
+    columns,
+    options: { ...defaultTableOptions, ...options }
+  };
+
   return (
-    <TableStore.Provider
-      runtimeModel={{
-        ...tableModel,
-        columns: columns?.map((column: TableColumn) => {
-          return {
-            ...column,
-            id: column.id ?? column.title
-          };
-        }),
-        options: { ...defaultTableOptions, ...options }
-      }}
-    >
-      <TableFilterStore.Provider>
-        <TableUpdateRows rows={rows}>{children}</TableUpdateRows>
-        <PanelLocal />
-      </TableFilterStore.Provider>
+    <TableStore.Provider runtimeModel={runtimeModel}>
+      <TablePaginationStore.Provider>
+        <TableSortStore.Provider>
+          <TableFilterStore.Provider>
+            {TableActions && <TableActions />}
+            <TableBanner />
+            {children}
+            <TablePagination />
+            <PanelLocal />
+          </TableFilterStore.Provider>
+        </TableSortStore.Provider>
+      </TablePaginationStore.Provider>
     </TableStore.Provider>
   );
 };

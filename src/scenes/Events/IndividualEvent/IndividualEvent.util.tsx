@@ -31,10 +31,11 @@ const getIndividualEventTableAttendees = (
     const member: IMember = db.byMemberId[attendee?.member];
     const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
 
-    const email = member?.email ?? supporter?.email;
-    const firstName = member?.firstName ?? supporter?.firstName;
-    const lastName = member?.lastName ?? supporter?.lastName;
+    const email: string = member?.email ?? supporter?.email;
+    const firstName: string = member?.firstName ?? supporter?.firstName;
+    const lastName: string = member?.lastName ?? supporter?.lastName;
 
+    // If the email already exists in the record, don't go again.
     if (acc[email]) return acc;
 
     const data: IndividualEventTableRowProps = {
@@ -131,9 +132,9 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
 
   if (!totalRecord) return null;
 
-  return (Object.values(totalRecord)?.sort((a, b) => {
+  return Object.values(totalRecord)?.sort((a, b) => {
     return sortObjects(a, b, ['joinedAt', 'rsvpdAt']);
-  }) as any) as TableRow[];
+  }) as TableRow[];
 };
 
 /**
@@ -153,10 +154,8 @@ export const getIndividualEventTableColumns = (
     ? [
         {
           id: 'joinedAt',
-          render: (value) => {
-            return (
-              value && <p>{day(value as string).format('MMM D @ h:mm A')}</p>
-            );
+          render: (value: string) => {
+            return value && <p>{day(value).format('MMM D @ h:mm A')}</p>;
           },
           title: `Joined At`,
           type: QuestionType.SHORT_TEXT
@@ -183,8 +182,8 @@ export const getIndividualEventTableColumns = (
     ...joinedAtColumn,
     {
       id: 'rsvpdAt',
-      render: (value) => {
-        return value && <p>{day(value as string).format('MMM D @ h:mm A')}</p>;
+      render: (value: string) => {
+        return value && <p>{day(value).format('MMM D @ h:mm A')}</p>;
       },
       title: `RSVP'd At`,
       type: QuestionType.SHORT_TEXT

@@ -9,10 +9,6 @@ import { useStoreState } from '@store/Store';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {
-  const clubhouseUrl: string = useStoreState(({ db }) => {
-    return db.socials?.clubhouseUrl;
-  });
-
   const facebookUrl: string = useStoreState(({ db }) => {
     return db.socials?.facebookUrl;
   });
@@ -49,14 +45,6 @@ const ProfileSocialModal: React.FC = () => {
         title="Facebook URL"
         validate="IS_URL"
         value={facebookUrl}
-      />
-
-      <FormShortText
-        id="CLUBHOUSE_URL"
-        required={false}
-        title="Clubhouse URL"
-        validate="IS_URL"
-        value={clubhouseUrl}
       />
 
       <FormShortText

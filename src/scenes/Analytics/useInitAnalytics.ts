@@ -18,7 +18,7 @@ const useInitAnalytics = (): Partial<QueryResult> => {
       { community: ['id'] },
       { plan: ['id'] }
     ],
-    operation: QueryEvent.GET_MEMBERS,
+    operation: QueryEvent.LIST_MEMBERS,
     schema: [Schema.MEMBER],
     types: { communityId: { required: false } },
     variables: { communityId }
@@ -28,7 +28,7 @@ const useInitAnalytics = (): Partial<QueryResult> => {
     IMemberValue[]
   >({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: QueryEvent.GET_MEMBER_VALUES,
+    operation: QueryEvent.LIST_MEMBER_VALUES,
     schema: [Schema.MEMBER_VALUE],
     types: { communityId: { required: false } },
     variables: { communityId }

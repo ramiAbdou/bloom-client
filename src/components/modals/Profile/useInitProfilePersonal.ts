@@ -12,7 +12,6 @@ const useInitProfilePersonal = (): QueryResult<IMemberSocials> => {
 
   const result: QueryResult<IMemberSocials> = useQuery<IMemberSocials>({
     fields: [
-      'clubhouseUrl',
       'facebookUrl',
       'id',
       'instagramUrl',
@@ -21,7 +20,7 @@ const useInitProfilePersonal = (): QueryResult<IMemberSocials> => {
       { member: ['id'] }
     ],
     operation: QueryEvent.GET_MEMBER_SOCIALS,
-    schema: [Schema.MEMBER_SOCIALS],
+    schema: Schema.MEMBER_SOCIALS,
     types: { memberId: { required: false } },
     variables: { memberId }
   });

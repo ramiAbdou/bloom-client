@@ -11,16 +11,10 @@ import useInitProfileSocial from './useInitProfileSocial';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
   const isSocialLinked: boolean = useStoreState(({ db }) => {
-    const { clubhouseUrl, facebookUrl, instagramUrl, linkedInUrl, twitterUrl } =
+    const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } =
       db.socials ?? {};
 
-    return (
-      !!clubhouseUrl ||
-      !!facebookUrl ||
-      !!instagramUrl ||
-      !!linkedInUrl ||
-      !!twitterUrl
-    );
+    return !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
   });
 
   const showModal = useStoreActions(({ modal }) => {
@@ -46,10 +40,6 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 const ProfileSocialHeader: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => {
-    return db.socials?.clubhouseUrl;
-  });
-
   const facebookUrl = useStoreState(({ db }) => {
     return db.socials?.facebookUrl;
   });
@@ -71,11 +61,7 @@ const ProfileSocialHeader: React.FC = () => {
   });
 
   const isSocialLinked: boolean =
-    !!clubhouseUrl ||
-    !!facebookUrl ||
-    !!instagramUrl ||
-    !!linkedInUrl ||
-    !!twitterUrl;
+    !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
 
   const onClick = () => {
     return showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
@@ -87,16 +73,6 @@ const ProfileSocialHeader: React.FC = () => {
       title="Social Media"
       onEditClick={onClick}
     />
-  );
-};
-
-const ProfileSocialClubhouse: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => {
-    return db.socials?.clubhouseUrl;
-  });
-
-  return (
-    <ProfileSocialValue brand={SocialBrand.CLUBHOUSE} url={clubhouseUrl} />
   );
 };
 
@@ -145,7 +121,6 @@ const ProfileSocialCard: React.FC = () => {
         <ProfileSocialLinkedIn />
         <ProfileSocialTwitter />
         <ProfileSocialFacebook />
-        <ProfileSocialClubhouse />
         <ProfileSocialInstagram />
       </div>
 

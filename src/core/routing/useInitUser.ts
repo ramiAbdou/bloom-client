@@ -41,14 +41,14 @@ const useInitUser = (): boolean => {
       { community: ['id'] },
       { user: ['id'] }
     ],
-    operation: QueryEvent.GET_MEMBERS,
+    operation: QueryEvent.LIST_MEMBERS,
     schema: [Schema.MEMBER],
     types: { userId: { required: false } }
   });
 
   const [getCommunities, { loading: loading3 }] = useManualQuery<ICommunity[]>({
     fields: ['id', 'logoUrl', 'primaryColor', 'urlName'],
-    operation: QueryEvent.GET_COMMUNITIES,
+    operation: QueryEvent.LIST_COMMUNITIES,
     schema: [Schema.COMMUNITY],
     types: { userId: { required: false } }
   });

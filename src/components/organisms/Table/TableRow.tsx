@@ -1,16 +1,16 @@
 import React from 'react';
 
 import { cx } from '@util/util';
-import TableStore from '../Table.store';
-import { TableColumn, TableRow as TableRowProps } from '../Table.types';
-import TableRowCell from '../TableCell';
+import TableStore from './Table.store';
+import { TableColumn, TableRow as TableRowProps } from './Table.types';
+import TableRowCell from './TableCell';
 
 const TableRow: React.FC<TableRowProps> = (row) => {
   const onRowClick = TableStore.useStoreState(({ options }) => {
     return options.onRowClick;
   });
 
-  const columns = TableStore.useStoreState((state) => {
+  const columns: TableColumn[] = TableStore.useStoreState((state) => {
     return state.columns;
   });
 
@@ -23,8 +23,8 @@ const TableRow: React.FC<TableRowProps> = (row) => {
     'o-table-tr--clickable': !!onRowClick
   });
 
-  const onClick = () => {
-    return onRowClick && onRowClick(row);
+  const onClick = (): void => {
+    if (onRowClick) onRowClick(row);
   };
 
   return (

@@ -22,7 +22,7 @@ const useInitPaymentAnalyticsHistory = (): Partial<QueryResult> => {
       { member: ['id'] },
       { plan: ['id'] }
     ],
-    operation: QueryEvent.GET_PAYMENTS,
+    operation: QueryEvent.LIST_PAYMENTS,
     schema: [Schema.PAYMENT],
     types: { communityId: { required: false } },
     variables: { communityId }
@@ -30,7 +30,7 @@ const useInitPaymentAnalyticsHistory = (): Partial<QueryResult> => {
 
   const { loading: loading2 }: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: ['email', 'id', 'isDuesActive', 'firstName', 'lastName'],
-    operation: QueryEvent.GET_MEMBERS,
+    operation: QueryEvent.LIST_MEMBERS,
     schema: [Schema.MEMBER],
     types: { communityId: { required: false } },
     variables: { communityId }

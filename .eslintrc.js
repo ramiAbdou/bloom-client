@@ -81,6 +81,6 @@ module.exports = {
     'sort-keys-fix/sort-keys-fix': 2 // Sorts objects keys automatically.
   },
   settings: {
-    'import/resolver': { typescript: { directory: './tsconfig.json' } }
+    'import/resolver': { typescript: { project: './tsconfig.json' } }
   }
 };

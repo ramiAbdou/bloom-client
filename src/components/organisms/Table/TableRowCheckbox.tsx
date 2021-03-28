@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
-import TableStore from '../Table.store';
-import { TableColumn } from '../Table.types';
+import TableStore from './Table.store';
+import { TableColumn } from './Table.types';
 
 interface TableRowCheckboxProps {
   columnId: string;
@@ -19,8 +19,8 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
     });
   });
 
-  const hasCheckbox = TableStore.useStoreState(({ options }) => {
-    return options.hasCheckbox;
+  const hasCheckbox: boolean = TableStore.useStoreState(({ options }) => {
+    return !!options.hasCheckbox;
   });
 
   const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) => {
@@ -31,8 +31,8 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
     return store.toggleRow;
   });
 
-  const onChange = () => {
-    return toggleRow(rowId);
+  const onChange = (): void => {
+    toggleRow(rowId);
   };
 
   return (

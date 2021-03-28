@@ -11,12 +11,14 @@ const FilterButton: React.FC = () => {
     return panel.showPanel;
   });
 
-  const isAnythingSelected = TableStore.useStoreState(({ selectedRowIds }) => {
-    return !!selectedRowIds.length;
-  });
+  const isAnythingSelected: boolean = TableStore.useStoreState(
+    ({ selectedRowIds }) => {
+      return !!selectedRowIds.length;
+    }
+  );
 
-  const onClick = () => {
-    return showPanel({ id: PanelType.FILTER_TABLE });
+  const onClick: VoidFunction = () => {
+    showPanel({ id: PanelType.FILTER_TABLE });
   };
 
   return (

@@ -32,7 +32,6 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
   const { category }: IQuestion = db.byQuestionId[questionId];
 
   if (category === QuestionCategory.BIO) return member.bio;
-  if (category === QuestionCategory.CLUBHOUSE_URL) return socials?.clubhouseUrl;
   if (category === QuestionCategory.DUES_STATUS) return member.isDuesActive;
   if (category === QuestionCategory.EMAIL) return member.email;
   if (category === QuestionCategory.FACEBOOK_URL) return socials?.facebookUrl;

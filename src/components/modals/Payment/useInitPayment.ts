@@ -26,7 +26,7 @@ const useInitPayment = (): Partial<QueryResult> => {
       { paymentMethod: ['brand', 'expirationDate', 'last4', 'zipCode'] }
     ],
     operation: QueryEvent.GET_MEMBER_INTEGRATIONS,
-    schema: [Schema.MEMBER_INTEGRATIONS]
+    schema: Schema.MEMBER_INTEGRATIONS
   });
 
   return { loading: loading1 || loading2 };

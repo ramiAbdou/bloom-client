@@ -76,9 +76,12 @@ const PaymentAnalyticsHistoryTable: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows}>
+    <Table columns={columns} options={options}>
       <TableSearchBar className="mb-sm--nlc" />
-      <TableContent emptyMessage="Looks like nobody has paid dues in the last year." />
+      <TableContent
+        emptyMessage="Looks like nobody has paid dues in the last year."
+        rows={rows}
+      />
     </Table>
   );
 };

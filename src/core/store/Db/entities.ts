@@ -176,7 +176,6 @@ export interface IMemberPlan extends BaseEntity {
 // MEMBER SOCIALS
 
 export interface IMemberSocials extends BaseEntity {
-  clubhouseUrl: string;
   facebookUrl: string;
   instagramUrl: string;
   linkedInUrl: string;

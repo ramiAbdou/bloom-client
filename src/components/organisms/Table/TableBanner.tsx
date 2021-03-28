@@ -17,19 +17,27 @@ import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import TableStore from './Table.store';
+import { TableRow } from './Table.types';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';
+import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableBannerButton: React.FC = () => {
   const title: string = TableStore.useStoreState((state) => {
     return getBannerButtonTitle(state);
   });
 
+  const allRowIds: string[] = TableStore.useStoreState((state) => {
+    return state.filteredRows.map((row: TableRow) => {
+      return row.id;
+    });
+  });
+
   const toggleRows = TableStore.useStoreActions((store) => {
-    return store.toggleAllRows;
+    return store.toggleRows;
   });
 
   const onClick = () => {
-    return toggleRows();
+    toggleRows(allRowIds);
   };
 
   return (
@@ -40,16 +48,43 @@ const TableBannerButton: React.FC = () => {
 };
 
 const TableBannerMessage: React.FC = () => {
+  const floor: number = TablePaginationStore.useStoreState((state) => {
+    return state.floor;
+  });
+
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
+    return state.ceiling;
+  });
+
   const message: string = TableStore.useStoreState((state) => {
-    return getBannerMessage(state);
+    return getBannerMessage({ ...state, ceiling, floor });
   });
 
   return <p>{message}</p>;
 };
 
 const TableBanner: React.FC = () => {
+  const floor: number = TablePaginationStore.useStoreState((state) => {
+    return state.floor;
+  });
+
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
+    return state.ceiling;
+  });
+
+  const isAllPageSelected: boolean = TableStore.useStoreState(
+    ({ filteredRows, selectedRowIds }) => {
+      return (
+        !!selectedRowIds.length &&
+        filteredRows.slice(floor, ceiling).every(({ id: rowId }) => {
+          return selectedRowIds.includes(rowId as string);
+        })
+      );
+    }
+  );
+
   return (
-    <Card className="mb-xs--nlc">
+    <Card className="mb-xs--nlc" show={isAllPageSelected}>
       <Row justify="center" spacing="xs">
         <TableBannerMessage />
         <TableBannerButton />

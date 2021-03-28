@@ -20,7 +20,7 @@ const EventFormNotificationsSection: React.FC = () => {
 
   const { data } = useQuery<IMember[]>({
     fields: ['id', { community: ['id'] }],
-    operation: QueryEvent.GET_MEMBERS,
+    operation: QueryEvent.LIST_MEMBERS,
     schema: [Schema.MEMBER],
     types: { communityId: { required: false } },
     variables: { communityId }

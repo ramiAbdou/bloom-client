@@ -3,13 +3,8 @@ import { matchSorter } from 'match-sorter';
 
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
-import {
-  TableColumn,
-  TableFilter,
-  TableModel,
-  TablePaginationValue,
-  TableRow
-} from './Table.types';
+import { TableColumn, TableFilter, TableModel, TableRow } from './Table.types';
+import { TablePaginationValue } from './TablePagination/TablePagination.types';
 
 /**
  * Returns the title of the TableBannerButton based on the current state of
@@ -33,14 +28,22 @@ export const getBannerButtonTitle = (state: State<TableModel>): string => {
   return `Select All ${numFilteredMembers} Filtered Rows`;
 };
 
+interface GetBannerMessageArgs {
+  ceiling: number;
+  filteredRows: TableRow[];
+  floor: number;
+  rows: TableRow[];
+  selectedRowIds: string[];
+}
+
 /**
  * Returns the appropriate Table banner message based on the current state of
  * selectedRowIds.
  *
  * @param state Entire table state.
  */
-export const getBannerMessage = (state: State<TableModel>): string => {
-  const { filteredRows, range, rows, selectedRowIds } = state;
+export const getBannerMessage = (args: GetBannerMessageArgs): string => {
+  const { ceiling, filteredRows, floor, rows, selectedRowIds } = args;
 
   const numTotalRows = rows.length;
   const numFilteredRows = filteredRows.length;
@@ -55,11 +58,11 @@ export const getBannerMessage = (state: State<TableModel>): string => {
   }
 
   if (
-    filteredRows.slice(range[0], range[1]).every(({ id }) => {
+    filteredRows.slice(floor, ceiling).every(({ id }) => {
       return selectedRowIds.includes(id);
     })
   ) {
-    return `All 50 rows on this page are selected.`;
+    return `All 25 rows on this page are selected.`;
   }
 
   return null;
@@ -123,11 +126,10 @@ interface GetTableCellClassArgs {
  *
  * @param type Question's type (ie: SHORT_TEXT).
  */
-export const getTableCellClass = ({
-  category,
-  type
-}: GetTableCellClassArgs): string => {
-  const isDuesStatus = category === QuestionCategory.DUES_STATUS;
+export const getTableCellClass = (args: GetTableCellClassArgs): string => {
+  const { category, type } = args;
+
+  const isDuesStatus: boolean = category === QuestionCategory.DUES_STATUS;
 
   return cx('', {
     'o-table-cell--lg': type === QuestionType.LONG_TEXT,
@@ -153,15 +155,14 @@ interface RunFiltersArgs {
  * Returns the filtered Table rows based on the active filters as well as
  * the Table search string.
  */
-export const runFilters = ({
-  filters,
-  searchString,
-  state
-}: RunFiltersArgs): TableRow[] => {
-  const rows: TableRow[] = [...state.rows];
+export const runFilters = (args: RunFiltersArgs): TableRow[] => {
+  const filters: Record<string, TableFilter> =
+    args.filters ?? args.state.filters;
 
-  filters = filters ?? state.filters;
-  searchString = searchString ?? state.searchString;
+  const searchString: string = args.searchString ?? args.state.searchString;
+  const { state } = args;
+
+  const rows: TableRow[] = [...state.rows];
 
   const filteredRows: TableRow[] = rows?.filter((row) => {
     return Object.values(filters)?.every((tableFilter: TableFilter) => {

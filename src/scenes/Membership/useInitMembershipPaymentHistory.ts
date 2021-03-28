@@ -20,7 +20,7 @@ const useInitMembershipPaymentHistory = (): QueryResult<IPayment[]> => {
       { member: ['id'] },
       { plan: ['id'] }
     ],
-    operation: QueryEvent.GET_PAYMENTS,
+    operation: QueryEvent.LIST_PAYMENTS,
     schema: [Schema.PAYMENT],
     types: { memberId: { required: false } },
     variables: { memberId }

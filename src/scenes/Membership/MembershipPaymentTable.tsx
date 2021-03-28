@@ -72,15 +72,16 @@ const MembershipPaymentTable: React.FC = () => {
   });
 
   const options: TableOptions = {
-    alignEndRight: true,
-    fixFirstColumn: false,
     isSortable: false,
     showCount: false
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows}>
-      <TableContent emptyMessage="Looks like you haven't made any payments." />
+    <Table columns={columns} options={options}>
+      <TableContent
+        emptyMessage="Looks like you haven't made any payments."
+        rows={rows}
+      />
     </Table>
   );
 };
