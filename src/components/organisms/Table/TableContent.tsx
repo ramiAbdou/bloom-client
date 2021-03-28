@@ -77,14 +77,12 @@ const TableContent: React.FC<TableContentProps> = ({
 
   return (
     <Show show={show}>
-      <Show show={!emptyMessage}>
-        <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
-          <table className="o-table">
-            <TableHeaderRow />
-            <TableBody />
-          </table>
-        </div>
-      </Show>
+      <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
+        <table className="o-table">
+          <TableHeaderRow />
+          <TableBody />
+        </table>
+      </div>
 
       {emptyMessage && <p>{emptyMessage}</p>}
     </Show>
