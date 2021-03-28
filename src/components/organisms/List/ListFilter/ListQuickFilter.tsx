@@ -16,16 +16,26 @@ const ListQuickFilter: React.FC<ListQuickFilterProps> = (props) => {
 
   const [active, setActive] = useState<boolean>(false);
 
-  const filters = ListStore.useStoreState((state) => state.filters);
-  const setFilter = ListStore.useStoreActions((store) => store.setFilter);
-  const removeFilter = ListStore.useStoreActions((store) => store.removeFilter);
+  const filters = ListStore.useStoreState((state) => {
+    return state.filters;
+  });
+
+  const setFilter = ListStore.useStoreActions((store) => {
+    return store.setFilter;
+  });
+
+  const removeFilter = ListStore.useStoreActions((store) => {
+    return store.removeFilter;
+  });
 
   useEffect(() => {
     if (active && !filters[filterId]) setFilter({ filter, filterId });
     else if (!active && !!filters[filterId]) removeFilter(filterId);
   }, [active]);
 
-  const onClick = () => setActive(!active);
+  const onClick = () => {
+    return setActive(!active);
+  };
 
   const css: string = cx(
     'o-list-quick-filter',

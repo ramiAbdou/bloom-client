@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ShowProps } from '@util/constants';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import FormDate from '@organisms/Form/FormDate';
@@ -9,6 +8,7 @@ import FormShortText from '@organisms/Form/FormShortText';
 import FormTime from '@organisms/Form/FormTime';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { ShowProps } from '@util/constants';
 import FormSectionHeader from '../../organisms/Form/FormSectionHeader';
 
 const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => {
@@ -28,7 +28,9 @@ const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => {
 };
 
 const EventFormDetailsSection: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+  const eventId: string = useStoreState(({ modal }) => {
+    return modal.metadata;
+  });
 
   const videoUrl: string = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];

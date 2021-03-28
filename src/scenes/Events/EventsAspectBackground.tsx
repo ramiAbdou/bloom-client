@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ClassNameProps } from '@util/constants';
 import Aspect from '@containers/Aspect/Aspect';
 import Network from '@images/network.svg';
+import { ClassNameProps } from '@util/constants';
 
 interface EventsAspectBackgroundProps extends ClassNameProps {
   imageUrl?: string;

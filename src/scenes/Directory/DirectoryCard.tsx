@@ -14,7 +14,9 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 
 const DirectoryCardInformation: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
+  const memberId: string = IdStore.useStoreState(({ id }) => {
+    return id;
+  });
 
   const fullName: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -33,7 +35,9 @@ const DirectoryCardInformation: React.FC = () => {
     }
 
     return member.values
-      ?.map((valueId: string) => db.byValuesId[valueId])
+      ?.map((valueId: string) => {
+        return db.byValuesId[valueId];
+      })
       ?.find((data: IMemberValue) => {
         return data?.question === db.community?.highlightedQuestion;
       })?.value;
@@ -49,13 +53,21 @@ const DirectoryCardInformation: React.FC = () => {
 };
 
 const DirectoryCardPicture: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
+  const memberId: string = IdStore.useStoreState(({ id }) => {
+    return id;
+  });
+
   return <ProfilePicture circle={false} fontSize={60} memberId={memberId} />;
 };
 
 const DirectoryCardContent: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
+
+  const memberId: string = IdStore.useStoreState(({ id }) => {
+    return id;
+  });
 
   const role = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -75,7 +87,7 @@ const DirectoryCardContent: React.FC = () => {
   );
 };
 
-const DirectoryCard: React.FC<any> = ({ data }) => {
+const DirectoryCard: React.FC<unknown> = ({ data }) => {
   return (
     <IdStore.Provider runtimeModel={{ id: data?.memberId }}>
       <DirectoryCardContent />

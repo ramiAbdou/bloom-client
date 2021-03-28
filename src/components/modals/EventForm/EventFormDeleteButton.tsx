@@ -8,10 +8,17 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const DeleteEventButton: React.FC = () => {
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const showToast = useStoreActions(({ toast }) => {
+    return toast.showToast;
+  });
 
-  const eventId: string = useStoreState(({ modal }) => modal.metadata);
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const eventId: string = useStoreState(({ modal }) => {
+    return modal.metadata;
+  });
+
+  const closeModal = useStoreActions(({ modal }) => {
+    return modal.closeModal;
+  });
 
   const [deleteEvent, { loading }] = useMutation<boolean>({
     fields: ['deletedAt', 'id'],

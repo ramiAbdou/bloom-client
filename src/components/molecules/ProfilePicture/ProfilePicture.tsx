@@ -49,7 +49,9 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
         alt="Profile Avatar"
         referrerPolicy="no-referrer"
         src={pictureUrl}
-        onError={() => setImageError(true)}
+        onError={() => {
+          return setImageError(true);
+        }}
       />
     );
   }

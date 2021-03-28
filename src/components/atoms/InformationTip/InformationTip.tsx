@@ -5,11 +5,16 @@ import useTooltip, { TooltipPosition } from '@hooks/useTooltip';
 
 type InformationTipProps = { position?: TooltipPosition; tooltip: string };
 
-const InformationTip = ({ position, tooltip }: InformationTipProps) => {
-  const ref = useTooltip(tooltip, position ?? 'middle');
+const InformationTip: React.FC<InformationTipProps> = ({
+  position,
+  tooltip
+}) => {
+  const ref: React.MutableRefObject<HTMLElement> = useTooltip(
+    tooltip,
+    position ?? 'middle'
+  );
 
   return (
-    // @ts-ignore until we figure out the write type.
     <div ref={ref} className="c-misc-tip">
       <IoInformationCircleOutline />
     </div>

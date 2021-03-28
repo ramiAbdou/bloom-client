@@ -18,9 +18,18 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
   ...args
 }) => {
   const key = getFormItemKey(args);
-  const error = FormStore.useStoreState(({ items }) => items[key]?.error);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((store) => store.setValue);
+
+  const error = FormStore.useStoreState(({ items }) => {
+    return items[key]?.error;
+  });
+
+  const value = FormStore.useStoreState(({ items }) => {
+    return items[key]?.value;
+  });
+
+  const setValue = FormStore.useStoreActions((store) => {
+    return store.setValue;
+  });
 
   useInitFormItem(args);
 

@@ -11,7 +11,9 @@ import {
 import { runFilters } from './Table.util';
 
 export const tableModel: TableModel = {
-  clearSelectedRows: action((state) => ({ ...state, selectedRowIds: [] })),
+  clearSelectedRows: action((state) => {
+    return { ...state, selectedRowIds: [] };
+  }),
 
   columns: [],
 
@@ -140,12 +142,16 @@ export const tableModel: TableModel = {
 
     const isPageSelected = [...state.filteredRows]
       .slice(range[0], range[1])
-      .every(({ id: rowId }) => [...state.selectedRowIds].includes(rowId));
+      .every(({ id: rowId }) => {
+        return [...state.selectedRowIds].includes(rowId);
+      });
 
     return {
       ...state,
       selectedRowIds: !isPageSelected
-        ? [...state.filteredRows].slice(range[0], range[1]).map(({ id }) => id)
+        ? [...state.filteredRows].slice(range[0], range[1]).map(({ id }) => {
+            return id;
+          })
         : []
     };
   }),
@@ -156,7 +162,9 @@ export const tableModel: TableModel = {
       selectedRowIds:
         state.selectedRowIds?.length === state.filteredRows?.length
           ? []
-          : [...state.filteredRows].map(({ id }) => id)
+          : [...state.filteredRows].map(({ id }) => {
+              return id;
+            })
     };
   }),
 
@@ -167,9 +175,9 @@ export const tableModel: TableModel = {
   toggleRow: action((state, rowId: string) => {
     const updatedSelectedRowIds = [...state.selectedRowIds];
 
-    const index = state.selectedRowIds.findIndex(
-      (value: string) => value === rowId
-    );
+    const index = state.selectedRowIds.findIndex((value: string) => {
+      return value === rowId;
+    });
 
     return {
       ...state,
@@ -184,18 +192,22 @@ export const tableModel: TableModel = {
   }),
 
   updateColumn: action(
-    ({ columns, ...state }, updatedColumn: Partial<TableColumn>) => ({
-      ...state,
-      columns: columns.map((column) => {
-        if (column.id !== updatedColumn.id) return column;
-        return { ...column, ...updatedColumn };
-      })
-    })
+    ({ columns, ...state }, updatedColumn: Partial<TableColumn>) => {
+      return {
+        ...state,
+        columns: columns.map((column) => {
+          if (column.id !== updatedColumn.id) return column;
+          return { ...column, ...updatedColumn };
+        })
+      };
+    }
   )
 };
 
 const TableStore = createContextStore<TableModel>(
-  (model: TableModel) => model,
+  (model: TableModel) => {
+    return model;
+  },
   { disableImmer: true }
 );
 

@@ -18,7 +18,7 @@ export const getListCacheKey = (state: State<ListModel>): string => {
  * Returns the filtered items in the List based upon custom filters, quick
  * filters, and the search string.
  */
-export const runListFilters = (state: State<ListModel>): any[] => {
+export const runListFilters = (state: State<ListModel>): unknown[] => {
   const filteredItems = [...state.items]
     ?.filter((entity) => {
       const customFilters = Object.values(state.customFilters);

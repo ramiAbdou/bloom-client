@@ -22,8 +22,13 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   showError = true,
   ...props
 }) => {
-  const isCompleted = FormStore.useStoreState((state) => state.isCompleted);
-  const loading = FormStore.useStoreState((state) => state.isLoading);
+  const isCompleted = FormStore.useStoreState((state) => {
+    return state.isCompleted;
+  });
+
+  const loading = FormStore.useStoreState((state) => {
+    return state.isLoading;
+  });
 
   if (row) {
     fill = false;

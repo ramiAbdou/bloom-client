@@ -25,7 +25,9 @@ const useDeleteTooltip = (): string => {
     if (db.member?.role === MemberRole.OWNER) return true;
 
     if (
-      selectedRowIds.some((memberId: string) => !!db.byMemberId[memberId]?.role)
+      selectedRowIds.some((memberId: string) => {
+        return !!db.byMemberId[memberId]?.role;
+      })
     ) {
       return false;
     }
@@ -43,9 +45,15 @@ const useDeleteTooltip = (): string => {
 };
 
 const MemberDatabaseDeleteButton: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
+
   const tooltip: string = useDeleteTooltip();
-  const onClick = () => showModal({ id: ModalType.DELETE_MEMBERS });
+
+  const onClick = () => {
+    return showModal({ id: ModalType.DELETE_MEMBERS });
+  };
 
   return (
     <DatabaseAction

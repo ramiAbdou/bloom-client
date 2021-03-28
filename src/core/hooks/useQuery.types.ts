@@ -12,7 +12,7 @@ export interface UseQueryArgs<S> {
   variables?: S;
 }
 
-export interface QueryResult<T = any> {
+export interface QueryResult<T = unknown> {
   data: T;
   error: string;
   loading: boolean;

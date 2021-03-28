@@ -14,7 +14,7 @@ export const mergeEntities: Action<DbModel, MergeEntitiesArgs> = action(
     const normalizedEntities = normalize(data, schema).entities;
 
     const parsedEntities = Object.entries(normalizedEntities).reduce(
-      (acc: Record<string, any>, [key, value]) => {
+      (acc: Record<string, unknown>, [key, value]) => {
         return { ...acc, [key]: { byId: value } };
       },
       {}

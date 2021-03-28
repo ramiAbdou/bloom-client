@@ -15,9 +15,15 @@ import useUpdateMemberValues from './useUpdateMemberValues';
 const ProfileMembershipForm: React.FC = () => {
   const items: FormItemData[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
-      .filter((question: IQuestion) => !question.category);
+      ?.map((questionId: string) => {
+        return db.byQuestionId[questionId];
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      })
+      .filter((question: IQuestion) => {
+        return !question.category;
+      });
 
     const data: IMemberValue[] = db.member.values?.map((valueId: string) => {
       return db.byValuesId[valueId];
@@ -26,11 +32,11 @@ const ProfileMembershipForm: React.FC = () => {
     return questions?.map((question: IQuestion) => {
       const { id, options, type } = question;
 
-      const value: any = data?.find(
-        (entity: IMemberValue) => entity?.question === id
-      )?.value;
+      const value: unknown = data?.find((entity: IMemberValue) => {
+        return entity?.question === id;
+      })?.value;
 
-      let parsedValue: any = value;
+      let parsedValue: unknown = value;
 
       if (type === QuestionType.MULTIPLE_SELECT) {
         parsedValue = value?.split(',');

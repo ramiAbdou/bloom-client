@@ -19,17 +19,25 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   const globalStore = useStore();
 
   const items: Record<string, FormItemData> = FormStore.useStoreState(
-    (store) => store.items,
+    (store) => {
+      return store.items;
+    },
     deepequal
   );
 
-  const setError = FormStore.useStoreActions((store) => store.setError);
-  const setIsLoading = FormStore.useStoreActions((store) => store.setIsLoading);
+  const setError = FormStore.useStoreActions((store) => {
+    return store.setError;
+  });
+
+  const setIsLoading = FormStore.useStoreActions((store) => {
+    return store.setIsLoading;
+  });
+
   const storyStore = StoryStore.useStore();
 
-  const setItemErrors = FormStore.useStoreActions(
-    (store) => store.setItemErrors
-  );
+  const setItemErrors = FormStore.useStoreActions((store) => {
+    return store.setItemErrors;
+  });
 
   const onFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -43,7 +51,11 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         return { ...acc, [key]: { ...item, error: getError(item) } };
       }, {});
 
-      if (Object.values(validatedItems).some(({ error }) => !!error)) {
+      if (
+        Object.values(validatedItems).some(({ error }) => {
+          return !!error;
+        })
+      ) {
         setItemErrors(validatedItems);
         return;
       }
@@ -89,12 +101,14 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   );
 };
 
-const Form: React.FC<FormProps> = ({ options, show, ...props }: FormProps) => (
-  <Show show={show}>
-    <FormStore.Provider runtimeModel={{ ...formModel, options }}>
-      <FormContent {...props} />
-    </FormStore.Provider>
-  </Show>
-);
+const Form: React.FC<FormProps> = ({ options, show, ...props }: FormProps) => {
+  return (
+    <Show show={show}>
+      <FormStore.Provider runtimeModel={{ ...formModel, options }}>
+        <FormContent {...props} />
+      </FormStore.Provider>
+    </Show>
+  );
+};
 
 export default Form;

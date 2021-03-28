@@ -6,7 +6,7 @@ import { cx } from '@util/util';
 interface InputProps extends ValueProps {
   error?: boolean;
   placeholder?: string;
-  onChange: (value: string) => any;
+  onChange: (value: string) => unknown;
 }
 
 /**

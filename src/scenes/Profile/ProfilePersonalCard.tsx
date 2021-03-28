@@ -16,8 +16,13 @@ const ProfilePersonalHeader: React.FC = () => {
     return `${db.member.firstName} ${db.member.lastName}`;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
+
+  const onClick = () => {
+    return showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+  };
 
   return (
     <ProfileCardHeader canEdit h2 title={fullName} onEditClick={onClick} />
@@ -25,7 +30,9 @@ const ProfilePersonalHeader: React.FC = () => {
 };
 
 const ProfilePersonalTagList: React.FC = () => {
-  const role = useStoreState(({ db }) => db.member.role);
+  const role = useStoreState(({ db }) => {
+    return db.member.role;
+  });
 
   const type: string = useStoreState(({ db }) => {
     return db.byMemberPlanId[db.member.plan]?.name;
@@ -40,24 +47,40 @@ const ProfilePersonalTagList: React.FC = () => {
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const email = useStoreState(({ db }) => db.member.email);
+  const email = useStoreState(({ db }) => {
+    return db.member.email;
+  });
+
   return <MailTo email={email} />;
 };
 
 const ProfilePersonalBio: React.FC = () => {
-  const bio = useStoreState(({ db }) => db.member.bio);
+  const bio = useStoreState(({ db }) => {
+    return db.member.bio;
+  });
+
   if (!bio) return null;
   return <p>{bio}</p>;
 };
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
-  const bio = useStoreState(({ db }) => db.member.bio);
-  const pictureUrl = useStoreState(({ db }) => db.member.pictureUrl);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const bio = useStoreState(({ db }) => {
+    return db.member.bio;
+  });
+
+  const pictureUrl = useStoreState(({ db }) => {
+    return db.member.pictureUrl;
+  });
+
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   if (bio && pictureUrl) return null;
 
-  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+  const onClick = () => {
+    return showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+  };
 
   return (
     <Row spacing="xs">
@@ -76,21 +99,28 @@ const ProfilePersonalOnboardingContainer: React.FC = () => {
   );
 };
 
-const ProfilePersonalMainContent: React.FC = () => (
-  <div className="s-profile-card--personal-main">
-    <ProfilePersonalHeader />
-    <ProfilePersonalTagList />
-    <ProfilePersonalEmail />
-    <ProfilePersonalBio />
-    <ProfilePersonalOnboardingContainer />
-  </div>
-);
+const ProfilePersonalMainContent: React.FC = () => {
+  return (
+    <div className="s-profile-card--personal-main">
+      <ProfilePersonalHeader />
+      <ProfilePersonalTagList />
+      <ProfilePersonalEmail />
+      <ProfilePersonalBio />
+      <ProfilePersonalOnboardingContainer />
+    </div>
+  );
+};
 
 const ProfilePersonalPictureRow: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const isMobile = useBreakpoint() === 1;
-  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+
+  const onClick = () => {
+    return showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+  };
 
   return (
     <Row justify="sb">

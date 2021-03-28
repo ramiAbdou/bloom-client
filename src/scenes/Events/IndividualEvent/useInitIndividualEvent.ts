@@ -37,7 +37,7 @@ const useInitIndividualEvent = (): Partial<QueryResult> => {
     return modal.showModal;
   });
 
-  const { data: data1, loading: loading1 } = useQuery<any, GetEventArgs>({
+  const { data: data1, loading: loading1 } = useQuery<unknown, GetEventArgs>({
     fields: [
       'description',
       'endTime',

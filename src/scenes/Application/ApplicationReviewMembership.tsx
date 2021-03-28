@@ -28,16 +28,24 @@ const ApplicationReviewMembeship: React.FC = () => {
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
     const selectedType: IMemberPlan = db.community?.plans
-      ?.map((planId: string) => db.byMemberPlanId[planId])
-      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
+      ?.map((planId: string) => {
+        return db.byMemberPlanId[planId];
+      })
+      ?.find((type: IMemberPlan) => {
+        return type?.name === selectedTypeName;
+      });
 
     return !!selectedType?.amount;
   });
 
   const description: string = useStoreState(({ db }) => {
     const selectedType: IMemberPlan = db.community?.plans
-      ?.map((planId: string) => db.byMemberPlanId[planId])
-      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
+      ?.map((planId: string) => {
+        return db.byMemberPlanId[planId];
+      })
+      ?.find((type: IMemberPlan) => {
+        return type?.name === selectedTypeName;
+      });
 
     if (!selectedType) return null;
 

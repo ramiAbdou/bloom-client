@@ -15,7 +15,9 @@ import { sortObjects } from '@util/util';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
-  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+  const memberId: string = useStoreState(({ modal }) => {
+    return modal.metadata;
+  });
 
   const fullName = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -26,23 +28,29 @@ const ApplicantsModalTitle: React.FC = () => {
 };
 
 const ApplicantsModalItems: React.FC = () => {
-  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+  const memberId: string = useStoreState(({ modal }) => {
+    return modal.metadata;
+  });
 
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
-    const data: IMemberValue[] = member.values?.map(
-      (valueId: string) => db.byValuesId[valueId]
-    );
+    const data: IMemberValue[] = member.values?.map((valueId: string) => {
+      return db.byValuesId[valueId];
+    });
 
     return db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.map((questionId: string) => {
+        return db.byQuestionId[questionId];
+      })
       ?.filter((question: IQuestion) => {
         return (
           !question?.category || question?.category === QuestionCategory.EMAIL
         );
       })
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      })
       ?.map((question: IQuestion) => {
         const element: IMemberValue = data?.find((entity: IMemberValue) => {
           return entity.question === question.id;
@@ -67,7 +75,9 @@ const ApplicantsModalItems: React.FC = () => {
 };
 
 const ApplicantsModalActionContainer: React.FC = () => {
-  const memberId: string = useStoreState(({ modal }) => modal.metadata);
+  const memberId: string = useStoreState(({ modal }) => {
+    return modal.metadata;
+  });
 
   return (
     <Row equal spacing="xs">

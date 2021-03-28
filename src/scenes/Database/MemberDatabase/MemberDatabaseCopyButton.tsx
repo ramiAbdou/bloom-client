@@ -12,7 +12,9 @@ import DatabaseAction from '../DatabaseAction';
  * comma-separated list.
  */
 const MemberDatabaseCopyButton: React.FC = () => {
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const showToast = useStoreActions(({ toast }) => {
+    return toast.showToast;
+  });
 
   const emails = TableStore.useStoreState(
     ({ columns, rows, selectedRowIds }) => {
@@ -23,7 +25,9 @@ const MemberDatabaseCopyButton: React.FC = () => {
 
       return selectedRowIds.map((rowId: string) => {
         const selectedRow =
-          rows.find((row: TableRow) => row.id === rowId) || {};
+          rows.find((row: TableRow) => {
+            return row.id === rowId;
+          }) || {};
 
         return selectedRow[columnId];
       });

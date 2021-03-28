@@ -1,4 +1,4 @@
-export type ExpandedDetailProps = { label: string; value: any };
+export type ExpandedDetailProps = { label: string; value: unknown };
 
 export interface IntegrationsDetailsData {
   connected?: boolean;

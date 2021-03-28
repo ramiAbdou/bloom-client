@@ -12,9 +12,17 @@ import EventsShareButton from '../EventsShareButton';
 import EventsViewRecordingButton from '../EventsViewRecordingButton';
 
 const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
-  const eventId = useStoreState(({ db }) => db.event?.id);
-  const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const eventId = useStoreState(({ db }) => {
+    return db.event?.id;
+  });
+
+  const recordingUrl = useStoreState(({ db }) => {
+    return db.event?.recordingUrl;
+  });
+
+  const showPanel = useStoreActions(({ panel }) => {
+    return panel.showPanel;
+  });
 
   const onClick = () => {
     showPanel({ id: PanelType.ADD_RECORDING_LINK, metadata: eventId });
@@ -35,14 +43,21 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
 };
 
 const EventsEditEventButton: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
-  const eventId = useStoreState(({ db }) => db.event?.id);
+  const isAdmin = useStoreState(({ db }) => {
+    return !!db.member?.role;
+  });
+
+  const eventId = useStoreState(({ db }) => {
+    return db.event?.id;
+  });
 
   const hasPast = useStoreState(({ db }) => {
     return day().isAfter(day(db.event.endTime));
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const onClick = () => {
     showModal({ id: ModalType.CREATE_EVENT, metadata: eventId });
@@ -64,9 +79,17 @@ const EventsEditEventButton: React.FC = () => {
  * - View Event Recording (Past Event)
  */
 const IndividualEventActions: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
-  const eventId = useStoreState(({ db }) => db.event?.id);
-  const guests = useStoreState(({ db }) => db.event?.guests);
+  const isAdmin = useStoreState(({ db }) => {
+    return !!db.member?.role;
+  });
+
+  const eventId = useStoreState(({ db }) => {
+    return db.event?.id;
+  });
+
+  const guests = useStoreState(({ db }) => {
+    return db.event?.guests;
+  });
 
   const hasPast: boolean = useStoreState(({ db }) => {
     return day().isAfter(day(db.event.endTime));
@@ -78,8 +101,12 @@ const IndividualEventActions: React.FC = () => {
 
   const isGoing: boolean = useStoreState(({ db }) => {
     return guests
-      ?.map((guestId: string) => db.byGuestId[guestId])
-      ?.some((guest: IEventGuest) => guest.member === db.member?.id);
+      ?.map((guestId: string) => {
+        return db.byGuestId[guestId];
+      })
+      ?.some((guest: IEventGuest) => {
+        return guest.member === db.member?.id;
+      });
   });
 
   return (

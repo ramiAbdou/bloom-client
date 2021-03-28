@@ -7,17 +7,21 @@ export const paymentModel: PaymentModel = {
   changeProrationDate: null,
   selectedPlanId: null,
 
-  setChangeData: action((state, args) => ({
-    ...state,
-    changeAmount: args?.changeAmount,
-    changeProrationDate: args?.changeProrationDate
-  })),
+  setChangeData: action((state, args) => {
+    return {
+      ...state,
+      changeAmount: args?.changeAmount,
+      changeProrationDate: args?.changeProrationDate
+    };
+  }),
 
   type: PaymentModalType.PAY_DUES
 };
 
 const PaymentStore = createContextStore<PaymentModel>(
-  (runtimeModel: PaymentModel) => runtimeModel,
+  (runtimeModel: PaymentModel) => {
+    return runtimeModel;
+  },
   { disableImmer: true }
 );
 

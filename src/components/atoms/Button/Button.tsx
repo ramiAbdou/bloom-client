@@ -58,7 +58,7 @@ const Button = forwardRef(
       tertiary,
       ...props
     }: ButtonProps,
-    ref: React.MutableRefObject<any>
+    ref: React.MutableRefObject<unknown>
   ) => {
     // If the button is in it's loading state, it should be disabled.
     const showSpinner: boolean = loading && !!loadingText;

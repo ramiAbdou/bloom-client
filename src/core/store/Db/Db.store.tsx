@@ -10,7 +10,9 @@ const dbStore: DbModel = {
   ...dbActiveStore,
   ...dbByIdStore,
 
-  clearEntities: action((state) => ({ ...state, entities: initialEntities })),
+  clearEntities: action((state) => {
+    return { ...state, entities: initialEntities };
+  }),
 
   entities: initialEntities,
 

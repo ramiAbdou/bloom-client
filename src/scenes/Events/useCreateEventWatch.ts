@@ -5,7 +5,7 @@ import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
 
 const useCreateEventWatch = (): ((
-  variables?: any
+  variables?: unknown
 ) => Promise<UseMutationFnResult<IEventWatch>>) => {
   const [createEventWatch] = useMutation<IEventWatch>({
     fields: [

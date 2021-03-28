@@ -11,8 +11,12 @@ import { useStoreState } from '@store/Store';
 const ApplicationReviewMain: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community?.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => !question.locked);
+      ?.map((questionId: string) => {
+        return db.byQuestionId[questionId];
+      })
+      ?.filter((question: IQuestion) => {
+        return !question.locked;
+      });
   });
 
   const items: QuestionBoxItemProps[] = StoryStore.useStoreState((store) => {

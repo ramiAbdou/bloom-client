@@ -15,7 +15,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
     return state.admin;
   });
 
-  const [inviteMembers] = useMutation<any, AddMembersArgs>({
+  const [inviteMembers] = useMutation<unknown, AddMembersArgs>({
     fields: ['id'],
     operation: MutationEvent.INVITE_MEMBERS,
     types: { members: { required: true, type: '[InviteMemberInput!]' } }

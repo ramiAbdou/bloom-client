@@ -8,7 +8,9 @@ import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 
 const MemberDatabaseInactiveFilter: React.FC = () => {
-  const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
+  const show: boolean = useStoreState(({ db }) => {
+    return db.community.canCollectDues;
+  });
 
   const duesStatusQuestionId: string = useStoreState(({ db }) => {
     return db.community.questions?.find((questionId: string) => {
@@ -28,7 +30,9 @@ const MemberDatabaseInactiveFilter: React.FC = () => {
 };
 
 const MemberDatabaseActiveFilter: React.FC = () => {
-  const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
+  const show: boolean = useStoreState(({ db }) => {
+    return db.community.canCollectDues;
+  });
 
   const duesStatusQuestionId: string = useStoreState(({ db }) => {
     return db.community.questions?.find((questionId: string) => {
@@ -46,7 +50,9 @@ const MemberDatabaseActiveFilter: React.FC = () => {
 };
 
 const MemberDatabaseQuickFilters: React.FC = () => {
-  const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
+  const show: boolean = useStoreState(({ db }) => {
+    return db.community.canCollectDues;
+  });
 
   return (
     <Row wrap show={show} spacing="sm">

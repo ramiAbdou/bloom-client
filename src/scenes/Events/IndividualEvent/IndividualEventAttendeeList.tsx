@@ -35,7 +35,9 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
     return `${firstName} ${lastName}`;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const onClick = () => {
     showModal({ id: ModalType.PROFILE, metadata: memberId });
@@ -52,8 +54,12 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
 const IndividualEventAttendeeListContent: React.FC = () => {
   const attendees: IndividualEventAttendeeProps[] = useStoreState(({ db }) => {
     return db.event?.attendees
-      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
-      ?.sort((a, b) => sortObjects(a, b, 'createdAt'))
+      ?.map((attendeeId: string) => {
+        return db.byAttendeeId[attendeeId];
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'createdAt');
+      })
       ?.reduce((acc, attendee: IEventAttendee) => {
         return [...acc, { attendeeId: attendee.id }];
       }, []);
@@ -73,8 +79,13 @@ const IndividualEventAttendeeListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const numAttendees = useStoreState(({ db }) => db.event?.attendees?.length);
+  const endTime = useStoreState(({ db }) => {
+    return db.event?.endTime;
+  });
+
+  const numAttendees = useStoreState(({ db }) => {
+    return db.event?.attendees?.length;
+  });
 
   return (
     <Card

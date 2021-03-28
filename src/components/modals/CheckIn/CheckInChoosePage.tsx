@@ -20,9 +20,9 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
     return day().isBefore(day(db.event?.startTime).subtract(30, 'm'));
   });
 
-  const setCurrentPage = StoryStore.useStoreActions(
-    (state) => state.setCurrentPage
-  );
+  const setCurrentPage = StoryStore.useStoreActions((state) => {
+    return state.setCurrentPage;
+  });
 
   if (show === false) return null;
 

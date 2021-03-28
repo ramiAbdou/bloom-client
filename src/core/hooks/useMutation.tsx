@@ -6,14 +6,16 @@ import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { MutationResult, UseMutationArgs } from './useMutation.types';
 
-function useMutation<T = any, S = any>({
+function useMutation<T = unknown, S = unknown>({
   fields,
   operation,
   schema,
   types,
   variables: initialVariables
 }: UseMutationArgs<S>): MutationResult<T, S> {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => {
+    return db.mergeEntities;
+  });
 
   const [mutationFn, { data, error, loading }] = useGraphQlHooksMutation(
     mutation({ fields, operation, variables: types }).query,
@@ -38,7 +40,9 @@ function useMutation<T = any, S = any>({
     loading
   };
 
-  const memoizedSchema = useMemo(() => schema, []);
+  const memoizedSchema = useMemo(() => {
+    return schema;
+  }, []);
 
   useEffect(() => {
     if (result.data && schema) mergeEntities({ data: result.data, schema });

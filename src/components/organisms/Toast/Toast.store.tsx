@@ -5,16 +5,21 @@ import { ToastModel } from './Toast.types';
 
 const toastModel: ToastModel = {
   dequeueToast: action(({ queue }, id: string) => {
-    const index = queue.findIndex(({ id: toastId }) => toastId === id);
+    const index = queue.findIndex(({ id: toastId }) => {
+      return toastId === id;
+    });
+
     if (index < 0) return { queue };
     return { queue: [...queue.slice(0, index), ...queue.slice(index + 1)] };
   }),
 
   queue: [],
 
-  showToast: action(({ queue }, toast) => ({
-    queue: [...queue, { id: nanoid(), ...toast }]
-  }))
+  showToast: action(({ queue }, toast) => {
+    return {
+      queue: [...queue, { id: nanoid(), ...toast }]
+    };
+  })
 };
 
 export default toastModel;

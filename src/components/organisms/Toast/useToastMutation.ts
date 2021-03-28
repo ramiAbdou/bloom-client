@@ -19,7 +19,7 @@ interface UseMutationOnCompleteArgs
  */
 const useToastMutation = (
   args: UseMutationOnCompleteArgs
-): MutationResultVariablesFunction<any, any> => {
+): MutationResultVariablesFunction<unknown, unknown> => {
   const { id, mutationArgsOnUndo, wasUndid } = args;
 
   const dequeueToast = useStoreActions(({ toast }) => {

@@ -2,7 +2,10 @@ import { useEffect, useRef } from 'react';
 
 export type TooltipPosition = 'left' | 'middle' | 'right';
 
-const useTooltip = (tooltip: string, position: TooltipPosition = 'middle') => {
+const useTooltip = (
+  tooltip: string,
+  position: TooltipPosition = 'middle'
+): React.MutableRefObject<HTMLElement> => {
   const ref: React.MutableRefObject<HTMLElement> = useRef(null);
 
   useEffect(() => {

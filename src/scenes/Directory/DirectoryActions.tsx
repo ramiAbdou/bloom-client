@@ -7,7 +7,10 @@ import ListSearchBar from '@organisms/List/ListSearchBar';
 import { IMember } from '@store/Db/entities';
 
 const DirectoryAdminQuickFilter: React.FC = () => {
-  const filter = (member: Partial<IMember>): boolean => !!member?.role;
+  const filter = (member: Partial<IMember>): boolean => {
+    return !!member?.role;
+  };
+
   return <ListQuickFilter filter={filter} title="Admins Only" />;
 };
 

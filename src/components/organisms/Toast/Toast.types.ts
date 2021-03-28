@@ -3,7 +3,7 @@ import { Action } from 'easy-peasy';
 import { UseMutationArgs } from '@hooks/useMutation.types';
 import { IdProps } from '@util/constants';
 
-export interface ToastOptions<S = any> extends Partial<IdProps> {
+export interface ToastOptions<S = unknown> extends Partial<IdProps> {
   message?: string;
   mutationArgsOnUndo?: UseMutationArgs<S>;
 }

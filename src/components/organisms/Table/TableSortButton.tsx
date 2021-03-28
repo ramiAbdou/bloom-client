@@ -13,8 +13,13 @@ interface TableSortButtonProps extends IdProps {
 }
 
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
-  const columnId = useStoreState(({ panel }) => panel.metadata);
-  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
+  const columnId = useStoreState(({ panel }) => {
+    return panel.metadata;
+  });
+
+  const closePanel = useStoreActions(({ panel }) => {
+    return panel.closePanel;
+  });
 
   const isSorted = TableStore.useStoreState(
     ({ sortDirection, sortColumnId }) => {
@@ -22,7 +27,9 @@ const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
     }
   );
 
-  const sortColumn = TableStore.useStoreActions((store) => store.sortColumn);
+  const sortColumn = TableStore.useStoreActions((store) => {
+    return store.sortColumn;
+  });
 
   const onClick = () => {
     sortColumn([columnId, direction]);

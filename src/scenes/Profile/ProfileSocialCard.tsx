@@ -23,8 +23,13 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
     );
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
+
+  const onClick = () => {
+    return showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
+  };
 
   return (
     <Show show={!isSocialLinked}>
@@ -41,12 +46,29 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 const ProfileSocialHeader: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => db.socials?.clubhouseUrl);
-  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
-  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
-  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
-  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const clubhouseUrl = useStoreState(({ db }) => {
+    return db.socials?.clubhouseUrl;
+  });
+
+  const facebookUrl = useStoreState(({ db }) => {
+    return db.socials?.facebookUrl;
+  });
+
+  const instagramUrl = useStoreState(({ db }) => {
+    return db.socials?.instagramUrl;
+  });
+
+  const linkedInUrl = useStoreState(({ db }) => {
+    return db.socials?.linkedInUrl;
+  });
+
+  const twitterUrl = useStoreState(({ db }) => {
+    return db.socials?.twitterUrl;
+  });
+
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const isSocialLinked: boolean =
     !!clubhouseUrl ||
@@ -55,7 +77,9 @@ const ProfileSocialHeader: React.FC = () => {
     !!linkedInUrl ||
     !!twitterUrl;
 
-  const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
+  const onClick = () => {
+    return showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
+  };
 
   return (
     <ProfileCardHeader
@@ -67,7 +91,9 @@ const ProfileSocialHeader: React.FC = () => {
 };
 
 const ProfileSocialClubhouse: React.FC = () => {
-  const clubhouseUrl = useStoreState(({ db }) => db.socials?.clubhouseUrl);
+  const clubhouseUrl = useStoreState(({ db }) => {
+    return db.socials?.clubhouseUrl;
+  });
 
   return (
     <ProfileSocialValue brand={SocialBrand.CLUBHOUSE} url={clubhouseUrl} />
@@ -75,12 +101,17 @@ const ProfileSocialClubhouse: React.FC = () => {
 };
 
 const ProfileSocialFacebook: React.FC = () => {
-  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
+  const facebookUrl = useStoreState(({ db }) => {
+    return db.socials?.facebookUrl;
+  });
+
   return <ProfileSocialValue brand={SocialBrand.FACEBOOK} url={facebookUrl} />;
 };
 
 const ProfileSocialInstagram: React.FC = () => {
-  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
+  const instagramUrl = useStoreState(({ db }) => {
+    return db.socials?.instagramUrl;
+  });
 
   return (
     <ProfileSocialValue brand={SocialBrand.INSTAGRAM} url={instagramUrl} />
@@ -88,12 +119,18 @@ const ProfileSocialInstagram: React.FC = () => {
 };
 
 const ProfileSocialLinkedIn: React.FC = () => {
-  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
+  const linkedInUrl = useStoreState(({ db }) => {
+    return db.socials?.linkedInUrl;
+  });
+
   return <ProfileSocialValue brand={SocialBrand.LINKED_IN} url={linkedInUrl} />;
 };
 
 const ProfileSocialTwitter: React.FC = () => {
-  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
+  const twitterUrl = useStoreState(({ db }) => {
+    return db.socials?.twitterUrl;
+  });
+
   return <ProfileSocialValue brand={SocialBrand.TWITTER} url={twitterUrl} />;
 };
 

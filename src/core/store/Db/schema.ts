@@ -19,9 +19,12 @@ import { take } from '@util/util';
  * @param a First entity to merge.
  * @param b Second entity to merge.
  */
-export const mergeStrategy = (a: Partial<any>, b: Partial<any>): any => {
-  const arrayMerge = (target: any[], source: any[]) => {
-    const updatedSource = source.filter((value: any) => {
+export const mergeStrategy = (
+  a: Partial<unknown>,
+  b: Partial<unknown>
+): unknown => {
+  const arrayMerge = (target: unknown[], source: unknown[]) => {
+    const updatedSource = source.filter((value: unknown) => {
       return !target.includes(value);
     });
 

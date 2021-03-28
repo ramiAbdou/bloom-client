@@ -12,7 +12,9 @@ const SidebarPayDuesButton: React.FC = () => {
     return db.member?.plan;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const onClick = () => {
     showModal({

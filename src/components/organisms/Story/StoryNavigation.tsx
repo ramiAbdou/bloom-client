@@ -9,28 +9,38 @@ import StoryStore from './Story.store';
 import { StoryPageProps } from './Story.types';
 
 const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
-  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
+  const page = StoryStore.useStoreState(({ getPage }) => {
+    return getPage(id);
+  });
 
-  const setCurrentPage = StoryStore.useStoreActions(
-    (store) => store.setCurrentPage
-  );
+  const setCurrentPage = StoryStore.useStoreActions((store) => {
+    return store.setCurrentPage;
+  });
 
   const { disabled, branches, branchId } = page;
   const title = branches[branchId]?.title;
 
-  const ref: React.LegacyRef<any> = useTooltip(title);
-  const onClick = () => !disabled && setCurrentPage({ branchId, id });
+  const ref: React.LegacyRef<unknown> = useTooltip(title);
+
+  const onClick = () => {
+    return !disabled && setCurrentPage({ branchId, id });
+  };
+
   const css: string = cx('o-story-nav', { 'o-story-nav--disabled': disabled });
 
   return <div ref={ref} className={css} onClick={onClick} />;
 };
 
 const StoryNavigation: React.FC<ShowProps> = ({ show }) => {
-  const pageId = StoryStore.useStoreState((state) => state.pageId);
+  const pageId = StoryStore.useStoreState((state) => {
+    return state.pageId;
+  });
 
-  const pages = StoryStore.useStoreState((store) =>
-    store.pages.filter(({ id }) => id !== 'CONFIRMATION')
-  );
+  const pages = StoryStore.useStoreState((store) => {
+    return store.pages.filter(({ id }) => {
+      return id !== 'CONFIRMATION';
+    });
+  });
 
   if (pageId === 'CONFIRMATION' || pages?.length <= 1) return null;
 

@@ -13,7 +13,7 @@ interface ProcessFilterArgs extends TableFilterArgs {
 const processFilter = (args: ProcessFilterArgs) => {
   const { columnId, operator, row, value } = args;
 
-  const rowValue: any = row[columnId]?.toString()?.toLowerCase();
+  const rowValue: unknown = row[columnId]?.toString()?.toLowerCase();
   const processedValue: string = value?.toString()?.toLowerCase();
 
   if (operator === 'includes') return rowValue?.includes(processedValue);
@@ -23,17 +23,21 @@ const processFilter = (args: ProcessFilterArgs) => {
 };
 
 const TableFilterApplyButton: React.FC = () => {
-  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
+  const closePanel = useStoreActions(({ panel }) => {
+    return panel.closePanel;
+  });
 
-  const joinOperator = TableFilterStore.useStoreState(
-    (store) => store.joinOperator
-  );
+  const joinOperator = TableFilterStore.useStoreState((store) => {
+    return store.joinOperator;
+  });
 
-  const filters: TableFilterArgs[] = TableFilterStore.useStoreState((store) =>
-    Object.values(store.filters)
-  );
+  const filters: TableFilterArgs[] = TableFilterStore.useStoreState((store) => {
+    return Object.values(store.filters);
+  });
 
-  const setFilter = TableStore.useStoreActions((store) => store.setFilter);
+  const setFilter = TableStore.useStoreActions((store) => {
+    return store.setFilter;
+  });
 
   const onClick = () => {
     const filter: TableFilter = (row: TableRow) => {

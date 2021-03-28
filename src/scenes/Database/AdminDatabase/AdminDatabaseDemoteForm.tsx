@@ -26,9 +26,9 @@ const AdminDatabaseDemoteFormActions: React.FC = () => {
 };
 
 const AdminDatabaseDemoteForm: React.FC = () => {
-  const memberIds = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const memberIds = TableStore.useStoreState(({ selectedRowIds }) => {
+    return selectedRowIds;
+  });
 
   const [demoteMembers] = useMutation<IMember[], MemberIdsArgs>({
     fields: ['id', 'role'],

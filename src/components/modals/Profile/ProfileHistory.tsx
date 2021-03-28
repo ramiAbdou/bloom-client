@@ -11,7 +11,9 @@ import ProfileHistoryEvent from './ProfileHistoryEvent';
 import useInitProfileHistory from './useInitProfileHistory';
 
 const ProfileHistoryEventList: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => state.id);
+  const memberId: string = IdStore.useStoreState((state) => {
+    return state.id;
+  });
 
   const history: MemberHistoryData[] = useStoreState(({ db }) => {
     return getMemberHistory({ db, memberId });
@@ -43,7 +45,9 @@ const ProfileHistoryContent: React.FC = () => {
 };
 
 const ProfileHistory: React.FC = () => {
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
+  const isAdmin: boolean = useStoreState(({ db }) => {
+    return !!db.member.role;
+  });
 
   return (
     <Show show={isAdmin}>

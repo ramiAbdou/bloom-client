@@ -23,7 +23,9 @@ const MembershipPaymentMethodEmpty: React.FC = () => {
 
 const MembershipPaymentMethodContent: React.FC = () => {
   const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
-    ({ db }) => db.memberIntegrations.paymentMethod ?? {},
+    ({ db }) => {
+      return db.memberIntegrations.paymentMethod ?? {};
+    },
     deepequal
   );
 

@@ -19,20 +19,28 @@ import MemberDatabaseActions from './MemberDatabaseActions';
 import useUpdateQuestion from './useUpdateQuestion';
 
 const MemberDatabase: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
-  const canCollectDues: boolean = useStoreState(
-    ({ db }) => db.community.canCollectDues
-  );
+  const canCollectDues: boolean = useStoreState(({ db }) => {
+    return db.community.canCollectDues;
+  });
 
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
-  const rows: TableRow[] = useStoreState(({ db }) => getMemberTableRow({ db }));
+  const rows: TableRow[] = useStoreState(({ db }) => {
+    return getMemberTableRow({ db });
+  });
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
     const filteredColumns: TableColumn[] = db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.map((questionId: string) => {
+        return db.byQuestionId[questionId];
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      })
       ?.filter((question: IQuestion) => {
         if (
           question.category === QuestionCategory.DUES_STATUS &&
@@ -48,14 +56,18 @@ const MemberDatabase: React.FC = () => {
       if (question.category === QuestionCategory.DUES_STATUS) {
         return {
           ...question,
-          format: (value: boolean) => (value ? 'Paid' : 'Not Paid')
+          format: (value: boolean) => {
+            return value ? 'Paid' : 'Not Paid';
+          }
         };
       }
 
       if (question.category === QuestionCategory.JOINED_AT) {
         return {
           ...question,
-          format: (value) => day(value).format('MMMM, D, YYYY')
+          format: (value) => {
+            return day(value).format('MMMM, D, YYYY');
+          }
         };
       }
 

@@ -4,7 +4,7 @@ export interface RadioOptionProps {
   checked?: boolean;
   description?: string;
   label: string;
-  onSelect?: (value: any) => any;
+  onSelect?: (value: unknown) => unknown;
   name?: string;
 }
 

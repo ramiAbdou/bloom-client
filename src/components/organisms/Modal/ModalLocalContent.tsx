@@ -9,7 +9,9 @@ import { cx } from '@util/util';
 import ModalContainer from './ModalContainer';
 
 const ModalLocalCustomContent: React.FC = () => {
-  const id: string = useStoreState(({ modal }) => modal.id);
+  const id: string = useStoreState(({ modal }) => {
+    return modal.id;
+  });
 
   if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteForm />;
   if (id === ModalType.DEMOTE_MEMBERS) return <AdminDatabaseDemoteForm />;
@@ -19,15 +21,22 @@ const ModalLocalCustomContent: React.FC = () => {
 };
 
 const ModalLocalContent: React.FC = () => {
-  const className: string = useStoreState(({ modal }) => modal.className);
-  const clearOptions = useStoreActions(({ modal }) => modal.clearOptions);
+  const className: string = useStoreState(({ modal }) => {
+    return modal.className;
+  });
 
-  const confirmation: boolean = useStoreState(
-    ({ modal }) => modal.options?.confirmation
-  );
+  const clearOptions = useStoreActions(({ modal }) => {
+    return modal.clearOptions;
+  });
+
+  const confirmation: boolean = useStoreState(({ modal }) => {
+    return modal.options?.confirmation;
+  });
 
   useEffect(() => {
-    return () => clearOptions();
+    return () => {
+      return clearOptions();
+    };
   }, []);
 
   const css: string = cx(

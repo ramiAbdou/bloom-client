@@ -18,12 +18,18 @@ import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsRecentEventsTable: React.FC = () => {
-  const urlName = useStoreState(({ db }) => db.community?.urlName);
+  const urlName = useStoreState(({ db }) => {
+    return db.community?.urlName;
+  });
 
   const rows: TableRow[] = useStoreState(({ db }) => {
     return db.community.events
-      ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => day().isAfter(event.endTime))
+      ?.map((eventId: string) => {
+        return db.byEventId[eventId];
+      })
+      ?.filter((event: IEvent) => {
+        return day().isAfter(event.endTime);
+      })
       ?.map(({ attendees, id, guests, startTime, title, watches }: IEvent) => {
         return {
           date: day(startTime).format('MMMM D, YYYY'),
@@ -35,7 +41,9 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
           title
         };
       })
-      .sort((a, b) => sortObjects(a, b, 'startTime'));
+      .sort((a, b) => {
+        return sortObjects(a, b, 'startTime');
+      });
   });
 
   const columns: TableColumn[] = [
@@ -59,7 +67,9 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   const options: TableOptions = {
     fixFirstColumn: false,
     isSortable: false,
-    onRowClick: ({ id }: TableRow) => push(`/${urlName}/events/${id}`),
+    onRowClick: ({ id }: TableRow) => {
+      return push(`/${urlName}/events/${id}`);
+    },
     showCount: false
   };
 

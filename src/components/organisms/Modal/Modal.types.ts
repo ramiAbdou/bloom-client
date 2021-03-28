@@ -13,7 +13,7 @@ export interface ModalOptions {
 export interface ModalData {
   className?: string;
   id: ModalType;
-  metadata?: any;
+  metadata?: unknown;
   onClose?: VoidFunction;
   options?: ModalOptions;
   width?: number;

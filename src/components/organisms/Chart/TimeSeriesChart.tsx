@@ -22,12 +22,19 @@ import useYAxisOptions from './useYAxisOptions';
 const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
   label
 }) => {
-  const data = ChartStore.useStoreState((state) => state.data);
-  const format = ChartStore.useStoreState(({ options }) => options?.format);
+  const data = ChartStore.useStoreState((state) => {
+    return state.data;
+  });
+
+  const format = ChartStore.useStoreState(({ options }) => {
+    return options?.format;
+  });
 
   if (!label) return null;
 
-  const value = data.find(({ name }) => name === label)?.value;
+  const value = data.find(({ name }) => {
+    return name === label;
+  })?.value;
 
   const formattedLabel: string = take([
     [format === 'HOUR', day(label).format('dddd, MMMM D @ h:mm A')],
@@ -48,8 +55,14 @@ const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
 };
 
 const TimeSeriesChart: React.FC = () => {
-  const color = useStoreState(({ db }) => db.community.primaryColor);
-  const data = ChartStore.useStoreState((state) => state.data, deepequal);
+  const color = useStoreState(({ db }) => {
+    return db.community.primaryColor;
+  });
+
+  const data = ChartStore.useStoreState((state) => {
+    return state.data;
+  }, deepequal);
+
   const isMonitor = useBreakpoint() === 4;
 
   const xAxisOptions = useXAxisOptions();
@@ -63,7 +76,11 @@ const TimeSeriesChart: React.FC = () => {
         <CartesianGrid vertical={false} />
         <XAxis {...xAxisOptions} />
         <YAxis {...yAxisOptions} />
-        <Tooltip content={({ label }) => <LineChartTooltip label={label} />} />
+        <Tooltip
+          content={({ label }) => {
+            return <LineChartTooltip label={label} />;
+          }}
+        />
         <Line
           activeDot={{ r: 8 }}
           dataKey="value"

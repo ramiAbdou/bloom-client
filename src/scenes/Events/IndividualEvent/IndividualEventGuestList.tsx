@@ -33,8 +33,13 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
     return `${firstName} ${lastName}`;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
+
+  const isMember = useStoreState(({ db }) => {
+    return db.isMember;
+  });
 
   const onClick = () => {
     if (isMember && memberId) {
@@ -57,8 +62,12 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 const IndividualEventGuestListContent: React.FC = () => {
   const guests: IndividualEventGuestProps[] = useStoreState(({ db }) => {
     return db.event?.guests
-      ?.map((guestId: string) => db.byGuestId[guestId])
-      ?.sort((a: IEventGuest, b) => sortObjects(a, b, 'createdAt'))
+      ?.map((guestId: string) => {
+        return db.byGuestId[guestId];
+      })
+      ?.sort((a: IEventGuest, b) => {
+        return sortObjects(a, b, 'createdAt');
+      })
       ?.reduce((acc, guest: IEventGuest) => {
         return [...acc, { guestId: guest.id }];
       }, []);
@@ -78,8 +87,13 @@ const IndividualEventGuestListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const numGuests = useStoreState(({ db }) => db.event?.guests?.length);
+  const endTime = useStoreState(({ db }) => {
+    return db.event?.endTime;
+  });
+
+  const numGuests = useStoreState(({ db }) => {
+    return db.event?.guests?.length;
+  });
 
   return (
     <Card

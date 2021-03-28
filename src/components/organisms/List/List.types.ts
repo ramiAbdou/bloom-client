@@ -10,11 +10,13 @@ import {
 
 // ## PREPARE FOR FILTER
 
-export type PrepareForListFilter<T = any> = (entity: T) => Record<string, any>;
+export type PrepareForListFilter<T = unknown> = (
+  entity: T
+) => Record<string, unknown>;
 
 // ## LIST PROPS
 
-export interface ListProps<T = any> extends ClassNameProps {
+export interface ListProps<T = unknown> extends ClassNameProps {
   emptyMessage?: string;
   items: T[];
   options?: MatchSorterOptions<T>;
@@ -24,7 +26,7 @@ export interface ListProps<T = any> extends ClassNameProps {
 
 // ## LIST MODEL
 
-export interface ListModel<T = any> {
+export interface ListModel<T = unknown> {
   cacheKey: string;
   customFilters: Record<string, ListFilterArgs>;
   filteredItems: T[];

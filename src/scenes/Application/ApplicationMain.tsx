@@ -5,7 +5,7 @@ import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IRankedQuestion, IQuestion } from '@store/Db/entities';
+import { IQuestion, IRankedQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';
@@ -14,19 +14,28 @@ import useValidateEmail from './useValidateEmail';
 const ApplicationMainForm: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.application?.questions
-      ?.map((questionId: string) => db.byRankedQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.map((questionId: string) => {
+        return db.byRankedQuestionId[questionId];
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      })
       ?.map((rankedQuestion: IRankedQuestion) => {
         return db.byQuestionId[rankedQuestion.question];
       });
   });
 
-  const isSolo = StoryStore.useStoreState(
-    ({ pages }) =>
-      pages?.filter(({ id }) => id !== 'CONFIRMATION')?.length === 1
-  );
+  const isSolo = StoryStore.useStoreState(({ pages }) => {
+    return (
+      pages?.filter(({ id }) => {
+        return id !== 'CONFIRMATION';
+      })?.length === 1
+    );
+  });
 
-  const items = StoryStore.useStoreState((state) => state.items);
+  const items = StoryStore.useStoreState((state) => {
+    return state.items;
+  });
 
   const applyForMembership = useApplyToCommunity();
   const validateEmail = useValidateEmail();
@@ -51,9 +60,17 @@ const ApplicationMainForm: React.FC = () => {
 };
 
 const ApplicationMain: React.FC = () => {
-  const description = useStoreState(({ db }) => db.application?.description);
-  const title = useStoreState(({ db }) => db.application?.title);
-  const iconUrl = useStoreState(({ db }) => db.community?.logoUrl);
+  const description = useStoreState(({ db }) => {
+    return db.application?.description;
+  });
+
+  const title = useStoreState(({ db }) => {
+    return db.application?.title;
+  });
+
+  const iconUrl = useStoreState(({ db }) => {
+    return db.community?.logoUrl;
+  });
 
   return (
     <StoryPage

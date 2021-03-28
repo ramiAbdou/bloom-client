@@ -1,27 +1,38 @@
 import Dropdown from './Dropdown.store';
 import { DropdownValue } from './Dropdown.types';
 
-const useSelectOption = (option: string) => {
-  const filteredValues = Dropdown.useStoreState(
-    (store) => store.filteredValues
-  );
+const useSelectOption = (option: string): VoidFunction => {
+  const filteredValues = Dropdown.useStoreState((store) => {
+    return store.filteredValues;
+  });
 
-  const multiple = Dropdown.useStoreState((state) => state.options.multiple);
-  const value = Dropdown.useStoreState((state) => state.value);
-  const onSelect = Dropdown.useStoreState((state) => state.onSelect);
-  const setIsOpen = Dropdown.useStoreActions((store) => store.setIsOpen);
+  const multiple = Dropdown.useStoreState((state) => {
+    return state.options.multiple;
+  });
 
-  const setSearchString = Dropdown.useStoreActions(
-    (store) => store.setSearchString
-  );
+  const value = Dropdown.useStoreState((state) => {
+    return state.value;
+  });
+
+  const onSelect = Dropdown.useStoreState((state) => {
+    return state.onSelect;
+  });
+
+  const setIsOpen = Dropdown.useStoreActions((store) => {
+    return store.setIsOpen;
+  });
+
+  const setSearchString = Dropdown.useStoreActions((store) => {
+    return store.setSearchString;
+  });
 
   const selectOption = () => {
     let wasNonePreviouslySelected: boolean;
 
     if (Array.isArray(value)) {
-      wasNonePreviouslySelected = (value as string[])?.some((element) =>
-        ['None', 'None of the Above', 'N/A'].includes(element)
-      );
+      wasNonePreviouslySelected = (value as string[])?.some((element) => {
+        return ['None', 'None of the Above', 'N/A'].includes(element);
+      });
     }
 
     const isNoneSelected = ['None', 'None of the Above', 'N/A'].includes(

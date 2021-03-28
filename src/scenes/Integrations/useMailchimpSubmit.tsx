@@ -9,9 +9,9 @@ import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const useMailchimpSubmit = (): OnFormSubmitFunction => {
-  const options = useStoreState(
-    ({ db }) => db.communityIntegrations?.mailchimpLists
-  );
+  const options = useStoreState(({ db }) => {
+    return db.communityIntegrations?.mailchimpLists;
+  });
 
   const [updateMailchimpListId] = useMutation<ICommunityIntegrations>({
     fields: ['id', 'mailchimpListId', 'mailchimpListName'],
@@ -27,9 +27,9 @@ const useMailchimpSubmit = (): OnFormSubmitFunction => {
   }: OnFormSubmitArgs) => {
     const selectedMailchimpList = items.MAILCHIMP_LIST_ID?.value;
 
-    const { id: mailchimpListId } = options.find(
-      ({ name }) => name === selectedMailchimpList
-    );
+    const { id: mailchimpListId } = options.find(({ name }) => {
+      return name === selectedMailchimpList;
+    });
 
     const { error } = await updateMailchimpListId({ mailchimpListId });
 

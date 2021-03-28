@@ -34,7 +34,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <Show show={show}>
-      <label className={css} onClick={(e) => e.stopPropagation()}>
+      <label
+        className={css}
+        onClick={(e) => {
+          return e.stopPropagation();
+        }}
+      >
         <input checked={checked} type="checkbox" onChange={onChange} />
         <span />
         <IoCheckmark color="#FFF" />

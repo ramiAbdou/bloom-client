@@ -6,14 +6,16 @@ import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { QueryResult, UseQueryArgs } from './useQuery.types';
 
-function useQuery<T = any, S = any>({
+function useQuery<T = unknown, S = unknown>({
   fields,
   operation,
   schema,
   types,
   variables
 }: UseQueryArgs<S>): QueryResult<T> {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+  const mergeEntities = useStoreActions(({ db }) => {
+    return db.mergeEntities;
+  });
 
   const { data, error, loading } = useGQLQuery(
     query({ fields, operation, variables: types }).query,

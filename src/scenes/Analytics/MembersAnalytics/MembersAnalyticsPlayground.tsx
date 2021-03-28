@@ -16,8 +16,12 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   // name aren't very meaningful.
   const questions: IQuestion[] = useStoreState(({ db }) => {
     return db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.map((questionId: string) => {
+        return db.byQuestionId[questionId];
+      })
+      ?.sort((a, b) => {
+        return sortObjects(a, b, 'rank', 'ASC');
+      })
       ?.filter((question: IQuestion) => {
         return (
           !question.category ||
@@ -30,13 +34,18 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
       });
   });
 
-  const questionId = IdStore.useStoreState((state) => state.id);
-  const setId = IdStore.useStoreActions((store) => store.setId);
+  const questionId = IdStore.useStoreState((state) => {
+    return state.id;
+  });
+
+  const setId = IdStore.useStoreActions((store) => {
+    return store.setId;
+  });
 
   const onSelect = (result: string) => {
-    const updatedQuestionId = questions.find(
-      (question) => question.title === result
-    )?.id;
+    const updatedQuestionId = questions.find((question) => {
+      return question.title === result;
+    })?.id;
 
     setId(updatedQuestionId);
   };
@@ -45,8 +54,14 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
     <Dropdown
       fit
       className="mb-sm--nlc"
-      value={questions?.find(({ id }) => id === questionId)?.title}
-      values={questions?.map(({ title }) => title)}
+      value={
+        questions?.find(({ id }) => {
+          return id === questionId;
+        })?.title
+      }
+      values={questions?.map(({ title }) => {
+        return title;
+      })}
       onSelect={onSelect}
     />
   );
@@ -57,7 +72,9 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
   // name aren't very meaningful.
   const initialQuestionId: string = useStoreState(({ db }) => {
     return db.community.questions
-      ?.map((id: string) => db.byQuestionId[id])
+      ?.map((id: string) => {
+        return db.byQuestionId[id];
+      })
       ?.filter((question: IQuestion) => {
         return (
           !question.category ||
@@ -70,8 +87,13 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
       })[0].id;
   });
 
-  const questionId = IdStore.useStoreState((state) => state.id);
-  const setId = IdStore.useStoreActions((store) => store.setId);
+  const questionId = IdStore.useStoreState((state) => {
+    return state.id;
+  });
+
+  const setId = IdStore.useStoreActions((store) => {
+    return store.setId;
+  });
 
   useEffect(() => {
     if (!questionId && initialQuestionId !== questionId) {
@@ -91,7 +113,10 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
 };
 
 const MembersAnalyticsPlaygroundChart: React.FC = () => {
-  const questionId = IdStore.useStoreState((state) => state.id);
+  const questionId = IdStore.useStoreState((state) => {
+    return state.id;
+  });
+
   return <Chart questionId={questionId} />;
 };
 

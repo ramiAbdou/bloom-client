@@ -8,15 +8,17 @@ import { ErrorType } from '@util/constants.errors';
 const IndividualEventErrorModal: React.FC = () => {
   const error:
     | ErrorType.EVENT_FINISHED
-    | ErrorType.EVENT_HASNT_STARTED = useStoreState(
-    ({ modal }) => modal.metadata
-  );
+    | ErrorType.EVENT_HASNT_STARTED = useStoreState(({ modal }) => {
+    return modal.metadata;
+  });
 
   const startTime = useStoreState(({ db }) => {
     return day(db.event?.startTime).format('MMMM, D @ h:mm A');
   });
 
-  const title = useStoreState(({ db }) => db.event?.title);
+  const title = useStoreState(({ db }) => {
+    return db.event?.title;
+  });
 
   return (
     <>

@@ -20,8 +20,15 @@ const FormMultipleSelect: React.FC<FormMultipleChoiceProps> = ({
   ...args
 }) => {
   const key = getFormItemKey(args);
-  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
-  const setValue = FormStore.useStoreActions((store) => store.setValue);
+
+  const value = FormStore.useStoreState(({ items }) => {
+    return items[key]?.value;
+  });
+
+  const setValue = FormStore.useStoreActions((store) => {
+    return store.setValue;
+  });
+
   useInitFormItem(args);
 
   return (
@@ -31,7 +38,9 @@ const FormMultipleSelect: React.FC<FormMultipleChoiceProps> = ({
           {args?.options.map((option: string) => {
             const onChange = () => {
               const updatedValue = value?.includes(option)
-                ? value.filter((element) => element !== option)
+                ? value.filter((element) => {
+                    return element !== option;
+                  })
                 : [...value, option];
 
               setValue({ key, value: updatedValue });

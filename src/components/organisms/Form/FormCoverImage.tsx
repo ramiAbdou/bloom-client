@@ -11,12 +11,17 @@ import useInitFormItem from './useInitFormItem';
 
 const FormCoverImageContent: React.FC<FormItemData> = (args) => {
   const key: string = getFormItemKey(args);
-  const setValue = FormStore.useStoreActions((store) => store.setValue);
+
+  const setValue = FormStore.useStoreActions((store) => {
+    return store.setValue;
+  });
 
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
 
   // Opens the file uploader by "clicking" the invisible file input tag.
-  const openFileUploader = () => ref.current.click();
+  const openFileUploader = () => {
+    return ref.current.click();
+  };
 
   const onChange = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const file = target.files[0];
@@ -57,9 +62,9 @@ const FormCoverImageMessage: React.FC = () => {
 const FormCoverImage: React.FC<FormItemData> = (args) => {
   const key = getFormItemKey(args);
 
-  const selectedImage = FormStore.useStoreState(
-    ({ items }) => items[key]?.value
-  );
+  const selectedImage = FormStore.useStoreState(({ items }) => {
+    return items[key]?.value;
+  });
 
   useInitFormItem(args);
 
