@@ -72,8 +72,6 @@ const MembershipPaymentTable: React.FC = () => {
   });
 
   const options: TableOptions = {
-    alignEndRight: true,
-    fixFirstColumn: false,
     isSortable: false,
     showCount: false
   };

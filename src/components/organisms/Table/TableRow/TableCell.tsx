@@ -83,19 +83,8 @@ const TableCell: React.FC<TableCellProps> = (props) => {
     return columns[columnIndex]?.type;
   });
 
-  const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
-    const isLastCell: boolean = columnIndex === columns.length - 1;
-    return options.alignEndRight && isLastCell;
-  });
-
-  const fixFirstColumn = TableStore.useStoreState(({ options }) => {
-    return options.fixFirstColumn;
-  });
-
   const css: string = cx(getTableCellClass({ category, type }), {
-    'o-table-td--fixed': fixFirstColumn && columnIndex === 0,
-    'o-table-td--multiple-select': type === QuestionType.MULTIPLE_SELECT,
-    'o-table-td--right': alignEndRight
+    'o-table-td--multiple-select': type === QuestionType.MULTIPLE_SELECT
   });
 
   return (

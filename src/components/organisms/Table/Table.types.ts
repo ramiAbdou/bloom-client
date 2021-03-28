@@ -55,11 +55,8 @@ export interface TableRow extends Pick<IdProps, 'id'>, Record<string, any> {}
 // ## TABLE OPTIONS
 
 export type TableOptions = {
-  alignEndRight?: boolean;
-  fixFirstColumn?: boolean;
   hasCheckbox?: boolean;
   hideIfEmpty?: boolean;
-  isRenamable?: boolean;
   isSortable?: boolean;
   onRenameColumn?: (args: OnRenameColumnArgs) => Promise<void>;
   onRowClick?: (row: TableRow) => void;
@@ -67,10 +64,7 @@ export type TableOptions = {
 };
 
 export const defaultTableOptions: TableOptions = {
-  alignEndRight: false,
-  fixFirstColumn: false,
   hasCheckbox: false,
-  isRenamable: false,
   isSortable: true,
   showCount: true
 };

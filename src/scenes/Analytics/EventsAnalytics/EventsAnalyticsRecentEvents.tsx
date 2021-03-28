@@ -65,7 +65,6 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   const { push } = useHistory();
 
   const options: TableOptions = {
-    fixFirstColumn: false,
     isSortable: false,
     onRowClick: ({ id }: TableRow) => {
       return push(`/${urlName}/events/${id}`);

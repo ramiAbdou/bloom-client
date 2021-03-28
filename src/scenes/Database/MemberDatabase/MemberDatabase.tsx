@@ -1,6 +1,8 @@
 import day from 'dayjs';
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
+import { ModalData } from '@organisms/Modal/Modal.types';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import {
@@ -19,12 +21,12 @@ import MemberDatabaseActions from './MemberDatabaseActions';
 import useUpdateQuestion from './useUpdateQuestion';
 
 const MemberDatabase: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
-
   const canCollectDues: boolean = useStoreState(({ db }) => {
     return db.community.canCollectDues;
+  });
+
+  const showModal: ActionCreator<ModalData> = useStoreActions(({ modal }) => {
+    return modal.showModal;
   });
 
   // Massage the member data into valid row data by mapping the question ID

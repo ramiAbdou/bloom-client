@@ -33,7 +33,6 @@ const IndividualEventTableContent: React.FC = () => {
   });
 
   const options: TableOptions = {
-    fixFirstColumn: false,
     hideIfEmpty: true,
     onRowClick: (row: TableRow) => {
       showModal({ id: ModalType.PROFILE, metadata: row?.id });

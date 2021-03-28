@@ -21,11 +21,6 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   id,
   title
 }) => {
-  const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
-    const isLastCell = i === columns.length - 1;
-    return options.alignEndRight && isLastCell;
-  });
-
   const sortColumnId = TableStore.useStoreState((state) => {
     return state.sortColumnId;
   });
@@ -40,10 +35,6 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
 
   const isSortable = TableStore.useStoreState(({ options }) => {
     return options.isSortable;
-  });
-
-  const fixFirstColumn = TableStore.useStoreState(({ options }) => {
-    return options.fixFirstColumn;
   });
 
   const isPanelShowing = useStoreState(({ panel }) => {
@@ -63,8 +54,6 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   const isSortedColumn = sortColumnId === id;
 
   const css: string = cx(getTableCellClass({ category, type }), {
-    'o-table-td--right': alignEndRight,
-    'o-table-th--fixed': fixFirstColumn && i === 0,
     'o-table-th--panel': isPanelShowing,
     'o-table-th--sortable': isSortable,
     'o-table-th--sorted': isSortedColumn
