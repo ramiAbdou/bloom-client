@@ -7,12 +7,13 @@ import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import { IMemberPlan, MemberRole } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
-  const fullName = useStoreState(({ db }) => {
+  const fullName: string = useStoreState(({ db }) => {
     return `${db.member.firstName} ${db.member.lastName}`;
   });
 
@@ -21,7 +22,7 @@ const ProfilePersonalHeader: React.FC = () => {
   });
 
   const onClick = () => {
-    return showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+    showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
   };
 
   return (
@@ -30,24 +31,25 @@ const ProfilePersonalHeader: React.FC = () => {
 };
 
 const ProfilePersonalTagList: React.FC = () => {
-  const role = useStoreState(({ db }) => {
+  const role: MemberRole = useStoreState(({ db }) => {
     return db.member.role;
   });
 
-  const type: string = useStoreState(({ db }) => {
-    return db.byMemberPlanId[db.member.plan]?.name;
+  const memberPlanName: string = useStoreState(({ db }) => {
+    const memberPlan: IMemberPlan = db.byMemberPlanId[db.member.plan];
+    return memberPlan?.name;
   });
 
   return (
     <Row wrap gap="xs">
       <HeaderTag show={!!role}>{role}</HeaderTag>
-      <HeaderTag>{type}</HeaderTag>
+      <HeaderTag>{memberPlanName}</HeaderTag>
     </Row>
   );
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const email = useStoreState(({ db }) => {
+  const email: string = useStoreState(({ db }) => {
     return db.member.email;
   });
 
@@ -55,7 +57,7 @@ const ProfilePersonalEmail: React.FC = () => {
 };
 
 const ProfilePersonalBio: React.FC = () => {
-  const bio = useStoreState(({ db }) => {
+  const bio: string = useStoreState(({ db }) => {
     return db.member.bio;
   });
 
@@ -64,11 +66,11 @@ const ProfilePersonalBio: React.FC = () => {
 };
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
-  const bio = useStoreState(({ db }) => {
+  const bio: string = useStoreState(({ db }) => {
     return db.member.bio;
   });
 
-  const pictureUrl = useStoreState(({ db }) => {
+  const pictureUrl: string = useStoreState(({ db }) => {
     return db.member.pictureUrl;
   });
 
@@ -116,10 +118,10 @@ const ProfilePersonalPictureRow: React.FC = () => {
     return modal.showModal;
   });
 
-  const isMobile = useBreakpoint() === 1;
+  const isMobile: boolean = useBreakpoint() === 1;
 
   const onClick = () => {
-    return showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
+    showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
   };
 
   return (

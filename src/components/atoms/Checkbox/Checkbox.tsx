@@ -28,7 +28,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 }) => {
   const css: string = cx(
     'c-misc-checkbox',
-    { 'c-misc-checkbox--label': title, 'c-misc-checkbox--plain': plain },
+    { 'c-misc-checkbox--label': !!title, 'c-misc-checkbox--plain': plain },
     className
   );
 

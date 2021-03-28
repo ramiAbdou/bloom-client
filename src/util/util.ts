@@ -27,7 +27,7 @@ export const buildUrl = (
  */
 export const cx = (
   baseClass: string,
-  classMap: Record<string, any>,
+  classMap: Record<string, boolean>,
   customClass?: string
 ): string => {
   const classes = Object.entries(classMap).reduce(
