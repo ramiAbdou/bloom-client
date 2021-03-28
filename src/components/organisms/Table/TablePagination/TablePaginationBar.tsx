@@ -64,12 +64,12 @@ const TablePaginationBarNextButton: React.FC = () => {
     return state.page;
   });
 
-  const setPage = TablePaginationStore.useStoreActions((store) => {
-    return store.setPage;
-  });
-
   const numPages: number = TableStore.useStoreState(({ filteredRows }) => {
     return Math.ceil(filteredRows.length / 50);
+  });
+
+  const setPage = TablePaginationStore.useStoreActions((store) => {
+    return store.setPage;
   });
 
   const onClick = () => {

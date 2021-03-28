@@ -86,9 +86,8 @@ export type TableModel = {
   sortColumn: Action<TableModel, [string, TableSortDirection]>;
   sortDirection: TableSortDirection;
   sortColumnId: string;
-  toggleAllPageRows: Action<TableModel>;
-  toggleAllRows: Action<TableModel>;
   toggleRow: Action<TableModel, string>;
+  toggleRows: Action<TableModel, string[]>;
   updateColumn: Action<TableModel, Partial<TableColumn>>;
   setRows: Action<TableModel, TableRow[]>;
 };

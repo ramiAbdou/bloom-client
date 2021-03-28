@@ -2,6 +2,7 @@ import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
 import TableStore from './Table.store';
+import { TableRow } from './Table.types';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableHeaderCheckbox: React.FC = () => {
@@ -13,23 +14,29 @@ const TableHeaderCheckbox: React.FC = () => {
     return state.ceiling;
   });
 
+  const currentPageRowIds: string[] = TableStore.useStoreState((state) => {
+    return state.filteredRows.slice(floor, ceiling).map((row: TableRow) => {
+      return row.id;
+    });
+  });
+
   const isAllPageSelected: boolean = TableStore.useStoreState(
-    ({ filteredRows, selectedRowIds }) => {
+    ({ selectedRowIds }) => {
       return (
         !!selectedRowIds.length &&
-        filteredRows.slice(floor, ceiling).every(({ id: rowId }) => {
+        currentPageRowIds.every((rowId: string) => {
           return selectedRowIds.includes(rowId);
         })
       );
     }
   );
 
-  const toggleAllPageRows = TableStore.useStoreActions((store) => {
-    return store.toggleAllPageRows;
+  const toggleRows = TableStore.useStoreActions((store) => {
+    return store.toggleRows;
   });
 
   const onChange = () => {
-    return toggleAllPageRows();
+    toggleRows(currentPageRowIds);
   };
 
   return (

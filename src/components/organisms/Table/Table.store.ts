@@ -110,46 +110,14 @@ export const tableModel: TableModel = {
 
   sortDirection: null,
 
-  toggleAllPageRows: action((state) => {
-    return state;
-    // const { range } = state;
-
-    // const isPageSelected = [...state.filteredRows]
-    //   .slice(range[0], range[1])
-    //   .every(({ id: rowId }) => {
-    //     return [...state.selectedRowIds].includes(rowId);
-    //   });
-
-    // return {
-    //   ...state,
-    //   selectedRowIds: !isPageSelected
-    //     ? [...state.filteredRows].slice(range[0], range[1]).map(({ id }) => {
-    //         return id;
-    //       })
-    //     : []
-    // };
-  }),
-
-  toggleAllRows: action((state) => {
-    return {
-      ...state,
-      selectedRowIds:
-        state.selectedRowIds?.length === state.filteredRows?.length
-          ? []
-          : [...state.filteredRows].map(({ id }) => {
-              return id;
-            })
-    };
-  }),
-
   /**
    * Updates the rows by setting isSelected to true where the ID of the row
    * matches the ID of the row.
    */
   toggleRow: action((state, rowId: string) => {
-    const updatedSelectedRowIds = [...state.selectedRowIds];
+    const updatedSelectedRowIds: string[] = [...state.selectedRowIds];
 
-    const index = state.selectedRowIds.findIndex((value: string) => {
+    const index: number = state.selectedRowIds.findIndex((value: string) => {
       return value === rowId;
     });
 
@@ -162,6 +130,20 @@ export const tableModel: TableModel = {
               ...updatedSelectedRowIds.slice(0, index),
               ...updatedSelectedRowIds.slice(index + 1)
             ]
+    };
+  }),
+
+  toggleRows: action((state, rowIds: string[]) => {
+    const currentSelectedRowIds: string[] = [...state.selectedRowIds];
+
+    const allRowIdsSelectedAlready: boolean = rowIds.every((rowId: string) => {
+      return currentSelectedRowIds.includes(rowId);
+    });
+
+    return {
+      ...state,
+      selectedRowIds:
+        currentSelectedRowIds.length && allRowIdsSelectedAlready ? [] : rowIds
     };
   }),
 

@@ -17,6 +17,7 @@ import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import TableStore from './Table.store';
+import { TableRow } from './Table.types';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
@@ -25,12 +26,18 @@ const TableBannerButton: React.FC = () => {
     return getBannerButtonTitle(state);
   });
 
+  const allRowIds: string[] = TableStore.useStoreState((state) => {
+    return state.filteredRows.map((row: TableRow) => {
+      return row.id;
+    });
+  });
+
   const toggleRows = TableStore.useStoreActions((store) => {
-    return store.toggleAllRows;
+    return store.toggleRows;
   });
 
   const onClick = () => {
-    return toggleRows();
+    toggleRows(allRowIds);
   };
 
   return (
