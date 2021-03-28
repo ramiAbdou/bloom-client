@@ -44,7 +44,7 @@ export const getFormItemKey = ({
  *
  * This function ensures that all values are returned as arrays.
  */
-export const parseValue = (value: string | string[]): unknown => {
+export const parseValue = (value: string | string[]): any => {
   if (!value) return null;
 
   const isArray = Array.isArray(value);

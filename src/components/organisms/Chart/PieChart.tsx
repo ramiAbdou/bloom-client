@@ -59,7 +59,7 @@ const PieChart: React.FC = () => {
       <RechartsPieChart margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <Legend
           align="left"
-          content={(props: unknown) => {
+          content={(props: any) => {
             return <PieChartLegend {...props} />;
           }}
           layout="vertical"

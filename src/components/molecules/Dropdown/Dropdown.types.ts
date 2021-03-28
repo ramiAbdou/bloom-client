@@ -15,7 +15,7 @@ export const defaultOptions: DropdownOptions = {
 export interface DropdownModel {
   filteredValues: string[];
   isOpen: boolean;
-  onSelect?: (result: DropdownValue) => unknown;
+  onSelect?: (result: DropdownValue) => any;
   options: DropdownOptions;
   searchString: string;
   setSearchString: Action<DropdownModel, string>;

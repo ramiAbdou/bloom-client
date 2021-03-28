@@ -87,7 +87,7 @@ const DirectoryCardContent: React.FC = () => {
   );
 };
 
-const DirectoryCard: React.FC<unknown> = ({ data }) => {
+const DirectoryCard: React.FC<any> = ({ data }) => {
   return (
     <IdStore.Provider runtimeModel={{ id: data?.memberId }}>
       <DirectoryCardContent />

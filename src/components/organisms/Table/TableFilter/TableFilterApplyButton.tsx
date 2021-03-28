@@ -13,7 +13,7 @@ interface ProcessFilterArgs extends TableFilterArgs {
 const processFilter = (args: ProcessFilterArgs) => {
   const { columnId, operator, row, value } = args;
 
-  const rowValue: unknown = row[columnId]?.toString()?.toLowerCase();
+  const rowValue: any = row[columnId]?.toString()?.toLowerCase();
   const processedValue: string = value?.toString()?.toLowerCase();
 
   if (operator === 'includes') return rowValue?.includes(processedValue);

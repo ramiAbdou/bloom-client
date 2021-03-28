@@ -14,7 +14,7 @@ import { prepareMemberForFilter } from './Directory.util';
 import DirectoryCard from './DirectoryCard';
 
 const DirectoryCardList: React.FC = () => {
-  const members: unknown[] = useStoreState(({ db }) => {
+  const members: any[] = useStoreState(({ db }) => {
     if (!db.community?.members?.length) return [];
 
     return db.community.members

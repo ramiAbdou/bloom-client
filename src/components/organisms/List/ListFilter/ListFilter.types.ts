@@ -4,8 +4,8 @@ import { ValueProps } from '@util/constants';
 
 // ## LIST FILTER FUNCTION
 
-export type ListFilterFunction<T = unknown> = (
-  row: T | Record<string, unknown>
+export type ListFilterFunction<T = any> = (
+  row: T | Record<string, any>
 ) => boolean;
 
 export interface ListFilterArgs extends ValueProps {
@@ -14,7 +14,7 @@ export interface ListFilterArgs extends ValueProps {
 
 // ## LIST QUICK FILTER
 
-export type ListQuickFilterArgs<T = unknown> = {
+export type ListQuickFilterArgs<T = any> = {
   filterId: string;
   filter: (row: T) => boolean;
 };

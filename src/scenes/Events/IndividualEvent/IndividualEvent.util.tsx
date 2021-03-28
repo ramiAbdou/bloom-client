@@ -133,7 +133,7 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
 
   return (Object.values(totalRecord)?.sort((a, b) => {
     return sortObjects(a, b, ['joinedAt', 'rsvpdAt']);
-  }) as unknown) as TableRow[];
+  }) as any) as TableRow[];
 };
 
 /**

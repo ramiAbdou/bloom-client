@@ -23,7 +23,7 @@ import {
 } from './entities';
 
 export interface MergeEntitiesArgs {
-  data?: unknown;
+  data?: any;
   schema?: Schema;
 }
 

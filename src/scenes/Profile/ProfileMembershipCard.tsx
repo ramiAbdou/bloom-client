@@ -45,7 +45,7 @@ const ProfileMembershipContent: React.FC = () => {
     });
 
     return sortedQuestions?.map(({ id, title, type }: IQuestion) => {
-      const value: unknown = values?.find((entity: IMemberValue) => {
+      const value: any = values?.find((entity: IMemberValue) => {
         return entity?.question === id;
       })?.value;
 

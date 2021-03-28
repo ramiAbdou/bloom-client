@@ -7,7 +7,7 @@ import { getGraphQLError } from '@util/util';
 import { MutationResult } from './useMutation.types';
 import { QueryResult, UseQueryArgs } from './useQuery.types';
 
-function useManualQuery<T = unknown, S = unknown>({
+function useManualQuery<T = any, S = any>({
   fields,
   operation,
   schema,

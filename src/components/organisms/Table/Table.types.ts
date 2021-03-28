@@ -11,10 +11,10 @@ import {
 
 export interface TableColumn {
   category?: QuestionCategory;
-  format?: (value: unknown) => unknown;
+  format?: (value: any) => any;
   hideTitle?: boolean;
   id: string;
-  render?: (value: unknown) => JSX.Element;
+  render?: (value: any) => JSX.Element;
   title?: string;
   type?: QuestionType;
 }
@@ -50,9 +50,7 @@ export type OnRenameColumn = (args: OnRenameColumnArgs) => Promise<void>;
 
 // ## TABLE ROW
 
-export interface TableRow
-  extends Pick<IdProps, 'id'>,
-    Record<string, unknown> {}
+export interface TableRow extends Pick<IdProps, 'id'>, Record<string, any> {}
 
 // ## TABLE OPTIONS
 

@@ -6,7 +6,7 @@ import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { QueryResult, UseQueryArgs } from './useQuery.types';
 
-function useQuery<T = unknown, S = unknown>({
+function useQuery<T = any, S = any>({
   fields,
   operation,
   schema,

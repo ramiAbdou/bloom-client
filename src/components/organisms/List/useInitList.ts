@@ -13,7 +13,7 @@ const useInitList = (
 ): void => {
   const { items, options, prepareForFilter } = props;
 
-  const storedItems: unknown[] = ListStore.useStoreState((state) => {
+  const storedItems: any[] = ListStore.useStoreState((state) => {
     return state.items;
   });
 

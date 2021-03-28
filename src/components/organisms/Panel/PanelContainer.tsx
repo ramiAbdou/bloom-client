@@ -62,7 +62,7 @@ const PanelContainer: React.FC = ({ children }) => {
       return;
     }
 
-    const { clientX, clientY } = event;
+    const { clientX, clientY } = event as any;
     const { offsetLeft, offsetTop, offsetHeight, offsetWidth } = ref?.current;
 
     if (

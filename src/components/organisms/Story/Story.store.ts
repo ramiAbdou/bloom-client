@@ -17,7 +17,7 @@ export type StoryModel = {
   getPage: Computed<
     StoryModel,
     (pageId: string) => StoryPageProps,
-    Record<string, unknown>
+    Record<string, any>
   >;
   goForward: Action<StoryModel>;
   pageId: string;

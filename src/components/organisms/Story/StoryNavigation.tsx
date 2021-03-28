@@ -20,7 +20,7 @@ const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
   const { disabled, branches, branchId } = page;
   const title = branches[branchId]?.title;
 
-  const ref: React.LegacyRef<unknown> = useTooltip(title);
+  const ref: React.LegacyRef<any> = useTooltip(title);
 
   const onClick = () => {
     return !disabled && setCurrentPage({ branchId, id });

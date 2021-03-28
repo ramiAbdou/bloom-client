@@ -6,7 +6,7 @@ import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { MutationResult, UseMutationArgs } from './useMutation.types';
 
-function useMutation<T = unknown, S = unknown>({
+function useMutation<T = any, S = any>({
   fields,
   operation,
   schema,

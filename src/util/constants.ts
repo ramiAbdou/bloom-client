@@ -25,7 +25,7 @@ export type ShowProps = { show?: boolean };
 export type StyleProps = { style?: React.CSSProperties };
 export type TitleProps = { title?: string };
 export type UrlNameProps = { urlName?: string };
-export type ValueProps = { value?: unknown };
+export type ValueProps = { value?: any };
 
 export interface BaseProps extends ClassNameProps, ShowProps, StyleProps {}
 

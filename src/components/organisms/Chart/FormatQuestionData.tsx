@@ -109,7 +109,7 @@ const useQuestionData = (): Pick<
 
 export default ({
   questionId
-}: Pick<ChartModelInitArgs, 'questionId'>): unknown => {
+}: Pick<ChartModelInitArgs, 'questionId'>): any => {
   const currentQuestionId = Chart.useStoreState((state) => {
     return state.questionId;
   });

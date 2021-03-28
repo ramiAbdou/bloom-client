@@ -32,11 +32,11 @@ const ProfileMembershipForm: React.FC = () => {
     return questions?.map((question: IQuestion) => {
       const { id, options, type } = question;
 
-      const value: unknown = data?.find((entity: IMemberValue) => {
+      const value: any = data?.find((entity: IMemberValue) => {
         return entity?.question === id;
       })?.value;
 
-      let parsedValue: unknown = value;
+      let parsedValue: any = value;
 
       if (type === QuestionType.MULTIPLE_SELECT) {
         parsedValue = value?.split(',');

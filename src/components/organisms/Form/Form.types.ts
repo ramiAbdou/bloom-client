@@ -34,9 +34,9 @@ export interface FormItemData
     Partial<FormQuestion>,
     ShowProps {
   error?: string;
-  metadata?: unknown;
+  metadata?: any;
   questionId?: string;
-  value?: unknown;
+  value?: any;
   validate?: FormValidate;
 }
 
@@ -55,7 +55,7 @@ export interface FormProps extends ClassNameProps, ShowProps {
   questions?: FormItemData[];
   options?: FormOptions;
   onSubmit?: OnFormSubmitFunction;
-  onSubmitDeps?: unknown[];
+  onSubmitDeps?: any[];
   spacing?: 'md' | 'lg';
 }
 

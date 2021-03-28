@@ -5,7 +5,7 @@ export type TooltipPosition = 'left' | 'middle' | 'right';
 const useTooltip = (
   tooltip: string,
   position: TooltipPosition = 'middle'
-): React.MutableRefObject<HTMLElement> => {
+): React.MutableRefObject<any> => {
   const ref: React.MutableRefObject<HTMLElement> = useRef(null);
 
   useEffect(() => {

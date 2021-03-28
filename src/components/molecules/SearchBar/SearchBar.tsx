@@ -8,7 +8,7 @@ import { cx } from '@util/util';
 
 export interface SearchBarProps extends BaseProps, ValueProps {
   placeholder?: string;
-  onChange: (value: string) => unknown;
+  onChange: (value: string) => any;
 }
 
 const SearchBarClearButton: React.FC<Partial<SearchBarProps>> = (props) => {

@@ -9,7 +9,7 @@ import { FormItemData } from './Form.types';
 const useInitFormItem = (props: FormItemData): void => {
   const key = getFormItemKey(props);
 
-  const storedValue: unknown = FormStore.useStoreState(({ items }) => {
+  const storedValue: any = FormStore.useStoreState(({ items }) => {
     return items[key]?.value;
   });
 

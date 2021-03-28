@@ -19,7 +19,7 @@ export type PanelAlign =
 export interface PanelData extends BaseProps {
   align?: PanelAlign;
   id: PanelType;
-  metadata?: unknown;
+  metadata?: any;
   scrollId?: string;
   size?: 'md' | 'lg';
   useMetadataInId?: boolean;

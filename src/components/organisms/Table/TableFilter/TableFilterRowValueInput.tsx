@@ -22,7 +22,7 @@ const TableFilterRowValueInput: React.FC = () => {
     return db.byQuestionId[columnId];
   }, deepequal);
 
-  const storedValue: unknown = TableFilterStore.useStoreState((store) => {
+  const storedValue: any = TableFilterStore.useStoreState((store) => {
     return store.filters[id]?.value;
   });
 

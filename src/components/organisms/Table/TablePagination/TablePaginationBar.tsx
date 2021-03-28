@@ -95,7 +95,7 @@ const TablePaginationBar: React.FC = () => {
     <Row>
       <TablePaginationBarBackButton />
 
-      {nums.map((value: unknown) => {
+      {nums.map((value: any) => {
         return <TablePaginationBarNumber key={nanoid()} value={value} />;
       })}
 
