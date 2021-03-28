@@ -55,7 +55,14 @@ export const formModel: FormModel = {
 
     if (disableValidation) return true;
     if (!Object.keys(items)?.length) return false;
-    if (Object.values(items).every(({ value }) => !value)) return false;
+
+    const allValuesAreEmpty: boolean = Object.values(items).every(
+      ({ value }) => {
+        return !value;
+      }
+    );
+
+    if (allValuesAreEmpty) return false;
 
     return Object.values(items).every(
       ({ required, value, validate }: FormItemData) => {
@@ -78,13 +85,17 @@ export const formModel: FormModel = {
 
   options: null,
 
-  setError: action((state, error: string) => ({ ...state, error })),
+  setError: action((state, error: string) => {
+    return { ...state, error };
+  }),
 
   // Typically set when a form is submitting an async function.
-  setIsLoading: action((state, isLoading: boolean) => ({
-    ...state,
-    isLoading
-  })),
+  setIsLoading: action((state, isLoading: boolean) => {
+    return {
+      ...state,
+      isLoading
+    };
+  }),
 
   setItem: action(({ items, ...state }, item: Partial<FormItemData>) => {
     const key: string = getFormItemKey(item);
@@ -92,10 +103,12 @@ export const formModel: FormModel = {
     return { ...state, items: { ...items, ...updatedItems } };
   }),
 
-  setItemErrors: action((state, items: Record<string, FormItemData>) => ({
-    ...state,
-    items
-  })),
+  setItemErrors: action((state, items: Record<string, FormItemData>) => {
+    return {
+      ...state,
+      items
+    };
+  }),
 
   setValue: action(({ items, ...state }, { key, value }: SetValueArgs) => {
     items[key].value = value;
@@ -105,7 +118,9 @@ export const formModel: FormModel = {
 };
 
 const FormStore = createContextStore<FormModel>(
-  ({ options, ...runtimeModel }: FormModel) => ({ ...runtimeModel, options }),
+  ({ options, ...runtimeModel }: FormModel) => {
+    return { ...runtimeModel, options };
+  },
   { disableImmer: true }
 );
 

@@ -26,7 +26,9 @@ const useBackupCommunity = (): boolean => {
 
   const isMember: boolean = useStoreState(({ db }) => {
     return db.user?.members
-      ?.map((memberId: string) => db.byMemberId[memberId])
+      ?.map((memberId: string) => {
+        return db.byMemberId[memberId];
+      })
       ?.some((member: IMember) => {
         const community: ICommunity = db.byCommunityId[member.community];
         return urlName === community.urlName;

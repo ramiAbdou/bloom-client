@@ -17,15 +17,25 @@ import { GetEventArgs } from '../Events.types';
 const useInitIndividualEvent = (): Partial<QueryResult> => {
   const { eventId } = useParams() as { eventId: string };
 
-  const communityId = useStoreState(({ db }) => db.community?.id);
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const communityId: string = useStoreState(({ db }) => {
+    return db.community?.id;
+  });
 
-  const isMembersOnly = useStoreState(
-    ({ db }) => db.event?.privacy === EventPrivacy.MEMBERS_ONLY
-  );
+  const isMember: boolean = useStoreState(({ db }) => {
+    return db.isMember;
+  });
 
-  const setActive = useStoreActions(({ db }) => db.setActive);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const isMembersOnly: boolean = useStoreState(({ db }) => {
+    return db.event?.privacy === EventPrivacy.MEMBERS_ONLY;
+  });
+
+  const setActive = useStoreActions(({ db }) => {
+    return db.setActive;
+  });
+
+  const showModal = useStoreActions(({ modal }) => {
+    return modal.showModal;
+  });
 
   const { data: data1, loading: loading1 } = useQuery<any, GetEventArgs>({
     fields: [

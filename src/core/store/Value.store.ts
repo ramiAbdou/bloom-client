@@ -6,10 +6,15 @@ interface ValueModel<T = string> {
 }
 
 const ValueStore = createContextStore<ValueModel>(
-  (runtimeModel) => ({
-    ...runtimeModel,
-    setValue: action((state, value) => ({ ...state, value }))
-  }),
+  (runtimeModel) => {
+    return {
+      ...runtimeModel,
+
+      setValue: action((state, value) => {
+        return { ...state, value };
+      })
+    };
+  },
   { disableImmer: true }
 );
 

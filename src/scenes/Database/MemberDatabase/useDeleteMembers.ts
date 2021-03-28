@@ -11,9 +11,9 @@ import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 
 const useDeleteMembers = (): OnFormSubmitFunction => {
-  const memberIds: string[] = TableStore.useStoreState(
-    ({ selectedRowIds }) => selectedRowIds
-  );
+  const memberIds: string[] = TableStore.useStoreState(({ selectedRowIds }) => {
+    return selectedRowIds;
+  });
 
   const [deleteMembers] = useMutation<IMember[], MemberIdsArgs>({
     fields: ['deletedAt', 'id'],

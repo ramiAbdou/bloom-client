@@ -11,7 +11,9 @@ import AddMemberStore from './AddMember.store';
 import { AddMemberInput, AddMembersArgs } from './AddMember.types';
 
 const useInviteMembers = (): OnFormSubmitFunction => {
-  const admin = AddMemberStore.useStoreState((state) => state.admin);
+  const admin: boolean = AddMemberStore.useStoreState((state) => {
+    return state.admin;
+  });
 
   const [inviteMembers] = useMutation<any, AddMembersArgs>({
     fields: ['id'],
