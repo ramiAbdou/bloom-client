@@ -23,7 +23,6 @@
     },
     "resolveJsonModule": true,
     "sourceMap": true,
-    "strictPropertyInitialization": false,
     "typeRoots": ["./node_modules/@types", "./src/types.d.ts"]
   }
 }

@@ -18,7 +18,7 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
   });
 
   const hasCheckbox: boolean = TableStore.useStoreState(({ options }) => {
-    return options.hasCheckbox;
+    return !!options.hasCheckbox;
   });
 
   const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) => {

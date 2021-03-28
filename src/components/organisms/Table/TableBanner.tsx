@@ -45,13 +45,15 @@ const TableBannerMessage: React.FC = () => {
   return <p>{message}</p>;
 };
 
-const TableBanner: React.FC = () => (
-  <Card className="mb-xs--nlc">
-    <Row justify="center" spacing="xs">
-      <TableBannerMessage />
-      <TableBannerButton />
-    </Row>
-  </Card>
-);
+const TableBanner: React.FC = () => {
+  return (
+    <Card className="mb-xs--nlc">
+      <Row justify="center" spacing="xs">
+        <TableBannerMessage />
+        <TableBannerButton />
+      </Row>
+    </Card>
+  );
+};
 
 export default TableBanner;

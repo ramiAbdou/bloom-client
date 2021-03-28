@@ -123,11 +123,10 @@ interface GetTableCellClassArgs {
  *
  * @param type Question's type (ie: SHORT_TEXT).
  */
-export const getTableCellClass = ({
-  category,
-  type
-}: GetTableCellClassArgs) => {
-  const isDuesStatus = category === QuestionCategory.DUES_STATUS;
+export const getTableCellClass = (args: GetTableCellClassArgs): string => {
+  const { category, type } = args;
+
+  const isDuesStatus: boolean = category === QuestionCategory.DUES_STATUS;
 
   return cx('', {
     'o-table-cell--lg': type === QuestionType.LONG_TEXT,
@@ -153,15 +152,14 @@ interface RunFiltersArgs {
  * Returns the filtered Table rows based on the active filters as well as
  * the Table search string.
  */
-export const runFilters = ({
-  filters,
-  searchString,
-  state
-}: RunFiltersArgs) => {
-  const rows: TableRow[] = [...state.rows];
+export const runFilters = (args: RunFiltersArgs): TableRow[] => {
+  const filters: Record<string, TableFilter> =
+    args.filters ?? args.state.filters;
 
-  filters = filters ?? state.filters;
-  searchString = searchString ?? state.searchString;
+  const searchString: string = args.searchString ?? args.state.searchString;
+  const { state } = args;
+
+  const rows: TableRow[] = [...state.rows];
 
   const filteredRows: TableRow[] = rows?.filter((row) => {
     return Object.values(filters)?.every((tableFilter: TableFilter) => {

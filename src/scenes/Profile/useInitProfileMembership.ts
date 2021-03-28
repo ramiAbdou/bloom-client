@@ -6,7 +6,9 @@ import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitProfileMembership = (): QueryResult<IMemberValue[]> => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => {
+    return db.member.id;
+  });
 
   const result: QueryResult<IMemberValue[]> = useQuery<IMemberValue[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],

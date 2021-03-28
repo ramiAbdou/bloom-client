@@ -9,18 +9,18 @@ import { TableColumn } from '../Table.types';
 import { getTableCellClass } from '../Table.util';
 import TableHeaderCheckbox from './TableHeaderCheckbox';
 
-interface HeaderCellProps extends TableColumn {
+interface TableHeaderCellProps extends TableColumn {
   i: number;
 }
 
-const HeaderCell = ({
+const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   category,
   hideTitle,
   i,
   type,
   id,
   title
-}: HeaderCellProps) => {
+}) => {
   const alignEndRight = TableStore.useStoreState(({ columns, options }) => {
     const isLastCell = i === columns.length - 1;
     return options.alignEndRight && isLastCell;
@@ -79,4 +79,4 @@ const HeaderCell = ({
   );
 };
 
-export default HeaderCell;
+export default TableHeaderCell;

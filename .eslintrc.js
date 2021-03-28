@@ -28,6 +28,7 @@ module.exports = {
         varsIgnorePattern: '_' // Allow underscores not to be treated as vars.
       }
     ],
+    'arrow-body-style': ['error', 'always'],
     curly: ['error', 'multi-line'],
     'import/newline-after-import': 2,
     'import/no-extraneous-dependencies': 0,

@@ -9,8 +9,13 @@ import { QueryEvent } from '@util/constants.events';
 import { GetEventArgs } from '../Events.types';
 
 const useInitIndividualEventTable = (): Partial<QueryResult> => {
-  const eventId = useStoreState(({ db }) => db.event?.id);
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
+  const eventId: string = useStoreState(({ db }) => {
+    return db.event?.id;
+  });
+
+  const isAdmin: boolean = useStoreState(({ db }) => {
+    return !!db.member?.role;
+  });
 
   const [getEventAttendees, { loading: loading1 }] = useManualQuery<
     IEvent,

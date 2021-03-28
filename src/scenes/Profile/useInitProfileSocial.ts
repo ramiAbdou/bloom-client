@@ -6,7 +6,9 @@ import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitProfileSocial = (): QueryResult<IMemberSocials> => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => {
+    return db.member.id;
+  });
 
   const result: QueryResult<IMemberSocials> = useQuery<IMemberSocials>({
     fields: ['facebookUrl', 'instagramUrl', 'id', 'linkedInUrl', 'twitterUrl'],

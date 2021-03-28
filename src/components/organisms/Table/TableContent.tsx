@@ -1,11 +1,13 @@
+import hash from 'object-hash';
 import React from 'react';
 
 import Show from '@containers/Show';
 import TableStore from './Table.store';
+import { TableRow as TableRowProps } from './Table.types';
 import TableBanner from './TableBanner';
-import TableBodyContainer from './TableBody';
-import TableHeaderContainer from './TableHeader';
+import TableHeaderRow from './TableHeaderRow/TableHeaderRow';
 import TablePagination from './TablePagination/TablePagination';
+import TableRow from './TableRow/TableRow';
 
 interface TableContentProps {
   emptyMessage?: string;
@@ -19,6 +21,28 @@ const TableContentEmptyMessage: React.FC<
     <Show show={!!emptyMessage}>
       <p>{emptyMessage}</p>
     </Show>
+  );
+};
+
+const TableBody: React.FC = () => {
+  const filteredRows: TableRowProps = TableStore.useStoreState((state) => {
+    return state.filteredRows;
+  });
+
+  const floor: number = TableStore.useStoreState((state) => state.range[0]);
+  const ceiling: number = TableStore.useStoreState((state) => state.range[1]);
+
+  // Fetching these values forces React to re-render, which in the case of
+  // sorting, we do want to re-render our data.
+  TableStore.useStoreState((state) => state.sortColumnId);
+  TableStore.useStoreState((state) => state.sortDirection);
+
+  return (
+    <tbody>
+      {filteredRows.slice(floor, ceiling).map((row: TableRowProps) => (
+        <TableRow key={hash(row)} {...row} />
+      ))}
+    </tbody>
   );
 };
 
@@ -52,8 +76,8 @@ const TableContent: React.FC<TableContentProps> = ({
       <Show show={!emptyMessage}>
         <div id="o-table-ctr" style={{ maxHeight: small && '45vh' }}>
           <table className="o-table">
-            <TableHeaderContainer />
-            <TableBodyContainer />
+            <TableHeaderRow />
+            <TableBody />
           </table>
         </div>
       </Show>
