@@ -8,12 +8,12 @@ import PaginationBar from './TablePaginationBar';
 import useUpdateRange from './useUpdateRange';
 
 const TablePaginationMessage: React.FC = () => {
-  const floor: number = TablePaginationStore.useStoreState(({ range }) => {
-    return range[0] + 1;
+  const floor: number = TablePaginationStore.useStoreState((state) => {
+    return state.floor + 1;
   });
 
-  const ceiling: number = TablePaginationStore.useStoreState(({ range }) => {
-    return range[1];
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
+    return state.ceiling;
   });
 
   const rowsCount: number = TableStore.useStoreState(({ filteredRows }) => {

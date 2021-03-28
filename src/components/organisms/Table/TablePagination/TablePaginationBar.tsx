@@ -8,9 +8,9 @@ import Row from '@containers/Row/Row';
 import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 import TableStore from '../Table.store';
-import { TablePaginationValue } from '../Table.types';
 import { getPaginationValues } from '../Table.util';
 import TablePaginationStore from './TablePagination.store';
+import { TablePaginationValue } from './TablePagination.types';
 
 const TablePaginationBarNumber: React.FC<ValueProps> = ({ value }) => {
   const active: boolean = TablePaginationStore.useStoreState(({ page }) => {

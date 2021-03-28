@@ -42,11 +42,11 @@ const TableBannerButton: React.FC = () => {
 
 const TableBannerMessage: React.FC = () => {
   const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.range[0];
+    return state.floor;
   });
 
   const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.range[1];
+    return state.ceiling;
   });
 
   const message: string = TableStore.useStoreState((state) => {

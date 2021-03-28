@@ -35,10 +35,6 @@ export type TableQuickFilterArgs = {
   filter: (rows: TableRow) => boolean;
 };
 
-// ## TABLE PAGINATION
-
-export type TablePaginationValue = number | '...';
-
 // ## TABLE RENAME COLUMN
 
 export type OnRenameColumnArgs = {

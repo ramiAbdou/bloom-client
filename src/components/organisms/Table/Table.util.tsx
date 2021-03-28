@@ -3,13 +3,8 @@ import { matchSorter } from 'match-sorter';
 
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
-import {
-  TableColumn,
-  TableFilter,
-  TableModel,
-  TablePaginationValue,
-  TableRow
-} from './Table.types';
+import { TableColumn, TableFilter, TableModel, TableRow } from './Table.types';
+import { TablePaginationValue } from './TablePagination/TablePagination.types';
 
 /**
  * Returns the title of the TableBannerButton based on the current state of

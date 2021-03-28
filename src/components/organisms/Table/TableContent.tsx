@@ -33,11 +33,11 @@ const TableBody: React.FC = () => {
   });
 
   const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.range[0];
+    return state.floor;
   });
 
   const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.range[1];
+    return state.ceiling;
   });
 
   // Fetching these values forces React to re-render, which in the case of
@@ -75,11 +75,11 @@ const TableContent: React.FC<TableContentProps> = ({
   });
 
   const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.range[0];
+    return state.floor;
   });
 
   const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.range[1];
+    return state.ceiling;
   });
 
   const isAllPageSelected: boolean = TableStore.useStoreState(

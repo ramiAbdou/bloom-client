@@ -3,9 +3,9 @@ import { action, createContextStore } from 'easy-peasy';
 import { TablePaginationModel } from './TablePagination.types';
 
 const TablePaginationStore = createContextStore<TablePaginationModel>({
+  ceiling: 50,
+  floor: 0,
   page: 0,
-
-  range: [0, 50],
 
   setPage: action((state, page: number) => {
     // When going to a new page, we need to ensure that the scroll position is
@@ -16,7 +16,7 @@ const TablePaginationStore = createContextStore<TablePaginationModel>({
   }),
 
   setRange: action((state, range: [number, number]) => {
-    return { ...state, range };
+    return { ...state, ceiling: range[1], floor: range[0] };
   })
 });
 

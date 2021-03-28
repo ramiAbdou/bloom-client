@@ -5,17 +5,19 @@ import TableStore from './Table.store';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableHeaderCheckbox: React.FC = () => {
-  const range: [number, number] = TablePaginationStore.useStoreState(
-    (state) => {
-      return state.range;
-    }
-  );
+  const floor: number = TablePaginationStore.useStoreState((state) => {
+    return state.floor;
+  });
+
+  const ceiling: number = TablePaginationStore.useStoreState((state) => {
+    return state.ceiling;
+  });
 
   const isAllPageSelected: boolean = TableStore.useStoreState(
     ({ filteredRows, selectedRowIds }) => {
       return (
         !!selectedRowIds.length &&
-        filteredRows.slice(range[0], range[1]).every(({ id: rowId }) => {
+        filteredRows.slice(floor, ceiling).every(({ id: rowId }) => {
           return selectedRowIds.includes(rowId);
         })
       );
