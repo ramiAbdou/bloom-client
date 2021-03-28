@@ -6,9 +6,10 @@ import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
-import TableFilterStore from './TableFilter.store';
+import TableFilterStore from './TableFilterPanel.store';
+import { TableFilterOperatorType } from './TableFilterPanel.types';
 
-const TableFilterRowQuestionDropdown: React.FC = () => {
+const TableFilterPanelRowQuestionDropdown: React.FC = () => {
   const id: string = IdStore.useStoreState((state) => {
     return state.id;
   });
@@ -71,7 +72,13 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
       return question.title === result;
     })?.id;
 
-    setFilter({ columnId: updatedColumnId, id, operator: 'is', value: null });
+    setFilter({
+      columnId: updatedColumnId,
+      id,
+      operator: TableFilterOperatorType.IS,
+      value: null
+    });
+
     setQuestionId(updatedColumnId);
   };
 
@@ -91,4 +98,4 @@ const TableFilterRowQuestionDropdown: React.FC = () => {
   );
 };
 
-export default TableFilterRowQuestionDropdown;
+export default TableFilterPanelRowQuestionDropdown;

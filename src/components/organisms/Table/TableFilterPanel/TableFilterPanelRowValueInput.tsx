@@ -7,9 +7,9 @@ import { IQuestion } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
-import TableFilterStore from './TableFilter.store';
+import TableFilterStore from './TableFilterPanel.store';
 
-const TableFilterRowValueInput: React.FC = () => {
+const TableFilterPanelRowValueInput: React.FC = () => {
   const id: string = IdStore.useStoreState((state) => {
     return state.id;
   });
@@ -60,4 +60,4 @@ const TableFilterRowValueInput: React.FC = () => {
   );
 };
 
-export default TableFilterRowValueInput;
+export default TableFilterPanelRowValueInput;

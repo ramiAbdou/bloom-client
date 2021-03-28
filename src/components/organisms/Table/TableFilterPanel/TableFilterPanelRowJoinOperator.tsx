@@ -2,10 +2,10 @@ import React from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
-import TableFilterStore from './TableFilter.store';
-import { TableFilterJoinOperatorType } from './TableFilter.types';
+import TableFilterStore from './TableFilterPanel.store';
+import { TableFilterJoinOperatorType } from './TableFilterPanel.types';
 
-const TableFilterRowJoinOperator: React.FC = () => {
+const TableFilterPanelRowJoinOperator: React.FC = () => {
   const id: string = IdStore.useStoreState((state) => {
     return state.id;
   });
@@ -41,4 +41,4 @@ const TableFilterRowJoinOperator: React.FC = () => {
   );
 };
 
-export default TableFilterRowJoinOperator;
+export default TableFilterPanelRowJoinOperator;

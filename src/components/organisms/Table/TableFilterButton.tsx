@@ -6,17 +6,19 @@ import useTooltip from '@hooks/useTooltip';
 import { useStoreActions } from '@store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
-import TableStore from '../Table.store';
-import TableFilterStore from './TableFilter.store';
+import TableStore from './Table.store';
+import TableFilterPanelStore from './TableFilterPanel/TableFilterPanel.store';
 
 const TableFilterButtonNumActiveTag: React.FC = () => {
   const isCustomFilterApplied: boolean = TableStore.useStoreState((state) => {
     return Object.keys(state.filters).includes('FILTER_CUSTOM');
   });
 
-  const numActiveFilters: number = TableFilterStore.useStoreState((state) => {
-    return state.filterIds.length;
-  });
+  const numActiveFilters: number = TableFilterPanelStore.useStoreState(
+    (state) => {
+      return state.filterIds.length;
+    }
+  );
 
   if (!isCustomFilterApplied || numActiveFilters === 0) return null;
   return <div>{numActiveFilters}</div>;

@@ -2,9 +2,9 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import TableStore from '../Table.store';
-import TableFilterStore from './TableFilter.store';
+import TableFilterStore from './TableFilterPanel.store';
 
-const TableFilterClearButton: React.FC = () => {
+const TableFilterPanelClearButton: React.FC = () => {
   const clearCustomFilters = TableFilterStore.useStoreActions((store) => {
     return store.clearFilters;
   });
@@ -25,4 +25,4 @@ const TableFilterClearButton: React.FC = () => {
   );
 };
 
-export default TableFilterClearButton;
+export default TableFilterPanelClearButton;

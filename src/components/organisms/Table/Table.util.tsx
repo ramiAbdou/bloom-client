@@ -4,7 +4,7 @@ import { matchSorter } from 'match-sorter';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
 import { TableColumn, TableModel, TableRow } from './Table.types';
-import { TableFilterFunction } from './TableFilter/TableFilter.types';
+import { TableFilterFunction } from './TableFilterPanel/TableFilterPanel.types';
 import { TablePaginationValue } from './TablePagination/TablePagination.types';
 
 /**

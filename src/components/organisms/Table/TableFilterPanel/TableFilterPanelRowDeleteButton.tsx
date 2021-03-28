@@ -3,9 +3,9 @@ import { IoTrash } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
 import IdStore from '@store/Id.store';
-import TableFilterStore from './TableFilter.store';
+import TableFilterStore from './TableFilterPanel.store';
 
-const TableFilterRowDeleteButton: React.FC = () => {
+const TableFilterPanelRowDeleteButton: React.FC = () => {
   const id: string = IdStore.useStoreState((state) => {
     return state.id;
   });
@@ -14,8 +14,8 @@ const TableFilterRowDeleteButton: React.FC = () => {
     return state.filterIds?.length >= 2;
   });
 
-  const removeFilter = TableFilterStore.useStoreActions((store) => {
-    return store.removeFilter;
+  const removeFilter = TableFilterStore.useStoreActions((state) => {
+    return state.removeFilter;
   });
 
   const onClick = () => {
@@ -29,4 +29,4 @@ const TableFilterRowDeleteButton: React.FC = () => {
   );
 };
 
-export default TableFilterRowDeleteButton;
+export default TableFilterPanelRowDeleteButton;

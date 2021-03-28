@@ -3,7 +3,7 @@ import { Action } from 'easy-peasy';
 import { IdProps, ValueProps } from '@util/constants';
 import { TableRow } from '../Table.types';
 
-export type TableFilterFunction = (rows: TableRow) => boolean;
+export type TableFilterFunction = (row: TableRow) => boolean;
 
 export enum TableFilterOperatorType {
   INCLUDES = 'includes',
@@ -21,13 +21,17 @@ export enum TableFilterJoinOperatorType {
   OR = 'or'
 }
 
-export interface TableFilterModel {
-  addFilter: Action<TableFilterModel>;
-  clearFilters: Action<TableFilterModel>;
+export interface TableFilterPanelModel {
+  /**
+   * Adds a new filter to the query that is completely empty. Defaults to
+   * the TableFilterOperatorType.IS operator.
+   */
+  addEmptyFilter: Action<TableFilterPanelModel>;
+
   filterIds: string[];
   filters: Record<string, TableFilterArgs>;
   joinOperator: TableFilterJoinOperatorType;
-  removeFilter: Action<TableFilterModel, string>;
-  setFilter: Action<TableFilterModel, Partial<TableFilterArgs>>;
-  setJoinOperator: Action<TableFilterModel, TableFilterJoinOperatorType>;
+  removeFilter: Action<TableFilterPanelModel, string>;
+  setFilter: Action<TableFilterPanelModel, Partial<TableFilterArgs>>;
+  setJoinOperator: Action<TableFilterPanelModel, TableFilterJoinOperatorType>;
 }

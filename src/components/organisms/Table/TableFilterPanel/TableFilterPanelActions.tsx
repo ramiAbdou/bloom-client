@@ -3,16 +3,16 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import { useStoreActions } from '@store/Store';
-import TableFilterStore from './TableFilter.store';
-import TableFilterApplyButton from './TableFilterApplyButton';
+import TableFilterPanelStore from './TableFilterPanel.store';
+import TableFilterPanelApplyButton from './TableFilterPanelApplyButton';
 
-const TableFilterCloseButton: React.FC = () => {
+const TableFilterPanelCloseButton: React.FC = () => {
   const closePanel = useStoreActions(({ panel }) => {
     return panel.closePanel;
   });
 
   const onClick = () => {
-    return closePanel();
+    closePanel();
   };
 
   return (
@@ -22,17 +22,17 @@ const TableFilterCloseButton: React.FC = () => {
   );
 };
 
-const TableFilterActions: React.FC = () => {
-  const hasFilters: boolean = TableFilterStore.useStoreState((store) => {
+const TableFilterPanelActions: React.FC = () => {
+  const hasFilters: boolean = TableFilterPanelStore.useStoreState((store) => {
     return !!Object.values(store.filters)?.length;
   });
 
   return (
     <Row show={hasFilters} spacing="xs">
-      <TableFilterApplyButton />
-      <TableFilterCloseButton />
+      <TableFilterPanelApplyButton />
+      <TableFilterPanelCloseButton />
     </Row>
   );
 };
 
-export default TableFilterActions;
+export default TableFilterPanelActions;

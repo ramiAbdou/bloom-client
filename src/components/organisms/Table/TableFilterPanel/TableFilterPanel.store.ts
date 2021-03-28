@@ -4,31 +4,19 @@ import { nanoid } from 'nanoid';
 import {
   TableFilterArgs,
   TableFilterJoinOperatorType,
-  TableFilterModel,
-  TableFilterOperatorType
-} from './TableFilter.types';
+  TableFilterOperatorType,
+  TableFilterPanelModel
+} from './TableFilterPanel.types';
 
-const tableFilterModel: TableFilterModel = {
-  addFilter: action((state) => {
-    const id = nanoid();
+const tableFilterPanelModel: TableFilterPanelModel = {
+  addEmptyFilter: action((state) => {
+    const id: string = nanoid();
 
     return {
       ...state,
       filterIds: [...state.filterIds, id],
       filters: {
         ...state.filters,
-        [id]: { columnId: null, operator: TableFilterOperatorType.IS }
-      }
-    };
-  }),
-
-  clearFilters: action((state) => {
-    const id = nanoid();
-
-    return {
-      ...state,
-      filterIds: [id],
-      filters: {
         [id]: { columnId: null, operator: TableFilterOperatorType.IS }
       }
     };
@@ -77,13 +65,13 @@ const tableFilterModel: TableFilterModel = {
   )
 };
 
-const TableFilterStore = createContextStore<TableFilterModel>(
+const TableFilterStore = createContextStore<TableFilterPanelModel>(
   (runtimeModel) => {
-    const id = nanoid();
+    const id: string = nanoid();
 
     return {
       ...runtimeModel,
-      ...tableFilterModel,
+      ...tableFilterPanelModel,
       filterIds: [id],
       filters: {
         [id]: { columnId: null, operator: TableFilterOperatorType.IS }

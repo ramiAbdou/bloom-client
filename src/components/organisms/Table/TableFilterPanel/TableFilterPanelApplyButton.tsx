@@ -4,8 +4,8 @@ import Button from '@atoms/Button/Button';
 import { useStoreActions } from '@store/Store';
 import TableStore from '../Table.store';
 import { TableRow } from '../Table.types';
-import TableFilterStore from './TableFilter.store';
-import { TableFilterArgs, TableFilterFunction } from './TableFilter.types';
+import TableFilterPanelStore from './TableFilterPanel.store';
+import { TableFilterArgs, TableFilterFunction } from './TableFilterPanel.types';
 
 interface ProcessFilterArgs extends TableFilterArgs {
   row: TableRow;
@@ -23,18 +23,20 @@ const processFilter = (args: ProcessFilterArgs) => {
   return false;
 };
 
-const TableFilterApplyButton: React.FC = () => {
+const TableFilterPanelApplyButton: React.FC = () => {
   const closePanel = useStoreActions(({ panel }) => {
     return panel.closePanel;
   });
 
-  const joinOperator = TableFilterStore.useStoreState((store) => {
+  const joinOperator = TableFilterPanelStore.useStoreState((store) => {
     return store.joinOperator;
   });
 
-  const filters: TableFilterArgs[] = TableFilterStore.useStoreState((store) => {
-    return Object.values(store.filters);
-  });
+  const filters: TableFilterArgs[] = TableFilterPanelStore.useStoreState(
+    (store) => {
+      return Object.values(store.filters);
+    }
+  );
 
   const setFilter = TableStore.useStoreActions((store) => {
     return store.setFilter;
@@ -64,4 +66,4 @@ const TableFilterApplyButton: React.FC = () => {
   );
 };
 
-export default TableFilterApplyButton;
+export default TableFilterPanelApplyButton;
