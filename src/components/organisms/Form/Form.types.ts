@@ -2,6 +2,7 @@ import { ActionCreator, State } from 'easy-peasy';
 
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { DbModel } from '@store/Db/Db.types';
+import { IPaymentMethod } from '@store/Db/entities';
 import {
   ClassNameProps,
   QuestionCategory,
@@ -36,7 +37,7 @@ export interface FormItemData
   error?: string;
   metadata?: any;
   questionId?: string;
-  value?: any;
+  value?: string | string[] | boolean | number | IPaymentMethod;
   validate?: FormValidate;
 }
 

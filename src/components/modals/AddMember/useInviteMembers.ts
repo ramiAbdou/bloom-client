@@ -38,7 +38,7 @@ const useInviteMembers = (): OnFormSubmitFunction => {
         [category === QuestionCategory.FIRST_NAME, { firstName: value }],
         [category === QuestionCategory.LAST_NAME, { lastName: value }],
         [category === QuestionCategory.EMAIL, { email: value }],
-        [true, { isAdmin: admin || !!value.length }]
+        [true, { isAdmin: admin || !!(value as string[]).length }]
       ]);
 
       return { ...acc, [inputId]: { ...acc[inputId], ...formattedValue } };

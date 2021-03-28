@@ -42,7 +42,7 @@ const ApplicationPaymentForm: React.FC = () => {
 
 const ApplicationPaymentSection: React.FC = () => {
   const selectedTypeName: string = StoryStore.useStoreState(({ items }) => {
-    return items.MEMBER_PLAN?.value;
+    return items.MEMBER_PLAN?.value as string;
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {

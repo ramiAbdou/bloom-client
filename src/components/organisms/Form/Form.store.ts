@@ -71,8 +71,8 @@ export const formModel: FormModel = {
           if (!Array.isArray(value) && !value) return false;
         }
 
-        if (validate === 'IS_EMAIL') return validator.isEmail(value);
-        if (validate === 'IS_URL') return validator.isURL(value);
+        if (validate === 'IS_EMAIL') return validator.isEmail(value as string);
+        if (validate === 'IS_URL') return validator.isURL(value as string);
         return true;
       }
     );

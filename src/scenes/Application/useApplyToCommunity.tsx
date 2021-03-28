@@ -5,7 +5,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
-import { IMemberPlan, IQuestion } from '@store/Db/entities';
+import { IMemberPlan, IPaymentMethod, IQuestion } from '@store/Db/entities';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 
@@ -39,8 +39,11 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
       return question?.category === QuestionCategory.EMAIL;
     });
 
-    const email = storyItems[emailId]?.value;
-    const { paymentMethodId } = storyItems.CREDIT_OR_DEBIT_CARD?.value ?? {};
+    const email: string = storyItems[emailId]?.value as string;
+
+    const paymentMethodId: string = (storyItems.CREDIT_OR_DEBIT_CARD
+      ?.value as IPaymentMethod)?.paymentMethodId as string;
+
     const typeName = storyItems.MEMBER_PLAN?.value;
 
     const memberPlanId = types.find((type) => {
@@ -55,7 +58,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
         return {
           category,
           questionId: id,
-          value: parseValue(value)
+          value: parseValue(value as string[])
         };
       });
 

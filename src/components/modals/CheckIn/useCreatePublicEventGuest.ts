@@ -33,9 +33,9 @@ const useCreatePublicEventGuest = (): OnFormSubmitFunction => {
   });
 
   const onSubmit = async ({ goForward, items, setError }: OnFormSubmitArgs) => {
-    const firstName = items.FIRST_NAME?.value;
-    const lastName = items.LAST_NAME?.value;
-    const email = items.EMAIL?.value;
+    const firstName: string = items.FIRST_NAME?.value as string;
+    const lastName: string = items.LAST_NAME?.value as string;
+    const email: string = items.EMAIL?.value as string;
 
     const { error } = await createEventGuest({
       email,

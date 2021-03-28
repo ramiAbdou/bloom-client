@@ -15,7 +15,7 @@ import ApplicationPaymentForm from './ApplicationPaymentSection';
 
 const ApplicationChooseTypeButton: React.FC = () => {
   const selectedTypeName: string = FormStore.useStoreState(({ items }) => {
-    return items.MEMBER_PLAN?.value;
+    return items.MEMBER_PLAN?.value as string;
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {

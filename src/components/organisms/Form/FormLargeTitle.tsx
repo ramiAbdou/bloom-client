@@ -47,7 +47,7 @@ const FormLargeTitle: React.FC<FormLargeTitleProps> = ({
         className={css}
         placeholder={placeholder}
         rows={1}
-        value={value ?? ''}
+        value={(value as string) ?? ''}
         onChange={updateText}
       />
 

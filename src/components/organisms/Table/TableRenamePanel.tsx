@@ -33,7 +33,7 @@ const TableRenameForm: React.FC = () => {
 
   const onSubmit: OnFormSubmitFunction = async ({ closePanel, items }) => {
     // Only one form item, so just index first element.
-    const updatedTitle: string = items.TABLE_COLUMN?.value;
+    const updatedTitle: string = items.TABLE_COLUMN?.value as string;
 
     // If the column name didn't change, don't send to backend.
     if (updatedTitle === title) return;

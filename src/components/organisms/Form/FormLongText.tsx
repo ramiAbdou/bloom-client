@@ -46,7 +46,7 @@ const FormLongText: React.FC<FormLongTextProps> = ({
         className={css}
         minRows={4}
         placeholder={placeholder}
-        value={value ?? ''}
+        value={(value as string) ?? ''}
         onChange={updateText}
       />
     </FormItemContainer>

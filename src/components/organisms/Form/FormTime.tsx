@@ -27,9 +27,13 @@ const useMinTime = (key: string) => {
   const startOfToday = day().startOf('day');
 
   if (key === 'END_TIME' && !startTime) return null;
-  if (key === 'END_TIME') return day(startTime).add(30, 'minute').toDate();
+  if (key === 'END_TIME') {
+    return day(startTime as string)
+      .add(30, 'minute')
+      .toDate();
+  }
   if (key === 'START_TIME' && !startDate) return null;
-  if (key === 'START_TIME' && day(startDate).isAfter(startOfToday)) {
+  if (key === 'START_TIME' && day(startDate as string).isAfter(startOfToday)) {
     return day().startOf('day').toDate();
   }
 
@@ -84,7 +88,9 @@ const FormTime: React.FC<FormItemData> = ({ className, ...args }) => {
         maxTime={day().endOf('day').toDate()}
         minTime={minTime}
         placeholderText={placeholderText}
-        selected={day(value).isValid() && day(value).toDate()}
+        selected={
+          day(value as string).isValid() && day(value as string).toDate()
+        }
         onChange={(date) => {
           return updateDate(date);
         }}

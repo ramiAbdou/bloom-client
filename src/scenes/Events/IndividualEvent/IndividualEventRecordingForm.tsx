@@ -38,7 +38,7 @@ const IndividualEventRecordingForm: React.FC = () => {
   }: OnFormSubmitArgs) => {
     await updateRecordingUrl({
       eventId,
-      recordingUrl: items.RECORDING_URL?.value
+      recordingUrl: items.RECORDING_URL?.value as string
     });
 
     closePanel();

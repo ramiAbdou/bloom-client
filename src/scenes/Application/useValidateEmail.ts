@@ -29,7 +29,7 @@ const useValidateEmail = (): OnFormSubmitFunction => {
 
     const { error } = await isEmailTaken({
       communityId: db.community.id,
-      email: items[emailId]?.value
+      email: items[emailId]?.value as string
     });
 
     if (error) {

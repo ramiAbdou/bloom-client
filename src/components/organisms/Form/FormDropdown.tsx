@@ -33,7 +33,7 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ multiple, ...args }) => {
     <FormItemContainer {...args}>
       <Dropdown
         options={{ multiple }}
-        value={value}
+        value={value as string[]}
         values={args?.options}
         onSelect={onSelect}
       />

@@ -15,7 +15,7 @@ import { take } from '@util/util';
 
 const ApplicationReviewMembeship: React.FC = () => {
   const selectedTypeName: string = StoryStore.useStoreState(({ items }) => {
-    return items.MEMBER_PLAN?.value;
+    return items.MEMBER_PLAN?.value as string;
   });
 
   const {
@@ -23,7 +23,7 @@ const ApplicationReviewMembeship: React.FC = () => {
     expirationDate,
     last4
   }: IPaymentMethod = StoryStore.useStoreState(({ items }) => {
-    return items.CREDIT_OR_DEBIT_CARD?.value ?? {};
+    return (items.CREDIT_OR_DEBIT_CARD?.value ?? {}) as IPaymentMethod;
   });
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {

@@ -32,7 +32,9 @@ const FormDate: React.FC<FormItemData> = ({ className, ...args }) => {
   };
 
   const minDate =
-    key === 'END_DATE' && startDate ? day(startDate).toDate() : new Date();
+    key === 'END_DATE' && startDate
+      ? day(startDate as string).toDate()
+      : new Date();
 
   const css: string = cx('o-form-item--date', {}, className);
 
@@ -42,7 +44,9 @@ const FormDate: React.FC<FormItemData> = ({ className, ...args }) => {
         dateFormat="MMMM d, yyyy"
         minDate={minDate}
         placeholderText={`${day().format('MMMM D, YYYY')}`}
-        selected={day(value).isValid() && day(value).toDate()}
+        selected={
+          day(value as string).isValid() && day(value as string).toDate()
+        }
         onChange={(date) => {
           return updateDate(date);
         }}
