@@ -56,7 +56,12 @@ const SidebarProfileButton: React.FC = () => {
   });
 
   return (
-    <button className={css} id={PanelType.PROFILE} onClick={onClick}>
+    <button
+      className={css}
+      id={PanelType.PROFILE}
+      type="button"
+      onClick={onClick}
+    >
       <SidebarProfileContent />
       <IoChevronForwardOutline />
     </button>

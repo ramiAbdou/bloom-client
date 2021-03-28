@@ -95,7 +95,7 @@ const Button = forwardRef(
         ref={ref}
         className={css}
         disabled={disabled}
-        type={type ?? 'button'}
+        type={type ? 'button' : 'submit'}
         onClick={onButtonClick}
         {...props}
       >

@@ -22,7 +22,7 @@ const SidebarLinkAction: React.FC<
   };
 
   return (
-    <button className="o-nav-link" onClick={onUpdatedClick}>
+    <button className="o-nav-link" type="button" onClick={onUpdatedClick}>
       <Icon />
       {title}
     </button>

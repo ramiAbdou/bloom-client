@@ -18,7 +18,6 @@ module.exports = {
     }
   ],
   rules: {
-    '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-unused-vars': [
       2,
@@ -55,8 +54,6 @@ module.exports = {
         next: 'return'
       }
     ],
-    'react/button-has-type': 0,
-    'react/jsx-filename-extension': 0,
     'react/jsx-props-no-spreading': 0,
     'react/jsx-sort-props': [
       2,
@@ -70,8 +67,6 @@ module.exports = {
       }
     ],
     'react/no-unescaped-entities': 0,
-    'react/prop-types': 0, // Don't require prop type specification.
-    'react/require-default-props': 0, // Don't require default props.
     'react-hooks/rules-of-hooks': 2,
     'react-hooks/exhaustive-deps': 0,
     semi: 2, // Require a semicolon.

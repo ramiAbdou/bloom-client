@@ -21,7 +21,7 @@ const PanelOption: React.FC<PanelAction> = ({ Icon, onClick, text }) => {
   };
 
   return (
-    <button className="c-panel-option" onClick={onOptionClick}>
+    <button className="c-panel-option" type="button" onClick={onOptionClick}>
       <Icon />
       {text}
     </button>
