@@ -22,6 +22,18 @@ const tableFilterPanelModel: TableFilterPanelModel = {
     };
   }),
 
+  clearFilters: action((state) => {
+    const id: string = nanoid();
+
+    return {
+      ...state,
+      filterIds: [id],
+      filters: {
+        [id]: { columnId: null, operator: TableFilterOperatorType.IS }
+      }
+    };
+  }),
+
   filterIds: [],
 
   filters: {},

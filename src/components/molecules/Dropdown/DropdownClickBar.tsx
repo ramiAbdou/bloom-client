@@ -27,8 +27,8 @@ const DropdownClickBarValue: React.FC<ValueProps> = ({ value }) => {
     return state.onSelect;
   });
 
-  const setIsOpen = Dropdown.useStoreActions((store) => {
-    return store.setIsOpen;
+  const setIsOpen = Dropdown.useStoreActions((state) => {
+    return state.setIsOpen;
   });
 
   const deleteValue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -83,12 +83,12 @@ const DropdownClickBar: React.FC = () => {
     return state.isOpen;
   });
 
-  const setIsOpen = Dropdown.useStoreActions((store) => {
-    return store.setIsOpen;
+  const setIsOpen = Dropdown.useStoreActions((state) => {
+    return state.setIsOpen;
   });
 
-  const setWidth = Dropdown.useStoreActions((store) => {
-    return store.setWidth;
+  const setWidth = Dropdown.useStoreActions((state) => {
+    return state.setWidth;
   });
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);

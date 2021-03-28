@@ -19,13 +19,13 @@ const ApplicationReviewMain: React.FC = () => {
       });
   });
 
-  const items: QuestionBoxItemProps[] = StoryStore.useStoreState((store) => {
+  const items: QuestionBoxItemProps[] = StoryStore.useStoreState((state) => {
     return questions?.map(({ id, title, type }: IQuestion) => {
       return {
         handleNull: 'HIDE_ALL',
         title,
         type,
-        value: store.items[id]?.value
+        value: state.items[id]?.value
       };
     });
   });

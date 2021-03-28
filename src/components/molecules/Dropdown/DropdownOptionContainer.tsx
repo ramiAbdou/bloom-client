@@ -46,8 +46,8 @@ const DropdownOptionContainer: React.FC = () => {
     return state.width;
   });
 
-  const noOptionsFound = DropdownStore.useStoreState((store) => {
-    return !store.filteredValues.length;
+  const noOptionsFound = DropdownStore.useStoreState((state) => {
+    return !state.filteredValues.length;
   });
 
   return (

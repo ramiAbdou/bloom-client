@@ -19,12 +19,12 @@ const TableQuickFilter: React.FC<TableQuickFilterProps> = (props) => {
     return state.filters;
   });
 
-  const setFilter = TableStore.useStoreActions((store) => {
-    return store.setFilter;
+  const setFilter = TableStore.useStoreActions((state) => {
+    return state.setFilter;
   });
 
-  const removeFilter = TableStore.useStoreActions((store) => {
-    return store.removeFilter;
+  const removeFilter = TableStore.useStoreActions((state) => {
+    return state.removeFilter;
   });
 
   useEffect(() => {

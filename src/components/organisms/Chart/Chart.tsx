@@ -14,8 +14,8 @@ const ChartContent = (data: ChartModelInitArgs) => {
     return state.type;
   });
 
-  const setData = ChartStore.useStoreActions((store) => {
-    return store.setData;
+  const setData = ChartStore.useStoreActions((state) => {
+    return state.setData;
   });
 
   useEffect(() => {

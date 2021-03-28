@@ -28,18 +28,18 @@ const TableFilterPanelApplyButton: React.FC = () => {
     return panel.closePanel;
   });
 
-  const joinOperator = TableFilterPanelStore.useStoreState((store) => {
-    return store.joinOperator;
+  const joinOperator = TableFilterPanelStore.useStoreState((state) => {
+    return state.joinOperator;
   });
 
   const filters: TableFilterArgs[] = TableFilterPanelStore.useStoreState(
-    (store) => {
-      return Object.values(store.filters);
+    (state) => {
+      return Object.values(state.filters);
     }
   );
 
-  const setFilter = TableStore.useStoreActions((store) => {
-    return store.setFilter;
+  const setFilter = TableStore.useStoreActions((state) => {
+    return state.setFilter;
   });
 
   const onClick = () => {

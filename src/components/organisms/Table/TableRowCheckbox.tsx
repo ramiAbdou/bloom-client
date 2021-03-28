@@ -27,8 +27,8 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
     return selectedRowIds.includes(rowId);
   });
 
-  const toggleRow = TableStore.useStoreActions((store) => {
-    return store.toggleRow;
+  const toggleRow = TableStore.useStoreActions((state) => {
+    return state.toggleRow;
   });
 
   const onChange = (): void => {

@@ -32,8 +32,8 @@ const TableBannerButton: React.FC = () => {
     });
   });
 
-  const toggleRows = TableStore.useStoreActions((store) => {
-    return store.toggleRows;
+  const toggleRows = TableStore.useStoreActions((state) => {
+    return state.toggleRows;
   });
 
   const onClick = () => {

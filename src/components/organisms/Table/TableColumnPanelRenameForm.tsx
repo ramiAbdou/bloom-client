@@ -30,8 +30,8 @@ const TableColumnPanelRenameForm: React.FC = () => {
 
   const updateColumn: ActionCreator<
     Partial<TableColumn>
-  > = TableStore.useStoreActions((store) => {
-    return store.updateColumn;
+  > = TableStore.useStoreActions((state) => {
+    return state.updateColumn;
   });
 
   const onSubmit: OnFormSubmitFunction = async ({ closePanel, items }) => {

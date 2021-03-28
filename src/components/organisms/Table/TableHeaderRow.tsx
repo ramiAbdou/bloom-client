@@ -9,8 +9,8 @@ const TableHeaderRow: React.FC = () => {
     return state.columns;
   });
 
-  const hasData: boolean = TableStore.useStoreState((store) => {
-    return !!store.filteredRows.length;
+  const hasData: boolean = TableStore.useStoreState((state) => {
+    return !!state.filteredRows.length;
   });
 
   const customStyle: React.CSSProperties = !hasData

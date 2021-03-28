@@ -2,7 +2,7 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import TableStore from '@organisms/Table/Table.store';
-import TableFilterButton from '@organisms/Table/TableFilter/TableFilterButton';
+import TableFilterButton from '@organisms/Table/TableFilterButton';
 import SearchBar from '@organisms/Table/TableSeachBar';
 import { MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';

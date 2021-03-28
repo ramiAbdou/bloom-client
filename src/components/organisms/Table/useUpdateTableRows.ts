@@ -12,8 +12,8 @@ const useUpdateTableRows = (currentRows: TableRow[]): void => {
   // });
 
   const setRows: ActionCreator<TableRow[]> = TableStore.useStoreActions(
-    (store) => {
-      return store.setRows;
+    (state) => {
+      return state.setRows;
     }
   );
 

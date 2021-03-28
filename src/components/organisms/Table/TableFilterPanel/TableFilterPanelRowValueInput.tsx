@@ -14,20 +14,20 @@ const TableFilterPanelRowValueInput: React.FC = () => {
     return state.id;
   });
 
-  const columnId: string = TableFilterStore.useStoreState((store) => {
-    return store.filters[id]?.columnId;
+  const columnId: string = TableFilterStore.useStoreState((state) => {
+    return state.filters[id]?.columnId;
   });
 
   const question: IQuestion = useStoreState(({ db }) => {
     return db.byQuestionId[columnId];
   }, deepequal);
 
-  const storedValue: any = TableFilterStore.useStoreState((store) => {
-    return store.filters[id]?.value;
+  const storedValue: any = TableFilterStore.useStoreState((state) => {
+    return state.filters[id]?.value;
   });
 
-  const setFilter = TableFilterStore.useStoreActions((store) => {
-    return store.setFilter;
+  const setFilter = TableFilterStore.useStoreActions((state) => {
+    return state.setFilter;
   });
 
   const onInputChange = (value: string) => {

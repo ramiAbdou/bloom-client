@@ -11,13 +11,13 @@ const TableFilterPanelRowOperatorDropdown: React.FC = () => {
   });
 
   const operator: TableFilterOperatorType = TableFilterStore.useStoreState(
-    (store) => {
-      return store.filters[id]?.operator;
+    (state) => {
+      return state.filters[id]?.operator;
     }
   );
 
-  const setFilter = TableFilterStore.useStoreActions((store) => {
-    return store.setFilter;
+  const setFilter = TableFilterStore.useStoreActions((state) => {
+    return state.setFilter;
   });
 
   const onOperatorUpdate = (result: TableFilterOperatorType) => {

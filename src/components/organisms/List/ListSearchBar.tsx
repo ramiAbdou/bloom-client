@@ -10,8 +10,8 @@ const ListSearchBar: React.FC<Omit<SearchBarProps, 'onChange'>> = ({
 }) => {
   const [value, setValue] = useState<string>('');
 
-  const setSearchString = ListStore.useStoreActions((store) => {
-    return store.setSearchString;
+  const setSearchString = ListStore.useStoreActions((state) => {
+    return state.setSearchString;
   });
 
   useEffect(() => {

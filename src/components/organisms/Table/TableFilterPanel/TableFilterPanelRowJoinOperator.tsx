@@ -16,12 +16,12 @@ const TableFilterPanelRowJoinOperator: React.FC = () => {
     });
   });
 
-  const joinOperator = TableFilterStore.useStoreState((store) => {
-    return store.joinOperator;
+  const joinOperator = TableFilterStore.useStoreState((state) => {
+    return state.joinOperator;
   });
 
-  const setJoinOperator = TableFilterStore.useStoreActions((store) => {
-    return store.setJoinOperator;
+  const setJoinOperator = TableFilterStore.useStoreActions((state) => {
+    return state.setJoinOperator;
   });
 
   const onSelect = (result: TableFilterJoinOperatorType) => {

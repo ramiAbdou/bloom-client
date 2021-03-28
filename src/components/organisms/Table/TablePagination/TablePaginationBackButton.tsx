@@ -11,8 +11,8 @@ const TablePaginationBackButton: React.FC = () => {
   });
 
   const setPage: ActionCreator<number> = TablePaginationStore.useStoreActions(
-    (store) => {
-      return store.setPage;
+    (state) => {
+      return state.setPage;
     }
   );
 

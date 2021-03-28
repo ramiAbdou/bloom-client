@@ -25,8 +25,8 @@ const FormShortText: React.FC<FormShortTextProps> = ({
     return items[key]?.value;
   });
 
-  const setValue = FormStore.useStoreActions((store) => {
-    return store.setValue;
+  const setValue = FormStore.useStoreActions((state) => {
+    return state.setValue;
   });
 
   useInitFormItem({

@@ -22,8 +22,8 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
 
   const { pathname } = useLocation();
 
-  const setCurrentPage = StoryStore.useStoreActions((store) => {
-    return store.setCurrentPage;
+  const setCurrentPage = StoryStore.useStoreActions((state) => {
+    return state.setCurrentPage;
   });
 
   const [getOwner] = useManualQuery<IMember>({

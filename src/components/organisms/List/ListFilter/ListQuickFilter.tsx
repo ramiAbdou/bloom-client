@@ -20,12 +20,12 @@ const ListQuickFilter: React.FC<ListQuickFilterProps> = (props) => {
     return state.filters;
   });
 
-  const setFilter = ListStore.useStoreActions((store) => {
-    return store.setFilter;
+  const setFilter = ListStore.useStoreActions((state) => {
+    return state.setFilter;
   });
 
-  const removeFilter = ListStore.useStoreActions((store) => {
-    return store.removeFilter;
+  const removeFilter = ListStore.useStoreActions((state) => {
+    return state.removeFilter;
   });
 
   useEffect(() => {

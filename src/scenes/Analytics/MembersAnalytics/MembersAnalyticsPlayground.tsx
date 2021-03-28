@@ -38,8 +38,8 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
     return state.id;
   });
 
-  const setId = IdStore.useStoreActions((store) => {
-    return store.setId;
+  const setId = IdStore.useStoreActions((state) => {
+    return state.setId;
   });
 
   const onSelect = (result: string) => {
@@ -91,8 +91,8 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
     return state.id;
   });
 
-  const setId = IdStore.useStoreActions((store) => {
-    return store.setId;
+  const setId = IdStore.useStoreActions((state) => {
+    return state.setId;
   });
 
   useEffect(() => {

@@ -19,8 +19,8 @@ const useInitChangePreview = (): QueryResult<GetChangePreviewResult> => {
     return state.type;
   });
 
-  const setChangeData = PaymentStore.useStoreActions((store) => {
-    return store.setChangeData;
+  const setChangeData = PaymentStore.useStoreActions((state) => {
+    return state.setChangeData;
   });
 
   const [getChangePreview, result] = useManualQuery<

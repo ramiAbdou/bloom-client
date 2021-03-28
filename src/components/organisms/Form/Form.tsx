@@ -19,24 +19,24 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   const globalStore = useStore();
 
   const items: Record<string, FormItemData> = FormStore.useStoreState(
-    (store) => {
-      return store.items;
+    (state) => {
+      return state.items;
     },
     deepequal
   );
 
-  const setError = FormStore.useStoreActions((store) => {
-    return store.setError;
+  const setError = FormStore.useStoreActions((state) => {
+    return state.setError;
   });
 
-  const setIsLoading = FormStore.useStoreActions((store) => {
-    return store.setIsLoading;
+  const setIsLoading = FormStore.useStoreActions((state) => {
+    return state.setIsLoading;
   });
 
   const storyStore = StoryStore.useStore();
 
-  const setItemErrors = FormStore.useStoreActions((store) => {
-    return store.setItemErrors;
+  const setItemErrors = FormStore.useStoreActions((state) => {
+    return state.setItemErrors;
   });
 
   const onFormSubmit = useCallback(

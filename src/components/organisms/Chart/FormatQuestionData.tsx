@@ -118,16 +118,16 @@ export default ({
     return state.type;
   });
 
-  const setData = Chart.useStoreActions((store) => {
-    return store.setData;
+  const setData = Chart.useStoreActions((state) => {
+    return state.setData;
   });
 
-  const setQuestionId = Chart.useStoreActions((store) => {
-    return store.setQuestionId;
+  const setQuestionId = Chart.useStoreActions((state) => {
+    return state.setQuestionId;
   });
 
-  const setType = Chart.useStoreActions((store) => {
-    return store.setType;
+  const setType = Chart.useStoreActions((state) => {
+    return state.setType;
   });
 
   const type: QuestionType = useStoreState(({ db }) => {

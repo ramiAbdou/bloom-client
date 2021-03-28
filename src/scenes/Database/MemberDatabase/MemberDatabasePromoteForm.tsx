@@ -30,8 +30,8 @@ const MemberDatabasePromoteForm: React.FC = () => {
     return selectedRowIds;
   });
 
-  const clearSelectedRows = TableStore.useStoreActions((store) => {
-    return store.clearSelectedRows;
+  const clearSelectedRows = TableStore.useStoreActions((state) => {
+    return state.clearSelectedRows;
   });
 
   const [promoteMembers] = useMutation<IMember[], MemberIdsArgs>({

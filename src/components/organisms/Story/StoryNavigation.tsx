@@ -13,8 +13,8 @@ const StoryNavigationBar: React.FC<StoryPageProps> = ({ id }) => {
     return getPage(id);
   });
 
-  const setCurrentPage = StoryStore.useStoreActions((store) => {
-    return store.setCurrentPage;
+  const setCurrentPage = StoryStore.useStoreActions((state) => {
+    return state.setCurrentPage;
   });
 
   const { disabled, branches, branchId } = page;
@@ -36,8 +36,8 @@ const StoryNavigation: React.FC<ShowProps> = ({ show }) => {
     return state.pageId;
   });
 
-  const pages = StoryStore.useStoreState((store) => {
-    return store.pages.filter(({ id }) => {
+  const pages = StoryStore.useStoreState((state) => {
+    return state.pages.filter(({ id }) => {
       return id !== 'CONFIRMATION';
     });
   });

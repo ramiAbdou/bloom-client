@@ -4,8 +4,8 @@ import StoryStore from './Story.store';
 import StoryNavigation from './StoryNavigation';
 
 const StoryContent: React.FC = ({ children }) => {
-  const hasPages = StoryStore.useStoreState((store) => {
-    return !!store.pages?.length;
+  const hasPages = StoryStore.useStoreState((state) => {
+    return !!state.pages?.length;
   });
 
   return (

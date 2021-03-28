@@ -20,8 +20,8 @@ const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
     return getPage('FINISH')?.branchId;
   });
 
-  const setCurrentPage = StoryStore.useStoreActions((store) => {
-    return store.setCurrentPage;
+  const setCurrentPage = StoryStore.useStoreActions((state) => {
+    return state.setCurrentPage;
   });
 
   const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);

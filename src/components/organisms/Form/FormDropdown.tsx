@@ -19,8 +19,8 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ multiple, ...args }) => {
     return items[key]?.value;
   });
 
-  const setValue = FormStore.useStoreActions((store) => {
-    return store.setValue;
+  const setValue = FormStore.useStoreActions((state) => {
+    return state.setValue;
   });
 
   useInitFormItem(args);

@@ -12,8 +12,8 @@ const TableSearchBar: React.FC<
 > = (props) => {
   const [value, setValue] = useState<string>('');
 
-  const setSearchString = TableStore.useStoreActions((store) => {
-    return store.setSearchString;
+  const setSearchString = TableStore.useStoreActions((state) => {
+    return state.setSearchString;
   });
 
   useEffect(() => {

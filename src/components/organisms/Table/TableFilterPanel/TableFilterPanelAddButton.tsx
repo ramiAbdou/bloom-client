@@ -6,8 +6,8 @@ import TableFilterPanelStore from './TableFilterPanel.store';
 
 const TableFilterPanelAddButton: React.FC = () => {
   const addEmptyFilter: ActionCreator<void> = TableFilterPanelStore.useStoreActions(
-    (store) => {
-      return store.addEmptyFilter;
+    (state) => {
+      return state.addEmptyFilter;
     }
   );
 

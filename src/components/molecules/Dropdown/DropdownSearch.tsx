@@ -12,8 +12,8 @@ const DropdownSearch: React.FC = () => {
     return state.searchString;
   });
 
-  const setSearchString = DropdownStore.useStoreActions((store) => {
-    return store.setSearchString;
+  const setSearchString = DropdownStore.useStoreActions((state) => {
+    return state.setSearchString;
   });
 
   const onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {

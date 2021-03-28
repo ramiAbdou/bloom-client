@@ -16,8 +16,8 @@ const FormDate: React.FC<FormItemData> = ({ className, ...args }) => {
     return items[key]?.value;
   });
 
-  const setValue = FormStore.useStoreActions((store) => {
-    return store.setValue;
+  const setValue = FormStore.useStoreActions((state) => {
+    return state.setValue;
   });
 
   const startDate = FormStore.useStoreState(({ items }) => {

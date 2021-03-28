@@ -13,8 +13,8 @@ const useInitFormItem = (props: FormItemData): void => {
     return items[key]?.value;
   });
 
-  const setItem = FormStore.useStoreActions((store) => {
-    return store.setItem;
+  const setItem = FormStore.useStoreActions((state) => {
+    return state.setItem;
   });
 
   const storyStore = StoryStore.useStore();

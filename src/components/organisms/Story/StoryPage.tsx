@@ -39,8 +39,8 @@ const StoryPage: React.FC<StoryPageProps> = ({
     return getPage(id);
   });
 
-  const setPage = StoryStore.useStoreActions((store) => {
-    return store.setPage;
+  const setPage = StoryStore.useStoreActions((state) => {
+    return state.setPage;
   });
 
   useUpdateDisabledPage(id);

@@ -13,8 +13,8 @@ import DatabaseAction from '../DatabaseAction';
  * to delete another person in the community.
  */
 const useDeleteTooltip = (): string => {
-  const selectedRowIds = TableStore.useStoreState((store) => {
-    return store.selectedRowIds;
+  const selectedRowIds = TableStore.useStoreState((state) => {
+    return state.selectedRowIds;
   });
 
   const isSelfSelected = useStoreState(({ db }) => {

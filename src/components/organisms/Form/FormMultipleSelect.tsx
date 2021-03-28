@@ -25,8 +25,8 @@ const FormMultipleSelect: React.FC<FormMultipleChoiceProps> = ({
     return items[key]?.value as string[];
   });
 
-  const setValue = FormStore.useStoreActions((store) => {
-    return store.setValue;
+  const setValue = FormStore.useStoreActions((state) => {
+    return state.setValue;
   });
 
   useInitFormItem(args);

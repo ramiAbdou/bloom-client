@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import { TableFilter } from '@organisms/Table/Table.types';
+import { TableFilterFunction } from '@organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@organisms/Table/TableQuickFilter';
 import { useStoreState } from '@store/Store';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
@@ -14,7 +14,9 @@ const IndividualEventViewedFilter: React.FC = () => {
 
   const show = !!recordingUrl;
 
-  const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {
+  const filter: TableFilterFunction = (
+    row: IndividualEventTableRowProps
+  ): boolean => {
     return !!row.watched;
   };
 
@@ -30,7 +32,7 @@ const IndividualEventRsvpFilter: React.FC = () => {
 
   const show = day().isAfter(day(startTime));
 
-  const filter: TableFilter = (row: IndividualEventTableRowProps) => {
+  const filter: TableFilterFunction = (row: IndividualEventTableRowProps) => {
     return !!row.rsvpdAt;
   };
 
@@ -44,7 +46,9 @@ const IndividualEventJoinedFilter: React.FC = () => {
 
   const show = day().isAfter(day(startTime));
 
-  const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {
+  const filter: TableFilterFunction = (
+    row: IndividualEventTableRowProps
+  ): boolean => {
     return !!row.joinedAt;
   };
 
@@ -58,7 +62,9 @@ const IndividualEventNoShowFilter: React.FC = () => {
 
   const show = day().isAfter(day(startTime));
 
-  const filter: TableFilter = (row: IndividualEventTableRowProps): boolean => {
+  const filter: TableFilterFunction = (
+    row: IndividualEventTableRowProps
+  ): boolean => {
     return !!row.rsvpdAt && !row.joinedAt;
   };
 

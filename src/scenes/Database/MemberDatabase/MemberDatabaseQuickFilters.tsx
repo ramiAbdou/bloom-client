@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import { TableFilter, TableRow } from '@organisms/Table/Table.types';
+import { TableRow } from '@organisms/Table/Table.types';
+import { TableFilterFunction } from '@organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@organisms/Table/TableQuickFilter';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -19,7 +20,7 @@ const MemberDatabaseInactiveFilter: React.FC = () => {
     });
   });
 
-  const filter: TableFilter = (row: TableRow) => {
+  const filter: TableFilterFunction = (row: TableRow) => {
     const isDuesActive: boolean = row[duesStatusQuestionId];
     return !isDuesActive;
   };
@@ -41,7 +42,7 @@ const MemberDatabaseActiveFilter: React.FC = () => {
     });
   });
 
-  const filter: TableFilter = (row: TableRow) => {
+  const filter: TableFilterFunction = (row: TableRow) => {
     const isDuesActive: boolean = row[duesStatusQuestionId];
     return isDuesActive;
   };

@@ -27,7 +27,7 @@ export interface TableFilterPanelModel {
    * the TableFilterOperatorType.IS operator.
    */
   addEmptyFilter: Action<TableFilterPanelModel>;
-
+  clearFilters: Action<TableFilterPanelModel>;
   filterIds: string[];
   filters: Record<string, TableFilterArgs>;
   joinOperator: TableFilterJoinOperatorType;

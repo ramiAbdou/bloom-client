@@ -29,16 +29,16 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
     return state.values;
   });
 
-  const setIsOpen = DropdownStore.useStoreActions((store) => {
-    return store.setIsOpen;
+  const setIsOpen = DropdownStore.useStoreActions((state) => {
+    return state.setIsOpen;
   });
 
-  const setValue = DropdownStore.useStoreActions((store) => {
-    return store.setValue;
+  const setValue = DropdownStore.useStoreActions((state) => {
+    return state.setValue;
   });
 
-  const setValues = DropdownStore.useStoreActions((store) => {
-    return store.setValues;
+  const setValues = DropdownStore.useStoreActions((state) => {
+    return state.setValues;
   });
 
   useEffect(() => {

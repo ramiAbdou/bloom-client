@@ -11,8 +11,8 @@ import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
 const useCreatePublicEventAttendee = (): OnFormSubmitFunction => {
-  const setCurrentPage = StoryStore.useStoreActions((store) => {
-    return store.setCurrentPage;
+  const setCurrentPage = StoryStore.useStoreActions((state) => {
+    return state.setCurrentPage;
   });
 
   const [createEventAttendee] = useMutation<IEventGuest, CreateEventGuestArgs>({

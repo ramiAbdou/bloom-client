@@ -23,8 +23,8 @@ const TableFilterPanelCloseButton: React.FC = () => {
 };
 
 const TableFilterPanelActions: React.FC = () => {
-  const hasFilters: boolean = TableFilterPanelStore.useStoreState((store) => {
-    return !!Object.values(store.filters)?.length;
+  const hasFilters: boolean = TableFilterPanelStore.useStoreState((state) => {
+    return !!Object.values(state.filters)?.length;
   });
 
   return (

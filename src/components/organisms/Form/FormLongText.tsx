@@ -26,8 +26,8 @@ const FormLongText: React.FC<FormLongTextProps> = ({
     return items[key]?.value;
   });
 
-  const setValue = FormStore.useStoreActions((store) => {
-    return store.setValue;
+  const setValue = FormStore.useStoreActions((state) => {
+    return state.setValue;
   });
 
   useInitFormItem(args);

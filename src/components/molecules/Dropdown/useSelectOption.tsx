@@ -2,8 +2,8 @@ import Dropdown from './Dropdown.store';
 import { DropdownValue } from './Dropdown.types';
 
 const useSelectOption = (option: string): VoidFunction => {
-  const filteredValues = Dropdown.useStoreState((store) => {
-    return store.filteredValues;
+  const filteredValues = Dropdown.useStoreState((state) => {
+    return state.filteredValues;
   });
 
   const multiple = Dropdown.useStoreState((state) => {
@@ -18,12 +18,12 @@ const useSelectOption = (option: string): VoidFunction => {
     return state.onSelect;
   });
 
-  const setIsOpen = Dropdown.useStoreActions((store) => {
-    return store.setIsOpen;
+  const setIsOpen = Dropdown.useStoreActions((state) => {
+    return state.setIsOpen;
   });
 
-  const setSearchString = Dropdown.useStoreActions((store) => {
-    return store.setSearchString;
+  const setSearchString = Dropdown.useStoreActions((state) => {
+    return state.setSearchString;
   });
 
   const selectOption = () => {

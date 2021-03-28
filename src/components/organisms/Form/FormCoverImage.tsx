@@ -14,8 +14,8 @@ const FormCoverImageContent: React.FC<FormItemData> = (args) => {
 
   const key: string = getFormItemKey(args);
 
-  const setValue = FormStore.useStoreActions((store) => {
-    return store.setValue;
+  const setValue = FormStore.useStoreActions((state) => {
+    return state.setValue;
   });
 
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);

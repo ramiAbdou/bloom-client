@@ -17,8 +17,8 @@ const useUpdateDisabledPage = (id: string): void => {
     return state.pages;
   });
 
-  const setPageDisabled = StoryStore.useStoreActions((store) => {
-    return store.setPageDisabled;
+  const setPageDisabled = StoryStore.useStoreActions((state) => {
+    return state.setPageDisabled;
   });
 
   const currentPageIndex: number = pages.findIndex((element) => {

@@ -14,8 +14,8 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
     return state.id;
   });
 
-  const columnId: string = TableFilterStore.useStoreState((store) => {
-    return store.filters[id]?.columnId;
+  const columnId: string = TableFilterStore.useStoreState((state) => {
+    return state.filters[id]?.columnId;
   });
 
   const [questionId, setQuestionId] = useState<string>(columnId);
@@ -56,8 +56,8 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
       });
   });
 
-  const setFilter = TableFilterStore.useStoreActions((store) => {
-    return store.setFilter;
+  const setFilter = TableFilterStore.useStoreActions((state) => {
+    return state.setFilter;
   });
 
   useEffect(() => {
