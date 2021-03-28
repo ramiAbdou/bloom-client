@@ -20,9 +20,9 @@ const TableHeaderRow: React.FC = () => {
   return (
     <thead>
       <tr style={customStyle}>
-        {columns.map((column: TableColumn, i: number) => (
-          <HeaderCell key={column.id} i={i} {...column} />
-        ))}
+        {columns.map((column: TableColumn, i: number) => {
+          return <HeaderCell key={column.id} i={i} {...column} />;
+        })}
       </tr>
     </thead>
   );
