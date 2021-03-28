@@ -42,9 +42,9 @@ const IndividualEventTableContent: React.FC = () => {
 
   return (
     <MainSection className="s-events-individual-table-ctr">
-      <Table columns={columns} options={options} rows={rows}>
+      <Table columns={columns} options={options}>
         <IndividualEventTableActions />
-        <TableContent small />
+        <TableContent small rows={rows} />
       </Table>
     </MainSection>
   );

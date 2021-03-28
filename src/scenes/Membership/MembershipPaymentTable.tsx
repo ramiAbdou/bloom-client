@@ -77,8 +77,11 @@ const MembershipPaymentTable: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows}>
-      <TableContent emptyMessage="Looks like you haven't made any payments." />
+    <Table columns={columns} options={options}>
+      <TableContent
+        emptyMessage="Looks like you haven't made any payments."
+        rows={rows}
+      />
     </Table>
   );
 };

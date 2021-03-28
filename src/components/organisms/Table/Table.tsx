@@ -1,51 +1,17 @@
-import deepequal from 'fast-deep-equal';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { ShowProps } from '@util/constants';
 import PanelLocal from '../Panel/PanelLocal';
 import TableStore, { tableModel } from './Table.store';
-import {
-  defaultTableOptions,
-  TableColumn,
-  TableOptions,
-  TableRow
-} from './Table.types';
+import { defaultTableOptions, TableColumn, TableOptions } from './Table.types';
 import TableFilterStore from './TableFilter/TableFilter.store';
 
 interface TableProps extends ShowProps {
   columns: TableColumn[];
   options?: TableOptions;
-  rows: TableRow[];
 }
 
-const TableUpdateRows: React.FC<Pick<TableProps, 'rows'>> = ({
-  children,
-  rows
-}) => {
-  const storedRows = TableStore.useStoreState((state) => {
-    return state.rows;
-  });
-
-  const setRows = TableStore.useStoreActions((store) => {
-    return store.setRows;
-  });
-
-  // // Used primarily for the removal of rows. This will not update the
-  // // data if the number of rows doesn't change.
-  useEffect(() => {
-    if (!deepequal(storedRows, rows)) setRows(rows ?? []);
-  }, [rows]);
-
-  return <>{children}</>;
-};
-
-const Table: React.FC<TableProps> = ({
-  children,
-  columns,
-  options,
-  rows,
-  show
-}) => {
+const Table: React.FC<TableProps> = ({ children, columns, options, show }) => {
   if (show === false) return null;
 
   return (
@@ -62,7 +28,7 @@ const Table: React.FC<TableProps> = ({
       }}
     >
       <TableFilterStore.Provider>
-        <TableUpdateRows rows={rows}>{children}</TableUpdateRows>
+        {children}
         <PanelLocal />
       </TableFilterStore.Provider>
     </TableStore.Provider>

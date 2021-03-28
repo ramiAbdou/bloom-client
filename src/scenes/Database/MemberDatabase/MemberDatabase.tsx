@@ -67,7 +67,7 @@ const MemberDatabase: React.FC = () => {
       if (question.category === QuestionCategory.JOINED_AT) {
         return {
           ...question,
-          format: (value) => {
+          format: (value: string) => {
             return day(value).format('MMMM, D, YYYY');
           }
         };
@@ -94,14 +94,9 @@ const MemberDatabase: React.FC = () => {
   };
 
   return (
-    <Table
-      columns={columns}
-      options={options}
-      rows={rows}
-      show={!!columns?.length}
-    >
+    <Table columns={columns} options={options} show={!!columns?.length}>
       <MemberDatabaseActions />
-      <TableContent />
+      <TableContent rows={rows} />
       <ModalLocal />
     </Table>
   );

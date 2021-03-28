@@ -37,9 +37,9 @@ const AdminDatabase: React.FC = () => {
   ];
 
   return (
-    <Table columns={columns} options={{ hasCheckbox: isOwner }} rows={rows}>
+    <Table columns={columns} options={{ hasCheckbox: isOwner }}>
       <AdminDatabaseActions />
-      <TableContent />
+      <TableContent rows={rows} />
       <ModalLocal />
     </Table>
   );

@@ -8,10 +8,12 @@ import TableBanner from './TableBanner';
 import TableHeaderRow from './TableHeaderRow/TableHeaderRow';
 import TablePagination from './TablePagination/TablePagination';
 import TableRow from './TableRow/TableRow';
+import useUpdateTableRows from './useUpdateTableRows';
 
 interface TableContentProps {
   emptyMessage?: string;
   small?: boolean;
+  rows?: TableRowProps[];
 }
 
 const TableContentEmptyMessage: React.FC<
@@ -58,14 +60,17 @@ const TableBody: React.FC = () => {
 
 const TableContent: React.FC<TableContentProps> = ({
   emptyMessage: eMessage,
-  small
+  small,
+  rows
 }) => {
-  const emptyMessage = TableStore.useStoreState(({ rows }) => {
-    return !rows?.length ? eMessage : null;
+  useUpdateTableRows(rows);
+
+  const emptyMessage = TableStore.useStoreState((state) => {
+    return !state.rows?.length ? eMessage : null;
   });
 
-  const show: boolean = TableStore.useStoreState(({ rows, options }) => {
-    return !options.hideIfEmpty || !!rows?.length;
+  const show: boolean = TableStore.useStoreState((state) => {
+    return !state.options.hideIfEmpty || !!state.rows?.length;
   });
 
   const isAllPageSelected: boolean = TableStore.useStoreState(

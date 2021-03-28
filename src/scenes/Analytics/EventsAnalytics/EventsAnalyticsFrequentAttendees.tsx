@@ -91,8 +91,11 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   };
 
   return (
-    <Table columns={columns} options={options} rows={rows}>
-      <TableContent emptyMessage="Looks like nobody has attended an event yet." />
+    <Table columns={columns} options={options}>
+      <TableContent
+        emptyMessage="Looks like nobody has attended an event yet."
+        rows={rows}
+      />
     </Table>
   );
 };

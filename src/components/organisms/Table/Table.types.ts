@@ -11,10 +11,10 @@ import {
 
 export interface TableColumn {
   category?: QuestionCategory;
-  format?: (value: any) => any;
+  format?: (value: boolean | string) => string;
   hideTitle?: boolean;
   id: string;
-  render?: (value: any) => JSX.Element;
+  render?: (value: string) => JSX.Element;
   title?: string;
   type?: QuestionType;
 }
