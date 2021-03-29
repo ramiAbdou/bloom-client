@@ -2,12 +2,15 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import useManualQuery from '@hooks/useManualQuery';
 import useMutation from '@hooks/useMutation';
 import { ModalData } from '@organisms/Modal/Modal.types';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { IEvent } from '@store/Db/entities';
+import { Schema } from '@store/Db/schema';
+import { useStoreActions } from '@store/Store';
 import { ModalType, VerifyEvent } from '@util/constants';
 import { ErrorType } from '@util/constants.errors';
-import { MutationEvent } from '@util/constants.events';
+import { MutationEvent, QueryEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
 interface VerifiedToken {
@@ -23,8 +26,6 @@ interface VerifiedToken {
  * if user logs in from email.
  */
 const useVerifyToken = (): boolean => {
-  const videoUrl: string = useStoreState(({ db }) => db.event?.videoUrl);
-
   const showModal: ActionCreator<ModalData> = useStoreActions(
     ({ modal }) => modal.showModal
   );
@@ -33,10 +34,17 @@ const useVerifyToken = (): boolean => {
     'token'
   );
 
-  const [verifyToken, result] = useMutation<VerifiedToken>({
+  const [verifyToken, result1] = useMutation<VerifiedToken>({
     fields: ['event'],
     operation: MutationEvent.VERIFY_TOKEN,
     types: { token: { required: true } }
+  });
+
+  const [getEvent, result2] = useManualQuery<IEvent>({
+    fields: ['videoUrl'],
+    operation: QueryEvent.GET_EVENT,
+    schema: Schema.EVENT,
+    types: { eventId: { required: true } }
   });
 
   const { push } = useHistory();
@@ -55,16 +63,28 @@ const useVerifyToken = (): boolean => {
         showModal({ id: ModalType.EVENT_ERROR, metadata: error });
       }
 
-      if (data?.event === VerifyEvent.JOIN_EVENT) openHref(videoUrl, false);
+      // If there is no data, then there is nothing left to query/do.
+      if (!data) return;
+
+      // If the event is VerifyEvent.JOIN_EVENT, then we need to grab the
+      // videoUrl from the backend and open the browser to that.
+      if (data.event === VerifyEvent.JOIN_EVENT) {
+        const videoUrl: string = (await getEvent({ eventId: data?.eventId }))
+          .data?.videoUrl;
+
+        if (videoUrl) openHref(videoUrl, false);
+      }
 
       // If the token is verified, we get rid of the token attached as a
       // query parameter.
-      if (data) push(window.location.pathname);
+      push(window.location.pathname);
     })();
-  }, [token, videoUrl]);
+  }, [token]);
 
   const loading: boolean =
-    (!!token && !result.data && !result.error) || result.loading;
+    (!!token && !result1.data && !result1.error) ||
+    result1.loading ||
+    result2.loading;
 
   return loading;
 };
