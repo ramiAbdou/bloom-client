@@ -12,7 +12,6 @@ import { RouteType, UrlNameProps } from '@util/constants';
  */
 const useTopLevelRoute = (): RouteType => {
   const { urlName } = useParams() as UrlNameProps;
-
   const { pathname } = useHistory().location;
   const route = pathname.slice(urlName?.length + 2);
 

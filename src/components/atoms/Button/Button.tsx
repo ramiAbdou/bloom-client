@@ -24,16 +24,14 @@ export interface ButtonProps
 
 const ButtonLoadingContainer: React.FC<
   Pick<ButtonProps, 'loading' | 'loadingText' | 'secondary'>
-> = React.memo(({ loading, loadingText, secondary }) => {
-  return (
-    <Show show={!!loading}>
-      <div className="c-btn-loading-ctr">
-        <p>{loadingText}</p>
-        <Spinner show dark={secondary} />
-      </div>
-    </Show>
-  );
-});
+> = React.memo(({ loading, loadingText, secondary }) => (
+  <Show show={!!loading}>
+    <div className="c-btn-loading-ctr">
+      <p>{loadingText}</p>
+      <Spinner show dark={secondary} />
+    </div>
+  </Show>
+));
 
 const Button = forwardRef(
   (

@@ -14,31 +14,24 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   eventId,
   large
 }) => {
-  const { eventUrl, startTime }: IEvent = useStoreState(({ db }) => {
-    return db.byEventId[eventId];
-  }, deepequal);
+  const { eventUrl, startTime }: IEvent = useStoreState(
+    ({ db }) => db.byEventId[eventId],
+    deepequal
+  );
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const guests = new Set(
-      db.member?.guests?.filter((guestId: string) => {
-        return !db.byGuestId[guestId]?.deletedAt;
-      })
+      db.member?.guests?.filter(
+        (guestId: string) => !db.byGuestId[guestId]?.deletedAt
+      )
     );
 
     const event: IEvent = db.byEventId[eventId];
-    return event?.guests?.some((guestId: string) => {
-      return guests.has(guestId);
-    });
+    return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
 
-  const isAdmin = useStoreState(({ db }) => {
-    return !!db.member?.role;
-  });
-
-  const showToast = useStoreActions(({ toast }) => {
-    return toast.showToast;
-  });
-
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
   const isUpcoming = day().isBefore(day(startTime));
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

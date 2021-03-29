@@ -19,18 +19,13 @@ import PaymentAnalytics from './PaymentAnalytics/PaymentAnalytics';
 import useInitAnalytics from './useInitAnalytics';
 
 const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const canCollectDues = useStoreState(({ db }) => {
-    return db.community.canCollectDues;
-  });
-
+  const canCollectDues = useStoreState(({ db }) => db.community.canCollectDues);
   const { push } = useHistory();
 
   const duesOptions: MainNavigationOptionProps[] = canCollectDues
     ? [
         {
-          onClick: () => {
-            return push('payments');
-          },
+          onClick: () => push('payments'),
           pathname: 'payments',
           title: 'Payments'
         }
@@ -39,17 +34,13 @@ const AnalyticsHeader: React.FC<LoadingProps> = ({ loading }) => {
 
   const options: MainNavigationOptionProps[] = [
     {
-      onClick: () => {
-        return push('members');
-      },
+      onClick: () => push('members'),
       pathname: 'members',
       title: 'Members'
     },
     ...duesOptions,
     {
-      onClick: () => {
-        return push('events');
-      },
+      onClick: () => push('events'),
       pathname: 'events',
       title: 'Events'
     }

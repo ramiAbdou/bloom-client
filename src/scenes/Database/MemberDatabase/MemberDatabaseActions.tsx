@@ -2,7 +2,7 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import TableStore from '@organisms/Table/Table.store';
-import TableFilterButton from '@organisms/Table/TableFilter/TableFilterButton';
+import TableFilterButton from '@organisms/Table/TableFilterButton';
 import SearchBar from '@organisms/Table/TableSeachBar';
 import { MemberRole } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
@@ -13,14 +13,12 @@ import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 
 const MemberDatabaseButtons: React.FC = () => {
-  const isOwner: boolean = useStoreState(({ db }) => {
-    return db.member?.role === MemberRole.OWNER;
-  });
+  const isOwner: boolean = useStoreState(
+    ({ db }) => db.member?.role === MemberRole.OWNER
+  );
 
   const isAnythingSelected: boolean = TableStore.useStoreState(
-    ({ selectedRowIds }) => {
-      return !!selectedRowIds.length;
-    }
+    ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
   return (
@@ -33,15 +31,13 @@ const MemberDatabaseButtons: React.FC = () => {
   );
 };
 
-const MemberDatabaseActions: React.FC = () => {
-  return (
-    <Row noMarginBottom wrap className="mb-sm--nlc" gap="sm" justify="sb">
-      <SearchBar placeholder="Search members..." />
-      <MemberDatabaseQuickFilters />
-      <TableFilterButton className="ml-auto" />
-      <MemberDatabaseButtons />
-    </Row>
-  );
-};
+const MemberDatabaseActions: React.FC = () => (
+  <Row noMarginBottom wrap className="mb-sm--nlc" gap="sm" justify="sb">
+    <SearchBar placeholder="Search members..." />
+    <MemberDatabaseQuickFilters />
+    <TableFilterButton className="ml-auto" />
+    <MemberDatabaseButtons />
+  </Row>
+);
 
 export default MemberDatabaseActions;

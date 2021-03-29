@@ -18,18 +18,12 @@ import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsRecentEventsTable: React.FC = () => {
-  const urlName = useStoreState(({ db }) => {
-    return db.community?.urlName;
-  });
+  const urlName = useStoreState(({ db }) => db.community?.urlName);
 
-  const rows: TableRow[] = useStoreState(({ db }) => {
-    return db.community.events
-      ?.map((eventId: string) => {
-        return db.byEventId[eventId];
-      })
-      ?.filter((event: IEvent) => {
-        return day().isAfter(event.endTime);
-      })
+  const rows: TableRow[] = useStoreState(({ db }) =>
+    db.community.events
+      ?.map((eventId: string) => db.byEventId[eventId])
+      ?.filter((event: IEvent) => day().isAfter(event.endTime))
       ?.map(({ attendees, id, guests, startTime, title, watches }: IEvent) => {
         return {
           date: day(startTime).format('MMMM D, YYYY'),
@@ -41,10 +35,8 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
           title
         };
       })
-      .sort((a, b) => {
-        return sortObjects(a, b, 'startTime');
-      });
-  });
+      .sort((a, b) => sortObjects(a, b, 'startTime'))
+  );
 
   const columns: TableColumn[] = [
     { id: 'title', title: 'Title', type: QuestionType.LONG_TEXT },
@@ -66,9 +58,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
 
   const options: TableOptions = {
     isSortable: false,
-    onRowClick: ({ id }: TableRow) => {
-      return push(`/${urlName}/events/${id}`);
-    },
+    onRowClick: ({ id }: TableRow) => push(`/${urlName}/events/${id}`),
     showCount: false
   };
 
@@ -83,13 +73,11 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   );
 };
 
-const EventsAnalyticsTopEvents: React.FC = () => {
-  return (
-    <MainSection>
-      <LoadingHeader h2 title="Recent Events" />
-      <EventsAnalyticsRecentEventsTable />
-    </MainSection>
-  );
-};
+const EventsAnalyticsTopEvents: React.FC = () => (
+  <MainSection>
+    <LoadingHeader h2 title="Recent Events" />
+    <EventsAnalyticsRecentEventsTable />
+  </MainSection>
+);
 
 export default EventsAnalyticsTopEvents;

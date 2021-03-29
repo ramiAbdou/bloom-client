@@ -22,29 +22,24 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   id,
   title
 }) => {
-  const sortColumnId: string = TableSortStore.useStoreState((state) => {
-    return state.sortColumnId;
-  });
+  const sortColumnId: string = TableSortStore.useStoreState(
+    (state) => state.sortColumnId
+  );
 
-  const direction = TableSortStore.useStoreState((state) => {
-    return state.sortDirection;
-  });
+  const direction = TableSortStore.useStoreState(
+    (state) => state.sortDirection
+  );
 
-  const hasCheckbox = TableStore.useStoreState(({ options }) => {
-    return options.hasCheckbox;
-  });
+  const hasCheckbox = TableStore.useStoreState(
+    ({ options }) => options.hasCheckbox
+  );
 
-  const isSortable = TableStore.useStoreState(({ options }) => {
-    return options.isSortable;
-  });
+  const isSortable = TableStore.useStoreState(
+    ({ options }) => options.isSortable
+  );
 
-  const isPanelShowing = useStoreState(({ panel }) => {
-    return panel.id === id;
-  });
-
-  const showPanel = useStoreActions(({ panel }) => {
-    return panel.showPanel;
-  });
+  const isPanelShowing = useStoreState(({ panel }) => panel.id === id);
+  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
   const onClick = () => {
     if (isSortable) {

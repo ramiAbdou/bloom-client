@@ -10,7 +10,7 @@ import {
   TableOptions
 } from './Table.types';
 import TableBanner from './TableBanner';
-import TableFilterStore from './TableFilter/TableFilter.store';
+import TableFilterStore from './TableFilterPanel/TableFilterPanel.store';
 import TablePagination from './TablePagination/TablePagination';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 import TableSortStore from './TableSort/TableSort.store';

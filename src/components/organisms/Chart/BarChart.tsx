@@ -16,14 +16,8 @@ import useXAxisOptions from './useXAxisOptions';
 import useYAxisOptions from './useYAxisOptions';
 
 const BarChart: React.FC = () => {
-  const color = useStoreState(({ db }) => {
-    return db.community.primaryColor;
-  });
-
-  const data = Chart.useStoreState((state) => {
-    return state.data;
-  });
-
+  const color = useStoreState(({ db }) => db.community.primaryColor);
+  const data = Chart.useStoreState((state) => state.data);
   const xAxisOptions = useXAxisOptions();
   const yAxisOptions = useYAxisOptions();
 
@@ -44,9 +38,7 @@ const BarChart: React.FC = () => {
         <YAxis {...yAxisOptions} />
 
         <Tooltip
-          content={(props: ChartTooltipProps) => {
-            return <ChartTooltip {...props} />;
-          }}
+          content={(props: ChartTooltipProps) => <ChartTooltip {...props} />}
           wrapperStyle={{ visibility: 'visible' }}
         />
         <Bar dataKey="value" fill={color} />

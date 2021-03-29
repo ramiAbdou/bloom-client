@@ -18,14 +18,12 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
 }) => {
   const createEventWatch = useCreateEventWatch();
 
-  const { endTime, recordingUrl }: IEvent = useStoreState(({ db }) => {
-    return db.byEventId[eventId];
-  }, deepequal);
+  const { endTime, recordingUrl }: IEvent = useStoreState(
+    ({ db }) => db.byEventId[eventId],
+    deepequal
+  );
 
-  const isAdmin = useStoreState(({ db }) => {
-    return !!db.member?.role;
-  });
-
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const isPast = day().isAfter(day(endTime));
 
   const onClick = async (

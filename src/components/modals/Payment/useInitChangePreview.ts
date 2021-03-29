@@ -11,17 +11,17 @@ import {
 } from './Payment.types';
 
 const useInitChangePreview = (): QueryResult<GetChangePreviewResult> => {
-  const planId: string = PaymentStore.useStoreState((state) => {
-    return state.selectedPlanId;
-  });
+  const planId: string = PaymentStore.useStoreState(
+    (state) => state.selectedPlanId
+  );
 
-  const modalType: PaymentModalType = PaymentStore.useStoreState((state) => {
-    return state.type;
-  });
+  const modalType: PaymentModalType = PaymentStore.useStoreState(
+    (state) => state.type
+  );
 
-  const setChangeData = PaymentStore.useStoreActions((store) => {
-    return store.setChangeData;
-  });
+  const setChangeData = PaymentStore.useStoreActions(
+    (state) => state.setChangeData
+  );
 
   const [getChangePreview, result] = useManualQuery<
     GetChangePreviewResult,

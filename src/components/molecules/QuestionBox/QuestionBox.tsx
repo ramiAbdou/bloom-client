@@ -48,9 +48,9 @@ const QuestionBox: React.FC<QuestionBoxProps> = ({
 
   return (
     <div className={css}>
-      {items?.map((item: QuestionBoxItemProps) => {
-        return <QuestionBoxItem key={item.title} {...item} {...props} />;
-      })}
+      {items?.map((item: QuestionBoxItemProps) => (
+        <QuestionBoxItem key={item.title} {...item} {...props} />
+      ))}
     </div>
   );
 };

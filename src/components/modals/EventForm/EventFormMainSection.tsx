@@ -10,14 +10,10 @@ import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
 const EventFormMainSection: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => {
-    return modal.metadata;
-  });
+  const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
   const { description, imageUrl, summary, title }: IEvent = useStoreState(
-    ({ db }) => {
-      return db.byEventId[eventId] ?? {};
-    },
+    ({ db }) => db.byEventId[eventId] ?? {},
     deepequal
   );
 

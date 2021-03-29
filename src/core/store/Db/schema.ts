@@ -21,9 +21,9 @@ import { take } from '@util/util';
  */
 export const mergeStrategy = (a: Partial<any>, b: Partial<any>): any => {
   const arrayMerge = (target: any[], source: any[]) => {
-    const updatedSource = source.filter((value: any) => {
-      return !target.includes(value);
-    });
+    const updatedSource = source.filter(
+      (value: any) => !target.includes(value)
+    );
 
     // Concat the source to the target.
     return target.concat(updatedSource);

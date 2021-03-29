@@ -11,7 +11,6 @@ export const getPlanDescription = (
   type: Pick<IMemberPlan, 'amount' | 'recurrence'>
 ): string => {
   const { amount, recurrence } = type;
-
   // Formats the amount with FREE if the amount is 0.
   const amountString = amount ? `$${amount}` : 'FREE';
 

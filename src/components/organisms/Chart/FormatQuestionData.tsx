@@ -17,9 +17,7 @@ const useQuestionData = (): Pick<
   ChartModelInitArgs,
   'data' | 'totalResponses'
 > => {
-  const questionId = Chart.useStoreState((state) => {
-    return state.questionId;
-  });
+  const questionId = Chart.useStoreState((state) => state.questionId);
 
   const questionType: QuestionType = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
@@ -30,7 +28,6 @@ const useQuestionData = (): Pick<
   // were valid for the question (not null).
   const result: ChartModelInitArgs = useStoreState(({ db }) => {
     const record: Record<string, number> = {};
-
     const { members } = db.community;
 
     // If the community doesn't have members loaded yet,
@@ -91,9 +88,7 @@ const useQuestionData = (): Pick<
       .map(([name, value]) => {
         return { name, value };
       })
-      .sort((a, b) => {
-        return a.value < b.value ? 1 : -1;
-      });
+      .sort((a, b) => (a.value < b.value ? 1 : -1));
 
     return {
       data:
@@ -110,29 +105,15 @@ const useQuestionData = (): Pick<
 export default ({
   questionId
 }: Pick<ChartModelInitArgs, 'questionId'>): any => {
-  const currentQuestionId = Chart.useStoreState((state) => {
-    return state.questionId;
-  });
+  const currentQuestionId = Chart.useStoreState((state) => state.questionId);
+  const currentType = Chart.useStoreState((state) => state.type);
+  const setData = Chart.useStoreActions((state) => state.setData);
+  const setQuestionId = Chart.useStoreActions((state) => state.setQuestionId);
+  const setType = Chart.useStoreActions((state) => state.setType);
 
-  const currentType = Chart.useStoreState((state) => {
-    return state.type;
-  });
-
-  const setData = Chart.useStoreActions((store) => {
-    return store.setData;
-  });
-
-  const setQuestionId = Chart.useStoreActions((store) => {
-    return store.setQuestionId;
-  });
-
-  const setType = Chart.useStoreActions((store) => {
-    return store.setType;
-  });
-
-  const type: QuestionType = useStoreState(({ db }) => {
-    return db.byQuestionId[questionId]?.type;
-  });
+  const type: QuestionType = useStoreState(
+    ({ db }) => db.byQuestionId[questionId]?.type
+  );
 
   const { data, totalResponses } = useQuestionData();
 

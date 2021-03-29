@@ -30,9 +30,7 @@ const useBreakpoint = (): Breakpoint => {
     onWindowResize(); // Set the initial values.
     window.addEventListener('resize', onWindowResize);
 
-    return () => {
-      return window.removeEventListener('resize', onWindowResize);
-    };
+    return () => window.removeEventListener('resize', onWindowResize);
   }, []);
 
   return breakpoint;

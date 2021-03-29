@@ -42,22 +42,20 @@ Sentry.init({
   tracesSampleRate: process.env.APP_ENV === 'dev' ? 1.0 : 0.75
 });
 
-const App = () => {
-  return (
-    <ClientContext.Provider value={client}>
-      <StoreProvider store={store}>
-        <IconContext.Provider value={{ className: 'react-icon' }}>
-          <BrowserRouter>
-            <Loader />
-            <Modal />
-            <Panel />
-            <Router />
-            <ToastQueue />
-          </BrowserRouter>
-        </IconContext.Provider>
-      </StoreProvider>
-    </ClientContext.Provider>
-  );
-};
+const App = () => (
+  <ClientContext.Provider value={client}>
+    <StoreProvider store={store}>
+      <IconContext.Provider value={{ className: 'react-icon' }}>
+        <BrowserRouter>
+          <Loader />
+          <Modal />
+          <Panel />
+          <Router />
+          <ToastQueue />
+        </BrowserRouter>
+      </IconContext.Provider>
+    </StoreProvider>
+  </ClientContext.Provider>
+);
 
 ReactDOM.render(<App />, document.getElementById('root'));

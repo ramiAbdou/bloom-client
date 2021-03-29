@@ -16,10 +16,7 @@ const ApplicantsRespondButton: React.FC<ApplicantsRespondButtonProps> = (
   args
 ) => {
   const { all, applicantIds, response } = args;
-
-  const showToast = useStoreActions(({ toast }) => {
-    return toast.showToast;
-  });
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const [respondToApplicants] = useRespondToApplicants({
     memberIds: applicantIds,

@@ -3,7 +3,8 @@ import { matchSorter } from 'match-sorter';
 
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { cx } from '@util/util';
-import { TableColumn, TableFilter, TableModel, TableRow } from './Table.types';
+import { TableColumn, TableModel, TableRow } from './Table.types';
+import { TableFilterFunction } from './TableFilterPanel/TableFilterPanel.types';
 import { TablePaginationValue } from './TablePagination/TablePagination.types';
 
 /**
@@ -44,7 +45,6 @@ interface GetBannerMessageArgs {
  */
 export const getBannerMessage = (args: GetBannerMessageArgs): string => {
   const { ceiling, filteredRows, floor, rows, selectedRowIds } = args;
-
   const numTotalRows = rows.length;
   const numFilteredRows = filteredRows.length;
   const numSelectedRows = selectedRowIds.length;
@@ -58,9 +58,9 @@ export const getBannerMessage = (args: GetBannerMessageArgs): string => {
   }
 
   if (
-    filteredRows.slice(floor, ceiling).every(({ id }) => {
-      return selectedRowIds.includes(id);
-    })
+    filteredRows
+      .slice(floor, ceiling)
+      .every(({ id }) => selectedRowIds.includes(id))
   ) {
     return `All 25 rows on this page are selected.`;
   }
@@ -128,7 +128,6 @@ interface GetTableCellClassArgs {
  */
 export const getTableCellClass = (args: GetTableCellClassArgs): string => {
   const { category, type } = args;
-
   const isDuesStatus: boolean = category === QuestionCategory.DUES_STATUS;
 
   return cx('', {
@@ -146,7 +145,7 @@ export const getTableCellClass = (args: GetTableCellClassArgs): string => {
 };
 
 interface RunFiltersArgs {
-  filters?: Record<string, TableFilter>;
+  filters?: Record<string, TableFilterFunction>;
   searchString?: string;
   state: State<TableModel>;
 }
@@ -156,40 +155,35 @@ interface RunFiltersArgs {
  * the Table search string.
  */
 export const runFilters = (args: RunFiltersArgs): TableRow[] => {
-  const filters: Record<string, TableFilter> =
+  const filters: Record<string, TableFilterFunction> =
     args.filters ?? args.state.filters;
 
   const searchString: string = args.searchString ?? args.state.searchString;
   const { state } = args;
-
   const rows: TableRow[] = [...state.rows];
 
-  const filteredRows: TableRow[] = rows?.filter((row) => {
-    return Object.values(filters)?.every((tableFilter: TableFilter) => {
-      return tableFilter(row);
-    });
-  });
+  const filteredRows: TableRow[] = rows?.filter((row) =>
+    Object.values(filters)?.every((tableFilter: TableFilterFunction) =>
+      tableFilter(row)
+    )
+  );
 
   if (!searchString) return filteredRows;
 
   const columns: TableColumn[] = [...state.columns];
 
-  const firstNameColumnId: string = columns.find(({ category }) => {
-    return category === QuestionCategory.FIRST_NAME;
-  })?.id;
+  const firstNameColumnId: string = columns.find(
+    ({ category }) => category === QuestionCategory.FIRST_NAME
+  )?.id;
 
-  const lastNameColumnId: string = columns.find(({ category }) => {
-    return category === QuestionCategory.LAST_NAME;
-  })?.id;
+  const lastNameColumnId: string = columns.find(
+    ({ category }) => category === QuestionCategory.LAST_NAME
+  )?.id;
 
   return matchSorter(filteredRows, searchString, {
     keys: [
-      ...[...state.columns].map(({ id }) => {
-        return id;
-      }),
-      (row: TableRow) => {
-        return `${row[firstNameColumnId]} ${row[lastNameColumnId]}`;
-      }
+      ...[...state.columns].map(({ id }) => id),
+      (row: TableRow) => `${row[firstNameColumnId]} ${row[lastNameColumnId]}`
     ],
     threshold: matchSorter.rankings.ACRONYM
   });

@@ -13,13 +13,8 @@ import AddMemberInput from './AddMemberInput';
 import useInviteMembers from './useInviteMembers';
 
 const AddMemberFormActions: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => {
-    return modal.closeModal;
-  });
-
-  const onSecondaryClick = () => {
-    return closeModal();
-  };
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const onSecondaryClick = () => closeModal();
 
   return (
     <Row wrap gap="xs">
@@ -40,13 +35,8 @@ const AddMemberFormActions: React.FC = () => {
 };
 
 const AddMemberFormAddAnotherButton: React.FC = () => {
-  const addRow = AddMemberStore.useStoreActions((state) => {
-    return state.addRow;
-  });
-
-  const onClick = () => {
-    return addRow();
-  };
+  const addRow = AddMemberStore.useStoreActions((state) => state.addRow);
+  const onClick = () => addRow();
 
   return (
     <Button tertiary className="mb-md--nlc" onClick={onClick}>
@@ -56,28 +46,21 @@ const AddMemberFormAddAnotherButton: React.FC = () => {
 };
 
 const AddMemberFormRows: React.FC = () => {
-  const rows = AddMemberStore.useStoreState((state) => {
-    return state.rows;
-  });
+  const rows = AddMemberStore.useStoreState((state) => state.rows);
 
   return (
     <ul>
-      {rows.map((id) => {
-        return (
-          <IdStore.Provider key={id} runtimeModel={{ id }}>
-            <AddMemberInput />
-          </IdStore.Provider>
-        );
-      })}
+      {rows.map((id) => (
+        <IdStore.Provider key={id} runtimeModel={{ id }}>
+          <AddMemberInput />
+        </IdStore.Provider>
+      ))}
     </ul>
   );
 };
 
 const AddMemberForm: React.FC = () => {
-  const admin = AddMemberStore.useStoreState((state) => {
-    return state.admin;
-  });
-
+  const admin = AddMemberStore.useStoreState((state) => state.admin);
   const addMembers = useInviteMembers();
 
   return (

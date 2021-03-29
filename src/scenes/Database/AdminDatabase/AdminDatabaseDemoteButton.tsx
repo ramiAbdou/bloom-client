@@ -7,17 +7,13 @@ import { ModalType } from '@util/constants';
 import DatabaseAction from '../DatabaseAction';
 
 const AdminDatabaseDemoteButton: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const disabled = TableStore.useStoreState(({ selectedRowIds }) => {
-    return selectedRowIds.length > 15;
-  });
+  const disabled = TableStore.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds.length > 15
+  );
 
-  const onClick = () => {
-    return showModal({ id: ModalType.DEMOTE_MEMBERS });
-  };
+  const onClick = () => showModal({ id: ModalType.DEMOTE_MEMBERS });
 
   return (
     <DatabaseAction

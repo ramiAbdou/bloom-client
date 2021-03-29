@@ -14,9 +14,9 @@ import useInitChangePreview from './useInitChangePreview';
 import useUpdateStripeSubscriptionId from './useUpdateStripeSubscriptionId';
 
 const PaymentFinishForm: React.FC = () => {
-  const prorationDate: number = PaymentStore.useStoreState((state) => {
-    return state.changeProrationDate;
-  });
+  const prorationDate: number = PaymentStore.useStoreState(
+    (state) => state.changeProrationDate
+  );
 
   const updateStripeSubscriptionId: OnFormSubmitFunction = useUpdateStripeSubscriptionId();
 
@@ -37,9 +37,9 @@ const PaymentFinishForm: React.FC = () => {
 };
 
 const PaymentFinishPage: React.FC = () => {
-  const modalType: PaymentModalType = PaymentStore.useStoreState((state) => {
-    return state.type;
-  });
+  const modalType: PaymentModalType = PaymentStore.useStoreState(
+    (state) => state.type
+  );
 
   const {
     loading

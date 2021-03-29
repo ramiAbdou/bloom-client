@@ -3,8 +3,9 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import { useStoreActions } from '@store/Store';
 import TableStore from '../Table.store';
-import { TableFilter, TableFilterArgs, TableRow } from '../Table.types';
-import TableFilterStore from './TableFilter.store';
+import { TableRow } from '../Table.types';
+import TableFilterPanelStore from './TableFilterPanel.store';
+import { TableFilterArgs, TableFilterFunction } from './TableFilterPanel.types';
 
 interface ProcessFilterArgs extends TableFilterArgs {
   row: TableRow;
@@ -12,7 +13,6 @@ interface ProcessFilterArgs extends TableFilterArgs {
 
 const processFilter = (args: ProcessFilterArgs) => {
   const { columnId, operator, row, value } = args;
-
   const rowValue: any = row[columnId]?.toString()?.toLowerCase();
   const processedValue: string = value?.toString()?.toLowerCase();
 
@@ -22,34 +22,30 @@ const processFilter = (args: ProcessFilterArgs) => {
   return false;
 };
 
-const TableFilterApplyButton: React.FC = () => {
-  const closePanel = useStoreActions(({ panel }) => {
-    return panel.closePanel;
-  });
+const TableFilterPanelApplyButton: React.FC = () => {
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const joinOperator = TableFilterStore.useStoreState((store) => {
-    return store.joinOperator;
-  });
+  const joinOperator = TableFilterPanelStore.useStoreState(
+    (state) => state.joinOperator
+  );
 
-  const filters: TableFilterArgs[] = TableFilterStore.useStoreState((store) => {
-    return Object.values(store.filters);
-  });
+  const filters: TableFilterArgs[] = TableFilterPanelStore.useStoreState(
+    (state) => Object.values(state.filters)
+  );
 
-  const setFilter = TableStore.useStoreActions((store) => {
-    return store.setFilter;
-  });
+  const setFilter = TableStore.useStoreActions((state) => state.setFilter);
 
   const onClick = () => {
-    const filter: TableFilter = (row: TableRow) => {
+    const filter: TableFilterFunction = (row: TableRow) => {
       if (joinOperator === 'and') {
-        return filters?.every((filterArgs: TableFilterArgs) => {
-          return processFilter({ ...filterArgs, row });
-        });
+        return filters?.every((filterArgs: TableFilterArgs) =>
+          processFilter({ ...filterArgs, row })
+        );
       }
 
-      return filters?.some((filterArgs: TableFilterArgs) => {
-        return processFilter({ ...filterArgs, row });
-      });
+      return filters?.some((filterArgs: TableFilterArgs) =>
+        processFilter({ ...filterArgs, row })
+      );
     };
 
     setFilter({ filter, filterId: 'FILTER_CUSTOM' });
@@ -63,4 +59,4 @@ const TableFilterApplyButton: React.FC = () => {
   );
 };
 
-export default TableFilterApplyButton;
+export default TableFilterPanelApplyButton;

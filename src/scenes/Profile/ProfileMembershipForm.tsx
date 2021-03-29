@@ -15,26 +15,20 @@ import useUpdateMemberValues from './useUpdateMemberValues';
 const ProfileMembershipForm: React.FC = () => {
   const items: FormItemData[] = useStoreState(({ db }) => {
     const questions: IQuestion[] = db.community.questions
-      ?.map((questionId: string) => {
-        return db.byQuestionId[questionId];
-      })
-      ?.sort((a, b) => {
-        return sortObjects(a, b, 'rank', 'ASC');
-      })
-      .filter((question: IQuestion) => {
-        return !question.category;
-      });
+      ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      .filter((question: IQuestion) => !question.category);
 
-    const data: IMemberValue[] = db.member.values?.map((valueId: string) => {
-      return db.byValuesId[valueId];
-    });
+    const data: IMemberValue[] = db.member.values?.map(
+      (valueId: string) => db.byValuesId[valueId]
+    );
 
     return questions?.map((question: IQuestion) => {
       const { id, options, type } = question;
 
-      const value: any = data?.find((entity: IMemberValue) => {
-        return entity?.question === id;
-      })?.value;
+      const value: any = data?.find(
+        (entity: IMemberValue) => entity?.question === id
+      )?.value;
 
       let parsedValue: any = value;
 
@@ -56,9 +50,9 @@ const ProfileMembershipForm: React.FC = () => {
     <Form onSubmit={updateMemberValues}>
       <FormHeader title="Edit Membership Information" />
 
-      {items?.map(({ id, ...item }) => {
-        return <FormItem key={id} questionId={id} {...item} />;
-      })}
+      {items?.map(({ id, ...item }) => (
+        <FormItem key={id} questionId={id} {...item} />
+      ))}
 
       <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
     </Form>

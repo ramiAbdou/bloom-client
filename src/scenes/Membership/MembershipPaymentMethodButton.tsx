@@ -6,13 +6,11 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
 const MembershipPaymentMethodButton: React.FC = () => {
-  const isCardOnFile: boolean = useStoreState(({ db }) => {
-    return !!db.memberIntegrations.paymentMethod;
-  });
+  const isCardOnFile: boolean = useStoreState(
+    ({ db }) => !!db.memberIntegrations.paymentMethod
+  );
 
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({

@@ -10,9 +10,7 @@ import { take } from '@util/util';
 import MembershipCurrentPlanActions from './MembershipCurrentPlanActions';
 
 const MembershipCurrentPlanHeader: React.FC = () => {
-  const isDuesActive = useStoreState(({ db }) => {
-    return db.member?.isDuesActive;
-  });
+  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   return (
     <Row justify="sb" spacing="xs">
@@ -26,14 +24,14 @@ const MembershipCurrentPlanHeader: React.FC = () => {
 };
 
 const MembershipCurrentPlanDescription: React.FC = () => {
-  const currentType: IMemberPlan = useStoreState(({ db }) => {
-    return db.byMemberPlanId[db.member.plan];
-  }, deepequal);
+  const currentType: IMemberPlan = useStoreState(
+    ({ db }) => db.byMemberPlanId[db.member.plan],
+    deepequal
+  );
 
   if (!currentType) return null;
 
   const { amount, name, recurrence } = currentType;
-
   // Formats the amount with FREE if the amount is 0.
   const amountString = amount ? `$${amount}` : 'FREE';
 
@@ -55,14 +53,12 @@ const MembershipCurrentPlanDescription: React.FC = () => {
   );
 };
 
-const MembershipCurrentPlan: React.FC = () => {
-  return (
-    <Card className="s-membership-card s-membership-card--plan">
-      <MembershipCurrentPlanHeader />
-      <MembershipCurrentPlanDescription />
-      <MembershipCurrentPlanActions />
-    </Card>
-  );
-};
+const MembershipCurrentPlan: React.FC = () => (
+  <Card className="s-membership-card s-membership-card--plan">
+    <MembershipCurrentPlanHeader />
+    <MembershipCurrentPlanDescription />
+    <MembershipCurrentPlanActions />
+  </Card>
+);
 
 export default MembershipCurrentPlan;

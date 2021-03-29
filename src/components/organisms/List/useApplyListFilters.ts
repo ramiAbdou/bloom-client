@@ -4,18 +4,14 @@ import ListFilterStore from './ListFilter/ListFilter.store';
 import { ListFilterArgs } from './ListFilter/ListFilter.types';
 
 const useApplyListFilters = (): VoidFunction => {
-  const closePanel = useStoreActions(({ panel }) => {
-    return panel.closePanel;
-  });
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const setCustomFilters = ListStore.useStoreActions((state) => {
-    return state.setCustomFilters;
-  });
+  const setCustomFilters = ListStore.useStoreActions(
+    (state) => state.setCustomFilters
+  );
 
   const filters: Record<string, ListFilterArgs> = ListFilterStore.useStoreState(
-    (state) => {
-      return state.filters;
-    }
+    (state) => state.filters
   );
 
   const applyListFilters = () => {

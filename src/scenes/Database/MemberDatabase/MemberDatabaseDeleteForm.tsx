@@ -8,22 +8,20 @@ import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
 import TableStore from '@organisms/Table/Table.store';
 import useDeleteMembers from './useDeleteMembers';
 
-const MemberDatabaseDeleteFormActions: React.FC = () => {
-  return (
-    <Row spacing="xs">
-      <FormSubmitButton row loadingText="Removing...">
-        Remove
-      </FormSubmitButton>
+const MemberDatabaseDeleteFormActions: React.FC = () => (
+  <Row spacing="xs">
+    <FormSubmitButton row loadingText="Removing...">
+      Remove
+    </FormSubmitButton>
 
-      <ModalCloseButton />
-    </Row>
-  );
-};
+    <ModalCloseButton />
+  </Row>
+);
 
 const MemberDatabaseDeleteFormHeader: React.FC = () => {
-  const memberIds = TableStore.useStoreState(({ selectedRowIds }) => {
-    return selectedRowIds;
-  });
+  const memberIds = TableStore.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds
+  );
 
   return (
     <FormHeader

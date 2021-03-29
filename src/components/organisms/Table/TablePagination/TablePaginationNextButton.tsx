@@ -7,18 +7,16 @@ import TableStore from '../Table.store';
 import TablePaginationStore from './TablePagination.store';
 
 const TablePaginationNextButton: React.FC = () => {
-  const page: number = TablePaginationStore.useStoreState((state) => {
-    return state.page;
-  });
+  const page: number = TablePaginationStore.useStoreState(
+    (state) => state.page
+  );
 
-  const numPages: number = TableStore.useStoreState((state) => {
-    return Math.ceil(state.filteredRows.length / 25);
-  });
+  const numPages: number = TableStore.useStoreState((state) =>
+    Math.ceil(state.filteredRows.length / 25)
+  );
 
   const setPage: ActionCreator<number> = TablePaginationStore.useStoreActions(
-    (state) => {
-      return state.setPage;
-    }
+    (state) => state.setPage
   );
 
   const onClick = (): void => {

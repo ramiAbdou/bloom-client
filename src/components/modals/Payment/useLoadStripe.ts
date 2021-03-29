@@ -6,9 +6,9 @@ import { loadStripe, Stripe } from '@stripe/stripe-js';
 const useLoadStripe = (): Stripe => {
   const [stripe, setStripe] = useState<Stripe>(null);
 
-  const stripeAccountId: string = useStoreState(({ db }) => {
-    return db.communityIntegrations?.stripeAccountId;
-  });
+  const stripeAccountId: string = useStoreState(
+    ({ db }) => db.communityIntegrations?.stripeAccountId
+  );
 
   useEffect(() => {
     // Don't try to load Stripe unless we have the ID of the Stripe account

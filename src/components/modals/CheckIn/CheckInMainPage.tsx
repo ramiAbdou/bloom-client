@@ -12,17 +12,15 @@ interface CheckInMainPageProps {
 }
 
 const CheckInMainPage: React.FC<CheckInMainPageProps> = ({ lock }) => {
-  const pageId = StoryStore.useStoreState((state) => {
-    return state.pageId;
-  });
+  const pageId = StoryStore.useStoreState((state) => state.pageId);
 
-  const branchId = StoryStore.useStoreState(({ getPage }) => {
-    return getPage('FINISH')?.branchId;
-  });
+  const branchId = StoryStore.useStoreState(
+    ({ getPage }) => getPage('FINISH')?.branchId
+  );
 
-  const setCurrentPage = StoryStore.useStoreActions((store) => {
-    return store.setCurrentPage;
-  });
+  const setCurrentPage = StoryStore.useStoreActions(
+    (state) => state.setCurrentPage
+  );
 
   const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 

@@ -31,17 +31,9 @@ const StoryPage: React.FC<StoryPageProps> = ({
   branchId = branchId ?? id;
   branches = branches ?? { [branchId]: { description, iconUrl, title } };
 
-  const pageId = StoryStore.useStoreState((state) => {
-    return state.pageId;
-  });
-
-  const page = StoryStore.useStoreState(({ getPage }) => {
-    return getPage(id);
-  });
-
-  const setPage = StoryStore.useStoreActions((store) => {
-    return store.setPage;
-  });
+  const pageId = StoryStore.useStoreState((state) => state.pageId);
+  const page = StoryStore.useStoreState(({ getPage }) => getPage(id));
+  const setPage = StoryStore.useStoreActions((state) => state.setPage);
 
   useUpdateDisabledPage(id);
 

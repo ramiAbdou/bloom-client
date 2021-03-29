@@ -13,22 +13,20 @@ import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 
-const AdminDatabaseDemoteFormActions: React.FC = () => {
-  return (
-    <Row spacing="xs">
-      <FormSubmitButton row loadingText="Demoting...">
-        Demote
-      </FormSubmitButton>
+const AdminDatabaseDemoteFormActions: React.FC = () => (
+  <Row spacing="xs">
+    <FormSubmitButton row loadingText="Demoting...">
+      Demote
+    </FormSubmitButton>
 
-      <ModalCloseButton />
-    </Row>
-  );
-};
+    <ModalCloseButton />
+  </Row>
+);
 
 const AdminDatabaseDemoteForm: React.FC = () => {
-  const memberIds = TableStore.useStoreState(({ selectedRowIds }) => {
-    return selectedRowIds;
-  });
+  const memberIds = TableStore.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds
+  );
 
   const [demoteMembers] = useMutation<IMember[], MemberIdsArgs>({
     fields: ['id', 'role'],

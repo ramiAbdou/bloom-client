@@ -7,14 +7,8 @@ import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
 const SidebarHamburgerButton: React.FC<BaseProps> = ({ className }) => {
-  const setIsOpen = useStoreActions(({ sidebar }) => {
-    return sidebar.setIsOpen;
-  });
-
-  const onClick = () => {
-    return setIsOpen(true);
-  };
-
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
+  const onClick = () => setIsOpen(true);
   const css: string = cx('d-none--d mb-sm', {}, className);
 
   return (

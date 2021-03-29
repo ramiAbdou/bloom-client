@@ -15,10 +15,7 @@ import PaymentFinishButton from './PaymentFinishButton';
 import useUpdateStripePaymentMethodId from './useUpdateStripePaymentMethodId';
 
 const PaymentCardButton: React.FC = () => {
-  const modalType = PaymentStore.useStoreState((state) => {
-    return state.type;
-  });
-
+  const modalType = PaymentStore.useStoreState((state) => state.type);
   const stripe = useStripe();
 
   if (modalType === PaymentModalType.UPDATE_PAYMENT_METHOD) {
@@ -63,13 +60,11 @@ const PaymentCardForm: React.FC = () => {
 };
 
 const PaymentCardPage: React.FC = () => {
-  const isCardOnFile: boolean = useStoreState(({ db }) => {
-    return !!db.memberIntegrations.paymentMethod;
-  });
+  const isCardOnFile: boolean = useStoreState(
+    ({ db }) => !!db.memberIntegrations.paymentMethod
+  );
 
-  const modalType = PaymentStore.useStoreState((state) => {
-    return state.type;
-  });
+  const modalType = PaymentStore.useStoreState((state) => state.type);
 
   const description: string = isCardOnFile
     ? 'An update to your current subscription will be reflected on your next billing date.'

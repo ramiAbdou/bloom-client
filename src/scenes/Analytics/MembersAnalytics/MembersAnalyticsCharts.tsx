@@ -5,15 +5,13 @@ import Row from '@containers/Row/Row';
 import MembersAnalyticsActiveMembersChart from './MembersAnalyticsActiveChart';
 import MembersAnalyticsTotalMembersChart from './MembersAnalyticsTotalChart';
 
-const MembersAnalyticsCharts: React.FC = () => {
-  return (
-    <MainSection>
-      <Row wrap gap="sm">
-        <MembersAnalyticsTotalMembersChart />
-        <MembersAnalyticsActiveMembersChart />
-      </Row>
-    </MainSection>
-  );
-};
+const MembersAnalyticsCharts: React.FC = () => (
+  <MainSection>
+    <Row wrap gap="sm">
+      <MembersAnalyticsTotalMembersChart />
+      <MembersAnalyticsActiveMembersChart />
+    </Row>
+  </MainSection>
+);
 
 export default MembersAnalyticsCharts;

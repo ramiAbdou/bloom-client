@@ -11,9 +11,7 @@ import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitDatabase = (): Partial<QueryResult> => {
-  const communityId: string = useStoreState(({ db }) => {
-    return db.community.id;
-  });
+  const communityId: string = useStoreState(({ db }) => db.community.id);
 
   const { loading: loading1 }: QueryResult<IMember[]> = useQuery<IMember[]>({
     fields: [

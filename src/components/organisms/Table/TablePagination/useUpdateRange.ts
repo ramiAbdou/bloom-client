@@ -5,19 +5,17 @@ import TableStore from '../Table.store';
 import TablePaginationStore from './TablePagination.store';
 
 const useUpdateRange = (): void => {
-  const numFilteredRows: number = TableStore.useStoreState((state) => {
-    return state.filteredRows.length;
-  });
+  const numFilteredRows: number = TableStore.useStoreState(
+    (state) => state.filteredRows.length
+  );
 
-  const page: number = TablePaginationStore.useStoreState((state) => {
-    return state.page;
-  });
+  const page: number = TablePaginationStore.useStoreState(
+    (state) => state.page
+  );
 
   const setRange: ActionCreator<
     [number, number]
-  > = TablePaginationStore.useStoreActions((state) => {
-    return state.setRange;
-  });
+  > = TablePaginationStore.useStoreActions((state) => state.setRange);
 
   useEffect(() => {
     const floor: number = page * 25;

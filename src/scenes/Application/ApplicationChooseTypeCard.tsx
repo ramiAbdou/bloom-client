@@ -8,9 +8,10 @@ import { IdProps } from '@util/constants';
 import { take } from '@util/util';
 
 const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: planId }) => {
-  const { amount, recurrence }: IMemberPlan = useStoreState(({ db }) => {
-    return db.byMemberPlanId[planId];
-  }, deepequal);
+  const { amount, recurrence }: IMemberPlan = useStoreState(
+    ({ db }) => db.byMemberPlanId[planId],
+    deepequal
+  );
 
   // Formats the amount with FREE if the amount is 0.
   const amountString: string = amount ? `$${amount}` : 'FREE';

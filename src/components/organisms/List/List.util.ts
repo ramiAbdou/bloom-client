@@ -34,11 +34,9 @@ export const runListFilters = (state: State<ListModel>): any[] => {
         }
       );
     })
-    ?.filter((entity) => {
-      return Object.values(state.filters)?.every((listFilter) => {
-        return listFilter(entity);
-      });
-    });
+    ?.filter((entity) =>
+      Object.values(state.filters)?.every((listFilter) => listFilter(entity))
+    );
 
   if (!state.searchString) return filteredItems;
 

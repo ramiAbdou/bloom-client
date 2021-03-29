@@ -9,26 +9,22 @@ import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
 const ApplicationReviewMain: React.FC = () => {
-  const questions: IQuestion[] = useStoreState(({ db }) => {
-    return db.community?.questions
-      ?.map((questionId: string) => {
-        return db.byQuestionId[questionId];
-      })
-      ?.filter((question: IQuestion) => {
-        return !question.locked;
-      });
-  });
+  const questions: IQuestion[] = useStoreState(({ db }) =>
+    db.community?.questions
+      ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.filter((question: IQuestion) => !question.locked)
+  );
 
-  const items: QuestionBoxItemProps[] = StoryStore.useStoreState((store) => {
-    return questions?.map(({ id, title, type }: IQuestion) => {
+  const items: QuestionBoxItemProps[] = StoryStore.useStoreState((state) =>
+    questions?.map(({ id, title, type }: IQuestion) => {
       return {
         handleNull: 'HIDE_ALL',
         title,
         type,
-        value: store.items[id]?.value
+        value: state.items[id]?.value
       };
-    });
-  });
+    })
+  );
 
   return (
     <FormSection>

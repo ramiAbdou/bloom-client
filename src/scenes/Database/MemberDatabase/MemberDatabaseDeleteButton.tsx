@@ -13,21 +13,19 @@ import DatabaseAction from '../DatabaseAction';
  * to delete another person in the community.
  */
 const useDeleteTooltip = (): string => {
-  const selectedRowIds = TableStore.useStoreState((store) => {
-    return store.selectedRowIds;
-  });
+  const selectedRowIds = TableStore.useStoreState(
+    (state) => state.selectedRowIds
+  );
 
-  const isSelfSelected = useStoreState(({ db }) => {
-    return selectedRowIds.includes(db.member.id);
-  });
+  const isSelfSelected = useStoreState(({ db }) =>
+    selectedRowIds.includes(db.member.id)
+  );
 
   const hasPermissions: boolean = useStoreState(({ db }) => {
     if (db.member?.role === MemberRole.OWNER) return true;
 
     if (
-      selectedRowIds.some((memberId: string) => {
-        return !!db.byMemberId[memberId]?.role;
-      })
+      selectedRowIds.some((memberId: string) => !!db.byMemberId[memberId]?.role)
     ) {
       return false;
     }
@@ -45,15 +43,9 @@ const useDeleteTooltip = (): string => {
 };
 
 const MemberDatabaseDeleteButton: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
-
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const tooltip: string = useDeleteTooltip();
-
-  const onClick = () => {
-    return showModal({ id: ModalType.DELETE_MEMBERS });
-  };
+  const onClick = () => showModal({ id: ModalType.DELETE_MEMBERS });
 
   return (
     <DatabaseAction

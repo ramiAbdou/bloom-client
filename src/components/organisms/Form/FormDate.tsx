@@ -11,18 +11,12 @@ import useInitFormItem from './useInitFormItem';
 
 const FormDate: React.FC<FormItemData> = ({ className, ...args }) => {
   const key = getFormItemKey(args);
+  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
+  const setValue = FormStore.useStoreActions((state) => state.setValue);
 
-  const value = FormStore.useStoreState(({ items }) => {
-    return items[key]?.value;
-  });
-
-  const setValue = FormStore.useStoreActions((store) => {
-    return store.setValue;
-  });
-
-  const startDate = FormStore.useStoreState(({ items }) => {
-    return items.START_DATE?.value;
-  });
+  const startDate = FormStore.useStoreState(
+    ({ items }) => items.START_DATE?.value
+  );
 
   useInitFormItem(args);
 
@@ -47,9 +41,7 @@ const FormDate: React.FC<FormItemData> = ({ className, ...args }) => {
         selected={
           day(value as string).isValid() && day(value as string).toDate()
         }
-        onChange={(date) => {
-          return updateDate(date);
-        }}
+        onChange={(date) => updateDate(date)}
       />
     </FormItemContainer>
   );

@@ -28,14 +28,12 @@ const ProfileCardHeader: React.FC<ProfileCardHeaderProps> = ({
   h2,
   title,
   ...editProps
-}) => {
-  return (
-    <Row justify="sb" spacing="xs">
-      {h2 && <h2>{title}</h2>}
-      {!h2 && <h3>{title}</h3>}
-      <ProfileEditButton {...editProps} />
-    </Row>
-  );
-};
+}) => (
+  <Row justify="sb" spacing="xs">
+    {h2 && <h2>{title}</h2>}
+    {!h2 && <h3>{title}</h3>}
+    <ProfileEditButton {...editProps} />
+  </Row>
+);
 
 export default ProfileCardHeader;

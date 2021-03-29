@@ -6,9 +6,7 @@ import { PanelType } from '@util/constants';
 import SidebarPanel from '../Sidebar/SidebarPanel';
 
 const PanelContent: React.FC = () => {
-  const panelId: string = useStoreState(({ panel }) => {
-    return panel.id;
-  });
+  const panelId: string = useStoreState(({ panel }) => panel.id);
 
   if (panelId === PanelType.ADD_RECORDING_LINK) {
     return <IndividualEventRecordingForm />;

@@ -13,7 +13,6 @@ export interface MainNavigationProps extends BaseProps {
 
 const MainNavigation: React.FC<MainNavigationProps> = (props) => {
   const { options, show } = props;
-
   const { location } = useHistory();
   const { pathname } = location;
 
@@ -21,10 +20,7 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
   if (!options?.length) return null;
 
   const page = pathname.substring(pathname.lastIndexOf('/') + 1);
-
-  const activeIndex = options.findIndex((option) => {
-    return option.pathname === page;
-  });
+  const activeIndex = options.findIndex((option) => option.pathname === page);
 
   if (activeIndex < 0 || !options?.length) return null;
 
@@ -33,15 +29,13 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
   return (
     <Show show={show}>
       <nav className="f f-ac">
-        {options.map((optionProps: MainNavigationOptionProps) => {
-          return (
-            <MainNavigationButton
-              key={optionProps.title}
-              activeTitle={activeOption.title}
-              {...optionProps}
-            />
-          );
-        })}
+        {options.map((optionProps: MainNavigationOptionProps) => (
+          <MainNavigationButton
+            key={optionProps.title}
+            activeTitle={activeOption.title}
+            {...optionProps}
+          />
+        ))}
       </nav>
     </Show>
   );

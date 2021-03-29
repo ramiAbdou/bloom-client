@@ -46,9 +46,7 @@ const SearchBar: React.FC<SearchBarProps> = (props: SearchBarProps) => {
         placeholder={placeholder ?? 'Search...'}
         type="text"
         value={value}
-        onChange={({ target }) => {
-          return onChange(target.value);
-        }}
+        onChange={({ target }) => onChange(target.value)}
       />
 
       <SearchBarClearButton value={value} onChange={onChange} />

@@ -21,14 +21,8 @@ interface VerifiedToken {
  */
 const useVerifyToken = (): boolean => {
   const token = new URLSearchParams(window.location.search).get('token');
-
-  const videoUrl: string = useStoreState(({ db }) => {
-    return db.event?.videoUrl;
-  });
-
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const videoUrl: string = useStoreState(({ db }) => db.event?.videoUrl);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const [verifyToken, result] = useMutation<VerifiedToken>({
     fields: ['event'],

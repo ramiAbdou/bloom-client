@@ -13,17 +13,16 @@ import IntegrationCard from './IntegrationsCard';
 // Responsible for fetching and supplying all the data to the children card
 // components to process and render.
 const IntegrationsConnectedList: React.FC = () => {
-  const urlName = useStoreState(({ db }) => {
-    return db.community.urlName;
-  });
+  const urlName = useStoreState(({ db }) => db.community.urlName);
 
   const {
     isMailchimpAuthenticated,
     mailchimpListId,
     stripeAccountId
-  } = useStoreState(({ db }) => {
-    return db.communityIntegrations ?? {};
-  }, deepequal) as ICommunityIntegrations;
+  } = useStoreState(
+    ({ db }) => db.communityIntegrations ?? {},
+    deepequal
+  ) as ICommunityIntegrations;
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
     isMailchimpAuthenticated,
@@ -33,17 +32,15 @@ const IntegrationsConnectedList: React.FC = () => {
   });
 
   const connectedData: IntegrationsDetailsData[] = integrationData.filter(
-    ({ connected }) => {
-      return connected;
-    }
+    ({ connected }) => connected
   );
 
   return (
     <Show show={!!connectedData?.length}>
       <Row className="pt-xxs" fillBreakpoint={2} gap="sm">
-        {connectedData.map((props: IntegrationsDetailsData) => {
-          return <IntegrationCard key={props.name} {...props} />;
-        })}
+        {connectedData.map((props: IntegrationsDetailsData) => (
+          <IntegrationCard key={props.name} {...props} />
+        ))}
       </Row>
 
       <Separator margin={24} />

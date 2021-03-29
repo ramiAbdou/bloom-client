@@ -11,22 +11,10 @@ import { QuestionCategory } from '@util/constants';
 import useUpdateMember from './useUpdateMember';
 
 const ProfilePersonalModal: React.FC = () => {
-  const bio = useStoreState(({ db }) => {
-    return db.member.bio;
-  });
-
-  const firstName = useStoreState(({ db }) => {
-    return db.member.firstName;
-  });
-
-  const lastName = useStoreState(({ db }) => {
-    return db.member.lastName;
-  });
-
-  const pictureUrl = useStoreState(({ db }) => {
-    return db.member.pictureUrl;
-  });
-
+  const bio = useStoreState(({ db }) => db.member.bio);
+  const firstName = useStoreState(({ db }) => db.member.firstName);
+  const lastName = useStoreState(({ db }) => db.member.lastName);
+  const pictureUrl = useStoreState(({ db }) => db.member.pictureUrl);
   const updateMember = useUpdateMember();
 
   return (

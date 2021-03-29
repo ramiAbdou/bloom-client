@@ -5,21 +5,21 @@ import TableStore from '../Table.store';
 import TablePaginationStore from './TablePagination.store';
 
 const TablePaginationMessage: React.FC = () => {
-  const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.floor;
-  });
+  const floor: number = TablePaginationStore.useStoreState(
+    (state) => state.floor
+  );
 
-  const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.ceiling;
-  });
+  const ceiling: number = TablePaginationStore.useStoreState(
+    (state) => state.ceiling
+  );
 
-  const rowsCount: number = TableStore.useStoreState(({ filteredRows }) => {
-    return filteredRows?.length;
-  });
+  const rowsCount: number = TableStore.useStoreState(
+    ({ filteredRows }) => filteredRows?.length
+  );
 
-  const showCount: boolean = TableStore.useStoreState(({ options }) => {
-    return options.showCount;
-  });
+  const showCount: boolean = TableStore.useStoreState(
+    ({ options }) => options.showCount
+  );
 
   const message: string = rowsCount
     ? `Displaying ${floor + 1}-${ceiling} of ${rowsCount} results.`

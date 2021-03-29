@@ -22,9 +22,7 @@ const DirectoryCardList: React.FC = () => {
         const member: IMember = db.byMemberId[memberId];
 
         const values: IMemberValue[] = member.values
-          ?.map((valueId: string) => {
-            return db.byValuesId[valueId];
-          })
+          ?.map((valueId: string) => db.byValuesId[valueId])
           ?.filter((value: IMemberValue) => {
             const question: IQuestion = db.byQuestionId[value.question];
             return !question?.locked;
@@ -32,12 +30,8 @@ const DirectoryCardList: React.FC = () => {
 
         return { ...member, memberId, values };
       })
-      ?.filter((member) => {
-        return member?.status === MemberStatus.ACCEPTED;
-      })
-      ?.sort((a, b) => {
-        return sortObjects(a, b, 'joinedAt');
-      });
+      ?.filter((member) => member?.status === MemberStatus.ACCEPTED)
+      ?.sort((a, b) => sortObjects(a, b, 'joinedAt'));
   }, deepequal);
 
   return (
@@ -50,14 +44,8 @@ const DirectoryCardList: React.FC = () => {
           'lastName',
           'email',
           'bio',
-          (item) => {
-            return `${item.firstName} ${item.lastName}`;
-          },
-          (item) => {
-            return item.values.map(({ value }) => {
-              return value?.toString();
-            });
-          }
+          (item) => `${item.firstName} ${item.lastName}`,
+          (item) => item.values.map(({ value }) => value?.toString())
         ]
       }}
       prepareForFilter={prepareMemberForFilter}

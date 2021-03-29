@@ -9,20 +9,18 @@ import MembershipPaymentHistory from './MembershipPaymentHistory';
 import MembershipPaymentMethod from './MembershipPaymentMethod';
 import MembershipRenewalCard from './MembershipRenewalCard';
 
-const MembershipContent: React.FC = () => {
-  return (
-    <>
-      <MembershipRenewalCard />
+const MembershipContent: React.FC = () => (
+  <>
+    <MembershipRenewalCard />
 
-      <div className="s-membership-card-ctr mb-md--nlc">
-        <MembershipCurrentPlan />
-        <MembershipPaymentMethod />
-      </div>
+    <div className="s-membership-card-ctr mb-md--nlc">
+      <MembershipCurrentPlan />
+      <MembershipPaymentMethod />
+    </div>
 
-      <MembershipPaymentHistory />
-    </>
-  );
-};
+    <MembershipPaymentHistory />
+  </>
+);
 
 const Membership: React.FC = () => {
   const { url } = useRouteMatch();

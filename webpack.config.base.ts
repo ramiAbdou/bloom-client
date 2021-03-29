@@ -4,7 +4,6 @@ import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
-import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import StylelintPlugin from 'stylelint-webpack-plugin';
 import webpack, { Configuration as WebpackConfiguration } from 'webpack';
 
@@ -14,9 +13,7 @@ if (process.env.APP_ENV === 'dev') dotEnvName = '.env.dev';
 else if (process.env.APP_ENV === 'stage') dotEnvName = '.env.stage';
 else if (process.env.APP_ENV === 'prod') dotEnvName = '.env.prod';
 
-const smp: SpeedMeasurePlugin = new SpeedMeasurePlugin();
-
-const webpackBaseConfig: WebpackConfiguration = smp.wrap({
+const webpackBaseConfig: WebpackConfiguration = {
   entry: path.join(__dirname, '/src/App.tsx'),
 
   module: {
@@ -91,6 +88,6 @@ const webpackBaseConfig: WebpackConfiguration = smp.wrap({
       new TsConfigPathsPlugin()
     ]
   }
-});
+};
 
 export default webpackBaseConfig;

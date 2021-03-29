@@ -7,14 +7,12 @@ import { cx } from '@util/util';
 import TablePaginationStore from './TablePagination.store';
 
 const TablePaginationNumberButton: React.FC<ValueProps> = ({ value }) => {
-  const isSelected: boolean = TablePaginationStore.useStoreState((state) => {
-    return state.page === value;
-  });
+  const isSelected: boolean = TablePaginationStore.useStoreState(
+    (state) => state.page === value
+  );
 
   const setPage: ActionCreator<number> = TablePaginationStore.useStoreActions(
-    (state) => {
-      return state.setPage;
-    }
+    (state) => state.setPage
   );
 
   const isEllipses: boolean = value === '...';

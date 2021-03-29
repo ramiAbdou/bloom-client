@@ -9,13 +9,8 @@ import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
-  const startTime = useStoreState(({ db }) => {
-    return db.event.startTime;
-  });
-
-  const numAttendees = useStoreState(({ db }) => {
-    return db.event.attendees?.length;
-  });
+  const startTime = useStoreState(({ db }) => db.event.startTime);
+  const numAttendees = useStoreState(({ db }) => db.event.attendees?.length);
 
   return (
     <GrayCard
@@ -27,21 +22,14 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
 };
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
-  const numGuests = useStoreState(({ db }) => {
-    return db.event.guests?.length;
-  });
+  const numGuests = useStoreState(({ db }) => db.event.guests?.length);
 
   return <GrayCard label="# of RSVPs" value={numGuests ?? 0} />;
 };
 
 const IndividualEventInsightsWatchesCard: React.FC = () => {
-  const recordingUrl = useStoreState(({ db }) => {
-    return db.event.recordingUrl;
-  });
-
-  const numWatches = useStoreState(({ db }) => {
-    return db.event.watches?.length;
-  });
+  const recordingUrl = useStoreState(({ db }) => db.event.recordingUrl);
+  const numWatches = useStoreState(({ db }) => db.event.watches?.length);
 
   return (
     <GrayCard
@@ -53,9 +41,7 @@ const IndividualEventInsightsWatchesCard: React.FC = () => {
 };
 
 const IndividualEventInsights: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => {
-    return !!db.member?.role;
-  });
+  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
 
   return (
     <MainSection className="s-events-individual-insights" show={!!isAdmin}>

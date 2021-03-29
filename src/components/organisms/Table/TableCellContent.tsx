@@ -15,20 +15,18 @@ const TableCellContent: React.FC<TableCellContentProps> = ({
   columnId,
   value
 }) => {
-  const columnIndex: number = TableStore.useStoreState(({ columns }) => {
-    return columns.findIndex((element: TableColumn) => {
-      return element.id === columnId;
-    });
-  });
+  const columnIndex: number = TableStore.useStoreState(({ columns }) =>
+    columns.findIndex((element: TableColumn) => element.id === columnId)
+  );
 
   const {
     category,
     format,
     render,
     type
-  }: TableColumn = TableStore.useStoreState(({ columns }) => {
-    return (columns[columnIndex] ?? {}) as TableColumn;
-  });
+  }: TableColumn = TableStore.useStoreState(
+    ({ columns }) => (columns[columnIndex] ?? {}) as TableColumn
+  );
 
   // Custom rendering for of the cell value.
   if (render) return <>{render(value as string)}</>;
@@ -50,9 +48,9 @@ const TableCellContent: React.FC<TableCellContentProps> = ({
   if (type === QuestionType.MULTIPLE_SELECT && typeof value === 'string') {
     return (
       <>
-        {value.split(',').map((element: string) => {
-          return <Attribute key={element}>{element}</Attribute>;
-        })}
+        {value.split(',').map((element: string) => (
+          <Attribute key={element}>{element}</Attribute>
+        ))}
       </>
     );
   }

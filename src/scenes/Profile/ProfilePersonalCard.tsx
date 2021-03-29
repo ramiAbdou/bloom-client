@@ -13,13 +13,11 @@ import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
-  const fullName: string = useStoreState(({ db }) => {
-    return `${db.member.firstName} ${db.member.lastName}`;
-  });
+  const fullName: string = useStoreState(
+    ({ db }) => `${db.member.firstName} ${db.member.lastName}`
+  );
 
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
@@ -31,9 +29,7 @@ const ProfilePersonalHeader: React.FC = () => {
 };
 
 const ProfilePersonalTagList: React.FC = () => {
-  const role: MemberRole = useStoreState(({ db }) => {
-    return db.member.role;
-  });
+  const role: MemberRole = useStoreState(({ db }) => db.member.role);
 
   const memberPlanName: string = useStoreState(({ db }) => {
     const memberPlan: IMemberPlan = db.byMemberPlanId[db.member.plan];
@@ -49,40 +45,26 @@ const ProfilePersonalTagList: React.FC = () => {
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const email: string = useStoreState(({ db }) => {
-    return db.member.email;
-  });
+  const email: string = useStoreState(({ db }) => db.member.email);
 
   return <MailTo email={email} />;
 };
 
 const ProfilePersonalBio: React.FC = () => {
-  const bio: string = useStoreState(({ db }) => {
-    return db.member.bio;
-  });
+  const bio: string = useStoreState(({ db }) => db.member.bio);
 
   if (!bio) return null;
   return <p>{bio}</p>;
 };
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
-  const bio: string = useStoreState(({ db }) => {
-    return db.member.bio;
-  });
-
-  const pictureUrl: string = useStoreState(({ db }) => {
-    return db.member.pictureUrl;
-  });
-
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const bio: string = useStoreState(({ db }) => db.member.bio);
+  const pictureUrl: string = useStoreState(({ db }) => db.member.pictureUrl);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   if (bio && pictureUrl) return null;
 
-  const onClick = () => {
-    return showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
-  };
+  const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
     <Row spacing="xs">
@@ -101,23 +83,18 @@ const ProfilePersonalOnboardingContainer: React.FC = () => {
   );
 };
 
-const ProfilePersonalMainContent: React.FC = () => {
-  return (
-    <div className="s-profile-card--personal-main">
-      <ProfilePersonalHeader />
-      <ProfilePersonalTagList />
-      <ProfilePersonalEmail />
-      <ProfilePersonalBio />
-      <ProfilePersonalOnboardingContainer />
-    </div>
-  );
-};
+const ProfilePersonalMainContent: React.FC = () => (
+  <div className="s-profile-card--personal-main">
+    <ProfilePersonalHeader />
+    <ProfilePersonalTagList />
+    <ProfilePersonalEmail />
+    <ProfilePersonalBio />
+    <ProfilePersonalOnboardingContainer />
+  </div>
+);
 
 const ProfilePersonalPictureRow: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
-
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMobile: boolean = useBreakpoint() === 1;
 
   const onClick = () => {
@@ -132,13 +109,11 @@ const ProfilePersonalPictureRow: React.FC = () => {
   );
 };
 
-const ProfilePersonalCard: React.FC = () => {
-  return (
-    <Card className="s-profile-card--personal">
-      <ProfilePersonalPictureRow />
-      <ProfilePersonalMainContent />
-    </Card>
-  );
-};
+const ProfilePersonalCard: React.FC = () => (
+  <Card className="s-profile-card--personal">
+    <ProfilePersonalPictureRow />
+    <ProfilePersonalMainContent />
+  </Card>
+);
 
 export default ProfilePersonalCard;

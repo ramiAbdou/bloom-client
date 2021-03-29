@@ -13,7 +13,6 @@ import { ICommunity, IMember } from '../store/Db/entities';
  */
 const useBackupCommunity = (): boolean => {
   const { urlName }: UrlNameProps = useParams();
-
   const { push } = useHistory();
 
   const backupUrlName: string = useStoreState(({ db }) => {
@@ -24,16 +23,14 @@ const useBackupCommunity = (): boolean => {
     return db.byCommunityId[member.community]?.urlName;
   });
 
-  const isMember: boolean = useStoreState(({ db }) => {
-    return db.user?.members
-      ?.map((memberId: string) => {
-        return db.byMemberId[memberId];
-      })
+  const isMember: boolean = useStoreState(({ db }) =>
+    db.user?.members
+      ?.map((memberId: string) => db.byMemberId[memberId])
       ?.some((member: IMember) => {
         const community: ICommunity = db.byCommunityId[member.community];
         return urlName === community.urlName;
-      });
-  });
+      })
+  );
 
   useEffect(() => {
     if (backupUrlName && (!urlName || isMember === false)) {

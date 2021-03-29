@@ -10,29 +10,23 @@ import TableStore from './Table.store';
 import { RenameColumnFunction, TableColumn } from './Table.types';
 
 const TableColumnPanelRenameForm: React.FC = () => {
-  const columnId: string = useStoreState(({ panel }) => {
-    return panel.metadata;
-  });
+  const columnId: string = useStoreState(({ panel }) => panel.metadata);
 
   const title: string = TableStore.useStoreState(({ columns }) => {
-    const result: TableColumn = columns.find((column: TableColumn) => {
-      return column.id === columnId;
-    });
+    const result: TableColumn = columns.find(
+      (column: TableColumn) => column.id === columnId
+    );
 
     return result?.title;
   });
 
   const onRenameColumn: RenameColumnFunction = TableStore.useStoreState(
-    ({ options }) => {
-      return options.onRenameColumn;
-    }
+    ({ options }) => options.onRenameColumn
   );
 
   const updateColumn: ActionCreator<
     Partial<TableColumn>
-  > = TableStore.useStoreActions((store) => {
-    return store.updateColumn;
-  });
+  > = TableStore.useStoreActions((state) => state.updateColumn);
 
   const onSubmit: OnFormSubmitFunction = async ({ closePanel, items }) => {
     // Only one form item, so just index first element.

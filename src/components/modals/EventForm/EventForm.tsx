@@ -11,10 +11,7 @@ import useCreateEvent from './useCreateEvent';
 import useUpdateEvent from './useUpdateEvent';
 
 const EventForm: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => {
-    return modal.metadata;
-  });
-
+  const eventId: string = useStoreState(({ modal }) => modal.metadata);
   const createEvent = useCreateEvent();
   const updateEvent = useUpdateEvent(eventId);
 

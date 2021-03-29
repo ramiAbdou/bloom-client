@@ -6,9 +6,7 @@ import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitPaymentAnalyticsHistory = (): Partial<QueryResult> => {
-  const communityId: string = useStoreState(({ db }) => {
-    return db.community.id;
-  });
+  const communityId: string = useStoreState(({ db }) => db.community.id);
 
   const { data, loading: loading1 }: QueryResult<IPayment[]> = useQuery<
     IPayment[]

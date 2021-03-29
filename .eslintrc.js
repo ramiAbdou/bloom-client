@@ -26,7 +26,11 @@ module.exports = {
         varsIgnorePattern: '_' // Allow underscores not to be treated as vars.
       }
     ],
-    'arrow-body-style': ['error', 'always'],
+    'arrow-body-style': [
+      'error',
+      'as-needed',
+      { requireReturnForObjectLiteral: true }
+    ],
     curly: ['error', 'multi-line'],
     'import/newline-after-import': 2,
     'import/no-extraneous-dependencies': 0,
@@ -52,6 +56,11 @@ module.exports = {
         blankLine: 'always',
         prev: ['multiline-const', 'multiline-expression'],
         next: 'return'
+      },
+      {
+        blankLine: 'never',
+        prev: ['singleline-const'],
+        next: ['singleline-const']
       }
     ],
     'react/jsx-props-no-spreading': 0,

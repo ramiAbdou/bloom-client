@@ -13,23 +13,19 @@ const TableRowCheckbox: React.FC<TableRowCheckboxProps> = ({
   columnId,
   rowId
 }) => {
-  const columnIndex: number = TableStore.useStoreState(({ columns }) => {
-    return columns.findIndex((element: TableColumn) => {
-      return element.id === columnId;
-    });
-  });
+  const columnIndex: number = TableStore.useStoreState(({ columns }) =>
+    columns.findIndex((element: TableColumn) => element.id === columnId)
+  );
 
-  const hasCheckbox: boolean = TableStore.useStoreState(({ options }) => {
-    return !!options.hasCheckbox;
-  });
+  const hasCheckbox: boolean = TableStore.useStoreState(
+    ({ options }) => !!options.hasCheckbox
+  );
 
-  const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) => {
-    return selectedRowIds.includes(rowId);
-  });
+  const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) =>
+    selectedRowIds.includes(rowId)
+  );
 
-  const toggleRow = TableStore.useStoreActions((store) => {
-    return store.toggleRow;
-  });
+  const toggleRow = TableStore.useStoreActions((state) => state.toggleRow);
 
   const onChange = (): void => {
     toggleRow(rowId);

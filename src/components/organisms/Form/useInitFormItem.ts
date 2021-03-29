@@ -9,19 +9,15 @@ import { FormItemData } from './Form.types';
 const useInitFormItem = (props: FormItemData): void => {
   const key = getFormItemKey(props);
 
-  const storedValue: any = FormStore.useStoreState(({ items }) => {
-    return items[key]?.value;
-  });
+  const storedValue: any = FormStore.useStoreState(
+    ({ items }) => items[key]?.value
+  );
 
-  const setItem = FormStore.useStoreActions((store) => {
-    return store.setItem;
-  });
-
+  const setItem = FormStore.useStoreActions((state) => state.setItem);
   const storyStore = StoryStore.useStore();
   const storyItems = storyStore?.getState()?.items;
   const setStoryItem = storyStore?.getActions()?.setItem;
   const setStoryValue = storyStore?.getActions()?.setValue;
-
   const { required, type, value } = props;
 
   useEffect(() => {

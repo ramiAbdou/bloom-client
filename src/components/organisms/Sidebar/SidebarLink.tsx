@@ -12,9 +12,7 @@ interface SidebarLinkProps extends SidebarLinkOptions, OnClickProps {}
 const SidebarLinkAction: React.FC<
   Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
-  const setIsOpen = useStoreActions(({ sidebar }) => {
-    return sidebar.setIsOpen;
-  });
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
 
   const onUpdatedClick = () => {
     setIsOpen(false);
@@ -35,12 +33,8 @@ const SidebarLinkAction: React.FC<
  * Button that opens up a modal.
  */
 const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
-  const setIsOpen = useStoreActions(({ sidebar }) => {
-    return sidebar.setIsOpen;
-  });
-
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
   const { Icon, onClick, to, title } = props;
-
   const { url } = useRouteMatch();
   const isActive = useTopLevelRoute() === to;
 
@@ -51,9 +45,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
     'o-nav-link--active': isActive
   });
 
-  const onLinkClick = () => {
-    return setIsOpen(false);
-  };
+  const onLinkClick = () => setIsOpen(false);
 
   return (
     <Link className={css} to={`${url}/${to}`} onClick={onLinkClick}>

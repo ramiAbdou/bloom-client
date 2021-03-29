@@ -20,17 +20,15 @@ import IndividualEventTableActions from './IndividualEventTableActions';
 import useInitIndividualEventTable from './useInitIndividualEventTable';
 
 const IndividualEventTableContent: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const rows: TableRow[] = useStoreState(({ db }) => {
-    return getIndividualEventTableRows(db);
-  });
+  const rows: TableRow[] = useStoreState(({ db }) =>
+    getIndividualEventTableRows(db)
+  );
 
-  const columns: TableColumn[] = useStoreState(({ db }) => {
-    return getIndividualEventTableColumns(db);
-  });
+  const columns: TableColumn[] = useStoreState(({ db }) =>
+    getIndividualEventTableColumns(db)
+  );
 
   const options: TableOptions = {
     hideIfEmpty: true,
@@ -54,17 +52,14 @@ const IndividualEventTableContent: React.FC = () => {
 };
 
 const IndividualEventTable: React.FC = () => {
-  const isAdmin: boolean = useStoreState(({ db }) => {
-    return !!db.member?.role;
-  });
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
 
-  const hasEventContent: boolean = useStoreState(({ db }) => {
-    return (
+  const hasEventContent: boolean = useStoreState(
+    ({ db }) =>
       !!db.event?.attendees?.length ||
       !!db.event?.guests?.length ||
       !!db.event?.watches?.length
-    );
-  });
+  );
 
   const { loading }: Partial<QueryResult> = useInitIndividualEventTable();
 

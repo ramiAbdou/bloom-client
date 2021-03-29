@@ -10,13 +10,8 @@ import PieChart from './PieChart';
 import TimeSeriesChart from './TimeSeriesChart';
 
 const ChartContent = (data: ChartModelInitArgs) => {
-  const chartType = ChartStore.useStoreState((state) => {
-    return state.type;
-  });
-
-  const setData = ChartStore.useStoreActions((store) => {
-    return store.setData;
-  });
+  const chartType = ChartStore.useStoreState((state) => state.type);
+  const setData = ChartStore.useStoreActions((state) => state.setData);
 
   useEffect(() => {
     // Only time we'll need to update the data is if the title/type are set.

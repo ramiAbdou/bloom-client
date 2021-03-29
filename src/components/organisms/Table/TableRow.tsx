@@ -6,17 +6,17 @@ import { TableColumn, TableRow as TableRowProps } from './Table.types';
 import TableRowCell from './TableCell';
 
 const TableRow: React.FC<TableRowProps> = (row) => {
-  const onRowClick = TableStore.useStoreState(({ options }) => {
-    return options.onRowClick;
-  });
+  const onRowClick = TableStore.useStoreState(
+    ({ options }) => options.onRowClick
+  );
 
-  const columns: TableColumn[] = TableStore.useStoreState((state) => {
-    return state.columns;
-  });
+  const columns: TableColumn[] = TableStore.useStoreState(
+    (state) => state.columns
+  );
 
-  const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) => {
-    return selectedRowIds.includes(row?.id);
-  });
+  const isSelected: boolean = TableStore.useStoreState(({ selectedRowIds }) =>
+    selectedRowIds.includes(row?.id)
+  );
 
   const css: string = cx('', {
     'o-table-tr--active': isSelected,

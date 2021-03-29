@@ -14,18 +14,16 @@ const SidebarSection: React.FC<LinkSectionProps> = ({
   links,
   title
 }: LinkSectionProps) => {
-  const isAdmin: boolean = useStoreState(({ db }) => {
-    return !!db.member?.role;
-  });
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
 
   if (['Admin', 'Quick Actions'].includes(title) && !isAdmin) return null;
 
   return (
     <div className="o-nav-section">
       <h5 className="c-gray-3 mb-xs ml-sm">{title}</h5>
-      {links.map((link) => {
-        return <SidebarLink key={link.to ?? nanoid()} {...link} />;
-      })}
+      {links.map((link) => (
+        <SidebarLink key={link.to ?? nanoid()} {...link} />
+      ))}
     </div>
   );
 };

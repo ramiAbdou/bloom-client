@@ -40,22 +40,20 @@ const Radio: React.FC<RadioProps> = ({
   options,
   value: checkedValue,
   ...radioProps
-}) => {
-  return (
-    <div className="c-misc-radio">
-      {options.map((optionProps: RadioOptionProps) => {
-        const allProps = {
-          ...optionProps,
-          ...radioProps,
-          checked: checkedValue === optionProps.label,
-          key: optionProps.label
-        };
+}) => (
+  <div className="c-misc-radio">
+    {options.map((optionProps: RadioOptionProps) => {
+      const allProps = {
+        ...optionProps,
+        ...radioProps,
+        checked: checkedValue === optionProps.label,
+        key: optionProps.label
+      };
 
-        if (card) return <RadioOptionCard {...allProps} />;
-        return <RadioOption {...allProps} />;
-      })}
-    </div>
-  );
-};
+      if (card) return <RadioOptionCard {...allProps} />;
+      return <RadioOption {...allProps} />;
+    })}
+  </div>
+);
 
 export default Radio;

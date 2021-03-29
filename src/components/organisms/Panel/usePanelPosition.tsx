@@ -20,7 +20,6 @@ const usePanelPosition = ({
   const scrollElement: HTMLElement = document.getElementById(scrollId);
   const { left, top, width } = element?.getBoundingClientRect() ?? {};
   const { innerWidth } = window;
-
   const [align, setAlign] = useState<PanelAlign>(initialAlign);
   const [targetLeft, setTargetLeft] = useState(left);
   const [targetTop, setTargetTop] = useState(top);

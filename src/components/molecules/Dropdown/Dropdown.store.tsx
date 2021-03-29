@@ -14,9 +14,9 @@ export const dropdownModel: DropdownModel = {
   setSearchString: action((state, searchString: string) => {
     return {
       ...state,
-      filteredValues: [...state.values].filter((option: string) => {
-        return option?.toLowerCase().includes(searchString.toLowerCase());
-      }),
+      filteredValues: [...state.values].filter((option: string) =>
+        option?.toLowerCase().includes(searchString.toLowerCase())
+      ),
       searchString
     };
   }),
@@ -42,9 +42,7 @@ export const dropdownModel: DropdownModel = {
 };
 
 const DropdownStore = createContextStore<DropdownModel>(
-  (runtimeModel: DropdownModel) => {
-    return runtimeModel;
-  },
+  (runtimeModel: DropdownModel) => runtimeModel,
   { disableImmer: true }
 );
 

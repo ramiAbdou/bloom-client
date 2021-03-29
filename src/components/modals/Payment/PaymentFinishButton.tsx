@@ -8,21 +8,21 @@ import PaymentStore from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 
 const PaymentFinishButton: React.FC = () => {
-  const type: PaymentModalType = PaymentStore.useStoreState((state) => {
-    return state.type;
-  });
+  const type: PaymentModalType = PaymentStore.useStoreState(
+    (state) => state.type
+  );
 
-  const selectedPlanId: string = PaymentStore.useStoreState((state) => {
-    return state.selectedPlanId;
-  });
+  const selectedPlanId: string = PaymentStore.useStoreState(
+    (state) => state.selectedPlanId
+  );
 
-  const changeAmount: number = PaymentStore.useStoreState((state) => {
-    return state.changeAmount;
-  });
+  const changeAmount: number = PaymentStore.useStoreState(
+    (state) => state.changeAmount
+  );
 
-  const amount: number = useStoreState(({ db }) => {
-    return changeAmount ?? db.byMemberPlanId[selectedPlanId]?.amount;
-  });
+  const amount: number = useStoreState(
+    ({ db }) => changeAmount ?? db.byMemberPlanId[selectedPlanId]?.amount
+  );
 
   const isLessThanCurrentType: boolean = useStoreState(({ db }) => {
     const selectedAmount: number = db.byMemberPlanId[selectedPlanId]?.amount;

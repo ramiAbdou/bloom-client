@@ -12,9 +12,7 @@ import ProfileSocialContainer from './ProfileSocial';
 import useInitProfilePersonal from './useInitProfilePersonal';
 
 const ProfilePersonalPicture: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   return (
     <ProfilePicture
@@ -27,9 +25,7 @@ const ProfilePersonalPicture: React.FC = () => {
 };
 
 const ProfilePersonalName: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const fullName: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -40,9 +36,7 @@ const ProfilePersonalName: React.FC = () => {
 };
 
 const ProfilePersonalTags: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const role = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -64,9 +58,7 @@ const ProfilePersonalTags: React.FC = () => {
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const email: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -77,9 +69,7 @@ const ProfilePersonalEmail: React.FC = () => {
 };
 
 const ProfilePersonalBio: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const bio: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];

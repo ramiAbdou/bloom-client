@@ -18,13 +18,8 @@ function MasonryList<T>({
 }: MasonryListProps<T>): JSX.Element {
   useInitList({ items, options, prepareForFilter });
 
-  const cacheKey = ListStore.useStoreState((state) => {
-    return state.cacheKey;
-  });
-
-  const filteredItems = ListStore.useStoreState((state) => {
-    return state.filteredItems;
-  });
+  const cacheKey = ListStore.useStoreState((state) => state.cacheKey);
+  const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
 
   if (!filteredItems?.length) return <p>{emptyMessage}</p>;
 

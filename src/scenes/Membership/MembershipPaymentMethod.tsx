@@ -10,9 +10,9 @@ import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';
 import useInitMembershipPaymentMethod from './useInitMembershipPaymentMethod';
 
 const MembershipPaymentMethodEmpty: React.FC = () => {
-  const isCardOnFile: boolean = useStoreState(({ db }) => {
-    return !!db.memberIntegrations.paymentMethod;
-  });
+  const isCardOnFile: boolean = useStoreState(
+    ({ db }) => !!db.memberIntegrations.paymentMethod
+  );
 
   return (
     <Show show={!isCardOnFile}>
@@ -23,9 +23,7 @@ const MembershipPaymentMethodEmpty: React.FC = () => {
 
 const MembershipPaymentMethodContent: React.FC = () => {
   const { brand, expirationDate, last4 }: IPaymentMethod = useStoreState(
-    ({ db }) => {
-      return db.memberIntegrations.paymentMethod ?? {};
-    },
+    ({ db }) => db.memberIntegrations.paymentMethod ?? {},
     deepequal
   );
 

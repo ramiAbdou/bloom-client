@@ -8,11 +8,12 @@ import { LoadingProps } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const pendingApplicantIds: string[] = useStoreState(({ db }) => {
-    return db.community?.members?.filter((memberId: string) => {
-      return db.byMemberId[memberId]?.status === MemberStatus.PENDING;
-    });
-  });
+  const pendingApplicantIds: string[] = useStoreState(({ db }) =>
+    db.community?.members?.filter(
+      (memberId: string) =>
+        db.byMemberId[memberId]?.status === MemberStatus.PENDING
+    )
+  );
 
   const numApplicants: number = pendingApplicantIds?.length;
   const headerTag: string = !!numApplicants && `${numApplicants} Total`;

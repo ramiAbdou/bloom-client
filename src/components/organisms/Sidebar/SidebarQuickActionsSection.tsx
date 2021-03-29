@@ -7,23 +7,17 @@ import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarSection from './SidebarSection';
 
 const SidebarQuickActionsSection: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const quickLinks: SidebarLinkOptions[] = [
     {
       Icon: IoAdd,
-      onClick: () => {
-        return showModal({ id: ModalType.CREATE_EVENT });
-      },
+      onClick: () => showModal({ id: ModalType.CREATE_EVENT }),
       title: 'Create Event'
     },
     {
       Icon: IoPersonAdd,
-      onClick: () => {
-        return showModal({ id: ModalType.ADD_MEMBERS });
-      },
+      onClick: () => showModal({ id: ModalType.ADD_MEMBERS }),
       title: 'Add Member'
     }
   ];

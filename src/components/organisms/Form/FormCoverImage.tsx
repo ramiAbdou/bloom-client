@@ -11,19 +11,11 @@ import useInitFormItem from './useInitFormItem';
 
 const FormCoverImageContent: React.FC<FormItemData> = (args) => {
   const { title } = args;
-
   const key: string = getFormItemKey(args);
-
-  const setValue = FormStore.useStoreActions((store) => {
-    return store.setValue;
-  });
-
+  const setValue = FormStore.useStoreActions((state) => state.setValue);
   const ref: React.MutableRefObject<HTMLInputElement> = useRef(null);
-
   // Opens the file uploader by "clicking" the invisible file input tag.
-  const openFileUploader = () => {
-    return ref.current.click();
-  };
+  const openFileUploader = () => ref.current.click();
 
   const onChange = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const file = target.files[0];
@@ -52,21 +44,19 @@ const FormCoverImageContent: React.FC<FormItemData> = (args) => {
   );
 };
 
-const FormCoverImageMessage: React.FC = () => {
-  return (
-    <p className="meta">
-      Note: For best results, upload image with an aspect ratio of 2:1 (width :
-      height).
-    </p>
-  );
-};
+const FormCoverImageMessage: React.FC = () => (
+  <p className="meta">
+    Note: For best results, upload image with an aspect ratio of 2:1 (width :
+    height).
+  </p>
+);
 
 const FormCoverImage: React.FC<FormItemData> = (args) => {
   const key = getFormItemKey(args);
 
-  const selectedImage = FormStore.useStoreState(({ items }) => {
-    return items[key]?.value;
-  });
+  const selectedImage = FormStore.useStoreState(
+    ({ items }) => items[key]?.value
+  );
 
   useInitFormItem(args);
 

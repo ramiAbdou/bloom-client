@@ -9,24 +9,17 @@ import { cx } from '@util/util';
 import ListStore from '../List.store';
 
 const ListFilterButtonActiveTag: React.FC = () => {
-  const numCustomFilters: number = ListStore.useStoreState((state) => {
-    return Object.keys(state.customFilters)?.length;
-  });
+  const numCustomFilters: number = ListStore.useStoreState(
+    (state) => Object.keys(state.customFilters)?.length
+  );
 
   return numCustomFilters ? <div>{numCustomFilters}</div> : null;
 };
 
 const ListFilterOpenButton: React.FC<Partial<ButtonProps>> = (props) => {
   const { className } = props;
-
-  const showPanel = useStoreActions(({ panel }) => {
-    return panel.showPanel;
-  });
-
-  const onClick = () => {
-    return showPanel({ id: PanelType.FILTER_LIST });
-  };
-
+  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  const onClick = () => showPanel({ id: PanelType.FILTER_LIST });
   const ref: React.MutableRefObject<HTMLElement> = useTooltip('Filter');
 
   const css: string = cx(

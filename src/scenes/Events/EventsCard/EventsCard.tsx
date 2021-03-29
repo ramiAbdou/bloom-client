@@ -17,9 +17,7 @@ import EventsViewRecordingButton from '../EventsViewRecordingButton';
 import EventsCardPeople from './EventsCardPeople';
 
 const EventsCardButton: React.FC = () => {
-  const eventId = IdStore.useStoreState((event) => {
-    return event.id;
-  });
+  const eventId = IdStore.useStoreState((event) => event.id);
 
   return (
     <>
@@ -32,13 +30,12 @@ const EventsCardButton: React.FC = () => {
 };
 
 const EventsCardContent: React.FC = () => {
-  const eventId = IdStore.useStoreState((event) => {
-    return event.id;
-  });
+  const eventId = IdStore.useStoreState((event) => event.id);
 
-  const { endTime, startTime, title }: IEvent = useStoreState(({ db }) => {
-    return db.byEventId[eventId];
-  }, deepequal);
+  const { endTime, startTime, title }: IEvent = useStoreState(
+    ({ db }) => db.byEventId[eventId],
+    deepequal
+  );
 
   const isHappeningNow =
     day().isAfter(day(startTime)) && day().isBefore(day(endTime));
@@ -65,15 +62,9 @@ const EventsCardContent: React.FC = () => {
 };
 
 const EventsCard: React.FC<IdProps> = ({ id }) => {
-  const imageUrl = useStoreState(({ db }) => {
-    return db.byEventId[id]?.imageUrl;
-  });
-
+  const imageUrl = useStoreState(({ db }) => db.byEventId[id]?.imageUrl);
   const { push } = useHistory();
-
-  const onClick = () => {
-    return push(id);
-  };
+  const onClick = () => push(id);
 
   return (
     <IdStore.Provider runtimeModel={{ id }}>

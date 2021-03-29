@@ -13,29 +13,17 @@ interface ListQuickFilterProps extends BaseProps, IdProps, TitleProps {
 const ListQuickFilter: React.FC<ListQuickFilterProps> = (props) => {
   const { className, id, filter, show, title } = props;
   const filterId: string = id ?? title;
-
   const [active, setActive] = useState<boolean>(false);
-
-  const filters = ListStore.useStoreState((state) => {
-    return state.filters;
-  });
-
-  const setFilter = ListStore.useStoreActions((store) => {
-    return store.setFilter;
-  });
-
-  const removeFilter = ListStore.useStoreActions((store) => {
-    return store.removeFilter;
-  });
+  const filters = ListStore.useStoreState((state) => state.filters);
+  const setFilter = ListStore.useStoreActions((state) => state.setFilter);
+  const removeFilter = ListStore.useStoreActions((state) => state.removeFilter);
 
   useEffect(() => {
     if (active && !filters[filterId]) setFilter({ filter, filterId });
     else if (!active && !!filters[filterId]) removeFilter(filterId);
   }, [active]);
 
-  const onClick = () => {
-    return setActive(!active);
-  };
+  const onClick = () => setActive(!active);
 
   const css: string = cx(
     'o-list-quick-filter',
