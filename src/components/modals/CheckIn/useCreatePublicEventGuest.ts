@@ -10,9 +10,7 @@ import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const useCreatePublicEventGuest = (): OnFormSubmitFunction => {
-  const eventId: string = useStoreState(({ db }) => {
-    return db.event?.id;
-  });
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
 
   const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
     fields: [

@@ -19,32 +19,30 @@ interface TableContentProps {
 }
 
 const TableBody: React.FC = () => {
-  const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.floor;
-  });
+  const floor: number = TablePaginationStore.useStoreState(
+    (state) => state.floor
+  );
 
-  const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.ceiling;
-  });
+  const ceiling: number = TablePaginationStore.useStoreState(
+    (state) => state.ceiling
+  );
 
   // Fetching these values forces React to re-render, which in the case of
   // sorting, we do want to re-render our data.
-  const sortColumnId: string = TableSortStore.useStoreState((state) => {
-    return state.sortColumnId;
-  });
+  const sortColumnId: string = TableSortStore.useStoreState(
+    (state) => state.sortColumnId
+  );
 
   const sortDirection: TableSortDirection = TableSortStore.useStoreState(
-    (state) => {
-      return state.sortDirection;
-    }
+    (state) => state.sortDirection
   );
 
   const filteredRowsOnPage: TableRowProps = TableStore.useStoreState(
     (state) => {
-      const sortedRows: TableRowProps[] = [...state.filteredRows].sort(
-        (a: TableRowProps, b: TableRowProps) => {
-          return sortObjects(a, b, sortColumnId, sortDirection);
-        }
+      const sortedRows: TableRowProps[] = [
+        ...state.filteredRows
+      ].sort((a: TableRowProps, b: TableRowProps) =>
+        sortObjects(a, b, sortColumnId, sortDirection)
       );
 
       return sortedRows.slice(floor, ceiling);
@@ -53,9 +51,9 @@ const TableBody: React.FC = () => {
 
   return (
     <tbody>
-      {filteredRowsOnPage.map((row: TableRowProps) => {
-        return <TableRow key={hash(row)} {...row} />;
-      })}
+      {filteredRowsOnPage.map((row: TableRowProps) => (
+        <TableRow key={hash(row)} {...row} />
+      ))}
     </tbody>
   );
 };
@@ -67,13 +65,13 @@ const TableContent: React.FC<TableContentProps> = ({
 }) => {
   useUpdateTableRows(rows);
 
-  const emptyMessage: string = TableStore.useStoreState((state) => {
-    return !state.rows?.length ? eMessage : null;
-  });
+  const emptyMessage: string = TableStore.useStoreState((state) =>
+    !state.rows?.length ? eMessage : null
+  );
 
-  const show: boolean = TableStore.useStoreState((state) => {
-    return !!state.rows?.length || !state.options.hideIfEmpty;
-  });
+  const show: boolean = TableStore.useStoreState(
+    (state) => !!state.rows?.length || !state.options.hideIfEmpty
+  );
 
   return (
     <Show show={show}>

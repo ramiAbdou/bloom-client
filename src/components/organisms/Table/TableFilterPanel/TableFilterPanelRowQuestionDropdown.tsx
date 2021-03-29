@@ -13,9 +13,7 @@ import {
 } from './TableFilterPanel.types';
 
 const TableFilterPanelRowQuestionDropdown: React.FC = () => {
-  const filterId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const filterId: string = IdStore.useStoreState((state) => state.id);
 
   const columnId: string = TableFilterStore.useStoreState((state) => {
     const tableFilter: TableFilterArgs = state.filters[filterId];
@@ -24,45 +22,40 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
 
   const [questionId, setQuestionId] = useState<string>(columnId);
 
-  const defaultQuestionId: string = useStoreState(({ db }) => {
-    return db.community.questions
-      ?.map((entityId: string) => {
-        return db.byQuestionId[entityId];
-      })
-      ?.sort((a, b) => {
-        return sortObjects(a, b, 'rank', 'ASC');
-      })
-      ?.filter((question: IQuestion) => {
-        return ![
-          QuestionCategory.FIRST_NAME,
-          QuestionCategory.LAST_NAME,
-          QuestionCategory.EMAIL,
-          QuestionCategory.JOINED_AT
-        ].includes(question.category);
-      })[0]?.id;
-  });
+  const defaultQuestionId: string = useStoreState(
+    ({ db }) =>
+      db.community.questions
+        ?.map((entityId: string) => db.byQuestionId[entityId])
+        ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
+        ?.filter(
+          (question: IQuestion) =>
+            ![
+              QuestionCategory.FIRST_NAME,
+              QuestionCategory.LAST_NAME,
+              QuestionCategory.EMAIL,
+              QuestionCategory.JOINED_AT
+            ].includes(question.category)
+        )[0]?.id
+  );
 
-  const questions: IQuestion[] = useStoreState(({ db }) => {
-    return db.community.questions
-      ?.map((entityId: string) => {
-        return db.byQuestionId[entityId];
-      })
-      ?.sort((a: IQuestion, b: IQuestion) => {
-        return sortObjects(a, b, 'rank', 'ASC');
-      })
-      ?.filter((question: IQuestion) => {
-        return ![
-          QuestionCategory.FIRST_NAME,
-          QuestionCategory.LAST_NAME,
-          QuestionCategory.EMAIL,
-          QuestionCategory.JOINED_AT
-        ].includes(question.category);
-      });
-  });
+  const questions: IQuestion[] = useStoreState(({ db }) =>
+    db.community.questions
+      ?.map((entityId: string) => db.byQuestionId[entityId])
+      ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.filter(
+        (question: IQuestion) =>
+          ![
+            QuestionCategory.FIRST_NAME,
+            QuestionCategory.LAST_NAME,
+            QuestionCategory.EMAIL,
+            QuestionCategory.JOINED_AT
+          ].includes(question.category)
+      )
+  );
 
-  const setFilter = TableFilterStore.useStoreActions((state) => {
-    return state.setFilter;
-  });
+  const setFilter = TableFilterStore.useStoreActions(
+    (state) => state.setFilter
+  );
 
   useEffect(() => {
     if (!questionId && defaultQuestionId) {
@@ -72,9 +65,9 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
   }, [columnId, defaultQuestionId]);
 
   const onQuestionUpdate = (result: string) => {
-    const updatedColumnId = questions.find((question) => {
-      return question.title === result;
-    })?.id;
+    const updatedColumnId = questions.find(
+      (question) => question.title === result
+    )?.id;
 
     setFilter({
       columnId: updatedColumnId,
@@ -90,13 +83,10 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
     <Dropdown
       options={{ attribute: false }}
       value={
-        questions?.find((question: IQuestion) => {
-          return question.id === questionId;
-        })?.title
+        questions?.find((question: IQuestion) => question.id === questionId)
+          ?.title
       }
-      values={questions?.map(({ title }) => {
-        return title;
-      })}
+      values={questions?.map(({ title }) => title)}
       onSelect={onQuestionUpdate}
     />
   );

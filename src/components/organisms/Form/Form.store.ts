@@ -57,9 +57,7 @@ export const formModel: FormModel = {
     if (!Object.keys(items)?.length) return false;
 
     const allValuesAreEmpty: boolean = Object.values(items).every(
-      ({ value }) => {
-        return !value;
-      }
+      ({ value }) => !value
     );
 
     if (allValuesAreEmpty) return false;

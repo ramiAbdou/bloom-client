@@ -6,9 +6,7 @@ import PaymentStore from './Payment.store';
 import { PaymentModalType } from './Payment.types';
 
 const PaymentConfirmation: React.FC = () => {
-  const modalType = PaymentStore.useStoreState((state) => {
-    return state.type;
-  });
+  const modalType = PaymentStore.useStoreState((state) => state.type);
 
   let pageProps: Pick<StoryPageProps, 'description' | 'title'>;
 

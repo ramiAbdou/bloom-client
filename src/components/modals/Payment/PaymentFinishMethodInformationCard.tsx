@@ -6,9 +6,9 @@ import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
 
 const PaymentFinishMethodInformationCard: React.FC = () => {
-  const planId: string = PaymentStore.useStoreState((state) => {
-    return state.selectedPlanId;
-  });
+  const planId: string = PaymentStore.useStoreState(
+    (state) => state.selectedPlanId
+  );
 
   const isFree: boolean = useStoreState(({ db }) => {
     const plan: IMemberPlan = db.byMemberPlanId[planId];

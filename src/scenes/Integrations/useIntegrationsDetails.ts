@@ -6,17 +6,17 @@ interface IntegrationsDetails {
 }
 
 const useIntegrationsDetails = (name: string): IntegrationsDetails[] => {
-  const listName: string = useStoreState(({ db }) => {
-    return db.communityIntegrations.mailchimpListName;
-  });
+  const listName: string = useStoreState(
+    ({ db }) => db.communityIntegrations.mailchimpListName
+  );
 
-  const listId: string = useStoreState(({ db }) => {
-    return db.communityIntegrations.mailchimpListId;
-  });
+  const listId: string = useStoreState(
+    ({ db }) => db.communityIntegrations.mailchimpListId
+  );
 
-  const value: string = useStoreState(({ db }) => {
-    return db.communityIntegrations.stripeAccountId;
-  });
+  const value: string = useStoreState(
+    ({ db }) => db.communityIntegrations.stripeAccountId
+  );
 
   if (name === 'Mailchimp') {
     return [

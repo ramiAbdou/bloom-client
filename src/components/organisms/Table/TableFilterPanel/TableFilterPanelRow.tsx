@@ -7,19 +7,17 @@ import TableFilterRowOperatorDropdown from './TableFilterPanelRowOperatorDropdow
 import TableFilterRowQuestionDropdown from './TableFilterPanelRowQuestionDropdown';
 import TableFilterRowValueInput from './TableFilterPanelRowValueInput';
 
-const TableFilterPanelRow: React.FC = () => {
-  return (
-    <Row className="o-table-filter-row mb-md--nlc" spacing="sm">
-      <TableFilterRowJoinOperator />
+const TableFilterPanelRow: React.FC = () => (
+  <Row className="o-table-filter-row mb-md--nlc" spacing="sm">
+    <TableFilterRowJoinOperator />
 
-      <Row spacing="xs">
-        <TableFilterRowQuestionDropdown />
-        <TableFilterRowOperatorDropdown />
-        <TableFilterRowValueInput />
-        <TableFilterRowDeleteButton />
-      </Row>
+    <Row spacing="xs">
+      <TableFilterRowQuestionDropdown />
+      <TableFilterRowOperatorDropdown />
+      <TableFilterRowValueInput />
+      <TableFilterRowDeleteButton />
     </Row>
-  );
-};
+  </Row>
+);
 
 export default TableFilterPanelRow;

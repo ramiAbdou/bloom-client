@@ -19,33 +19,20 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
-
-  const showToast = useStoreActions(({ toast }) => {
-    return toast.showToast;
-  });
-
-  const startTime = useStoreState(({ db }) => {
-    return db.byEventId[eventId]?.startTime;
-  });
-
-  const isMember = useStoreState(({ db }) => {
-    return db.isMember;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showToast = useStoreActions(({ toast }) => toast.showToast);
+  const startTime = useStoreState(({ db }) => db.byEventId[eventId]?.startTime);
+  const isMember = useStoreState(({ db }) => db.isMember);
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const guests = new Set(
-      db.member?.guests?.filter((guestId: string) => {
-        return !db.byGuestId[guestId]?.deletedAt;
-      })
+      db.member?.guests?.filter(
+        (guestId: string) => !db.byGuestId[guestId]?.deletedAt
+      )
     );
 
     const event: IEvent = db.byEventId[eventId];
-    return event?.guests?.some((guestId: string) => {
-      return guests.has(guestId);
-    });
+    return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
 
   const createEventGuest = useCreateEventGuest();

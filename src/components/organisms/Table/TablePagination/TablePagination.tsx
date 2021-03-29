@@ -9,9 +9,9 @@ import useUpdateRange from './useUpdateRange';
 const TablePagination: React.FC = () => {
   useUpdateRange();
 
-  const hasRows: boolean = TableStore.useStoreState((state) => {
-    return !!state.filteredRows?.length;
-  });
+  const hasRows: boolean = TableStore.useStoreState(
+    (state) => !!state.filteredRows?.length
+  );
 
   return (
     <Row wrap className="mt-sm" gap="sm" justify="sb" show={hasRows}>

@@ -53,9 +53,7 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
   }
 
   const value = member.values
-    ?.map((valueId: string) => {
-      return db.byValuesId[valueId];
-    })
+    ?.map((valueId: string) => db.byValuesId[valueId])
     ?.find((entity: IMemberValue) => {
       const question: IQuestion = db.byQuestionId[entity.question];
       return question.id === questionId;
@@ -77,29 +75,21 @@ export const getMemberTableRow = (args: GetMemberTableRowArgs): TableRow[] => {
   );
 
   const filteredMembers: IMember[] = db.community.members
-    ?.map((memberId: string) => {
-      return db.byMemberId[memberId];
-    })
-    ?.filter((member: IMember) => {
-      return member?.status === MemberStatus.ACCEPTED;
-    })
-    ?.filter((member: IMember) => {
-      return !member.deletedAt;
-    });
+    ?.map((memberId: string) => db.byMemberId[memberId])
+    ?.filter((member: IMember) => member?.status === MemberStatus.ACCEPTED)
+    ?.filter((member: IMember) => !member.deletedAt);
 
-  const rows: TableRow[] = filteredMembers?.map((member: IMember) => {
-    return db.community?.questions.reduce(
+  const rows: TableRow[] = filteredMembers?.map((member: IMember) =>
+    db.community?.questions.reduce(
       (result: TableRow, questionId: string) => {
         const value = getMemberValue({ db, member, questionId });
         return { ...result, [questionId]: value };
       },
       { id: member?.id }
-    );
-  });
+    )
+  );
 
-  return rows?.sort((a, b) => {
-    return sortObjects(a, b, sortQuestionId);
-  });
+  return rows?.sort((a, b) => sortObjects(a, b, sortQuestionId));
 };
 
 export default getMemberTableRow;

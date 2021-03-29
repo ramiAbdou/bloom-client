@@ -11,17 +11,13 @@ import { sortObjects } from '@util/util';
 import useInitProfileData from './useInitProfileData';
 
 const ProfileDataContent: React.FC = () => {
-  const memberId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
     const filteredValues: IMemberValue[] = member?.values
-      ?.map((valueId: string) => {
-        return db.byValuesId[valueId];
-      })
+      ?.map((valueId: string) => db.byValuesId[valueId])
       ?.filter((data: IMemberValue) => {
         const question: IQuestion = db.byQuestionId[data.question];
         return !question?.category;
@@ -40,11 +36,7 @@ const ProfileDataContent: React.FC = () => {
   });
 
   return (
-    <Show
-      show={items?.some(({ value }) => {
-        return !!value;
-      })}
-    >
+    <Show show={items?.some(({ value }) => !!value)}>
       <Separator margin={0} />
       <QuestionBox className="my-md" handleNull="HIDE_ALL" items={items} />
     </Show>

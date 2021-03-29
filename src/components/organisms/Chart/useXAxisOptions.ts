@@ -5,17 +5,15 @@ import ChartStore from './Chart.store';
 import { ChartFormat, ChartType, ChartXAxisOptions } from './Chart.types';
 
 const useXAxisOptions = (): Partial<XAxisProps> => {
-  const type: ChartType = ChartStore.useStoreState((state) => {
-    return state.type;
-  });
+  const type: ChartType = ChartStore.useStoreState((state) => state.type);
 
-  const format: ChartFormat = ChartStore.useStoreState(({ options }) => {
-    return options?.format;
-  });
+  const format: ChartFormat = ChartStore.useStoreState(
+    ({ options }) => options?.format
+  );
 
-  const xAxis: ChartXAxisOptions = ChartStore.useStoreState(({ options }) => {
-    return options?.xAxis;
-  });
+  const xAxis: ChartXAxisOptions = ChartStore.useStoreState(
+    ({ options }) => options?.xAxis
+  );
 
   return {
     allowDuplicatedCategory: false,

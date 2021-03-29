@@ -6,17 +6,15 @@ import IdStore from '@store/Id.store';
 import TableFilterStore from './TableFilterPanel.store';
 
 const TableFilterPanelRowDeleteButton: React.FC = () => {
-  const filterId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const filterId: string = IdStore.useStoreState((state) => state.id);
 
-  const show: boolean = TableFilterStore.useStoreState((state) => {
-    return state.filterIds?.length >= 2;
-  });
+  const show: boolean = TableFilterStore.useStoreState(
+    (state) => state.filterIds?.length >= 2
+  );
 
-  const removeFilter = TableFilterStore.useStoreActions((state) => {
-    return state.removeFilter;
-  });
+  const removeFilter = TableFilterStore.useStoreActions(
+    (state) => state.removeFilter
+  );
 
   const onClick = (): void => {
     removeFilter(filterId);

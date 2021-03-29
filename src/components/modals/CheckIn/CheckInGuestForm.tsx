@@ -11,9 +11,9 @@ import useCreatePublicEventAttendee from './useCreatePublicEventAttendee';
 import useCreatePublicEventGuest from './useCreatePublicEventGuest';
 
 const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
-  const isUpcoming: boolean = useStoreState(({ db }) => {
-    return day().isBefore(day(db.event?.startTime).subtract(30, 'm'));
-  });
+  const isUpcoming: boolean = useStoreState(({ db }) =>
+    day().isBefore(day(db.event?.startTime).subtract(30, 'm'))
+  );
 
   const createPublicEventAttendee = useCreatePublicEventAttendee();
   const createPublicEventGuest = useCreatePublicEventGuest();

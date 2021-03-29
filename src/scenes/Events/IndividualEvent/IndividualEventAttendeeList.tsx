@@ -29,15 +29,12 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
     const guest: IEventAttendee = db.byAttendeeId[attendeeId];
     const member: IMember = db.byMemberId[guest?.member];
     const supporter: ISupporter = db.bySupporterId[guest?.supporter];
-
     const firstName = member?.firstName ?? supporter?.firstName;
     const lastName = member?.lastName ?? supporter?.lastName;
     return `${firstName} ${lastName}`;
   });
 
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({ id: ModalType.PROFILE, metadata: memberId });
@@ -52,18 +49,18 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
 };
 
 const IndividualEventAttendeeListContent: React.FC = () => {
-  const attendees: IndividualEventAttendeeProps[] = useStoreState(({ db }) => {
-    return db.event?.attendees
-      ?.map((attendeeId: string) => {
-        return db.byAttendeeId[attendeeId];
-      })
-      ?.sort((a, b) => {
-        return sortObjects(a, b, 'createdAt');
-      })
-      ?.reduce((acc, attendee: IEventAttendee) => {
-        return [...acc, { attendeeId: attendee.id }];
-      }, []);
-  });
+  const attendees: IndividualEventAttendeeProps[] = useStoreState(({ db }) =>
+    db.event?.attendees
+      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt'))
+      ?.reduce(
+        (acc, attendee: IEventAttendee) => [
+          ...acc,
+          { attendeeId: attendee.id }
+        ],
+        []
+      )
+  );
 
   return (
     <>
@@ -79,13 +76,8 @@ const IndividualEventAttendeeListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const endTime = useStoreState(({ db }) => {
-    return db.event?.endTime;
-  });
-
-  const numAttendees = useStoreState(({ db }) => {
-    return db.event?.attendees?.length;
-  });
+  const endTime = useStoreState(({ db }) => db.event?.endTime);
+  const numAttendees = useStoreState(({ db }) => db.event?.attendees?.length);
 
   return (
     <Card

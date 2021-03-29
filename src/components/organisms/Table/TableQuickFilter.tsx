@@ -12,29 +12,20 @@ interface TableQuickFilterProps extends ShowProps, TitleProps {
 
 const TableQuickFilter: React.FC<TableQuickFilterProps> = (props) => {
   const { filter, show, title } = props;
-
   const [active, setActive] = useState<boolean>(false);
+  const filters = TableStore.useStoreState((state) => state.filters);
+  const setFilter = TableStore.useStoreActions((state) => state.setFilter);
 
-  const filters = TableStore.useStoreState((state) => {
-    return state.filters;
-  });
-
-  const setFilter = TableStore.useStoreActions((state) => {
-    return state.setFilter;
-  });
-
-  const removeFilter = TableStore.useStoreActions((state) => {
-    return state.removeFilter;
-  });
+  const removeFilter = TableStore.useStoreActions(
+    (state) => state.removeFilter
+  );
 
   useEffect(() => {
     if (active && !filters[title]) setFilter({ filter, filterId: title });
     else if (!active && !!filters[title]) removeFilter(title);
   }, [active]);
 
-  const onClick = () => {
-    return setActive(!active);
-  };
+  const onClick = () => setActive(!active);
 
   const css: string = cx('f f-ac meta o-table-quick-filter', {
     'o-table-quick-filter--active': active

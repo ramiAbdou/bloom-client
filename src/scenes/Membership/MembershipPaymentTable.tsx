@@ -19,9 +19,7 @@ const columns: TableColumn[] = [
   { id: 'amount', title: 'Amount' },
   { id: 'type', title: 'Membership Plan', type: QuestionType.MULTIPLE_CHOICE },
   {
-    format: (value: boolean) => {
-      return value ? 'Succeeded' : 'Failed';
-    },
+    format: (value: boolean) => (value ? 'Succeeded' : 'Failed'),
     id: 'status',
     title: 'Status',
     type: QuestionType.TRUE_FALSE
@@ -29,30 +27,23 @@ const columns: TableColumn[] = [
   {
     hideTitle: true,
     id: 'receipt',
-    render: (receiptUrl: string) => {
-      return (
-        <Button tertiary href={receiptUrl}>
-          Receipt
-        </Button>
-      );
-    },
+    render: (receiptUrl: string) => (
+      <Button tertiary href={receiptUrl}>
+        Receipt
+      </Button>
+    ),
     title: 'Receipt'
   }
 ];
 
 const MembershipPaymentTable: React.FC = () => {
-  const rows: TableRow[] = useStoreState(({ db }) => {
-    return db.member.payments
-      ?.map((paymentId: string) => {
-        return db.byPaymentId[paymentId];
-      })
-      ?.filter((payment: IPayment) => {
-        return !!payment?.plan;
-      })
+  const rows: TableRow[] = useStoreState(({ db }) =>
+    db.member.payments
+      ?.map((paymentId: string) => db.byPaymentId[paymentId])
+      ?.filter((payment: IPayment) => !!payment?.plan)
       ?.map((payment: IPayment) => {
         const { createdAt, id, stripeInvoiceUrl: receipt } = payment;
         const plan: IMemberPlan = db.byMemberPlanId[payment.plan];
-
         const amount = `$${payment.amount.toFixed(2)}`;
         const paidOn = day(createdAt).format('MMM DD, YYYY');
 
@@ -66,10 +57,8 @@ const MembershipPaymentTable: React.FC = () => {
           type: plan?.name
         };
       })
-      ?.sort((a, b) => {
-        return sortObjects(a, b, 'createdAt');
-      });
-  });
+      ?.sort((a, b) => sortObjects(a, b, 'createdAt'))
+  );
 
   const options: TableOptions = {
     isSortable: false,

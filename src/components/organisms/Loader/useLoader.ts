@@ -9,13 +9,8 @@ import { useStoreActions } from '@store/Store';
  * @param loading True if the application is loading.
  */
 const useLoader = (loading: boolean): void => {
-  const closeLoader = useStoreActions(({ loader }) => {
-    return loader.closeLoader;
-  });
-
-  const showLoader = useStoreActions(({ loader }) => {
-    return loader.showLoader;
-  });
+  const closeLoader = useStoreActions(({ loader }) => loader.closeLoader);
+  const showLoader = useStoreActions(({ loader }) => loader.showLoader);
 
   useEffect(() => {
     if (loading) showLoader();

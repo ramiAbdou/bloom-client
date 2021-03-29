@@ -15,10 +15,7 @@ import useInitUser from './useInitUser';
  * urlName in the useParams() call in the useInitUser() hook.
  */
 const CommunityRouter: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => {
-    return db.isAuthenticated;
-  });
-
+  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
   const finalPath: string = useFinalPath();
   const loading1: boolean = useGetTokens(true);
   const loading2: boolean = useInitUser();

@@ -10,9 +10,7 @@ const LoginRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
   exact,
   path
 }) => {
-  const isAuthenticated = useStoreState(({ db }) => {
-    return !!db.isAuthenticated;
-  });
+  const isAuthenticated = useStoreState(({ db }) => !!db.isAuthenticated);
 
   if (isAuthenticated) return <Redirect to="/" />;
   return <Route component={LoginPage} exact={exact} path={path} />;

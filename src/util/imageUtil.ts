@@ -79,7 +79,6 @@ export const uploadImage = async ({
 }: UploadImageArgs): Promise<string> => {
   const image: Jimp = await Jimp.read(base64String);
   const buffer = await image.getBufferAsync(Jimp.MIME_PNG);
-
   const bucketKey = `${key}-${nanoid()}`;
 
   const options: aws.S3.PutObjectRequest = {

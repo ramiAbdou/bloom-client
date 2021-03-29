@@ -8,18 +8,15 @@ import { useStoreState } from '@store/Store';
 const EventsAnalyticsGuestCard: React.FC = () => {
   const numGuests: number = useStoreState(({ db }) => {
     const pastEvents: IEvent[] = db.community.events
-      ?.map((eventId: string) => {
-        return db.byEventId[eventId];
-      })
-      ?.filter((event: IEvent) => {
-        return day().isAfter(event.endTime);
-      });
+      ?.map((eventId: string) => db.byEventId[eventId])
+      ?.filter((event: IEvent) => day().isAfter(event.endTime));
 
     if (!pastEvents?.length) return null;
 
-    const totalGuests = pastEvents?.reduce((acc: number, event: IEvent) => {
-      return acc + event?.guests?.length;
-    }, 0);
+    const totalGuests = pastEvents?.reduce(
+      (acc: number, event: IEvent) => acc + event?.guests?.length,
+      0
+    );
 
     return Math.ceil(totalGuests / pastEvents.length);
   });

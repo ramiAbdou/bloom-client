@@ -8,42 +8,36 @@ import TableFilterPanelAddButton from './TableFilterPanelAddButton';
 import TableFilterPanelClearButton from './TableFilterPanelClearButton';
 import TableFilterPanelRow from './TableFilterPanelRow';
 
-const TableFilterPanelHeader: React.FC = () => {
-  return (
-    <Row className="mb-sm--nlc" justify="sb" spacing="xs">
-      <h3>Filters</h3>
-      <TableFilterPanelClearButton />
-    </Row>
-  );
-};
+const TableFilterPanelHeader: React.FC = () => (
+  <Row className="mb-sm--nlc" justify="sb" spacing="xs">
+    <h3>Filters</h3>
+    <TableFilterPanelClearButton />
+  </Row>
+);
 
 const TableFilterPanelRowList: React.FC = () => {
-  const filterIds: string[] = TableFilterPanelStore.useStoreState((state) => {
-    return state.filterIds;
-  });
+  const filterIds: string[] = TableFilterPanelStore.useStoreState(
+    (state) => state.filterIds
+  );
 
   return (
     <ul className="mb-sm--nlc">
-      {filterIds.map((id: string) => {
-        return (
-          <IdStore.Provider key={id} runtimeModel={{ id }}>
-            <TableFilterPanelRow />
-          </IdStore.Provider>
-        );
-      })}
+      {filterIds.map((id: string) => (
+        <IdStore.Provider key={id} runtimeModel={{ id }}>
+          <TableFilterPanelRow />
+        </IdStore.Provider>
+      ))}
     </ul>
   );
 };
 
-const TableFilterPanel: React.FC = () => {
-  return (
-    <>
-      <TableFilterPanelHeader />
-      <TableFilterPanelRowList />
-      <TableFilterPanelAddButton />
-      <TableFilterPanelActions />
-    </>
-  );
-};
+const TableFilterPanel: React.FC = () => (
+  <>
+    <TableFilterPanelHeader />
+    <TableFilterPanelRowList />
+    <TableFilterPanelAddButton />
+    <TableFilterPanelActions />
+  </>
+);
 
 export default TableFilterPanel;

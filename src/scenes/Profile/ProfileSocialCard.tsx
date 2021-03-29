@@ -17,12 +17,10 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
     return !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
   });
 
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () => {
-    return showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
+  const onClick = (): void => {
+    showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
   };
 
   return (
@@ -40,33 +38,16 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 const ProfileSocialHeader: React.FC = () => {
-  const facebookUrl = useStoreState(({ db }) => {
-    return db.socials?.facebookUrl;
-  });
-
-  const instagramUrl = useStoreState(({ db }) => {
-    return db.socials?.instagramUrl;
-  });
-
-  const linkedInUrl = useStoreState(({ db }) => {
-    return db.socials?.linkedInUrl;
-  });
-
-  const twitterUrl = useStoreState(({ db }) => {
-    return db.socials?.twitterUrl;
-  });
-
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
+  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
+  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
+  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isSocialLinked: boolean =
     !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
 
-  const onClick = () => {
-    return showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
-  };
-
+  const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
   return (
     <ProfileCardHeader
       canEdit={isSocialLinked}
@@ -77,42 +58,29 @@ const ProfileSocialHeader: React.FC = () => {
 };
 
 const ProfileSocialFacebook: React.FC = () => {
-  const facebookUrl = useStoreState(({ db }) => {
-    return db.socials?.facebookUrl;
-  });
-
+  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
   return <ProfileSocialValue brand={SocialBrand.FACEBOOK} url={facebookUrl} />;
 };
 
 const ProfileSocialInstagram: React.FC = () => {
-  const instagramUrl = useStoreState(({ db }) => {
-    return db.socials?.instagramUrl;
-  });
-
+  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
   return (
     <ProfileSocialValue brand={SocialBrand.INSTAGRAM} url={instagramUrl} />
   );
 };
 
 const ProfileSocialLinkedIn: React.FC = () => {
-  const linkedInUrl = useStoreState(({ db }) => {
-    return db.socials?.linkedInUrl;
-  });
-
+  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
   return <ProfileSocialValue brand={SocialBrand.LINKED_IN} url={linkedInUrl} />;
 };
 
 const ProfileSocialTwitter: React.FC = () => {
-  const twitterUrl = useStoreState(({ db }) => {
-    return db.socials?.twitterUrl;
-  });
-
+  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
   return <ProfileSocialValue brand={SocialBrand.TWITTER} url={twitterUrl} />;
 };
 
 const ProfileSocialCard: React.FC = () => {
   const { loading } = useInitProfileSocial();
-
   return (
     <Card className="s-profile-card--social" loading={loading}>
       <ProfileSocialHeader />

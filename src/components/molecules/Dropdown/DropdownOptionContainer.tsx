@@ -20,35 +20,28 @@ const DropdownOption: React.FC<ValueProps> = ({ value }) => {
 };
 
 const DropdownOptionList: React.FC = () => {
-  const options = DropdownStore.useStoreState(({ filteredValues, value }) => {
-    return filteredValues.filter((option: string) => {
-      return !value?.includes(option);
-    });
-  });
+  const options = DropdownStore.useStoreState(({ filteredValues, value }) =>
+    filteredValues.filter((option: string) => !value?.includes(option))
+  );
 
   return (
     <Show show={!!options?.length}>
       <ul className="ma-h-4 o-scroll">
-        {options.map((value: string) => {
-          return <DropdownOption key={value} value={value} />;
-        })}
+        {options.map((value: string) => (
+          <DropdownOption key={value} value={value} />
+        ))}
       </ul>
     </Show>
   );
 };
 
 const DropdownOptionContainer: React.FC = () => {
-  const isOpen = DropdownStore.useStoreState((state) => {
-    return state.isOpen;
-  });
+  const isOpen = DropdownStore.useStoreState((state) => state.isOpen);
+  const width = DropdownStore.useStoreState((state) => state.width);
 
-  const width = DropdownStore.useStoreState((state) => {
-    return state.width;
-  });
-
-  const noOptionsFound = DropdownStore.useStoreState((state) => {
-    return !state.filteredValues.length;
-  });
+  const noOptionsFound = DropdownStore.useStoreState(
+    (state) => !state.filteredValues.length
+  );
 
   return (
     <Show show={isOpen}>

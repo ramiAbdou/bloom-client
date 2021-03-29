@@ -18,9 +18,7 @@ function List<T>(props: ListProps<T>): JSX.Element {
 
   useInitList({ items, options, prepareForFilter });
 
-  const filteredItems = ListStore.useStoreState((state) => {
-    return state.filteredItems;
-  });
+  const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
 
   if (!filteredItems?.length) return <p>{emptyMessage}</p>;
 
@@ -28,9 +26,9 @@ function List<T>(props: ListProps<T>): JSX.Element {
 
   return (
     <div className={css}>
-      {filteredItems?.map((value) => {
-        return <ListItem key={value?.id ?? nanoid()} {...value} />;
-      })}
+      {filteredItems?.map((value) => (
+        <ListItem key={value?.id ?? nanoid()} {...value} />
+      ))}
     </div>
   );
 }

@@ -18,27 +18,23 @@ export interface LoadingHeaderProps extends BaseProps, LoadingProps {
 
 const LoadingHeaderBackButton: React.FC<Pick<LoadingHeaderProps, 'onBack'>> = ({
   onBack
-}) => {
-  return (
-    <Show show={!!onBack}>
-      <Button onClick={onBack}>
-        <IoArrowBack />
-      </Button>
-    </Show>
-  );
-};
+}) => (
+  <Show show={!!onBack}>
+    <Button onClick={onBack}>
+      <IoArrowBack />
+    </Button>
+  </Show>
+);
 
 const LoadingHeaderTitle: React.FC<
   Pick<LoadingHeaderProps, 'h2' | 'h3' | 'title'>
-> = ({ h2, h3, title }) => {
-  return (
-    <>
-      {!h2 && !h3 && title && <h1>{title}</h1>}
-      {h2 && <h2>{title}</h2>}
-      {h3 && <h3>{title}</h3>}
-    </>
-  );
-};
+> = ({ h2, h3, title }) => (
+  <>
+    {!h2 && !h3 && title && <h1>{title}</h1>}
+    {h2 && <h2>{title}</h2>}
+    {h3 && <h3>{title}</h3>}
+  </>
+);
 
 const LoadingHeader: React.FC<LoadingHeaderProps> = ({
   className,

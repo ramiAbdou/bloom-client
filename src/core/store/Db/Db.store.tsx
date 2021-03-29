@@ -16,17 +16,16 @@ const dbStore: DbModel = {
 
   entities: initialEntities,
 
-  isAuthenticated: computed(({ entities }) => {
-    return (
+  isAuthenticated: computed(
+    ({ entities }) =>
       !!entities.communities.activeId &&
       !!entities.members.activeId &&
       !!entities.users.activeId
-    );
-  }),
+  ),
 
-  isInitialized: computed(({ community, member, user }) => {
-    return !!community && !!member && !!user;
-  }),
+  isInitialized: computed(
+    ({ community, member, user }) => !!community && !!member && !!user
+  ),
 
   /**
    * Returns true if the authenticated user has a membership with the active
@@ -35,12 +34,12 @@ const dbStore: DbModel = {
    * Useful when going to pages outside of authenticated realm, such as viewing
    * IndividualEvent.
    */
-  isMember: computed(({ byMemberId, community, user }) => {
-    return user?.members?.some((memberId: string) => {
+  isMember: computed(({ byMemberId, community, user }) =>
+    user?.members?.some((memberId: string) => {
       const member: IMember = byMemberId[memberId];
       return member.community === community?.id;
-    });
-  }),
+    })
+  ),
 
   mergeEntities,
   setActive

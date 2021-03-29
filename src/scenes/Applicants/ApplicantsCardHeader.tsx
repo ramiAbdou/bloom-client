@@ -10,9 +10,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
 const ApplicantsCardHeaderDetails: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => {
-    return id;
-  });
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   const createdAt: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
@@ -33,14 +31,8 @@ const ApplicantsCardHeaderDetails: React.FC = () => {
 };
 
 const ApplicantsCardHeaderExpandButton: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
-
-  const memberId: string = IdStore.useStoreState(({ id }) => {
-    return id;
-  });
-
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
   const isMobile: boolean = useBreakpoint() === 1;
 
   const onClick = () => {
@@ -54,13 +46,11 @@ const ApplicantsCardHeaderExpandButton: React.FC = () => {
   );
 };
 
-const ApplicantsCardHeader: React.FC = () => {
-  return (
-    <Row wrap className="mb-md--nlc" gap="xs" justify="sb">
-      <ApplicantsCardHeaderDetails />
-      <ApplicantsCardHeaderExpandButton />
-    </Row>
-  );
-};
+const ApplicantsCardHeader: React.FC = () => (
+  <Row wrap className="mb-md--nlc" gap="xs" justify="sb">
+    <ApplicantsCardHeaderDetails />
+    <ApplicantsCardHeaderExpandButton />
+  </Row>
+);
 
 export default ApplicantsCardHeader;

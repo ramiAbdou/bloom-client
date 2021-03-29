@@ -14,9 +14,7 @@ function useManualQuery<T = any, S = any>({
   types,
   variables: initialVariables
 }: UseQueryArgs<S>): MutationResult<T, S> {
-  const mergeEntities = useStoreActions(({ db }) => {
-    return db.mergeEntities;
-  });
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const [manualQueryFn, { data, error, loading }] = useGQLManualQuery(
     query({ fields, operation, variables: types }).query,
@@ -41,9 +39,7 @@ function useManualQuery<T = any, S = any>({
     loading
   };
 
-  const memoizedSchema = useMemo(() => {
-    return schema;
-  }, []);
+  const memoizedSchema = useMemo(() => schema, []);
 
   // Updates the global entities store if a schema is passed in. Also formats
   // the data to match the schema if need be.

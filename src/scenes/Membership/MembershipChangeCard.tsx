@@ -9,17 +9,12 @@ import { IdProps, ModalType } from '@util/constants';
 import { take } from '@util/util';
 
 const MembershipChangeCard: React.FC<IdProps> = ({ id: planId }) => {
-  const plan: IMemberPlan = useStoreState(({ db }) => {
-    return db.byMemberPlanId[planId];
-  });
+  const plan: IMemberPlan = useStoreState(
+    ({ db }) => db.byMemberPlanId[planId]
+  );
 
-  const isCurrent = useStoreState(({ db }) => {
-    return db.member.plan === planId;
-  });
-
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const isCurrent = useStoreState(({ db }) => db.member.plan === planId);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({

@@ -11,26 +11,22 @@ import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';
 import FormSectionHeader from '../../organisms/Form/FormSectionHeader';
 
-const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => {
-  return (
-    <Show show={show}>
-      <Row wrap align="end" gap="xs">
-        <FormDate className="f-2" id="START_DATE" title="Start Time" />
-        <FormTime className="f-1" id="START_TIME" />
-      </Row>
+const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
+  <Show show={show}>
+    <Row wrap align="end" gap="xs">
+      <FormDate className="f-2" id="START_DATE" title="Start Time" />
+      <FormTime className="f-1" id="START_TIME" />
+    </Row>
 
-      <Row wrap align="end" gap="xs">
-        <FormDate className="f-2" id="END_DATE" title="End Time" />
-        <FormTime className="f-1" id="END_TIME" />
-      </Row>
-    </Show>
-  );
-};
+    <Row wrap align="end" gap="xs">
+      <FormDate className="f-2" id="END_DATE" title="End Time" />
+      <FormTime className="f-1" id="END_TIME" />
+    </Row>
+  </Show>
+);
 
 const EventFormDetailsSection: React.FC = () => {
-  const eventId: string = useStoreState(({ modal }) => {
-    return modal.metadata;
-  });
+  const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
   const videoUrl: string = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];

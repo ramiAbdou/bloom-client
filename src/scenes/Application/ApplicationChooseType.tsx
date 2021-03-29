@@ -14,18 +14,14 @@ import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentForm from './ApplicationPaymentSection';
 
 const ApplicationChooseTypeButton: React.FC = () => {
-  const selectedTypeName: string = FormStore.useStoreState(({ items }) => {
-    return items.MEMBER_PLAN?.value as string;
-  });
+  const selectedTypeName: string = FormStore.useStoreState(
+    ({ items }) => items.MEMBER_PLAN?.value as string
+  );
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
     const selectedType: IMemberPlan = db.community?.plans
-      ?.map((planId: string) => {
-        return db.byMemberPlanId[planId];
-      })
-      ?.find((type: IMemberPlan) => {
-        return type?.name === selectedTypeName;
-      });
+      ?.map((planId: string) => db.byMemberPlanId[planId])
+      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
 
     return !!selectedType?.amount;
   });
@@ -38,24 +34,19 @@ const ApplicationChooseTypeButton: React.FC = () => {
 };
 
 const ApplicationChooseTypeForm: React.FC = () => {
-  const types: RadioOptionProps[] = useStoreState(({ db }) => {
-    return db.community?.plans?.map((planId: string) => {
+  const types: RadioOptionProps[] = useStoreState(({ db }) =>
+    db.community?.plans?.map((planId: string) => {
       const type: IMemberPlan = db.byMemberPlanId[planId];
 
       return {
         children: <ApplicationChooseTypeCard id={planId} />,
         label: type.name
       };
-    });
-  });
+    })
+  );
 
-  const goForward = StoryStore.useStoreActions((state) => {
-    return state.goForward;
-  });
-
-  const onSubmit = async () => {
-    return goForward();
-  };
+  const goForward = StoryStore.useStoreActions((state) => state.goForward);
+  const onSubmit = async () => goForward();
 
   return (
     <Form onSubmit={onSubmit}>

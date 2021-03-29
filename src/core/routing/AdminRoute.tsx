@@ -10,10 +10,7 @@ import { UrlNameProps } from '@util/constants';
  * the global state with the user.
  */
 const AdminRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
-  const role = useStoreState(({ db }) => {
-    return db.member?.role;
-  });
-
+  const role = useStoreState(({ db }) => db.member?.role);
   const { urlName }: UrlNameProps = useParams();
 
   // If role is undefined, means it hasn't been loaded yet.

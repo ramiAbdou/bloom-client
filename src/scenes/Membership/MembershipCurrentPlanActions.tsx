@@ -8,18 +8,9 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
 const MembershipCurrentPlanActions: React.FC = () => {
-  const isDuesActive = useStoreState(({ db }) => {
-    return db.member?.isDuesActive;
-  });
-
-  const currentTypeId: string = useStoreState(({ db }) => {
-    return db.member?.plan;
-  });
-
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
-
+  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
+  const currentTypeId: string = useStoreState(({ db }) => db.member?.plan);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const { url } = useRouteMatch();
   const { push } = useHistory();
 
@@ -33,9 +24,7 @@ const MembershipCurrentPlanActions: React.FC = () => {
     });
   };
 
-  const onSecondaryClick = () => {
-    return push(`${url}/change`);
-  };
+  const onSecondaryClick = () => push(`${url}/change`);
 
   return (
     <Row equal={!isDuesActive} spacing="xs">

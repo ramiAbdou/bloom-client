@@ -20,10 +20,7 @@ import useInitCheckInError from './useInitCheckInError';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {
-  const communityId = useStoreState(({ db }) => {
-    return db.community?.id;
-  });
-
+  const communityId = useStoreState(({ db }) => db.community?.id);
   const { pathname } = useLocation();
 
   const url: string = buildUrl('https://accounts.google.com/o/oauth2/v2/auth', {
@@ -49,20 +46,15 @@ const CheckInGoogleButton: React.FC = () => {
 };
 
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
-  const owner: IMember = useStoreState(({ db }) => {
-    return db.community?.members
-      ?.map((memberId: string) => {
-        return db.byMemberId[memberId];
-      })
-      ?.find((member: IMember) => {
-        return member.role === MemberRole.OWNER;
-      });
-  });
+  const owner: IMember = useStoreState(({ db }) =>
+    db.community?.members
+      ?.map((memberId: string) => db.byMemberId[memberId])
+      ?.find((member: IMember) => member.role === MemberRole.OWNER)
+  );
 
   // We store the error code in a cookie.
   const error = Cookies.get(ErrorContext.LOGIN_ERROR) as ErrorType;
   const message = getCheckInErrorMessage({ error, owner });
-
   const { loading } = useInitCheckInError();
 
   // After we get the message, we remove the cookie so that the error doesn't
@@ -73,9 +65,7 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
       if (error) Cookies.remove(ErrorContext.LOGIN_ERROR);
     }, 5000);
 
-    return () => {
-      return clearTimeout(timeout);
-    };
+    return () => clearTimeout(timeout);
   }, [error]);
 
   return (
@@ -106,14 +96,12 @@ const LoginCardEmailForm: React.FC = () => {
   );
 };
 
-const CheckInLoginContent: React.FC<ShowProps> = ({ show }) => {
-  return (
-    <Show show={show}>
-      <LoginCardGoogleContainer />
-      <Separator margin={24} />
-      <LoginCardEmailForm />
-    </Show>
-  );
-};
+const CheckInLoginContent: React.FC<ShowProps> = ({ show }) => (
+  <Show show={show}>
+    <LoginCardGoogleContainer />
+    <Separator margin={24} />
+    <LoginCardEmailForm />
+  </Show>
+);
 
 export default CheckInLoginContent;

@@ -11,17 +11,15 @@ import { QueryEvent } from '@util/constants.events';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
-const MailchimpModalActionContainer: React.FC = () => {
-  return (
-    <Row spacing="xs">
-      <SubmitButton fill={false} large={false} loadingText="Finishing...">
-        Finish
-      </SubmitButton>
+const MailchimpModalActionContainer: React.FC = () => (
+  <Row spacing="xs">
+    <SubmitButton fill={false} large={false} loadingText="Finishing...">
+      Finish
+    </SubmitButton>
 
-      <ModalCloseButton />
-    </Row>
-  );
-};
+    <ModalCloseButton />
+  </Row>
+);
 
 const MailchimpModalContent: React.FC = () => {
   const { data, loading } = useQuery({
@@ -45,9 +43,7 @@ const MailchimpModalContent: React.FC = () => {
       <FormMultipleChoice
         description="Choose the Mailchimp Audience/List that you would like new members to automatically be added to upon joining your community."
         id="MAILCHIMP_LIST_ID"
-        options={data.mailchimpLists?.map(({ name }) => {
-          return name;
-        })}
+        options={data.mailchimpLists?.map(({ name }) => name)}
         title="Select Audience/List ID"
       />
 

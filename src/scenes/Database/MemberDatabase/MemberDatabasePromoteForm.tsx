@@ -13,26 +13,24 @@ import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 
-const MemberDatabasePromoteFormActions: React.FC = () => {
-  return (
-    <Row spacing="xs">
-      <FormSubmitButton row loadingText="Promoting...">
-        Promote
-      </FormSubmitButton>
+const MemberDatabasePromoteFormActions: React.FC = () => (
+  <Row spacing="xs">
+    <FormSubmitButton row loadingText="Promoting...">
+      Promote
+    </FormSubmitButton>
 
-      <ModalCloseButton />
-    </Row>
-  );
-};
+    <ModalCloseButton />
+  </Row>
+);
 
 const MemberDatabasePromoteForm: React.FC = () => {
-  const memberIds = TableStore.useStoreState(({ selectedRowIds }) => {
-    return selectedRowIds;
-  });
+  const memberIds = TableStore.useStoreState(
+    ({ selectedRowIds }) => selectedRowIds
+  );
 
-  const clearSelectedRows = TableStore.useStoreActions((state) => {
-    return state.clearSelectedRows;
-  });
+  const clearSelectedRows = TableStore.useStoreActions(
+    (state) => state.clearSelectedRows
+  );
 
   const [promoteMembers] = useMutation<IMember[], MemberIdsArgs>({
     fields: ['id', 'role'],

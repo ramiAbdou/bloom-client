@@ -11,18 +11,12 @@ import { LoadingProps } from '@util/constants';
 import EventsCard from './EventsCard/EventsCard';
 
 const EventsPastYourList: React.FC = () => {
-  const events: IEvent[] = useStoreState(({ db }) => {
-    return db.member.attendees
-      ?.map((attendeeId: string) => {
-        return db.byAttendeeId[attendeeId];
-      })
-      ?.map((attendee: IEventAttendee) => {
-        return db.byEventId[attendee.event];
-      })
-      ?.filter((event: IEvent) => {
-        return day().isAfter(day(event?.endTime));
-      });
-  });
+  const events: IEvent[] = useStoreState(({ db }) =>
+    db.member.attendees
+      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
+      ?.map((attendee: IEventAttendee) => db.byEventId[attendee.event])
+      ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)))
+  );
 
   return (
     <List
@@ -35,18 +29,13 @@ const EventsPastYourList: React.FC = () => {
 };
 
 const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
-  const hasEvents: boolean = useStoreState(({ db }) => {
-    return !!db.member.attendees
-      ?.map((attendeeId: string) => {
-        return db.byAttendeeId[attendeeId];
-      })
-      ?.map((attendee: IEventAttendee) => {
-        return db.byEventId[attendee.event];
-      })
-      ?.filter((event: IEvent) => {
-        return day().isAfter(day(event?.endTime));
-      })?.length;
-  });
+  const hasEvents: boolean = useStoreState(
+    ({ db }) =>
+      !!db.member.attendees
+        ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
+        ?.map((attendee: IEventAttendee) => db.byEventId[attendee.event])
+        ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)))?.length
+  );
 
   return (
     <MainSection show={hasEvents}>

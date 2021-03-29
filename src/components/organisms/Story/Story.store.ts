@@ -31,28 +31,18 @@ export type StoryModel = {
 };
 
 export const storyModel: StoryModel = {
-  currentPage: computed(({ pageId, pages }) => {
-    return pages.find((page: StoryPageProps) => {
-      return page.id === pageId;
-    });
-  }),
+  currentPage: computed(({ pageId, pages }) =>
+    pages.find((page: StoryPageProps) => page.id === pageId)
+  ),
 
-  getPage: computed(({ pages }) => {
-    return (pageId: string) => {
-      return pages.find((page: StoryPageProps) => {
-        return page.id === pageId;
-      });
-    };
-  }),
+  getPage: computed(({ pages }) => (pageId: string) =>
+    pages.find((page: StoryPageProps) => page.id === pageId)
+  ),
 
   goForward: action(({ pages, pageId, ...state }) => {
     window.scrollTo({ top: 0 });
 
-    const nextIndex =
-      pages.findIndex((page) => {
-        return page.id === pageId;
-      }) + 1;
-
+    const nextIndex = pages.findIndex((page) => page.id === pageId) + 1;
     const { id } = pages[nextIndex];
     return { ...state, pageId: id, pages };
   }),
@@ -70,9 +60,7 @@ export const storyModel: StoryModel = {
     ) => {
       window.scrollTo({ top: 0 });
 
-      const index = pages.findIndex((page) => {
-        return page.id === id;
-      });
+      const index = pages.findIndex((page) => page.id === id);
 
       pages[index].branchId = branchId;
       return { ...state, pageId: id, pages };
@@ -96,9 +84,7 @@ export const storyModel: StoryModel = {
       { pages, ...state },
       { disabled, id }: Pick<StoryPageProps, 'disabled' | 'id'>
     ) => {
-      const index = pages.findIndex((page) => {
-        return page.id === id;
-      });
+      const index = pages.findIndex((page) => page.id === id);
 
       pages[index].disabled = disabled;
       return { ...state, pages };

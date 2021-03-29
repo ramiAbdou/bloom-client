@@ -10,14 +10,11 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const DatbaseHeaderAddButton: React.FC = () => {
-  const isOwner = useStoreState(({ db }) => {
-    return db.member?.role === MemberRole.OWNER;
-  });
+  const isOwner = useStoreState(
+    ({ db }) => db.member?.role === MemberRole.OWNER
+  );
 
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
-
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isAdminsPage = useFinalPath() === 'admins';
   const isMembersPage = useFinalPath() === 'members';
 
@@ -38,16 +35,12 @@ const DatabaseHeader: React.FC<LoadingProps> = ({ loading }) => {
 
   const options: MainNavigationOptionProps[] = [
     {
-      onClick: () => {
-        return push('members');
-      },
+      onClick: () => push('members'),
       pathname: 'members',
       title: 'Members'
     },
     {
-      onClick: () => {
-        return push('admins');
-      },
+      onClick: () => push('admins'),
       pathname: 'admins',
       title: 'Admins'
     }

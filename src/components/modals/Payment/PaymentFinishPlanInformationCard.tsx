@@ -7,9 +7,9 @@ import PaymentStore from './Payment.store';
 import { getPlanDescription } from './Payment.util';
 
 const PaymentFinishPlanInformationCard: React.FC = () => {
-  const planId: string = PaymentStore.useStoreState((state) => {
-    return state.selectedPlanId;
-  });
+  const planId: string = PaymentStore.useStoreState(
+    (state) => state.selectedPlanId
+  );
 
   const amount: number = useStoreState(({ db }) => {
     const plan: IMemberPlan = db.byMemberPlanId[planId];

@@ -5,10 +5,7 @@ import { useStoreState } from '@store/Store';
 import { RouteType } from '@util/constants';
 
 const usePush = (to: RouteType, path?: string): VoidFunction => {
-  const urlName: string = useStoreState(({ db }) => {
-    return db.community?.urlName;
-  });
-
+  const urlName: string = useStoreState(({ db }) => db.community?.urlName);
   const { push } = useHistory();
 
   const result: VoidFunction = useCallback(() => {

@@ -17,29 +17,12 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   value,
   values
 }) => {
-  const isOpen = DropdownStore.useStoreState((state) => {
-    return state.isOpen;
-  });
-
-  const storedValue = DropdownStore.useStoreState((state) => {
-    return state.value;
-  });
-
-  const storedValues = DropdownStore.useStoreState((state) => {
-    return state.values;
-  });
-
-  const setIsOpen = DropdownStore.useStoreActions((state) => {
-    return state.setIsOpen;
-  });
-
-  const setValue = DropdownStore.useStoreActions((state) => {
-    return state.setValue;
-  });
-
-  const setValues = DropdownStore.useStoreActions((state) => {
-    return state.setValues;
-  });
+  const isOpen = DropdownStore.useStoreState((state) => state.isOpen);
+  const storedValue = DropdownStore.useStoreState((state) => state.value);
+  const storedValues = DropdownStore.useStoreState((state) => state.values);
+  const setIsOpen = DropdownStore.useStoreActions((state) => state.setIsOpen);
+  const setValue = DropdownStore.useStoreActions((state) => state.setValue);
+  const setValues = DropdownStore.useStoreActions((state) => state.setValues);
 
   useEffect(() => {
     if (!deepequal(storedValue, value)) setValue(value);
@@ -51,9 +34,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
 
   const ref: React.MutableRefObject<HTMLDivElement> = useRef(null);
 
-  useOnClickOutside(ref, () => {
-    return isOpen && setIsOpen(false);
-  });
+  useOnClickOutside(ref, () => isOpen && setIsOpen(false));
 
   const css: string = cx('', { 'm-dropdown--fit': fit }, className);
 

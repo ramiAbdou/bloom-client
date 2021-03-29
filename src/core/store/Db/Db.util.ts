@@ -81,14 +81,13 @@ export const updateDocumentColors = (color: string): void => {
   if (style.getPropertyValue('--primary') === color) return;
 
   const RGB = color
-    .replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (_, r, g, b) => {
-      return `#${r}${r}${g}${g}${b}${b}`;
-    })
+    .replace(
+      /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+      (_, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
+    )
     .substring(1)
     .match(/.{2}/g)
-    .map((x) => {
-      return parseInt(x, 16);
-    });
+    .map((x) => parseInt(x, 16));
 
   const hue = getHueFromRGB(RGB);
 

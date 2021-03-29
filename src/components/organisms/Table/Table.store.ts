@@ -79,9 +79,9 @@ export const tableModel: TableModel = {
   toggleRow: action((state, rowId: string) => {
     const updatedSelectedRowIds: string[] = [...state.selectedRowIds];
 
-    const index: number = state.selectedRowIds.findIndex((value: string) => {
-      return value === rowId;
-    });
+    const index: number = state.selectedRowIds.findIndex(
+      (value: string) => value === rowId
+    );
 
     return {
       ...state,
@@ -98,9 +98,9 @@ export const tableModel: TableModel = {
   toggleRows: action((state, rowIds: string[]) => {
     const currentSelectedRowIds: string[] = [...state.selectedRowIds];
 
-    const allRowIdsSelectedAlready: boolean = rowIds.every((rowId: string) => {
-      return currentSelectedRowIds.includes(rowId);
-    });
+    const allRowIdsSelectedAlready: boolean = rowIds.every((rowId: string) =>
+      currentSelectedRowIds.includes(rowId)
+    );
 
     return {
       ...state,

@@ -16,13 +16,13 @@ import useInitFormItem from './useInitFormItem';
  * midnight.
  */
 const useMinTime = (key: string) => {
-  const startDate = FormStore.useStoreState(({ items }) => {
-    return items.START_DATE?.value;
-  });
+  const startDate = FormStore.useStoreState(
+    ({ items }) => items.START_DATE?.value
+  );
 
-  const startTime = FormStore.useStoreState(({ items }) => {
-    return items.START_TIME?.value;
-  });
+  const startTime = FormStore.useStoreState(
+    ({ items }) => items.START_TIME?.value
+  );
 
   const startOfToday = day().startOf('day');
 
@@ -42,14 +42,8 @@ const useMinTime = (key: string) => {
 
 const FormTime: React.FC<FormItemData> = ({ className, ...args }) => {
   const key = getFormItemKey(args);
-
-  const value = FormStore.useStoreState(({ items }) => {
-    return items[key]?.value;
-  });
-
-  const setValue = FormStore.useStoreActions((state) => {
-    return state.setValue;
-  });
+  const value = FormStore.useStoreState(({ items }) => items[key]?.value);
+  const setValue = FormStore.useStoreActions((state) => state.setValue);
 
   const disabled: boolean = FormStore.useStoreState(({ items }) => {
     if (key === 'END_TIME') return !items.START_TIME?.value;
@@ -91,9 +85,7 @@ const FormTime: React.FC<FormItemData> = ({ className, ...args }) => {
         selected={
           day(value as string).isValid() && day(value as string).toDate()
         }
-        onChange={(date) => {
-          return updateDate(date);
-        }}
+        onChange={(date) => updateDate(date)}
       />
     </FormItemContainer>
   );

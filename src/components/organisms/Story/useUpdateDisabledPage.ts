@@ -9,26 +9,21 @@ import { StoryPageProps } from './Story.types';
  * is.
  */
 const useUpdateDisabledPage = (id: string): void => {
-  const pageId: string = StoryStore.useStoreState((state) => {
-    return state.pageId;
-  });
+  const pageId: string = StoryStore.useStoreState((state) => state.pageId);
 
-  const pages: StoryPageProps[] = StoryStore.useStoreState((state) => {
-    return state.pages;
-  });
+  const pages: StoryPageProps[] = StoryStore.useStoreState(
+    (state) => state.pages
+  );
 
-  const setPageDisabled = StoryStore.useStoreActions((state) => {
-    return state.setPageDisabled;
-  });
+  const setPageDisabled = StoryStore.useStoreActions(
+    (state) => state.setPageDisabled
+  );
 
-  const currentPageIndex: number = pages.findIndex((element) => {
-    return element.id === pageId;
-  });
+  const currentPageIndex: number = pages.findIndex(
+    (element) => element.id === pageId
+  );
 
-  const pageIndex: number = pages.findIndex((element) => {
-    return element.id === id;
-  });
-
+  const pageIndex: number = pages.findIndex((element) => element.id === id);
   const { disabled } = pages[pageIndex] ?? {};
 
   useEffect(() => {

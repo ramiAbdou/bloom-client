@@ -6,23 +6,19 @@ import TableFilterStore from './TableFilterPanel.store';
 import { TableFilterJoinOperatorType } from './TableFilterPanel.types';
 
 const TableFilterPanelRowJoinOperator: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const id: string = IdStore.useStoreState((state) => state.id);
 
-  const rowIndex: number = TableFilterStore.useStoreState((state) => {
-    return state.filterIds.findIndex((filterId) => {
-      return filterId === id;
-    });
-  });
+  const rowIndex: number = TableFilterStore.useStoreState((state) =>
+    state.filterIds.findIndex((filterId) => filterId === id)
+  );
 
-  const joinOperator = TableFilterStore.useStoreState((state) => {
-    return state.joinOperator;
-  });
+  const joinOperator = TableFilterStore.useStoreState(
+    (state) => state.joinOperator
+  );
 
-  const setJoinOperator = TableFilterStore.useStoreActions((state) => {
-    return state.setJoinOperator;
-  });
+  const setJoinOperator = TableFilterStore.useStoreActions(
+    (state) => state.setJoinOperator
+  );
 
   const onSelect = (result: TableFilterJoinOperatorType) => {
     setJoinOperator(result);

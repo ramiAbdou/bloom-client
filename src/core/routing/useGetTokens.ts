@@ -19,11 +19,7 @@ interface GetTokensResult {
 const useGetTokens = (checkUrlName = false): boolean => {
   const token = new URLSearchParams(window.location.search).get('token');
   const { urlName }: UrlNameProps = useParams();
-
-  const setActive = useStoreActions(({ db }) => {
-    return db.setActive;
-  });
-
+  const setActive = useStoreActions(({ db }) => db.setActive);
   const { push } = useHistory();
 
   const [getTokens, result] = useManualQuery<GetTokensResult>({

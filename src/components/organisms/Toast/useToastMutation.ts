@@ -21,10 +21,7 @@ const useToastMutation = (
   args: UseMutationOnCompleteArgs
 ): MutationResultVariablesFunction<any, any> => {
   const { id, mutationArgsOnUndo, wasUndid } = args;
-
-  const dequeueToast = useStoreActions(({ toast }) => {
-    return toast.dequeueToast;
-  });
+  const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
 
   const [mutationOnUndoFn] = useMutation(
     mutationArgsOnUndo ?? { operation: null }

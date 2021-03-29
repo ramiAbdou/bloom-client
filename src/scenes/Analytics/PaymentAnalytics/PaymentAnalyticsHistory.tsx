@@ -39,15 +39,11 @@ const columns: TableColumn[] = [
 ];
 
 const PaymentAnalyticsHistoryTable: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
     const result: PaymentAnalyticsHistoryTableData[] = db.community.payments
-      ?.map((paymentId: string) => {
-        return db.byPaymentId[paymentId];
-      })
+      ?.map((paymentId: string) => db.byPaymentId[paymentId])
       ?.map((payment: IPayment) => {
         const { amount, createdAt, plan }: IPayment = payment;
         const member: IMember = db.byMemberId[payment?.member];
@@ -65,9 +61,7 @@ const PaymentAnalyticsHistoryTable: React.FC = () => {
       }, []);
 
     return result;
-  })?.sort((a, b) => {
-    return sortObjects(a, b, 'paidOn');
-  });
+  })?.sort((a, b) => sortObjects(a, b, 'paidOn'));
 
   const options: TableOptions = {
     onRowClick: (row: TableRow) => {

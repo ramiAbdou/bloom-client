@@ -12,9 +12,9 @@ import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
 
 const Profile: React.FC = () => {
-  const memberId: string = useStoreState(({ modal }) => {
-    return modal.metadata as string;
-  });
+  const memberId: string = useStoreState(
+    ({ modal }) => modal.metadata as string
+  );
 
   const [getMember, { data }] = useManualQuery<IMember>({
     fields: [

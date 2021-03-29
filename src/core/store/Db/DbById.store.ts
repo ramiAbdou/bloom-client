@@ -22,73 +22,43 @@ const dbByIdStore: Pick<
   | 'byValuesId'
   | 'byWatchId'
 > = {
-  byApplicationId: computed(({ entities }) => {
-    return entities.applications.byId;
-  }),
+  byApplicationId: computed(({ entities }) => entities.applications.byId),
 
-  byAttendeeId: computed(({ entities }) => {
-    return entities.attendees.byId;
-  }),
+  byAttendeeId: computed(({ entities }) => entities.attendees.byId),
 
-  byCommunityId: computed(({ entities }) => {
-    return entities.communities.byId;
-  }),
+  byCommunityId: computed(({ entities }) => entities.communities.byId),
 
-  byCommunityIntegrationsId: computed(({ entities }) => {
-    return entities.communityIntegrations.byId;
-  }),
+  byCommunityIntegrationsId: computed(
+    ({ entities }) => entities.communityIntegrations.byId
+  ),
 
-  byEventId: computed(({ entities }) => {
-    return entities.events.byId;
-  }),
+  byEventId: computed(({ entities }) => entities.events.byId),
 
-  byGuestId: computed(({ entities }) => {
-    return entities.guests.byId;
-  }),
+  byGuestId: computed(({ entities }) => entities.guests.byId),
 
-  byMemberId: computed(({ entities }) => {
-    return entities.members.byId;
-  }),
+  byMemberId: computed(({ entities }) => entities.members.byId),
 
-  byMemberIntegrationsId: computed(({ entities }) => {
-    return entities.memberIntegrations.byId;
-  }),
+  byMemberIntegrationsId: computed(
+    ({ entities }) => entities.memberIntegrations.byId
+  ),
 
-  byMemberPlanId: computed(({ entities }) => {
-    return entities.memberPlans.byId;
-  }),
+  byMemberPlanId: computed(({ entities }) => entities.memberPlans.byId),
 
-  byPaymentId: computed(({ entities }) => {
-    return entities.payments.byId;
-  }),
+  byPaymentId: computed(({ entities }) => entities.payments.byId),
 
-  byQuestionId: computed(({ entities }) => {
-    return entities.questions.byId;
-  }),
+  byQuestionId: computed(({ entities }) => entities.questions.byId),
 
-  byRankedQuestionId: computed(({ entities }) => {
-    return entities.rankedQuestions.byId;
-  }),
+  byRankedQuestionId: computed(({ entities }) => entities.rankedQuestions.byId),
 
-  bySocialsId: computed(({ entities }) => {
-    return entities.socials.byId;
-  }),
+  bySocialsId: computed(({ entities }) => entities.socials.byId),
 
-  bySupporterId: computed(({ entities }) => {
-    return entities.supporters.byId;
-  }),
+  bySupporterId: computed(({ entities }) => entities.supporters.byId),
 
-  byUserId: computed(({ entities }) => {
-    return entities.users.byId;
-  }),
+  byUserId: computed(({ entities }) => entities.users.byId),
 
-  byValuesId: computed(({ entities }) => {
-    return entities.values.byId;
-  }),
+  byValuesId: computed(({ entities }) => entities.values.byId),
 
-  byWatchId: computed(({ entities }) => {
-    return entities.watches.byId;
-  })
+  byWatchId: computed(({ entities }) => entities.watches.byId)
 };
 
 export default dbByIdStore;

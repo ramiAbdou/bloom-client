@@ -13,9 +13,9 @@ import ApplicationReviewMembership from './ApplicationReviewMembership';
 import useApplyToCommunity from './useApplyToCommunity';
 
 const ApplicationReviewButton: React.FC = () => {
-  const hasCreditCard = StoryStore.useStoreState(({ items }) => {
-    return !!items.CREDIT_OR_DEBIT_CARD;
-  });
+  const hasCreditCard = StoryStore.useStoreState(
+    ({ items }) => !!items.CREDIT_OR_DEBIT_CARD
+  );
 
   return (
     <FormSubmitButton>

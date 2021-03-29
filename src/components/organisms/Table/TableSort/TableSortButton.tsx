@@ -13,23 +13,20 @@ interface TableSortButtonProps {
 }
 
 const TableSortButton: React.FC<TableSortButtonProps> = ({ direction }) => {
-  const columnId: string = useStoreState(({ panel }) => {
-    return panel.metadata;
-  });
+  const columnId: string = useStoreState(({ panel }) => panel.metadata);
 
-  const closePanel: ActionCreator<void> = useStoreActions(({ panel }) => {
-    return panel.closePanel;
-  });
+  const closePanel: ActionCreator<void> = useStoreActions(
+    ({ panel }) => panel.closePanel
+  );
 
-  const isSorted: boolean = TableSortStore.useStoreState((state) => {
-    return state.sortDirection === direction && state.sortColumnId === columnId;
-  });
+  const isSorted: boolean = TableSortStore.useStoreState(
+    (state) =>
+      state.sortDirection === direction && state.sortColumnId === columnId
+  );
 
   const sortColumn: ActionCreator<
     [string, TableSortDirection]
-  > = TableSortStore.useStoreActions((state) => {
-    return state.sortColumn;
-  });
+  > = TableSortStore.useStoreActions((state) => state.sortColumn);
 
   const onClick = (): void => {
     sortColumn([columnId, direction]);

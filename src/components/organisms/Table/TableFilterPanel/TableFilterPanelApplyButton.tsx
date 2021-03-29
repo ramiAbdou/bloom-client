@@ -13,7 +13,6 @@ interface ProcessFilterArgs extends TableFilterArgs {
 
 const processFilter = (args: ProcessFilterArgs) => {
   const { columnId, operator, row, value } = args;
-
   const rowValue: any = row[columnId]?.toString()?.toLowerCase();
   const processedValue: string = value?.toString()?.toLowerCase();
 
@@ -24,35 +23,29 @@ const processFilter = (args: ProcessFilterArgs) => {
 };
 
 const TableFilterPanelApplyButton: React.FC = () => {
-  const closePanel = useStoreActions(({ panel }) => {
-    return panel.closePanel;
-  });
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
-  const joinOperator = TableFilterPanelStore.useStoreState((state) => {
-    return state.joinOperator;
-  });
-
-  const filters: TableFilterArgs[] = TableFilterPanelStore.useStoreState(
-    (state) => {
-      return Object.values(state.filters);
-    }
+  const joinOperator = TableFilterPanelStore.useStoreState(
+    (state) => state.joinOperator
   );
 
-  const setFilter = TableStore.useStoreActions((state) => {
-    return state.setFilter;
-  });
+  const filters: TableFilterArgs[] = TableFilterPanelStore.useStoreState(
+    (state) => Object.values(state.filters)
+  );
+
+  const setFilter = TableStore.useStoreActions((state) => state.setFilter);
 
   const onClick = () => {
     const filter: TableFilterFunction = (row: TableRow) => {
       if (joinOperator === 'and') {
-        return filters?.every((filterArgs: TableFilterArgs) => {
-          return processFilter({ ...filterArgs, row });
-        });
+        return filters?.every((filterArgs: TableFilterArgs) =>
+          processFilter({ ...filterArgs, row })
+        );
       }
 
-      return filters?.some((filterArgs: TableFilterArgs) => {
-        return processFilter({ ...filterArgs, row });
-      });
+      return filters?.some((filterArgs: TableFilterArgs) =>
+        processFilter({ ...filterArgs, row })
+      );
     };
 
     setFilter({ filter, filterId: 'FILTER_CUSTOM' });

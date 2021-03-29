@@ -14,9 +14,7 @@ import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitCommunity = (): Partial<QueryResult> => {
-  const communityId: string = useStoreState(({ db }) => {
-    return db.community?.id;
-  });
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
 
   const [getCommunity, { loading: loading1 }] = useManualQuery<ICommunity>({
     fields: [

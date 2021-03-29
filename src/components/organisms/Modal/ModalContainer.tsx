@@ -14,13 +14,8 @@ import { cx } from '@util/util';
  * background.
  */
 const ModalBackground: React.FC = () => {
-  const lock: boolean = useStoreState(({ modal }) => {
-    return modal.options?.lock;
-  });
-
-  const closeModal = useStoreActions(({ modal }) => {
-    return modal.closeModal;
-  });
+  const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
   const onClick = () => {
     if (!lock) closeModal();
@@ -32,17 +27,9 @@ const ModalBackground: React.FC = () => {
 };
 
 const ModalExitButton: React.FC = () => {
-  const lock: boolean = useStoreState(({ modal }) => {
-    return modal.options?.lock;
-  });
-
-  const closeModal = useStoreActions(({ modal }) => {
-    return modal.closeModal;
-  });
-
-  const onClick = () => {
-    return closeModal();
-  };
+  const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const onClick = () => closeModal();
 
   return (
     <Button className="c-modal-cancel" show={!lock} onClick={onClick}>
@@ -52,25 +39,13 @@ const ModalExitButton: React.FC = () => {
 };
 
 const ModalContainer: React.FC = ({ children }) => {
-  const onClose = useStoreState(({ modal }) => {
-    return modal?.onClose;
-  });
-
-  const sheet: boolean = useStoreState(({ modal }) => {
-    return modal.options?.sheet;
-  });
-
-  const width: number = useStoreState(({ modal }) => {
-    return modal?.width;
-  });
+  const onClose = useStoreState(({ modal }) => modal?.onClose);
+  const sheet: boolean = useStoreState(({ modal }) => modal.options?.sheet);
+  const width: number = useStoreState(({ modal }) => modal?.width);
 
   useLockBodyScroll();
 
-  useEffect(() => {
-    return () => {
-      return onClose && onClose();
-    };
-  }, []);
+  useEffect(() => () => onClose && onClose(), []);
 
   const isMobile = useBreakpoint() === 1;
 

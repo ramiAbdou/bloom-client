@@ -11,9 +11,9 @@ import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarSection from './SidebarSection';
 
 const SidebarAdminSection: React.FC = () => {
-  const autoAccept: boolean = useStoreState(({ db }) => {
-    return db.community?.autoAccept;
-  });
+  const autoAccept: boolean = useStoreState(
+    ({ db }) => db.community?.autoAccept
+  );
 
   const pendingApplicantsLinks: SidebarLinkOptions[] = !autoAccept
     ? [{ Icon: IoFolderOpen, title: 'Pending Applicants', to: 'applicants' }]

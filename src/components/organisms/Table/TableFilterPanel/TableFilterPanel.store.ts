@@ -10,26 +10,26 @@ import {
 
 const tableFilterPanelModel: TableFilterPanelModel = {
   addEmptyFilter: action((state) => {
-    const id: string = nanoid();
+    const filterId: string = nanoid();
 
     return {
       ...state,
-      filterIds: [...state.filterIds, id],
+      filterIds: [...state.filterIds, filterId],
       filters: {
         ...state.filters,
-        [id]: { columnId: null, operator: TableFilterOperatorType.IS }
+        [filterId]: { columnId: null, operator: TableFilterOperatorType.IS }
       }
     };
   }),
 
   clearFilters: action((state) => {
-    const id: string = nanoid();
+    const filterId: string = nanoid();
 
     return {
       ...state,
-      filterIds: [id],
+      filterIds: [filterId],
       filters: {
-        [id]: { columnId: null, operator: TableFilterOperatorType.IS }
+        [filterId]: { columnId: null, operator: TableFilterOperatorType.IS }
       }
     };
   }),
@@ -48,9 +48,7 @@ const tableFilterPanelModel: TableFilterPanelModel = {
     delete updatedFilters[filterId];
 
     const updatedFilterIds: string[] = [...state.filterIds].filter(
-      (id: string) => {
-        return id !== filterId;
-      }
+      (id: string) => id !== filterId
     );
 
     return { ...state, filterIds: updatedFilterIds, filters: updatedFilters };
@@ -78,15 +76,15 @@ const tableFilterPanelModel: TableFilterPanelModel = {
 };
 
 const TableFilterStore = createContextStore<TableFilterPanelModel>(
-  (runtimeModel) => {
-    const id: string = nanoid();
+  (runtimeModel: TableFilterPanelModel) => {
+    const filterId: string = nanoid();
 
     return {
       ...runtimeModel,
       ...tableFilterPanelModel,
-      filterIds: [id],
+      filterIds: [filterId],
       filters: {
-        [id]: { columnId: null, operator: TableFilterOperatorType.IS }
+        [filterId]: { columnId: null, operator: TableFilterOperatorType.IS }
       }
     };
   },

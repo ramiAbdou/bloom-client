@@ -6,34 +6,30 @@ import { TableRow } from './Table.types';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableHeaderCheckbox: React.FC = () => {
-  const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.floor;
-  });
+  const floor: number = TablePaginationStore.useStoreState(
+    (state) => state.floor
+  );
 
-  const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.ceiling;
-  });
+  const ceiling: number = TablePaginationStore.useStoreState(
+    (state) => state.ceiling
+  );
 
   const currentPageRowIds: string[] = TableStore.useStoreState((state) => {
-    return state.filteredRows.slice(floor, ceiling).map((row: TableRow) => {
-      return row.id;
-    });
+    const rowsOnPage: TableRow[] = state.filteredRows.slice(floor, ceiling);
+    return rowsOnPage.map((row: TableRow) => row.id);
   });
 
   const isAllPageSelected: boolean = TableStore.useStoreState(
     ({ selectedRowIds }) => {
-      return (
-        !!selectedRowIds.length &&
-        currentPageRowIds.every((rowId: string) => {
-          return selectedRowIds.includes(rowId);
-        })
+      const allRowsOnPageSelected: boolean = currentPageRowIds.every(
+        (rowId: string) => selectedRowIds.includes(rowId)
       );
+
+      return !!selectedRowIds.length && allRowsOnPageSelected;
     }
   );
 
-  const toggleRows = TableStore.useStoreActions((state) => {
-    return state.toggleRows;
-  });
+  const toggleRows = TableStore.useStoreActions((state) => state.toggleRows);
 
   const onChange = () => {
     toggleRows(currentPageRowIds);

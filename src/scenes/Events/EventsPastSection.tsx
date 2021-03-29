@@ -17,20 +17,15 @@ const EventsPastList: React.FC = () => {
     const yourAttendees: Set<string> = new Set(db.member.attendees);
 
     return db.community?.events
-      ?.map((eventId: string) => {
-        return db.byEventId[eventId];
-      })
-      ?.filter((event: IEvent) => {
-        return day().isAfter(day(event.endTime));
-      })
-      ?.filter((event: IEvent) => {
-        return !event.attendees?.some((attendeeId: string) => {
-          return yourAttendees.has(attendeeId);
-        });
-      })
-      ?.sort((a, b) => {
-        return sortObjects(a, b, 'startTime');
-      });
+      ?.map((eventId: string) => db.byEventId[eventId])
+      ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
+      ?.filter(
+        (event: IEvent) =>
+          !event.attendees?.some((attendeeId: string) =>
+            yourAttendees.has(attendeeId)
+          )
+      )
+      ?.sort((a, b) => sortObjects(a, b, 'startTime'));
   });
 
   return (
@@ -56,17 +51,14 @@ const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => {
     const attendees = new Set(db.member.attendees);
 
     return !!db.community?.events
-      ?.map((eventId: string) => {
-        return db.byEventId[eventId];
-      })
-      ?.filter((event: IEvent) => {
-        return day().isAfter(day(event.endTime));
-      })
-      ?.filter((event: IEvent) => {
-        return !event.attendees?.some((attendeeId: string) => {
-          return attendees.has(attendeeId);
-        });
-      });
+      ?.map((eventId: string) => db.byEventId[eventId])
+      ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
+      ?.filter(
+        (event: IEvent) =>
+          !event.attendees?.some((attendeeId: string) =>
+            attendees.has(attendeeId)
+          )
+      );
   });
 
   return (

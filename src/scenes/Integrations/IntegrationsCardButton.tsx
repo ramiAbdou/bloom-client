@@ -10,9 +10,7 @@ const IntegrationsCardSeeDetailsButton: React.FC<IntegrationsDetailsData> = ({
   logo,
   name
 }) => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({ id: ModalType.INTEGRATIONS_DETAILS, metadata: { logo, name } });
@@ -35,9 +33,7 @@ const IntegrationsCardConnectButton: React.FC<IntegrationsDetailsData> = ({
   href,
   name
 }) => {
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   // If the href is present, the user hasn't authenticated anything. Otherwise,
   // it means the user authenticated (logged in), but didn't finish the

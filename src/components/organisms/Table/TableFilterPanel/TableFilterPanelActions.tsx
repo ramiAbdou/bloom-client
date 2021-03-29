@@ -8,9 +8,9 @@ import TableFilterPanelStore from './TableFilterPanel.store';
 import TableFilterPanelApplyButton from './TableFilterPanelApplyButton';
 
 const TableFilterPanelCloseButton: React.FC = () => {
-  const closePanel: ActionCreator<void> = useStoreActions(({ panel }) => {
-    return panel.closePanel;
-  });
+  const closePanel: ActionCreator<void> = useStoreActions(
+    ({ panel }) => panel.closePanel
+  );
 
   const onClick = (): void => {
     closePanel();
@@ -24,9 +24,9 @@ const TableFilterPanelCloseButton: React.FC = () => {
 };
 
 const TableFilterPanelActions: React.FC = () => {
-  const hasFilters: boolean = TableFilterPanelStore.useStoreState((state) => {
-    return !!Object.values(state.filters)?.length;
-  });
+  const hasFilters: boolean = TableFilterPanelStore.useStoreState(
+    (state) => !!Object.values(state.filters)?.length
+  );
 
   return (
     <Row show={hasFilters} spacing="xs">

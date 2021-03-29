@@ -14,7 +14,6 @@ interface MainNavigationButtonProps extends MainNavigationOptionProps {
 
 const MainNavigationButton: React.FC<MainNavigationButtonProps> = (props) => {
   const { activeTitle, onClick, title } = props;
-
   const active: boolean = activeTitle === title;
 
   const css: string = cx('t-main-nav f-1 ta-center', {

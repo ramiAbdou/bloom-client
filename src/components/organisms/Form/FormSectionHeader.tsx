@@ -9,13 +9,11 @@ interface FormSectionHeaderProps extends TitleProps {
 const FormSectionHeader: React.FC<FormSectionHeaderProps> = ({
   description,
   title
-}) => {
-  return (
-    <div className="mb-md--nlc">
-      {title && <h2 className="mb-xs--nlc">{title}</h2>}
-      {description && <p>{description}</p>}
-    </div>
-  );
-};
+}) => (
+  <div className="mb-md--nlc">
+    {title && <h2 className="mb-xs--nlc">{title}</h2>}
+    {description && <p>{description}</p>}
+  </div>
+);
 
 export default FormSectionHeader;

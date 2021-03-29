@@ -30,9 +30,9 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
   }: OnFormSubmitArgs) => {
     const urlName: string = db.community?.urlName;
 
-    const types: IMemberPlan[] = db.community?.plans?.map((planId: string) => {
-      return db.byMemberPlanId[planId];
-    });
+    const types: IMemberPlan[] = db.community?.plans?.map(
+      (planId: string) => db.byMemberPlanId[planId]
+    );
 
     const emailId = db.community?.questions?.find((questionId: string) => {
       const question: IQuestion = db.byQuestionId[questionId];
@@ -45,15 +45,10 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
       ?.value as IPaymentMethod)?.paymentMethodId as string;
 
     const typeName = storyItems.MEMBER_PLAN?.value;
-
-    const memberPlanId = types.find((type) => {
-      return type.name === typeName;
-    })?.id;
+    const memberPlanId = types.find((type) => type.name === typeName)?.id;
 
     const data = Object.values(storyItems)
-      .filter(({ questionId }) => {
-        return !!questionId;
-      })
+      .filter(({ questionId }) => !!questionId)
       .map(({ category, id, value }) => {
         return {
           category,

@@ -29,28 +29,19 @@ interface PieChartLegendProps {
   payload?: LegendPayload[];
 }
 
-const PieChartLegend: React.FC<PieChartLegendProps> = ({ payload }) => {
-  return (
-    <>
-      {payload.map(({ color, value }: LegendPayload) => {
-        return (
-          <Row key={value} className="mb-xs--nlc">
-            <div
-              className="br-xxs h-md w-md"
-              style={{ backgroundColor: color }}
-            />
-            <p className="meta ml-xs">{value}</p>
-          </Row>
-        );
-      })}
-    </>
-  );
-};
+const PieChartLegend: React.FC<PieChartLegendProps> = ({ payload }) => (
+  <>
+    {payload.map(({ color, value }: LegendPayload) => (
+      <Row key={value} className="mb-xs--nlc">
+        <div className="br-xxs h-md w-md" style={{ backgroundColor: color }} />
+        <p className="meta ml-xs">{value}</p>
+      </Row>
+    ))}
+  </>
+);
 
 const PieChart: React.FC = () => {
-  const data = Chart.useStoreState((state) => {
-    return state.data;
-  });
+  const data = Chart.useStoreState((state) => state.data);
 
   if (!data?.length) return null;
 
@@ -59,25 +50,19 @@ const PieChart: React.FC = () => {
       <RechartsPieChart margin={{ bottom: 0, left: 0, right: 0, top: 0 }}>
         <Legend
           align="left"
-          content={(props: any) => {
-            return <PieChartLegend {...props} />;
-          }}
+          content={(props: any) => <PieChartLegend {...props} />}
           layout="vertical"
           verticalAlign="middle"
         />
 
         <Pie label animationBegin={0} cx={240} data={data} dataKey="value">
-          {data.map((entry, index) => {
-            return (
-              <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
-            );
-          })}
+          {data.map((entry, index) => (
+            <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+          ))}
         </Pie>
 
         <Tooltip
-          content={(props: ChartTooltipProps) => {
-            return <ChartTooltip {...props} />;
-          }}
+          content={(props: ChartTooltipProps) => <ChartTooltip {...props} />}
         />
       </RechartsPieChart>
     </ResponsiveContainer>

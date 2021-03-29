@@ -12,9 +12,7 @@ const useUpdateTableRows = (currentRows: TableRow[]): void => {
   // });
 
   const setRows: ActionCreator<TableRow[]> = TableStore.useStoreActions(
-    (state) => {
-      return state.setRows;
-    }
+    (state) => state.setRows
   );
 
   // Used primarily for the removal of rows. This will not update the

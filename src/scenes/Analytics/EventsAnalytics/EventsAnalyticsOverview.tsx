@@ -7,17 +7,15 @@ import EventsAnalyticsGuestCard from './EventsAnalyticsGuestCard';
 import EventsAnalyticsTotalCard from './EventsAnalyticsTotalCard';
 import EventsAnalyticsWatchesCard from './EventsAnalyticsWatchesCard';
 
-const EventsAnalyticsOverview: React.FC = () => {
-  return (
-    <MainSection>
-      <Row wrap gap="xs">
-        <EventsAnalyticsTotalCard />
-        <EventsAnalyticsAttendanceCard />
-        <EventsAnalyticsGuestCard />
-        <EventsAnalyticsWatchesCard />
-      </Row>
-    </MainSection>
-  );
-};
+const EventsAnalyticsOverview: React.FC = () => (
+  <MainSection>
+    <Row wrap gap="xs">
+      <EventsAnalyticsTotalCard />
+      <EventsAnalyticsAttendanceCard />
+      <EventsAnalyticsGuestCard />
+      <EventsAnalyticsWatchesCard />
+    </Row>
+  </MainSection>
+);
 
 export default EventsAnalyticsOverview;

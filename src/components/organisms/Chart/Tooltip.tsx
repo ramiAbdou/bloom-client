@@ -12,22 +12,15 @@ export type ChartTooltipProps = {
 // The tooltip data that we need will either come from the label if it is a bar
 // chart, or from the payload if it is a pie chart. Subject to change.
 export default ({ active, label, payload }: ChartTooltipProps): JSX.Element => {
-  const data = Chart.useStoreState((state) => {
-    return state.data;
-  });
-
-  const totalResponses = Chart.useStoreState((state) => {
-    return state.totalResponses;
-  });
+  const data = Chart.useStoreState((state) => state.data);
+  const totalResponses = Chart.useStoreState((state) => state.totalResponses);
 
   // Only show the tooltip if it active.
   if (!active || (!label && !payload?.length)) return null;
 
   label = label ?? payload[0]?.name;
 
-  const { value } = data.find(({ name }) => {
-    return name === label;
-  });
+  const { value } = data.find(({ name }) => name === label);
 
   const percentageOfTotal = (
     ((value as number) / totalResponses) *

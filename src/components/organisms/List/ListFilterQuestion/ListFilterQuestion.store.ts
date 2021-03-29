@@ -21,9 +21,7 @@ const listFilterQuestionModel: ListFilterQuestionModel = {
   removeValue: action((state, value: string) => {
     return {
       ...state,
-      values: [...state.values].filter((element: string) => {
-        return element !== value;
-      })
+      values: [...state.values].filter((element: string) => element !== value)
     };
   }),
 

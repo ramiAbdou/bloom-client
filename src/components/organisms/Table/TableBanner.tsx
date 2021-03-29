@@ -22,19 +22,15 @@ import { getBannerButtonTitle, getBannerMessage } from './Table.util';
 import TablePaginationStore from './TablePagination/TablePagination.store';
 
 const TableBannerButton: React.FC = () => {
-  const title: string = TableStore.useStoreState((state) => {
-    return getBannerButtonTitle(state);
-  });
+  const title: string = TableStore.useStoreState((state) =>
+    getBannerButtonTitle(state)
+  );
 
-  const allRowIds: string[] = TableStore.useStoreState((state) => {
-    return state.filteredRows.map((row: TableRow) => {
-      return row.id;
-    });
-  });
+  const allRowIds: string[] = TableStore.useStoreState((state) =>
+    state.filteredRows.map((row: TableRow) => row.id)
+  );
 
-  const toggleRows = TableStore.useStoreActions((state) => {
-    return state.toggleRows;
-  });
+  const toggleRows = TableStore.useStoreActions((state) => state.toggleRows);
 
   const onClick = () => {
     toggleRows(allRowIds);
@@ -48,38 +44,37 @@ const TableBannerButton: React.FC = () => {
 };
 
 const TableBannerMessage: React.FC = () => {
-  const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.floor;
-  });
+  const floor: number = TablePaginationStore.useStoreState(
+    (state) => state.floor
+  );
 
-  const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.ceiling;
-  });
+  const ceiling: number = TablePaginationStore.useStoreState(
+    (state) => state.ceiling
+  );
 
-  const message: string = TableStore.useStoreState((state) => {
-    return getBannerMessage({ ...state, ceiling, floor });
-  });
+  const message: string = TableStore.useStoreState((state) =>
+    getBannerMessage({ ...state, ceiling, floor })
+  );
 
   return <p>{message}</p>;
 };
 
 const TableBanner: React.FC = () => {
-  const floor: number = TablePaginationStore.useStoreState((state) => {
-    return state.floor;
-  });
+  const floor: number = TablePaginationStore.useStoreState(
+    (state) => state.floor
+  );
 
-  const ceiling: number = TablePaginationStore.useStoreState((state) => {
-    return state.ceiling;
-  });
+  const ceiling: number = TablePaginationStore.useStoreState(
+    (state) => state.ceiling
+  );
 
   const isAllPageSelected: boolean = TableStore.useStoreState(
     ({ filteredRows, selectedRowIds }) => {
-      return (
-        !!selectedRowIds.length &&
-        filteredRows.slice(floor, ceiling).every(({ id: rowId }) => {
-          return selectedRowIds.includes(rowId as string);
-        })
-      );
+      const allRowsOnPageSelected: boolean = filteredRows
+        .slice(floor, ceiling)
+        .every(({ id: rowId }) => selectedRowIds.includes(rowId as string));
+
+      return !!selectedRowIds.length && allRowsOnPageSelected;
     }
   );
 

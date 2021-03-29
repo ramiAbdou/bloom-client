@@ -14,21 +14,13 @@ import EventsHeader from './EventsHeader';
 import useInitUpcomingEvents from './useInitUpcomingEvents';
 
 const EventsUpcomingContent: React.FC = () => {
-  const upcomingEvents: IEvent[] = useStoreState(({ db }) => {
-    return db.community?.events
-      ?.map((eventId: string) => {
-        return db.byEventId[eventId];
-      })
-      ?.filter((event: IEvent) => {
-        return !event.deletedAt;
-      })
-      ?.filter((event: IEvent) => {
-        return day().isBefore(day(event.endTime));
-      })
-      ?.sort((a: IEvent, b: IEvent) => {
-        return sortObjects(a, b, 'startTime', 'ASC');
-      });
-  });
+  const upcomingEvents: IEvent[] = useStoreState(({ db }) =>
+    db.community?.events
+      ?.map((eventId: string) => db.byEventId[eventId])
+      ?.filter((event: IEvent) => !event.deletedAt)
+      ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
+      ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime', 'ASC'))
+  );
 
   return (
     <List

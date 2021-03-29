@@ -6,27 +6,23 @@ import ProfileMembershipCard from './ProfileMembershipCard';
 import ProfilePersonalCard from './ProfilePersonalCard';
 import ProfileSocialCard from './ProfileSocialCard';
 
-const ProfileContent: React.FC = () => {
-  return (
-    <div className="s-profile pt-md--d">
-      <div>
-        <ProfilePersonalCard />
-        <ProfileSocialCard />
-        <ProfileMembershipCard />
-      </div>
-
+const ProfileContent: React.FC = () => (
+  <div className="s-profile pt-md--d">
+    <div>
+      <ProfilePersonalCard />
       <ProfileSocialCard />
+      <ProfileMembershipCard />
     </div>
-  );
-};
 
-const Profile: React.FC = () => {
-  return (
-    <MainContent>
-      <SidebarHamburgerButton className="pt-md" />
-      <ProfileContent />
-    </MainContent>
-  );
-};
+    <ProfileSocialCard />
+  </div>
+);
+
+const Profile: React.FC = () => (
+  <MainContent>
+    <SidebarHamburgerButton className="pt-md" />
+    <ProfileContent />
+  </MainContent>
+);
 
 export default Profile;

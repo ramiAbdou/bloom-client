@@ -16,13 +16,8 @@ interface UpdateRecordingUrlArgs {
 }
 
 const IndividualEventRecordingForm: React.FC = () => {
-  const eventId = useStoreState(({ panel }) => {
-    return panel.metadata;
-  });
-
-  const recordingUrl = useStoreState(({ db }) => {
-    return db.event?.recordingUrl;
-  });
+  const eventId = useStoreState(({ panel }) => panel.metadata);
+  const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
 
   const [updateEvent] = useMutation<IEvent, UpdateRecordingUrlArgs>({
     fields: ['id', 'recordingUrl'],

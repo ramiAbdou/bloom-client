@@ -10,14 +10,12 @@ interface EventsAspectBackgroundProps extends ClassNameProps {
 
 const EventsAspectBackground: React.FC<EventsAspectBackgroundProps> = ({
   imageUrl
-}) => {
-  return (
-    <Aspect className="o-form-item--cover-image-aspect" ratio={2}>
-      {imageUrl && <img alt="Profile Avatar" src={imageUrl} />}
-      {!imageUrl && <div />}
-      {!imageUrl && <Network />}
-    </Aspect>
-  );
-};
+}) => (
+  <Aspect className="o-form-item--cover-image-aspect" ratio={2}>
+    {imageUrl && <img alt="Profile Avatar" src={imageUrl} />}
+    {!imageUrl && <div />}
+    {!imageUrl && <Network />}
+  </Aspect>
+);
 
 export default EventsAspectBackground;

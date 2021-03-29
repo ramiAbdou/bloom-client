@@ -52,7 +52,6 @@ const MainHeaderContent: React.FC<MainHeaderProps> = (props) => {
 
 const MainHeader: React.FC<MainHeaderProps> = (props) => {
   const { className } = props;
-
   const css: string = cx('t-main-header', {}, className);
 
   return (

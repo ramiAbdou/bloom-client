@@ -8,13 +8,11 @@ import { useStoreState } from '@store/Store';
 import useLogout from './useLogout';
 
 const SidebarPanel: React.FC = () => {
-  const urlName: string = useStoreState(({ db }) => {
-    return db.community.urlName;
-  });
+  const urlName: string = useStoreState(({ db }) => db.community.urlName);
 
-  const canCollectDues: boolean = useStoreState(({ db }) => {
-    return db.community?.canCollectDues;
-  });
+  const canCollectDues: boolean = useStoreState(
+    ({ db }) => db.community?.canCollectDues
+  );
 
   const { push } = useHistory();
   const logout = useLogout();
@@ -25,18 +23,14 @@ const SidebarPanel: React.FC = () => {
       ? [
           {
             Icon: IoCard,
-            onClick: () => {
-              return push(`/${urlName}/membership`);
-            },
+            onClick: () => push(`/${urlName}/membership`),
             text: 'Manage Membership'
           }
         ]
       : []),
     {
       Icon: IoPerson,
-      onClick: () => {
-        return push(`/${urlName}/profile`);
-      },
+      onClick: () => push(`/${urlName}/profile`),
       text: 'Your Profile'
     },
     { Icon: IoExit, onClick: logout, text: 'Log Out' }
@@ -44,9 +38,9 @@ const SidebarPanel: React.FC = () => {
 
   return (
     <>
-      {actions.map((action) => {
-        return <PanelOption key={action.text} {...action} />;
-      })}
+      {actions.map((action) => (
+        <PanelOption key={action.text} {...action} />
+      ))}
     </>
   );
 };

@@ -9,22 +9,13 @@ import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';
 
 const SidebarProfileContent: React.FC = () => {
-  const memberTypeName: string = useStoreState(({ db }) => {
-    return db.byMemberPlanId[db.member?.plan]?.name;
-  });
+  const memberTypeName: string = useStoreState(
+    ({ db }) => db.byMemberPlanId[db.member?.plan]?.name
+  );
 
-  const role = useStoreState(({ db }) => {
-    return db.member?.role;
-  });
-
-  const firstName = useStoreState(({ db }) => {
-    return db.member?.firstName;
-  });
-
-  const lastName = useStoreState(({ db }) => {
-    return db.member?.lastName;
-  });
-
+  const role = useStoreState(({ db }) => db.member?.role);
+  const firstName = useStoreState(({ db }) => db.member?.firstName);
+  const lastName = useStoreState(({ db }) => db.member?.lastName);
   const fullName = `${firstName} ${lastName}`;
 
   return (
@@ -40,10 +31,7 @@ const SidebarProfileContent: React.FC = () => {
 };
 
 const SidebarProfileButton: React.FC = () => {
-  const showPanel = useStoreActions(({ panel }) => {
-    return panel.showPanel;
-  });
-
+  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
   const activeRoute: RouteType = useTopLevelRoute();
   const isActive: boolean = ['membership', 'profile'].includes(activeRoute);
 
@@ -69,9 +57,9 @@ const SidebarProfileButton: React.FC = () => {
 };
 
 const SidebarProfile: React.FC = () => {
-  const isDuesMessageShowing: boolean = useStoreState(({ db }) => {
-    return db.community?.canCollectDues && !db.member?.isDuesActive;
-  });
+  const isDuesMessageShowing: boolean = useStoreState(
+    ({ db }) => db.community?.canCollectDues && !db.member?.isDuesActive
+  );
 
   const isTablet: boolean = useBreakpoint() <= 2;
 

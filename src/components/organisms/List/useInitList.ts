@@ -12,22 +12,13 @@ const useInitList = (
   props: Pick<ListProps, 'items' | 'options' | 'prepareForFilter'>
 ): void => {
   const { items, options, prepareForFilter } = props;
+  const storedItems: any[] = ListStore.useStoreState((state) => state.items);
+  const setItems = ListStore.useStoreActions((state) => state.setItems);
+  const setOptions = ListStore.useStoreActions((state) => state.setOptions);
 
-  const storedItems: any[] = ListStore.useStoreState((state) => {
-    return state.items;
-  });
-
-  const setItems = ListStore.useStoreActions((state) => {
-    return state.setItems;
-  });
-
-  const setOptions = ListStore.useStoreActions((state) => {
-    return state.setOptions;
-  });
-
-  const setPrepareForFilter = ListStore.useStoreActions((state) => {
-    return state.setPrepareForFilter;
-  });
+  const setPrepareForFilter = ListStore.useStoreActions(
+    (state) => state.setPrepareForFilter
+  );
 
   useEffect(() => {
     setOptions(options);

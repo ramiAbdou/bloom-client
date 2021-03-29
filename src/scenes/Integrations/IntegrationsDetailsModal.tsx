@@ -7,14 +7,8 @@ import { QuestionType } from '@util/constants';
 import useIntegrationsDetails from './useIntegrationsDetails';
 
 const IntegrationsDetailsModal: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => {
-    return modal.closeModal;
-  });
-
-  const { name, logo } = useStoreState(({ modal }) => {
-    return modal.metadata ?? {};
-  });
-
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const { name, logo } = useStoreState(({ modal }) => modal.metadata ?? {});
   const details = useIntegrationsDetails(name);
 
   return (
@@ -38,12 +32,7 @@ const IntegrationsDetailsModal: React.FC = () => {
         })}
       />
 
-      <Button
-        secondary
-        onClick={() => {
-          return closeModal();
-        }}
-      >
+      <Button secondary onClick={() => closeModal()}>
         Close
       </Button>
     </>

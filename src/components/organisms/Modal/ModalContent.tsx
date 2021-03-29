@@ -18,9 +18,7 @@ import { cx } from '@util/util';
 import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
-  const id: string = useStoreState(({ modal }) => {
-    return modal.id;
-  });
+  const id: string = useStoreState(({ modal }) => modal.id);
 
   if (id === ModalType.ADD_ADMINS) return <AddMemberModal admin />;
   if (id === ModalType.ADD_MEMBERS) return <AddMemberModal />;
@@ -64,23 +62,14 @@ const ModalCustomContent: React.FC = () => {
 };
 
 const ModalContent: React.FC = () => {
-  const className: string = useStoreState(({ modal }) => {
-    return modal.className;
-  });
+  const className: string = useStoreState(({ modal }) => modal.className);
+  const clearOptions = useStoreActions(({ modal }) => modal.clearOptions);
 
-  const clearOptions = useStoreActions(({ modal }) => {
-    return modal.clearOptions;
-  });
+  const confirmation: boolean = useStoreState(
+    ({ modal }) => modal.options?.confirmation
+  );
 
-  const confirmation: boolean = useStoreState(({ modal }) => {
-    return modal.options?.confirmation;
-  });
-
-  useEffect(() => {
-    return () => {
-      return clearOptions();
-    };
-  }, []);
+  useEffect(() => () => clearOptions(), []);
 
   const css: string = cx(
     'c-modal',

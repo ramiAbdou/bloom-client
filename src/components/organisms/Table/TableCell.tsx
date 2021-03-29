@@ -14,11 +14,9 @@ interface TableCellProps extends ValueProps {
 }
 
 const TableCell: React.FC<TableCellProps> = ({ columnId, rowId, value }) => {
-  const columnIndex: number = TableStore.useStoreState(({ columns }) => {
-    return columns.findIndex((column: TableColumn) => {
-      return column.id === columnId;
-    });
-  });
+  const columnIndex: number = TableStore.useStoreState(({ columns }) =>
+    columns.findIndex((column: TableColumn) => column.id === columnId)
+  );
 
   const category: QuestionCategory = TableStore.useStoreState(({ columns }) => {
     const column: TableColumn = columns[columnIndex];

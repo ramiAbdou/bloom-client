@@ -11,9 +11,9 @@ import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
 const useCreatePublicEventAttendee = (): OnFormSubmitFunction => {
-  const setCurrentPage = StoryStore.useStoreActions((state) => {
-    return state.setCurrentPage;
-  });
+  const setCurrentPage = StoryStore.useStoreActions(
+    (state) => state.setCurrentPage
+  );
 
   const [createEventAttendee] = useMutation<IEventGuest, CreateEventGuestArgs>({
     fields: [
@@ -40,7 +40,6 @@ const useCreatePublicEventAttendee = (): OnFormSubmitFunction => {
     setError
   }: OnFormSubmitArgs) => {
     const { id: eventId, videoUrl } = db.event;
-
     const firstName: string = items.FIRST_NAME?.value as string;
     const lastName: string = items.LAST_NAME?.value as string;
     const email: string = items.EMAIL?.value as string;

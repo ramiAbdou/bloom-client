@@ -84,7 +84,7 @@ export const getMemberHistory = ({
     ...joinedAtEvents,
     ...paymentEvents,
     ...watchEvents
-  ].sort((a: MemberHistoryData, b: MemberHistoryData) => {
-    return sortObjects(a, b, 'date');
-  });
+  ].sort((a: MemberHistoryData, b: MemberHistoryData) =>
+    sortObjects(a, b, 'date')
+  );
 };

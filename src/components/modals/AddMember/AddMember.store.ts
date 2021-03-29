@@ -23,9 +23,7 @@ export const addMemberModel: AddMemberModel = {
   deleteRow: action((state, rowId: string) => {
     return {
       ...state,
-      rows: state.rows.filter((id: string) => {
-        return id !== rowId;
-      })
+      rows: state.rows.filter((id: string) => id !== rowId)
     };
   }),
 
@@ -33,9 +31,7 @@ export const addMemberModel: AddMemberModel = {
 };
 
 const AddMemberStore = createContextStore<AddMemberModel>(
-  (runtimeModel) => {
-    return runtimeModel;
-  },
+  (runtimeModel) => runtimeModel,
   { disableImmer: true }
 );
 

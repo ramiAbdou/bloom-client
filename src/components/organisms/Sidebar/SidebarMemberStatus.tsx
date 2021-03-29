@@ -8,13 +8,8 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
 const SidebarPayDuesButton: React.FC = () => {
-  const currentTypeId: string = useStoreState(({ db }) => {
-    return db.member?.plan;
-  });
-
-  const showModal = useStoreActions(({ modal }) => {
-    return modal.showModal;
-  });
+  const currentTypeId: string = useStoreState(({ db }) => db.member?.plan);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({
@@ -34,13 +29,13 @@ const SidebarPayDuesButton: React.FC = () => {
 };
 
 const SidebarMemberStatus: React.FC = () => {
-  const canCollectDues: boolean = useStoreState(({ db }) => {
-    return db.community?.canCollectDues;
-  });
+  const canCollectDues: boolean = useStoreState(
+    ({ db }) => db.community?.canCollectDues
+  );
 
-  const isDuesActive: boolean = useStoreState(({ db }) => {
-    return db.member?.isDuesActive;
-  });
+  const isDuesActive: boolean = useStoreState(
+    ({ db }) => db.member?.isDuesActive
+  );
 
   return (
     <Show show={!!canCollectDues && !isDuesActive}>

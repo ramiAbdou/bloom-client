@@ -11,9 +11,7 @@ import TableFilterStore from './TableFilterPanel.store';
 import { TableFilterArgs } from './TableFilterPanel.types';
 
 const TableFilterPanelRowValueInput: React.FC = () => {
-  const filterId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const filterId: string = IdStore.useStoreState((state) => state.id);
 
   const columnId: string = TableFilterStore.useStoreState((state) => {
     const tableFilter: TableFilterArgs = state.filters[filterId];
@@ -37,9 +35,7 @@ const TableFilterPanelRowValueInput: React.FC = () => {
 
   const setFilter: ActionCreator<
     Partial<TableFilterArgs>
-  > = TableFilterStore.useStoreActions((state) => {
-    return state.setFilter;
-  });
+  > = TableFilterStore.useStoreActions((state) => state.setFilter);
 
   const onInputChange = (value: string): void => {
     setFilter({ id: filterId, value });
@@ -52,9 +48,9 @@ const TableFilterPanelRowValueInput: React.FC = () => {
     return (
       <Dropdown
         options={{ attribute: false }}
-        value={questionOptions?.find((option: string) => {
-          return option === storedValue;
-        })}
+        value={questionOptions?.find(
+          (option: string) => option === storedValue
+        )}
         values={questionOptions}
         onSelect={onInputChange}
       />

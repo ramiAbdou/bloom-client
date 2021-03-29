@@ -7,9 +7,7 @@ import TableColumnPanel from '../Table/TableColumnPanel';
 import TableFilterPanel from '../Table/TableFilterPanel/TableFilterPanel';
 
 const PanelLocalContent: React.FC = () => {
-  const panelId: PanelType = useStoreState(({ panel }) => {
-    return panel.id;
-  });
+  const panelId: PanelType = useStoreState(({ panel }) => panel.id);
 
   if (panelId === PanelType.FILTER_LIST) return <ListFilter />;
   if (panelId === PanelType.FILTER_TABLE) return <TableFilterPanel />;

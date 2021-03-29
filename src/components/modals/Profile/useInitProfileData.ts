@@ -6,9 +6,7 @@ import IdStore from '@store/Id.store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitProfileData = (): Partial<QueryResult> => {
-  const memberId: string = IdStore.useStoreState((state) => {
-    return state.id;
-  });
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const { loading } = useQuery<IMemberValue[]>({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],

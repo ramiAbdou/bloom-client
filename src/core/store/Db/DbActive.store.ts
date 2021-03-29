@@ -34,19 +34,14 @@ const dbActiveStore: Pick<
     const { activeId, byId } = entities.communities;
     const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
     const { byId: byMemberPlanId } = entities.memberPlans;
-
     const result: ICommunity = byId[activeId];
 
     const communityIntegrations: ICommunityIntegrations =
       byCommunityIntegrationsId[result?.communityIntegrations];
 
     const hasPaidMembership: boolean = result?.plans
-      ?.map((planId: string) => {
-        return byMemberPlanId[planId];
-      })
-      ?.some((plan: IMemberPlan) => {
-        return !plan?.isFree;
-      });
+      ?.map((planId: string) => byMemberPlanId[planId])
+      ?.some((plan: IMemberPlan) => !plan?.isFree);
 
     if (!result) return null;
 

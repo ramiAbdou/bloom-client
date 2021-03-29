@@ -11,24 +11,22 @@ import PaymentFinishPage from './PaymentFinishPage';
 import PaymentStripeProvider from './PaymentStripeProvider';
 import useInitPayment from './useInitPayment';
 
-const PaymentModalStory: React.FC = () => {
-  return (
-    <Story>
-      <PaymentCardPage />
-      <PaymentFinishPage />
-      <PaymentConfirmationPage />
-    </Story>
-  );
-};
+const PaymentModalStory: React.FC = () => (
+  <Story>
+    <PaymentCardPage />
+    <PaymentFinishPage />
+    <PaymentConfirmationPage />
+  </Story>
+);
 
 const PaymentModal: React.FC = () => {
-  const modalType: PaymentModalType = useStoreState(({ modal }) => {
-    return modal.metadata?.type;
-  });
+  const modalType: PaymentModalType = useStoreState(
+    ({ modal }) => modal.metadata?.type
+  );
 
-  const selectedPlanId: string = useStoreState(({ modal }) => {
-    return modal.metadata?.selectedPlanId;
-  });
+  const selectedPlanId: string = useStoreState(
+    ({ modal }) => modal.metadata?.selectedPlanId
+  );
 
   const { loading }: Partial<QueryResult> = useInitPayment();
 

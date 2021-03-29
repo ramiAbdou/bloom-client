@@ -4,13 +4,8 @@ import Button from '@atoms/Button/Button';
 import { useStoreActions } from '@store/Store';
 
 const PanelCloseButton: React.FC = () => {
-  const closePanel = useStoreActions(({ panel }) => {
-    return panel.closePanel;
-  });
-
-  const onClick = () => {
-    return closePanel();
-  };
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
+  const onClick = () => closePanel();
 
   return (
     <Button secondary onClick={onClick}>

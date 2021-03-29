@@ -9,9 +9,7 @@ import { PanelAction } from './Panel.types';
  * to use this component.
  */
 const PanelOption: React.FC<PanelAction> = ({ Icon, onClick, text }) => {
-  const closePanel = useStoreActions(({ panel }) => {
-    return panel.closePanel;
-  });
+  const closePanel = useStoreActions(({ panel }) => panel.closePanel);
 
   // After the passed-in onClick is executed, close the panel. This component
   // should not be used as a Flow. It is meant to be a one-time action panel.

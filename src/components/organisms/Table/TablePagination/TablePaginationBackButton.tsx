@@ -6,14 +6,12 @@ import Button from '@atoms/Button/Button';
 import TablePaginationStore from './TablePagination.store';
 
 const TablePaginationBackButton: React.FC = () => {
-  const page: number = TablePaginationStore.useStoreState((state) => {
-    return state.page;
-  });
+  const page: number = TablePaginationStore.useStoreState(
+    (state) => state.page
+  );
 
   const setPage: ActionCreator<number> = TablePaginationStore.useStoreActions(
-    (state) => {
-      return state.setPage;
-    }
+    (state) => state.setPage
   );
 
   const onClick = (): void => {

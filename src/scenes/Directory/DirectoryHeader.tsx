@@ -5,9 +5,9 @@ import ListStore from '@organisms/List/List.store';
 import { LoadingProps } from '@util/constants';
 
 const DirectoryHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const membersCount: number = ListStore.useStoreState((state) => {
-    return state.filteredItems?.length;
-  });
+  const membersCount: number = ListStore.useStoreState(
+    (state) => state.filteredItems?.length
+  );
 
   return (
     <MainHeader

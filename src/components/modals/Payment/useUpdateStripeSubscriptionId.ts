@@ -11,13 +11,13 @@ import PaymentStore from './Payment.store';
 import { CreateSubscriptionArgs } from './Payment.types';
 
 const useUpdateStripeSubscriptionId = (): OnFormSubmitFunction => {
-  const memberPlanId: string = PaymentStore.useStoreState((state) => {
-    return state.selectedPlanId;
-  });
+  const memberPlanId: string = PaymentStore.useStoreState(
+    (state) => state.selectedPlanId
+  );
 
-  const prorationDate: number = PaymentStore.useStoreState((state) => {
-    return state.changeProrationDate;
-  });
+  const prorationDate: number = PaymentStore.useStoreState(
+    (state) => state.changeProrationDate
+  );
 
   const pushToMembership: VoidFunction = usePush('membership');
 

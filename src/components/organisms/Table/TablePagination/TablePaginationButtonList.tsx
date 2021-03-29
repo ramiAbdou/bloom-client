@@ -11,9 +11,9 @@ import TablePaginationNextButton from './TablePaginationNextButton';
 import TablePaginationNumberButton from './TablePaginationNumberButton';
 
 const TablePaginationNumberButtonList: React.FC = () => {
-  const page: number = TablePaginationStore.useStoreState((state) => {
-    return state.page;
-  });
+  const page: number = TablePaginationStore.useStoreState(
+    (state) => state.page
+  );
 
   const paginationValues: TablePaginationValue[] = TableStore.useStoreState(
     (state) => {
@@ -24,19 +24,17 @@ const TablePaginationNumberButtonList: React.FC = () => {
 
   return (
     <>
-      {paginationValues.map((paginationValue: TablePaginationValue) => {
-        return (
-          <TablePaginationNumberButton key={nanoid()} value={paginationValue} />
-        );
-      })}
+      {paginationValues.map((paginationValue: TablePaginationValue) => (
+        <TablePaginationNumberButton key={nanoid()} value={paginationValue} />
+      ))}
     </>
   );
 };
 
 const TablePaginationButtonList: React.FC = () => {
-  const rowsCount: number = TableStore.useStoreState((state) => {
-    return state.filteredRows?.length;
-  });
+  const rowsCount: number = TableStore.useStoreState(
+    (state) => state.filteredRows?.length
+  );
 
   return (
     <Row show={rowsCount >= 25}>

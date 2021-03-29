@@ -19,9 +19,7 @@ export const paymentModel: PaymentModel = {
 };
 
 const PaymentStore = createContextStore<PaymentModel>(
-  (runtimeModel: PaymentModel) => {
-    return runtimeModel;
-  },
+  (runtimeModel: PaymentModel) => runtimeModel,
   { disableImmer: true }
 );
 

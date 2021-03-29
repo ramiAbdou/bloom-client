@@ -14,9 +14,7 @@ import SidebarProfileSection from './SidebarProfileSection';
 import SidebarQuickActionsSection from './SidebarQuickActionsSection';
 
 const SidebarCommunityName: React.FC = () => {
-  const name: string = useStoreState(({ db }) => {
-    return db.community?.name;
-  });
+  const name: string = useStoreState(({ db }) => db.community?.name);
 
   return (
     <>
@@ -26,25 +24,20 @@ const SidebarCommunityName: React.FC = () => {
   );
 };
 
-const SidebarContent: React.FC = () => {
-  return (
-    <div className="f f-col o-scroll w-100">
-      <SidebarCommunityName />
-      <SidebarMainSection />
-      <SidebarAdminSection />
-      <SidebarQuickActionsSection />
-      <SidebarProfileSection />
-      <SidebarDuesContent />
-      <SidebarProfile />
-    </div>
-  );
-};
+const SidebarContent: React.FC = () => (
+  <div className="f f-col o-scroll w-100">
+    <SidebarCommunityName />
+    <SidebarMainSection />
+    <SidebarAdminSection />
+    <SidebarQuickActionsSection />
+    <SidebarProfileSection />
+    <SidebarDuesContent />
+    <SidebarProfile />
+  </div>
+);
 
 const Sidebar: React.FC = () => {
-  const isOpen: boolean = useStoreState(({ sidebar }) => {
-    return sidebar.isOpen;
-  });
-
+  const isOpen: boolean = useStoreState(({ sidebar }) => sidebar.isOpen);
   const isDesktop: boolean = useBreakpoint() >= 3;
 
   return (

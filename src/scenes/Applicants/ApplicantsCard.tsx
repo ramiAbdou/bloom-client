@@ -18,9 +18,7 @@ import ApplicantsCardHeader from './ApplicantsCardHeader';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsCardActions: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => {
-    return id;
-  });
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   return (
     <Row equal className="mt-auto" spacing="xs">
@@ -38,31 +36,23 @@ const ApplicantsCardActions: React.FC = () => {
 };
 
 const ApplicantsCardItems: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => {
-    return id;
-  });
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
 
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
-    const data: IMemberValue[] = member.values?.map((valueId: string) => {
-      return db.byValuesId[valueId];
-    });
+    const data: IMemberValue[] = member.values?.map(
+      (valueId: string) => db.byValuesId[valueId]
+    );
 
     return db.community.questions
-      ?.map((questionId: string) => {
-        return db.byQuestionId[questionId];
-      })
-      ?.filter((question: IQuestion) => {
-        return !question?.category;
-      })
-      ?.sort((a, b) => {
-        return sortObjects(a, b, 'rank', 'ASC');
-      })
+      ?.map((questionId: string) => db.byQuestionId[questionId])
+      ?.filter((question: IQuestion) => !question?.category)
+      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.map((question: IQuestion) => {
-        const element: IMemberValue = data?.find((entity: IMemberValue) => {
-          return entity.question === question.id;
-        });
+        const element: IMemberValue = data?.find(
+          (entity: IMemberValue) => entity.question === question.id
+        );
 
         return {
           title: question?.title,
