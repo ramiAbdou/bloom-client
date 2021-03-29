@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
+import { QueryResult } from '@hooks/useQuery.types';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import EventsAspectBackground from '../EventsAspectBackground';
@@ -11,9 +12,10 @@ import IndividualEventInsights from './IndividualEventInsights';
 import IndividualEventMain from './IndividualEventMain';
 import IndividualEventTable from './IndividualEventTable';
 import useInitIndividualEvent from './useInitIndividualEvent';
+import useInitMembersOnlyIndividualEvent from './useInitMembersOnlyIndividualEvent';
 
 const IndividualEventHeader: React.FC = () => {
-  const imageUrl = useStoreState(({ db }) => db.event?.imageUrl);
+  const imageUrl: string = useStoreState(({ db }) => db.event.imageUrl);
 
   return (
     <div className="cg-md d-grid p-md s-events-individual-header">
@@ -25,9 +27,14 @@ const IndividualEventHeader: React.FC = () => {
 
 const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
-  const isMember = useStoreState(({ db }) => db.isMember);
-  const isEventActive = useStoreState(({ db }) => db.event?.id === eventId);
-  const { loading } = useInitIndividualEvent();
+  const isMember: boolean = useStoreState(({ db }) => db.isMember);
+
+  const isEventActive: boolean = useStoreState(
+    ({ db }) => db.event?.id === eventId
+  );
+
+  const { loading }: Partial<QueryResult> = useInitIndividualEvent();
+  useInitMembersOnlyIndividualEvent();
 
   if (loading || !isEventActive) return null;
 

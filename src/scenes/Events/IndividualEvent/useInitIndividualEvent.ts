@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie';
+import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -6,27 +6,31 @@ import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
-import { EventPrivacy, ICommunity, IEvent } from '@store/Db/entities';
+import { SetActiveArgs } from '@store/Db/Db.types';
+import { ICommunity, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
-import { ErrorContext } from '@util/constants.errors';
 import { QueryEvent } from '@util/constants.events';
 import { GetEventArgs } from '../Events.types';
+
+interface GetEventResult {
+  id: string;
+  community: { id: string };
+}
 
 const useInitIndividualEvent = (): Partial<QueryResult> => {
   const { eventId } = useParams() as { eventId: string };
   const communityId: string = useStoreState(({ db }) => db.community?.id);
   const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
-  const isMembersOnly: boolean = useStoreState(
-    ({ db }) => db.event?.privacy === EventPrivacy.MEMBERS_ONLY
-  );
+  const setActiveEntities: ActionCreator<
+    SetActiveArgs | SetActiveArgs[]
+  > = useStoreActions(({ db }) => db.setActiveEntities);
 
-  const setActive = useStoreActions(({ db }) => db.setActive);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
-  const { data: data1, loading: loading1 } = useQuery<any, GetEventArgs>({
+  const { data: data1, loading: loading1 } = useQuery<
+    GetEventResult,
+    GetEventArgs
+  >({
     fields: [
       'description',
       'endTime',
@@ -47,7 +51,7 @@ const useInitIndividualEvent = (): Partial<QueryResult> => {
     variables: { eventId }
   });
 
-  const { loading: loading2 } = useQuery<IEvent, GetEventArgs>({
+  const { loading: loading2 } = useQuery<IEventGuest[], GetEventArgs>({
     fields: [
       'createdAt',
       'id',
@@ -68,28 +72,14 @@ const useInitIndividualEvent = (): Partial<QueryResult> => {
     types: { communityId: { required: false } }
   });
 
-  const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);
-
   useEffect(() => {
     if (data1) {
-      setActive([
+      setActiveEntities([
         { id: data1.id, table: 'events' },
         { id: data1.community.id, table: 'communities' }
       ]);
     }
   }, [data1]);
-
-  // If not a member of the community, and it's a member's only
-  // event or there was an issue logging in, show a locked modal.
-  useEffect(() => {
-    if (!isMember && (isMembersOnly || hasCookieError)) {
-      showModal({
-        id: ModalType.CHECK_IN,
-        metadata: eventId,
-        options: { lock: isMembersOnly }
-      });
-    }
-  }, [hasCookieError, isMember, isMembersOnly]);
 
   // If not a member of the community, then we need to load the
   // community's name and primary color as well.

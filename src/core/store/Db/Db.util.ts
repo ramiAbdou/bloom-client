@@ -30,7 +30,7 @@ export const mergeEntities: Action<DbModel, MergeEntitiesArgs> = action(
 /**
  * Updates the activeId of a series of tables or just one table.
  */
-export const setActive: Action<
+export const setActiveEntities: Action<
   DbModel,
   SetActiveArgs | SetActiveArgs[]
 > = action((state, args: SetActiveArgs | SetActiveArgs[]) => {

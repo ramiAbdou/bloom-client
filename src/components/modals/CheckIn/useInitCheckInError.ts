@@ -34,7 +34,7 @@ const useInitCheckInError = (): Partial<QueryResult> => {
     types: { communityId: { required: true } }
   });
 
-  const hasCookieError = !!Cookies.get(ErrorContext.LOGIN_ERROR);
+  const hasCookieError: boolean = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 
   useEffect(() => {
     (async () => {

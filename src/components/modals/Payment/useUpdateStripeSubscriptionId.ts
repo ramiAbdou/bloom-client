@@ -1,16 +1,20 @@
+import { useHistory } from 'react-router-dom';
+
 import useMutation from '@hooks/useMutation';
-import usePush from '@hooks/usePush';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 import PaymentStore from './Payment.store';
 import { CreateSubscriptionArgs } from './Payment.types';
 
 const useUpdateStripeSubscriptionId = (): OnFormSubmitFunction => {
+  const urlName: string = useStoreState(({ db }) => db.community?.urlName);
+
   const memberPlanId: string = PaymentStore.useStoreState(
     (state) => state.selectedPlanId
   );
@@ -19,7 +23,7 @@ const useUpdateStripeSubscriptionId = (): OnFormSubmitFunction => {
     (state) => state.changeProrationDate
   );
 
-  const pushToMembership: VoidFunction = usePush('membership');
+  const { push } = useHistory();
 
   const [updateStripeSubscriptionId] = useMutation<
     IMemberIntegrations,
@@ -56,7 +60,7 @@ const useUpdateStripeSubscriptionId = (): OnFormSubmitFunction => {
     // bit of time to capture the Stripe webhook and create the payment so
     // we can display it in the MembershipPaymentTable.
     setTimeout(() => {
-      pushToMembership();
+      push(`/${urlName}/membership`);
     }, 2500);
   };
 
