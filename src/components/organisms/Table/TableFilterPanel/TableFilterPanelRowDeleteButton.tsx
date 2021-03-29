@@ -6,7 +6,7 @@ import IdStore from '@store/Id.store';
 import TableFilterStore from './TableFilterPanel.store';
 
 const TableFilterPanelRowDeleteButton: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => {
+  const filterId: string = IdStore.useStoreState((state) => {
     return state.id;
   });
 
@@ -18,8 +18,8 @@ const TableFilterPanelRowDeleteButton: React.FC = () => {
     return state.removeFilter;
   });
 
-  const onClick = () => {
-    return removeFilter(id);
+  const onClick = (): void => {
+    removeFilter(filterId);
   };
 
   return (

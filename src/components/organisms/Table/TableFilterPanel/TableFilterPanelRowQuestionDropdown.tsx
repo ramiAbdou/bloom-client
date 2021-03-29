@@ -7,15 +7,19 @@ import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 import TableFilterStore from './TableFilterPanel.store';
-import { TableFilterOperatorType } from './TableFilterPanel.types';
+import {
+  TableFilterArgs,
+  TableFilterOperatorType
+} from './TableFilterPanel.types';
 
 const TableFilterPanelRowQuestionDropdown: React.FC = () => {
-  const id: string = IdStore.useStoreState((state) => {
+  const filterId: string = IdStore.useStoreState((state) => {
     return state.id;
   });
 
   const columnId: string = TableFilterStore.useStoreState((state) => {
-    return state.filters[id]?.columnId;
+    const tableFilter: TableFilterArgs = state.filters[filterId];
+    return tableFilter?.columnId;
   });
 
   const [questionId, setQuestionId] = useState<string>(columnId);
@@ -43,7 +47,7 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
       ?.map((entityId: string) => {
         return db.byQuestionId[entityId];
       })
-      ?.sort((a, b) => {
+      ?.sort((a: IQuestion, b: IQuestion) => {
         return sortObjects(a, b, 'rank', 'ASC');
       })
       ?.filter((question: IQuestion) => {
@@ -63,7 +67,7 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
   useEffect(() => {
     if (!questionId && defaultQuestionId) {
       setQuestionId(defaultQuestionId);
-      setFilter({ columnId: defaultQuestionId, id });
+      setFilter({ columnId: defaultQuestionId, id: filterId });
     } else if (columnId !== questionId) setQuestionId(columnId);
   }, [columnId, defaultQuestionId]);
 
@@ -74,7 +78,7 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
 
     setFilter({
       columnId: updatedColumnId,
-      id,
+      id: filterId,
       operator: TableFilterOperatorType.IS,
       value: null
     });
@@ -86,7 +90,7 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
     <Dropdown
       options={{ attribute: false }}
       value={
-        questions?.find((question) => {
+        questions?.find((question: IQuestion) => {
           return question.id === questionId;
         })?.title
       }
