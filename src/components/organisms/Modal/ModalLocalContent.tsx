@@ -9,11 +9,19 @@ import { cx } from '@util/util';
 import ModalContainer from './ModalContainer';
 
 const ModalLocalCustomContent: React.FC = () => {
-  const id: string = useStoreState(({ modal }) => modal.id);
+  const modalId: string = useStoreState(({ modal }) => modal.id);
 
-  if (id === ModalType.DELETE_MEMBERS) return <MemberDatabaseDeleteForm />;
-  if (id === ModalType.DEMOTE_MEMBERS) return <AdminDatabaseDemoteForm />;
-  if (id === ModalType.PROMOTE_MEMBERS) return <MemberDatabasePromoteForm />;
+  if (modalId === ModalType.DELETE_MEMBERS) {
+    return <MemberDatabaseDeleteForm />;
+  }
+
+  if (modalId === ModalType.DEMOTE_MEMBERS) {
+    return <AdminDatabaseDemoteForm />;
+  }
+
+  if (modalId === ModalType.PROMOTE_MEMBERS) {
+    return <MemberDatabasePromoteForm />;
+  }
 
   return null;
 };

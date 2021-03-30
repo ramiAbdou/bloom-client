@@ -39,17 +39,17 @@ const ApplicantsModalItems: React.FC = () => {
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.filter(
         (question: IQuestion) =>
-          !question?.category || question?.category === QuestionCategory.EMAIL
+          !question.category || question.category === QuestionCategory.EMAIL
       )
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
       ?.map((question: IQuestion) => {
         const element: IMemberValue = data?.find(
           (entity: IMemberValue) => entity.question === question.id
         );
 
         return {
-          title: question?.title,
-          type: question?.type,
+          title: question.title,
+          type: question.type,
           value:
             question.category === QuestionCategory.EMAIL
               ? member.email
