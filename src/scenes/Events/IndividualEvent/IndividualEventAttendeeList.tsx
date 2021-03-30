@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
@@ -10,6 +9,7 @@ import { IEventAttendee, IMember, ISupporter } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { sortObjects } from '@util/util';
+import { EventTiming, getEventTiming } from '../Events.util';
 
 interface IndividualEventAttendeeProps {
   attendeeId?: string;
@@ -29,8 +29,8 @@ const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
     const guest: IEventAttendee = db.byAttendeeId[attendeeId];
     const member: IMember = db.byMemberId[guest?.member];
     const supporter: ISupporter = db.bySupporterId[guest?.supporter];
-    const firstName = member?.firstName ?? supporter?.firstName;
-    const lastName = member?.lastName ?? supporter?.lastName;
+    const firstName: string = member?.firstName ?? supporter?.firstName;
+    const lastName: string = member?.lastName ?? supporter?.lastName;
     return `${firstName} ${lastName}`;
   });
 
@@ -76,14 +76,21 @@ const IndividualEventAttendeeListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const numAttendees = useStoreState(({ db }) => db.event?.attendees?.length);
+  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
+  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+
+  const numAttendees: number = useStoreState(
+    ({ db }) => db.event?.attendees?.length
+  );
+
+  const hasEventFinished: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
   return (
     <Card
       className="s-events-individual-card"
       headerTag={numAttendees ? `${numAttendees} Attended` : null}
-      show={day().isAfter(day(endTime))}
+      show={hasEventFinished}
       title="Attendees"
     >
       <ListStore.Provider>

@@ -10,6 +10,7 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import {
   IEvent,
   IEventAttendee,
@@ -25,7 +26,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) => {
     const pastEvents: IEvent[] = db.community.events
       ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => day().isAfter(event.endTime));
+      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST);
 
     const pastAttendees: IEventAttendee[] = pastEvents
       ?.reduce(

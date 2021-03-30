@@ -1,44 +1,59 @@
-import day from 'dayjs';
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
+import { ModalData } from '@organisms/Modal/Modal.types';
 import { IEvent } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
+import { EventTiming, getEventTiming } from './Events.util';
 import useCreateEventAttendee from './useCreateEventAttendee';
 
-interface EventJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
+interface EventsJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
 }
 
-const EventJoinButton: React.FC<EventJoinButtonProps> = ({
+const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
   eventId,
   large
 }) => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const endTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.endTime;
+  });
 
-  const { endTime, startTime, videoUrl }: IEvent = useStoreState(
-    ({ db }) => db.byEventId[eventId]
+  const startTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.startTime;
+  });
+
+  const videoUrl: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.videoUrl;
+  });
+
+  const showModal: ActionCreator<ModalData> = useStoreActions(
+    ({ modal }) => modal.showModal
   );
 
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
-  const isHappeningNow =
-    day().isAfter(day(startTime)) && day().isBefore(day(endTime));
+  const isHappeningNowOrStartingSoon: boolean = [
+    EventTiming.HAPPENING_NOW,
+    EventTiming.STARTING_SOON
+  ].includes(getEventTiming({ endTime, startTime }));
 
   const createEventAttendee = useCreateEventAttendee();
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    // Stop propagation so that we don't open the event page (default for
+    // clicking the background of an EventsCard).
     e.stopPropagation();
 
-    if (!isMember) {
-      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
-      return;
-    }
-
-    await createEventAttendee({ eventId });
+    if (isMember) await createEventAttendee({ eventId });
+    else showModal({ id: ModalType.CHECK_IN, metadata: eventId });
   };
 
   return (
@@ -47,7 +62,7 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
       primary
       href={isMember ? videoUrl : null}
       large={large}
-      show={isHappeningNow}
+      show={isHappeningNowOrStartingSoon}
       onClick={onClick}
     >
       Join
@@ -55,4 +70,4 @@ const EventJoinButton: React.FC<EventJoinButtonProps> = ({
   );
 };
 
-export default EventJoinButton;
+export default EventsJoinButton;

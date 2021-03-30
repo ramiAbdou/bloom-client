@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import useManualQuery from '@hooks/useManualQuery';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import useLoader from '@organisms/Loader/useLoader';
 import { SetActiveArgs } from '@store/Db/Db.types';
 import { ICommunity, IEventGuest } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -88,8 +87,6 @@ const useInitIndividualEvent = (): Partial<QueryResult> => {
       if (communityId && !isMember) await getCommunity({ communityId });
     })();
   }, [communityId, isMember]);
-
-  useLoader(loading1 || loading2 || loading3);
 
   return { loading: loading1 || loading2 || loading3 };
 };

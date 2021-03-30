@@ -6,6 +6,7 @@ import Row from '@containers/Row/Row';
 import { IEventGuest } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, PanelType } from '@util/constants';
+import { EventTiming, getEventTiming } from '../Events.util';
 import EventsJoinButton from '../EventsJoinButton';
 import EventsRsvpButton from '../EventsRsvpButton';
 import EventsShareButton from '../EventsShareButton';
@@ -39,12 +40,13 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
 };
 
 const EventsEditEventButton: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
-  const eventId = useStoreState(({ db }) => db.event?.id);
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
+  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
 
-  const hasPast = useStoreState(({ db }) =>
-    day().isAfter(day(db.event.endTime))
-  );
+  const isPast: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -53,7 +55,7 @@ const EventsEditEventButton: React.FC = () => {
   };
 
   return (
-    <Button fill large secondary show={!hasPast && isAdmin} onClick={onClick}>
+    <Button fill large secondary show={!isPast && isAdmin} onClick={onClick}>
       Edit Event
     </Button>
   );
@@ -68,13 +70,14 @@ const EventsEditEventButton: React.FC = () => {
  * - View Event Recording (Past Event)
  */
 const IndividualEventActions: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
-  const eventId = useStoreState(({ db }) => db.event?.id);
-  const guests = useStoreState(({ db }) => db.event?.guests);
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
+  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+  const guests: string[] = useStoreState(({ db }) => db.event?.guests);
 
-  const hasPast: boolean = useStoreState(({ db }) =>
-    day().isAfter(day(db.event.endTime))
-  );
+  const isPast: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
   const isUpcoming: boolean = useStoreState(({ db }) =>
     day().isBefore(day(db.event.startTime))
@@ -93,7 +96,7 @@ const IndividualEventActions: React.FC = () => {
       <EventsEditEventButton />
       <EventsShareButton large eventId={eventId} />
       <EventsViewRecordingButton large eventId={eventId} />
-      <EventsAddRecordingButton show={hasPast && isAdmin} />
+      <EventsAddRecordingButton show={isPast && isAdmin} />
     </Row>
   );
 };

@@ -6,16 +6,24 @@ import GrayCard from '@containers/Card/GrayCard';
 import MainSection from '@containers/Main/MainSection';
 import Row from '@containers/Row/Row';
 import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
-  const startTime = useStoreState(({ db }) => db.event.startTime);
-  const numAttendees = useStoreState(({ db }) => db.event.attendees?.length);
+  const endTime: string = useStoreState(({ db }) => db.event.startTime);
+  const startTime: string = useStoreState(({ db }) => db.event.startTime);
+
+  const numAttendees: number = useStoreState(
+    ({ db }) => db.event.attendees?.length
+  );
+
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
 
   return (
     <GrayCard
       label="# of Attendees"
-      show={!!day().isAfter(day(startTime))}
+      show={!isUpcoming}
       value={numAttendees ?? 0}
     />
   );

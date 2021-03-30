@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
@@ -10,6 +9,7 @@ import { IEventGuest, IMember, ISupporter } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { cx, sortObjects } from '@util/util';
+import { EventTiming, getEventTiming } from '../Events.util';
 
 interface IndividualEventGuestProps {
   guestId?: string;
@@ -27,8 +27,8 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
     const guest: IEventGuest = db.byGuestId[guestId];
     const member: IMember = db.byMemberId[guest?.member];
     const supporter: ISupporter = db.bySupporterId[guest?.supporter];
-    const firstName = member?.firstName ?? supporter?.firstName;
-    const lastName = member?.lastName ?? supporter?.lastName;
+    const firstName: string = member?.firstName ?? supporter?.firstName;
+    const lastName: string = member?.lastName ?? supporter?.lastName;
     return `${firstName} ${lastName}`;
   });
 
@@ -57,7 +57,7 @@ const IndividualEventGuestListContent: React.FC = () => {
   const guests: IndividualEventGuestProps[] = useStoreState(({ db }) =>
     db.event?.guests
       ?.map((guestId: string) => db.byGuestId[guestId])
-      ?.sort((a: IEventGuest, b) => sortObjects(a, b, 'createdAt'))
+      ?.sort((a: IEventGuest, b: IEventGuest) => sortObjects(a, b, 'createdAt'))
       ?.reduce((acc, guest: IEventGuest) => [...acc, { guestId: guest.id }], [])
   );
 
@@ -75,14 +75,18 @@ const IndividualEventGuestListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const numGuests = useStoreState(({ db }) => db.event?.guests?.length);
+  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
+  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+  const numGuests: number = useStoreState(({ db }) => db.event?.guests?.length);
+
+  const hasEventFinished: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
   return (
     <Card
       className="s-events-individual-card"
       headerTag={numGuests ? `${numGuests} Going` : null}
-      show={day().isBefore(day(endTime))}
+      show={!hasEventFinished}
       title="Guest List"
     >
       <ListStore.Provider>

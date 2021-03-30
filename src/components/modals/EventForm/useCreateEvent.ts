@@ -17,7 +17,6 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     fields: [
       'description',
       'endTime',
-      'eventUrl',
       'id',
       'imageUrl',
       'privacy',

@@ -1,5 +1,4 @@
 import day from 'dayjs';
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -8,7 +7,8 @@ import { IEvent } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { IdProps } from '@util/constants';
-import { cx } from '@util/util';
+import { cx, take } from '@util/util';
+import { EventTiming, getEventTiming } from '../Events.util';
 import EventsAspectBackground from '../EventsAspectBackground';
 import EventsJoinButton from '../EventsJoinButton';
 import EventsRsvpButton from '../EventsRsvpButton';
@@ -17,7 +17,7 @@ import EventsViewRecordingButton from '../EventsViewRecordingButton';
 import EventsCardPeople from './EventsCardPeople';
 
 const EventsCardButton: React.FC = () => {
-  const eventId = IdStore.useStoreState((event) => event.id);
+  const eventId: string = IdStore.useStoreState((event) => event.id);
 
   return (
     <>
@@ -30,22 +30,37 @@ const EventsCardButton: React.FC = () => {
 };
 
 const EventsCardContent: React.FC = () => {
-  const eventId = IdStore.useStoreState((event) => event.id);
+  const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const { endTime, startTime, title }: IEvent = useStoreState(
-    ({ db }) => db.byEventId[eventId],
-    deepequal
-  );
+  const endTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.endTime;
+  });
 
-  const isHappeningNow =
-    day().isAfter(day(startTime)) && day().isBefore(day(endTime));
+  const startTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.startTime;
+  });
 
-  const formattedStartTime = isHappeningNow
-    ? 'Happening Now'
-    : day(startTime).format('ddd, MMM D @ hA z');
+  const title: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.title;
+  });
+
+  const isHappeningNow: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.HAPPENING_NOW;
+
+  const isStartingSoon: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.STARTING_SOON;
+
+  const formattedStartTime: string = take([
+    [isHappeningNow, 'Happening Now'],
+    [isStartingSoon, `Starting Soon @ ${day(startTime).format('h:mm A z')}`],
+    [true, day(startTime).format('ddd, MMM D @ h:mm A z')]
+  ]);
 
   const css: string = cx('s-events-card-content', {
-    's-events-card-content--now': isHappeningNow
+    's-events-card-content--now': isHappeningNow || isStartingSoon
   });
 
   return (

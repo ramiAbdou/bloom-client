@@ -1,10 +1,10 @@
-import day from 'dayjs';
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainSection from '@containers/Main/MainSection';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
@@ -15,7 +15,7 @@ const EventsPastYourList: React.FC = () => {
     db.member.attendees
       ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
       ?.map((attendee: IEventAttendee) => db.byEventId[attendee.event])
-      ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)))
+      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
   );
 
   return (
@@ -34,7 +34,8 @@ const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
       !!db.member.attendees
         ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
         ?.map((attendee: IEventAttendee) => db.byEventId[attendee.event])
-        ?.filter((event: IEvent) => day().isAfter(day(event?.endTime)))?.length
+        ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
+        ?.length
   );
 
   return (

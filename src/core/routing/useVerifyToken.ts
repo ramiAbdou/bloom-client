@@ -72,6 +72,7 @@ const useVerifyToken = (): boolean => {
         const videoUrl: string = (await getEvent({ eventId: data?.eventId }))
           .data?.videoUrl;
 
+        // Only open the videoUrl if it's present though!
         if (videoUrl) openHref(videoUrl, false);
       }
 

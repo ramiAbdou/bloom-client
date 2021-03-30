@@ -4,6 +4,7 @@ import { State } from 'easy-peasy';
 import React from 'react';
 
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { DbModel } from '@store/Db/Db.types';
 import {
   IEventAttendee,
@@ -145,10 +146,14 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
 export const getIndividualEventTableColumns = (
   db: State<DbModel>
 ): TableColumn[] => {
-  const recordingUrl = db.event?.recordingUrl;
-  const startTime = db.event?.startTime;
+  const endTime: string = db.event?.endTime;
+  const recordingUrl: string = db.event?.recordingUrl;
+  const startTime: string = db.event?.startTime;
 
-  const joinedAtColumn: TableColumn[] = day().isAfter(day(startTime))
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+
+  const joinedAtColumn: TableColumn[] = !isUpcoming
     ? [
         {
           id: 'joinedAt',

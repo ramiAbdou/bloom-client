@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
@@ -9,6 +8,7 @@ import ListStore from '@organisms/List/List.store';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
+import { EventTiming, getEventTiming } from './Events.util';
 import EventsCard from './EventsCard/EventsCard';
 import EventsHeader from './EventsHeader';
 import useInitUpcomingEvents from './useInitUpcomingEvents';
@@ -18,7 +18,7 @@ const EventsUpcomingContent: React.FC = () => {
     db.community?.events
       ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => !event.deletedAt)
-      ?.filter((event: IEvent) => day().isBefore(day(event.endTime)))
+      ?.filter((event: IEvent) => getEventTiming(event) !== EventTiming.PAST)
       ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime', 'ASC'))
   );
 

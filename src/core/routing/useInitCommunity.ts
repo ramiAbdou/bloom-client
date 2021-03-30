@@ -85,8 +85,8 @@ const useInitCommunity = (): Partial<QueryResult> => {
       await Promise.all([
         getCommunity(),
         getCommunityIntegrations(),
-        listMemberPlans(),
-        getQuestions()
+        getQuestions(),
+        listMemberPlans()
       ]);
     })();
   }, [communityId]);

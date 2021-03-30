@@ -1,8 +1,8 @@
-import day from 'dayjs';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent, IEventAttendee, IEventGuest } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
@@ -27,12 +27,20 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
 );
 
 const EventsCardPeople: React.FC = () => {
-  const eventId = IdStore.useStoreState((event) => event.id);
+  const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const isPast: boolean = useStoreState(({ db }) => {
-    const endTime = db.byEventId[eventId]?.endTime;
-    return day().isAfter(day(endTime));
+  const endTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.endTime;
   });
+
+  const startTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.startTime;
+  });
+
+  const isPast: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
   const ids = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];
