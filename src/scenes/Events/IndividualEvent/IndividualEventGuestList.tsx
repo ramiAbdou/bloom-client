@@ -1,3 +1,4 @@
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
@@ -5,18 +6,15 @@ import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
+import { ModalData } from '@organisms/Modal/Modal.types';
 import { IEventGuest, IMember, ISupporter } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
+import { IdProps, ModalType } from '@util/constants';
 import { cx, sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
 
-interface IndividualEventGuestProps {
-  guestId?: string;
-}
-
-const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
-  const { guestId } = props;
+const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
+  const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
   const memberId: string = useStoreState(({ db }) => {
     const guest: IEventGuest = db.byGuestId[guestId];
@@ -27,15 +25,18 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
     const guest: IEventGuest = db.byGuestId[guestId];
     const member: IMember = db.byMemberId[guest?.member];
     const supporter: ISupporter = db.bySupporterId[guest?.supporter];
+
     const firstName: string = member?.firstName ?? supporter?.firstName;
     const lastName: string = member?.lastName ?? supporter?.lastName;
+
     return `${firstName} ${lastName}`;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const showModal: ActionCreator<ModalData> = useStoreActions(
+    ({ modal }) => modal.showModal
+  );
 
-  const onClick = () => {
+  const onClick = (): void => {
     if (isMember && memberId) {
       showModal({ id: ModalType.PROFILE, metadata: memberId });
     }
@@ -54,11 +55,13 @@ const IndividualEventGuest: React.FC<IndividualEventGuestProps> = (props) => {
 };
 
 const IndividualEventGuestListContent: React.FC = () => {
-  const guests: IndividualEventGuestProps[] = useStoreState(({ db }) =>
+  const guests: IdProps[] = useStoreState(({ db }) =>
     db.event?.guests
       ?.map((guestId: string) => db.byGuestId[guestId])
       ?.sort((a: IEventGuest, b: IEventGuest) => sortObjects(a, b, 'createdAt'))
-      ?.reduce((acc, guest: IEventGuest) => [...acc, { guestId: guest.id }], [])
+      ?.map((guest: IEventGuest) => {
+        return { id: guest.id };
+      })
   );
 
   return (

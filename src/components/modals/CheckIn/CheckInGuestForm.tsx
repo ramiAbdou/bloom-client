@@ -1,29 +1,25 @@
-import day from 'dayjs';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
+import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory, ShowProps } from '@util/constants';
+import useCreateEventGuestWithSupporter from './useCreateEventGuestWithSupporter';
 import useCreatePublicEventAttendee from './useCreatePublicEventAttendee';
-import useCreatePublicEventGuest from './useCreatePublicEventGuest';
 
-const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
-  const isUpcoming: boolean = useStoreState(({ db }) =>
-    day().isBefore(day(db.event?.startTime).subtract(30, 'm'))
-  );
+const CheckInGuestFormContent: React.FC = () => {
+  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
+  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
 
-  const createPublicEventAttendee = useCreatePublicEventAttendee();
-  const createPublicEventGuest = useCreatePublicEventGuest();
-
-  if (show === false) return null;
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
 
   return (
-    <Form
-      onSubmit={isUpcoming ? createPublicEventGuest : createPublicEventAttendee}
-    >
+    <>
       <Row equal align="baseline" spacing="xs">
         <FormShortText
           category={QuestionCategory.FIRST_NAME}
@@ -38,6 +34,29 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
 
       <FormShortText category={QuestionCategory.EMAIL} title="Email" />
       <FormSubmitButton>{isUpcoming ? 'RSVP' : 'Join'}</FormSubmitButton>
+    </>
+  );
+};
+
+const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
+  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
+  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+
+  const createEventGuestWithSupporter = useCreateEventGuestWithSupporter();
+  const createPublicEventAttendee = useCreatePublicEventAttendee();
+
+  if (show === false) return null;
+
+  const onSubmit: OnFormSubmitFunction = isUpcoming
+    ? createEventGuestWithSupporter
+    : createPublicEventAttendee;
+
+  return (
+    <Form onSubmit={onSubmit}>
+      <CheckInGuestFormContent />
     </Form>
   );
 };

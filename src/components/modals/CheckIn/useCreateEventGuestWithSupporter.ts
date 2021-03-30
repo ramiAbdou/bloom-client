@@ -9,24 +9,26 @@ import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
-const useCreatePublicEventGuest = (): OnFormSubmitFunction => {
+const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  const [createEventGuest] = useMutation<IEventGuest, CreateEventGuestArgs>({
+  const [createEventGuestWithSupporter] = useMutation<
+    IEventGuest,
+    CreateEventGuestArgs
+  >({
     fields: [
       'createdAt',
       'id',
       { event: ['id'] },
-      { member: ['id', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: MutationEvent.CREATE_EVENT_GUEST,
+    operation: MutationEvent.CREATE_EVENT_GUEST_WITH_SUPPORTER,
     schema: Schema.EVENT_GUEST,
     types: {
-      email: { required: false },
+      email: { required: true },
       eventId: { required: true },
-      firstName: { required: false },
-      lastName: { required: false }
+      firstName: { required: true },
+      lastName: { required: true }
     }
   });
 
@@ -35,7 +37,7 @@ const useCreatePublicEventGuest = (): OnFormSubmitFunction => {
     const lastName: string = items.LAST_NAME?.value as string;
     const email: string = items.EMAIL?.value as string;
 
-    const { error } = await createEventGuest({
+    const { error } = await createEventGuestWithSupporter({
       email,
       eventId,
       firstName,
@@ -49,4 +51,4 @@ const useCreatePublicEventGuest = (): OnFormSubmitFunction => {
   return onSubmit;
 };
 
-export default useCreatePublicEventGuest;
+export default useCreateEventGuestWithSupporter;

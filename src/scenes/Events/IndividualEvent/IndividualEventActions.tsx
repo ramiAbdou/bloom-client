@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
@@ -79,9 +78,8 @@ const IndividualEventActions: React.FC = () => {
   const isPast: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
-  const isUpcoming: boolean = useStoreState(({ db }) =>
-    day().isBefore(day(db.event.startTime))
-  );
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
 
   const isGoing: boolean = useStoreState(({ db }) =>
     guests

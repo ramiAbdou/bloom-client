@@ -238,11 +238,17 @@ const RankedQuestion = new schema.Entity(
 );
 
 const Supporter = new schema.Entity(
-  'supporter',
+  'supporters',
   {},
   {
-    processStrategy: (value) => {
-      return { ...value, supporterId: value.id };
+    processStrategy: (value, parent) => {
+      const processedData = take([
+        [!!parent.attendeeId, { attendees: [parent.id] }],
+        [!!parent.guestId, { guests: [parent.id] }],
+        [!!parent.watchId, { watches: [parent.id] }]
+      ]);
+
+      return { ...value, ...processedData, supporterId: value.id };
     }
   }
 );
@@ -266,7 +272,6 @@ const User = new schema.Entity(
 // ciruclar dependencies in our code.
 
 Application.define({ community: Community, questions: [RankedQuestion] });
-RankedQuestion.define({ application: Application, question: Question });
 
 Community.define({
   application: Application,
@@ -291,10 +296,13 @@ Event.define({
 });
 
 EventAttendee.define({ event: Event, member: Member, supporter: Supporter });
+
 EventGuest.define({ event: Event, member: Member, supporter: Supporter });
+
 EventWatch.define({ event: Event, member: Member });
 
 Member.define({
+  attendees: [EventAttendee],
   community: Community,
   guests: [EventGuest],
   memberIntegrations: MemberIntegrations,
@@ -307,8 +315,11 @@ Member.define({
 });
 
 MemberIntegrations.define({ member: Member });
+
 MemberSocials.define({ member: Member });
+
 MemberPlan.define({ community: Community });
+
 MemberValue.define({ member: Member, question: Question });
 
 Payment.define({
@@ -318,6 +329,11 @@ Payment.define({
 });
 
 Question.define({ community: Community, values: [MemberValue] });
+
+RankedQuestion.define({ application: Application, question: Question });
+
+Supporter.define({ attendees: [EventAttendee], guests: [EventGuest] });
+
 User.define({ members: [Member], supporters: [Supporter] });
 
 // We define an object that carries all the schemas to have everything

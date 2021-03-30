@@ -6,6 +6,7 @@ export enum MutationEvent {
   CREATE_EVENT = 'createEvent',
   CREATE_EVENT_ATTENDEE = 'createEventAttendee',
   CREATE_EVENT_GUEST = 'createEventGuest',
+  CREATE_EVENT_GUEST_WITH_SUPPORTER = 'createEventGuestWithSupporter',
   CREATE_EVENT_WATCH = 'createEventWatch',
   CREATE_MEMBER_PLANS = 'createMemberPlans',
   DELETE_EVENT = 'deleteEvent',
