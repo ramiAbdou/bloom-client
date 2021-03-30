@@ -1,21 +1,22 @@
 import React from 'react';
 
 import Show from '@containers/Show';
+import { QueryResult } from '@hooks/useQuery.types';
 import EventAnalyticsChart from './EventAnalyticsChart';
-import EventsAnalyticsFrequentAttendees from './EventsAnalyticsFrequentAttendees';
 import EventsAnalyticsOverview from './EventsAnalyticsOverview';
 import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
+import EventsAnalyticsTopEventGoers from './EventsAnalyticsTopEventGoers';
 import useInitEventAnalytics from './useInitEventAnalytics';
 
 const EventsAnalytics: React.FC = () => {
-  const { loading } = useInitEventAnalytics();
+  const { loading }: Partial<QueryResult> = useInitEventAnalytics();
 
   return (
     <Show show={!loading}>
       <EventsAnalyticsOverview />
       <EventAnalyticsChart />
       <EventsAnalyticsRecentEvents />
-      <EventsAnalyticsFrequentAttendees />
+      <EventsAnalyticsTopEventGoers />
     </Show>
   );
 };

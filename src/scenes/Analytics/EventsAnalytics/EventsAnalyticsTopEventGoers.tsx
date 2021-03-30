@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
@@ -19,8 +18,9 @@ import {
 } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionType } from '@util/constants';
+import { sortObjects } from '@util/util';
 
-const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
+const EventsAnalyticsTopEventGoersTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const rows: TableRow[] = useStoreState(({ db }) => {
@@ -39,9 +39,10 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
     const result = pastAttendees?.reduce((acc, attendee: IEventAttendee) => {
       const member: IMember = db.byMemberId[attendee?.member];
       const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
-      const email = member?.email ?? supporter?.email;
-      const firstName = member?.firstName ?? supporter?.firstName;
-      const lastName = member?.lastName ?? supporter?.lastName;
+
+      const email: string = member?.email ?? supporter?.email;
+      const firstName: string = member?.firstName ?? supporter?.firstName;
+      const lastName: string = member?.lastName ?? supporter?.lastName;
       const previousValue = acc[email];
 
       return {
@@ -50,7 +51,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
           email,
           fullName: `${firstName} ${lastName}`,
           id: email,
-          memberId: member.id ?? supporter.id,
+          memberId: member?.id ?? supporter?.id,
           value: previousValue ? previousValue?.value + 1 : 1
         }
       };
@@ -59,7 +60,7 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
     if (!result) return [];
 
     return (Object.values(result) as TableRow[])
-      .sort((a, b) => (a.value > b.value ? 1 : -1))
+      .sort((a: TableRow, b: TableRow) => sortObjects(a, b, 'value'))
       ?.slice(0, 10);
   });
 
@@ -91,11 +92,11 @@ const EventsAnalyticsFrequentAttendeesTable: React.FC = () => {
   );
 };
 
-const EventsAnalyticsFrequentAttendees: React.FC = () => (
+const EventsAnalyticsTopEventGoers: React.FC = () => (
   <MainSection>
     <LoadingHeader h2 title="Top Event Goers" />
-    <EventsAnalyticsFrequentAttendeesTable />
+    <EventsAnalyticsTopEventGoersTable />
   </MainSection>
 );
 
-export default EventsAnalyticsFrequentAttendees;
+export default EventsAnalyticsTopEventGoers;
