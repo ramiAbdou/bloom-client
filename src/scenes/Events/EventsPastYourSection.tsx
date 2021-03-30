@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
@@ -39,7 +39,7 @@ const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
   );
 
   return (
-    <MainSection show={hasEvents}>
+    <Section show={hasEvents}>
       <LoadingHeader
         h2
         className="mb-sm"
@@ -50,7 +50,7 @@ const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
       <ListStore.Provider>
         <EventsPastYourList />
       </ListStore.Provider>
-    </MainSection>
+    </Section>
   );
 };
 

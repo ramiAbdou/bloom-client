@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -93,10 +93,10 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
 };
 
 const EventsAnalyticsTopEventGoers: React.FC = () => (
-  <MainSection>
+  <Section>
     <LoadingHeader h2 className="mb-sm" title="Top Event Goers" />
     <EventsAnalyticsTopEventGoersTable />
-  </MainSection>
+  </Section>
 );
 
 export default EventsAnalyticsTopEventGoers;

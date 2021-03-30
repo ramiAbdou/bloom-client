@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import MembershipPaymentTable from './MembershipPaymentTable';
 import useInitMembershipPaymentHistory from './useInitMembershipPaymentHistory';
 
@@ -9,7 +9,7 @@ const MembershipPaymentHistory: React.FC = () => {
   const { loading } = useInitMembershipPaymentHistory();
 
   return (
-    <MainSection className="s-membership-overview-ctr">
+    <Section className="s-membership-overview-ctr">
       <LoadingHeader
         h2
         className="mb-sm"
@@ -17,7 +17,7 @@ const MembershipPaymentHistory: React.FC = () => {
         title="Payment Overview"
       />
       <MembershipPaymentTable />
-    </MainSection>
+    </Section>
   );
 };
 

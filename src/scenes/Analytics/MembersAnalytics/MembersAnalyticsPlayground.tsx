@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import Show from '@containers/Show';
 import Dropdown from '@molecules/Dropdown/Dropdown';
 import Chart from '@organisms/Chart/Chart';
@@ -99,7 +99,7 @@ const MembersAnalyticsPlaygroundChart: React.FC = () => {
  * currently being displayed.
  */
 const MembersAnalyticsPlayground: React.FC = () => (
-  <MainSection>
+  <Section>
     <LoadingHeader h2 className="mb-sm" title="Data Playground" />
     <IdStore.Provider>
       <div className="s-analytics-members-playground">
@@ -107,7 +107,7 @@ const MembersAnalyticsPlayground: React.FC = () => (
         <MembersAnalyticsPlaygroundChart />
       </div>
     </IdStore.Provider>
-  </MainSection>
+  </Section>
 );
 
 export default MembersAnalyticsPlayground;

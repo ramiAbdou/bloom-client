@@ -2,8 +2,8 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import GrayCard from '@containers/Card/GrayCard';
-import MainSection from '@containers/Main/MainSection';
 import Row from '@containers/Row/Row';
+import Section from '@containers/Section';
 import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
@@ -51,7 +51,7 @@ const IndividualEventInsights: React.FC = () => {
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
 
   return (
-    <MainSection className="s-events-individual-insights" show={!!isAdmin}>
+    <Section className="s-events-individual-insights" show={!!isAdmin}>
       <SidebarHamburgerButton />
 
       <Row spacing="sm">
@@ -61,7 +61,7 @@ const IndividualEventInsights: React.FC = () => {
       </Row>
 
       <Separator marginBottom={0} marginTop={24} />
-    </MainSection>
+    </Section>
   );
 };
 

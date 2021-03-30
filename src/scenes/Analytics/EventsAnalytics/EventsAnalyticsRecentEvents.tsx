@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -75,10 +75,10 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
 };
 
 const EventsAnalyticsTopEvents: React.FC = () => (
-  <MainSection>
+  <Section>
     <LoadingHeader h2 className="mb-sm" title="Recent Events" />
     <EventsAnalyticsRecentEventsTable />
-  </MainSection>
+  </Section>
 );
 
 export default EventsAnalyticsTopEvents;
