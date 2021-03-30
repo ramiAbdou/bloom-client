@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import Show from '@containers/Show';
 import { QueryResult } from '@hooks/useQuery.types';
 import Table from '@organisms/Table/Table';
@@ -39,7 +39,7 @@ const IndividualEventTableContent: React.FC = () => {
   };
 
   return (
-    <MainSection className="s-events-individual-table-ctr">
+    <Section className="s-events-individual-table-ctr">
       <Table
         TableActions={IndividualEventTableActions}
         columns={columns}
@@ -47,7 +47,7 @@ const IndividualEventTableContent: React.FC = () => {
       >
         <TableContent small rows={rows} />
       </Table>
-    </MainSection>
+    </Section>
   );
 };
 

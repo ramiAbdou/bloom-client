@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
@@ -16,13 +16,13 @@ const EventAnalyticsChart: React.FC = () => {
   if (loading) return null;
 
   return (
-    <MainSection>
+    <Section>
       <Chart
         data={data}
         title="Event Attendees in Last 30 Days"
         type={ChartType.TIME_SERIES}
       />
-    </MainSection>
+    </Section>
   );
 };
 

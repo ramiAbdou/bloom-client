@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import useQuery from '@hooks/useQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
@@ -14,7 +14,7 @@ const PaymentAnalyticsChart: React.FC = () => {
   });
 
   return (
-    <MainSection show={!loading && data?.some(({ value }) => !!value)}>
+    <Section show={!loading && data?.some(({ value }) => !!value)}>
       <Chart
         data={data}
         interval={2}
@@ -22,7 +22,7 @@ const PaymentAnalyticsChart: React.FC = () => {
         title="Total Dues Collected"
         type={ChartType.TIME_SERIES}
       />
-    </MainSection>
+    </Section>
   );
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainContent from '@containers/Main/MainContent';
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent } from '@store/Db/entities';
@@ -39,12 +39,18 @@ const EventsUpcoming: React.FC = () => {
     <MainContent>
       <EventsHeader />
 
-      <MainSection>
-        <LoadingHeader h2 loading={loading} title="Upcoming Events" />
+      <Section>
+        <LoadingHeader
+          h2
+          className="mb-sm"
+          loading={loading}
+          title="Upcoming Events"
+        />
+
         <ListStore.Provider>
           {!loading && <EventsUpcomingContent />}
         </ListStore.Provider>
-      </MainSection>
+      </Section>
     </MainContent>
   );
 };

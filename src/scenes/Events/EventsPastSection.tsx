@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import ListSearchBar from '@organisms/List/ListSearchBar';
@@ -63,13 +63,18 @@ const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => {
   });
 
   return (
-    <MainSection show={hasEvents}>
-      <LoadingHeader h2 loading={loading} title="Past Events" />
+    <Section show={hasEvents}>
+      <LoadingHeader
+        h2
+        className="mb-sm"
+        loading={loading}
+        title="Past Events"
+      />
 
       <ListStore.Provider>
         <EventsPastList />
       </ListStore.Provider>
-    </MainSection>
+    </Section>
   );
 };
 
