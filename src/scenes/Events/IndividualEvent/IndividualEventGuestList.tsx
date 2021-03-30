@@ -21,10 +21,14 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
     return guest?.member;
   });
 
-  const fullName: string = useStoreState(({ db }) => {
+  const supporterId: string = useStoreState(({ db }) => {
     const guest: IEventGuest = db.byGuestId[guestId];
-    const member: IMember = db.byMemberId[guest?.member];
-    const supporter: ISupporter = db.bySupporterId[guest?.supporter];
+    return guest?.supporter;
+  });
+
+  const fullName: string = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    const supporter: ISupporter = db.bySupporterId[supporterId];
 
     const firstName: string = member?.firstName ?? supporter?.firstName;
     const lastName: string = member?.lastName ?? supporter?.lastName;
@@ -48,7 +52,13 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
 
   return (
     <Button className={css} onClick={onClick}>
-      <ProfilePicture fontSize={16} memberId={memberId} size={36} />
+      <ProfilePicture
+        fontSize={16}
+        memberId={memberId}
+        size={36}
+        supporterId={supporterId}
+      />
+
       <p className="body--bold">{fullName}</p>
     </Button>
   );

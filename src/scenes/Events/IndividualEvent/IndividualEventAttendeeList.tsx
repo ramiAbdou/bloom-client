@@ -1,3 +1,4 @@
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
@@ -5,61 +6,72 @@ import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
+import { ModalData } from '@organisms/Modal/Modal.types';
 import { IEventAttendee, IMember, ISupporter } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
-import { sortObjects } from '@util/util';
+import { IdProps, ModalType } from '@util/constants';
+import { cx, sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
 
-interface IndividualEventAttendeeProps {
-  attendeeId?: string;
-}
-
-const IndividualEventAttendee: React.FC<IndividualEventAttendeeProps> = (
-  props
-) => {
-  const { attendeeId } = props;
+const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
+  const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
   const memberId: string = useStoreState(({ db }) => {
-    const guest: IEventAttendee = db.byAttendeeId[attendeeId];
-    return guest?.member;
+    const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
+    return attendee?.member;
+  });
+
+  const supporterId: string = useStoreState(({ db }) => {
+    const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
+    return attendee?.supporter;
   });
 
   const fullName: string = useStoreState(({ db }) => {
-    const guest: IEventAttendee = db.byAttendeeId[attendeeId];
-    const member: IMember = db.byMemberId[guest?.member];
-    const supporter: ISupporter = db.bySupporterId[guest?.supporter];
+    const member: IMember = db.byMemberId[memberId];
+    const supporter: ISupporter = db.bySupporterId[supporterId];
+
     const firstName: string = member?.firstName ?? supporter?.firstName;
     const lastName: string = member?.lastName ?? supporter?.lastName;
+
     return `${firstName} ${lastName}`;
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  const showModal: ActionCreator<ModalData> = useStoreActions(
+    ({ modal }) => modal.showModal
+  );
 
-  const onClick = () => {
-    showModal({ id: ModalType.PROFILE, metadata: memberId });
+  const onClick = (): void => {
+    if (isMember && memberId) {
+      showModal({ id: ModalType.PROFILE, metadata: memberId });
+    }
   };
 
+  const css: string = cx('s-events-individual-member', {
+    's-events-individual-member--disabled': !isMember
+  });
+
   return (
-    <Button className="s-events-individual-member" onClick={onClick}>
-      <ProfilePicture fontSize={16} memberId={memberId} size={36} />
+    <Button className={css} onClick={onClick}>
+      <ProfilePicture
+        fontSize={16}
+        memberId={memberId}
+        size={36}
+        supporterId={supporterId}
+      />
+
       <p className="body--bold">{fullName}</p>
     </Button>
   );
 };
 
 const IndividualEventAttendeeListContent: React.FC = () => {
-  const attendees: IndividualEventAttendeeProps[] = useStoreState(({ db }) =>
+  const attendees: IdProps[] = useStoreState(({ db }) =>
     db.event?.attendees
       ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'))
-      ?.reduce(
-        (acc, attendee: IEventAttendee) => [
-          ...acc,
-          { attendeeId: attendee.id }
-        ],
-        []
-      )
+      ?.map((attendee: IEventAttendee) => {
+        return { id: attendee.id };
+      })
   );
 
   return (
