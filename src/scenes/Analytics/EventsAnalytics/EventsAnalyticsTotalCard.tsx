@@ -6,7 +6,7 @@ import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {
-  const numPastEvents: number = useStoreState(
+  const pastEventsCount: number = useStoreState(
     ({ db }) =>
       db.community.events
         ?.map((eventId: string) => db.byEventId[eventId])
@@ -17,8 +17,8 @@ const EventsAnalyticsTotalCard: React.FC = () => {
   return (
     <GrayCard
       label="Events Hosted"
-      show={numPastEvents !== null}
-      value={numPastEvents}
+      show={pastEventsCount !== null}
+      value={pastEventsCount}
     />
   );
 };
