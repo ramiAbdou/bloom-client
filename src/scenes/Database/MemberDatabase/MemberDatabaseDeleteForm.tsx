@@ -1,22 +1,11 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
 import Form from '@organisms/Form/Form';
+import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
+import ModalConfirmationActions from '@organisms/Modal/ModalConfirmationActions';
 import TableStore from '@organisms/Table/Table.store';
 import useDeleteMembers from './useDeleteMembers';
-
-const MemberDatabaseDeleteFormActions: React.FC = () => (
-  <Row spacing="xs">
-    <FormSubmitButton row loadingText="Removing...">
-      Remove
-    </FormSubmitButton>
-
-    <ModalCloseButton />
-  </Row>
-);
 
 const MemberDatabaseDeleteFormHeader: React.FC = () => {
   const memberIds = TableStore.useStoreState(
@@ -32,12 +21,16 @@ const MemberDatabaseDeleteFormHeader: React.FC = () => {
 };
 
 const MemberDatabaseDeleteForm: React.FC = () => {
-  const deleteForm = useDeleteMembers();
+  const deleteForm: OnFormSubmitFunction = useDeleteMembers();
 
   return (
     <Form options={{ disableValidation: true }} onSubmit={deleteForm}>
       <MemberDatabaseDeleteFormHeader />
-      <MemberDatabaseDeleteFormActions />
+
+      <ModalConfirmationActions
+        primaryLoadingText="Removing..."
+        primaryText="Remove"
+      />
     </Form>
   );
 };

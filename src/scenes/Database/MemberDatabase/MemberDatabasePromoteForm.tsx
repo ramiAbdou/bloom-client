@@ -1,27 +1,15 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
 import useMutation from '@hooks/useMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
+import ModalConfirmationActions from '@organisms/Modal/ModalConfirmationActions';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
-
-const MemberDatabasePromoteFormActions: React.FC = () => (
-  <Row spacing="xs">
-    <FormSubmitButton row loadingText="Promoting...">
-      Promote
-    </FormSubmitButton>
-
-    <ModalCloseButton />
-  </Row>
-);
 
 const MemberDatabasePromoteForm: React.FC = () => {
   const memberIds = TableStore.useStoreState(
@@ -63,7 +51,10 @@ const MemberDatabasePromoteForm: React.FC = () => {
         title="Promote to admin?"
       />
 
-      <MemberDatabasePromoteFormActions />
+      <ModalConfirmationActions
+        primaryLoadingText="Promoting..."
+        primaryText="Promote"
+      />
     </Form>
   );
 };

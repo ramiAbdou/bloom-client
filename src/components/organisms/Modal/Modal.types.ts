@@ -25,6 +25,7 @@ export const globalModals: ModalType[] = [
   ModalType.ADD_ADMINS,
   ModalType.ADD_MEMBERS,
   ModalType.APPLICANT,
+  ModalType.APPLICANT_CONFIRMATION,
   ModalType.CHANGE_MEMBERSHIP,
   ModalType.CHECK_IN,
   ModalType.CREATE_EVENT,

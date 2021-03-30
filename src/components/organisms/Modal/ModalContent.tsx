@@ -6,6 +6,7 @@ import CheckInModal from '@modals/CheckIn/CheckIn';
 import EventForm from '@modals/EventForm/EventForm';
 import PaymentModal from '@modals/Payment/Payment';
 import ProfileModal from '@modals/Profile/Profile';
+import ApplicantsConfirmationModal from '@scenes/Applicants/ApplicantsConfirmationModal';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
 import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
@@ -31,6 +32,10 @@ const ModalCustomContent: React.FC = () => {
 
   if (modalId === ModalType.APPLICANT) {
     return <ApplicantsModal />;
+  }
+
+  if (modalId === ModalType.APPLICANT_CONFIRMATION) {
+    return <ApplicantsConfirmationModal />;
   }
 
   if (

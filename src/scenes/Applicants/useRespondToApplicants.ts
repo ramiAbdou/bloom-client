@@ -1,5 +1,9 @@
 import useMutation from '@hooks/useMutation';
 import { MutationResult } from '@hooks/useMutation.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@organisms/Form/Form.types';
 import { IMember, MemberStatus } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
@@ -16,10 +20,10 @@ interface UseRespondToApplicantsArgs {
 
 const useRespondToApplicants = (
   args: UseRespondToApplicantsArgs
-): MutationResult<IMember[], RespondToApplicantsArgs> => {
+): OnFormSubmitFunction => {
   const { memberIds, response } = args;
 
-  const result: MutationResult<
+  const [respondToApplicants]: MutationResult<
     IMember[],
     RespondToApplicantsArgs
   > = useMutation<IMember[], RespondToApplicantsArgs>({
@@ -33,7 +37,13 @@ const useRespondToApplicants = (
     variables: { memberIds, response }
   });
 
-  return result;
+  const onSubmit = async ({ closeModal, showToast }: OnFormSubmitArgs) => {
+    await respondToApplicants();
+    closeModal();
+    showToast({ message: `Member(s) have been ${response.toLowerCase()}.` });
+  };
+
+  return onSubmit;
 };
 
 export default useRespondToApplicants;
