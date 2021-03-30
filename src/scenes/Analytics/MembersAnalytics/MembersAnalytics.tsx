@@ -1,15 +1,24 @@
 import React from 'react';
 
+import Show from '@containers/Show';
+import { QueryResult } from '@hooks/useQuery.types';
 import MembersAnalyticsCharts from './MembersAnalyticsCharts';
-import MembersAnalyticsOverview from './MembersAnalyticsOverview';
+import MembersAnalyticsInsights from './MembersAnalyticsInsights';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';
+import useInitMembersAnalytics from './useInitMembersAnalytics';
 
-const MembersAnalytics: React.FC = () => (
-  <div className="s-analytics-page s-analytics-members">
-    <MembersAnalyticsOverview />
-    <MembersAnalyticsCharts />
-    <MembersAnalyticsPlayground />
-  </div>
-);
+const MembersAnalytics: React.FC = () => {
+  const { loading }: Partial<QueryResult> = useInitMembersAnalytics();
+
+  return (
+    <Show show={!loading}>
+      <div className="s-analytics-page s-analytics-members">
+        <MembersAnalyticsInsights />
+        <MembersAnalyticsCharts />
+        <MembersAnalyticsPlayground />
+      </div>
+    </Show>
+  );
+};
 
 export default MembersAnalytics;

@@ -5,7 +5,7 @@ import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
-const useInitAnalytics = (): Partial<QueryResult> => {
+const useInitMembersAnalytics = (): Partial<QueryResult> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
   const { loading: loading1 }: QueryResult<IMember[]> = useQuery<IMember[]>({
@@ -35,4 +35,4 @@ const useInitAnalytics = (): Partial<QueryResult> => {
   return { loading: loading1 || loading2 };
 };
 
-export default useInitAnalytics;
+export default useInitMembersAnalytics;

@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import MainSection from '@containers/Main/MainSection';
+import Section from '@containers/Section';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -84,10 +84,16 @@ const PaymentAnalyticsHistory: React.FC = () => {
   const { data, loading } = useInitPaymentAnalyticsHistory();
 
   return (
-    <MainSection className="s-analytics-dues-history" show={!!data?.length}>
-      <LoadingHeader h2 loading={loading} title="Dues History" />
+    <Section show={!!data?.length}>
+      <LoadingHeader
+        h2
+        className="mb-sm"
+        loading={loading}
+        title="Dues History"
+      />
+
       {!loading && <PaymentAnalyticsHistoryTable />}
-    </MainSection>
+    </Section>
   );
 };
 

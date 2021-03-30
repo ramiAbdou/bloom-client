@@ -1,3 +1,4 @@
+import { ActionCreator } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
 
 import Dropdown from '@molecules/Dropdown/Dropdown';
@@ -22,47 +23,70 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
 
   const [questionId, setQuestionId] = useState<string>(columnId);
 
-  const defaultQuestionId: string = useStoreState(
-    ({ db }) =>
-      db.community.questions
-        ?.map((entityId: string) => db.byQuestionId[entityId])
-        ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
-        ?.filter(
-          (question: IQuestion) =>
-            ![
-              QuestionCategory.FIRST_NAME,
-              QuestionCategory.LAST_NAME,
-              QuestionCategory.EMAIL,
-              QuestionCategory.JOINED_AT
-            ].includes(question.category)
-        )[0]?.id
-  );
+  const initialQuestionId: string = useStoreState(({ db }) => {
+    const questions: IQuestion[] = db.community.questions?.map(
+      (id: string) => db.byQuestionId[id]
+    );
+
+    const initialQuestion: IQuestion = questions.find((question: IQuestion) => {
+      const isDuesStatusAllowed: boolean =
+        question.category === QuestionCategory.DUES_STATUS &&
+        db.community.canCollectDues;
+
+      const isMemberPlanAllowed: boolean =
+        question.category === QuestionCategory.MEMBER_PLAN &&
+        db.community.plans.length >= 2;
+
+      return (
+        !question.category ||
+        isDuesStatusAllowed ||
+        isMemberPlanAllowed ||
+        question.category === QuestionCategory.BIO ||
+        question.category === QuestionCategory.EVENTS_ATTENDED ||
+        question.category === QuestionCategory.GENDER
+      );
+    });
+
+    return initialQuestion?.id;
+  });
 
   const questions: IQuestion[] = useStoreState(({ db }) =>
     db.community.questions
       ?.map((entityId: string) => db.byQuestionId[entityId])
+      ?.filter((question: IQuestion) => {
+        const isDuesStatusAllowed: boolean =
+          question.category === QuestionCategory.DUES_STATUS &&
+          db.community.canCollectDues;
+
+        const isMemberPlanAllowed: boolean =
+          question.category === QuestionCategory.MEMBER_PLAN &&
+          db.community.plans.length >= 2;
+
+        return (
+          !question.category ||
+          isDuesStatusAllowed ||
+          isMemberPlanAllowed ||
+          question.category === QuestionCategory.BIO ||
+          question.category === QuestionCategory.EVENTS_ATTENDED ||
+          question.category === QuestionCategory.GENDER
+        );
+      })
       ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
-      ?.filter(
-        (question: IQuestion) =>
-          ![
-            QuestionCategory.FIRST_NAME,
-            QuestionCategory.LAST_NAME,
-            QuestionCategory.EMAIL,
-            QuestionCategory.JOINED_AT
-          ].includes(question.category)
-      )
   );
 
-  const setFilter = TableFilterStore.useStoreActions(
-    (state) => state.setFilter
-  );
+  const setFilter: ActionCreator<
+    Partial<TableFilterArgs>
+  > = TableFilterStore.useStoreActions((state) => state.setFilter);
 
   useEffect(() => {
-    if (!questionId && defaultQuestionId) {
-      setQuestionId(defaultQuestionId);
-      setFilter({ columnId: defaultQuestionId, id: filterId });
-    } else if (columnId !== questionId) setQuestionId(columnId);
-  }, [columnId, defaultQuestionId]);
+    if (!questionId && initialQuestionId) {
+      setQuestionId(initialQuestionId);
+      setFilter({ columnId: initialQuestionId, id: filterId });
+      return;
+    }
+
+    if (columnId !== questionId) setQuestionId(columnId);
+  }, [columnId, initialQuestionId]);
 
   const onQuestionUpdate = (result: string) => {
     const updatedColumnId = questions.find(
@@ -86,7 +110,7 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
         questions?.find((question: IQuestion) => question.id === questionId)
           ?.title
       }
-      values={questions?.map(({ title }) => title)}
+      values={questions?.map((question: IQuestion) => question.title)}
       onSelect={onQuestionUpdate}
     />
   );

@@ -82,7 +82,6 @@ export type RouteType =
 
 export enum QuestionCategory {
   BIO = 'BIO',
-  CLUBHOUSE_URL = 'CLUBHOUSE_URL',
   DUES_STATUS = 'DUES_STATUS',
   EMAIL = 'EMAIL',
   EVENTS_ATTENDED = 'EVENTS_ATTENDED',

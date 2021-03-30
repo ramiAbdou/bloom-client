@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import IdStore from '@store/Id.store';
 import TableFilterPanelStore from './TableFilterPanel.store';
 import TableFilterPanelActions from './TableFilterPanelActions';
 import TableFilterPanelAddButton from './TableFilterPanelAddButton';
@@ -22,10 +21,8 @@ const TableFilterPanelRowList: React.FC = () => {
 
   return (
     <ul className="mb-sm--nlc">
-      {filterIds.map((id: string) => (
-        <IdStore.Provider key={id} runtimeModel={{ id }}>
-          <TableFilterPanelRow />
-        </IdStore.Provider>
+      {filterIds.map((filterId: string) => (
+        <TableFilterPanelRow key={filterId} id={filterId} />
       ))}
     </ul>
   );

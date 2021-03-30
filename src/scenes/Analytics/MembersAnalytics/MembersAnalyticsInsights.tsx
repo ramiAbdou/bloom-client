@@ -1,17 +1,17 @@
 import React from 'react';
 
-import MainSection from '@containers/Main/MainSection';
 import Row from '@containers/Row/Row';
+import Section from '@containers/Section';
 import MembersAnalyticsActiveMembersCard from './MembersAnalyticsActiveCard';
 import MembersAnalyticsTotalMembersCard from './MembersAnalyticsTotalCard';
 
-const MembersAnalyticsOverview: React.FC = () => (
-  <MainSection>
+const MembersAnalyticsInsights: React.FC = () => (
+  <Section>
     <Row wrap gap="xs">
       <MembersAnalyticsTotalMembersCard />
       <MembersAnalyticsActiveMembersCard />
     </Row>
-  </MainSection>
+  </Section>
 );
 
-export default MembersAnalyticsOverview;
+export default MembersAnalyticsInsights;

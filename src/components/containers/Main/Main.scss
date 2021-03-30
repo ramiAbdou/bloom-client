@@ -15,15 +15,17 @@ $PREF: 't-main';
 }
 
 .#{$PREF}-header > .t-row {
-  > div:first-child > .c-tag-number ~ .c-spinner { margin-left: $xs; }
+  > div:first-child > .c-tag-number ~ .c-spinner {
+    margin-left: $xs;
+  }
 
   > div:first-child > button:first-of-type > svg {
     @extend .react-icon--xl;
-  
+
     border-radius: 50%;
     margin-right: $sm;
     padding: 2px;
-  
+
     @include HOVER {
       background-color: rgba($color: $primary-hex, $alpha: 0.15);
     }
@@ -32,8 +34,13 @@ $PREF: 't-main';
   > div:last-child:not(:first-child) {
     min-width: 15%;
 
-    @include MT { display: none; }
-    > * { margin-left: auto; }
+    @include MT {
+      display: none;
+    }
+
+    > * {
+      margin-left: auto;
+    }
   }
 }
 
@@ -43,13 +50,10 @@ $PREF: 't-main';
   margin: 0 $md;
   padding: 2px 2px $xl * 2 2px; // 2px for box-shadow to show properly.
 
-  @include M { margin: 0 $sm; }
+  @include M {
+    margin: 0 $sm;
+  }
 }
-
-// ## MAIN SECTION
-
-.#{$PREF}-section { margin-bottom: $md; }
-.#{$PREF}-section > .t-loading-header { margin-bottom: $sm; }
 
 // ## NAV BUTTON - Only use a border-top, border-bottom and border-right, but
 // not border-left, so we avoid stacking pixels (1px * 2 = 2px). However,
@@ -57,15 +61,18 @@ $PREF: 't-main';
 
 .#{$PREF}-nav {
   @extend .meta--lg;
-  
+
   background-color: inherit;
   border: 1px $primary solid;
   border-left: none;
   border-radius: 0;
   color: $primary;
   padding: $xs $sm;
-  
-  &--active { background-color: $primary; color: white; }
+
+  &--active {
+    background-color: $primary;
+    color: white;
+  }
 
   &:first-child {
     border-left: 1px $primary solid;
