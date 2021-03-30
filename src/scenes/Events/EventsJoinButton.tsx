@@ -7,7 +7,7 @@ import { IEvent } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
-import useCreateEventAttendee from './useCreateEventAttendee';
+import useCreateEventAttendeeWithMember from './useCreateEventAttendeeWithMember';
 
 interface EventsJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -43,7 +43,7 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
     EventTiming.STARTING_SOON
   ].includes(getEventTiming({ endTime, startTime }));
 
-  const createEventAttendee = useCreateEventAttendee();
+  const createEventAttendeeWithMember = useCreateEventAttendeeWithMember();
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -52,7 +52,7 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
     // clicking the background of an EventsCard).
     e.stopPropagation();
 
-    if (isMember) await createEventAttendee({ eventId });
+    if (isMember) await createEventAttendeeWithMember({ eventId });
     else showModal({ id: ModalType.CHECK_IN, metadata: eventId });
   };
 

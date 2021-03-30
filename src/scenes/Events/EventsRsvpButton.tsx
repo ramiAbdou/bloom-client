@@ -9,7 +9,7 @@ import { ModalType } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 import { DeleteEventGuestArgs } from './Events.types';
 import { EventTiming, getEventTiming } from './Events.util';
-import useCreateEventGuest from './useCreateEventGuest';
+import useCreateEventGuestWithMember from './useCreateEventGuestWithMember';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -44,7 +44,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
 
-  const createEventGuest = useCreateEventGuest();
+  const createEventGuestWithMember = useCreateEventGuestWithMember();
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -56,7 +56,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       return;
     }
 
-    await createEventGuest({ eventId });
+    await createEventGuestWithMember({ eventId });
 
     const options: ToastOptions<DeleteEventGuestArgs> = {
       message: 'RSVP was registered.',

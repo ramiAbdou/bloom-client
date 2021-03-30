@@ -10,20 +10,22 @@ import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
-const useCreatePublicEventAttendee = (): OnFormSubmitFunction => {
+const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
   const setCurrentPage = StoryStore.useStoreActions(
     (state) => state.setCurrentPage
   );
 
-  const [createEventAttendee] = useMutation<IEventGuest, CreateEventGuestArgs>({
+  const [createEventAttendeeWithSupporter] = useMutation<
+    IEventGuest,
+    CreateEventGuestArgs
+  >({
     fields: [
       'createdAt',
       'id',
       { event: ['id'] },
-      { member: ['id', 'pictureUrl'] },
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
-    operation: MutationEvent.CREATE_EVENT_ATTENDEE,
+    operation: MutationEvent.CREATE_EVENT_ATTENDEE_WITH_SUPPORTER,
     schema: Schema.EVENT_ATTENDEE,
     types: {
       email: { required: false },
@@ -44,7 +46,7 @@ const useCreatePublicEventAttendee = (): OnFormSubmitFunction => {
     const lastName: string = items.LAST_NAME?.value as string;
     const email: string = items.EMAIL?.value as string;
 
-    const { error } = await createEventAttendee({
+    const { error } = await createEventAttendeeWithSupporter({
       email,
       eventId,
       firstName,
@@ -62,4 +64,4 @@ const useCreatePublicEventAttendee = (): OnFormSubmitFunction => {
   return onSubmit;
 };
 
-export default useCreatePublicEventAttendee;
+export default useCreateEventAttendeeWithSupporter;

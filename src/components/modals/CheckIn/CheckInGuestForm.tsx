@@ -8,8 +8,8 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory, ShowProps } from '@util/constants';
+import useCreateEventAttendeeWithSupporter from './useCreateEventAttendeeWithSupporter';
 import useCreateEventGuestWithSupporter from './useCreateEventGuestWithSupporter';
-import useCreatePublicEventAttendee from './useCreatePublicEventAttendee';
 
 const CheckInGuestFormContent: React.FC = () => {
   const endTime: string = useStoreState(({ db }) => db.event?.endTime);
@@ -46,13 +46,13 @@ const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
     getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
 
   const createEventGuestWithSupporter = useCreateEventGuestWithSupporter();
-  const createPublicEventAttendee = useCreatePublicEventAttendee();
+  const createEventAttendeeWithSupporter = useCreateEventAttendeeWithSupporter();
 
   if (show === false) return null;
 
   const onSubmit: OnFormSubmitFunction = isUpcoming
     ? createEventGuestWithSupporter
-    : createPublicEventAttendee;
+    : createEventAttendeeWithSupporter;
 
   return (
     <Form onSubmit={onSubmit}>
