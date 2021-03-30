@@ -35,7 +35,7 @@ const useVerifyToken = (): boolean => {
   );
 
   const [verifyToken, result1] = useMutation<VerifiedToken>({
-    fields: ['event'],
+    fields: ['event', 'eventId'],
     operation: MutationEvent.VERIFY_TOKEN,
     types: { token: { required: true } }
   });
