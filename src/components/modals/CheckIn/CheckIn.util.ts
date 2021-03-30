@@ -22,6 +22,10 @@ export const getCheckInErrorMessage = (
     return 'You have pending member applications. Once they are accepted, you will be able to log in.';
   }
 
+  if (error === ErrorType.NO_MEMBER_APPLICATIONS) {
+    return 'To log in, you must be a member of a community. To do that, you must fill out an application to the community.';
+  }
+
   if (error === ErrorType.NOT_MEMBER) {
     return `This email is not registered as a member of this community. If you
       believe this is an error, please reach out to the owner,

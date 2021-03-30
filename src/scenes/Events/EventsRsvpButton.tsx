@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
@@ -9,7 +8,8 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 import { DeleteEventGuestArgs } from './Events.types';
-import useCreateEventGuest from './useCreateEventGuest';
+import { EventTiming, getEventTiming } from './Events.util';
+import useCreateEventGuestWithMember from './useCreateEventGuestWithMember';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -19,10 +19,19 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
+  const isMember: boolean = useStoreState(({ db }) => db.isMember);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const startTime = useStoreState(({ db }) => db.byEventId[eventId]?.startTime);
-  const isMember = useStoreState(({ db }) => db.isMember);
+
+  const endTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.endTime;
+  });
+
+  const startTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.startTime;
+  });
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const guests = new Set(
@@ -35,7 +44,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return event?.guests?.some((guestId: string) => guests.has(guestId));
   });
 
-  const createEventGuest = useCreateEventGuest();
+  const createEventGuestWithMember = useCreateEventGuestWithMember();
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -47,7 +56,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       return;
     }
 
-    await createEventGuest({ eventId });
+    await createEventGuestWithMember({ eventId });
 
     const options: ToastOptions<DeleteEventGuestArgs> = {
       message: 'RSVP was registered.',
@@ -63,7 +72,8 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     showToast(options);
   };
 
-  const isUpcoming = day().isBefore(day(startTime));
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
 
   return (
     <Button

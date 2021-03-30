@@ -2,7 +2,7 @@ import { action, computed } from 'easy-peasy';
 
 import { IMember, initialEntities } from '@store/Db/entities';
 import { DbModel } from './Db.types';
-import { mergeEntities, setActive } from './Db.util';
+import { mergeEntities, setActiveEntities } from './Db.util';
 import dbActiveStore from './DbActive.store';
 import dbByIdStore from './DbById.store';
 
@@ -42,7 +42,8 @@ const dbStore: DbModel = {
   ),
 
   mergeEntities,
-  setActive
+
+  setActiveEntities
 };
 
 export default dbStore;

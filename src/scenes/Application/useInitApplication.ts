@@ -21,7 +21,7 @@ interface CommunityIdArgs {
 }
 
 const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
-  const setActive = useStoreActions(({ db }) => db.setActive);
+  const setActiveEntities = useStoreActions(({ db }) => db.setActiveEntities);
   const { urlName } = useParams() as UrlNameProps;
 
   const { data, error, loading: loading1 } = useQuery<ICommunity, UrlNameProps>(
@@ -109,7 +109,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   useEffect(() => {
     if (!communityId) return;
 
-    setActive({ id: communityId, table: 'communities' });
+    setActiveEntities({ id: communityId, table: 'communities' });
 
     (async () => {
       await Promise.all([

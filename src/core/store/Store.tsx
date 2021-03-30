@@ -6,7 +6,7 @@
  * (ie: PanelModel, ToastModel).
  */
 
-import { createStore, createTypedHooks } from 'easy-peasy';
+import { createStore, createTypedHooks, Store } from 'easy-peasy';
 
 import loader, { LoaderModel } from '@organisms/Loader/Loader.store';
 import modal from '@organisms/Modal/Modal.store';
@@ -20,16 +20,16 @@ import { ToastModel } from '@organisms/Toast/Toast.types';
 import db from './Db/Db.store';
 import { DbModel } from './Db/Db.types';
 
-export type StoreModel = {
+export interface StoreModel {
   db: DbModel;
   loader: LoaderModel;
   modal: ModalModel;
   panel: PanelModel;
   sidebar: SidebarModel;
   toast: ToastModel;
-};
+}
 
-export const store = createStore<StoreModel>(
+export const store: Store<StoreModel> = createStore<StoreModel>(
   { db, loader, modal, panel, sidebar, toast },
   { disableImmer: true }
 );

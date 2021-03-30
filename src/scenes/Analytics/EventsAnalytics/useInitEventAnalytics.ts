@@ -40,8 +40,8 @@ const useInitEventAnalytics = (): Partial<QueryResult> => {
       'createdAt',
       'id',
       { event: ['id'] },
-      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'firstName', 'lastName'] }
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
+      { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
     operation: QueryEvent.LIST_EVENT_GUESTS,
     schema: [Schema.EVENT_GUEST]
@@ -52,7 +52,7 @@ const useInitEventAnalytics = (): Partial<QueryResult> => {
       'createdAt',
       'id',
       { event: ['id', { community: ['id'] }] },
-      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] }
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
     ],
     operation: QueryEvent.LIST_EVENT_WATCHES,
     schema: [Schema.EVENT_WATCH],

@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
@@ -6,6 +5,7 @@ import MainSection from '@containers/Main/MainSection';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import ListSearchBar from '@organisms/List/ListSearchBar';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
@@ -18,14 +18,15 @@ const EventsPastList: React.FC = () => {
 
     return db.community?.events
       ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
-      ?.filter(
-        (event: IEvent) =>
-          !event.attendees?.some((attendeeId: string) =>
-            yourAttendees.has(attendeeId)
-          )
-      )
-      ?.sort((a, b) => sortObjects(a, b, 'startTime'));
+      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
+      ?.filter((event: IEvent) => {
+        const wentToEvent: boolean = !event.attendees?.some(
+          (attendeeId: string) => yourAttendees.has(attendeeId)
+        );
+
+        return wentToEvent;
+      })
+      ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'));
   });
 
   return (
@@ -48,11 +49,11 @@ const EventsPastList: React.FC = () => {
 
 const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => {
   const hasEvents: boolean = useStoreState(({ db }) => {
-    const attendees = new Set(db.member.attendees);
+    const attendees: Set<string> = new Set(db.member.attendees);
 
     return !!db.community?.events
       ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => day().isAfter(day(event.endTime)))
+      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
       ?.filter(
         (event: IEvent) =>
           !event.attendees?.some((attendeeId: string) =>

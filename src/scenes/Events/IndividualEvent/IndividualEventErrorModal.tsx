@@ -12,11 +12,14 @@ const IndividualEventErrorModal: React.FC = () => {
     ({ modal }) => modal.metadata
   );
 
-  const startTime = useStoreState(({ db }) =>
+  const startTime: string = useStoreState(({ db }) =>
     day(db.event?.startTime).format('MMMM, D @ h:mm A')
   );
 
-  const title = useStoreState(({ db }) => db.event?.title);
+  const title: string = useStoreState(({ db }) => db.event?.title);
+
+  // If the Event content hasn't fully loaded yet, just wait to show modal.
+  if (!startTime || !title) return null;
 
   return (
     <>

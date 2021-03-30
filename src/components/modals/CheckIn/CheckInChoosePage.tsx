@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
@@ -6,19 +5,22 @@ import Row from '@containers/Row/Row';
 import FormLabel from '@organisms/Form/FormLabel';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ICommunity } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';
 
 const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
-  const name: string = useStoreState(({ db }) => {
+  const communityName: string = useStoreState(({ db }) => {
     const community: ICommunity = db.byCommunityId[db.event?.community];
     return community?.name;
   });
 
-  const isBefore: boolean = useStoreState(({ db }) =>
-    day().isBefore(day(db.event?.startTime).subtract(30, 'm'))
-  );
+  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
+  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
 
   const setCurrentPage = StoryStore.useStoreActions(
     (state) => state.setCurrentPage
@@ -31,7 +33,7 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   };
 
   const onSecondaryClick = () => {
-    if (isBefore) setCurrentPage({ branchId: 'FINISH_GUEST', id: 'FINISH' });
+    if (isUpcoming) setCurrentPage({ branchId: 'FINISH_GUEST', id: 'FINISH' });
     else setCurrentPage({ branchId: 'FINISH_ATTENDEE', id: 'FINISH' });
   };
 
@@ -45,7 +47,10 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
         }
       }}
     >
-      <FormLabel marginBottom={16}>{`Are you a member of ${name}?`}</FormLabel>
+      <FormLabel
+        marginBottom={16}
+      >{`Are you a member of ${communityName}?`}</FormLabel>
+
       <Row equal spacing="xs">
         <Button primary onClick={onPrimaryClick}>
           Yes

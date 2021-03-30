@@ -7,7 +7,7 @@ import { useStoreState } from '@store/Store';
 import useFinalPath from '../hooks/useFinalPath';
 import AuthenticatedCommunityRouter from './AuthenticatedCommunityRouter';
 import useBackupCommunity from './useBackupCommunity';
-import useGetTokens from './useGetTokens';
+import useGetUserTokens from './useGetUserTokens';
 import useInitUser from './useInitUser';
 
 /**
@@ -15,9 +15,13 @@ import useInitUser from './useInitUser';
  * urlName in the useParams() call in the useInitUser() hook.
  */
 const CommunityRouter: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
+  const isAuthenticated: boolean = useStoreState(
+    ({ db }) => db.isAuthenticated
+  );
+
   const finalPath: string = useFinalPath();
-  const loading1: boolean = useGetTokens(true);
+
+  const loading1: boolean = useGetUserTokens(true);
   const loading2: boolean = useInitUser();
   const loading3: boolean = useBackupCommunity();
 

@@ -5,10 +5,10 @@ import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
 import { CreateEventAttendeeArgs } from './Events.types';
 
-const useCreateEventAttendee = (): ((
+const useCreateEventAttendeeWithMember = (): ((
   variables?: CreateEventAttendeeArgs
 ) => Promise<UseMutationFnResult<IEventAttendee>>) => {
-  const [createEventAttendee] = useMutation<
+  const [createEventAttendeeWithMember] = useMutation<
     IEventAttendee,
     CreateEventAttendeeArgs
   >({
@@ -16,15 +16,14 @@ const useCreateEventAttendee = (): ((
       'createdAt',
       'id',
       { event: ['id'] },
-      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'email', 'firstName', 'lastName'] }
+      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
     ],
-    operation: MutationEvent.CREATE_EVENT_ATTENDEE,
+    operation: MutationEvent.CREATE_EVENT_ATTENDEE_WITH_MEMBER,
     schema: Schema.EVENT_ATTENDEE,
     types: { eventId: { required: true } }
   });
 
-  return createEventAttendee;
+  return createEventAttendeeWithMember;
 };
 
-export default useCreateEventAttendee;
+export default useCreateEventAttendeeWithMember;

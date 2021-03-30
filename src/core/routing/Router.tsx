@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import CommunityRouter from './CommunityRouter';
 import LoginRoute from './LoginRoute';
-import useGetTokens from './useGetTokens';
+import useGetUserTokens from './useGetUserTokens';
 import useVerifyToken from './useVerifyToken';
 
 /**
@@ -12,8 +12,8 @@ import useVerifyToken from './useVerifyToken';
  * most nested logic within it.
  */
 const Router: React.FC = () => {
-  const loading1 = useGetTokens();
-  const loading2 = useVerifyToken();
+  const loading1: boolean = useGetUserTokens();
+  const loading2: boolean = useVerifyToken();
 
   if (loading1 || loading2) return null;
 

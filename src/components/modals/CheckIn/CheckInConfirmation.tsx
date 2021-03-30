@@ -12,7 +12,7 @@ const CheckInConfirmation: React.FC = () => (
         title: `Attendee Registered`
       },
       GUEST_CONFIRMATION: {
-        description: `We just emailed you an RSVP confirmation. You'll get a join link 30 minutes before the event starts.`,
+        description: `We just emailed you an RSVP confirmation. In that email, you will find a "Join Event" button that you can click to join the event up to 10 minutes before the event. You can also come back to this page to the join the event up to 10 minutes before the event.`,
         title: `RSVP Registered`
       },
       LOGIN_LINK: {

@@ -78,5 +78,5 @@ export interface DbModel {
   isInitialized: Computed<DbModel, boolean>;
   isMember: Computed<DbModel, boolean>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
-  setActive: Action<DbModel, SetActiveArgs | SetActiveArgs[]>;
+  setActiveEntities: Action<DbModel, SetActiveArgs | SetActiveArgs[]>;
 }

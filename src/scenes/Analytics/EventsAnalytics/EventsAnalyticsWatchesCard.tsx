@@ -1,7 +1,7 @@
-import day from 'dayjs';
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 
@@ -9,7 +9,7 @@ const EventsAnalyticsWatchesCard: React.FC = () => {
   const numViews: number = useStoreState(({ db }) => {
     const pastEvents: IEvent[] = db.community.events
       ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => day().isAfter(event.endTime))
+      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
       ?.filter((event: IEvent) => !!event.recordingUrl);
 
     if (!pastEvents?.length) return null;

@@ -12,6 +12,7 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
@@ -23,7 +24,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) =>
     db.community.events
       ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => day().isAfter(event.endTime))
+      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
       ?.map(({ attendees, id, guests, startTime, title, watches }: IEvent) => {
         return {
           date: day(startTime).format('MMMM D, YYYY'),

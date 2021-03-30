@@ -4,6 +4,7 @@ import { State } from 'easy-peasy';
 import React from 'react';
 
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { DbModel } from '@store/Db/Db.types';
 import {
   IEventAttendee,
@@ -26,27 +27,31 @@ const getIndividualEventTableAttendees = (
 ): Record<string, IndividualEventTableRowProps> => {
   if (!db.event.attendees) return {};
 
-  return db.event.attendees.reduce((acc, attendeeId: string) => {
-    const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
-    const member: IMember = db.byMemberId[attendee?.member];
-    const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
-    const email: string = member?.email ?? supporter?.email;
-    const firstName: string = member?.firstName ?? supporter?.firstName;
-    const lastName: string = member?.lastName ?? supporter?.lastName;
+  return db.event.attendees.reduce(
+    (acc: Record<string, IndividualEventTableRowProps>, attendeeId: string) => {
+      const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
+      const member: IMember = db.byMemberId[attendee?.member];
+      const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
 
-    // If the email already exists in the record, don't go again.
-    if (acc[email]) return acc;
+      const email: string = member?.email ?? supporter?.email;
+      const firstName: string = member?.firstName ?? supporter?.firstName;
+      const lastName: string = member?.lastName ?? supporter?.lastName;
 
-    const data: IndividualEventTableRowProps = {
-      email,
-      fullName: `${firstName} ${lastName}`,
-      id: attendee?.member,
-      joinedAt: attendee.createdAt,
-      watched: false
-    };
+      // If the email already exists in the record, don't go again.
+      if (acc[email]) return acc;
 
-    return { ...acc, [email]: data };
-  }, {});
+      const data: IndividualEventTableRowProps = {
+        email,
+        fullName: `${firstName} ${lastName}`,
+        id: attendee?.member,
+        joinedAt: attendee.createdAt,
+        watched: false
+      };
+
+      return { ...acc, [email]: data };
+    },
+    {}
+  );
 };
 
 /**
@@ -59,26 +64,30 @@ const getIndividualEventTableGuests = (
 ): Record<string, IndividualEventTableRowProps> => {
   if (!db.event.guests) return {};
 
-  return db.event.guests.reduce((acc, guestId: string) => {
-    const guest: IEventGuest = db.byGuestId[guestId];
-    const member: IMember = db.byMemberId[guest?.member];
-    const supporter: ISupporter = db.bySupporterId[guest?.supporter];
-    const email = member?.email ?? supporter?.email;
-    const firstName = member?.firstName ?? supporter?.firstName;
-    const lastName = member?.lastName ?? supporter?.lastName;
+  return db.event.guests.reduce(
+    (acc: Record<string, IndividualEventTableRowProps>, guestId: string) => {
+      const guest: IEventGuest = db.byGuestId[guestId];
+      const member: IMember = db.byMemberId[guest?.member];
+      const supporter: ISupporter = db.bySupporterId[guest?.supporter];
 
-    if (acc[email]) return acc;
+      const email: string = member?.email ?? supporter?.email;
+      const firstName: string = member?.firstName ?? supporter?.firstName;
+      const lastName: string = member?.lastName ?? supporter?.lastName;
 
-    const data: IndividualEventTableRowProps = {
-      email,
-      fullName: `${firstName} ${lastName}`,
-      id: guest?.member,
-      rsvpdAt: guest.createdAt,
-      watched: false
-    };
+      if (acc[email]) return acc;
 
-    return { ...acc, [email]: data };
-  }, {});
+      const data: IndividualEventTableRowProps = {
+        email,
+        fullName: `${firstName} ${lastName}`,
+        id: guest?.member,
+        rsvpdAt: guest.createdAt,
+        watched: false
+      };
+
+      return { ...acc, [email]: data };
+    },
+    {}
+  );
 };
 
 /**
@@ -91,22 +100,26 @@ const getIndividualEventTableViewers = (
 ): Record<string, IndividualEventTableRowProps> => {
   if (!db.event.watches) return {};
 
-  return db.event.watches.reduce((acc, watchId: string) => {
-    const watch: IEventWatch = db.byWatchId[watchId];
-    const member: IMember = db.byMemberId[watch?.member];
-    const { email } = member ?? {};
+  return db.event.watches.reduce(
+    (acc: Record<string, IndividualEventTableRowProps>, watchId: string) => {
+      const watch: IEventWatch = db.byWatchId[watchId];
+      const member: IMember = db.byMemberId[watch?.member];
 
-    if (acc[email]) return acc;
+      const { email } = member ?? {};
 
-    const data: IndividualEventTableRowProps = {
-      email,
-      fullName: `${member.firstName} ${member.lastName}`,
-      id: member?.id,
-      watched: true
-    };
+      if (acc[email]) return acc;
 
-    return { ...acc, [email]: data };
-  }, {});
+      const data: IndividualEventTableRowProps = {
+        email,
+        fullName: `${member.firstName} ${member.lastName}`,
+        id: member?.id,
+        watched: true
+      };
+
+      return { ...acc, [email]: data };
+    },
+    {}
+  );
 };
 
 /**
@@ -130,7 +143,9 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
 
   if (!totalRecord) return null;
 
-  return Object.values(totalRecord)?.sort((a, b) =>
+  return Object.values(
+    totalRecord
+  )?.sort((a: IndividualEventTableRowProps, b: IndividualEventTableRowProps) =>
     sortObjects(a, b, ['joinedAt', 'rsvpdAt'])
   ) as TableRow[];
 };
@@ -145,11 +160,16 @@ export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
 export const getIndividualEventTableColumns = (
   db: State<DbModel>
 ): TableColumn[] => {
-  const recordingUrl = db.event?.recordingUrl;
-  const startTime = db.event?.startTime;
+  const endTime: string = db.event?.endTime;
+  const recordingUrl: string = db.event?.recordingUrl;
+  const startTime: string = db.event?.startTime;
 
-  const joinedAtColumn: TableColumn[] = day().isAfter(day(startTime))
-    ? [
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+
+  const joinedAtColumn: TableColumn[] = isUpcoming
+    ? []
+    : [
         {
           id: 'joinedAt',
           render: (value: string) =>
@@ -157,8 +177,7 @@ export const getIndividualEventTableColumns = (
           title: `Joined At`,
           type: QuestionType.SHORT_TEXT
         }
-      ]
-    : [];
+      ];
 
   const viewedRecordingColumn: TableColumn[] = recordingUrl
     ? [

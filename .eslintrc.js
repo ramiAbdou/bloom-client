@@ -19,6 +19,7 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/interface-name-prefix': 0,
+    '@typescript-eslint/no-inferrable-types': 0,
     '@typescript-eslint/no-unused-vars': [
       2,
       {
@@ -56,11 +57,6 @@ module.exports = {
         blankLine: 'always',
         prev: ['multiline-const', 'multiline-expression'],
         next: 'return'
-      },
-      {
-        blankLine: 'never',
-        prev: ['singleline-const'],
-        next: ['singleline-const']
       }
     ],
     'react/jsx-props-no-spreading': 0,

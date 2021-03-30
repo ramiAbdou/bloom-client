@@ -1,10 +1,9 @@
-import day from 'dayjs';
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { IEvent } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { EventTiming, getEventTiming } from './Events.util';
 
 interface EventShareButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -14,10 +13,20 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   eventId,
   large
 }) => {
-  const { eventUrl, startTime }: IEvent = useStoreState(
-    ({ db }) => db.byEventId[eventId],
-    deepequal
-  );
+  const endTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.endTime;
+  });
+
+  const eventUrl: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.eventUrl;
+  });
+
+  const startTime: string = useStoreState(({ db }) => {
+    const event: IEvent = db.byEventId[eventId];
+    return event.startTime;
+  });
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const guests = new Set(
@@ -32,7 +41,9 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
 
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
-  const isUpcoming = day().isBefore(day(startTime));
+
+  const isUpcoming: boolean =
+    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();

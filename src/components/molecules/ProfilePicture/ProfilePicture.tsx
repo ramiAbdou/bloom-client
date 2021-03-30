@@ -20,6 +20,8 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   supporterId,
   size
 }) => {
+  // If there is an error rendering the image for whatever reason (URL is no
+  // longer valid, etc.) we should show something else.
   const [imageError, setImageError] = useState(false);
 
   // If one of these is null, it means the user isn't fully loaded yet.
@@ -41,15 +43,19 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
     return db.member?.pictureUrl;
   });
 
-  const initials = firstName[0] + lastName[0];
+  const initials: string = firstName[0] + lastName[0];
 
   if (pictureUrl && !imageError) {
+    const onError = () => {
+      setImageError(true);
+    };
+
     return (
       <img
         alt="Profile Avatar"
         referrerPolicy="no-referrer"
         src={pictureUrl}
-        onError={() => setImageError(true)}
+        onError={onError}
       />
     );
   }
@@ -60,7 +66,7 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
 const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
   const { circle = true, className, memberId, size, supporterId } = props;
 
-  const show: boolean = useStoreState(({ db }) => {
+  const doesMemberOrSupporterExist: boolean = useStoreState(({ db }) => {
     if (memberId) return !!db.byMemberId[memberId];
     if (supporterId) return !!db.bySupporterId[supporterId];
     return !!db.member?.firstName && !!db.member?.lastName;
@@ -73,7 +79,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
   );
 
   return (
-    <Show show={show}>
+    <Show show={doesMemberOrSupporterExist}>
       <div
         className={css}
         style={{ height: size, minWidth: size, width: size }}
