@@ -18,11 +18,10 @@ interface UseRespondToApplicantsArgs {
   response: MemberStatus.ACCEPTED | MemberStatus.REJECTED;
 }
 
-const useRespondToApplicants = (
-  args: UseRespondToApplicantsArgs
-): OnFormSubmitFunction => {
-  const { memberIds, response } = args;
-
+const useRespondToApplicants = ({
+  memberIds,
+  response
+}: UseRespondToApplicantsArgs): OnFormSubmitFunction => {
   const [respondToApplicants]: MutationResult<
     IMember[],
     RespondToApplicantsArgs

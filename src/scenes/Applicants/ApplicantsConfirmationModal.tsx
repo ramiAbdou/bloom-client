@@ -30,7 +30,7 @@ const ApplicantsConfirmationModalHeader: React.FC = () => {
   const description: string =
     response === MemberStatus.ACCEPTED
       ? `Are you sure you want to accept these applicant(s)? We will send an email notification with next steps for them to onboard.`
-      : 'Are you sure you want to reject these applicant(s)?';
+      : 'Are you sure you want to reject these applicant(s)? You will not be able to reverse this action.';
 
   return (
     <FormHeader

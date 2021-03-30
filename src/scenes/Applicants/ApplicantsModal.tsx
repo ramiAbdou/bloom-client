@@ -17,7 +17,7 @@ import ApplicantsRespondButton from './ApplicantsRespondButton';
 const ApplicantsModalTitle: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const fullName = useStoreState(({ db }) => {
+  const fullName: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
     return `${member?.firstName} ${member?.lastName}`;
   });

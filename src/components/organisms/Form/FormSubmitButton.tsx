@@ -52,6 +52,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
         large={large ?? true}
         loading={loading}
         loadingText={loadingText ?? 'Submitting...'}
+        type="submit"
         {...props}
       />
     </>
