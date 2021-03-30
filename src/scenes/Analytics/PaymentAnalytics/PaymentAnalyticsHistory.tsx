@@ -84,8 +84,14 @@ const PaymentAnalyticsHistory: React.FC = () => {
   const { data, loading } = useInitPaymentAnalyticsHistory();
 
   return (
-    <MainSection className="s-analytics-dues-history" show={!!data?.length}>
-      <LoadingHeader h2 loading={loading} title="Dues History" />
+    <MainSection show={!!data?.length}>
+      <LoadingHeader
+        h2
+        className="mb-sm"
+        loading={loading}
+        title="Dues History"
+      />
+
       {!loading && <PaymentAnalyticsHistoryTable />}
     </MainSection>
   );

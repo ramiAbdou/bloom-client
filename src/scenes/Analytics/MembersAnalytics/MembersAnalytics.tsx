@@ -1,12 +1,12 @@
 import React from 'react';
 
 import MembersAnalyticsCharts from './MembersAnalyticsCharts';
-import MembersAnalyticsOverview from './MembersAnalyticsOverview';
+import MembersAnalyticsInsights from './MembersAnalyticsInsights';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';
 
 const MembersAnalytics: React.FC = () => (
   <div className="s-analytics-page s-analytics-members">
-    <MembersAnalyticsOverview />
+    <MembersAnalyticsInsights />
     <MembersAnalyticsCharts />
     <MembersAnalyticsPlayground />
   </div>

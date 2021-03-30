@@ -10,7 +10,12 @@ const MembershipPaymentHistory: React.FC = () => {
 
   return (
     <MainSection className="s-membership-overview-ctr">
-      <LoadingHeader h2 loading={loading} title="Payment Overview" />
+      <LoadingHeader
+        h2
+        className="mb-sm"
+        loading={loading}
+        title="Payment Overview"
+      />
       <MembershipPaymentTable />
     </MainSection>
   );

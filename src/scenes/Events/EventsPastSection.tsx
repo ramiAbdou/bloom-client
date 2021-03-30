@@ -64,7 +64,12 @@ const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => {
 
   return (
     <MainSection show={hasEvents}>
-      <LoadingHeader h2 loading={loading} title="Past Events" />
+      <LoadingHeader
+        h2
+        className="mb-sm"
+        loading={loading}
+        title="Past Events"
+      />
 
       <ListStore.Provider>
         <EventsPastList />

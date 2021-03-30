@@ -8,7 +8,7 @@ interface MainSectionProps extends ClassNameProps, ShowProps {}
 
 const MainSection: React.FC<MainSectionProps> = (props) => {
   const { children, className, show } = props;
-  const css: string = cx('t-main-section mb-md', {}, className);
+  const css: string = cx('mb-md', {}, className);
 
   return (
     <Show show={show}>

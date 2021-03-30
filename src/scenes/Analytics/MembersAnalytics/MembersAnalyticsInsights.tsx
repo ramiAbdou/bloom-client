@@ -5,7 +5,7 @@ import Row from '@containers/Row/Row';
 import MembersAnalyticsActiveMembersCard from './MembersAnalyticsActiveCard';
 import MembersAnalyticsTotalMembersCard from './MembersAnalyticsTotalCard';
 
-const MembersAnalyticsOverview: React.FC = () => (
+const MembersAnalyticsInsights: React.FC = () => (
   <MainSection>
     <Row wrap gap="xs">
       <MembersAnalyticsTotalMembersCard />
@@ -14,4 +14,4 @@ const MembersAnalyticsOverview: React.FC = () => (
   </MainSection>
 );
 
-export default MembersAnalyticsOverview;
+export default MembersAnalyticsInsights;

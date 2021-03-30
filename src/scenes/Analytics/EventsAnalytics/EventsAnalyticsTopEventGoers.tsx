@@ -94,7 +94,7 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
 
 const EventsAnalyticsTopEventGoers: React.FC = () => (
   <MainSection>
-    <LoadingHeader h2 title="Top Event Goers" />
+    <LoadingHeader h2 className="mb-sm" title="Top Event Goers" />
     <EventsAnalyticsTopEventGoersTable />
   </MainSection>
 );

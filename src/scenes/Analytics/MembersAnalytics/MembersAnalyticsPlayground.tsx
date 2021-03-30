@@ -17,7 +17,7 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   const questions: IQuestion[] = useStoreState(({ db }) =>
     db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+      ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter(
         (question: IQuestion) =>
           !question.category ||
@@ -90,8 +90,7 @@ const MembersAnalyticsPlaygroundHeader: React.FC = () => {
 };
 
 const MembersAnalyticsPlaygroundChart: React.FC = () => {
-  const questionId = IdStore.useStoreState((state) => state.id);
-
+  const questionId: string = IdStore.useStoreState((state) => state.id);
   return <Chart questionId={questionId} />;
 };
 
@@ -101,7 +100,7 @@ const MembersAnalyticsPlaygroundChart: React.FC = () => {
  */
 const MembersAnalyticsPlayground: React.FC = () => (
   <MainSection>
-    <LoadingHeader h2 title="Data Playground" />
+    <LoadingHeader h2 className="mb-sm" title="Data Playground" />
     <IdStore.Provider>
       <div className="s-analytics-members-playground">
         <MembersAnalyticsPlaygroundHeader />

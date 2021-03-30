@@ -76,7 +76,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
 
 const EventsAnalyticsTopEvents: React.FC = () => (
   <MainSection>
-    <LoadingHeader h2 title="Recent Events" />
+    <LoadingHeader h2 className="mb-sm" title="Recent Events" />
     <EventsAnalyticsRecentEventsTable />
   </MainSection>
 );
