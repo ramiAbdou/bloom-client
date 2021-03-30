@@ -26,16 +26,10 @@ const IndividualEventViewedFilter: React.FC = () => {
 };
 
 const IndividualEventRsvpFilter: React.FC = () => {
-  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
-  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
-
-  const isUpcoming: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
-
   const filter: TableFilterFunction = (row: IndividualEventTableRowProps) =>
     !!row.rsvpdAt;
 
-  return <TableQuickFilter filter={filter} show={!isUpcoming} title="RSVP'd" />;
+  return <TableQuickFilter filter={filter} title="RSVP'd" />;
 };
 
 const IndividualEventJoinedFilter: React.FC = () => {
@@ -72,21 +66,13 @@ const IndividualEventNoShowFilter: React.FC = () => {
   );
 };
 
-const IndividualEventTableFilters: React.FC = () => {
-  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
-  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
-
-  const isUpcoming: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
-
-  return (
-    <Row wrap gap="sm" show={!isUpcoming}>
-      <IndividualEventJoinedFilter />
-      <IndividualEventRsvpFilter />
-      <IndividualEventViewedFilter />
-      <IndividualEventNoShowFilter />
-    </Row>
-  );
-};
+const IndividualEventTableFilters: React.FC = () => (
+  <Row wrap gap="sm">
+    <IndividualEventJoinedFilter />
+    <IndividualEventRsvpFilter />
+    <IndividualEventViewedFilter />
+    <IndividualEventNoShowFilter />
+  </Row>
+);
 
 export default IndividualEventTableFilters;

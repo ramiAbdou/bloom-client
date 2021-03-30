@@ -1,16 +1,24 @@
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
 import MainHeader from '@containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
+import { ModalData } from '@organisms/Modal/Modal.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
-const CreateEventButton: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member.role);
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal({ id: ModalType.CREATE_EVENT });
+const EventsHeaderCreateEventButton: React.FC = () => {
+  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
+
+  const showModal: ActionCreator<ModalData> = useStoreActions(
+    ({ modal }) => modal.showModal
+  );
+
+  const onClick = (): void => {
+    showModal({ id: ModalType.CREATE_EVENT });
+  };
 
   return (
     <Button primary show={isAdmin} onClick={onClick}>
@@ -37,7 +45,7 @@ const EventsHeader: React.FC<LoadingProps> = ({ loading }) => {
 
   return (
     <MainHeader loading={loading} options={options} title="Events">
-      <CreateEventButton />
+      <EventsHeaderCreateEventButton />
     </MainHeader>
   );
 };
