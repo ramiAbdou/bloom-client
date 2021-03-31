@@ -19,7 +19,7 @@ const SidebarSection: React.FC<LinkSectionProps> = ({
   if (['Admin', 'Quick Actions'].includes(title) && !isAdmin) return null;
 
   return (
-    <div className="o-nav-section">
+    <div className="mt-sm mr-ss">
       <h5 className="c-gray-3 mb-xs ml-sm">{title}</h5>
       {links.map((link) => (
         <SidebarLink key={link.to ?? nanoid()} {...link} />

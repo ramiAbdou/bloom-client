@@ -13,7 +13,10 @@ $PREF: 'o-nav';
   width: $xxl * 5.5;
   z-index: 12;
 
-  @include MT { width: 90%; z-index: 1001; }
+  @include MT {
+    width: 90%;
+    z-index: 1001;
+  }
 }
 
 .#{$PREF}-bg {
@@ -23,12 +26,16 @@ $PREF: 'o-nav';
   background-color: hsla($primary-hue, 5%, 20%, 0.75);
   z-index: 1000;
 
-  &--lock { backdrop-filter: blur(8px); }
+  &--lock {
+    backdrop-filter: blur(8px);
+  }
 }
 
 // ## SIDEBAR COMMUNITY LIST
 
-.#{$PREF}-community-ctr { border-right: 1px $gray-5 solid; }
+.#{$PREF}-community-ctr {
+  border-right: 1px $gray-5 solid;
+}
 
 .#{$PREF}-community {
   border: 2px white solid;
@@ -38,25 +45,20 @@ $PREF: 'o-nav';
   padding: 2px;
   width: $xl;
 
-  &--active { border: 2px $primary solid; }
+  &--active {
+    border: 2px $primary solid;
+  }
 
-  > img { @extend .fill; border-radius: $xxs; }
-}
+  > img {
+    @extend .fill;
 
-// ## SIDEBAR SECTION
-
-.#{$PREF}-section {
-  margin: $sm $ss 0 0;
-
-  > h5 { margin: 0 0 $xs $sm; }
+    border-radius: $xxs;
+  }
 }
 
 // ## SIDEBAR LINK
 
 .#{$PREF}-link {
-  @extend .f;
-  @extend .f-ac;
-
   border-left: 3px white solid;
   border-radius: 0 $lg $lg 0;
   box-sizing: border-box;
@@ -75,21 +77,27 @@ $PREF: 'o-nav';
   }
 
   &--active {
-    @extend .body--bold; 
+    @extend .body--bold;
 
     background-color: $primary-bg;
     border-left: 3px $primary solid;
     color: $primary;
 
-    @include HOVER { border-left: 3px $primary solid; }
+    @include HOVER {
+      border-left: 3px $primary solid;
+    }
 
-    > svg { color: $primary; }
+    > svg {
+      color: $primary;
+    }
   }
 
-  > svg { margin-right: $xs; }
+  > svg {
+    margin-right: $xs;
+  }
 }
 
-// ## SIDEBAR DUES CONTAINER - Only shows if the user hasn't paid their 
+// ## SIDEBAR DUES CONTAINER - Only shows if the user hasn't paid their
 // dues yet.
 
 .#{$PREF}-dues-ctr {
@@ -99,7 +107,9 @@ $PREF: 'o-nav';
   padding: 0 $sm;
   width: 100%;
 
-  > div:first-child { margin-bottom: $xs; }
+  > div:first-child {
+    margin-bottom: $xs;
+  }
 }
 
 // ## SIDEBAR PROFILE CONTAINER
@@ -108,8 +118,10 @@ $PREF: 'o-nav';
   border-top: 1px $gray-5 solid;
   margin-top: auto;
   padding: $xs $ss $xs 0;
-  
-  &--no-auto { margin-top: initial; }
+
+  &--no-auto {
+    margin-top: initial;
+  }
 }
 
 // ## SIDEBAR PROFILE - Actual button that opens the Panel.
@@ -122,28 +134,49 @@ $PREF: 'o-nav';
   padding: $xs 0 $xs $sm;
   width: 100%;
 
-  &--active { background-color: $primary-bg; }
-  &--active > svg { color: $primary; }
+  &--active {
+    background-color: $primary-bg;
+  }
+
+  &--active > svg {
+    color: $primary;
+  }
   &--active > div > .#{$PREF}-profile-info > p:first-child {
     @extend .body--bold;
 
     color: $primary;
   }
 
-  > div { @extend .f; @extend .f-ac; }
-  > svg { margin-right: $sm; }
+  > div {
+    @extend .f;
+    @extend .f-ac;
+  }
+
+  > svg {
+    margin-right: $sm;
+  }
 }
 
 // ## SIDEBAR INFO - Contains the user's name and role in community.
 
 .#{$PREF}-profile-info {
-  @extend .flex-col; 
+  @extend .flex-col;
 
   align-items: flex-start;
   margin-left: $sm;
 
-  > p { @extend .overflow-ellipses; text-align: left; }
-  > p:last-child { @extend .meta; color: $gray-3; text-transform: capitalize; }
+  > p {
+    @extend .overflow-ellipses;
+
+    text-align: left;
+  }
+
+  > p:last-child {
+    @extend .meta;
+
+    color: $gray-3;
+    text-transform: capitalize;
+  }
 }
 
 // ## NAV HAMBURGER CONTAINER
@@ -155,7 +188,11 @@ $PREF: 'o-nav';
   top: 0;
   z-index: 12;
 
-  @include M { padding: $sm; }
+  @include M {
+    padding: $sm;
+  }
 
-  > button > svg { @extend .react-icon--lg; }
+  > button > svg {
+    @extend .react-icon--lg;
+  }
 }
