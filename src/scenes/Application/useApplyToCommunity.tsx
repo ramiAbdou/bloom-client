@@ -5,7 +5,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
-import { IMemberPlan, IPaymentMethod, IQuestion } from '@store/Db/entities';
+import { IMemberType, IPaymentMethod, IQuestion } from '@store/Db/entities';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 
@@ -16,7 +16,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
     types: {
       data: { type: '[MemberValueInput!]!' },
       email: { required: true },
-      memberPlanId: { required: false },
+      memberTypeId: { required: false },
       paymentMethodId: { required: false },
       urlName: { required: true }
     }
@@ -30,8 +30,8 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
   }: OnFormSubmitArgs) => {
     const urlName: string = db.community?.urlName;
 
-    const types: IMemberPlan[] = db.community?.plans?.map(
-      (planId: string) => db.byMemberPlanId[planId]
+    const types: IMemberType[] = db.community?.memberTypes?.map(
+      (memberTypeId: string) => db.byMemberTypeId[memberTypeId]
     );
 
     const emailId = db.community?.questions?.find((questionId: string) => {
@@ -44,8 +44,8 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
     const paymentMethodId: string = (storyItems.CREDIT_OR_DEBIT_CARD
       ?.value as IPaymentMethod)?.paymentMethodId as string;
 
-    const typeName = storyItems.MEMBER_PLAN?.value;
-    const memberPlanId = types.find((type) => type.name === typeName)?.id;
+    const typeName = storyItems.MEMBER_TYPE?.value;
+    const memberTypeId = types.find((type) => type.name === typeName)?.id;
 
     const data = Object.values(storyItems)
       .filter(({ questionId }) => !!questionId)
@@ -60,7 +60,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
     const result = await applyToCommunity({
       data,
       email,
-      memberPlanId,
+      memberTypeId,
       paymentMethodId,
       urlName
     });

@@ -7,7 +7,7 @@ import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IMemberPlan } from '@store/Db/entities';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
@@ -15,13 +15,13 @@ import ApplicationPaymentForm from './ApplicationPaymentSection';
 
 const ApplicationChooseTypeButton: React.FC = () => {
   const selectedTypeName: string = FormStore.useStoreState(
-    ({ items }) => items.MEMBER_PLAN?.value as string
+    ({ items }) => items.MEMBER_TYPE?.value as string
   );
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const selectedType: IMemberPlan = db.community?.plans
-      ?.map((planId: string) => db.byMemberPlanId[planId])
-      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
+    const selectedType: IMemberType = db.community?.memberTypes
+      ?.map((memberTypeId: string) => db.byMemberTypeId[memberTypeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
 
     return !!selectedType?.amount;
   });
@@ -35,11 +35,11 @@ const ApplicationChooseTypeButton: React.FC = () => {
 
 const ApplicationChooseTypeForm: React.FC = () => {
   const types: RadioOptionProps[] = useStoreState(({ db }) =>
-    db.community?.plans?.map((planId: string) => {
-      const type: IMemberPlan = db.byMemberPlanId[planId];
+    db.community?.memberTypes?.map((memberTypeId: string) => {
+      const type: IMemberType = db.byMemberTypeId[memberTypeId];
 
       return {
-        children: <ApplicationChooseTypeCard id={planId} />,
+        children: <ApplicationChooseTypeCard id={memberTypeId} />,
         label: type.name
       };
     })
@@ -52,7 +52,7 @@ const ApplicationChooseTypeForm: React.FC = () => {
     <Form onSubmit={onSubmit}>
       <FormMultipleChoice
         cardOptions={types}
-        category={QuestionCategory.MEMBER_PLAN}
+        category={QuestionCategory.MEMBER_TYPE}
       />
       <ApplicationChooseTypeButton />
     </Form>
@@ -61,10 +61,10 @@ const ApplicationChooseTypeForm: React.FC = () => {
 
 const ApplicationChooseType: React.FC = () => {
   const isMultipleTypesOrPaid: boolean = useStoreState(({ db }) => {
-    const types: string[] = db.community?.plans;
+    const types: string[] = db.community?.memberTypes;
 
-    return types?.some((planId: string) => {
-      const type: IMemberPlan = db.byMemberPlanId[planId];
+    return types?.some((memberTypeId: string) => {
+      const type: IMemberType = db.byMemberTypeId[memberTypeId];
       return !!type?.amount;
     });
   });

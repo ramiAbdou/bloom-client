@@ -20,7 +20,7 @@ const PaymentConfirmation: React.FC = () => {
     pageProps = {
       description:
         'Your membership has successfully been changed. Please check your email for a confirmation.',
-      title: 'Membership Plan Changed'
+      title: 'Membership Type Changed'
     };
   } else if (modalType === PaymentModalType.PAY_DUES) {
     pageProps = {

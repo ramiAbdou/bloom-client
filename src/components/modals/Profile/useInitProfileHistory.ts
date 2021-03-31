@@ -61,7 +61,7 @@ const useInitProfileHistory = (): Partial<QueryResult> => {
       'id',
       'type',
       { member: ['id'] },
-      { plan: ['id'] }
+      { memberType: ['id'] }
     ],
     operation: QueryEvent.LIST_PAYMENTS,
     schema: [Schema.PAYMENT],

@@ -56,7 +56,7 @@ const ApplicationConfirmation: React.FC = () => {
 
   const show: boolean = useStoreState(
     ({ db }) =>
-      !!db.community?.questions?.length && !!db.community?.plans?.length
+      !!db.community?.questions?.length && !!db.community?.memberTypes?.length
   );
 
   return (

@@ -32,12 +32,12 @@ export interface ICommunity extends BaseEntity {
   events?: Identifier[];
   highlightedQuestion: Identifier;
   logoUrl: string;
+  memberTypes: Identifier[];
   members: Identifier[];
   payments: Identifier[];
   questions: Identifier[];
   name: string;
   owner?: Identifier;
-  plans: Identifier[];
   primaryColor: string;
   supporters: Identifier[];
   urlName: string;
@@ -131,9 +131,9 @@ export interface IMember extends BaseEntity {
   joinedAt: string;
   lastName: string;
   memberIntegrations: Identifier;
+  memberType: Identifier;
   payments: Identifier[];
   pictureUrl: string;
-  plan: Identifier;
   role?: MemberRole;
   socials: Identifier;
   status: MemberStatus;
@@ -159,14 +159,14 @@ export interface IMemberIntegrations extends BaseEntity {
   stripeSubscriptionId?: string;
 }
 
-// ## MEMBER PLAN
+// ## MEMBER TYPE
 
 export enum RecurrenceType {
   MONTHLY = 'Monthly',
   YEARLY = 'Yearly'
 }
 
-export interface IMemberPlan extends BaseEntity {
+export interface IMemberType extends BaseEntity {
   amount: number;
   isFree: boolean;
   name: string;
@@ -201,7 +201,7 @@ export interface IPayment extends BaseEntity {
   amount: number;
   stripeInvoiceUrl: string;
   member: Identifier;
-  plan: Identifier;
+  memberType: Identifier;
   type: PaymentType;
 }
 
@@ -257,7 +257,7 @@ export interface IEntities {
   guests: EntityRecord<IEventGuest>;
   members: EntityRecord<IMember>;
   memberIntegrations: EntityRecord<IMemberIntegrations>;
-  memberPlans: EntityRecord<IMemberPlan>;
+  memberTypes: EntityRecord<IMemberType>;
   payments: EntityRecord<IPayment>;
   questions: EntityRecord<IQuestion>;
   rankedQuestions: EntityRecord<IRankedQuestion>;
@@ -277,7 +277,7 @@ export const initialEntities: IEntities = {
   events: { activeId: null, byId: {} },
   guests: { byId: {} },
   memberIntegrations: { byId: {} },
-  memberPlans: { byId: {} },
+  memberTypes: { byId: {} },
   members: { activeId: null, byId: {} },
   payments: { byId: {} },
   questions: { byId: {} },

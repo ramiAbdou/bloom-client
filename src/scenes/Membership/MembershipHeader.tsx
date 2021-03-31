@@ -4,13 +4,15 @@ import MainHeader from '@containers/Main/MainHeader';
 import useFinalPath from '@hooks/useFinalPath';
 
 const MembershipHeader: React.FC = () => {
-  const isChangePlan = useFinalPath() === 'change';
+  const isChangeMemberType = useFinalPath() === 'change';
 
   return (
     <MainHeader
-      backButton={isChangePlan}
+      backButton={isChangeMemberType}
       loading={false}
-      title={isChangePlan ? 'Change Membership Plan' : 'Manage Membership'}
+      title={
+        isChangeMemberType ? 'Change Membership Type' : 'Manage Membership'
+      }
     />
   );
 };

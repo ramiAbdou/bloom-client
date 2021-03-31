@@ -82,19 +82,7 @@ div.#{$PREF}-card {
   padding: $sm $xs;
 }
 .#{$PREF}-card-content > p {
-  @extend .body--bold;
-
   max-width: 100%;
-  text-align: center;
 
   @include OVERFLOW_ELLIPSES(3);
-}
-
-.#{$PREF}-card-content > p > span {
-  @extend .meta;
-
-  color: $gray-2;
-  display: block;
-  margin-top: $xxs;
-  text-align: center;
 }

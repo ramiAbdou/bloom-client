@@ -5,7 +5,7 @@ import { PaymentModalType, PaymentModel } from './Payment.types';
 export const paymentModel: PaymentModel = {
   changeAmount: null,
   changeProrationDate: null,
-  selectedPlanId: null,
+  selectedMemberTypeId: null,
 
   setChangeData: action((state, args) => {
     return {

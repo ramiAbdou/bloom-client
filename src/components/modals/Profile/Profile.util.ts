@@ -8,7 +8,7 @@ import {
   IEventGuest,
   IEventWatch,
   IMember,
-  IMemberPlan,
+  IMemberType,
   IPayment
 } from '@store/Db/entities';
 import { sortObjects } from '@util/util';
@@ -57,7 +57,7 @@ export const getMemberHistory = ({
   const paymentEvents: MemberHistoryData[] =
     member.payments?.map((paymentId: string) => {
       const payment: IPayment = db.byPaymentId[paymentId];
-      const type: IMemberPlan = db.byMemberPlanId[payment?.plan];
+      const type: IMemberType = db.byMemberTypeId[payment?.memberType];
 
       return {
         date: payment.createdAt,

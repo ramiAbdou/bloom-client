@@ -10,7 +10,7 @@ import FormHeader from '@organisms/Form/FormHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMemberPlan } from '@store/Db/entities';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import useSavePaymentMethod from './useSavePaymentMethod';
 
@@ -21,7 +21,7 @@ const ApplicationPaymentForm: React.FC = () => {
     <Form onSubmit={savePaymentMethod}>
       <FormHeader
         h2
-        description="You selected a paid plan. Please enter your card and billing information to continue. You will be able to review this information in the next step."
+        description="You selected a paid type. Please enter your card and billing information to continue. You will be able to review this information in the next step."
         title="Payment"
       />
 
@@ -42,13 +42,13 @@ const ApplicationPaymentForm: React.FC = () => {
 
 const ApplicationPaymentSection: React.FC = () => {
   const selectedTypeName: string = StoryStore.useStoreState(
-    ({ items }) => items.MEMBER_PLAN?.value as string
+    ({ items }) => items.MEMBER_TYPE?.value as string
   );
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const selectedType: IMemberPlan = db.community?.plans
-      ?.map((planId: string) => db.byMemberPlanId[planId])
-      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
+    const selectedType: IMemberType = db.community?.memberTypes
+      ?.map((memberTypeId: string) => db.byMemberTypeId[memberTypeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
 
     return !!selectedType?.amount;
   });

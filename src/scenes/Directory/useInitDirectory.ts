@@ -20,7 +20,7 @@ const useInitDirectory = (): Partial<QueryResult> => {
       'role',
       'status',
       { community: ['id'] },
-      { plan: ['id'] }
+      { memberType: ['id'] }
     ],
     operation: QueryEvent.LIST_MEMBERS,
     schema: [Schema.MEMBER],

@@ -3,41 +3,46 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import { PaymentModalType } from '@modals/Payment/Payment.types';
-import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
+import { IMemberType, RecurrenceType } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { IdProps, ModalType } from '@util/constants';
 import { take } from '@util/util';
 
-const MembershipChangeCard: React.FC<IdProps> = ({ id: planId }) => {
-  const plan: IMemberPlan = useStoreState(
-    ({ db }) => db.byMemberPlanId[planId]
+const MembershipChangeCard: React.FC<IdProps> = ({ id: memberTypeId }) => {
+  const memberType: IMemberType = useStoreState(
+    ({ db }) => db.byMemberTypeId[memberTypeId]
   );
 
-  const isCurrent = useStoreState(({ db }) => db.member.plan === planId);
+  const isCurrent = useStoreState(
+    ({ db }) => db.member.memberType === memberTypeId
+  );
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({
       id: ModalType.CHANGE_MEMBERSHIP,
       metadata: {
-        selectedPlanId: planId,
+        selectedMemberTypeId: memberTypeId,
         type: PaymentModalType.CHANGE_MEMBERSHIP
       }
     });
   };
 
   // Formats the amount with FREE if the amount is 0.
-  const amountString: string = plan.amount ? `$${plan.amount}` : 'FREE';
+  const amountString: string = memberType.amount
+    ? `$${memberType.amount}`
+    : 'FREE';
 
   // Construct string "Per" timespan based on the recurrence.
   const recurrenceString: string = take([
-    [plan.recurrence === RecurrenceType.YEARLY, 'Per Year'],
-    [plan.recurrence === RecurrenceType.MONTHLY, 'Per Month']
+    [memberType.recurrence === RecurrenceType.YEARLY, 'Per Year'],
+    [memberType.recurrence === RecurrenceType.MONTHLY, 'Per Month']
   ]);
 
   return (
     <Card className="s-membership-card">
-      <h4>{plan.name}</h4>
+      <h4>{memberType.name}</h4>
 
       <p>
         <span>{amountString}</span>
@@ -51,7 +56,7 @@ const MembershipChangeCard: React.FC<IdProps> = ({ id: planId }) => {
         secondary={!isCurrent}
         onClick={onClick}
       >
-        {isCurrent ? 'Current Plan' : 'Change Plan'}
+        {isCurrent ? 'Current Type' : 'Change Type'}
       </Button>
     </Card>
   );

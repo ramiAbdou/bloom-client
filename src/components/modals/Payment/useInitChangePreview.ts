@@ -11,8 +11,8 @@ import {
 } from './Payment.types';
 
 const useInitChangePreview = (): QueryResult<GetChangePreviewResult> => {
-  const planId: string = PaymentStore.useStoreState(
-    (state) => state.selectedPlanId
+  const selectedMemberTypeId: string = PaymentStore.useStoreState(
+    (state) => state.selectedMemberTypeId
   );
 
   const modalType: PaymentModalType = PaymentStore.useStoreState(
@@ -29,21 +29,23 @@ const useInitChangePreview = (): QueryResult<GetChangePreviewResult> => {
   >({
     fields: ['amount', 'prorationDate'],
     operation: QueryEvent.GET_CHANGE_PREVIEW,
-    types: { memberPlanId: { required: true } }
+    types: { memberTypeId: { required: true } }
   });
 
   useEffect(() => {
     if (modalType !== PaymentModalType.CHANGE_MEMBERSHIP) return;
 
     (async () => {
-      const { data } = await getChangePreview({ memberPlanId: planId });
+      const { data } = await getChangePreview({
+        memberTypeId: selectedMemberTypeId
+      });
 
       setChangeData({
         changeAmount: data?.amount,
         changeProrationDate: data?.prorationDate
       });
     })();
-  }, [modalType, planId]);
+  }, [modalType, selectedMemberTypeId]);
 
   return result;
 };

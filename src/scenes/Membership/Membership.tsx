@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import MainContent from '@containers/Main/MainContent';
 import MembershipChangeList from './MembershipChangeList';
-import MembershipCurrentPlan from './MembershipCurrentPlan';
+import MembershipCurrentMemberType from './MembershipCurrentMemberType';
 import MembershipHeader from './MembershipHeader';
 import MembershipPaymentHistory from './MembershipPaymentHistory';
 import MembershipPaymentMethod from './MembershipPaymentMethod';
@@ -14,7 +14,7 @@ const MembershipContent: React.FC = () => (
     <MembershipRenewalCard />
 
     <div className="s-membership-card-ctr mb-md--nlc">
-      <MembershipCurrentPlan />
+      <MembershipCurrentMemberType />
       <MembershipPaymentMethod />
     </div>
 

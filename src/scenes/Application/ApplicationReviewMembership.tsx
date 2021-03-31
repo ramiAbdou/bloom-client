@@ -6,7 +6,7 @@ import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import StoryStore from '@organisms/Story/Story.store';
 import {
-  IMemberPlan,
+  IMemberType,
   IPaymentMethod,
   RecurrenceType
 } from '@store/Db/entities';
@@ -15,7 +15,7 @@ import { take } from '@util/util';
 
 const ApplicationReviewMembeship: React.FC = () => {
   const selectedTypeName: string = StoryStore.useStoreState(
-    ({ items }) => items.MEMBER_PLAN?.value as string
+    ({ items }) => items.MEMBER_TYPE?.value as string
   );
 
   const {
@@ -27,17 +27,17 @@ const ApplicationReviewMembeship: React.FC = () => {
   );
 
   const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const selectedType: IMemberPlan = db.community?.plans
-      ?.map((planId: string) => db.byMemberPlanId[planId])
-      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
+    const selectedType: IMemberType = db.community?.memberTypes
+      ?.map((memberTypeId: string) => db.byMemberTypeId[memberTypeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
 
     return !!selectedType?.amount;
   });
 
   const description: string = useStoreState(({ db }) => {
-    const selectedType: IMemberPlan = db.community?.plans
-      ?.map((planId: string) => db.byMemberPlanId[planId])
-      ?.find((type: IMemberPlan) => type?.name === selectedTypeName);
+    const selectedType: IMemberType = db.community?.memberTypes
+      ?.map((memberTypeId: string) => db.byMemberTypeId[memberTypeId])
+      ?.find((type: IMemberType) => type?.name === selectedTypeName);
 
     if (!selectedType) return null;
 
@@ -57,7 +57,7 @@ const ApplicationReviewMembeship: React.FC = () => {
   return (
     <FormSection>
       <FormSectionHeader
-        title={last4 ? 'Membership & Payment' : 'Membership Plan'}
+        title={last4 ? 'Membership & Payment' : 'Membership Type'}
       />
 
       <Row justify="sb" spacing="xs">

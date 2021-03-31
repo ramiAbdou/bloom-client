@@ -1,18 +1,18 @@
 import React from 'react';
 
 import InformationCard from '@containers/Card/InformationCard';
-import { IMemberPlan, IPaymentMethod } from '@store/Db/entities';
+import { IMemberType, IPaymentMethod } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
 
 const PaymentFinishMethodInformationCard: React.FC = () => {
-  const planId: string = PaymentStore.useStoreState(
-    (state) => state.selectedPlanId
+  const selectedMemberTypeId: string = PaymentStore.useStoreState(
+    (state) => state.selectedMemberTypeId
   );
 
   const isFree: boolean = useStoreState(({ db }) => {
-    const plan: IMemberPlan = db.byMemberPlanId[planId];
-    return plan.isFree;
+    const memberType: IMemberType = db.byMemberTypeId[selectedMemberTypeId];
+    return memberType.isFree;
   });
 
   const brand: string = useStoreState(({ db }) => {

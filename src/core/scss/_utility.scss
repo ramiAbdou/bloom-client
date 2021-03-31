@@ -128,6 +128,14 @@
   }
 }
 
+// ## FONT SIZE
+
+.fs {
+  &-13 {
+    font-size: 13px;
+  }
+}
+
 // ## GAP
 
 .g {
@@ -274,6 +282,10 @@
 .mt {
   &-auto {
     margin-top: auto;
+  }
+
+  &-xxs {
+    margin-top: $xxs;
   }
 
   &-xs {

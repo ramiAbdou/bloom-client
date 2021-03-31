@@ -22,8 +22,8 @@ interface PaymentAnalyticsHistoryTableData {
   id: string;
   email: string;
   fullName: string;
+  memberType: string;
   paidOn: string;
-  plan: string;
 }
 
 const columns: TableColumn[] = [
@@ -32,8 +32,8 @@ const columns: TableColumn[] = [
   { id: 'email', title: 'Email', type: QuestionType.SHORT_TEXT },
   { id: 'amount', title: 'Amount', type: QuestionType.SHORT_TEXT },
   {
-    id: 'plan',
-    title: 'Membership Plan',
+    id: 'memberType',
+    title: 'Membership Type',
     type: QuestionType.MULTIPLE_CHOICE
   }
 ];
@@ -45,7 +45,7 @@ const PaymentAnalyticsHistoryTable: React.FC = () => {
     const result: PaymentAnalyticsHistoryTableData[] = db.community.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
       ?.map((payment: IPayment) => {
-        const { amount, createdAt, plan }: IPayment = payment;
+        const { amount, createdAt, memberType }: IPayment = payment;
         const member: IMember = db.byMemberId[payment?.member];
 
         const row: PaymentAnalyticsHistoryTableData = {
@@ -53,8 +53,8 @@ const PaymentAnalyticsHistoryTable: React.FC = () => {
           email: member?.email,
           fullName: `${member?.firstName} ${member?.lastName}`,
           id: member.id,
-          paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A'),
-          plan: db.byMemberPlanId[plan].name
+          memberType: db.byMemberTypeId[memberType].name,
+          paidOn: day(createdAt).format('MMM DD, YYYY @ h:mm A')
         };
 
         return row;

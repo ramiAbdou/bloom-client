@@ -8,7 +8,7 @@ import useLoader from '@organisms/Loader/useLoader';
 import {
   IApplication,
   ICommunity,
-  IMemberPlan,
+  IMemberType,
   IRankedQuestion
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -87,8 +87,8 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     types: { communityId: { required: false } }
   });
 
-  const [listMemberPlans, { loading: loading5 }] = useManualQuery<
-    IMemberPlan[],
+  const [listMemberTypes, { loading: loading5 }] = useManualQuery<
+    IMemberType[],
     CommunityIdArgs
   >({
     fields: [
@@ -99,8 +99,8 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       'recurrence',
       { community: ['id'] }
     ],
-    operation: QueryEvent.LIST_MEMBER_PLANS,
-    schema: [Schema.MEMBER_PLAN],
+    operation: QueryEvent.LIST_MEMBER_TYPES,
+    schema: [Schema.MEMBER_TYPE],
     types: { communityId: { required: false } }
   });
 
@@ -115,7 +115,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       await Promise.all([
         getApplication({ communityId }),
         getCommunityIntegrations({ communityId }),
-        listMemberPlans({ communityId }),
+        listMemberTypes({ communityId }),
         getRankedQuestions({ communityId })
       ]);
     })();

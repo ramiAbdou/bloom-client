@@ -7,7 +7,7 @@ import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMemberPlan, MemberRole } from '@store/Db/entities';
+import { IMemberType, MemberRole } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
@@ -31,15 +31,15 @@ const ProfilePersonalHeader: React.FC = () => {
 const ProfilePersonalTagList: React.FC = () => {
   const role: MemberRole = useStoreState(({ db }) => db.member.role);
 
-  const memberPlanName: string = useStoreState(({ db }) => {
-    const memberPlan: IMemberPlan = db.byMemberPlanId[db.member.plan];
-    return memberPlan?.name;
+  const memberTypeName: string = useStoreState(({ db }) => {
+    const memberType: IMemberType = db.byMemberTypeId[db.member.memberType];
+    return memberType?.name;
   });
 
   return (
     <Row wrap gap="xs">
       <HeaderTag show={!!role}>{role}</HeaderTag>
-      <HeaderTag>{memberPlanName}</HeaderTag>
+      <HeaderTag>{memberTypeName}</HeaderTag>
     </Row>
   );
 };

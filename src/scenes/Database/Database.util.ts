@@ -4,8 +4,8 @@ import { TableRow } from '@organisms/Table/Table.types';
 import { DbModel } from '@store/Db/Db.types';
 import {
   IMember,
-  IMemberPlan,
   IMemberSocials,
+  IMemberType,
   IMemberValue,
   IQuestion,
   MemberStatus
@@ -43,9 +43,9 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
   if (category === QuestionCategory.PROFILE_PICTURE) return member.pictureUrl;
   if (category === QuestionCategory.TWITTER_URL) return socials?.twitterUrl;
 
-  if (category === QuestionCategory.MEMBER_PLAN) {
-    const plan: IMemberPlan = db.byMemberPlanId[member.plan];
-    return plan?.name;
+  if (category === QuestionCategory.MEMBER_TYPE) {
+    const memberType: IMemberType = db.byMemberTypeId[member.memberType];
+    return memberType?.name;
   }
 
   if (category === QuestionCategory.EVENTS_ATTENDED) {
@@ -65,7 +65,9 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
 export const getMemberTableRow = (args: GetMemberTableRowArgs): TableRow[] => {
   const { db } = args;
 
-  if (!db.community.plans?.length || !db.community.questions?.length) return [];
+  if (!db.community.memberTypes?.length || !db.community.questions?.length) {
+    return [];
+  }
 
   const sortQuestionId: string = db.community?.questions?.find(
     (questionId: string) => {

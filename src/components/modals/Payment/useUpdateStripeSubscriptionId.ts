@@ -15,8 +15,8 @@ import { CreateSubscriptionArgs } from './Payment.types';
 const useUpdateStripeSubscriptionId = (): OnFormSubmitFunction => {
   const urlName: string = useStoreState(({ db }) => db.community?.urlName);
 
-  const memberPlanId: string = PaymentStore.useStoreState(
-    (state) => state.selectedPlanId
+  const selectedMemberTypeId: string = PaymentStore.useStoreState(
+    (state) => state.selectedMemberTypeId
   );
 
   const prorationDate: number = PaymentStore.useStoreState(
@@ -32,19 +32,19 @@ const useUpdateStripeSubscriptionId = (): OnFormSubmitFunction => {
     fields: [
       'id',
       'stripeSubscriptionId',
-      { member: ['id', 'isDuesActive', { plan: ['id'] }] }
+      { member: ['id', 'isDuesActive', { memberType: ['id'] }] }
     ],
     operation: MutationEvent.UPDATE_STRIPE_SUBSCRIPTION_ID,
     schema: Schema.MEMBER_INTEGRATIONS,
     types: {
-      memberPlanId: { required: true },
+      memberTypeId: { required: true },
       prorationDate: { required: false, type: 'Int' }
     }
   });
 
   const onSubmit: OnFormSubmitFunction = async (args: OnFormSubmitArgs) => {
     const { error } = await updateStripeSubscriptionId({
-      memberPlanId,
+      memberTypeId: selectedMemberTypeId,
       prorationDate
     });
 

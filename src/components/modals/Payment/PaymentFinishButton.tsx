@@ -12,8 +12,8 @@ const PaymentFinishButton: React.FC = () => {
     (state) => state.type
   );
 
-  const selectedPlanId: string = PaymentStore.useStoreState(
-    (state) => state.selectedPlanId
+  const selectedMemberTypeId: string = PaymentStore.useStoreState(
+    (state) => state.selectedMemberTypeId
   );
 
   const changeAmount: number = PaymentStore.useStoreState(
@@ -21,16 +21,19 @@ const PaymentFinishButton: React.FC = () => {
   );
 
   const amount: number = useStoreState(
-    ({ db }) => changeAmount ?? db.byMemberPlanId[selectedPlanId]?.amount
+    ({ db }) => changeAmount ?? db.byMemberTypeId[selectedMemberTypeId]?.amount
   );
 
   const isLessThanCurrentType: boolean = useStoreState(({ db }) => {
-    const selectedAmount: number = db.byMemberPlanId[selectedPlanId]?.amount;
-    const currentAmount: number = db.byMemberPlanId[db.member.plan]?.amount;
+    const selectedAmount: number =
+      db.byMemberTypeId[selectedMemberTypeId]?.amount;
+
+    const currentAmount: number =
+      db.byMemberTypeId[db.member.memberType]?.amount;
 
     return (
       db.member.isDuesActive &&
-      !db.byMemberPlanId[selectedPlanId]?.isFree &&
+      !db.byMemberTypeId[selectedMemberTypeId]?.isFree &&
       selectedAmount < currentAmount
     );
   });

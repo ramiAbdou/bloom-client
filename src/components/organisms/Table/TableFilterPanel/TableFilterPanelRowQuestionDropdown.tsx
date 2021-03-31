@@ -33,14 +33,14 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
         question.category === QuestionCategory.DUES_STATUS &&
         db.community.canCollectDues;
 
-      const isMemberPlanAllowed: boolean =
-        question.category === QuestionCategory.MEMBER_PLAN &&
-        db.community.plans.length >= 2;
+      const isMemberTypeAllowed: boolean =
+        question.category === QuestionCategory.MEMBER_TYPE &&
+        db.community.memberTypes.length >= 2;
 
       return (
         !question.category ||
         isDuesStatusAllowed ||
-        isMemberPlanAllowed ||
+        isMemberTypeAllowed ||
         question.category === QuestionCategory.BIO ||
         question.category === QuestionCategory.EVENTS_ATTENDED ||
         question.category === QuestionCategory.GENDER
@@ -58,14 +58,14 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
           question.category === QuestionCategory.DUES_STATUS &&
           db.community.canCollectDues;
 
-        const isMemberPlanAllowed: boolean =
-          question.category === QuestionCategory.MEMBER_PLAN &&
-          db.community.plans.length >= 2;
+        const isMemberTypeAllowed: boolean =
+          question.category === QuestionCategory.MEMBER_TYPE &&
+          db.community.memberTypes.length >= 2;
 
         return (
           !question.category ||
           isDuesStatusAllowed ||
-          isMemberPlanAllowed ||
+          isMemberTypeAllowed ||
           question.category === QuestionCategory.BIO ||
           question.category === QuestionCategory.EVENTS_ATTENDED ||
           question.category === QuestionCategory.GENDER

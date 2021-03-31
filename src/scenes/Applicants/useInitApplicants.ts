@@ -15,7 +15,7 @@ const useInitApplicants = (): QueryResult<IMember[]> => {
       'role',
       'status',
       { community: ['id'] },
-      { plan: ['id'] },
+      { memberType: ['id'] },
       { values: ['id', 'value', { question: ['id'] }] }
     ],
     operation: QueryEvent.LIST_APPLICANTS,

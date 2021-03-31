@@ -2,14 +2,14 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Show from '@containers/Show';
-import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
+import { IMemberType, RecurrenceType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { IdProps } from '@util/constants';
 import { take } from '@util/util';
 
-const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: planId }) => {
-  const { amount, recurrence }: IMemberPlan = useStoreState(
-    ({ db }) => db.byMemberPlanId[planId],
+const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: memberTypeId }) => {
+  const { amount, recurrence }: IMemberType = useStoreState(
+    ({ db }) => db.byMemberTypeId[memberTypeId],
     deepequal
   );
 
