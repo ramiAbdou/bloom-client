@@ -134,6 +134,7 @@ export interface IMember extends BaseEntity {
   memberType: Identifier;
   payments: Identifier[];
   pictureUrl: string;
+  position?: string;
   role?: MemberRole;
   socials: Identifier;
   status: MemberStatus;

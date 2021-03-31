@@ -22,6 +22,7 @@ const Profile: React.FC = () => {
       'bio',
       'email',
       'joinedAt',
+      'position',
       { memberType: ['id'] },
       { socials: ['id'] }
     ],

@@ -13,6 +13,23 @@ import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 
+const DirectoryCardInformationPosition: React.FC = () => {
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
+
+  const position: string = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    return member?.position;
+  });
+
+  if (!position) return null;
+
+  return (
+    <span className="body--bold c-primary d-block fs-13 mb-xxs ta-center">
+      {position}
+    </span>
+  );
+};
+
 const DirectoryCardInformation: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
@@ -45,10 +62,7 @@ const DirectoryCardInformation: React.FC = () => {
       <p>
         <span className="body--bold d-block mb-xxs ta-center">{fullName}</span>
 
-        <span className="body--bold c-primary d-block fs-13 mb-xxs ta-center">
-          Head of Community Outreach
-        </span>
-
+        <DirectoryCardInformationPosition />
         <span className="c-gray-2 d-block meta ta-center">
           {highlightedValue ?? ''}
         </span>

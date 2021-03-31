@@ -17,6 +17,7 @@ const useInitDirectory = (): Partial<QueryResult> => {
       'joinedAt',
       'lastName',
       'pictureUrl',
+      'position',
       'role',
       'status',
       { community: ['id'] },
