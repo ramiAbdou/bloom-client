@@ -1,3 +1,4 @@
+import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
@@ -6,21 +7,28 @@ import { useStoreActions } from '@store/Store';
 import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
 import { SidebarLinkOptions } from './Sidebar.types';
+import SidebarLinkNotificationCircle from './SidebarLinkNotificationCircle';
 
 interface SidebarLinkProps extends SidebarLinkOptions, OnClickProps {}
 
 const SidebarLinkAction: React.FC<
   Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
-  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
+  const setIsOpen: ActionCreator<boolean> = useStoreActions(
+    ({ sidebar }) => sidebar.setIsOpen
+  );
 
-  const onUpdatedClick = () => {
+  const onUpdatedClick = (): void => {
     setIsOpen(false);
-    onClick();
+    if (onClick) onClick();
   };
 
   return (
-    <button className="o-nav-link" type="button" onClick={onUpdatedClick}>
+    <button
+      className="f f-ac o-nav-link"
+      type="button"
+      onClick={onUpdatedClick}
+    >
       <Icon />
       {title}
     </button>
@@ -33,24 +41,33 @@ const SidebarLinkAction: React.FC<
  * Button that opens up a modal.
  */
 const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
-  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
   const { Icon, onClick, to, title } = props;
+
+  const setIsOpen: ActionCreator<boolean> = useStoreActions(
+    ({ sidebar }) => sidebar.setIsOpen
+  );
+
   const { url } = useRouteMatch();
-  const isActive = useTopLevelRoute() === to;
+  const isActive: boolean = useTopLevelRoute() === to;
 
   // If onClick is supplied, means it is an action.
-  if (onClick) return <SidebarLinkAction {...props} />;
+  if (onClick) {
+    return <SidebarLinkAction {...props} />;
+  }
 
-  const css: string = cx('o-nav-link', {
+  const css: string = cx('f f-ac o-nav-link', {
     'o-nav-link--active': isActive
   });
 
-  const onLinkClick = () => setIsOpen(false);
+  const onLinkClick = (): void => {
+    setIsOpen(false);
+  };
 
   return (
     <Link className={css} to={`${url}/${to}`} onClick={onLinkClick}>
       <Icon />
       {title}
+      <SidebarLinkNotificationCircle to={to} />
     </Link>
   );
 };

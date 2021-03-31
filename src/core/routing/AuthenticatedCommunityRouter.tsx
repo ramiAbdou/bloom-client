@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import { QueryResult } from '@hooks/useQuery.types';
 import Sidebar from '@organisms/Sidebar/Sidebar';
 import Analytics from '@scenes/Analytics/Analytics';
 import Applicants from '@scenes/Applicants/Applicants';
@@ -15,7 +16,9 @@ import AdminRoute from './AdminRoute';
 import useInitCommunity from './useInitCommunity';
 
 const AuthenticatedCommunityRouterSwitch: React.FC = () => {
-  const autoAccept = useStoreState(({ db }) => db.community?.autoAccept);
+  const autoAccept: boolean = useStoreState(
+    ({ db }) => db.community?.autoAccept
+  );
 
   return (
     <div className="home-content">
@@ -39,9 +42,13 @@ const AuthenticatedCommunityRouterSwitch: React.FC = () => {
 };
 
 const AuthenticatedCommunityRouter: React.FC = () => {
-  const isAuthenticated = useStoreState(({ db }) => db.isAuthenticated);
-  const isInitialized = useStoreState(({ db }) => db.isInitialized);
-  const { loading } = useInitCommunity();
+  const isInitialized: boolean = useStoreState(({ db }) => db.isInitialized);
+
+  const isAuthenticated: boolean = useStoreState(
+    ({ db }) => db.isAuthenticated
+  );
+
+  const { loading }: Partial<QueryResult> = useInitCommunity();
 
   if (!isAuthenticated) return <Redirect to="/login" />;
   if (!isInitialized || loading) return null;
