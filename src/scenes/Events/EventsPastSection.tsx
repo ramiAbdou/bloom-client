@@ -47,35 +47,14 @@ const EventsPastList: React.FC = () => {
   );
 };
 
-const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => {
-  const hasEvents: boolean = useStoreState(({ db }) => {
-    const attendees: Set<string> = new Set(db.member.attendees);
+const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => (
+  <Section>
+    <LoadingHeader h2 className="mb-sm" loading={loading} title="Past Events" />
 
-    return !!db.community?.events
-      ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-      ?.filter(
-        (event: IEvent) =>
-          !event.attendees?.some((attendeeId: string) =>
-            attendees.has(attendeeId)
-          )
-      );
-  });
-
-  return (
-    <Section show={hasEvents}>
-      <LoadingHeader
-        h2
-        className="mb-sm"
-        loading={loading}
-        title="Past Events"
-      />
-
-      <ListStore.Provider>
-        <EventsPastList />
-      </ListStore.Provider>
-    </Section>
-  );
-};
+    <ListStore.Provider>
+      <EventsPastList />
+    </ListStore.Provider>
+  </Section>
+);
 
 export default EventsPastSection;
