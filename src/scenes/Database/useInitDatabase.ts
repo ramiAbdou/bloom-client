@@ -26,7 +26,7 @@ const useInitDatabase = (): Partial<QueryResult> => {
       'role',
       'status',
       { community: ['id'] },
-      { plan: ['id'] },
+      { memberType: ['id'] },
       { socials: ['id'] }
     ],
     operation: QueryEvent.LIST_MEMBERS,

@@ -6,7 +6,7 @@ import Form from '@organisms/Form/Form';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IMemberPlan } from '@store/Db/entities';
+import { IMemberType } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import ApplicationReviewMain from './ApplicationReviewMain';
 import ApplicationReviewMembership from './ApplicationReviewMembership';
@@ -39,10 +39,10 @@ const ApplicationReviewForm: React.FC = () => {
 
 const ApplicationReview: React.FC = () => {
   const isMultipleTypesOrPaid: boolean = useStoreState(({ db }) => {
-    const types: string[] = db.community?.plans;
+    const types: string[] = db.community?.memberTypes;
 
-    return types?.some((planId: string) => {
-      const type: IMemberPlan = db.byMemberPlanId[planId];
+    return types?.some((memberTypeId: string) => {
+      const type: IMemberType = db.byMemberTypeId[memberTypeId];
       return !!type?.amount;
     });
   });

@@ -8,8 +8,8 @@ import StoryPage from '@organisms/Story/StoryPage';
 import PaymentStore from './Payment.store';
 import { GetChangePreviewResult, PaymentModalType } from './Payment.types';
 import PaymentFinishButton from './PaymentFinishButton';
+import PaymentFinishMemberTypeInformationCard from './PaymentFinishMemberTypeInformationCard';
 import PaymentFinishMethodInformationCard from './PaymentFinishMethodInformationCard';
-import PaymentFinishPlanInformationCard from './PaymentFinishPlanInformationCard';
 import useInitChangePreview from './useInitChangePreview';
 import useUpdateStripeSubscriptionId from './useUpdateStripeSubscriptionId';
 
@@ -27,7 +27,7 @@ const PaymentFinishForm: React.FC = () => {
       onSubmitDeps={[prorationDate]}
     >
       <Row className="mb-md--nlc" justify="sb" spacing="xs">
-        <PaymentFinishPlanInformationCard />
+        <PaymentFinishMemberTypeInformationCard />
         <PaymentFinishMethodInformationCard />
       </Row>
 
@@ -57,7 +57,7 @@ const PaymentFinishPage: React.FC = () => {
       title={
         modalType === PaymentModalType.PAY_DUES
           ? 'Pay Dues'
-          : 'Change Membership Plan'
+          : 'Change Membership Type'
       }
     >
       <PaymentFinishForm />

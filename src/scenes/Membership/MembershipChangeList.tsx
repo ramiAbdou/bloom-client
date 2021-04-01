@@ -4,12 +4,14 @@ import { useStoreState } from '@store/Store';
 import MembershipChangeCard from './MembershipChangeCard';
 
 const MembershipChangeList: React.FC = () => {
-  const planIds: string[] = useStoreState(({ db }) => db.community.plans);
+  const memberTypeIds: string[] = useStoreState(
+    ({ db }) => db.community.memberTypes
+  );
 
   return (
     <ul className="s-membership-card-ctr">
-      {planIds?.map((planId: string) => (
-        <MembershipChangeCard key={planId} id={planId} />
+      {memberTypeIds?.map((memberTypeId: string) => (
+        <MembershipChangeCard key={memberTypeId} id={memberTypeId} />
       ))}
     </ul>
   );

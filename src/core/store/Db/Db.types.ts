@@ -12,8 +12,8 @@ import {
   IEventWatch,
   IMember,
   IMemberIntegrations,
-  IMemberPlan,
   IMemberSocials,
+  IMemberType,
   IMemberValue,
   IPayment,
   IQuestion,
@@ -49,7 +49,7 @@ export interface DbModel {
     DbModel,
     Record<string, IMemberIntegrations>
   >;
-  byMemberPlanId: Computed<DbModel, Record<string, IMemberPlan>>;
+  byMemberTypeId: Computed<DbModel, Record<string, IMemberType>>;
   byPaymentId: Computed<DbModel, Record<string, IPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
   byRankedQuestionId: Computed<DbModel, Record<string, IRankedQuestion>>;

@@ -14,7 +14,7 @@ const useInitMembersAnalytics = (): Partial<QueryResult> => {
       'isDuesActive',
       'status',
       { community: ['id'] },
-      { plan: ['id'] }
+      { memberType: ['id'] }
     ],
     operation: QueryEvent.LIST_MEMBERS,
     schema: [Schema.MEMBER],

@@ -1,14 +1,14 @@
-import { IMemberPlan, RecurrenceType } from '@store/Db/entities';
+import { IMemberType, RecurrenceType } from '@store/Db/entities';
 import { take } from '@util/util';
 
 /**
  * Returns the type description based on the amount, recurrence and such.
  *
- * @example getPlanDescription(args) => FREE Per Month
- * @example getPlanDescription(args) => $20 Per Year
+ * @example getMemberTypeDescription(args) => "FREE Per Month"
+ * @example getMemberTypeDescription(args) => "$20 Per Year"
  */
-export const getPlanDescription = (
-  type: Pick<IMemberPlan, 'amount' | 'recurrence'>
+export const getMemberTypeDescription = (
+  type: Pick<IMemberType, 'amount' | 'recurrence'>
 ): string => {
   const { amount, recurrence } = type;
   // Formats the amount with FREE if the amount is 0.

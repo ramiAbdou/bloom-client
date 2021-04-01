@@ -24,23 +24,23 @@ const PaymentModal: React.FC = () => {
     ({ modal }) => modal.metadata?.type
   );
 
-  const selectedPlanId: string = useStoreState(
-    ({ modal }) => modal.metadata?.selectedPlanId
+  const selectedMemberTypeId: string = useStoreState(
+    ({ modal }) => modal.metadata?.selectedMemberTypeId
   );
 
   const { loading }: Partial<QueryResult> = useInitPayment();
 
-  // If CHANGE_MEMBERSHIP or PAY_DUES, there should be a selectedPlanId!
-  const missingSelectedPlan: boolean =
+  // If CHANGE_MEMBERSHIP or PAY_DUES, there should be a selectedMemberTypeId!
+  const missingSelectedMemberType: boolean =
     (modalType === PaymentModalType.CHANGE_MEMBERSHIP ||
       modalType === PaymentModalType.PAY_DUES) &&
-    !selectedPlanId;
+    !selectedMemberTypeId;
 
-  if (loading || missingSelectedPlan) return null;
+  if (loading || missingSelectedMemberType) return null;
 
   return (
     <PaymentStore.Provider
-      runtimeModel={{ ...paymentModel, selectedPlanId, type: modalType }}
+      runtimeModel={{ ...paymentModel, selectedMemberTypeId, type: modalType }}
     >
       <PaymentStripeProvider>
         <PaymentModalStory />

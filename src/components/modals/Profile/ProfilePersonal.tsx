@@ -5,7 +5,7 @@ import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMember, IMemberPlan } from '@store/Db/entities';
+import { IMember, IMemberType, MemberRole } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ProfileSocialContainer from './ProfileSocial';
@@ -38,21 +38,27 @@ const ProfilePersonalName: React.FC = () => {
 const ProfilePersonalTags: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const role = useStoreState(({ db }) => {
+  const role: MemberRole = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
     return member.role;
   });
 
-  const planName: string = useStoreState(({ db }) => {
+  const position: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    const plan: IMemberPlan = db.byMemberPlanId[member.plan];
-    return plan?.name;
+    return member.position;
+  });
+
+  const memberTypeName: string = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    const memberType: IMemberType = db.byMemberTypeId[member.memberType];
+    return memberType?.name;
   });
 
   return (
-    <Row className="mb-ss--nlc" spacing="xs">
+    <Row wrap className="mb-ss--nlc" gap="xs">
       <HeaderTag show={!!role}>{role}</HeaderTag>
-      <HeaderTag>{planName}</HeaderTag>
+      <HeaderTag show={!!position}>{position}</HeaderTag>
+      <HeaderTag>{memberTypeName}</HeaderTag>
     </Row>
   );
 };

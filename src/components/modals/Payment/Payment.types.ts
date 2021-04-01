@@ -7,12 +7,12 @@ export enum PaymentModalType {
 }
 
 export interface CreateSubscriptionArgs {
-  memberPlanId: string;
+  memberTypeId: string;
   prorationDate?: number;
 }
 
 export interface GetChangePreviewArgs {
-  memberPlanId: string;
+  memberTypeId: string;
 }
 
 export interface GetChangePreviewResult {
@@ -29,7 +29,7 @@ export interface UpdateStripePaymentMethodIdArgs {
 export interface PaymentModel {
   changeAmount: number;
   changeProrationDate: number;
-  selectedPlanId: string;
+  selectedMemberTypeId: string;
   setChangeData: Action<
     PaymentModel,
     Pick<PaymentModel, 'changeAmount' | 'changeProrationDate'>

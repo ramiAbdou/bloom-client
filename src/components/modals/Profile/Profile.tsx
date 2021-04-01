@@ -22,7 +22,8 @@ const Profile: React.FC = () => {
       'bio',
       'email',
       'joinedAt',
-      { plan: ['id'] },
+      'position',
+      { memberType: ['id'] },
       { socials: ['id'] }
     ],
     operation: QueryEvent.GET_MEMBER,

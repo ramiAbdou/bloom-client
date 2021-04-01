@@ -7,8 +7,8 @@ import {
   IEvent,
   IMember,
   IMemberIntegrations,
-  IMemberPlan,
   IMemberSocials,
+  IMemberType,
   IUser
 } from '@store/Db/entities';
 import { DbModel } from './Db.types';
@@ -33,15 +33,16 @@ const dbActiveStore: Pick<
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
     const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
-    const { byId: byMemberPlanId } = entities.memberPlans;
+    const { byId: byMemberTypeId } = entities.memberTypes;
+
     const result: ICommunity = byId[activeId];
 
     const communityIntegrations: ICommunityIntegrations =
       byCommunityIntegrationsId[result?.communityIntegrations];
 
-    const hasPaidMembership: boolean = result?.plans
-      ?.map((planId: string) => byMemberPlanId[planId])
-      ?.some((plan: IMemberPlan) => !plan?.isFree);
+    const hasPaidMembership: boolean = result?.memberTypes
+      ?.map((memberTypeId: string) => byMemberTypeId[memberTypeId])
+      ?.some((memberType: IMemberType) => !memberType?.isFree);
 
     if (!result) return null;
 

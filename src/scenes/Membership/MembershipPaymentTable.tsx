@@ -9,7 +9,7 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMemberPlan, IPayment } from '@store/Db/entities';
+import { IMemberType, IPayment } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -17,7 +17,7 @@ import { sortObjects } from '@util/util';
 const columns: TableColumn[] = [
   { id: 'paidOn', title: 'Date' },
   { id: 'amount', title: 'Amount' },
-  { id: 'type', title: 'Membership Plan', type: QuestionType.MULTIPLE_CHOICE },
+  { id: 'type', title: 'Membership Type', type: QuestionType.MULTIPLE_CHOICE },
   {
     format: (value: boolean) => (value ? 'Succeeded' : 'Failed'),
     id: 'status',
@@ -40,10 +40,10 @@ const MembershipPaymentTable: React.FC = () => {
   const rows: TableRow[] = useStoreState(({ db }) =>
     db.member.payments
       ?.map((paymentId: string) => db.byPaymentId[paymentId])
-      ?.filter((payment: IPayment) => !!payment?.plan)
+      ?.filter((payment: IPayment) => !!payment?.memberType)
       ?.map((payment: IPayment) => {
         const { createdAt, id, stripeInvoiceUrl: receipt } = payment;
-        const plan: IMemberPlan = db.byMemberPlanId[payment.plan];
+        const memberType: IMemberType = db.byMemberTypeId[payment.memberType];
         const amount = `$${payment.amount.toFixed(2)}`;
         const paidOn = day(createdAt).format('MMM DD, YYYY');
 
@@ -54,7 +54,7 @@ const MembershipPaymentTable: React.FC = () => {
           paidOn,
           receipt,
           status: true,
-          type: plan?.name
+          type: memberType?.name
         };
       })
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'))

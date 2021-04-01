@@ -63,7 +63,7 @@ const Community = new schema.Entity(
         ],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.memberId, { members: [parent.id] }],
-        [!!parent.memberPlanId, { plans: [parent.id] }],
+        [!!parent.memberTypeId, { memberTypes: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
         [!!parent.questionId, { questions: [parent.id] }]
       ]);
@@ -183,12 +183,12 @@ const MemberSocials = new schema.Entity(
   }
 );
 
-const MemberPlan = new schema.Entity(
-  'memberPlans',
+const MemberType = new schema.Entity(
+  'memberTypes',
   {},
   {
     processStrategy: (value) => {
-      return { ...value, memberPlanId: value.id };
+      return { ...value, memberTypeId: value.id };
     }
   }
 );
@@ -278,10 +278,10 @@ Community.define({
   communityIntegrations: CommunityIntegrations,
   events: [Event],
   highlightedQuestion: Question,
+  memberTypes: [MemberType],
   members: [Member],
   owner: Member,
   payments: [Payment],
-  plans: [MemberPlan],
   questions: [Question],
   supporters: [Supporter]
 });
@@ -306,8 +306,8 @@ Member.define({
   community: Community,
   guests: [EventGuest],
   memberIntegrations: MemberIntegrations,
+  memberType: MemberType,
   payments: [Payment],
-  plan: MemberPlan,
   socials: MemberSocials,
   user: User,
   values: [MemberValue],
@@ -318,14 +318,14 @@ MemberIntegrations.define({ member: Member });
 
 MemberSocials.define({ member: Member });
 
-MemberPlan.define({ community: Community });
+MemberType.define({ community: Community });
 
 MemberValue.define({ member: Member, question: Question });
 
 Payment.define({
   community: Community,
   member: Member,
-  plan: MemberPlan
+  memberType: MemberType
 });
 
 Question.define({ community: Community, values: [MemberValue] });
@@ -350,8 +350,8 @@ export const Schema = {
   EVENT_WATCH: EventWatch,
   MEMBER: Member,
   MEMBER_INTEGRATIONS: MemberIntegrations,
-  MEMBER_PLAN: MemberPlan,
   MEMBER_SOCIALS: MemberSocials,
+  MEMBER_TYPE: MemberType,
   MEMBER_VALUE: MemberValue,
   PAYMENT: Payment,
   QUESTION: Question,

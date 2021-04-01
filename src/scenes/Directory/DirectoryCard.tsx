@@ -5,13 +5,30 @@ import Card from '@containers/Card/Card';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import {
   IMember,
-  IMemberPlan,
+  IMemberType,
   IMemberValue,
   IQuestion
 } from '@store/Db/entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
+
+const DirectoryCardInformationPosition: React.FC = () => {
+  const memberId: string = IdStore.useStoreState(({ id }) => id);
+
+  const position: string = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    return member?.position;
+  });
+
+  if (!position) return null;
+
+  return (
+    <span className="body--bold c-primary d-block fs-13 mb-xxs ta-center">
+      {position}
+    </span>
+  );
+};
 
 const DirectoryCardInformation: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
@@ -27,9 +44,9 @@ const DirectoryCardInformation: React.FC = () => {
     const highlightedQuestion: IQuestion =
       db.byQuestionId[db.community?.highlightedQuestion];
 
-    if (highlightedQuestion.category === QuestionCategory.MEMBER_PLAN) {
-      const memberPlan: IMemberPlan = db.byMemberPlanId[member.plan];
-      return memberPlan.name;
+    if (highlightedQuestion.category === QuestionCategory.MEMBER_TYPE) {
+      const memberType: IMemberType = db.byMemberTypeId[member.memberType];
+      return memberType.name;
     }
 
     return member.values
@@ -43,7 +60,12 @@ const DirectoryCardInformation: React.FC = () => {
   return (
     <div className="s-directory-card-content">
       <p>
-        {fullName} <span>{highlightedValue ?? ''}</span>
+        <span className="body--bold d-block mb-xxs ta-center">{fullName}</span>
+
+        <DirectoryCardInformationPosition />
+        <span className="c-gray-2 d-block meta ta-center">
+          {highlightedValue ?? ''}
+        </span>
       </p>
     </div>
   );

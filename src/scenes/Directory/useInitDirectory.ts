@@ -17,10 +17,11 @@ const useInitDirectory = (): Partial<QueryResult> => {
       'joinedAt',
       'lastName',
       'pictureUrl',
+      'position',
       'role',
       'status',
       { community: ['id'] },
-      { plan: ['id'] }
+      { memberType: ['id'] }
     ],
     operation: QueryEvent.LIST_MEMBERS,
     schema: [Schema.MEMBER],

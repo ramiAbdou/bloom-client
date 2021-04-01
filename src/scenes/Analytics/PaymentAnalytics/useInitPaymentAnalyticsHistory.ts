@@ -18,7 +18,7 @@ const useInitPaymentAnalyticsHistory = (): Partial<QueryResult> => {
       'stripeInvoiceUrl',
       { community: ['id'] },
       { member: ['id'] },
-      { plan: ['id'] }
+      { memberType: ['id'] }
     ],
     operation: QueryEvent.LIST_PAYMENTS,
     schema: [Schema.PAYMENT],

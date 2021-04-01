@@ -7,9 +7,13 @@ import { PaymentModalType } from '@modals/Payment/Payment.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
-const MembershipCurrentPlanActions: React.FC = () => {
+const MembershipCurrentMemberTypeActions: React.FC = () => {
   const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
-  const currentTypeId: string = useStoreState(({ db }) => db.member?.plan);
+
+  const currentTypeId: string = useStoreState(
+    ({ db }) => db.member?.memberType
+  );
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const { url } = useRouteMatch();
   const { push } = useHistory();
@@ -18,7 +22,7 @@ const MembershipCurrentPlanActions: React.FC = () => {
     showModal({
       id: ModalType.PAY_DUES,
       metadata: {
-        selectedPlanId: currentTypeId,
+        selectedMemberTypeId: currentTypeId,
         type: PaymentModalType.PAY_DUES
       }
     });
@@ -33,10 +37,10 @@ const MembershipCurrentPlanActions: React.FC = () => {
       </Button>
 
       <Button fill secondary onClick={onSecondaryClick}>
-        Change Plan
+        Change Type
       </Button>
     </Row>
   );
 };
 
-export default MembershipCurrentPlanActions;
+export default MembershipCurrentMemberTypeActions;

@@ -8,14 +8,17 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
 const SidebarPayDuesButton: React.FC = () => {
-  const currentTypeId: string = useStoreState(({ db }) => db.member?.plan);
+  const currentTypeId: string = useStoreState(
+    ({ db }) => db.member?.memberType
+  );
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({
       id: ModalType.PAY_DUES,
       metadata: {
-        selectedPlanId: currentTypeId,
+        selectedMemberTypeId: currentTypeId,
         type: PaymentModalType.PAY_DUES
       }
     });

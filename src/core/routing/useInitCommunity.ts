@@ -6,7 +6,7 @@ import useLoader from '@organisms/Loader/useLoader';
 import {
   ICommunity,
   ICommunityIntegrations,
-  IMemberPlan,
+  IMemberType,
   IQuestion
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -63,8 +63,8 @@ const useInitCommunity = (): Partial<QueryResult> => {
     schema: [Schema.QUESTION]
   });
 
-  const [listMemberPlans, { loading: loading4 }] = useManualQuery<
-    IMemberPlan[]
+  const [listMemberTypes, { loading: loading4 }] = useManualQuery<
+    IMemberType[]
   >({
     fields: [
       'amount',
@@ -74,8 +74,8 @@ const useInitCommunity = (): Partial<QueryResult> => {
       'recurrence',
       { community: ['id'] }
     ],
-    operation: QueryEvent.LIST_MEMBER_PLANS,
-    schema: [Schema.MEMBER_PLAN]
+    operation: QueryEvent.LIST_MEMBER_TYPES,
+    schema: [Schema.MEMBER_TYPE]
   });
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const useInitCommunity = (): Partial<QueryResult> => {
         getCommunity(),
         getCommunityIntegrations(),
         getQuestions(),
-        listMemberPlans()
+        listMemberTypes()
       ]);
     })();
   }, [communityId]);

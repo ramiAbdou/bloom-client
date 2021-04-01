@@ -4,7 +4,7 @@ import sw from 'stopword';
 
 import {
   IMember,
-  IMemberPlan,
+  IMemberType,
   IMemberValue,
   IQuestion
 } from '@store/Db/entities';
@@ -40,12 +40,13 @@ const useQuestionData = (): Pick<
 
     members.forEach((memberId: string) => {
       const member: IMember = db.byMemberId[memberId];
-      const plan: IMemberPlan = db.byMemberPlanId[member.plan];
+      const memberType: IMemberType = db.byMemberTypeId[member.memberType];
 
       let value;
 
-      if (category === QuestionCategory.MEMBER_PLAN) value = plan?.name;
-      else if (category === QuestionCategory.DUES_STATUS) {
+      if (category === QuestionCategory.MEMBER_TYPE) {
+        value = memberType?.name;
+      } else if (category === QuestionCategory.DUES_STATUS) {
         value = member.isDuesActive ? 'Paid' : 'Not Paid';
       } else {
         const d = member.values.find((valueId: string) => {

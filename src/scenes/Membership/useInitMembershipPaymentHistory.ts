@@ -16,7 +16,7 @@ const useInitMembershipPaymentHistory = (): QueryResult<IPayment[]> => {
       'stripeInvoiceUrl',
       'type',
       { member: ['id'] },
-      { plan: ['id'] }
+      { memberType: ['id'] }
     ],
     operation: QueryEvent.LIST_PAYMENTS,
     schema: [Schema.PAYMENT],
