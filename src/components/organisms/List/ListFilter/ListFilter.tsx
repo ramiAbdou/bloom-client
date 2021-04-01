@@ -4,6 +4,7 @@ import Row from '@containers/Row/Row';
 import PanelCloseButton from '@organisms/Panel/PanelCloseButton';
 import { IQuestion } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
+import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import ListFilterQuestion from '../ListFilterQuestion/ListFilterQuestion';
 import ListFilterStore from './ListFilter.store';
@@ -23,7 +24,8 @@ const ListFilterQuestionList: React.FC = () => {
       ?.map((questionId: string) => db.byQuestionId[questionId])
       ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
       ?.filter(
-        (question: IQuestion) => !question.locked && !!question.options?.length
+        (question: IQuestion) =>
+          !question.locked && question.type === QuestionType.MULTIPLE_CHOICE
       )
   );
 

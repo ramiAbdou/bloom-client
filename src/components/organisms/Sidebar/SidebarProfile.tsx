@@ -4,6 +4,7 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import { MemberRole } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';
@@ -13,10 +14,12 @@ const SidebarProfileContent: React.FC = () => {
     ({ db }) => db.byMemberTypeId[db.member?.memberType]?.name
   );
 
-  const role = useStoreState(({ db }) => db.member?.role);
-  const firstName = useStoreState(({ db }) => db.member?.firstName);
-  const lastName = useStoreState(({ db }) => db.member?.lastName);
-  const fullName = `${firstName} ${lastName}`;
+  const role: MemberRole = useStoreState(({ db }) => db.member?.role);
+  const position: string = useStoreState(({ db }) => db.member?.position);
+  const firstName: string = useStoreState(({ db }) => db.member?.firstName);
+  const lastName: string = useStoreState(({ db }) => db.member?.lastName);
+
+  const fullName: string = `${firstName} ${lastName}`;
 
   return (
     <div>
@@ -24,7 +27,7 @@ const SidebarProfileContent: React.FC = () => {
 
       <div className="o-nav-profile-info">
         <p>{fullName}</p>
-        <p>{role?.toLowerCase() ?? memberTypeName}</p>
+        <p>{position ?? role ?? memberTypeName}</p>
       </div>
     </div>
   );

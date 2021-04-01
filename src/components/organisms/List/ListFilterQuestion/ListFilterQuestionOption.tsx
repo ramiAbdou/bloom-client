@@ -22,9 +22,11 @@ const ListFilterQuestionOption: React.FC<ValueProps> = ({ value: option }) => {
   const numResponses: number = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
 
-    return question?.values
-      ?.map((valueId: string) => db.byValuesId[valueId])
-      ?.filter((data: IMemberValue) => data?.value === option)?.length;
+    if (!question?.values) return 0;
+
+    return question.values
+      .map((valueId: string) => db.byValuesId[valueId])
+      .filter((data: IMemberValue) => data?.value === option)?.length;
   });
 
   const setFilter = ListFilterStore.useStoreActions((state) => state.setFilter);

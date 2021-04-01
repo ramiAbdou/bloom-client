@@ -54,7 +54,7 @@ const ProfilePersonalBio: React.FC = () => {
   const bio: string = useStoreState(({ db }) => db.member.bio);
 
   if (!bio) return null;
-  return <p>{bio}</p>;
+  return <p className="ws-pre-wrap">{bio}</p>;
 };
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
