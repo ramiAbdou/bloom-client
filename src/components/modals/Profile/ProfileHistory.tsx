@@ -43,10 +43,15 @@ const ProfileHistoryContent: React.FC = () => {
 };
 
 const ProfileHistory: React.FC = () => {
+  const memberId: string = IdStore.useStoreState((state) => state.id);
   const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
 
+  const isMyProfile: boolean = useStoreState(
+    ({ db }) => db.member.id === memberId
+  );
+
   return (
-    <Show show={isAdmin}>
+    <Show show={isAdmin || isMyProfile}>
       <Separator margin={0} />
       <ProfileHistoryContent />
     </Show>
