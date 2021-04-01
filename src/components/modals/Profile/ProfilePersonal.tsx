@@ -82,7 +82,7 @@ const ProfilePersonalBio: React.FC = () => {
     return member.bio;
   });
 
-  return <p className="mb-sm--nlc">{bio}</p>;
+  return <p className="mb-sm--nlc ws-pre-wrap">{bio}</p>;
 };
 
 const ProfilePersonal: React.FC = () => {
