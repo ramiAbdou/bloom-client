@@ -8,7 +8,7 @@ import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import { IMemberValue, IQuestion } from '@store/Db/entities';
 import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType } from '@util/constants';
+import { ModalType, QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
 import useInitProfileMembership from './useInitProfileMembership';
@@ -31,7 +31,10 @@ const ProfileMembershipContent: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const sortedQuestions: IQuestion[] = db.community.questions
       ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => !question.category)
+      ?.filter(
+        (question: IQuestion) =>
+          !question.category || question.category === QuestionCategory.GENDER
+      )
       ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'));
 
     const values: IMemberValue[] = db.member.values?.map(
