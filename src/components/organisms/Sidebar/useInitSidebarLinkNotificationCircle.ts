@@ -1,15 +1,25 @@
 import { useEffect } from 'react';
 
-import useManualQuery from '@hooks/useManualQuery';
-import { IMember } from '@store/Db/entities';
+import useHasuraLazyQuery from '@hooks/useHasuraLazyQuery';
 import { Schema } from '@store/Db/schema';
-import { QueryEvent } from '@util/constants.events';
+import { useStoreState } from '@store/Store';
 
 const useInitSidebarLinkNotificationCircle = (to: string): void => {
-  const [listApplicants] = useManualQuery<IMember[]>({
-    fields: ['id', 'status', { community: ['id'] }],
-    operation: QueryEvent.LIST_APPLICANTS,
-    schema: [Schema.MEMBER]
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const [listApplicants] = useHasuraLazyQuery({
+    fields: ['community.id', 'id', 'status'],
+    operation: 'members',
+    queryName: 'GetApplicantsByCommunityId',
+    schema: [Schema.MEMBER],
+    variables: {
+      communityId: { type: 'String!', value: communityId },
+      status: { type: 'String!', value: 'Pending' }
+    },
+    where: {
+      community: { id: { _eq: '$communityId' } },
+      status: { _eq: '$status' }
+    }
   });
 
   useEffect(() => {

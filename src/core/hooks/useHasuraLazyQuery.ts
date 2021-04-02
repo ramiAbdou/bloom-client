@@ -3,7 +3,7 @@ import { snakeCase } from 'change-case';
 import { Schema } from 'normalizr';
 import { useEffect } from 'react';
 
-import { DocumentNode, gql, useQuery } from '@apollo/client';
+import { DocumentNode, gql, useLazyQuery } from '@apollo/client';
 import { QueryResult } from '@hooks/useQuery.types';
 import { useStoreActions } from '@store/Store';
 
@@ -73,14 +73,14 @@ const buildArgsString = (where): string => {
   return a ? `(${a})` : a;
 };
 
-function useHasuraQuery<T = any>({
+const useHasuraLazyQuery = ({
   fields,
   operation,
   queryName: queryString,
   schema,
   variables,
   where
-}: UseHasuraQueryArgs): QueryResult<T> {
+}: UseHasuraQueryArgs): [any, QueryResult] => {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const argsString: string = buildArgsString(where);
@@ -96,7 +96,7 @@ function useHasuraQuery<T = any>({
       }
     `;
 
-  const result = useQuery(
+  const [queryFn, result] = useLazyQuery(
     query,
     variables
       ? {
@@ -117,7 +117,7 @@ function useHasuraQuery<T = any>({
     }
   }, [result.data, schema]);
 
-  return { ...result, error: result.error?.message };
-}
+  return [queryFn, { ...result, error: result.error?.message }];
+};
 
-export default useHasuraQuery;
+export default useHasuraLazyQuery;

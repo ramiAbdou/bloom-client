@@ -1,14 +1,10 @@
 import { useEffect } from 'react';
 
+import useHasuraLazyQuery from '@hooks/useHasuraLazyQuery';
 import useManualQuery from '@hooks/useManualQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
-import {
-  ICommunity,
-  ICommunityIntegrations,
-  IMemberType,
-  IQuestion
-} from '@store/Db/entities';
+import { ICommunity, IMemberType, IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
@@ -30,20 +26,13 @@ const useInitCommunity = (): Partial<QueryResult> => {
     schema: Schema.COMMUNITY
   });
 
-  const [
-    getCommunityIntegrations,
-    { loading: loading2 }
-  ] = useManualQuery<ICommunityIntegrations>({
-    fields: [
-      'id',
-      'isMailchimpAuthenticated',
-      'mailchimpListId',
-      'mailchimpListName',
-      'stripeAccountId',
-      { community: ['id'] }
-    ],
-    operation: QueryEvent.GET_COMMUNITY_INTEGRATIONS,
-    schema: Schema.COMMUNITY_INTEGRATIONS
+  const [getCommunityIntegrations, { loading: loading2 }] = useHasuraLazyQuery({
+    fields: ['community.id', 'id', 'mailchimpListId', 'stripeAccountId'],
+    operation: 'communityIntegrations',
+    queryName: 'GetCommunityIntegrationsByCommunityId',
+    schema: [Schema.COMMUNITY_INTEGRATIONS],
+    variables: { communityId: { type: 'String!', value: communityId } },
+    where: { community_id: { _eq: '$communityId' } }
   });
 
   const [getQuestions, { loading: loading3 }] = useManualQuery<IQuestion[]>({

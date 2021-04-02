@@ -1,22 +1,22 @@
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
-import { QueryEvent } from '@util/constants.events';
 
 const useInitProfileData = (): Partial<QueryResult> => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { loading } = useQuery<IMemberValue[]>({
-    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: QueryEvent.LIST_MEMBER_VALUES,
+  const result = useHasuraQuery<IMemberValue[]>({
+    fields: ['id', 'member.id', 'question.id', 'value'],
+    operation: 'memberValues',
+    queryName: 'GetMemberValuesByMemberId',
     schema: [Schema.MEMBER_VALUE],
-    types: { memberId: { required: false } },
-    variables: { memberId }
+    variables: { memberId: { type: 'String!', value: memberId } },
+    where: { member_id: { _eq: '$memberId' } }
   });
 
-  return { loading };
+  return result;
 };
 
 export default useInitProfileData;

@@ -1,3 +1,4 @@
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import {
@@ -60,14 +61,13 @@ const useInitDatabase = (): Partial<QueryResult> => {
     schema: [Schema.EVENT_ATTENDEE]
   });
 
-  const { loading: loading4 }: QueryResult<IMemberValue[]> = useQuery<
-    IMemberValue[]
-  >({
-    fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
-    operation: QueryEvent.LIST_MEMBER_VALUES,
+  const { loading: loading4 } = useHasuraQuery<IMemberValue[]>({
+    fields: ['id', 'member.id', 'question.id', 'value'],
+    operation: 'memberValues',
+    queryName: 'GetMemberValuesByCommunityId',
     schema: [Schema.MEMBER_VALUE],
-    types: { communityId: { required: false } },
-    variables: { communityId }
+    variables: { communityId: { type: 'String!', value: communityId } },
+    where: { member: { community: { id: { _eq: '$communityId' } } } }
   });
 
   return { loading: loading1 || loading2 || loading3 || loading4 };

@@ -1,3 +1,4 @@
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import {
@@ -5,15 +6,19 @@ import {
   IMemberIntegrations
 } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
+import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitPayment = (): Partial<QueryResult> => {
-  const {
-    loading: loading1
-  }: QueryResult<ICommunityIntegrations> = useQuery<ICommunityIntegrations>({
-    fields: ['id', 'stripeAccountId', { community: ['id'] }],
-    operation: QueryEvent.GET_COMMUNITY_INTEGRATIONS,
-    schema: Schema.COMMUNITY_INTEGRATIONS
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const { loading: loading1 } = useHasuraQuery<ICommunityIntegrations[]>({
+    fields: ['id', 'community.id', 'stripeAccountId'],
+    operation: 'communityIntegrations',
+    queryName: 'GetCommunityIntegrationsByCommunityId',
+    schema: [Schema.COMMUNITY_INTEGRATIONS],
+    variables: { communityId: { type: 'String!', value: communityId } },
+    where: { community_id: { _eq: '$communityId' } }
   });
 
   const { loading: loading2 }: QueryResult<IMemberIntegrations[]> = useQuery<
