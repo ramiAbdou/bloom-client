@@ -22,7 +22,7 @@ const ApplicationMainForm: React.FC = () => {
       )
   );
 
-  const isSolo = StoryStore.useStoreState(
+  const isSolo: boolean = StoryStore.useStoreState(
     ({ pages }) =>
       pages?.filter(({ id }) => id !== 'CONFIRMATION')?.length === 1
   );
@@ -51,9 +51,12 @@ const ApplicationMainForm: React.FC = () => {
 };
 
 const ApplicationMain: React.FC = () => {
-  const description = useStoreState(({ db }) => db.application?.description);
-  const title = useStoreState(({ db }) => db.application?.title);
-  const iconUrl = useStoreState(({ db }) => db.community?.logoUrl);
+  const description: string = useStoreState(
+    ({ db }) => db.application?.description
+  );
+
+  const title: string = useStoreState(({ db }) => db.application?.title);
+  const iconUrl: string = useStoreState(({ db }) => db.community?.logoUrl);
 
   return (
     <StoryPage

@@ -16,8 +16,8 @@ const ProfileDataContent: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
-    const filteredValues: IMemberValue[] = member?.values
-      ?.map((valueId: string) => db.byValuesId[valueId])
+    const filteredValues: IMemberValue[] = member?.memberValues
+      ?.map((memberValueId: string) => db.byMemberValuesId[memberValueId])
       ?.filter((data: IMemberValue) => {
         const question: IQuestion = db.byQuestionId[data.question];
         return !question?.category;

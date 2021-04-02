@@ -21,8 +21,8 @@ const DirectoryCardList: React.FC = () => {
       ?.map((memberId: string) => {
         const member: IMember = db.byMemberId[memberId];
 
-        const values: IMemberValue[] = member.values
-          ?.map((valueId: string) => db.byValuesId[valueId])
+        const values: IMemberValue[] = member.memberValues
+          ?.map((memberValueId: string) => db.byMemberValuesId[memberValueId])
           ?.filter((value: IMemberValue) => {
             const question: IQuestion = db.byQuestionId[value.question];
             return !question?.locked;

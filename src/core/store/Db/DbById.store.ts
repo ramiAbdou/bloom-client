@@ -12,6 +12,7 @@ const dbByIdStore: Pick<
   | 'byGuestId'
   | 'byMemberId'
   | 'byMemberIntegrationsId'
+  | 'byMemberValuesId'
   | 'byPaymentId'
   | 'byQuestionId'
   | 'bySocialsId'
@@ -19,7 +20,6 @@ const dbByIdStore: Pick<
   | 'byRankedQuestionId'
   | 'bySupporterId'
   | 'byUserId'
-  | 'byValuesId'
   | 'byWatchId'
 > = {
   byApplicationId: computed(({ entities }) => entities.applications.byId),
@@ -44,6 +44,8 @@ const dbByIdStore: Pick<
 
   byMemberTypeId: computed(({ entities }) => entities.memberTypes.byId),
 
+  byMemberValuesId: computed(({ entities }) => entities.memberValues.byId),
+
   byPaymentId: computed(({ entities }) => entities.payments.byId),
 
   byQuestionId: computed(({ entities }) => entities.questions.byId),
@@ -55,8 +57,6 @@ const dbByIdStore: Pick<
   bySupporterId: computed(({ entities }) => entities.supporters.byId),
 
   byUserId: computed(({ entities }) => entities.users.byId),
-
-  byValuesId: computed(({ entities }) => entities.values.byId),
 
   byWatchId: computed(({ entities }) => entities.watches.byId)
 };

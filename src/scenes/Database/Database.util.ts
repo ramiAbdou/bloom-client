@@ -52,8 +52,8 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
     return member.attendees?.length ?? 0;
   }
 
-  const value = member.values
-    ?.map((valueId: string) => db.byValuesId[valueId])
+  const value = member.memberValues
+    ?.map((memberValueId: string) => db.byMemberValuesId[memberValueId])
     ?.find((entity: IMemberValue) => {
       const question: IQuestion = db.byQuestionId[entity.question];
       return question.id === questionId;

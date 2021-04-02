@@ -19,8 +19,8 @@ const ListFilterQuestionOptionList: React.FC = () => {
   const options: string[] = useStoreState(({ db }) => {
     const question: IQuestion = db.byQuestionId[questionId];
 
-    const data: IMemberValue[] = question?.values?.map(
-      (valueId: string) => db.byValuesId[valueId]
+    const data: IMemberValue[] = question?.memberValues?.map(
+      (memberValueId: string) => db.byMemberValuesId[memberValueId]
     );
 
     return question?.options?.sort((aOption, bOption) => {

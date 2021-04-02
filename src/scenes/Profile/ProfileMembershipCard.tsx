@@ -37,8 +37,8 @@ const ProfileMembershipContent: React.FC = () => {
       )
       ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'));
 
-    const values: IMemberValue[] = db.member.values?.map(
-      (valueId: string) => db.byValuesId[valueId]
+    const values: IMemberValue[] = db.member.memberValues?.map(
+      (memberValueId: string) => db.byMemberValuesId[memberValueId]
     );
 
     return sortedQuestions?.map(({ id, title, type }: IQuestion) => {
@@ -54,7 +54,7 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const hasData: boolean = useStoreState(({ db }) => !!db.member.values);
+  const hasData: boolean = useStoreState(({ db }) => !!db.member.memberValues);
 
   const showModal: ActionCreator<ModalData> = useStoreActions(
     ({ modal }) => modal.showModal

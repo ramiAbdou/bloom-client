@@ -49,8 +49,8 @@ const DirectoryCardInformation: React.FC = () => {
       return memberType.name;
     }
 
-    return member.values
-      ?.map((valueId: string) => db.byValuesId[valueId])
+    return member.memberValues
+      ?.map((memberValueId: string) => db.byMemberValuesId[memberValueId])
       ?.find(
         (data: IMemberValue) =>
           data?.question === db.community?.highlightedQuestion

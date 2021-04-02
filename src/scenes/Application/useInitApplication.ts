@@ -1,130 +1,62 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import useManualQuery from '@hooks/useManualQuery';
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import useLoader from '@organisms/Loader/useLoader';
-import {
-  IApplication,
-  ICommunity,
-  IMemberType,
-  IRankedQuestion
-} from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
-import { QueryEvent } from '@util/constants.events';
-
-interface CommunityIdArgs {
-  communityId: string;
-}
 
 const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   const setActiveEntities = useStoreActions(({ db }) => db.setActiveEntities);
   const { urlName } = useParams() as UrlNameProps;
 
-  const { data, error, loading: loading1 } = useQuery<ICommunity, UrlNameProps>(
-    {
-      fields: [
-        'autoAccept',
-        'id',
-        'logoUrl',
-        'name',
-        'primaryColor',
-        'urlName'
-      ],
-      operation: QueryEvent.GET_COMMUNITY,
-      schema: Schema.COMMUNITY,
-      types: { urlName: { required: false } },
-      variables: { urlName }
-    }
-  );
-
-  const [getApplication, { loading: loading2 }] = useManualQuery<
-    IApplication,
-    CommunityIdArgs
-  >({
-    fields: ['description', 'id', 'title', { community: ['id'] }],
-    operation: QueryEvent.GET_APPLICATION,
-    schema: Schema.APPLICATION,
-    types: { communityId: { required: true } }
-  });
-
-  const [getCommunityIntegrations, { loading: loading3 }] = useManualQuery<
-    IApplication,
-    CommunityIdArgs
-  >({
-    fields: ['id', 'stripeAccountId', { community: ['id'] }],
-    operation: QueryEvent.GET_COMMUNITY_INTEGRATIONS,
-    schema: Schema.COMMUNITY_INTEGRATIONS,
-    types: { communityId: { required: true } }
-  });
-
-  const [getRankedQuestions, { loading: loading4 }] = useManualQuery<
-    IRankedQuestion[],
-    CommunityIdArgs
-  >({
+  const { error, loading, data } = useHasuraQuery({
     fields: [
       'id',
-      'rank',
-      { application: ['id'] },
-      {
-        question: [
-          'category',
-          'description',
-          'id',
-          'options',
-          'required',
-          'title',
-          'type',
-          { community: ['id'] }
-        ]
-      }
+      'communityId',
+      'community.autoAccept',
+      'community.id',
+      'community.logoUrl',
+      'community.name',
+      'community.primaryColor',
+      'community.urlName',
+      'community.communityIntegration.id',
+      'community.communityIntegration.communityId',
+      'community.communityIntegration.stripeAccountId',
+      'community.memberTypes.amount',
+      'community.memberTypes.id',
+      'community.memberTypes.name',
+      'community.memberTypes.recurrence',
+      'description',
+      'rankedQuestions.id',
+      'rankedQuestions.rank',
+      'rankedQuestions.application.id',
+      'rankedQuestions.question.category',
+      'rankedQuestions.question.description',
+      'rankedQuestions.question.id',
+      'rankedQuestions.question.options',
+      'rankedQuestions.question.required',
+      'rankedQuestions.question.title',
+      'rankedQuestions.question.type',
+      'rankedQuestions.question.community.id',
+      'title'
     ],
-    operation: QueryEvent.LIST_RANKED_QUESTIONS,
-    schema: [Schema.APPLICATION_QUESTION],
-    types: { communityId: { required: false } }
+    operation: 'applications',
+    queryName: 'GetApplicationByUrlName',
+    schema: [Schema.APPLICATION],
+    variables: { urlName: { type: 'String!', value: urlName } },
+    where: { community: { url_name: { _eq: '$urlName' } } }
   });
-
-  const [listMemberTypes, { loading: loading5 }] = useManualQuery<
-    IMemberType[],
-    CommunityIdArgs
-  >({
-    fields: [
-      'amount',
-      'id',
-      'isFree',
-      'name',
-      'recurrence',
-      { community: ['id'] }
-    ],
-    operation: QueryEvent.LIST_MEMBER_TYPES,
-    schema: [Schema.MEMBER_TYPE],
-    types: { communityId: { required: false } }
-  });
-
-  const communityId: string = data?.id;
 
   useEffect(() => {
-    if (!communityId) return;
+    if (!data) return;
 
-    setActiveEntities({ id: communityId, table: 'communities' });
-
-    (async () => {
-      await Promise.all([
-        getApplication({ communityId }),
-        getCommunityIntegrations({ communityId }),
-        listMemberTypes({ communityId }),
-        getRankedQuestions({ communityId })
-      ]);
-    })();
-  }, [communityId]);
-
-  const loading: boolean =
-    loading1 || loading2 || loading3 || loading4 || loading5;
-
-  useLoader(loading);
+    setActiveEntities({
+      id: data.applications[0].community.id,
+      table: 'communities'
+    });
+  }, [data]);
 
   return { error, loading };
 };

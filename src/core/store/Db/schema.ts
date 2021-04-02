@@ -152,8 +152,8 @@ const Member = new schema.Entity(
         [!!parent.attendeeId, { attendees: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
+        [!!parent.memberValueId, { memberValues: [parent.id] }],
         [!!parent.paymentId, { payments: [parent.id] }],
-        [!!parent.valueId, { values: [parent.id] }],
         [!!parent.watchId, { watches: [parent.id] }]
       ]);
 
@@ -194,12 +194,12 @@ const MemberType = new schema.Entity(
 );
 
 const MemberValue = new schema.Entity(
-  'values',
+  'memberValues',
   {},
   {
     mergeStrategy,
     processStrategy: (value) => {
-      return { ...value, valueId: value.id };
+      return { ...value, memberValueId: value.id };
     }
   }
 );
@@ -220,7 +220,9 @@ const Question = new schema.Entity(
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
-      const processedData = take([[!!parent.valueId, { values: [parent.id] }]]);
+      const processedData = take([
+        [!!parent.memberValueId, { memberValues: [parent.id] }]
+      ]);
 
       return { ...value, ...processedData, questionId: value.id };
     }
@@ -271,7 +273,7 @@ const User = new schema.Entity(
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.
 
-Application.define({ community: Community, questions: [RankedQuestion] });
+Application.define({ community: Community, rankedQuestions: [RankedQuestion] });
 
 Community.define({
   application: Application,
@@ -307,10 +309,10 @@ Member.define({
   guests: [EventGuest],
   memberIntegrations: MemberIntegrations,
   memberType: MemberType,
+  memberValues: [MemberValue],
   payments: [Payment],
   socials: MemberSocials,
   user: User,
-  values: [MemberValue],
   watches: [EventWatch]
 });
 
@@ -328,7 +330,7 @@ Payment.define({
   memberType: MemberType
 });
 
-Question.define({ community: Community, values: [MemberValue] });
+Question.define({ community: Community, memberValues: [MemberValue] });
 
 RankedQuestion.define({ application: Application, question: Question });
 

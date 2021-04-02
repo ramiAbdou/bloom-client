@@ -50,13 +50,13 @@ export interface DbModel {
     Record<string, IMemberIntegrations>
   >;
   byMemberTypeId: Computed<DbModel, Record<string, IMemberType>>;
+  byMemberValuesId: Computed<DbModel, Record<string, IMemberValue>>;
   byPaymentId: Computed<DbModel, Record<string, IPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
   byRankedQuestionId: Computed<DbModel, Record<string, IRankedQuestion>>;
   bySocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
   bySupporterId: Computed<DbModel, Record<string, ISupporter>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
-  byValuesId: Computed<DbModel, Record<string, IMemberValue>>;
   byWatchId: Computed<DbModel, Record<string, IEventWatch>>;
 
   // ACTIVE STORE

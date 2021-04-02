@@ -22,8 +22,8 @@ const ProfileMembershipForm: React.FC = () => {
           !question.category || question.category === QuestionCategory.GENDER
       );
 
-    const data: IMemberValue[] = db.member.values?.map(
-      (valueId: string) => db.byValuesId[valueId]
+    const data: IMemberValue[] = db.member.memberValues?.map(
+      (memberValueId: string) => db.byMemberValuesId[memberValueId]
     );
 
     return questions?.map((question: IQuestion) => {

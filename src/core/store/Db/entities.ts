@@ -17,6 +17,7 @@ export interface BaseEntity {
 
 export interface IApplication extends BaseEntity {
   community: Identifier;
+  communityId: Identifier;
   description: string;
   questions: Identifier[];
   title: string;
@@ -132,6 +133,7 @@ export interface IMember extends BaseEntity {
   lastName: string;
   memberIntegrations: Identifier;
   memberType: Identifier;
+  memberValues: Identifier[];
   payments: Identifier[];
   pictureUrl: string;
   position?: string;
@@ -139,7 +141,6 @@ export interface IMember extends BaseEntity {
   socials: Identifier;
   status: MemberStatus;
   user: Identifier;
-  values: Identifier[];
   watches: Identifier[];
 }
 
@@ -211,12 +212,12 @@ export interface IPayment extends BaseEntity {
 export interface IQuestion extends BaseEntity {
   category: QuestionCategory;
   locked: boolean;
+  memberValues?: Identifier[];
   options: string[];
   rank?: number;
   required: boolean;
   title: QuestionType;
   type: QuestionType;
-  values?: Identifier[];
 }
 
 // RANKED QUESTION
@@ -259,13 +260,13 @@ export interface IEntities {
   members: EntityRecord<IMember>;
   memberIntegrations: EntityRecord<IMemberIntegrations>;
   memberTypes: EntityRecord<IMemberType>;
+  memberValues: EntityRecord<IMemberValue>;
   payments: EntityRecord<IPayment>;
   questions: EntityRecord<IQuestion>;
   rankedQuestions: EntityRecord<IRankedQuestion>;
   socials: EntityRecord<IMemberSocials>;
   supporters: EntityRecord<ISupporter>;
   users: EntityRecord<IUser>;
-  values: EntityRecord<IMemberValue>;
   watches: EntityRecord<IEventWatch>;
 }
 
@@ -279,6 +280,7 @@ export const initialEntities: IEntities = {
   guests: { byId: {} },
   memberIntegrations: { byId: {} },
   memberTypes: { byId: {} },
+  memberValues: { byId: {} },
   members: { activeId: null, byId: {} },
   payments: { byId: {} },
   questions: { byId: {} },
@@ -286,6 +288,5 @@ export const initialEntities: IEntities = {
   socials: { byId: {} },
   supporters: { byId: {} },
   users: { activeId: null, byId: {} },
-  values: { byId: {} },
   watches: { byId: {} }
 };

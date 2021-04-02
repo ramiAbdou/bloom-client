@@ -49,13 +49,13 @@ const useQuestionData = (): Pick<
       } else if (category === QuestionCategory.DUES_STATUS) {
         value = member.isDuesActive ? 'Paid' : 'Not Paid';
       } else {
-        const d = member.values.find((valueId: string) => {
-          const data: IMemberValue = db.byValuesId[valueId];
+        const d = member.memberValues.find((memberValueId: string) => {
+          const data: IMemberValue = db.byMemberValuesId[memberValueId];
           const question: IQuestion = db.byQuestionId[data.question];
           return question.id === questionId;
         });
 
-        value = db.byValuesId[d]?.value;
+        value = db.byMemberValuesId[d]?.value;
       }
 
       if (!value) return;

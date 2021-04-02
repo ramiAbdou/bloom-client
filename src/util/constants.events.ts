@@ -35,7 +35,6 @@ export enum MutationEvent {
 export enum QueryEvent {
   GET_ACTIVE_MEMBERS_GROWTH = 'getActiveMembersGrowth',
   GET_ACTIVE_MEMBERS_SERIES = 'getActiveMembersSeries',
-  GET_APPLICATION = 'getApplication',
   GET_CHANGE_PREVIEW = 'getChangePreview',
   GET_COMMUNITY = 'getCommunity',
   GET_COMMUNITY_INTEGRATIONS = 'getCommunityIntegrations',

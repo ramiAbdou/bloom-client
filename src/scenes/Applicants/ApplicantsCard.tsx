@@ -41,8 +41,8 @@ const ApplicantsCardItems: React.FC = () => {
   const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
 
-    const data: IMemberValue[] = member.values?.map(
-      (valueId: string) => db.byValuesId[valueId]
+    const data: IMemberValue[] = member.memberValues?.map(
+      (memberValueId: string) => db.byMemberValuesId[memberValueId]
     );
 
     return db.community.questions

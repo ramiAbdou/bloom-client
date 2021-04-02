@@ -12,6 +12,12 @@ import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 import { BrowserRouter } from 'react-router-dom';
 
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache
+} from '@apollo/client';
 import Loader from '@organisms/Loader/Loader';
 import Modal from '@organisms/Modal/Modal';
 import Panel from '@organisms/Panel/Panel';
@@ -31,6 +37,18 @@ const client: GraphQLClient = new GraphQLClient({
   url: `${APP.SERVER_URL}/graphql`
 });
 
+const apolloClient = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    credentials: 'include',
+    headers: {
+      'Hasura-Client-Name': `Bloom Client (${process.env.APP_ENV})`,
+      'content-type': 'application/json'
+    },
+    uri: process.env.HASURA_SERVER_URL
+  })
+});
+
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   environment: process.env.APP_ENV,
@@ -42,19 +60,21 @@ Sentry.init({
   tracesSampleRate: process.env.APP_ENV === 'dev' ? 1.0 : 0.75
 });
 
-const App = () => (
+const App: React.FC = () => (
   <ClientContext.Provider value={client}>
-    <StoreProvider store={store}>
-      <IconContext.Provider value={{ className: 'react-icon' }}>
-        <BrowserRouter>
-          <Loader />
-          <Modal />
-          <Panel />
-          <Router />
-          <ToastQueue />
-        </BrowserRouter>
-      </IconContext.Provider>
-    </StoreProvider>
+    <ApolloProvider client={apolloClient}>
+      <StoreProvider store={store}>
+        <IconContext.Provider value={{ className: 'react-icon' }}>
+          <BrowserRouter>
+            <Loader />
+            <Modal />
+            <Panel />
+            <Router />
+            <ToastQueue />
+          </BrowserRouter>
+        </IconContext.Provider>
+      </StoreProvider>
+    </ApolloProvider>
   </ClientContext.Provider>
 );
 
