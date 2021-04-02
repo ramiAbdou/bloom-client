@@ -44,10 +44,10 @@ const EventsCardPeople: React.FC = () => {
 
   const ids = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];
-    const people = isPast ? event?.attendees : event?.guests;
+    const people = isPast ? event?.eventAttendees : event?.guests;
 
     return people
-      ?.map((id: string) => (isPast ? db.byAttendeeId[id] : db.byGuestId[id]))
+      ?.map((id: string) => (isPast ? db.byEventAttendeeId[id] : db.byGuestId[id]))
       ?.reduce(
         (acc, person: IEventGuest | IEventAttendee) => [
           ...acc,

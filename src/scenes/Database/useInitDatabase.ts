@@ -1,76 +1,45 @@
 import useHasuraQuery from '@hooks/useHasuraQuery';
-import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import {
-  IEventAttendee,
-  IMember,
-  IMemberSocials,
-  IMemberValue
-} from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
 
-const useInitDatabase = (): Partial<QueryResult> => {
+const useInitDatabase = (): QueryResult<IMember[]> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const { loading: loading1 }: QueryResult<IMember[]> = useQuery<IMember[]>({
+  const result = useHasuraQuery<IMember[]>({
     fields: [
       'bio',
+      'community.id',
       'email',
+      'eventAttendees.id',
+      'eventAttendees.member.id',
       'id',
-      'isDuesActive',
       'firstName',
       'lastName',
       'joinedAt',
+      'memberSocials.facebookUrl',
+      'memberSocials.instagramUrl',
+      'memberSocials.linkedInUrl',
+      'memberSocials.member.id',
+      'memberSocials.twitterUrl',
+      'memberType.id',
+      'memberValues.id',
+      'memberValues.member.id',
+      'memberValues.question.id',
+      'memberValues.value',
       'pictureUrl',
       'role',
-      'status',
-      { community: ['id'] },
-      { memberType: ['id'] },
-      { socials: ['id'] }
+      'status'
     ],
-    operation: QueryEvent.LIST_MEMBERS,
+    operation: 'members',
+    queryName: 'GetMembersByCommunityId',
     schema: [Schema.MEMBER],
-    types: { communityId: { required: false } },
-    variables: { communityId }
-  });
-
-  const { loading: loading2 }: QueryResult<IMemberSocials[]> = useQuery<
-    IMemberSocials[]
-  >({
-    fields: [
-      'id',
-      'facebookUrl',
-      'instagramUrl',
-      'linkedInUrl',
-      'twitterUrl',
-      { member: ['id'] }
-    ],
-    operation: QueryEvent.LIST_MEMBER_SOCIALS,
-    schema: [Schema.MEMBER_SOCIALS],
-    types: { communityId: { required: false } },
-    variables: { communityId }
-  });
-
-  const { loading: loading3 }: QueryResult<IEventAttendee[]> = useQuery<
-    IEventAttendee[]
-  >({
-    fields: ['id', { member: ['id'] }],
-    operation: QueryEvent.LIST_EVENT_ATTENDEES,
-    schema: [Schema.EVENT_ATTENDEE]
-  });
-
-  const { loading: loading4 } = useHasuraQuery<IMemberValue[]>({
-    fields: ['id', 'member.id', 'question.id', 'value'],
-    operation: 'memberValues',
-    queryName: 'GetMemberValuesByCommunityId',
-    schema: [Schema.MEMBER_VALUE],
     variables: { communityId: { type: 'String!', value: communityId } },
-    where: { member: { community: { id: { _eq: '$communityId' } } } }
+    where: { community_id: { _eq: '$communityId' } }
   });
 
-  return { loading: loading1 || loading2 || loading3 || loading4 };
+  return result;
 };
 
 export default useInitDatabase;

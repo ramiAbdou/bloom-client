@@ -63,11 +63,11 @@ export enum EventPrivacy {
 }
 
 export interface IEvent extends BaseEntity {
-  attendees: Identifier[];
   attendeesSeries: TimeSeriesData[];
   community?: Identifier;
   description: string;
   endTime: string;
+  eventAttendees: Identifier[];
   eventUrl: string;
   guests: Identifier[];
   guestsSeries: TimeSeriesData[];
@@ -122,23 +122,23 @@ export enum MemberStatus {
 }
 
 export interface IMember extends BaseEntity {
-  attendees: Identifier[];
   bio: string;
   community: Identifier;
   email: string;
+  eventAttendees: Identifier[];
   firstName: string;
   guests: Identifier[];
   isDuesActive: boolean;
   joinedAt: string;
   lastName: string;
   memberIntegrations: Identifier;
+  memberSocials: Identifier;
   memberType: Identifier;
   memberValues: Identifier[];
   payments: Identifier[];
   pictureUrl: string;
   position?: string;
   role?: MemberRole;
-  socials: Identifier;
   status: MemberStatus;
   user: Identifier;
   watches: Identifier[];
@@ -252,19 +252,19 @@ export interface EntityRecord<T> {
 
 export interface IEntities {
   applications: EntityRecord<IApplication>;
-  attendees: EntityRecord<IEventAttendee>;
   communities: EntityRecord<ICommunity>;
   communityIntegrations: EntityRecord<ICommunityIntegrations>;
+  eventAttendees: EntityRecord<IEventAttendee>;
   events: EntityRecord<IEvent>;
   guests: EntityRecord<IEventGuest>;
   members: EntityRecord<IMember>;
   memberIntegrations: EntityRecord<IMemberIntegrations>;
+  memberSocials: EntityRecord<IMemberSocials>;
   memberTypes: EntityRecord<IMemberType>;
   memberValues: EntityRecord<IMemberValue>;
   payments: EntityRecord<IPayment>;
   questions: EntityRecord<IQuestion>;
   rankedQuestions: EntityRecord<IRankedQuestion>;
-  socials: EntityRecord<IMemberSocials>;
   supporters: EntityRecord<ISupporter>;
   users: EntityRecord<IUser>;
   watches: EntityRecord<IEventWatch>;
@@ -273,19 +273,19 @@ export interface IEntities {
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
   applications: { byId: {} },
-  attendees: { byId: {} },
   communities: { activeId: null, byId: {} },
   communityIntegrations: { byId: {} },
+  eventAttendees: { byId: {} },
   events: { activeId: null, byId: {} },
   guests: { byId: {} },
   memberIntegrations: { byId: {} },
+  memberSocials: { byId: {} },
   memberTypes: { byId: {} },
   memberValues: { byId: {} },
   members: { activeId: null, byId: {} },
   payments: { byId: {} },
   questions: { byId: {} },
   rankedQuestions: { byId: {} },
-  socials: { byId: {} },
   supporters: { byId: {} },
   users: { activeId: null, byId: {} },
   watches: { byId: {} }

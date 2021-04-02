@@ -1,26 +1,26 @@
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberSocials } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
-import { QueryEvent } from '@util/constants.events';
 
-const useInitProfilePersonal = (): QueryResult<IMemberSocials> => {
+const useInitProfilePersonal = (): QueryResult<IMemberSocials[]> => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const result: QueryResult<IMemberSocials> = useQuery<IMemberSocials>({
+  const result = useHasuraQuery<IMemberSocials[]>({
     fields: [
       'facebookUrl',
-      'id',
       'instagramUrl',
+      'id',
       'linkedInUrl',
-      'twitterUrl',
-      { member: ['id'] }
+      'member.id',
+      'twitterUrl'
     ],
-    operation: QueryEvent.GET_MEMBER_SOCIALS,
-    schema: Schema.MEMBER_SOCIALS,
-    types: { memberId: { required: false } },
-    variables: { memberId }
+    operation: 'memberSocials',
+    queryName: 'GetMemberSocialsByMemberId',
+    schema: [Schema.MEMBER_SOCIALS],
+    variables: { memberId: { type: 'String!', value: memberId } },
+    where: { member_id: { _eq: '$memberId' } }
   });
 
   return result;

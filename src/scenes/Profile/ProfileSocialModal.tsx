@@ -10,18 +10,21 @@ import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {
   const facebookUrl: string = useStoreState(
-    ({ db }) => db.socials?.facebookUrl
+    ({ db }) => db.memberSocials?.facebookUrl
   );
 
   const instagramUrl: string = useStoreState(
-    ({ db }) => db.socials?.instagramUrl
+    ({ db }) => db.memberSocials?.instagramUrl
   );
 
   const linkedInUrl: string = useStoreState(
-    ({ db }) => db.socials?.linkedInUrl
+    ({ db }) => db.memberSocials?.linkedInUrl
   );
 
-  const twitterUrl: string = useStoreState(({ db }) => db.socials?.twitterUrl);
+  const twitterUrl: string = useStoreState(
+    ({ db }) => db.memberSocials?.twitterUrl
+  );
+
   const updateMemberSocials: OnFormSubmitFunction = useUpdateMemberSocials();
 
   return (

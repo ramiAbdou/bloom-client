@@ -17,13 +17,13 @@ const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
   const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
   const memberId: string = useStoreState(({ db }) => {
-    const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
-    return attendee?.member;
+    const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
+    return eventAttendee?.member;
   });
 
   const supporterId: string = useStoreState(({ db }) => {
-    const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
-    return attendee?.supporter;
+    const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
+    return eventAttendee?.supporter;
   });
 
   const fullName: string = useStoreState(({ db }) => {
@@ -66,11 +66,11 @@ const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
 
 const IndividualEventAttendeeListContent: React.FC = () => {
   const attendees: IdProps[] = useStoreState(({ db }) =>
-    db.event?.attendees
-      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
+    db.event?.eventAttendees
+      ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId])
       ?.sort((a, b) => sortObjects(a, b, 'createdAt'))
-      ?.map((attendee: IEventAttendee) => {
-        return { id: attendee.id };
+      ?.map((eventAttendee: IEventAttendee) => {
+        return { id: eventAttendee.id };
       })
   );
 
@@ -92,7 +92,7 @@ const IndividualEventGuestList: React.FC = () => {
   const startTime: string = useStoreState(({ db }) => db.event?.startTime);
 
   const numAttendees: number = useStoreState(
-    ({ db }) => db.event?.attendees?.length
+    ({ db }) => db.event?.eventAttendees?.length
   );
 
   const hasEventFinished: boolean =

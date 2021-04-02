@@ -31,14 +31,14 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
     const pastAttendees: IEventAttendee[] = pastEvents
       ?.reduce(
         (acc: string[], event: IEvent) =>
-          event?.attendees ? acc.concat(event.attendees) : acc,
+          event?.eventAttendees ? acc.concat(event.eventAttendees) : acc,
         []
       )
-      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId]);
+      ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId]);
 
-    const result = pastAttendees?.reduce((acc, attendee: IEventAttendee) => {
-      const member: IMember = db.byMemberId[attendee?.member];
-      const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
+    const result = pastAttendees?.reduce((acc, eventAttendee: IEventAttendee) => {
+      const member: IMember = db.byMemberId[eventAttendee?.member];
+      const supporter: ISupporter = db.bySupporterId[eventAttendee?.supporter];
 
       const email: string = member?.email ?? supporter?.email;
       const firstName: string = member?.firstName ?? supporter?.firstName;

@@ -56,7 +56,7 @@ const IndividualEventTable: React.FC = () => {
 
   const hasEventContent: boolean = useStoreState(
     ({ db }) =>
-      !!db.event?.attendees?.length ||
+      !!db.event?.eventAttendees?.length ||
       !!db.event?.guests?.length ||
       !!db.event?.watches?.length
   );

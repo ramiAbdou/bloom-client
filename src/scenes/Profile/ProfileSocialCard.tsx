@@ -12,7 +12,7 @@ import useInitProfileSocial from './useInitProfileSocial';
 const ProfileSocialOnboardingContainer: React.FC = () => {
   const isSocialLinked: boolean = useStoreState(({ db }) => {
     const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } =
-      db.socials ?? {};
+      db.memberSocials ?? {};
 
     return !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
   });
@@ -38,10 +38,14 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 const ProfileSocialHeader: React.FC = () => {
-  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
-  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
-  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
-  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
+  const facebookUrl = useStoreState(({ db }) => db.memberSocials?.facebookUrl);
+
+  const instagramUrl = useStoreState(
+    ({ db }) => db.memberSocials?.instagramUrl
+  );
+
+  const linkedInUrl = useStoreState(({ db }) => db.memberSocials?.linkedInUrl);
+  const twitterUrl = useStoreState(({ db }) => db.memberSocials?.twitterUrl);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isSocialLinked: boolean =
@@ -58,24 +62,27 @@ const ProfileSocialHeader: React.FC = () => {
 };
 
 const ProfileSocialFacebook: React.FC = () => {
-  const facebookUrl = useStoreState(({ db }) => db.socials?.facebookUrl);
+  const facebookUrl = useStoreState(({ db }) => db.memberSocials?.facebookUrl);
   return <ProfileSocialValue brand={SocialBrand.FACEBOOK} url={facebookUrl} />;
 };
 
 const ProfileSocialInstagram: React.FC = () => {
-  const instagramUrl = useStoreState(({ db }) => db.socials?.instagramUrl);
+  const instagramUrl = useStoreState(
+    ({ db }) => db.memberSocials?.instagramUrl
+  );
+
   return (
     <ProfileSocialValue brand={SocialBrand.INSTAGRAM} url={instagramUrl} />
   );
 };
 
 const ProfileSocialLinkedIn: React.FC = () => {
-  const linkedInUrl = useStoreState(({ db }) => db.socials?.linkedInUrl);
+  const linkedInUrl = useStoreState(({ db }) => db.memberSocials?.linkedInUrl);
   return <ProfileSocialValue brand={SocialBrand.LINKED_IN} url={linkedInUrl} />;
 };
 
 const ProfileSocialTwitter: React.FC = () => {
-  const twitterUrl = useStoreState(({ db }) => db.socials?.twitterUrl);
+  const twitterUrl = useStoreState(({ db }) => db.memberSocials?.twitterUrl);
   return <ProfileSocialValue brand={SocialBrand.TWITTER} url={twitterUrl} />;
 };
 

@@ -27,12 +27,12 @@ export const getMemberHistory = ({
   const community: ICommunity = db.byCommunityId[member?.community];
 
   const attendeeEvents: MemberHistoryData[] =
-    member.attendees?.map((attendeeId: string) => {
-      const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
-      const event: IEvent = db.byEventId[attendee?.event];
+    member.eventAttendees?.map((attendeeId: string) => {
+      const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
+      const event: IEvent = db.byEventId[eventAttendee?.event];
 
       return {
-        date: attendee.createdAt,
+        date: eventAttendee.createdAt,
         event: 'Attended Event',
         title: event.title
       };

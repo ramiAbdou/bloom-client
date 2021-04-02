@@ -25,13 +25,13 @@ import { IndividualEventTableRowProps } from './IndividualEvent.types';
 const getIndividualEventTableAttendees = (
   db: State<DbModel>
 ): Record<string, IndividualEventTableRowProps> => {
-  if (!db.event.attendees) return {};
+  if (!db.event.eventAttendees) return {};
 
-  return db.event.attendees.reduce(
+  return db.event.eventAttendees.reduce(
     (acc: Record<string, IndividualEventTableRowProps>, attendeeId: string) => {
-      const attendee: IEventAttendee = db.byAttendeeId[attendeeId];
-      const member: IMember = db.byMemberId[attendee?.member];
-      const supporter: ISupporter = db.bySupporterId[attendee?.supporter];
+      const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
+      const member: IMember = db.byMemberId[eventAttendee?.member];
+      const supporter: ISupporter = db.bySupporterId[eventAttendee?.supporter];
 
       const email: string = member?.email ?? supporter?.email;
       const firstName: string = member?.firstName ?? supporter?.firstName;
@@ -43,8 +43,8 @@ const getIndividualEventTableAttendees = (
       const data: IndividualEventTableRowProps = {
         email,
         fullName: `${firstName} ${lastName}`,
-        id: attendee?.member,
-        joinedAt: attendee.createdAt,
+        id: eventAttendee?.member,
+        joinedAt: eventAttendee.createdAt,
         watched: false
       };
 

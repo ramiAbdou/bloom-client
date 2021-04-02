@@ -22,7 +22,7 @@ const dbActiveStore: Pick<
   | 'event'
   | 'member'
   | 'memberIntegrations'
-  | 'socials'
+  | 'memberSocials'
   | 'user'
 > = {
   application: computed(({ community, entities }) => {
@@ -79,9 +79,9 @@ const dbActiveStore: Pick<
     return byId[member?.memberIntegrations] as IMemberIntegrations;
   }),
 
-  socials: computed(({ entities, member }) => {
-    const { byId: bySocialsId } = entities.socials;
-    return bySocialsId[member?.socials] as IMemberSocials;
+  memberSocials: computed(({ entities, member }) => {
+    const { byId: byMemberSocialsId } = entities.memberSocials;
+    return byMemberSocialsId[member?.memberSocials] as IMemberSocials;
   }),
 
   user: computed(({ entities }) => {

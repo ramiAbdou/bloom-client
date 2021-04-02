@@ -93,7 +93,7 @@ const Event = new schema.Entity(
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = take([
-        [!!parent.attendeeId, { attendees: [parent.id] }],
+        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.watchId, { watches: [parent.id] }]
       ]);
@@ -104,14 +104,14 @@ const Event = new schema.Entity(
 );
 
 const EventAttendee = new schema.Entity(
-  'attendees',
+  'eventAttendees',
   {},
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = take([[!!parent.eventId, { event: parent.id }]]);
 
-      return { ...value, ...processedData, attendeeId: value.id };
+      return { ...value, ...processedData, eventAttendeeId: value.id };
     }
   }
 );
@@ -149,7 +149,7 @@ const Member = new schema.Entity(
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = take([
-        [!!parent.attendeeId, { attendees: [parent.id] }],
+        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.memberValueId, { memberValues: [parent.id] }],
@@ -173,12 +173,12 @@ const MemberIntegrations = new schema.Entity(
 );
 
 const MemberSocials = new schema.Entity(
-  'socials',
+  'memberSocials',
   {},
   {
     mergeStrategy,
     processStrategy: (value) => {
-      return { ...value, socialsId: value.id };
+      return { ...value, memberSocialsId: value.id };
     }
   }
 );
@@ -245,7 +245,7 @@ const Supporter = new schema.Entity(
   {
     processStrategy: (value, parent) => {
       const processedData = take([
-        [!!parent.attendeeId, { attendees: [parent.id] }],
+        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
         [!!parent.guestId, { guests: [parent.id] }],
         [!!parent.watchId, { watches: [parent.id] }]
       ]);
@@ -291,8 +291,8 @@ Community.define({
 CommunityIntegrations.define({ community: Community });
 
 Event.define({
-  attendees: [EventAttendee],
   community: Community,
+  eventAttendees: [EventAttendee],
   guests: [EventGuest],
   watches: [EventWatch]
 });
@@ -304,14 +304,14 @@ EventGuest.define({ event: Event, member: Member, supporter: Supporter });
 EventWatch.define({ event: Event, member: Member });
 
 Member.define({
-  attendees: [EventAttendee],
   community: Community,
+  eventAttendees: [EventAttendee],
   guests: [EventGuest],
   memberIntegrations: MemberIntegrations,
+  memberSocials: MemberSocials,
   memberType: MemberType,
   memberValues: [MemberValue],
   payments: [Payment],
-  socials: MemberSocials,
   user: User,
   watches: [EventWatch]
 });
@@ -334,7 +334,7 @@ Question.define({ community: Community, memberValues: [MemberValue] });
 
 RankedQuestion.define({ application: Application, question: Question });
 
-Supporter.define({ attendees: [EventAttendee], guests: [EventGuest] });
+Supporter.define({ eventAttendees: [EventAttendee], guests: [EventGuest] });
 
 User.define({ members: [Member], supporters: [Supporter] });
 

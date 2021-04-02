@@ -14,13 +14,13 @@ import EventsCard from './EventsCard/EventsCard';
 
 const EventsPastList: React.FC = () => {
   const pastEvents: IEvent[] = useStoreState(({ db }) => {
-    const yourAttendees: Set<string> = new Set(db.member.attendees);
+    const yourAttendees: Set<string> = new Set(db.member.eventAttendees);
 
     return db.community?.events
       ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
       ?.filter((event: IEvent) => {
-        const wentToEvent: boolean = !event.attendees?.some(
+        const wentToEvent: boolean = !event.eventAttendees?.some(
           (attendeeId: string) => yourAttendees.has(attendeeId)
         );
 

@@ -5,17 +5,17 @@ import { DbModel } from './Db.types';
 const dbByIdStore: Pick<
   DbModel,
   | 'byApplicationId'
-  | 'byAttendeeId'
   | 'byCommunityId'
   | 'byCommunityIntegrationsId'
   | 'byEventId'
+  | 'byEventAttendeeId'
   | 'byGuestId'
   | 'byMemberId'
   | 'byMemberIntegrationsId'
+  | 'byMemberSocialsId'
   | 'byMemberValuesId'
   | 'byPaymentId'
   | 'byQuestionId'
-  | 'bySocialsId'
   | 'byMemberTypeId'
   | 'byRankedQuestionId'
   | 'bySupporterId'
@@ -24,13 +24,13 @@ const dbByIdStore: Pick<
 > = {
   byApplicationId: computed(({ entities }) => entities.applications.byId),
 
-  byAttendeeId: computed(({ entities }) => entities.attendees.byId),
-
   byCommunityId: computed(({ entities }) => entities.communities.byId),
 
   byCommunityIntegrationsId: computed(
     ({ entities }) => entities.communityIntegrations.byId
   ),
+
+  byEventAttendeeId: computed(({ entities }) => entities.eventAttendees.byId),
 
   byEventId: computed(({ entities }) => entities.events.byId),
 
@@ -42,6 +42,8 @@ const dbByIdStore: Pick<
     ({ entities }) => entities.memberIntegrations.byId
   ),
 
+  byMemberSocialsId: computed(({ entities }) => entities.memberSocials.byId),
+
   byMemberTypeId: computed(({ entities }) => entities.memberTypes.byId),
 
   byMemberValuesId: computed(({ entities }) => entities.memberValues.byId),
@@ -51,8 +53,6 @@ const dbByIdStore: Pick<
   byQuestionId: computed(({ entities }) => entities.questions.byId),
 
   byRankedQuestionId: computed(({ entities }) => entities.rankedQuestions.byId),
-
-  bySocialsId: computed(({ entities }) => entities.socials.byId),
 
   bySupporterId: computed(({ entities }) => entities.supporters.byId),
 

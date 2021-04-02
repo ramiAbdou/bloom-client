@@ -55,7 +55,7 @@ const ProfileSocialContainer: React.FC = () => {
     twitterUrl
   }: IMemberSocials = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    return db.bySocialsId[member?.socials];
+    return db.byMemberSocialsId[member?.memberSocials];
   });
 
   return (

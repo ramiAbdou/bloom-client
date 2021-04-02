@@ -28,20 +28,30 @@ interface GetMemberValueArgs {
  * IUser attached.
  */
 const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
-  const socials: IMemberSocials = db.bySocialsId[member.socials];
+  const memberSocials: IMemberSocials =
+    db.byMemberSocialsId[member.memberSocials];
+
   const { category }: IQuestion = db.byQuestionId[questionId];
 
   if (category === QuestionCategory.BIO) return member.bio;
   if (category === QuestionCategory.DUES_STATUS) return member.isDuesActive;
   if (category === QuestionCategory.EMAIL) return member.email;
-  if (category === QuestionCategory.FACEBOOK_URL) return socials?.facebookUrl;
+  if (category === QuestionCategory.FACEBOOK_URL) {
+    return memberSocials?.facebookUrl;
+  }
   if (category === QuestionCategory.FIRST_NAME) return member.firstName;
-  if (category === QuestionCategory.INSTAGRAM_URL) return socials?.instagramUrl;
+  if (category === QuestionCategory.INSTAGRAM_URL) {
+    return memberSocials?.instagramUrl;
+  }
   if (category === QuestionCategory.JOINED_AT) return member.joinedAt;
   if (category === QuestionCategory.LAST_NAME) return member.lastName;
-  if (category === QuestionCategory.LINKED_IN_URL) return socials?.linkedInUrl;
+  if (category === QuestionCategory.LINKED_IN_URL) {
+    return memberSocials?.linkedInUrl;
+  }
   if (category === QuestionCategory.PROFILE_PICTURE) return member.pictureUrl;
-  if (category === QuestionCategory.TWITTER_URL) return socials?.twitterUrl;
+  if (category === QuestionCategory.TWITTER_URL) {
+    return memberSocials?.twitterUrl;
+  }
 
   if (category === QuestionCategory.MEMBER_TYPE) {
     const memberType: IMemberType = db.byMemberTypeId[member.memberType];
@@ -49,7 +59,7 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
   }
 
   if (category === QuestionCategory.EVENTS_ATTENDED) {
-    return member.attendees?.length ?? 0;
+    return member.eventAttendees?.length ?? 0;
   }
 
   const value = member.memberValues

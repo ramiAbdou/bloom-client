@@ -13,7 +13,7 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
   const startTime: string = useStoreState(({ db }) => db.event.startTime);
 
   const numAttendees: number = useStoreState(
-    ({ db }) => db.event.attendees?.length
+    ({ db }) => db.event.eventAttendees?.length
   );
 
   const isUpcoming: boolean =

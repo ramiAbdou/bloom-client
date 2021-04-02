@@ -36,25 +36,25 @@ export interface DbModel {
   // BY ID STORE
 
   byApplicationId: Computed<DbModel, Record<string, IApplication>>;
-  byAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
   byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
   byCommunityIntegrationsId: Computed<
     DbModel,
     Record<string, ICommunityIntegrations>
   >;
   byEventId: Computed<DbModel, Record<string, IEvent>>;
+  byEventAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
   byGuestId: Computed<DbModel, Record<string, IEventGuest>>;
   byMemberId: Computed<DbModel, Record<string, IMember>>;
   byMemberIntegrationsId: Computed<
     DbModel,
     Record<string, IMemberIntegrations>
   >;
+  byMemberSocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
   byMemberTypeId: Computed<DbModel, Record<string, IMemberType>>;
   byMemberValuesId: Computed<DbModel, Record<string, IMemberValue>>;
   byPaymentId: Computed<DbModel, Record<string, IPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
   byRankedQuestionId: Computed<DbModel, Record<string, IRankedQuestion>>;
-  bySocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
   bySupporterId: Computed<DbModel, Record<string, ISupporter>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
   byWatchId: Computed<DbModel, Record<string, IEventWatch>>;
@@ -67,7 +67,7 @@ export interface DbModel {
   event: Computed<DbModel, IEvent>;
   member: Computed<DbModel, IMember>;
   memberIntegrations: Computed<DbModel, IMemberIntegrations>;
-  socials: Computed<DbModel, IMemberSocials>;
+  memberSocials: Computed<DbModel, IMemberSocials>;
   user: Computed<DbModel, IUser>;
 
   // UTILITY

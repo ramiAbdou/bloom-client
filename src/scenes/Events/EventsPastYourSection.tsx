@@ -12,9 +12,9 @@ import EventsCard from './EventsCard/EventsCard';
 
 const EventsPastYourList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) =>
-    db.member.attendees
-      ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
-      ?.map((attendee: IEventAttendee) => db.byEventId[attendee.event])
+    db.member.eventAttendees
+      ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId])
+      ?.map((eventAttendee: IEventAttendee) => db.byEventId[eventAttendee.event])
       ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
   );
 
@@ -31,9 +31,9 @@ const EventsPastYourList: React.FC = () => {
 const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const hasEvents: boolean = useStoreState(
     ({ db }) =>
-      !!db.member.attendees
-        ?.map((attendeeId: string) => db.byAttendeeId[attendeeId])
-        ?.map((attendee: IEventAttendee) => db.byEventId[attendee.event])
+      !!db.member.eventAttendees
+        ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId])
+        ?.map((eventAttendee: IEventAttendee) => db.byEventId[eventAttendee.event])
         ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
         ?.length
   );
