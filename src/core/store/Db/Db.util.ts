@@ -11,8 +11,6 @@ import { mergeStrategy } from './schema';
  */
 export const mergeEntities: Action<DbModel, MergeEntitiesArgs> = action(
   (state, { data, schema }: MergeEntitiesArgs) => {
-    console.log('DATA', data);
-    console.log('SCHEMA', schema);
     const normalizedEntities = normalize(data, schema).entities;
 
     const parsedEntities = Object.entries(normalizedEntities).reduce(

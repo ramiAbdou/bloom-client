@@ -11,33 +11,61 @@ const useGql = () => {
 
   const gql = useMemo(() => {
     return {
+      events: {
+        findOne: async (args) =>
+          findOne({
+            ...args,
+            client,
+            entity: 'events',
+            mergeEntities
+          }),
+
+        update: async (args) =>
+          update({
+            ...args,
+            client,
+            entity: 'events',
+            mergeEntities
+          })
+      },
+
       memberSocials: {
-        update: async (args) => {
-          console.log('update member socials');
-          console.log(args);
-          return update({
+        update: async (args) =>
+          update({
             ...args,
             client,
             entity: 'memberSocials',
             mergeEntities
-          });
-        }
+          })
       },
+
+      members: {
+        update: async (args) =>
+          update({
+            ...args,
+            client,
+            entity: 'members',
+            mergeEntities
+          })
+      },
+      questions: {
+        update: async (args) =>
+          update({
+            ...args,
+            client,
+            entity: 'questions',
+            mergeEntities
+          })
+      },
+
       users: {
-        findOne: async (args) => {
-          console.log('find one users');
-          return findOne({
+        findOne: async (args) =>
+          findOne({
             ...args,
             client,
             entity: 'users',
             mergeEntities
-          });
-        },
-
-        update: async (args) => {
-          console.log('update user');
-          console.log(args);
-        }
+          })
       }
     };
   }, []);

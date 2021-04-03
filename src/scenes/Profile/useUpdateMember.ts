@@ -1,28 +1,14 @@
 import validator from 'validator';
 
-import useBloomMutation from '@gql/useBloomMutation';
+import useGql from '@gql/useGql';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IMember } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/constants.events';
 import { uploadImage } from '@util/imageUtil';
-import { UpdateMemberArgs } from './Profile.types';
 
 const useUpdateMember = (): OnFormSubmitFunction => {
-  const [updateMember] = useBloomMutation<IMember, UpdateMemberArgs>({
-    fields: ['id', 'bio', 'firstName', 'lastName', 'pictureUrl'],
-    operation: MutationEvent.UPDATE_MEMBER,
-    schema: Schema.MEMBER,
-    types: {
-      bio: { required: false },
-      firstName: { required: false },
-      lastName: { required: false },
-      pictureUrl: { required: false }
-    }
-  });
+  const gql = useGql();
 
   const onSubmit = async ({
     closeModal,
@@ -51,11 +37,9 @@ const useUpdateMember = (): OnFormSubmitFunction => {
       }
     }
 
-    const { error } = await updateMember({
-      bio,
-      firstName,
-      lastName,
-      pictureUrl
+    const { error } = await gql.members.update({
+      updatedFields: { bio, firstName, lastName, pictureUrl },
+      where: { id: db.member.id }
     });
 
     if (error) {

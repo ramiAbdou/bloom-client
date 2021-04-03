@@ -5,7 +5,13 @@ import { DocumentNode, gql } from '@apollo/client';
 import { Schema } from '@store/Db/schema';
 import { buildArgsString, buildFieldsString } from '../gql.util';
 
-const map = { memberSocials: Schema.MEMBER_SOCIALS, users: Schema.USER };
+const map = {
+  events: Schema.EVENT,
+  memberSocials: Schema.MEMBER_SOCIALS,
+  members: Schema.MEMBER,
+  questions: Schema.QUESTION,
+  users: Schema.USER
+};
 
 const update = async ({
   client,

@@ -1,36 +1,12 @@
-import useBloomMutation from '@gql/useBloomMutation';
+import useGql from '@gql/useGql';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IEvent } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/constants.events';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
-  const [updateEvent] = useBloomMutation<IEvent>({
-    fields: [
-      'description',
-      'id',
-      'imageUrl',
-      'privacy',
-      'summary',
-      'title',
-      'videoUrl'
-    ],
-    operation: MutationEvent.UPDATE_EVENT,
-    schema: Schema.EVENT,
-    types: {
-      description: { required: false },
-      eventId: { required: true },
-      imageUrl: { required: false },
-      privacy: { required: false },
-      summary: { required: false },
-      title: { required: false },
-      videoUrl: { required: false }
-    }
-  });
+  const gql = useGql();
 
   const onSubmit = async ({
     closeModal,
@@ -56,17 +32,22 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
       }
     }
 
-    const args = {
-      description: items.EVENT_DESCRIPTION?.value,
-      eventId,
-      imageUrl,
-      privacy: items.PRIVACY?.value,
-      summary: items.EVENT_SUMMARY?.value,
-      title: items.EVENT_NAME?.value,
-      videoUrl: items.VIDEO_URL?.value
-    };
+    const { error } = await gql.events.update({
+      updatedFields: {
+        description: items.EVENT_DESCRIPTION?.value,
+        imageUrl,
+        privacy: items.PRIVACY?.value,
+        summary: items.EVENT_SUMMARY?.value,
+        title: items.EVENT_NAME?.value,
+        videoUrl: items.VIDEO_URL?.value
+      },
+      where: { id: eventId }
+    });
 
-    await updateEvent(args);
+    if (error) {
+      setError('Failed to update event.');
+      return;
+    }
 
     showToast({ message: 'Event updated!' });
     closeModal();

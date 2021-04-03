@@ -2,7 +2,6 @@
 
 export enum MutationEvent {
   APPLY_TO_COMMUNITY = 'applyToCommunity',
-  CREATE_COMMUNITY = 'createCommunity',
   CREATE_EVENT = 'createEvent',
   CREATE_EVENT_ATTENDEE_WITH_MEMBER = 'createEventAttendeeWithMember',
   CREATE_EVENT_ATTENDEE_WITH_SUPPORTER = 'createEventAttendeeWithSupporter',
@@ -21,11 +20,8 @@ export enum MutationEvent {
   RESPOND_TO_APPLICANTS = 'respondToApplicants',
   RESTORE_MEMBERS = 'restoreMembers',
   SEND_LOGIN_LINK = 'sendLoginLink',
-  UPDATE_EVENT = 'updateEvent',
   UPDATE_MAILCHIMP_LIST_ID = 'updateMailchimpListId',
-  UPDATE_MEMBER = 'updateMember',
   UPDATE_MEMBER_VALUES = 'updateMemberValues',
-  UPDATE_QUESTION = 'updateQuestion',
   UPDATE_STRIPE_PAYMENT_METHOD_ID = 'updateStripePaymentMethodId',
   UPDATE_STRIPE_SUBSCRIPTION_ID = 'updateStripeSubscriptionId',
   VERIFY_TOKEN = 'verifyToken'
@@ -36,7 +32,6 @@ export enum QueryEvent {
   GET_ACTIVE_MEMBERS_SERIES = 'getActiveMembersSeries',
   GET_CHANGE_PREVIEW = 'getChangePreview',
   GET_COMMUNITY_INTEGRATIONS = 'getCommunityIntegrations',
-  GET_EVENT = 'getEvent',
   GET_EVENT_ATTENDEES_SERIES = 'getEventAttendeesSeries',
   GET_MEMBER_INTEGRATIONS = 'getMemberIntegrations',
   GET_MEMBERS_GROWTH = 'getMembersGrowth',

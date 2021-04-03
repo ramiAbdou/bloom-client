@@ -3,14 +3,12 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import useBloomMutation from '@gql/useBloomMutation';
-import useManualQuery from '@gql/useManualQuery';
+import useGql from '@gql/useGql';
 import { ModalData } from '@organisms/Modal/Modal.types';
-import { IEvent } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { ModalType, VerifyEvent } from '@util/constants';
 import { ErrorType } from '@util/constants.errors';
-import { MutationEvent, QueryEvent } from '@util/constants.events';
+import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 
 interface VerifiedToken {
@@ -34,17 +32,12 @@ const useVerifyToken = (): boolean => {
     'token'
   );
 
+  const gql = useGql();
+
   const [verifyToken, result1] = useBloomMutation<VerifiedToken>({
     fields: ['event', 'eventId'],
     operation: MutationEvent.VERIFY_TOKEN,
     types: { token: { required: true } }
-  });
-
-  const [getEvent, result2] = useManualQuery<IEvent>({
-    fields: ['videoUrl'],
-    operation: QueryEvent.GET_EVENT,
-    schema: Schema.EVENT,
-    types: { eventId: { required: true } }
   });
 
   const { push } = useHistory();
@@ -69,11 +62,13 @@ const useVerifyToken = (): boolean => {
       // If the event is VerifyEvent.JOIN_EVENT, then we need to grab the
       // videoUrl from the backend and open the browser to that.
       if (data.event === VerifyEvent.JOIN_EVENT) {
-        const videoUrl: string = (await getEvent({ eventId: data?.eventId }))
-          .data?.videoUrl;
+        const { data: event } = await gql.events.findOne({
+          fields: ['id', 'videoUrl'],
+          where: { id: data.eventId }
+        });
 
         // Only open the videoUrl if it's present though!
-        if (videoUrl) openHref(videoUrl, false);
+        if (event?.videoUrl) openHref(event.videoUrl, false);
       }
 
       // If the token is verified, we get rid of the token attached as a
@@ -83,9 +78,7 @@ const useVerifyToken = (): boolean => {
   }, [token]);
 
   const loading: boolean =
-    (!!token && !result1.data && !result1.error) ||
-    result1.loading ||
-    result2.loading;
+    (!!token && !result1.data && !result1.error) || result1.loading;
 
   return loading;
 };

@@ -2,6 +2,7 @@ import day from 'dayjs';
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
+import useGql from '@gql/useGql';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
@@ -18,7 +19,6 @@ import { ModalType, QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 import { getMemberTableRow } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
-import useUpdateQuestion from './useUpdateQuestion';
 
 const MemberDatabase: React.FC = () => {
   const canCollectDues: boolean = useStoreState(
@@ -67,14 +67,19 @@ const MemberDatabase: React.FC = () => {
     });
   });
 
-  const updateQuestion = useUpdateQuestion();
+  const gql = useGql();
 
   const onRenameColumn: RenameColumnFunction = async ({
     column,
     updateColumn
   }) => {
     const { title, id } = column;
-    const { error } = await updateQuestion({ questionId: id, title });
+
+    const { error } = await gql.questions.update({
+      updatedFields: { title },
+      where: { id }
+    });
+
     if (!error) updateColumn({ id, title });
   };
 

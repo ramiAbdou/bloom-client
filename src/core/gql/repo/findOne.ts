@@ -5,7 +5,7 @@ import { DocumentNode, gql } from '@apollo/client';
 import { Schema } from '@store/Db/schema';
 import { buildArgsString, buildFieldsString } from '../gql.util';
 
-const map = { users: Schema.USER };
+const map = { events: Schema.EVENT, users: Schema.USER };
 
 const findOne = async ({ client, entity, fields, mergeEntities, where }) => {
   // Example: '(where: { email: { $eq: "rami@onbloom.co" } })'
