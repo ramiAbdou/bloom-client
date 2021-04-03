@@ -2,11 +2,19 @@ import camelCaseKeys from 'camelcase-keys';
 import { snakeCase } from 'change-case';
 
 import { DocumentNode, gql } from '@apollo/client';
-import { buildArgsString, buildFieldsString } from './gql.util';
+import { Schema } from '@store/Db/schema';
+import { buildArgsString, buildFieldsString } from '../gql.util';
 
-const findOne = async ({ client, entity, fields, where }) => {
+const map = { users: Schema.USER };
+
+const findOne = async ({ client, entity, fields, mergeEntities, where }) => {
+  // Example: '(where: { email: { $eq: "rami@onbloom.co" } })'
   const argsString: string = buildArgsString({ where });
+
+  // Example: 'id member { id firstName }'
   const fieldsString: string = buildFieldsString(fields);
+
+  // Example: "members", "users"
   const operationString: string = snakeCase(entity);
 
   const query: DocumentNode = gql`
@@ -17,15 +25,7 @@ const findOne = async ({ client, entity, fields, where }) => {
       }
     `;
 
-  console.log(`
-    query {
-      ${operationString} ${argsString} {
-        ${fieldsString}
-      }
-    }
-  `);
-
-  const { data } = await client.query({ query });
+  const { data, errors } = await client.query({ query });
 
   const camelCaseData = camelCaseKeys(data ? data[operationString] : null, {
     deep: true
@@ -33,9 +33,9 @@ const findOne = async ({ client, entity, fields, where }) => {
 
   const result = camelCaseData?.length ? camelCaseData[0] : null;
 
-  // if (result) mergeEntities({ data: camelCaseData, schema: Schema.USER });
+  if (result) mergeEntities({ data: camelCaseData, schema: map[entity] });
 
-  return result;
+  return { data, error: errors?.length && errors[0]?.message };
 };
 
 export default findOne;

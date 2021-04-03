@@ -1,17 +1,13 @@
-import gql from '@gql/gql';
-import mutate from '@gql/mutate';
+import useGql from '@gql/useGql';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { Schema } from '@store/Db/schema';
-import { useStoreActions } from '@store/Store';
 
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+  const gql = useGql();
 
   const onSubmit = async ({
-    apolloClient,
     closeModal,
     db,
     items,
@@ -23,25 +19,8 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
     const linkedInUrl: string = items.LINKED_IN_URL?.value as string;
     const twitterUrl: string = items.TWITTER_URL?.value as string;
 
-    await gql.users.findOne({
-      client: apolloClient,
-      fields: ['id', 'email'],
-      where: { email: 'rami@onbloom.co' }
-    });
-
-    const { error } = await mutate({
-      client: apolloClient,
-      fields: [
-        'facebookUrl',
-        'id',
-        'instagramUrl',
-        'linkedInUrl',
-        'twitterUrl'
-      ],
-      mergeEntities,
-      operation: 'updateMemberSocials',
-      schema: [Schema.MEMBER_SOCIALS],
-      set: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
+    const { error } = await gql.memberSocials.update({
+      updatedFields: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
       where: { id: db.member.memberSocials }
     });
 

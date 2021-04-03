@@ -1,6 +1,5 @@
 import { ActionCreator, State } from 'easy-peasy';
 
-import { ApolloClient } from '@apollo/client';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { DbModel } from '@store/Db/Db.types';
 import { IPaymentMethod } from '@store/Db/entities';
@@ -62,7 +61,6 @@ export interface FormProps extends ClassNameProps, ShowProps {
 }
 
 export interface OnFormSubmitArgs {
-  apolloClient?: ApolloClient<unknown>;
   closeModal?: ActionCreator;
   closePanel?: ActionCreator;
   db?: State<DbModel>;
