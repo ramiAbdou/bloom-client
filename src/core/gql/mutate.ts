@@ -10,7 +10,6 @@ async function mutate<T>({
   fields,
   operation,
   mergeEntities,
-  mutationName: mutationNameString,
   schema,
   set,
   where
@@ -20,7 +19,7 @@ async function mutate<T>({
   const operationString: string = snakeCase(operation);
 
   const mutation: DocumentNode = gql`
-      mutation ${mutationNameString} {
+      mutation {
         ${operationString} ${argsString} {
           returning {
             ${fieldsString}

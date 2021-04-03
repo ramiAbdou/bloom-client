@@ -13,7 +13,6 @@ function useQuery<T>({
   fields,
   operation,
   schema,
-  skip,
   where
 }: QueryArgs): QueryResult<T> {
   const mergeEntities: ActionCreator<MergeEntitiesArgs> = useStoreActions(
@@ -32,7 +31,7 @@ function useQuery<T>({
       }
     `;
 
-  const result = useApolloQuery(query, { skip });
+  const result = useApolloQuery(query);
 
   // Deeply converts all of the data from the operation to camelCase, if the
   // data exists.

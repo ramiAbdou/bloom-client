@@ -39,7 +39,6 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
         'twitterUrl'
       ],
       mergeEntities,
-      mutationName: 'UpdateMemberSocials',
       operation: 'updateMemberSocials',
       schema: [Schema.MEMBER_SOCIALS],
       set: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },

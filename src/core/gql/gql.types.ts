@@ -9,7 +9,6 @@ export interface MutationArgs {
   fields: string[];
   operation: string;
   mergeEntities?: ActionCreator<MergeEntitiesArgs>;
-  mutationName: string;
   schema: Schema;
   set?: Record<string, unknown>;
   where?: Record<string, unknown>;
@@ -34,7 +33,6 @@ export interface QueryArgs {
   fields: string[];
   operation: string;
   schema: Schema;
-  skip?: boolean;
   where?: Record<string, unknown>;
 }
 
