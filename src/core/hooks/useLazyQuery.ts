@@ -3,7 +3,11 @@ import { snakeCase } from 'change-case';
 import { Schema } from 'normalizr';
 import { useEffect } from 'react';
 
-import { DocumentNode, gql, useLazyQuery } from '@apollo/client';
+import {
+  DocumentNode,
+  gql,
+  useLazyQuery as useApolloLazyQuery
+} from '@apollo/client';
 import { QueryResult } from '@hooks/useQuery.types';
 import { useStoreActions } from '@store/Store';
 
@@ -73,7 +77,7 @@ const buildArgsString = (where): string => {
   return a ? `(${a})` : a;
 };
 
-function useHasuraLazyQuery<T = any>({
+function useLazyQuery<T = any>({
   fields,
   operation,
   queryName: queryString,
@@ -96,7 +100,7 @@ function useHasuraLazyQuery<T = any>({
       }
     `;
 
-  const [queryFn, result] = useLazyQuery(
+  const [queryFn, result] = useApolloLazyQuery(
     query,
     initialVariables
       ? {
@@ -125,4 +129,4 @@ function useHasuraLazyQuery<T = any>({
   ];
 }
 
-export default useHasuraLazyQuery;
+export default useLazyQuery;

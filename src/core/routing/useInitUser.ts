@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import useHasuraLazyQuery from '@hooks/useHasuraLazyQuery';
+import useLazyQuery from '@hooks/useLazyQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { IUser } from '@store/Db/entities';
@@ -18,7 +18,7 @@ const useInitUser = (): QueryResult<IUser[]> => {
 
   const userId: string = useStoreState(({ db }) => db.entities.users.activeId);
 
-  const [getUser, result] = useHasuraLazyQuery<IUser[]>({
+  const [getUser, result] = useLazyQuery<IUser[]>({
     fields: [
       'email',
       'id',

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import useHasuraLazyQuery from '@hooks/useHasuraLazyQuery';
+import useLazyQuery from '@hooks/useLazyQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';
@@ -10,7 +10,7 @@ import { useStoreState } from '@store/Store';
 const useInitCommunity = (): QueryResult<ICommunity[]> => {
   const communityId: string = useStoreState(({ db }) => db.community?.id);
 
-  const [getCommunity, result] = useHasuraLazyQuery<ICommunity[]>({
+  const [getCommunity, result] = useLazyQuery<ICommunity[]>({
     fields: [
       'autoAccept',
       'communityIntegrations.community.id',

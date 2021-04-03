@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Show from '@containers/Show';
-import useHasuraLazyQuery from '@hooks/useHasuraLazyQuery';
+import useLazyQuery from '@hooks/useLazyQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
     ({ modal }) => modal.metadata as string
   );
 
-  const [getMember, { data }] = useHasuraLazyQuery<IMember[]>({
+  const [getMember, { data }] = useLazyQuery<IMember[]>({
     fields: [
       'bio',
       'email',

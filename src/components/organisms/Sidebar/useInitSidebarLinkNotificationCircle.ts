@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 
-import useHasuraLazyQuery from '@hooks/useHasuraLazyQuery';
+import { useApolloClient } from '@apollo/client';
+import useLazyQuery from '@hooks/useLazyQuery';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 
 const useInitSidebarLinkNotificationCircle = (to: string): void => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const [listApplicants] = useHasuraLazyQuery({
+  const client = useApolloClient();
+
+  const [listApplicants] = useLazyQuery({
     fields: ['community.id', 'id', 'status'],
     operation: 'members',
     queryName: 'GetApplicantsByCommunityId',
@@ -24,9 +27,9 @@ const useInitSidebarLinkNotificationCircle = (to: string): void => {
 
   useEffect(() => {
     (async () => {
-      if (to === 'applicants') await listApplicants();
+      if (to === 'applicants') listApplicants();
     })();
-  }, [to]);
+  }, [client, to]);
 };
 
 export default useInitSidebarLinkNotificationCircle;
