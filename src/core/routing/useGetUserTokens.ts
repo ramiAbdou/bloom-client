@@ -2,7 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import useManualQuery from '@hooks/useManualQuery';
+import useManualQuery from '@gql/useManualQuery';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 import { QueryEvent } from '@util/constants.events';

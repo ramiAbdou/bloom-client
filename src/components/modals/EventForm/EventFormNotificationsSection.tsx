@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useQuery from '@hooks/useQuery';
+import useQuery from '@gql/useQuery';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';

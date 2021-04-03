@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Section from '@containers/Section';
-import useBloomQuery from '@hooks/useBloomQuery';
+import useBloomQuery from '@gql/useBloomQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { TimeSeriesData } from '@util/constants';

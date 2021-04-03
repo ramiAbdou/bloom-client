@@ -1,5 +1,5 @@
-import useMutation from '@hooks/useMutation';
-import { MutationResult } from '@hooks/useMutation.types';
+import useMutation from '@gql/useMutation';
+import { MutationResult } from '@gql/useMutation.types';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

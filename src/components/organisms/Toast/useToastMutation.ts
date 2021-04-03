@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import useMutation from '@hooks/useMutation';
-import { MutationResultVariablesFunction } from '@hooks/useMutation.types';
+import useMutation from '@gql/useMutation';
+import { MutationResultVariablesFunction } from '@gql/useMutation.types';
 import { useStoreActions } from '@store/Store';
 import { ToastOptions } from './Toast.types';
 

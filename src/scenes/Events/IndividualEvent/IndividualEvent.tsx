@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { QueryResult } from '@hooks/useQuery.types';
+import { QueryResult } from '@gql/useQuery.types';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import EventsAspectBackground from '../EventsAspectBackground';

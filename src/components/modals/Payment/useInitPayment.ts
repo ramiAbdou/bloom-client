@@ -1,6 +1,6 @@
-import useBloomQuery from '@hooks/useBloomQuery';
-import useQuery from '@hooks/useQuery';
-import { QueryResult } from '@hooks/useQuery.types';
+import useBloomQuery from '@gql/useBloomQuery';
+import useQuery from '@gql/useQuery';
+import { QueryResult } from '@gql/useQuery.types';
 import {
   ICommunityIntegrations,
   IMemberIntegrations

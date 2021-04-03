@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 
-import useManualQuery from '@hooks/useManualQuery';
-import { QueryResult } from '@hooks/useQuery.types';
+import useManualQuery from '@gql/useManualQuery';
+import { QueryResult } from '@gql/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';

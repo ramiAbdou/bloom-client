@@ -1,5 +1,5 @@
-import useMutation from '@hooks/useMutation';
-import { UseMutationFnResult } from '@hooks/useMutation.types';
+import useMutation from '@gql/useMutation';
+import { UseMutationFnResult } from '@gql/useMutation.types';
 import { IEventWatch } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';

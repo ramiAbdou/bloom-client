@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import useQuery from '@hooks/useQuery';
-import { QueryResult } from '@hooks/useQuery.types';
+import useQuery from '@gql/useQuery';
+import { QueryResult } from '@gql/useQuery.types';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';

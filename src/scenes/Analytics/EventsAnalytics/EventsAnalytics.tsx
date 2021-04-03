@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Show from '@containers/Show';
-import { QueryResult } from '@hooks/useQuery.types';
+import { QueryResult } from '@gql/useQuery.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';

@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 
-import useMutation from '@hooks/useMutation';
+import useMutation from '@gql/useMutation';
 import { useStoreActions } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 

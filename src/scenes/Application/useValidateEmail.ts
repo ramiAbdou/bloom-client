@@ -1,4 +1,4 @@
-import useManualQuery from '@hooks/useManualQuery';
+import useManualQuery from '@gql/useManualQuery';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

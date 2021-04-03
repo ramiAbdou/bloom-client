@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
-import { QueryResult } from '@hooks/useQuery.types';
+import { QueryResult } from '@gql/useQuery.types';
 import ListStore from '@organisms/List/List.store';
 import ListFilterStore from '@organisms/List/ListFilter/ListFilter.store';
 import PanelLocal from '@organisms/Panel/PanelLocal';

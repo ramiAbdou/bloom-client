@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import useLazyQuery from '@hooks/useLazyQuery';
-import { QueryResult } from '@hooks/useQuery.types';
+import useLazyQuery from '@gql/useLazyQuery';
+import { QueryResult } from '@gql/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
 import { ICommunity } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';

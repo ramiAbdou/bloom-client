@@ -8,7 +8,7 @@ import {
   gql,
   useLazyQuery as useApolloLazyQuery
 } from '@apollo/client';
-import { QueryResult } from '@hooks/useQuery.types';
+import { QueryResult } from '@gql/useQuery.types';
 import { useStoreActions } from '@store/Store';
 
 interface GraphQLVariableArgs {

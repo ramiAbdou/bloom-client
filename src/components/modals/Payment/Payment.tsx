@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { QueryResult } from '@hooks/useQuery.types';
+import { QueryResult } from '@gql/useQuery.types';
 import Story from '@organisms/Story/Story';
 import { useStoreState } from '@store/Store';
 import PaymentStore, { paymentModel } from './Payment.store';

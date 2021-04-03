@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import useBloomQuery from '@hooks/useBloomQuery';
+import useBloomQuery from '@gql/useBloomQuery';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import useBloomQuery from '@hooks/useBloomQuery';
+import useBloomQuery from '@gql/useBloomQuery';
 import { QueryEvent } from '@util/constants.events';
 
 const MembersAnalyticsTotalCard: React.FC = () => {

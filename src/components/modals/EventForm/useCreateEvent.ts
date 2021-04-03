@@ -1,6 +1,6 @@
 import day from 'dayjs';
 
-import useMutation from '@hooks/useMutation';
+import useMutation from '@gql/useMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

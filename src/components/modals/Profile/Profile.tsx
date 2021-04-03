@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Show from '@containers/Show';
-import useLazyQuery from '@hooks/useLazyQuery';
+import useLazyQuery from '@gql/useLazyQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';

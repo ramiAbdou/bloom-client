@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
-import { QueryResult } from '@hooks/useQuery.types';
+import { QueryResult } from '@gql/useQuery.types';
 import { IMember } from '@store/Db/entities';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';

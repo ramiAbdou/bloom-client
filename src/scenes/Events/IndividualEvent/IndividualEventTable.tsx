@@ -2,7 +2,7 @@ import React from 'react';
 
 import Section from '@containers/Section';
 import Show from '@containers/Show';
-import { QueryResult } from '@hooks/useQuery.types';
+import { QueryResult } from '@gql/useQuery.types';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,

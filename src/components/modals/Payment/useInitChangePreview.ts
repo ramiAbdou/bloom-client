@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import useManualQuery from '@hooks/useManualQuery';
-import { QueryResult } from '@hooks/useQuery.types';
+import useManualQuery from '@gql/useManualQuery';
+import { QueryResult } from '@gql/useQuery.types';
 import { QueryEvent } from '@util/constants.events';
 import PaymentStore from './Payment.store';
 import {

@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
-import useManualQuery from '@hooks/useManualQuery';
-import useMutation from '@hooks/useMutation';
+import useMutation from '@gql/useMutation';
+import useManualQuery from '@gql/useManualQuery';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

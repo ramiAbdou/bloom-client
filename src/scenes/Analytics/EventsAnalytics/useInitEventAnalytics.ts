@@ -1,5 +1,5 @@
-import useQuery from '@hooks/useQuery';
-import { QueryResult } from '@hooks/useQuery.types';
+import useQuery from '@gql/useQuery';
+import { QueryResult } from '@gql/useQuery.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';

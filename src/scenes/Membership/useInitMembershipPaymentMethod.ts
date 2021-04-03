@@ -1,5 +1,5 @@
-import useBloomQuery from '@hooks/useBloomQuery';
-import { QueryResult } from '@hooks/useQuery.types';
+import useBloomQuery from '@gql/useBloomQuery';
+import { QueryResult } from '@gql/useQuery.types';
 import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { QueryEvent } from '@util/constants.events';

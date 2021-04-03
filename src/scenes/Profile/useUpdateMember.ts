@@ -1,6 +1,6 @@
 import validator from 'validator';
 
-import useMutation from '@hooks/useMutation';
+import useMutation from '@gql/useMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

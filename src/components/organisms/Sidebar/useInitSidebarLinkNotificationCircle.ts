@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useApolloClient } from '@apollo/client';
-import useLazyQuery from '@hooks/useLazyQuery';
+import useLazyQuery from '@gql/useLazyQuery';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
 

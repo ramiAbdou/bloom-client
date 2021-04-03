@@ -2,8 +2,8 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import useQuery from '@hooks/useQuery';
-import { QueryResult } from '@hooks/useQuery.types';
+import useQuery from '@gql/useQuery';
+import { QueryResult } from '@gql/useQuery.types';
 import { SetActiveArgs } from '@store/Db/Db.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';

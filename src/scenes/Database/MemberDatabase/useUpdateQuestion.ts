@@ -1,5 +1,5 @@
-import useMutation from '@hooks/useMutation';
-import { MutationResultVariablesFunction } from '@hooks/useMutation.types';
+import useMutation from '@gql/useMutation';
+import { MutationResultVariablesFunction } from '@gql/useMutation.types';
 import { IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
