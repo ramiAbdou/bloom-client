@@ -25,10 +25,7 @@ const useInitApplicants = (): QueryResult<IMember[]> => {
     operation: 'members',
     queryName: 'GetApplicantsByCommunityId',
     schema: [Schema.MEMBER],
-    where: {
-      community: { id: { _eq: communityId } },
-      status: { _eq: 'Pending' }
-    }
+    where: { communityId, status: 'Pending' }
   });
 
   return result;

@@ -46,7 +46,7 @@ const useInitIndividualEvent = (): QueryResult<IEvent[]> => {
     operation: 'events',
     queryName: 'GetEventById',
     schema: [Schema.EVENT],
-    where: { id: { _eq: eventId } }
+    where: { id: eventId }
   });
 
   useEffect(() => {

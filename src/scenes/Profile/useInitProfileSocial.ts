@@ -19,7 +19,7 @@ const useInitProfileSocial = (): QueryResult<IMemberSocials[]> => {
     operation: 'memberSocials',
     queryName: 'GetMemberSocialsByMemberId',
     schema: [Schema.MEMBER_SOCIALS],
-    where: { memberId: { _eq: memberId } }
+    where: { memberId }
   });
 
   return result;

@@ -46,7 +46,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     operation: 'applications',
     queryName: 'GetApplicationByUrlName',
     schema: [Schema.APPLICATION],
-    where: { community: { url_name: { _eq: urlName } } }
+    where: { community: { urlName } }
   });
 
   useEffect(() => {

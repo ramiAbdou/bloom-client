@@ -1,3 +1,4 @@
+import gql from '@gql/gql';
 import mutate from '@gql/mutate';
 import {
   OnFormSubmitArgs,
@@ -22,6 +23,12 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
     const linkedInUrl: string = items.LINKED_IN_URL?.value as string;
     const twitterUrl: string = items.TWITTER_URL?.value as string;
 
+    await gql.users.findOne({
+      client: apolloClient,
+      fields: ['id', 'email'],
+      where: { email: 'rami@onbloom.co' }
+    });
+
     const { error } = await mutate({
       client: apolloClient,
       fields: [
@@ -36,7 +43,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
       operation: 'updateMemberSocials',
       schema: [Schema.MEMBER_SOCIALS],
       set: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
-      where: { id: { _eq: db.member.memberSocials } }
+      where: { id: db.member.memberSocials }
     });
 
     if (error) {

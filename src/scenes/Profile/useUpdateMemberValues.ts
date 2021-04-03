@@ -35,23 +35,6 @@ const useUpdateMemberValues = (): OnFormSubmitFunction => {
 
     const { error } = await updateMemberValues({ items: data });
 
-    // const { error } = await mutate({
-    //   client: apolloClient,
-    //   fields: [
-    //     'facebookUrl',
-    //     'id',
-    //     'instagramUrl',
-    //     'linkedInUrl',
-    //     'twitterUrl'
-    //   ],
-    //   mergeEntities,
-    //   mutationName: 'UpdateMemberSocials',
-    //   operation: 'updateMemberSocials',
-    //   schema: [Schema.MEMBER_SOCIALS],
-    //   set: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
-    //   where: { id: { _eq: db.member.memberSocials } }
-    // });
-
     if (error) {
       setError('Failed to update membership information.');
       return;

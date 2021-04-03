@@ -12,7 +12,7 @@ const useInitProfileData = (): Partial<QueryResult> => {
     operation: 'memberValues',
     queryName: 'GetMemberValuesByMemberId',
     schema: [Schema.MEMBER_VALUE],
-    where: { memberId: { _eq: memberId } }
+    where: { memberId }
   });
 
   return result;

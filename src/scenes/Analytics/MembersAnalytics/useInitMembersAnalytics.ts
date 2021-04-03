@@ -21,7 +21,7 @@ const useInitMembersAnalytics = (): QueryResult<IMember[]> => {
     operation: 'members',
     queryName: 'GetMemberValuesByCommunityId',
     schema: [Schema.MEMBER],
-    where: { communityId: { _eq: communityId } }
+    where: { communityId }
   });
 
   return result;

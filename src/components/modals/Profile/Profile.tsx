@@ -28,7 +28,7 @@ const Profile: React.FC = () => {
     operation: 'members',
     queryName: 'GetMemberByMemberId',
     schema: [Schema.MEMBER],
-    where: { id: { _eq: memberId } }
+    where: { id: memberId }
   });
 
   useEffect(() => {

@@ -43,7 +43,7 @@ const useInitUser = (): QueryResult<IUser[]> => {
     operation: 'users',
     queryName: 'GetUserById',
     schema: [Schema.USER],
-    where: { id: { _eq: userId } }
+    where: { id: userId }
   });
 
   useEffect(() => {

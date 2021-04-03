@@ -52,7 +52,7 @@ const useInitProfileHistory = (): QueryResult<IMember[]> => {
     operation: 'members',
     queryName: 'GetMemberHistory',
     schema: [Schema.MEMBER],
-    where: { memberId: { _eq: memberId } }
+    where: { memberId }
   });
 
   return result;

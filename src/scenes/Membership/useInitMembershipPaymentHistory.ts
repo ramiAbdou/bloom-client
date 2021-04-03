@@ -20,7 +20,7 @@ const useInitMembershipPaymentHistory = (): QueryResult<IPayment[]> => {
     operation: 'payments',
     queryName: 'GetPaymentsByMemberId',
     schema: [Schema.PAYMENT],
-    where: { memberId: { _eq: memberId } }
+    where: { memberId }
   });
 
   return result;

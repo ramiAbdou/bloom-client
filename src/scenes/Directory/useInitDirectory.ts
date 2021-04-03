@@ -29,7 +29,7 @@ const useInitDirectory = (): QueryResult<IMember[]> => {
     operation: 'members',
     queryName: 'GetMembersByCommunityId',
     schema: [Schema.MEMBER],
-    where: { communityId: { _eq: communityId } }
+    where: { communityId }
   });
 
   return result;

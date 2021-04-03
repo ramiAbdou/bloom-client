@@ -20,15 +20,27 @@ export const buildArgsString = ({
 }: BuildArgsStringArgs): string => {
   if (!set && !where) return '';
 
+  const formattedWhere: Record<string, unknown> = Object.entries(where).reduce(
+    (acc, [key, value]) => {
+      if (typeof value !== 'object' && !['_eq', '_lt', '_gt'].includes(key)) {
+        return { ...acc, [key]: { _eq: value } };
+      }
+
+      return { ...acc, [key]: value };
+    },
+    {}
+  );
+
   const snakeCaseSet: Record<string, unknown> = snakeCaseKeys(set ?? {}, {
     // Don't want to convert any of the query operators.
     exclude: ['_eq', '_lt', '_gt']
   });
 
-  const snakeCaseWhere: Record<string, unknown> = snakeCaseKeys(where ?? {}, {
+  const snakeCaseWhere: Record<string, unknown> = snakeCaseKeys(
+    formattedWhere,
     // Don't want to convert any of the query operators.
-    exclude: ['_eq', '_lt', '_gt']
-  });
+    { exclude: ['_eq', '_lt', '_gt'] }
+  );
 
   // Converts the object to a string, and replaces the double quotes around
   // keys (and not the values).

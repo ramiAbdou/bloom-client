@@ -33,10 +33,7 @@ const useInitPastEvents = (): QueryResult<IEvent[]> => {
     operation: 'events',
     queryName: 'GetPastEvents',
     schema: [Schema.EVENT],
-    where: {
-      communityId: { _eq: communityId },
-      endTime: { _lt: day.utc().format() }
-    }
+    where: { communityId, endTime: { _lt: day.utc().format() } }
   });
 
   return result;

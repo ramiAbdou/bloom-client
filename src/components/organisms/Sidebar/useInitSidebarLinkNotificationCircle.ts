@@ -15,10 +15,7 @@ const useInitSidebarLinkNotificationCircle = (to: string): void => {
     operation: 'members',
     queryName: 'GetApplicantsByCommunityId',
     schema: [Schema.MEMBER],
-    where: {
-      community: { id: { _eq: communityId } },
-      status: { _eq: 'Pending' }
-    }
+    where: { community: { id: communityId }, status: 'Pending' }
   });
 
   useEffect(() => {
