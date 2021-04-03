@@ -3,7 +3,7 @@ import React from 'react';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainContent from '@containers/Main/MainContent';
 import Section from '@containers/Section';
-import { QueryResult } from '@gql/useQuery.types';
+import { QueryResult } from '@gql/gql.types';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent } from '@store/Db/entities';

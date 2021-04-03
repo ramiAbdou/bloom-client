@@ -1,26 +1,10 @@
 import camelCaseKeys from 'camelcase-keys';
 import { snakeCase } from 'change-case';
-import { Schema } from 'normalizr';
 import { useEffect } from 'react';
 
 import { DocumentNode, gql, useQuery as useApolloQuery } from '@apollo/client';
 import { useStoreActions } from '@store/Store';
-import { QueryResult } from './useQuery.types';
-
-interface GraphQLVariableArgs {
-  type: 'String!';
-  value: string;
-}
-
-interface UseQueryArgs {
-  fields: string[];
-  variables: Record<string, GraphQLVariableArgs>;
-  operation: string;
-  queryName: string;
-  schema?: Schema;
-  skip?: boolean;
-  where?: any;
-}
+import { QueryArgs, QueryResult } from './gql.types';
 
 const buildQuery = (fields: string[]) => {
   const snakeCaseFields: string[] = fields.reduce(
@@ -82,7 +66,7 @@ function useQuery<T = any>({
   skip,
   variables,
   where
-}: UseQueryArgs): QueryResult<T> {
+}: QueryArgs): QueryResult<T> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const argsString: string = buildArgsString(where);
@@ -123,8 +107,7 @@ function useQuery<T = any>({
     called: result.called,
     data: camelCaseData,
     error: result.error?.message,
-    loading: result.loading,
-    refetch: result.refetch
+    loading: result.loading
   };
 }
 

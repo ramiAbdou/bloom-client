@@ -1,6 +1,6 @@
+import { QueryResult } from '@gql/gql.types';
 import useBloomQuery from '@gql/useBloomQuery';
 import useQuery from '@gql/useQuery';
-import { QueryResult } from '@gql/useQuery.types';
 import {
   ICommunityIntegrations,
   IMemberIntegrations

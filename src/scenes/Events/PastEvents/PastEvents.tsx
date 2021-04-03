@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
-import { QueryResult } from '@gql/useQuery.types';
+import { QueryResult } from '@gql/gql.types';
 import EventsHeader from '../EventsHeader';
 import PastEventsSection from './PastEventsSection';
 import PastEventsYourSection from './PastEventsYourSection';

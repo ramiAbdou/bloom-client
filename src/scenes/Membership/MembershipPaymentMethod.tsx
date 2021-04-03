@@ -3,7 +3,7 @@ import React from 'react';
 
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
-import { QueryResult } from '@gql/useQuery.types';
+import { QueryResult } from '@gql/gql.types';
 import { IPaymentMethod } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';

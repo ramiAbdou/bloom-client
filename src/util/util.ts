@@ -1,11 +1,6 @@
 import { APIError } from 'graphql-hooks';
 
 /**
- * Returns the GraphQL query string that we need to send to the
- */
-// export const buildQuery = (): string => {};
-
-/**
  * Returns the URL with the URL params.
  *
  * @param url - URL to start with.

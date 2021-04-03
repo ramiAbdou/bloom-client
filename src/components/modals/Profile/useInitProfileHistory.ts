@@ -1,5 +1,5 @@
+import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { QueryResult } from '@gql/useQuery.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';

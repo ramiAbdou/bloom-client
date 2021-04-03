@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Show from '@containers/Show';
-import { QueryResult } from '@gql/useQuery.types';
+import { QueryResult } from '@gql/gql.types';
 import MembersAnalyticsCharts from './MembersAnalyticsCharts';
 import MembersAnalyticsInsights from './MembersAnalyticsInsights';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';

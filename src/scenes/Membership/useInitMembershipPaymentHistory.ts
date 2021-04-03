@@ -1,5 +1,5 @@
+import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { QueryResult } from '@gql/useQuery.types';
 import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
