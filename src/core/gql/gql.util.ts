@@ -6,7 +6,10 @@ import { QueryArgs } from './gql.types';
 type BuildArgsStringArgs = Pick<QueryArgs, 'where'>;
 
 /**
- *
+ * Returns the argument string (defined right after the GraphQL operation). All
+ * of the following affect the args string:
+ *  - limit
+ *  - where
  */
 export const buildArgsString = ({ where }: BuildArgsStringArgs): string => {
   if (!where) return '';
@@ -16,12 +19,12 @@ export const buildArgsString = ({ where }: BuildArgsStringArgs): string => {
     exclude: ['_eq', '_lt', '_gt']
   });
 
-  const whereString = `where: ${JSON.stringify(snakeCaseWhere).replace(
-    /"/g,
-    ''
-  )}`;
+  const whereArgsString = JSON.stringify(snakeCaseWhere).replace(
+    /"(\w*)":/g,
+    '$1:'
+  );
 
-  return whereString ? `(${whereString})` : whereString;
+  return whereArgsString ? `(where: ${whereArgsString})` : whereArgsString;
 };
 
 /**
@@ -87,11 +90,6 @@ export const buildFieldsString = (fields: string[]): string => {
       .replace(/"|:|null/g, '')
   );
 };
-
-/**
- *
- */
-export const buildVarsString = (): string => null;
 
 /**
  * Returns the GraphQL query string that we need to send to the Hasura GraphQL

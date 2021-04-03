@@ -54,8 +54,7 @@ const useInitEventAnalytics = (): QueryResult<IEvent[]> => {
     operation: 'events',
     queryName: 'GetEventAnalytics',
     schema: [Schema.EVENT],
-    variables: { communityId: { type: 'String!', value: communityId } },
-    where: { communityId: { _eq: '$communityId' } }
+    where: { communityId: { _eq: communityId } }
   });
 
   return result;

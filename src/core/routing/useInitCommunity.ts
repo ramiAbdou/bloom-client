@@ -41,8 +41,7 @@ const useInitCommunity = (): QueryResult<ICommunity[]> => {
     operation: 'communities',
     queryName: 'GetCommunityById',
     schema: [Schema.COMMUNITY],
-    variables: { communityId: { type: 'String!', value: communityId } },
-    where: { id: { _eq: '$communityId' } }
+    where: { id: { _eq: communityId } }
   });
 
   useEffect(() => {

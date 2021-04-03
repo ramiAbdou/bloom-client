@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import useQuery from '@gql/useQuery';
 import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
@@ -45,8 +45,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     operation: 'applications',
     queryName: 'GetApplicationByUrlName',
     schema: [Schema.APPLICATION],
-    variables: { urlName: { type: 'String!', value: urlName } },
-    where: { community: { url_name: { _eq: '$urlName' } } }
+    where: { community: { url_name: { _eq: urlName } } }
   });
 
   useEffect(() => {

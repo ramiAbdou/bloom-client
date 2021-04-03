@@ -15,13 +15,9 @@ const useInitSidebarLinkNotificationCircle = (to: string): void => {
     operation: 'members',
     queryName: 'GetApplicantsByCommunityId',
     schema: [Schema.MEMBER],
-    variables: {
-      communityId: { type: 'String!', value: communityId },
-      status: { type: 'String!', value: 'Pending' }
-    },
     where: {
-      community: { id: { _eq: '$communityId' } },
-      status: { _eq: '$status' }
+      community: { id: { _eq: communityId } },
+      status: { _eq: 'Pending' }
     }
   });
 

@@ -2,8 +2,8 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import useQuery from '@gql/useQuery';
 import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { SetActiveArgs } from '@store/Db/Db.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -46,8 +46,7 @@ const useInitIndividualEvent = (): QueryResult<IEvent[]> => {
     operation: 'events',
     queryName: 'GetEventById',
     schema: [Schema.EVENT],
-    variables: { eventId: { type: 'String!', value: eventId } },
-    where: { id: { _eq: '$eventId' } }
+    where: { id: { _eq: eventId } }
   });
 
   useEffect(() => {

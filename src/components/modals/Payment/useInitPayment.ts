@@ -17,8 +17,7 @@ const useInitPayment = (): Partial<QueryResult> => {
     operation: 'communityIntegrations',
     queryName: 'GetCommunityIntegrationsByCommunityId',
     schema: [Schema.COMMUNITY_INTEGRATIONS],
-    variables: { communityId: { type: 'String!', value: communityId } },
-    where: { communityId: { _eq: '$communityId' } }
+    where: { communityId: { _eq: communityId } }
   });
 
   const {

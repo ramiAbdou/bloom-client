@@ -7,56 +7,27 @@ import { useStoreActions } from '@store/Store';
 import { QueryArgs, QueryResult } from './gql.types';
 import { buildArgsString, buildFieldsString } from './gql.util';
 
-const buildVarsString = (variables: any): string => {
-  if (!variables) return '';
-
-  const a = Object.entries(variables).reduce(
-    (acc: string, [key, value]: [any, any], i) => {
-      if (i === 0) {
-        return `${acc}$${key}: ${value.type}`;
-      }
-
-      return `, ${acc}$${key}: ${value.type}`;
-    },
-    ''
-  );
-
-  return a ? `(${a})` : a;
-};
-
 function useQuery<T = any>({
   fields,
   operation,
-  queryName: queryString,
+  queryName,
   schema,
   skip,
-  variables,
   where
 }: QueryArgs): QueryResult<T> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const argsString: string = buildArgsString({ where });
-  const varsString: string = buildVarsString(variables);
 
   const snakeOperation: string = snakeCase(operation);
 
   const query: DocumentNode = gql`
-      query ${queryString}${varsString} {
-        ${snakeOperation}${argsString} ${buildFieldsString(fields)}
+      query ${queryName} {
+        ${snakeOperation} ${argsString} ${buildFieldsString(fields)}
       }
     `;
 
-  const result = useApolloQuery(
-    query,
-    variables
-      ? {
-          skip,
-          variables: Object.entries(variables).reduce((acc, [key, value]) => {
-            return { ...acc, [key]: value.value };
-          }, {})
-        }
-      : { skip }
-  );
+  const result = useApolloQuery(query, { skip });
 
   const camelCaseData: T = camelCaseKeys(
     result.data ? result.data[snakeOperation] : null,

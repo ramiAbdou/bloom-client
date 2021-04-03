@@ -1,5 +1,5 @@
-import useQuery from '@gql/useQuery';
 import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -34,8 +34,7 @@ const useInitIndividualEventTable = (): Partial<QueryResult> => {
     operation: 'events',
     queryName: 'GetEventById',
     schema: [Schema.EVENT],
-    variables: { eventId: { type: 'String!', value: eventId } },
-    where: { id: { _eq: '$eventId' } }
+    where: { id: { _eq: eventId } }
   });
 
   return result;

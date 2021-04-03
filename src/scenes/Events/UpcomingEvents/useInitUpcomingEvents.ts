@@ -31,13 +31,9 @@ const useInitUpcomingEvents = (): QueryResult<IEvent[]> => {
     operation: 'events',
     queryName: 'GetPastEvents',
     schema: [Schema.EVENT],
-    variables: {
-      communityId: { type: 'String!', value: communityId },
-      time: { type: 'String!', value: day.utc().format() }
-    },
     where: {
-      communityId: { _eq: '$communityId' },
-      startTime: { _gt: '$time' }
+      communityId: { _eq: communityId },
+      startTime: { _gt: day.utc().format() }
     }
   });
 

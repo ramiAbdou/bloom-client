@@ -43,8 +43,7 @@ const useInitUser = (): QueryResult<IUser[]> => {
     operation: 'users',
     queryName: 'GetUserById',
     schema: [Schema.USER],
-    variables: { userId: { type: 'String!', value: userId } },
-    where: { id: { _eq: '$userId' } }
+    where: { id: { _eq: userId } }
   });
 
   useEffect(() => {

@@ -24,8 +24,7 @@ const useInitPaymentAnalyticsHistory = (): QueryResult<IMember[]> => {
     operation: 'members',
     queryName: 'GetMemberPaymentAnalytics',
     schema: [Schema.MEMBER],
-    variables: { communityId: { type: 'String!', value: communityId } },
-    where: { communityId: { _eq: '$communityId' } }
+    where: { communityId: { _eq: communityId } }
   });
 
   return result;
