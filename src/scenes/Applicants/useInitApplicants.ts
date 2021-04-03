@@ -7,7 +7,7 @@ import { useStoreState } from '@store/Store';
 const useInitApplicants = (): QueryResult<IMember[]> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const result = useQuery({
+  const result = useQuery<IMember[]>({
     fields: [
       'community.id',
       'createdAt',

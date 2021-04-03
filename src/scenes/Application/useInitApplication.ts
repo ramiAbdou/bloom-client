@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
+import { IApplication } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
@@ -11,7 +12,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   const setActiveEntities = useStoreActions(({ db }) => db.setActiveEntities);
   const { urlName } = useParams() as UrlNameProps;
 
-  const { error, loading, data } = useQuery({
+  const { error, loading, data: applications } = useQuery<IApplication[]>({
     fields: [
       'id',
       'communityId',
@@ -49,13 +50,13 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   });
 
   useEffect(() => {
-    if (!data) return;
+    if (!applications) return;
 
     setActiveEntities({
-      id: data.applications[0].community.id,
+      id: applications[0].communityId,
       table: 'communities'
     });
-  }, [data]);
+  }, [applications]);
 
   return { error, loading };
 };
