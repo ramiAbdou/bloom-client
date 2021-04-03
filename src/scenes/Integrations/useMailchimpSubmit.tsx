@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -13,7 +13,7 @@ const useMailchimpSubmit = (): OnFormSubmitFunction => {
     ({ db }) => db.communityIntegrations?.mailchimpLists
   );
 
-  const [updateMailchimpListId] = useMutation<ICommunityIntegrations>({
+  const [updateMailchimpListId] = useBloomMutation<ICommunityIntegrations>({
     fields: ['id', 'mailchimpListId', 'mailchimpListName'],
     operation: MutationEvent.UPDATE_MAILCHIMP_LIST_ID,
     schema: Schema.COMMUNITY_INTEGRATIONS,

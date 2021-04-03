@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import useMutation from '@gql/useMutation';
-import { MutationResultVariablesFunction } from '@gql/useMutation.types';
+import useBloomMutation from '@gql/useBloomMutation';
+import { MutationResultVariablesFunction } from '@gql/useBloomMutation.types';
 import { useStoreActions } from '@store/Store';
 import { ToastOptions } from './Toast.types';
 
@@ -23,7 +23,7 @@ const useToastMutation = (
   const { id, mutationArgsOnUndo, wasUndid } = args;
   const dequeueToast = useStoreActions(({ toast }) => toast.dequeueToast);
 
-  const [mutationOnUndoFn] = useMutation(
+  const [mutationOnUndoFn] = useBloomMutation(
     mutationArgsOnUndo ?? { operation: null }
   );
 

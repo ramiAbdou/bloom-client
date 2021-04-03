@@ -4,9 +4,9 @@ import { useEffect, useMemo } from 'react';
 
 import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
-import { MutationResult, UseMutationArgs } from './useMutation.types';
+import { MutationResult, UseMutationArgs } from './useBloomMutation.types';
 
-function useMutation<T = any, S = any>({
+function useBloomMutation<T = any, S = any>({
   fields,
   operation,
   schema,
@@ -47,4 +47,4 @@ function useMutation<T = any, S = any>({
   return [typedMutationFn, result];
 }
 
-export default useMutation;
+export default useBloomMutation;

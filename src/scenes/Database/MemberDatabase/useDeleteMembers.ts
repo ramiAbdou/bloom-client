@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -15,7 +15,7 @@ const useDeleteMembers = (): OnFormSubmitFunction => {
     ({ selectedRowIds }) => selectedRowIds
   );
 
-  const [deleteMembers] = useMutation<IMember[], MemberIdsArgs>({
+  const [deleteMembers] = useBloomMutation<IMember[], MemberIdsArgs>({
     fields: ['deletedAt', 'id'],
     operation: MutationEvent.DELETE_MEMBERS,
     schema: [Schema.MEMBER],

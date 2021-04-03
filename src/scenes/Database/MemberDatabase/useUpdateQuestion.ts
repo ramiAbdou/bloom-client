@@ -1,5 +1,5 @@
-import useMutation from '@gql/useMutation';
-import { MutationResultVariablesFunction } from '@gql/useMutation.types';
+import useBloomMutation from '@gql/useBloomMutation';
+import { MutationResultVariablesFunction } from '@gql/useBloomMutation.types';
 import { IQuestion } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
@@ -9,7 +9,7 @@ const useUpdateQuestion = (): MutationResultVariablesFunction<
   IQuestion,
   UpdateQuestionArgs
 > => {
-  const [updateQuestion] = useMutation<IQuestion, UpdateQuestionArgs>({
+  const [updateQuestion] = useBloomMutation<IQuestion, UpdateQuestionArgs>({
     fields: ['id', 'title'],
     operation: MutationEvent.UPDATE_QUESTION,
     schema: Schema.QUESTION,

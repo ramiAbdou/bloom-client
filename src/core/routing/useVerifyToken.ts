@@ -2,7 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import useManualQuery from '@gql/useManualQuery';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import { IEvent } from '@store/Db/entities';
@@ -34,7 +34,7 @@ const useVerifyToken = (): boolean => {
     'token'
   );
 
-  const [verifyToken, result1] = useMutation<VerifiedToken>({
+  const [verifyToken, result1] = useBloomMutation<VerifiedToken>({
     fields: ['event', 'eventId'],
     operation: MutationEvent.VERIFY_TOKEN,
     types: { token: { required: true } }

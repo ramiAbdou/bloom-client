@@ -1,13 +1,16 @@
 import { useHistory } from 'react-router-dom';
 
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import { useStoreActions } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const useLogout = (): VoidFunction => {
   const clearEntities = useStoreActions(({ db }) => db.clearEntities);
   const { push } = useHistory();
-  const [logout] = useMutation<boolean>({ operation: MutationEvent.LOGOUT });
+
+  const [logout] = useBloomMutation<boolean>({
+    operation: MutationEvent.LOGOUT
+  });
 
   return async () => {
     const { error } = await logout();

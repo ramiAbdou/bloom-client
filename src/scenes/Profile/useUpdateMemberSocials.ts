@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -9,7 +9,7 @@ import { MutationEvent } from '@util/constants.events';
 import { UpdateUserSocialsArgs } from './Profile.types';
 
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {
-  const [updateMemberSocials] = useMutation<IUser, UpdateUserSocialsArgs>({
+  const [updateMemberSocials] = useBloomMutation<IUser, UpdateUserSocialsArgs>({
     fields: ['id', 'facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
     operation: MutationEvent.UPDATE_MEMBER_SOCIALS,
     schema: Schema.MEMBER_SOCIALS,

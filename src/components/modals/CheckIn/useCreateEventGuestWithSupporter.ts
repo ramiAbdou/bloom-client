@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -12,7 +12,7 @@ import { MutationEvent } from '@util/constants.events';
 const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  const [createEventGuestWithSupporter] = useMutation<
+  const [createEventGuestWithSupporter] = useBloomMutation<
     IEventGuest,
     CreateEventGuestArgs
   >({

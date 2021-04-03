@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   FormItemData,
   OnFormSubmitArgs,
@@ -13,7 +13,7 @@ import { AddMemberInput, AddMembersArgs } from './AddMember.types';
 const useInviteMembers = (): OnFormSubmitFunction => {
   const admin: boolean = AddMemberStore.useStoreState((state) => state.admin);
 
-  const [inviteMembers] = useMutation<any, AddMembersArgs>({
+  const [inviteMembers] = useBloomMutation<any, AddMembersArgs>({
     fields: ['id'],
     operation: MutationEvent.INVITE_MEMBERS,
     types: { members: { required: true, type: '[InviteMemberInput!]' } }

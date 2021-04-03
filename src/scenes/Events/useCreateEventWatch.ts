@@ -1,5 +1,5 @@
-import useMutation from '@gql/useMutation';
-import { UseMutationFnResult } from '@gql/useMutation.types';
+import useBloomMutation from '@gql/useBloomMutation';
+import { UseMutationFnResult } from '@gql/useBloomMutation.types';
 import { IEventWatch } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { MutationEvent } from '@util/constants.events';
@@ -7,7 +7,7 @@ import { MutationEvent } from '@util/constants.events';
 const useCreateEventWatch = (): ((
   variables?: any
 ) => Promise<UseMutationFnResult<IEventWatch>>) => {
-  const [createEventWatch] = useMutation<IEventWatch>({
+  const [createEventWatch] = useBloomMutation<IEventWatch>({
     fields: [
       'createdAt',
       'id',

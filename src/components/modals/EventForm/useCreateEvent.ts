@@ -1,6 +1,6 @@
 import day from 'dayjs';
 
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -13,7 +13,7 @@ import { uploadImage } from '@util/imageUtil';
 type CreateEventArgs = Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>;
 
 const useCreateEvent = (): OnFormSubmitFunction => {
-  const [createEvent] = useMutation<IEvent, CreateEventArgs>({
+  const [createEvent] = useBloomMutation<IEvent, CreateEventArgs>({
     fields: [
       'description',
       'endTime',

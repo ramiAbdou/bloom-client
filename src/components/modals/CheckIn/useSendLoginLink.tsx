@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import useManualQuery from '@gql/useManualQuery';
 import {
   OnFormSubmitArgs,
@@ -37,7 +37,7 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
     types: { communityId: { required: true } }
   });
 
-  const [sendLoginLink] = useMutation<boolean, SendLoginLinkArgs>({
+  const [sendLoginLink] = useBloomMutation<boolean, SendLoginLinkArgs>({
     operation: MutationEvent.SEND_LOGIN_LINK,
     types: {
       communityId: { required: false },

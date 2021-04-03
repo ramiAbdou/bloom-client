@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
@@ -13,7 +13,7 @@ const DeleteEventButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
-  const [deleteEvent, { loading }] = useMutation<boolean>({
+  const [deleteEvent, { loading }] = useBloomMutation<boolean>({
     fields: ['deletedAt', 'id'],
     operation: MutationEvent.DELETE_EVENT,
     schema: Schema.EVENT,

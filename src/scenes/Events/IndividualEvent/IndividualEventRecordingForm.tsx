@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormShortText from '@organisms/Form/FormShortText';
@@ -19,7 +19,7 @@ const IndividualEventRecordingForm: React.FC = () => {
   const eventId = useStoreState(({ panel }) => panel.metadata);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
 
-  const [updateEvent] = useMutation<IEvent, UpdateRecordingUrlArgs>({
+  const [updateEvent] = useBloomMutation<IEvent, UpdateRecordingUrlArgs>({
     fields: ['id', 'recordingUrl'],
     operation: MutationEvent.UPDATE_EVENT,
     schema: Schema.EVENT,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
@@ -20,7 +20,7 @@ const MemberDatabasePromoteForm: React.FC = () => {
     (state) => state.clearSelectedRows
   );
 
-  const [promoteMembers] = useMutation<IMember[], MemberIdsArgs>({
+  const [promoteMembers] = useBloomMutation<IMember[], MemberIdsArgs>({
     fields: ['id', 'role'],
     operation: MutationEvent.PROMOTE_MEMBERS,
     schema: [Schema.MEMBER],

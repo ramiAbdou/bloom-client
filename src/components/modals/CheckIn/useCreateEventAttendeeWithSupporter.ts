@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -15,7 +15,7 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
     (state) => state.setCurrentPage
   );
 
-  const [createEventAttendeeWithSupporter] = useMutation<
+  const [createEventAttendeeWithSupporter] = useBloomMutation<
     IEventGuest,
     CreateEventGuestArgs
   >({

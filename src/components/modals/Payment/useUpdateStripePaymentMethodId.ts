@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -13,7 +13,7 @@ const useUpdateStripePaymentMethodId = (): OnFormSubmitFunction => {
   const elements = useElements();
   const stripe = useStripe();
 
-  const [updateStripePaymentMethodId] = useMutation<
+  const [updateStripePaymentMethodId] = useBloomMutation<
     Pick<IMemberIntegrations, 'id' | 'paymentMethod'>,
     UpdateStripePaymentMethodIdArgs
   >({

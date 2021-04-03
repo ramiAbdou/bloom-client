@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -25,7 +25,7 @@ const useUpdateStripeSubscriptionId = (): OnFormSubmitFunction => {
 
   const { push } = useHistory();
 
-  const [updateStripeSubscriptionId] = useMutation<
+  const [updateStripeSubscriptionId] = useBloomMutation<
     IMemberIntegrations,
     CreateSubscriptionArgs
   >({

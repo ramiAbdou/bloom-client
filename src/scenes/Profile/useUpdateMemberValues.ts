@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   FormItemData,
   OnFormSubmitArgs,
@@ -10,7 +10,7 @@ import { MutationEvent } from '@util/constants.events';
 import { MemberValueInput, UpdateMemberValueArgs } from './Profile.types';
 
 const useUpdateMemberValues = (): OnFormSubmitFunction => {
-  const [updateMemberValues] = useMutation<
+  const [updateMemberValues] = useBloomMutation<
     IMemberValue[],
     UpdateMemberValueArgs
   >({

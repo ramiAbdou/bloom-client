@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -9,7 +9,7 @@ import { MutationEvent } from '@util/constants.events';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
-  const [updateEvent] = useMutation<IEvent>({
+  const [updateEvent] = useBloomMutation<IEvent>({
     fields: [
       'description',
       'id',

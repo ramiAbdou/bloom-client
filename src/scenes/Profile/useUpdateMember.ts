@@ -1,6 +1,6 @@
 import validator from 'validator';
 
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -12,7 +12,7 @@ import { uploadImage } from '@util/imageUtil';
 import { UpdateMemberArgs } from './Profile.types';
 
 const useUpdateMember = (): OnFormSubmitFunction => {
-  const [updateMember] = useMutation<IMember, UpdateMemberArgs>({
+  const [updateMember] = useBloomMutation<IMember, UpdateMemberArgs>({
     fields: ['id', 'bio', 'firstName', 'lastName', 'pictureUrl'],
     operation: MutationEvent.UPDATE_MEMBER,
     schema: Schema.MEMBER,

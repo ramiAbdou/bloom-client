@@ -1,5 +1,5 @@
-import useMutation from '@gql/useMutation';
-import { MutationResult } from '@gql/useMutation.types';
+import useBloomMutation from '@gql/useBloomMutation';
+import { MutationResult } from '@gql/useBloomMutation.types';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -25,7 +25,7 @@ const useRespondToApplicants = ({
   const [respondToApplicants]: MutationResult<
     IMember[],
     RespondToApplicantsArgs
-  > = useMutation<IMember[], RespondToApplicantsArgs>({
+  > = useBloomMutation<IMember[], RespondToApplicantsArgs>({
     fields: ['id', 'status'],
     operation: MutationEvent.RESPOND_TO_APPLICANTS,
     schema: [Schema.MEMBER],

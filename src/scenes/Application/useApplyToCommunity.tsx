@@ -1,4 +1,4 @@
-import useMutation from '@gql/useMutation';
+import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -10,7 +10,7 @@ import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 
 const useApplyToCommunity = (): OnFormSubmitFunction => {
-  const [applyToCommunity] = useMutation<any, ApplyForMembershipArgs>({
+  const [applyToCommunity] = useBloomMutation<any, ApplyForMembershipArgs>({
     fields: ['id'],
     operation: MutationEvent.APPLY_TO_COMMUNITY,
     types: {

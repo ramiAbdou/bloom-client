@@ -9,7 +9,7 @@ import { useStoreActions } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 import { getGraphQLError } from '@util/util';
 import { QueryResult } from './gql.types';
-import { MutationResult } from './useMutation.types';
+import { MutationResult } from './useBloomMutation.types';
 
 interface UseQueryArgs<S> {
   fields?: Fields;
