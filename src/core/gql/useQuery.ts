@@ -27,7 +27,9 @@ function useQuery<T>({
 
   const query: DocumentNode = gql`
       query ${queryNameString} {
-        ${operationString} ${argsString} ${fieldsString}
+        ${operationString} ${argsString} {
+          ${fieldsString}
+        }
       }
     `;
 

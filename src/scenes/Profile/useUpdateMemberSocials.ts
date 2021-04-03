@@ -1,42 +1,46 @@
-import useBloomMutation from '@gql/useBloomMutation';
+import mutate from '@gql/mutate';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { MutationEvent } from '@util/constants.events';
-import { UpdateUserSocialsArgs } from './Profile.types';
+import { useStoreActions } from '@store/Store';
 
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {
-  const [updateMemberSocials] = useBloomMutation<IUser, UpdateUserSocialsArgs>({
-    fields: ['id', 'facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-    operation: MutationEvent.UPDATE_MEMBER_SOCIALS,
-    schema: Schema.MEMBER_SOCIALS,
-    types: {
-      facebookUrl: { required: false },
-      instagramUrl: { required: false },
-      linkedInUrl: { required: false },
-      twitterUrl: { required: false }
-    }
-  });
+  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
-  const onSubmit = async (args: OnFormSubmitArgs) => {
-    const { closeModal, items, setError, showToast } = args;
+  const onSubmit = async ({
+    apolloClient,
+    closeModal,
+    db,
+    items,
+    setError,
+    showToast
+  }: OnFormSubmitArgs) => {
     const facebookUrl: string = items.FACEBOOK_URL?.value as string;
     const instagramUrl: string = items.INSTAGRAM_URL?.value as string;
     const linkedInUrl: string = items.LINKED_IN_URL?.value as string;
     const twitterUrl: string = items.TWITTER_URL?.value as string;
 
-    const { error } = await updateMemberSocials({
-      facebookUrl,
-      instagramUrl,
-      linkedInUrl,
-      twitterUrl
+    const { error } = await mutate({
+      client: apolloClient,
+      fields: [
+        'facebookUrl',
+        'id',
+        'instagramUrl',
+        'linkedInUrl',
+        'twitterUrl'
+      ],
+      mergeEntities,
+      mutationName: 'UpdateMemberSocials',
+      operation: 'updateMemberSocials',
+      schema: [Schema.MEMBER_SOCIALS],
+      set: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
+      where: { id: { _eq: db.member.memberSocials } }
     });
 
     if (error) {
-      setError(error);
+      setError('Failed to update social media.');
       return;
     }
 

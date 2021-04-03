@@ -1,6 +1,7 @@
 import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
+import { useApolloClient } from '@apollo/client';
 import Show from '@containers/Show';
 import StoryStore from '@organisms/Story/Story.store';
 import { useStore } from '@store/Store';
@@ -17,6 +18,8 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   spacing
 }) => {
   const globalStore = useStore();
+
+  const apolloClient = useApolloClient();
 
   const items: Record<string, FormItemData> = FormStore.useStoreState(
     (state) => state.items,
@@ -57,6 +60,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         storyStore?.getActions() ?? {};
 
       await onSubmit({
+        apolloClient,
         closeModal: modal?.closeModal,
         closePanel: panel?.closePanel,
         db: globalStore.getState()?.db,

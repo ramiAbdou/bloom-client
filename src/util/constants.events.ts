@@ -24,7 +24,6 @@ export enum MutationEvent {
   UPDATE_EVENT = 'updateEvent',
   UPDATE_MAILCHIMP_LIST_ID = 'updateMailchimpListId',
   UPDATE_MEMBER = 'updateMember',
-  UPDATE_MEMBER_SOCIALS = 'updateMemberSocials',
   UPDATE_MEMBER_VALUES = 'updateMemberValues',
   UPDATE_QUESTION = 'updateQuestion',
   UPDATE_STRIPE_PAYMENT_METHOD_ID = 'updateStripePaymentMethodId',

@@ -30,7 +30,9 @@ function useLazyQuery<T>({
 
   const query: DocumentNode = gql`
       query ${queryNameString} {
-        ${snakeOperation} ${argsString} ${fieldsString}
+        ${snakeOperation} ${argsString} {
+          ${fieldsString}
+        }
       }
     `;
 

@@ -1,9 +1,12 @@
 import { snakeCase } from 'change-case';
 import snakeCaseKeys from 'snakecase-keys';
 
-import { QueryArgs } from './gql.types';
+import { take } from '@util/util';
 
-type BuildArgsStringArgs = Pick<QueryArgs, 'where'>;
+interface BuildArgsStringArgs {
+  set?: Record<string, unknown>;
+  where?: Record<string, unknown>;
+}
 
 /**
  * Returns the argument string (defined right after the GraphQL operation). All
@@ -11,20 +14,43 @@ type BuildArgsStringArgs = Pick<QueryArgs, 'where'>;
  *  - limit
  *  - where
  */
-export const buildArgsString = ({ where }: BuildArgsStringArgs): string => {
-  if (!where) return '';
+export const buildArgsString = ({
+  set,
+  where
+}: BuildArgsStringArgs): string => {
+  if (!set && !where) return '';
 
-  const snakeCaseWhere: Record<string, unknown> = snakeCaseKeys(where, {
+  const snakeCaseSet: Record<string, unknown> = snakeCaseKeys(set ?? {}, {
     // Don't want to convert any of the query operators.
     exclude: ['_eq', '_lt', '_gt']
   });
 
+  const snakeCaseWhere: Record<string, unknown> = snakeCaseKeys(where ?? {}, {
+    // Don't want to convert any of the query operators.
+    exclude: ['_eq', '_lt', '_gt']
+  });
+
+  // Converts the object to a string, and replaces the double quotes around
+  // keys (and not the values).
+  const setArgsString = JSON.stringify(snakeCaseSet).replace(
+    /"(\w*)":/g,
+    '$1:'
+  );
+
+  // Converts the object to a string, and replaces the double quotes around
+  // keys (and not the values).
   const whereArgsString = JSON.stringify(snakeCaseWhere).replace(
     /"(\w*)":/g,
     '$1:'
   );
 
-  return whereArgsString ? `(where: ${whereArgsString})` : whereArgsString;
+  const result: string = take([
+    [set && where, `(_set: ${setArgsString}, where: ${whereArgsString})`],
+    [where, `(where: ${whereArgsString})`],
+    [true, '']
+  ]);
+
+  return result;
 };
 
 /**
@@ -88,6 +114,10 @@ export const buildFieldsString = (fields: string[]): string => {
     JSON.stringify(result)
       // Replaces all double quote, colon and null with empty string.
       .replace(/"|:|null/g, '')
+      // Replaces the very first '{'.
+      .replace(/^\{/, '')
+      // Replaces the very last '}'.
+      .replace(/\}$/, '')
   );
 };
 

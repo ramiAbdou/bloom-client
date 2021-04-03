@@ -1,5 +1,6 @@
 import { ActionCreator, State } from 'easy-peasy';
 
+import { ApolloClient } from '@apollo/client';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { DbModel } from '@store/Db/Db.types';
 import { IPaymentMethod } from '@store/Db/entities';
@@ -60,7 +61,8 @@ export interface FormProps extends ClassNameProps, ShowProps {
   spacing?: 'md' | 'lg';
 }
 
-export type OnFormSubmitArgs = {
+export interface OnFormSubmitArgs {
+  apolloClient?: ApolloClient<unknown>;
   closeModal?: ActionCreator;
   closePanel?: ActionCreator;
   db?: State<DbModel>;
@@ -70,6 +72,6 @@ export type OnFormSubmitArgs = {
   setStoryValue: ActionCreator<SetValueArgs>;
   showToast?: ActionCreator<ToastOptions>;
   storyItems?: Record<string, FormItemData>;
-};
+}
 
 export type OnFormSubmitFunction = (args: OnFormSubmitArgs) => Promise<void>;
