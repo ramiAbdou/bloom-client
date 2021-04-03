@@ -65,6 +65,7 @@ export enum EventPrivacy {
 export interface IEvent extends BaseEntity {
   attendeesSeries: TimeSeriesData[];
   community?: Identifier;
+  communityId?: Identifier;
   description: string;
   endTime: string;
   eventAttendees: Identifier[];

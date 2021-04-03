@@ -1,58 +1,44 @@
-import { useEffect } from 'react';
-
-import useManualQuery from '@hooks/useManualQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
-import { GetEventArgs } from '../Events.types';
 
 const useInitIndividualEventTable = (): Partial<QueryResult> => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
 
-  const [getEventAttendees, { loading: loading1 }] = useManualQuery<
-    IEvent,
-    GetEventArgs
-  >({
+  const result = useHasuraQuery<IEvent[]>({
     fields: [
-      'createdAt',
-      'id',
-      { event: ['id'] },
-      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'email', 'firstName', 'lastName'] }
+      'eventAttendees.createdAt',
+      'eventAttendees.event.id',
+      'eventAttendees.id',
+      'eventAttendees.member.email',
+      'eventAttendees.member.id',
+      'eventAttendees.member.firstName',
+      'eventAttendees.member.lastName',
+      'eventAttendees.member.pictureUrl',
+      'eventAttendees.supporter.email',
+      'eventAttendees.supporter.id',
+      'eventAttendees.supporter.firstName',
+      'eventAttendees.supporter.lastName',
+      'eventWatches.createdAt',
+      'eventWatches.event.id',
+      'eventWatches.id',
+      'eventWatches.member.email',
+      'eventWatches.member.id',
+      'eventWatches.member.firstName',
+      'eventWatches.member.lastName',
+      'eventWatches.member.pictureUrl',
+      'id'
     ],
-    operation: QueryEvent.LIST_EVENT_ATTENDEES,
-    schema: [Schema.EVENT_ATTENDEE],
-    types: { eventId: { required: false } },
-    variables: { eventId }
+    operation: 'events',
+    queryName: 'GetEventById',
+    schema: [Schema.EVENT],
+    variables: { eventId: { type: 'String!', value: eventId } },
+    where: { id: { _eq: '$eventId' } }
   });
 
-  const [getEventWatches, { loading: loading2 }] = useManualQuery<
-    IEvent,
-    GetEventArgs
-  >({
-    fields: [
-      'createdAt',
-      'id',
-      { event: ['id'] },
-      { member: ['email', 'id', 'firstName', 'lastName', 'pictureUrl'] }
-    ],
-    operation: QueryEvent.LIST_EVENT_WATCHES,
-    schema: [Schema.EVENT_WATCH],
-    types: { eventId: { required: false } },
-    variables: { eventId }
-  });
-
-  useEffect(() => {
-    if (isAdmin) {
-      getEventAttendees();
-      getEventWatches();
-    }
-  }, []);
-
-  return { loading: loading1 || loading2 };
+  return result;
 };
 
 export default useInitIndividualEventTable;

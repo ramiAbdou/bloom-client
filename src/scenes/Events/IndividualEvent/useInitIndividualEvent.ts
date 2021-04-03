@@ -2,38 +2,38 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import useManualQuery from '@hooks/useManualQuery';
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { SetActiveArgs } from '@store/Db/Db.types';
-import { ICommunity, IEventGuest } from '@store/Db/entities';
+import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
-import { GetEventArgs } from '../Events.types';
+import { useStoreActions } from '@store/Store';
 
-interface GetEventResult {
-  id: string;
-  community: { id: string };
-}
-
-const useInitIndividualEvent = (): Partial<QueryResult> => {
+const useInitIndividualEvent = (): QueryResult<IEvent[]> => {
   const { eventId } = useParams() as { eventId: string };
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
-  const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
   const setActiveEntities: ActionCreator<
     SetActiveArgs | SetActiveArgs[]
   > = useStoreActions(({ db }) => db.setActiveEntities);
 
-  const { data: data1, loading: loading1 } = useQuery<
-    GetEventResult,
-    GetEventArgs
-  >({
+  const result = useHasuraQuery<IEvent[]>({
     fields: [
+      'communityId',
+      'community.id',
+      'community.name',
+      'community.primaryColor',
       'description',
       'endTime',
-      'eventUrl',
+      'eventGuests.createdAt',
+      'eventGuests.member.email',
+      'eventGuests.member.firstName',
+      'eventGuests.member.id',
+      'eventGuests.member.lastName',
+      'eventGuests.member.pictureUrl',
+      'eventGuests.supporter.email',
+      'eventGuests.supporter.firstName',
+      'eventGuests.supporter.id',
+      'eventGuests.supporter.lastName',
       'id',
       'imageUrl',
       'privacy',
@@ -41,54 +41,27 @@ const useInitIndividualEvent = (): Partial<QueryResult> => {
       'startTime',
       'summary',
       'title',
-      'videoUrl',
-      { community: ['id'] }
+      'videoUrl'
     ],
-    operation: QueryEvent.GET_EVENT,
-    schema: Schema.EVENT,
-    types: { eventId: { required: true } },
-    variables: { eventId }
-  });
-
-  const { loading: loading2 } = useQuery<IEventGuest[], GetEventArgs>({
-    fields: [
-      'createdAt',
-      'id',
-      { event: ['id'] },
-      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'email', 'firstName', 'lastName'] }
-    ],
-    operation: QueryEvent.LIST_EVENT_GUESTS,
-    schema: [Schema.EVENT_GUEST],
-    types: { eventId: { required: false } },
-    variables: { eventId }
-  });
-
-  const [getCommunity, { loading: loading3 }] = useManualQuery<ICommunity>({
-    fields: ['id', 'name', 'primaryColor'],
-    operation: QueryEvent.GET_COMMUNITY,
-    schema: Schema.COMMUNITY,
-    types: { communityId: { required: false } }
+    operation: 'events',
+    queryName: 'GetEventById',
+    schema: [Schema.EVENT],
+    variables: { eventId: { type: 'String!', value: eventId } },
+    where: { id: { _eq: '$eventId' } }
   });
 
   useEffect(() => {
-    if (data1) {
+    if (result.data) {
       setActiveEntities([
-        { id: data1.id, table: 'events' },
-        { id: data1.community.id, table: 'communities' }
+        { id: result.data[0].id, table: 'events' },
+        { id: result.data[0].communityId, table: 'communities' }
       ]);
     }
-  }, [data1]);
+  }, [result.data]);
 
-  // If not a member of the community, then we need to load the
-  // community's name and primary color as well.
-  useEffect(() => {
-    (async () => {
-      if (communityId && !isMember) await getCommunity({ communityId });
-    })();
-  }, [communityId, isMember]);
+  console.log(result.data, result.error);
 
-  return { loading: loading1 || loading2 || loading3 };
+  return result;
 };
 
 export default useInitIndividualEvent;
