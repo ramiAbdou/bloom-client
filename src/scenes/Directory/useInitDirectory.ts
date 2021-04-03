@@ -1,4 +1,4 @@
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -7,7 +7,7 @@ import { useStoreState } from '@store/Store';
 const useInitDirectory = (): QueryResult<IMember[]> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const result = useHasuraQuery<IMember[]>({
+  const result = useQuery<IMember[]>({
     fields: [
       'bio',
       'community.id',

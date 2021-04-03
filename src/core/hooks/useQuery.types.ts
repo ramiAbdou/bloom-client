@@ -17,4 +17,5 @@ export interface QueryResult<T = any> {
   data: T;
   error: string;
   loading: boolean;
+  refetch?: () => Promise<any>;
 }

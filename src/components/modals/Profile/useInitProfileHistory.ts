@@ -1,4 +1,4 @@
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -7,7 +7,7 @@ import IdStore from '@store/Id.store';
 const useInitProfileHistory = (): QueryResult<IMember[]> => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const result = useHasuraQuery<IMember[]>({
+  const result = useQuery<IMember[]>({
     fields: [
       'eventAttendees.createdAt',
       'eventAttendees.event.id',

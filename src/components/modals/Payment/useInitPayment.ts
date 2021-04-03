@@ -1,4 +1,4 @@
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useBloomQuery from '@hooks/useBloomQuery';
 import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import {
@@ -12,7 +12,7 @@ import { QueryEvent } from '@util/constants.events';
 const useInitPayment = (): Partial<QueryResult> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const { loading: loading1 } = useHasuraQuery<ICommunityIntegrations[]>({
+  const { loading: loading1 } = useQuery<ICommunityIntegrations[]>({
     fields: ['id', 'community.id', 'stripeAccountId'],
     operation: 'communityIntegrations',
     queryName: 'GetCommunityIntegrationsByCommunityId',
@@ -21,9 +21,9 @@ const useInitPayment = (): Partial<QueryResult> => {
     where: { community_id: { _eq: '$communityId' } }
   });
 
-  const { loading: loading2 }: QueryResult<IMemberIntegrations[]> = useQuery<
-    IMemberIntegrations[]
-  >({
+  const {
+    loading: loading2
+  }: QueryResult<IMemberIntegrations[]> = useBloomQuery<IMemberIntegrations[]>({
     fields: [
       'id',
       'stripeSubscriptionId',

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
@@ -12,7 +12,7 @@ const EventFormNotificationsSection: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data } = useHasuraQuery<IMember[]>({
+  const { data } = useQuery<IMember[]>({
     fields: ['community.id', 'id'],
     operation: 'members',
     queryName: 'GetMembersByCommunityId',

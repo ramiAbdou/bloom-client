@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { Schema } from '@store/Db/schema';
 import { useStoreActions } from '@store/Store';
@@ -11,7 +11,7 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
   const setActiveEntities = useStoreActions(({ db }) => db.setActiveEntities);
   const { urlName } = useParams() as UrlNameProps;
 
-  const { error, loading, data } = useHasuraQuery({
+  const { error, loading, data } = useQuery({
     fields: [
       'id',
       'communityId',

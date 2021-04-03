@@ -1,4 +1,4 @@
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -7,7 +7,7 @@ import { useStoreState } from '@store/Store';
 const useInitIndividualEventTable = (): Partial<QueryResult> => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  const result = useHasuraQuery<IEvent[]>({
+  const result = useQuery<IEvent[]>({
     fields: [
       'eventAttendees.createdAt',
       'eventAttendees.event.id',

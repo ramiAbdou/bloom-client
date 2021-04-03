@@ -6,7 +6,7 @@ import { useStoreActions } from '@store/Store';
 import { getGraphQLError } from '@util/util';
 import { QueryResult, UseQueryArgs } from './useQuery.types';
 
-function useQuery<T = any, S = any>({
+function useBloomQuery<T = any, S = any>({
   fields,
   operation,
   schema,
@@ -35,4 +35,4 @@ function useQuery<T = any, S = any>({
   return result;
 }
 
-export default useQuery;
+export default useBloomQuery;

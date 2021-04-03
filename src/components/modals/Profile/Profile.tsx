@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 
 import Show from '@containers/Show';
-import useManualQuery from '@hooks/useManualQuery';
+import useHasuraLazyQuery from '@hooks/useHasuraLazyQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
@@ -16,20 +15,21 @@ const Profile: React.FC = () => {
     ({ modal }) => modal.metadata as string
   );
 
-  const [getMember, { data }] = useManualQuery<IMember>({
+  const [getMember, { data }] = useHasuraLazyQuery<IMember[]>({
     fields: [
-      'id',
       'bio',
       'email',
+      'id',
       'joinedAt',
-      'position',
-      { memberType: ['id'] },
-      { socials: ['id'] }
+      'memberType.id',
+      'memberSocials.id',
+      'position'
     ],
-    operation: QueryEvent.GET_MEMBER,
-    schema: Schema.MEMBER,
-    types: { memberId: { required: false } },
-    variables: { memberId }
+    operation: 'members',
+    queryName: 'GetMemberByMemberId',
+    schema: [Schema.MEMBER],
+    variables: { memberId: { type: 'String!', value: memberId } },
+    where: { id: { _eq: '$memberId' } }
   });
 
   useEffect(() => {

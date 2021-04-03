@@ -1,14 +1,14 @@
 import React from 'react';
 
 import Section from '@containers/Section';
-import useQuery from '@hooks/useQuery';
+import useBloomQuery from '@hooks/useBloomQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { QueryEvent } from '@util/constants.events';
 import { TimeSeriesData } from '../Analytics.types';
 
 const PaymentAnalyticsChart: React.FC = () => {
-  const { data, loading } = useQuery<TimeSeriesData[]>({
+  const { data, loading } = useBloomQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
     operation: QueryEvent.GET_PAYMENTS_SERIES
   });

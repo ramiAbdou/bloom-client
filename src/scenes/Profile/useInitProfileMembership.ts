@@ -1,4 +1,4 @@
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -7,7 +7,7 @@ import { useStoreState } from '@store/Store';
 const useInitProfileMembership = (): QueryResult<IMemberValue[]> => {
   const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const result = useHasuraQuery<IMemberValue[]>({
+  const result = useQuery<IMemberValue[]>({
     fields: ['id', 'member.id', 'question.id', 'value'],
     operation: 'memberValues',
     queryName: 'GetMemberValuesByMemberId',

@@ -1,4 +1,4 @@
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -11,7 +11,7 @@ import { useStoreState } from '@store/Store';
 const useInitEventAnalytics = (): QueryResult<IEvent[]> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const result = useHasuraQuery<IEvent[]>({
+  const result = useQuery<IEvent[]>({
     fields: [
       'community.id',
       'endTime',

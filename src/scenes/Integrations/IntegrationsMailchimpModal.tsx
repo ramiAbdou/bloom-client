@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import useQuery from '@hooks/useQuery';
+import useBloomQuery from '@hooks/useBloomQuery';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
@@ -22,7 +22,7 @@ const MailchimpModalActionContainer: React.FC = () => (
 );
 
 const MailchimpModalContent: React.FC = () => {
-  const { data, loading } = useQuery({
+  const { data, loading } = useBloomQuery({
     fields: ['id', { mailchimpLists: ['id', 'name'] }, { community: ['id'] }],
     operation: QueryEvent.GET_COMMUNITY_INTEGRATIONS,
     schema: Schema.COMMUNITY_INTEGRATIONS

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import useQuery from '@hooks/useQuery';
+import useBloomQuery from '@hooks/useBloomQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { TimeSeriesData } from '@util/constants';
 import { QueryEvent } from '@util/constants.events';
 
 const MembersAnalyticsActiveChart: React.FC = () => {
-  const { data, loading } = useQuery<TimeSeriesData[]>({
+  const { data, loading } = useBloomQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
     operation: QueryEvent.GET_ACTIVE_MEMBERS_SERIES
   });

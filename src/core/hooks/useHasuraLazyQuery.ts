@@ -78,13 +78,13 @@ function useHasuraLazyQuery<T = any>({
   operation,
   queryName: queryString,
   schema,
-  variables,
+  variables: initialVariables,
   where
 }: UseHasuraQueryArgs): [any, QueryResult<T>] {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const argsString: string = buildArgsString(where);
-  const varsString: string = buildVarsString(variables);
+  const varsString: string = buildVarsString(initialVariables);
 
   const snakeOperation: string = snakeCase(operation);
 
@@ -98,11 +98,14 @@ function useHasuraLazyQuery<T = any>({
 
   const [queryFn, result] = useLazyQuery(
     query,
-    variables
+    initialVariables
       ? {
-          variables: Object.entries(variables).reduce((acc, [key, value]) => {
-            return { ...acc, [key]: value.value };
-          }, {})
+          variables: Object.entries(initialVariables).reduce(
+            (acc, [key, value]) => {
+              return { ...acc, [key]: value.value };
+            },
+            {}
+          )
         }
       : {}
   );

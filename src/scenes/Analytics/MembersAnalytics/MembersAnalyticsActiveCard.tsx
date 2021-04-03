@@ -1,11 +1,11 @@
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import useQuery from '@hooks/useQuery';
+import useBloomQuery from '@hooks/useBloomQuery';
 import { QueryEvent } from '@util/constants.events';
 
 const MembersAnalyticsActiveCard: React.FC = () => {
-  const { data, loading } = useQuery<[number, number]>({
+  const { data, loading } = useBloomQuery<[number, number]>({
     operation: QueryEvent.GET_ACTIVE_MEMBERS_GROWTH
   });
 

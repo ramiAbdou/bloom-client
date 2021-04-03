@@ -2,7 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { SetActiveArgs } from '@store/Db/Db.types';
 import { IEvent } from '@store/Db/entities';
@@ -16,7 +16,7 @@ const useInitIndividualEvent = (): QueryResult<IEvent[]> => {
     SetActiveArgs | SetActiveArgs[]
   > = useStoreActions(({ db }) => db.setActiveEntities);
 
-  const result = useHasuraQuery<IEvent[]>({
+  const result = useQuery<IEvent[]>({
     fields: [
       'communityId',
       'community.id',
@@ -58,8 +58,6 @@ const useInitIndividualEvent = (): QueryResult<IEvent[]> => {
       ]);
     }
   }, [result.data]);
-
-  console.log(result.data, result.error);
 
   return result;
 };

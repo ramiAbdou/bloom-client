@@ -3,21 +3,22 @@ import { snakeCase } from 'change-case';
 import { Schema } from 'normalizr';
 import { useEffect } from 'react';
 
-import { DocumentNode, gql, useQuery } from '@apollo/client';
-import { QueryResult } from '@hooks/useQuery.types';
+import { DocumentNode, gql, useQuery as useApolloQuery } from '@apollo/client';
 import { useStoreActions } from '@store/Store';
+import { QueryResult } from './useQuery.types';
 
 interface GraphQLVariableArgs {
   type: 'String!';
   value: string;
 }
 
-interface UseHasuraQueryArgs {
+interface UseQueryArgs {
   fields: string[];
   variables: Record<string, GraphQLVariableArgs>;
   operation: string;
   queryName: string;
   schema?: Schema;
+  skip?: boolean;
   where?: any;
 }
 
@@ -73,14 +74,15 @@ const buildArgsString = (where): string => {
   return a ? `(${a})` : a;
 };
 
-function useHasuraQuery<T = any>({
+function useQuery<T = any>({
   fields,
   operation,
   queryName: queryString,
   schema,
+  skip,
   variables,
   where
-}: UseHasuraQueryArgs): QueryResult<T> {
+}: UseQueryArgs): QueryResult<T> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const argsString: string = buildArgsString(where);
@@ -96,15 +98,16 @@ function useHasuraQuery<T = any>({
       }
     `;
 
-  const result = useQuery(
+  const result = useApolloQuery(
     query,
     variables
       ? {
+          skip,
           variables: Object.entries(variables).reduce((acc, [key, value]) => {
             return { ...acc, [key]: value.value };
           }, {})
         }
-      : {}
+      : { skip }
   );
 
   const camelCaseData: T = camelCaseKeys(
@@ -116,7 +119,13 @@ function useHasuraQuery<T = any>({
     if (camelCaseData && schema) mergeEntities({ data: camelCaseData, schema });
   }, [camelCaseData, schema]);
 
-  return { ...result, data: camelCaseData, error: result.error?.message };
+  return {
+    called: result.called,
+    data: camelCaseData,
+    error: result.error?.message,
+    loading: result.loading,
+    refetch: result.refetch
+  };
 }
 
-export default useHasuraQuery;
+export default useQuery;

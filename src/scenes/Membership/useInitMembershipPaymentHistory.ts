@@ -1,4 +1,4 @@
-import useHasuraQuery from '@hooks/useHasuraQuery';
+import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -7,7 +7,7 @@ import { useStoreState } from '@store/Store';
 const useInitMembershipPaymentHistory = (): QueryResult<IPayment[]> => {
   const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const result = useHasuraQuery<IPayment[]>({
+  const result = useQuery<IPayment[]>({
     fields: [
       'amount',
       'createdAt',

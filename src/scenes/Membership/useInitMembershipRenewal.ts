@@ -1,11 +1,11 @@
-import useQuery from '@hooks/useQuery';
+import useBloomQuery from '@hooks/useBloomQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IMemberIntegrations } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitMembershipRenewal = (): QueryResult<IMemberIntegrations[]> => {
-  const result: QueryResult<IMemberIntegrations[]> = useQuery<
+  const result: QueryResult<IMemberIntegrations[]> = useBloomQuery<
     IMemberIntegrations[]
   >({
     fields: ['id', 'renewalDate'],
