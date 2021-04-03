@@ -1,5 +1,5 @@
-import useQuery from '@gql/useQuery';
 import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { IMemberValue } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -13,7 +13,7 @@ const useInitProfileMembership = (): QueryResult<IMemberValue[]> => {
     queryName: 'GetMemberValuesByMemberId',
     schema: [Schema.MEMBER_VALUE],
     variables: { memberId: { type: 'String!', value: memberId } },
-    where: { member_id: { _eq: '$memberId' } }
+    where: { memberId: { _eq: '$memberId' } }
   });
 
   return result;

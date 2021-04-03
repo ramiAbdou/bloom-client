@@ -12,7 +12,7 @@ export interface QueryArgs {
   queryName: string;
   schema?: Schema;
   skip?: boolean;
-  where?: any;
+  where?: Record<string, unknown>;
 }
 
 export interface QueryResult<T = unknown> {

@@ -5,33 +5,7 @@ import { useEffect } from 'react';
 import { DocumentNode, gql, useQuery as useApolloQuery } from '@apollo/client';
 import { useStoreActions } from '@store/Store';
 import { QueryArgs, QueryResult } from './gql.types';
-
-const buildQuery = (fields: string[]) => {
-  const snakeCaseFields: string[] = fields.reduce(
-    (acc: string[], curr: string) => {
-      const a = curr
-        .split('.')
-        .map((val) => snakeCase(val))
-        .join('.');
-
-      return [...acc, a];
-    },
-    []
-  );
-
-  const set = (o = {}, a) => {
-    const k = a.shift();
-    o[k] = a.length ? set(o[k], a) : null;
-    return o;
-  };
-
-  const o = snakeCaseFields.reduce((o, a) => set(o, a.split('.')), {});
-
-  return JSON.stringify(o)
-    .replace(/\"|\:|null/g, '')
-    .replace(/^\{/, '')
-    .replace(/\}$/, '');
-};
+import { buildArgsString, buildFieldsString } from './gql.util';
 
 const buildVarsString = (variables: any): string => {
   if (!variables) return '';
@@ -50,14 +24,6 @@ const buildVarsString = (variables: any): string => {
   return a ? `(${a})` : a;
 };
 
-const buildArgsString = (where): string => {
-  if (!where) return '';
-
-  const a = `where: ${JSON.stringify(where).replace(/\"/g, '')}`;
-
-  return a ? `(${a})` : a;
-};
-
 function useQuery<T = any>({
   fields,
   operation,
@@ -69,16 +35,14 @@ function useQuery<T = any>({
 }: QueryArgs): QueryResult<T> {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
-  const argsString: string = buildArgsString(where);
+  const argsString: string = buildArgsString({ where });
   const varsString: string = buildVarsString(variables);
 
   const snakeOperation: string = snakeCase(operation);
 
   const query: DocumentNode = gql`
       query ${queryString}${varsString} {
-        ${snakeOperation}${argsString} {
-          ${buildQuery(fields)}
-        }
+        ${snakeOperation}${argsString} ${buildFieldsString(fields)}
       }
     `;
 

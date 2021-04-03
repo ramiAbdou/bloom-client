@@ -1,7 +1,7 @@
 import day from 'dayjs';
 
-import useQuery from '@gql/useQuery';
 import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -36,8 +36,8 @@ const useInitUpcomingEvents = (): QueryResult<IEvent[]> => {
       time: { type: 'String!', value: day.utc().format() }
     },
     where: {
-      community_id: { _eq: '$communityId' },
-      start_time: { _gt: '$time' }
+      communityId: { _eq: '$communityId' },
+      startTime: { _gt: '$time' }
     }
   });
 

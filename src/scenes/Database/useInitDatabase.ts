@@ -1,5 +1,5 @@
-import useQuery from '@gql/useQuery';
 import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -36,7 +36,7 @@ const useInitDatabase = (): QueryResult<IMember[]> => {
     queryName: 'GetMembersByCommunityId',
     schema: [Schema.MEMBER],
     variables: { communityId: { type: 'String!', value: communityId } },
-    where: { community_id: { _eq: '$communityId' } }
+    where: { communityId: { _eq: '$communityId' } }
   });
 
   return result;

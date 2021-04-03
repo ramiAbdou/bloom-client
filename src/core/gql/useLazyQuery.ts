@@ -10,6 +10,7 @@ import {
 } from '@apollo/client';
 import { QueryResult } from '@gql/gql.types';
 import { useStoreActions } from '@store/Store';
+import { buildFieldsString } from './gql.util';
 
 interface GraphQLVariableArgs {
   type: 'String!';
@@ -24,33 +25,6 @@ interface UseHasuraQueryArgs {
   schema?: Schema;
   where?: any;
 }
-
-const buildQuery = (fields: string[]) => {
-  const snakeCaseFields: string[] = fields.reduce(
-    (acc: string[], curr: string) => {
-      const a = curr
-        .split('.')
-        .map((val) => snakeCase(val))
-        .join('.');
-
-      return [...acc, a];
-    },
-    []
-  );
-
-  const set = (o = {}, a) => {
-    const k = a.shift();
-    o[k] = a.length ? set(o[k], a) : null;
-    return o;
-  };
-
-  const o = snakeCaseFields.reduce((o, a) => set(o, a.split('.')), {});
-
-  return JSON.stringify(o)
-    .replace(/\"|\:|null/g, '')
-    .replace(/^\{/, '')
-    .replace(/\}$/, '');
-};
 
 const buildVarsString = (variables: any): string => {
   if (!variables) return '';
@@ -72,7 +46,7 @@ const buildVarsString = (variables: any): string => {
 const buildArgsString = (where): string => {
   if (!where) return '';
 
-  const a = `where: ${JSON.stringify(where).replace(/\"/g, '')}`;
+  const a = `where: ${JSON.stringify(where).replace(/"/g, '')}`;
 
   return a ? `(${a})` : a;
 };
@@ -94,9 +68,7 @@ function useLazyQuery<T = any>({
 
   const query: DocumentNode = gql`
       query ${queryString}${varsString} {
-        ${snakeOperation}${argsString} {
-          ${buildQuery(fields)}
-        }
+        ${snakeOperation}${argsString} ${buildFieldsString(fields)}
       }
     `;
 

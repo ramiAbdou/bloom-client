@@ -18,7 +18,7 @@ const EventFormNotificationsSection: React.FC = () => {
     queryName: 'GetMembersByCommunityId',
     schema: [Schema.MEMBER],
     variables: { communityId: { type: 'String!', value: communityId } },
-    where: { community_id: { _eq: '$communityId' } }
+    where: { communityId: { _eq: '$communityId' } }
   });
 
   if (!data) return null;

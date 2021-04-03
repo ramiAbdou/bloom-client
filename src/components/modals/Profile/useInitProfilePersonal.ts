@@ -20,7 +20,7 @@ const useInitProfilePersonal = (): QueryResult<IMemberSocials[]> => {
     queryName: 'GetMemberSocialsByMemberId',
     schema: [Schema.MEMBER_SOCIALS],
     variables: { memberId: { type: 'String!', value: memberId } },
-    where: { member_id: { _eq: '$memberId' } }
+    where: { memberId: { _eq: '$memberId' } }
   });
 
   return result;

@@ -1,7 +1,7 @@
 import day from 'dayjs';
 
-import useQuery from '@gql/useQuery';
 import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
@@ -37,7 +37,7 @@ const useInitPastEvents = (): QueryResult<IEvent[]> => {
       communityId: { type: 'String!', value: communityId },
       time: { type: 'String!', value: day.utc().format() }
     },
-    where: { community_id: { _eq: '$communityId' }, end_time: { _lt: '$time' } }
+    where: { communityId: { _eq: '$communityId' }, endTime: { _lt: '$time' } }
   });
 
   return result;
