@@ -29,7 +29,6 @@ const useInitUpcomingEvents = (): QueryResult<IEvent[]> => {
       'videoUrl'
     ],
     operation: 'events',
-    queryName: 'GetPastEvents',
     schema: [Schema.EVENT],
     where: { communityId, startTime: { _gt: day.utc().format() } }
   });

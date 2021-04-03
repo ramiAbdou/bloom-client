@@ -17,7 +17,6 @@ const useInitProfileSocial = (): QueryResult<IMemberSocials[]> => {
       'twitterUrl'
     ],
     operation: 'memberSocials',
-    queryName: 'GetMemberSocialsByMemberId',
     schema: [Schema.MEMBER_SOCIALS],
     where: { memberId }
   });

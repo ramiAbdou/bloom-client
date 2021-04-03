@@ -13,7 +13,6 @@ const useInitSidebarLinkNotificationCircle = (to: string): void => {
   const [listApplicants] = useLazyQuery({
     fields: ['community.id', 'id', 'status'],
     operation: 'members',
-    queryName: 'GetApplicantsByCommunityId',
     schema: [Schema.MEMBER],
     where: { community: { id: communityId }, status: 'Pending' }
   });

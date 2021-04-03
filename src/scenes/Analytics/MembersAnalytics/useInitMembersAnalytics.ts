@@ -19,7 +19,6 @@ const useInitMembersAnalytics = (): QueryResult<IMember[]> => {
       'status'
     ],
     operation: 'members',
-    queryName: 'GetMemberValuesByCommunityId',
     schema: [Schema.MEMBER],
     where: { communityId }
   });

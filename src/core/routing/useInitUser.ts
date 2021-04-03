@@ -41,7 +41,6 @@ const useInitUser = (): QueryResult<IUser[]> => {
       'members.user.id'
     ],
     operation: 'users',
-    queryName: 'GetUserById',
     schema: [Schema.USER],
     where: { id: userId }
   });

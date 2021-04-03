@@ -16,7 +16,6 @@ import { buildArgsString, buildFieldsString } from './gql.util';
 function useLazyQuery<T>({
   fields,
   operation,
-  queryName: queryNameString,
   schema,
   where
 }: QueryArgs): [any, QueryResult<T>] {
@@ -29,7 +28,7 @@ function useLazyQuery<T>({
   const snakeOperation: string = snakeCase(operation);
 
   const query: DocumentNode = gql`
-      query ${queryNameString} {
+      query {
         ${snakeOperation} ${argsString} {
           ${fieldsString}
         }

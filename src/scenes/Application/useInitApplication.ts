@@ -44,7 +44,6 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       'title'
     ],
     operation: 'applications',
-    queryName: 'GetApplicationByUrlName',
     schema: [Schema.APPLICATION],
     where: { community: { urlName } }
   });

@@ -15,7 +15,6 @@ const EventFormNotificationsSection: React.FC = () => {
   const { data } = useQuery<IMember[]>({
     fields: ['community.id', 'id'],
     operation: 'members',
-    queryName: 'GetMembersByCommunityId',
     schema: [Schema.MEMBER],
     where: { communityId }
   });

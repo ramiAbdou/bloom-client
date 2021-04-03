@@ -44,7 +44,6 @@ const useInitIndividualEvent = (): QueryResult<IEvent[]> => {
       'videoUrl'
     ],
     operation: 'events',
-    queryName: 'GetEventById',
     schema: [Schema.EVENT],
     where: { id: eventId }
   });

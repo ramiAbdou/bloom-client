@@ -39,7 +39,6 @@ const useInitCommunity = (): QueryResult<ICommunity[]> => {
       'urlName'
     ],
     operation: 'communities',
-    queryName: 'GetCommunityById',
     schema: [Schema.COMMUNITY],
     where: { id: communityId }
   });

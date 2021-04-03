@@ -50,7 +50,6 @@ const useInitProfileHistory = (): QueryResult<IMember[]> => {
       'payments.type'
     ],
     operation: 'members',
-    queryName: 'GetMemberHistory',
     schema: [Schema.MEMBER],
     where: { memberId }
   });

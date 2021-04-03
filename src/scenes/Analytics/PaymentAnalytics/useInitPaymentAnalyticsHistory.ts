@@ -22,7 +22,6 @@ const useInitPaymentAnalyticsHistory = (): QueryResult<IMember[]> => {
       'payments.stripeInvoiceUrl'
     ],
     operation: 'members',
-    queryName: 'GetMemberPaymentAnalytics',
     schema: [Schema.MEMBER],
     where: { communityId }
   });

@@ -27,7 +27,6 @@ const useInitDirectory = (): QueryResult<IMember[]> => {
       'status'
     ],
     operation: 'members',
-    queryName: 'GetMembersByCommunityId',
     schema: [Schema.MEMBER],
     where: { communityId }
   });

@@ -15,7 +15,6 @@ const useInitPayment = (): Partial<QueryResult> => {
   const { loading: loading1 } = useQuery<ICommunityIntegrations[]>({
     fields: ['id', 'community.id', 'stripeAccountId'],
     operation: 'communityIntegrations',
-    queryName: 'GetCommunityIntegrationsByCommunityId',
     schema: [Schema.COMMUNITY_INTEGRATIONS],
     where: { communityId }
   });

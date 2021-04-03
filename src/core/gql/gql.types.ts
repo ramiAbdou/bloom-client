@@ -33,7 +33,6 @@ export interface MutateResult<T = unknown> {
 export interface QueryArgs {
   fields: string[];
   operation: string;
-  queryName: string;
   schema: Schema;
   skip?: boolean;
   where?: Record<string, unknown>;

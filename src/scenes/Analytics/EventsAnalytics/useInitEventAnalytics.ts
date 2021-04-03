@@ -52,7 +52,6 @@ const useInitEventAnalytics = (): QueryResult<IEvent[]> => {
       'title'
     ],
     operation: 'events',
-    queryName: 'GetEventAnalytics',
     schema: [Schema.EVENT],
     where: { communityId }
   });

@@ -12,7 +12,6 @@ import { buildArgsString, buildFieldsString } from './gql.util';
 function useQuery<T>({
   fields,
   operation,
-  queryName: queryNameString,
   schema,
   skip,
   where
@@ -26,7 +25,7 @@ function useQuery<T>({
   const operationString: string = snakeCase(operation);
 
   const query: DocumentNode = gql`
-      query ${queryNameString} {
+      query {
         ${operationString} ${argsString} {
           ${fieldsString}
         }

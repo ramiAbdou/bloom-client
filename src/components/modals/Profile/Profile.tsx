@@ -26,7 +26,6 @@ const Profile: React.FC = () => {
       'position'
     ],
     operation: 'members',
-    queryName: 'GetMemberByMemberId',
     schema: [Schema.MEMBER],
     where: { id: memberId }
   });

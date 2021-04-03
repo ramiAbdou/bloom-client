@@ -32,7 +32,6 @@ const useInitIndividualEventTable = (): Partial<QueryResult> => {
       'id'
     ],
     operation: 'events',
-    queryName: 'GetEventById',
     schema: [Schema.EVENT],
     where: { id: eventId }
   });
