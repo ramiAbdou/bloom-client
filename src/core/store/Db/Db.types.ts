@@ -43,7 +43,8 @@ export interface DbModel {
   >;
   byEventId: Computed<DbModel, Record<string, IEvent>>;
   byEventAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
-  byGuestId: Computed<DbModel, Record<string, IEventGuest>>;
+  byEventGuestId: Computed<DbModel, Record<string, IEventGuest>>;
+  byEventWatchId: Computed<DbModel, Record<string, IEventWatch>>;
   byMemberId: Computed<DbModel, Record<string, IMember>>;
   byMemberIntegrationsId: Computed<
     DbModel,
@@ -57,7 +58,6 @@ export interface DbModel {
   byRankedQuestionId: Computed<DbModel, Record<string, IRankedQuestion>>;
   bySupporterId: Computed<DbModel, Record<string, ISupporter>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
-  byWatchId: Computed<DbModel, Record<string, IEventWatch>>;
 
   // ACTIVE STORE
 

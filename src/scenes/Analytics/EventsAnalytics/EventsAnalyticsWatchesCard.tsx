@@ -15,7 +15,7 @@ const EventsAnalyticsWatchesCard: React.FC = () => {
     if (!pastEvents?.length) return null;
 
     const totalWatches = pastEvents?.reduce(
-      (acc: number, event: IEvent) => acc + event?.watches?.length,
+      (acc: number, event: IEvent) => acc + event?.eventWatches?.length,
       0
     );
 

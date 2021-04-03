@@ -17,12 +17,12 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
   const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
   const memberId: string = useStoreState(({ db }) => {
-    const guest: IEventGuest = db.byGuestId[guestId];
+    const guest: IEventGuest = db.byEventGuestId[guestId];
     return guest?.member;
   });
 
   const supporterId: string = useStoreState(({ db }) => {
-    const guest: IEventGuest = db.byGuestId[guestId];
+    const guest: IEventGuest = db.byEventGuestId[guestId];
     return guest?.supporter;
   });
 
@@ -66,8 +66,8 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
 
 const IndividualEventGuestListContent: React.FC = () => {
   const guests: IdProps[] = useStoreState(({ db }) =>
-    db.event?.guests
-      ?.map((guestId: string) => db.byGuestId[guestId])
+    db.event?.eventGuests
+      ?.map((guestId: string) => db.byEventGuestId[guestId])
       ?.sort((a: IEventGuest, b: IEventGuest) => sortObjects(a, b, 'createdAt'))
       ?.map((guest: IEventGuest) => {
         return { id: guest.id };
@@ -90,7 +90,10 @@ const IndividualEventGuestListContent: React.FC = () => {
 const IndividualEventGuestList: React.FC = () => {
   const endTime: string = useStoreState(({ db }) => db.event?.endTime);
   const startTime: string = useStoreState(({ db }) => db.event?.startTime);
-  const numGuests: number = useStoreState(({ db }) => db.event?.guests?.length);
+
+  const numGuests: number = useStoreState(
+    ({ db }) => db.event?.eventGuests?.length
+  );
 
   const hasEventFinished: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;

@@ -9,7 +9,8 @@ const dbByIdStore: Pick<
   | 'byCommunityIntegrationsId'
   | 'byEventId'
   | 'byEventAttendeeId'
-  | 'byGuestId'
+  | 'byEventGuestId'
+  | 'byEventWatchId'
   | 'byMemberId'
   | 'byMemberIntegrationsId'
   | 'byMemberSocialsId'
@@ -20,7 +21,6 @@ const dbByIdStore: Pick<
   | 'byRankedQuestionId'
   | 'bySupporterId'
   | 'byUserId'
-  | 'byWatchId'
 > = {
   byApplicationId: computed(({ entities }) => entities.applications.byId),
 
@@ -32,9 +32,11 @@ const dbByIdStore: Pick<
 
   byEventAttendeeId: computed(({ entities }) => entities.eventAttendees.byId),
 
+  byEventGuestId: computed(({ entities }) => entities.eventGuests.byId),
+
   byEventId: computed(({ entities }) => entities.events.byId),
 
-  byGuestId: computed(({ entities }) => entities.guests.byId),
+  byEventWatchId: computed(({ entities }) => entities.eventWatches.byId),
 
   byMemberId: computed(({ entities }) => entities.members.byId),
 
@@ -56,9 +58,7 @@ const dbByIdStore: Pick<
 
   bySupporterId: computed(({ entities }) => entities.supporters.byId),
 
-  byUserId: computed(({ entities }) => entities.users.byId),
-
-  byWatchId: computed(({ entities }) => entities.watches.byId)
+  byUserId: computed(({ entities }) => entities.users.byId)
 };
 
 export default dbByIdStore;

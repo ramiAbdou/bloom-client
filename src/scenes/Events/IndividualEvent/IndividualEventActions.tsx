@@ -73,7 +73,7 @@ const IndividualEventActions: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
   const endTime: string = useStoreState(({ db }) => db.event?.endTime);
   const startTime: string = useStoreState(({ db }) => db.event?.startTime);
-  const guests: string[] = useStoreState(({ db }) => db.event?.guests);
+  const guests: string[] = useStoreState(({ db }) => db.event?.eventGuests);
 
   const isPast: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;
@@ -83,7 +83,7 @@ const IndividualEventActions: React.FC = () => {
 
   const isGoing: boolean = useStoreState(({ db }) =>
     guests
-      ?.map((guestId: string) => db.byGuestId[guestId])
+      ?.map((guestId: string) => db.byEventGuestId[guestId])
       ?.some((guest: IEventGuest) => guest.member === db.member?.id)
   );
 

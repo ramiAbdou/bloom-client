@@ -94,8 +94,8 @@ const Event = new schema.Entity(
     processStrategy: (value, parent) => {
       const processedData = take([
         [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
-        [!!parent.guestId, { guests: [parent.id] }],
-        [!!parent.watchId, { watches: [parent.id] }]
+        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
+        [!!parent.eventWatchId, { eventWatches: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, eventId: value.id };
@@ -117,27 +117,27 @@ const EventAttendee = new schema.Entity(
 );
 
 const EventGuest = new schema.Entity(
-  'guests',
+  'eventGuests',
   {},
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = take([[!!parent.eventId, { event: parent.id }]]);
 
-      return { ...value, ...processedData, guestId: value.id };
+      return { ...value, ...processedData, eventGuestId: value.id };
     }
   }
 );
 
 const EventWatch = new schema.Entity(
-  'watches',
+  'eventWatches',
   {},
   {
     mergeStrategy,
     processStrategy: (value, parent) => {
       const processedData = take([[!!parent.eventId, { event: parent.id }]]);
 
-      return { ...value, ...processedData, watchId: value.id };
+      return { ...value, ...processedData, eventWatchId: value.id };
     }
   }
 );
@@ -150,11 +150,11 @@ const Member = new schema.Entity(
     processStrategy: (value, parent) => {
       const processedData = take([
         [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
+        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
         [!!parent.eventId, { events: [parent.id] }],
-        [!!parent.guestId, { guests: [parent.id] }],
+        [!!parent.eventWatchId, { eventWatches: [parent.id] }],
         [!!parent.memberValueId, { memberValues: [parent.id] }],
-        [!!parent.paymentId, { payments: [parent.id] }],
-        [!!parent.watchId, { watches: [parent.id] }]
+        [!!parent.paymentId, { payments: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, memberId: value.id };
@@ -246,8 +246,8 @@ const Supporter = new schema.Entity(
     processStrategy: (value, parent) => {
       const processedData = take([
         [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
-        [!!parent.guestId, { guests: [parent.id] }],
-        [!!parent.watchId, { watches: [parent.id] }]
+        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
+        [!!parent.eventWatchId, { eventWatches: [parent.id] }]
       ]);
 
       return { ...value, ...processedData, supporterId: value.id };
@@ -293,8 +293,8 @@ CommunityIntegrations.define({ community: Community });
 Event.define({
   community: Community,
   eventAttendees: [EventAttendee],
-  guests: [EventGuest],
-  watches: [EventWatch]
+  eventGuests: [EventGuest],
+  eventWatches: [EventWatch]
 });
 
 EventAttendee.define({ event: Event, member: Member, supporter: Supporter });
@@ -306,14 +306,14 @@ EventWatch.define({ event: Event, member: Member });
 Member.define({
   community: Community,
   eventAttendees: [EventAttendee],
-  guests: [EventGuest],
+  eventGuests: [EventGuest],
+  eventWatches: [EventWatch],
   memberIntegrations: MemberIntegrations,
   memberSocials: MemberSocials,
   memberType: MemberType,
   memberValues: [MemberValue],
   payments: [Payment],
-  user: User,
-  watches: [EventWatch]
+  user: User
 });
 
 MemberIntegrations.define({ member: Member });
@@ -334,7 +334,10 @@ Question.define({ community: Community, memberValues: [MemberValue] });
 
 RankedQuestion.define({ application: Application, question: Question });
 
-Supporter.define({ eventAttendees: [EventAttendee], guests: [EventGuest] });
+Supporter.define({
+  eventAttendees: [EventAttendee],
+  eventGuests: [EventGuest]
+});
 
 User.define({ members: [Member], supporters: [Supporter] });
 

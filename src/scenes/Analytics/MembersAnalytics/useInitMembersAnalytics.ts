@@ -1,38 +1,31 @@
 import useHasuraQuery from '@hooks/useHasuraQuery';
-import useQuery from '@hooks/useQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import { IMember, IMemberValue } from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
 
-const useInitMembersAnalytics = (): Partial<QueryResult> => {
+const useInitMembersAnalytics = (): QueryResult<IMember[]> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const { loading: loading1 }: QueryResult<IMember[]> = useQuery<IMember[]>({
+  const result = useHasuraQuery<IMember[]>({
     fields: [
       'id',
-      'isDuesActive',
-      'status',
-      { community: ['id'] },
-      { memberType: ['id'] }
+      'community.id',
+      'memberType.id',
+      'memberValues.id',
+      'memberValues.member.id',
+      'memberValues.question.id',
+      'memberValues.value',
+      'status'
     ],
-    operation: QueryEvent.LIST_MEMBERS,
-    schema: [Schema.MEMBER],
-    types: { communityId: { required: false } },
-    variables: { communityId }
-  });
-
-  const { loading: loading2 } = useHasuraQuery<IMemberValue[]>({
-    fields: ['id', 'member.id', 'question.id', 'value'],
-    operation: 'memberValues',
+    operation: 'members',
     queryName: 'GetMemberValuesByCommunityId',
-    schema: [Schema.MEMBER_VALUE],
+    schema: [Schema.MEMBER],
     variables: { communityId: { type: 'String!', value: communityId } },
-    where: { member: { community: { id: { _eq: '$communityId' } } } }
+    where: { community_id: { _eq: '$communityId' } }
   });
 
-  return { loading: loading1 || loading2 };
+  return result;
 };
 
 export default useInitMembersAnalytics;

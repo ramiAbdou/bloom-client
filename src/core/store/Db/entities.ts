@@ -68,8 +68,9 @@ export interface IEvent extends BaseEntity {
   description: string;
   endTime: string;
   eventAttendees: Identifier[];
+  eventGuests: Identifier[];
   eventUrl: string;
-  guests: Identifier[];
+  eventWatches: Identifier[];
   guestsSeries: TimeSeriesData[];
   imageUrl?: string;
   invitees?: Identifier[];
@@ -81,7 +82,6 @@ export interface IEvent extends BaseEntity {
   title: string;
   upcoming?: boolean;
   videoUrl: string;
-  watches: Identifier[];
 }
 
 // ## EVENT ATTENDEE
@@ -126,8 +126,9 @@ export interface IMember extends BaseEntity {
   community: Identifier;
   email: string;
   eventAttendees: Identifier[];
+  eventGuests: Identifier[];
+  eventWatches: Identifier[];
   firstName: string;
-  guests: Identifier[];
   isDuesActive: boolean;
   joinedAt: string;
   lastName: string;
@@ -141,7 +142,6 @@ export interface IMember extends BaseEntity {
   role?: MemberRole;
   status: MemberStatus;
   user: Identifier;
-  watches: Identifier[];
 }
 
 // ## MEMBER COMMUNITY INTEGRATIONS
@@ -255,8 +255,9 @@ export interface IEntities {
   communities: EntityRecord<ICommunity>;
   communityIntegrations: EntityRecord<ICommunityIntegrations>;
   eventAttendees: EntityRecord<IEventAttendee>;
+  eventGuests: EntityRecord<IEventGuest>;
+  eventWatches: EntityRecord<IEventWatch>;
   events: EntityRecord<IEvent>;
-  guests: EntityRecord<IEventGuest>;
   members: EntityRecord<IMember>;
   memberIntegrations: EntityRecord<IMemberIntegrations>;
   memberSocials: EntityRecord<IMemberSocials>;
@@ -267,7 +268,6 @@ export interface IEntities {
   rankedQuestions: EntityRecord<IRankedQuestion>;
   supporters: EntityRecord<ISupporter>;
   users: EntityRecord<IUser>;
-  watches: EntityRecord<IEventWatch>;
 }
 
 // Initial state for all of the entity (DB) definitions.
@@ -276,8 +276,9 @@ export const initialEntities: IEntities = {
   communities: { activeId: null, byId: {} },
   communityIntegrations: { byId: {} },
   eventAttendees: { byId: {} },
+  eventGuests: { byId: {} },
+  eventWatches: { byId: {} },
   events: { activeId: null, byId: {} },
-  guests: { byId: {} },
   memberIntegrations: { byId: {} },
   memberSocials: { byId: {} },
   memberTypes: { byId: {} },
@@ -287,6 +288,5 @@ export const initialEntities: IEntities = {
   questions: { byId: {} },
   rankedQuestions: { byId: {} },
   supporters: { byId: {} },
-  users: { activeId: null, byId: {} },
-  watches: { byId: {} }
+  users: { activeId: null, byId: {} }
 };

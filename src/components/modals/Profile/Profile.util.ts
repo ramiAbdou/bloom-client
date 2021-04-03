@@ -39,8 +39,8 @@ export const getMemberHistory = ({
     }) ?? [];
 
   const guestEvents: MemberHistoryData[] =
-    member.guests?.map((guestId: string) => {
-      const guest: IEventGuest = db.byGuestId[guestId];
+    member.eventGuests?.map((guestId: string) => {
+      const guest: IEventGuest = db.byEventGuestId[guestId];
       const event: IEvent = db.byEventId[guest?.event];
 
       return {
@@ -67,12 +67,12 @@ export const getMemberHistory = ({
     }) ?? [];
 
   const watchEvents: MemberHistoryData[] =
-    member.watches?.map((watchId: string) => {
-      const watch: IEventWatch = db.byWatchId[watchId];
-      const event: IEvent = db.byEventId[watch?.event];
+    member.eventWatches?.map((watchId: string) => {
+      const eventWatch: IEventWatch = db.byEventWatchId[watchId];
+      const event: IEvent = db.byEventId[eventWatch?.event];
 
       return {
-        date: watch.createdAt,
+        date: eventWatch.createdAt,
         event: `Viewed Event Recording`,
         title: event.title
       };

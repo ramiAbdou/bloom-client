@@ -57,8 +57,8 @@ const IndividualEventTable: React.FC = () => {
   const hasEventContent: boolean = useStoreState(
     ({ db }) =>
       !!db.event?.eventAttendees?.length ||
-      !!db.event?.guests?.length ||
-      !!db.event?.watches?.length
+      !!db.event?.eventGuests?.length ||
+      !!db.event?.eventWatches?.length
   );
 
   const { loading }: Partial<QueryResult> = useInitIndividualEventTable();

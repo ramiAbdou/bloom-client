@@ -1,89 +1,59 @@
 import { useEffect } from 'react';
 
-import useManualQuery from '@hooks/useManualQuery';
+import useHasuraLazyQuery from '@hooks/useHasuraLazyQuery';
+import { QueryResult } from '@hooks/useQuery.types';
 import useLoader from '@organisms/Loader/useLoader';
-import { ICommunity, IMember, IUser } from '@store/Db/entities';
+import { IUser } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
 
 /**
  * Updates the authenticated status of the user by checking the httpOnly
  * cookies stored in the browser.
  */
-const useInitUser = (): boolean => {
+const useInitUser = (): QueryResult<IUser[]> => {
   const isAuthenticated: boolean = useStoreState(
     ({ db }) => db.isAuthenticated
   );
 
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
-  const userId: string = useStoreState(({ db }) => db.user?.id);
+  const userId: string = useStoreState(({ db }) => db.entities.users.activeId);
 
-  const [getUser, { loading: loading1 }] = useManualQuery<IUser>({
-    fields: ['email', 'id'],
-    operation: QueryEvent.GET_USER,
-    schema: Schema.USER
-  });
-
-  const [getMembers, { loading: loading2 }] = useManualQuery<IMember[]>({
+  const [getUser, result] = useHasuraLazyQuery<IUser[]>({
     fields: [
-      'firstName',
-      'lastName',
-      'joinedAt',
-      'pictureUrl',
-      'id',
-      'status',
-      { community: ['id'] },
-      { user: ['id'] }
-    ],
-    operation: QueryEvent.LIST_MEMBERS,
-    schema: [Schema.MEMBER],
-    types: { userId: { required: false } }
-  });
-
-  const [getCommunities, { loading: loading3 }] = useManualQuery<ICommunity[]>({
-    fields: ['id', 'logoUrl', 'primaryColor', 'urlName'],
-    operation: QueryEvent.LIST_COMMUNITIES,
-    schema: [Schema.COMMUNITY],
-    types: { userId: { required: false } }
-  });
-
-  const [getMember, { loading: loading4 }] = useManualQuery({
-    fields: [
-      'bio',
       'email',
       'id',
-      'isDuesActive',
-      'role',
-      'status',
-      { community: ['id'] },
-      { memberIntegrations: ['id'] },
-      { memberType: ['id'] },
-      { socials: ['id'] },
-      { user: ['id'] }
+      'members.bio',
+      'members.community.id',
+      'members.community.logoUrl',
+      'members.community.primaryColor',
+      'members.community.urlName',
+      'members.email',
+      'members.firstName',
+      'members.lastName',
+      'members.joinedAt',
+      'members.memberIntegrations.id',
+      'members.memberSocials.id',
+      'members.memberType.id',
+      'members.id',
+      'members.pictureUrl',
+      'members.role',
+      'members.status',
+      'members.user.id'
     ],
-    operation: QueryEvent.GET_MEMBER,
-    schema: Schema.MEMBER
+    operation: 'users',
+    queryName: 'GetUserById',
+    schema: [Schema.USER],
+    variables: { userId: { type: 'String!', value: userId } },
+    where: { id: { _eq: '$userId' } }
   });
 
   useEffect(() => {
-    (async () => {
-      if (isAuthenticated) {
-        await Promise.all([
-          getCommunities({ userId }),
-          getMember(),
-          getMembers({ userId }),
-          getUser()
-        ]);
-      }
-    })();
-  }, [isAuthenticated, memberId, userId]);
+    if (isAuthenticated) getUser();
+  }, [isAuthenticated]);
 
-  const loading: boolean = loading1 || loading2 || loading3 || loading4;
+  useLoader(result.loading);
 
-  useLoader(loading);
-
-  return loading;
+  return result;
 };
 
 export default useInitUser;

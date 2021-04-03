@@ -22,7 +22,7 @@ const CommunityRouter: React.FC = () => {
   const finalPath: string = useFinalPath();
 
   const loading1: boolean = useGetUserTokens(true);
-  const loading2: boolean = useInitUser();
+  const { loading: loading2 } = useInitUser();
   const loading3: boolean = useBackupCommunity();
 
   if (loading1 || loading2 || loading3) return null;

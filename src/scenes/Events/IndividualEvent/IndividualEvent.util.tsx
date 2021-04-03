@@ -62,11 +62,11 @@ const getIndividualEventTableAttendees = (
 const getIndividualEventTableGuests = (
   db: State<DbModel>
 ): Record<string, IndividualEventTableRowProps> => {
-  if (!db.event.guests) return {};
+  if (!db.event.eventGuests) return {};
 
-  return db.event.guests.reduce(
+  return db.event.eventGuests.reduce(
     (acc: Record<string, IndividualEventTableRowProps>, guestId: string) => {
-      const guest: IEventGuest = db.byGuestId[guestId];
+      const guest: IEventGuest = db.byEventGuestId[guestId];
       const member: IMember = db.byMemberId[guest?.member];
       const supporter: ISupporter = db.bySupporterId[guest?.supporter];
 
@@ -98,12 +98,12 @@ const getIndividualEventTableGuests = (
 const getIndividualEventTableViewers = (
   db: State<DbModel>
 ): Record<string, IndividualEventTableRowProps> => {
-  if (!db.event.watches) return {};
+  if (!db.event.eventWatches) return {};
 
-  return db.event.watches.reduce(
+  return db.event.eventWatches.reduce(
     (acc: Record<string, IndividualEventTableRowProps>, watchId: string) => {
-      const watch: IEventWatch = db.byWatchId[watchId];
-      const member: IMember = db.byMemberId[watch?.member];
+      const eventWatch: IEventWatch = db.byEventWatchId[watchId];
+      const member: IMember = db.byMemberId[eventWatch?.member];
 
       const { email } = member ?? {};
 

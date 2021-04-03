@@ -73,14 +73,14 @@ const buildArgsString = (where): string => {
   return a ? `(${a})` : a;
 };
 
-const useHasuraLazyQuery = ({
+function useHasuraLazyQuery<T = any>({
   fields,
   operation,
   queryName: queryString,
   schema,
   variables,
   where
-}: UseHasuraQueryArgs): [any, QueryResult] => {
+}: UseHasuraQueryArgs): [any, QueryResult<T>] {
   const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
 
   const argsString: string = buildArgsString(where);
@@ -118,6 +118,6 @@ const useHasuraLazyQuery = ({
   }, [result.data, schema]);
 
   return [queryFn, { ...result, error: result.error?.message }];
-};
+}
 
 export default useHasuraLazyQuery;

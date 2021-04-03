@@ -25,19 +25,17 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
     db.community.events
       ?.map((eventId: string) => db.byEventId[eventId])
       ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-      ?.map(
-        ({ eventAttendees, id, guests, startTime, title, watches }: IEvent) => {
-          return {
-            date: day(startTime).format('MMMM D, YYYY'),
-            id,
-            numAttendees: eventAttendees?.length ?? 0,
-            numGuests: guests?.length ?? 0,
-            numViewers: watches?.length ?? 0,
-            startTime,
-            title
-          };
-        }
-      )
+      ?.map((event: IEvent) => {
+        return {
+          date: day(event.startTime).format('MMMM D, YYYY'),
+          id: event.id,
+          numAttendees: event.eventAttendees?.length ?? 0,
+          numGuests: event.eventGuests?.length ?? 0,
+          numViewers: event.eventWatches?.length ?? 0,
+          startTime: event.startTime,
+          title: event.title
+        };
+      })
       .sort((a, b) => sortObjects(a, b, 'startTime'))
   );
 

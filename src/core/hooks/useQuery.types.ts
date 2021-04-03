@@ -13,6 +13,7 @@ export interface UseQueryArgs<S> {
 }
 
 export interface QueryResult<T = any> {
+  called?: boolean;
   data: T;
   error: string;
   loading: boolean;

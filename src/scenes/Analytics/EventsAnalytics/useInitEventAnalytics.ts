@@ -1,66 +1,64 @@
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import {
-  IEvent,
-  IEventAttendee,
-  IEventGuest,
-  IEventWatch
-} from '@store/Db/entities';
+import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
 
 /**
  * Initializes the event analytics page by fetching all of the past events,
  * past attendees, past guest and past event watches.
  */
-const useInitEventAnalytics = (): Partial<QueryResult> => {
+const useInitEventAnalytics = (): QueryResult<IEvent[]> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const { loading: loading1 } = useQuery<IEvent[]>({
-    fields: ['endTime', 'id', 'startTime', 'title', { community: ['id'] }],
-    operation: QueryEvent.LIST_PAST_EVENTS,
-    schema: [Schema.EVENT]
-  });
-
-  const { loading: loading2 } = useQuery<IEventAttendee[]>({
+  const result = useHasuraQuery<IEvent[]>({
     fields: [
-      'createdAt',
+      'community.id',
+      'endTime',
+      'eventAttendees.createdAt',
+      'eventAttendees.event.id',
+      'eventAttendees.id',
+      'eventAttendees.member.email',
+      'eventAttendees.member.firstName',
+      'eventAttendees.member.id',
+      'eventAttendees.member.lastName',
+      'eventAttendees.member.pictureUrl',
+      'eventAttendees.supporter.email',
+      'eventAttendees.supporter.firstName',
+      'eventAttendees.supporter.id',
+      'eventAttendees.supporter.lastName',
+      'eventGuests.createdAt',
+      'eventGuests.event.id',
+      'eventGuests.id',
+      'eventGuests.member.email',
+      'eventGuests.member.firstName',
+      'eventGuests.member.id',
+      'eventGuests.member.lastName',
+      'eventGuests.member.pictureUrl',
+      'eventGuests.supporter.email',
+      'eventGuests.supporter.firstName',
+      'eventGuests.supporter.id',
+      'eventGuests.supporter.lastName',
+      'eventWatches.createdAt',
+      'eventWatches.event.id',
+      'eventWatches.id',
+      'eventWatches.member.email',
+      'eventWatches.member.firstName',
+      'eventWatches.member.id',
+      'eventWatches.member.lastName',
+      'eventWatches.member.pictureUrl',
       'id',
-      { event: ['id'] },
-      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'email', 'firstName', 'lastName'] }
+      'startTime',
+      'title'
     ],
-    operation: QueryEvent.LIST_EVENT_ATTENDEES,
-    schema: [Schema.EVENT_ATTENDEE]
+    operation: 'events',
+    queryName: 'GetEventAnalytics',
+    schema: [Schema.EVENT],
+    variables: { communityId: { type: 'String!', value: communityId } },
+    where: { community_id: { _eq: '$communityId' } }
   });
 
-  const { loading: loading3 } = useQuery<IEventGuest[]>({
-    fields: [
-      'createdAt',
-      'id',
-      { event: ['id'] },
-      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'email', 'firstName', 'lastName'] }
-    ],
-    operation: QueryEvent.LIST_EVENT_GUESTS,
-    schema: [Schema.EVENT_GUEST]
-  });
-
-  const { loading: loading4 } = useQuery<IEventWatch[]>({
-    fields: [
-      'createdAt',
-      'id',
-      { event: ['id', { community: ['id'] }] },
-      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-    ],
-    operation: QueryEvent.LIST_EVENT_WATCHES,
-    schema: [Schema.EVENT_WATCH],
-    types: { communityId: { required: false } },
-    variables: { communityId }
-  });
-
-  return { loading: loading1 || loading2 || loading3 || loading4 };
+  return result;
 };
 
 export default useInitEventAnalytics;

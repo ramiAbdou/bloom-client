@@ -35,13 +35,13 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
 
   const isGoing: boolean = useStoreState(({ db }) => {
     const guests = new Set(
-      db.member?.guests?.filter(
-        (guestId: string) => !db.byGuestId[guestId]?.deletedAt
+      db.member?.eventGuests?.filter(
+        (guestId: string) => !db.byEventGuestId[guestId]?.deletedAt
       )
     );
 
     const event: IEvent = db.byEventId[eventId];
-    return event?.guests?.some((guestId: string) => guests.has(guestId));
+    return event?.eventGuests?.some((guestId: string) => guests.has(guestId));
   });
 
   const createEventGuestWithMember = useCreateEventGuestWithMember();

@@ -14,7 +14,7 @@ const EventsAnalyticsGuestCard: React.FC = () => {
     if (!pastEvents?.length) return null;
 
     const totalGuests = pastEvents?.reduce(
-      (acc: number, event: IEvent) => acc + event?.guests?.length,
+      (acc: number, event: IEvent) => acc + event?.eventGuests?.length,
       0
     );
 

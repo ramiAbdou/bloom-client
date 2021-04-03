@@ -29,14 +29,14 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
 };
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
-  const numGuests = useStoreState(({ db }) => db.event.guests?.length);
+  const numGuests = useStoreState(({ db }) => db.event.eventGuests?.length);
 
   return <GrayCard label="# of RSVPs" value={numGuests ?? 0} />;
 };
 
 const IndividualEventInsightsWatchesCard: React.FC = () => {
   const recordingUrl = useStoreState(({ db }) => db.event.recordingUrl);
-  const numWatches = useStoreState(({ db }) => db.event.watches?.length);
+  const numWatches = useStoreState(({ db }) => db.event.eventWatches?.length);
 
   return (
     <GrayCard
