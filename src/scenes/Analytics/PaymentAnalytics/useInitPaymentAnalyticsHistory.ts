@@ -1,40 +1,34 @@
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import { IMember, IPayment } from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
 
-const useInitPaymentAnalyticsHistory = (): Partial<QueryResult> => {
+const useInitPaymentAnalyticsHistory = (): QueryResult<IMember[]> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const { data, loading: loading1 }: QueryResult<IPayment[]> = useQuery<
-    IPayment[]
-  >({
+  const result = useHasuraQuery<IMember[]>({
     fields: [
-      'amount',
-      'createdAt',
+      'email',
       'id',
-      'stripeInvoiceUrl',
-      { community: ['id'] },
-      { member: ['id'] },
-      { memberType: ['id'] }
+      'firstName',
+      'lastName',
+      'payments.amount',
+      'payments.community.id',
+      'payments.createdAt',
+      'payments.id',
+      'payments.member.id',
+      'payments.memberType.id',
+      'payments.stripeInvoiceUrl'
     ],
-    operation: QueryEvent.LIST_PAYMENTS,
-    schema: [Schema.PAYMENT],
-    types: { communityId: { required: false } },
-    variables: { communityId }
-  });
-
-  const { loading: loading2 }: QueryResult<IMember[]> = useQuery<IMember[]>({
-    fields: ['email', 'id', 'isDuesActive', 'firstName', 'lastName'],
-    operation: QueryEvent.LIST_MEMBERS,
+    operation: 'members',
+    queryName: 'GetMemberPaymentAnalytics',
     schema: [Schema.MEMBER],
-    types: { communityId: { required: false } },
-    variables: { communityId }
+    variables: { communityId: { type: 'String!', value: communityId } },
+    where: { community_id: { _eq: '$communityId' } }
   });
 
-  return { data, loading: loading1 || loading2 };
+  return result;
 };
 
 export default useInitPaymentAnalyticsHistory;

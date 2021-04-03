@@ -10,9 +10,9 @@ import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';
-import EventsCard from './EventsCard/EventsCard';
+import EventsCard from '../EventsCard/EventsCard';
 
-const EventsPastList: React.FC = () => {
+const PastEventsList: React.FC = () => {
   const pastEvents: IEvent[] = useStoreState(({ db }) => {
     const yourAttendees: Set<string> = new Set(db.member.eventAttendees);
 
@@ -47,14 +47,14 @@ const EventsPastList: React.FC = () => {
   );
 };
 
-const EventsPastSection: React.FC<LoadingProps> = ({ loading }) => (
+const PastEventsSection: React.FC<LoadingProps> = ({ loading }) => (
   <Section>
     <LoadingHeader h2 className="mb-sm" loading={loading} title="Past Events" />
 
     <ListStore.Provider>
-      <EventsPastList />
+      <PastEventsList />
     </ListStore.Provider>
   </Section>
 );
 
-export default EventsPastSection;
+export default PastEventsSection;

@@ -1,27 +1,27 @@
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
 import { IPayment } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
 
 const useInitMembershipPaymentHistory = (): QueryResult<IPayment[]> => {
   const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const result = useQuery<IPayment[]>({
+  const result = useHasuraQuery<IPayment[]>({
     fields: [
       'amount',
       'createdAt',
       'id',
+      'member.id',
+      'memberType.id',
       'stripeInvoiceUrl',
-      'type',
-      { member: ['id'] },
-      { memberType: ['id'] }
+      'type'
     ],
-    operation: QueryEvent.LIST_PAYMENTS,
+    operation: 'payments',
+    queryName: 'GetPaymentsByMemberId',
     schema: [Schema.PAYMENT],
-    types: { memberId: { required: false } },
-    variables: { memberId }
+    variables: { memberId: { type: 'String!', value: memberId } },
+    where: { member_id: { _eq: '$memberId' } }
   });
 
   return result;

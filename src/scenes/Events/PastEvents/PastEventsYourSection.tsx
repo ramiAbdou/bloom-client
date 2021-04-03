@@ -8,13 +8,15 @@ import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent, IEventAttendee } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
-import EventsCard from './EventsCard/EventsCard';
+import EventsCard from '../EventsCard/EventsCard';
 
-const EventsPastYourList: React.FC = () => {
+const PastEventsYourList: React.FC = () => {
   const events: IEvent[] = useStoreState(({ db }) =>
     db.member.eventAttendees
       ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId])
-      ?.map((eventAttendee: IEventAttendee) => db.byEventId[eventAttendee.event])
+      ?.map(
+        (eventAttendee: IEventAttendee) => db.byEventId[eventAttendee.event]
+      )
       ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
   );
 
@@ -28,12 +30,14 @@ const EventsPastYourList: React.FC = () => {
   );
 };
 
-const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
+const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const hasEvents: boolean = useStoreState(
     ({ db }) =>
       !!db.member.eventAttendees
         ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId])
-        ?.map((eventAttendee: IEventAttendee) => db.byEventId[eventAttendee.event])
+        ?.map(
+          (eventAttendee: IEventAttendee) => db.byEventId[eventAttendee.event]
+        )
         ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
         ?.length
   );
@@ -48,10 +52,10 @@ const EventsPastYourSection: React.FC<LoadingProps> = ({ loading }) => {
       />
 
       <ListStore.Provider>
-        <EventsPastYourList />
+        <PastEventsYourList />
       </ListStore.Provider>
     </Section>
   );
 };
 
-export default EventsPastYourSection;
+export default PastEventsYourSection;

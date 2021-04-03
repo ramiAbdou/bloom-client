@@ -3,17 +3,18 @@ import React from 'react';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainContent from '@containers/Main/MainContent';
 import Section from '@containers/Section';
+import { QueryResult } from '@hooks/useQuery.types';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
-import { EventTiming, getEventTiming } from './Events.util';
-import EventsCard from './EventsCard/EventsCard';
-import EventsHeader from './EventsHeader';
+import { EventTiming, getEventTiming } from '../Events.util';
+import EventsCard from '../EventsCard/EventsCard';
+import EventsHeader from '../EventsHeader';
 import useInitUpcomingEvents from './useInitUpcomingEvents';
 
-const EventsUpcomingContent: React.FC = () => {
+const UpcomingEventsContent: React.FC = () => {
   const upcomingEvents: IEvent[] = useStoreState(({ db }) =>
     db.community?.events
       ?.map((eventId: string) => db.byEventId[eventId])
@@ -32,8 +33,8 @@ const EventsUpcomingContent: React.FC = () => {
   );
 };
 
-const EventsUpcoming: React.FC = () => {
-  const { loading } = useInitUpcomingEvents();
+const UpcomingEvents: React.FC = () => {
+  const { loading }: QueryResult = useInitUpcomingEvents();
 
   return (
     <MainContent>
@@ -48,11 +49,11 @@ const EventsUpcoming: React.FC = () => {
         />
 
         <ListStore.Provider>
-          {!loading && <EventsUpcomingContent />}
+          {!loading && <UpcomingEventsContent />}
         </ListStore.Provider>
       </Section>
     </MainContent>
   );
 };
 
-export default EventsUpcoming;
+export default UpcomingEvents;

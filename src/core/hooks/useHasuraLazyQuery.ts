@@ -107,17 +107,19 @@ function useHasuraLazyQuery<T = any>({
       : {}
   );
 
+  const camelCaseData: T = camelCaseKeys(
+    result.data ? result.data[snakeOperation] : null,
+    { deep: true }
+  );
+
   useEffect(() => {
-    if (result.data && schema) {
-      const camelCaseData = camelCaseKeys(result.data[snakeOperation], {
-        deep: true
-      });
+    if (camelCaseData && schema) mergeEntities({ data: camelCaseData, schema });
+  }, [camelCaseData, schema]);
 
-      mergeEntities({ data: camelCaseData, schema });
-    }
-  }, [result.data, schema]);
-
-  return [queryFn, { ...result, error: result.error?.message }];
+  return [
+    queryFn,
+    { ...result, data: camelCaseData, error: result.error?.message }
+  ];
 }
 
 export default useHasuraLazyQuery;

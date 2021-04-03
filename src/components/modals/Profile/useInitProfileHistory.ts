@@ -1,75 +1,62 @@
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import { QueryResult } from '@hooks/useQuery.types';
-import {
-  IEventAttendee,
-  IEventGuest,
-  IEventWatch,
-  IPayment
-} from '@store/Db/entities';
+import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import IdStore from '@store/Id.store';
-import { QueryEvent } from '@util/constants.events';
 
-const useInitProfileHistory = (): Partial<QueryResult> => {
+const useInitProfileHistory = (): QueryResult<IMember[]> => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { loading: loading1 } = useQuery<IEventAttendee[]>({
+  const result = useHasuraQuery<IMember[]>({
     fields: [
-      'createdAt',
+      'eventAttendees.createdAt',
+      'eventAttendees.event.id',
+      'eventAttendees.id',
+      'eventAttendees.member.email',
+      'eventAttendees.member.firstName',
+      'eventAttendees.member.id',
+      'eventAttendees.member.lastName',
+      'eventAttendees.member.pictureUrl',
+      'eventAttendees.supporter.email',
+      'eventAttendees.supporter.firstName',
+      'eventAttendees.supporter.id',
+      'eventAttendees.supporter.lastName',
+      'eventGuests.createdAt',
+      'eventGuests.event.id',
+      'eventGuests.id',
+      'eventGuests.member.email',
+      'eventGuests.member.firstName',
+      'eventGuests.member.id',
+      'eventGuests.member.lastName',
+      'eventGuests.member.pictureUrl',
+      'eventGuests.supporter.email',
+      'eventGuests.supporter.firstName',
+      'eventGuests.supporter.id',
+      'eventGuests.supporter.lastName',
+      'eventWatches.createdAt',
+      'eventWatches.event.id',
+      'eventWatches.id',
+      'eventWatches.member.email',
+      'eventWatches.member.firstName',
+      'eventWatches.member.id',
+      'eventWatches.member.lastName',
+      'eventWatches.member.pictureUrl',
       'id',
-      { event: ['id', 'title'] },
-      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'firstName', 'lastName'] }
+      'payments.amount',
+      'payments.createdAt',
+      'payments.id',
+      'payments.member.id',
+      'payments.memberType.id',
+      'payments.type'
     ],
-    operation: QueryEvent.LIST_EVENT_ATTENDEES,
-    schema: [Schema.EVENT_ATTENDEE],
-    types: { memberId: { required: false } },
-    variables: { memberId }
+    operation: 'members',
+    queryName: 'GetMemberHistory',
+    schema: [Schema.MEMBER],
+    variables: { memberId: { type: 'String!', value: memberId } },
+    where: { member_id: { _eq: '$memberId' } }
   });
 
-  const { loading: loading2 } = useQuery<IEventGuest[]>({
-    fields: [
-      'createdAt',
-      'id',
-      { event: ['id', 'title'] },
-      { member: ['id', 'firstName', 'lastName', 'pictureUrl'] },
-      { supporter: ['id', 'firstName', 'lastName'] }
-    ],
-    operation: QueryEvent.LIST_EVENT_GUESTS,
-    schema: [Schema.EVENT_GUEST],
-    types: { memberId: { required: false } },
-    variables: { memberId }
-  });
-
-  const { loading: loading3 } = useQuery<IEventWatch[]>({
-    fields: [
-      'createdAt',
-      'id',
-      { event: ['id', 'title'] },
-      { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
-    ],
-    operation: QueryEvent.LIST_EVENT_WATCHES,
-    schema: [Schema.EVENT_WATCH],
-    types: { memberId: { required: false } },
-    variables: { memberId }
-  });
-
-  const { loading: loading4 } = useQuery<IPayment[]>({
-    fields: [
-      'amount',
-      'createdAt',
-      'id',
-      'type',
-      { member: ['id'] },
-      { memberType: ['id'] }
-    ],
-    operation: QueryEvent.LIST_PAYMENTS,
-    schema: [Schema.PAYMENT],
-    types: { memberId: { required: false } },
-    variables: { memberId }
-  });
-
-  return { loading: loading1 || loading2 || loading3 || loading4 };
+  return result;
 };
 
 export default useInitProfileHistory;

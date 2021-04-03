@@ -1,24 +1,24 @@
 import React from 'react';
 
-import useQuery from '@hooks/useQuery';
+import useHasuraQuery from '@hooks/useHasuraQuery';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import { IMember } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
 import { useStoreState } from '@store/Store';
-import { QueryEvent } from '@util/constants.events';
 
 const EventFormNotificationsSection: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data } = useQuery<IMember[]>({
-    fields: ['id', { community: ['id'] }],
-    operation: QueryEvent.LIST_MEMBERS,
+  const { data } = useHasuraQuery<IMember[]>({
+    fields: ['community.id', 'id'],
+    operation: 'members',
+    queryName: 'GetMembersByCommunityId',
     schema: [Schema.MEMBER],
-    types: { communityId: { required: false } },
-    variables: { communityId }
+    variables: { communityId: { type: 'String!', value: communityId } },
+    where: { community_id: { _eq: '$communityId' } }
   });
 
   if (!data) return null;
