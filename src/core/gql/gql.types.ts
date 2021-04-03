@@ -4,7 +4,7 @@ export interface QueryArgs {
   fields: string[];
   operation: string;
   queryName: string;
-  schema?: Schema;
+  schema: Schema;
   skip?: boolean;
   where?: Record<string, unknown>;
 }

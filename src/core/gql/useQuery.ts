@@ -9,7 +9,7 @@ import { MergeEntitiesArgs } from '../store/Db/Db.types';
 import { QueryArgs, QueryResult } from './gql.types';
 import { buildArgsString, buildFieldsString } from './gql.util';
 
-function useQuery<T = unknown>({
+function useQuery<T>({
   fields,
   operation,
   queryName: queryNameString,
@@ -22,23 +22,26 @@ function useQuery<T = unknown>({
   );
 
   const argsString: string = buildArgsString({ where });
+  const fieldsString: string = buildFieldsString(fields);
   const operationString: string = snakeCase(operation);
 
   const query: DocumentNode = gql`
       query ${queryNameString} {
-        ${operationString} ${argsString} ${buildFieldsString(fields)}
+        ${operationString} ${argsString} ${fieldsString}
       }
     `;
 
   const result = useApolloQuery(query, { skip });
 
+  // Deeply converts all of the data from the operation to camelCase, if the
+  // data exists.
   const camelCaseData: T = camelCaseKeys(
     result.data ? result.data[operationString] : null,
     { deep: true }
   );
 
   useEffect(() => {
-    if (camelCaseData && schema) mergeEntities({ data: camelCaseData, schema });
+    if (camelCaseData) mergeEntities({ data: camelCaseData, schema });
   }, [camelCaseData, schema]);
 
   return {
