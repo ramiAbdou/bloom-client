@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
+import useGql from '@gql/useGql';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IEvent } from '@store/Db/entities';
 import { Schema } from '@store/Db/schema';
@@ -9,7 +10,6 @@ import { ModalType } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 import { DeleteEventGuestArgs } from './Events.types';
 import { EventTiming, getEventTiming } from './Events.util';
-import useCreateEventGuestWithMember from './useCreateEventGuestWithMember';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -19,7 +19,10 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
+  const gql = useGql();
+
   const isMember: boolean = useStoreState(({ db }) => db.isMember);
+  const memberId: string = useStoreState(({ db }) => db.member?.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
@@ -44,8 +47,6 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     return event?.eventGuests?.some((guestId: string) => guests.has(guestId));
   });
 
-  const createEventGuestWithMember = useCreateEventGuestWithMember();
-
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -56,7 +57,18 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       return;
     }
 
-    await createEventGuestWithMember({ eventId });
+    await gql.eventGuests.create({
+      body: { eventId, memberId },
+      fields: [
+        'createdAt',
+        'event.id',
+        'id',
+        'member.firstName',
+        'member.id',
+        'member.lastName',
+        'member.pictureUrl'
+      ]
+    });
 
     const options: ToastOptions<DeleteEventGuestArgs> = {
       message: 'RSVP was registered.',

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
+import useGql from '@gql/useGql';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@store/Db/entities';
 import { useStoreState } from '@store/Store';
-import useCreateEventWatch from './useCreateEventWatch';
 
 interface EventsViewRecordingButtonProps
   extends Partial<Pick<ButtonProps, 'large'>> {
@@ -15,7 +15,9 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   eventId,
   large
 }) => {
+  const gql = useGql();
   const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
+  const memberId: string = useStoreState(({ db }) => db.member?.id);
 
   const endTime: string = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];
@@ -35,13 +37,23 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   const isPast: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
-  const createEventWatch = useCreateEventWatch();
-
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    await createEventWatch({ eventId });
+
+    await gql.eventWatches.create({
+      body: { eventId, memberId },
+      fields: [
+        'createdAt',
+        'event.id',
+        'id',
+        'member.firstName',
+        'member.id',
+        'member.lastName',
+        'member.pictureUrl'
+      ]
+    });
   };
 
   return (

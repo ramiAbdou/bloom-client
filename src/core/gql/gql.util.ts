@@ -4,6 +4,7 @@ import snakeCaseKeys from 'snakecase-keys';
 import { take } from '@util/util';
 
 interface BuildArgsStringArgs {
+  object?: Record<string, unknown>;
   set?: Record<string, unknown>;
   where?: Record<string, unknown>;
 }
@@ -15,21 +16,23 @@ interface BuildArgsStringArgs {
  *  - where
  */
 export const buildArgsString = ({
+  object,
   set,
   where
 }: BuildArgsStringArgs): string => {
-  if (!set && !where) return '';
+  if (!object && !set && !where) return '';
 
-  const formattedWhere: Record<string, unknown> = Object.entries(where).reduce(
-    (acc, [key, value]) => {
-      if (typeof value !== 'object' && !['_eq', '_lt', '_gt'].includes(key)) {
-        return { ...acc, [key]: { _eq: value } };
-      }
+  const formattedWhere: Record<string, unknown> = Object.entries(
+    where ?? {}
+  ).reduce((acc, [key, value]) => {
+    if (typeof value !== 'object' && !['_eq', '_lt', '_gt'].includes(key)) {
+      return { ...acc, [key]: { _eq: value } };
+    }
 
-      return { ...acc, [key]: value };
-    },
-    {}
-  );
+    return { ...acc, [key]: value };
+  }, {});
+
+  const snakeCaseObject: Record<string, unknown> = snakeCaseKeys(object ?? {});
 
   const snakeCaseSet: Record<string, unknown> = snakeCaseKeys(set ?? {}, {
     // Don't want to convert any of the query operators.
@@ -37,9 +40,16 @@ export const buildArgsString = ({
   });
 
   const snakeCaseWhere: Record<string, unknown> = snakeCaseKeys(
-    formattedWhere,
+    formattedWhere ?? {},
     // Don't want to convert any of the query operators.
     { exclude: ['_eq', '_lt', '_gt'] }
+  );
+
+  // Converts the object to a string, and replaces the double quotes around
+  // keys (and not the values).
+  const objectArgsString = JSON.stringify(snakeCaseObject).replace(
+    /"(\w*)":/g,
+    '$1:'
   );
 
   // Converts the object to a string, and replaces the double quotes around
@@ -59,6 +69,7 @@ export const buildArgsString = ({
   const result: string = take([
     [set && where, `(_set: ${setArgsString}, where: ${whereArgsString})`],
     [where, `(where: ${whereArgsString})`],
+    [object, `(object: ${objectArgsString})`],
     [true, '']
   ]);
 

@@ -1,12 +1,15 @@
 import camelCaseKeys from 'camelcase-keys';
 import { snakeCase } from 'change-case';
 import day from 'dayjs';
+import { nanoid } from 'nanoid';
 
 import { DocumentNode, gql } from '@apollo/client';
 import { Schema } from '@store/Db/schema';
 import { buildArgsString, buildFieldsString } from '../gql.util';
 
 const map = {
+  eventGuests: Schema.EVENT_GUEST,
+  eventWatches: Schema.EVENT_WATCH,
   events: Schema.EVENT,
   memberSocials: Schema.MEMBER_SOCIALS,
   members: Schema.MEMBER,
@@ -14,46 +17,43 @@ const map = {
   users: Schema.USER
 };
 
-const update = async ({
-  client,
-  entity,
-  updatedFields,
-  mergeEntities,
-  where
-}) => {
-  const set = { ...updatedFields, updatedAt: day.utc().format() };
+const create = async ({ client, fields, entity, body, mergeEntities }) => {
+  const object = {
+    ...body,
+    createdAt: day.utc().format(),
+    id: nanoid(),
+    updatedAt: day.utc().format()
+  };
+
   // Example: '(where: { email: { $eq: "rami@onbloom.co" } })'
-  const argsString: string = buildArgsString({ set, where });
+  const argsString: string = buildArgsString({ object });
+
+  console.log(argsString);
 
   // Example: 'id member { id firstName }'
-  const fieldsString: string = buildFieldsString(Object.keys(set));
+  const fieldsString: string = buildFieldsString(fields);
 
   // Example: "members", "users"
-  const operationString: string = snakeCase(`update_${entity}`);
+  const operationString: string = snakeCase(`insert_${entity}_one`);
 
   const mutation: DocumentNode = gql`
       mutation {
         ${operationString} ${argsString} {
-          returning {
-            id
-            ${fieldsString}
-          }
+          id
+          ${fieldsString}
         }
       }
     `;
 
   const { data, errors } = await client.mutate({ mutation });
 
-  const camelCaseData = camelCaseKeys(
-    data ? data[operationString]?.returning : null,
-    { deep: true }
-  );
-
-  const result = camelCaseData?.length ? camelCaseData[0] : null;
+  const result = camelCaseKeys(data ? data[operationString] : null, {
+    deep: true
+  });
 
   if (result) mergeEntities({ data: result, schema: map[entity] });
 
   return { data: result, error: errors?.length && errors[0]?.message };
 };
 
-export default update;
+export default create;
