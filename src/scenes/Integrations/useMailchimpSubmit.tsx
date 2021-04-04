@@ -1,10 +1,10 @@
+import { ICommunityIntegrations } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { ICommunityIntegrations } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
 import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 

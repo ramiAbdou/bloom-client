@@ -1,7 +1,7 @@
-import useBloomQuery from '@gql/useBloomQuery';
-import { QueryResult } from '@gql/gql.types';
 import { IMemberIntegrations } from '@db/db.entities';
 import { Schema } from '@db/db.schema';
+import { QueryResult } from '@gql/gql.types';
+import useBloomQuery from '@gql/useBloomQuery';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitMembershipRenewal = (): QueryResult<IMemberIntegrations[]> => {

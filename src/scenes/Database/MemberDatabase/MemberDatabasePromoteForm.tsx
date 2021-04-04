@@ -1,13 +1,13 @@
 import React from 'react';
 
+import { IMember } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import useBloomMutation from '@gql/useBloomMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
 import ModalConfirmationActions from '@organisms/Modal/ModalConfirmationActions';
 import TableStore from '@organisms/Table/Table.store';
-import { IMember } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 

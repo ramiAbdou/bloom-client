@@ -3,8 +3,8 @@ import { action, computed } from 'easy-peasy';
 import { IMember, initialEntities } from '@db/db.entities';
 import { DbModel } from './db.types';
 import { mergeEntities, setActiveEntities } from './db.util';
-import dbActiveStore from './dbActive.store';
-import dbByIdStore from './dbById.store';
+import dbActiveStore from './DbActive.store';
+import dbByIdStore from './DbById.store';
 
 const dbStore: DbModel = {
   ...dbActiveStore,

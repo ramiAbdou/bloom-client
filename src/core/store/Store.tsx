@@ -17,7 +17,7 @@ import sidebar from '@organisms/Sidebar/Sidebar.store';
 import { SidebarModel } from '@organisms/Sidebar/Sidebar.types';
 import toast from '@organisms/Toast/Toast.store';
 import { ToastModel } from '@organisms/Toast/Toast.types';
-import db from '../db/Db.store';
+import db from '../db/db.store';
 import { DbModel } from '../db/Db.types';
 
 export interface StoreModel {
