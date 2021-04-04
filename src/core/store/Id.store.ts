@@ -16,7 +16,7 @@ const idModel: IdModel = {
 
 const IdStore = createContextStore<IdModel>(
   (runtimeModel: IdModel) => {
-    return { ...runtimeModel, ...idModel };
+    return { ...idModel, ...runtimeModel };
   },
   { disableImmer: true }
 );

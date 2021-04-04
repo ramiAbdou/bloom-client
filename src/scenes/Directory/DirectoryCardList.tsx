@@ -1,13 +1,13 @@
 import deepequal from 'fast-deep-equal';
 import React from 'react';
 
-import MasonryList from '@organisms/List/MasonryList';
 import {
   IMember,
   IMemberValue,
   IQuestion,
   MemberStatus
 } from '@db/db.entities';
+import MasonryList from '@organisms/List/MasonryList';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { prepareMemberForFilter } from './Directory.util';

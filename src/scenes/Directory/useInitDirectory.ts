@@ -1,7 +1,7 @@
-import { QueryResult } from '@gql/gql.types';
-import useQuery from '@gql/useQuery';
 import { IMember } from '@db/db.entities';
 import { Schema } from '@db/db.schema';
+import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { useStoreState } from '@store/Store';
 
 const useInitDirectory = (): QueryResult<IMember[]> => {

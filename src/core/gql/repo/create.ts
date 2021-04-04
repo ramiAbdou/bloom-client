@@ -28,8 +28,6 @@ const create = async ({ client, fields, entity, body, mergeEntities }) => {
   // Example: '(where: { email: { $eq: "rami@onbloom.co" } })'
   const argsString: string = buildArgsString({ object });
 
-  console.log(argsString);
-
   // Example: 'id member { id firstName }'
   const fieldsString: string = buildFieldsString(fields);
 
