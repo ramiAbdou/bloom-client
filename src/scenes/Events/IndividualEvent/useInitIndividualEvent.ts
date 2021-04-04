@@ -2,11 +2,11 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { QueryResult } from '@gql/gql.types';
-import useQuery from '@gql/useQuery';
-import { SetActiveArgs } from '@db/db.types';
 import { IEvent } from '@db/db.entities';
 import { Schema } from '@db/db.schema';
+import { SetActiveArgs } from '@db/db.types';
+import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { useStoreActions } from '@store/Store';
 
 const useInitIndividualEvent = (): QueryResult<IEvent[]> => {

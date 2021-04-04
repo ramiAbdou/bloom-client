@@ -11,7 +11,8 @@ import {
 import { QueryArgs, QueryResult } from '@gql/gql.types';
 import { useStoreActions } from '@store/Store';
 import { MergeEntitiesArgs } from '../db/db.types';
-import { buildArgsString, buildFieldsString } from './gql.util';
+import { buildFieldsString } from './gql.util';
+import buildArgsString from './repo/buildArgsString';
 
 function useLazyQuery<T>({
   fields,

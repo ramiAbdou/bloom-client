@@ -1,9 +1,29 @@
+import deepmerge from 'deepmerge';
 import { Action, action } from 'easy-peasy';
 import { normalize } from 'normalizr';
 
 import { IEntities } from './db.entities';
-import { mergeStrategy } from './db.schema';
 import { DbModel, MergeEntitiesArgs, SetActiveArgs } from './db.types';
+
+/**
+ * Merges the two entities according to the deepmerge strategy, except handles
+ * array in a way that produces no duplicates.
+ *
+ * @param a First entity to merge.
+ * @param b Second entity to merge.
+ */
+export const mergeStrategy = (a: Partial<any>, b: Partial<any>): any => {
+  const arrayMerge = (target: any[], source: any[]) => {
+    const updatedSource = source.filter(
+      (value: any) => !target.includes(value)
+    );
+
+    // Concat the source to the target.
+    return target.concat(updatedSource);
+  };
+
+  return deepmerge(a, b, { arrayMerge });
+};
 
 /**
  * Main update function that updates all entities (front-end DB). Uses

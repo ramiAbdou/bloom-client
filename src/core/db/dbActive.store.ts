@@ -27,7 +27,7 @@ const dbActiveStore: Pick<
 > = {
   application: computed(({ community, entities }) => {
     const { byId: byApplicationId } = entities.applications;
-    return byApplicationId[community?.application] as IApplication;
+    return byApplicationId[community?.applicationId] as IApplication;
   }),
 
   community: computed(({ entities }) => {

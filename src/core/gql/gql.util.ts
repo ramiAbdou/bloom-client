@@ -1,80 +1,4 @@
 import { snakeCase } from 'change-case';
-import snakeCaseKeys from 'snakecase-keys';
-
-import { take } from '@util/util';
-
-interface BuildArgsStringArgs {
-  object?: Record<string, unknown>;
-  set?: Record<string, unknown>;
-  where?: Record<string, unknown>;
-}
-
-/**
- * Returns the argument string (defined right after the GraphQL operation). All
- * of the following affect the args string:
- *  - limit
- *  - where
- */
-export const buildArgsString = ({
-  object,
-  set,
-  where
-}: BuildArgsStringArgs): string => {
-  if (!object && !set && !where) return '';
-
-  const formattedWhere: Record<string, unknown> = Object.entries(
-    where ?? {}
-  ).reduce((acc, [key, value]) => {
-    if (typeof value !== 'object' && !['_eq', '_lt', '_gt'].includes(key)) {
-      return { ...acc, [key]: { _eq: value } };
-    }
-
-    return { ...acc, [key]: value };
-  }, {});
-
-  const snakeCaseObject: Record<string, unknown> = snakeCaseKeys(object ?? {});
-
-  const snakeCaseSet: Record<string, unknown> = snakeCaseKeys(set ?? {}, {
-    // Don't want to convert any of the query operators.
-    exclude: ['_eq', '_lt', '_gt']
-  });
-
-  const snakeCaseWhere: Record<string, unknown> = snakeCaseKeys(
-    formattedWhere ?? {},
-    // Don't want to convert any of the query operators.
-    { exclude: ['_eq', '_lt', '_gt'] }
-  );
-
-  // Converts the object to a string, and replaces the double quotes around
-  // keys (and not the values).
-  const objectArgsString = JSON.stringify(snakeCaseObject).replace(
-    /"(\w*)":/g,
-    '$1:'
-  );
-
-  // Converts the object to a string, and replaces the double quotes around
-  // keys (and not the values).
-  const setArgsString = JSON.stringify(snakeCaseSet).replace(
-    /"(\w*)":/g,
-    '$1:'
-  );
-
-  // Converts the object to a string, and replaces the double quotes around
-  // keys (and not the values).
-  const whereArgsString = JSON.stringify(snakeCaseWhere).replace(
-    /"(\w*)":/g,
-    '$1:'
-  );
-
-  const result: string = take([
-    [set && where, `(_set: ${setArgsString}, where: ${whereArgsString})`],
-    [where, `(where: ${whereArgsString})`],
-    [object, `(object: ${objectArgsString})`],
-    [true, '']
-  ]);
-
-  return result;
-};
 
 /**
  * Returns the nested fields object that we will later use to clean up.
@@ -103,7 +27,7 @@ const buildFieldsObject = (
 };
 
 /**
- * Returns the formatted fields string in a GraphQL nested object manner.
+ * Returns the formatted fields string as a GraphQL nested object.
  *
  * @param fields - Array of dot case strings.
  *

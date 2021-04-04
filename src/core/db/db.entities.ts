@@ -1,32 +1,76 @@
+/* eslint-disable max-lines */
+
+import deepmerge from 'deepmerge';
+import { schema } from 'normalizr';
+
 import {
   QuestionCategory,
   QuestionType,
   TimeSeriesData
 } from '@util/constants';
+import { take } from '@util/util';
+
+/**
+ * Merges the two entities according to the deepmerge strategy, except handles
+ * array in a way that produces no duplicates.
+ *
+ * @param a First entity to merge.
+ * @param b Second entity to merge.
+ */
+export const mergeStrategy = (a: Partial<any>, b: Partial<any>): any => {
+  const arrayMerge = (target: any[], source: any[]) => {
+    const updatedSource = source.filter(
+      (value: any) => !target.includes(value)
+    );
+
+    // Concat the source to the target.
+    return target.concat(updatedSource);
+  };
+
+  return deepmerge(a, b, { arrayMerge });
+};
 
 export type Identifier = string;
 
 export interface BaseEntity {
-  createdAt: Identifier;
-  deletedAt?: Identifier;
+  createdAt: string;
+  deletedAt?: string;
   id: Identifier;
-  updatedAt: Identifier;
+  updatedAt: string;
 }
 
 // ## APPLICATION
 
 export interface IApplication extends BaseEntity {
-  community: Identifier;
   communityId: Identifier;
   description: string;
   questions: Identifier[];
   title: string;
 }
 
+export const IApplicationSchema: schema.Entity<IApplication> = new schema.Entity(
+  'applications',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (application: IApplication, parent) => {
+      const processedData: Partial<IApplication> = take([
+        [!!parent.rankedQuestionId, { questions: [parent.id] }]
+      ]);
+
+      return {
+        ...application,
+        ...processedData,
+        applicationId: application.id
+      };
+    }
+  }
+);
+
 // ## COMMUNITY
 
 export interface ICommunity extends BaseEntity {
-  application?: Identifier;
+  applicationId?: Identifier;
   autoAccept?: boolean;
   canCollectDues?: boolean;
   communityIntegrations: Identifier;
@@ -43,6 +87,30 @@ export interface ICommunity extends BaseEntity {
   supporters: Identifier[];
   urlName: string;
 }
+
+export const ICommunitySchema: schema.Entity<ICommunity> = new schema.Entity(
+  'communities',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (community: ICommunity, parent) => {
+      const processedData: Partial<ICommunity> = take([
+        [!!parent.applicationId, { applicationId: parent.id }],
+        [
+          !!parent.communityIntegrationsId,
+          { communityIntegrations: parent.id }
+        ],
+        [!!parent.eventId, { events: [parent.id] }],
+        [!!parent.memberId, { members: [parent.id] }],
+        [!!parent.memberTypeId, { memberTypes: [parent.id] }],
+        [!!parent.paymentId, { payments: [parent.id] }],
+        [!!parent.questionId, { questions: [parent.id] }]
+      ]);
+
+      return { ...community, ...processedData, communityId: community.id };
+    }
+  }
+);
 
 // ## COMMUNITY INTEGRATIONS
 

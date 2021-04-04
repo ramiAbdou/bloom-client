@@ -13,3 +13,5 @@ export interface QueryResult<T = unknown> {
   error: string;
   loading: boolean;
 }
+
+export type QueryOperator = '_eq' | '_lt' | '_gt';

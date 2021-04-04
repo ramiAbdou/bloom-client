@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { QueryResult } from '@gql/gql.types';
-import useQuery from '@gql/useQuery';
 import { IApplication } from '@db/db.entities';
 import { Schema } from '@db/db.schema';
+import { QueryResult } from '@gql/gql.types';
+import useQuery from '@gql/useQuery';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 
@@ -22,9 +22,9 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
       'community.name',
       'community.primaryColor',
       'community.urlName',
-      'community.communityIntegration.id',
-      'community.communityIntegration.communityId',
-      'community.communityIntegration.stripeAccountId',
+      'community.communityIntegrations.id',
+      'community.communityIntegrations.communityId',
+      'community.communityIntegrations.stripeAccountId',
       'community.memberTypes.amount',
       'community.memberTypes.id',
       'community.memberTypes.name',
@@ -47,6 +47,8 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     schema: [Schema.APPLICATION],
     where: { community: { urlName } }
   });
+
+  console.log(error, applications);
 
   useEffect(() => {
     if (!applications) return;

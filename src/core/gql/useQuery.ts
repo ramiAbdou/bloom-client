@@ -7,7 +7,8 @@ import { DocumentNode, gql, useQuery as useApolloQuery } from '@apollo/client';
 import { useStoreActions } from '@store/Store';
 import { MergeEntitiesArgs } from '../db/db.types';
 import { QueryArgs, QueryResult } from './gql.types';
-import { buildArgsString, buildFieldsString } from './gql.util';
+import { buildFieldsString } from './gql.util';
+import buildArgsString from './repo/buildArgsString';
 
 function useQuery<T>({
   fields,
