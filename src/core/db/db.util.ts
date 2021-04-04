@@ -3,7 +3,7 @@ import { normalize } from 'normalizr';
 
 import { IEntities } from './db.entities';
 import { mergeStrategy } from './db.schema';
-import { DbModel, MergeEntitiesArgs, SetActiveArgs } from './Db.types';
+import { DbModel, MergeEntitiesArgs, SetActiveArgs } from './db.types';
 
 /**
  * Main update function that updates all entities (front-end DB). Uses

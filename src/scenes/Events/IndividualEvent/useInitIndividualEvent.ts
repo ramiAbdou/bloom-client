@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { SetActiveArgs } from '@db/Db.types';
+import { SetActiveArgs } from '@db/db.types';
 import { IEvent } from '@db/db.entities';
 import { Schema } from '@db/db.schema';
 import { useStoreActions } from '@store/Store';

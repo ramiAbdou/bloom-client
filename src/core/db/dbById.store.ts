@@ -1,6 +1,6 @@
 import { computed } from 'easy-peasy';
 
-import { DbModel } from './Db.types';
+import { DbModel } from './db.types';
 
 const dbByIdStore: Pick<
   DbModel,

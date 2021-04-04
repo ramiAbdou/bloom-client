@@ -5,7 +5,7 @@ import React from 'react';
 
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { DbModel } from '@db/Db.types';
+import { DbModel } from '@db/db.types';
 import {
   IEventAttendee,
   IEventGuest,

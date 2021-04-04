@@ -10,7 +10,7 @@ import {
   IMemberType,
   IPayment
 } from '@db/db.entities';
-import { DbModel } from '@db/Db.types';
+import { DbModel } from '@db/db.types';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
 

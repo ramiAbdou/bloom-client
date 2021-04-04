@@ -8,7 +8,7 @@ import {
   IQuestion,
   MemberStatus
 } from '@db/db.entities';
-import { DbModel } from '@db/Db.types';
+import { DbModel } from '@db/db.types';
 import { TableRow } from '@organisms/Table/Table.types';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
