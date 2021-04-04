@@ -1,9 +1,9 @@
 import { Action, action } from 'easy-peasy';
 import { normalize } from 'normalizr';
 
+import { IEntities } from './Db.entities';
+import { mergeStrategy } from './Db.schema';
 import { DbModel, MergeEntitiesArgs, SetActiveArgs } from './Db.types';
-import { IEntities } from './entities';
-import { mergeStrategy } from './schema';
 
 /**
  * Main update function that updates all entities (front-end DB). Uses

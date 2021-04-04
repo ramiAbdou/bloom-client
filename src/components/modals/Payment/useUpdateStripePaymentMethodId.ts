@@ -3,8 +3,8 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IMemberIntegrations } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
+import { IMemberIntegrations } from '@store/Db/Db.entities';
+import { Schema } from '@store/Db/Db.schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { MutationEvent } from '@util/constants.events';
 import { UpdateStripePaymentMethodIdArgs } from './Payment.types';

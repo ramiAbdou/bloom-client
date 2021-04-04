@@ -4,7 +4,7 @@ import Separator from '@atoms/Separator';
 import Show from '@containers/Show';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import { IMember, IMemberValue, IQuestion } from '@store/Db/entities';
+import { IMember, IMemberValue, IQuestion } from '@store/Db/Db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';

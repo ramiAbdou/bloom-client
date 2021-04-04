@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IMember, MemberStatus } from '@store/Db/entities';
+import { IMember, MemberStatus } from '@store/Db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { SidebarLinkOptions } from './Sidebar.types';
 import useInitSidebarLinkNotificationCircle from './useInitSidebarLinkNotificationCircle';

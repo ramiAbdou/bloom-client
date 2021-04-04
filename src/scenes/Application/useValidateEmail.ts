@@ -3,7 +3,7 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IQuestion } from '@store/Db/entities';
+import { IQuestion } from '@store/Db/Db.entities';
 import { QuestionCategory } from '@util/constants';
 import { QueryEvent } from '@util/constants.events';
 import { IsEmailTakenArgs } from './Application.types';

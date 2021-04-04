@@ -20,7 +20,7 @@ import {
   IRankedQuestion,
   ISupporter,
   IUser
-} from './entities';
+} from './Db.entities';
 
 export interface MergeEntitiesArgs {
   data?: any;

@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { useStoreState } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
-import { ICommunity, IMember } from '../store/Db/entities';
+import { ICommunity, IMember } from '../store/Db/Db.entities';
 
 /**
  * Pushes the URL to a community that is known to the member (AKA to a

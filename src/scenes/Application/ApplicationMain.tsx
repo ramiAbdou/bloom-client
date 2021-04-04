@@ -5,7 +5,7 @@ import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IQuestion, IRankedQuestion } from '@store/Db/entities';
+import { IQuestion, IRankedQuestion } from '@store/Db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';

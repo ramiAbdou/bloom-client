@@ -3,7 +3,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { ModalData } from '@organisms/Modal/Modal.types';
-import { IEvent } from '@store/Db/entities';
+import { IEvent } from '@store/Db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';

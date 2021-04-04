@@ -10,7 +10,7 @@ import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { IMember, MemberRole } from '@store/Db/entities';
+import { IMember, MemberRole } from '@store/Db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/constants.errors';

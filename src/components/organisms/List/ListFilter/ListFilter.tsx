@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import Row from '@containers/Row/Row';
 import PanelCloseButton from '@organisms/Panel/PanelCloseButton';
-import { IQuestion } from '@store/Db/entities';
+import { IQuestion } from '@store/Db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';

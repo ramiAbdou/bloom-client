@@ -5,7 +5,7 @@ import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
 import FormShortText from '@organisms/Form/FormShortText';
-import { MemberRole } from '@store/Db/entities';
+import { MemberRole } from '@store/Db/Db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';

@@ -6,7 +6,7 @@ import FormLargeTitle from '@organisms/Form/FormLargeTitle';
 import FormLongText from '@organisms/Form/FormLongText';
 import FormSection from '@organisms/Form/FormSection';
 import FormShortText from '@organisms/Form/FormShortText';
-import { IEvent } from '@store/Db/entities';
+import { IEvent } from '@store/Db/Db.entities';
 import { useStoreState } from '@store/Store';
 
 const EventFormMainSection: React.FC = () => {

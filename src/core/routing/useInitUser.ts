@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { QueryResult } from '@gql/gql.types';
 import useLazyQuery from '@gql/useLazyQuery';
 import useLoader from '@organisms/Loader/useLoader';
-import { IUser } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
+import { IUser } from '@store/Db/Db.entities';
+import { Schema } from '@store/Db/Db.schema';
 import { useStoreState } from '@store/Store';
 
 /**

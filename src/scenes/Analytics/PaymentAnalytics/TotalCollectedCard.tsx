@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import { IPayment } from '@store/Db/entities';
+import { IPayment } from '@store/Db/Db.entities';
 import { useStoreState } from '@store/Store';
 
 const PaymentAnalyticsTotalCollectedCard: React.FC = () => {

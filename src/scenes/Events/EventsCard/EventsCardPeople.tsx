@@ -3,7 +3,7 @@ import React from 'react';
 import Row from '@containers/Row/Row';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent, IEventAttendee, IEventGuest } from '@store/Db/entities';
+import { IEvent, IEventAttendee, IEventGuest } from '@store/Db/Db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 

@@ -3,7 +3,7 @@ import { snakeCase } from 'change-case';
 import day from 'dayjs';
 
 import { DocumentNode, gql } from '@apollo/client';
-import { Schema } from '@store/Db/schema';
+import { Schema } from '@store/Db/Db.schema';
 import { buildArgsString, buildFieldsString } from '../gql.util';
 
 const map = {

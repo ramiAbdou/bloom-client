@@ -15,7 +15,7 @@ import {
   IEventAttendee,
   IMember,
   ISupporter
-} from '@store/Db/entities';
+} from '@store/Db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';

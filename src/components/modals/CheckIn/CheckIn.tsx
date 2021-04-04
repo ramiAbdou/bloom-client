@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Story from '@organisms/Story/Story';
-import { EventPrivacy } from '@store/Db/entities';
+import { EventPrivacy } from '@store/Db/Db.entities';
 import { useStoreState } from '@store/Store';
 import CheckInChoosePage from './CheckInChoosePage';
 import CheckInConfirmation from './CheckInConfirmation';

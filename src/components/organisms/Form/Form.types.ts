@@ -1,8 +1,8 @@
 import { ActionCreator, State } from 'easy-peasy';
 
 import { ToastOptions } from '@organisms/Toast/Toast.types';
+import { IPaymentMethod } from '@store/Db/Db.entities';
 import { DbModel } from '@store/Db/Db.types';
-import { IPaymentMethod } from '@store/Db/entities';
 import {
   ClassNameProps,
   QuestionCategory,

@@ -1,4 +1,4 @@
-import { IMemberType, RecurrenceType } from '@store/Db/entities';
+import { IMemberType, RecurrenceType } from '@store/Db/Db.entities';
 import { take } from '@util/util';
 
 /**

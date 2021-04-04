@@ -3,7 +3,7 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import { ModalData } from '@organisms/Modal/Modal.types';
-import { MemberStatus } from '@store/Db/entities';
+import { MemberStatus } from '@store/Db/Db.entities';
 import { useStoreActions } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';

@@ -7,8 +7,8 @@ import {
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMember } from '@store/Db/entities';
-import { Schema } from '@store/Db/schema';
+import { IMember } from '@store/Db/Db.entities';
+import { Schema } from '@store/Db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent, QueryEvent } from '@util/constants.events';

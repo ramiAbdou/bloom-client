@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { EventPrivacy } from '@store/Db/entities';
+import { EventPrivacy } from '@store/Db/Db.entities';
 import { useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
 
