@@ -5,14 +5,14 @@ import React from 'react';
 
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { DbModel } from '@store/db/Db.types';
+import { DbModel } from '@db/Db.types';
 import {
   IEventAttendee,
   IEventGuest,
   IEventWatch,
   IMember,
   ISupporter
-} from '@store/db/Db.entities';
+} from '@db/Db.entities';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';

@@ -6,8 +6,8 @@ import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
 import ModalConfirmationActions from '@organisms/Modal/ModalConfirmationActions';
 import TableStore from '@organisms/Table/Table.store';
-import { IMember } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IMember } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 

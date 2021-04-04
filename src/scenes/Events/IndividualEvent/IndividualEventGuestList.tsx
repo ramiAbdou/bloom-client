@@ -7,7 +7,7 @@ import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { ModalData } from '@organisms/Modal/Modal.types';
-import { IEventGuest, IMember, ISupporter } from '@store/db/Db.entities';
+import { IEventGuest, IMember, ISupporter } from '@db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { IdProps, ModalType } from '@util/constants';
 import { cx, sortObjects } from '@util/util';

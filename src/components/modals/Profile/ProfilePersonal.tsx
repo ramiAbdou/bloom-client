@@ -5,7 +5,7 @@ import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMember, IMemberType, MemberRole } from '@store/db/Db.entities';
+import { IMember, IMemberType, MemberRole } from '@db/Db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ProfileSocialContainer from './ProfileSocial';

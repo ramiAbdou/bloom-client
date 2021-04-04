@@ -4,8 +4,8 @@ import useQuery from '@gql/useQuery';
 import {
   ICommunityIntegrations,
   IMemberIntegrations
-} from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+} from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 

@@ -5,8 +5,8 @@ import {
 } from '@organisms/Form/Form.types';
 import StoryStore from '@organisms/Story/Story.store';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
-import { IEventGuest } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IEventGuest } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';
 

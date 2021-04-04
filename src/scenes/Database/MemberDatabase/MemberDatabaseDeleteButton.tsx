@@ -2,7 +2,7 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import TableStore from '@organisms/Table/Table.store';
-import { MemberRole } from '@store/db/Db.entities';
+import { MemberRole } from '@db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';

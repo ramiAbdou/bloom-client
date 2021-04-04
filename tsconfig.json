@@ -12,6 +12,7 @@
     "paths": {
       "@atoms/*": ["./src/components/atoms/*"],
       "@containers/*": ["./src/components/containers/*"],
+      "@db/*": ["./src/core/db/*"],
       "@gql/*": ["./src/core/gql/*"],
       "@hooks/*": ["./src/core/hooks/*"],
       "@images/*": ["./src/components/images/*"],

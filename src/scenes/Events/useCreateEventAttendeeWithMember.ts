@@ -1,7 +1,7 @@
 import useBloomMutation from '@gql/useBloomMutation';
 import { UseMutationFnResult } from '@gql/useBloomMutation.types';
-import { IEventAttendee } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IEventAttendee } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { MutationEvent } from '@util/constants.events';
 import { CreateEventAttendeeArgs } from './Events.types';
 

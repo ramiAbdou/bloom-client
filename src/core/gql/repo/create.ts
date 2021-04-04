@@ -4,7 +4,7 @@ import day from 'dayjs';
 import { nanoid } from 'nanoid';
 
 import { DocumentNode, gql } from '@apollo/client';
-import { Schema } from '@store/db/Db.schema';
+import { Schema } from '@db/Db.schema';
 import { buildArgsString, buildFieldsString } from '../gql.util';
 
 const map = {

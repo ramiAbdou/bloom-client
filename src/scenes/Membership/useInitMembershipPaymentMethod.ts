@@ -1,7 +1,7 @@
 import useBloomQuery from '@gql/useBloomQuery';
 import { QueryResult } from '@gql/gql.types';
-import { IMemberIntegrations } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IMemberIntegrations } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { QueryEvent } from '@util/constants.events';
 
 const useInitMembershipPaymentMethod = (): QueryResult<

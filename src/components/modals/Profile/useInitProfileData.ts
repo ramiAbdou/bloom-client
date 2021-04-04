@@ -1,7 +1,7 @@
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { IMemberValue } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IMemberValue } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import IdStore from '@store/Id.store';
 
 const useInitProfileData = (): Partial<QueryResult> => {

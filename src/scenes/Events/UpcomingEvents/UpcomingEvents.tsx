@@ -6,7 +6,7 @@ import Section from '@containers/Section';
 import { QueryResult } from '@gql/gql.types';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
-import { IEvent } from '@store/db/Db.entities';
+import { IEvent } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';

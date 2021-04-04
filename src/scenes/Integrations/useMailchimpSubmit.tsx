@@ -3,8 +3,8 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { ICommunityIntegrations } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { ICommunityIntegrations } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 

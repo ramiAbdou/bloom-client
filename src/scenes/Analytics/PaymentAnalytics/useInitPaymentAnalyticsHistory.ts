@@ -1,7 +1,7 @@
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { IMember } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IMember } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 
 const useInitPaymentAnalyticsHistory = (): QueryResult<IMember[]> => {

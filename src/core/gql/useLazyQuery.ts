@@ -10,7 +10,7 @@ import {
 } from '@apollo/client';
 import { QueryArgs, QueryResult } from '@gql/gql.types';
 import { useStoreActions } from '@store/Store';
-import { MergeEntitiesArgs } from '../store/db/Db.types';
+import { MergeEntitiesArgs } from '../db/Db.types';
 import { buildArgsString, buildFieldsString } from './gql.util';
 
 function useLazyQuery<T>({

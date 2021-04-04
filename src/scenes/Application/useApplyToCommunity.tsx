@@ -5,7 +5,7 @@ import {
 } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
-import { IMemberType, IPaymentMethod, IQuestion } from '@store/db/Db.entities';
+import { IMemberType, IPaymentMethod, IQuestion } from '@db/Db.entities';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 

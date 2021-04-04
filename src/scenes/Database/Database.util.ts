@@ -1,7 +1,5 @@
 import { State } from 'easy-peasy';
 
-import { TableRow } from '@organisms/Table/Table.types';
-import { DbModel } from '@store/db/Db.types';
 import {
   IMember,
   IMemberSocials,
@@ -9,7 +7,9 @@ import {
   IMemberValue,
   IQuestion,
   MemberStatus
-} from '@store/db/Db.entities';
+} from '@db/Db.entities';
+import { DbModel } from '@db/Db.types';
+import { TableRow } from '@organisms/Table/Table.types';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 

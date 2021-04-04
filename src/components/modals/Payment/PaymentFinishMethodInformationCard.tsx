@@ -1,7 +1,7 @@
 import React from 'react';
 
 import InformationCard from '@containers/Card/InformationCard';
-import { IMemberType, IPaymentMethod } from '@store/db/Db.entities';
+import { IMemberType, IPaymentMethod } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
 

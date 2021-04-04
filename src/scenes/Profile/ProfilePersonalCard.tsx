@@ -7,7 +7,7 @@ import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMemberType, MemberRole } from '@store/db/Db.entities';
+import { IMemberType, MemberRole } from '@db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';

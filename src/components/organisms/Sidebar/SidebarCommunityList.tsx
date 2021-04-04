@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IMember, MemberStatus } from '@store/db/Db.entities';
+import { IMember, MemberStatus } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import SidebarCommunityButton from './SidebarCommunityButton';

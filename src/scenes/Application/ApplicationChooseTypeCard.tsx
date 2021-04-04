@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Show from '@containers/Show';
-import { IMemberType, RecurrenceType } from '@store/db/Db.entities';
+import { IMemberType, RecurrenceType } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { IdProps } from '@util/constants';
 import { take } from '@util/util';

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 
 import Show from '@containers/Show';
 import useLazyQuery from '@gql/useLazyQuery';
-import { IMember } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IMember } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ProfileData from './ProfileData';

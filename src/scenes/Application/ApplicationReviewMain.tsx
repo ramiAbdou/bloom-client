@@ -5,7 +5,7 @@ import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import StoryStore from '@organisms/Story/Story.store';
-import { IQuestion } from '@store/db/Db.entities';
+import { IQuestion } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 
 const ApplicationReviewMain: React.FC = () => {

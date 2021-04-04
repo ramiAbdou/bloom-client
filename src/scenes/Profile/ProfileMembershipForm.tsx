@@ -6,7 +6,7 @@ import { parseValue } from '@organisms/Form/Form.util';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { IMemberValue, IQuestion } from '@store/db/Db.entities';
+import { IMemberValue, IQuestion } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';

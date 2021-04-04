@@ -4,7 +4,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
-import { IMember } from '@store/db/Db.entities';
+import { IMember } from '@db/Db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';

@@ -6,7 +6,7 @@ import FormDate from '@organisms/Form/FormDate';
 import FormSection from '@organisms/Form/FormSection';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormTime from '@organisms/Form/FormTime';
-import { IEvent } from '@store/db/Db.entities';
+import { IEvent } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';
 import FormSectionHeader from '../../organisms/Form/FormSectionHeader';

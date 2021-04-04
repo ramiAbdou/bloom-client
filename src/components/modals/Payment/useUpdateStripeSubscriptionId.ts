@@ -5,8 +5,8 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IMemberIntegrations } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IMemberIntegrations } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 import PaymentStore from './Payment.store';

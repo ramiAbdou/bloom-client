@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import Show from '@containers/Show';
-import { Identifier } from '@store/db/Db.entities';
+import { Identifier } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';

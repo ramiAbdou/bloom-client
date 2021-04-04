@@ -4,7 +4,7 @@ import Row from '@containers/Row/Row';
 import ListFilterOpenButton from '@organisms/List/ListFilter/ListFilterOpenButton';
 import ListQuickFilter from '@organisms/List/ListFilter/ListQuickFilter';
 import ListSearchBar from '@organisms/List/ListSearchBar';
-import { IMember } from '@store/db/Db.entities';
+import { IMember } from '@db/Db.entities';
 
 const DirectoryAdminQuickFilter: React.FC = () => {
   const filter = (member: Partial<IMember>): boolean => !!member?.role;

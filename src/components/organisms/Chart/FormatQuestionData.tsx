@@ -7,7 +7,7 @@ import {
   IMemberType,
   IMemberValue,
   IQuestion
-} from '@store/db/Db.entities';
+} from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import Chart from './Chart.store';

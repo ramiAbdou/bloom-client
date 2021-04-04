@@ -4,8 +4,8 @@ import useQuery from '@gql/useQuery';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
-import { IMember } from '@store/db/Db.entities';
-import { Schema } from '@store/db/Db.schema';
+import { IMember } from '@db/Db.entities';
+import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 
 const EventFormNotificationsSection: React.FC = () => {

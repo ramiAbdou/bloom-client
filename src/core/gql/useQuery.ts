@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 import { DocumentNode, gql, useQuery as useApolloQuery } from '@apollo/client';
 import { useStoreActions } from '@store/Store';
-import { MergeEntitiesArgs } from '../store/db/Db.types';
+import { MergeEntitiesArgs } from '../db/Db.types';
 import { QueryArgs, QueryResult } from './gql.types';
 import { buildArgsString, buildFieldsString } from './gql.util';
 

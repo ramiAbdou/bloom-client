@@ -8,7 +8,7 @@ import {
   IMemberValue,
   IQuestion,
   MemberStatus
-} from '@store/db/Db.entities';
+} from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';

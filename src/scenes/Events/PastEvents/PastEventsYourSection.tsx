@@ -5,7 +5,7 @@ import Section from '@containers/Section';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent, IEventAttendee } from '@store/db/Db.entities';
+import { IEvent, IEventAttendee } from '@db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import EventsCard from '../EventsCard/EventsCard';
