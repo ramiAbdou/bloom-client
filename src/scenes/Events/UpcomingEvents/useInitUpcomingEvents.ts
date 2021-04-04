@@ -2,8 +2,8 @@ import day from 'dayjs';
 
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { IEvent } from '@db/Db.entities';
-import { Schema } from '@db/Db.schema';
+import { IEvent } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import { useStoreState } from '@store/Store';
 
 const useInitUpcomingEvents = (): QueryResult<IEvent[]> => {

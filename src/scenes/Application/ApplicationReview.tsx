@@ -6,7 +6,7 @@ import Form from '@organisms/Form/Form';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IMemberType } from '@db/Db.entities';
+import { IMemberType } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import ApplicationReviewMain from './ApplicationReviewMain';
 import ApplicationReviewMembership from './ApplicationReviewMembership';

@@ -2,8 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
+import { Schema } from '@db/db.schema';
 import useBloomMutation from '@gql/useBloomMutation';
-import { Schema } from '@db/Db.schema';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 

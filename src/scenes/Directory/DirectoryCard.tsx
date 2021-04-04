@@ -8,7 +8,7 @@ import {
   IMemberType,
   IMemberValue,
   IQuestion
-} from '@db/Db.entities';
+} from '@db/db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';

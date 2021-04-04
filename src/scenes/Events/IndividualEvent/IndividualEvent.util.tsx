@@ -12,7 +12,7 @@ import {
   IEventWatch,
   IMember,
   ISupporter
-} from '@db/Db.entities';
+} from '@db/db.entities';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';

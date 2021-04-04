@@ -3,7 +3,7 @@ import React from 'react';
 
 import Input from '@atoms/Input/Input';
 import Dropdown from '@molecules/Dropdown/Dropdown';
-import { IQuestion } from '@db/Db.entities';
+import { IQuestion } from '@db/db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';

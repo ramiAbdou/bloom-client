@@ -6,7 +6,7 @@ import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import ListSearchBar from '@organisms/List/ListSearchBar';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent } from '@db/Db.entities';
+import { IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';

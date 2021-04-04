@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
 import Show from '@containers/Show';
+import { IMember } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import useLazyQuery from '@gql/useLazyQuery';
-import { IMember } from '@db/Db.entities';
-import { Schema } from '@db/Db.schema';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ProfileData from './ProfileData';

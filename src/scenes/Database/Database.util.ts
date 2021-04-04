@@ -7,7 +7,7 @@ import {
   IMemberValue,
   IQuestion,
   MemberStatus
-} from '@db/Db.entities';
+} from '@db/db.entities';
 import { DbModel } from '@db/Db.types';
 import { TableRow } from '@organisms/Table/Table.types';
 import { QuestionCategory } from '@util/constants';

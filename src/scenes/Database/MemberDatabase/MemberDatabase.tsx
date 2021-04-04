@@ -13,7 +13,7 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IQuestion } from '@db/Db.entities';
+import { IQuestion } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';

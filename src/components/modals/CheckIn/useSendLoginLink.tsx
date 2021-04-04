@@ -1,5 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
+import { IMember } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import useBloomMutation from '@gql/useBloomMutation';
 import useManualQuery from '@gql/useManualQuery';
 import {
@@ -7,8 +9,6 @@ import {
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMember } from '@db/Db.entities';
-import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent, QueryEvent } from '@util/constants.events';

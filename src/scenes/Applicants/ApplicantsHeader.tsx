@@ -2,7 +2,7 @@ import React from 'react';
 
 import MainHeader from '@containers/Main/MainHeader';
 import Row from '@containers/Row/Row';
-import { IMember, MemberStatus } from '@db/Db.entities';
+import { IMember, MemberStatus } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';

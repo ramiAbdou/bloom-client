@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import { IMember, MemberStatus } from '@db/Db.entities';
+import { IMember, MemberStatus } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 
 const PaymentAnalyticsPercentPaidCard: React.FC = () => {

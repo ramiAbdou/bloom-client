@@ -6,7 +6,7 @@ import FormLabel from '@organisms/Form/FormLabel';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { ICommunity } from '@db/Db.entities';
+import { ICommunity } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';
 

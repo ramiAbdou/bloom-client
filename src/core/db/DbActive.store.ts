@@ -10,9 +10,9 @@ import {
   IMemberSocials,
   IMemberType,
   IUser
-} from '@db/Db.entities';
-import { DbModel } from './Db.types';
-import { updateDocumentColors } from './Db.util';
+} from '@db/db.entities';
+import { DbModel } from './db.types';
+import { updateDocumentColors } from './db.util';
 
 const dbActiveStore: Pick<
   DbModel,

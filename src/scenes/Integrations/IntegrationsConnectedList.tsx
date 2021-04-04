@@ -4,7 +4,7 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import { ICommunityIntegrations } from '@db/Db.entities';
+import { ICommunityIntegrations } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';

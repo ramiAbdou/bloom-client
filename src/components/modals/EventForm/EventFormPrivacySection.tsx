@@ -3,7 +3,7 @@ import React from 'react';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
-import { EventPrivacy, IEvent } from '@db/Db.entities';
+import { EventPrivacy, IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 
 const EventFormPrivacySection: React.FC = () => {

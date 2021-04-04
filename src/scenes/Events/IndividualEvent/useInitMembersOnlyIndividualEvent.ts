@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { EventPrivacy } from '@db/Db.entities';
+import { EventPrivacy } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { ErrorContext } from '@util/constants.errors';

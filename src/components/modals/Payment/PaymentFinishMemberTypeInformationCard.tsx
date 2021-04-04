@@ -1,7 +1,7 @@
 import React from 'react';
 
 import InformationCard from '@containers/Card/InformationCard';
-import { IMemberType, RecurrenceType } from '@db/Db.entities';
+import { IMemberType, RecurrenceType } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import PaymentStore from './Payment.store';
 import { getMemberTypeDescription } from './Payment.util';

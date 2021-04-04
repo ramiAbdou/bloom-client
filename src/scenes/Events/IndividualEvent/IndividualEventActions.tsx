@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
-import { IEventGuest } from '@db/Db.entities';
+import { IEventGuest } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, PanelType } from '@util/constants';
 import { EventTiming, getEventTiming } from '../Events.util';

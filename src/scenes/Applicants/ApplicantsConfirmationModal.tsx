@@ -4,7 +4,7 @@ import Form from '@organisms/Form/Form';
 import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
 import ModalConfirmationActions from '@organisms/Modal/ModalConfirmationActions';
-import { MemberStatus } from '@db/Db.entities';
+import { MemberStatus } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import useRespondToApplicants from './useRespondToApplicants';
 

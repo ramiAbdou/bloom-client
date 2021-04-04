@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 
+import { ICommunity } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import { QueryResult } from '@gql/gql.types';
 import useManualQuery from '@gql/useManualQuery';
 import useLoader from '@organisms/Loader/useLoader';
-import { ICommunity } from '@db/Db.entities';
-import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { ErrorContext } from '@util/constants.errors';
 import { QueryEvent } from '@util/constants.events';

@@ -9,7 +9,7 @@ import {
   IMemberValue,
   IQuestion,
   MemberStatus
-} from '@db/Db.entities';
+} from '@db/db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { IdProps } from '@util/constants';

@@ -1,7 +1,7 @@
+import { IMember } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { IMember } from '@db/Db.entities';
-import { Schema } from '@db/Db.schema';
 import IdStore from '@store/Id.store';
 
 const useInitProfileHistory = (): QueryResult<IMember[]> => {

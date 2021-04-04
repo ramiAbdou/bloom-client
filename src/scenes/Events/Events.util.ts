@@ -1,6 +1,6 @@
 import day, { Dayjs } from 'dayjs';
 
-import { IEvent } from '@db/Db.entities';
+import { IEvent } from '@db/db.entities';
 
 export enum EventTiming {
   HAPPENING_NOW = 'HAPPENING_NOW',

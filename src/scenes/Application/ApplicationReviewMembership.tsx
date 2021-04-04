@@ -9,7 +9,7 @@ import {
   IMemberType,
   IPaymentMethod,
   RecurrenceType
-} from '@db/Db.entities';
+} from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { take } from '@util/util';
 

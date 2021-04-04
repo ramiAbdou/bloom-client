@@ -1,7 +1,7 @@
 import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 
-import { IQuestion } from '@db/Db.entities';
+import { IQuestion } from '@db/db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';

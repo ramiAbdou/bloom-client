@@ -2,7 +2,7 @@ import React from 'react';
 import { IoAdd } from 'react-icons/io5';
 
 import Row from '@containers/Row/Row';
-import { IQuestion } from '@db/Db.entities';
+import { IQuestion } from '@db/db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';

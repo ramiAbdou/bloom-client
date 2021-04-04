@@ -13,7 +13,7 @@ import {
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent } from '@db/Db.entities';
+import { IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';

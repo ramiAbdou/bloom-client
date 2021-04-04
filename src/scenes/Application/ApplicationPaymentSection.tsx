@@ -10,7 +10,7 @@ import FormHeader from '@organisms/Form/FormHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMemberType } from '@db/Db.entities';
+import { IMemberType } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import useSavePaymentMethod from './useSavePaymentMethod';
 

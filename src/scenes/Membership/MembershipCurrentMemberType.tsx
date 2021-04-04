@@ -4,7 +4,7 @@ import React from 'react';
 import StatusTag from '@atoms/Tag/StatusTag';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
-import { IMemberType, RecurrenceType } from '@db/Db.entities';
+import { IMemberType, RecurrenceType } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { take } from '@util/util';
 import MembershipCurrentMemberTypeActions from './MembershipCurrentMemberTypeActions';

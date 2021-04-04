@@ -1,10 +1,10 @@
+import { IMemberIntegrations } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IMemberIntegrations } from '@db/Db.entities';
-import { Schema } from '@db/Db.schema';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { MutationEvent } from '@util/constants.events';
 import { UpdateStripePaymentMethodIdArgs } from './Payment.types';

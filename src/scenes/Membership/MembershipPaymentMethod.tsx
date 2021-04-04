@@ -4,7 +4,7 @@ import React from 'react';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
 import { QueryResult } from '@gql/gql.types';
-import { IPaymentMethod } from '@db/Db.entities';
+import { IPaymentMethod } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import MembershipPaymentMethodButton from './MembershipPaymentMethodButton';
 import useInitMembershipPaymentMethod from './useInitMembershipPaymentMethod';

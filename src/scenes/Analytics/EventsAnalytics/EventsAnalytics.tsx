@@ -3,7 +3,7 @@ import React from 'react';
 import Show from '@containers/Show';
 import { QueryResult } from '@gql/gql.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent } from '@db/Db.entities';
+import { IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import EventAnalyticsChart from './EventAnalyticsChart';
 import EventsAnalyticsOverview from './EventsAnalyticsOverview';

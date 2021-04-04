@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import { ICommunityIntegrations } from '@db/Db.entities';
+import { ICommunityIntegrations } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';

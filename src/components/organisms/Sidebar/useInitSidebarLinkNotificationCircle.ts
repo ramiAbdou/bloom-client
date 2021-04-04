@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 import { useApolloClient } from '@apollo/client';
+import { Schema } from '@db/db.schema';
 import useLazyQuery from '@gql/useLazyQuery';
-import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 
 const useInitSidebarLinkNotificationCircle = (to: string): void => {

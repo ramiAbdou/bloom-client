@@ -1,12 +1,12 @@
 import { useHistory } from 'react-router-dom';
 
+import { IMemberIntegrations } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IMemberIntegrations } from '@db/Db.entities';
-import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 import PaymentStore from './Payment.store';

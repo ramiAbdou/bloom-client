@@ -1,11 +1,8 @@
+import { ICommunityIntegrations, IMemberIntegrations } from '@db/db.entities';
+import { Schema } from '@db/db.schema';
 import { QueryResult } from '@gql/gql.types';
 import useBloomQuery from '@gql/useBloomQuery';
 import useQuery from '@gql/useQuery';
-import {
-  ICommunityIntegrations,
-  IMemberIntegrations
-} from '@db/Db.entities';
-import { Schema } from '@db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 
