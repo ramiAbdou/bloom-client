@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom';
 
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { SetActiveArgs } from '@store/Db/Db.types';
-import { IEvent } from '@store/Db/Db.entities';
-import { Schema } from '@store/Db/Db.schema';
+import { SetActiveArgs } from '@store/db/Db.types';
+import { IEvent } from '@store/db/Db.entities';
+import { Schema } from '@store/db/Db.schema';
 import { useStoreActions } from '@store/Store';
 
 const useInitIndividualEvent = (): QueryResult<IEvent[]> => {

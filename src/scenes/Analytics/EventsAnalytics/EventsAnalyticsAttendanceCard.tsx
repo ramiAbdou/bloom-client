@@ -2,7 +2,7 @@ import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent } from '@store/Db/Db.entities';
+import { IEvent } from '@store/db/Db.entities';
 import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {

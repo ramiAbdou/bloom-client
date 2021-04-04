@@ -7,7 +7,7 @@ import {
   IMemberValue,
   IQuestion,
   MemberStatus
-} from '@store/Db/Db.entities';
+} from '@store/db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { prepareMemberForFilter } from './Directory.util';

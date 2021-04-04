@@ -1,6 +1,6 @@
 import { State } from 'easy-peasy';
 
-import { DbModel } from '@store/Db/Db.types';
+import { DbModel } from '@store/db/Db.types';
 import {
   ICommunity,
   IEvent,
@@ -10,7 +10,7 @@ import {
   IMember,
   IMemberType,
   IPayment
-} from '@store/Db/Db.entities';
+} from '@store/db/Db.entities';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
 

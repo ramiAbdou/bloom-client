@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Show from '@containers/Show';
-import { IMemberValue, IQuestion } from '@store/Db/Db.entities';
+import { IMemberValue, IQuestion } from '@store/db/Db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import ListFilterStore from '../ListFilter/ListFilter.store';

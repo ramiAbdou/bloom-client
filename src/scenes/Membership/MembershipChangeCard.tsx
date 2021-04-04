@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import { PaymentModalType } from '@modals/Payment/Payment.types';
-import { IMemberType, RecurrenceType } from '@store/Db/Db.entities';
+import { IMemberType, RecurrenceType } from '@store/db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { IdProps, ModalType } from '@util/constants';
 import { take } from '@util/util';

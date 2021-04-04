@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Card from '@containers/Card/Card';
-import { IEvent } from '@store/Db/Db.entities';
+import { IEvent } from '@store/db/Db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { IdProps } from '@util/constants';

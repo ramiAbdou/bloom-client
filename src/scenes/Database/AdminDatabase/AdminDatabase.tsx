@@ -4,7 +4,7 @@ import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMember, MemberRole } from '@store/Db/Db.entities';
+import { IMember, MemberRole } from '@store/db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';

@@ -5,8 +5,8 @@ import {
 } from '@organisms/Form/Form.types';
 import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
-import { IMember } from '@store/Db/Db.entities';
-import { Schema } from '@store/Db/Db.schema';
+import { IMember } from '@store/db/Db.entities';
+import { Schema } from '@store/db/Db.schema';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 

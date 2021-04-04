@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { IApplication } from '@store/Db/Db.entities';
-import { Schema } from '@store/Db/Db.schema';
+import { IApplication } from '@store/db/Db.entities';
+import { Schema } from '@store/db/Db.schema';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 

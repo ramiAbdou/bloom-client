@@ -4,7 +4,7 @@ import Row from '@containers/Row/Row';
 import { TableRow } from '@organisms/Table/Table.types';
 import { TableFilterFunction } from '@organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@organisms/Table/TableQuickFilter';
-import { IQuestion } from '@store/Db/Db.entities';
+import { IQuestion } from '@store/db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 

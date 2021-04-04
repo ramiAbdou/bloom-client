@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { QueryResult } from '@gql/gql.types';
 import useLazyQuery from '@gql/useLazyQuery';
 import useLoader from '@organisms/Loader/useLoader';
-import { ICommunity } from '@store/Db/Db.entities';
-import { Schema } from '@store/Db/Db.schema';
+import { ICommunity } from '@store/db/Db.entities';
+import { Schema } from '@store/db/Db.schema';
 import { useStoreState } from '@store/Store';
 
 const useInitCommunity = (): QueryResult<ICommunity[]> => {

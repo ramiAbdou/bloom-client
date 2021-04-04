@@ -6,7 +6,7 @@ import Card from '@containers/Card/Card';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { ModalData } from '@organisms/Modal/Modal.types';
-import { IMemberValue, IQuestion } from '@store/Db/Db.entities';
+import { IMemberValue, IQuestion } from '@store/db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';

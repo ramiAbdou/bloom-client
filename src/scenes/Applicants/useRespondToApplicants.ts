@@ -4,8 +4,8 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IMember, MemberStatus } from '@store/Db/Db.entities';
-import { Schema } from '@store/Db/Db.schema';
+import { IMember, MemberStatus } from '@store/db/Db.entities';
+import { Schema } from '@store/db/Db.schema';
 import { MutationEvent } from '@util/constants.events';
 
 export interface RespondToApplicantsArgs {

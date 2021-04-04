@@ -3,7 +3,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import useGql from '@gql/useGql';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent } from '@store/Db/Db.entities';
+import { IEvent } from '@store/db/Db.entities';
 import { useStoreState } from '@store/Store';
 
 interface EventsViewRecordingButtonProps

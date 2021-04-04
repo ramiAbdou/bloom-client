@@ -3,7 +3,7 @@ import React from 'react';
 import Row from '@containers/Row/Row';
 import TableStore from '@organisms/Table/Table.store';
 import SearchBar from '@organisms/Table/TableSeachBar';
-import { MemberRole } from '@store/Db/Db.entities';
+import { MemberRole } from '@store/db/Db.entities';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseDeleteButton from './AdminDatabaseDeleteButton';
 import AdminDatabaseDemoteButton from './AdminDatabaseDemoteButton';

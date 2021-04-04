@@ -5,8 +5,8 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IEvent } from '@store/Db/Db.entities';
-import { Schema } from '@store/Db/Db.schema';
+import { IEvent } from '@store/db/Db.entities';
+import { Schema } from '@store/db/Db.schema';
 import { MutationEvent } from '@util/constants.events';
 import { uploadImage } from '@util/imageUtil';
 

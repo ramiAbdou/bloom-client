@@ -2,7 +2,7 @@ import camelCaseKeys from 'camelcase-keys';
 import { snakeCase } from 'change-case';
 
 import { DocumentNode, gql } from '@apollo/client';
-import { Schema } from '@store/Db/Db.schema';
+import { Schema } from '@store/db/Db.schema';
 import { buildArgsString, buildFieldsString } from '../gql.util';
 
 const map = { events: Schema.EVENT, users: Schema.USER };

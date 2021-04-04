@@ -9,7 +9,7 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMemberType, IPayment } from '@store/Db/Db.entities';
+import { IMemberType, IPayment } from '@store/db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';

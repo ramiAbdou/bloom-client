@@ -4,8 +4,8 @@ import {
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
-import { IEventGuest } from '@store/Db/Db.entities';
-import { Schema } from '@store/Db/Db.schema';
+import { IEventGuest } from '@store/db/Db.entities';
+import { Schema } from '@store/db/Db.schema';
 import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 

@@ -1,7 +1,7 @@
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { IMemberSocials } from '@store/Db/Db.entities';
-import { Schema } from '@store/Db/Db.schema';
+import { IMemberSocials } from '@store/db/Db.entities';
+import { Schema } from '@store/db/Db.schema';
 import { useStoreState } from '@store/Store';
 
 const useInitProfileSocial = (): QueryResult<IMemberSocials[]> => {

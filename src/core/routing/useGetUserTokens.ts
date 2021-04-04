@@ -6,7 +6,7 @@ import useManualQuery from '@gql/useManualQuery';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 import { QueryEvent } from '@util/constants.events';
-import { SetActiveArgs } from '../store/Db/Db.types';
+import { SetActiveArgs } from '../store/db/Db.types';
 
 interface GetUserTokensResult {
   communityId: string;

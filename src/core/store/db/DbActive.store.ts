@@ -10,7 +10,7 @@ import {
   IMemberSocials,
   IMemberType,
   IUser
-} from '@store/Db/Db.entities';
+} from '@store/db/Db.entities';
 import { DbModel } from './Db.types';
 import { updateDocumentColors } from './Db.util';
 

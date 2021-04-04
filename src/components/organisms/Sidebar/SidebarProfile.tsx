@@ -4,7 +4,7 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { MemberRole } from '@store/Db/Db.entities';
+import { MemberRole } from '@store/db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';

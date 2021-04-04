@@ -7,7 +7,7 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { IMember, IMemberSocials } from '@store/Db/Db.entities';
+import { IMember, IMemberSocials } from '@store/db/Db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { SocialBrand } from '@util/constants';

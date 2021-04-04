@@ -5,7 +5,7 @@ import Button from '@atoms/Button/Button';
 import MainHeader from '@containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
 import useFinalPath from '@hooks/useFinalPath';
-import { MemberRole } from '@store/Db/Db.entities';
+import { MemberRole } from '@store/db/Db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 

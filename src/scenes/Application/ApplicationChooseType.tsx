@@ -7,7 +7,7 @@ import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IMemberType } from '@store/Db/Db.entities';
+import { IMemberType } from '@store/db/Db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
