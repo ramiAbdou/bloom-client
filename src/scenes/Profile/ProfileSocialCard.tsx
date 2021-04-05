@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+// import { gql, useApolloClient } from '@apollo/client';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
+import { IMemberSocials } from '@db/db.entities';
+import useGQL from '@gql/useGql';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, SocialBrand } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
@@ -62,7 +65,29 @@ const ProfileSocialHeader: React.FC = () => {
 };
 
 const ProfileSocialFacebook: React.FC = () => {
-  const facebookUrl = useStoreState(({ db }) => db.memberSocials?.facebookUrl);
+  const memberSocialsId: string = useStoreState(
+    ({ db }) => db.memberSocials?.id
+  );
+
+  const gql = useGQL();
+
+  useEffect(() => {
+    (async () => {
+      const a = await gql.hello.findOne({
+        fields: ['id', 'email'],
+        where: { email: 'rami@onbloom.co' }
+      });
+
+      console.log(a);
+    })();
+  }, [gql]);
+
+  // console.log(gql.hello.name);
+
+  const { facebookUrl }: IMemberSocials = gql.memberSocials.byId(
+    memberSocialsId
+  );
+
   return <ProfileSocialValue brand={SocialBrand.FACEBOOK} url={facebookUrl} />;
 };
 

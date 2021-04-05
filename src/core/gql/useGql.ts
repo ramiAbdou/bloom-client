@@ -1,87 +1,56 @@
 import { useMemo } from 'react';
 
 import { ApolloClient, useApolloClient } from '@apollo/client';
-import { useStoreActions } from '@store/Store';
-import create from './repo/create';
-import findOne from './repo/findOne';
-import update from './repo/update';
+import {
+  IApplication,
+  ICommunity,
+  ICommunityIntegrations,
+  IEvent,
+  IEventAttendee,
+  IEventGuest,
+  IEventWatch,
+  IMember,
+  IMemberIntegrations,
+  IMemberSocials,
+  IMemberType,
+  IMemberValue,
+  IPayment,
+  IQuestion,
+  IRankedQuestion,
+  ISupporter,
+  IUser
+} from '@db/db.entities';
+import { IEntities } from '../db/db.types';
+import GQLUtility from './GQLUtility';
 
-const useGql = () => {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
+export type GQL = Record<keyof IEntities, GQLUtility>;
+
+const useGQL = (): GQL => {
   const client: ApolloClient<any> = useApolloClient();
 
   const gql = useMemo(() => {
     return {
-      eventGuests: {
-        create: async (args) =>
-          create({ ...args, client, entity: 'eventGuests', mergeEntities })
-      },
-
-      eventWatches: {
-        create: async (args) =>
-          create({ ...args, client, entity: 'eventWatches', mergeEntities })
-      },
-
-      events: {
-        findOne: async (args) =>
-          findOne({
-            ...args,
-            client,
-            entity: 'events',
-            mergeEntities
-          }),
-
-        update: async (args) =>
-          update({
-            ...args,
-            client,
-            entity: 'events',
-            mergeEntities
-          })
-      },
-
-      memberSocials: {
-        update: async (args) =>
-          update({
-            ...args,
-            client,
-            entity: 'memberSocials',
-            mergeEntities
-          })
-      },
-
-      members: {
-        update: async (args) =>
-          update({
-            ...args,
-            client,
-            entity: 'members',
-            mergeEntities
-          })
-      },
-      questions: {
-        update: async (args) =>
-          update({
-            ...args,
-            client,
-            entity: 'questions',
-            mergeEntities
-          })
-      },
-
-      users: {
-        findOne: async (args) =>
-          findOne({
-            ...args,
-            client,
-            entity: 'users',
-            mergeEntities
-          })
-      }
+      applications: new GQLUtility(IApplication, client),
+      communities: new GQLUtility(ICommunity, client),
+      communityIntegrations: new GQLUtility(ICommunityIntegrations, client),
+      eventAttendees: new GQLUtility(IEventAttendee, client),
+      eventGuests: new GQLUtility(IEventGuest, client),
+      eventWatches: new GQLUtility(IEventWatch, client),
+      events: new GQLUtility(IEvent, client),
+      memberIntegrations: new GQLUtility(IMemberIntegrations, client),
+      memberSocials: new GQLUtility(IMemberSocials, client),
+      memberTypes: new GQLUtility(IMemberType, client),
+      memberValues: new GQLUtility(IMemberValue, client),
+      members: new GQLUtility(IMember, client),
+      payments: new GQLUtility(IPayment, client),
+      questions: new GQLUtility(IQuestion, client),
+      rankedQuestions: new GQLUtility(IRankedQuestion, client),
+      supporters: new GQLUtility(ISupporter, client),
+      users: new GQLUtility(IUser, client)
     };
-  }, []);
+  }, [client]);
 
   return gql;
 };
 
-export default useGql;
+export default useGQL;

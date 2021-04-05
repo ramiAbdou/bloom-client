@@ -41,6 +41,7 @@ const client: GraphQLClient = new GraphQLClient({
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
+  connectToDevTools: process.env.APP_ENV === 'dev',
   link: new HttpLink({
     credentials: 'include',
     headers: {

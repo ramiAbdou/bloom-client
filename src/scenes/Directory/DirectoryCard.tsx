@@ -1,14 +1,10 @@
 import React from 'react';
 
+import { gql, useApolloClient } from '@apollo/client';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Card from '@containers/Card/Card';
+import { IMember, IMemberType, IMemberValue, IQuestion } from '@db/db.entities';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import {
-  IMember,
-  IMemberType,
-  IMemberValue,
-  IQuestion
-} from '@db/db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
@@ -16,9 +12,15 @@ import { ModalType, QuestionCategory } from '@util/constants';
 const DirectoryCardInformationPosition: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const position: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return member?.position;
+  const client = useApolloClient();
+
+  const { position } = client.readFragment({
+    fragment: gql`
+      fragment Frag on members {
+        position
+      }
+    `,
+    id: `members:${memberId}`
   });
 
   if (!position) return null;
