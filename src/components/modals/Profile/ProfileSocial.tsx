@@ -8,6 +8,7 @@ import {
 
 import Button from '@atoms/Button/Button';
 import { IMember } from '@db/db.entities';
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
@@ -54,7 +55,7 @@ const ProfileSocialContainer: React.FC = () => {
     return member?.memberSocials;
   });
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const {
     facebookUrl,

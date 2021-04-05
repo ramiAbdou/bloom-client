@@ -4,13 +4,11 @@ import { DbModel } from './db.types';
 
 const dbByIdStore: Pick<
   DbModel,
-  | 'byApplicationId'
   | 'byCommunityId'
   | 'byCommunityIntegrationsId'
   | 'byEventId'
   | 'byEventAttendeeId'
   | 'byEventGuestId'
-  | 'byEventWatchId'
   | 'byMemberId'
   | 'byMemberIntegrationsId'
   | 'byMemberValuesId'
@@ -20,8 +18,6 @@ const dbByIdStore: Pick<
   | 'byRankedQuestionId'
   | 'byUserId'
 > = {
-  byApplicationId: computed(({ entities }) => entities.applications.byId),
-
   byCommunityId: computed(({ entities }) => entities.communities.byId),
 
   byCommunityIntegrationsId: computed(
@@ -33,8 +29,6 @@ const dbByIdStore: Pick<
   byEventGuestId: computed(({ entities }) => entities.eventGuests.byId),
 
   byEventId: computed(({ entities }) => entities.events.byId),
-
-  byEventWatchId: computed(({ entities }) => entities.eventWatches.byId),
 
   byMemberId: computed(({ entities }) => entities.members.byId),
 

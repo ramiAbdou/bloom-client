@@ -3,6 +3,7 @@ import React from 'react';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
 import { IEvent, IEventAttendee, IMember } from '@db/db.entities';
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import Table from '@organisms/Table/Table';
 import {
@@ -19,7 +20,7 @@ import { sortObjects } from '@util/util';
 const EventsAnalyticsTopEventGoersTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const rows: TableRow[] = useStoreState(({ db }) => {
     const pastEvents: IEvent[] = db.community.events

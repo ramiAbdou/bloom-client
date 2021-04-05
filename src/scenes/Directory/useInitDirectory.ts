@@ -1,33 +1,27 @@
-import { IMember, Schema } from '@db/db.entities';
+import { ICommunity } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
 import { useStoreState } from '@store/Store';
 
-const useInitDirectory = (): QueryResult<IMember[]> => {
+const useInitDirectory = (): QueryResult<ICommunity[]> => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const result = useQuery<IMember[]>({
+  const result = useQuery<ICommunity[]>({
     fields: [
-      'bio',
-      'community.id',
-      'email',
-      'firstName',
       'id',
-      'joinedAt',
-      'lastName',
-      'memberType.id',
-      'memberValues.id',
-      'memberValues.member.id',
-      'memberValues.question.id',
-      'memberValues.value',
-      'pictureUrl',
-      'position',
-      'role',
-      'status'
+      'members.id',
+      'members.bio',
+      'members.email',
+      'members.firstName',
+      'members.lastName',
+      'members.joinedAt',
+      'members.pictureUrl',
+      'members.position',
+      'members.role',
+      'members.status'
     ],
-    operation: 'members',
-    schema: [Schema.MEMBER],
-    where: { communityId }
+    operation: 'communities',
+    where: { id: communityId }
   });
 
   return result;

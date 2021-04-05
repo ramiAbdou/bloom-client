@@ -3,6 +3,7 @@ import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import { IQuestion } from '@db/db.entities';
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import ModalLocal from '@organisms/Modal/ModalLocal';
@@ -29,7 +30,7 @@ const MemberDatabase: React.FC = () => {
     ({ modal }) => modal.showModal
   );
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.

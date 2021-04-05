@@ -1,3 +1,4 @@
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import {
   OnFormSubmitArgs,
@@ -5,7 +6,7 @@ import {
 } from '@organisms/Form/Form.types';
 
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const onSubmit = async ({
     closeModal,

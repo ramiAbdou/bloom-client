@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import Show from '@containers/Show';
-import { Identifier } from '@db/db.entities';
+import { Identifier, IMember, ISupporter } from '@db/db.entities';
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import { useStoreState } from '@store/Store';
 import { BaseProps } from '@util/constants';
@@ -21,35 +22,35 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   supporterId,
   size
 }) => {
-  const gql = useGQL();
+  const gql: GQL = useGQL();
   // If there is an error rendering the image for whatever reason (URL is no
   // longer valid, etc.) we should show something else.
   const [imageError, setImageError] = useState(false);
 
+  const member: IMember = gql.members.fromCache({
+    fields: ['firstName', 'lastName', 'email', 'pictureUrl'],
+    id: memberId
+  });
+
+  const supporter: ISupporter = gql.supporters.fromCache({
+    fields: ['firstName', 'lastName', 'email', 'pictureUrl'],
+    id: supporterId
+  });
+
   // If one of these is null, it means the user isn't fully loaded yet.
-  const firstName: string = useStoreState(({ db }) => {
-    if (memberId) return db.byMemberId[memberId]?.firstName;
-    if (supporterId) {
-      return gql.supporters.fromCache({ id: supporterId })?.firstName;
-    }
-    return db.member?.firstName;
-  });
+  const firstName: string = useStoreState(
+    ({ db }) =>
+      member?.firstName ?? supporter?.firstName ?? db.member?.firstName
+  );
 
-  const lastName: string = useStoreState(({ db }) => {
-    if (memberId) return db.byMemberId[memberId]?.lastName;
-    if (supporterId) {
-      return gql.supporters.fromCache({ id: supporterId }).lastName;
-    }
-    return db.member?.lastName;
-  });
+  const lastName: string = useStoreState(
+    ({ db }) => member?.lastName ?? supporter?.lastName ?? db.member?.lastName
+  );
 
-  const pictureUrl: string = useStoreState(({ db }) => {
-    if (memberId) return db.byMemberId[memberId]?.pictureUrl;
-    if (supporterId) {
-      return gql.supporters.fromCache({ id: supporterId }).pictureUrl;
-    }
-    return db.member?.pictureUrl;
-  });
+  const pictureUrl: string = useStoreState(
+    ({ db }) =>
+      member?.pictureUrl ?? supporter?.pictureUrl ?? db.member?.pictureUrl
+  );
 
   const initials: string = firstName[0] + lastName[0];
 
@@ -74,10 +75,10 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
 const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
   const { circle = true, className, memberId, size, supporterId } = props;
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const doesMemberOrSupporterExist: boolean = useStoreState(({ db }) => {
-    if (memberId) return !!db.byMemberId[memberId];
+    if (memberId) return !!gql.members.fromCache({ id: memberId })?.id;
     if (supporterId) return !!gql.supporters.fromCache({ id: supporterId })?.id;
     return !!db.member?.firstName && !!db.member?.lastName;
   });

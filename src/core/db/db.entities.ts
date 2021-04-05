@@ -48,7 +48,7 @@ export class IApplication extends BaseEntity {
 
   community: Identifier;
 
-  questions: Identifier[];
+  rankedQuestions: IRankedQuestion[];
 }
 
 export const IApplicationSchema: schema.Entity<IApplication> = new schema.Entity(
@@ -58,7 +58,7 @@ export const IApplicationSchema: schema.Entity<IApplication> = new schema.Entity
     mergeStrategy,
     processStrategy: (application, parent): IApplication => {
       const processedData: Partial<IApplication> = take([
-        [!!parent.rankedQuestionId, { questions: [parent.id] }]
+        [!!parent.rankedQuestionId, { rankedQuestions: [parent.id] }]
       ]);
 
       return {
@@ -528,7 +528,7 @@ export class IRankedQuestion extends BaseEntity {
 
   application?: Identifier;
 
-  question: Identifier;
+  question: IQuestion;
 }
 
 export const IRankedQuestionSchema: schema.Entity<IRankedQuestion> = new schema.Entity(

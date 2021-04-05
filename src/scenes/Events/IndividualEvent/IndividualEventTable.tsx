@@ -2,7 +2,7 @@ import React from 'react';
 
 import Section from '@containers/Section';
 import Show from '@containers/Show';
-import { QueryResult } from '@gql/gql.types';
+import { GQL, QueryResult } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import Table from '@organisms/Table/Table';
 import {
@@ -23,7 +23,7 @@ import useInitIndividualEventTable from './useInitIndividualEventTable';
 const IndividualEventTableContent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const rows: TableRow[] = useStoreState(({ db }) =>
     getIndividualEventTableRows(db, gql)

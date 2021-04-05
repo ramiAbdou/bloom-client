@@ -16,11 +16,13 @@ import { MemberHistoryData } from './Profile.types';
 
 interface GetMemberHistoryArgs {
   db: State<DbModel>;
+  gql: any;
   memberId: string;
 }
 
 export const getMemberHistory = ({
   db,
+  gql,
   memberId
 }: GetMemberHistoryArgs): MemberHistoryData[] => {
   const member: IMember = db.byMemberId[memberId];
@@ -68,7 +70,10 @@ export const getMemberHistory = ({
 
   const watchEvents: MemberHistoryData[] =
     member.eventWatches?.map((watchId: string) => {
-      const eventWatch: IEventWatch = db.byEventWatchId[watchId];
+      const eventWatch: IEventWatch = gql.eventWatches.fromCache({
+        id: watchId
+      });
+
       const event: IEvent = db.byEventId[eventWatch?.event];
 
       return {

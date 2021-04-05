@@ -2,13 +2,11 @@ import { Action, Computed } from 'easy-peasy';
 import { Schema } from 'normalizr';
 
 import {
-  IApplication,
   ICommunity,
   ICommunityIntegrations,
   IEvent,
   IEventAttendee,
   IEventGuest,
-  IEventWatch,
   IMember,
   IMemberIntegrations,
   IMemberType,
@@ -25,12 +23,10 @@ export interface EntityRecord<T> {
 }
 
 export interface IEntities {
-  applications: EntityRecord<IApplication>;
   communities: EntityRecord<ICommunity>;
   communityIntegrations: EntityRecord<ICommunityIntegrations>;
   eventAttendees: EntityRecord<IEventAttendee>;
   eventGuests: EntityRecord<IEventGuest>;
-  eventWatches: EntityRecord<IEventWatch>;
   events: EntityRecord<IEvent>;
   members: EntityRecord<IMember>;
   memberIntegrations: EntityRecord<IMemberIntegrations>;
@@ -44,12 +40,10 @@ export interface IEntities {
 
 // Initial state for all of the entity (DB) definitions.
 export const initialEntities: IEntities = {
-  applications: { byId: {} },
   communities: { activeId: null, byId: {} },
   communityIntegrations: { byId: {} },
   eventAttendees: { byId: {} },
   eventGuests: { byId: {} },
-  eventWatches: { byId: {} },
   events: { activeId: null, byId: {} },
   memberIntegrations: { byId: {} },
   memberTypes: { byId: {} },
@@ -74,7 +68,6 @@ export interface SetActiveArgs {
 export interface DbModel {
   // BY ID STORE
 
-  byApplicationId: Computed<DbModel, Record<string, IApplication>>;
   byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
   byCommunityIntegrationsId: Computed<
     DbModel,
@@ -83,7 +76,6 @@ export interface DbModel {
   byEventId: Computed<DbModel, Record<string, IEvent>>;
   byEventAttendeeId: Computed<DbModel, Record<string, IEventAttendee>>;
   byEventGuestId: Computed<DbModel, Record<string, IEventGuest>>;
-  byEventWatchId: Computed<DbModel, Record<string, IEventWatch>>;
   byMemberId: Computed<DbModel, Record<string, IMember>>;
   byMemberIntegrationsId: Computed<
     DbModel,
@@ -98,7 +90,6 @@ export interface DbModel {
 
   // ACTIVE STORE
 
-  application: Computed<DbModel, IApplication>;
   community: Computed<DbModel, ICommunity>;
   communityIntegrations: Computed<DbModel, ICommunityIntegrations>;
   event: Computed<DbModel, IEvent>;

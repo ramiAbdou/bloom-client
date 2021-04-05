@@ -1,5 +1,6 @@
 import validator from 'validator';
 
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import {
   OnFormSubmitArgs,
@@ -8,7 +9,7 @@ import {
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateMember = (): OnFormSubmitFunction => {
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const onSubmit = async ({
     closeModal,

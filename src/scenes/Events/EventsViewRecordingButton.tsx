@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { IEvent } from '@db/db.entities';
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
@@ -15,7 +16,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   eventId,
   large
 }) => {
-  const gql = useGQL();
+  const gql: GQL = useGQL();
   const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
   const memberId: string = useStoreState(({ db }) => db.member?.id);
 

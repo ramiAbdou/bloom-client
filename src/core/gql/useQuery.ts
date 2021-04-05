@@ -42,7 +42,7 @@ function useQuery<T>({
   );
 
   useEffect(() => {
-    if (camelCaseData) mergeEntities({ data: camelCaseData, schema });
+    if (camelCaseData && schema) mergeEntities({ data: camelCaseData, schema });
   }, [camelCaseData, schema]);
 
   return {

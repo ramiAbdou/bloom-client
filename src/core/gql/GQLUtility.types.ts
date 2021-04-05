@@ -20,7 +20,7 @@ export interface GQLUtilityFindOneResult<T> {
 
 export interface GQLUtilityFromCacheArgs<T> {
   id: string;
-  fields?: (keyof T)[];
+  fields?: (keyof T | string)[];
 }
 
 export interface GQLUtilityUpdateArgs<T> {

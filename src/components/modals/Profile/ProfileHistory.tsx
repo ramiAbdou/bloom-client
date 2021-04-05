@@ -3,6 +3,8 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
+import { GQL } from '@gql/gql.types';
+import useGQL from '@gql/useGQL';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { MemberHistoryData } from './Profile.types';
@@ -13,8 +15,10 @@ import useInitProfileHistory from './useInitProfileHistory';
 const ProfileHistoryEventList: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
+  const gql: GQL = useGQL();
+
   const history: MemberHistoryData[] = useStoreState(({ db }) =>
-    getMemberHistory({ db, memberId })
+    getMemberHistory({ db, gql, memberId })
   );
 
   return (

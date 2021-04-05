@@ -1,7 +1,6 @@
 import { computed } from 'easy-peasy';
 
 import {
-  IApplication,
   ICommunity,
   ICommunityIntegrations,
   IEvent,
@@ -15,7 +14,6 @@ import { updateDocumentColors } from './db.util';
 
 const dbActiveStore: Pick<
   DbModel,
-  | 'application'
   | 'community'
   | 'communityIntegrations'
   | 'event'
@@ -23,11 +21,6 @@ const dbActiveStore: Pick<
   | 'memberIntegrations'
   | 'user'
 > = {
-  application: computed(({ community, entities }) => {
-    const { byId: byApplicationId } = entities.applications;
-    return byApplicationId[community?.application] as IApplication;
-  }),
-
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
     const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;

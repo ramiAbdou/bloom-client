@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
@@ -14,7 +15,7 @@ const ProfileSocialModal: React.FC = () => {
     ({ db }) => db.member?.memberSocials
   );
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const {
     facebookUrl,

@@ -7,7 +7,8 @@ import {
   IEventAttendee,
   IEventGuest,
   IEventWatch,
-  IMember
+  IMember,
+  ISupporter
 } from '@db/db.entities';
 import { DbModel } from '@db/db.types';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
@@ -30,9 +31,13 @@ const getIndividualEventTableAttendees = (
   return db.event.eventAttendees.reduce(
     (acc: Record<string, IndividualEventTableRowProps>, attendeeId: string) => {
       const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
-      const member: IMember = db.byMemberId[eventAttendee?.member];
 
-      const supporter = gql.supporters.fromCache({
+      const member: IMember = gql.supporters.fromCache({
+        fields: ['email', 'firstName', 'lastName'],
+        id: eventAttendee?.member
+      });
+
+      const supporter: ISupporter = gql.supporters.fromCache({
         fields: ['email', 'firstName', 'lastName'],
         id: eventAttendee?.supporter
       });
@@ -106,13 +111,17 @@ const getIndividualEventTableGuests = (
  * @param db Entire DB store.
  */
 const getIndividualEventTableViewers = (
-  db: State<DbModel>
+  db: State<DbModel>,
+  gql: any
 ): Record<string, IndividualEventTableRowProps> => {
   if (!db.event.eventWatches) return {};
 
   return db.event.eventWatches.reduce(
     (acc: Record<string, IndividualEventTableRowProps>, watchId: string) => {
-      const eventWatch: IEventWatch = db.byEventWatchId[watchId];
+      const eventWatch: IEventWatch = gql.eventWatches.fromCache({
+        id: watchId
+      });
+
       const member: IMember = db.byMemberId[eventWatch?.member];
 
       const { email } = member ?? {};
@@ -147,7 +156,7 @@ export const getIndividualEventTableRows = (
 ): TableRow[] => {
   const attendeesRecord = getIndividualEventTableAttendees(db, gql);
   const guestsRecord = getIndividualEventTableGuests(db, gql);
-  const viewersRecord = getIndividualEventTableViewers(db);
+  const viewersRecord = getIndividualEventTableViewers(db, gql);
 
   const totalRecord: Record<string, IndividualEventTableRowProps> = deepmerge(
     deepmerge(attendeesRecord, guestsRecord),

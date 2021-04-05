@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { IApplication } from '@db/db.entities';
-import { Schema } from '@db/db.entities';
+import { IApplication, Schema } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
 import { useStoreActions } from '@store/Store';

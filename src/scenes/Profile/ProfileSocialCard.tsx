@@ -3,6 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, SocialBrand } from '@util/constants';
@@ -15,7 +16,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
     ({ db }) => db.member?.memberSocials
   );
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const {
     facebookUrl,
@@ -55,7 +56,7 @@ const ProfileSocialHeader: React.FC = () => {
     ({ db }) => db.member?.memberSocials
   );
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const {
     facebookUrl,
@@ -87,7 +88,7 @@ const ProfileSocialFacebook: React.FC = () => {
     ({ db }) => db.member?.memberSocials
   );
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const { facebookUrl } = gql.memberSocials.fromCache({
     fields: ['facebookUrl'],
@@ -102,7 +103,7 @@ const ProfileSocialInstagram: React.FC = () => {
     ({ db }) => db.member?.memberSocials
   );
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const { instagramUrl } = gql.memberSocials.fromCache({
     fields: ['instagramUrl'],
@@ -119,7 +120,7 @@ const ProfileSocialLinkedIn: React.FC = () => {
     ({ db }) => db.member?.memberSocials
   );
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const { linkedInUrl } = gql.memberSocials.fromCache({
     fields: ['linkedInUrl'],
@@ -134,7 +135,7 @@ const ProfileSocialTwitter: React.FC = () => {
     ({ db }) => db.member?.memberSocials
   );
 
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const { twitterUrl } = gql.memberSocials.fromCache({
     fields: ['twitterUrl'],

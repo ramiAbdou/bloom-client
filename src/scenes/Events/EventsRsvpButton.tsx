@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { IEvent, Schema } from '@db/db.entities';
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -18,7 +19,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const isMember: boolean = useStoreState(({ db }) => db.isMember);
   const memberId: string = useStoreState(({ db }) => db.member?.id);

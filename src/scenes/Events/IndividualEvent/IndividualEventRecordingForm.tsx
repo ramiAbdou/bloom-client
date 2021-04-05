@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
@@ -8,7 +9,7 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventRecordingForm: React.FC = () => {
-  const gql = useGQL();
+  const gql: GQL = useGQL();
 
   const eventId = useStoreState(({ panel }) => panel.metadata);
   const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);

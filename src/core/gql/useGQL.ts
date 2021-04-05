@@ -20,12 +20,10 @@ import {
   ISupporter,
   IUser
 } from '@db/db.entities';
+import { GQL } from './gql.types';
 import GQLUtility from './GQLUtility';
 
-// import { IEntities } from '../db/db.types';
-// export type GQL = Record<keyof IEntities, GQLUtility>;
-
-const useGQL = () => {
+const useGQL = (): GQL => {
   const client: ApolloClient<any> = useApolloClient();
 
   const gql = useMemo(() => {
