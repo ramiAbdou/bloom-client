@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-import { IMember } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { IMember, Schema } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import useManualQuery from '@gql/useManualQuery';
 import {

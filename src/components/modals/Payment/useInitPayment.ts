@@ -1,5 +1,5 @@
 import { ICommunityIntegrations, IMemberIntegrations } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { Schema } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
 import useBloomQuery from '@gql/useBloomQuery';
 import useQuery from '@gql/useQuery';

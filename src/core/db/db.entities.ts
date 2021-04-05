@@ -518,48 +518,116 @@ export const IUserSchema: schema.Entity<IUser> = new schema.Entity(
   }
 );
 
-export interface EntityRecord<T> {
-  activeId?: string;
-  byId: Record<string, T>;
-}
+// ## RELATIONSHIPS - Using .define({}) like this handles all of the
+// ciruclar dependencies in our code.
 
-export interface IEntities {
-  applications: EntityRecord<IApplication>;
-  communities: EntityRecord<ICommunity>;
-  communityIntegrations: EntityRecord<ICommunityIntegrations>;
-  eventAttendees: EntityRecord<IEventAttendee>;
-  eventGuests: EntityRecord<IEventGuest>;
-  eventWatches: EntityRecord<IEventWatch>;
-  events: EntityRecord<IEvent>;
-  members: EntityRecord<IMember>;
-  memberIntegrations: EntityRecord<IMemberIntegrations>;
-  memberSocials: EntityRecord<IMemberSocials>;
-  memberTypes: EntityRecord<IMemberType>;
-  memberValues: EntityRecord<IMemberValue>;
-  payments: EntityRecord<IPayment>;
-  questions: EntityRecord<IQuestion>;
-  rankedQuestions: EntityRecord<IRankedQuestion>;
-  supporters: EntityRecord<ISupporter>;
-  users: EntityRecord<IUser>;
-}
+IApplicationSchema.define({
+  community: ICommunitySchema,
+  rankedQuestions: [IRankedQuestionSchema]
+});
 
-// Initial state for all of the entity (DB) definitions.
-export const initialEntities: IEntities = {
-  applications: { byId: {} },
-  communities: { activeId: null, byId: {} },
-  communityIntegrations: { byId: {} },
-  eventAttendees: { byId: {} },
-  eventGuests: { byId: {} },
-  eventWatches: { byId: {} },
-  events: { activeId: null, byId: {} },
-  memberIntegrations: { byId: {} },
-  memberSocials: { byId: {} },
-  memberTypes: { byId: {} },
-  memberValues: { byId: {} },
-  members: { activeId: null, byId: {} },
-  payments: { byId: {} },
-  questions: { byId: {} },
-  rankedQuestions: { byId: {} },
-  supporters: { byId: {} },
-  users: { activeId: null, byId: {} }
+ICommunitySchema.define({
+  application: IApplicationSchema,
+  communityIntegrations: ICommunityIntegrationsSchema,
+  events: [IEventSchema],
+  highlightedQuestion: IQuestionSchema,
+  memberTypes: [IMemberTypeSchema],
+  members: [IMemberSchema],
+  owner: IMemberSchema,
+  payments: [IPaymentSchema],
+  questions: [IQuestionSchema],
+  supporters: [ISupporterSchema]
+});
+
+ICommunityIntegrationsSchema.define({ community: ICommunitySchema });
+
+IEventSchema.define({
+  community: ICommunitySchema,
+  eventAttendees: [IEventAttendeeSchema],
+  eventGuests: [IEventGuestSchema],
+  eventWatches: [IEventWatchSchema]
+});
+
+IEventAttendeeSchema.define({
+  event: IEventSchema,
+  member: IMemberSchema,
+  supporter: ISupporterSchema
+});
+
+IEventGuestSchema.define({
+  event: IEventSchema,
+  member: IMemberSchema,
+  supporter: ISupporterSchema
+});
+
+IEventWatchSchema.define({ event: IEventSchema, member: IMemberSchema });
+
+IMemberSchema.define({
+  community: ICommunitySchema,
+  eventAttendees: [IEventAttendeeSchema],
+  eventGuests: [IEventGuestSchema],
+  eventWatches: [IEventWatchSchema],
+  memberIntegrations: IMemberIntegrationsSchema,
+  memberSocials: IMemberSocialsSchema,
+  memberType: IMemberTypeSchema,
+  memberValues: [IMemberValueSchema],
+  payments: [IPaymentSchema],
+  user: IUserSchema
+});
+
+IMemberIntegrationsSchema.define({ member: IMemberSchema });
+
+IMemberSocialsSchema.define({ member: IMemberSchema });
+
+IMemberTypeSchema.define({ community: ICommunitySchema });
+
+IMemberValueSchema.define({ member: IMemberSchema, question: IQuestionSchema });
+
+IPaymentSchema.define({
+  community: ICommunitySchema,
+  member: IMemberSchema,
+  memberType: IMemberTypeSchema
+});
+
+IQuestionSchema.define({
+  community: ICommunitySchema,
+  memberValues: [IMemberValueSchema]
+});
+
+IRankedQuestionSchema.define({
+  application: IApplicationSchema,
+  question: IQuestionSchema
+});
+
+ISupporterSchema.define({
+  eventAttendees: [IEventAttendeeSchema],
+  eventGuests: [IEventGuestSchema]
+});
+
+IUserSchema.define({
+  members: [IMemberSchema],
+  supporters: [ISupporterSchema]
+});
+
+// We define an object that carries all the schemas to have everything
+// centralized and to reduce confusion with the Interface declarations
+// (ie: ICommunity, IUser, etc).
+export const Schema = {
+  APPLICATION: IApplicationSchema,
+  COMMUNITY: ICommunitySchema,
+  COMMUNITY_INTEGRATIONS: ICommunityIntegrationsSchema,
+  EVENT: IEventSchema,
+  EVENT_ATTENDEE: IEventAttendeeSchema,
+  EVENT_GUEST: IEventGuestSchema,
+  EVENT_WATCH: IEventWatchSchema,
+  MEMBER: IMemberSchema,
+  MEMBER_INTEGRATIONS: IMemberIntegrationsSchema,
+  MEMBER_SOCIALS: IMemberSocialsSchema,
+  MEMBER_TYPE: IMemberTypeSchema,
+  MEMBER_VALUE: IMemberValueSchema,
+  PAYMENT: IPaymentSchema,
+  QUESTION: IQuestionSchema,
+  RANKED_QUESTION: IRankedQuestionSchema,
+  SUPPORTER: ISupporterSchema,
+  USER: IUserSchema
 };

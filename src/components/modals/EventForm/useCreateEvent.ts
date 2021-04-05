@@ -1,7 +1,6 @@
 import day from 'dayjs';
 
-import { IEvent } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { IEvent, Schema } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,

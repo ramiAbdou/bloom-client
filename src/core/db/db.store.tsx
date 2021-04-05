@@ -1,7 +1,7 @@
 import { action, computed } from 'easy-peasy';
 
-import { IMember, initialEntities } from '@db/db.entities';
-import { DbModel } from './db.types';
+import { IMember } from '@db/db.entities';
+import { DbModel, initialEntities } from './db.types';
 import { mergeEntities, setActiveEntities } from './db.util';
 import dbActiveStore from './dbActive.store';
 import dbByIdStore from './dbById.store';

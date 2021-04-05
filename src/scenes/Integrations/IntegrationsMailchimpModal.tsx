@@ -1,12 +1,12 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
+import { Schema } from '@db/db.entities';
 import useBloomQuery from '@gql/useBloomQuery';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
-import { Schema } from '@db/db.schema';
 import { QueryEvent } from '@util/constants.events';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';

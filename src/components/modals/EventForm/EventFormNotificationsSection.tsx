@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMember } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { Schema } from '@db/db.entities';
 import useQuery from '@gql/useQuery';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';

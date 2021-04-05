@@ -5,7 +5,7 @@ import {
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import { IMemberValue } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { Schema } from '@db/db.entities';
 import { MutationEvent } from '@util/constants.events';
 import { MemberValueInput, UpdateMemberValueArgs } from './Profile.types';
 

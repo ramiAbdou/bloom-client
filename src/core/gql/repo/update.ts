@@ -3,7 +3,7 @@ import { snakeCase } from 'change-case';
 import day from 'dayjs';
 
 import { DocumentNode, gql } from '@apollo/client';
-import { Schema } from '@db/db.schema';
+import { Schema } from '@db/db.entities';
 import buildArgsString from './buildArgsString';
 import buildFieldsString from './buildFieldsString';
 

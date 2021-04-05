@@ -3,7 +3,7 @@ import day from 'dayjs';
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
 import { IEvent } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { Schema } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 
 const useInitPastEvents = (): QueryResult<IEvent[]> => {

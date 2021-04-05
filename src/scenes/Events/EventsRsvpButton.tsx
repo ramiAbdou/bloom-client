@@ -4,7 +4,7 @@ import Button, { ButtonProps } from '@atoms/Button/Button';
 import useGql from '@gql/useGql';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { IEvent } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { Schema } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
-import { IUser } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { IUser, Schema } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
 import useLazyQuery from '@gql/useLazyQuery';
 import useLoader from '@organisms/Loader/useLoader';

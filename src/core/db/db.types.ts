@@ -5,7 +5,6 @@ import {
   IApplication,
   ICommunity,
   ICommunityIntegrations,
-  IEntities,
   IEvent,
   IEventAttendee,
   IEventGuest,
@@ -21,6 +20,52 @@ import {
   ISupporter,
   IUser
 } from './db.entities';
+
+export interface EntityRecord<T> {
+  activeId?: string;
+  byId: Record<string, T>;
+}
+
+export interface IEntities {
+  applications: EntityRecord<IApplication>;
+  communities: EntityRecord<ICommunity>;
+  communityIntegrations: EntityRecord<ICommunityIntegrations>;
+  eventAttendees: EntityRecord<IEventAttendee>;
+  eventGuests: EntityRecord<IEventGuest>;
+  eventWatches: EntityRecord<IEventWatch>;
+  events: EntityRecord<IEvent>;
+  members: EntityRecord<IMember>;
+  memberIntegrations: EntityRecord<IMemberIntegrations>;
+  memberSocials: EntityRecord<IMemberSocials>;
+  memberTypes: EntityRecord<IMemberType>;
+  memberValues: EntityRecord<IMemberValue>;
+  payments: EntityRecord<IPayment>;
+  questions: EntityRecord<IQuestion>;
+  rankedQuestions: EntityRecord<IRankedQuestion>;
+  supporters: EntityRecord<ISupporter>;
+  users: EntityRecord<IUser>;
+}
+
+// Initial state for all of the entity (DB) definitions.
+export const initialEntities: IEntities = {
+  applications: { byId: {} },
+  communities: { activeId: null, byId: {} },
+  communityIntegrations: { byId: {} },
+  eventAttendees: { byId: {} },
+  eventGuests: { byId: {} },
+  eventWatches: { byId: {} },
+  events: { activeId: null, byId: {} },
+  memberIntegrations: { byId: {} },
+  memberSocials: { byId: {} },
+  memberTypes: { byId: {} },
+  memberValues: { byId: {} },
+  members: { activeId: null, byId: {} },
+  payments: { byId: {} },
+  questions: { byId: {} },
+  rankedQuestions: { byId: {} },
+  supporters: { byId: {} },
+  users: { activeId: null, byId: {} }
+};
 
 export interface MergeEntitiesArgs {
   data?: any;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
-import { Schema } from '@db/db.schema';
+import { Schema } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';

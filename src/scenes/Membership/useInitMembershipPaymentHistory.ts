@@ -1,7 +1,6 @@
+import { IPayment, Schema } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
-import { IPayment } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
 import { useStoreState } from '@store/Store';
 
 const useInitMembershipPaymentHistory = (): QueryResult<IPayment[]> => {

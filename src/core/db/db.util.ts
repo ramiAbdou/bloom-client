@@ -2,8 +2,12 @@ import deepmerge from 'deepmerge';
 import { Action, action } from 'easy-peasy';
 import { normalize } from 'normalizr';
 
-import { IEntities } from './db.entities';
-import { DbModel, MergeEntitiesArgs, SetActiveArgs } from './db.types';
+import {
+  DbModel,
+  IEntities,
+  MergeEntitiesArgs,
+  SetActiveArgs
+} from './db.types';
 
 /**
  * Merges the two entities according to the deepmerge strategy, except handles

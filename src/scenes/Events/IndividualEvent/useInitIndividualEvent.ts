@@ -2,8 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { IEvent } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { IEvent, Schema } from '@db/db.entities';
 import { SetActiveArgs } from '@db/db.types';
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';

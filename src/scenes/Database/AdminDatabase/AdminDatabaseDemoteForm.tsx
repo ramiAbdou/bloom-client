@@ -7,7 +7,7 @@ import FormHeader from '@organisms/Form/FormHeader';
 import ModalConfirmationActions from '@organisms/Modal/ModalConfirmationActions';
 import TableStore from '@organisms/Table/Table.store';
 import { IMember } from '@db/db.entities';
-import { Schema } from '@db/db.schema';
+import { Schema } from '@db/db.entities';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 
