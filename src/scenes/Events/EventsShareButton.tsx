@@ -3,6 +3,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { IEvent } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
+import { APP } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
 
 interface EventShareButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
@@ -18,10 +19,9 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     return event.endTime;
   });
 
-  const eventUrl: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.eventUrl;
-  });
+  const eventUrl: string = useStoreState(
+    ({ db }) => `${APP.CLIENT_URL}/${db.community.urlName}/events/${eventId}`
+  );
 
   const startTime: string = useStoreState(({ db }) => {
     const event: IEvent = db.byEventId[eventId];

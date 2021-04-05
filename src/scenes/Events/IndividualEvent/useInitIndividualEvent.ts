@@ -52,7 +52,9 @@ const useInitIndividualEvent = (): QueryResult<IEvent[]> => {
     if (result.data) {
       setActiveEntities([
         { id: result.data[0].id, table: 'events' },
-        { id: result.data[0].communityId, table: 'communities' }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore b/c we know that the denormalized data is nested.
+        { id: result.data[0].community.id, table: 'communities' }
       ]);
     }
   }, [result.data]);

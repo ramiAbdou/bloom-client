@@ -2,12 +2,7 @@ import deepequal from 'fast-deep-equal';
 import { useEffect } from 'react';
 import sw from 'stopword';
 
-import {
-  IMember,
-  IMemberType,
-  IMemberValue,
-  IQuestion
-} from '@db/db.entities';
+import { IMember, IMemberType, IMemberValue, IQuestion } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import Chart from './Chart.store';
@@ -47,7 +42,8 @@ const useQuestionData = (): Pick<
       if (category === QuestionCategory.MEMBER_TYPE) {
         value = memberType?.name;
       } else if (category === QuestionCategory.DUES_STATUS) {
-        value = member.isDuesActive ? 'Paid' : 'Not Paid';
+        value = 'Paid';
+        // value = member.isDuesActive ? 'Paid' : 'Not Paid';
       } else {
         const d = member.memberValues.find((memberValueId: string) => {
           const data: IMemberValue = db.byMemberValuesId[memberValueId];

@@ -2,6 +2,7 @@ import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
+import { IEvent, IEventAttendee, IMember, ISupporter } from '@db/db.entities';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -10,12 +11,6 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import {
-  IEvent,
-  IEventAttendee,
-  IMember,
-  ISupporter
-} from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -36,26 +31,31 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
       )
       ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId]);
 
-    const result = pastAttendees?.reduce((acc, eventAttendee: IEventAttendee) => {
-      const member: IMember = db.byMemberId[eventAttendee?.member];
-      const supporter: ISupporter = db.bySupporterId[eventAttendee?.supporter];
+    const result = pastAttendees?.reduce(
+      (acc, eventAttendee: IEventAttendee) => {
+        const member: IMember = db.byMemberId[eventAttendee?.member];
 
-      const email: string = member?.email ?? supporter?.email;
-      const firstName: string = member?.firstName ?? supporter?.firstName;
-      const lastName: string = member?.lastName ?? supporter?.lastName;
-      const previousValue = acc[email];
+        const supporter: ISupporter =
+          db.bySupporterId[eventAttendee?.supporter];
 
-      return {
-        ...acc,
-        [email]: {
-          email,
-          fullName: `${firstName} ${lastName}`,
-          id: email,
-          memberId: member?.id ?? supporter?.id,
-          value: previousValue ? previousValue?.value + 1 : 1
-        }
-      };
-    }, {});
+        const email: string = member?.email ?? supporter?.email;
+        const firstName: string = member?.firstName ?? supporter?.firstName;
+        const lastName: string = member?.lastName ?? supporter?.lastName;
+        const previousValue = acc[email];
+
+        return {
+          ...acc,
+          [email]: {
+            email,
+            fullName: `${firstName} ${lastName}`,
+            id: email,
+            memberId: member?.id ?? supporter?.id,
+            value: previousValue ? previousValue?.value + 1 : 1
+          }
+        };
+      },
+      {}
+    );
 
     if (!result) return [];
 

@@ -32,7 +32,7 @@ const useUpdateStripeSubscriptionId = (): OnFormSubmitFunction => {
     fields: [
       'id',
       'stripeSubscriptionId',
-      { member: ['id', 'isDuesActive', { memberType: ['id'] }] }
+      { member: ['id', { memberType: ['id'] }] }
     ],
     operation: MutationEvent.UPDATE_STRIPE_SUBSCRIPTION_ID,
     schema: Schema.MEMBER_INTEGRATIONS,

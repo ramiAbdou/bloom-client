@@ -2,10 +2,10 @@ import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
+import { IEvent, IEventAttendee } from '@db/db.entities';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent, IEventAttendee } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import EventsCard from '../EventsCard/EventsCard';

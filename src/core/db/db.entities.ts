@@ -3,11 +3,7 @@
 import deepmerge from 'deepmerge';
 import { schema } from 'normalizr';
 
-import {
-  QuestionCategory,
-  QuestionType,
-  TimeSeriesData
-} from '@util/constants';
+import { QuestionCategory, QuestionType } from '@util/constants';
 import { take } from '@util/util';
 
 /**
@@ -42,10 +38,11 @@ export interface BaseEntity {
 // ## APPLICATION
 
 export interface IApplication extends BaseEntity {
-  communityId: Identifier;
   description: string;
-  questions: Identifier[];
   title: string;
+
+  community: Identifier;
+  questions: Identifier[];
 }
 
 export const IApplicationSchema: schema.Entity<IApplication> = new schema.Entity(
@@ -53,7 +50,7 @@ export const IApplicationSchema: schema.Entity<IApplication> = new schema.Entity
   {},
   {
     mergeStrategy,
-    processStrategy: (application: IApplication, parent) => {
+    processStrategy: (application, parent): IApplication => {
       const processedData: Partial<IApplication> = take([
         [!!parent.rankedQuestionId, { questions: [parent.id] }]
       ]);
@@ -70,21 +67,23 @@ export const IApplicationSchema: schema.Entity<IApplication> = new schema.Entity
 // ## COMMUNITY
 
 export interface ICommunity extends BaseEntity {
-  applicationId?: Identifier;
-  canCollectDues?: boolean;
-  communityIntegrationsId: Identifier;
+  canCollectDues: boolean;
+  logoUrl: string;
+  knowledgeHubUrl?: string;
+  name: string;
+  primaryColor: string;
+  urlName: string;
+
+  application?: Identifier;
+  communityIntegrations: Identifier;
   events?: Identifier[];
   highlightedQuestion: Identifier;
-  logoUrl: string;
   memberTypes: Identifier[];
   members: Identifier[];
   payments: Identifier[];
   questions: Identifier[];
-  name: string;
   owner?: Identifier;
-  primaryColor: string;
   supporters: Identifier[];
-  urlName: string;
 }
 
 export const ICommunitySchema: schema.Entity<ICommunity> = new schema.Entity(
@@ -92,12 +91,12 @@ export const ICommunitySchema: schema.Entity<ICommunity> = new schema.Entity(
   {},
   {
     mergeStrategy,
-    processStrategy: (community: ICommunity, parent) => {
+    processStrategy: (community, parent): ICommunity => {
       const processedData: Partial<ICommunity> = take([
-        [!!parent.applicationId, { applicationId: parent.id }],
+        [!!parent.applicationId, { application: parent.id }],
         [
           !!parent.communityIntegrationsId,
-          { communityIntegrationsId: parent.id }
+          { communityIntegrations: parent.id }
         ],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.memberId, { members: [parent.id] }],
@@ -114,13 +113,27 @@ export const ICommunitySchema: schema.Entity<ICommunity> = new schema.Entity(
 // ## COMMUNITY INTEGRATIONS
 
 export interface ICommunityIntegrations extends BaseEntity {
-  community: Identifier;
   isMailchimpAuthenticated: boolean;
   mailchimpLists: { name: string; id: string }[];
   mailchimpListId: string;
   mailchimpListName: string;
   stripeAccountId: string;
+
+  community: Identifier;
 }
+
+export const ICommunityIntegrationsSchema = new schema.Entity(
+  'communityIntegrations',
+  {},
+  {
+    processStrategy: (communityIntegrations): ICommunityIntegrations => {
+      return {
+        ...communityIntegrations,
+        communityIntegrationsId: communityIntegrations.id
+      };
+    }
+  }
+);
 
 // ## EVENT
 
@@ -130,27 +143,40 @@ export enum EventPrivacy {
 }
 
 export interface IEvent extends BaseEntity {
-  attendeesSeries: TimeSeriesData[];
-  community?: Identifier;
-  communityId?: Identifier;
   description: string;
   endTime: string;
-  eventAttendees: Identifier[];
-  eventGuests: Identifier[];
-  eventUrl: string;
-  eventWatches: Identifier[];
-  guestsSeries: TimeSeriesData[];
   imageUrl?: string;
-  invitees?: Identifier[];
-  past?: boolean;
   privacy: EventPrivacy;
   recordingUrl?: string;
   startTime: string;
-  summary: string;
+  summary?: string;
   title: string;
-  upcoming?: boolean;
   videoUrl: string;
+
+  community: Identifier;
+  eventAttendees: Identifier[];
+  eventGuests: Identifier[];
+  eventInvitees?: Identifier[];
+  eventWatches: Identifier[];
 }
+
+export const IEventSchema: schema.Entity<IEvent> = new schema.Entity(
+  'events',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (event, parent): IEvent => {
+      const processedData: Partial<IEvent> = take([
+        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
+        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
+        [!!parent.eventInviteeId, { eventInvitees: [parent.id] }],
+        [!!parent.eventWatchId, { eventWatches: [parent.id] }]
+      ]);
+
+      return { ...event, ...processedData, eventId: event.id };
+    }
+  }
+);
 
 // ## EVENT ATTENDEE
 
@@ -160,6 +186,20 @@ export interface IEventAttendee extends BaseEntity {
   supporter?: Identifier;
 }
 
+export const IEventAttendeeSchema: schema.Entity<IEventAttendee> = new schema.Entity(
+  'eventAttendees',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (eventAttendee: IEventAttendee) => {
+      return {
+        ...eventAttendee,
+        eventAttendeeId: eventAttendee.id
+      };
+    }
+  }
+);
+
 // ## EVENT GUEST
 
 export interface IEventGuest extends BaseEntity {
@@ -168,12 +208,34 @@ export interface IEventGuest extends BaseEntity {
   supporter?: Identifier;
 }
 
+export const IEventGuestSchema: schema.Entity<IEventGuest> = new schema.Entity(
+  'eventGuests',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (eventGuest): IEventGuest => {
+      return { ...eventGuest, eventGuestId: eventGuest.id };
+    }
+  }
+);
+
 // ## EVENT WATCH
 
 export interface IEventWatch extends BaseEntity {
   event: Identifier;
   member: Identifier;
 }
+
+export const IEventWatchSchema: schema.Entity<IEventWatch> = new schema.Entity(
+  'eventWatches',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (eventWatch): IEventWatch => {
+      return { ...eventWatch, eventWatchId: eventWatch.id };
+    }
+  }
+);
 
 // ## MEMBER
 
@@ -190,29 +252,50 @@ export enum MemberStatus {
 }
 
 export interface IMember extends BaseEntity {
-  bio: string;
-  community: Identifier;
+  bio?: string;
   email: string;
+  firstName: string;
+  joinedAt?: string;
+  lastName: string;
+  pictureUrl?: string;
+  position?: string;
+  role?: MemberRole;
+  status: MemberStatus;
+
+  community: Identifier;
   eventAttendees: Identifier[];
   eventGuests: Identifier[];
   eventWatches: Identifier[];
-  firstName: string;
-  isDuesActive: boolean;
-  joinedAt: string;
-  lastName: string;
   memberIntegrations: Identifier;
   memberSocials: Identifier;
   memberType: Identifier;
   memberValues: Identifier[];
   payments: Identifier[];
-  pictureUrl: string;
-  position?: string;
-  role?: MemberRole;
-  status: MemberStatus;
   user: Identifier;
 }
 
-// ## MEMBER COMMUNITY INTEGRATIONS
+export const IMemberSchema: schema.Entity<IMember> = new schema.Entity(
+  'members',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (member, parent): IMember => {
+      const processedData: Partial<IMember> = take([
+        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
+        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
+        [!!parent.eventId, { events: [parent.id] }],
+        [!!parent.eventWatchId, { eventWatches: [parent.id] }],
+        [!!parent.memberIntegrationsId, { memberIntegrations: parent.id }],
+        [!!parent.memberValueId, { memberValues: [parent.id] }],
+        [!!parent.paymentId, { payments: [parent.id] }]
+      ]);
+
+      return { ...member, ...processedData, memberId: member.id };
+    }
+  }
+);
+
+// ## MEMBER INTEGRATIONS
 
 export interface IPaymentMethod {
   brand: string;
@@ -223,11 +306,47 @@ export interface IPaymentMethod {
 }
 
 export interface IMemberIntegrations extends BaseEntity {
-  member: Identifier;
   paymentMethod: IPaymentMethod;
   renewalDate?: string;
   stripeSubscriptionId?: string;
+
+  member: Identifier;
 }
+
+export const IMemberIntegrationsSchema = new schema.Entity(
+  'memberIntegrations',
+  {},
+  {
+    processStrategy: (memberIntegrations): IMemberIntegrations => {
+      return {
+        ...memberIntegrations,
+        memberIntegrationsId: memberIntegrations.id
+      };
+    }
+  }
+);
+
+// MEMBER SOCIALS
+
+export interface IMemberSocials extends BaseEntity {
+  facebookUrl: string;
+  instagramUrl: string;
+  linkedInUrl: string;
+  twitterUrl: string;
+
+  member: Identifier;
+}
+
+export const IMemberSocialsSchema: schema.Entity<IMemberSocials> = new schema.Entity(
+  'memberSocials',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (memberSocials): IMemberSocials => {
+      return { ...memberSocials, memberSocialsId: memberSocials.id };
+    }
+  }
+);
 
 // ## MEMBER TYPE
 
@@ -238,27 +357,39 @@ export enum RecurrenceType {
 
 export interface IMemberType extends BaseEntity {
   amount: number;
-  isFree: boolean;
   name: string;
   recurrence: RecurrenceType;
 }
 
-// MEMBER SOCIALS
-
-export interface IMemberSocials extends BaseEntity {
-  facebookUrl: string;
-  instagramUrl: string;
-  linkedInUrl: string;
-  twitterUrl: string;
-}
+export const IMemberTypeSchema: schema.Entity<IMemberType> = new schema.Entity(
+  'memberTypes',
+  {},
+  {
+    processStrategy: (memberType): IMemberType => {
+      return { ...memberType, memberTypeId: memberType.id };
+    }
+  }
+);
 
 // ## MEMBER VALUE
 
 export interface IMemberValue extends BaseEntity {
+  value: string;
+
   member: Identifier;
   question: Identifier;
-  value: string | string[];
 }
+
+export const IMemberValueSchema: schema.Entity<IMemberValue> = new schema.Entity(
+  'memberValues',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (memberValue): IMemberValue => {
+      return { ...memberValue, memberValueId: memberValue.id };
+    }
+  }
+);
 
 // ## PAYMENT
 
@@ -270,31 +401,69 @@ export enum PaymentType {
 export interface IPayment extends BaseEntity {
   amount: number;
   stripeInvoiceUrl: string;
+  type: PaymentType;
+
   member: Identifier;
   memberType: Identifier;
-  type: PaymentType;
 }
+
+export const IPaymentSchema: schema.Entity<IPayment> = new schema.Entity(
+  'payments',
+  {},
+  {
+    processStrategy: (payment): IPayment => {
+      return { ...payment, paymentId: payment.id };
+    }
+  }
+);
 
 // ## QUESTION
 
 export interface IQuestion extends BaseEntity {
   category: QuestionCategory;
   locked: boolean;
-  memberValues?: Identifier[];
   options: string[];
   rank?: number;
   required: boolean;
   title: QuestionType;
   type: QuestionType;
+
+  memberValues?: Identifier[];
 }
+
+export const IQuestionSchema: schema.Entity<IQuestion> = new schema.Entity(
+  'questions',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (question, parent): IQuestion => {
+      const processedData = take([
+        [!!parent.memberValueId, { memberValues: [parent.id] }]
+      ]);
+
+      return { ...question, ...processedData, questionId: question.id };
+    }
+  }
+);
 
 // RANKED QUESTION
 
 export interface IRankedQuestion extends BaseEntity {
-  application?: Identifier;
   rank: number;
+
+  application?: Identifier;
   question: Identifier;
 }
+
+export const IRankedQuestionSchema: schema.Entity<IRankedQuestion> = new schema.Entity(
+  'rankedQuestions',
+  {},
+  {
+    processStrategy: (rankedQuestion): IRankedQuestion => {
+      return { ...rankedQuestion, rankedQuestionId: rankedQuestion.id };
+    }
+  }
+);
 
 // ## SUPPORTER
 

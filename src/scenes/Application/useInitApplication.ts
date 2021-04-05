@@ -47,13 +47,11 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     where: { community: { urlName } }
   });
 
-  console.log(error, applications);
-
   useEffect(() => {
     if (!applications) return;
 
     setActiveEntities({
-      id: applications[0].communityId,
+      id: applications[0].community,
       table: 'communities'
     });
   }, [applications]);

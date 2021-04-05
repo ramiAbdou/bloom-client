@@ -8,7 +8,8 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 
 const MembershipCurrentMemberTypeActions: React.FC = () => {
-  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
+  const isDuesActive = true;
+  // const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   const currentTypeId: string = useStoreState(
     ({ db }) => db.member?.memberType

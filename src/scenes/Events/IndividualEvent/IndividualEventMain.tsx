@@ -31,7 +31,7 @@ const IndividualEventMain: React.FC = () => {
   const summary = useStoreState(({ db }) => db.event?.summary);
   const title = useStoreState(({ db }) => db.event?.title);
 
-  const community = useStoreState(
+  const communityName: string = useStoreState(
     ({ db }) => db.byCommunityId[db.event?.community]?.name
   );
 
@@ -40,7 +40,7 @@ const IndividualEventMain: React.FC = () => {
       <div>
         <IndividualEventMainHeaderContainer />
         <h1>{title}</h1>
-        {!isMember && <p className="meta">Hosted by {community}</p>}
+        {!isMember && <p className="meta">Hosted by {communityName}</p>}
         {summary && <p>{summary}</p>}
         <HeaderTag>{isPrivate ? 'Members Only' : 'Open to All'} </HeaderTag>
       </div>

@@ -36,9 +36,10 @@ const SidebarMemberStatus: React.FC = () => {
     ({ db }) => db.community?.canCollectDues
   );
 
-  const isDuesActive: boolean = useStoreState(
-    ({ db }) => db.member?.isDuesActive
-  );
+  const isDuesActive = true;
+  // const isDuesActive: boolean = useStoreState(
+  //   ({ db }) => db.member?.isDuesActive
+  // );
 
   return (
     <Show show={!!canCollectDues && !isDuesActive}>

@@ -7,10 +7,11 @@ import { useStoreState } from '@store/Store';
 const PaymentAnalyticsPercentPaidCard: React.FC = () => {
   const numActiveMembers: number = useStoreState(
     ({ db }) =>
+      // ?.filter((member: IMember) => member.isDuesActive)?.length
       db.community.members
         ?.map((memberId: string) => db.byMemberId[memberId])
         ?.filter((member: IMember) => member.status === MemberStatus.ACCEPTED)
-        ?.filter((member: IMember) => member.isDuesActive)?.length
+        ?.length
   );
 
   const numTotalMembers: number = useStoreState(

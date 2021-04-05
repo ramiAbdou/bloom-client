@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
+import { IEvent, IEventAttendee, IEventGuest } from '@db/db.entities';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent, IEventAttendee, IEventGuest } from '@db/db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 

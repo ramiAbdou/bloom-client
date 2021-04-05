@@ -3,9 +3,6 @@ import deepmerge from 'deepmerge';
 import { State } from 'easy-peasy';
 import React from 'react';
 
-import { TableColumn, TableRow } from '@organisms/Table/Table.types';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { DbModel } from '@db/db.types';
 import {
   IEventAttendee,
   IEventGuest,
@@ -13,6 +10,9 @@ import {
   IMember,
   ISupporter
 } from '@db/db.entities';
+import { DbModel } from '@db/db.types';
+import { TableColumn, TableRow } from '@organisms/Table/Table.types';
+import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
@@ -31,6 +31,7 @@ const getIndividualEventTableAttendees = (
     (acc: Record<string, IndividualEventTableRowProps>, attendeeId: string) => {
       const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
       const member: IMember = db.byMemberId[eventAttendee?.member];
+
       const supporter: ISupporter = db.bySupporterId[eventAttendee?.supporter];
 
       const email: string = member?.email ?? supporter?.email;

@@ -27,7 +27,7 @@ const dbActiveStore: Pick<
 > = {
   application: computed(({ community, entities }) => {
     const { byId: byApplicationId } = entities.applications;
-    return byApplicationId[community?.applicationId] as IApplication;
+    return byApplicationId[community?.application] as IApplication;
   }),
 
   community: computed(({ entities }) => {
@@ -38,11 +38,11 @@ const dbActiveStore: Pick<
     const result: ICommunity = byId[activeId];
 
     const communityIntegrations: ICommunityIntegrations =
-      byCommunityIntegrationsId[result?.communityIntegrationsId];
+      byCommunityIntegrationsId[result?.communityIntegrations];
 
     const hasPaidMembership: boolean = result?.memberTypes
       ?.map((memberTypeId: string) => byMemberTypeId[memberTypeId])
-      ?.some((memberType: IMemberType) => !memberType?.isFree);
+      ?.some((memberType: IMemberType) => !memberType?.amount);
 
     if (!result) return null;
 
@@ -60,7 +60,7 @@ const dbActiveStore: Pick<
     const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
 
     return byCommunityIntegrationsId[
-      community?.communityIntegrationsId
+      community?.communityIntegrations
     ] as ICommunityIntegrations;
   }),
 

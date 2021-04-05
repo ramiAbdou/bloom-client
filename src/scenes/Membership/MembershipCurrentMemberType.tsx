@@ -10,7 +10,8 @@ import { take } from '@util/util';
 import MembershipCurrentMemberTypeActions from './MembershipCurrentMemberTypeActions';
 
 const MembershipCurrentMemberTypeHeader: React.FC = () => {
-  const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
+  const isDuesActive = true;
+  // const isDuesActive = useStoreState(({ db }) => db.member?.isDuesActive);
 
   return (
     <Row justify="sb" spacing="xs">

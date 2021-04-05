@@ -10,7 +10,7 @@ import {
 import { MutationEvent } from '@util/constants.events';
 import { uploadImage } from '@util/imageUtil';
 
-type CreateEventArgs = Omit<Partial<IEvent>, 'eventUrl' | 'guests' | 'id'>;
+type CreateEventArgs = Omit<Partial<IEvent>, 'guests' | 'id'>;
 
 const useCreateEvent = (): OnFormSubmitFunction => {
   const [createEvent] = useBloomMutation<IEvent, CreateEventArgs>({
@@ -31,8 +31,8 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     types: {
       description: { required: true },
       endTime: { required: true },
+      eventInvitees: { required: true, type: '[String!]' },
       imageUrl: { required: false },
-      invitees: { required: true, type: '[String!]' },
       privacy: { required: false },
       startTime: { required: true },
       summary: { required: false },
@@ -87,7 +87,7 @@ const useCreateEvent = (): OnFormSubmitFunction => {
       }
     }
 
-    const invitees: string[] =
+    const eventInvitees: string[] =
       items.EVENT_NOTIFICATION?.value === `Don't Send Email`
         ? []
         : db.community.members;
@@ -95,8 +95,8 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     const args: CreateEventArgs = {
       description: items.EVENT_DESCRIPTION?.value as string,
       endTime,
+      eventInvitees,
       imageUrl,
-      invitees,
       privacy: items.PRIVACY?.value as any,
       startTime,
       summary: items.EVENT_SUMMARY?.value as string,

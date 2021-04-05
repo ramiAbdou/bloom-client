@@ -10,176 +10,26 @@
 import { schema } from 'normalizr';
 
 import { take } from '@util/util';
-import { IApplicationSchema, ICommunitySchema } from './db.entities';
+import {
+  IApplicationSchema,
+  ICommunityIntegrationsSchema,
+  ICommunitySchema,
+  IEventAttendeeSchema,
+  IEventGuestSchema,
+  IEventSchema,
+  IEventWatchSchema,
+  IMemberIntegrationsSchema,
+  IMemberSchema,
+  IMemberSocialsSchema,
+  IMemberTypeSchema,
+  IMemberValueSchema,
+  IPaymentSchema,
+  IQuestionSchema,
+  IRankedQuestionSchema
+} from './db.entities';
 import { mergeStrategy } from './db.util';
 
 // ## NORMALIZR SCHEMA DECLARATIONS
-
-const CommunityIntegrations = new schema.Entity(
-  'communityIntegrations',
-  {},
-  {
-    processStrategy: (value) => {
-      return {
-        ...value,
-        communityIntegrationsId: value.id
-      };
-    }
-  }
-);
-
-const Event = new schema.Entity(
-  'events',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value, parent) => {
-      const processedData = take([
-        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
-        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
-        [!!parent.eventWatchId, { eventWatches: [parent.id] }]
-      ]);
-
-      return { ...value, ...processedData, eventId: value.id };
-    }
-  }
-);
-
-const EventAttendee = new schema.Entity(
-  'eventAttendees',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value, parent) => {
-      const processedData = take([[!!parent.eventId, { event: parent.id }]]);
-
-      return { ...value, ...processedData, eventAttendeeId: value.id };
-    }
-  }
-);
-
-const EventGuest = new schema.Entity(
-  'eventGuests',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value, parent) => {
-      const processedData = take([[!!parent.eventId, { event: parent.id }]]);
-
-      return { ...value, ...processedData, eventGuestId: value.id };
-    }
-  }
-);
-
-const EventWatch = new schema.Entity(
-  'eventWatches',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value, parent) => {
-      const processedData = take([[!!parent.eventId, { event: parent.id }]]);
-
-      return { ...value, ...processedData, eventWatchId: value.id };
-    }
-  }
-);
-
-const Member = new schema.Entity(
-  'members',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value, parent) => {
-      const processedData = take([
-        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
-        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
-        [!!parent.eventId, { events: [parent.id] }],
-        [!!parent.eventWatchId, { eventWatches: [parent.id] }],
-        [!!parent.memberValueId, { memberValues: [parent.id] }],
-        [!!parent.paymentId, { payments: [parent.id] }]
-      ]);
-
-      return { ...value, ...processedData, memberId: value.id };
-    }
-  }
-);
-
-const MemberIntegrations = new schema.Entity(
-  'memberIntegrations',
-  {},
-  {
-    processStrategy: (value) => {
-      return { ...value, memberIntegrationsId: value.id };
-    }
-  }
-);
-
-const MemberSocials = new schema.Entity(
-  'memberSocials',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value) => {
-      return { ...value, memberSocialsId: value.id };
-    }
-  }
-);
-
-const MemberType = new schema.Entity(
-  'memberTypes',
-  {},
-  {
-    processStrategy: (value) => {
-      return { ...value, memberTypeId: value.id };
-    }
-  }
-);
-
-const MemberValue = new schema.Entity(
-  'memberValues',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value) => {
-      return { ...value, memberValueId: value.id };
-    }
-  }
-);
-
-const Payment = new schema.Entity(
-  'payments',
-  {},
-  {
-    processStrategy: (value) => {
-      return { ...value, paymentId: value.id };
-    }
-  }
-);
-
-const Question = new schema.Entity(
-  'questions',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value, parent) => {
-      const processedData = take([
-        [!!parent.memberValueId, { memberValues: [parent.id] }]
-      ]);
-
-      return { ...value, ...processedData, questionId: value.id };
-    }
-  }
-);
-
-const RankedQuestion = new schema.Entity(
-  'rankedQuestions',
-  {},
-  {
-    processStrategy: (value) => {
-      return { ...value, rankedQuestionId: value.id };
-    }
-  }
-);
 
 const Supporter = new schema.Entity(
   'supporters',
@@ -217,93 +67,107 @@ const User = new schema.Entity(
 
 IApplicationSchema.define({
   community: ICommunitySchema,
-  rankedQuestions: [RankedQuestion]
+  rankedQuestions: [IRankedQuestionSchema]
 });
 
 ICommunitySchema.define({
   application: IApplicationSchema,
-  communityIntegrations: CommunityIntegrations,
-  events: [Event],
-  highlightedQuestion: Question,
-  memberTypes: [MemberType],
-  members: [Member],
-  owner: Member,
-  payments: [Payment],
-  questions: [Question],
+  communityIntegrations: ICommunityIntegrationsSchema,
+  events: [IEventSchema],
+  highlightedQuestion: IQuestionSchema,
+  memberTypes: [IMemberTypeSchema],
+  members: [IMemberSchema],
+  owner: IMemberSchema,
+  payments: [IPaymentSchema],
+  questions: [IQuestionSchema],
   supporters: [Supporter]
 });
 
-CommunityIntegrations.define({ community: ICommunitySchema });
+ICommunityIntegrationsSchema.define({ community: ICommunitySchema });
 
-Event.define({
+IEventSchema.define({
   community: ICommunitySchema,
-  eventAttendees: [EventAttendee],
-  eventGuests: [EventGuest],
-  eventWatches: [EventWatch]
+  eventAttendees: [IEventAttendeeSchema],
+  eventGuests: [IEventGuestSchema],
+  eventWatches: [IEventWatchSchema]
 });
 
-EventAttendee.define({ event: Event, member: Member, supporter: Supporter });
+IEventAttendeeSchema.define({
+  event: IEventSchema,
+  member: IMemberSchema,
+  supporter: Supporter
+});
 
-EventGuest.define({ event: Event, member: Member, supporter: Supporter });
+IEventGuestSchema.define({
+  event: IEventSchema,
+  member: IMemberSchema,
+  supporter: Supporter
+});
 
-EventWatch.define({ event: Event, member: Member });
+IEventWatchSchema.define({ event: IEventSchema, member: IMemberSchema });
 
-Member.define({
+IMemberSchema.define({
   community: ICommunitySchema,
-  eventAttendees: [EventAttendee],
-  eventGuests: [EventGuest],
-  eventWatches: [EventWatch],
-  memberIntegrations: MemberIntegrations,
-  memberSocials: MemberSocials,
-  memberType: MemberType,
-  memberValues: [MemberValue],
-  payments: [Payment],
+  eventAttendees: [IEventAttendeeSchema],
+  eventGuests: [IEventGuestSchema],
+  eventWatches: [IEventWatchSchema],
+  memberIntegrations: IMemberIntegrationsSchema,
+  memberSocials: IMemberSocialsSchema,
+  memberType: IMemberTypeSchema,
+  memberValues: [IMemberValueSchema],
+  payments: [IPaymentSchema],
   user: User
 });
 
-MemberIntegrations.define({ member: Member });
+IMemberIntegrationsSchema.define({ member: IMemberSchema });
 
-MemberSocials.define({ member: Member });
+IMemberSocialsSchema.define({ member: IMemberSchema });
 
-MemberType.define({ community: ICommunitySchema });
+IMemberTypeSchema.define({ community: ICommunitySchema });
 
-MemberValue.define({ member: Member, question: Question });
+IMemberValueSchema.define({ member: IMemberSchema, question: IQuestionSchema });
 
-Payment.define({
+IPaymentSchema.define({
   community: ICommunitySchema,
-  member: Member,
-  memberType: MemberType
+  member: IMemberSchema,
+  memberType: IMemberTypeSchema
 });
 
-Question.define({ community: ICommunitySchema, memberValues: [MemberValue] });
+IQuestionSchema.define({
+  community: ICommunitySchema,
+  memberValues: [IMemberValueSchema]
+});
 
-RankedQuestion.define({ application: IApplicationSchema, question: Question });
+IRankedQuestionSchema.define({
+  application: IApplicationSchema,
+  question: IQuestionSchema
+});
 
 Supporter.define({
-  eventAttendees: [EventAttendee],
-  eventGuests: [EventGuest]
+  eventAttendees: [IEventAttendeeSchema],
+  eventGuests: [IEventGuestSchema]
 });
 
-User.define({ members: [Member], supporters: [Supporter] });
+User.define({ members: [IMemberSchema], supporters: [Supporter] });
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
 // (ie: ICommunity, IUser, etc).
 export const Schema = {
   APPLICATION: IApplicationSchema,
-  APPLICATION_QUESTION: RankedQuestion,
   COMMUNITY: ICommunitySchema,
-  COMMUNITY_INTEGRATIONS: CommunityIntegrations,
-  EVENT: Event,
-  EVENT_ATTENDEE: EventAttendee,
-  EVENT_GUEST: EventGuest,
-  EVENT_WATCH: EventWatch,
-  MEMBER: Member,
-  MEMBER_INTEGRATIONS: MemberIntegrations,
-  MEMBER_SOCIALS: MemberSocials,
-  MEMBER_TYPE: MemberType,
-  MEMBER_VALUE: MemberValue,
-  PAYMENT: Payment,
-  QUESTION: Question,
+  COMMUNITY_INTEGRATIONS: ICommunityIntegrationsSchema,
+  EVENT: IEventSchema,
+  EVENT_ATTENDEE: IEventAttendeeSchema,
+  EVENT_GUEST: IEventGuestSchema,
+  EVENT_WATCH: IEventWatchSchema,
+  MEMBER: IMemberSchema,
+  MEMBER_INTEGRATIONS: IMemberIntegrationsSchema,
+  MEMBER_SOCIALS: IMemberSocialsSchema,
+  MEMBER_TYPE: IMemberTypeSchema,
+  MEMBER_VALUE: IMemberValueSchema,
+  PAYMENT: IPaymentSchema,
+  QUESTION: IQuestionSchema,
+  RANKED_QUESTION: IRankedQuestionSchema,
   USER: User
 };

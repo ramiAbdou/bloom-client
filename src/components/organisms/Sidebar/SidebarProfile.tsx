@@ -1,10 +1,10 @@
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
+import { MemberRole } from '@db/db.entities';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { MemberRole } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';
@@ -61,7 +61,8 @@ const SidebarProfileButton: React.FC = () => {
 
 const SidebarProfile: React.FC = () => {
   const isDuesMessageShowing: boolean = useStoreState(
-    ({ db }) => db.community?.canCollectDues && !db.member?.isDuesActive
+    ({ db }) => !!db.community?.canCollectDues
+    // ({ db }) => db.community?.canCollectDues && !db.member?.isDuesActive
   );
 
   const isTablet: boolean = useBreakpoint() <= 2;

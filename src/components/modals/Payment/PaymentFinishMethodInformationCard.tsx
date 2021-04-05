@@ -12,7 +12,7 @@ const PaymentFinishMethodInformationCard: React.FC = () => {
 
   const isFree: boolean = useStoreState(({ db }) => {
     const memberType: IMemberType = db.byMemberTypeId[selectedMemberTypeId];
-    return memberType.isFree;
+    return !memberType.amount;
   });
 
   const brand: string = useStoreState(({ db }) => {
