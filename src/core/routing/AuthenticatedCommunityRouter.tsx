@@ -15,31 +15,21 @@ import { useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
 import useInitCommunity from './useInitCommunity';
 
-const AuthenticatedCommunityRouterSwitch: React.FC = () => {
-  const autoAccept: boolean = useStoreState(
-    ({ db }) => db.community?.autoAccept
-  );
-
-  return (
-    <div className="home-content">
-      <Switch>
-        <Route component={Directory} path="/:urlName/directory" />
-        <Route component={Events} path="/:urlName/events" />
-        <AdminRoute component={Database} path="/:urlName/database" />
-        <AdminRoute component={Analytics} path="/:urlName/analytics" />
-        <AdminRoute component={Integrations} path="/:urlName/integrations" />
-
-        {!autoAccept && (
-          <AdminRoute component={Applicants} path="/:urlName/applicants" />
-        )}
-
-        <Route component={Membership} path="/:urlName/membership" />
-        <Route component={Profile} path="/:urlName/profile" />
-        <Redirect to="/:urlName/directory" />
-      </Switch>
-    </div>
-  );
-};
+const AuthenticatedCommunityRouterSwitch: React.FC = () => (
+  <div className="home-content">
+    <Switch>
+      <Route component={Directory} path="/:urlName/directory" />
+      <Route component={Events} path="/:urlName/events" />
+      <AdminRoute component={Database} path="/:urlName/database" />
+      <AdminRoute component={Analytics} path="/:urlName/analytics" />
+      <AdminRoute component={Integrations} path="/:urlName/integrations" />
+      <AdminRoute component={Applicants} path="/:urlName/applicants" />
+      <Route component={Membership} path="/:urlName/membership" />
+      <Route component={Profile} path="/:urlName/profile" />
+      <Redirect to="/:urlName/directory" />
+    </Switch>
+  </div>
+);
 
 const AuthenticatedCommunityRouter: React.FC = () => {
   const isInitialized: boolean = useStoreState(({ db }) => db.isInitialized);

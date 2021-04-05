@@ -35,7 +35,7 @@ const buildFieldsObject = (
  * // Returns { id name members { id firstName } }
  * buildFieldsString(['id', 'name', 'members.id', 'members.firstName'])
  */
-export const buildFieldsString = (fields: string[]): string => {
+const buildFieldsString = (fields: string[]): string => {
   const snakeCaseFields: string[] = fields.reduce(
     (allFields: string[], currField: string) => {
       // Splits the array by the '.', converts that individual string to
@@ -68,8 +68,4 @@ export const buildFieldsString = (fields: string[]): string => {
   );
 };
 
-/**
- * Returns the GraphQL query string that we need to send to the Hasura GraphQL
- * server.
- */
-export const buildQueryString = (): string => null;
+export default buildFieldsString;

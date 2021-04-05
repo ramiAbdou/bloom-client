@@ -71,9 +71,8 @@ export const IApplicationSchema: schema.Entity<IApplication> = new schema.Entity
 
 export interface ICommunity extends BaseEntity {
   applicationId?: Identifier;
-  autoAccept?: boolean;
   canCollectDues?: boolean;
-  communityIntegrations: Identifier;
+  communityIntegrationsId: Identifier;
   events?: Identifier[];
   highlightedQuestion: Identifier;
   logoUrl: string;
@@ -98,7 +97,7 @@ export const ICommunitySchema: schema.Entity<ICommunity> = new schema.Entity(
         [!!parent.applicationId, { applicationId: parent.id }],
         [
           !!parent.communityIntegrationsId,
-          { communityIntegrations: parent.id }
+          { communityIntegrationsId: parent.id }
         ],
         [!!parent.eventId, { events: [parent.id] }],
         [!!parent.memberId, { members: [parent.id] }],

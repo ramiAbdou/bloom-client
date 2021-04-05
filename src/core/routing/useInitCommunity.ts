@@ -12,7 +12,6 @@ const useInitCommunity = (): QueryResult<ICommunity[]> => {
 
   const [getCommunity, result] = useLazyQuery<ICommunity[]>({
     fields: [
-      'autoAccept',
       'communityIntegrations.community.id',
       'communityIntegrations.id',
       'communityIntegrations.stripeAccountId',

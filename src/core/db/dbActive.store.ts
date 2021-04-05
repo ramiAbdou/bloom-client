@@ -38,7 +38,7 @@ const dbActiveStore: Pick<
     const result: ICommunity = byId[activeId];
 
     const communityIntegrations: ICommunityIntegrations =
-      byCommunityIntegrationsId[result?.communityIntegrations];
+      byCommunityIntegrationsId[result?.communityIntegrationsId];
 
     const hasPaidMembership: boolean = result?.memberTypes
       ?.map((memberTypeId: string) => byMemberTypeId[memberTypeId])
@@ -60,7 +60,7 @@ const dbActiveStore: Pick<
     const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
 
     return byCommunityIntegrationsId[
-      community?.communityIntegrations
+      community?.communityIntegrationsId
     ] as ICommunityIntegrations;
   }),
 

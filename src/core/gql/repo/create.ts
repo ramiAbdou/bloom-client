@@ -5,8 +5,8 @@ import { nanoid } from 'nanoid';
 
 import { DocumentNode, gql } from '@apollo/client';
 import { Schema } from '@db/db.schema';
-import { buildFieldsString } from '../gql.util';
 import buildArgsString from './buildArgsString';
+import buildFieldsString from './buildFieldsString';
 
 const map = {
   eventGuests: Schema.EVENT_GUEST,

@@ -3,8 +3,8 @@ import { snakeCase } from 'change-case';
 
 import { DocumentNode, gql } from '@apollo/client';
 import { Schema } from '@db/db.schema';
-import { buildFieldsString } from '../gql.util';
 import buildArgsString from './buildArgsString';
+import buildFieldsString from './buildFieldsString';
 
 const map = { events: Schema.EVENT, users: Schema.USER };
 

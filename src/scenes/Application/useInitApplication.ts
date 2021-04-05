@@ -16,7 +16,6 @@ const useInitApplication = (): Pick<QueryResult, 'error' | 'loading'> => {
     fields: [
       'id',
       'communityId',
-      'community.autoAccept',
       'community.id',
       'community.logoUrl',
       'community.name',
