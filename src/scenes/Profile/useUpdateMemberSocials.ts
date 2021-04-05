@@ -1,11 +1,11 @@
-import useGql from '@gql/useGql';
+import useGQL from '@gql/useGQL';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {
-  const gql = useGql();
+  const gql = useGQL();
 
   const onSubmit = async ({
     closeModal,
@@ -20,7 +20,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
     const twitterUrl: string = items.TWITTER_URL?.value as string;
 
     const { error } = await gql.memberSocials.update({
-      updatedFields: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
+      data: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
       where: { id: db.member.memberSocials }
     });
 

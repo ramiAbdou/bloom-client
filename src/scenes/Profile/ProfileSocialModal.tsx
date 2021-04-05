@@ -1,5 +1,6 @@
 import React from 'react';
 
+import useGQL from '@gql/useGQL';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
@@ -9,21 +10,21 @@ import { useStoreState } from '@store/Store';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {
-  const facebookUrl: string = useStoreState(
-    ({ db }) => db.memberSocials?.facebookUrl
+  const memberSocialsId: string = useStoreState(
+    ({ db }) => db.member?.memberSocials
   );
 
-  const instagramUrl: string = useStoreState(
-    ({ db }) => db.memberSocials?.instagramUrl
-  );
+  const gql = useGQL();
 
-  const linkedInUrl: string = useStoreState(
-    ({ db }) => db.memberSocials?.linkedInUrl
-  );
-
-  const twitterUrl: string = useStoreState(
-    ({ db }) => db.memberSocials?.twitterUrl
-  );
+  const {
+    facebookUrl,
+    instagramUrl,
+    linkedInUrl,
+    twitterUrl
+  } = gql.memberSocials.fromCache({
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    id: memberSocialsId
+  });
 
   const updateMemberSocials: OnFormSubmitFunction = useUpdateMemberSocials();
 

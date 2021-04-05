@@ -20,12 +20,12 @@ import {
   ISupporter,
   IUser
 } from '@db/db.entities';
-import { IEntities } from '../db/db.types';
 import GQLUtility from './GQLUtility';
 
-export type GQL = Record<keyof IEntities, GQLUtility>;
+// import { IEntities } from '../db/db.types';
+// export type GQL = Record<keyof IEntities, GQLUtility>;
 
-const useGQL = (): GQL => {
+const useGQL = () => {
   const client: ApolloClient<any> = useApolloClient();
 
   const gql = useMemo(() => {
@@ -48,7 +48,7 @@ const useGQL = (): GQL => {
       supporters: new GQLUtility(ISupporter, client),
       users: new GQLUtility(IUser, client)
     };
-  }, [client]);
+  }, []);
 
   return gql;
 };

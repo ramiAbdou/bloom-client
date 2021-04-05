@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-// import { gql, useApolloClient } from '@apollo/client';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
-import { IMemberSocials } from '@db/db.entities';
-import useGQL from '@gql/useGql';
+import useGQL from '@gql/useGQL';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, SocialBrand } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
@@ -13,12 +11,24 @@ import ProfileSocialValue from './ProfileSocialValue';
 import useInitProfileSocial from './useInitProfileSocial';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
-  const isSocialLinked: boolean = useStoreState(({ db }) => {
-    const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } =
-      db.memberSocials ?? {};
+  const memberSocialsId: string = useStoreState(
+    ({ db }) => db.member?.memberSocials
+  );
 
-    return !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
+  const gql = useGQL();
+
+  const {
+    facebookUrl,
+    instagramUrl,
+    linkedInUrl,
+    twitterUrl
+  } = gql.memberSocials.fromCache({
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    id: memberSocialsId
   });
+
+  const isSocialLinked: boolean =
+    !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -41,14 +51,22 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 const ProfileSocialHeader: React.FC = () => {
-  const facebookUrl = useStoreState(({ db }) => db.memberSocials?.facebookUrl);
-
-  const instagramUrl = useStoreState(
-    ({ db }) => db.memberSocials?.instagramUrl
+  const memberSocialsId: string = useStoreState(
+    ({ db }) => db.member?.memberSocials
   );
 
-  const linkedInUrl = useStoreState(({ db }) => db.memberSocials?.linkedInUrl);
-  const twitterUrl = useStoreState(({ db }) => db.memberSocials?.twitterUrl);
+  const gql = useGQL();
+
+  const {
+    facebookUrl,
+    instagramUrl,
+    linkedInUrl,
+    twitterUrl
+  } = gql.memberSocials.fromCache({
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    id: memberSocialsId
+  });
+
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const isSocialLinked: boolean =
@@ -66,35 +84,30 @@ const ProfileSocialHeader: React.FC = () => {
 
 const ProfileSocialFacebook: React.FC = () => {
   const memberSocialsId: string = useStoreState(
-    ({ db }) => db.memberSocials?.id
+    ({ db }) => db.member?.memberSocials
   );
 
   const gql = useGQL();
 
-  useEffect(() => {
-    (async () => {
-      const a = await gql.hello.findOne({
-        fields: ['id', 'email'],
-        where: { email: 'rami@onbloom.co' }
-      });
-
-      console.log(a);
-    })();
-  }, [gql]);
-
-  // console.log(gql.hello.name);
-
-  const { facebookUrl }: IMemberSocials = gql.memberSocials.byId(
-    memberSocialsId
-  );
+  const { facebookUrl } = gql.memberSocials.fromCache({
+    fields: ['facebookUrl'],
+    id: memberSocialsId
+  });
 
   return <ProfileSocialValue brand={SocialBrand.FACEBOOK} url={facebookUrl} />;
 };
 
 const ProfileSocialInstagram: React.FC = () => {
-  const instagramUrl = useStoreState(
-    ({ db }) => db.memberSocials?.instagramUrl
+  const memberSocialsId: string = useStoreState(
+    ({ db }) => db.member?.memberSocials
   );
+
+  const gql = useGQL();
+
+  const { instagramUrl } = gql.memberSocials.fromCache({
+    fields: ['instagramUrl'],
+    id: memberSocialsId
+  });
 
   return (
     <ProfileSocialValue brand={SocialBrand.INSTAGRAM} url={instagramUrl} />
@@ -102,12 +115,32 @@ const ProfileSocialInstagram: React.FC = () => {
 };
 
 const ProfileSocialLinkedIn: React.FC = () => {
-  const linkedInUrl = useStoreState(({ db }) => db.memberSocials?.linkedInUrl);
+  const memberSocialsId: string = useStoreState(
+    ({ db }) => db.member?.memberSocials
+  );
+
+  const gql = useGQL();
+
+  const { linkedInUrl } = gql.memberSocials.fromCache({
+    fields: ['linkedInUrl'],
+    id: memberSocialsId
+  });
+
   return <ProfileSocialValue brand={SocialBrand.LINKED_IN} url={linkedInUrl} />;
 };
 
 const ProfileSocialTwitter: React.FC = () => {
-  const twitterUrl = useStoreState(({ db }) => db.memberSocials?.twitterUrl);
+  const memberSocialsId: string = useStoreState(
+    ({ db }) => db.member?.memberSocials
+  );
+
+  const gql = useGQL();
+
+  const { twitterUrl } = gql.memberSocials.fromCache({
+    fields: ['twitterUrl'],
+    id: memberSocialsId
+  });
+
   return <ProfileSocialValue brand={SocialBrand.TWITTER} url={twitterUrl} />;
 };
 

@@ -1,10 +1,9 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import useGql from '@gql/useGql';
+import { IEvent, Schema } from '@db/db.entities';
+import useGQL from '@gql/useGQL';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
-import { IEvent } from '@db/db.entities';
-import { Schema } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
@@ -19,7 +18,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
-  const gql = useGql();
+  const gql = useGQL();
 
   const isMember: boolean = useStoreState(({ db }) => db.isMember);
   const memberId: string = useStoreState(({ db }) => db.member?.id);
@@ -58,6 +57,8 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     }
 
     await gql.eventGuests.create({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       body: { eventId, memberId },
       fields: [
         'createdAt',

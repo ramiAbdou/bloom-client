@@ -1,4 +1,5 @@
-import useGql from '@gql/useGql';
+import { EventPrivacy } from '@db/db.entities';
+import useGQL from '@gql/useGQL';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -6,7 +7,7 @@ import {
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
-  const gql = useGql();
+  const gql = useGQL();
 
   const onSubmit = async ({
     closeModal,
@@ -33,13 +34,13 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
     }
 
     const { error } = await gql.events.update({
-      updatedFields: {
-        description: items.EVENT_DESCRIPTION?.value,
+      data: {
+        description: items.EVENT_DESCRIPTION?.value as string,
         imageUrl,
-        privacy: items.PRIVACY?.value,
-        summary: items.EVENT_SUMMARY?.value,
-        title: items.EVENT_NAME?.value,
-        videoUrl: items.VIDEO_URL?.value
+        privacy: items.PRIVACY?.value as EventPrivacy,
+        summary: items.EVENT_SUMMARY?.value as string,
+        title: items.EVENT_NAME?.value as string,
+        videoUrl: items.VIDEO_URL?.value as string
       },
       where: { id: eventId }
     });

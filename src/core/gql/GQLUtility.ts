@@ -12,11 +12,12 @@ import {
   GQLUtilityCreateResult,
   GQLUtilityFindOneArgs,
   GQLUtilityFindOneResult,
+  GQLUtilityFromCacheArgs,
   GQLUtilityUpdateArgs,
   GQLUtilityUpdateResult
 } from './GQLUtility.types';
 
-class GQLUtility<T = unknown> {
+class GQLUtility<T> {
   client: ApolloClient<any>;
 
   name: string;
@@ -24,6 +25,28 @@ class GQLUtility<T = unknown> {
   constructor(entity: new () => T, client: ApolloClient<any>) {
     this.name = entity.name;
     this.client = client;
+  }
+
+  fromCache({
+    id,
+    fields
+  }: GQLUtilityFromCacheArgs<T>): T | Record<string, never> {
+    const fieldsString: string = buildFieldsString(fields as string[]);
+    const entityName: string = this.getEntityName();
+
+    const fragment: DocumentNode = gql`
+      fragment Fragment on ${entityName} {
+        id
+        ${fieldsString}
+      }
+    `;
+
+    const result: T = this.client.readFragment({
+      fragment,
+      id: `${entityName}:${id}`
+    });
+
+    return camelCaseKeys(result, { deep: true }) ?? {};
   }
 
   async create({
@@ -139,7 +162,7 @@ class GQLUtility<T = unknown> {
    * GQLUtility.getEntityName()
    */
   private getEntityName(): string {
-    const nameWithoutI: string = this.name.substring(1).toLowerCase();
+    const nameWithoutI: string = this.name.substring(1);
     const pluralNameWithoutI: string = pluralize(nameWithoutI);
     return snakeCase(pluralNameWithoutI);
   }

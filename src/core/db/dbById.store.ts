@@ -13,7 +13,6 @@ const dbByIdStore: Pick<
   | 'byEventWatchId'
   | 'byMemberId'
   | 'byMemberIntegrationsId'
-  | 'byMemberSocialsId'
   | 'byMemberValuesId'
   | 'byPaymentId'
   | 'byQuestionId'
@@ -43,8 +42,6 @@ const dbByIdStore: Pick<
   byMemberIntegrationsId: computed(
     ({ entities }) => entities.memberIntegrations.byId
   ),
-
-  byMemberSocialsId: computed(({ entities }) => entities.memberSocials.byId),
 
   byMemberTypeId: computed(({ entities }) => entities.memberTypes.byId),
 

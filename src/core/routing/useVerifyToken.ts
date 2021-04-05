@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import useBloomMutation from '@gql/useBloomMutation';
-import useGql from '@gql/useGql';
+import useGQL from '@gql/useGQL';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import { useStoreActions } from '@store/Store';
 import { ModalType, VerifyEvent } from '@util/constants';
@@ -32,7 +32,7 @@ const useVerifyToken = (): boolean => {
     'token'
   );
 
-  const gql = useGql();
+  const gql = useGQL();
 
   const [verifyToken, result1] = useBloomMutation<VerifiedToken>({
     fields: ['event', 'eventId'],

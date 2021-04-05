@@ -7,7 +7,6 @@ import {
   IEvent,
   IMember,
   IMemberIntegrations,
-  IMemberSocials,
   IMemberType,
   IUser
 } from './db.entities';
@@ -22,7 +21,6 @@ const dbActiveStore: Pick<
   | 'event'
   | 'member'
   | 'memberIntegrations'
-  | 'memberSocials'
   | 'user'
 > = {
   application: computed(({ community, entities }) => {
@@ -77,11 +75,6 @@ const dbActiveStore: Pick<
   memberIntegrations: computed(({ entities, member }) => {
     const { byId } = entities.memberIntegrations;
     return byId[member?.memberIntegrations] as IMemberIntegrations;
-  }),
-
-  memberSocials: computed(({ entities, member }) => {
-    const { byId: byMemberSocialsId } = entities.memberSocials;
-    return byMemberSocialsId[member?.memberSocials] as IMemberSocials;
   }),
 
   user: computed(({ entities }) => {

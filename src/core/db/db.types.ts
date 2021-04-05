@@ -11,7 +11,6 @@ import {
   IEventWatch,
   IMember,
   IMemberIntegrations,
-  IMemberSocials,
   IMemberType,
   IMemberValue,
   IPayment,
@@ -36,7 +35,6 @@ export interface IEntities {
   events: EntityRecord<IEvent>;
   members: EntityRecord<IMember>;
   memberIntegrations: EntityRecord<IMemberIntegrations>;
-  memberSocials: EntityRecord<IMemberSocials>;
   memberTypes: EntityRecord<IMemberType>;
   memberValues: EntityRecord<IMemberValue>;
   payments: EntityRecord<IPayment>;
@@ -56,7 +54,6 @@ export const initialEntities: IEntities = {
   eventWatches: { byId: {} },
   events: { activeId: null, byId: {} },
   memberIntegrations: { byId: {} },
-  memberSocials: { byId: {} },
   memberTypes: { byId: {} },
   memberValues: { byId: {} },
   members: { activeId: null, byId: {} },
@@ -95,7 +92,6 @@ export interface DbModel {
     DbModel,
     Record<string, IMemberIntegrations>
   >;
-  byMemberSocialsId: Computed<DbModel, Record<string, IMemberSocials>>;
   byMemberTypeId: Computed<DbModel, Record<string, IMemberType>>;
   byMemberValuesId: Computed<DbModel, Record<string, IMemberValue>>;
   byPaymentId: Computed<DbModel, Record<string, IPayment>>;
@@ -112,7 +108,6 @@ export interface DbModel {
   event: Computed<DbModel, IEvent>;
   member: Computed<DbModel, IMember>;
   memberIntegrations: Computed<DbModel, IMemberIntegrations>;
-  memberSocials: Computed<DbModel, IMemberSocials>;
   user: Computed<DbModel, IUser>;
 
   // UTILITY

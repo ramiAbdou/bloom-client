@@ -7,7 +7,8 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { IMember, IMemberSocials } from '@db/db.entities';
+import { IMember } from '@db/db.entities';
+import useGQL from '@gql/useGQL';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { SocialBrand } from '@util/constants';
@@ -48,14 +49,21 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
 const ProfileSocialContainer: React.FC = () => {
   const memberId = IdStore.useStoreState((state) => state.id);
 
+  const memberSocialsId: string = useStoreState(({ db }) => {
+    const member: IMember = db.byMemberId[memberId];
+    return member?.memberSocials;
+  });
+
+  const gql = useGQL();
+
   const {
     facebookUrl,
     instagramUrl,
     linkedInUrl,
     twitterUrl
-  }: IMemberSocials = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return db.byMemberSocialsId[member?.memberSocials];
+  } = gql.memberSocials.fromCache({
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    id: memberSocialsId
   });
 
   return (

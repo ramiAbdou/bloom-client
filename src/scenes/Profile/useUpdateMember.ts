@@ -1,6 +1,6 @@
 import validator from 'validator';
 
-import useGql from '@gql/useGql';
+import useGQL from '@gql/useGQL';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -8,7 +8,7 @@ import {
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateMember = (): OnFormSubmitFunction => {
-  const gql = useGql();
+  const gql = useGQL();
 
   const onSubmit = async ({
     closeModal,
@@ -38,7 +38,7 @@ const useUpdateMember = (): OnFormSubmitFunction => {
     }
 
     const { error } = await gql.members.update({
-      updatedFields: { bio, firstName, lastName, pictureUrl },
+      data: { bio, firstName, lastName, pictureUrl },
       where: { id: db.member.id }
     });
 

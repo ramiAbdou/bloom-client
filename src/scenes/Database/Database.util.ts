@@ -2,7 +2,6 @@ import { State } from 'easy-peasy';
 
 import {
   IMember,
-  IMemberSocials,
   IMemberType,
   IMemberValue,
   IQuestion,
@@ -15,10 +14,12 @@ import { sortObjects } from '@util/util';
 
 interface GetMemberTableRowArgs {
   db: State<DbModel>;
+  gql: any;
 }
 
 interface GetMemberValueArgs {
   db: State<DbModel>;
+  gql: any;
   member: IMember;
   questionId: string;
 }
@@ -27,9 +28,21 @@ interface GetMemberValueArgs {
  * Returns the appropriate value based on the IMember data as well as the
  * IUser attached.
  */
-const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
-  const memberSocials: IMemberSocials =
-    db.byMemberSocialsId[member.memberSocials];
+const getMemberValue = ({
+  db,
+  gql,
+  member,
+  questionId
+}: GetMemberValueArgs) => {
+  const {
+    facebookUrl,
+    instagramUrl,
+    linkedInUrl,
+    twitterUrl
+  } = gql.memberSocials.fromCache({
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    id: member.memberSocials
+  });
 
   const { category }: IQuestion = db.byQuestionId[questionId];
 
@@ -37,22 +50,14 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
   if (category === QuestionCategory.DUES_STATUS) return true;
   // if (category === QuestionCategory.DUES_STATUS) return member.isDuesActive;
   if (category === QuestionCategory.EMAIL) return member.email;
-  if (category === QuestionCategory.FACEBOOK_URL) {
-    return memberSocials?.facebookUrl;
-  }
+  if (category === QuestionCategory.FACEBOOK_URL) return facebookUrl;
   if (category === QuestionCategory.FIRST_NAME) return member.firstName;
-  if (category === QuestionCategory.INSTAGRAM_URL) {
-    return memberSocials?.instagramUrl;
-  }
+  if (category === QuestionCategory.INSTAGRAM_URL) return instagramUrl;
   if (category === QuestionCategory.JOINED_AT) return member.joinedAt;
   if (category === QuestionCategory.LAST_NAME) return member.lastName;
-  if (category === QuestionCategory.LINKED_IN_URL) {
-    return memberSocials?.linkedInUrl;
-  }
+  if (category === QuestionCategory.LINKED_IN_URL) return linkedInUrl;
   if (category === QuestionCategory.PROFILE_PICTURE) return member.pictureUrl;
-  if (category === QuestionCategory.TWITTER_URL) {
-    return memberSocials?.twitterUrl;
-  }
+  if (category === QuestionCategory.TWITTER_URL) return twitterUrl;
 
   if (category === QuestionCategory.MEMBER_TYPE) {
     const memberType: IMemberType = db.byMemberTypeId[member.memberType];
@@ -73,9 +78,10 @@ const getMemberValue = ({ db, member, questionId }: GetMemberValueArgs) => {
   return value;
 };
 
-export const getMemberTableRow = (args: GetMemberTableRowArgs): TableRow[] => {
-  const { db } = args;
-
+export const getMemberTableRow = ({
+  db,
+  gql
+}: GetMemberTableRowArgs): TableRow[] => {
   if (!db.community.memberTypes?.length || !db.community.questions?.length) {
     return [];
   }
@@ -95,7 +101,7 @@ export const getMemberTableRow = (args: GetMemberTableRowArgs): TableRow[] => {
   const rows: TableRow[] = filteredMembers?.map((member: IMember) =>
     db.community?.questions.reduce(
       (result: TableRow, questionId: string) => {
-        const value = getMemberValue({ db, member, questionId });
+        const value = getMemberValue({ db, gql, member, questionId });
         return { ...result, [questionId]: value };
       },
       { id: member?.id }

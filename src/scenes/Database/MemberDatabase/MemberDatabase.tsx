@@ -2,7 +2,8 @@ import day from 'dayjs';
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import useGql from '@gql/useGql';
+import { IQuestion } from '@db/db.entities';
+import useGQL from '@gql/useGQL';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
@@ -13,7 +14,6 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IQuestion } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -29,9 +29,13 @@ const MemberDatabase: React.FC = () => {
     ({ modal }) => modal.showModal
   );
 
+  const gql = useGQL();
+
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
-  const rows: TableRow[] = useStoreState(({ db }) => getMemberTableRow({ db }));
+  const rows: TableRow[] = useStoreState(({ db }) =>
+    getMemberTableRow({ db, gql })
+  );
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
     const filteredColumns: TableColumn[] = db.community.questions
@@ -67,8 +71,6 @@ const MemberDatabase: React.FC = () => {
     });
   });
 
-  const gql = useGql();
-
   const onRenameColumn: RenameColumnFunction = async ({
     column,
     updateColumn
@@ -76,7 +78,7 @@ const MemberDatabase: React.FC = () => {
     const { title, id } = column;
 
     const { error } = await gql.questions.update({
-      updatedFields: { title },
+      data: { title },
       where: { id }
     });
 

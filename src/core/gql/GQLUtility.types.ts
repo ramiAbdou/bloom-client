@@ -18,6 +18,11 @@ export interface GQLUtilityFindOneResult<T> {
   error?: string;
 }
 
+export interface GQLUtilityFromCacheArgs<T> {
+  id: string;
+  fields: (keyof T)[];
+}
+
 export interface GQLUtilityUpdateArgs<T> {
   data: Partial<T>;
   where: Partial<T>;

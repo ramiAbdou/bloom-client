@@ -499,7 +499,7 @@ export class IQuestion extends BaseEntity {
 
   required: boolean;
 
-  title: QuestionType;
+  title: string;
 
   type: QuestionType;
 
