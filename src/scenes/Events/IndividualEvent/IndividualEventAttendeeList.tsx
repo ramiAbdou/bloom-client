@@ -4,6 +4,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import { IEventAttendee, IMember, ISupporter } from '@db/db.entities';
+import useGQL from '@gql/useGQL';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
@@ -14,6 +15,8 @@ import { cx, sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
 
 const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
+  const gql = useGQL();
+
   const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
   const memberId: string = useStoreState(({ db }) => {
@@ -28,7 +31,7 @@ const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
 
   const fullName: string = useStoreState(({ db }) => {
     const member: IMember = db.byMemberId[memberId];
-    const supporter: ISupporter = db.bySupporterId[supporterId];
+    const supporter: ISupporter = gql.supporters.fromCache({ id: supporterId });
 
     const firstName: string = member?.firstName ?? supporter?.firstName;
     const lastName: string = member?.lastName ?? supporter?.lastName;

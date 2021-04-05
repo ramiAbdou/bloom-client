@@ -27,11 +27,8 @@ class GQLUtility<T> {
     this.client = client;
   }
 
-  fromCache({
-    id,
-    fields
-  }: GQLUtilityFromCacheArgs<T>): T | Record<string, never> {
-    const fieldsString: string = buildFieldsString(fields as string[]);
+  fromCache({ id, fields }: GQLUtilityFromCacheArgs<T>): T {
+    const fieldsString: string = buildFieldsString((fields ?? []) as string[]);
     const entityName: string = this.getEntityName();
 
     const fragment: DocumentNode = gql`
@@ -46,6 +43,8 @@ class GQLUtility<T> {
       id: `${entityName}:${id}`
     });
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore b/c we want to provide null safety.
     return camelCaseKeys(result, { deep: true }) ?? {};
   }
 

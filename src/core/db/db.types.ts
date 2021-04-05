@@ -16,7 +16,6 @@ import {
   IPayment,
   IQuestion,
   IRankedQuestion,
-  ISupporter,
   IUser
 } from './db.entities';
 
@@ -40,7 +39,6 @@ export interface IEntities {
   payments: EntityRecord<IPayment>;
   questions: EntityRecord<IQuestion>;
   rankedQuestions: EntityRecord<IRankedQuestion>;
-  supporters: EntityRecord<ISupporter>;
   users: EntityRecord<IUser>;
 }
 
@@ -60,7 +58,6 @@ export const initialEntities: IEntities = {
   payments: { byId: {} },
   questions: { byId: {} },
   rankedQuestions: { byId: {} },
-  supporters: { byId: {} },
   users: { activeId: null, byId: {} }
 };
 
@@ -97,7 +94,6 @@ export interface DbModel {
   byPaymentId: Computed<DbModel, Record<string, IPayment>>;
   byQuestionId: Computed<DbModel, Record<string, IQuestion>>;
   byRankedQuestionId: Computed<DbModel, Record<string, IRankedQuestion>>;
-  bySupporterId: Computed<DbModel, Record<string, ISupporter>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
 
   // ACTIVE STORE

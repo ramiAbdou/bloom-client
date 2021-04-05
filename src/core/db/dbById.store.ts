@@ -18,7 +18,6 @@ const dbByIdStore: Pick<
   | 'byQuestionId'
   | 'byMemberTypeId'
   | 'byRankedQuestionId'
-  | 'bySupporterId'
   | 'byUserId'
 > = {
   byApplicationId: computed(({ entities }) => entities.applications.byId),
@@ -52,8 +51,6 @@ const dbByIdStore: Pick<
   byQuestionId: computed(({ entities }) => entities.questions.byId),
 
   byRankedQuestionId: computed(({ entities }) => entities.rankedQuestions.byId),
-
-  bySupporterId: computed(({ entities }) => entities.supporters.byId),
 
   byUserId: computed(({ entities }) => entities.users.byId)
 };

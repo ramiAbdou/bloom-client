@@ -2,7 +2,8 @@ import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
-import { IEvent, IEventAttendee, IMember, ISupporter } from '@db/db.entities';
+import { IEvent, IEventAttendee, IMember } from '@db/db.entities';
+import useGQL from '@gql/useGQL';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -17,6 +18,8 @@ import { sortObjects } from '@util/util';
 
 const EventsAnalyticsTopEventGoersTable: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  const gql = useGQL();
 
   const rows: TableRow[] = useStoreState(({ db }) => {
     const pastEvents: IEvent[] = db.community.events
@@ -35,8 +38,10 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
       (acc, eventAttendee: IEventAttendee) => {
         const member: IMember = db.byMemberId[eventAttendee?.member];
 
-        const supporter: ISupporter =
-          db.bySupporterId[eventAttendee?.supporter];
+        const supporter = gql.supporters.fromCache({
+          fields: ['email', 'firstName', 'lastName'],
+          id: eventAttendee?.supporter
+        });
 
         const email: string = member?.email ?? supporter?.email;
         const firstName: string = member?.firstName ?? supporter?.firstName;

@@ -7,8 +7,7 @@ import {
   IEventAttendee,
   IEventGuest,
   IEventWatch,
-  IMember,
-  ISupporter
+  IMember
 } from '@db/db.entities';
 import { DbModel } from '@db/db.types';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
@@ -23,7 +22,8 @@ import { IndividualEventTableRowProps } from './IndividualEvent.types';
  * @param db Entire DB store.
  */
 const getIndividualEventTableAttendees = (
-  db: State<DbModel>
+  db: State<DbModel>,
+  gql: any
 ): Record<string, IndividualEventTableRowProps> => {
   if (!db.event.eventAttendees) return {};
 
@@ -32,7 +32,10 @@ const getIndividualEventTableAttendees = (
       const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
       const member: IMember = db.byMemberId[eventAttendee?.member];
 
-      const supporter: ISupporter = db.bySupporterId[eventAttendee?.supporter];
+      const supporter = gql.supporters.fromCache({
+        fields: ['email', 'firstName', 'lastName'],
+        id: eventAttendee?.supporter
+      });
 
       const email: string = member?.email ?? supporter?.email;
       const firstName: string = member?.firstName ?? supporter?.firstName;
@@ -59,9 +62,11 @@ const getIndividualEventTableAttendees = (
  * Returns a record of data for everybody who RSVP'd to the event.
  *
  * @param db Entire DB store.
+ * @param gql Entire GQL object.
  */
 const getIndividualEventTableGuests = (
-  db: State<DbModel>
+  db: State<DbModel>,
+  gql: any
 ): Record<string, IndividualEventTableRowProps> => {
   if (!db.event.eventGuests) return {};
 
@@ -69,7 +74,11 @@ const getIndividualEventTableGuests = (
     (acc: Record<string, IndividualEventTableRowProps>, guestId: string) => {
       const guest: IEventGuest = db.byEventGuestId[guestId];
       const member: IMember = db.byMemberId[guest?.member];
-      const supporter: ISupporter = db.bySupporterId[guest?.supporter];
+
+      const supporter = gql.supporters.fromCache({
+        fields: ['email', 'firstName', 'lastName'],
+        id: guest?.supporter
+      });
 
       const email: string = member?.email ?? supporter?.email;
       const firstName: string = member?.firstName ?? supporter?.firstName;
@@ -132,9 +141,12 @@ const getIndividualEventTableViewers = (
  *
  * @param db Entire DB state.
  */
-export const getIndividualEventTableRows = (db: State<DbModel>): TableRow[] => {
-  const attendeesRecord = getIndividualEventTableAttendees(db);
-  const guestsRecord = getIndividualEventTableGuests(db);
+export const getIndividualEventTableRows = (
+  db: State<DbModel>,
+  gql: any
+): TableRow[] => {
+  const attendeesRecord = getIndividualEventTableAttendees(db, gql);
+  const guestsRecord = getIndividualEventTableGuests(db, gql);
   const viewersRecord = getIndividualEventTableViewers(db);
 
   const totalRecord: Record<string, IndividualEventTableRowProps> = deepmerge(
