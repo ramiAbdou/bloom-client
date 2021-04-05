@@ -279,7 +279,7 @@ export const IMemberSchema: schema.Entity<IMember> = new schema.Entity(
   {},
   {
     mergeStrategy,
-    processStrategy: (member, parent): IMember => {
+    processStrategy: (member: IMember, parent) => {
       const processedData: Partial<IMember> = take([
         [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
         [!!parent.eventGuestId, { eventGuests: [parent.id] }],
@@ -317,7 +317,7 @@ export const IMemberIntegrationsSchema = new schema.Entity(
   'memberIntegrations',
   {},
   {
-    processStrategy: (memberIntegrations): IMemberIntegrations => {
+    processStrategy: (memberIntegrations: IMemberIntegrations) => {
       return {
         ...memberIntegrations,
         memberIntegrationsId: memberIntegrations.id
@@ -342,7 +342,7 @@ export const IMemberSocialsSchema: schema.Entity<IMemberSocials> = new schema.En
   {},
   {
     mergeStrategy,
-    processStrategy: (memberSocials): IMemberSocials => {
+    processStrategy: (memberSocials: IMemberSocials) => {
       return { ...memberSocials, memberSocialsId: memberSocials.id };
     }
   }
@@ -365,7 +365,7 @@ export const IMemberTypeSchema: schema.Entity<IMemberType> = new schema.Entity(
   'memberTypes',
   {},
   {
-    processStrategy: (memberType): IMemberType => {
+    processStrategy: (memberType: IMemberType) => {
       return { ...memberType, memberTypeId: memberType.id };
     }
   }
@@ -385,7 +385,7 @@ export const IMemberValueSchema: schema.Entity<IMemberValue> = new schema.Entity
   {},
   {
     mergeStrategy,
-    processStrategy: (memberValue): IMemberValue => {
+    processStrategy: (memberValue: IMemberValue) => {
       return { ...memberValue, memberValueId: memberValue.id };
     }
   }
@@ -411,7 +411,7 @@ export const IPaymentSchema: schema.Entity<IPayment> = new schema.Entity(
   'payments',
   {},
   {
-    processStrategy: (payment): IPayment => {
+    processStrategy: (payment: IPayment) => {
       return { ...payment, paymentId: payment.id };
     }
   }
@@ -436,7 +436,7 @@ export const IQuestionSchema: schema.Entity<IQuestion> = new schema.Entity(
   {},
   {
     mergeStrategy,
-    processStrategy: (question, parent): IQuestion => {
+    processStrategy: (question: IQuestion, parent) => {
       const processedData = take([
         [!!parent.memberValueId, { memberValues: [parent.id] }]
       ]);
@@ -459,7 +459,7 @@ export const IRankedQuestionSchema: schema.Entity<IRankedQuestion> = new schema.
   'rankedQuestions',
   {},
   {
-    processStrategy: (rankedQuestion): IRankedQuestion => {
+    processStrategy: (rankedQuestion: IRankedQuestion) => {
       return { ...rankedQuestion, rankedQuestionId: rankedQuestion.id };
     }
   }
@@ -472,15 +472,51 @@ export interface ISupporter extends BaseEntity {
   firstName: string;
   lastName: string;
   pictureUrl: string;
+
+  eventAttendees: Identifier[];
+  eventGuests: Identifier[];
+  eventWatches: Identifier[];
 }
+
+export const ISupporterSchema: schema.Entity<ISupporter> = new schema.Entity(
+  'supporters',
+  {},
+  {
+    processStrategy: (supporter: ISupporter, parent) => {
+      const processedData: Partial<ISupporter> = take([
+        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
+        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
+        [!!parent.eventWatchId, { eventWatches: [parent.id] }]
+      ]);
+
+      return { ...supporter, ...processedData, supporterId: supporter.id };
+    }
+  }
+);
 
 // ## USER
 
 export interface IUser extends BaseEntity {
   email: string;
+
   members: Identifier[];
   supporters: Identifier[];
 }
+
+export const IUserSchema: schema.Entity<IUser> = new schema.Entity(
+  'users',
+  {},
+  {
+    mergeStrategy,
+    processStrategy: (value: IUser, parent) => {
+      const processedData: Partial<IUser> = take([
+        [!!parent.memberId, { members: [parent.id] }]
+      ]);
+
+      return { ...value, ...processedData, userId: value.id };
+    }
+  }
+);
 
 export interface EntityRecord<T> {
   activeId?: string;

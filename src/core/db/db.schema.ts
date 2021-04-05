@@ -1,5 +1,3 @@
-/* eslint-disable max-lines */
-
 /**
  * @fileoverview Store: Schema
  * - Defines the normalizr schema needed to normalize all of the data based
@@ -7,9 +5,6 @@
  * to the actual PostgreSQL DB.
  */
 
-import { schema } from 'normalizr';
-
-import { take } from '@util/util';
 import {
   IApplicationSchema,
   ICommunityIntegrationsSchema,
@@ -25,42 +20,10 @@ import {
   IMemberValueSchema,
   IPaymentSchema,
   IQuestionSchema,
-  IRankedQuestionSchema
+  IRankedQuestionSchema,
+  ISupporterSchema,
+  IUserSchema
 } from './db.entities';
-import { mergeStrategy } from './db.util';
-
-// ## NORMALIZR SCHEMA DECLARATIONS
-
-const Supporter = new schema.Entity(
-  'supporters',
-  {},
-  {
-    processStrategy: (value, parent) => {
-      const processedData = take([
-        [!!parent.eventAttendeeId, { eventAttendees: [parent.id] }],
-        [!!parent.eventGuestId, { eventGuests: [parent.id] }],
-        [!!parent.eventWatchId, { eventWatches: [parent.id] }]
-      ]);
-
-      return { ...value, ...processedData, supporterId: value.id };
-    }
-  }
-);
-
-const User = new schema.Entity(
-  'users',
-  {},
-  {
-    mergeStrategy,
-    processStrategy: (value, parent) => {
-      const processedData = take([
-        [!!parent.memberId, { members: [parent.id] }]
-      ]);
-
-      return { ...value, ...processedData, userId: value.id };
-    }
-  }
-);
 
 // ## RELATIONSHIPS - Using .define({}) like this handles all of the
 // ciruclar dependencies in our code.
@@ -80,7 +43,7 @@ ICommunitySchema.define({
   owner: IMemberSchema,
   payments: [IPaymentSchema],
   questions: [IQuestionSchema],
-  supporters: [Supporter]
+  supporters: [ISupporterSchema]
 });
 
 ICommunityIntegrationsSchema.define({ community: ICommunitySchema });
@@ -95,13 +58,13 @@ IEventSchema.define({
 IEventAttendeeSchema.define({
   event: IEventSchema,
   member: IMemberSchema,
-  supporter: Supporter
+  supporter: ISupporterSchema
 });
 
 IEventGuestSchema.define({
   event: IEventSchema,
   member: IMemberSchema,
-  supporter: Supporter
+  supporter: ISupporterSchema
 });
 
 IEventWatchSchema.define({ event: IEventSchema, member: IMemberSchema });
@@ -116,7 +79,7 @@ IMemberSchema.define({
   memberType: IMemberTypeSchema,
   memberValues: [IMemberValueSchema],
   payments: [IPaymentSchema],
-  user: User
+  user: IUserSchema
 });
 
 IMemberIntegrationsSchema.define({ member: IMemberSchema });
@@ -143,12 +106,15 @@ IRankedQuestionSchema.define({
   question: IQuestionSchema
 });
 
-Supporter.define({
+ISupporterSchema.define({
   eventAttendees: [IEventAttendeeSchema],
   eventGuests: [IEventGuestSchema]
 });
 
-User.define({ members: [IMemberSchema], supporters: [Supporter] });
+IUserSchema.define({
+  members: [IMemberSchema],
+  supporters: [ISupporterSchema]
+});
 
 // We define an object that carries all the schemas to have everything
 // centralized and to reduce confusion with the Interface declarations
@@ -169,5 +135,6 @@ export const Schema = {
   PAYMENT: IPaymentSchema,
   QUESTION: IQuestionSchema,
   RANKED_QUESTION: IRankedQuestionSchema,
-  USER: User
+  SUPPORTER: ISupporterSchema,
+  USER: IUserSchema
 };
