@@ -2,8 +2,8 @@ import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Show from '@containers/Show';
-import Dropdown from '@molecules/Dropdown/Dropdown';
 import { IQuestion } from '@db/db.entities';
+import Dropdown from '@molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';

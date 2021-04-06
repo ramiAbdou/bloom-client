@@ -2,7 +2,8 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
-import { ICommunity } from '@db/db.entities';
+import { ICommunity, IEvent } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import FormLabel from '@organisms/Form/FormLabel';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
@@ -10,14 +11,13 @@ import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';
 
-const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
-  const communityName: string = useStoreState(({ db }) => {
-    const community: ICommunity = db.byCommunityId[db.event?.community];
-    return community?.name;
-  });
+const CheckInChoosePageActions: React.FC = () => {
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
-  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+  const { endTime, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'startTime'],
+    where: { id: eventId }
+  });
 
   const isUpcoming: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
@@ -25,8 +25,6 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   const setCurrentPage = StoryStore.useStoreActions(
     (state) => state.setCurrentPage
   );
-
-  if (show === false) return null;
 
   const onPrimaryClick = () => {
     setCurrentPage({ branchId: 'FINISH_MEMBER', id: 'FINISH' });
@@ -38,6 +36,29 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   };
 
   return (
+    <Row equal spacing="xs">
+      <Button primary onClick={onPrimaryClick}>
+        Yes
+      </Button>
+
+      <Button secondary onClick={onSecondaryClick}>
+        No
+      </Button>
+    </Row>
+  );
+};
+
+const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
+
+  const { name } = useFindOne(ICommunity, {
+    fields: ['name'],
+    where: { id: communityId }
+  });
+
+  if (show === false) return null;
+
+  return (
     <StoryPage
       branches={{
         IS_MEMBER: {
@@ -47,19 +68,8 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
         }
       }}
     >
-      <FormLabel
-        marginBottom={16}
-      >{`Are you a member of ${communityName}?`}</FormLabel>
-
-      <Row equal spacing="xs">
-        <Button primary onClick={onPrimaryClick}>
-          Yes
-        </Button>
-
-        <Button secondary onClick={onSecondaryClick}>
-          No
-        </Button>
-      </Row>
+      <FormLabel marginBottom={16}>{`Are you a member of ${name}?`}</FormLabel>
+      <CheckInChoosePageActions />
     </StoryPage>
   );
 };

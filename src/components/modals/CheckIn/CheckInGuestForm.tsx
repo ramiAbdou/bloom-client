@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
+import { IEvent } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormShortText from '@organisms/Form/FormShortText';
@@ -12,8 +14,12 @@ import useCreateEventAttendeeWithSupporter from './useCreateEventAttendeeWithSup
 import useCreateEventGuestWithSupporter from './useCreateEventGuestWithSupporter';
 
 const CheckInGuestFormContent: React.FC = () => {
-  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
-  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
+
+  const { endTime, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'startTime'],
+    where: { id: eventId }
+  });
 
   const isUpcoming: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
@@ -39,8 +45,12 @@ const CheckInGuestFormContent: React.FC = () => {
 };
 
 const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
-  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
-  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
+
+  const { endTime, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'startTime'],
+    where: { id: eventId }
+  });
 
   const isUpcoming: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;

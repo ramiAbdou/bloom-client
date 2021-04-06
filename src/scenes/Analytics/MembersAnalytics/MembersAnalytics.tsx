@@ -1,14 +1,30 @@
 import React from 'react';
 
 import Show from '@containers/Show';
+import { IMember } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
+import useFindFull from '@gql/useFindFull';
+import { useStoreState } from '@store/Store';
 import MembersAnalyticsCharts from './MembersAnalyticsCharts';
 import MembersAnalyticsInsights from './MembersAnalyticsInsights';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';
-import useInitMembersAnalytics from './useInitMembersAnalytics';
 
 const MembersAnalytics: React.FC = () => {
-  const { loading }: Partial<QueryResult> = useInitMembersAnalytics();
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const { loading }: Partial<QueryResult> = useFindFull(IMember, {
+    fields: [
+      'id',
+      'community.id',
+      'memberType.id',
+      'memberValues.id',
+      'memberValues.member.id',
+      'memberValues.question.id',
+      'memberValues.value',
+      'status'
+    ],
+    where: { communityId }
+  });
 
   return (
     <Show show={!loading}>

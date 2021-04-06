@@ -6,11 +6,12 @@ import Button from '@atoms/Button/Button';
 import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
 import Show from '@containers/Show';
+import { IMember, MemberRole } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { IMember, MemberRole } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/constants.errors';
@@ -46,11 +47,12 @@ const CheckInGoogleButton: React.FC = () => {
 };
 
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
-  const owner: IMember = useStoreState(({ db }) =>
-    db.community?.members
-      ?.map((memberId: string) => db.byMemberId[memberId])
-      ?.find((member: IMember) => member.role === MemberRole.OWNER)
-  );
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
+
+  const owner: IMember = useFindOne(IMember, {
+    fields: ['email', 'firstName', 'lastName'],
+    where: { communityId, role: MemberRole.OWNER }
+  });
 
   // We store the error code in a cookie.
   const error = Cookies.get(ErrorContext.LOGIN_ERROR) as ErrorType;
