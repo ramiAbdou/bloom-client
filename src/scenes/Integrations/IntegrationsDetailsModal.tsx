@@ -1,15 +1,49 @@
 import React from 'react';
 
 import Button from '@atoms/Button/Button';
+import { ICommunityIntegrations } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
-import useIntegrationsDetails from './useIntegrationsDetails';
+
+interface IntegrationsDetail {
+  label: string;
+  value: string;
+}
+
+const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const mailchimpListName: string = useStoreState(
+    ({ db }) => db.communityIntegrations.mailchimpListName
+  );
+
+  const { mailchimpListId, stripeAccountId } = useFindOne(
+    ICommunityIntegrations,
+    {
+      fields: ['mailchimpListId', 'stripeAccountId'],
+      where: { communityId }
+    }
+  );
+
+  if (name === 'Mailchimp') {
+    return [
+      { label: 'Audience/List Name', value: mailchimpListName },
+      { label: 'Audience/List ID', value: mailchimpListId }
+    ];
+  }
+
+  if (name === 'Stripe') {
+    return [{ label: 'Account ID', value: stripeAccountId }];
+  }
+  return [];
+};
 
 const IntegrationsDetailsModal: React.FC = () => {
-  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
   const { name, logo } = useStoreState(({ modal }) => modal.metadata ?? {});
-  const details = useIntegrationsDetails(name);
+  const closeModal = useStoreActions(({ modal }) => modal.closeModal);
+  const details: IntegrationsDetail[] = useIntegrationsDetails(name);
 
   return (
     <>

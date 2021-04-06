@@ -1,8 +1,8 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import { ICommunityIntegrations } from '@db/db.entities';
+import { ICommunity } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -11,21 +11,22 @@ import IntegrationCard from './IntegrationsCard';
 // Responsible for fetching and supplying all the data to the children card
 // components to process and render.
 const IntegrationsCardList: React.FC = () => {
-  const urlName = useStoreState(({ db }) => db.community.urlName);
+  const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const {
-    isMailchimpAuthenticated,
-    mailchimpListId,
-    stripeAccountId
-  } = useStoreState(
-    ({ db }) => db.communityIntegrations ?? {},
-    deepequal
-  ) as ICommunityIntegrations;
+  const { communityIntegrations, urlName } = useFindOne(ICommunity, {
+    fields: [
+      'communityIntegrations.id',
+      'communityIntegrations.mailchimpListId',
+      'communityIntegrations.stripeAccountId',
+      'urlName'
+    ],
+    where: { id: communityId }
+  });
 
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
-    isMailchimpAuthenticated,
-    mailchimpListId,
-    stripeAccountId,
+    isMailchimpAuthenticated: !!communityIntegrations.mailchimpListId,
+    mailchimpListId: communityIntegrations.mailchimpListId,
+    stripeAccountId: communityIntegrations.stripeAccountId,
     urlName
   });
 
