@@ -1,15 +1,19 @@
 import day from 'dayjs';
+import React from 'react';
 
-import { QueryResult } from '@gql/gql.types';
-import useQuery from '@gql/useQuery';
+import MainContent from '@containers/Main/MainContent';
 import { IEvent } from '@db/db.entities';
-import { Schema } from '@db/db.entities';
+import { QueryResult } from '@gql/gql.types';
+import useFindFull from '@gql/useFindFull';
 import { useStoreState } from '@store/Store';
+import EventsHeader from './EventsHeader';
+import PastEventsSection from './PastEventsSection';
+import PastEventsYourSection from './PastEventsYourSection';
 
-const useInitPastEvents = (): QueryResult<IEvent[]> => {
+const PastEvents: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const result = useQuery<IEvent[]>({
+  const { loading }: QueryResult = useFindFull(IEvent, {
     fields: [
       'community.id',
       'description',
@@ -30,12 +34,16 @@ const useInitPastEvents = (): QueryResult<IEvent[]> => {
       'summary',
       'title'
     ],
-    operation: 'events',
-    schema: [Schema.EVENT],
     where: { communityId, endTime: { _lt: day.utc().format() } }
   });
 
-  return result;
+  return (
+    <MainContent>
+      <EventsHeader />
+      <PastEventsYourSection loading={loading} />
+      <PastEventsSection loading={loading} />
+    </MainContent>
+  );
 };
 
-export default useInitPastEvents;
+export default PastEvents;

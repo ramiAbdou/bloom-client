@@ -5,12 +5,19 @@ import { useHistory } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import MainHeader from '@containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
+import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const EventsHeaderCreateEventButton: React.FC = () => {
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
 
   const showModal: ActionCreator<ModalData> = useStoreActions(
     ({ modal }) => modal.showModal
@@ -21,7 +28,7 @@ const EventsHeaderCreateEventButton: React.FC = () => {
   };
 
   return (
-    <Button primary show={isAdmin} onClick={onClick}>
+    <Button primary show={!!role} onClick={onClick}>
       Create Event
     </Button>
   );

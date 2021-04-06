@@ -2,8 +2,8 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import IndividualEvent from './IndividualEvent/IndividualEvent';
-import PastEvents from './PastEvents/PastEvents';
-import UpcomingEvents from './UpcomingEvents/UpcomingEvents';
+import PastEvents from './PastEvents';
+import UpcomingEvents from './UpcomingEvents';
 
 const Events: React.FC = () => {
   const { url } = useRouteMatch();

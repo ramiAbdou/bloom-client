@@ -2,13 +2,18 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import { IEvent, IEventAttendee, IEventGuest } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
+
+interface EventsCardPictureId {
+  memberId?: string;
+  supporterId?: string;
+}
 
 interface EventsCardPersonPictures {
-  ids?: { memberId?: string; supporterId?: string }[];
+  ids?: EventsCardPictureId[];
 }
 
 const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
@@ -29,37 +34,39 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
 const EventsCardPeople: React.FC = () => {
   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const endTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.endTime;
-  });
-
-  const startTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.startTime;
-  });
+  const { endTime, eventAttendees, eventGuests, startTime } = useFindOne(
+    IEvent,
+    {
+      fields: [
+        'endTime',
+        'eventAttendees.id',
+        'eventAttendees.member.id',
+        'eventAttendees.supporter.id',
+        'eventGuests.id',
+        'eventGuests.member.id',
+        'eventGuests.supporter.id',
+        'startTime'
+      ],
+      where: { id: eventId }
+    }
+  );
 
   const isPast: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
-  const ids = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    const people = isPast ? event?.eventAttendees : event?.eventGuests;
-
-    return people
-      ?.map((id: string) =>
-        isPast ? db.byEventAttendeeId[id] : db.byEventGuestId[id]
-      )
-      ?.reduce(
-        (acc, person: IEventGuest | IEventAttendee) => [
-          ...acc,
-          person.member
-            ? { memberId: person.member }
-            : { supporterId: person.supporter }
-        ],
-        []
-      );
-  });
+  const ids: EventsCardPictureId[] = isPast
+    ? eventAttendees.slice(0, 3).map((eventAttendee: IEventAttendee) => {
+        return {
+          memberId: eventAttendee.member?.id,
+          supporterId: eventAttendee.supporter?.id
+        };
+      })
+    : eventGuests.slice(0, 3).map((eventGuest: IEventGuest) => {
+        return {
+          memberId: eventGuest.member?.id,
+          supporterId: eventGuest.supporter?.id
+        };
+      });
 
   return (
     <Row className="s-events-card-people" show={!!ids?.length} spacing="xs">

@@ -3,6 +3,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { IEvent } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
+import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
@@ -20,19 +21,9 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
   const memberId: string = useStoreState(({ db }) => db.member?.id);
 
-  const endTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.endTime;
-  });
-
-  const recordingUrl: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.recordingUrl;
-  });
-
-  const startTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.startTime;
+  const { endTime, recordingUrl, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'recordingUrl', 'startTime'],
+    where: { id: eventId }
   });
 
   const isPast: boolean =

@@ -1,8 +1,9 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent, Schema } from '@db/db.entities';
+import { IEvent, IEventGuest, Schema } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
+import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -26,26 +27,20 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const endTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.endTime;
+  const { endTime, eventGuests, startTime } = useFindOne(IEvent, {
+    fields: [
+      'endTime',
+      'eventGuests.deletedAt',
+      'eventGuests.id',
+      'eventGuests.member.id',
+      'startTime'
+    ],
+    where: { id: eventId }
   });
 
-  const startTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.startTime;
-  });
-
-  const isGoing: boolean = useStoreState(({ db }) => {
-    const guests = new Set(
-      db.member?.eventGuests?.filter(
-        (guestId: string) => !db.byEventGuestId[guestId]?.deletedAt
-      )
-    );
-
-    const event: IEvent = db.byEventId[eventId];
-    return event?.eventGuests?.some((guestId: string) => guests.has(guestId));
-  });
+  const isGoing: boolean = eventGuests.some(
+    (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
+  );
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>

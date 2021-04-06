@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 
 import Card from '@containers/Card/Card';
 import { IEvent } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
 import { IdProps } from '@util/constants';
 import { cx, take } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
@@ -32,19 +32,9 @@ const EventsCardButton: React.FC = () => {
 const EventsCardContent: React.FC = () => {
   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const endTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.endTime;
-  });
-
-  const startTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.startTime;
-  });
-
-  const title: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.title;
+  const { endTime, startTime, title } = useFindOne(IEvent, {
+    fields: ['endTime', 'startTime', 'title'],
+    where: { id: eventId }
   });
 
   const isHappeningNow: boolean =
@@ -76,13 +66,17 @@ const EventsCardContent: React.FC = () => {
   );
 };
 
-const EventsCard: React.FC<IdProps> = ({ id }) => {
-  const imageUrl = useStoreState(({ db }) => db.byEventId[id]?.imageUrl);
+const EventsCard: React.FC<IdProps> = ({ id: eventId }) => {
   const { push } = useHistory();
-  const onClick = () => push(id);
+  const onClick = () => push(eventId);
+
+  const { imageUrl } = useFindOne(IEvent, {
+    fields: ['imageUrl'],
+    where: { id: eventId }
+  });
 
   return (
-    <IdStore.Provider runtimeModel={{ id }}>
+    <IdStore.Provider runtimeModel={{ id: eventId }}>
       <Card noPadding className="s-events-card" onClick={onClick}>
         <EventsAspectBackground imageUrl={imageUrl} />
         <EventsCardContent />
