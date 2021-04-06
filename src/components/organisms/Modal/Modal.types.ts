@@ -26,7 +26,6 @@ export const globalModals: ModalType[] = [
   ModalType.ADD_MEMBERS,
   ModalType.APPLICANT,
   ModalType.APPLICANT_CONFIRMATION,
-  ModalType.CHANGE_MEMBERSHIP,
   ModalType.CHECK_IN,
   ModalType.CREATE_EVENT,
   ModalType.EDIT_MEMBERSHIP_INFORMATION,
@@ -35,7 +34,6 @@ export const globalModals: ModalType[] = [
   ModalType.EVENT_ERROR,
   ModalType.INTEGRATIONS_DETAILS,
   ModalType.MAILCHIMP_FLOW,
-  ModalType.PAY_DUES,
   ModalType.PROFILE,
   ModalType.UPDATE_PAYMENT_METHOD
 ];

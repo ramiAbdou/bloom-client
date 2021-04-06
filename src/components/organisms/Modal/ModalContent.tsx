@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import AddMemberModal from '@modals/AddMember/AddMember';
 import CheckInModal from '@modals/CheckIn/CheckIn';
 import EventForm from '@modals/EventForm/EventForm';
-import PaymentModal from '@modals/Payment/Payment';
 import ProfileModal from '@modals/Profile/Profile';
 import ApplicantsConfirmationModal from '@scenes/Applicants/ApplicantsConfirmationModal';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
@@ -36,16 +35,6 @@ const ModalCustomContent: React.FC = () => {
 
   if (modalId === ModalType.APPLICANT_CONFIRMATION) {
     return <ApplicantsConfirmationModal />;
-  }
-
-  if (
-    [
-      ModalType.CHANGE_MEMBERSHIP,
-      ModalType.PAY_DUES,
-      ModalType.UPDATE_PAYMENT_METHOD
-    ].includes(modalId)
-  ) {
-    return <PaymentModal />;
   }
 
   if (modalId === ModalType.CHECK_IN) {
