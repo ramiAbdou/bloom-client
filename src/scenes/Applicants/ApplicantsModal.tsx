@@ -1,26 +1,23 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
+import { IMember, IMemberValue, MemberStatus } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import {
-  IMember,
-  IMemberValue,
-  IQuestion,
-  MemberStatus
-} from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
-import { sortObjects } from '@util/util';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const fullName: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return `${member?.firstName} ${member?.lastName}`;
+  const { firstName, lastName } = useFindOne(IMember, {
+    fields: ['firstName', 'lastName'],
+    where: { id: memberId }
   });
+
+  const fullName: string = `${firstName} ${lastName}`;
 
   return <h1>{fullName}</h1>;
 };
@@ -28,35 +25,42 @@ const ApplicantsModalTitle: React.FC = () => {
 const ApplicantsModalItems: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-
-    const data: IMemberValue[] = member.memberValues?.map(
-      (memberValueId: string) => db.byMemberValuesId[memberValueId]
-    );
-
-    return db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter(
-        (question: IQuestion) =>
-          !question.category || question.category === QuestionCategory.EMAIL
-      )
-      ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
-      ?.map((question: IQuestion) => {
-        const element: IMemberValue = data?.find(
-          (entity: IMemberValue) => entity.question === question.id
-        );
-
-        return {
-          title: question.title,
-          type: question.type,
-          value:
-            question.category === QuestionCategory.EMAIL
-              ? member.email
-              : element?.value
-        };
-      });
+  const { email, memberValues } = useFindOne(IMember, {
+    fields: [
+      'email',
+      'memberValues.id',
+      'memberValues.question.category',
+      'memberValues.question.id',
+      'memberValues.question.rank',
+      'memberValues.question.title',
+      'memberValues.question.type',
+      'memberValues.value'
+    ],
+    where: { id: memberId }
   });
+
+  const items: QuestionBoxItemProps[] = memberValues
+    ?.filter(
+      (memberValue: IMemberValue) =>
+        !memberValue.question.category ||
+        memberValue.question.category === QuestionCategory.GENDER ||
+        memberValue.question.category === QuestionCategory.EMAIL
+    )
+    ?.sort((a: IMemberValue, b: IMemberValue) => {
+      if (a.question.rank < b.question.rank) return -1;
+      if (a.question.rank > b.question.rank) return 1;
+      return 0;
+    })
+    ?.map((memberValue: IMemberValue) => {
+      return {
+        title: memberValue.question.title,
+        type: memberValue.question.type,
+        value:
+          memberValue.question.category === QuestionCategory.EMAIL
+            ? email
+            : memberValue.value
+      };
+    });
 
   return (
     <section className="c-modal-content-ctr">

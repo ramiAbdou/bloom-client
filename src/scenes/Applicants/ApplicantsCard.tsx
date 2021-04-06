@@ -2,18 +2,12 @@ import React from 'react';
 
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
+import { IMember, IMemberValue, MemberStatus } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import {
-  IMember,
-  IMemberValue,
-  IQuestion,
-  MemberStatus
-} from '@db/db.entities';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
-import { IdProps } from '@util/constants';
-import { sortObjects } from '@util/util';
+import { IdProps, QuestionCategory } from '@util/constants';
 import ApplicantsCardHeader from './ApplicantsCardHeader';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
@@ -38,46 +32,50 @@ const ApplicantsCardActions: React.FC = () => {
 const ApplicantsCardItems: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-
-    const data: IMemberValue[] = member.memberValues?.map(
-      (memberValueId: string) => db.byMemberValuesId[memberValueId]
-    );
-
-    return db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter((question: IQuestion) => !question?.category)
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
-      ?.map((question: IQuestion) => {
-        const element: IMemberValue = data?.find(
-          (entity: IMemberValue) => entity.question === question.id
-        );
-
-        return {
-          title: question?.title,
-          type: question?.type,
-          value: element?.value
-        };
-      })
-      ?.slice(0, 5);
+  const { memberValues } = useFindOne(IMember, {
+    fields: [
+      'memberValues.id',
+      'memberValues.question.category',
+      'memberValues.question.id',
+      'memberValues.question.rank',
+      'memberValues.question.title',
+      'memberValues.question.type',
+      'memberValues.value'
+    ],
+    where: { id: memberId }
   });
+
+  const items: QuestionBoxItemProps[] = memberValues
+    ?.filter(
+      (memberValue: IMemberValue) =>
+        !memberValue.question.category ||
+        memberValue.question.category === QuestionCategory.GENDER
+    )
+    ?.sort((a: IMemberValue, b: IMemberValue) => {
+      if (a.question.rank < b.question.rank) return -1;
+      if (a.question.rank > b.question.rank) return 1;
+      return 0;
+    })
+    ?.map((memberValue: IMemberValue) => {
+      return {
+        title: memberValue.question.title,
+        type: memberValue.question.type,
+        value: memberValue.value
+      };
+    })
+    ?.slice(0, 5);
 
   return <QuestionBox className="mb-md--nlc" items={items} />;
 };
 
-const ApplicantsCard: React.FC<IdProps> = (args) => {
-  const { id } = args;
-
-  return (
-    <IdStore.Provider runtimeModel={{ id }}>
-      <Card className="bs-bb w-100--m">
-        <ApplicantsCardHeader />
-        <ApplicantsCardItems />
-        <ApplicantsCardActions />
-      </Card>
-    </IdStore.Provider>
-  );
-};
+const ApplicantsCard: React.FC<IdProps> = ({ id: memberId }) => (
+  <IdStore.Provider runtimeModel={{ id: memberId }}>
+    <Card className="bs-bb w-100--m">
+      <ApplicantsCardHeader />
+      <ApplicantsCardItems />
+      <ApplicantsCardActions />
+    </Card>
+  </IdStore.Provider>
+);
 
 export default ApplicantsCard;

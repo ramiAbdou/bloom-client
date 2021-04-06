@@ -3,36 +3,36 @@ import React from 'react';
 import MainHeader from '@containers/Main/MainHeader';
 import Row from '@containers/Row/Row';
 import { IMember, MemberStatus } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsHeader: React.FC<LoadingProps> = ({ loading }) => {
-  const pendingApplicantIds: string[] = useStoreState(({ db }) =>
-    db.community?.members?.filter((memberId: string) => {
-      const member: IMember = db.byMemberId[memberId];
-      return member?.status === MemberStatus.PENDING;
-    })
-  );
+  const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const applicantsCount: number = pendingApplicantIds?.length;
+  const pendingMembersIds: string[] = useFind(IMember, {
+    where: { communityId, status: 'Pending' }
+  })?.map((pendingMember: IMember) => pendingMember.id);
+
+  const pendingMembersCount: number = pendingMembersIds?.length;
 
   return (
     <MainHeader
-      headerTag={!!applicantsCount && `${applicantsCount} Total`}
+      headerTag={!!pendingMembersCount && `${pendingMembersCount} Total`}
       loading={loading}
       title="Pending Applicants"
     >
       <Row spacing="xs">
         <ApplicantsRespondButton
           all
-          applicantIds={pendingApplicantIds}
+          applicantIds={pendingMembersIds}
           response={MemberStatus.ACCEPTED}
         />
 
         <ApplicantsRespondButton
           all
-          applicantIds={pendingApplicantIds}
+          applicantIds={pendingMembersIds}
           response={MemberStatus.REJECTED}
         />
       </Row>

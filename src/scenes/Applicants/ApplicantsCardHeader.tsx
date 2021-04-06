@@ -3,36 +3,35 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
-import useBreakpoint from '@hooks/useBreakpoint';
 import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
+import useBreakpoint from '@hooks/useBreakpoint';
 import IdStore from '@store/Id.store';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { ModalType } from '@util/constants';
 
 const ApplicantsCardHeaderDetails: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const createdAt: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return day(member?.createdAt).format('M/D/YY');
+  const { createdAt, firstName, lastName } = useFindOne(IMember, {
+    fields: ['createdAt', 'firstName', 'lastName'],
+    where: { id: memberId }
   });
 
-  const fullName: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return `${member?.firstName} ${member?.lastName}`;
-  });
+  const formattedCreatedAt: string = day(createdAt).format('M/D/YY');
+  const fullName: string = `${firstName} ${lastName}`;
 
   return (
     <div>
-      <p className="c-gray-2 mb-xxs meta">Applied {createdAt}</p>
+      <p className="c-gray-2 mb-xxs meta">Applied {formattedCreatedAt}</p>
       <h3>{fullName}</h3>
     </div>
   );
 };
 
 const ApplicantsCardHeaderExpandButton: React.FC = () => {
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const memberId: string = IdStore.useStoreState(({ id }) => id);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMobile: boolean = useBreakpoint() === 1;
 
   const onClick = () => {

@@ -1,11 +1,10 @@
+import { IMember, MemberStatus, Schema } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import { MutationResult } from '@gql/useBloomMutation.types';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IMember, MemberStatus } from '@db/db.entities';
-import { Schema } from '@db/db.entities';
 import { MutationEvent } from '@util/constants.events';
 
 export interface RespondToApplicantsArgs {

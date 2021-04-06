@@ -15,7 +15,7 @@ function useFind<T>(
   const entityName: string = snakeCase(pluralize(nameWithoutI));
 
   const argsString: string = buildArgsString({ where });
-  const fieldsString: string = buildFieldsString(fields as string[]);
+  const fieldsString: string = buildFieldsString((fields ?? []) as string[]);
 
   const query: DocumentNode = gql`
       query FindOne${nameWithoutI} {
