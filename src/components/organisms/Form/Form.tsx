@@ -2,6 +2,8 @@ import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
 import Show from '@containers/Show';
+import { GQL } from '@gql/gql.types';
+import useGQL from '@gql/useGQL';
 import StoryStore from '@organisms/Story/Story.store';
 import { useStore } from '@store/Store';
 import { cx } from '@util/util';
@@ -16,6 +18,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
   onSubmitDeps,
   spacing
 }) => {
+  const gql: GQL = useGQL();
   const globalStore = useStore();
 
   const items: Record<string, FormItemData> = FormStore.useStoreState(
@@ -61,6 +64,7 @@ const FormContent: React.FC<Omit<FormProps, 'questions'>> = ({
         closePanel: panel?.closePanel,
         db: globalStore.getState()?.db,
         goForward,
+        gql,
         items: validatedItems,
         setError,
         setStoryValue,

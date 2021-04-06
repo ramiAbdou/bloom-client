@@ -2,6 +2,7 @@ import { ActionCreator, State } from 'easy-peasy';
 
 import { IPaymentMethod } from '@db/db.entities';
 import { DbModel } from '@db/db.types';
+import { GQL } from '@gql/gql.types';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import {
   ClassNameProps,
@@ -65,6 +66,7 @@ export interface OnFormSubmitArgs {
   closePanel?: ActionCreator;
   db?: State<DbModel>;
   goForward?: ActionCreator;
+  gql: GQL;
   items: Record<string, FormItemData>;
   setError: ActionCreator<string>;
   setStoryValue: ActionCreator<SetValueArgs>;

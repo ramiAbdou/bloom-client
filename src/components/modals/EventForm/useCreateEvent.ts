@@ -42,7 +42,6 @@ const useCreateEvent = (): OnFormSubmitFunction => {
 
   const onSubmit = async ({
     closeModal,
-    db,
     items,
     setError,
     showToast
@@ -86,15 +85,19 @@ const useCreateEvent = (): OnFormSubmitFunction => {
       }
     }
 
-    const eventInvitees: string[] =
-      items.EVENT_NOTIFICATION?.value === `Don't Send Email`
-        ? []
-        : db.community.members;
+    // const eventInvitees: string[] =
+    //   items.EVENT_NOTIFICATION?.value === `Don't Send Email`
+    //     ? []
+    //     : (await gql.members.find({
+    //         fields: ['id'],
+    //         where: { community: { id: communityId } }
+    //       })).data;
 
     const args: CreateEventArgs = {
       description: items.EVENT_DESCRIPTION?.value as string,
       endTime,
-      eventInvitees,
+      eventInvitees: [],
+      // eventInvitees,
       imageUrl,
       privacy: items.PRIVACY?.value as any,
       startTime,

@@ -1,21 +1,21 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
+import { IEvent } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import FormCoverImage from '@organisms/Form/FormCoverImage';
 import FormLargeTitle from '@organisms/Form/FormLargeTitle';
 import FormLongText from '@organisms/Form/FormLongText';
 import FormSection from '@organisms/Form/FormSection';
 import FormShortText from '@organisms/Form/FormShortText';
-import { IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 
 const EventFormMainSection: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { description, imageUrl, summary, title }: IEvent = useStoreState(
-    ({ db }) => db.byEventId[eventId] ?? {},
-    deepequal
-  );
+  const { description, imageUrl, summary, title } = useFindOne(IEvent, {
+    fields: ['description', 'imageUrl', 'summary', 'title'],
+    where: { id: eventId }
+  });
 
   return (
     <FormSection>

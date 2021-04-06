@@ -1,17 +1,18 @@
 import React from 'react';
 
+import { EventPrivacy, IEvent } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
-import { EventPrivacy, IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 
 const EventFormPrivacySection: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const privacy: EventPrivacy = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event?.privacy;
+  const { privacy } = useFindOne(IEvent, {
+    fields: ['privacy'],
+    where: { id: eventId }
   });
 
   return (

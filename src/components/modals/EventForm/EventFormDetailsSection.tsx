@@ -2,14 +2,15 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
+import { IEvent } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import FormDate from '@organisms/Form/FormDate';
 import FormSection from '@organisms/Form/FormSection';
+import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormTime from '@organisms/Form/FormTime';
-import { IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';
-import FormSectionHeader from '../../organisms/Form/FormSectionHeader';
 
 const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
   <Show show={show}>
@@ -28,9 +29,9 @@ const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
 const EventFormDetailsSection: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const videoUrl: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event?.videoUrl;
+  const { videoUrl } = useFindOne(IEvent, {
+    fields: ['videoUrl'],
+    where: { id: eventId }
   });
 
   return (

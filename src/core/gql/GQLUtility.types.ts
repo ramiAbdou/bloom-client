@@ -1,5 +1,9 @@
+type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
+
 export interface GQLUtilityCreateArgs<T> {
-  data: Partial<T>;
+  data: RecursivePartial<T>;
   fields: string[];
 }
 
@@ -10,7 +14,7 @@ export interface GQLUtilityCreateResult<T> {
 
 export interface GQLUtilityFindOneArgs<T> {
   fields: string[];
-  where: Partial<T>;
+  where: RecursivePartial<T>;
 }
 
 export interface GQLUtilityFindOneResult<T> {
@@ -24,8 +28,8 @@ export interface GQLUtilityFromCacheArgs<T> {
 }
 
 export interface GQLUtilityUpdateArgs<T> {
-  data: Partial<T>;
-  where: Partial<T>;
+  data: RecursivePartial<T>;
+  where: RecursivePartial<T>;
 }
 
 export interface GQLUtilityUpdateResult<T> {
