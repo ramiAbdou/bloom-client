@@ -2,7 +2,8 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
-import { IEventGuest } from '@db/db.entities';
+import { IEvent, IEventGuest, IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, PanelType } from '@util/constants';
 import { EventTiming, getEventTiming } from '../Events.util';
@@ -14,9 +15,10 @@ import EventsViewRecordingButton from '../EventsViewRecordingButton';
 const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  const recordingUrl: string = useStoreState(
-    ({ db }) => db.event?.recordingUrl
-  );
+  const { recordingUrl } = useFindOne(IEvent, {
+    fields: ['recordingUrl'],
+    where: { id: eventId }
+  });
 
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
@@ -39,22 +41,29 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
 };
 
 const EventsEditEventButton: React.FC = () => {
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
-  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
   const eventId: string = useStoreState(({ db }) => db.event?.id);
-  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  const { endTime, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],
+    where: { id: eventId }
+  });
+
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
 
   const isPast: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;
-
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = () => {
     showModal({ id: ModalType.CREATE_EVENT, metadata: eventId });
   };
 
   return (
-    <Button fill large secondary show={!isPast && isAdmin} onClick={onClick}>
+    <Button fill large secondary show={!isPast && !!role} onClick={onClick}>
       Edit Event
     </Button>
   );
@@ -69,11 +78,18 @@ const EventsEditEventButton: React.FC = () => {
  * - View Event Recording (Past Event)
  */
 const IndividualEventActions: React.FC = () => {
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
   const eventId: string = useStoreState(({ db }) => db.event?.id);
-  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
-  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
-  const guests: string[] = useStoreState(({ db }) => db.event?.eventGuests);
+  const memberId: string = useStoreState(({ db }) => db.member?.id);
+
+  const { endTime, eventGuests, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],
+    where: { id: eventId }
+  });
+
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
 
   const isPast: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;
@@ -81,10 +97,8 @@ const IndividualEventActions: React.FC = () => {
   const isUpcoming: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
 
-  const isGoing: boolean = useStoreState(({ db }) =>
-    guests
-      ?.map((guestId: string) => db.byEventGuestId[guestId])
-      ?.some((guest: IEventGuest) => guest.member === db.member?.id)
+  const isGoing: boolean = eventGuests.some(
+    (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
   );
 
   return (
@@ -94,7 +108,7 @@ const IndividualEventActions: React.FC = () => {
       <EventsEditEventButton />
       <EventsShareButton large eventId={eventId} />
       <EventsViewRecordingButton large eventId={eventId} />
-      <EventsAddRecordingButton show={isPast && isAdmin} />
+      <EventsAddRecordingButton show={isPast && !!role} />
     </Row>
   );
 };

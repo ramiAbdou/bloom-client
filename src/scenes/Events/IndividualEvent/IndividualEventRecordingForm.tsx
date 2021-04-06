@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { IEvent } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
+import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
@@ -9,10 +11,13 @@ import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventRecordingForm: React.FC = () => {
+  const eventId: string = useStoreState(({ panel }) => panel.metadata);
   const gql: GQL = useGQL();
 
-  const eventId = useStoreState(({ panel }) => panel.metadata);
-  const recordingUrl = useStoreState(({ db }) => db.event?.recordingUrl);
+  const { recordingUrl } = useFindOne(IEvent, {
+    fields: ['recordingUrl'],
+    where: { id: eventId }
+  });
 
   const onSubmit = async ({
     closePanel,

@@ -3,9 +3,8 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
-import { IEventGuest, IMember, ISupporter } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
+import { IEvent, IEventGuest } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
@@ -16,36 +15,31 @@ import { cx, sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
 
 const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
-  const gql: GQL = useGQL();
-
   const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
-  const memberId: string = useStoreState(({ db }) => {
-    const guest: IEventGuest = db.byEventGuestId[guestId];
-    return guest?.member;
+  const { member, supporter }: IEventGuest = useFindOne(IEventGuest, {
+    fields: [
+      'member.firstName',
+      'member.id',
+      'member.lastName',
+      'supporter.firstName',
+      'supporter.id',
+      'supporter.lastName'
+    ],
+    where: { id: guestId }
   });
 
-  const supporterId: string = useStoreState(({ db }) => {
-    const guest: IEventGuest = db.byEventGuestId[guestId];
-    return guest?.supporter;
-  });
-
-  const fullName: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    const supporter: ISupporter = gql.supporters.fromCache({ id: supporterId });
-    const firstName: string = member?.firstName ?? supporter?.firstName;
-    const lastName: string = member?.lastName ?? supporter?.lastName;
-
-    return `${firstName} ${lastName}`;
-  });
+  const firstName: string = member?.firstName ?? supporter?.firstName;
+  const lastName: string = member?.lastName ?? supporter?.lastName;
+  const fullName: string = `${firstName} ${lastName}`;
 
   const showModal: ActionCreator<ModalData> = useStoreActions(
     ({ modal }) => modal.showModal
   );
 
   const onClick = (): void => {
-    if (isMember && memberId) {
-      showModal({ id: ModalType.PROFILE, metadata: memberId });
+    if (isMember && member.id) {
+      showModal({ id: ModalType.PROFILE, metadata: member.id });
     }
   };
 
@@ -57,9 +51,9 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
     <Button className={css} onClick={onClick}>
       <ProfilePicture
         fontSize={16}
-        memberId={memberId}
+        memberId={member.id}
         size={36}
-        supporterId={supporterId}
+        supporterId={supporter.id}
       />
 
       <p className="body--bold">{fullName}</p>
@@ -68,22 +62,26 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
 };
 
 const IndividualEventGuestListContent: React.FC = () => {
-  const guests: IdProps[] = useStoreState(({ db }) =>
-    db.event?.eventGuests
-      ?.map((guestId: string) => db.byEventGuestId[guestId])
-      ?.sort((a: IEventGuest, b: IEventGuest) => sortObjects(a, b, 'createdAt'))
-      ?.map((guest: IEventGuest) => {
-        return { id: guest.id };
-      })
-  );
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
+
+  const { eventGuests }: IEvent = useFindOne(IEvent, {
+    fields: ['eventGuests.createdAt', 'eventGuests.id'],
+    where: { id: eventId }
+  });
+
+  const sortedEventGuests: IdProps[] = eventGuests
+    ?.sort((a: IEventGuest, b: IEventGuest) => sortObjects(a, b, 'createdAt'))
+    ?.map((eventGuest: IEventGuest) => {
+      return { id: eventGuest.id };
+    });
 
   return (
     <>
-      {!guests?.length && <p>No guests have RSVP'd yet.</p>}
+      {!sortedEventGuests?.length && <p>No guests have RSVP'd yet.</p>}
 
       <List
         className="s-events-card-ctr"
-        items={guests}
+        items={sortedEventGuests}
         render={IndividualEventGuest}
       />
     </>
@@ -91,12 +89,14 @@ const IndividualEventGuestListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const endTime: string = useStoreState(({ db }) => db.event?.endTime);
-  const startTime: string = useStoreState(({ db }) => db.event?.startTime);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  const numGuests: number = useStoreState(
-    ({ db }) => db.event?.eventGuests?.length
-  );
+  const { endTime, eventGuests, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'eventGuests.id', 'startTime'],
+    where: { id: eventId }
+  });
+
+  const guestsCount: number = eventGuests?.length;
 
   const hasEventFinished: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;
@@ -104,7 +104,7 @@ const IndividualEventGuestList: React.FC = () => {
   return (
     <Card
       className="s-events-individual-card"
-      headerTag={numGuests ? `${numGuests} Going` : null}
+      headerTag={guestsCount ? `${guestsCount} Going` : null}
       show={!hasEventFinished}
       title="Guest List"
     >

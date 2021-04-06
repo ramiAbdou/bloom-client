@@ -2,8 +2,9 @@ import React from 'react';
 
 import Section from '@containers/Section';
 import Show from '@containers/Show';
-import { GQL, QueryResult } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
+import { IEvent, IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
+import useFindOneFull from '@gql/useFindOneFull';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -14,24 +15,16 @@ import TableContent from '@organisms/Table/TableContent';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import {
-  getIndividualEventTableColumns,
-  getIndividualEventTableRows
+  useIndividualEventTableColumns,
+  useIndividualEventTableRows
 } from './IndividualEvent.util';
 import IndividualEventTableActions from './IndividualEventTableActions';
-import useInitIndividualEventTable from './useInitIndividualEventTable';
 
 const IndividualEventTableContent: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const gql: GQL = useGQL();
-
-  const rows: TableRow[] = useStoreState(({ db }) =>
-    getIndividualEventTableRows(db, gql)
-  );
-
-  const columns: TableColumn[] = useStoreState(({ db }) =>
-    getIndividualEventTableColumns(db)
-  );
+  const rows: TableRow[] = useIndividualEventTableRows();
+  const columns: TableColumn[] = useIndividualEventTableColumns();
 
   const options: TableOptions = {
     hideIfEmpty: true,
@@ -55,19 +48,48 @@ const IndividualEventTableContent: React.FC = () => {
 };
 
 const IndividualEventTable: React.FC = () => {
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
+  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  const hasEventContent: boolean = useStoreState(
-    ({ db }) =>
-      !!db.event?.eventAttendees?.length ||
-      !!db.event?.eventGuests?.length ||
-      !!db.event?.eventWatches?.length
-  );
+  const { data: event, loading } = useFindOneFull(IEvent, {
+    fields: [
+      'eventAttendees.createdAt',
+      'eventAttendees.event.id',
+      'eventAttendees.id',
+      'eventAttendees.member.email',
+      'eventAttendees.member.id',
+      'eventAttendees.member.firstName',
+      'eventAttendees.member.lastName',
+      'eventAttendees.member.pictureUrl',
+      'eventAttendees.supporter.email',
+      'eventAttendees.supporter.id',
+      'eventAttendees.supporter.firstName',
+      'eventAttendees.supporter.lastName',
+      'eventWatches.createdAt',
+      'eventWatches.event.id',
+      'eventWatches.id',
+      'eventWatches.member.email',
+      'eventWatches.member.id',
+      'eventWatches.member.firstName',
+      'eventWatches.member.lastName',
+      'eventWatches.member.pictureUrl',
+      'id'
+    ],
+    where: { id: eventId }
+  });
 
-  const { loading }: Partial<QueryResult> = useInitIndividualEventTable();
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
+  const hasEventContent: boolean =
+    !!event?.eventAttendees?.length ||
+    !!event?.eventGuests?.length ||
+    !!event?.eventWatches?.length;
 
   return (
-    <Show show={!!isAdmin && !loading && hasEventContent}>
+    <Show show={!!role && !loading && hasEventContent}>
       <IndividualEventTableContent />
     </Show>
   );

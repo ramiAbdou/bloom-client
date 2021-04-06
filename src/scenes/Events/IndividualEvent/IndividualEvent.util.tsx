@@ -1,18 +1,17 @@
 import day from 'dayjs';
 import deepmerge from 'deepmerge';
-import { State } from 'easy-peasy';
 import React from 'react';
 
 import {
+  IEvent,
   IEventAttendee,
   IEventGuest,
-  IEventWatch,
-  IMember,
-  ISupporter
+  IEventWatch
 } from '@db/db.entities';
-import { DbModel } from '@db/db.types';
+import useFindOne from '@gql/useFindOne';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
+import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
@@ -22,25 +21,36 @@ import { IndividualEventTableRowProps } from './IndividualEvent.types';
  *
  * @param db Entire DB store.
  */
-const getIndividualEventTableAttendees = (
-  db: State<DbModel>,
-  gql: any
-): Record<string, IndividualEventTableRowProps> => {
-  if (!db.event.eventAttendees) return {};
+const useIndividualEventTableAttendees = (): Record<
+  string,
+  IndividualEventTableRowProps
+> => {
+  const eventId: string = useStoreState(({ db }) => db.event.id);
 
-  return db.event.eventAttendees.reduce(
-    (acc: Record<string, IndividualEventTableRowProps>, attendeeId: string) => {
-      const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
+  const { eventAttendees } = useFindOne(IEvent, {
+    fields: [
+      'eventAttendees.createdAt',
+      'eventAttendees.id',
+      'eventAttendees.member.email',
+      'eventAttendees.member.firstName',
+      'eventAttendees.member.id',
+      'eventAttendees.member.lastName',
+      'eventAttendees.supporter.email',
+      'eventAttendees.supporter.firstName',
+      'eventAttendees.supporter.id',
+      'eventAttendees.supporter.lastName'
+    ],
+    where: { id: eventId }
+  });
 
-      const member: IMember = gql.supporters.fromCache({
-        fields: ['email', 'firstName', 'lastName'],
-        id: eventAttendee?.member
-      });
+  if (!eventAttendees) return {};
 
-      const supporter: ISupporter = gql.supporters.fromCache({
-        fields: ['email', 'firstName', 'lastName'],
-        id: eventAttendee?.supporter
-      });
+  return eventAttendees.reduce(
+    (
+      acc: Record<string, IndividualEventTableRowProps>,
+      eventAttendee: IEventAttendee
+    ) => {
+      const { member, supporter } = eventAttendee;
 
       const email: string = member?.email ?? supporter?.email;
       const firstName: string = member?.firstName ?? supporter?.firstName;
@@ -52,7 +62,7 @@ const getIndividualEventTableAttendees = (
       const data: IndividualEventTableRowProps = {
         email,
         fullName: `${firstName} ${lastName}`,
-        id: eventAttendee?.member,
+        id: member?.id ?? supporter?.id,
         joinedAt: eventAttendee.createdAt,
         watched: false
       };
@@ -65,25 +75,37 @@ const getIndividualEventTableAttendees = (
 
 /**
  * Returns a record of data for everybody who RSVP'd to the event.
- *
- * @param db Entire DB store.
- * @param gql Entire GQL object.
  */
-const getIndividualEventTableGuests = (
-  db: State<DbModel>,
-  gql: any
-): Record<string, IndividualEventTableRowProps> => {
-  if (!db.event.eventGuests) return {};
+const useIndividualEventTableGuests = (): Record<
+  string,
+  IndividualEventTableRowProps
+> => {
+  const eventId: string = useStoreState(({ db }) => db.event.id);
 
-  return db.event.eventGuests.reduce(
-    (acc: Record<string, IndividualEventTableRowProps>, guestId: string) => {
-      const guest: IEventGuest = db.byEventGuestId[guestId];
-      const member: IMember = db.byMemberId[guest?.member];
+  const { eventGuests } = useFindOne(IEvent, {
+    fields: [
+      'eventGuests.createdAt',
+      'eventGuests.id',
+      'eventGuests.member.email',
+      'eventGuests.member.firstName',
+      'eventGuests.member.id',
+      'eventGuests.member.lastName',
+      'eventGuests.supporter.email',
+      'eventGuests.supporter.firstName',
+      'eventGuests.supporter.id',
+      'eventGuests.supporter.lastName'
+    ],
+    where: { id: eventId }
+  });
 
-      const supporter = gql.supporters.fromCache({
-        fields: ['email', 'firstName', 'lastName'],
-        id: guest?.supporter
-      });
+  if (!eventGuests) return {};
+
+  return eventGuests.reduce(
+    (
+      acc: Record<string, IndividualEventTableRowProps>,
+      eventGuest: IEventGuest
+    ) => {
+      const { member, supporter } = eventGuest;
 
       const email: string = member?.email ?? supporter?.email;
       const firstName: string = member?.firstName ?? supporter?.firstName;
@@ -94,8 +116,8 @@ const getIndividualEventTableGuests = (
       const data: IndividualEventTableRowProps = {
         email,
         fullName: `${firstName} ${lastName}`,
-        id: guest?.member,
-        rsvpdAt: guest.createdAt,
+        id: member?.id ?? supporter?.id,
+        rsvpdAt: eventGuest.createdAt,
         watched: false
       };
 
@@ -107,30 +129,43 @@ const getIndividualEventTableGuests = (
 
 /**
  * Returns a record of data for everybody who viewed the event recording.
- *
- * @param db Entire DB store.
  */
-const getIndividualEventTableViewers = (
-  db: State<DbModel>,
-  gql: any
-): Record<string, IndividualEventTableRowProps> => {
-  if (!db.event.eventWatches) return {};
+const useIndividualEventTableWatchers = (): Record<
+  string,
+  IndividualEventTableRowProps
+> => {
+  const eventId: string = useStoreState(({ db }) => db.event.id);
 
-  return db.event.eventWatches.reduce(
-    (acc: Record<string, IndividualEventTableRowProps>, watchId: string) => {
-      const eventWatch: IEventWatch = gql.eventWatches.fromCache({
-        id: watchId
-      });
+  const { eventWatches } = useFindOne(IEvent, {
+    fields: [
+      'eventWatches.createdAt',
+      'eventWatches.id',
+      'eventWatches.member.email',
+      'eventWatches.member.firstName',
+      'eventWatches.member.id',
+      'eventWatches.member.lastName'
+    ],
+    where: { id: eventId }
+  });
 
-      const member: IMember = db.byMemberId[eventWatch?.member];
+  if (!eventWatches) return {};
 
-      const { email } = member ?? {};
+  return eventWatches.reduce(
+    (
+      acc: Record<string, IndividualEventTableRowProps>,
+      eventWatch: IEventWatch
+    ) => {
+      const { member } = eventWatch;
+
+      const email: string = member?.email;
+      const firstName: string = member?.firstName;
+      const lastName: string = member?.lastName;
 
       if (acc[email]) return acc;
 
       const data: IndividualEventTableRowProps = {
         email,
-        fullName: `${member.firstName} ${member.lastName}`,
+        fullName: `${firstName} ${lastName}`,
         id: member?.id,
         watched: true
       };
@@ -147,20 +182,26 @@ const getIndividualEventTableViewers = (
  *  - RSVP'd to the event.
  *  - Joined the event.
  *  - Viewed the event recording.
- *
- * @param db Entire DB state.
  */
-export const getIndividualEventTableRows = (
-  db: State<DbModel>,
-  gql: any
-): TableRow[] => {
-  const attendeesRecord = getIndividualEventTableAttendees(db, gql);
-  const guestsRecord = getIndividualEventTableGuests(db, gql);
-  const viewersRecord = getIndividualEventTableViewers(db, gql);
+export const useIndividualEventTableRows = (): TableRow[] => {
+  const eventAttendeesRecord: Record<
+    string,
+    IndividualEventTableRowProps
+  > = useIndividualEventTableAttendees();
+
+  const eventGuestsRecord: Record<
+    string,
+    IndividualEventTableRowProps
+  > = useIndividualEventTableGuests();
+
+  const eventWatchersRecord: Record<
+    string,
+    IndividualEventTableRowProps
+  > = useIndividualEventTableWatchers();
 
   const totalRecord: Record<string, IndividualEventTableRowProps> = deepmerge(
-    deepmerge(attendeesRecord, guestsRecord),
-    viewersRecord
+    deepmerge(eventAttendeesRecord, eventGuestsRecord),
+    eventWatchersRecord
   );
 
   if (!totalRecord) return null;
@@ -176,15 +217,14 @@ export const getIndividualEventTableRows = (
  * Returns an array of Table columns to render for the Individual event.
  * Depends upon the start time of the event whether or not to show joinedAt,
  * and viewedRecording columns.
- *
- * @param db Entire DB state.
  */
-export const getIndividualEventTableColumns = (
-  db: State<DbModel>
-): TableColumn[] => {
-  const endTime: string = db.event?.endTime;
-  const recordingUrl: string = db.event?.recordingUrl;
-  const startTime: string = db.event?.startTime;
+export const useIndividualEventTableColumns = (): TableColumn[] => {
+  const eventId: string = useStoreState(({ db }) => db.event.id);
+
+  const { endTime, recordingUrl, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'recordingUrl', 'startTime'],
+    where: { id: eventId }
+  });
 
   const isUpcoming: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;

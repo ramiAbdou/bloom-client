@@ -2,16 +2,22 @@ import day from 'dayjs';
 import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { EventPrivacy } from '@db/db.entities';
+import { EventPrivacy, IEvent } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
 
 const IndividualEventMainHeaderContainer: React.FC = () => {
-  const endTime = useStoreState(({ db }) => db.event?.endTime);
-  const startTime = useStoreState(({ db }) => db.event?.startTime);
-  const startDay = day(startTime).format('dddd, MMMM Do');
-  const startHour = day(startTime).format('h:mm A');
-  const endHour = day(endTime).format('h:mm A z');
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
+
+  const { endTime, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'startTime'],
+    where: { id: eventId }
+  });
+
+  const startDay: string = day(startTime).format('dddd, MMMM Do');
+  const startHour: string = day(startTime).format('h:mm A');
+  const endHour: string = day(endTime).format('h:mm A z');
 
   return (
     <div className="s-events-individual-header-date">
@@ -22,27 +28,26 @@ const IndividualEventMainHeaderContainer: React.FC = () => {
 };
 
 const IndividualEventMain: React.FC = () => {
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
   const isMember = useStoreState(({ db }) => db.isMember);
 
-  const isPrivate = useStoreState(
-    ({ db }) => db.event?.privacy === EventPrivacy.MEMBERS_ONLY
-  );
-
-  const summary = useStoreState(({ db }) => db.event?.summary);
-  const title = useStoreState(({ db }) => db.event?.title);
-
-  const communityName: string = useStoreState(
-    ({ db }) => db.byCommunityId[db.event?.community]?.name
-  );
+  const { community, privacy, summary, title } = useFindOne(IEvent, {
+    fields: ['community.id', 'community.name', 'privacy', 'summary', 'title'],
+    where: { id: eventId }
+  });
 
   return (
     <div className="s-events-individual-header-content">
       <div>
         <IndividualEventMainHeaderContainer />
         <h1>{title}</h1>
-        {!isMember && <p className="meta">Hosted by {communityName}</p>}
+        {!isMember && <p className="meta">Hosted by {community.name}</p>}
         {summary && <p>{summary}</p>}
-        <HeaderTag>{isPrivate ? 'Members Only' : 'Open to All'} </HeaderTag>
+        <HeaderTag>
+          {privacy === EventPrivacy.MEMBERS_ONLY
+            ? 'Members Only'
+            : 'Open to All'}{' '}
+        </HeaderTag>
       </div>
 
       <IndividualEventActions />

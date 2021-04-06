@@ -1,10 +1,17 @@
 import React from 'react';
 
 import Card from '@containers/Card/Card';
+import { IEvent } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventAbout: React.FC = () => {
-  const description: string = useStoreState(({ db }) => db.event?.description);
+  const eventId: string = useStoreState(({ db }) => db.event.id);
+
+  const { description } = useFindOne(IEvent, {
+    fields: ['description'],
+    where: { id: eventId }
+  });
 
   return (
     <Card className="s-events-individual-card" title="About This Event">

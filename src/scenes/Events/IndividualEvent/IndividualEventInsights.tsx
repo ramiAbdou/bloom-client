@@ -4,17 +4,21 @@ import Separator from '@atoms/Separator';
 import GrayCard from '@containers/Card/GrayCard';
 import Row from '@containers/Row/Row';
 import Section from '@containers/Section';
+import { IEvent, IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
-  const endTime: string = useStoreState(({ db }) => db.event.startTime);
-  const startTime: string = useStoreState(({ db }) => db.event.startTime);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  const numAttendees: number = useStoreState(
-    ({ db }) => db.event.eventAttendees?.length
-  );
+  const { endTime, eventAttendees, startTime } = useFindOne(IEvent, {
+    fields: ['endTime', 'eventAttendees.id', 'startTime'],
+    where: { id: eventId }
+  });
+
+  const attendeesCount: number = eventAttendees?.length;
 
   const isUpcoming: boolean =
     getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
@@ -23,35 +27,53 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
     <GrayCard
       label="# of Attendees"
       show={!isUpcoming}
-      value={numAttendees ?? 0}
+      value={attendeesCount ?? 0}
     />
   );
 };
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
-  const numGuests = useStoreState(({ db }) => db.event.eventGuests?.length);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
 
-  return <GrayCard label="# of RSVPs" value={numGuests ?? 0} />;
+  const { eventGuests } = useFindOne(IEvent, {
+    fields: ['endTime', 'eventGuests.id', 'startTime'],
+    where: { id: eventId }
+  });
+
+  const guestsCount: number = eventGuests?.length;
+
+  return <GrayCard label="# of RSVPs" value={guestsCount ?? 0} />;
 };
 
 const IndividualEventInsightsWatchesCard: React.FC = () => {
-  const recordingUrl = useStoreState(({ db }) => db.event.recordingUrl);
-  const numWatches = useStoreState(({ db }) => db.event.eventWatches?.length);
+  const eventId: string = useStoreState(({ db }) => db.event?.id);
+
+  const { eventWatches, recordingUrl } = useFindOne(IEvent, {
+    fields: ['eventWatches.id', 'recordingUrl'],
+    where: { id: eventId }
+  });
+
+  const watchesCount: number = eventWatches?.length;
 
   return (
     <GrayCard
       label="# of Recording Viewers"
       show={!!recordingUrl}
-      value={numWatches ?? 0}
+      value={watchesCount ?? 0}
     />
   );
 };
 
 const IndividualEventInsights: React.FC = () => {
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
+  const memberId: string = useStoreState(({ db }) => db.member?.id);
+
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
 
   return (
-    <Section className="s-events-individual-insights" show={!!isAdmin}>
+    <Section className="s-events-individual-insights" show={!!role}>
       <SidebarHamburgerButton />
 
       <Row spacing="sm">
