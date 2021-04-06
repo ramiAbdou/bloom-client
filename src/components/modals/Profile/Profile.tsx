@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Show from '@containers/Show';
-import { IMember } from '@db/db.entities';
-import { Schema } from '@db/db.entities';
+import { IMember, Schema } from '@db/db.entities';
 import useLazyQuery from '@gql/useLazyQuery';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';

@@ -46,7 +46,7 @@ export class IApplication extends BaseEntity {
 
   title: string;
 
-  community: Identifier;
+  community: ICommunity;
 
   rankedQuestions: IRankedQuestion[];
 }
@@ -85,25 +85,25 @@ export class ICommunity extends BaseEntity {
 
   urlName: string;
 
-  application?: Identifier;
+  application?: IApplication;
 
-  communityIntegrations: Identifier;
+  communityIntegrations: ICommunityIntegrations;
 
-  events?: Identifier[];
+  events?: IEvent[];
 
-  highlightedQuestion: Identifier;
+  highlightedQuestion: IQuestion;
 
-  memberTypes: Identifier[];
+  memberTypes: IMemberType[];
 
-  members: Identifier[];
+  members: IMember[];
 
-  payments: Identifier[];
+  payments: IPayment[];
 
-  questions: Identifier[];
+  questions: IQuestion[];
 
-  owner?: Identifier;
+  owner?: IMember;
 
-  supporters: Identifier[];
+  supporters: ISupporter[];
 }
 
 export const ICommunitySchema: schema.Entity<ICommunity> = new schema.Entity(
@@ -143,7 +143,7 @@ export class ICommunityIntegrations extends BaseEntity {
 
   stripeAccountId: string;
 
-  community: Identifier;
+  community: ICommunity;
 }
 
 export const ICommunityIntegrationsSchema = new schema.Entity(
@@ -185,15 +185,15 @@ export class IEvent extends BaseEntity {
 
   videoUrl: string;
 
-  community: Identifier;
+  community: ICommunity;
 
-  eventAttendees: Identifier[];
+  eventAttendees: IEventAttendee[];
 
-  eventGuests: Identifier[];
+  eventGuests: IEventGuest[];
 
-  eventInvitees?: Identifier[];
+  eventInvitees?: string[];
 
-  eventWatches: Identifier[];
+  eventWatches: IEventWatch[];
 }
 
 export const IEventSchema: schema.Entity<IEvent> = new schema.Entity(
@@ -217,11 +217,11 @@ export const IEventSchema: schema.Entity<IEvent> = new schema.Entity(
 // ## EVENT ATTENDEE
 
 export class IEventAttendee extends BaseEntity {
-  event: Identifier;
+  event: IEvent;
 
-  member?: Identifier;
+  member?: IMember;
 
-  supporter?: Identifier;
+  supporter?: ISupporter;
 }
 
 export const IEventAttendeeSchema: schema.Entity<IEventAttendee> = new schema.Entity(
@@ -241,11 +241,11 @@ export const IEventAttendeeSchema: schema.Entity<IEventAttendee> = new schema.En
 // ## EVENT GUEST
 
 export class IEventGuest extends BaseEntity {
-  event: Identifier;
+  event: IEvent;
 
-  member?: Identifier;
+  member?: IMember;
 
-  supporter?: Identifier;
+  supporter?: ISupporter;
 }
 
 export const IEventGuestSchema: schema.Entity<IEventGuest> = new schema.Entity(
@@ -262,9 +262,9 @@ export const IEventGuestSchema: schema.Entity<IEventGuest> = new schema.Entity(
 // ## EVENT WATCH
 
 export class IEventWatch extends BaseEntity {
-  event: Identifier;
+  event: IEvent;
 
-  member: Identifier;
+  member: IMember;
 }
 
 export const IEventWatchSchema: schema.Entity<IEventWatch> = new schema.Entity(
@@ -311,25 +311,25 @@ export class IMember extends BaseEntity {
 
   status: MemberStatus;
 
-  community: Identifier;
+  community: ICommunity;
 
-  eventAttendees: Identifier[];
+  eventAttendees: IEventAttendee[];
 
-  eventGuests: Identifier[];
+  eventGuests: IEventGuest[];
 
-  eventWatches: Identifier[];
+  eventWatches: IEventWatch[];
 
-  memberIntegrations: Identifier;
+  memberIntegrations: IMemberIntegrations;
 
-  memberSocials: Identifier;
+  memberSocials: IMemberSocials;
 
-  memberType: Identifier;
+  memberType: IMemberType;
 
-  memberValues: Identifier[];
+  memberValues: IMemberValue[];
 
-  payments: Identifier[];
+  payments: IPayment[];
 
-  user: Identifier;
+  user: IUser;
 }
 
 export const IMemberSchema: schema.Entity<IMember> = new schema.Entity(
@@ -370,7 +370,7 @@ export class IMemberIntegrations extends BaseEntity {
 
   stripeSubscriptionId?: string;
 
-  member: Identifier;
+  member: IMember;
 }
 
 export const IMemberIntegrationsSchema = new schema.Entity(
@@ -397,7 +397,7 @@ export class IMemberSocials extends BaseEntity {
 
   twitterUrl: string;
 
-  member: Identifier;
+  member: IMember;
 }
 
 export const IMemberSocialsSchema: schema.Entity<IMemberSocials> = new schema.Entity(
@@ -441,9 +441,9 @@ export const IMemberTypeSchema: schema.Entity<IMemberType> = new schema.Entity(
 export class IMemberValue extends BaseEntity {
   value: string;
 
-  member: Identifier;
+  member: IMember;
 
-  question: Identifier;
+  question: IQuestion;
 }
 
 export const IMemberValueSchema: schema.Entity<IMemberValue> = new schema.Entity(
@@ -471,9 +471,9 @@ export class IPayment extends BaseEntity {
 
   type: PaymentType;
 
-  member: Identifier;
+  member: IMember;
 
-  memberType: Identifier;
+  memberType: IMemberType;
 }
 
 export const IPaymentSchema: schema.Entity<IPayment> = new schema.Entity(
@@ -503,7 +503,7 @@ export class IQuestion extends BaseEntity {
 
   type: QuestionType;
 
-  memberValues?: Identifier[];
+  memberValues?: IMemberValue[];
 }
 
 export const IQuestionSchema: schema.Entity<IQuestion> = new schema.Entity(
@@ -526,7 +526,7 @@ export const IQuestionSchema: schema.Entity<IQuestion> = new schema.Entity(
 export class IRankedQuestion extends BaseEntity {
   rank: number;
 
-  application?: Identifier;
+  application?: IApplication;
 
   question: IQuestion;
 }
@@ -552,11 +552,11 @@ export class ISupporter extends BaseEntity {
 
   pictureUrl: string;
 
-  eventAttendees: Identifier[];
+  eventAttendees: IEventAttendee[];
 
-  eventGuests: Identifier[];
+  eventGuests: IEventGuest[];
 
-  eventWatches: Identifier[];
+  eventWatches: IEventWatch[];
 }
 
 export const ISupporterSchema: schema.Entity<ISupporter> = new schema.Entity(
@@ -580,9 +580,9 @@ export const ISupporterSchema: schema.Entity<ISupporter> = new schema.Entity(
 export class IUser extends BaseEntity {
   email: string;
 
-  members: Identifier[];
+  members: IMember[];
 
-  supporters: Identifier[];
+  supporters: ISupporter[];
 }
 
 export const IUserSchema: schema.Entity<IUser> = new schema.Entity(
@@ -704,12 +704,10 @@ export const Schema = {
   EVENT_WATCH: IEventWatchSchema,
   MEMBER: IMemberSchema,
   MEMBER_INTEGRATIONS: IMemberIntegrationsSchema,
-  MEMBER_SOCIALS: IMemberSocialsSchema,
   MEMBER_TYPE: IMemberTypeSchema,
   MEMBER_VALUE: IMemberValueSchema,
   PAYMENT: IPaymentSchema,
   QUESTION: IQuestionSchema,
   RANKED_QUESTION: IRankedQuestionSchema,
-  SUPPORTER: ISupporterSchema,
   USER: IUserSchema
 };

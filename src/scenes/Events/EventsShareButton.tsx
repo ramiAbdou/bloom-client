@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent } from '@db/db.entities';
+import { IEvent, IEventGuest } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { APP } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
@@ -14,36 +15,31 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   eventId,
   large
 }) => {
-  const endTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.endTime;
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const event: IEvent = useFindOne(IEvent, {
+    fields: [
+      'community.id',
+      'community.urlName',
+      'endTime',
+      'eventGuests.deletedAt',
+      'eventGuests.id',
+      'eventGuests.member.id',
+      'startTime'
+    ],
+    where: { id: eventId }
   });
 
-  const eventUrl: string = useStoreState(
-    ({ db }) => `${APP.CLIENT_URL}/${db.community.urlName}/events/${eventId}`
+  const eventUrl: string = `${APP.CLIENT_URL}/${event.community.urlName}/events/${eventId}`;
+
+  const isGoing: boolean = event.eventGuests.some(
+    (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
   );
-
-  const startTime: string = useStoreState(({ db }) => {
-    const event: IEvent = db.byEventId[eventId];
-    return event.startTime;
-  });
-
-  const isGoing: boolean = useStoreState(({ db }) => {
-    const guests = new Set(
-      db.member?.eventGuests?.filter(
-        (guestId: string) => !db.byEventGuestId[guestId]?.deletedAt
-      )
-    );
-
-    const event: IEvent = db.byEventId[eventId];
-    return event?.eventGuests?.some((guestId: string) => guests.has(guestId));
-  });
 
   const isAdmin = useStoreState(({ db }) => !!db.member?.role);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
-  const isUpcoming: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();

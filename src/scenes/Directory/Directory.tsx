@@ -1,17 +1,36 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
+import { ICommunity } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
+import useFindOneWithLoading from '@gql/useFindOneWithLoading';
 import ListStore from '@organisms/List/List.store';
 import ListFilterStore from '@organisms/List/ListFilter/ListFilter.store';
 import PanelLocal from '@organisms/Panel/PanelLocal';
+import { useStoreState } from '@store/Store';
 import DirectoryActions from './DirectoryActions';
 import DirectoryCardList from './DirectoryCardList';
 import DirectoryHeader from './DirectoryHeader';
-import useInitDirectory from './useInitDirectory';
 
 const Directory: React.FC = () => {
-  const { loading }: Partial<QueryResult> = useInitDirectory();
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const { loading }: Partial<QueryResult> = useFindOneWithLoading(ICommunity, {
+    fields: [
+      'id',
+      'members.id',
+      'members.bio',
+      'members.email',
+      'members.firstName',
+      'members.lastName',
+      'members.joinedAt',
+      'members.pictureUrl',
+      'members.position',
+      'members.role',
+      'members.status'
+    ],
+    where: { id: communityId }
+  });
 
   return (
     <ListStore.Provider>

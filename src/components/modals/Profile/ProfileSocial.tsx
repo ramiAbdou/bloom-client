@@ -7,11 +7,10 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
-import { IMember } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
+import Show from '@containers/Show';
+import { IMemberSocials } from '@db/db.entities';
+import useFindOneWithLoading from '@gql/useFindOneWithLoading';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
 import { SocialBrand } from '@util/constants';
 import { cx } from '@util/util';
 
@@ -24,11 +23,11 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
   brand,
   href
 }) => {
-  const isClubhouse = brand === SocialBrand.CLUBHOUSE;
-  const isFacebook = brand === SocialBrand.FACEBOOK;
-  const isInstagram = brand === SocialBrand.INSTAGRAM;
-  const isLinkedIn = brand === SocialBrand.LINKED_IN;
-  const isTwitter = brand === SocialBrand.TWITTER;
+  const isClubhouse: boolean = brand === SocialBrand.CLUBHOUSE;
+  const isFacebook: boolean = brand === SocialBrand.FACEBOOK;
+  const isInstagram: boolean = brand === SocialBrand.INSTAGRAM;
+  const isLinkedIn: boolean = brand === SocialBrand.LINKED_IN;
+  const isTwitter: boolean = brand === SocialBrand.TWITTER;
 
   const css: string = cx('mo-profile-social mr-sm--nlc', {
     'mo-profile-social--clubhouse': isClubhouse,
@@ -48,32 +47,32 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
 };
 
 const ProfileSocialContainer: React.FC = () => {
-  const memberId = IdStore.useStoreState((state) => state.id);
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const memberSocialsId: string = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-    return member?.memberSocials;
+  const { data, loading } = useFindOneWithLoading(IMemberSocials, {
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    where: { memberId }
   });
-
-  const gql: GQL = useGQL();
 
   const {
     facebookUrl,
     instagramUrl,
     linkedInUrl,
     twitterUrl
-  } = gql.memberSocials.fromCache({
-    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-    id: memberSocialsId
-  });
+  }: IMemberSocials = data;
 
   return (
-    <div className="f f-ac">
-      <ProfileSocialButton brand={SocialBrand.TWITTER} href={twitterUrl} />
-      <ProfileSocialButton brand={SocialBrand.LINKED_IN} href={linkedInUrl} />
-      <ProfileSocialButton brand={SocialBrand.FACEBOOK} href={facebookUrl} />
-      <ProfileSocialButton brand={SocialBrand.INSTAGRAM} href={instagramUrl} />
-    </div>
+    <Show show={!loading}>
+      <div className="f f-ac">
+        <ProfileSocialButton brand={SocialBrand.TWITTER} href={twitterUrl} />
+        <ProfileSocialButton brand={SocialBrand.LINKED_IN} href={linkedInUrl} />
+        <ProfileSocialButton brand={SocialBrand.FACEBOOK} href={facebookUrl} />
+        <ProfileSocialButton
+          brand={SocialBrand.INSTAGRAM}
+          href={instagramUrl}
+        />
+      </div>
+    </Show>
   );
 };
 

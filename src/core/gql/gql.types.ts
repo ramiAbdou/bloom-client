@@ -21,6 +21,11 @@ import {
 } from '@db/db.entities';
 import GQLUtility from './GQLUtility';
 
+export interface FindOneArgs<T> {
+  fields: (keyof T | string)[];
+  where: Record<string, unknown>;
+}
+
 export interface QueryArgs {
   fields: string[];
   operation: string;

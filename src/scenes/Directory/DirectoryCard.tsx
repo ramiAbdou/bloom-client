@@ -2,21 +2,19 @@ import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Card from '@containers/Card/Card';
-import { IMember, IMemberType, IMemberValue, IQuestion } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
+import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import IdStore from '@store/Id.store';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType, QuestionCategory } from '@util/constants';
+import { useStoreActions } from '@store/Store';
+import { ModalType } from '@util/constants';
 
 const DirectoryCardInformationFullName: React.FC = () => {
-  const gql: GQL = useGQL();
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const { firstName, lastName }: IMember = gql.members.fromCache({
+  const { firstName, lastName }: IMember = useFindOne(IMember, {
     fields: ['firstName', 'lastName'],
-    id: memberId
+    where: { id: memberId }
   });
 
   const fullName: string =
@@ -28,13 +26,11 @@ const DirectoryCardInformationFullName: React.FC = () => {
 };
 
 const DirectoryCardInformationPosition: React.FC = () => {
-  const gql: GQL = useGQL();
-
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const { position }: IMember = gql.members.fromCache({
+  const { position }: IMember = useFindOne(IMember, {
     fields: ['position'],
-    id: memberId
+    where: { id: memberId }
   });
 
   if (!position) return null;
@@ -46,41 +42,41 @@ const DirectoryCardInformationPosition: React.FC = () => {
   );
 };
 
-const DirectoryCardInformationHighlightedValue: React.FC = () => {
-  const memberId: string = IdStore.useStoreState(({ id }) => id);
+// const DirectoryCardInformationHighlightedValue: React.FC = () => {
+//   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  // const highlightedValue = useStoreState(({ db }) => {
-  //   const member: IMember = db.byMemberId[memberId];
+// const highlightedValue = useStoreState(({ db }) => {
+//   const member: IMember = db.byMemberId[memberId];
 
-  //   const highlightedQuestion: IQuestion =
-  //     db.byQuestionId[db.community?.highlightedQuestion];
+//   const highlightedQuestion: IQuestion =
+//     db.byQuestionId[db.community?.highlightedQuestion];
 
-  //   if (highlightedQuestion.category === QuestionCategory.MEMBER_TYPE) {
-  //     const memberType: IMemberType = db.byMemberTypeId[member.memberType];
-  //     return memberType.name;
-  //   }
+//   if (highlightedQuestion.category === QuestionCategory.MEMBER_TYPE) {
+//     const memberType: IMemberType = db.byMemberTypeId[member.memberType];
+//     return memberType.name;
+//   }
 
-  //   return member.memberValues
-  //     ?.map((memberValueId: string) => db.byMemberValuesId[memberValueId])
-  //     ?.find(
-  //       (data: IMemberValue) =>
-  //         data?.question === db.community?.highlightedQuestion
-  //     )?.value;
-  // });
-  return null;
-  // return (
-  //   <span className="c-gray-2 d-block meta ta-center">
-  //     {highlightedValue ?? ''}
-  //   </span>
-  // );
-};
+//   return member.memberValues
+//     ?.map((memberValueId: string) => db.byMemberValuesId[memberValueId])
+//     ?.find(
+//       (data: IMemberValue) =>
+//         data?.question === db.community?.highlightedQuestion
+//     )?.value;
+// });
+
+// return (
+//   <span className="c-gray-2 d-block meta ta-center">
+//     {highlightedValue ?? ''}
+//   </span>
+// );
+// };
 
 const DirectoryCardInformation: React.FC = () => (
   <div className="s-directory-card-content">
     <p>
       <DirectoryCardInformationFullName />
       <DirectoryCardInformationPosition />
-      <DirectoryCardInformationHighlightedValue />
+      {/* <DirectoryCardInformationHighlightedValue /> */}
     </p>
   </div>
 );
@@ -93,11 +89,9 @@ const DirectoryCardPicture: React.FC = () => {
 const DirectoryCardRole: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const gql: GQL = useGQL();
-
-  const { role }: IMember = gql.members.fromCache({
+  const { role }: IMember = useFindOne(IMember, {
     fields: ['role'],
-    id: memberId
+    where: { id: memberId }
   });
 
   return <HeaderTag show={!!role}>{role}</HeaderTag>;

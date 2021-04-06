@@ -3,13 +3,14 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
+import { IMemberSocials } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
+import useQuery from '@gql/useQuery';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, SocialBrand } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
 import ProfileSocialValue from './ProfileSocialValue';
-import useInitProfileSocial from './useInitProfileSocial';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
   const memberSocialsId: string = useStoreState(
@@ -146,7 +147,14 @@ const ProfileSocialTwitter: React.FC = () => {
 };
 
 const ProfileSocialCard: React.FC = () => {
-  const { loading } = useInitProfileSocial();
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { loading } = useQuery<IMemberSocials[]>({
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    operation: 'memberSocials',
+    where: { memberId }
+  });
+
   return (
     <Card className="s-profile-card--social" loading={loading}>
       <ProfileSocialHeader />

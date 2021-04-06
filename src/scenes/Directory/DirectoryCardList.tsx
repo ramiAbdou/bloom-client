@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { ICommunity, IMember, MemberStatus } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
+import useFindOne from '@gql/useFindOne';
 import MasonryList from '@organisms/List/MasonryList';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
@@ -12,9 +11,7 @@ import DirectoryCard from './DirectoryCard';
 const DirectoryCardList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const gql: GQL = useGQL();
-
-  const community: ICommunity = gql.communities.fromCache({
+  const community: ICommunity = useFindOne(ICommunity, {
     fields: [
       'id',
       'members.id',
@@ -28,14 +25,14 @@ const DirectoryCardList: React.FC = () => {
       'members.role',
       'members.status'
     ],
-    id: communityId
+    where: { id: communityId }
   });
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore b/c we haven't fixed the community.members type yet.
-  const members: IMember[] = (community.members as IMember[])
+  const members: IMember[] = community.members
     ?.filter((member: IMember) => member?.status === MemberStatus.ACCEPTED)
-    .sort((a, b) => sortObjects(a, b, 'joinedAt'));
+    ?.sort((a, b) => sortObjects(a, b, 'joinedAt'));
 
   return (
     <MasonryList

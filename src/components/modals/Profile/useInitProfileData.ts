@@ -1,5 +1,4 @@
-import { IMemberValue } from '@db/db.entities';
-import { Schema } from '@db/db.entities';
+import { IMemberValue, Schema } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
 import useQuery from '@gql/useQuery';
 import IdStore from '@store/Id.store';

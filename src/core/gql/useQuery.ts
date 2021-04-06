@@ -27,6 +27,7 @@ function useQuery<T>({
   const query: DocumentNode = gql`
       query {
         ${operationString} ${argsString} {
+          ${fields.includes('id') ? '' : 'id'}
           ${fieldsString}
         }
       }

@@ -1,93 +1,87 @@
-import { State } from 'easy-peasy';
-
 import {
-  ICommunity,
-  IEvent,
   IEventAttendee,
   IEventGuest,
   IEventWatch,
-  IMember,
-  IMemberType,
-  IPayment
+  IMember
 } from '@db/db.entities';
-import { DbModel } from '@db/db.types';
+import { GQL } from '@gql/gql.types';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
 
 interface GetMemberHistoryArgs {
-  db: State<DbModel>;
-  gql: any;
+  gql: GQL;
   memberId: string;
 }
 
 export const getMemberHistory = ({
-  db,
   gql,
   memberId
 }: GetMemberHistoryArgs): MemberHistoryData[] => {
-  const member: IMember = db.byMemberId[memberId];
-  const community: ICommunity = db.byCommunityId[member?.community];
+  const member: IMember = gql.members.fromCache({
+    fields: [
+      'community.id',
+      'community.name',
+      'eventAttendees.createdAt',
+      'eventAttendees.id',
+      'eventAttendees.event.title',
+      'eventGuests.createdAt',
+      'eventGuests.id',
+      'eventGuests.event.title',
+      'eventWatches.createdAt',
+      'eventWatches.id',
+      'eventWatches.event.title',
+      'id',
+      'firstName',
+      'joinedAt'
+    ],
+    id: memberId
+  });
 
-  const attendeeEvents: MemberHistoryData[] =
-    member.eventAttendees?.map((attendeeId: string) => {
-      const eventAttendee: IEventAttendee = db.byEventAttendeeId[attendeeId];
-      const event: IEvent = db.byEventId[eventAttendee?.event];
+  if (!member) return [];
 
+  const attendeeEvents: MemberHistoryData[] = member.eventWatches.map(
+    (eventAttendee: IEventAttendee) => {
       return {
         date: eventAttendee.createdAt,
-        event: 'Attended Event',
-        title: event.title
+        event: `Attended Event`,
+        title: eventAttendee.event.title
       };
-    }) ?? [];
+    }
+  );
 
-  const guestEvents: MemberHistoryData[] =
-    member.eventGuests?.map((guestId: string) => {
-      const guest: IEventGuest = db.byEventGuestId[guestId];
-      const event: IEvent = db.byEventId[guest?.event];
-
+  const guestEvents: MemberHistoryData[] = member.eventGuests.map(
+    (eventGuest: IEventGuest) => {
       return {
-        date: guest.createdAt,
+        date: eventGuest.createdAt,
         event: `RSVP'd to Event`,
-        title: event.title
+        title: eventGuest.event.title
       };
-    }) ?? [];
+    }
+  );
 
   const joinedAtEvents: MemberHistoryData[] = [
-    { date: member.joinedAt, event: 'Joined Community', title: community?.name }
+    {
+      date: member.joinedAt,
+      event: 'Joined Community',
+      title: member.community.name
+    }
   ];
 
-  const paymentEvents: MemberHistoryData[] =
-    member.payments?.map((paymentId: string) => {
-      const payment: IPayment = db.byPaymentId[paymentId];
-      const type: IMemberType = db.byMemberTypeId[payment?.memberType];
-
-      return {
-        date: payment.createdAt,
-        event: `Paid Dues`,
-        title: `${type.name}, $${payment.amount}`
-      };
-    }) ?? [];
-
-  const watchEvents: MemberHistoryData[] =
-    member.eventWatches?.map((watchId: string) => {
-      const eventWatch: IEventWatch = gql.eventWatches.fromCache({
-        id: watchId
-      });
-
-      const event: IEvent = db.byEventId[eventWatch?.event];
-
+  const watchEvents: MemberHistoryData[] = member.eventWatches.map(
+    (eventWatch: IEventWatch) => {
       return {
         date: eventWatch.createdAt,
         event: `Viewed Event Recording`,
-        title: event.title
+        title: eventWatch.event.title
       };
-    }) ?? [];
+    }
+  );
 
   return [
     ...attendeeEvents,
     ...guestEvents,
     ...joinedAtEvents,
-    ...paymentEvents,
+    // ...paymentEvents,
     ...watchEvents
   ].sort((a: MemberHistoryData, b: MemberHistoryData) =>
     sortObjects(a, b, 'date')
