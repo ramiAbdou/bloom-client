@@ -1,34 +1,36 @@
+import day from 'dayjs';
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import { useStoreState } from '@store/Store';
 
-const EventsAnalyticsWatchesCard: React.FC = () => {
-  const numViews: number = useStoreState(({ db }) => {
-    const pastEvents: IEvent[] = db.community.events
-      ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-      ?.filter((event: IEvent) => !!event.recordingUrl);
+const EventsAnalyticsGuestCard: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
 
-    if (!pastEvents?.length) return null;
-
-    const totalWatches = pastEvents?.reduce(
-      (acc: number, event: IEvent) => acc + event?.eventWatches?.length,
-      0
-    );
-
-    return Math.ceil(totalWatches / pastEvents.length);
+  const pastEvents: IEvent[] = useFind(IEvent, {
+    fields: ['endTime', 'eventWatches.id', 'startTime'],
+    where: { communityId, endTime: { _lt: day.utc().format() } }
   });
+
+  const eventWatchesCount: number = pastEvents.reduce(
+    (totalCount: number, event: IEvent) =>
+      totalCount + event?.eventWatches?.length,
+    0
+  );
+
+  const averageEventWatchesCount: number = Math.ceil(
+    eventWatchesCount / pastEvents.length
+  );
 
   return (
     <GrayCard
-      label="Avg # of Recording Viewers"
-      show={numViews !== null}
-      value={numViews}
+      label="Avg # of RSVPs"
+      show={averageEventWatchesCount !== null}
+      value={averageEventWatchesCount}
     />
   );
 };
 
-export default EventsAnalyticsWatchesCard;
+export default EventsAnalyticsGuestCard;

@@ -2,6 +2,7 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import { IQuestion } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { TableRow } from '@organisms/Table/Table.types';
 import { TableFilterFunction } from '@organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@organisms/Table/TableQuickFilter';
@@ -9,14 +10,12 @@ import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 
 const MemberDatabaseInactiveFilter: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
   const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
 
-  const duesStatusQuestionId: string = useStoreState(({ db }) =>
-    db.community.questions?.find((questionId: string) => {
-      const question: IQuestion = db.byQuestionId[questionId];
-      return question?.category === QuestionCategory.DUES_STATUS;
-    })
-  );
+  const { id: duesStatusQuestionId } = useFindOne(IQuestion, {
+    where: { category: QuestionCategory.DUES_STATUS, communityId }
+  });
 
   const filter: TableFilterFunction = (row: TableRow) => {
     const isDuesActive: boolean = row[duesStatusQuestionId];
@@ -29,14 +28,12 @@ const MemberDatabaseInactiveFilter: React.FC = () => {
 };
 
 const MemberDatabaseActiveFilter: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
   const show: boolean = useStoreState(({ db }) => db.community.canCollectDues);
 
-  const duesStatusQuestionId: string = useStoreState(({ db }) =>
-    db.community.questions?.find((questionId: string) => {
-      const question: IQuestion = db.byQuestionId[questionId];
-      return question?.category === QuestionCategory.DUES_STATUS;
-    })
-  );
+  const { id: duesStatusQuestionId } = useFindOne(IQuestion, {
+    where: { category: QuestionCategory.DUES_STATUS, communityId }
+  });
 
   const filter: TableFilterFunction = (row: TableRow) => {
     const isDuesActive: boolean = row[duesStatusQuestionId];

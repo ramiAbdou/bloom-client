@@ -1,18 +1,19 @@
+import day from 'dayjs';
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {
-  const pastEventsCount: number = useStoreState(
-    ({ db }) =>
-      db.community.events
-        ?.map((eventId: string) => db.byEventId[eventId])
-        ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-        ?.length
-  );
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const pastEvents: IEvent[] = useFind(IEvent, {
+    where: { communityId, endTime: { _lt: day.utc().format() } }
+  });
+
+  const pastEventsCount: number = pastEvents?.length;
 
   return (
     <GrayCard

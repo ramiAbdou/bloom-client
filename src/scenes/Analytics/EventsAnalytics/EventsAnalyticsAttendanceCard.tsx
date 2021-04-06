@@ -1,32 +1,34 @@
+import day from 'dayjs';
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {
-  const numAttendees: number = useStoreState(({ db }) => {
-    const pastEvents: IEvent[] = db.community.events
-      ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST);
+  const communityId: string = useStoreState(({ db }) => db.community.id);
 
-    if (!pastEvents?.length) return null;
-
-    const totalAttendees = pastEvents?.reduce(
-      (acc: number, event: IEvent) =>
-        event?.eventAttendees ? acc + event?.eventAttendees?.length : acc,
-      0
-    );
-
-    return Math.ceil(totalAttendees / pastEvents.length);
+  const pastEvents: IEvent[] = useFind(IEvent, {
+    fields: ['endTime', 'eventAttendees.id', 'startTime'],
+    where: { communityId, endTime: { _lt: day.utc().format() } }
   });
+
+  const attendeesCount: number = pastEvents.reduce(
+    (totalCount: number, event: IEvent) =>
+      totalCount + event?.eventAttendees?.length,
+    0
+  );
+
+  const averageAttendeesCount: number = Math.ceil(
+    attendeesCount / pastEvents.length
+  );
 
   return (
     <GrayCard
       label="Avg # of Attendees"
-      show={numAttendees !== null}
-      value={numAttendees}
+      show={averageAttendeesCount !== null}
+      value={averageAttendeesCount}
     />
   );
 };

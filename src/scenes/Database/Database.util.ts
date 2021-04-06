@@ -1,114 +1,108 @@
-import { State } from 'easy-peasy';
-
 import {
   IMember,
-  IMemberType,
   IMemberValue,
   IQuestion,
   MemberStatus
 } from '@db/db.entities';
-import { DbModel } from '@db/db.types';
+import useFind from '@gql/useFind';
+import useFindOne from '@gql/useFindOne';
 import { TableRow } from '@organisms/Table/Table.types';
+import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 
-interface GetMemberTableRowArgs {
-  db: State<DbModel>;
-  gql: any;
-}
-
 interface GetMemberValueArgs {
-  db: State<DbModel>;
-  gql: any;
   member: IMember;
-  questionId: string;
+  question: IQuestion;
+  value: string;
 }
 
 /**
  * Returns the appropriate value based on the IMember data as well as the
  * IUser attached.
  */
-const getMemberValue = ({
-  db,
-  gql,
-  member,
-  questionId
-}: GetMemberValueArgs) => {
+const getMemberValue = ({ member, question, value }: GetMemberValueArgs) => {
+  const { bio, email, firstName, joinedAt, lastName, pictureUrl } = member;
+
   const {
     facebookUrl,
     instagramUrl,
     linkedInUrl,
     twitterUrl
-  } = gql.memberSocials.fromCache({
-    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-    id: member.memberSocials
-  });
+  } = member.memberSocials;
 
-  const { category }: IQuestion = db.byQuestionId[questionId];
+  const { category } = question;
 
-  if (category === QuestionCategory.BIO) return member.bio;
+  if (category === QuestionCategory.BIO) return bio;
   if (category === QuestionCategory.DUES_STATUS) return true;
-  // if (category === QuestionCategory.DUES_STATUS) return member.isDuesActive;
-  if (category === QuestionCategory.EMAIL) return member.email;
+  if (category === QuestionCategory.EMAIL) return email;
   if (category === QuestionCategory.FACEBOOK_URL) return facebookUrl;
-  if (category === QuestionCategory.FIRST_NAME) return member.firstName;
+  if (category === QuestionCategory.FIRST_NAME) return firstName;
   if (category === QuestionCategory.INSTAGRAM_URL) return instagramUrl;
-  if (category === QuestionCategory.JOINED_AT) return member.joinedAt;
-  if (category === QuestionCategory.LAST_NAME) return member.lastName;
+  if (category === QuestionCategory.JOINED_AT) return joinedAt;
+  if (category === QuestionCategory.LAST_NAME) return lastName;
   if (category === QuestionCategory.LINKED_IN_URL) return linkedInUrl;
-  if (category === QuestionCategory.PROFILE_PICTURE) return member.pictureUrl;
+  if (category === QuestionCategory.PROFILE_PICTURE) return pictureUrl;
   if (category === QuestionCategory.TWITTER_URL) return twitterUrl;
 
   if (category === QuestionCategory.MEMBER_TYPE) {
-    const memberType: IMemberType = db.byMemberTypeId[member.memberType];
-    return memberType?.name;
+    return member.memberType?.name;
   }
 
   if (category === QuestionCategory.EVENTS_ATTENDED) {
     return member.eventAttendees?.length ?? 0;
   }
 
-  const value = member.memberValues
-    ?.map((memberValueId: string) => db.byMemberValuesId[memberValueId])
-    ?.find((entity: IMemberValue) => {
-      const question: IQuestion = db.byQuestionId[entity.question];
-      return question.id === questionId;
-    })?.value;
-
   return value;
 };
 
-export const getMemberTableRow = ({
-  db,
-  gql
-}: GetMemberTableRowArgs): TableRow[] => {
-  if (!db.community.memberTypes?.length || !db.community.questions?.length) {
-    return [];
-  }
+export const useMemberDatabaseRows = (): TableRow[] => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const sortQuestionId: string = db.community?.questions?.find(
-    (questionId: string) => {
-      const question: IQuestion = db.byQuestionId[questionId];
-      return question?.category === QuestionCategory.JOINED_AT;
-    }
-  );
+  const members: IMember[] = useFind(IMember, {
+    fields: [
+      'deletedAt',
+      'email',
+      'eventAttendees.id',
+      'joinedAt',
+      'memberSocials.facebookUrl',
+      'memberSocials.instagramUrl',
+      'memberSocials.linkedInUrl',
+      'memberSocials.twitterUrl',
+      'memberSocials.id',
+      'memberType.id',
+      'memberType.name',
+      'memberValues.id',
+      'memberValues.question.id',
+      'memberValues.value',
+      'pictureUrl',
+      'status'
+    ],
+    where: { communityId, status: MemberStatus.ACCEPTED }
+  });
 
-  const filteredMembers: IMember[] = db.community.members
-    ?.map((memberId: string) => db.byMemberId[memberId])
-    ?.filter((member: IMember) => member?.status === MemberStatus.ACCEPTED)
-    ?.filter((member: IMember) => !member.deletedAt);
+  const { id: sortQuestionId } = useFindOne(IQuestion, {
+    where: { category: QuestionCategory.JOINED_AT, communityId }
+  });
 
-  const rows: TableRow[] = filteredMembers?.map((member: IMember) =>
-    db.community?.questions.reduce(
-      (result: TableRow, questionId: string) => {
-        const value = getMemberValue({ db, gql, member, questionId });
-        return { ...result, [questionId]: value };
-      },
-      { id: member?.id }
+  const rows: TableRow[] = members
+    ?.filter((member: IMember) => !member.deletedAt)
+    ?.map((member: IMember) =>
+      member.memberValues.reduce(
+        (row: TableRow, memberValue: IMemberValue) => {
+          return {
+            ...row,
+            [memberValue.question.id]: getMemberValue({
+              member,
+              question: memberValue.question,
+              value: memberValue.value
+            })
+          };
+        },
+        { id: member.id }
+      )
     )
-  );
+    ?.sort((a: TableRow, b: TableRow) => sortObjects(a, b, sortQuestionId));
 
-  return rows?.sort((a, b) => sortObjects(a, b, sortQuestionId));
+  return rows;
 };
-
-export default getMemberTableRow;

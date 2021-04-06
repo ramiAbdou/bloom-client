@@ -4,19 +4,25 @@ import { useHistory } from 'react-router-dom';
 import Button from '@atoms/Button/Button';
 import MainHeader from '@containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
+import { IMember, MemberRole } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import useFinalPath from '@hooks/useFinalPath';
-import { MemberRole } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const DatbaseHeaderAddButton: React.FC = () => {
-  const isOwner = useStoreState(
-    ({ db }) => db.member?.role === MemberRole.OWNER
-  );
-
+  const memberId: string = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const isAdminsPage = useFinalPath() === 'admins';
-  const isMembersPage = useFinalPath() === 'members';
+
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
+  const isOwner: boolean = role === MemberRole.OWNER;
+
+  const isAdminsPage: boolean = useFinalPath() === 'admins';
+  const isMembersPage: boolean = useFinalPath() === 'members';
 
   const onClick = () => {
     if (isMembersPage) showModal({ id: ModalType.ADD_MEMBERS });

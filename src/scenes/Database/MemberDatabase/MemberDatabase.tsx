@@ -18,7 +18,7 @@ import TableContent from '@organisms/Table/TableContent';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
-import { getMemberTableRow } from '../Database.util';
+import { useMemberDatabaseRows } from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
 
 const MemberDatabase: React.FC = () => {
@@ -34,9 +34,7 @@ const MemberDatabase: React.FC = () => {
 
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
-  const rows: TableRow[] = useStoreState(({ db }) =>
-    getMemberTableRow({ db, gql })
-  );
+  const rows: TableRow[] = useMemberDatabaseRows();
 
   const columns: TableColumn[] = useStoreState(({ db }) => {
     const filteredColumns: TableColumn[] = db.community.questions

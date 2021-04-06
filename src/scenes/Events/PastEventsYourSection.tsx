@@ -2,28 +2,47 @@ import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
-import { IEvent, IEventAttendee } from '@db/db.entities';
+import { IEvent, IEventGuest } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
-import EventsCard from '../EventsCard/EventsCard';
+import { sortObjects } from '@util/util';
+import EventsCard from './EventsCard/EventsCard';
 
 const PastEventsYourList: React.FC = () => {
-  const events: IEvent[] = useStoreState(({ db }) =>
-    db.member.eventAttendees
-      ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId])
-      ?.map(
-        (eventAttendee: IEventAttendee) => db.byEventId[eventAttendee.event]
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const events: IEvent[] = useFind(IEvent, {
+    fields: [
+      'deletedAt',
+      'description',
+      'endTime',
+      'eventAttendees.id',
+      'eventAttendees.member.id',
+      'startTime',
+      'summary',
+      'title'
+    ],
+    where: { id: communityId }
+  });
+
+  const sortedEvents: IEvent[] = events
+    ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
+    ?.filter((event: IEvent) =>
+      event.eventGuests.some(
+        (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
       )
-      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-  );
+    )
+    ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'));
 
   return (
     <List
       className="s-events-card-ctr"
-      items={events}
+      items={sortedEvents}
       options={{ keys: ['title', 'summary', 'description'] }}
       render={EventsCard}
     />
@@ -31,19 +50,33 @@ const PastEventsYourList: React.FC = () => {
 };
 
 const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
-  const hasEvents: boolean = useStoreState(
-    ({ db }) =>
-      !!db.member.eventAttendees
-        ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId])
-        ?.map(
-          (eventAttendee: IEventAttendee) => db.byEventId[eventAttendee.event]
-        )
-        ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-        ?.length
-  );
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const events: IEvent[] = useFind(IEvent, {
+    fields: [
+      'deletedAt',
+      'description',
+      'endTime',
+      'eventAttendees.id',
+      'eventAttendees.member.id',
+      'startTime',
+      'summary',
+      'title'
+    ],
+    where: { id: communityId }
+  });
+
+  const filteredEvents: IEvent[] = events
+    ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
+    ?.filter((event: IEvent) =>
+      event.eventGuests.some(
+        (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
+      )
+    );
 
   return (
-    <Section show={hasEvents}>
+    <Section show={!!filteredEvents?.length}>
       <LoadingHeader
         h2
         className="mb-sm"

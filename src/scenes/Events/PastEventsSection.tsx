@@ -2,44 +2,55 @@ import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
+import { IEvent, IEventGuest } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import ListSearchBar from '@organisms/List/ListSearchBar';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';
-import EventsCard from '../EventsCard/EventsCard';
+import EventsCard from './EventsCard/EventsCard';
 
 const PastEventsList: React.FC = () => {
-  const pastEvents: IEvent[] = useStoreState(({ db }) => {
-    const yourAttendees: Set<string> = new Set(db.member.eventAttendees);
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-    return db.community?.events
-      ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-      ?.filter((event: IEvent) => {
-        const wentToEvent: boolean = !event.eventAttendees?.some(
-          (attendeeId: string) => yourAttendees.has(attendeeId)
-        );
-
-        return wentToEvent;
-      })
-      ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'));
+  const events: IEvent[] = useFind(IEvent, {
+    fields: [
+      'deletedAt',
+      'description',
+      'endTime',
+      'eventAttendees.id',
+      'eventAttendees.member.id',
+      'startTime',
+      'summary',
+      'title'
+    ],
+    where: { id: communityId }
   });
+
+  const sortedEvents: IEvent[] = events
+    ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
+    ?.filter((event: IEvent) =>
+      event.eventGuests.some(
+        (eventGuest: IEventGuest) => eventGuest.member?.id !== memberId
+      )
+    )
+    ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'));
 
   return (
     <>
       <ListSearchBar
         className="mb-sm--nlc"
         placeholder="Search events..."
-        show={!!pastEvents?.length}
+        show={!!sortedEvents?.length}
       />
 
       <List
         emptyMessage="Looks like there were no past events found."
-        items={pastEvents}
+        items={sortedEvents}
         options={{ keys: ['title', 'summary', 'description'] }}
         render={EventsCard}
       />

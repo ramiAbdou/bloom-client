@@ -1,30 +1,64 @@
+import day from 'dayjs';
 import React from 'react';
 
 import Show from '@containers/Show';
-import { QueryResult } from '@gql/gql.types';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IEvent } from '@db/db.entities';
+import useFindFull from '@gql/useFindFull';
 import { useStoreState } from '@store/Store';
 import EventAnalyticsChart from './EventAnalyticsChart';
 import EventsAnalyticsOverview from './EventsAnalyticsOverview';
 import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 import EventsAnalyticsTopEventGoers from './EventsAnalyticsTopEventGoers';
-import useInitEventAnalytics from './useInitEventAnalytics';
 
 const EventsAnalytics: React.FC = () => {
-  const hasPastEvents: boolean = useStoreState(
-    ({ db }) =>
-      !!db.community.events
-        ?.map((eventId: string) => db.byEventId[eventId])
-        ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-        ?.length
-  );
+  const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const { loading }: Partial<QueryResult> = useInitEventAnalytics();
+  const { data: events, loading } = useFindFull(IEvent, {
+    fields: [
+      'community.id',
+      'endTime',
+      'eventAttendees.createdAt',
+      'eventAttendees.event.id',
+      'eventAttendees.id',
+      'eventAttendees.member.email',
+      'eventAttendees.member.firstName',
+      'eventAttendees.member.id',
+      'eventAttendees.member.lastName',
+      'eventAttendees.member.pictureUrl',
+      'eventAttendees.supporter.email',
+      'eventAttendees.supporter.firstName',
+      'eventAttendees.supporter.id',
+      'eventAttendees.supporter.lastName',
+      'eventGuests.createdAt',
+      'eventGuests.event.id',
+      'eventGuests.id',
+      'eventGuests.member.email',
+      'eventGuests.member.firstName',
+      'eventGuests.member.id',
+      'eventGuests.member.lastName',
+      'eventGuests.member.pictureUrl',
+      'eventGuests.supporter.email',
+      'eventGuests.supporter.firstName',
+      'eventGuests.supporter.id',
+      'eventGuests.supporter.lastName',
+      'eventWatches.createdAt',
+      'eventWatches.event.id',
+      'eventWatches.id',
+      'eventWatches.member.email',
+      'eventWatches.member.firstName',
+      'eventWatches.member.id',
+      'eventWatches.member.lastName',
+      'eventWatches.member.pictureUrl',
+      'id',
+      'startTime',
+      'title'
+    ],
+    where: { communityId, endTime: { _lt: day.utc().format() } }
+  });
 
   // If the page isn't loading and there aren't any past events, show empty
   // message.
-  if (!loading && !hasPastEvents) {
+  if (!loading && !events?.length) {
     return <p>To see Events analytics, you need to host an event first! 😜</p>;
   }
 

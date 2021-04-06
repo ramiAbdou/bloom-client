@@ -1,24 +1,27 @@
 import React from 'react';
 
+import { IMember, MemberRole } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { IMember, MemberRole } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
 const AdminDatabase: React.FC = () => {
-  const rows: TableRow[] = useStoreState(({ db }) =>
-    db.community.members
-      ?.map((memberId: string) => db.byMemberId[memberId])
-      ?.filter((member: IMember) => !!member?.role)
-      ?.map((member: IMember) => {
-        const { email, firstName, lastName }: IMember = member;
-        return { email, firstName, id: member.id, lastName };
-      }, [])
-  );
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const members: IMember[] = useFind(IMember, {
+    fields: ['email', 'firstName', 'lastName'],
+    where: { communityId, role: { _ne: null } }
+  });
+
+  const rows: TableRow[] = members.map((member: IMember) => {
+    const { email, firstName, lastName }: IMember = member;
+    return { email, firstName, id: member.id, lastName };
+  }, []);
 
   const isOwner: boolean = useStoreState(
     ({ db }) => db.member?.role === MemberRole.OWNER
