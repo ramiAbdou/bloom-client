@@ -9,7 +9,6 @@ import Database from '@scenes/Database/Database';
 import Directory from '@scenes/Directory/Directory';
 import Events from '@scenes/Events/Events';
 import Integrations from '@scenes/Integrations/Integrations';
-import Membership from '@scenes/Membership/Membership';
 import Profile from '@scenes/Profile/Profile';
 import { useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
@@ -24,7 +23,6 @@ const AuthenticatedCommunityRouterSwitch: React.FC = () => (
       <AdminRoute component={Analytics} path="/:urlName/analytics" />
       <AdminRoute component={Integrations} path="/:urlName/integrations" />
       <AdminRoute component={Applicants} path="/:urlName/applicants" />
-      <Route component={Membership} path="/:urlName/membership" />
       <Route component={Profile} path="/:urlName/profile" />
       <Redirect to="/:urlName/directory" />
     </Switch>
