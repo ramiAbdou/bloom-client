@@ -4,6 +4,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import { ICommunity, IMember, IMemberValue } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import useFindFull from '@gql/useFindFull';
 import useFindOne from '@gql/useFindOne';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
@@ -39,17 +40,17 @@ const ProfileMembershipHeader: React.FC = () => {
 const ProfileMembershipContent: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const { memberValues } = useFindOne(IMember, {
+  const memberValues: IMemberValue[] = useFind(IMemberValue, {
     fields: [
-      'memberValues.id',
-      'memberValues.question.category',
-      'memberValues.question.id',
-      'memberValues.question.rank',
-      'memberValues.question.title',
-      'memberValues.question.type',
-      'memberValues.value'
+      'id',
+      'question.category',
+      'question.id',
+      'question.rank',
+      'question.title',
+      'question.type',
+      'value'
     ],
-    where: { id: memberId }
+    where: { memberId }
   });
 
   const items: QuestionBoxItemProps[] = memberValues

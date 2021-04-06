@@ -2,38 +2,43 @@ import React from 'react';
 
 import Separator from '@atoms/Separator';
 import Show from '@containers/Show';
-import { IMember, IMemberValue, IQuestion } from '@db/db.entities';
+import { IMemberValue } from '@db/db.entities';
+import useFind from '@gql/useFind';
+import useFindFull from '@gql/useFindFull';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
-import { sortObjects } from '@util/util';
-import useInitProfileData from './useInitProfileData';
 
 const ProfileDataContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
-    const member: IMember = db.byMemberId[memberId];
-
-    const filteredValues: IMemberValue[] = member?.memberValues
-      ?.map((memberValueId: string) => db.byMemberValuesId[memberValueId])
-      ?.filter((data: IMemberValue) => {
-        const question: IQuestion = db.byQuestionId[data.question];
-        return !question?.category;
-      });
-
-    const sortedValues: IMemberValue[] = filteredValues?.sort((a, b) => {
-      const aQuestion: IQuestion = db.byQuestionId[a.question];
-      const bQuestion: IQuestion = db.byQuestionId[b.question];
-      return sortObjects(aQuestion, bQuestion, 'rank', 'ASC');
-    });
-
-    return sortedValues?.map((element: IMemberValue) => {
-      const { title, type }: IQuestion = db.byQuestionId[element.question];
-      return { title, type, value: element.value };
-    });
+  const memberValues: IMemberValue[] = useFind(IMemberValue, {
+    fields: [
+      'id',
+      'question.category',
+      'question.id',
+      'question.rank',
+      'question.title',
+      'question.type',
+      'value'
+    ],
+    where: { memberId }
   });
+
+  const items: QuestionBoxItemProps[] = memberValues
+    ?.filter((memberValue: IMemberValue) => !memberValue.question.category)
+    ?.sort((a: IMemberValue, b: IMemberValue) => {
+      if (a.question.rank < b.question.rank) return -1;
+      if (a.question.rank > b.question.rank) return 1;
+      return 0;
+    })
+    ?.map((memberValue: IMemberValue) => {
+      return {
+        title: memberValue.question.title,
+        type: memberValue.question.type,
+        value: memberValue.value
+      };
+    });
 
   return (
     <Show show={items?.some(({ value }) => !!value)}>
@@ -44,7 +49,12 @@ const ProfileDataContent: React.FC = () => {
 };
 
 const ProfileData: React.FC = () => {
-  const { loading } = useInitProfileData();
+  const memberId: string = IdStore.useStoreState((state) => state.id);
+
+  const { loading } = useFindFull(IMemberValue, {
+    fields: ['id', 'member.id', 'question.id', 'value'],
+    where: { memberId }
+  });
 
   if (loading) return null;
   return <ProfileDataContent />;

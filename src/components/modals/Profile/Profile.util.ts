@@ -4,20 +4,21 @@ import {
   IEventWatch,
   IMember
 } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
+import useFindOne from '@gql/useFindOne';
+import IdStore from '@store/Id.store';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
 
-interface GetMemberHistoryArgs {
-  gql: GQL;
-  memberId: string;
-}
+export const useMemberHistory = (): MemberHistoryData[] => {
+  const memberId: string = IdStore.useStoreState((state) => state.id);
 
-export const getMemberHistory = ({
-  gql,
-  memberId
-}: GetMemberHistoryArgs): MemberHistoryData[] => {
-  const member: IMember = gql.members.fromCache({
+  const {
+    community,
+    eventAttendees,
+    eventGuests,
+    eventWatches,
+    joinedAt
+  } = useFindOne(IMember, {
     fields: [
       'community.id',
       'community.name',
@@ -34,12 +35,12 @@ export const getMemberHistory = ({
       'firstName',
       'joinedAt'
     ],
-    id: memberId
+    where: { id: memberId }
   });
 
-  if (!member) return [];
+  if (!eventAttendees && !eventGuests && !eventWatches) return [];
 
-  const attendeeEvents: MemberHistoryData[] = member.eventWatches.map(
+  const attendeeEvents: MemberHistoryData[] = eventWatches.map(
     (eventAttendee: IEventAttendee) => {
       return {
         date: eventAttendee.createdAt,
@@ -49,7 +50,7 @@ export const getMemberHistory = ({
     }
   );
 
-  const guestEvents: MemberHistoryData[] = member.eventGuests.map(
+  const guestEvents: MemberHistoryData[] = eventGuests.map(
     (eventGuest: IEventGuest) => {
       return {
         date: eventGuest.createdAt,
@@ -61,13 +62,13 @@ export const getMemberHistory = ({
 
   const joinedAtEvents: MemberHistoryData[] = [
     {
-      date: member.joinedAt,
+      date: joinedAt,
       event: 'Joined Community',
-      title: member.community.name
+      title: community.name
     }
   ];
 
-  const watchEvents: MemberHistoryData[] = member.eventWatches.map(
+  const watchEvents: MemberHistoryData[] = eventWatches.map(
     (eventWatch: IEventWatch) => {
       return {
         date: eventWatch.createdAt,
@@ -81,7 +82,6 @@ export const getMemberHistory = ({
     ...attendeeEvents,
     ...guestEvents,
     ...joinedAtEvents,
-    // ...paymentEvents,
     ...watchEvents
   ].sort((a: MemberHistoryData, b: MemberHistoryData) =>
     sortObjects(a, b, 'date')

@@ -48,10 +48,6 @@ const ProfilePersonalTags: React.FC = () => {
     <Row wrap className="mb-ss--nlc" gap="xs">
       <HeaderTag show={!!role}>{role}</HeaderTag>
       <HeaderTag show={!!position}>{position}</HeaderTag>
-
-      {/*
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      @ts-ignore */}
       <HeaderTag>{memberType.name}</HeaderTag>
     </Row>
   );
