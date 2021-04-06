@@ -5,7 +5,7 @@ import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
 import { IMember } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
-import useFindOneWithLoading from '@gql/useFindOneWithLoading';
+import useFindOneFull from '@gql/useFindOneFull';
 import useGQL from '@gql/useGQL';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
@@ -30,7 +30,7 @@ const ProfileHistoryEventList: React.FC = () => {
 const ProfileHistoryContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { loading } = useFindOneWithLoading(IMember, {
+  const { loading } = useFindOneFull(IMember, {
     fields: [
       'eventAttendees.createdAt',
       'eventAttendees.event.id',

@@ -1,51 +1,63 @@
 import React from 'react';
 
+import { IMember, IMemberValue } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import Form from '@organisms/Form/Form';
 import { FormItemData } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import { IMemberValue, IQuestion } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory, QuestionType } from '@util/constants';
-import { sortObjects } from '@util/util';
 import useUpdateMemberValues from './useUpdateMemberValues';
 
 const ProfileMembershipForm: React.FC = () => {
-  const items: FormItemData[] = useStoreState(({ db }) => {
-    const questions: IQuestion[] = db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
-      .filter(
-        (question: IQuestion) =>
-          !question.category || question.category === QuestionCategory.GENDER
-      );
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-    const data: IMemberValue[] = db.member.memberValues?.map(
-      (memberValueId: string) => db.byMemberValuesId[memberValueId]
-    );
+  const { memberValues } = useFindOne(IMember, {
+    fields: [
+      'memberValues.id',
+      'memberValues.question.category',
+      'memberValues.question.description',
+      'memberValues.question.id',
+      'memberValues.question.options',
+      'memberValues.question.rank',
+      'memberValues.question.required',
+      'memberValues.question.title',
+      'memberValues.question.type',
+      'memberValues.value'
+    ],
+    where: { id: memberId }
+  });
 
-    return questions?.map((question: IQuestion) => {
-      const { id, options, type } = question;
+  const items: FormItemData[] = memberValues
+    ?.filter(
+      (memberValue: IMemberValue) =>
+        !memberValue.question.category ||
+        memberValue.question.category === QuestionCategory.GENDER
+    )
+    ?.sort((a: IMemberValue, b: IMemberValue) => {
+      if (a.question.rank < b.question.rank) return -1;
+      if (a.question.rank > b.question.rank) return 1;
+      return 0;
+    })
+    ?.map((memberValue: IMemberValue) => {
+      let parsedValue: any = memberValue.value;
 
-      const value: any = data?.find(
-        (entity: IMemberValue) => entity?.question === id
-      )?.value;
-
-      let parsedValue: any = value;
-
-      if (type === QuestionType.MULTIPLE_SELECT) {
-        parsedValue = value?.split(',');
+      if (memberValue.question.type === QuestionType.MULTIPLE_SELECT) {
+        parsedValue = memberValue.value?.split(',');
       }
 
-      if (type === QuestionType.MULTIPLE_CHOICE && options?.length >= 5) {
+      if (
+        memberValue.question.type === QuestionType.MULTIPLE_CHOICE &&
+        memberValue.question.options?.length >= 5
+      ) {
         parsedValue = parseValue(parsedValue);
       }
 
-      return { ...question, value: parsedValue };
+      return { ...memberValue.question, value: parsedValue };
     });
-  });
 
   const updateMemberValues = useUpdateMemberValues();
 

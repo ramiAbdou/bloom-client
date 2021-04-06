@@ -7,10 +7,10 @@ import buildArgsString from './buildArgsString';
 import buildFieldsString from './buildFieldsString';
 import { FindOneArgs, QueryResult } from './gql.types';
 
-function useFindOneWithLoading<T>(
+function useFindFull<T>(
   entity: new () => T,
   { fields, where }: FindOneArgs<T>
-): QueryResult<T> {
+): QueryResult<T[]> {
   const nameWithoutI: string = entity.name.substring(1);
   const entityName: string = snakeCase(pluralize(nameWithoutI));
 
@@ -35,15 +35,13 @@ function useFindOneWithLoading<T>(
     { deep: true }
   );
 
-  const record: T = camelCaseData?.length ? camelCaseData[0] : null;
-
   return {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore b/c we want to be able to destructure without null issues.
-    data: record ?? {},
+    data: camelCaseData ?? {},
     error: result.error?.message,
     loading: result.loading
   };
 }
 
-export default useFindOneWithLoading;
+export default useFindFull;

@@ -4,30 +4,23 @@ import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import Show from '@containers/Show';
 import { IMemberSocials } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
-import useQuery from '@gql/useQuery';
+import useFindOne from '@gql/useFindOne';
+import useFindOneFull from '@gql/useFindOneFull';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, SocialBrand } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
 import ProfileSocialValue from './ProfileSocialValue';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
-  const memberSocialsId: string = useStoreState(
-    ({ db }) => db.member?.memberSocials
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = useFindOne(
+    IMemberSocials,
+    {
+      fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+      where: { memberId }
+    }
   );
-
-  const gql: GQL = useGQL();
-
-  const {
-    facebookUrl,
-    instagramUrl,
-    linkedInUrl,
-    twitterUrl
-  } = gql.memberSocials.fromCache({
-    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-    id: memberSocialsId
-  });
 
   const isSocialLinked: boolean =
     !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
@@ -53,21 +46,15 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 const ProfileSocialHeader: React.FC = () => {
-  const memberSocialsId: string = useStoreState(
-    ({ db }) => db.member?.memberSocials
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = useFindOne(
+    IMemberSocials,
+    {
+      fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+      where: { memberId }
+    }
   );
-
-  const gql: GQL = useGQL();
-
-  const {
-    facebookUrl,
-    instagramUrl,
-    linkedInUrl,
-    twitterUrl
-  } = gql.memberSocials.fromCache({
-    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-    id: memberSocialsId
-  });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -85,30 +72,22 @@ const ProfileSocialHeader: React.FC = () => {
 };
 
 const ProfileSocialFacebook: React.FC = () => {
-  const memberSocialsId: string = useStoreState(
-    ({ db }) => db.member?.memberSocials
-  );
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const gql: GQL = useGQL();
-
-  const { facebookUrl } = gql.memberSocials.fromCache({
+  const { facebookUrl } = useFindOne(IMemberSocials, {
     fields: ['facebookUrl'],
-    id: memberSocialsId
+    where: { memberId }
   });
 
   return <ProfileSocialValue brand={SocialBrand.FACEBOOK} url={facebookUrl} />;
 };
 
 const ProfileSocialInstagram: React.FC = () => {
-  const memberSocialsId: string = useStoreState(
-    ({ db }) => db.member?.memberSocials
-  );
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const gql: GQL = useGQL();
-
-  const { instagramUrl } = gql.memberSocials.fromCache({
+  const { instagramUrl } = useFindOne(IMemberSocials, {
     fields: ['instagramUrl'],
-    id: memberSocialsId
+    where: { memberId }
   });
 
   return (
@@ -117,30 +96,22 @@ const ProfileSocialInstagram: React.FC = () => {
 };
 
 const ProfileSocialLinkedIn: React.FC = () => {
-  const memberSocialsId: string = useStoreState(
-    ({ db }) => db.member?.memberSocials
-  );
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const gql: GQL = useGQL();
-
-  const { linkedInUrl } = gql.memberSocials.fromCache({
+  const { linkedInUrl } = useFindOne(IMemberSocials, {
     fields: ['linkedInUrl'],
-    id: memberSocialsId
+    where: { memberId }
   });
 
   return <ProfileSocialValue brand={SocialBrand.LINKED_IN} url={linkedInUrl} />;
 };
 
 const ProfileSocialTwitter: React.FC = () => {
-  const memberSocialsId: string = useStoreState(
-    ({ db }) => db.member?.memberSocials
-  );
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const gql: GQL = useGQL();
-
-  const { twitterUrl } = gql.memberSocials.fromCache({
+  const { twitterUrl } = useFindOne(IMemberSocials, {
     fields: ['twitterUrl'],
-    id: memberSocialsId
+    where: { memberId }
   });
 
   return <ProfileSocialValue brand={SocialBrand.TWITTER} url={twitterUrl} />;
@@ -149,9 +120,8 @@ const ProfileSocialTwitter: React.FC = () => {
 const ProfileSocialCard: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const { loading } = useQuery<IMemberSocials[]>({
+  const { loading } = useFindOneFull(IMemberSocials, {
     fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-    operation: 'memberSocials',
     where: { memberId }
   });
 

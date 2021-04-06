@@ -1,6 +1,9 @@
 import React from 'react';
 
+import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import Form from '@organisms/Form/Form';
+import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormImage from '@organisms/Form/FormImage';
 import FormLongText from '@organisms/Form/FormLongText';
@@ -11,11 +14,14 @@ import { QuestionCategory } from '@util/constants';
 import useUpdateMember from './useUpdateMember';
 
 const ProfilePersonalModal: React.FC = () => {
-  const bio = useStoreState(({ db }) => db.member.bio);
-  const firstName = useStoreState(({ db }) => db.member.firstName);
-  const lastName = useStoreState(({ db }) => db.member.lastName);
-  const pictureUrl = useStoreState(({ db }) => db.member.pictureUrl);
-  const updateMember = useUpdateMember();
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { bio, firstName, lastName, pictureUrl } = useFindOne(IMember, {
+    fields: ['bio', 'firstName', 'lastName', 'pictureUrl'],
+    where: { id: memberId }
+  });
+
+  const updateMember: OnFormSubmitFunction = useUpdateMember();
 
   return (
     <Form onSubmit={updateMember}>

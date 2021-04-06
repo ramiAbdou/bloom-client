@@ -4,18 +4,25 @@ import Button from '@atoms/Button/Button';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
+import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import { IMemberType, MemberRole } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
-  const fullName: string = useStoreState(
-    ({ db }) => `${db.member.firstName} ${db.member.lastName}`
-  );
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { firstName, lastName } = useFindOne(IMember, {
+    fields: ['firstName', 'lastName'],
+    where: { id: memberId }
+  });
+
+  const fullName: string =
+    firstName && lastName ? `${firstName} ${lastName}` : '';
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -29,38 +36,51 @@ const ProfilePersonalHeader: React.FC = () => {
 };
 
 const ProfilePersonalTagList: React.FC = () => {
-  const role: MemberRole = useStoreState(({ db }) => db.member.role);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const memberTypeName: string = useStoreState(({ db }) => {
-    const memberType: IMemberType = db.byMemberTypeId[db.member.memberType];
-    return memberType?.name;
+  const { memberType, role } = useFindOne(IMember, {
+    fields: ['role', 'memberType.id', 'memberType.name'],
+    where: { id: memberId }
   });
 
   return (
     <Row wrap gap="xs">
       <HeaderTag show={!!role}>{role}</HeaderTag>
-      <HeaderTag>{memberTypeName}</HeaderTag>
+      <HeaderTag>{memberType?.name}</HeaderTag>
     </Row>
   );
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const email: string = useStoreState(({ db }) => db.member.email);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { email } = useFindOne(IMember, {
+    fields: ['email'],
+    where: { id: memberId }
+  });
 
   return <MailTo email={email} />;
 };
 
 const ProfilePersonalBio: React.FC = () => {
-  const bio: string = useStoreState(({ db }) => db.member.bio);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  if (!bio) return null;
-  return <p className="ws-pre-wrap">{bio}</p>;
+  const { bio } = useFindOne(IMember, {
+    fields: ['bio'],
+    where: { id: memberId }
+  });
+
+  return bio ? <p className="ws-pre-wrap">{bio}</p> : null;
 };
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
-  const bio: string = useStoreState(({ db }) => db.member.bio);
-  const pictureUrl: string = useStoreState(({ db }) => db.member.pictureUrl);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
+
+  const { bio, pictureUrl } = useFindOne(IMember, {
+    fields: ['bio', 'pictureUrl'],
+    where: { id: memberId }
+  });
 
   if (bio && pictureUrl) return null;
 

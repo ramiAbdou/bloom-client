@@ -21,14 +21,12 @@ const ProfileSocialValue: React.FC<ProfileSocialMediaValueProps> = ({
 }) => {
   if (!url) return null;
 
-  const isClubhouse: boolean = brand === SocialBrand.CLUBHOUSE;
   const isFacebook: boolean = brand === SocialBrand.FACEBOOK;
   const isInstagram: boolean = brand === SocialBrand.INSTAGRAM;
   const isLinkedIn: boolean = brand === SocialBrand.LINKED_IN;
   const isTwitter: boolean = brand === SocialBrand.TWITTER;
 
   const css: string = cx('s-profile-card--social-logo', {
-    's-profile-card--social-logo--clubhouse': isClubhouse,
     's-profile-card--social-logo--facebook': isFacebook,
     's-profile-card--social-logo--linkedin': isLinkedIn,
     's-profile-card--social-logo--twitter': isTwitter

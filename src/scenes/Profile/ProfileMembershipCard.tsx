@@ -3,20 +3,23 @@ import React from 'react';
 
 import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
+import { ICommunity, IMember, IMemberValue } from '@db/db.entities';
+import useFindFull from '@gql/useFindFull';
+import useFindOne from '@gql/useFindOne';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import { ModalData } from '@organisms/Modal/Modal.types';
-import { IMemberValue, IQuestion } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
-import { sortObjects } from '@util/util';
 import ProfileCardHeader from './ProfileCardHeader';
-import useInitProfileMembership from './useInitProfileMembership';
 
 const ProfileMembershipHeader: React.FC = () => {
-  const title: string = useStoreState(
-    ({ db }) => `${db.community.name} Membership Information`
-  );
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const { name } = useFindOne(ICommunity, {
+    fields: ['name'],
+    where: { id: communityId }
+  });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -24,37 +27,60 @@ const ProfileMembershipHeader: React.FC = () => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
   };
 
-  return <ProfileCardHeader canEdit title={title} onEditClick={onClick} />;
+  return (
+    <ProfileCardHeader
+      canEdit
+      title={`${name} Membership Information`}
+      onEditClick={onClick}
+    />
+  );
 };
 
 const ProfileMembershipContent: React.FC = () => {
-  const items: QuestionBoxItemProps[] = useStoreState(({ db }) => {
-    const sortedQuestions: IQuestion[] = db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.filter(
-        (question: IQuestion) =>
-          !question.category || question.category === QuestionCategory.GENDER
-      )
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'));
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-    const values: IMemberValue[] = db.member.memberValues?.map(
-      (memberValueId: string) => db.byMemberValuesId[memberValueId]
-    );
-
-    return sortedQuestions?.map(({ id, title, type }: IQuestion) => {
-      const value: any = values?.find(
-        (entity: IMemberValue) => entity?.question === id
-      )?.value;
-
-      return { title, type, value };
-    });
+  const { memberValues } = useFindOne(IMember, {
+    fields: [
+      'memberValues.id',
+      'memberValues.question.category',
+      'memberValues.question.id',
+      'memberValues.question.rank',
+      'memberValues.question.title',
+      'memberValues.question.type',
+      'memberValues.value'
+    ],
+    where: { id: memberId }
   });
+
+  const items: QuestionBoxItemProps[] = memberValues
+    ?.filter(
+      (memberValue: IMemberValue) =>
+        !memberValue.question.category ||
+        memberValue.question.category === QuestionCategory.GENDER
+    )
+    ?.sort((a: IMemberValue, b: IMemberValue) => {
+      if (a.question.rank < b.question.rank) return -1;
+      if (a.question.rank > b.question.rank) return 1;
+      return 0;
+    })
+    ?.map((memberValue: IMemberValue) => {
+      return {
+        title: memberValue.question.title,
+        type: memberValue.question.type,
+        value: memberValue.value
+      };
+    });
 
   return <QuestionBox handleNull="HIDE_VALUE" items={items} />;
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const hasData: boolean = useStoreState(({ db }) => !!db.member.memberValues);
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { memberValues } = useFindOne(IMember, {
+    fields: ['memberValues.id'],
+    where: { memberId }
+  });
 
   const showModal: ActionCreator<ModalData> = useStoreActions(
     ({ modal }) => modal.showModal
@@ -65,14 +91,19 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
   };
 
   return (
-    <Button fill primary show={!hasData} onClick={onClick}>
+    <Button fill primary show={!!memberValues} onClick={onClick}>
       + Fill Out Membership Information
     </Button>
   );
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const { loading } = useInitProfileMembership();
+  const memberId: string = useStoreState(({ db }) => db.member.id);
+
+  const { loading } = useFindFull(IMemberValue, {
+    fields: ['id', 'member.id', 'question.id', 'value'],
+    where: { memberId }
+  });
 
   return (
     <Card className="s-profile-card--membership" show={!loading}>

@@ -111,7 +111,6 @@ export enum QuestionType {
 }
 
 export enum SocialBrand {
-  CLUBHOUSE = 'CLUBHOUSE',
   FACEBOOK = 'FACEBOOK',
   INSTAGRAM = 'INSTAGRAM',
   LINKED_IN = 'LINKED_IN',

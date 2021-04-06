@@ -3,7 +3,7 @@ import React from 'react';
 import MainContent from '@containers/Main/MainContent';
 import { ICommunity } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
-import useFindOneWithLoading from '@gql/useFindOneWithLoading';
+import useFindOneFull from '@gql/useFindOneFull';
 import ListStore from '@organisms/List/List.store';
 import ListFilterStore from '@organisms/List/ListFilter/ListFilter.store';
 import PanelLocal from '@organisms/Panel/PanelLocal';
@@ -15,7 +15,7 @@ import DirectoryHeader from './DirectoryHeader';
 const Directory: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const { loading }: Partial<QueryResult> = useFindOneWithLoading(ICommunity, {
+  const { loading }: Partial<QueryResult> = useFindOneFull(ICommunity, {
     fields: [
       'id',
       'members.id',
