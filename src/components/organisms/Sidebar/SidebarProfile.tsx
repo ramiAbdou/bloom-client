@@ -14,6 +14,7 @@ const SidebarProfileContent: React.FC = () => {
     ({ db }) => db.byMemberTypeId[db.member?.memberType]?.name
   );
 
+  const memberId: string = useStoreState(({ db }) => db.member?.id);
   const role: MemberRole = useStoreState(({ db }) => db.member?.role);
   const position: string = useStoreState(({ db }) => db.member?.position);
   const firstName: string = useStoreState(({ db }) => db.member?.firstName);
@@ -23,7 +24,7 @@ const SidebarProfileContent: React.FC = () => {
 
   return (
     <div>
-      <ProfilePicture size={48} />
+      <ProfilePicture memberId={memberId} size={48} />
 
       <div className="o-nav-profile-info">
         <p>{fullName}</p>

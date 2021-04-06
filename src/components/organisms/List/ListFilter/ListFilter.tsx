@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 
 import Row from '@containers/Row/Row';
-import PanelCloseButton from '@organisms/Panel/PanelCloseButton';
 import { IQuestion } from '@db/db.entities';
+import useFind from '@gql/useFind';
+import PanelCloseButton from '@organisms/Panel/PanelCloseButton';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -19,19 +20,23 @@ const ListFilterHeader: React.FC = () => (
 );
 
 const ListFilterQuestionList: React.FC = () => {
-  const questions: IQuestion[] = useStoreState(({ db }) =>
-    db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
-      ?.filter(
-        (question: IQuestion) =>
-          !question.locked && question.type === QuestionType.MULTIPLE_CHOICE
-      )
-  );
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const questions: IQuestion[] = useFind(IQuestion, {
+    fields: ['locked', 'rank', 'type'],
+    where: { communityId }
+  });
+
+  const sortedQuestions: IQuestion[] = questions
+    ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
+    ?.filter(
+      (question: IQuestion) =>
+        !question.locked && question.type === QuestionType.MULTIPLE_CHOICE
+    );
 
   return (
     <ul>
-      {questions?.map(({ id }: IQuestion) => (
+      {sortedQuestions?.map(({ id }: IQuestion) => (
         <ListFilterQuestion key={id} id={id} />
       ))}
     </ul>

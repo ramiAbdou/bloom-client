@@ -2,8 +2,8 @@ import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
 import { IMemberValue, IQuestion } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
 import { ValueProps } from '@util/constants';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
@@ -19,15 +19,14 @@ const ListFilterQuestionOption: React.FC<ValueProps> = ({ value: option }) => {
     (state) => state.removeValue
   );
 
-  const numResponses: number = useStoreState(({ db }) => {
-    const question: IQuestion = db.byQuestionId[questionId];
-
-    if (!question?.memberValues) return 0;
-
-    return question.memberValues
-      .map((memberValueId: string) => db.byMemberValuesId[memberValueId])
-      .filter((data: IMemberValue) => data?.value === option)?.length;
+  const { memberValues } = useFindOne(IQuestion, {
+    fields: ['memberValues.id', 'memberValues.value'],
+    where: { id: questionId }
   });
+
+  const responsesCount: number = memberValues.filter(
+    (memberValue: IMemberValue) => memberValue?.value === option
+  )?.length;
 
   const setFilter = ListFilterStore.useStoreActions((state) => state.setFilter);
   const values = ListFilterQuestionStore.useStoreState((state) => state.values);
@@ -51,7 +50,7 @@ const ListFilterQuestionOption: React.FC<ValueProps> = ({ value: option }) => {
     <Checkbox
       key={option}
       checked={values.includes(option)}
-      format={(value: string) => `${value} (${numResponses})`}
+      format={(value: string) => `${value} (${responsesCount})`}
       title={option}
       onChange={onChange}
     />

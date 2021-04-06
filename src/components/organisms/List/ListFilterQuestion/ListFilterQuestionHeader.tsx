@@ -3,8 +3,8 @@ import { IoAdd } from 'react-icons/io5';
 
 import Row from '@containers/Row/Row';
 import { IQuestion } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
@@ -20,9 +20,9 @@ const ListFilterQuestionHeader: React.FC = () => {
     (state) => !!state.values?.length
   );
 
-  const title: string = useStoreState(({ db }) => {
-    const question: IQuestion = db.byQuestionId[questionId];
-    return question?.title;
+  const { title } = useFindOne(IQuestion, {
+    fields: ['title'],
+    where: { id: questionId }
   });
 
   const css: string = cx('w-100', { 'mb-ss--nlc': areValuesSelected });
