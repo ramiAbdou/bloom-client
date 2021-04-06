@@ -2,19 +2,25 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 
 import Separator from '@atoms/Separator';
+import { ICommunity } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 import SidebarAdminSection from './SidebarAdminSection';
 import SidebarBackground from './SidebarBackground';
 import SidebarCommunityList from './SidebarCommunityList';
 import SidebarMainSection from './SidebarMainSection';
-import SidebarDuesContent from './SidebarMemberStatus';
 import SidebarProfile from './SidebarProfile';
 import SidebarProfileSection from './SidebarProfileSection';
 import SidebarQuickActionsSection from './SidebarQuickActionsSection';
 
 const SidebarCommunityName: React.FC = () => {
-  const name: string = useStoreState(({ db }) => db.community?.name);
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
+
+  const { name } = useFindOne(ICommunity, {
+    fields: ['name'],
+    where: { id: communityId }
+  });
 
   return (
     <>
@@ -31,7 +37,6 @@ const SidebarContent: React.FC = () => (
     <SidebarAdminSection />
     <SidebarQuickActionsSection />
     <SidebarProfileSection />
-    <SidebarDuesContent />
     <SidebarProfile />
   </div>
 );

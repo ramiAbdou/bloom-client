@@ -1,6 +1,8 @@
 import { nanoid } from 'nanoid';
 import React from 'react';
 
+import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { useStoreState } from '@store/Store';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLink from './SidebarLink';
@@ -14,9 +16,14 @@ const SidebarSection: React.FC<LinkSectionProps> = ({
   links,
   title
 }: LinkSectionProps) => {
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
+  const memberId: string = useStoreState(({ db }) => db.member?.id);
 
-  if (['Admin', 'Quick Actions'].includes(title) && !isAdmin) return null;
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
+  if (['Admin', 'Quick Actions'].includes(title) && !role) return null;
 
   return (
     <div className="mt-sm mr-ss">

@@ -2,7 +2,7 @@ import { action } from 'easy-peasy';
 
 import { SidebarModel } from './Sidebar.types';
 
-const navModel: SidebarModel = {
+const sidebarModel: SidebarModel = {
   isOpen: false,
 
   setIsOpen: action((state, isOpen: boolean) => {
@@ -10,4 +10,4 @@ const navModel: SidebarModel = {
   })
 };
 
-export default navModel;
+export default sidebarModel;

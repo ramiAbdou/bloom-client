@@ -1,7 +1,8 @@
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
-import { MemberRole } from '@db/db.entities';
+import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
@@ -10,15 +11,22 @@ import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';
 
 const SidebarProfileContent: React.FC = () => {
-  const memberTypeName: string = useStoreState(
-    ({ db }) => db.byMemberTypeId[db.member?.memberType]?.name
-  );
-
   const memberId: string = useStoreState(({ db }) => db.member?.id);
-  const role: MemberRole = useStoreState(({ db }) => db.member?.role);
-  const position: string = useStoreState(({ db }) => db.member?.position);
-  const firstName: string = useStoreState(({ db }) => db.member?.firstName);
-  const lastName: string = useStoreState(({ db }) => db.member?.lastName);
+
+  const { firstName, lastName, memberType, position, role } = useFindOne(
+    IMember,
+    {
+      fields: [
+        'firstName',
+        'lastName',
+        'memberType.id',
+        'memberType.name',
+        'position',
+        'role'
+      ],
+      where: { id: memberId }
+    }
+  );
 
   const fullName: string = `${firstName} ${lastName}`;
 
@@ -28,7 +36,7 @@ const SidebarProfileContent: React.FC = () => {
 
       <div className="o-nav-profile-info">
         <p>{fullName}</p>
-        <p>{position ?? role ?? memberTypeName}</p>
+        <p>{position ?? role ?? memberType.name}</p>
       </div>
     </div>
   );
@@ -61,21 +69,12 @@ const SidebarProfileButton: React.FC = () => {
 };
 
 const SidebarProfile: React.FC = () => {
-  const isDuesMessageShowing: boolean = useStoreState(
-    ({ db }) => !!db.community?.canCollectDues
-    // ({ db }) => db.community?.canCollectDues && !db.member?.isDuesActive
-  );
-
   const isTablet: boolean = useBreakpoint() <= 2;
-
-  const css: string = cx('o-nav-profile-ctr', {
-    'o-nav-profile-ctr--no-auto': isDuesMessageShowing
-  });
 
   if (isTablet) return null;
 
   return (
-    <div className={css}>
+    <div className="o-nav-profile-ctr">
       <SidebarProfileButton />
     </div>
   );

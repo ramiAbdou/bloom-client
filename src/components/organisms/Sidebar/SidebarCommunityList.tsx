@@ -1,23 +1,27 @@
 import React from 'react';
 
 import { IMember, MemberStatus } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import SidebarCommunityButton from './SidebarCommunityButton';
 
 const SidebarCommunityList: React.FC = () => {
-  const memberIds: string[] = useStoreState(({ db }) =>
-    db.user?.members
-      ?.map((memberId: string) => db.byMemberId[memberId])
-      ?.filter((member: IMember) => member.status === MemberStatus.ACCEPTED)
-      ?.sort((a, b) => sortObjects(a, b, 'joinedAt', 'ASC'))
-      ?.map((member: IMember) => member.id)
+  const userId: string = useStoreState(({ db }) => db.user?.id);
+
+  const members: IMember[] = useFind(IMember, {
+    fields: ['joinedAt', 'name'],
+    where: { status: MemberStatus.ACCEPTED, userId }
+  });
+
+  const sortedMembers: IMember[] = members?.sort((a: IMember, b: IMember) =>
+    sortObjects(a, b, 'joinedAt', 'ASC')
   );
 
   return (
     <div className="f f-ac f-col px-xs py-sm o-nav-community-ctr">
-      {memberIds?.map((id: string) => (
-        <SidebarCommunityButton key={id} id={id} />
+      {sortedMembers?.map((sortedMember: IMember) => (
+        <SidebarCommunityButton key={sortedMember.id} id={sortedMember.id} />
       ))}
     </div>
   );

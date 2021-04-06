@@ -15,12 +15,15 @@ const PanelContainer: React.FC = ({ children }) => {
   const size = useStoreState(({ panel }) => panel.size);
   const style = useStoreState(({ panel }) => panel.style);
   const useMetadataInId = useStoreState(({ panel }) => panel.useMetadataInId);
+
   const closePanel = useStoreActions(({ panel }) => panel.closePanel);
+
   const elementId = useMetadataInId ? `${id}-${metadata}` : id;
   const ref: MutableRefObject<HTMLDivElement> = useRef(null);
   const element: HTMLElement = document.getElementById(elementId);
   const { height, width } = element?.getBoundingClientRect() ?? {};
   const { innerHeight, innerWidth } = window;
+
   const position = usePanelPosition({ id: elementId, initialAlign, scrollId });
   const { align, left, top } = position;
 
