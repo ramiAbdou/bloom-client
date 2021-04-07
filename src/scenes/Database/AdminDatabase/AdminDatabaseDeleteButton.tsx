@@ -7,7 +7,10 @@ import DatabaseAction from '../DatabaseAction';
 
 const AdminDatabaseDeleteButton: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const onClick = () => showModal({ id: ModalType.DELETE_MEMBERS });
+
+  const onClick = (): void => {
+    showModal({ id: ModalType.DELETE_MEMBERS });
+  };
 
   return (
     <DatabaseAction

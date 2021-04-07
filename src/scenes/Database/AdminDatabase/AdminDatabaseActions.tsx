@@ -1,19 +1,25 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
+import { IMember, MemberRole } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import TableStore from '@organisms/Table/Table.store';
 import SearchBar from '@organisms/Table/TableSeachBar';
-import { MemberRole } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseDeleteButton from './AdminDatabaseDeleteButton';
 import AdminDatabaseDemoteButton from './AdminDatabaseDemoteButton';
 
 const AdminDatabaseButtons: React.FC = () => {
-  const isOwner = useStoreState(
-    ({ db }) => db.member?.role === MemberRole.OWNER
-  );
+  const memberId: string = useStoreState(({ db }) => db.member.id);
 
-  const isAnythingSelected = TableStore.useStoreState(
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
+  const isOwner: boolean = role === MemberRole.OWNER;
+
+  const isAnythingSelected: boolean = TableStore.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
