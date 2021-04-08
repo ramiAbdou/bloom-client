@@ -9,7 +9,7 @@ import { useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
 
 const IndividualEventMainHeaderContainer: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
@@ -29,7 +29,7 @@ const IndividualEventMainHeaderContainer: React.FC = () => {
 };
 
 const IndividualEventMain: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
   const isMember: boolean = useIsMember();
 
   const { community, privacy, summary, title } = useFindOne(IEvent, {

@@ -36,25 +36,30 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
 
   const onSubmit = async ({
     db,
+    gql,
     goForward,
     items,
     setError
   }: OnFormSubmitArgs) => {
-    const { id: eventId, videoUrl } = db.event;
     const firstName: string = items.FIRST_NAME?.value as string;
     const lastName: string = items.LAST_NAME?.value as string;
     const email: string = items.EMAIL?.value as string;
 
     const { error } = await createEventAttendeeWithSupporter({
       email,
-      eventId,
+      eventId: db.eventId,
       firstName,
       lastName
     });
 
     if (error) setError(error);
     else {
-      openHref(videoUrl);
+      const { data: event } = await gql.events.findOne({
+        fields: ['videoUrl'],
+        where: { id: db.eventId }
+      });
+
+      openHref(event?.videoUrl);
       setCurrentPage({ branchId: 'ATTENDEE_CONFIRMATION', id: 'CONFIRMATION' });
       goForward();
     }

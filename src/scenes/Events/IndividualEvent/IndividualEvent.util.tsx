@@ -25,7 +25,7 @@ const useIndividualEventTableAttendees = (): Record<
   string,
   IndividualEventTableRowProps
 > => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { eventAttendees } = useFindOne(IEvent, {
     fields: [
@@ -80,7 +80,7 @@ const useIndividualEventTableGuests = (): Record<
   string,
   IndividualEventTableRowProps
 > => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { eventGuests } = useFindOne(IEvent, {
     fields: [
@@ -134,7 +134,7 @@ const useIndividualEventTableWatchers = (): Record<
   string,
   IndividualEventTableRowProps
 > => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { eventWatches } = useFindOne(IEvent, {
     fields: [
@@ -219,7 +219,7 @@ export const useIndividualEventTableRows = (): TableRow[] => {
  * and viewedRecording columns.
  */
 export const useIndividualEventTableColumns = (): TableColumn[] => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, recordingUrl, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'recordingUrl', 'startTime'],

@@ -10,7 +10,7 @@ import { useStoreState } from '@store/Store';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 const IndividualEventViewedFilter: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { recordingUrl } = useFindOne(IEvent, {
     fields: ['recordingUrl'],
@@ -38,7 +38,7 @@ const IndividualEventRsvpFilter: React.FC = () => {
 };
 
 const IndividualEventJoinedFilter: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
@@ -56,7 +56,7 @@ const IndividualEventJoinedFilter: React.FC = () => {
 };
 
 const IndividualEventNoShowFilter: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],

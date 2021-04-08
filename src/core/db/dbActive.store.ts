@@ -1,12 +1,12 @@
 import { computed } from 'easy-peasy';
 
-import { ICommunity, IEvent } from './db.entities';
+import { ICommunity } from './db.entities';
 import { DbModel } from './db.types';
 import { updateDocumentColors } from './db.util';
 
 const dbActiveStore: Pick<
   DbModel,
-  'community' | 'communityId' | 'event' | 'eventId' | 'memberId' | 'userId'
+  'community' | 'communityId' | 'eventId' | 'memberId' | 'userId'
 > = {
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
@@ -35,12 +35,6 @@ const dbActiveStore: Pick<
   }),
 
   communityId: null,
-
-  event: computed(({ entities }) => {
-    const { activeId, byId } = entities.events;
-    return byId[activeId] as IEvent;
-  }),
-
   eventId: null,
   memberId: null,
   userId: null

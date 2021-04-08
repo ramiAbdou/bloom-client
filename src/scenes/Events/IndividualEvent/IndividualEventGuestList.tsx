@@ -63,7 +63,7 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
 };
 
 const IndividualEventGuestListContent: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { eventGuests }: IEvent = useFindOne(IEvent, {
     fields: ['eventGuests.createdAt', 'eventGuests.id'],
@@ -90,7 +90,7 @@ const IndividualEventGuestListContent: React.FC = () => {
 };
 
 const IndividualEventGuestList: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, eventGuests, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'startTime'],

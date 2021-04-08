@@ -8,7 +8,7 @@ import { useStoreState } from '@store/Store';
 import { ErrorType } from '@util/constants.errors';
 
 const IndividualEventErrorModal: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const error:
     | ErrorType.EVENT_FINISHED

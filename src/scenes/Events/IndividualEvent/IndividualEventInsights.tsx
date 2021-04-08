@@ -11,7 +11,7 @@ import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, eventAttendees, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'eventAttendees.id', 'startTime'],
@@ -33,7 +33,7 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
 };
 
 const IndividualEventInsightsGuestsCard: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { eventGuests } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'startTime'],
@@ -46,7 +46,7 @@ const IndividualEventInsightsGuestsCard: React.FC = () => {
 };
 
 const IndividualEventInsightsWatchesCard: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { eventWatches, recordingUrl } = useFindOne(IEvent, {
     fields: ['eventWatches.id', 'recordingUrl'],

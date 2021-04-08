@@ -6,7 +6,7 @@ import useFindOne from '@gql/useFindOne';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventAbout: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { description } = useFindOne(IEvent, {
     fields: ['description'],

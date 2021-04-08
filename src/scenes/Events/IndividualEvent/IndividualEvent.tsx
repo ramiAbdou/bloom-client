@@ -22,7 +22,7 @@ import IndividualEventMain from './IndividualEventMain';
 import IndividualEventTable from './IndividualEventTable';
 
 const IndividualEventHeader: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { imageUrl } = useFindOne(IEvent, {
     fields: ['imageUrl'],
@@ -38,7 +38,7 @@ const IndividualEventHeader: React.FC = () => {
 };
 
 const IndividualEventContent: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { privacy } = useFindOne(IEvent, {
     fields: ['privacy'],
@@ -84,7 +84,7 @@ const IndividualEvent: React.FC = () => {
   const { eventId } = useParams() as { eventId: string };
 
   const isEventActive: boolean = useStoreState(
-    ({ db }) => db.event?.id === eventId
+    ({ db }) => db.eventId === eventId
   );
 
   const setActiveEntities: ActionCreator<

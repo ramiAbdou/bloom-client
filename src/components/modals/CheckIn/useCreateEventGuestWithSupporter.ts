@@ -9,7 +9,7 @@ import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const [createEventGuestWithSupporter] = useBloomMutation<
     IEventGuest,

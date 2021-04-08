@@ -12,7 +12,7 @@ import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';
 
 const CheckInChoosePageActions: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],

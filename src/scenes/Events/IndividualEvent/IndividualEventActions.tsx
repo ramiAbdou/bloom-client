@@ -13,7 +13,7 @@ import EventsShareButton from '../EventsShareButton';
 import EventsViewRecordingButton from '../EventsViewRecordingButton';
 
 const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { recordingUrl } = useFindOne(IEvent, {
     fields: ['recordingUrl'],
@@ -41,7 +41,7 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
 };
 
 const EventsEditEventButton: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
@@ -78,7 +78,7 @@ const EventsEditEventButton: React.FC = () => {
  * - View Event Recording (Past Event)
  */
 const IndividualEventActions: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { endTime, eventGuests, startTime } = useFindOne(IEvent, {

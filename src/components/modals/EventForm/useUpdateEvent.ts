@@ -1,6 +1,4 @@
 import { EventPrivacy } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -8,11 +6,10 @@ import {
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
-  const gql: GQL = useGQL();
-
   const onSubmit = async ({
     closeModal,
     db,
+    gql,
     items,
     setError,
     showToast
@@ -21,12 +18,17 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
 
     let imageUrl: string;
 
+    const { data: event } = await gql.events.findOne({
+      fields: ['imageUrl'],
+      where: { id: db.eventId }
+    });
+
     if (base64String) {
       try {
         imageUrl = await uploadImage({
           base64String,
           key: 'EVENT',
-          previousImageUrl: db.event?.imageUrl
+          previousImageUrl: event?.imageUrl
         });
       } catch {
         setError('Failed to upload image.');

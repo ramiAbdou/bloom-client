@@ -49,7 +49,7 @@ const IndividualEventTableContent: React.FC = () => {
 
 const IndividualEventTable: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { data: event, loading } = useFindOneFull(IEvent, {
     fields: [

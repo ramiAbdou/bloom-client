@@ -10,7 +10,7 @@ import CheckInConfirmation from './CheckInConfirmation';
 import CheckInMainPage from './CheckInMainPage';
 
 const CheckInModal: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
   const isMember: boolean = useIsMember();
 
   const { privacy } = useFindOne(IEvent, {

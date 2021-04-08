@@ -14,7 +14,7 @@ import useCreateEventAttendeeWithSupporter from './useCreateEventAttendeeWithSup
 import useCreateEventGuestWithSupporter from './useCreateEventGuestWithSupporter';
 
 const CheckInGuestFormContent: React.FC = () => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
@@ -45,7 +45,7 @@ const CheckInGuestFormContent: React.FC = () => {
 };
 
 const CheckInGuestForm: React.FC<ShowProps> = ({ show }) => {
-  const eventId: string = useStoreState(({ db }) => db.event?.id);
+  const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { endTime, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
