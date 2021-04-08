@@ -16,6 +16,7 @@ import useIsMember from '../hooks/useIsMember';
 const useBackupCommunity = (): boolean => {
   const userId: string = useStoreState(({ db }) => db.user?.id);
 
+  const isMember: boolean = useIsMember();
   const { urlName }: UrlNameProps = useParams();
   const { push } = useHistory();
 
@@ -24,8 +25,7 @@ const useBackupCommunity = (): boolean => {
     where: { id: userId }
   });
 
-  const backupUrlName: string = members[0]?.community.urlName;
-  const isMember: boolean = useIsMember();
+  const backupUrlName: string = members ? members[0]?.community.urlName : null;
 
   useEffect(() => {
     if (backupUrlName && (!urlName || isMember === false)) {

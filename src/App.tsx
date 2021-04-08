@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import 'react-datepicker/dist/react-datepicker.css';
 import './index.scss';
 import '../public/favicon.ico';
@@ -40,7 +41,19 @@ const client: GraphQLClient = new GraphQLClient({
 });
 
 const apolloClient = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          members: (_, { args, toReference }) =>
+            toReference({
+              __typename: 'members',
+              id: args.where?.id?._eq
+            })
+        }
+      }
+    }
+  }),
   connectToDevTools: process.env.APP_ENV === 'dev',
   link: new HttpLink({
     credentials: 'include',

@@ -101,7 +101,7 @@ const DirectoryCardContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const onClick = () => {
+  const onClick = (): void => {
     showModal({ id: ModalType.PROFILE, metadata: memberId });
   };
 

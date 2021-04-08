@@ -15,12 +15,15 @@ function useFindFull<T>(
   const entityName: string = snakeCase(pluralize(nameWithoutI));
 
   const argsString: string = buildArgsString({ where });
-  const fieldsString: string = buildFieldsString(fields as string[]);
+
+  const fieldsString: string = buildFieldsString([
+    ...(fields ?? []),
+    'id'
+  ] as string[]);
 
   const query: DocumentNode = gql`
       query FindOne${nameWithoutI} {
         ${entityName} ${argsString} {
-          id
           ${fieldsString}
         }
       }

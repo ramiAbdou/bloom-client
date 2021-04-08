@@ -1,9 +1,9 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
-import { ICommunity } from '@db/db.entities';
+import { IMember } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
-import useFindOneFull from '@gql/useFindOneFull';
+import useFindFull from '@gql/useFindFull';
 import ListStore from '@organisms/List/List.store';
 import ListFilterStore from '@organisms/List/ListFilter/ListFilter.store';
 import PanelLocal from '@organisms/Panel/PanelLocal';
@@ -15,21 +15,19 @@ import DirectoryHeader from './DirectoryHeader';
 const Directory: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const { loading }: Partial<QueryResult> = useFindOneFull(ICommunity, {
+  const { loading }: Partial<QueryResult> = useFindFull(IMember, {
     fields: [
-      'id',
-      'members.id',
-      'members.bio',
-      'members.email',
-      'members.firstName',
-      'members.lastName',
-      'members.joinedAt',
-      'members.pictureUrl',
-      'members.position',
-      'members.role',
-      'members.status'
+      'bio',
+      'email',
+      'firstName',
+      'lastName',
+      'joinedAt',
+      'pictureUrl',
+      'position',
+      'role',
+      'status'
     ],
-    where: { id: communityId }
+    where: { communityId }
   });
 
   return (

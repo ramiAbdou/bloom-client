@@ -36,7 +36,7 @@ const SidebarProfileContent: React.FC = () => {
 
       <div className="o-nav-profile-info">
         <p>{fullName}</p>
-        <p>{position ?? role ?? memberType.name}</p>
+        <p>{position ?? role ?? memberType?.name}</p>
       </div>
     </div>
   );
