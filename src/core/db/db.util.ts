@@ -54,22 +54,17 @@ export const mergeEntities: Action<DbModel, MergeEntitiesArgs> = action(
 /**
  * Updates the activeId of a series of tables or just one table.
  */
-export const setActiveEntities: Action<
-  DbModel,
-  SetActiveArgs | SetActiveArgs[]
-> = action((state, args: SetActiveArgs | SetActiveArgs[]) => {
-  const argsArr = Array.isArray(args) ? args : [args];
-
-  const updatedEntities: IEntities = argsArr.reduce(
-    (acc: IEntities, currentArgs: SetActiveArgs) => {
-      const { id, table } = currentArgs;
-      return { ...acc, [table]: { ...acc[table], activeId: id } };
-    },
-    { ...state.entities }
-  );
-
-  return { ...state, entities: updatedEntities };
-});
+export const setActiveEntities: Action<DbModel, SetActiveArgs> = action(
+  (state, { communityId, eventId, memberId, userId }: SetActiveArgs) => {
+    return {
+      ...state,
+      communityId: communityId ?? state.communityId,
+      eventId: eventId ?? state.eventId,
+      memberId: memberId ?? state.memberId,
+      userId: userId ?? state.userId
+    };
+  }
+);
 
 /**
  * Returns the hue from an RGB 3-tuple. Only a helper function for the next

@@ -10,7 +10,7 @@ import AdminDatabaseDeleteButton from './AdminDatabaseDeleteButton';
 import AdminDatabaseDemoteButton from './AdminDatabaseDemoteButton';
 
 const AdminDatabaseButtons: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { role } = useFindOne(IMember, {
     fields: ['role'],

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent, IEventGuest } from '@db/db.entities';
+import { IEvent, IEventGuest, IMember } from '@db/db.entities';
 import useFindOne from '@gql/useFindOne';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { APP } from '@util/constants';
@@ -15,7 +15,7 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   eventId,
   large
 }) => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const event: IEvent = useFindOne(IEvent, {
     fields: [
@@ -36,7 +36,11 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
   );
 
-  const isAdmin = useStoreState(({ db }) => !!db.member?.role);
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
@@ -48,7 +52,7 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
   };
 
   const showOnSmall = !large && !!isGoing;
-  const showOnLarge = !!large && (!isAdmin || (isAdmin && !!isGoing));
+  const showOnLarge = !!large && (!role || (role && !!isGoing));
 
   return (
     <Button

@@ -13,7 +13,7 @@ import { QuestionCategory, QuestionType } from '@util/constants';
 import useUpdateMemberValues from './useUpdateMemberValues';
 
 const ProfileMembershipForm: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { memberValues } = useFindOne(IMember, {
     fields: [

@@ -22,10 +22,6 @@ const dbStore: DbModel = {
       !!entities.users.activeId
   ),
 
-  isInitialized: computed(
-    ({ community, member, user }) => !!community && !!member && !!user
-  ),
-
   mergeEntities,
 
   setActiveEntities

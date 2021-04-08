@@ -11,7 +11,7 @@ import { useStoreState } from '@store/Store';
  */
 const useIsMember = (): boolean => {
   const communityId: string = useStoreState(({ db }) => db.community?.id);
-  const userId: string = useStoreState(({ db }) => db.user?.id);
+  const userId: string = useStoreState(({ db }) => db.userId);
 
   const { members }: IUser = useFindOne(IUser, {
     fields: ['members.community.id', 'members.id'],

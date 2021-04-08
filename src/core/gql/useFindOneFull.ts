@@ -9,7 +9,7 @@ import { FindOneArgs, QueryResult } from './gql.types';
 
 function useFindOneFull<T>(
   entity: new () => T,
-  { fields, where }: FindOneArgs<T>
+  { fields, skip, where }: FindOneArgs<T>
 ): QueryResult<T> {
   const nameWithoutI: string = entity.name.substring(1);
   const entityName: string = snakeCase(pluralize(nameWithoutI));
@@ -29,21 +29,25 @@ function useFindOneFull<T>(
       }
     `;
 
-  const result = useQuery(query);
+  const result = useQuery(query, { skip });
+
+  if (!result.data) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore b/c we want to destructure very easily.
+    return { data: {}, error: result.error?.message, loading: result.loading };
+  }
 
   // Deeply converts all of the data from the operation to camelCase, if the
   // data exists.
-  const camelCaseData: T[] = camelCaseKeys(
-    result.data ? result.data[entityName] : null,
+  const camelCaseData: T = camelCaseKeys(
+    Array.isArray(result.data[entityName])
+      ? result.data[entityName][0]
+      : result.data[entityName],
     { deep: true }
   );
 
-  const record: T = camelCaseData?.length ? camelCaseData[0] : null;
-
   return {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore b/c we want to be able to destructure without null issues.
-    data: record ?? {},
+    data: camelCaseData,
     error: result.error?.message,
     loading: result.loading
   };

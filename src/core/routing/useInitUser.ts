@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
-
-import { IUser, Schema } from '@db/db.entities';
+import { IUser } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
-import useLazyQuery from '@gql/useLazyQuery';
+import useFindOneFull from '@gql/useFindOneFull';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreState } from '@store/Store';
 
@@ -10,18 +8,17 @@ import { useStoreState } from '@store/Store';
  * Updates the authenticated status of the user by checking the httpOnly
  * cookies stored in the browser.
  */
-const useInitUser = (): QueryResult<IUser[]> => {
+const useInitUser = (): QueryResult<IUser> => {
   const isAuthenticated: boolean = useStoreState(
     ({ db }) => db.isAuthenticated
   );
 
   const userId: string = useStoreState(({ db }) => db.entities.users.activeId);
 
-  const [getUser, result] = useLazyQuery<IUser[]>({
+  const result: QueryResult<IUser> = useFindOneFull(IUser, {
     fields: [
       'email',
       'id',
-      'members.bio',
       'members.community.id',
       'members.community.logoUrl',
       'members.community.primaryColor',
@@ -29,24 +26,16 @@ const useInitUser = (): QueryResult<IUser[]> => {
       'members.email',
       'members.firstName',
       'members.lastName',
-      'members.joinedAt',
-      'members.memberIntegrations.id',
-      'members.memberSocials.id',
-      'members.memberType.id',
       'members.id',
       'members.pictureUrl',
       'members.role',
-      'members.status',
-      'members.user.id'
+      'members.status'
     ],
-    operation: 'users',
-    schema: [Schema.USER],
+    skip: !isAuthenticated,
     where: { id: userId }
   });
 
-  useEffect(() => {
-    if (isAuthenticated) getUser();
-  }, [isAuthenticated]);
+  console.log(result);
 
   useLoader(result.loading);
 

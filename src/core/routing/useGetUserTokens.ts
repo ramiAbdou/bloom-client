@@ -46,11 +46,11 @@ const useGetUserTokens = (shouldRedirectToLogin = false): boolean => {
       // If the userId is decoded from the decoded token, then set the active
       // entities for the communities, members and users.
       if (data?.userId) {
-        setActiveEntities([
-          { id: data.communityId, table: 'communities' },
-          { id: data.memberId, table: 'members' },
-          { id: data.userId, table: 'users' }
-        ]);
+        setActiveEntities({
+          communityId: data.communityId,
+          memberId: data.memberId,
+          userId: data.userId
+        });
 
         return;
       }

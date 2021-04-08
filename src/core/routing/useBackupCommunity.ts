@@ -14,7 +14,7 @@ import useIsMember from '../hooks/useIsMember';
  * All of the user's memberships are already loaded at this point.
  */
 const useBackupCommunity = (): boolean => {
-  const userId: string = useStoreState(({ db }) => db.user?.id);
+  const userId: string = useStoreState(({ db }) => db.userId);
 
   const isMember: boolean = useIsMember();
   const { urlName }: UrlNameProps = useParams();

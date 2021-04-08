@@ -9,7 +9,7 @@ import { FindOneArgs } from './gql.types';
 
 function useFindOne<T>(
   entity: new () => T,
-  { fields, where }: FindOneArgs<T>
+  { fields, skip, where }: FindOneArgs<T>
 ): T {
   // All of our entity types start with an I (ex: IMember, IUser, etc).
   const nameWithoutI: string = entity.name.substring(1);
@@ -33,7 +33,7 @@ function useFindOne<T>(
       }
     `;
 
-  const result = useQuery(query);
+  const result = useQuery(query, { skip });
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore b/c we want to destructure very easily.
@@ -48,9 +48,7 @@ function useFindOne<T>(
     { deep: true }
   );
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore b/c we want to destructure very easily.
-  return camelCaseData ?? {};
+  return camelCaseData;
 }
 
 export default useFindOne;

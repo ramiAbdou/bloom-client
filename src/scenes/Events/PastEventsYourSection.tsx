@@ -14,7 +14,7 @@ import EventsCard from './EventsCard/EventsCard';
 
 const PastEventsYourList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const events: IEvent[] = useFind(IEvent, {
     fields: [
@@ -51,7 +51,7 @@ const PastEventsYourList: React.FC = () => {
 
 const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const events: IEvent[] = useFind(IEvent, {
     fields: [

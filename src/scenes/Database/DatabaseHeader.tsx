@@ -11,7 +11,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const DatbaseHeaderAddButton: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { role } = useFindOne(IMember, {

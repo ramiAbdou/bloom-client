@@ -16,7 +16,7 @@ const SidebarSection: React.FC<LinkSectionProps> = ({
   links,
   title
 }: LinkSectionProps) => {
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { role } = useFindOne(IMember, {
     fields: ['role'],

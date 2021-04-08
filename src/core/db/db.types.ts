@@ -61,11 +61,18 @@ export interface MergeEntitiesArgs {
 }
 
 export interface SetActiveArgs {
-  id: string;
-  table: keyof IEntities;
+  communityId?: string;
+  eventId?: string;
+  memberId?: string;
+  userId?: string;
 }
 
 export interface DbModel {
+  communityId: string;
+  eventId: string;
+  memberId: string;
+  userId: string;
+
   // BY ID STORE
 
   byCommunityId: Computed<DbModel, Record<string, ICommunity>>;
@@ -92,15 +99,12 @@ export interface DbModel {
 
   community: Computed<DbModel, ICommunity>;
   event: Computed<DbModel, IEvent>;
-  member: Computed<DbModel, IMember>;
-  user: Computed<DbModel, IUser>;
 
   // UTILITY
 
   clearEntities: Action<DbModel>;
   entities: IEntities;
   isAuthenticated: Computed<DbModel, boolean>;
-  isInitialized: Computed<DbModel, boolean>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
-  setActiveEntities: Action<DbModel, SetActiveArgs | SetActiveArgs[]>;
+  setActiveEntities: Action<DbModel, SetActiveArgs>;
 }

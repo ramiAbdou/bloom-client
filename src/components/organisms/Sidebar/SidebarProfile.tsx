@@ -11,7 +11,7 @@ import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';
 
 const SidebarProfileContent: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { firstName, lastName, memberType, position, role } = useFindOne(
     IMember,

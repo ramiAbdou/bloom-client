@@ -23,6 +23,7 @@ import GQLUtility from './GQLUtility';
 
 export interface FindOneArgs<T> {
   fields?: (keyof T | string)[];
+  skip?: boolean;
   where: Record<string, unknown>;
 }
 

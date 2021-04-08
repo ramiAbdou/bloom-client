@@ -23,7 +23,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
 }) => {
   const gql: GQL = useGQL();
 
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
 

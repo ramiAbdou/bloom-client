@@ -122,10 +122,10 @@ const IndividualEvent: React.FC = () => {
 
   useEffect(() => {
     if (event) {
-      setActiveEntities([
-        { id: event.id, table: 'events' },
-        { id: event.community.id, table: 'communities' }
-      ]);
+      setActiveEntities({
+        communityId: event.community.id,
+        eventId: event.id
+      });
     }
   }, [event]);
 

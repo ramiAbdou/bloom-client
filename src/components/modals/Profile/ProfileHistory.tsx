@@ -4,6 +4,7 @@ import Separator from '@atoms/Separator';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Show from '@containers/Show';
 import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import useFindOneFull from '@gql/useFindOneFull';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
@@ -90,13 +91,15 @@ const ProfileHistoryContent: React.FC = () => {
 
 const ProfileHistory: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member.role);
+  const authenticatedMemberId: string = useStoreState(({ db }) => db.memberId);
 
-  const isMyProfile: boolean = useStoreState(
-    ({ db }) => db.member.id === memberId
-  );
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: authenticatedMemberId }
+  });
 
-  const hasAccessToHistory: boolean = isAdmin || isMyProfile;
+  const isMyProfile: boolean = memberId === authenticatedMemberId;
+  const hasAccessToHistory: boolean = !!role || isMyProfile;
 
   return (
     <Show show={hasAccessToHistory}>

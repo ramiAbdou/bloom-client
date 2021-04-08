@@ -48,12 +48,9 @@ const Application: React.FC = () => {
   });
 
   useEffect(() => {
-    if (!application) return;
-
-    setActiveEntities({
-      id: application.community.id,
-      table: 'communities'
-    });
+    if (application) {
+      setActiveEntities({ communityId: application.community.id });
+    }
   }, [application]);
 
   if (error) return <Redirect to="/login" />;

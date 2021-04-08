@@ -52,7 +52,7 @@ const ProfileData: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
   const { loading } = useFindFull(IMemberValue, {
-    fields: ['id', 'member.id', 'question.id', 'value'],
+    fields: ['member.id', 'question.id', 'value'],
     where: { memberId }
   });
 

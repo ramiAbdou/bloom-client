@@ -1,7 +1,5 @@
 import validator from 'validator';
 
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -9,11 +7,10 @@ import {
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateMember = (): OnFormSubmitFunction => {
-  const gql: GQL = useGQL();
-
   const onSubmit = async ({
     closeModal,
     db,
+    gql,
     items,
     setError,
     showToast
@@ -25,12 +22,17 @@ const useUpdateMember = (): OnFormSubmitFunction => {
 
     let pictureUrl: string;
 
+    const { data: member } = await gql.members.findOne({
+      fields: ['pictureUrl'],
+      where: { id: db.memberId }
+    });
+
     if (base64String && !validator.isURL(base64String)) {
       try {
         pictureUrl = await uploadImage({
           base64String,
           key: 'PROFILE',
-          previousImageUrl: db.member?.pictureUrl
+          previousImageUrl: member?.pictureUrl
         });
       } catch (e) {
         setError('Failed to upload image.');
@@ -40,7 +42,7 @@ const useUpdateMember = (): OnFormSubmitFunction => {
 
     const { error } = await gql.members.update({
       data: { bio, firstName, lastName, pictureUrl },
-      where: { id: db.member.id }
+      where: { id: db.memberId }
     });
 
     if (error) {

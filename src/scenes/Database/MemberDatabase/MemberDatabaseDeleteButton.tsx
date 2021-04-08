@@ -1,8 +1,10 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
+import { IMember, MemberRole } from '@db/db.entities';
+import useFind from '@gql/useFind';
+import useFindOne from '@gql/useFindOne';
 import TableStore from '@organisms/Table/Table.store';
-import { MemberRole } from '@db/db.entities';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';
@@ -13,25 +15,26 @@ import DatabaseAction from '../DatabaseAction';
  * to delete another person in the community.
  */
 const useDeleteTooltip = (): string => {
+  const memberId: string = useStoreState(({ db }) => db.memberId);
+
   const selectedRowIds = TableStore.useStoreState(
     (state) => state.selectedRowIds
   );
 
-  const isSelfSelected = useStoreState(({ db }) =>
-    selectedRowIds.includes(db.member.id)
-  );
-
-  const hasPermissions: boolean = useStoreState(({ db }) => {
-    if (db.member?.role === MemberRole.OWNER) return true;
-
-    if (
-      selectedRowIds.some((memberId: string) => !!db.byMemberId[memberId]?.role)
-    ) {
-      return false;
-    }
-
-    return true;
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
   });
+
+  const isSelfSelected: boolean = selectedRowIds.includes(memberId);
+
+  const members: IMember[] = useFind(IMember, {
+    where: { id: { _in: selectedRowIds } }
+  });
+
+  const hasPermissions: boolean =
+    role === MemberRole.OWNER ||
+    members.every((member: IMember) => !member.role);
 
   const tooltip: string = take([
     [isSelfSelected, `Can't delete member(s) because you selected yourself.`],
@@ -45,7 +48,10 @@ const useDeleteTooltip = (): string => {
 const MemberDatabaseDeleteButton: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const tooltip: string = useDeleteTooltip();
-  const onClick = () => showModal({ id: ModalType.DELETE_MEMBERS });
+
+  const onClick = (): void => {
+    showModal({ id: ModalType.DELETE_MEMBERS });
+  };
 
   return (
     <DatabaseAction

@@ -8,7 +8,7 @@ import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabasePromoteButton: React.FC = () => {
-  const memberId = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const tooManySelected = TableStore.useStoreState(

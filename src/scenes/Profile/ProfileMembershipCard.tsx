@@ -38,7 +38,7 @@ const ProfileMembershipHeader: React.FC = () => {
 };
 
 const ProfileMembershipContent: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const memberValues: IMemberValue[] = useFind(IMemberValue, {
     fields: [
@@ -76,7 +76,7 @@ const ProfileMembershipContent: React.FC = () => {
 };
 
 const ProfileMembershipOnboardingContainer: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { memberValues } = useFindOne(IMember, {
     fields: ['memberValues.id'],
@@ -99,7 +99,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 };
 
 const ProfileMembershipCard: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { loading } = useFindFull(IMemberValue, {
     fields: ['id', 'member.id', 'question.id', 'value'],

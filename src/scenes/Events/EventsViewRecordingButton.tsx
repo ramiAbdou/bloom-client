@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent } from '@db/db.entities';
+import { IEvent, IMember } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
 import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
@@ -18,8 +18,12 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   large
 }) => {
   const gql: GQL = useGQL();
-  const isAdmin: boolean = useStoreState(({ db }) => !!db.member?.role);
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
+
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
 
   const { endTime, recordingUrl, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'recordingUrl', 'startTime'],
@@ -58,7 +62,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
       large={large}
       primary={!!recordingUrl}
       secondary={!recordingUrl}
-      show={isPast && (!isAdmin || !large || !!recordingUrl)}
+      show={isPast && (!role || !large || !!recordingUrl)}
       onClick={onClick}
     >
       {recordingUrl ? 'View Recording' : 'No Recording Available'}

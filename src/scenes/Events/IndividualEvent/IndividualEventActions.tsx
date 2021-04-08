@@ -42,7 +42,7 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
 
 const EventsEditEventButton: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { endTime, startTime } = useFindOne(IEvent, {
@@ -79,7 +79,7 @@ const EventsEditEventButton: React.FC = () => {
  */
 const IndividualEventActions: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { endTime, eventGuests, startTime } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],

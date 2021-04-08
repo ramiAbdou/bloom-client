@@ -11,7 +11,7 @@ import { useStoreState } from '@store/Store';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = useFindOne(
     IMemberSocials,

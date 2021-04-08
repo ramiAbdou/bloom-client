@@ -2,6 +2,7 @@ import React from 'react';
 
 import { IMember, MemberRole } from '@db/db.entities';
 import useFind from '@gql/useFind';
+import useFindOne from '@gql/useFindOne';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
@@ -11,7 +12,8 @@ import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
 const AdminDatabase: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const members: IMember[] = useFind(IMember, {
     fields: ['email', 'firstName', 'lastName'],
@@ -23,9 +25,12 @@ const AdminDatabase: React.FC = () => {
     return { email, firstName, id: member.id, lastName };
   }, []);
 
-  const isOwner: boolean = useStoreState(
-    ({ db }) => db.member?.role === MemberRole.OWNER
-  );
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
+  const isOwner: boolean = role === MemberRole.OWNER;
 
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.

@@ -12,7 +12,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const EventsHeaderCreateEventButton: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { role } = useFindOne(IMember, {
     fields: ['role'],

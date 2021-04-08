@@ -7,7 +7,7 @@ import { sortObjects } from '@util/util';
 import SidebarCommunityButton from './SidebarCommunityButton';
 
 const SidebarCommunityList: React.FC = () => {
-  const userId: string = useStoreState(({ db }) => db.user?.id);
+  const userId: string = useStoreState(({ db }) => db.userId);
 
   const members: IMember[] = useFind(IMember, {
     fields: ['joinedAt', 'name'],

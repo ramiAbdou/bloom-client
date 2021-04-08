@@ -12,7 +12,7 @@ import ProfileCardHeader from './ProfileCardHeader';
 import ProfileSocialValue from './ProfileSocialValue';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = useFindOne(
     IMemberSocials,
@@ -46,7 +46,7 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 };
 
 const ProfileSocialHeader: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = useFindOne(
     IMemberSocials,
@@ -72,7 +72,7 @@ const ProfileSocialHeader: React.FC = () => {
 };
 
 const ProfileSocialFacebook: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { facebookUrl } = useFindOne(IMemberSocials, {
     fields: ['facebookUrl'],
@@ -83,7 +83,7 @@ const ProfileSocialFacebook: React.FC = () => {
 };
 
 const ProfileSocialInstagram: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { instagramUrl } = useFindOne(IMemberSocials, {
     fields: ['instagramUrl'],
@@ -96,7 +96,7 @@ const ProfileSocialInstagram: React.FC = () => {
 };
 
 const ProfileSocialLinkedIn: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { linkedInUrl } = useFindOne(IMemberSocials, {
     fields: ['linkedInUrl'],
@@ -107,7 +107,7 @@ const ProfileSocialLinkedIn: React.FC = () => {
 };
 
 const ProfileSocialTwitter: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { twitterUrl } = useFindOne(IMemberSocials, {
     fields: ['twitterUrl'],
@@ -118,7 +118,7 @@ const ProfileSocialTwitter: React.FC = () => {
 };
 
 const ProfileSocialCard: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { loading } = useFindOneFull(IMemberSocials, {
     fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],

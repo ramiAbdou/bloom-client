@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
+import { IMember } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { useStoreState } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 
@@ -10,7 +12,13 @@ import { UrlNameProps } from '@util/constants';
  * the global state with the user.
  */
 const AdminRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
-  const role = useStoreState(({ db }) => db.member?.role);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
+
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
   const { urlName }: UrlNameProps = useParams();
 
   // If role is undefined, means it hasn't been loaded yet.

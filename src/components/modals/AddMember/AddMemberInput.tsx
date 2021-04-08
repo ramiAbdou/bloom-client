@@ -3,7 +3,8 @@ import { IoTrash } from 'react-icons/io5';
 
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
-import { MemberRole } from '@db/db.entities';
+import { IMember, MemberRole } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
 import FormShortText from '@organisms/Form/FormShortText';
 import IdStore from '@store/Id.store';
@@ -29,11 +30,15 @@ const AddMemberInputTrashButton: React.FC = () => {
 };
 
 const AddMemberInput: React.FC = () => {
+  const memberId: string = useStoreState(({ db }) => db.memberId);
   const id: string = IdStore.useStoreState((state) => state.id);
 
-  const isOwner = useStoreState(
-    ({ db }) => db.member?.role === MemberRole.OWNER
-  );
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
+  const isOwner: boolean = role === MemberRole.OWNER;
 
   const admin = AddMemberStore.useStoreState((state) => state.admin);
 

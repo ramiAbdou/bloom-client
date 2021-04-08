@@ -14,7 +14,7 @@ import { QuestionCategory } from '@util/constants';
 import useUpdateMember from './useUpdateMember';
 
 const ProfilePersonalModal: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { bio, firstName, lastName, pictureUrl } = useFindOne(IMember, {
     fields: ['bio', 'firstName', 'lastName', 'pictureUrl'],

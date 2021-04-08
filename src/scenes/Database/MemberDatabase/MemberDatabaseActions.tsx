@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
+import { IMember, MemberRole } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import TableStore from '@organisms/Table/Table.store';
 import TableFilterButton from '@organisms/Table/TableFilterButton';
 import SearchBar from '@organisms/Table/TableSeachBar';
-import { MemberRole } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
 import DeleteMembersButton from './MemberDatabaseDeleteButton';
@@ -13,9 +14,14 @@ import MemberDatabasePromoteButton from './MemberDatabasePromoteButton';
 import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 
 const MemberDatabaseButtons: React.FC = () => {
-  const isOwner: boolean = useStoreState(
-    ({ db }) => db.member?.role === MemberRole.OWNER
-  );
+  const memberId: string = useStoreState(({ db }) => db.memberId);
+
+  const { role } = useFindOne(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
+  const isOwner: boolean = role === MemberRole.OWNER;
 
   const isAnythingSelected: boolean = TableStore.useStoreState(
     ({ selectedRowIds }) => !!selectedRowIds.length

@@ -28,14 +28,11 @@ const AuthenticatedCommunityRouterSwitch: React.FC = () => (
 );
 
 const AuthenticatedCommunityRouter: React.FC = () => {
-  const isInitialized: boolean = useStoreState(({ db }) => db.isInitialized);
-
   const isAuthenticated: boolean = useStoreState(
     ({ db }) => db.isAuthenticated
   );
 
   if (!isAuthenticated) return <Redirect to="/login" />;
-  if (!isInitialized) return null;
 
   return (
     <>

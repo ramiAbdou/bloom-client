@@ -65,7 +65,7 @@ const IndividualEventInsightsWatchesCard: React.FC = () => {
 };
 
 const IndividualEventInsights: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { role } = useFindOne(IMember, {
     fields: ['role'],

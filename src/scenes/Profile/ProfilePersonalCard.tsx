@@ -14,7 +14,7 @@ import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { firstName, lastName } = useFindOne(IMember, {
     fields: ['firstName', 'lastName'],
@@ -36,7 +36,7 @@ const ProfilePersonalHeader: React.FC = () => {
 };
 
 const ProfilePersonalTagList: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { memberType, role } = useFindOne(IMember, {
     fields: ['role', 'memberType.id', 'memberType.name'],
@@ -52,7 +52,7 @@ const ProfilePersonalTagList: React.FC = () => {
 };
 
 const ProfilePersonalEmail: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { email } = useFindOne(IMember, {
     fields: ['email'],
@@ -63,7 +63,7 @@ const ProfilePersonalEmail: React.FC = () => {
 };
 
 const ProfilePersonalBio: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const { bio } = useFindOne(IMember, {
     fields: ['bio'],
@@ -74,7 +74,7 @@ const ProfilePersonalBio: React.FC = () => {
 };
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const { bio, pictureUrl } = useFindOne(IMember, {
@@ -114,7 +114,7 @@ const ProfilePersonalMainContent: React.FC = () => (
 );
 
 const ProfilePersonalPictureRow: React.FC = () => {
-  const memberId: string = useStoreState(({ db }) => db.member?.id);
+  const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const isMobile: boolean = useBreakpoint() === 1;
 
