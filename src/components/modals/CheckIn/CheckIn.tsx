@@ -2,6 +2,7 @@ import React from 'react';
 
 import { EventPrivacy, IEvent } from '@db/db.entities';
 import useFindOne from '@gql/useFindOne';
+import useIsMember from '@hooks/useIsMember';
 import Story from '@organisms/Story/Story';
 import { useStoreState } from '@store/Store';
 import CheckInChoosePage from './CheckInChoosePage';
@@ -10,7 +11,7 @@ import CheckInMainPage from './CheckInMainPage';
 
 const CheckInModal: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
-  const isMember: boolean = useStoreState(({ db }) => db.isMember);
+  const isMember: boolean = useIsMember();
 
   const { privacy } = useFindOne(IEvent, {
     fields: ['privacy'],

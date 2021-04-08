@@ -1,17 +1,16 @@
-import deepequal from 'fast-deep-equal';
 import React from 'react';
 
 import Show from '@containers/Show';
 import { IMemberType, RecurrenceType } from '@db/db.entities';
-import { useStoreState } from '@store/Store';
+import useFindOne from '@gql/useFindOne';
 import { IdProps } from '@util/constants';
 import { take } from '@util/util';
 
 const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: memberTypeId }) => {
-  const { amount, recurrence }: IMemberType = useStoreState(
-    ({ db }) => db.byMemberTypeId[memberTypeId],
-    deepequal
-  );
+  const { amount, recurrence } = useFindOne(IMemberType, {
+    fields: ['amount', 'recurrence'],
+    where: { id: memberTypeId }
+  });
 
   // Formats the amount with FREE if the amount is 0.
   const amountString: string = amount ? `$${amount}` : 'FREE';

@@ -5,6 +5,7 @@ import { IEvent, IEventGuest, Schema } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
 import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
+import useIsMember from '@hooks/useIsMember';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
@@ -22,10 +23,11 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
 }) => {
   const gql: GQL = useGQL();
 
-  const isMember: boolean = useStoreState(({ db }) => db.isMember);
   const memberId: string = useStoreState(({ db }) => db.member?.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+
+  const isMember: boolean = useIsMember();
 
   const { endTime, eventGuests, startTime } = useFindOne(IEvent, {
     fields: [

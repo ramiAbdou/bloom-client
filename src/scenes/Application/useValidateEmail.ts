@@ -1,9 +1,9 @@
+import { IQuestion } from '@db/db.entities';
 import useManualQuery from '@gql/useManualQuery';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { IQuestion } from '@db/db.entities';
 import { QuestionCategory } from '@util/constants';
 import { QueryEvent } from '@util/constants.events';
 import { IsEmailTakenArgs } from './Application.types';
@@ -16,16 +16,21 @@ const useValidateEmail = (): OnFormSubmitFunction => {
 
   const onSubmit = async ({
     db,
+    gql,
     items,
     goForward,
     setError
   }: OnFormSubmitArgs) => {
-    const emailId: string = db.community.questions.find(
-      (questionId: string) => {
-        const question: IQuestion = db.byQuestionId[questionId];
-        return question?.category === QuestionCategory.EMAIL;
-      }
-    );
+    const { data: community } = await gql.communities.findOne({
+      fields: ['questions.category', 'questions.id'],
+      where: { id: db.community.id }
+    });
+
+    const { questions } = community;
+
+    const emailId: string = questions.find(
+      (question: IQuestion) => question.category === QuestionCategory.EMAIL
+    ).id;
 
     const { error } = await isEmailTaken({
       communityId: db.community.id,

@@ -1,3 +1,5 @@
+import day from 'dayjs';
+
 import {
   IMember,
   IMemberValue,
@@ -6,7 +8,7 @@ import {
 } from '@db/db.entities';
 import useFind from '@gql/useFind';
 import useFindOne from '@gql/useFindOne';
-import { TableRow } from '@organisms/Table/Table.types';
+import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -105,4 +107,39 @@ export const useMemberDatabaseRows = (): TableRow[] => {
     ?.sort((a: TableRow, b: TableRow) => sortObjects(a, b, sortQuestionId));
 
   return rows;
+};
+
+export const useMemberDatabaseColumns = (): TableColumn[] => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
+
+  const questions: IQuestion[] = useFind(IQuestion, {
+    fields: ['category', 'rank', 'title', 'type'],
+    where: { communityId }
+  });
+
+  const columns: TableColumn[] = questions
+    ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
+    ?.filter(
+      (question: IQuestion) =>
+        question.category !== QuestionCategory.DUES_STATUS
+    )
+    .map((question: IQuestion) => {
+      if (question.category === QuestionCategory.DUES_STATUS) {
+        return {
+          ...question,
+          format: (value: boolean) => (value ? 'Paid' : 'Not Paid')
+        };
+      }
+
+      if (question.category === QuestionCategory.JOINED_AT) {
+        return {
+          ...question,
+          format: (value: string) => day(value).format('MMMM, D, YYYY')
+        };
+      }
+
+      return question;
+    });
+
+  return columns;
 };

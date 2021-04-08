@@ -4,8 +4,9 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { IEvent } from '@db/db.entities';
 import useFindOne from '@gql/useFindOne';
+import useIsMember from '@hooks/useIsMember';
 import { ModalData } from '@organisms/Modal/Modal.types';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
 import useCreateEventAttendeeWithMember from './useCreateEventAttendeeWithMember';
@@ -18,7 +19,7 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
   eventId,
   large
 }) => {
-  const isMember: boolean = useStoreState(({ db }) => db.isMember);
+  const isMember: boolean = useIsMember();
 
   const { endTime, startTime, videoUrl } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime', 'videoUrl'],

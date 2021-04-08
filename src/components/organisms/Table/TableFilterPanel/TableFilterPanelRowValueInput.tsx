@@ -2,10 +2,10 @@ import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Input from '@atoms/Input/Input';
-import Dropdown from '@molecules/Dropdown/Dropdown';
 import { IQuestion } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
+import Dropdown from '@molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import TableFilterStore from './TableFilterPanel.store';
 import { TableFilterArgs } from './TableFilterPanel.types';
@@ -18,14 +18,9 @@ const TableFilterPanelRowValueInput: React.FC = () => {
     return tableFilter?.columnId;
   });
 
-  const questionType: QuestionType = useStoreState(({ db }) => {
-    const question: IQuestion = db.byQuestionId[columnId];
-    return question?.type;
-  });
-
-  const questionOptions: string[] = useStoreState(({ db }) => {
-    const question: IQuestion = db.byQuestionId[columnId];
-    return question?.options;
+  const { options, type } = useFindOne(IQuestion, {
+    fields: ['options', 'type'],
+    where: { id: columnId }
   });
 
   const storedValue: string = TableFilterStore.useStoreState((state) => {
@@ -42,16 +37,14 @@ const TableFilterPanelRowValueInput: React.FC = () => {
   };
 
   if (
-    questionType === QuestionType.MULTIPLE_CHOICE ||
-    questionType === QuestionType.MULTIPLE_SELECT
+    type === QuestionType.MULTIPLE_CHOICE ||
+    type === QuestionType.MULTIPLE_SELECT
   ) {
     return (
       <Dropdown
         options={{ attribute: false }}
-        value={questionOptions?.find(
-          (option: string) => option === storedValue
-        )}
-        values={questionOptions}
+        value={options?.find((option: string) => option === storedValue)}
+        values={options}
         onSelect={onInputChange}
       />
     );

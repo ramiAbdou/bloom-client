@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { RadioOptionProps } from '@molecules/Radio/Radio.types';
+import { IMemberType } from '@db/db.entities';
+import useFind from '@gql/useFind';
+import useFindOne from '@gql/useFindOne';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';
-import { IMemberType } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
@@ -18,12 +19,10 @@ const ApplicationChooseTypeButton: React.FC = () => {
     ({ items }) => items.MEMBER_TYPE?.value as string
   );
 
-  const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const selectedType: IMemberType = db.community?.memberTypes
-      ?.map((memberTypeId: string) => db.byMemberTypeId[memberTypeId])
-      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
 
-    return !!selectedType?.amount;
+  const isPaidMembershipSelected: boolean = !!useFindOne(IMemberType, {
+    where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   });
 
   return (
@@ -34,16 +33,12 @@ const ApplicationChooseTypeButton: React.FC = () => {
 };
 
 const ApplicationChooseTypeForm: React.FC = () => {
-  const types: RadioOptionProps[] = useStoreState(({ db }) =>
-    db.community?.memberTypes?.map((memberTypeId: string) => {
-      const type: IMemberType = db.byMemberTypeId[memberTypeId];
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
 
-      return {
-        children: <ApplicationChooseTypeCard id={memberTypeId} />,
-        label: type.name
-      };
-    })
-  );
+  const memberTypes: IMemberType[] = useFind(IMemberType, {
+    fields: ['amount'],
+    where: { communityId }
+  });
 
   const goForward = StoryStore.useStoreActions((state) => state.goForward);
   const onSubmit = async () => goForward();
@@ -51,7 +46,12 @@ const ApplicationChooseTypeForm: React.FC = () => {
   return (
     <Form onSubmit={onSubmit}>
       <FormMultipleChoice
-        cardOptions={types}
+        cardOptions={memberTypes.map((memberType: IMemberType) => {
+          return {
+            children: <ApplicationChooseTypeCard id={memberType.id} />,
+            label: memberType.name
+          };
+        })}
         category={QuestionCategory.MEMBER_TYPE}
       />
       <ApplicationChooseTypeButton />
@@ -60,14 +60,16 @@ const ApplicationChooseTypeForm: React.FC = () => {
 };
 
 const ApplicationChooseType: React.FC = () => {
-  const isMultipleTypesOrPaid: boolean = useStoreState(({ db }) => {
-    const types: string[] = db.community?.memberTypes;
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
 
-    return types?.some((memberTypeId: string) => {
-      const type: IMemberType = db.byMemberTypeId[memberTypeId];
-      return !!type?.amount;
-    });
+  const memberTypes: IMemberType[] = useFind(IMemberType, {
+    fields: ['amount'],
+    where: { communityId }
   });
+
+  const isMultipleTypesOrPaid: boolean = memberTypes?.some(
+    (memberType: IMemberType) => !!memberType?.amount
+  );
 
   return (
     <StoryPage

@@ -3,14 +3,15 @@ import React from 'react';
 import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
-import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
+import { IMemberType } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
+// import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
 import Form from '@organisms/Form/Form';
 import FormCreditCard from '@organisms/Form/FormCreditCard';
 import FormHeader from '@organisms/Form/FormHeader';
 import FormShortText from '@organisms/Form/FormShortText';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
-import { IMemberType } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import useSavePaymentMethod from './useSavePaymentMethod';
 
@@ -41,25 +42,23 @@ const ApplicationPaymentForm: React.FC = () => {
 };
 
 const ApplicationPaymentSection: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
+
   const selectedTypeName: string = StoryStore.useStoreState(
     ({ items }) => items.MEMBER_TYPE?.value as string
   );
 
-  const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const selectedType: IMemberType = db.community?.memberTypes
-      ?.map((memberTypeId: string) => db.byMemberTypeId[memberTypeId])
-      ?.find((type: IMemberType) => type?.name === selectedTypeName);
-
-    return !!selectedType?.amount;
+  const isPaidMembershipSelected: boolean = !!useFindOne(IMemberType, {
+    where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   });
 
   return (
     <Show show={!!isPaidMembershipSelected}>
       <Separator margin={24} />
 
-      <PaymentStripeProvider>
-        <ApplicationPaymentForm />
-      </PaymentStripeProvider>
+      {/* <PaymentStripeProvider> */}
+      <ApplicationPaymentForm />
+      {/* </PaymentStripeProvider> */}
     </Show>
   );
 };

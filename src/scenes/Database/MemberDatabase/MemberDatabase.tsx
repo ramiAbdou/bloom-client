@@ -1,8 +1,6 @@
-import day from 'dayjs';
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import { IQuestion } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
 import useGQL from '@gql/useGQL';
 import { ModalData } from '@organisms/Modal/Modal.types';
@@ -15,17 +13,15 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { useStoreActions, useStoreState } from '@store/Store';
-import { ModalType, QuestionCategory } from '@util/constants';
-import { sortObjects } from '@util/util';
-import { useMemberDatabaseRows } from '../Database.util';
+import { useStoreActions } from '@store/Store';
+import { ModalType } from '@util/constants';
+import {
+  useMemberDatabaseColumns,
+  useMemberDatabaseRows
+} from '../Database.util';
 import MemberDatabaseActions from './MemberDatabaseActions';
 
 const MemberDatabase: React.FC = () => {
-  const canCollectDues: boolean = useStoreState(
-    ({ db }) => db.community.canCollectDues
-  );
-
   const showModal: ActionCreator<ModalData> = useStoreActions(
     ({ modal }) => modal.showModal
   );
@@ -35,40 +31,7 @@ const MemberDatabase: React.FC = () => {
   // Massage the member data into valid row data by mapping the question ID
   // to the value for each member.
   const rows: TableRow[] = useMemberDatabaseRows();
-
-  const columns: TableColumn[] = useStoreState(({ db }) => {
-    const filteredColumns: TableColumn[] = db.community.questions
-      ?.map((questionId: string) => db.byQuestionId[questionId])
-      ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
-      ?.filter((question: IQuestion) => {
-        if (
-          question.category === QuestionCategory.DUES_STATUS &&
-          !canCollectDues
-        ) {
-          return false;
-        }
-
-        return true;
-      });
-
-    return filteredColumns?.map((question: IQuestion) => {
-      if (question.category === QuestionCategory.DUES_STATUS) {
-        return {
-          ...question,
-          format: (value: boolean) => (value ? 'Paid' : 'Not Paid')
-        };
-      }
-
-      if (question.category === QuestionCategory.JOINED_AT) {
-        return {
-          ...question,
-          format: (value: string) => day(value).format('MMMM, D, YYYY')
-        };
-      }
-
-      return question;
-    });
-  });
+  const columns: TableColumn[] = useMemberDatabaseColumns();
 
   const onRenameColumn: RenameColumnFunction = async ({
     column,

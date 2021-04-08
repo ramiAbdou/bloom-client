@@ -5,6 +5,7 @@ import Button from '@atoms/Button/Button';
 import Card from '@containers/Card/Card';
 import { IEvent, IEventAttendee } from '@db/db.entities';
 import useFindOne from '@gql/useFindOne';
+import useIsMember from '@hooks/useIsMember';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
@@ -15,7 +16,7 @@ import { cx, sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
 
 const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
-  const isMember: boolean = useStoreState(({ db }) => db.isMember);
+  const isMember: boolean = useIsMember();
 
   const { member, supporter }: IEventAttendee = useFindOne(IEventAttendee, {
     fields: [

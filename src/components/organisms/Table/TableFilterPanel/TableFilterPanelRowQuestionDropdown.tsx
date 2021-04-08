@@ -1,8 +1,9 @@
 import { ActionCreator } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
 
+import { ICommunity, IQuestion } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import Dropdown from '@molecules/Dropdown/Dropdown';
-import { IQuestion } from '@db/db.entities';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
@@ -14,6 +15,7 @@ import {
 } from './TableFilterPanel.types';
 
 const TableFilterPanelRowQuestionDropdown: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community.id);
   const filterId: string = IdStore.useStoreState((state) => state.id);
 
   const columnId: string = TableFilterStore.useStoreState((state) => {
@@ -23,56 +25,40 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
 
   const [questionId, setQuestionId] = useState<string>(columnId);
 
-  const initialQuestionId: string = useStoreState(({ db }) => {
-    const questions: IQuestion[] = db.community.questions?.map(
-      (id: string) => db.byQuestionId[id]
+  const { memberTypes, questions } = useFindOne(ICommunity, {
+    fields: ['memberTypes.id', 'questions.category', 'questions.id'],
+    where: { communityId }
+  });
+
+  const initialQuestionId: string = questions.find((question: IQuestion) => {
+    const isMemberTypeAllowed: boolean =
+      question.category === QuestionCategory.MEMBER_TYPE &&
+      memberTypes.length >= 2;
+
+    return (
+      isMemberTypeAllowed ||
+      !question.category ||
+      question.category === QuestionCategory.BIO ||
+      question.category === QuestionCategory.EVENTS_ATTENDED ||
+      question.category === QuestionCategory.GENDER
     );
+  })?.id;
 
-    const initialQuestion: IQuestion = questions.find((question: IQuestion) => {
-      const isDuesStatusAllowed: boolean =
-        question.category === QuestionCategory.DUES_STATUS &&
-        db.community.canCollectDues;
-
+  const sortedQuestions: IQuestion[] = questions
+    ?.filter((question: IQuestion) => {
       const isMemberTypeAllowed: boolean =
         question.category === QuestionCategory.MEMBER_TYPE &&
-        db.community.memberTypes.length >= 2;
+        memberTypes.length >= 2;
 
       return (
-        !question.category ||
-        isDuesStatusAllowed ||
         isMemberTypeAllowed ||
+        !question.category ||
         question.category === QuestionCategory.BIO ||
         question.category === QuestionCategory.EVENTS_ATTENDED ||
         question.category === QuestionCategory.GENDER
       );
-    });
-
-    return initialQuestion?.id;
-  });
-
-  const questions: IQuestion[] = useStoreState(({ db }) =>
-    db.community.questions
-      ?.map((entityId: string) => db.byQuestionId[entityId])
-      ?.filter((question: IQuestion) => {
-        const isDuesStatusAllowed: boolean =
-          question.category === QuestionCategory.DUES_STATUS &&
-          db.community.canCollectDues;
-
-        const isMemberTypeAllowed: boolean =
-          question.category === QuestionCategory.MEMBER_TYPE &&
-          db.community.memberTypes.length >= 2;
-
-        return (
-          !question.category ||
-          isDuesStatusAllowed ||
-          isMemberTypeAllowed ||
-          question.category === QuestionCategory.BIO ||
-          question.category === QuestionCategory.EVENTS_ATTENDED ||
-          question.category === QuestionCategory.GENDER
-        );
-      })
-      ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))
-  );
+    })
+    ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'));
 
   const setFilter: ActionCreator<
     Partial<TableFilterArgs>
@@ -89,7 +75,7 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
   }, [columnId, initialQuestionId]);
 
   const onQuestionUpdate = (result: string) => {
-    const updatedColumnId = questions.find(
+    const updatedColumnId = sortedQuestions.find(
       (question) => question.title === result
     )?.id;
 
@@ -107,10 +93,11 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
     <Dropdown
       options={{ attribute: false }}
       value={
-        questions?.find((question: IQuestion) => question.id === questionId)
-          ?.title
+        sortedQuestions?.find(
+          (question: IQuestion) => question.id === questionId
+        )?.title
       }
-      values={questions?.map((question: IQuestion) => question.title)}
+      values={sortedQuestions?.map((question: IQuestion) => question.title)}
       onSelect={onQuestionUpdate}
     />
   );

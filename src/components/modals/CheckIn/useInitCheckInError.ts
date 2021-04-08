@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { ICommunity, Schema } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
 import useManualQuery from '@gql/useManualQuery';
+import useIsMember from '@hooks/useIsMember';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreState } from '@store/Store';
 import { ErrorContext } from '@util/constants.errors';
@@ -17,7 +18,7 @@ import { QueryEvent } from '@util/constants.events';
  */
 const useInitCheckInError = (): Partial<QueryResult> => {
   const communityId: string = useStoreState(({ db }) => db.community?.id);
-  const isMember: boolean = useStoreState(({ db }) => db.isMember);
+  const isMember: boolean = useIsMember();
 
   const [getOwner, { loading }] = useManualQuery<ICommunity>({
     fields: [

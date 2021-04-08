@@ -94,7 +94,6 @@ export interface DbModel {
   communityIntegrations: Computed<DbModel, ICommunityIntegrations>;
   event: Computed<DbModel, IEvent>;
   member: Computed<DbModel, IMember>;
-  memberIntegrations: Computed<DbModel, IMemberIntegrations>;
   user: Computed<DbModel, IUser>;
 
   // UTILITY
@@ -103,7 +102,6 @@ export interface DbModel {
   entities: IEntities;
   isAuthenticated: Computed<DbModel, boolean>;
   isInitialized: Computed<DbModel, boolean>;
-  isMember: Computed<DbModel, boolean>;
   mergeEntities: Action<DbModel, MergeEntitiesArgs>;
   setActiveEntities: Action<DbModel, SetActiveArgs | SetActiveArgs[]>;
 }

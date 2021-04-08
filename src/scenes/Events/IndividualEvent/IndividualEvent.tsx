@@ -8,6 +8,7 @@ import { EventPrivacy, IEvent } from '@db/db.entities';
 import { SetActiveArgs } from '@db/db.types';
 import useFindOne from '@gql/useFindOne';
 import useFindOneFull from '@gql/useFindOneFull';
+import useIsMember from '@hooks/useIsMember';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { ErrorContext } from '@util/constants.errors';
@@ -38,7 +39,6 @@ const IndividualEventHeader: React.FC = () => {
 
 const IndividualEventContent: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.event.id);
-  const isMember: boolean = useStoreState(({ db }) => db.isMember);
 
   const { privacy } = useFindOne(IEvent, {
     fields: ['privacy'],
@@ -47,6 +47,7 @@ const IndividualEventContent: React.FC = () => {
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
+  const isMember: boolean = useIsMember();
   const isMembersOnly: boolean = privacy === EventPrivacy.MEMBERS_ONLY;
   const hasCookieError: boolean = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 

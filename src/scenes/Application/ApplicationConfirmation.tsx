@@ -1,12 +1,19 @@
 import React from 'react';
 
 import Card from '@containers/Card/Card';
+import { ICommunity } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import StoryConfirmation from '@organisms/Story/StoryConfirmation';
 import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 
-const ApplicationConfirmationDefaultMessage: React.FC = () => {
-  const name = useStoreState(({ db }) => db.community?.name);
+const ApplicationConfirmationMessage: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
+
+  const { name } = useFindOne(ICommunity, {
+    fields: ['name'],
+    where: { id: communityId }
+  });
 
   return (
     <>
@@ -20,28 +27,23 @@ const ApplicationConfirmationDefaultMessage: React.FC = () => {
   );
 };
 
-const ApplicationConfirmationContent: React.FC = () => {
-  const name = useStoreState(({ db }) => db.community?.name);
-
-  if (!name) return null;
-  return <ApplicationConfirmationDefaultMessage />;
-};
-
 const ApplicationConfirmation: React.FC = () => {
-  const show: boolean = useStoreState(
-    ({ db }) =>
-      !!db.community?.questions?.length && !!db.community?.memberTypes?.length
-  );
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
+
+  const { memberTypes, questions } = useFindOne(ICommunity, {
+    fields: ['memberTypes.id', 'questions.id'],
+    where: { id: communityId }
+  });
 
   return (
     <StoryPage
       className="s-application-ctr--confirmation"
       id="CONFIRMATION"
-      show={!!show}
+      show={!!memberTypes?.length && !!questions?.length}
     >
       <Card>
         <StoryConfirmation title="Application Received">
-          <ApplicationConfirmationContent />
+          <ApplicationConfirmationMessage />
         </StoryConfirmation>
       </Card>
     </StoryPage>

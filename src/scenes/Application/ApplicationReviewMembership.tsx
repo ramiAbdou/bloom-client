@@ -2,18 +2,17 @@ import React from 'react';
 
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
+import { IMemberType, IPaymentMethod, RecurrenceType } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import StoryStore from '@organisms/Story/Story.store';
-import {
-  IMemberType,
-  IPaymentMethod,
-  RecurrenceType
-} from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { take } from '@util/util';
 
-const ApplicationReviewMembeship: React.FC = () => {
+const ApplicationReviewMembership: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
+
   const selectedTypeName: string = StoryStore.useStoreState(
     ({ items }) => items.MEMBER_TYPE?.value as string
   );
@@ -26,33 +25,18 @@ const ApplicationReviewMembeship: React.FC = () => {
     ({ items }) => (items.CREDIT_OR_DEBIT_CARD?.value ?? {}) as IPaymentMethod
   );
 
-  const isPaidMembershipSelected: boolean = useStoreState(({ db }) => {
-    const selectedType: IMemberType = db.community?.memberTypes
-      ?.map((memberTypeId: string) => db.byMemberTypeId[memberTypeId])
-      ?.find((type: IMemberType) => type?.name === selectedTypeName);
-
-    return !!selectedType?.amount;
+  const { amount, recurrence } = useFindOne(IMemberType, {
+    where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   });
 
-  const description: string = useStoreState(({ db }) => {
-    const selectedType: IMemberType = db.community?.memberTypes
-      ?.map((memberTypeId: string) => db.byMemberTypeId[memberTypeId])
-      ?.find((type: IMemberType) => type?.name === selectedTypeName);
+  const amountString: string = amount ? `$${amount}` : 'FREE';
 
-    if (!selectedType) return null;
+  const recurrenceString: string = take([
+    [recurrence === RecurrenceType.YEARLY, 'Per Year'],
+    [recurrence === RecurrenceType.MONTHLY, 'Per Month']
+  ]);
 
-    const { amount, recurrence } = selectedType;
-    // Formats the amount with FREE if the amount is 0.
-    const amountString = amount ? `$${amount}` : 'FREE';
-
-    // Construct string "Per" timespan based on the recurrence.
-    const recurrenceString = take([
-      [recurrence === RecurrenceType.YEARLY, 'Per Year'],
-      [recurrence === RecurrenceType.MONTHLY, 'Per Month']
-    ]);
-
-    return `${amountString} ${recurrenceString}`;
-  });
+  const description: string = `${amountString} ${recurrenceString}`;
 
   return (
     <FormSection>
@@ -65,7 +49,7 @@ const ApplicationReviewMembeship: React.FC = () => {
 
         <InformationCard
           description={`Expires ${expirationDate}`}
-          show={!!isPaidMembershipSelected && !!last4}
+          show={!!amount && !!last4}
           title={`${brand} Ending in ${last4}`}
         />
       </Row>
@@ -73,4 +57,4 @@ const ApplicationReviewMembeship: React.FC = () => {
   );
 };
 
-export default ApplicationReviewMembeship;
+export default ApplicationReviewMembership;

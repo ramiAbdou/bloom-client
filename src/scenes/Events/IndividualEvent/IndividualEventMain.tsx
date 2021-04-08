@@ -4,6 +4,7 @@ import React from 'react';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import { EventPrivacy, IEvent } from '@db/db.entities';
 import useFindOne from '@gql/useFindOne';
+import useIsMember from '@hooks/useIsMember';
 import { useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
 
@@ -29,7 +30,7 @@ const IndividualEventMainHeaderContainer: React.FC = () => {
 
 const IndividualEventMain: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.event?.id);
-  const isMember = useStoreState(({ db }) => db.isMember);
+  const isMember: boolean = useIsMember();
 
   const { community, privacy, summary, title } = useFindOne(IEvent, {
     fields: ['community.id', 'community.name', 'privacy', 'summary', 'title'],

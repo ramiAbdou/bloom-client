@@ -5,8 +5,6 @@ import {
   ICommunityIntegrations,
   IEvent,
   IMember,
-  IMemberIntegrations,
-  IMemberType,
   IUser
 } from './db.entities';
 import { DbModel } from './db.types';
@@ -23,17 +21,17 @@ const dbActiveStore: Pick<
 > = {
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
-    const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
-    const { byId: byMemberTypeId } = entities.memberTypes;
+    // const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
+    // const { byId: byMemberTypeId } = entities.memberTypes;
 
     const result: ICommunity = byId[activeId];
 
-    const communityIntegrations: ICommunityIntegrations =
-      byCommunityIntegrationsId[result?.communityIntegrations];
+    // const communityIntegrations: ICommunityIntegrations =
+    //   byCommunityIntegrationsId[result?.communityIntegrations];
 
-    const hasPaidMembership: boolean = result?.memberTypes
-      ?.map((memberTypeId: string) => byMemberTypeId[memberTypeId])
-      ?.some((memberType: IMemberType) => !memberType?.amount);
+    // const hasPaidMembership: boolean = result?.memberTypes
+    //   ?.map((memberTypeId: string) => byMemberTypeId[memberTypeId])
+    //   ?.some((memberType: IMemberType) => !memberType?.amount);
 
     if (!result) return null;
 
@@ -42,8 +40,8 @@ const dbActiveStore: Pick<
 
     return {
       ...result,
-      canCollectDues:
-        hasPaidMembership && !!communityIntegrations?.stripeAccountId
+      canCollectDues: false
+      // hasPaidMembership && !!communityIntegrations?.stripeAccountId
     };
   }),
 
@@ -63,11 +61,6 @@ const dbActiveStore: Pick<
   member: computed(({ entities }) => {
     const { activeId, byId } = entities.members;
     return byId[activeId] as IMember;
-  }),
-
-  memberIntegrations: computed(({ entities, member }) => {
-    const { byId } = entities.memberIntegrations;
-    return byId[member?.memberIntegrations] as IMemberIntegrations;
   }),
 
   user: computed(({ entities }) => {

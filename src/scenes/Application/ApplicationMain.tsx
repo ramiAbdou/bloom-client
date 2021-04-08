@@ -1,9 +1,14 @@
 import React from 'react';
 
-import { IApplication, IQuestion, IRankedQuestion } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
+import {
+  IApplication,
+  ICommunity,
+  IQuestion,
+  IRankedQuestion
+} from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import Form from '@organisms/Form/Form';
+import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormItem from '@organisms/Form/FormItem';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';
@@ -14,13 +19,9 @@ import useApplyToCommunity from './useApplyToCommunity';
 import useValidateEmail from './useValidateEmail';
 
 const ApplicationMainForm: React.FC = () => {
-  // const applicationId: string = useStoreState(
-  //   ({ db }) => db.community?.application
-  // );
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
 
-  const gql: GQL = useGQL();
-
-  const { rankedQuestions }: IApplication = gql.applications.fromCache({
+  const { rankedQuestions } = useFindOne(IApplication, {
     fields: [
       'rankedQuestions.id',
       'rankedQuestions.question.category',
@@ -31,12 +32,13 @@ const ApplicationMainForm: React.FC = () => {
       'rankedQuestions.question.type',
       'rankedQuestions.rank'
     ],
-    id: 'ZltjB2QLmq9b9S0nVOUkG'
-    // id: applicationId
+    where: { communityId }
   });
 
   const questions: IQuestion[] = rankedQuestions
-    ?.sort((a, b) => sortObjects(a, b, 'rank', 'ASC'))
+    ?.sort((a: IRankedQuestion, b: IRankedQuestion) =>
+      sortObjects(a, b, 'rank', 'ASC')
+    )
     ?.map((rankedQuestion: IRankedQuestion) => rankedQuestion.question);
 
   const isSolo: boolean = StoryStore.useStoreState(
@@ -45,8 +47,9 @@ const ApplicationMainForm: React.FC = () => {
   );
 
   const items = StoryStore.useStoreState((state) => state.items);
-  const applyForMembership = useApplyToCommunity();
-  const validateEmail = useValidateEmail();
+
+  const applyForMembership: OnFormSubmitFunction = useApplyToCommunity();
+  const validateEmail: OnFormSubmitFunction = useValidateEmail();
 
   return (
     <Form
@@ -55,9 +58,9 @@ const ApplicationMainForm: React.FC = () => {
       onSubmit={isSolo ? applyForMembership : validateEmail}
       onSubmitDeps={[isSolo]}
     >
-      {questions?.map((props) => {
-        const args = { ...props, ...items[props?.id] };
-        return <FormItem key={args?.id} questionId={props?.id} {...args} />;
+      {questions?.map((question: IQuestion) => {
+        const args = { ...question, ...items[question?.id] };
+        return <FormItem key={args?.id} questionId={question?.id} {...args} />;
       })}
 
       <FormSubmitButton>
@@ -68,24 +71,22 @@ const ApplicationMainForm: React.FC = () => {
 };
 
 const ApplicationMain: React.FC = () => {
-  // const applicationId: string = useStoreState(
-  //   ({ db }) => db.community?.application
-  // );
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
 
-  const gql: GQL = useGQL();
-
-  const { description, title }: IApplication = gql.applications.fromCache({
+  const { description, title } = useFindOne(IApplication, {
     fields: ['description', 'title'],
-    id: 'ZltjB2QLmq9b9S0nVOUkG'
-    // id: applicationId
+    where: { communityId }
   });
 
-  const iconUrl: string = useStoreState(({ db }) => db.community?.logoUrl);
+  const { logoUrl } = useFindOne(ICommunity, {
+    fields: ['logoUrl'],
+    where: { id: communityId }
+  });
 
   return (
     <StoryPage
       description={description}
-      iconUrl={iconUrl}
+      iconUrl={logoUrl}
       id="APPLICATION_MAIN"
       title={title}
     >

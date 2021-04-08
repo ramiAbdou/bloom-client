@@ -1,3 +1,4 @@
+import { IMemberType, IPaymentMethod, IQuestion } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
@@ -5,7 +6,6 @@ import {
 } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
-import { IMemberType, IPaymentMethod, IQuestion } from '@db/db.entities';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 
@@ -24,28 +24,39 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
 
   const onSubmit = async ({
     db,
+    gql,
     goForward,
     setError,
     storyItems
   }: OnFormSubmitArgs) => {
     const urlName: string = db.community?.urlName;
 
-    const types: IMemberType[] = db.community?.memberTypes?.map(
-      (memberTypeId: string) => db.byMemberTypeId[memberTypeId]
-    );
-
-    const emailId = db.community?.questions?.find((questionId: string) => {
-      const question: IQuestion = db.byQuestionId[questionId];
-      return question?.category === QuestionCategory.EMAIL;
+    const { data: community } = await gql.communities.findOne({
+      fields: [
+        'questions.category',
+        'questions.id',
+        'memberTypes.id',
+        'memberTypes.name'
+      ],
+      where: { id: db.community.id }
     });
+
+    const { memberTypes, questions } = community;
+
+    const emailId: string = questions.find(
+      (question: IQuestion) => question.category === QuestionCategory.EMAIL
+    ).id;
 
     const email: string = storyItems[emailId]?.value as string;
 
     const paymentMethodId: string = (storyItems.CREDIT_OR_DEBIT_CARD
       ?.value as IPaymentMethod)?.paymentMethodId as string;
 
-    const typeName = storyItems.MEMBER_TYPE?.value;
-    const memberTypeId = types.find((type) => type.name === typeName)?.id;
+    const memberTypeName = storyItems.MEMBER_TYPE?.value;
+
+    const memberTypeId = memberTypes.find(
+      (memberType: IMemberType) => memberType.name === memberTypeName
+    )?.id;
 
     const data = Object.values(storyItems)
       .filter(({ questionId }) => !!questionId)

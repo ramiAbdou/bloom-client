@@ -15,9 +15,9 @@ interface IntegrationsDetail {
 const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
   const communityId: string = useStoreState(({ db }) => db.community.id);
 
-  const mailchimpListName: string = useStoreState(
-    ({ db }) => db.communityIntegrations.mailchimpListName
-  );
+  // const mailchimpListName: string = useStoreState(
+  //   ({ db }) => db.communityIntegrations.mailchimpListName
+  // );
 
   const { mailchimpListId, stripeAccountId } = useFindOne(
     ICommunityIntegrations,
@@ -29,7 +29,8 @@ const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
 
   if (name === 'Mailchimp') {
     return [
-      { label: 'Audience/List Name', value: mailchimpListName },
+      // { label: 'Audience/List Name', value: mailchimpListName },
+      // { label: 'Audience/List Name', value: 'Mailchimp' },
       { label: 'Audience/List ID', value: mailchimpListId }
     ];
   }
