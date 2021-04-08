@@ -91,7 +91,6 @@ export interface DbModel {
   // ACTIVE STORE
 
   community: Computed<DbModel, ICommunity>;
-  communityIntegrations: Computed<DbModel, ICommunityIntegrations>;
   event: Computed<DbModel, IEvent>;
   member: Computed<DbModel, IMember>;
   user: Computed<DbModel, IUser>;

@@ -4,13 +4,14 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
-import { useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const useMailchimpSubmit = (): OnFormSubmitFunction => {
-  const options = useStoreState(
-    ({ db }) => db.communityIntegrations?.mailchimpLists
-  );
+  // const options = useStoreState(
+  //   ({ db }) => db.communityIntegrations?.mailchimpLists
+  // );
+
+  const options = [];
 
   const [updateMailchimpListId] = useBloomMutation<ICommunityIntegrations>({
     fields: ['id', 'mailchimpListId', 'mailchimpListName'],

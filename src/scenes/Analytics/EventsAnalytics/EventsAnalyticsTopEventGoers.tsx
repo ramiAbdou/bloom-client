@@ -1,10 +1,10 @@
+import day from 'dayjs';
 import React from 'react';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
-import { IEvent, IEventAttendee, IMember } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
-import useGQL from '@gql/useGQL';
+import { IEvent, IEventAttendee } from '@db/db.entities';
+import useFind from '@gql/useFind';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -12,63 +12,62 @@ import {
   TableRow
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsTopEventGoersTable: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const gql: GQL = useGQL();
-
-  const rows: TableRow[] = useStoreState(({ db }) => {
-    const pastEvents: IEvent[] = db.community.events
-      ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST);
-
-    const pastAttendees: IEventAttendee[] = pastEvents
-      ?.reduce(
-        (acc: string[], event: IEvent) =>
-          event?.eventAttendees ? acc.concat(event.eventAttendees) : acc,
-        []
-      )
-      ?.map((attendeeId: string) => db.byEventAttendeeId[attendeeId]);
-
-    const result = pastAttendees?.reduce(
-      (acc, eventAttendee: IEventAttendee) => {
-        const member: IMember = db.byMemberId[eventAttendee?.member];
-
-        const supporter = gql.supporters.fromCache({
-          fields: ['email', 'firstName', 'lastName'],
-          id: eventAttendee?.supporter
-        });
-
-        const email: string = member?.email ?? supporter?.email;
-        const firstName: string = member?.firstName ?? supporter?.firstName;
-        const lastName: string = member?.lastName ?? supporter?.lastName;
-        const previousValue = acc[email];
-
-        return {
-          ...acc,
-          [email]: {
-            email,
-            fullName: `${firstName} ${lastName}`,
-            id: email,
-            memberId: member?.id ?? supporter?.id,
-            value: previousValue ? previousValue?.value + 1 : 1
-          }
-        };
-      },
-      {}
-    );
-
-    if (!result) return [];
-
-    return (Object.values(result) as TableRow[])
-      .sort((a: TableRow, b: TableRow) => sortObjects(a, b, 'value'))
-      ?.slice(0, 10);
+  const events: IEvent[] = useFind(IEvent, {
+    fields: [
+      'eventAttendees.id',
+      'eventAttendees.member.email',
+      'eventAttendees.member.firstName',
+      'eventAttendees.member.id',
+      'eventAttendees.member.lastName',
+      'eventAttendees.supporter.email',
+      'eventAttendees.supporter.firstName',
+      'eventAttendees.supporter.id',
+      'eventAttendees.supporter.lastName',
+      'startTime',
+      'title'
+    ],
+    where: { communityId, endTime: { _lt: day.utc().format() } }
   });
+
+  const allAttendees: IEventAttendee[] = events?.reduce(
+    (result: IEventAttendee[], event: IEvent) =>
+      event?.eventAttendees ? result.concat(event.eventAttendees) : result,
+    []
+  );
+
+  const result = allAttendees?.reduce((acc, eventAttendee: IEventAttendee) => {
+    const { member, supporter } = eventAttendee;
+
+    const email: string = member?.email ?? supporter?.email;
+    const firstName: string = member?.firstName ?? supporter?.firstName;
+    const lastName: string = member?.lastName ?? supporter?.lastName;
+    const previousValue = acc[email];
+
+    return {
+      ...acc,
+      [email]: {
+        email,
+        fullName: `${firstName} ${lastName}`,
+        id: email,
+        memberId: member?.id ?? supporter?.id,
+        value: previousValue ? previousValue?.value + 1 : 1
+      }
+    };
+  }, {});
+
+  const rows: TableRow[] = result
+    ? (Object.values(result) as TableRow[])
+        .sort((a: TableRow, b: TableRow) => sortObjects(a, b, 'value'))
+        ?.slice(0, 10)
+    : [];
 
   const columns: TableColumn[] = [
     { id: 'fullName', title: 'Full Name', type: QuestionType.SHORT_TEXT },

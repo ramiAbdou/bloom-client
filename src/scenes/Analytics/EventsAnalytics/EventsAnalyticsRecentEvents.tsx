@@ -4,6 +4,9 @@ import { useHistory } from 'react-router-dom';
 
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
+import { ICommunity, IEvent } from '@db/db.entities';
+import useFind from '@gql/useFind';
+import useFindOne from '@gql/useFindOne';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,
@@ -12,32 +15,42 @@ import {
 } from '@organisms/Table/Table.types';
 import TableContent from '@organisms/Table/TableContent';
 import TableSearchBar from '@organisms/Table/TableSeachBar';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { IEvent } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsRecentEventsTable: React.FC = () => {
-  const urlName = useStoreState(({ db }) => db.community?.urlName);
+  const communityId: string = useStoreState(({ db }) => db.community?.id);
 
-  const rows: TableRow[] = useStoreState(({ db }) =>
-    db.community.events
-      ?.map((eventId: string) => db.byEventId[eventId])
-      ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
-      ?.map((event: IEvent) => {
-        return {
-          date: day(event.startTime).format('MMMM D, YYYY'),
-          id: event.id,
-          numAttendees: event.eventAttendees?.length ?? 0,
-          numGuests: event.eventGuests?.length ?? 0,
-          numViewers: event.eventWatches?.length ?? 0,
-          startTime: event.startTime,
-          title: event.title
-        };
-      })
-      .sort((a, b) => sortObjects(a, b, 'startTime'))
-  );
+  const events: IEvent[] = useFind(IEvent, {
+    fields: [
+      'eventAttendees.id',
+      'eventGuests.id',
+      'eventWatches.id',
+      'startTime',
+      'title'
+    ],
+    where: { communityId, endTime: { _lt: day.utc().format() } }
+  });
+
+  const { urlName } = useFindOne(ICommunity, {
+    fields: ['urlName'],
+    where: { id: communityId }
+  });
+
+  const rows: TableRow[] = events
+    .sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'))
+    .map((event: IEvent) => {
+      return {
+        date: day(event.startTime).format('MMMM D, YYYY'),
+        id: event.id,
+        numAttendees: event.eventAttendees?.length ?? 0,
+        numGuests: event.eventGuests?.length ?? 0,
+        numViewers: event.eventWatches?.length ?? 0,
+        startTime: event.startTime,
+        title: event.title
+      };
+    });
 
   const columns: TableColumn[] = [
     { id: 'title', title: 'Title', type: QuestionType.LONG_TEXT },

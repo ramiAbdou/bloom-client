@@ -1,23 +1,12 @@
 import { computed } from 'easy-peasy';
 
-import {
-  ICommunity,
-  ICommunityIntegrations,
-  IEvent,
-  IMember,
-  IUser
-} from './db.entities';
+import { ICommunity, IEvent, IMember, IUser } from './db.entities';
 import { DbModel } from './db.types';
 import { updateDocumentColors } from './db.util';
 
 const dbActiveStore: Pick<
   DbModel,
-  | 'community'
-  | 'communityIntegrations'
-  | 'event'
-  | 'member'
-  | 'memberIntegrations'
-  | 'user'
+  'community' | 'event' | 'member' | 'user'
 > = {
   community: computed(({ entities }) => {
     const { activeId, byId } = entities.communities;
@@ -43,14 +32,6 @@ const dbActiveStore: Pick<
       canCollectDues: false
       // hasPaidMembership && !!communityIntegrations?.stripeAccountId
     };
-  }),
-
-  communityIntegrations: computed(({ community, entities }) => {
-    const { byId: byCommunityIntegrationsId } = entities.communityIntegrations;
-
-    return byCommunityIntegrationsId[
-      community?.communityIntegrations
-    ] as ICommunityIntegrations;
   }),
 
   event: computed(({ entities }) => {

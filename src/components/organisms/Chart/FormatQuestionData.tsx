@@ -1,103 +1,108 @@
-import deepequal from 'fast-deep-equal';
 import { useEffect } from 'react';
-import sw from 'stopword';
 
-import { IMember, IMemberType, IMemberValue, IQuestion } from '@db/db.entities';
 import { useStoreState } from '@store/Store';
-import { QuestionCategory, QuestionType } from '@util/constants';
+import { QuestionType } from '@util/constants';
 import Chart from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
 
-const useQuestionData = (): Pick<
-  ChartModelInitArgs,
-  'data' | 'totalResponses'
-> => {
-  const questionId = Chart.useStoreState((state) => state.questionId);
+// const useQuestionData = (): Pick<
+//   ChartModelInitArgs,
+//   'data' | 'totalResponses'
+// > => {
+//   const communityId: string = useStoreState(({ db }) => db.community.id);
+//   const questionId = Chart.useStoreState((state) => state.questionId);
 
-  const questionType: QuestionType = useStoreState(({ db }) => {
-    const question: IQuestion = db.byQuestionId[questionId];
-    return question?.type;
-  });
+//   const { category, type } = useFindOne(IQuestion, {
+//     fields: ['category', 'type'],
+//     where: { id: questionId }
+//   });
 
-  // Construct the data array and calculate the number of responses that
-  // were valid for the question (not null).
-  const result: ChartModelInitArgs = useStoreState(({ db }) => {
-    const record: Record<string, number> = {};
-    const { members } = db.community;
+//   const members: IMember[] = useFind(IMember, {
+//     fields: [
+//       'memberType.id',
+//       'memberType.name',
+//       'memberValues.id',
+//       'memberValues.question.id',
+//       'memberValues.value'
+//     ],
+//     where: { communityId }
+//   });
 
-    // If the community doesn't have members loaded yet,
-    if (!members?.length || !questionId) return { data: [], totalResponses: 0 };
+//   // Construct the data array and calculate the number of responses that
+//   // were valid for the question (not null).
+//   const result: ChartModelInitArgs = useStoreState(({ db }) => {
+//     const record: Record<string, number> = {};
+//     const { members } = db.community;
 
-    const { category }: IQuestion = db.byQuestionId[questionId];
+//     // If the community doesn't have members loaded yet,
+//     if (!members?.length || !questionId) return { data: [], totalResponses: 0 };
 
-    // Initialize a counter for the number of meaningful responses.
-    let totalResponses = 0;
+//     // Initialize a counter for the number of meaningful responses.
+//     let totalResponses = 0;
 
-    members.forEach((memberId: string) => {
-      const member: IMember = db.byMemberId[memberId];
-      const memberType: IMemberType = db.byMemberTypeId[member.memberType];
+//     members.forEach((memberId: string) => {
+//       const member: IMember = db.byMemberId[memberId];
+//       const memberType: IMemberType = db.byMemberTypeId[member.memberType];
 
-      let value;
+//       let value;
 
-      if (category === QuestionCategory.MEMBER_TYPE) {
-        value = memberType?.name;
-      } else if (category === QuestionCategory.DUES_STATUS) {
-        value = 'Paid';
-        // value = member.isDuesActive ? 'Paid' : 'Not Paid';
-      } else {
-        const d = member.memberValues.find((memberValueId: string) => {
-          const data: IMemberValue = db.byMemberValuesId[memberValueId];
-          const question: IQuestion = db.byQuestionId[data.question];
-          return question.id === questionId;
-        });
+//       if (category === QuestionCategory.MEMBER_TYPE) {
+//         value = memberType?.name;
+//       } else if (category === QuestionCategory.DUES_STATUS) {
+//         value = 'Paid';
+//         // value = member.isDuesActive ? 'Paid' : 'Not Paid';
+//       } else {
+//         const d = member.memberValues.find((memberValueId: string) => {
+//           const data: IMemberValue = db.byMemberValuesId[memberValueId];
+//           const question: IQuestion = db.byQuestionId[data.question];
+//           return question.id === questionId;
+//         });
 
-        value = db.byMemberValuesId[d]?.value;
-      }
+//         value = db.byMemberValuesId[d]?.value;
+//       }
 
-      if (!value) return;
+//       if (!value) return;
 
-      if (questionType === QuestionType.LONG_TEXT) {
-        // We use stopwords to remove all of the common English words (ie: the).
-        const wordArray: string[] = sw.removeStopwords(value.trim().split(' '));
+//       if (type === QuestionType.LONG_TEXT) {
+//         // We use stopwords to remove all of the common English words (ie: the).
+//         const wordArray: string[] = sw.removeStopwords(value.trim().split(' '));
 
-        // Increment the record accordingly.
-        wordArray.forEach((word: string) => {
-          if (record[word]) record[word] += 1;
-          else record[word] = 1;
-        });
-      } else if (questionType === QuestionType.MULTIPLE_SELECT) {
-        value.split(',').forEach((element: string) => {
-          // If for whatever reason the splitted array returns a value that
-          // is empty (has happened before), don't add it, just go to next.
-          if (!element) return;
+//         // Increment the record accordingly.
+//         wordArray.forEach((word: string) => {
+//           if (record[word]) record[word] += 1;
+//           else record[word] = 1;
+//         });
+//       } else if (type === QuestionType.MULTIPLE_SELECT) {
+//         value.split(',').forEach((element: string) => {
+//           // If for whatever reason the splitted array returns a value that
+//           // is empty (has happened before), don't add it, just go to next.
+//           if (!element) return;
 
-          // Increment the value accordingly.
-          if (record[element]) record[element] += 1;
-          else record[element] = 1;
-        });
-      } else if (record[value]) record[value] += 1;
-      else record[value] = 1;
+//           // Increment the value accordingly.
+//           if (record[element]) record[element] += 1;
+//           else record[element] = 1;
+//         });
+//       } else if (record[value]) record[value] += 1;
+//       else record[value] = 1;
 
-      totalResponses += 1;
-    });
+//       totalResponses += 1;
+//     });
 
-    const sortedData = Object.entries(record)
-      .map(([name, value]) => {
-        return { name, value };
-      })
-      .sort((a, b) => (a.value < b.value ? 1 : -1));
+//     const sortedData = Object.entries(record)
+//       .map(([name, value]) => {
+//         return { name, value };
+//       })
+//       .sort((a, b) => (a.value < b.value ? 1 : -1));
 
-    return {
-      data:
-        questionType === QuestionType.LONG_TEXT
-          ? sortedData.slice(0, 100)
-          : sortedData,
-      totalResponses
-    };
-  }, deepequal);
+//     return {
+//       data:
+//         type === QuestionType.LONG_TEXT ? sortedData.slice(0, 100) : sortedData,
+//       totalResponses
+//     };
+//   }, deepequal);
 
-  return result;
-};
+//   return result;
+// };
 
 export default ({
   questionId
@@ -112,7 +117,8 @@ export default ({
     ({ db }) => db.byQuestionId[questionId]?.type
   );
 
-  const { data, totalResponses } = useQuestionData();
+  const { data, totalResponses } = { data: [], totalResponses: 0 };
+  // const { data, totalResponses } = useQuestionData();
 
   useEffect(() => {
     if (questionId !== currentQuestionId) setQuestionId(questionId);
