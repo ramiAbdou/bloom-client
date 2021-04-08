@@ -13,7 +13,7 @@ import DirectoryCardList from './DirectoryCardList';
 import DirectoryHeader from './DirectoryHeader';
 
 const Directory: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { loading }: Partial<QueryResult> = useFindFull(IMember, {
     fields: [

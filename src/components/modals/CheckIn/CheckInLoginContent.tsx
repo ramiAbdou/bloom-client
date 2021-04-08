@@ -21,7 +21,7 @@ import useInitCheckInError from './useInitCheckInError';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {
-  const communityId = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const { pathname } = useLocation();
 
   const url: string = buildUrl('https://accounts.google.com/o/oauth2/v2/auth', {
@@ -47,7 +47,7 @@ const CheckInGoogleButton: React.FC = () => {
 };
 
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const owner: IMember = useFindOne(IMember, {
     fields: ['email', 'firstName', 'lastName'],

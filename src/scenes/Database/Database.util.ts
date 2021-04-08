@@ -59,7 +59,7 @@ const getMemberValue = ({ member, question, value }: GetMemberValueArgs) => {
 };
 
 export const useMemberDatabaseRows = (): TableRow[] => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const members: IMember[] = useFind(IMember, {
     fields: [
@@ -110,7 +110,7 @@ export const useMemberDatabaseRows = (): TableRow[] => {
 };
 
 export const useMemberDatabaseColumns = (): TableColumn[] => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const questions: IQuestion[] = useFind(IQuestion, {
     fields: ['category', 'rank', 'title', 'type'],

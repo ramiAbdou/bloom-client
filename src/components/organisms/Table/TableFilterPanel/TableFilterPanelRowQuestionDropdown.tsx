@@ -15,7 +15,7 @@ import {
 } from './TableFilterPanel.types';
 
 const TableFilterPanelRowQuestionDropdown: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const filterId: string = IdStore.useStoreState((state) => state.id);
 
   const columnId: string = TableFilterStore.useStoreState((state) => {

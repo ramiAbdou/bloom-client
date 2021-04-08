@@ -20,7 +20,7 @@ import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsRecentEventsTable: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const events: IEvent[] = useFind(IEvent, {
     fields: [

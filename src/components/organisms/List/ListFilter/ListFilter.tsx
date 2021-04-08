@@ -20,7 +20,7 @@ const ListFilterHeader: React.FC = () => (
 );
 
 const ListFilterQuestionList: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const questions: IQuestion[] = useFind(IQuestion, {
     fields: ['locked', 'rank', 'type'],

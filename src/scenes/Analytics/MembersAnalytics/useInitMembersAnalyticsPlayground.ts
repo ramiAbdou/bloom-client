@@ -9,7 +9,7 @@ import { QuestionCategory } from '@util/constants';
 
 // Responsible for populating the initial question in the Data Playground.
 const useInitMembersAnalyticsPlayground = (): void => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { memberTypes, questions } = useFindOne(ICommunity, {
     fields: ['memberTypes.id', 'questions.category', 'questions.id'],

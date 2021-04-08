@@ -8,7 +8,7 @@ import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 
 const Applicants: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { loading } = useFindFull(IMember, {
     fields: [

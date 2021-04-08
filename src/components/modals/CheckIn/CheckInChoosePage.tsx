@@ -49,7 +49,7 @@ const CheckInChoosePageActions: React.FC = () => {
 };
 
 const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { name } = useFindOne(ICommunity, {
     fields: ['name'],

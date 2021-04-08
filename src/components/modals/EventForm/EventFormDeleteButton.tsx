@@ -9,7 +9,7 @@ import { useStoreActions, useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const DeleteEventButton: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);

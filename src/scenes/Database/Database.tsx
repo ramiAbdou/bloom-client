@@ -11,7 +11,7 @@ import DatabaseHeader from './DatabaseHeader';
 import MemberDatabase from './MemberDatabase/MemberDatabase';
 
 const Database: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const { url } = useRouteMatch();
 
   const { loading } = useFindFull(IMember, {

@@ -19,7 +19,7 @@ const ApplicationChooseTypeButton: React.FC = () => {
     ({ items }) => items.MEMBER_TYPE?.value as string
   );
 
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const isPaidMembershipSelected: boolean = !!useFindOne(IMemberType, {
     where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
@@ -33,7 +33,7 @@ const ApplicationChooseTypeButton: React.FC = () => {
 };
 
 const ApplicationChooseTypeForm: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const memberTypes: IMemberType[] = useFind(IMemberType, {
     fields: ['amount'],
@@ -60,7 +60,7 @@ const ApplicationChooseTypeForm: React.FC = () => {
 };
 
 const ApplicationChooseType: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const memberTypes: IMemberType[] = useFind(IMemberType, {
     fields: ['amount'],

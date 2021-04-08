@@ -8,7 +8,7 @@ import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import { useStoreState } from '@store/Store';
 
 const EventFormNotificationsSection: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
   const members: IMember[] = useFind(IMember, {

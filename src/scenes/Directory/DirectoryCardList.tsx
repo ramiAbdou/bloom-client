@@ -9,7 +9,7 @@ import { prepareMemberForFilter } from './Directory.util';
 import DirectoryCard from './DirectoryCard';
 
 const DirectoryCardList: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const community: ICommunity = useFindOne(ICommunity, {
     fields: [

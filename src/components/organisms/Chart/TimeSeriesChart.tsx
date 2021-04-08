@@ -11,6 +11,8 @@ import {
   YAxis
 } from 'recharts';
 
+import { ICommunity } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 import { take } from '@util/util';
@@ -48,8 +50,15 @@ const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
 };
 
 const TimeSeriesChart: React.FC = () => {
-  const color = useStoreState(({ db }) => db.community.primaryColor);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
+
+  const { primaryColor } = useFindOne(ICommunity, {
+    fields: ['primaryColor'],
+    where: { id: communityId }
+  });
+
   const data = ChartStore.useStoreState((state) => state.data, deepequal);
+
   const isMonitor = useBreakpoint() === 4;
   const xAxisOptions = useXAxisOptions();
   const yAxisOptions = useYAxisOptions();
@@ -67,7 +76,7 @@ const TimeSeriesChart: React.FC = () => {
           activeDot={{ r: 8 }}
           dataKey="value"
           dot={false}
-          stroke={color}
+          stroke={primaryColor}
           type="basis"
         />
       </LineChart>

@@ -11,7 +11,7 @@ import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const memberTypes: IMemberType[] = useFind(IMemberType, {
     where: { communityId }

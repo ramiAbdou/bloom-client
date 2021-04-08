@@ -17,7 +17,7 @@ import EventsCard from './EventsCard/EventsCard';
 import EventsHeader from './EventsHeader';
 
 const UpcomingEventsContent: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const events = useFind(IEvent, {
     fields: ['deletedAt', 'endTime', 'startTime'],
@@ -40,7 +40,7 @@ const UpcomingEventsContent: React.FC = () => {
 };
 
 const UpcomingEvents: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { loading }: QueryResult = useFindFull(IEvent, {
     fields: [

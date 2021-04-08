@@ -39,7 +39,7 @@ const ApplicationReviewForm: React.FC = () => {
 };
 
 const ApplicationReview: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const memberTypes: IMemberType[] = useFind(IMemberType, {
     fields: ['amount'],

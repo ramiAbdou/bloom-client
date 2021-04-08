@@ -10,7 +10,7 @@ import { useStoreState } from '@store/Store';
  * IndividualEvent.
  */
 const useIsMember = (): boolean => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const userId: string = useStoreState(({ db }) => db.userId);
 
   const { members }: IUser = useFindOne(IUser, {

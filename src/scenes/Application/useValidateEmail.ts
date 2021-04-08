@@ -23,7 +23,7 @@ const useValidateEmail = (): OnFormSubmitFunction => {
   }: OnFormSubmitArgs) => {
     const { data: community } = await gql.communities.findOne({
       fields: ['questions.category', 'questions.id'],
-      where: { id: db.community.id }
+      where: { id: db.communityId }
     });
 
     const { questions } = community;
@@ -33,7 +33,7 @@ const useValidateEmail = (): OnFormSubmitFunction => {
     ).id;
 
     const { error } = await isEmailTaken({
-      communityId: db.community.id,
+      communityId: db.communityId,
       email: items[emailId]?.value as string
     });
 

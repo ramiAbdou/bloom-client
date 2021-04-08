@@ -19,7 +19,7 @@ import useApplyToCommunity from './useApplyToCommunity';
 import useValidateEmail from './useValidateEmail';
 
 const ApplicationMainForm: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { rankedQuestions } = useFindOne(IApplication, {
     fields: [
@@ -71,7 +71,7 @@ const ApplicationMainForm: React.FC = () => {
 };
 
 const ApplicationMain: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { description, title } = useFindOne(IApplication, {
     fields: ['description', 'title'],

@@ -14,7 +14,7 @@ import { sortObjects } from '@util/util';
 import EventsCard from './EventsCard/EventsCard';
 
 const PastEventsList: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
   const events: IEvent[] = useFind(IEvent, {

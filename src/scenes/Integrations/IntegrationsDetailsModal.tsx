@@ -13,7 +13,7 @@ interface IntegrationsDetail {
 }
 
 const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   // const mailchimpListName: string = useStoreState(
   //   ({ db }) => db.communityIntegrations.mailchimpListName

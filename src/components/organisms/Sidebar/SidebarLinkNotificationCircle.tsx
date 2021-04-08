@@ -8,7 +8,7 @@ import { SidebarLinkOptions } from './Sidebar.types';
 const SidebarLinkNotificationCircle: React.FC<
   Pick<SidebarLinkOptions, 'to'>
 > = ({ to }) => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const pendingMembers: IMember[] = useFind(IMember, {
     where: { communityId, status: MemberStatus.PENDING }

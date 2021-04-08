@@ -9,6 +9,8 @@ import {
   YAxis
 } from 'recharts';
 
+import { ICommunity } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { useStoreState } from '@store/Store';
 import Chart from './Chart.store';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
@@ -16,8 +18,15 @@ import useXAxisOptions from './useXAxisOptions';
 import useYAxisOptions from './useYAxisOptions';
 
 const BarChart: React.FC = () => {
-  const color = useStoreState(({ db }) => db.community.primaryColor);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
+
+  const { primaryColor } = useFindOne(ICommunity, {
+    fields: ['primaryColor'],
+    where: { id: communityId }
+  });
+
   const data = Chart.useStoreState((state) => state.data);
+
   const xAxisOptions = useXAxisOptions();
   const yAxisOptions = useYAxisOptions();
 
@@ -41,7 +50,7 @@ const BarChart: React.FC = () => {
           content={(props: ChartTooltipProps) => <ChartTooltip {...props} />}
           wrapperStyle={{ visibility: 'visible' }}
         />
-        <Bar dataKey="value" fill={color} />
+        <Bar dataKey="value" fill={primaryColor} />
       </RechartsBarChart>
     </ResponsiveContainer>
   );

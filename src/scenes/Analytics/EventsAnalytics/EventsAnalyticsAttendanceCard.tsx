@@ -7,7 +7,7 @@ import useFind from '@gql/useFind';
 import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const pastEvents: IEvent[] = useFind(IEvent, {
     fields: ['endTime', 'eventAttendees.id', 'startTime'],

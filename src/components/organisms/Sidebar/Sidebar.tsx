@@ -15,7 +15,7 @@ import SidebarProfileSection from './SidebarProfileSection';
 import SidebarQuickActionsSection from './SidebarQuickActionsSection';
 
 const SidebarCommunityName: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { name } = useFindOne(ICommunity, {
     fields: ['name'],

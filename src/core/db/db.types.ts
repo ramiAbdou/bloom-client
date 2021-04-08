@@ -95,10 +95,6 @@ export interface DbModel {
   byRankedQuestionId: Computed<DbModel, Record<string, IRankedQuestion>>;
   byUserId: Computed<DbModel, Record<string, IUser>>;
 
-  // ACTIVE STORE
-
-  community: Computed<DbModel, ICommunity>;
-
   // UTILITY
 
   clearEntities: Action<DbModel>;

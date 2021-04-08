@@ -13,7 +13,7 @@ import IntegrationCard from './IntegrationsCard';
 // Responsible for fetching and supplying all the data to the children card
 // components to process and render.
 const IntegrationsConnectedList: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { communityIntegrations, urlName } = useFindOne(ICommunity, {
     fields: [

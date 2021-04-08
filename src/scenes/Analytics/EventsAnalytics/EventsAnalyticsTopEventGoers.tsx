@@ -17,7 +17,7 @@ import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
 const EventsAnalyticsTopEventGoersTable: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const events: IEvent[] = useFind(IEvent, {

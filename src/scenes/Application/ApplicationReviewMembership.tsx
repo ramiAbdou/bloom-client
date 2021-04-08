@@ -11,7 +11,7 @@ import { useStoreState } from '@store/Store';
 import { take } from '@util/util';
 
 const ApplicationReviewMembership: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const selectedTypeName: string = StoryStore.useStoreState(
     ({ items }) => items.MEMBER_TYPE?.value as string

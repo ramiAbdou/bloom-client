@@ -6,7 +6,7 @@ import { useStoreState } from '@store/Store';
 import ApplicantCard from './ApplicantsCard';
 
 const ApplicantsCardList: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const pendingMembers: IMember[] = useFind(IMember, {
     fields: ['createdAt', 'status'],

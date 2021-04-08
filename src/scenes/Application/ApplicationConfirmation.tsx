@@ -8,7 +8,7 @@ import StoryPage from '@organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 
 const ApplicationConfirmationMessage: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { name } = useFindOne(ICommunity, {
     fields: ['name'],
@@ -28,7 +28,7 @@ const ApplicationConfirmationMessage: React.FC = () => {
 };
 
 const ApplicationConfirmation: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { memberTypes, questions } = useFindOne(ICommunity, {
     fields: ['memberTypes.id', 'questions.id'],

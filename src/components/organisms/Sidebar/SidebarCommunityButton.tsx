@@ -8,7 +8,7 @@ import { IdProps } from '@util/constants';
 import { cx } from '@util/util';
 
 const SidebarCommunityButton: React.FC<IdProps> = ({ id: memberId }) => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { community } = useFindOne(IMember, {
     fields: ['community.id', 'community.logoUrl', 'community.urlName'],

@@ -11,7 +11,7 @@ import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
 import EventsAnalyticsTopEventGoers from './EventsAnalyticsTopEventGoers';
 
 const EventsAnalytics: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { data: events, loading } = useFindFull(IEvent, {
     fields: [

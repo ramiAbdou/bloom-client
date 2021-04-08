@@ -42,7 +42,7 @@ const ApplicationPaymentForm: React.FC = () => {
 };
 
 const ApplicationPaymentSection: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const selectedTypeName: string = StoryStore.useStoreState(
     ({ items }) => items.MEMBER_TYPE?.value as string

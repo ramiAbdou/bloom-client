@@ -15,7 +15,7 @@ import { ModalType, QuestionCategory } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileMembershipHeader: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { name } = useFindOne(ICommunity, {
     fields: ['name'],

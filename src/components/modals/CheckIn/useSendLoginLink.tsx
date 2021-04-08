@@ -15,7 +15,7 @@ import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
 const useSendLoginLink = (): OnFormSubmitFunction => {
-  const communityId = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const { pathname } = useLocation();
 
   const setCurrentPage = StoryStore.useStoreActions(

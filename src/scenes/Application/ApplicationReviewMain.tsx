@@ -11,7 +11,7 @@ import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 
 const ApplicationReviewMain: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community?.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { rankedQuestions } = useFindOne(IApplication, {
     fields: [

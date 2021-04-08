@@ -10,7 +10,7 @@ import MembersAnalyticsInsights from './MembersAnalyticsInsights';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';
 
 const MembersAnalytics: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { loading }: Partial<QueryResult> = useFindFull(IMember, {
     fields: [

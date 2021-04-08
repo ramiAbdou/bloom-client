@@ -11,7 +11,7 @@ import PastEventsSection from './PastEventsSection';
 import PastEventsYourSection from './PastEventsYourSection';
 
 const PastEvents: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.community.id);
+  const communityId: string = useStoreState(({ db }) => db.communityId);
 
   const { loading }: QueryResult = useFindFull(IEvent, {
     fields: [
