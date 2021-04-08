@@ -6,7 +6,7 @@ import useManualQuery from '@gql/useManualQuery';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 import { QueryEvent } from '@util/constants.events';
-import { SetActiveArgs } from '../db/db.types';
+import { SetActiveEntitesArgs } from '../db/db.types';
 
 interface GetUserTokensResult {
   communityId: string;
@@ -23,7 +23,7 @@ interface GetUserTokensResult {
  */
 const useGetUserTokens = (shouldRedirectToLogin = false): boolean => {
   const setActiveEntities: ActionCreator<
-    SetActiveArgs | SetActiveArgs[]
+    SetActiveEntitesArgs | SetActiveEntitesArgs[]
   > = useStoreActions(({ db }) => db.setActiveEntities);
 
   const token: string = new URLSearchParams(window.location.search).get(

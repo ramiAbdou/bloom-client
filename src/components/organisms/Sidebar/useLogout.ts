@@ -1,12 +1,12 @@
 import { useHistory } from 'react-router-dom';
 
+import { useApolloClient } from '@apollo/client';
 import useBloomMutation from '@gql/useBloomMutation';
-import { useStoreActions } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const useLogout = (): VoidFunction => {
-  const clearEntities = useStoreActions(({ db }) => db.clearEntities);
   const { push } = useHistory();
+  const apolloClient = useApolloClient();
 
   const [logout] = useBloomMutation<boolean>({
     operation: MutationEvent.LOGOUT
@@ -18,7 +18,7 @@ const useLogout = (): VoidFunction => {
     if (error) return;
 
     // Clear the entities that we've ever fetched.
-    clearEntities();
+    apolloClient.clearStore();
 
     // Reset all of the document colors to Bloom colors.
     const { style } = document.documentElement;

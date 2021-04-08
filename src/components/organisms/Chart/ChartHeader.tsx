@@ -1,14 +1,23 @@
 import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
-import { useStoreState } from '@store/Store';
-import Chart from './Chart.store';
+import { IQuestion } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
+import ChartStore from './Chart.store';
 
 const ChartHeader: React.FC = () => {
-  const questionId = Chart.useStoreState((state) => state.questionId);
-  const totalResponses = Chart.useStoreState((state) => state.totalResponses);
-  const currentTitle = Chart.useStoreState((state) => state.title);
-  const title = useStoreState(({ db }) => db.byQuestionId[questionId]?.title);
+  const questionId = ChartStore.useStoreState((state) => state.questionId);
+
+  const totalResponses = ChartStore.useStoreState(
+    (state) => state.totalResponses
+  );
+
+  const currentTitle = ChartStore.useStoreState((state) => state.title);
+
+  const { title } = useFindOne(IQuestion, {
+    fields: ['title'],
+    where: { id: questionId }
+  });
 
   return (
     <div>

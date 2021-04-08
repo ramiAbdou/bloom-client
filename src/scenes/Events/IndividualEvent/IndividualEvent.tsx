@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import Show from '@containers/Show';
 import { EventPrivacy, IEvent } from '@db/db.entities';
-import { SetActiveArgs } from '@db/db.types';
+import { SetActiveEntitesArgs } from '@db/db.types';
 import useFindOne from '@gql/useFindOne';
 import useFindOneFull from '@gql/useFindOneFull';
 import useIsMember from '@hooks/useIsMember';
@@ -88,7 +88,7 @@ const IndividualEvent: React.FC = () => {
   );
 
   const setActiveEntities: ActionCreator<
-    SetActiveArgs | SetActiveArgs[]
+    SetActiveEntitesArgs | SetActiveEntitesArgs[]
   > = useStoreActions(({ db }) => db.setActiveEntities);
 
   const { data: event, loading } = useFindOneFull(IEvent, {

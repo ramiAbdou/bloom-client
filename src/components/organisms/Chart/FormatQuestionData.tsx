@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
-import { useStoreState } from '@store/Store';
+import { IQuestion } from '@db/db.entities';
+import useFindOne from '@gql/useFindOne';
 import { QuestionType } from '@util/constants';
 import Chart from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
@@ -113,9 +114,10 @@ export default ({
   const setQuestionId = Chart.useStoreActions((state) => state.setQuestionId);
   const setType = Chart.useStoreActions((state) => state.setType);
 
-  const type: QuestionType = useStoreState(
-    ({ db }) => db.byQuestionId[questionId]?.type
-  );
+  const { type } = useFindOne(IQuestion, {
+    fields: ['type'],
+    where: { id: questionId }
+  });
 
   const { data, totalResponses } = { data: [], totalResponses: 0 };
   // const { data, totalResponses } = useQuestionData();

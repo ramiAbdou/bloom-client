@@ -3,9 +3,7 @@ import Fields from 'gql-query-builder/build/Fields';
 import VariableOptions from 'gql-query-builder/build/VariableOptions';
 import { useManualQuery as useGQLManualQuery } from 'graphql-hooks';
 import { Schema } from 'normalizr';
-import { useEffect, useMemo } from 'react';
 
-import { useStoreActions } from '@store/Store';
 import { QueryEvent } from '@util/constants.events';
 import { getGraphQLError } from '@util/util';
 import { QueryResult } from './gql.types';
@@ -22,12 +20,9 @@ interface UseQueryArgs<S> {
 function useManualQuery<T = any, S = any>({
   fields,
   operation,
-  schema,
   types,
   variables: initialVariables
 }: UseQueryArgs<S>): MutationResult<T, S> {
-  const mergeEntities = useStoreActions(({ db }) => db.mergeEntities);
-
   const [manualQueryFn, { data, error, loading }] = useGQLManualQuery(
     query({ fields, operation, variables: types }).query,
     initialVariables ? { variables: initialVariables } : {}
@@ -50,14 +45,6 @@ function useManualQuery<T = any, S = any>({
     error: getGraphQLError(error),
     loading
   };
-
-  const memoizedSchema = useMemo(() => schema, []);
-
-  // Updates the global entities store if a schema is passed in. Also formats
-  // the data to match the schema if need be.
-  useEffect(() => {
-    if (result.data && schema) mergeEntities({ data: result.data, schema });
-  }, [result.data, memoizedSchema]);
 
   return [typedManualQueryFn, result];
 }

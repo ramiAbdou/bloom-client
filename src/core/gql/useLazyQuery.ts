@@ -1,7 +1,5 @@
 import camelCaseKeys from 'camelcase-keys';
 import { snakeCase } from 'change-case';
-import { ActionCreator } from 'easy-peasy';
-import { useEffect } from 'react';
 
 import {
   DocumentNode,
@@ -9,21 +7,14 @@ import {
   useLazyQuery as useApolloLazyQuery
 } from '@apollo/client';
 import { QueryArgs, QueryResult } from '@gql/gql.types';
-import { useStoreActions } from '@store/Store';
-import { MergeEntitiesArgs } from '../db/db.types';
 import buildArgsString from './buildArgsString';
 import buildFieldsString from './buildFieldsString';
 
 function useLazyQuery<T>({
   fields,
   operation,
-  schema,
   where
 }: QueryArgs): [any, QueryResult<T>] {
-  const mergeEntities: ActionCreator<MergeEntitiesArgs> = useStoreActions(
-    ({ db }) => db.mergeEntities
-  );
-
   const argsString: string = buildArgsString({ where });
   const fieldsString: string = buildFieldsString(fields);
   const snakeOperation: string = snakeCase(operation);
@@ -44,10 +35,6 @@ function useLazyQuery<T>({
     result.data ? result.data[snakeOperation] : null,
     { deep: true }
   );
-
-  useEffect(() => {
-    if (camelCaseData) mergeEntities({ data: camelCaseData, schema });
-  }, [camelCaseData, schema]);
 
   return [
     queryFn,

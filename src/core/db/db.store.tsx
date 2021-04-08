@@ -1,19 +1,10 @@
-import { action, computed } from 'easy-peasy';
+import { computed } from 'easy-peasy';
 
-import { DbModel, initialEntities } from './db.types';
-import { mergeEntities, setActiveEntities } from './db.util';
-import dbByIdStore from './dbById.store';
+import { DbModel } from './db.types';
+import { setActiveEntities } from './db.util';
 
 const dbStore: DbModel = {
-  ...dbByIdStore,
-
-  clearEntities: action((state) => {
-    return { ...state, entities: initialEntities };
-  }),
-
   communityId: null,
-
-  entities: initialEntities,
 
   eventId: null,
 
@@ -23,8 +14,6 @@ const dbStore: DbModel = {
   ),
 
   memberId: null,
-
-  mergeEntities,
 
   setActiveEntities,
 

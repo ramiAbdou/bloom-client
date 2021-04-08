@@ -1,13 +1,7 @@
 import deepmerge from 'deepmerge';
 import { Action, action } from 'easy-peasy';
-import { normalize } from 'normalizr';
 
-import {
-  DbModel,
-  IEntities,
-  MergeEntitiesArgs,
-  SetActiveArgs
-} from './db.types';
+import { DbModel, SetActiveEntitesArgs } from './db.types';
 
 /**
  * Merges the two entities according to the deepmerge strategy, except handles
@@ -30,32 +24,10 @@ export const mergeStrategy = (a: Partial<any>, b: Partial<any>): any => {
 };
 
 /**
- * Main update function that updates all entities (front-end DB). Uses
- * the deepmerge library function to make the updates.
- */
-export const mergeEntities: Action<DbModel, MergeEntitiesArgs> = action(
-  (state, { data, schema }: MergeEntitiesArgs) => {
-    const normalizedEntities = normalize(data, schema).entities;
-
-    const parsedEntities = Object.entries(normalizedEntities).reduce(
-      (acc: Record<string, any>, [key, value]) => {
-        return { ...acc, [key]: { byId: value } };
-      },
-      {}
-    );
-
-    return {
-      ...state,
-      entities: mergeStrategy(state.entities, parsedEntities) as IEntities
-    };
-  }
-);
-
-/**
  * Updates the activeId of a series of tables or just one table.
  */
-export const setActiveEntities: Action<DbModel, SetActiveArgs> = action(
-  (state, { communityId, eventId, memberId, userId }: SetActiveArgs) => {
+export const setActiveEntities: Action<DbModel, SetActiveEntitesArgs> = action(
+  (state, { communityId, eventId, memberId, userId }: SetActiveEntitesArgs) => {
     return {
       ...state,
       communityId: communityId ?? state.communityId,

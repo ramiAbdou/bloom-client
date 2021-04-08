@@ -13,7 +13,7 @@ const useInitUser = (): QueryResult<IUser> => {
     ({ db }) => db.isAuthenticated
   );
 
-  const userId: string = useStoreState(({ db }) => db.entities.users.activeId);
+  const userId: string = useStoreState(({ db }) => db.userId);
 
   const result: QueryResult<IUser> = useFindOneFull(IUser, {
     fields: [
@@ -34,8 +34,6 @@ const useInitUser = (): QueryResult<IUser> => {
     skip: !isAuthenticated,
     where: { id: userId }
   });
-
-  console.log(result);
 
   useLoader(result.loading);
 
