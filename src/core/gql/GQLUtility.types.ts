@@ -22,11 +22,6 @@ export interface GQLUtilityFindOneResult<T> {
   error?: string;
 }
 
-export interface GQLUtilityFromCacheArgs<T> {
-  id: string;
-  fields?: (keyof T | string)[];
-}
-
 export interface GQLUtilityUpdateArgs<T> {
   data: RecursivePartial<T>;
   where: RecursivePartial<T>;

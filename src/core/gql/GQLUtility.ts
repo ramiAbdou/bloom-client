@@ -4,15 +4,21 @@ import day from 'dayjs';
 import { nanoid } from 'nanoid';
 import pluralize from 'pluralize';
 
-import { ApolloClient, DocumentNode, gql } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloQueryResult,
+  DocumentNode,
+  gql
+} from '@apollo/client';
+import { QueryResult } from '@gql/gql.types';
 import buildArgsString from './buildArgsString';
 import buildFieldsString from './buildFieldsString';
+import { getFindOneQuery, parseFindOneQueryResult } from './findOne';
 import {
   GQLUtilityCreateArgs,
   GQLUtilityCreateResult,
   GQLUtilityFindOneArgs,
   GQLUtilityFindOneResult,
-  GQLUtilityFromCacheArgs,
   GQLUtilityUpdateArgs,
   GQLUtilityUpdateResult
 } from './GQLUtility.types';
@@ -20,32 +26,14 @@ import {
 class GQLUtility<T> {
   client: ApolloClient<any>;
 
+  entity: new () => T;
+
   name: string;
 
   constructor(entity: new () => T, client: ApolloClient<any>) {
-    this.name = entity.name;
     this.client = client;
-  }
-
-  fromCache({ id, fields }: GQLUtilityFromCacheArgs<T>): T {
-    const fieldsString: string = buildFieldsString((fields ?? []) as string[]);
-    const entityName: string = this.getEntityName();
-
-    const fragment: DocumentNode = gql`
-      fragment Fragment on ${entityName} {
-        id
-        ${fieldsString}
-      }
-    `;
-
-    const result: T = this.client.readFragment({
-      fragment,
-      id: `${entityName}:${id}`
-    });
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore b/c we want to provide null safety.
-    return camelCaseKeys(result, { deep: true }) ?? {};
+    this.entity = entity;
+    this.name = entity.name;
   }
 
   async create({
@@ -92,32 +80,18 @@ class GQLUtility<T> {
     fields,
     where
   }: GQLUtilityFindOneArgs<T>): Promise<GQLUtilityFindOneResult<T>> {
-    const argsString: string = buildArgsString({ where });
+    const query: DocumentNode = getFindOneQuery(this.entity, { fields, where });
 
-    const fieldsString: string = buildFieldsString([
-      ...(fields ?? []),
-      'id'
-    ] as string[]);
-
-    const entityName: string = this.getEntityName();
-
-    const query: DocumentNode = gql`
-      query FindOne${this.name.substring(1)} {
-        ${entityName} ${argsString} {
-          ${fieldsString}
-        }
-      }
-    `;
-
-    const { data, errors } = await this.client.query({ query });
-
-    const camelCaseData: T[] = camelCaseKeys(data ? data[entityName] : null, {
-      deep: true
+    const result: ApolloQueryResult<unknown> = await this.client.query({
+      query
     });
 
-    const result: T = camelCaseData?.length ? camelCaseData[0] : null;
+    const parsedResult: QueryResult<T> = parseFindOneQueryResult(
+      this.entity,
+      result
+    );
 
-    return { data: result, error: errors?.length && errors[0]?.message };
+    return parsedResult;
   }
 
   async update({
