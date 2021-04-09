@@ -9,11 +9,11 @@ import Directory from '@scenes/Directory/Directory';
 import Events from '@scenes/Events/Events';
 import Integrations from '@scenes/Integrations/Integrations';
 import Profile from '@scenes/Profile/Profile';
-import CatchAllRoute from './CatchAllRoute';
-import LoginRoute from './LoginRoute';
-import MemberRoute from './MemberRoute';
-import useUpdateUserId from './useUpdateUserId';
-import useVerifyToken from './useVerifyToken';
+import CatchAllRoute from './routes/CatchAllRoute';
+import MemberRoute from './routes/MemberRoute';
+import useUpdateUserId from './hooks/useUpdateUserId';
+import useVerifyToken from './hooks/useVerifyToken';
+import Login from '@scenes/Login/Login';
 
 /**
  * Core routing logic of the entire application. Nested logic should live
@@ -28,7 +28,7 @@ const Router: React.FC = () => {
 
   return (
     <Switch>
-      <LoginRoute exact path="/login" />
+      <Route exact component={Login} path="/login" />
       <Route exact component={Application} path="/:urlName/apply" />
       <MemberRoute admin component={Analytics} path="/:urlName/analytics" />
 

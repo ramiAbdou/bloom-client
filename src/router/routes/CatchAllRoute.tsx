@@ -13,23 +13,23 @@ const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
 
   const members: IMember[] = useFind(IMember, {
     fields: ['community.id', 'community.urlName'],
-    skip: !userId,
+    skip: !userId, // Only fire query if userId is present.
     where: { userId }
   });
 
+  // If userId isn't present, means the user isn't logged in, so redirect
+  // the user to the login page.
   if (!userId) return <Redirect to="/login" />;
 
-  console.log(members.length && members[0]?.community?.urlName);
+  // If the members of the user have loaded, redirect them to the first
+  // community that loads.
   if (members?.length) {
-    return <Redirect to={`/${members[0]?.community?.urlName}/directory`} />;
+    const { urlName } = members[0].community;
+    return <Redirect to={`/${urlName}/directory`} />;
   }
 
-  return (
-    // 1. if the user is not authenticated, should redirect to login
-    // 2. if the user is logged in
-
-    <Route component={null} exact={exact} path={path} />
-  );
+  // Otherwise, return a Route that is null until our queries finish.
+  return <Route component={null} exact={exact} path={path} />;
 };
 
 export default CatchAllRoute;

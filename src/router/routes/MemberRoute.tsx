@@ -1,4 +1,3 @@
-import { ActionCreator } from 'easy-peasy';
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
@@ -7,7 +6,6 @@ import { updateDocumentColors } from '@db/db.util';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
-import { SetActiveEntitesArgs } from '../core/db/db.types';
 
 interface MemberRouteProps extends RouteProps {
   admin?: boolean;
@@ -18,21 +16,21 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   component,
   ...rest
 }) => {
-  const setActiveEntities: ActionCreator<SetActiveEntitesArgs> = useStoreActions(
-    ({ db }) => db.setActiveEntities
-  );
-
   const storedCommunityId: string = useStoreState(({ db }) => db.communityId);
   const storedMemberId: string = useStoreState(({ db }) => db.memberId);
-  const userId: string = useStoreState(({ db }) => db.userId);
+  const storedUserId: string = useStoreState(({ db }) => db.userId);
+  const setActiveEntities = useStoreActions(({ db }) => db.setActiveEntities);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore b/c we know that computed match exists.
+  // @ts-ignore b/c we know that computed match exists and we need to use
+  // this because the useParams() hook isn't loaded by this point so the urlName
+  // still would not be known to us.
   const { urlName }: UrlNameProps = rest?.computedMatch?.params;
 
+  // Find the community with the urlName that we are currently at.
   const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['community.id', 'community.primaryColor', 'role'],
-    where: { community: { urlName }, userId }
+    where: { community: { urlName }, userId: storedUserId }
   });
 
   useEffect(() => {
@@ -49,14 +47,23 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
         memberId: member.id
       });
 
+      // As we set the active entities, we must also update the document
+      // colors with the community's primary color.
       updateDocumentColors(member.community.primaryColor);
     }
   }, [member, storedCommunityId, storedMemberId]);
 
-  // If role is undefined, means it hasn't been loaded yet.
+  // Just wait if the query is still loading.
   if (loading) return null;
-  if (!loading && !member) return <Redirect to="/login" />;
-  if (admin && member.role === null) return <Redirect to={`/${urlName}`} />;
+
+  // If it is no longer loading and there is no member at all, that means the
+  // user isn't authorized to view this community so let's redirect them to
+  // the catch all route, maybe they are apart of another community.
+  if (!loading && !member) return <Redirect to="/" />;
+
+  // If it is an admin route and the member is not an admin/owner, redirect
+  // them to the community's directory page.
+  if (admin && !member.role) return <Redirect to={`/${urlName}/directory`} />;
 
   return <Route component={component} {...rest} />;
 };
