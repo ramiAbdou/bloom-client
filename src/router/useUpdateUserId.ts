@@ -1,11 +1,9 @@
 import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 
-import { IMember, MemberStatus } from '@db/db.entities';
 import { SetActiveEntitesArgs } from '@db/db.types';
 import useCustomQuery from '@gql/hooks/useCustomQuery';
-import useFind from '@gql/hooks/useFind';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 
 interface GetUserTokensResult {
   userId: string;
@@ -19,22 +17,18 @@ interface GetUserTokensResult {
  * there are no ID's (userId, etc.) present on the token.
  */
 const useUpdateUserId = (): boolean => {
+  const storedUserId: string = useStoreState(({ db }) => db.userId);
+
   const setActiveEntities: ActionCreator<
     SetActiveEntitesArgs | SetActiveEntitesArgs[]
   > = useStoreActions(({ db }) => db.setActiveEntities);
 
-  const { data } = useCustomQuery<GetUserTokensResult>({
+  const { data, loading } = useCustomQuery<GetUserTokensResult>({
     fields: ['userId'],
     queryName: 'getUserTokens'
   });
 
   const userId: string = data?.userId;
-
-  const members: IMember[] = useFind(IMember, {
-    fields: ['community.id', 'community.urlName'],
-    skip: !userId,
-    where: { id: userId, status: MemberStatus.ACCEPTED }
-  });
 
   useEffect(() => {
     // If the userId is decoded from the decoded token, then set the active
@@ -42,7 +36,7 @@ const useUpdateUserId = (): boolean => {
     if (userId) setActiveEntities({ userId });
   }, [userId]);
 
-  return !members;
+  return loading || (!!userId && userId !== storedUserId);
 };
 
 export default useUpdateUserId;

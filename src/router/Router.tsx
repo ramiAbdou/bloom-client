@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-// import Sidebar from '@organisms/Sidebar/Sidebar';
 import Analytics from '@scenes/Analytics/Analytics';
 import Applicants from '@scenes/Applicants/Applicants';
 import Application from '@scenes/Application/Application';
@@ -10,8 +9,7 @@ import Directory from '@scenes/Directory/Directory';
 import Events from '@scenes/Events/Events';
 import Integrations from '@scenes/Integrations/Integrations';
 import Profile from '@scenes/Profile/Profile';
-// import Scene from '../components/containers/Scene';
-// import CommunityRouter from './CommunityRouter';
+import CatchAllRoute from './CatchAllRoute';
 import LoginRoute from './LoginRoute';
 import MemberRoute from './MemberRoute';
 import useUpdateUserId from './useUpdateUserId';
@@ -51,12 +49,9 @@ const Router: React.FC = () => {
         path="/:urlName/integrations"
       />
 
-      <Route component={Profile} path="/:urlName/profile" />
-
-      {/* <Redirect to="/:urlName/directory" /> */}
-      {/* <Route component={CommunityRouter} path="/:urlName" />
-      <Route exact component={CommunityRouter} path="/" /> */}
-      <Redirect to="/login" />
+      <MemberRoute exact component={Profile} path="/:urlName/profile" />
+      <CatchAllRoute exact path="/" />
+      <Redirect to="/" />
     </Switch>
   );
 };

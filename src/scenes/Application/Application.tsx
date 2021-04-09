@@ -48,7 +48,7 @@ const Application: React.FC = () => {
   });
 
   useEffect(() => {
-    if (application) {
+    if (application.id) {
       setActiveEntities({ communityId: application.community.id });
     }
   }, [application]);

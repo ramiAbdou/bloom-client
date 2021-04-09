@@ -1,8 +1,9 @@
 import { ActionCreator } from 'easy-peasy';
 import React, { useEffect } from 'react';
-import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import { IMember } from '@db/db.entities';
+import { updateDocumentColors } from '@db/db.util';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
@@ -25,10 +26,12 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   const storedMemberId: string = useStoreState(({ db }) => db.memberId);
   const userId: string = useStoreState(({ db }) => db.userId);
 
-  const { urlName }: UrlNameProps = useParams();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore b/c we know that computed match exists.
+  const { urlName }: UrlNameProps = rest?.computedMatch?.params;
 
   const { data: member, loading } = useFindOneFull(IMember, {
-    fields: ['community.id', 'role'],
+    fields: ['community.id', 'community.primaryColor', 'role'],
     where: { community: { urlName }, userId }
   });
 
@@ -45,6 +48,8 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
         communityId: member.community.id,
         memberId: member.id
       });
+
+      updateDocumentColors(member.community.primaryColor);
     }
   }, [member, storedCommunityId, storedMemberId]);
 
@@ -53,9 +58,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   if (!loading && !member) return <Redirect to="/login" />;
   if (admin && member.role === null) return <Redirect to={`/${urlName}`} />;
 
-  // If role is null, means it has been loaded.
-  // if (role === null) return <Redirect to={`/${urlName}`} />;
-  return <Route {...rest} component={component} />;
+  return <Route component={component} {...rest} />;
 };
 
 export default MemberRoute;

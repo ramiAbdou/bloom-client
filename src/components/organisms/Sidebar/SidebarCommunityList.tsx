@@ -10,7 +10,12 @@ const SidebarCommunityList: React.FC = () => {
   const userId: string = useStoreState(({ db }) => db.userId);
 
   const members: IMember[] = useFind(IMember, {
-    fields: ['community.id', 'joinedAt'],
+    fields: [
+      'community.logoUrl',
+      'community.id',
+      'community.urlName',
+      'joinedAt'
+    ],
     where: { status: MemberStatus.ACCEPTED, userId }
   });
 
