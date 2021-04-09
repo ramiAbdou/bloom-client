@@ -1,13 +1,11 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import { Schema } from '@db/db.entities';
-import useBloomQuery from '@gql/useBloomQuery';
+import useCustomQuery from '@gql/useCustomQuery';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';
 import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
-import { QueryEvent } from '@util/constants.events';
 import mailchimp from './images/mailchimp.png';
 import useMailchimpSubmit from './useMailchimpSubmit';
 
@@ -21,11 +19,14 @@ const MailchimpModalActionContainer: React.FC = () => (
   </Row>
 );
 
+interface GetCommunityIntegrationsResult {
+  mailchimpLists: { id: string; name: string }[];
+}
+
 const MailchimpModalContent: React.FC = () => {
-  const { data, loading } = useBloomQuery({
-    fields: ['id', { mailchimpLists: ['id', 'name'] }, { community: ['id'] }],
-    operation: QueryEvent.GET_COMMUNITY_INTEGRATIONS,
-    schema: Schema.COMMUNITY_INTEGRATIONS
+  const { data, loading } = useCustomQuery<GetCommunityIntegrationsResult>({
+    fields: ['id', 'mailchimpLists.id', 'mailchimpLists.name'],
+    queryName: 'getCommunityIntegrations'
   });
 
   if (loading || !data.mailchimpLists?.length) return null;

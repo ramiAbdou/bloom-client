@@ -1,16 +1,15 @@
 import React from 'react';
 
 import Section from '@containers/Section';
-import useBloomQuery from '@gql/useBloomQuery';
+import useCustomQuery from '@gql/useCustomQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { TimeSeriesData } from '@util/constants';
-import { QueryEvent } from '@util/constants.events';
 
 const EventAnalyticsChart: React.FC = () => {
-  const { data, loading } = useBloomQuery<TimeSeriesData[]>({
+  const { data, loading } = useCustomQuery<TimeSeriesData[]>({
     fields: ['name', 'value'],
-    operation: QueryEvent.GET_EVENT_ATTENDEES_SERIES
+    queryName: 'getEventAttendeesSeries'
   });
 
   if (loading) return null;

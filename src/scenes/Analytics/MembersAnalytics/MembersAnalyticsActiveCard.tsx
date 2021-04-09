@@ -1,20 +1,25 @@
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import useBloomQuery from '@gql/useBloomQuery';
-import { QueryEvent } from '@util/constants.events';
+import useCustomQuery from '@gql/useCustomQuery';
+
+interface GetActiveMembersGrowthResult {
+  count: number;
+  growth: number;
+}
 
 const MembersAnalyticsActiveCard: React.FC = () => {
-  const { data, loading } = useBloomQuery<[number, number]>({
-    operation: QueryEvent.GET_ACTIVE_MEMBERS_GROWTH
+  const { data, loading } = useCustomQuery<GetActiveMembersGrowthResult>({
+    fields: ['count', 'growth'],
+    queryName: 'getActiveMembersGrowth'
   });
 
   return (
     <GrayCard
       label="Active Users"
-      percentage={data && data[1]}
+      percentage={data && data?.growth}
       show={!loading}
-      value={data && data[0]}
+      value={data && data?.count}
     />
   );
 };
