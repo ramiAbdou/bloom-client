@@ -23,18 +23,3 @@ export enum MutationEvent {
   UPDATE_STRIPE_SUBSCRIPTION_ID = 'updateStripeSubscriptionId',
   VERIFY_TOKEN = 'verifyToken'
 }
-
-export enum QueryEvent {
-  GET_ACTIVE_MEMBERS_GROWTH = 'getActiveMembersGrowth',
-  GET_ACTIVE_MEMBERS_SERIES = 'getActiveMembersSeries',
-  GET_CHANGE_PREVIEW = 'getChangePreview',
-  GET_COMMUNITY_INTEGRATIONS = 'getCommunityIntegrations',
-  GET_EVENT_ATTENDEES_SERIES = 'getEventAttendeesSeries',
-  GET_MEMBER_INTEGRATIONS = 'getMemberIntegrations',
-  GET_MEMBERS_GROWTH = 'getMembersGrowth',
-  GET_MEMBERS_SERIES = 'getMembersSeries',
-  GET_OWNER = 'getOwner',
-  GET_PAYMENTS_SERIES = 'getPaymentsSeries',
-  GET_USER_TOKENS = 'getUserTokens',
-  IS_EMAIL_TAKEN = 'isEmailTaken'
-}

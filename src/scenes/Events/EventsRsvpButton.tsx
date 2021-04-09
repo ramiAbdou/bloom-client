@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent, IEventGuest, Schema } from '@db/db.entities';
+import { IEvent, IEventGuest } from '@db/db.entities';
 import { GQL } from '@gql/gql.types';
 import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
@@ -74,7 +74,6 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       mutationArgsOnUndo: {
         fields: ['deletedAt', 'id'],
         operation: MutationEvent.DELETE_EVENT_GUEST,
-        schema: Schema.EVENT_GUEST,
         types: { eventId: { required: true } },
         variables: { eventId }
       }

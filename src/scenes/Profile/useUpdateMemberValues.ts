@@ -1,4 +1,4 @@
-import { IMemberValue, Schema } from '@db/db.entities';
+import { IMemberValue } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   FormItemData,
@@ -15,7 +15,6 @@ const useUpdateMemberValues = (): OnFormSubmitFunction => {
   >({
     fields: ['id', 'value', { member: ['id'] }, { question: ['id'] }],
     operation: MutationEvent.UPDATE_MEMBER_VALUES,
-    schema: [Schema.MEMBER_VALUE],
     types: { items: { required: true, type: '[MemberValueArgs!]' } }
   });
 

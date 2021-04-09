@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
-import { ICommunity, Schema } from '@db/db.entities';
+import { ICommunity } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import useFindOne from '@gql/useFindOne';
 import { useStoreActions, useStoreState } from '@store/Store';
@@ -22,7 +22,6 @@ const DeleteEventButton: React.FC = () => {
   const [deleteEvent, { loading }] = useBloomMutation<boolean>({
     fields: ['deletedAt', 'id'],
     operation: MutationEvent.DELETE_EVENT,
-    schema: Schema.EVENT,
     types: { eventId: { required: true } },
     variables: { eventId }
   });

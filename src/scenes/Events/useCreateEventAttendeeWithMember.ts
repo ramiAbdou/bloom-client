@@ -1,4 +1,4 @@
-import { IEventAttendee, Schema } from '@db/db.entities';
+import { IEventAttendee } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import { UseMutationFnResult } from '@gql/useBloomMutation.types';
 import { MutationEvent } from '@util/constants.events';
@@ -18,7 +18,6 @@ const useCreateEventAttendeeWithMember = (): ((
       { member: ['id', 'email', 'firstName', 'lastName', 'pictureUrl'] }
     ],
     operation: MutationEvent.CREATE_EVENT_ATTENDEE_WITH_MEMBER,
-    schema: Schema.EVENT_ATTENDEE,
     types: { eventId: { required: true } }
   });
 

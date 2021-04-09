@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { IMember } from '@db/db.entities';
-import { Schema } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
@@ -23,7 +22,6 @@ const MemberDatabasePromoteForm: React.FC = () => {
   const [promoteMembers] = useBloomMutation<IMember[], MemberIdsArgs>({
     fields: ['id', 'role'],
     operation: MutationEvent.PROMOTE_MEMBERS,
-    schema: [Schema.MEMBER],
     types: { memberIds: { required: true, type: '[String!]' } }
   });
 

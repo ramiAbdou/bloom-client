@@ -1,6 +1,6 @@
 import day from 'dayjs';
 
-import { IEvent, Schema } from '@db/db.entities';
+import { IEvent } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
@@ -26,7 +26,6 @@ const useCreateEvent = (): OnFormSubmitFunction => {
       { community: ['id'] }
     ],
     operation: MutationEvent.CREATE_EVENT,
-    schema: Schema.EVENT,
     types: {
       description: { required: true },
       endTime: { required: true },

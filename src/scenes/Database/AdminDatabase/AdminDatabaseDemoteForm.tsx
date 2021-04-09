@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IMember, Schema } from '@db/db.entities';
+import { IMember } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
@@ -18,7 +18,6 @@ const AdminDatabaseDemoteForm: React.FC = () => {
   const [demoteMembers] = useBloomMutation<IMember[], MemberIdsArgs>({
     fields: ['id', 'role'],
     operation: MutationEvent.DEMOTE_MEMBERS,
-    schema: [Schema.MEMBER],
     types: { memberIds: { required: true, type: '[String!]' } }
   });
 

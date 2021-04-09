@@ -1,4 +1,4 @@
-import { IMember, MemberStatus, Schema } from '@db/db.entities';
+import { IMember, MemberStatus } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import { MutationResult } from '@gql/useBloomMutation.types';
 import {
@@ -27,7 +27,6 @@ const useRespondToApplicants = ({
   > = useBloomMutation<IMember[], RespondToApplicantsArgs>({
     fields: ['id', 'status'],
     operation: MutationEvent.RESPOND_TO_APPLICANTS,
-    schema: [Schema.MEMBER],
     types: {
       memberIds: { required: true, type: '[String!]' },
       response: { required: true }

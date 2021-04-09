@@ -1,7 +1,6 @@
-import { computed } from 'easy-peasy';
+import { action, computed } from 'easy-peasy';
 
-import { DbModel } from './db.types';
-import { setActiveEntities } from './db.util';
+import { DbModel, SetActiveEntitesArgs } from './db.types';
 
 const dbStore: DbModel = {
   communityId: null,
@@ -15,7 +14,20 @@ const dbStore: DbModel = {
 
   memberId: null,
 
-  setActiveEntities,
+  setActiveEntities: action(
+    (
+      state,
+      { communityId, eventId, memberId, userId }: SetActiveEntitesArgs
+    ) => {
+      return {
+        ...state,
+        communityId: communityId ?? state.communityId,
+        eventId: eventId ?? state.eventId,
+        memberId: memberId ?? state.memberId,
+        userId: userId ?? state.userId
+      };
+    }
+  ),
 
   userId: null
 };

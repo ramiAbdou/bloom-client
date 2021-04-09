@@ -1,3 +1,4 @@
+import { IMember } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
@@ -5,8 +6,6 @@ import {
 } from '@organisms/Form/Form.types';
 import TableStore from '@organisms/Table/Table.store';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
-import { IMember } from '@db/db.entities';
-import { Schema } from '@db/db.entities';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 
@@ -18,7 +17,6 @@ const useDeleteMembers = (): OnFormSubmitFunction => {
   const [deleteMembers] = useBloomMutation<IMember[], MemberIdsArgs>({
     fields: ['deletedAt', 'id'],
     operation: MutationEvent.DELETE_MEMBERS,
-    schema: [Schema.MEMBER],
     types: { memberIds: { required: true, type: '[String!]' } }
   });
 
@@ -39,7 +37,6 @@ const useDeleteMembers = (): OnFormSubmitFunction => {
       mutationArgsOnUndo: {
         fields: ['deletedAt', 'id'],
         operation: MutationEvent.RESTORE_MEMBERS,
-        schema: [Schema.MEMBER],
         types: { memberIds: { required: true, type: '[String!]' } },
         variables: { memberIds }
       }

@@ -1,4 +1,4 @@
-import { IEventGuest, Schema } from '@db/db.entities';
+import { IEventGuest } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
@@ -22,7 +22,6 @@ const useCreateEventGuestWithSupporter = (): OnFormSubmitFunction => {
       { supporter: ['id', 'email', 'firstName', 'lastName'] }
     ],
     operation: MutationEvent.CREATE_EVENT_GUEST_WITH_SUPPORTER,
-    schema: Schema.EVENT_GUEST,
     types: {
       email: { required: true },
       eventId: { required: true },
