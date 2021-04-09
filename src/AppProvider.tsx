@@ -3,12 +3,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './index.scss';
 import '../public/favicon.ico';
 
+import { snakeCase } from 'change-case';
 import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { StoreProvider } from 'easy-peasy';
 import { ClientContext, GraphQLClient } from 'graphql-hooks';
+import pluralize from 'pluralize';
 import React from 'react';
 import { IconContext } from 'react-icons';
 import { BrowserRouter } from 'react-router-dom';
@@ -19,6 +21,25 @@ import {
   HttpLink,
   InMemoryCache
 } from '@apollo/client';
+import {
+  IApplication,
+  ICommunity,
+  ICommunityIntegrations,
+  IEvent,
+  IEventAttendee,
+  IEventGuest,
+  IEventWatch,
+  IMember,
+  IMemberIntegrations,
+  IMemberSocials,
+  IMemberType,
+  IMemberValue,
+  IPayment,
+  IQuestion,
+  IRankedQuestion,
+  ISupporter,
+  IUser
+} from '@db/db.entities';
 import { store } from '@store/Store';
 import { APP } from '@util/constants';
 
@@ -32,96 +53,52 @@ const client: GraphQLClient = new GraphQLClient({
   url: `${APP.SERVER_URL}/graphql`
 });
 
+/**
+ * Resolves the Apollo Client query so that once an entity is fetched, if we
+ * query by it's ID, then we'll be able to use our cache store for it.
+ */
+function resolveReadQuery<T>(entity: new () => T) {
+  // All of our entity types start with an I (ex: IMember, IUser, etc).
+  const nameWithoutI: string = entity.name.substring(1);
+
+  // To get the GraphQL version of the entity name, we make the name plural
+  // and convert to snake case (which automatically converts to lowercase).
+  const entityName: string = snakeCase(pluralize(nameWithoutI));
+
+  return (existing, { args, toReference }) => {
+    if (args.where?.id) {
+      return toReference({
+        __typename: entityName,
+        id: args.where?.id?._eq
+      });
+    }
+
+    return existing;
+  };
+}
+
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
         fields: {
-          //   applications: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'applications',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   communities: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'communities',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   community_integrations: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'communities',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   event_attendees: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'event_attendees',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   event_guests: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'event_guests',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   event_watches: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'event_watches',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   events: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'events',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   member_integrations: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'member_integrations',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   member_socials: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'member_socials',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   member_types: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'members_types',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   member_values: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'member_values',
-          //       id: args.where?.id?._eq
-          //     }),
-          members: (_, { args, toReference }) =>
-            toReference({
-              __typename: 'members',
-              id: args.where?.id?._eq
-            })
-          //   payments: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'payments',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   questions: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'questions',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   ranked_questions: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'ranked_questions',
-          //       id: args.where?.id?._eq
-          //     }),
-          //   supporters: (_, { args, toReference }) =>
-          //     toReference({
-          //       __typename: 'supporters',
-          //       id: args.where?.id?._eq
-          //     }),
-          // users: (_, { args, toReference }) =>
-          //   toReference({
-          //     __typename: 'users',
-          //     id: args.where?.id?._eq
-          //   })
+          applications: resolveReadQuery(IApplication),
+          communities: resolveReadQuery(ICommunity),
+          community_integrations: resolveReadQuery(ICommunityIntegrations),
+          event_attendees: resolveReadQuery(IEventAttendee),
+          event_guests: resolveReadQuery(IEventGuest),
+          event_watches: resolveReadQuery(IEventWatch),
+          events: resolveReadQuery(IEvent),
+          member_integrations: resolveReadQuery(IMemberIntegrations),
+          member_socials: resolveReadQuery(IMemberSocials),
+          member_types: resolveReadQuery(IMemberType),
+          member_values: resolveReadQuery(IMemberValue),
+          members: resolveReadQuery(IMember),
+          payments: resolveReadQuery(IPayment),
+          questions: resolveReadQuery(IQuestion),
+          ranked_questions: resolveReadQuery(IRankedQuestion),
+          supporters: resolveReadQuery(ISupporter),
+          users: resolveReadQuery(IUser)
         }
       }
     }

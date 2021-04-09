@@ -9,9 +9,13 @@ import { FindOneArgs } from './gql.types';
 
 function useFind<T>(
   entity: new () => T,
-  { fields, where }: FindOneArgs<T>
+  { fields, skip, where }: FindOneArgs<T>
 ): T[] {
+  // All of our entity types start with an I (ex: IMember, IUser, etc).
   const nameWithoutI: string = entity.name.substring(1);
+
+  // To get the GraphQL version of the entity name, we make the name plural
+  // and convert to snake case (which automatically converts to lowercase).
   const entityName: string = snakeCase(pluralize(nameWithoutI));
 
   const argsString: string = buildArgsString({ where });
@@ -22,24 +26,25 @@ function useFind<T>(
   ] as string[]);
 
   const query: DocumentNode = gql`
-      query FindOne${nameWithoutI} {
+      query Find${nameWithoutI} {
         ${entityName} ${argsString} {
           ${fieldsString}
         }
       }
     `;
 
-  const result = useQuery(query);
-
-  // Deeply converts all of the data from the operation to camelCase, if the
-  // data exists.
-  const camelCaseData: T[] = camelCaseKeys(
-    result.data ? result.data[entityName] : [],
-    { deep: true }
-  );
+  const result = useQuery(query, { skip });
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore b/c we want to destructure very easily.
+  if (!result.data) return [];
+
+  // Deeply converts all of the data from the operation to camelCase, if the
+  // data exists.
+  const camelCaseData: T[] = camelCaseKeys(result.data[entityName], {
+    deep: true
+  });
+
   return camelCaseData;
 }
 

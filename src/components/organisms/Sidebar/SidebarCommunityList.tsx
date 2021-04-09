@@ -10,7 +10,7 @@ const SidebarCommunityList: React.FC = () => {
   const userId: string = useStoreState(({ db }) => db.userId);
 
   const members: IMember[] = useFind(IMember, {
-    fields: ['joinedAt', 'name'],
+    fields: ['community.id', 'joinedAt'],
     where: { status: MemberStatus.ACCEPTED, userId }
   });
 
@@ -20,8 +20,11 @@ const SidebarCommunityList: React.FC = () => {
 
   return (
     <div className="f f-ac f-col px-xs py-sm o-nav-community-ctr">
-      {sortedMembers?.map((sortedMember: IMember) => (
-        <SidebarCommunityButton key={sortedMember.id} id={sortedMember.id} />
+      {sortedMembers.map((sortedMember: IMember) => (
+        <SidebarCommunityButton
+          key={sortedMember.id}
+          id={sortedMember.community.id}
+        />
       ))}
     </div>
   );
