@@ -1,6 +1,6 @@
 import { DocumentNode, gql, useQuery } from '@apollo/client';
 import buildFieldsString from '../buildFieldsString';
-import { CustomQueryArgs, QueryResult } from '../gql.types';
+import { CustomQueryArgs, QueryResult } from '../GQL.types';
 
 function useCustomQuery<T>({
   fields,

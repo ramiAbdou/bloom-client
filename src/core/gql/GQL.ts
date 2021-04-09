@@ -9,16 +9,17 @@ import {
   DocumentNode,
   gql
 } from '@apollo/client';
-import { FindOneArgs, QueryResult } from '@gql/gql.types';
 import buildArgsString from './buildArgsString';
 import buildFieldsString from './buildFieldsString';
 import { getFindOneQuery, parseFindOneQueryResult } from './findOne';
 import {
+  FindOneArgs,
   GQLUtilityCreateArgs,
   GQLUtilityCreateResult,
   GQLUtilityUpdateArgs,
-  GQLUtilityUpdateResult
-} from './GQLtypes';
+  GQLUtilityUpdateResult,
+  QueryResult
+} from './GQL.types';
 
 class GQL {
   client: ApolloClient<unknown>;

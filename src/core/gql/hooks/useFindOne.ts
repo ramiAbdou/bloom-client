@@ -1,6 +1,6 @@
 import { ApolloQueryResult, DocumentNode, useQuery } from '@apollo/client';
-import { FindOneArgs, QueryResult } from '@gql/gql.types';
 import { getFindOneQuery, parseFindOneQueryResult } from '../findOne';
+import { FindOneArgs, QueryResult } from '../GQL.types';
 
 function useFindOne<T>(
   entity: new () => T,

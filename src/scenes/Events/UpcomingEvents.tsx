@@ -5,7 +5,7 @@ import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import MainContent from '@containers/Main/MainContent';
 import Section from '@containers/Section';
 import { IEvent } from '@db/db.entities';
-import { QueryResult } from '@gql/gql.types';
+import { QueryResult } from '@gql/GQL.types';
 import useFind from '@gql/hooks/useFind';
 import useFindFull from '@gql/hooks/useFindFull';
 import List from '@organisms/List/List';
