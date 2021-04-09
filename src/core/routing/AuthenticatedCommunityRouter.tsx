@@ -9,7 +9,6 @@ import Directory from '@scenes/Directory/Directory';
 import Events from '@scenes/Events/Events';
 import Integrations from '@scenes/Integrations/Integrations';
 import Profile from '@scenes/Profile/Profile';
-import { useStoreState } from '@store/Store';
 import AdminRoute from './AdminRoute';
 
 const AuthenticatedCommunityRouterSwitch: React.FC = () => (
@@ -27,19 +26,11 @@ const AuthenticatedCommunityRouterSwitch: React.FC = () => (
   </div>
 );
 
-const AuthenticatedCommunityRouter: React.FC = () => {
-  const isAuthenticated: boolean = useStoreState(
-    ({ db }) => db.isAuthenticated
-  );
-
-  if (!isAuthenticated) return <Redirect to="/login" />;
-
-  return (
-    <>
-      <Sidebar />
-      <AuthenticatedCommunityRouterSwitch />
-    </>
-  );
-};
+const AuthenticatedCommunityRouter: React.FC = () => (
+  <>
+    <Sidebar />
+    <AuthenticatedCommunityRouterSwitch />
+  </>
+);
 
 export default AuthenticatedCommunityRouter;

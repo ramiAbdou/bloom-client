@@ -37,7 +37,7 @@ const ListFilterQuestionOptionList: React.FC = () => {
   return (
     <Show show={!!isOpen}>
       <ul className="mt-sm o-list-filter-question-option-list">
-        {sortedOptions.map((sortedOption: string) => (
+        {sortedOptions?.map((sortedOption: string) => (
           <ListFilterQuestionOption key={sortedOption} value={sortedOption} />
         ))}
       </ul>

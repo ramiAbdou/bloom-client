@@ -46,13 +46,13 @@ const useGetUserTokens = (shouldRedirectToLogin = false): boolean => {
         memberId: data.memberId,
         userId: data.userId
       });
-
-      return;
     }
+  }, [data]);
 
-    // Otherwise, if shouldRedirectToLogin is true, we redirect to /login!
-    if (shouldRedirectToLogin && !urlName) push('/login');
-  }, [data, shouldRedirectToLogin, token, urlName]);
+  // useEffect(() => {
+  //   // Otherwise, if shouldRedirectToLogin is true, we redirect to /login!
+  //   if (shouldRedirectToLogin && !urlName) push('/login');
+  // }, [shouldRedirectToLogin, token, urlName]);
 
   // We say that it is loading if there is no data and no error OR the
   // fetching is still loading.

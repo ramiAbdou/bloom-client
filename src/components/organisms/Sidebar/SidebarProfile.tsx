@@ -28,7 +28,8 @@ const SidebarProfileContent: React.FC = () => {
     }
   );
 
-  const fullName: string = `${firstName} ${lastName}`;
+  const fullName: string =
+    firstName && lastName ? `${firstName} ${lastName}` : '';
 
   return (
     <div>

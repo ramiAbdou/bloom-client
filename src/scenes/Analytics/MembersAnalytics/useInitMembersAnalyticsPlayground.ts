@@ -13,10 +13,10 @@ const useInitMembersAnalyticsPlayground = (): void => {
 
   const { memberTypes, questions } = useFindOne(ICommunity, {
     fields: ['memberTypes.id', 'questions.category', 'questions.id'],
-    where: { communityId }
+    where: { id: communityId }
   });
 
-  const initialQuestionId: string = questions.find((question: IQuestion) => {
+  const initialQuestionId: string = questions?.find((question: IQuestion) => {
     const isMemberTypeAllowed: boolean =
       question.category === QuestionCategory.MEMBER_TYPE &&
       memberTypes.length >= 2;
@@ -24,7 +24,6 @@ const useInitMembersAnalyticsPlayground = (): void => {
     return (
       isMemberTypeAllowed ||
       !question.category ||
-      question.category === QuestionCategory.BIO ||
       question.category === QuestionCategory.EVENTS_ATTENDED ||
       question.category === QuestionCategory.GENDER
     );

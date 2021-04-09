@@ -29,8 +29,9 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
         memberTypes.length >= 2;
 
       return (
-        !question.category ||
         isMemberTypeAllowed ||
+        !question.category ||
+        question.category === QuestionCategory.EVENTS_ATTENDED ||
         question.category === QuestionCategory.GENDER
       );
     })
