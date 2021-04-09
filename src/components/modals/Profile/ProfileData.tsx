@@ -51,13 +51,12 @@ const ProfileDataContent: React.FC = () => {
 const ProfileData: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { loading } = useFindFull(IMemberValue, {
+  const { data } = useFindFull(IMemberValue, {
     fields: ['member.id', 'question.id', 'value'],
     where: { memberId }
   });
 
-  if (loading) return null;
-  return <ProfileDataContent />;
+  return data ? <ProfileDataContent /> : null;
 };
 
 export default ProfileData;

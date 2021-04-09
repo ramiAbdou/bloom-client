@@ -48,7 +48,7 @@ const ProfilePersonalTags: React.FC = () => {
     <Row wrap className="mb-ss--nlc" gap="xs">
       <HeaderTag show={!!role}>{role}</HeaderTag>
       <HeaderTag show={!!position}>{position}</HeaderTag>
-      <HeaderTag>{memberType.name}</HeaderTag>
+      <HeaderTag>{memberType?.name}</HeaderTag>
     </Row>
   );
 };
