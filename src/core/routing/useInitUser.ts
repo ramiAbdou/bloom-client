@@ -1,6 +1,6 @@
 import { IUser } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
-import useFindOneFull from '@gql/useFindOneFull';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import useLoader from '@organisms/Loader/useLoader';
 import { useStoreState } from '@store/Store';
 

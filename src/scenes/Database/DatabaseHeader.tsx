@@ -5,7 +5,7 @@ import Button from '@atoms/Button/Button';
 import MainHeader from '@containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
 import { IMember, MemberRole } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import useFinalPath from '@hooks/useFinalPath';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';

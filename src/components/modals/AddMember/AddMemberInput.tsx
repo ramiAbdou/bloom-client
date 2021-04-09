@@ -4,7 +4,7 @@ import { IoTrash } from 'react-icons/io5';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import { IMember, MemberRole } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import FormMultipleSelect from '@organisms/Form/FormMultipleSelect';
 import FormShortText from '@organisms/Form/FormShortText';
 import IdStore from '@store/Id.store';

@@ -1,5 +1,5 @@
 import { ApolloClient, useApolloClient } from '@apollo/client';
-import GQL from './GQL';
+import GQL from '../GQL';
 
 const useGQL = (): GQL => {
   const client: ApolloClient<unknown> = useApolloClient();

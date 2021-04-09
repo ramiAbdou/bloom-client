@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { EventPrivacy, IEvent } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';

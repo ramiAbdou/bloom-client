@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import { ICommunity, IEvent } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import FormLabel from '@organisms/Form/FormLabel';
 import StoryStore from '@organisms/Story/Story.store';
 import StoryPage from '@organisms/Story/StoryPage';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
-import useCustomQuery from '@gql/useCustomQuery';
+import useCustomQuery from '@gql/hooks/useCustomQuery';
 
 interface GetMembersGrowthResult {
   count: number;

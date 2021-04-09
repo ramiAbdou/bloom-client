@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMember, MemberStatus } from '@db/db.entities';
-import useFind from '@gql/useFind';
+import useFind from '@gql/hooks/useFind';
 import { useStoreState } from '@store/Store';
 import { SidebarLinkOptions } from './Sidebar.types';
 

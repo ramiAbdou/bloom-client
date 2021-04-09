@@ -3,7 +3,7 @@ import { IoExit, IoPerson } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
 import { ICommunity } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { PanelAction } from '@organisms/Panel/Panel.types';
 import PanelOption from '@organisms/Panel/PanelOption';
 import { useStoreState } from '@store/Store';

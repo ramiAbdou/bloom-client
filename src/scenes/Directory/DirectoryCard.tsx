@@ -3,7 +3,7 @@ import React from 'react';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Card from '@containers/Card/Card';
 import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import IdStore from '@store/Id.store';
 import { useStoreActions } from '@store/Store';

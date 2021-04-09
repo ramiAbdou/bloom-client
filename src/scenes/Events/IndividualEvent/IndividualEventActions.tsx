@@ -3,7 +3,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import { IEvent, IEventGuest, IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, PanelType } from '@util/constants';
 import { EventTiming, getEventTiming } from '../Events.util';

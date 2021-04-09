@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { IUser } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreState } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 import useIsMember from '../hooks/useIsMember';

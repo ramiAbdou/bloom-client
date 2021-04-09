@@ -3,7 +3,7 @@ import React from 'react';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import { IEvent } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import FormDate from '@organisms/Form/FormDate';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';

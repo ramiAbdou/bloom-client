@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IQuestion } from '@db/db.entities';
 import GQL from '@gql/GQL';
-import useGQL from '@gql/useGQL';
+import useGQL from '@gql/hooks/useGQL';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import ModalLocal from '@organisms/Modal/ModalLocal';
 import Table from '@organisms/Table/Table';

@@ -1,15 +1,15 @@
 import { ApolloQueryResult, DocumentNode, useQuery } from '@apollo/client';
-import { getFindOneQuery, parseFindOneQueryResult } from './findOne';
-import { FindOneArgs, QueryResult } from './gql.types';
+import { FindOneArgs, QueryResult } from '@gql/gql.types';
+import { getFindOneQuery, parseFindOneQueryResult } from '../findOne';
 
-function useFindOneFull<T>(
+function useFindOne<T>(
   entity: new () => T,
   { fields, skip, where }: FindOneArgs<T>
-): QueryResult<T> {
+): T {
   const query: DocumentNode = getFindOneQuery(entity, { fields, where });
   const result: ApolloQueryResult<unknown> = useQuery(query, { skip });
   const parsedResult: QueryResult<T> = parseFindOneQueryResult(entity, result);
-  return parsedResult;
+  return parsedResult.data;
 }
 
-export default useFindOneFull;
+export default useFindOne;

@@ -7,7 +7,7 @@ import ErrorMessage from '@atoms/ErrorMessage';
 import Separator from '@atoms/Separator';
 import Show from '@containers/Show';
 import { IMember, MemberRole } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import GoogleLogo from '@images/google.svg';
 import Form from '@organisms/Form/Form';
 import FormShortText from '@organisms/Form/FormShortText';

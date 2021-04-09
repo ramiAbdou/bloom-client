@@ -2,7 +2,7 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import { ICommunity } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';

@@ -10,7 +10,7 @@ import {
 } from 'recharts';
 
 import { ICommunity } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreState } from '@store/Store';
 import Chart from './Chart.store';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';

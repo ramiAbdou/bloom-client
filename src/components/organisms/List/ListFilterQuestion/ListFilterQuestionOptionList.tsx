@@ -2,7 +2,7 @@ import React from 'react';
 
 import Show from '@containers/Show';
 import { IMemberValue, IQuestion } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import IdStore from '@store/Id.store';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionOption from './ListFilterQuestionOption';

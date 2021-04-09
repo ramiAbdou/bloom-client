@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ICommunity, IMember, MemberStatus } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import MasonryList from '@organisms/List/MasonryList';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';

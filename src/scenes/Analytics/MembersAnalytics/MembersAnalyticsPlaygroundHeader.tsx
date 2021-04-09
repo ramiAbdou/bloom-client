@@ -3,7 +3,7 @@ import React from 'react';
 
 import Show from '@containers/Show';
 import { IMemberType, IQuestion } from '@db/db.entities';
-import useFind from '@gql/useFind';
+import useFind from '@gql/hooks/useFind';
 import Dropdown from '@molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';

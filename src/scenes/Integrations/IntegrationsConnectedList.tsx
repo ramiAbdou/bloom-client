@@ -4,7 +4,7 @@ import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import { ICommunity } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';

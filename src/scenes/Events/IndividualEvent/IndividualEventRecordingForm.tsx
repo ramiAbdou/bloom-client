@@ -2,8 +2,8 @@ import React from 'react';
 
 import { IEvent } from '@db/db.entities';
 import GQL from '@gql/GQL';
-import useFindOne from '@gql/useFindOne';
-import useGQL from '@gql/useGQL';
+import useFindOne from '@gql/hooks/useFindOne';
+import useGQL from '@gql/hooks/useGQL';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormShortText from '@organisms/Form/FormShortText';

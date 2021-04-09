@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 
 import { ICommunity } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { useStoreState } from '@store/Store';
 import { take } from '@util/util';

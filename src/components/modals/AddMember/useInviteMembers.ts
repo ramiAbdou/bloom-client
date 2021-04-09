@@ -1,4 +1,4 @@
-import useBloomMutation from '@gql/useBloomMutation';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   FormItemData,
   OnFormSubmitArgs,

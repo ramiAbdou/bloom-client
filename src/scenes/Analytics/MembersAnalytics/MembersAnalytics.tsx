@@ -3,7 +3,7 @@ import React from 'react';
 import Show from '@containers/Show';
 import { IMember } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
-import useFindFull from '@gql/useFindFull';
+import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';
 import MembersAnalyticsCharts from './MembersAnalyticsCharts';
 import MembersAnalyticsInsights from './MembersAnalyticsInsights';

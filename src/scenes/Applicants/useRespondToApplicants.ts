@@ -1,5 +1,5 @@
 import { IMember, MemberStatus } from '@db/db.entities';
-import useBloomMutation, { MutationResult } from '@gql/useBloomMutation';
+import useBloomMutation, { MutationResult } from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

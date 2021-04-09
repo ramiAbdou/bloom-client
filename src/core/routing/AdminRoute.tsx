@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, RouteProps, useParams } from 'react-router-dom';
 
 import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreState } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 

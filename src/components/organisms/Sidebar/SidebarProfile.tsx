@@ -2,7 +2,7 @@ import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
 import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';

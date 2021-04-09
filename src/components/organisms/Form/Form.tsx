@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 
 import Show from '@containers/Show';
 import GQL from '@gql/GQL';
-import useGQL from '@gql/useGQL';
+import useGQL from '@gql/hooks/useGQL';
 import StoryStore from '@organisms/Story/Story.store';
 import { useStore } from '@store/Store';
 import { cx } from '@util/util';

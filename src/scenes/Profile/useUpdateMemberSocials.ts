@@ -1,6 +1,6 @@
 import { IMemberSocials } from '@db/db.entities';
 import GQL from '@gql/GQL';
-import useGQL from '@gql/useGQL';
+import useGQL from '@gql/hooks/useGQL';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

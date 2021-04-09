@@ -4,7 +4,7 @@ import Separator from '@atoms/Separator';
 import Row from '@containers/Row/Row';
 import Show from '@containers/Show';
 import { IMemberType } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 // import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
 import Form from '@organisms/Form/Form';
 import FormCreditCard from '@organisms/Form/FormCreditCard';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMember } from '@db/db.entities';
-import useBloomMutation from '@gql/useBloomMutation';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';

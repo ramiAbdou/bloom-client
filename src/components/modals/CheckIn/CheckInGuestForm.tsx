@@ -2,7 +2,7 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import { IEvent } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormShortText from '@organisms/Form/FormShortText';

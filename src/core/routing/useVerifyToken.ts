@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 
 import { IEvent } from '@db/db.entities';
 import GQL from '@gql/GQL';
-import useBloomMutation from '@gql/useBloomMutation';
-import useGQL from '@gql/useGQL';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
+import useGQL from '@gql/hooks/useGQL';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import { useStoreActions } from '@store/Store';
 import { ModalType, VerifyEvent } from '@util/constants';

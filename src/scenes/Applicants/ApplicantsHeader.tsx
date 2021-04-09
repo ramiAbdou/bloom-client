@@ -3,7 +3,7 @@ import React from 'react';
 import MainHeader from '@containers/Main/MainHeader';
 import Row from '@containers/Row/Row';
 import { IMember, MemberStatus } from '@db/db.entities';
-import useFind from '@gql/useFind';
+import useFind from '@gql/hooks/useFind';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
 import { IMember } from '@db/db.entities';
-import useFindFull from '@gql/useFindFull';
+import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';

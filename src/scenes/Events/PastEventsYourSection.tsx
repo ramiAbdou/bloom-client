@@ -3,7 +3,7 @@ import React from 'react';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
 import { IEvent, IEventGuest } from '@db/db.entities';
-import useFind from '@gql/useFind';
+import useFind from '@gql/hooks/useFind';
 import List from '@organisms/List/List';
 import ListStore from '@organisms/List/List.store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';

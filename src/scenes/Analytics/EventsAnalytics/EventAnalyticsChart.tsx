@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Section from '@containers/Section';
-import useCustomQuery from '@gql/useCustomQuery';
+import useCustomQuery from '@gql/hooks/useCustomQuery';
 import Chart from '@organisms/Chart/Chart';
 import { ChartType } from '@organisms/Chart/Chart.types';
 import { TimeSeriesData } from '@util/constants';

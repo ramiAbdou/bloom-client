@@ -3,7 +3,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { IEvent } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import { useStoreActions } from '@store/Store';

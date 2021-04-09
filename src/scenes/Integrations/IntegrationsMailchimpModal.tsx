@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@containers/Row/Row';
-import useCustomQuery from '@gql/useCustomQuery';
+import useCustomQuery from '@gql/hooks/useCustomQuery';
 import Form from '@organisms/Form/Form';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import SubmitButton from '@organisms/Form/FormSubmitButton';

@@ -4,7 +4,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import MainContent from '@containers/Main/MainContent';
 import Show from '@containers/Show';
 import { IMember } from '@db/db.entities';
-import useFindFull from '@gql/useFindFull';
+import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';
 import AdminDatabase from './AdminDatabase/AdminDatabase';
 import DatabaseHeader from './DatabaseHeader';

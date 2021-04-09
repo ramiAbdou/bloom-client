@@ -18,7 +18,7 @@ import {
   GQLUtilityCreateResult,
   GQLUtilityUpdateArgs,
   GQLUtilityUpdateResult
-} from './GQLUtility.types';
+} from './GQLtypes';
 
 class GQL {
   client: ApolloClient<unknown>;

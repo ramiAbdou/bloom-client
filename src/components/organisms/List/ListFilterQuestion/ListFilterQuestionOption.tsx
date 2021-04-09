@@ -2,7 +2,7 @@ import React from 'react';
 
 import Checkbox from '@atoms/Checkbox/Checkbox';
 import { IMemberValue, IQuestion } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import IdStore from '@store/Id.store';
 import { ValueProps } from '@util/constants';
 import ListFilterStore from '../ListFilter/ListFilter.store';

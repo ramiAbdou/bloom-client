@@ -4,7 +4,7 @@ import React from 'react';
 import Button from '@atoms/Button/Button';
 import Row from '@containers/Row/Row';
 import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import IdStore from '@store/Id.store';
 import { useStoreActions } from '@store/Store';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import { IQuestion } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import ChartStore from './Chart.store';
 
 const ChartHeader: React.FC = () => {

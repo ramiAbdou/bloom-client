@@ -1,6 +1,6 @@
 import { Action } from 'easy-peasy';
 
-import { UseMutationArgs } from '@gql/useBloomMutation';
+import { UseMutationArgs } from '@gql/hooks/useBloomMutation';
 import { IdProps } from '@util/constants';
 
 export interface ToastOptions<S = any> extends Partial<IdProps> {

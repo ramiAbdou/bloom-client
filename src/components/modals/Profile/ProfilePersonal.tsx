@@ -3,7 +3,7 @@ import React from 'react';
 import HeaderTag from '@atoms/Tag/HeaderTag';
 import Row from '@containers/Row/Row';
 import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
 import IdStore from '@store/Id.store';

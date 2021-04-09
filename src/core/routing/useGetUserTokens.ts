@@ -2,10 +2,10 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+import { SetActiveEntitesArgs } from '@db/db.types';
+import useCustomQuery from '@gql/hooks/useCustomQuery';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
-import { SetActiveEntitesArgs } from '../db/db.types';
-import useCustomQuery from '../gql/useCustomQuery';
 
 interface GetUserTokensResult {
   communityId: string;

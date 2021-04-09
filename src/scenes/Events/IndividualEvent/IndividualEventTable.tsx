@@ -3,8 +3,8 @@ import React from 'react';
 import Section from '@containers/Section';
 import Show from '@containers/Show';
 import { IEvent, IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
-import useFindOneFull from '@gql/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,

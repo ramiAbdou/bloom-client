@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 
 import { useApolloClient } from '@apollo/client';
-import useBloomMutation from '@gql/useBloomMutation';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { MutationEvent } from '@util/constants.events';
 
 const useLogout = (): VoidFunction => {

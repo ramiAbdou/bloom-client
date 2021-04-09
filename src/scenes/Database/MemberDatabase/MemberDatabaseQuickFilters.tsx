@@ -2,7 +2,7 @@ import React from 'react';
 
 // import Row from '@containers/Row/Row';
 // import { IQuestion } from '@db/db.entities';
-// import useFindOne from '@gql/useFindOne';
+// import useFindOne from '@gql/hooks/useFindOne';
 // import { TableRow } from '@organisms/Table/Table.types';
 // import { TableFilterFunction } from '@organisms/Table/TableFilterPanel/TableFilterPanel.types';
 // import TableQuickFilter from '@organisms/Table/TableQuickFilter';

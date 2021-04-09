@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IApplication, IQuestion, IRankedQuestion } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import FormSection from '@organisms/Form/FormSection';

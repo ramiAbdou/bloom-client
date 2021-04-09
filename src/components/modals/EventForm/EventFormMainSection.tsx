@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IEvent } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import FormCoverImage from '@organisms/Form/FormCoverImage';
 import FormLargeTitle from '@organisms/Form/FormLargeTitle';
 import FormLongText from '@organisms/Form/FormLongText';

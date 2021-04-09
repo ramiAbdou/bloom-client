@@ -4,7 +4,7 @@ import React from 'react';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
 import { IEvent, IEventAttendee } from '@db/db.entities';
-import useFind from '@gql/useFind';
+import useFind from '@gql/hooks/useFind';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,

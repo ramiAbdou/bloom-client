@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { ICommunity } from '@db/db.entities';
 import { updateDocumentColors } from '@db/db.util';
 import GQL from '@gql/GQL';
-import useGQL from '@gql/useGQL';
+import useGQL from '@gql/hooks/useGQL';
 import Application from '@scenes/Application/Application';
 import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
 import { useStoreState } from '@store/Store';

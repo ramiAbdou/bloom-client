@@ -4,7 +4,7 @@ import React from 'react';
 import MainContent from '@containers/Main/MainContent';
 import { IEvent } from '@db/db.entities';
 import { QueryResult } from '@gql/gql.types';
-import useFindFull from '@gql/useFindFull';
+import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';
 import EventsHeader from './EventsHeader';
 import PastEventsSection from './PastEventsSection';

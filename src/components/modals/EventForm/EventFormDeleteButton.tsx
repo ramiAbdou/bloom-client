@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '@atoms/Button/Button';
 import { ICommunity } from '@db/db.entities';
-import useBloomMutation from '@gql/useBloomMutation';
-import useFindOne from '@gql/useFindOne';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
+import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 

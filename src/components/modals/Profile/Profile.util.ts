@@ -4,7 +4,7 @@ import {
   IEventWatch,
   IMember
 } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import IdStore from '@store/Id.store';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';

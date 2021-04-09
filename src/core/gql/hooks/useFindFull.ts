@@ -1,6 +1,6 @@
 import { ApolloQueryResult, DocumentNode, useQuery } from '@apollo/client';
-import { getFindQuery, parseFindQueryResult } from './find';
-import { FindOneArgs, QueryResult } from './gql.types';
+import { getFindQuery, parseFindQueryResult } from '../find';
+import { FindOneArgs, QueryResult } from '../gql.types';
 
 function useFindFull<T>(
   entity: new () => T,

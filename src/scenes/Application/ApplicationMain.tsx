@@ -6,7 +6,7 @@ import {
   IQuestion,
   IRankedQuestion
 } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormItem from '@organisms/Form/FormItem';

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { IMemberType } from '@db/db.entities';
-import useFind from '@gql/useFind';
-import useFindOne from '@gql/useFindOne';
+import useFind from '@gql/hooks/useFind';
+import useFindOne from '@gql/hooks/useFindOne';
 import Form from '@organisms/Form/Form';
 import FormStore from '@organisms/Form/Form.store';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';

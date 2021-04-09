@@ -5,8 +5,8 @@ import { useHistory } from 'react-router-dom';
 import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
 import Section from '@containers/Section';
 import { ICommunity, IEvent } from '@db/db.entities';
-import useFind from '@gql/useFind';
-import useFindOne from '@gql/useFindOne';
+import useFind from '@gql/hooks/useFind';
+import useFindOne from '@gql/hooks/useFindOne';
 import Table from '@organisms/Table/Table';
 import {
   TableColumn,

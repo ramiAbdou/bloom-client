@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
 import { IMember, MemberRole } from '@db/db.entities';
-import useBloomMutation from '@gql/useBloomMutation';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

@@ -9,7 +9,7 @@ import {
 import Button from '@atoms/Button/Button';
 import Show from '@containers/Show';
 import { IMemberSocials } from '@db/db.entities';
-import useFindOneFull from '@gql/useFindOneFull';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import IdStore from '@store/Id.store';
 import { SocialBrand } from '@util/constants';
 import { cx } from '@util/util';

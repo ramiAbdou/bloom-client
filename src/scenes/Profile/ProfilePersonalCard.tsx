@@ -5,7 +5,7 @@ import HeaderTag from '@atoms/Tag/HeaderTag';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import MailTo from '@molecules/MailTo';
 import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';

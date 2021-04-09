@@ -8,7 +8,7 @@ import {
   IEventGuest,
   IEventWatch
 } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { TableColumn, TableRow } from '@organisms/Table/Table.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';

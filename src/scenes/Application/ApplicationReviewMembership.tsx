@@ -3,7 +3,7 @@ import React from 'react';
 import InformationCard from '@containers/Card/InformationCard';
 import Row from '@containers/Row/Row';
 import { IMemberType, IPaymentMethod, RecurrenceType } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';
 import StoryStore from '@organisms/Story/Story.store';

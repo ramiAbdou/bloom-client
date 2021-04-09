@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import useBloomMutation, {
   MutationResultVariablesFunction
-} from '@gql/useBloomMutation';
+} from '@gql/hooks/useBloomMutation';
 import { useStoreActions } from '@store/Store';
 import { ToastOptions } from './Toast.types';
 

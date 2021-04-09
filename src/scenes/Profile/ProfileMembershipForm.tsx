@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMember, IMemberValue } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import Form from '@organisms/Form/Form';
 import { FormItemData } from '@organisms/Form/Form.types';
 import { parseValue } from '@organisms/Form/Form.util';

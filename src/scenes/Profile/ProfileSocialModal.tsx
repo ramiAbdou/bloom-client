@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMemberSocials } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import Form from '@organisms/Form/Form';
 import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
 import FormHeader from '@organisms/Form/FormHeader';

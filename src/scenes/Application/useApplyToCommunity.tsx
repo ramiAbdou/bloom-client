@@ -4,7 +4,7 @@ import {
   IPaymentMethod,
   IQuestion
 } from '@db/db.entities';
-import useBloomMutation from '@gql/useBloomMutation';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

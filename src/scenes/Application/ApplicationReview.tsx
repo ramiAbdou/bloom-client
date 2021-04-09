@@ -3,7 +3,7 @@ import { IoLockClosed } from 'react-icons/io5';
 
 import Separator from '@atoms/Separator';
 import { IMemberType } from '@db/db.entities';
-import useFind from '@gql/useFind';
+import useFind from '@gql/hooks/useFind';
 import Form from '@organisms/Form/Form';
 import FormSubmitButton from '@organisms/Form/FormSubmitButton';
 import StoryStore from '@organisms/Story/Story.store';

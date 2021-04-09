@@ -2,7 +2,7 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import { IMember, MemberRole } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import TableStore from '@organisms/Table/Table.store';
 import SearchBar from '@organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';

@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import React from 'react';
 
 import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreState } from '@store/Store';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLink from './SidebarLink';

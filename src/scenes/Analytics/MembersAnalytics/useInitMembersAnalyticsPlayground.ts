@@ -2,7 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 
 import { ICommunity, IQuestion } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';

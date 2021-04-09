@@ -3,7 +3,7 @@ import React from 'react';
 
 import GrayCard from '@containers/Card/GrayCard';
 import { IEvent } from '@db/db.entities';
-import useFind from '@gql/useFind';
+import useFind from '@gql/hooks/useFind';
 import { useStoreState } from '@store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {

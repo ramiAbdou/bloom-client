@@ -2,7 +2,7 @@ import React from 'react';
 
 import Row from '@containers/Row/Row';
 import { IEvent } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import { TableFilterFunction } from '@organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@organisms/Table/TableQuickFilter';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';

@@ -3,7 +3,7 @@ import React from 'react';
 import Card from '@containers/Card/Card';
 import Row from '@containers/Row/Row';
 import { IMember, IMemberValue, MemberStatus } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import QuestionBox from '@molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
 import IdStore from '@store/Id.store';

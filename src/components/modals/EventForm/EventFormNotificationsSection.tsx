@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMember } from '@db/db.entities';
-import useFind from '@gql/useFind';
+import useFind from '@gql/hooks/useFind';
 import FormMultipleChoice from '@organisms/Form/FormMultipleChoice';
 import FormSection from '@organisms/Form/FormSection';
 import FormSectionHeader from '@organisms/Form/FormSectionHeader';

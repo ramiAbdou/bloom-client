@@ -3,7 +3,7 @@ import { IoAdd } from 'react-icons/io5';
 
 import Row from '@containers/Row/Row';
 import { IQuestion } from '@db/db.entities';
-import useFindOne from '@gql/useFindOne';
+import useFindOne from '@gql/hooks/useFindOne';
 import IdStore from '@store/Id.store';
 import { cx } from '@util/util';
 import ListFilterStore from '../ListFilter/ListFilter.store';
