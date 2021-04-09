@@ -93,23 +93,35 @@ class GQLUtility<T> {
     where
   }: GQLUtilityFindOneArgs<T>): Promise<GQLUtilityFindOneResult<T>> {
     const argsString: string = buildArgsString({ where });
-    const fieldsString: string = buildFieldsString(fields);
-    const operationString: string = this.getEntityName();
+
+    const fieldsString: string = buildFieldsString([
+      ...(fields ?? []),
+      'id'
+    ] as string[]);
+
+    const entityName: string = this.getEntityName();
 
     const query: DocumentNode = gql`
       query FindOne${this.name.substring(1)} {
-        ${operationString} ${argsString} {
+        ${entityName} ${argsString} {
           ${fieldsString}
         }
       }
     `;
 
+    console.log(`
+    query FindOne${this.name.substring(1)} {
+      ${entityName} ${argsString} {
+        ${fieldsString}
+      }
+    }
+  `);
+
     const { data, errors } = await this.client.query({ query });
 
-    const camelCaseData: T[] = camelCaseKeys(
-      data ? data[operationString] : null,
-      { deep: true }
-    );
+    const camelCaseData: T[] = camelCaseKeys(data ? data[entityName] : null, {
+      deep: true
+    });
 
     const result: T = camelCaseData?.length ? camelCaseData[0] : null;
 
