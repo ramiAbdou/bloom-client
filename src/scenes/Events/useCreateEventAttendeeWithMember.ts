@@ -1,6 +1,5 @@
 import { IEventAttendee } from '@db/db.entities';
-import useBloomMutation from '@gql/useBloomMutation';
-import { UseMutationFnResult } from '@gql/useBloomMutation.types';
+import useBloomMutation, { UseMutationFnResult } from '@gql/useBloomMutation';
 import { MutationEvent } from '@util/constants.events';
 import { CreateEventAttendeeArgs } from './Events.types';
 

@@ -18,9 +18,10 @@ const useIsMember = (): boolean => {
     where: { id: userId }
   });
 
-  if (!members) return false;
-
-  return members.some((member: IMember) => member.community.id === communityId);
+  return (
+    !!members &&
+    members.some((member: IMember) => member.community.id === communityId)
+  );
 };
 
 export default useIsMember;

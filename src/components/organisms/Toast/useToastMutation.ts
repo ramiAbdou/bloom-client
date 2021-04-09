@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 
-import useBloomMutation from '@gql/useBloomMutation';
-import { MutationResultVariablesFunction } from '@gql/useBloomMutation.types';
+import useBloomMutation, {
+  MutationResultVariablesFunction
+} from '@gql/useBloomMutation';
 import { useStoreActions } from '@store/Store';
 import { ToastOptions } from './Toast.types';
 
