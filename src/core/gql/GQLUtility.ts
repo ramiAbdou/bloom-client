@@ -109,14 +109,6 @@ class GQLUtility<T> {
       }
     `;
 
-    console.log(`
-    query FindOne${this.name.substring(1)} {
-      ${entityName} ${argsString} {
-        ${fieldsString}
-      }
-    }
-  `);
-
     const { data, errors } = await this.client.query({ query });
 
     const camelCaseData: T[] = camelCaseKeys(data ? data[entityName] : null, {

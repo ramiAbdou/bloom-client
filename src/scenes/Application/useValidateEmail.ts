@@ -1,19 +1,11 @@
 import { IQuestion } from '@db/db.entities';
-import useManualQuery from '@gql/useManualQuery';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@organisms/Form/Form.types';
 import { QuestionCategory } from '@util/constants';
-import { QueryEvent } from '@util/constants.events';
-import { IsEmailTakenArgs } from './Application.types';
 
 const useValidateEmail = (): OnFormSubmitFunction => {
-  const [isEmailTaken] = useManualQuery<boolean, IsEmailTakenArgs>({
-    operation: QueryEvent.IS_EMAIL_TAKEN,
-    types: { communityId: { required: true }, email: { required: true } }
-  });
-
   const onSubmit = async ({
     db,
     gql,
@@ -22,7 +14,7 @@ const useValidateEmail = (): OnFormSubmitFunction => {
     setError
   }: OnFormSubmitArgs) => {
     const { data: community } = await gql.communities.findOne({
-      fields: ['questions.category', 'questions.id'],
+      fields: ['name', 'questions.category', 'questions.id'],
       where: { id: db.communityId }
     });
 
@@ -32,13 +24,15 @@ const useValidateEmail = (): OnFormSubmitFunction => {
       (question: IQuestion) => question.category === QuestionCategory.EMAIL
     ).id;
 
-    const { error } = await isEmailTaken({
-      communityId: db.communityId,
-      email: items[emailId]?.value as string
+    const email: string = items[emailId]?.value as string;
+
+    const { data: existingMember } = await gql.members.findOne({
+      fields: ['email'],
+      where: { community: { id: db.communityId }, email }
     });
 
-    if (error) {
-      setError(error);
+    if (existingMember) {
+      setError(`This email is already registered in ${community.name}.`);
       return;
     }
 

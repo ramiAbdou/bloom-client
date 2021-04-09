@@ -39,8 +39,6 @@ const CommunityRouter: React.FC = () => {
         where: { id: communityId }
       });
 
-      console.log(communityId, data);
-
       updateDocumentColors(data?.primaryColor ?? '#f58023');
     })();
   }, [communityId]);

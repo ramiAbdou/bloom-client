@@ -2,11 +2,10 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import useManualQuery from '@gql/useManualQuery';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
-import { QueryEvent } from '@util/constants.events';
 import { SetActiveEntitesArgs } from '../db/db.types';
+import useCustomQuery from '../gql/useCustomQuery';
 
 interface GetUserTokensResult {
   communityId: string;
@@ -33,38 +32,31 @@ const useGetUserTokens = (shouldRedirectToLogin = false): boolean => {
   const { urlName }: UrlNameProps = useParams();
   const { push } = useHistory();
 
-  const [getUserTokens, result] = useManualQuery<GetUserTokensResult>({
+  const { data, loading, error } = useCustomQuery<GetUserTokensResult>({
     fields: ['communityId', 'memberId', 'userId'],
-    operation: QueryEvent.GET_USER_TOKENS,
-    types: { urlName: { required: false } }
+    queryName: 'getUserTokens'
   });
 
   useEffect(() => {
-    (async () => {
-      const { data } = await getUserTokens({ urlName });
+    // If the userId is decoded from the decoded token, then set the active
+    // entities for the communities, members and users.
+    if (data?.userId) {
+      setActiveEntities({
+        communityId: data.communityId,
+        memberId: data.memberId,
+        userId: data.userId
+      });
 
-      // If the userId is decoded from the decoded token, then set the active
-      // entities for the communities, members and users.
-      if (data?.userId) {
-        setActiveEntities({
-          communityId: data.communityId,
-          memberId: data.memberId,
-          userId: data.userId
-        });
+      return;
+    }
 
-        return;
-      }
-
-      // Otherwise, if shouldRedirectToLogin is true, we redirect to /login!
-      if (shouldRedirectToLogin && !urlName) push('/login');
-    })();
-  }, [shouldRedirectToLogin, token, urlName]);
+    // Otherwise, if shouldRedirectToLogin is true, we redirect to /login!
+    if (shouldRedirectToLogin && !urlName) push('/login');
+  }, [data, shouldRedirectToLogin, token, urlName]);
 
   // We say that it is loading if there is no data and no error OR the
   // fetching is still loading.
-  const loading: boolean = (!result.data && !result.error) || result.loading;
-
-  return loading;
+  return loading || (!data && !error);
 };
 
 export default useGetUserTokens;

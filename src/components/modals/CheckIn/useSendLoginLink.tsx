@@ -1,8 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
-import { IMember, Schema } from '@db/db.entities';
+import { MemberRole } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
-import useManualQuery from '@gql/useManualQuery';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -10,7 +9,7 @@ import {
 import StoryStore from '@organisms/Story/Story.store';
 import { useStoreState } from '@store/Store';
 import { ErrorType } from '@util/constants.errors';
-import { MutationEvent, QueryEvent } from '@util/constants.events';
+import { MutationEvent } from '@util/constants.events';
 import { SendLoginLinkArgs } from './CheckIn.types';
 import { getCheckInErrorMessage } from './CheckIn.util';
 
@@ -22,20 +21,6 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
     (state) => state.setCurrentPage
   );
 
-  const [getOwner] = useManualQuery<IMember>({
-    fields: [
-      'id',
-      'email',
-      'firstName',
-      'lastName',
-      'role',
-      { community: ['id'] }
-    ],
-    operation: QueryEvent.GET_OWNER,
-    schema: Schema.MEMBER,
-    types: { communityId: { required: true } }
-  });
-
   const [sendLoginLink] = useBloomMutation<boolean, SendLoginLinkArgs>({
     operation: MutationEvent.SEND_LOGIN_LINK,
     types: {
@@ -45,7 +30,7 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
     }
   });
 
-  const onSubmit = async ({ items, setError }: OnFormSubmitArgs) => {
+  const onSubmit = async ({ gql, items, setError }: OnFormSubmitArgs) => {
     const email: string = items.EMAIL?.value as string;
 
     const { error } = await sendLoginLink({
@@ -54,11 +39,16 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
       pathname: communityId && pathname
     });
 
+    const { data: owner } = await gql.members.findOne({
+      fields: ['email', 'firstName', 'lastName'],
+      where: { community: { id: communityId }, role: MemberRole.OWNER }
+    });
+
     if (error) {
       setError(
         getCheckInErrorMessage({
           error: error as ErrorType,
-          owner: communityId ? (await getOwner({ communityId }))?.data : null
+          owner
         })
       );
 

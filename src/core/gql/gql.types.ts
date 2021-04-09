@@ -21,6 +21,12 @@ import {
 } from '@db/db.entities';
 import GQLUtility from './GQLUtility';
 
+export interface CustomQueryArgs {
+  fields: string[];
+  queryName: string;
+  skip?: boolean;
+}
+
 export interface FindOneArgs<T> {
   fields?: (keyof T | string)[];
   skip?: boolean;

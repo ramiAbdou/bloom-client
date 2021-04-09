@@ -17,7 +17,6 @@ import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/constants.errors';
 import { buildUrl } from '@util/util';
 import { getCheckInErrorMessage } from './CheckIn.util';
-import useInitCheckInError from './useInitCheckInError';
 import useSendLoginLink from './useSendLoginLink';
 
 const CheckInGoogleButton: React.FC = () => {
@@ -57,7 +56,6 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
   // We store the error code in a cookie.
   const error = Cookies.get(ErrorContext.LOGIN_ERROR) as ErrorType;
   const message = getCheckInErrorMessage({ error, owner });
-  const { loading } = useInitCheckInError();
 
   // After we get the message, we remove the cookie so that the error doesn't
   // get shown again. We set a timeout to ensure that even if the component
@@ -71,12 +69,10 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
   }, [error]);
 
   return (
-    <Show show={!loading}>
-      <div>
-        <CheckInGoogleButton />
-        <ErrorMessage marginBottom={0}>{message}</ErrorMessage>
-      </div>
-    </Show>
+    <div>
+      <CheckInGoogleButton />
+      <ErrorMessage marginBottom={0}>{message}</ErrorMessage>
+    </div>
   );
 });
 
