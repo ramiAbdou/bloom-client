@@ -35,12 +35,12 @@ const CommunityRouter: React.FC = () => {
     if (!communityId) return;
 
     (async () => {
-      const { data } = await gql.findOne(ICommunity, {
+      const { primaryColor } = await gql.findOne(ICommunity, {
         fields: ['primaryColor'],
         where: { id: communityId }
       });
 
-      updateDocumentColors(data?.primaryColor ?? '#f58023');
+      updateDocumentColors(primaryColor ?? '#f58023');
     })();
   }, [communityId]);
 

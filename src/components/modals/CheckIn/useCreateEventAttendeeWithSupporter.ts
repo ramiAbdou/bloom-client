@@ -53,12 +53,12 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
 
     if (error) setError(error);
     else {
-      const { data: event } = await gql.findOne(IEvent, {
+      const { videoUrl } = await gql.findOne(IEvent, {
         fields: ['videoUrl'],
         where: { id: db.eventId }
       });
 
-      openHref(event?.videoUrl);
+      openHref(videoUrl);
       setCurrentPage({ branchId: 'ATTENDEE_CONFIRMATION', id: 'CONFIRMATION' });
       goForward();
     }

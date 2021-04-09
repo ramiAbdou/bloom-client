@@ -13,12 +13,10 @@ const useValidateEmail = (): OnFormSubmitFunction => {
     goForward,
     setError
   }: OnFormSubmitArgs) => {
-    const { data: community } = await gql.findOne(ICommunity, {
+    const { name, questions } = await gql.findOne(ICommunity, {
       fields: ['name', 'questions.category', 'questions.id'],
       where: { id: db.communityId }
     });
-
-    const { questions } = community;
 
     const emailId: string = questions.find(
       (question: IQuestion) => question.category === QuestionCategory.EMAIL
@@ -26,13 +24,13 @@ const useValidateEmail = (): OnFormSubmitFunction => {
 
     const email: string = items[emailId]?.value as string;
 
-    const { data: existingMember } = await gql.findOne(IMember, {
+    const existingMember: IMember = await gql.findOne(IMember, {
       fields: ['email'],
       where: { community: { id: db.communityId }, email }
     });
 
     if (existingMember) {
-      setError(`This email is already registered in ${community.name}.`);
+      setError(`This email is already registered in ${name}.`);
       return;
     }
 

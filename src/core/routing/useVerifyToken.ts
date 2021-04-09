@@ -64,13 +64,13 @@ const useVerifyToken = (): boolean => {
       // If the event is VerifyEvent.JOIN_EVENT, then we need to grab the
       // videoUrl from the backend and open the browser to that.
       if (data.event === VerifyEvent.JOIN_EVENT) {
-        const { data: event } = await gql.findOne(IEvent, {
-          fields: ['id', 'videoUrl'],
+        const { videoUrl } = await gql.findOne(IEvent, {
+          fields: ['videoUrl'],
           where: { id: data.eventId }
         });
 
         // Only open the videoUrl if it's present though!
-        if (event?.videoUrl) openHref(event.videoUrl, false);
+        if (videoUrl) openHref(videoUrl, false);
       }
 
       // If the token is verified, we get rid of the token attached as a

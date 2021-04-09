@@ -11,6 +11,7 @@ import {
 } from '@apollo/client';
 import buildArgsString from './buildArgsString';
 import buildFieldsString from './buildFieldsString';
+import { getFindQuery, parseFindQueryResult } from './find';
 import { getFindOneQuery, parseFindOneQueryResult } from './findOne';
 import {
   FindOneArgs,
@@ -72,7 +73,7 @@ class GQL {
   async findOne<T>(
     entity: new () => T,
     { fields, where }: FindOneArgs<T>
-  ): Promise<QueryResult<T>> {
+  ): Promise<T> {
     const query: DocumentNode = getFindOneQuery(entity, { fields, where });
 
     const result: ApolloQueryResult<unknown> = await this.client.query({
@@ -84,7 +85,21 @@ class GQL {
       result
     );
 
-    return parsedResult;
+    return parsedResult.data;
+  }
+
+  async find<T>(
+    entity: new () => T,
+    { fields, where }: FindOneArgs<T>
+  ): Promise<T[]> {
+    const query: DocumentNode = getFindQuery(entity, { fields, where });
+
+    const result: ApolloQueryResult<unknown> = await this.client.query({
+      query
+    });
+
+    const parsedResult: QueryResult<T[]> = parseFindQueryResult(entity, result);
+    return parsedResult.data;
   }
 
   async update<T>(

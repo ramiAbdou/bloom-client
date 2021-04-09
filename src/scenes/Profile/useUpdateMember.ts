@@ -23,7 +23,7 @@ const useUpdateMember = (): OnFormSubmitFunction => {
 
     let pictureUrl: string;
 
-    const { data: member } = await gql.findOne(IMember, {
+    const member: IMember = await gql.findOne(IMember, {
       fields: ['pictureUrl'],
       where: { id: db.memberId }
     });

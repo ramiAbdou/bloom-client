@@ -18,7 +18,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
 
     let imageUrl: string;
 
-    const { data: event } = await gql.findOne(IEvent, {
+    const event: IEvent = await gql.findOne(IEvent, {
       fields: ['imageUrl'],
       where: { id: db.eventId }
     });

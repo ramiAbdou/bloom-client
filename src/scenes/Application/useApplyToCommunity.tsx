@@ -34,7 +34,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
     setError,
     storyItems
   }: OnFormSubmitArgs) => {
-    const { data: community } = await gql.findOne(ICommunity, {
+    const { questions, memberTypes, urlName } = await gql.findOne(ICommunity, {
       fields: [
         'questions.category',
         'questions.id',
@@ -44,8 +44,6 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
       ],
       where: { id: db.communityId }
     });
-
-    const { memberTypes, questions } = community;
 
     const emailId: string = questions.find(
       (question: IQuestion) => question.category === QuestionCategory.EMAIL
@@ -77,7 +75,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
       email,
       memberTypeId,
       paymentMethodId,
-      urlName: community.urlName
+      urlName
     });
 
     if (result.error) {

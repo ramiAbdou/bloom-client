@@ -39,18 +39,13 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
       pathname: communityId && pathname
     });
 
-    const { data: owner } = await gql.findOne(IMember, {
+    const owner: IMember = await gql.findOne(IMember, {
       fields: ['email', 'firstName', 'lastName'],
       where: { community: { id: communityId }, role: MemberRole.OWNER }
     });
 
     if (error) {
-      setError(
-        getCheckInErrorMessage({
-          error: error as ErrorType,
-          owner
-        })
-      );
+      setError(getCheckInErrorMessage({ error: error as ErrorType, owner }));
 
       return;
     }
