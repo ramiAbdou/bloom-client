@@ -38,7 +38,9 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   const firstName: string = member?.firstName ?? supporter?.firstName;
   const lastName: string = member?.lastName ?? supporter?.lastName;
   const pictureUrl: string = member?.pictureUrl ?? supporter?.pictureUrl;
-  const initials: string = firstName[0] + lastName[0];
+
+  const initials: string =
+    firstName && lastName ? firstName[0] + lastName[0] : '';
 
   if (pictureUrl && !imageError) {
     const onError = () => {

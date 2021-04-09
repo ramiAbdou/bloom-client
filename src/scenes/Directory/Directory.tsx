@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
+import Scene from '@containers/Scene';
 import { IMember } from '@db/db.entities';
 import { QueryResult } from '@gql/GQL.types';
 import useFindFull from '@gql/hooks/useFindFull';
@@ -31,16 +32,18 @@ const Directory: React.FC = () => {
   });
 
   return (
-    <ListStore.Provider>
-      <ListFilterStore.Provider>
-        <MainContent>
-          <DirectoryHeader loading={loading} />
-          {!loading && <DirectoryActions />}
-          {!loading && <DirectoryCardList />}
-          <PanelLocal />
-        </MainContent>
-      </ListFilterStore.Provider>
-    </ListStore.Provider>
+    <Scene>
+      <ListStore.Provider>
+        <ListFilterStore.Provider>
+          <MainContent>
+            <DirectoryHeader loading={loading} />
+            {!loading && <DirectoryActions />}
+            {!loading && <DirectoryCardList />}
+            <PanelLocal />
+          </MainContent>
+        </ListFilterStore.Provider>
+      </ListStore.Provider>
+    </Scene>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
+import Scene from '@containers/Scene';
 import { IMember } from '@db/db.entities';
 import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';
@@ -29,10 +30,12 @@ const Applicants: React.FC = () => {
   });
 
   return (
-    <MainContent>
-      <ApplicantsHeader loading={loading} />
-      {!loading && <ApplicantsCardList />}
-    </MainContent>
+    <Scene>
+      <MainContent>
+        <ApplicantsHeader loading={loading} />
+        {!loading && <ApplicantsCardList />}
+      </MainContent>
+    </Scene>
   );
 };
 

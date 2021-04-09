@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import MainContent from '@containers/Main/MainContent';
 import MainHeader from '@containers/Main/MainHeader';
+import Scene from '@containers/Scene';
 import { useStoreActions } from '@store/Store';
 import { ModalType } from '@util/constants';
 import IntegrationsConnectedList from './IntegrationsConnectedList';
@@ -18,11 +19,13 @@ const Integrations: React.FC = () => {
   }, [searchParam]);
 
   return (
-    <MainContent>
-      <MainHeader loading={false} title="Integrations" />
-      <IntegrationsConnectedList />
-      <IntegrationsDisconnectedList />
-    </MainContent>
+    <Scene>
+      <MainContent>
+        <MainHeader loading={false} title="Integrations" />
+        <IntegrationsConnectedList />
+        <IntegrationsDisconnectedList />
+      </MainContent>
+    </Scene>
   );
 };
 

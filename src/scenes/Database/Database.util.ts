@@ -63,10 +63,13 @@ export const useMemberDatabaseRows = (): TableRow[] => {
 
   const members: IMember[] = useFind(IMember, {
     fields: [
+      'bio',
       'deletedAt',
       'email',
       'eventAttendees.id',
+      'firstName',
       'joinedAt',
+      'lastName',
       'memberSocials.facebookUrl',
       'memberSocials.instagramUrl',
       'memberSocials.linkedInUrl',

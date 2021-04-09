@@ -17,7 +17,7 @@ import ToastQueue from '@organisms/Toast/Toast';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import AppProvider from './AppProvider';
-import Router from './core/routing/Router';
+import Router from './router/Router';
 
 // Extend the time-based library for entire app.
 day.extend(advancedFormat);

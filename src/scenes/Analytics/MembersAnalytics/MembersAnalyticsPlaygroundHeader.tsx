@@ -18,7 +18,7 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   });
 
   const questions: IQuestion[] = useFind(IQuestion, {
-    fields: ['category', 'rank'],
+    fields: ['category', 'rank', 'title'],
     where: { communityId }
   });
 

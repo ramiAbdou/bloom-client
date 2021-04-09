@@ -2,8 +2,9 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import MainContent from '@containers/Main/MainContent';
+import Scene from '@containers/Scene';
 import Show from '@containers/Show';
-import { IMember } from '@db/db.entities';
+import { IMember, MemberStatus } from '@db/db.entities';
 import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';
 import AdminDatabase from './AdminDatabase/AdminDatabase';
@@ -18,6 +19,7 @@ const Database: React.FC = () => {
     fields: [
       'bio',
       'community.id',
+      'deletedAt',
       'email',
       'eventAttendees.id',
       'eventAttendees.member.id',
@@ -39,21 +41,23 @@ const Database: React.FC = () => {
       'role',
       'status'
     ],
-    where: { communityId }
+    where: { communityId, status: MemberStatus.ACCEPTED }
   });
 
   return (
-    <MainContent>
-      <DatabaseHeader loading={loading} />
+    <Scene>
+      <MainContent>
+        <DatabaseHeader loading={loading} />
 
-      <Show show={!loading}>
-        <Switch>
-          <Route component={AdminDatabase} path={`${url}/admins`} />
-          <Route component={MemberDatabase} path={`${url}/members`} />
-          <Redirect to={`${url}/members`} />
-        </Switch>
-      </Show>
-    </MainContent>
+        <Show show={!loading}>
+          <Switch>
+            <Route component={AdminDatabase} path={`${url}/admins`} />
+            <Route component={MemberDatabase} path={`${url}/members`} />
+            <Redirect to={`${url}/members`} />
+          </Switch>
+        </Show>
+      </MainContent>
+    </Scene>
   );
 };
 

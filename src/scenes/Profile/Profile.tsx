@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MainContent from '@containers/Main/MainContent';
+import Scene from '@containers/Scene';
 import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
 import ProfileMembershipCard from './ProfileMembershipCard';
 import ProfilePersonalCard from './ProfilePersonalCard';
@@ -19,10 +20,12 @@ const ProfileContent: React.FC = () => (
 );
 
 const Profile: React.FC = () => (
-  <MainContent>
-    <SidebarHamburgerButton className="pt-md" />
-    <ProfileContent />
-  </MainContent>
+  <Scene>
+    <MainContent>
+      <SidebarHamburgerButton className="pt-md" />
+      <ProfileContent />
+    </MainContent>
+  </Scene>
 );
 
 export default Profile;
