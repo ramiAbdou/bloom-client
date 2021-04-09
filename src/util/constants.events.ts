@@ -1,5 +1,3 @@
-// ## GRAPHQL EVENTS - Shared between Front-End and Back-End.
-
 export enum MutationEvent {
   APPLY_TO_COMMUNITY = 'applyToCommunity',
   CREATE_EVENT = 'createEvent',

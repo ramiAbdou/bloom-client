@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import MainContent from '@containers/Main/MainContent';
 import Scene from '@containers/Scene';
@@ -13,7 +13,6 @@ import MemberDatabase from './MemberDatabase/MemberDatabase';
 
 const Database: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
-  const { url } = useRouteMatch();
 
   const { loading } = useFindFull(IMember, {
     fields: [
@@ -51,9 +50,14 @@ const Database: React.FC = () => {
 
         <Show show={!loading}>
           <Switch>
-            <Route component={AdminDatabase} path={`${url}/admins`} />
-            <Route component={MemberDatabase} path={`${url}/members`} />
-            <Redirect to={`${url}/members`} />
+            <Route component={AdminDatabase} path="/:urlName/database/admins" />
+
+            <Route
+              component={MemberDatabase}
+              path="/:urlName/database/members"
+            />
+
+            <Redirect to="/:urlName/database/members" />
           </Switch>
         </Show>
       </MainContent>

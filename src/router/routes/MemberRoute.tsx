@@ -27,6 +27,9 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   // still would not be known to us.
   const { urlName }: UrlNameProps = rest?.computedMatch?.params;
 
+  console.log('urlName', urlName);
+  console.log('rest', rest);
+
   // Find the community with the urlName that we are currently at.
   const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['community.id', 'community.primaryColor', 'role'],
@@ -42,6 +45,9 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
       member.id !== storedMemberId ||
       member.community.id !== storedCommunityId
     ) {
+      console.log('HEREEEEE', urlName);
+      console.log('HEREEEEE2', member);
+
       setActiveEntities({
         communityId: member.community.id,
         memberId: member.id
@@ -51,7 +57,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
       // colors with the community's primary color.
       updateDocumentColors(member.community.primaryColor);
     }
-  }, [member, storedCommunityId, storedMemberId]);
+  }, [member, storedCommunityId, storedMemberId, urlName]);
 
   // Just wait if the query is still loading.
   if (loading) return null;

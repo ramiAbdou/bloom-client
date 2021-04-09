@@ -15,11 +15,6 @@ import useUpdateUserId from './hooks/useUpdateUserId';
 import useVerifyToken from './hooks/useVerifyToken';
 import Login from '@scenes/Login/Login';
 
-/**
- * Core routing logic of the entire application. Nested logic should live
- * within each of the high level components. The Home route should have the
- * most nested logic within it.
- */
 const Router: React.FC = () => {
   const loading1: boolean = useUpdateUserId();
   const loading2: boolean = useVerifyToken();

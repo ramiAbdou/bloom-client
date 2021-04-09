@@ -1,6 +1,5 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { useStoreActions } from '@store/Store';
@@ -14,9 +13,7 @@ interface SidebarLinkProps extends SidebarLinkOptions, OnClickProps {}
 const SidebarLinkAction: React.FC<
   Pick<SidebarLinkProps, 'Icon' | 'onClick' | 'title'>
 > = ({ Icon, onClick, title }) => {
-  const setIsOpen: ActionCreator<boolean> = useStoreActions(
-    ({ sidebar }) => sidebar.setIsOpen
-  );
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
 
   const onUpdatedClick = (): void => {
     setIsOpen(false);
@@ -43,17 +40,13 @@ const SidebarLinkAction: React.FC<
 const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   const { Icon, onClick, to, title } = props;
 
-  const setIsOpen: ActionCreator<boolean> = useStoreActions(
-    ({ sidebar }) => sidebar.setIsOpen
-  );
+  const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
 
-  const { url } = useRouteMatch();
+  const { urlName } = useParams() as { urlName: string };
   const isActive: boolean = useTopLevelRoute() === to;
 
   // If onClick is supplied, means it is an action.
-  if (onClick) {
-    return <SidebarLinkAction {...props} />;
-  }
+  if (onClick) return <SidebarLinkAction {...props} />;
 
   const css: string = cx('f f-ac o-nav-link', {
     'o-nav-link--active': isActive
@@ -63,8 +56,10 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
     setIsOpen(false);
   };
 
+  console.log(`${urlName}/${to}`);
+
   return (
-    <Link className={css} to={`${url}/${to}`} onClick={onLinkClick}>
+    <Link className={css} to={`/${urlName}/${to}`} onClick={onLinkClick}>
       <Icon />
       {title}
       <SidebarLinkNotificationCircle to={to} />
