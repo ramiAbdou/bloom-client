@@ -1,4 +1,4 @@
-import { IQuestion } from '@db/db.entities';
+import { ICommunity, IMember, IQuestion } from '@db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -13,7 +13,7 @@ const useValidateEmail = (): OnFormSubmitFunction => {
     goForward,
     setError
   }: OnFormSubmitArgs) => {
-    const { data: community } = await gql.communities.findOne({
+    const { data: community } = await gql.findOne(ICommunity, {
       fields: ['name', 'questions.category', 'questions.id'],
       where: { id: db.communityId }
     });
@@ -26,7 +26,7 @@ const useValidateEmail = (): OnFormSubmitFunction => {
 
     const email: string = items[emailId]?.value as string;
 
-    const { data: existingMember } = await gql.members.findOne({
+    const { data: existingMember } = await gql.findOne(IMember, {
       fields: ['email'],
       where: { community: { id: db.communityId }, email }
     });

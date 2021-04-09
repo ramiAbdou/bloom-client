@@ -1,5 +1,6 @@
 import validator from 'validator';
 
+import { IMember } from '@db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -22,7 +23,7 @@ const useUpdateMember = (): OnFormSubmitFunction => {
 
     let pictureUrl: string;
 
-    const { data: member } = await gql.members.findOne({
+    const { data: member } = await gql.findOne(IMember, {
       fields: ['pictureUrl'],
       where: { id: db.memberId }
     });
@@ -40,7 +41,7 @@ const useUpdateMember = (): OnFormSubmitFunction => {
       }
     }
 
-    const { error } = await gql.members.update({
+    const { error } = await gql.update(IMember, {
       data: { bio, firstName, lastName, pictureUrl },
       where: { id: db.memberId }
     });

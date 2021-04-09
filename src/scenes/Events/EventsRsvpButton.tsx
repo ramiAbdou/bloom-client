@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
 import { IEvent, IEventGuest } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
+import GQL from '@gql/GQL';
 import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
 import useIsMember from '@hooks/useIsMember';
@@ -54,7 +54,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       return;
     }
 
-    await gql.eventGuests.create({
+    await gql.create(IEventGuest, {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       body: { eventId, memberId },

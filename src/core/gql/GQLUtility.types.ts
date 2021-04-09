@@ -12,16 +12,6 @@ export interface GQLUtilityCreateResult<T> {
   error?: string;
 }
 
-export interface GQLUtilityFindOneArgs<T> {
-  fields: string[];
-  where: RecursivePartial<T>;
-}
-
-export interface GQLUtilityFindOneResult<T> {
-  data: T;
-  error?: string;
-}
-
 export interface GQLUtilityUpdateArgs<T> {
   data: RecursivePartial<T>;
   where: RecursivePartial<T>;

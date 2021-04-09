@@ -1,7 +1,8 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import { GQL } from '@gql/gql.types';
+import { IQuestion } from '@db/db.entities';
+import GQL from '@gql/GQL';
 import useGQL from '@gql/useGQL';
 import { ModalData } from '@organisms/Modal/Modal.types';
 import ModalLocal from '@organisms/Modal/ModalLocal';
@@ -39,7 +40,7 @@ const MemberDatabase: React.FC = () => {
   }) => {
     const { title, id } = column;
 
-    const { error } = await gql.questions.update({
+    const { error } = await gql.update(IQuestion, {
       data: { title },
       where: { id }
     });

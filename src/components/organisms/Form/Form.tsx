@@ -2,7 +2,7 @@ import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
 import Show from '@containers/Show';
-import { GQL } from '@gql/gql.types';
+import GQL from '@gql/GQL';
 import useGQL from '@gql/useGQL';
 import StoryStore from '@organisms/Story/Story.store';
 import { useStore } from '@store/Store';

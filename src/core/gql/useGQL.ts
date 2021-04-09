@@ -1,54 +1,9 @@
-import { useMemo } from 'react';
-
 import { ApolloClient, useApolloClient } from '@apollo/client';
-import {
-  IApplication,
-  ICommunity,
-  ICommunityIntegrations,
-  IEvent,
-  IEventAttendee,
-  IEventGuest,
-  IEventWatch,
-  IMember,
-  IMemberIntegrations,
-  IMemberSocials,
-  IMemberType,
-  IMemberValue,
-  IPayment,
-  IQuestion,
-  IRankedQuestion,
-  ISupporter,
-  IUser
-} from '@db/db.entities';
-import { GQL } from './gql.types';
-import GQLUtility from './GQLUtility';
+import GQL from './GQL';
 
 const useGQL = (): GQL => {
-  const client: ApolloClient<any> = useApolloClient();
-
-  const gql = useMemo(() => {
-    return {
-      applications: new GQLUtility(IApplication, client),
-      communities: new GQLUtility(ICommunity, client),
-      communityIntegrations: new GQLUtility(ICommunityIntegrations, client),
-      eventAttendees: new GQLUtility(IEventAttendee, client),
-      eventGuests: new GQLUtility(IEventGuest, client),
-      eventWatches: new GQLUtility(IEventWatch, client),
-      events: new GQLUtility(IEvent, client),
-      memberIntegrations: new GQLUtility(IMemberIntegrations, client),
-      memberSocials: new GQLUtility(IMemberSocials, client),
-      memberTypes: new GQLUtility(IMemberType, client),
-      memberValues: new GQLUtility(IMemberValue, client),
-      members: new GQLUtility(IMember, client),
-      payments: new GQLUtility(IPayment, client),
-      questions: new GQLUtility(IQuestion, client),
-      rankedQuestions: new GQLUtility(IRankedQuestion, client),
-      supporters: new GQLUtility(ISupporter, client),
-      users: new GQLUtility(IUser, client)
-    };
-  }, []);
-
-  return gql;
+  const client: ApolloClient<unknown> = useApolloClient();
+  return new GQL(client);
 };
 
 export default useGQL;

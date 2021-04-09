@@ -1,4 +1,9 @@
-import { IMemberType, IPaymentMethod, IQuestion } from '@db/db.entities';
+import {
+  ICommunity,
+  IMemberType,
+  IPaymentMethod,
+  IQuestion
+} from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
@@ -29,7 +34,7 @@ const useApplyToCommunity = (): OnFormSubmitFunction => {
     setError,
     storyItems
   }: OnFormSubmitArgs) => {
-    const { data: community } = await gql.communities.findOne({
+    const { data: community } = await gql.findOne(ICommunity, {
       fields: [
         'questions.category',
         'questions.id',

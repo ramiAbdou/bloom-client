@@ -15,9 +15,9 @@ interface BuildArgsStringArgs {
  * and "_eq" operator to signify "equals". For example, if we wanted to query
  * the a member where the urlName of the community is "colorstack", we can
  * just do:
- *  - gql.members.findOne({ where: { community: { urlName: "colorstack" } } })
+ *  - gql.findOne(IMember, { where: { community: { urlName: "colorstack" } } })
  * as opposed to:
- *  - gql.members.findOne({ where: { community: { urlName: { _eq: "colorstack" } } } })
+ *  - gql.findOne(IMember, { where: { community: { urlName: { _eq: "colorstack" } } } })
  *
  * @param where - Record of arguments to lookup entity by.
  */

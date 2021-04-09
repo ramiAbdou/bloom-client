@@ -1,4 +1,5 @@
-import { GQL } from '@gql/gql.types';
+import { IMemberSocials } from '@db/db.entities';
+import GQL from '@gql/GQL';
 import useGQL from '@gql/useGQL';
 import {
   OnFormSubmitArgs,
@@ -20,7 +21,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
     const linkedInUrl: string = items.LINKED_IN_URL?.value as string;
     const twitterUrl: string = items.TWITTER_URL?.value as string;
 
-    const { error } = await gql.memberSocials.update({
+    const { error } = await gql.update(IMemberSocials, {
       data: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

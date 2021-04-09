@@ -1,4 +1,4 @@
-import { IEventGuest } from '@db/db.entities';
+import { IEvent, IEventGuest } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
@@ -53,7 +53,7 @@ const useCreateEventAttendeeWithSupporter = (): OnFormSubmitFunction => {
 
     if (error) setError(error);
     else {
-      const { data: event } = await gql.events.findOne({
+      const { data: event } = await gql.findOne(IEvent, {
         fields: ['videoUrl'],
         where: { id: db.eventId }
       });

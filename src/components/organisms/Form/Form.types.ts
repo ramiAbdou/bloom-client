@@ -2,7 +2,7 @@ import { ActionCreator, State } from 'easy-peasy';
 
 import { IPaymentMethod } from '@db/db.entities';
 import { DbModel } from '@db/db.types';
-import { GQL } from '@gql/gql.types';
+import GQL from '@gql/GQL';
 import { ToastOptions } from '@organisms/Toast/Toast.types';
 import {
   ClassNameProps,

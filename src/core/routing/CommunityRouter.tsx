@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import { ICommunity } from '@db/db.entities';
 import { updateDocumentColors } from '@db/db.util';
-import { GQL } from '@gql/gql.types';
+import GQL from '@gql/GQL';
 import useGQL from '@gql/useGQL';
 import Application from '@scenes/Application/Application';
 import IndividualEvent from '@scenes/Events/IndividualEvent/IndividualEvent';
@@ -34,7 +35,7 @@ const CommunityRouter: React.FC = () => {
     if (!communityId) return;
 
     (async () => {
-      const { data } = await gql.communities.findOne({
+      const { data } = await gql.findOne(ICommunity, {
         fields: ['primaryColor'],
         where: { id: communityId }
       });

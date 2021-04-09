@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@atoms/Button/Button';
-import { IEvent, IMember } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
+import { IEvent, IEventWatch, IMember } from '@db/db.entities';
+import GQL from '@gql/GQL';
 import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
@@ -38,7 +38,7 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   ) => {
     e.stopPropagation();
 
-    await gql.eventWatches.create({
+    await gql.create(IEventWatch, {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       data: { eventId, memberId },

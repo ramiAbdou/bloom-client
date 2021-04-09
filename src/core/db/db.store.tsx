@@ -2,17 +2,18 @@ import { action, computed } from 'easy-peasy';
 
 import { DbModel, SetActiveEntitesArgs } from './db.types';
 
-const dbStore: DbModel = {
-  communityId: null,
+const dbActiveIds: Pick<
+  DbModel,
+  'communityId' | 'eventId' | 'memberId' | 'userId'
+> = { communityId: null, eventId: null, memberId: null, userId: null };
 
-  eventId: null,
+const dbStore: DbModel = {
+  ...dbActiveIds,
 
   isAuthenticated: computed(
     ({ communityId, memberId, userId }) =>
       !!communityId && !!memberId && !!userId
   ),
-
-  memberId: null,
 
   setActiveEntities: action(
     (
@@ -27,9 +28,7 @@ const dbStore: DbModel = {
         userId: userId ?? state.userId
       };
     }
-  ),
-
-  userId: null
+  )
 };
 
 export default dbStore;

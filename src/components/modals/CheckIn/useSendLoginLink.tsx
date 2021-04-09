@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-import { MemberRole } from '@db/db.entities';
+import { IMember, MemberRole } from '@db/db.entities';
 import useBloomMutation from '@gql/useBloomMutation';
 import {
   OnFormSubmitArgs,
@@ -39,7 +39,7 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
       pathname: communityId && pathname
     });
 
-    const { data: owner } = await gql.members.findOne({
+    const { data: owner } = await gql.findOne(IMember, {
       fields: ['email', 'firstName', 'lastName'],
       where: { community: { id: communityId }, role: MemberRole.OWNER }
     });

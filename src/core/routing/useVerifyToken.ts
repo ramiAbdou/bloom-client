@@ -2,7 +2,8 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { GQL } from '@gql/gql.types';
+import { IEvent } from '@db/db.entities';
+import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/useBloomMutation';
 import useGQL from '@gql/useGQL';
 import { ModalData } from '@organisms/Modal/Modal.types';
@@ -63,7 +64,7 @@ const useVerifyToken = (): boolean => {
       // If the event is VerifyEvent.JOIN_EVENT, then we need to grab the
       // videoUrl from the backend and open the browser to that.
       if (data.event === VerifyEvent.JOIN_EVENT) {
-        const { data: event } = await gql.events.findOne({
+        const { data: event } = await gql.findOne(IEvent, {
           fields: ['id', 'videoUrl'],
           where: { id: data.eventId }
         });

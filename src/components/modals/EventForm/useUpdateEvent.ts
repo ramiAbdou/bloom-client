@@ -1,4 +1,4 @@
-import { EventPrivacy } from '@db/db.entities';
+import { EventPrivacy, IEvent } from '@db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
@@ -18,7 +18,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
 
     let imageUrl: string;
 
-    const { data: event } = await gql.events.findOne({
+    const { data: event } = await gql.findOne(IEvent, {
       fields: ['imageUrl'],
       where: { id: db.eventId }
     });
@@ -36,7 +36,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
       }
     }
 
-    const { error } = await gql.events.update({
+    const { error } = await gql.update(IEvent, {
       data: {
         description: items.EVENT_DESCRIPTION?.value as string,
         imageUrl,

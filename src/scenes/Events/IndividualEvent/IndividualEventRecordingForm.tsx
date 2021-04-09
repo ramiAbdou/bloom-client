@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IEvent } from '@db/db.entities';
-import { GQL } from '@gql/gql.types';
+import GQL from '@gql/GQL';
 import useFindOne from '@gql/useFindOne';
 import useGQL from '@gql/useGQL';
 import Form from '@organisms/Form/Form';
@@ -25,7 +25,7 @@ const IndividualEventRecordingForm: React.FC = () => {
     setError,
     showToast
   }: OnFormSubmitArgs) => {
-    const { error } = await gql.events.update({
+    const { error } = await gql.update(IEvent, {
       data: { recordingUrl: items.RECORDING_URL?.value as string },
       where: { id: eventId }
     });
