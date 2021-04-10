@@ -1,26 +1,20 @@
-import camelCaseKeys from 'camelcase-keys';
-import { snakeCase } from 'change-case';
-import day from 'dayjs';
-import { nanoid } from 'nanoid';
-
 import {
   ApolloClient,
   ApolloQueryResult,
   DocumentNode,
-  gql
+  FetchResult
 } from '@apollo/client';
-import buildArgsString from './buildArgsString';
-import buildFieldsString from './buildFieldsString';
-import { getFindQuery, parseFindQueryResult } from './find';
-import { getFindOneQuery, parseFindOneQueryResult } from './findOne';
 import {
+  CreateArgs,
   FindOneArgs,
-  GQLUtilityCreateArgs,
-  GQLUtilityCreateResult,
-  GQLUtilityUpdateArgs,
-  GQLUtilityUpdateResult,
-  QueryResult
+  MutationResult,
+  QueryResult,
+  UpdateArgs
 } from './GQL.types';
+import { getCreateMutation, parseCreateResult } from './repo/create';
+import { getFindQuery, parseFindQueryResult } from './repo/find';
+import { getFindOneQuery, parseFindOneQueryResult } from './repo/findOne';
+import { getUpdateMutation, parseUpdateResult } from './repo/update';
 
 class GQL {
   client: ApolloClient<unknown>;
@@ -31,43 +25,12 @@ class GQL {
 
   async create<T>(
     entity: new () => T,
-    { data, fields }: GQLUtilityCreateArgs<T>
-  ): Promise<GQLUtilityCreateResult<T>> {
-    const object = {
-      ...data,
-      createdAt: day.utc().format(),
-      id: nanoid(),
-      updatedAt: day.utc().format()
-    };
-
-    const argsString: string = buildArgsString({ object });
-    const fieldsString: string = buildFieldsString(fields);
-
-    const operationString: string = snakeCase(`insert__one`);
-    // const operationString: string = snakeCase(
-    //   `insert_${this.getEntityName()}_one`
-    // );
-
-    const mutation: DocumentNode = gql`
-        mutation Create${entity.name.substring(1)} {
-          ${operationString} ${argsString} {
-            id
-            ${fieldsString}
-          }
-        }
-      `;
-
-    const response = await this.client.mutate({ mutation });
-
-    const result: T = camelCaseKeys(
-      response.data ? response.data[operationString] : null,
-      { deep: true }
-    );
-
-    return {
-      data: result,
-      error: response.errors?.length && response.errors[0]?.message
-    };
+    { data, fields }: CreateArgs<T>
+  ): Promise<MutationResult<T>> {
+    const mutation: DocumentNode = getCreateMutation(entity, { data, fields });
+    const result: FetchResult<unknown> = await this.client.mutate({ mutation });
+    const parsedResult: MutationResult<T> = parseCreateResult(entity, result);
+    return parsedResult;
   }
 
   async findOne<T>(
@@ -104,39 +67,12 @@ class GQL {
 
   async update<T>(
     entity: new () => T,
-    { data, where }: GQLUtilityUpdateArgs<T>
-  ): Promise<GQLUtilityUpdateResult<T>> {
-    const set = { ...data, updatedAt: day.utc().format() };
-
-    const argsString: string = buildArgsString({ set, where });
-    const fieldsString: string = buildFieldsString(Object.keys(set));
-    const operationString: string = snakeCase(`update_`);
-    // const operationString: string = snakeCase(`update_${this.getEntityName()}`);
-
-    const mutation: DocumentNode = gql`
-      mutation Update${entity.name.substring(1)} {
-        ${operationString} ${argsString} {
-          returning {
-            id
-            ${fieldsString}
-          }
-        }
-      }
-    `;
-
-    const response = await this.client.mutate({ mutation });
-
-    const camelCaseData: T[] = camelCaseKeys(
-      response.data ? response.data[operationString]?.returning : null,
-      { deep: true }
-    );
-
-    const result: T = camelCaseData?.length ? camelCaseData[0] : null;
-
-    return {
-      data: result,
-      error: response.errors?.length && response.errors[0]?.message
-    };
+    { data, where }: UpdateArgs<T>
+  ): Promise<MutationResult<T>> {
+    const mutation: DocumentNode = getUpdateMutation(entity, { data, where });
+    const result: FetchResult<unknown> = await this.client.mutate({ mutation });
+    const parsedResult: MutationResult<T> = parseUpdateResult(entity, result);
+    return parsedResult;
   }
 }
 

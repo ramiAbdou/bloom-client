@@ -1,3 +1,10 @@
+export enum GQLOperation {
+  CREATE = 'Create',
+  FIND = 'Find',
+  FIND_ONE = 'FindOne',
+  UPDATE = 'Update'
+}
+
 export interface CustomQueryArgs {
   fields: string[];
   queryName: string;
@@ -16,28 +23,21 @@ export interface QueryResult<T = unknown> {
   loading: boolean;
 }
 
-export type QueryOperator = '_eq' | '_lt' | '_gt';
-
 type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
-export interface GQLUtilityCreateArgs<T> {
+export interface CreateArgs<T> {
   data: RecursivePartial<T>;
   fields: string[];
 }
 
-export interface GQLUtilityCreateResult<T> {
-  data: T;
-  error?: string;
-}
-
-export interface GQLUtilityUpdateArgs<T> {
+export interface UpdateArgs<T> {
   data: RecursivePartial<T>;
   where: RecursivePartial<T>;
 }
 
-export interface GQLUtilityUpdateResult<T> {
+export interface MutationResult<T = unknown> {
   data: T;
-  error?: string;
+  error: string;
 }

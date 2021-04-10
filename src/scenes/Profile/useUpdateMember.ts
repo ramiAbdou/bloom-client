@@ -1,10 +1,10 @@
 import validator from 'validator';
 
-import { IMember } from '@core/db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { IMember } from '@core/db/db.entities';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateMember = (): OnFormSubmitFunction => {

@@ -1,8 +1,8 @@
-import { EventPrivacy, IEvent } from '@core/db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import { EventPrivacy, IEvent } from '@core/db/db.entities';
 import { uploadImage } from '@util/imageUtil';
 
 const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {

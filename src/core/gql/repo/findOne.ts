@@ -3,9 +3,9 @@ import { snakeCase } from 'change-case';
 import pluralize from 'pluralize';
 
 import { ApolloQueryResult, DocumentNode, gql } from '@apollo/client';
-import buildArgsString from './buildArgsString';
-import buildFieldsString from './buildFieldsString';
-import { FindOneArgs, QueryResult } from './GQL.types';
+import buildArgsString from '../buildArgsString';
+import buildFieldsString from '../buildFieldsString';
+import { FindOneArgs, QueryResult } from '../GQL.types';
 
 export function getFindOneQuery<T>(
   entity: new () => T,
