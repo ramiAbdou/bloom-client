@@ -7,12 +7,12 @@ import FormSection from '@components/organisms/Form/FormSection';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import { IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 
 const EventFormMainSection: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['description', 'imageUrl', 'summary', 'title'],
     where: { id: eventId }
   });

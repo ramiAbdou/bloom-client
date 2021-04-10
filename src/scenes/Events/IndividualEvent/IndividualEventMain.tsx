@@ -3,7 +3,7 @@ import React from 'react';
 
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import useIsMember from '@hooks/useIsMember';
 import IndividualEventActions from './IndividualEventActions';
@@ -11,7 +11,7 @@ import IndividualEventActions from './IndividualEventActions';
 const IndividualEventMainHeaderContainer: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
     where: { id: eventId }
   });
@@ -34,7 +34,7 @@ const IndividualEventMain: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
   const isMember: boolean = useIsMember();
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['community.id', 'community.name', 'privacy', 'summary', 'title'],
     where: { id: eventId }
   });

@@ -5,7 +5,7 @@ import Table from '@components/organisms/Table/Table';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
 import { QuestionType } from '@util/constants';
@@ -25,7 +25,7 @@ const AdminDatabase: React.FC = () => {
     return { email, firstName, id: member.id, lastName };
   }, []);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });

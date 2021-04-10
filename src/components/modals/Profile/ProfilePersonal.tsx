@@ -6,7 +6,7 @@ import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import ProfileSocialContainer from './ProfileSocial';
 
 const ProfilePersonalPicture: React.FC = () => {
@@ -25,7 +25,7 @@ const ProfilePersonalPicture: React.FC = () => {
 const ProfilePersonalName: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['firstName', 'lastName'],
     where: { id: memberId }
   });
@@ -40,7 +40,7 @@ const ProfilePersonalName: React.FC = () => {
 const ProfilePersonalTags: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['memberType.id', 'memberType.name', 'position', 'role'],
     where: { id: memberId }
   });
@@ -59,7 +59,7 @@ const ProfilePersonalTags: React.FC = () => {
 const ProfilePersonalEmail: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['email'],
     where: { id: memberId }
   });
@@ -72,7 +72,7 @@ const ProfilePersonalEmail: React.FC = () => {
 const ProfilePersonalBio: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['bio'],
     where: { id: memberId }
   });

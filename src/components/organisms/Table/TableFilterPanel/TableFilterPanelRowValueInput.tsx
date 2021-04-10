@@ -5,7 +5,7 @@ import Input from '@components/atoms/Input/Input';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import { IQuestion } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
 import TableFilterStore from './TableFilterPanel.store';
 import { TableFilterArgs } from './TableFilterPanel.types';
@@ -27,7 +27,7 @@ const TableFilterPanelRowValueInput: React.FC = () => {
     Partial<TableFilterArgs>
   > = TableFilterStore.useStoreActions((state) => state.setFilter);
 
-  const { data: question, loading } = useFindOneFull(IQuestion, {
+  const { data: question, loading } = useFindOne(IQuestion, {
     fields: ['options', 'type'],
     where: { id: columnId }
   });

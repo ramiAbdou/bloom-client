@@ -4,7 +4,7 @@ import Row from '@components/containers/Row/Row';
 import { TableFilterFunction } from '@components/organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
 import { IEvent } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
@@ -12,7 +12,7 @@ import { IndividualEventTableRowProps } from './IndividualEvent.types';
 const IndividualEventViewedFilter: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['recordingUrl'],
     where: { id: eventId }
   });
@@ -42,7 +42,7 @@ const IndividualEventRsvpFilter: React.FC = () => {
 const IndividualEventJoinedFilter: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
     where: { id: eventId }
   });
@@ -61,7 +61,7 @@ const IndividualEventJoinedFilter: React.FC = () => {
 const IndividualEventNoShowFilter: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
     where: { id: eventId }
   });

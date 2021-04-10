@@ -9,7 +9,7 @@ import StoryPage from '@components/organisms/Story/StoryPage';
 import { IMemberType } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentForm from './ApplicationPaymentSection';
@@ -21,7 +21,7 @@ const ApplicationChooseTypeButton: React.FC = () => {
 
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const isPaidMembershipSelected: boolean = !!useFindOneFull(IMemberType, {
+  const isPaidMembershipSelected: boolean = !!useFindOne(IMemberType, {
     where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   })?.data;
 

@@ -3,7 +3,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { ToastOptions } from '@components/organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
@@ -29,7 +29,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
 
   const isMember: boolean = useIsMember();
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: [
       'endTime',
       'eventGuests.deletedAt',

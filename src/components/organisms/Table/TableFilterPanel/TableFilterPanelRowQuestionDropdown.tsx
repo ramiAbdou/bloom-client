@@ -5,7 +5,7 @@ import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import { ICommunity, IQuestion } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 import TableFilterStore from './TableFilterPanel.store';
@@ -29,7 +29,7 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
     Partial<TableFilterArgs>
   > = TableFilterStore.useStoreActions((state) => state.setFilter);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['memberTypes.id', 'questions.category', 'questions.id'],
     where: { communityId }
   });

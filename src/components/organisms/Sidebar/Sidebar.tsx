@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Separator from '@components/atoms/Separator';
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import SidebarAdminSection from './SidebarAdminSection';
 import SidebarBackground from './SidebarBackground';
@@ -18,7 +18,7 @@ import SidebarQuickActionsSection from './SidebarQuickActionsSection';
 const SidebarCommunityName: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['name'],
     where: { id: communityId }
   });

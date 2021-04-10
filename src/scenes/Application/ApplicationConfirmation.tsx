@@ -5,12 +5,12 @@ import StoryConfirmation from '@components/organisms/Story/StoryConfirmation';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 
 const ApplicationConfirmationMessage: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['name'],
     where: { id: communityId }
   });
@@ -32,7 +32,7 @@ const ApplicationConfirmationMessage: React.FC = () => {
 const ApplicationConfirmation: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['memberTypes.id', 'questions.id'],
     where: { id: communityId }
   });

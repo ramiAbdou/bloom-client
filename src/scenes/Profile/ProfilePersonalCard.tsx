@@ -7,7 +7,7 @@ import Row from '@components/containers/Row/Row';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { IMember } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
@@ -17,7 +17,7 @@ const ProfilePersonalHeader: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['firstName', 'lastName'],
     where: { id: memberId }
   });
@@ -38,7 +38,7 @@ const ProfilePersonalHeader: React.FC = () => {
 const ProfilePersonalTagList: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role', 'memberType.id', 'memberType.name'],
     where: { id: memberId }
   });
@@ -56,7 +56,7 @@ const ProfilePersonalTagList: React.FC = () => {
 const ProfilePersonalEmail: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['email'],
     where: { id: memberId }
   });
@@ -68,7 +68,7 @@ const ProfilePersonalEmail: React.FC = () => {
 const ProfilePersonalBio: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: member } = useFindOneFull(IMember, {
+  const { data: member } = useFindOne(IMember, {
     fields: ['bio'],
     where: { id: memberId }
   });
@@ -80,7 +80,7 @@ const ProfilePersonalOnboardingContainer: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['bio', 'pictureUrl'],
     where: { id: memberId }
   });

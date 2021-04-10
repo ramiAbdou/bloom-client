@@ -4,7 +4,7 @@ import Show from '@components/containers/Show';
 import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
@@ -12,7 +12,7 @@ import ProfilePersonal from './ProfilePersonal';
 const Profile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['bio', 'email', 'id', 'joinedAt', 'position'],
     skip: !memberId,
     where: { id: memberId }

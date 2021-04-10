@@ -8,7 +8,7 @@ import FormShortText from '@components/organisms/Form/FormShortText';
 import { IMember, MemberRole } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import AddMemberStore from './AddMember.store';
 
@@ -34,7 +34,7 @@ const AddMemberInput: React.FC = () => {
   const id: string = IdStore.useStoreState((state) => state.id);
   const admin = AddMemberStore.useStoreState((state) => state.admin);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });

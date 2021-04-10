@@ -9,7 +9,7 @@ import FormShortText from '@components/organisms/Form/FormShortText';
 import FormTime from '@components/organisms/Form/FormTime';
 import { IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { ShowProps } from '@util/constants';
 
 const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
@@ -29,7 +29,7 @@ const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
 const EventFormDetailsSection: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['videoUrl'],
     where: { id: eventId }
   });

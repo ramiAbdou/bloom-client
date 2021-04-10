@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { IEvent, IEventWatch, IMember } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
@@ -20,12 +20,12 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   const gql: GQL = useGQL();
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: member, loading: loading1 } = useFindOneFull(IMember, {
+  const { data: member, loading: loading1 } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  const { data: event, loading: loading2 } = useFindOneFull(IEvent, {
+  const { data: event, loading: loading2 } = useFindOne(IEvent, {
     fields: ['endTime', 'recordingUrl', 'startTime'],
     where: { id: eventId }
   });

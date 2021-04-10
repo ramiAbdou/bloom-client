@@ -5,7 +5,7 @@ import TableStore from '@components/organisms/Table/Table.store';
 import { IMember, MemberRole } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
@@ -25,7 +25,7 @@ const useDeleteTooltip = (): string => {
     where: { id: { _in: selectedRowIds } }
   });
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });

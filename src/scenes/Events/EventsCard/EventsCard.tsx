@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import Card from '@components/containers/Card/Card';
 import { IEvent } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import IdStore from '@core/store/Id.store';
 import { IdProps } from '@util/constants';
 import { cx, take } from '@util/util';
@@ -32,7 +32,7 @@ const EventsCardButton: React.FC = () => {
 const EventsCardContent: React.FC = () => {
   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime', 'title'],
     where: { id: eventId }
   });
@@ -75,7 +75,7 @@ const EventsCard: React.FC<IdProps> = ({ id: eventId }) => {
   const { push } = useHistory();
   const onClick = () => push(eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['imageUrl'],
     where: { id: eventId }
   });

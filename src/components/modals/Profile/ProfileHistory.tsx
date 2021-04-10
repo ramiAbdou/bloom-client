@@ -6,7 +6,7 @@ import Show from '@components/containers/Show';
 import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { MemberHistoryData } from './Profile.types';
 import { useMemberHistory } from './Profile.util';
 import ProfileHistoryEvent from './ProfileHistoryEvent';
@@ -26,7 +26,7 @@ const ProfileHistoryEventList: React.FC = () => {
 const ProfileHistoryContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { loading } = useFindOneFull(IMember, {
+  const { loading } = useFindOne(IMember, {
     fields: [
       'eventAttendees.createdAt',
       'eventAttendees.event.id',
@@ -92,7 +92,7 @@ const ProfileHistory: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
   const authenticatedMemberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: authenticatedMemberId }
   });

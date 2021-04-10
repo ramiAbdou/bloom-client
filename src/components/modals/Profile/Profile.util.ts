@@ -5,14 +5,14 @@ import {
   IMember
 } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
 
 export const useMemberHistory = (): MemberHistoryData[] => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: [
       'community.id',
       'community.name',

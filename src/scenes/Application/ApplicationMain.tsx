@@ -7,7 +7,7 @@ import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { IApplication, IQuestion, IRankedQuestion } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';
@@ -26,7 +26,7 @@ const ApplicationMainForm: React.FC = () => {
   const applyForMembership: OnFormSubmitFunction = useApplyToCommunity();
   const validateEmail: OnFormSubmitFunction = useValidateEmail();
 
-  const { data: application, loading } = useFindOneFull(IApplication, {
+  const { data: application, loading } = useFindOne(IApplication, {
     fields: [
       'rankedQuestions.id',
       'rankedQuestions.question.category',
@@ -70,7 +70,7 @@ const ApplicationMainForm: React.FC = () => {
 const ApplicationMain: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: application, loading } = useFindOneFull(IApplication, {
+  const { data: application, loading } = useFindOne(IApplication, {
     fields: ['community.id', 'community.logoUrl', 'description', 'title'],
     where: { communityId }
   });

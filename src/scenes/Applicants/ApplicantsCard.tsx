@@ -6,7 +6,7 @@ import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import { IMember, IMemberValue, MemberStatus } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { IdProps, QuestionCategory } from '@util/constants';
 import ApplicantsCardHeader from './ApplicantsCardHeader';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
@@ -32,7 +32,7 @@ const ApplicantsCardActions: React.FC = () => {
 const ApplicantsCardItems: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: [
       'memberValues.id',
       'memberValues.question.category',

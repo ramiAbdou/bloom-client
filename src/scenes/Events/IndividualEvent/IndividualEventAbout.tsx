@@ -2,13 +2,13 @@ import React from 'react';
 
 import Card from '@components/containers/Card/Card';
 import { IEvent } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 
 const IndividualEventAbout: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['description'],
     where: { id: eventId }
   });

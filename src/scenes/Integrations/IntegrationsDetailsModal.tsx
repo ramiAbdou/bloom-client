@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { ICommunityIntegrations } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { QuestionType } from '@util/constants';
 
@@ -19,7 +19,7 @@ const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
   //   ({ db }) => db.communityIntegrations.mailchimpListName
   // );
 
-  const { data: communityIntegrations, loading } = useFindOneFull(
+  const { data: communityIntegrations, loading } = useFindOne(
     ICommunityIntegrations,
     {
       fields: ['mailchimpListId', 'stripeAccountId'],

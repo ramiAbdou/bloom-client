@@ -2,7 +2,7 @@ import React from 'react';
 
 import MasonryList from '@components/organisms/List/MasonryList';
 import { ICommunity, IMember, MemberStatus } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { sortObjects } from '@util/util';
 import { prepareMemberForFilter } from './Directory.util';
@@ -11,7 +11,7 @@ import DirectoryCard from './DirectoryCard';
 const DirectoryCardList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: [
       'id',
       'members.id',

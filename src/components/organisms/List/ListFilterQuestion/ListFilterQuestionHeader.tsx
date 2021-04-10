@@ -4,7 +4,7 @@ import { IoAdd } from 'react-icons/io5';
 import Row from '@components/containers/Row/Row';
 import { IQuestion } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { cx } from '@util/util';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';
@@ -20,7 +20,7 @@ const ListFilterQuestionHeader: React.FC = () => {
     (state) => !!state.values?.length
   );
 
-  const { data: question, loading } = useFindOneFull(IQuestion, {
+  const { data: question, loading } = useFindOne(IQuestion, {
     fields: ['title'],
     where: { id: questionId }
   });

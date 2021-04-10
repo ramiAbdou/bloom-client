@@ -7,7 +7,7 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormItem from '@components/organisms/Form/FormItem';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMember, IMemberValue } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import useUpdateMemberValues from './useUpdateMemberValues';
@@ -16,7 +16,7 @@ const ProfileMembershipForm: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const updateMemberValues = useUpdateMemberValues();
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: [
       'memberValues.id',
       'memberValues.question.category',

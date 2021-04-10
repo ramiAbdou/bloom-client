@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IMember } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { SidebarLinkOptions } from './Sidebar.types';
 import SidebarLink from './SidebarLink';
 
@@ -18,7 +18,7 @@ const SidebarSection: React.FC<LinkSectionProps> = ({
 }: LinkSectionProps) => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });

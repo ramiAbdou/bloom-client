@@ -10,7 +10,7 @@ import {
   IPaymentMethod,
   RecurrenceType
 } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { take } from '@util/util';
 
@@ -29,7 +29,7 @@ const ApplicationReviewMembership: React.FC = () => {
     ({ items }) => (items.CREDIT_OR_DEBIT_CARD?.value ?? {}) as IPaymentMethod
   );
 
-  const { data: memberType, loading } = useFindOneFull(IMemberType, {
+  const { data: memberType, loading } = useFindOne(IMemberType, {
     where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   });
 

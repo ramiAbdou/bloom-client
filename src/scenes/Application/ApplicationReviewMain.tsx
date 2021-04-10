@@ -6,14 +6,14 @@ import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import StoryStore from '@components/organisms/Story/Story.store';
 import { IApplication, IQuestion, IRankedQuestion } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { sortObjects } from '@util/util';
 
 const ApplicationReviewMain: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: application } = useFindOneFull(IApplication, {
+  const { data: application } = useFindOne(IApplication, {
     fields: [
       'rankedQuestions.id',
       'rankedQuestions.question.category',

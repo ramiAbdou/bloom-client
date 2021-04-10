@@ -10,7 +10,7 @@ import Button from '@components/atoms/Button/Button';
 import Show from '@components/containers/Show';
 import IdStore from '@core/store/Id.store';
 import { IMemberSocials } from '@core/db/db.entities';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { SocialBrand } from '@util/constants';
 import { cx } from '@util/util';
 
@@ -47,7 +47,7 @@ const ProfileSocialButton: React.FC<ProfileSocialButtonProps> = ({
 const ProfileSocialContainer: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { data, loading } = useFindOneFull(IMemberSocials, {
+  const { data, loading } = useFindOne(IMemberSocials, {
     fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
     where: { memberId }
   });

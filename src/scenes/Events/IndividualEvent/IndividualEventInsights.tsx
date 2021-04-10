@@ -6,14 +6,14 @@ import Row from '@components/containers/Row/Row';
 import Section from '@components/containers/Section';
 import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
 import { IEvent, IMember } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'eventAttendees.id', 'startTime'],
     where: { id: eventId }
   });
@@ -35,7 +35,7 @@ const IndividualEventInsightsAttendeesCard: React.FC = () => {
 const IndividualEventInsightsGuestsCard: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'startTime'],
     where: { id: eventId }
   });
@@ -49,7 +49,7 @@ const IndividualEventInsightsGuestsCard: React.FC = () => {
 const IndividualEventInsightsWatchesCard: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['eventWatches.id', 'recordingUrl'],
     where: { id: eventId }
   });
@@ -70,7 +70,7 @@ const IndividualEventInsightsWatchesCard: React.FC = () => {
 const IndividualEventInsights: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });

@@ -15,7 +15,7 @@ import TableSearchBar from '@components/organisms/Table/TableSeachBar';
 import { ICommunity, IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
@@ -33,7 +33,7 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
     where: { communityId, endTime: { _lt: day.utc().format() } }
   });
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });

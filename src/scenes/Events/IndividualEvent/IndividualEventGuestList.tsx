@@ -8,7 +8,7 @@ import List from '@components/organisms/List/List';
 import ListStore from '@components/organisms/List/List.store';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { IEvent, IEventGuest } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useIsMember from '@hooks/useIsMember';
 import { IdProps, ModalType } from '@util/constants';
@@ -22,7 +22,7 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
     ({ modal }) => modal.showModal
   );
 
-  const { data: eventGuest, loading } = useFindOneFull(IEventGuest, {
+  const { data: eventGuest, loading } = useFindOne(IEventGuest, {
     fields: [
       'member.firstName',
       'member.id',
@@ -71,7 +71,7 @@ const IndividualEventGuest: React.FC<IdProps> = ({ id: guestId }) => {
 const IndividualEventGuestListContent: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['eventGuests.createdAt', 'eventGuests.id'],
     where: { id: eventId }
   });
@@ -100,7 +100,7 @@ const IndividualEventGuestListContent: React.FC = () => {
 const IndividualEventGuestList: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'startTime'],
     where: { id: eventId }
   });

@@ -6,7 +6,7 @@ import { PanelAction } from '@components/organisms/Panel/Panel.types';
 import PanelOption from '@components/organisms/Panel/PanelOption';
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import useLogout from './useLogout';
 
 const SidebarPanel: React.FC = () => {
@@ -15,7 +15,7 @@ const SidebarPanel: React.FC = () => {
   const { push } = useHistory();
   const logout = useLogout();
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });

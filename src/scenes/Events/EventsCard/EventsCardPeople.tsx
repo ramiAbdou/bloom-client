@@ -3,7 +3,7 @@ import React from 'react';
 import Row from '@components/containers/Row/Row';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { IEvent, IEventAttendee, IEventGuest } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import IdStore from '@core/store/Id.store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 
@@ -34,7 +34,7 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
 const EventsCardPeople: React.FC = () => {
   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: [
       'endTime',
       'eventAttendees.id',

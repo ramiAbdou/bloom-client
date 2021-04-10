@@ -7,7 +7,7 @@ import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { ICommunity, IMember, IMemberValue } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
 import useFindFull from '@gql/hooks/useFindFull';
@@ -18,7 +18,7 @@ const ProfileMembershipHeader: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['name'],
     where: { id: communityId }
   });
@@ -83,7 +83,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
     ({ modal }) => modal.showModal
   );
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['memberValues.id'],
     where: { memberId }
   });

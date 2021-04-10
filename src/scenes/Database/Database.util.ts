@@ -7,7 +7,7 @@ import {
   IQuestion,
   MemberStatus
 } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
 import { QuestionCategory } from '@util/constants';
@@ -86,7 +86,7 @@ export const useMemberDatabaseRows = (): TableRow[] => {
     where: { communityId, status: MemberStatus.ACCEPTED }
   });
 
-  const { data: question, loading } = useFindOneFull(IQuestion, {
+  const { data: question, loading } = useFindOne(IQuestion, {
     where: { category: QuestionCategory.JOINED_AT, communityId }
   });
 

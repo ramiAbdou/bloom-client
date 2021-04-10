@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { IQuestion } from '@core/db/db.entities';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
 import Chart from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
@@ -114,7 +114,7 @@ export default ({
   const setQuestionId = Chart.useStoreActions((state) => state.setQuestionId);
   const setType = Chart.useStoreActions((state) => state.setType);
 
-  const { data: question } = useFindOneFull(IQuestion, {
+  const { data: question } = useFindOne(IQuestion, {
     fields: ['type'],
     where: { id: questionId }
   });

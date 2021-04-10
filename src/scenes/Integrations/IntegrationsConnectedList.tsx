@@ -4,7 +4,7 @@ import Separator from '@components/atoms/Separator';
 import Row from '@components/containers/Row/Row';
 import Show from '@components/containers/Show';
 import { ICommunity } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
@@ -15,7 +15,7 @@ import IntegrationCard from './IntegrationsCard';
 const IntegrationsConnectedList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: [
       'communityIntegrations.id',
       'communityIntegrations.mailchimpListId',

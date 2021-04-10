@@ -7,7 +7,7 @@ import Show from '@components/containers/Show';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
 import { SetActiveEntitesArgs } from '@core/db/db.types';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
 import { ErrorContext } from '@util/constants.errors';
@@ -23,7 +23,7 @@ import IndividualEventTable from './IndividualEventTable';
 const IndividualEventHeader: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['imageUrl'],
     where: { id: eventId }
   });
@@ -42,7 +42,7 @@ const IndividualEventContent: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event } = useFindOneFull(IEvent, {
+  const { data: event } = useFindOne(IEvent, {
     fields: ['privacy'],
     where: { id: eventId }
   });
@@ -93,7 +93,7 @@ const IndividualEvent: React.FC = () => {
     SetActiveEntitesArgs | SetActiveEntitesArgs[]
   > = useStoreActions(({ db }) => db.setActiveEntities);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: [
       'community.id',
       'community.name',

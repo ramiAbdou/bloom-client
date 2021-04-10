@@ -5,7 +5,7 @@ import TableStore from '@components/organisms/Table/Table.store';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
 import SearchBar from '@components/organisms/Table/TableSeachBar';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
 import DeleteMembersButton from './MemberDatabaseDeleteButton';
@@ -20,7 +20,7 @@ const MemberDatabaseButtons: React.FC = () => {
     ({ selectedRowIds }) => !!selectedRowIds.length
   );
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });

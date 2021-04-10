@@ -6,7 +6,7 @@ import { ICommunity, IEvent } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import GQL from '@gql/GQL';
 // import useBloomMutation from '@gql/hooks/useBloomMutation';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import useGQL from '@gql/hooks/useGQL';
 // import { MutationEvent } from '@util/constants.events';
 import { now } from '@util/util';
@@ -17,7 +17,7 @@ const DeleteEventButton: React.FC = () => {
   const showToast = useStoreActions(({ toast }) => toast.showToast);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });

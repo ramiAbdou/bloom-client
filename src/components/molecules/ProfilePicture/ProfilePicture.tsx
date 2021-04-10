@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Show from '@components/containers/Show';
 import { Identifier, IMember, ISupporter } from '@core/db/db.entities';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 
@@ -24,12 +24,12 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
   // longer valid, etc.) we should show something else.
   const [imageError, setImageError] = useState(false);
 
-  const { data: member, loading: loading1 } = useFindOneFull(IMember, {
+  const { data: member, loading: loading1 } = useFindOne(IMember, {
     fields: ['firstName', 'lastName', 'email', 'pictureUrl'],
     where: { id: memberId }
   });
 
-  const { data: supporter, loading: loading2 } = useFindOneFull(ISupporter, {
+  const { data: supporter, loading: loading2 } = useFindOne(ISupporter, {
     fields: ['firstName', 'lastName', 'email', 'pictureUrl'],
     where: { id: supporterId }
   });
@@ -65,11 +65,11 @@ const ProfilePictureContent: React.FC<ProfilePictureProps> = ({
 const ProfilePicture: React.FC<ProfilePictureProps> = (props) => {
   const { circle = true, className, memberId, size, supporterId } = props;
 
-  const { data: member, loading: loading1 } = useFindOneFull(IMember, {
+  const { data: member, loading: loading1 } = useFindOne(IMember, {
     where: { id: memberId }
   });
 
-  const { data: supporter, loading: loading2 } = useFindOneFull(ISupporter, {
+  const { data: supporter, loading: loading2 } = useFindOne(ISupporter, {
     where: { id: supporterId }
   });
 

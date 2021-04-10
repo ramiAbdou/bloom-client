@@ -3,7 +3,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import { IEvent, IEventGuest, IMember } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { ModalType, PanelType } from '@util/constants';
 import { EventTiming, getEventTiming } from '../Events.util';
@@ -16,7 +16,7 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
   const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['recordingUrl'],
     where: { id: eventId }
   });
@@ -46,12 +46,12 @@ const EventsEditEventButton: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { data: event, loading: loading1 } = useFindOneFull(IEvent, {
+  const { data: event, loading: loading1 } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],
     where: { id: eventId }
   });
 
-  const { data: member, loading: loading2 } = useFindOneFull(IMember, {
+  const { data: member, loading: loading2 } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
@@ -89,12 +89,12 @@ const IndividualEventActions: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: event, loading: loading1 } = useFindOneFull(IEvent, {
+  const { data: event, loading: loading1 } = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],
     where: { id: eventId }
   });
 
-  const { data: member, loading: loading2 } = useFindOneFull(IMember, {
+  const { data: member, loading: loading2 } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });

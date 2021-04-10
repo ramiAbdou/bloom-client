@@ -5,7 +5,7 @@ import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFinalPath from '@hooks/useFinalPath';
 import { LoadingProps, ModalType } from '@util/constants';
@@ -17,7 +17,7 @@ const DatbaseHeaderAddButton: React.FC = () => {
   const isAdminsPage: boolean = useFinalPath() === 'admins';
   const isMembersPage: boolean = useFinalPath() === 'members';
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });

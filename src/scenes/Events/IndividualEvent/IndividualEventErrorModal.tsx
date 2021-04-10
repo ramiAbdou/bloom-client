@@ -3,7 +3,7 @@ import React from 'react';
 
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
 import { IEvent } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { ErrorType } from '@util/constants.errors';
 
@@ -16,7 +16,7 @@ const IndividualEventErrorModal: React.FC = () => {
     ({ modal }) => modal.metadata
   );
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['startTime', 'title'],
     where: { id: eventId }
   });

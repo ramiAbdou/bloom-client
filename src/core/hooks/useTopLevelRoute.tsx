@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { RouteType } from '@util/constants';
 
 /**
@@ -18,7 +18,7 @@ const useTopLevelRoute = (): RouteType => {
 
   const { pathname } = useHistory().location;
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });

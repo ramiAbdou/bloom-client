@@ -11,7 +11,7 @@ import {
 
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import Chart from './Chart.store';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 import useXAxisOptions from './useXAxisOptions';
@@ -20,7 +20,7 @@ import useYAxisOptions from './useYAxisOptions';
 const BarChart: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['primaryColor'],
     where: { id: communityId }
   });

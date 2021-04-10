@@ -4,7 +4,7 @@ import React from 'react';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { IEvent } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions } from '@core/store/Store';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
@@ -26,7 +26,7 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
   const isMember: boolean = useIsMember();
   const createEventAttendeeWithMember = useCreateEventAttendeeWithMember();
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime', 'videoUrl'],
     where: { id: eventId }
   });

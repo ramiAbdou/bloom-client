@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
@@ -47,7 +47,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
 
   const isActive: boolean = useTopLevelRoute() === to;
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });

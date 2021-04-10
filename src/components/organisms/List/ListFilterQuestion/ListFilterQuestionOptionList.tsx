@@ -3,7 +3,7 @@ import React from 'react';
 import Show from '@components/containers/Show';
 import { IMemberValue, IQuestion } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionOption from './ListFilterQuestionOption';
 
@@ -16,7 +16,7 @@ const ListFilterQuestionOptionList: React.FC = () => {
 
   const isOpen = questionId === openQuestionId;
 
-  const { data: question, loading } = useFindOneFull(IQuestion, {
+  const { data: question, loading } = useFindOne(IQuestion, {
     fields: ['memberValues.id', 'memberValues.value', 'options'],
     where: { id: questionId }
   });

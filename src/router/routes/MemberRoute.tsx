@@ -3,7 +3,7 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import { IMember } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { UrlNameProps } from '@util/constants';
 import { updateDocumentColors } from '@util/util';
 
@@ -30,7 +30,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   const { urlName }: UrlNameProps = rest?.computedMatch?.params;
 
   // Find the community with the urlName that we are currently at.
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['community.id', 'community.primaryColor', 'role'],
     where: { community: { urlName }, userId: storedUserId }
   });

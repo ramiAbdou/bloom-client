@@ -7,7 +7,7 @@ import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { ICommunity, IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ShowProps } from '@util/constants';
 
@@ -18,7 +18,7 @@ const CheckInChoosePageActions: React.FC = () => {
     (state) => state.setCurrentPage
   );
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime'],
     where: { id: eventId }
   });
@@ -52,7 +52,7 @@ const CheckInChoosePageActions: React.FC = () => {
 const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['name'],
     where: { id: communityId }
   });

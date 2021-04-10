@@ -5,14 +5,14 @@ import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import { IMember, IMemberValue, MemberStatus } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: ['firstName', 'lastName'],
     where: { id: memberId }
   });
@@ -27,7 +27,7 @@ const ApplicantsModalTitle: React.FC = () => {
 const ApplicantsModalItems: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data: member, loading } = useFindOneFull(IMember, {
+  const { data: member, loading } = useFindOne(IMember, {
     fields: [
       'email',
       'memberValues.id',

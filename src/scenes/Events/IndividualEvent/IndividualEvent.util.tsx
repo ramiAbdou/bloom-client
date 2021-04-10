@@ -9,7 +9,7 @@ import {
   IEventGuest,
   IEventWatch
 } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { QuestionType } from '@util/constants';
@@ -27,7 +27,7 @@ const useIndividualEventTableAttendees = (): Record<
 > => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: [
       'eventAttendees.createdAt',
       'eventAttendees.id',
@@ -82,7 +82,7 @@ const useIndividualEventTableGuests = (): Record<
 > => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: [
       'eventGuests.createdAt',
       'eventGuests.id',
@@ -136,7 +136,7 @@ const useIndividualEventTableWatchers = (): Record<
 > => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: [
       'eventWatches.createdAt',
       'eventWatches.id',
@@ -221,7 +221,7 @@ export const useIndividualEventTableRows = (): TableRow[] => {
 export const useIndividualEventTableColumns = (): TableColumn[] => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'recordingUrl', 'startTime'],
     where: { id: eventId }
   });

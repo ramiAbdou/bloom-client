@@ -11,7 +11,7 @@ import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import { IMemberType } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import useSavePaymentMethod from './useSavePaymentMethod';
 
@@ -48,7 +48,7 @@ const ApplicationPaymentSection: React.FC = () => {
     ({ items }) => items.MEMBER_TYPE?.value as string
   );
 
-  const isPaidMembershipSelected: boolean = !!useFindOneFull(IMemberType, {
+  const isPaidMembershipSelected: boolean = !!useFindOne(IMemberType, {
     where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   }).data;
 

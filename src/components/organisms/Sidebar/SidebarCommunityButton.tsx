@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { IdProps } from '@util/constants';
 import { cx } from '@util/util';
 
@@ -14,7 +14,7 @@ const SidebarCommunityButton: React.FC<IdProps> = ({ id: communityId }) => {
 
   const { push } = useHistory();
 
-  const { data: community, loading } = useFindOneFull(ICommunity, {
+  const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['logoUrl', 'urlName'],
     where: { id: communityId }
   });

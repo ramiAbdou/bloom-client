@@ -6,7 +6,7 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMemberSocials } from '@core/db/db.entities';
-import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
@@ -14,7 +14,7 @@ const ProfileSocialModal: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const updateMemberSocials: OnFormSubmitFunction = useUpdateMemberSocials();
 
-  const { data: memberSocials, loading } = useFindOneFull(IMemberSocials, {
+  const { data: memberSocials, loading } = useFindOne(IMemberSocials, {
     fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
     where: { memberId }
   });

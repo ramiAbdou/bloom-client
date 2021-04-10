@@ -12,7 +12,7 @@ import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMember, MemberRole } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/constants.errors';
 import { buildUrl } from '@util/util';
@@ -48,7 +48,7 @@ const CheckInGoogleButton: React.FC = () => {
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: owner, loading } = useFindOneFull(IMember, {
+  const { data: owner, loading } = useFindOne(IMember, {
     fields: ['email', 'firstName', 'lastName'],
     where: { communityId, role: MemberRole.OWNER }
   });

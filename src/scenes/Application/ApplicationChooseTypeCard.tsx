@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { IMemberType, RecurrenceType } from '@core/db/db.entities';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
+import useFindOne from '@gql/hooks/useFindOne';
 import { IdProps } from '@util/constants';
 import { take } from '@util/util';
 
 const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: memberTypeId }) => {
-  const { data: memberType, loading } = useFindOneFull(IMemberType, {
+  const { data: memberType, loading } = useFindOne(IMemberType, {
     fields: ['amount', 'recurrence'],
     where: { id: memberTypeId }
   });
