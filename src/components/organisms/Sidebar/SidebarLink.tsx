@@ -63,8 +63,6 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
     setIsOpen(false);
   };
 
-  console.log(`${urlName}/${to}`);
-
   return (
     <Link className={css} to={`/${urlName}/${to}`} onClick={onLinkClick}>
       <Icon />

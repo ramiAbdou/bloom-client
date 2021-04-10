@@ -81,7 +81,6 @@ const IndividualEventContent: React.FC = () => {
 };
 
 const IndividualEvent: React.FC = () => {
-  console.log('HEREEEEE');
   const { eventId } = useParams() as { eventId: string };
 
   const isEventActive: boolean = useStoreState(
@@ -123,8 +122,6 @@ const IndividualEvent: React.FC = () => {
 
   useEffect(() => {
     if (event.id) {
-      console.log('HELLO', event);
-
       setActiveEntities({
         communityId: event.community.id,
         eventId: event.id

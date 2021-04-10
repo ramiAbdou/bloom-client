@@ -52,9 +52,6 @@ const Sidebar: React.FC = () => {
   const showSidebar: boolean =
     (isDesktop || !!isOpen) && !!memberId && !pathname.includes('/apply');
 
-  // console.log(showSidebar, !!urlName && pathname !== `/${urlName}/apply`);
-  // console.log('urlName', urlName, pathname);
-
   return (
     <>
       <AnimatePresence>

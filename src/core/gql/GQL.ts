@@ -2,10 +2,13 @@ import {
   ApolloClient,
   ApolloQueryResult,
   DocumentNode,
-  FetchResult
+  FetchResult,
+  gql
 } from '@apollo/client';
+import buildFieldsString from './buildFieldsString';
 import {
   CreateArgs,
+  CustomMutationArgs,
   FindOneArgs,
   MutationResult,
   QueryResult,
@@ -63,6 +66,39 @@ class GQL {
 
     const parsedResult: QueryResult<T[]> = parseFindQueryResult(entity, result);
     return parsedResult.data;
+  }
+
+  async mutation<T>({
+    fields,
+    mutationName
+  }: CustomMutationArgs): Promise<MutationResult<T>> {
+    const fieldsString: string = buildFieldsString(fields, false);
+
+    const mutation: DocumentNode = gql`
+        mutation ${mutationName} {
+          ${mutationName}(email: "rami@rami.com") {
+            ${fieldsString}
+          }
+        }
+      `;
+
+    try {
+      const result: FetchResult<unknown> = await this.client.mutate({
+        mutation
+      });
+
+      return {
+        data: result?.data ? result?.data[mutationName] : {},
+        error: result.errors && result.errors[0]?.message
+      };
+    } catch (e) {
+      return {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        data: {},
+        error: e.message
+      };
+    }
   }
 
   async update<T>(

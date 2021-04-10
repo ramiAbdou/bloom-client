@@ -29,7 +29,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
 
   const isMember: boolean = useIsMember();
 
-  const { endTime, eventGuests, startTime } = useFindOne(IEvent, {
+  const event: IEvent = useFindOne(IEvent, {
     fields: [
       'endTime',
       'eventGuests.deletedAt',
@@ -40,7 +40,9 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     where: { id: eventId }
   });
 
-  const isGoing: boolean = eventGuests.some(
+  if (!event.id) return null;
+
+  const isGoing: boolean = event.eventGuests.some(
     (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
   );
 
@@ -82,8 +84,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     showToast(options);
   };
 
-  const isUpcoming: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
   return (
     <Button

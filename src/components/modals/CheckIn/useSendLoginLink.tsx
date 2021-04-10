@@ -5,8 +5,8 @@ import {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import StoryStore from '@components/organisms/Story/Story.store';
-import { useStoreState } from '@core/store/Store';
 import { IMember, MemberRole } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent } from '@util/constants.events';
@@ -26,18 +26,23 @@ const useSendLoginLink = (): OnFormSubmitFunction => {
     types: {
       communityId: { required: false },
       email: { required: true },
-      pathname: { required: false }
+      redirectUrl: { required: false }
     }
   });
 
   const onSubmit = async ({ gql, items, setError }: OnFormSubmitArgs) => {
     const email: string = items.EMAIL?.value as string;
 
-    const { error } = await sendLoginLink({
-      communityId,
-      email,
-      pathname: communityId && pathname
+    const { error } = await gql.mutation({
+      fields: ['ok'],
+      mutationName: 'sendLoginLink'
     });
+
+    // sendLoginLink({
+    //   communityId,
+    //   email,
+    //   redirectUrl: communityId && pathname
+    // });
 
     const owner: IMember = await gql.findOne(IMember, {
       fields: ['email', 'firstName', 'lastName'],

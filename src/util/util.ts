@@ -1,3 +1,4 @@
+import day from 'dayjs';
 import { APIError } from 'graphql-hooks';
 
 /**
@@ -59,6 +60,15 @@ export const getGraphQLError = (error: APIError): string => {
 
   return (graphQLErrors[0] as GraphQLError)?.message;
 };
+
+/**
+ * Returns the current UTC timestamp as a string to the millisecond.
+ *
+ * @example
+ * // Returns '2020-08-31T23:17:20Z'.
+ * now()
+ */
+export const now = (): string => day.utc().format();
 
 /**
  * Opens an href link in a compatible way with all browsers.

@@ -1,3 +1,4 @@
+import day from 'dayjs';
 import React from 'react';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
@@ -5,10 +6,9 @@ import Section from '@components/containers/Section';
 import List from '@components/organisms/List/List';
 import ListStore from '@components/organisms/List/List.store';
 import ListSearchBar from '@components/organisms/List/ListSearchBar';
-import { IEvent, IEventGuest } from '@core/db/db.entities';
+import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';
 import EventsCard from './EventsCard/EventsCard';
@@ -28,14 +28,13 @@ const PastEventsList: React.FC = () => {
       'summary',
       'title'
     ],
-    where: { id: communityId }
+    where: { communityId, endTime: { _lt: day.utc().format() } }
   });
 
   const sortedEvents: IEvent[] = events
-    ?.filter((event: IEvent) => getEventTiming(event) === EventTiming.PAST)
     ?.filter((event: IEvent) =>
-      event.eventGuests.some(
-        (eventGuest: IEventGuest) => eventGuest.member?.id !== memberId
+      event.eventAttendees.some(
+        (eventAttendee: IEventAttendee) => eventAttendee.member?.id !== memberId
       )
     )
     ?.sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'));

@@ -1,4 +1,3 @@
-import day from 'dayjs';
 import React from 'react';
 
 import MainContent from '@components/containers/Main/MainContent';
@@ -6,6 +5,7 @@ import { IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import { QueryResult } from '@gql/GQL.types';
 import useFindFull from '@gql/hooks/useFindFull';
+import { now } from '@util/util';
 import EventsHeader from './EventsHeader';
 import PastEventsSection from './PastEventsSection';
 import PastEventsYourSection from './PastEventsYourSection';
@@ -34,7 +34,7 @@ const PastEvents: React.FC = () => {
       'summary',
       'title'
     ],
-    where: { communityId, endTime: { _lt: day.utc().format() } }
+    where: { communityId, endTime: { _lt: now() } }
   });
 
   return (

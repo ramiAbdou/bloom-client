@@ -55,13 +55,13 @@ const EventsCardPeople: React.FC = () => {
     getEventTiming({ endTime, startTime }) === EventTiming.PAST;
 
   const ids: EventsCardPictureId[] = isPast
-    ? eventAttendees.slice(0, 3).map((eventAttendee: IEventAttendee) => {
+    ? eventAttendees?.slice(0, 3).map((eventAttendee: IEventAttendee) => {
         return {
           memberId: eventAttendee.member?.id,
           supporterId: eventAttendee.supporter?.id
         };
       })
-    : eventGuests.slice(0, 3).map((eventGuest: IEventGuest) => {
+    : eventGuests?.slice(0, 3).map((eventGuest: IEventGuest) => {
         return {
           memberId: eventGuest.member?.id,
           supporterId: eventGuest.supporter?.id
@@ -70,7 +70,7 @@ const EventsCardPeople: React.FC = () => {
 
   return (
     <Row className="s-events-card-people" show={!!ids?.length} spacing="xs">
-      <EventsCardPersonPictures ids={ids?.slice(0, 3)} />
+      <EventsCardPersonPictures ids={ids} />
       <p className="meta">
         {isPast
           ? `${ids?.length} people attended`

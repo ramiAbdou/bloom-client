@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 import { IEvent, IEventGuest, IMember } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { APP } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
@@ -30,18 +30,20 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     where: { id: eventId }
   });
 
-  const eventUrl: string = `${APP.CLIENT_URL}/${event.community.urlName}/events/${eventId}`;
-
-  const isGoing: boolean = event.eventGuests.some(
-    (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
-  );
-
   const { role } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
   const showToast = useStoreActions(({ toast }) => toast.showToast);
+
+  if (!event.id) return null;
+
+  const eventUrl: string = `${APP.CLIENT_URL}/${event.community.urlName}/events/${eventId}`;
+
+  const isGoing: boolean = event.eventGuests.some(
+    (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
+  );
 
   const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
@@ -51,8 +53,8 @@ const EventShareButton: React.FC<EventShareButtonProps> = ({
     showToast({ message: 'Event link copied to clipboard.' });
   };
 
-  const showOnSmall = !large && !!isGoing;
-  const showOnLarge = !!large && (!role || (role && !!isGoing));
+  const showOnSmall: boolean = !large && !!isGoing;
+  const showOnLarge: boolean = !!large && (!role || (role && !!isGoing));
 
   return (
     <Button
