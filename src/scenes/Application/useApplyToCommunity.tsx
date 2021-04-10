@@ -1,15 +1,15 @@
 import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@components/organisms/Form/Form.types';
+import { parseValue } from '@components/organisms/Form/Form.util';
+import {
   ICommunity,
   IMemberType,
   IPaymentMethod,
   IQuestion
 } from '@core/db/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
-import {
-  OnFormSubmitArgs,
-  OnFormSubmitFunction
-} from '@components/organisms/Form/Form.types';
-import { parseValue } from '@components/organisms/Form/Form.util';
 import { ApplyForMembershipArgs } from '@scenes/Application/Application.types';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';

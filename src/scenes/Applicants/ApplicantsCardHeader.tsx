@@ -4,10 +4,10 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import { IMember } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
-import useBreakpoint from '@hooks/useBreakpoint';
 import IdStore from '@core/store/Id.store';
 import { useStoreActions } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
+import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
 
 const ApplicantsCardHeaderDetails: React.FC = () => {

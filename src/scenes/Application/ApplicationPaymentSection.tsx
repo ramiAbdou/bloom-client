@@ -3,8 +3,6 @@ import React from 'react';
 import Separator from '@components/atoms/Separator';
 import Row from '@components/containers/Row/Row';
 import Show from '@components/containers/Show';
-import { IMemberType } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 // import PaymentStripeProvider from '@components/modals/Payment/PaymentStripeProvider';
 import Form from '@components/organisms/Form/Form';
 import FormCreditCard from '@components/organisms/Form/FormCreditCard';
@@ -12,7 +10,9 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
+import { IMemberType } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
 import useSavePaymentMethod from './useSavePaymentMethod';
 
 const ApplicationPaymentForm: React.FC = () => {

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { IMember } from '@core/db/db.entities';
-import useFind from '@gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
+import useFind from '@gql/hooks/useFind';
 import ApplicantCard from './ApplicantsCard';
 
 const ApplicantsCardList: React.FC = () => {
