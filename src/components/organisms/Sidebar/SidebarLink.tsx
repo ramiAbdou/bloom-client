@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import { ICommunity } from '@db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions, useStoreState } from '@store/Store';
 import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
 import { SidebarLinkOptions } from './Sidebar.types';
@@ -40,10 +42,15 @@ const SidebarLinkAction: React.FC<
 const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   const { Icon, onClick, to, title } = props;
 
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const setIsOpen = useStoreActions(({ sidebar }) => sidebar.setIsOpen);
 
-  const { urlName } = useParams() as { urlName: string };
   const isActive: boolean = useTopLevelRoute() === to;
+
+  const { urlName } = useFindOne(ICommunity, {
+    fields: ['urlName'],
+    where: { id: communityId }
+  });
 
   // If onClick is supplied, means it is an action.
   if (onClick) return <SidebarLinkAction {...props} />;

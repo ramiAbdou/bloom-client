@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Separator from '@atoms/Separator';
 import { ICommunity } from '@db/db.entities';
@@ -42,13 +43,22 @@ const SidebarContent: React.FC = () => (
 );
 
 const Sidebar: React.FC = () => {
+  const memberId: string = useStoreState(({ db }) => db.memberId);
   const isOpen: boolean = useStoreState(({ sidebar }) => sidebar.isOpen);
   const isDesktop: boolean = useBreakpoint() >= 3;
+
+  const { pathname } = useLocation();
+
+  const showSidebar: boolean =
+    (isDesktop || !!isOpen) && !!memberId && !pathname.includes('/apply');
+
+  // console.log(showSidebar, !!urlName && pathname !== `/${urlName}/apply`);
+  // console.log('urlName', urlName, pathname);
 
   return (
     <>
       <AnimatePresence>
-        {(isDesktop || !!isOpen) && (
+        {showSidebar && (
           <motion.div
             animate={{ x: !isDesktop && 0 }}
             className="o-nav"

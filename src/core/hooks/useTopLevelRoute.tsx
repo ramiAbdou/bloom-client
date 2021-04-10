@@ -1,6 +1,9 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-import { RouteType, UrlNameProps } from '@util/constants';
+import { ICommunity } from '@db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
+import { useStoreState } from '@store/Store';
+import { RouteType } from '@util/constants';
 
 /**
  * Returns the first active route of the community. Doesn't care about the
@@ -11,7 +14,13 @@ import { RouteType, UrlNameProps } from '@util/constants';
  * @example /colorstack/analytics/dues => analytics
  */
 const useTopLevelRoute = (): RouteType => {
-  const { urlName } = useParams() as UrlNameProps;
+  const communityId: string = useStoreState(({ db }) => db.communityId);
+
+  const { urlName } = useFindOne(ICommunity, {
+    fields: ['urlName'],
+    where: { id: communityId }
+  });
+
   const { pathname } = useHistory().location;
   const route = pathname.slice(urlName?.length + 2);
 
