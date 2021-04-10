@@ -3,8 +3,8 @@ import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@organisms/Form/Form.types';
-import StoryStore from '@organisms/Story/Story.store';
+} from '@components/organisms/Form/Form.types';
+import StoryStore from '@components/organisms/Story/Story.store';
 import { CreateEventGuestArgs } from '@scenes/Events/Events.types';
 import { MutationEvent } from '@util/constants.events';
 import { openHref } from '@util/util';

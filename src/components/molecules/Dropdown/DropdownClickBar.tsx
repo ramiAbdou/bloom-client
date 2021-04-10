@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { IoCaretDown } from 'react-icons/io5';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 import Dropdown from './Dropdown.store';

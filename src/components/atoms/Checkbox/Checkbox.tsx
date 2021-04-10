@@ -4,8 +4,8 @@
 import React from 'react';
 import { IoCheckmark } from 'react-icons/io5';
 
-import Attribute from '@atoms/Tag/Attribute';
-import Show from '@containers/Show';
+import Attribute from '@components/atoms/Tag/Attribute';
+import Show from '@components/containers/Show';
 import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 

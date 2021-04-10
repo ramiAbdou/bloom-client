@@ -4,16 +4,16 @@ import React from 'react';
 import { IQuestion } from '@db/db.entities';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
-import { ModalData } from '@organisms/Modal/Modal.types';
-import ModalLocal from '@organisms/Modal/ModalLocal';
-import Table from '@organisms/Table/Table';
+import { ModalData } from '@components/organisms/Modal/Modal.types';
+import ModalLocal from '@components/organisms/Modal/ModalLocal';
+import Table from '@components/organisms/Table/Table';
 import {
   RenameColumnFunction,
   TableColumn,
   TableOptions,
   TableRow
-} from '@organisms/Table/Table.types';
-import TableContent from '@organisms/Table/TableContent';
+} from '@components/organisms/Table/Table.types';
+import TableContent from '@components/organisms/Table/TableContent';
 import { useStoreActions } from '@store/Store';
 import { ModalType } from '@util/constants';
 import {

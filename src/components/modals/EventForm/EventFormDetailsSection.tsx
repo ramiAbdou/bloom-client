@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
-import Show from '@containers/Show';
+import Row from '@components/containers/Row/Row';
+import Show from '@components/containers/Show';
 import { IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import FormDate from '@organisms/Form/FormDate';
-import FormSection from '@organisms/Form/FormSection';
-import FormSectionHeader from '@organisms/Form/FormSectionHeader';
-import FormShortText from '@organisms/Form/FormShortText';
-import FormTime from '@organisms/Form/FormTime';
+import FormDate from '@components/organisms/Form/FormDate';
+import FormSection from '@components/organisms/Form/FormSection';
+import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
+import FormShortText from '@components/organisms/Form/FormShortText';
+import FormTime from '@components/organisms/Form/FormTime';
 import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';
 

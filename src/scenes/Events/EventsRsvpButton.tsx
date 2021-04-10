@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button/Button';
+import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { IEvent, IEventGuest } from '@db/db.entities';
 import GQL from '@gql/GQL';
 import useFindOne from '@gql/hooks/useFindOne';
 import useGQL from '@gql/hooks/useGQL';
 import useIsMember from '@hooks/useIsMember';
-import { ToastOptions } from '@organisms/Toast/Toast.types';
+import { ToastOptions } from '@components/organisms/Toast/Toast.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ErrorMessage from '@atoms/ErrorMessage';
+import ErrorMessage from '@components/atoms/ErrorMessage';
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';

@@ -2,7 +2,7 @@ import { AnimationProps, motion, MotionProps } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 import { useStoreActions, useStoreState } from '@store/Store';

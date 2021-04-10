@@ -3,7 +3,7 @@ import { Redirect, useParams } from 'react-router-dom';
 
 import { IApplication } from '@db/db.entities';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
-import Story from '@organisms/Story/Story';
+import Story from '@components/organisms/Story/Story';
 import { useStoreActions } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
 import ApplicationChooseTypePage from './ApplicationChooseType';

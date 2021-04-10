@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InformationTip from '@atoms/InformationTip/InformationTip';
+import InformationTip from '@components/atoms/InformationTip/InformationTip';
 import { cx } from '@util/util';
 
 interface FormLabelProps {

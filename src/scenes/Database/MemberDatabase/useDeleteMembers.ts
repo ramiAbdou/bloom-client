@@ -3,9 +3,9 @@ import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@organisms/Form/Form.types';
-import TableStore from '@organisms/Table/Table.store';
-import { ToastOptions } from '@organisms/Toast/Toast.types';
+} from '@components/organisms/Form/Form.types';
+import TableStore from '@components/organisms/Table/Table.store';
+import { ToastOptions } from '@components/organisms/Toast/Toast.types';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 

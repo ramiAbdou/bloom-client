@@ -1,11 +1,11 @@
 import React from 'react';
 
-import HeaderTag from '@atoms/Tag/HeaderTag';
-import Row from '@containers/Row/Row';
+import HeaderTag from '@components/atoms/Tag/HeaderTag';
+import Row from '@components/containers/Row/Row';
 import { IMember } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import MailTo from '@molecules/MailTo';
-import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import MailTo from '@components/molecules/MailTo';
+import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import IdStore from '@store/Id.store';
 import ProfileSocialContainer from './ProfileSocial';
 

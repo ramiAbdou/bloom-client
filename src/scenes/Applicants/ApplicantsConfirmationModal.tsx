@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { MemberStatus } from '@db/db.entities';
-import Form from '@organisms/Form/Form';
-import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
-import FormHeader from '@organisms/Form/FormHeader';
-import ModalConfirmationActions from '@organisms/Modal/ModalConfirmationActions';
+import Form from '@components/organisms/Form/Form';
+import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
+import FormHeader from '@components/organisms/Form/FormHeader';
+import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import { useStoreState } from '@store/Store';
 import useRespondToApplicants from './useRespondToApplicants';
 

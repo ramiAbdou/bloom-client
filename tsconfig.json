@@ -10,15 +10,10 @@
     "moduleResolution": "node",
     "outDir": "./dist/",
     "paths": {
-      "@atoms/*": ["./src/components/atoms/*"],
-      "@containers/*": ["./src/components/containers/*"],
+      "@components/*": ["./src/components/*"],
       "@db/*": ["./src/core/db/*"],
       "@gql/*": ["./src/core/gql/*"],
       "@hooks/*": ["./src/core/hooks/*"],
-      "@images/*": ["./src/components/images/*"],
-      "@modals/*": ["./src/components/modals/*"],
-      "@molecules/*": ["./src/components/molecules/*"],
-      "@organisms/*": ["./src/components/organisms/*"],
       "@scenes/*": ["./src/scenes/*"],
       "@store/*": ["./src/core/store/*"],
       "@util/*": ["./src/util/*"]

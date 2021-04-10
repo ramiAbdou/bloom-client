@@ -4,7 +4,7 @@ import { IoExit } from 'react-icons/io5';
 
 import { ICommunity } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import TableStore from '@organisms/Table/Table.store';
+import TableStore from '@components/organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import DatabaseAction from '../DatabaseAction';
 

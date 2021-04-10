@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import { ICommunityIntegrations } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import QuestionBox from '@molecules/QuestionBox/QuestionBox';
+import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 

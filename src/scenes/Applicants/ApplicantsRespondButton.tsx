@@ -1,9 +1,9 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import { MemberStatus } from '@db/db.entities';
-import { ModalData } from '@organisms/Modal/Modal.types';
+import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { useStoreActions } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';

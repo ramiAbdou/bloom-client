@@ -1,7 +1,7 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import Separator from '@atoms/Separator';
+import Separator from '@components/atoms/Separator';
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';

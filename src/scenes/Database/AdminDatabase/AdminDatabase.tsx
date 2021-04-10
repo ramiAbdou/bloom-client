@@ -1,12 +1,12 @@
 import React from 'react';
 
+import ModalLocal from '@components/organisms/Modal/ModalLocal';
+import Table from '@components/organisms/Table/Table';
+import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
+import TableContent from '@components/organisms/Table/TableContent';
 import { IMember, MemberRole } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
-import ModalLocal from '@organisms/Modal/ModalLocal';
-import Table from '@organisms/Table/Table';
-import { TableColumn, TableRow } from '@organisms/Table/Table.types';
-import TableContent from '@organisms/Table/TableContent';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';

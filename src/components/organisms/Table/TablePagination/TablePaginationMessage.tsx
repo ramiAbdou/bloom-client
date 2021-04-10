@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import TableStore from '../Table.store';
 import TablePaginationStore from './TablePagination.store';
 

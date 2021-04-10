@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { EventPrivacy, IEvent } from '@db/db.entities';
 import { SetActiveEntitesArgs } from '@db/db.types';
 import useFindOne from '@gql/hooks/useFindOne';

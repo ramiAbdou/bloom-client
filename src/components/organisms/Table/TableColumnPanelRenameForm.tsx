@@ -1,9 +1,9 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import Form from '@organisms/Form/Form';
-import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import Form from '@components/organisms/Form/Form';
+import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
+import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 import FormShortText from '../Form/FormShortText';
 import TableStore from './Table.store';

@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 
-import Button from '@atoms/Button/Button';
-import Aspect from '@containers/Aspect/Aspect';
-import Network from '@images/network.svg';
-import { getFormItemKey } from '@organisms/Form/Form.util';
+import Button from '@components/atoms/Button/Button';
+import Aspect from '@components/containers/Aspect/Aspect';
+import Network from '@components/images/network.svg';
+import { getFormItemKey } from '@components/organisms/Form/Form.util';
 import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';

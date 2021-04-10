@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Card from '@containers/Card/Card';
-import CheckInConfirmation from '@modals/CheckIn/CheckInConfirmation';
-import Story from '@organisms/Story/Story';
+import Card from '@components/containers/Card/Card';
+import CheckInConfirmation from '@components/modals/CheckIn/CheckInConfirmation';
+import Story from '@components/organisms/Story/Story';
 import LoginMainPage from './LoginMainPage';
 
 const Login: React.FC = () => (

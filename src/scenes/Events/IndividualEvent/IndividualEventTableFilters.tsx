@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import { IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import { TableFilterFunction } from '@organisms/Table/TableFilterPanel/TableFilterPanel.types';
-import TableQuickFilter from '@organisms/Table/TableQuickFilter';
+import { TableFilterFunction } from '@components/organisms/Table/TableFilterPanel/TableFilterPanel.types';
+import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';

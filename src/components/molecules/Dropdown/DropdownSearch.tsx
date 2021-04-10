@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import DropdownStore from './Dropdown.store';
 
 const DropdownSearch: React.FC = () => {

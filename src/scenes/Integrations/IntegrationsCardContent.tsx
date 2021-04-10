@@ -1,7 +1,7 @@
 import React from 'react';
 
-import StatusTag from '@atoms/Tag/StatusTag';
-import Row from '@containers/Row/Row';
+import StatusTag from '@components/atoms/Tag/StatusTag';
+import Row from '@components/containers/Row/Row';
 
 export type IntegrationCardProps = {
   connected?: boolean;

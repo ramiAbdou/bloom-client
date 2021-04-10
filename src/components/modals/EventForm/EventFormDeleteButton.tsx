@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import { ICommunity } from '@db/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import useFindOne from '@gql/hooks/useFindOne';

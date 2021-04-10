@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import { MemberHistoryData } from './Profile.types';
 
 const ProfileHistoryEvent: React.FC<MemberHistoryData> = ({

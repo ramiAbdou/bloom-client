@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import { IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import Form from '@organisms/Form/Form';
-import { OnFormSubmitFunction } from '@organisms/Form/Form.types';
-import FormShortText from '@organisms/Form/FormShortText';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import Form from '@components/organisms/Form/Form';
+import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
+import FormShortText from '@components/organisms/Form/FormShortText';
+import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory, ShowProps } from '@util/constants';

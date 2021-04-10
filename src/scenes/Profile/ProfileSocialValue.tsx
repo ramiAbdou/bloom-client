@@ -6,7 +6,7 @@ import {
   IoLogoTwitter
 } from 'react-icons/io5';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import { SocialBrand } from '@util/constants';
 import { cx } from '@util/util';
 

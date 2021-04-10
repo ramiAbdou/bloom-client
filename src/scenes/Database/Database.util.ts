@@ -8,7 +8,7 @@ import {
 } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
-import { TableColumn, TableRow } from '@organisms/Table/Table.types';
+import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';

@@ -4,10 +4,10 @@ import { IEvent } from '@db/db.entities';
 import GQL from '@gql/GQL';
 import useFindOne from '@gql/hooks/useFindOne';
 import useGQL from '@gql/hooks/useGQL';
-import Form from '@organisms/Form/Form';
-import { OnFormSubmitArgs } from '@organisms/Form/Form.types';
-import FormShortText from '@organisms/Form/FormShortText';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import Form from '@components/organisms/Form/Form';
+import { OnFormSubmitArgs } from '@components/organisms/Form/Form.types';
+import FormShortText from '@components/organisms/Form/FormShortText';
+import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 
 const IndividualEventRecordingForm: React.FC = () => {

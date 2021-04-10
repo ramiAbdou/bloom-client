@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import Button from '@atoms/Button/Button';
-import { TableRow } from '@organisms/Table/Table.types';
+import Button from '@components/atoms/Button/Button';
+import { TableRow } from '@components/organisms/Table/Table.types';
 import { ShowProps, TitleProps } from '@util/constants';
 import { cx } from '@util/util';
 import TableStore from './Table.store';

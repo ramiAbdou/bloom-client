@@ -9,7 +9,7 @@ import {
   IEventWatch
 } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import { TableColumn, TableRow } from '@organisms/Table/Table.types';
+import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';

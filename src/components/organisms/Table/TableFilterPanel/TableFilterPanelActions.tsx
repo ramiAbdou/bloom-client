@@ -1,8 +1,8 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import Row from '@containers/Row/Row';
+import Button from '@components/atoms/Button/Button';
+import Row from '@components/containers/Row/Row';
 import { useStoreActions } from '@store/Store';
 import TableFilterPanelStore from './TableFilterPanel.store';
 import TableFilterPanelApplyButton from './TableFilterPanelApplyButton';

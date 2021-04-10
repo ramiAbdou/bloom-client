@@ -1,7 +1,7 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import TableFilterPanelStore from './TableFilterPanel.store';
 
 const TableFilterPanelAddButton: React.FC = () => {

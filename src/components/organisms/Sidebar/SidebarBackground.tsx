@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { useStoreActions, useStoreState } from '@store/Store';
 
 const SidebarBackground: React.FC = () => {

@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
-import { FormItemData } from '@organisms/Form/Form.types';
+import { FormItemData } from '@components/organisms/Form/Form.types';
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 import { getFormItemKey } from './Form.util';

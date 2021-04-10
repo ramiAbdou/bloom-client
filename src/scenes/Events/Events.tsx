@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import Scene from '@containers/Scene';
+import Scene from '@components/containers/Scene';
 import MemberRoute from '../../router/routes/MemberRoute';
 import IndividualEvent from './IndividualEvent/IndividualEvent';
 import PastEvents from './PastEvents';

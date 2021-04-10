@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import TableStore from '../Table.store';
 import TableFilterStore from './TableFilterPanel.store';
 

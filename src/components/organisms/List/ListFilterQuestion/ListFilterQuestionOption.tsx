@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Checkbox from '@atoms/Checkbox/Checkbox';
+import Checkbox from '@components/atoms/Checkbox/Checkbox';
 import { IMemberValue, IQuestion } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import IdStore from '@store/Id.store';

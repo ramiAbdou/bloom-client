@@ -1,7 +1,7 @@
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@organisms/Form/Form.types';
+} from '@components/organisms/Form/Form.types';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 const useSavePaymentMethod = (): OnFormSubmitFunction => {

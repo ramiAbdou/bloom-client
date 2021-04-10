@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import Sidebar from '@organisms/Sidebar/Sidebar';
+import Sidebar from '@components/organisms/Sidebar/Sidebar';
 import Analytics from '@scenes/Analytics/Analytics';
 import Applicants from '@scenes/Applicants/Applicants';
 import Application from '@scenes/Application/Application';

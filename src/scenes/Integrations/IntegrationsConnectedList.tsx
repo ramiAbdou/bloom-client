@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Separator from '@atoms/Separator';
-import Row from '@containers/Row/Row';
-import Show from '@containers/Show';
+import Separator from '@components/atoms/Separator';
+import Row from '@components/containers/Row/Row';
+import Show from '@components/containers/Show';
 import { ICommunity } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { useStoreState } from '@store/Store';

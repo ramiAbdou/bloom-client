@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Separator from '@atoms/Separator';
-import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import Show from '@containers/Show';
+import Separator from '@components/atoms/Separator';
+import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
+import Show from '@components/containers/Show';
 import { IMember } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useFindOneFull from '@gql/hooks/useFindOneFull';

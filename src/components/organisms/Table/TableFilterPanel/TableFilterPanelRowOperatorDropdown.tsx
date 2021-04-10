@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Dropdown from '@molecules/Dropdown/Dropdown';
+import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
 import TableFilterStore from './TableFilterPanel.store';
 import { TableFilterOperatorType } from './TableFilterPanel.types';

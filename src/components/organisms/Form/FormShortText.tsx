@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Input from '@atoms/Input/Input';
-import { FormItemData } from '@organisms/Form/Form.types';
+import Input from '@components/atoms/Input/Input';
+import { FormItemData } from '@components/organisms/Form/Form.types';
 import FormStore from './Form.store';
 import { getFormItemKey } from './Form.util';
 import FormItemContainer from './FormItemContainer';

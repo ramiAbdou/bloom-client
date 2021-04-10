@@ -2,8 +2,8 @@ import React from 'react';
 
 import LoadingHeader, {
   LoadingHeaderProps
-} from '@containers/LoadingHeader/LoadingHeader';
-import Show from '@containers/Show';
+} from '@components/containers/LoadingHeader/LoadingHeader';
+import Show from '@components/containers/Show';
 import { ClassNameProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 

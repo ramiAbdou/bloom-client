@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
+import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
 import { useStoreState } from '@store/Store';
 import { ErrorType } from '@util/constants.errors';
 

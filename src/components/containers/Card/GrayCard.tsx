@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Spinner from '@atoms/Spinner/Spinner';
-import Pill from '@atoms/Tag/Pill';
-import Row from '@containers/Row/Row';
+import Spinner from '@components/atoms/Spinner/Spinner';
+import Pill from '@components/atoms/Tag/Pill';
+import Row from '@components/containers/Row/Row';
 import { BaseProps, LoadingProps, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 

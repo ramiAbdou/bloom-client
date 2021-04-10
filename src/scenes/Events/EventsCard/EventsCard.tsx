@@ -2,7 +2,7 @@ import day from 'dayjs';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Card from '@containers/Card/Card';
+import Card from '@components/containers/Card/Card';
 import { IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import IdStore from '@store/Id.store';

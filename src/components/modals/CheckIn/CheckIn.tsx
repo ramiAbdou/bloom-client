@@ -3,7 +3,7 @@ import React from 'react';
 import { EventPrivacy, IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
-import Story from '@organisms/Story/Story';
+import Story from '@components/organisms/Story/Story';
 import { useStoreState } from '@store/Store';
 import CheckInChoosePage from './CheckInChoosePage';
 import CheckInConfirmation from './CheckInConfirmation';

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 import DropdownStore from './Dropdown.store';

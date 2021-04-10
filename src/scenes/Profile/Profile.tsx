@@ -1,8 +1,8 @@
 import React from 'react';
 
-import MainContent from '@containers/Main/MainContent';
-import Scene from '@containers/Scene';
-import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
+import MainContent from '@components/containers/Main/MainContent';
+import Scene from '@components/containers/Scene';
+import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
 import ProfileMembershipCard from './ProfileMembershipCard';
 import ProfilePersonalCard from './ProfilePersonalCard';
 import ProfileSocialCard from './ProfileSocialCard';

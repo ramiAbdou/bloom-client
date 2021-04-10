@@ -1,9 +1,9 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import MainContent from '@containers/Main/MainContent';
-import Scene from '@containers/Scene';
-import Show from '@containers/Show';
+import MainContent from '@components/containers/Main/MainContent';
+import Scene from '@components/containers/Scene';
+import Show from '@components/containers/Show';
 import { IMember, MemberStatus } from '@db/db.entities';
 import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';

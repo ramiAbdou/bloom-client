@@ -2,11 +2,11 @@ import React from 'react';
 
 import { IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import FormCoverImage from '@organisms/Form/FormCoverImage';
-import FormLargeTitle from '@organisms/Form/FormLargeTitle';
-import FormLongText from '@organisms/Form/FormLongText';
-import FormSection from '@organisms/Form/FormSection';
-import FormShortText from '@organisms/Form/FormShortText';
+import FormCoverImage from '@components/organisms/Form/FormCoverImage';
+import FormLargeTitle from '@components/organisms/Form/FormLargeTitle';
+import FormLongText from '@components/organisms/Form/FormLongText';
+import FormSection from '@components/organisms/Form/FormSection';
+import FormShortText from '@components/organisms/Form/FormShortText';
 import { useStoreState } from '@store/Store';
 
 const EventFormMainSection: React.FC = () => {

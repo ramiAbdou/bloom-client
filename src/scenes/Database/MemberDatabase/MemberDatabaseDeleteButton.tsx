@@ -4,7 +4,7 @@ import { IoTrash } from 'react-icons/io5';
 import { IMember, MemberRole } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
-import TableStore from '@organisms/Table/Table.store';
+import TableStore from '@components/organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';

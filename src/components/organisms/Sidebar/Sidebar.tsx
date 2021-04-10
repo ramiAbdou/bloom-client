@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Separator from '@atoms/Separator';
+import Separator from '@components/atoms/Separator';
 import { ICommunity } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';

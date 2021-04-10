@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { IMember } from '@db/db.entities';
 import { QueryResult } from '@gql/GQL.types';
 import useFindFull from '@gql/hooks/useFindFull';

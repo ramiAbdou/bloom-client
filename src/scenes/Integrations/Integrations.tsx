@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
-import MainContent from '@containers/Main/MainContent';
-import MainHeader from '@containers/Main/MainHeader';
-import Scene from '@containers/Scene';
+import MainContent from '@components/containers/Main/MainContent';
+import MainHeader from '@components/containers/Main/MainHeader';
+import Scene from '@components/containers/Scene';
 import { useStoreActions } from '@store/Store';
 import { ModalType } from '@util/constants';
 import IntegrationsConnectedList from './IntegrationsConnectedList';

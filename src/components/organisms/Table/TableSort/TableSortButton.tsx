@@ -2,7 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import TableSortStore from './TableSort.store';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Attribute from '@atoms/Tag/Attribute';
+import Attribute from '@components/atoms/Tag/Attribute';
 import { QuestionType } from '@util/constants';
 import { QuestionBoxItemProps } from './QuestionBox.types';
 

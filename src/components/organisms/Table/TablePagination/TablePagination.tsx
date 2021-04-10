@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import TableStore from '../Table.store';
 import TablePaginationButtonList from './TablePaginationButtonList';
 import TablePaginationMessage from './TablePaginationMessage';

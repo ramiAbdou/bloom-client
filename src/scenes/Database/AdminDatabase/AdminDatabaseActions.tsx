@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import { IMember, MemberRole } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import TableStore from '@organisms/Table/Table.store';
-import SearchBar from '@organisms/Table/TableSeachBar';
+import TableStore from '@components/organisms/Table/Table.store';
+import SearchBar from '@components/organisms/Table/TableSeachBar';
 import { useStoreState } from '@store/Store';
 import AdminDatabaseDeleteButton from './AdminDatabaseDeleteButton';
 import AdminDatabaseDemoteButton from './AdminDatabaseDemoteButton';

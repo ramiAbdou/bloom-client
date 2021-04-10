@@ -1,15 +1,15 @@
 import day from 'dayjs';
 import React from 'react';
 
-import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import MainContent from '@containers/Main/MainContent';
-import Section from '@containers/Section';
+import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
+import MainContent from '@components/containers/Main/MainContent';
+import Section from '@components/containers/Section';
 import { IEvent } from '@db/db.entities';
 import { QueryResult } from '@gql/GQL.types';
 import useFind from '@gql/hooks/useFind';
 import useFindFull from '@gql/hooks/useFindFull';
-import List from '@organisms/List/List';
-import ListStore from '@organisms/List/List.store';
+import List from '@components/organisms/List/List';
+import ListStore from '@components/organisms/List/List.store';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from './Events.util';

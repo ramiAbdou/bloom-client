@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import React from 'react';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import TableStore from '../Table.store';
 import { getPaginationValues } from '../Table.util';
 import TablePaginationStore from './TablePagination.store';

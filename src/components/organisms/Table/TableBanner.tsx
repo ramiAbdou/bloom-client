@@ -13,9 +13,9 @@
 
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import Card from '@containers/Card/Card';
-import Row from '@containers/Row/Row';
+import Button from '@components/atoms/Button/Button';
+import Card from '@components/containers/Card/Card';
+import Row from '@components/containers/Row/Row';
 import TableStore from './Table.store';
 import { TableRow } from './Table.types';
 import { getBannerButtonTitle, getBannerMessage } from './Table.util';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import TableFilterPanelStore from './TableFilterPanel.store';
 import TableFilterPanelActions from './TableFilterPanelActions';
 import TableFilterPanelAddButton from './TableFilterPanelAddButton';

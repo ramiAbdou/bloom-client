@@ -2,7 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import TableStore from '../Table.store';
 import TablePaginationStore from './TablePagination.store';
 

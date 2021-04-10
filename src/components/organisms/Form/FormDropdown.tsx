@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Dropdown from '@molecules/Dropdown/Dropdown';
-import { DropdownValue } from '@molecules/Dropdown/Dropdown.types';
+import Dropdown from '@components/molecules/Dropdown/Dropdown';
+import { DropdownValue } from '@components/molecules/Dropdown/Dropdown.types';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';

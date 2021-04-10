@@ -1,15 +1,15 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import Card from '@containers/Card/Card';
+import Button from '@components/atoms/Button/Button';
+import Card from '@components/containers/Card/Card';
 import { ICommunity, IMember, IMemberValue } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import useFindFull from '@gql/hooks/useFindFull';
 import useFindOne from '@gql/hooks/useFindOne';
-import QuestionBox from '@molecules/QuestionBox/QuestionBox';
-import { QuestionBoxItemProps } from '@molecules/QuestionBox/QuestionBox.types';
-import { ModalData } from '@organisms/Modal/Modal.types';
+import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
+import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
+import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionCategory } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';

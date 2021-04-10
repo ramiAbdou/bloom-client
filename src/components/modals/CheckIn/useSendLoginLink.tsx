@@ -5,8 +5,8 @@ import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@organisms/Form/Form.types';
-import StoryStore from '@organisms/Story/Story.store';
+} from '@components/organisms/Form/Form.types';
+import StoryStore from '@components/organisms/Story/Story.store';
 import { useStoreState } from '@store/Store';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent } from '@util/constants.events';

@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import HeaderTag from '@atoms/Tag/HeaderTag';
-import Card from '@containers/Card/Card';
-import Row from '@containers/Row/Row';
+import Button from '@components/atoms/Button/Button';
+import HeaderTag from '@components/atoms/Tag/HeaderTag';
+import Card from '@components/containers/Card/Card';
+import Row from '@components/containers/Row/Row';
 import { IMember } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
-import MailTo from '@molecules/MailTo';
-import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import MailTo from '@components/molecules/MailTo';
+import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';

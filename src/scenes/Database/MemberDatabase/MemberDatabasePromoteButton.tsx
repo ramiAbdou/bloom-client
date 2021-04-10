@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoArrowUpCircle } from 'react-icons/io5';
 
-import TableStore from '@organisms/Table/Table.store';
+import TableStore from '@components/organisms/Table/Table.store';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';

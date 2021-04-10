@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import GrayCard from '@containers/Card/GrayCard';
+import GrayCard from '@components/containers/Card/GrayCard';
 import { IEvent } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import { useStoreState } from '@store/Store';

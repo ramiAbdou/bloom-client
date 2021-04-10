@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import Card from '@containers/Card/Card';
-import Show from '@containers/Show';
+import Button from '@components/atoms/Button/Button';
+import Card from '@components/containers/Card/Card';
+import Show from '@components/containers/Show';
 import { IMemberSocials } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useFindOneFull from '@gql/hooks/useFindOneFull';

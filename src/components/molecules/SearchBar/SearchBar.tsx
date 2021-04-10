@@ -1,8 +1,8 @@
 import React from 'react';
 import { IoCloseCircle, IoSearch } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
-import Row from '@containers/Row/Row';
+import Button from '@components/atoms/Button/Button';
+import Row from '@components/containers/Row/Row';
 import { BaseProps, ValueProps } from '@util/constants';
 import { cx } from '@util/util';
 

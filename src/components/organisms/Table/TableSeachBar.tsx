@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import SearchBar, { SearchBarProps } from '@molecules/SearchBar/SearchBar';
+import SearchBar, { SearchBarProps } from '@components/molecules/SearchBar/SearchBar';
 import TableStore from './Table.store';
 
 /**

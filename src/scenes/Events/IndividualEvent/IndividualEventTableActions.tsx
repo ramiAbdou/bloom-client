@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
-import TableSeachBar from '@organisms/Table/TableSeachBar';
+import Row from '@components/containers/Row/Row';
+import TableSeachBar from '@components/organisms/Table/TableSeachBar';
 import IndividualEventTableFilters from './IndividualEventTableFilters';
 
 const IndividualEventTableActions: React.FC = () => (

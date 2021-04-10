@@ -8,15 +8,15 @@
 
 import { createStore, createTypedHooks, Store } from 'easy-peasy';
 
-import loader, { LoaderModel } from '@organisms/Loader/Loader.store';
-import modal from '@organisms/Modal/Modal.store';
-import { ModalModel } from '@organisms/Modal/Modal.types';
-import panel from '@organisms/Panel/Panel.store';
-import { PanelModel } from '@organisms/Panel/Panel.types';
-import sidebar from '@organisms/Sidebar/Sidebar.store';
-import { SidebarModel } from '@organisms/Sidebar/Sidebar.types';
-import toast from '@organisms/Toast/Toast.store';
-import { ToastModel } from '@organisms/Toast/Toast.types';
+import loader, { LoaderModel } from '@components/organisms/Loader/Loader.store';
+import modal from '@components/organisms/Modal/Modal.store';
+import { ModalModel } from '@components/organisms/Modal/Modal.types';
+import panel from '@components/organisms/Panel/Panel.store';
+import { PanelModel } from '@components/organisms/Panel/Panel.types';
+import sidebar from '@components/organisms/Sidebar/Sidebar.store';
+import { SidebarModel } from '@components/organisms/Sidebar/Sidebar.types';
+import toast from '@components/organisms/Toast/Toast.store';
+import { ToastModel } from '@components/organisms/Toast/Toast.types';
 import db from '../db/db.store';
 import { DbModel } from '../db/db.types';
 

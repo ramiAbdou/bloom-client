@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ICommunity, IMember, MemberStatus } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import MasonryList from '@organisms/List/MasonryList';
+import MasonryList from '@components/organisms/List/MasonryList';
 import { useStoreState } from '@store/Store';
 import { sortObjects } from '@util/util';
 import { prepareMemberForFilter } from './Directory.util';

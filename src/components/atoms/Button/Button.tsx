@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 
-import Spinner from '@atoms/Spinner/Spinner';
-import Show from '@containers/Show';
+import Spinner from '@components/atoms/Spinner/Spinner';
+import Show from '@components/containers/Show';
 import { ShowProps } from '@util/constants';
 import { cx, openHref } from '@util/util';
 

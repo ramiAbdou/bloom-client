@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import Row from '@containers/Row/Row';
+import Button from '@components/atoms/Button/Button';
+import Row from '@components/containers/Row/Row';
 import { ICommunity, IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import FormLabel from '@organisms/Form/FormLabel';
-import StoryStore from '@organisms/Story/Story.store';
-import StoryPage from '@organisms/Story/StoryPage';
+import FormLabel from '@components/organisms/Form/FormLabel';
+import StoryStore from '@components/organisms/Story/Story.store';
+import StoryPage from '@components/organisms/Story/StoryPage';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { ShowProps } from '@util/constants';

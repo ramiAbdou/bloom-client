@@ -1,8 +1,8 @@
 import React from 'react';
 import { IoCopy } from 'react-icons/io5';
 
-import TableStore from '@organisms/Table/Table.store';
-import { TableRow } from '@organisms/Table/Table.types';
+import TableStore from '@components/organisms/Table/Table.store';
+import { TableRow } from '@components/organisms/Table/Table.types';
 import { useStoreActions } from '@store/Store';
 import { QuestionCategory } from '@util/constants';
 import DatabaseAction from '../DatabaseAction';

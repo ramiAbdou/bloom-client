@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Attribute from '@atoms/Tag/Attribute';
-import Row from '@containers/Row/Row';
+import Attribute from '@components/atoms/Tag/Attribute';
+import Row from '@components/containers/Row/Row';
 import IdStore from '@store/Id.store';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';

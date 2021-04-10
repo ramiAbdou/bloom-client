@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import MainHeader from '@containers/Main/MainHeader';
-import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
+import MainHeader from '@components/containers/Main/MainHeader';
+import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
 
 const AnalyticsHeader: React.FC = () => {
   const { push } = useHistory();

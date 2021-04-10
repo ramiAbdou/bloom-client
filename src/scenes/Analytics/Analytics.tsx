@@ -1,8 +1,8 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import MainContent from '@containers/Main/MainContent';
-import Scene from '@containers/Scene';
+import MainContent from '@components/containers/Main/MainContent';
+import Scene from '@components/containers/Scene';
 import AnalyticsHeader from './AnalyticsHeader';
 import EventsAnalytics from './EventsAnalytics/EventsAnalytics';
 import MembersAnalytics from './MembersAnalytics/MembersAnalytics';

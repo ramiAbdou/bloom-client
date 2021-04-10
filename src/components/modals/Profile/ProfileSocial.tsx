@@ -6,8 +6,8 @@ import {
   IoLogoTwitter
 } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
-import Show from '@containers/Show';
+import Button from '@components/atoms/Button/Button';
+import Show from '@components/containers/Show';
 import { IMemberSocials } from '@db/db.entities';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
 import IdStore from '@store/Id.store';

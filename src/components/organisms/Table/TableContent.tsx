@@ -1,7 +1,7 @@
 import hash from 'object-hash';
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { sortObjects } from '@util/util';
 import TableStore from './Table.store';
 import { TableRow as TableRowProps } from './Table.types';

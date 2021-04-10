@@ -4,7 +4,7 @@ import useGQL from '@gql/hooks/useGQL';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@organisms/Form/Form.types';
+} from '@components/organisms/Form/Form.types';
 
 const useUpdateMemberSocials = (): OnFormSubmitFunction => {
   const gql: GQL = useGQL();

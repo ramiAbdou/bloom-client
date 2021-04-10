@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '@containers/Card/Card';
+import Card from '@components/containers/Card/Card';
 import { ICommunity } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import StoryConfirmation from '@organisms/Story/StoryConfirmation';
-import StoryPage from '@organisms/Story/StoryPage';
+import StoryConfirmation from '@components/organisms/Story/StoryConfirmation';
+import StoryPage from '@components/organisms/Story/StoryPage';
 import { useStoreState } from '@store/Store';
 
 const ApplicationConfirmationMessage: React.FC = () => {

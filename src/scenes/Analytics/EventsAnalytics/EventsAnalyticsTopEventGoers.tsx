@@ -1,17 +1,17 @@
 import day from 'dayjs';
 import React from 'react';
 
-import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import Section from '@containers/Section';
+import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
+import Section from '@components/containers/Section';
 import { IEvent, IEventAttendee } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
-import Table from '@organisms/Table/Table';
+import Table from '@components/organisms/Table/Table';
 import {
   TableColumn,
   TableOptions,
   TableRow
-} from '@organisms/Table/Table.types';
-import TableContent from '@organisms/Table/TableContent';
+} from '@components/organisms/Table/Table.types';
+import TableContent from '@components/organisms/Table/TableContent';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';

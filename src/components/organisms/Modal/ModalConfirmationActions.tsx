@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import ModalCloseButton from '@organisms/Modal/ModalCloseButton';
+import Row from '@components/containers/Row/Row';
+import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
 
 interface ModalConfirmationActionsProps {
   primaryLoadingText?: string;

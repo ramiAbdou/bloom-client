@@ -1,15 +1,15 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import Card from '@containers/Card/Card';
+import Button from '@components/atoms/Button/Button';
+import Card from '@components/containers/Card/Card';
 import { IEvent, IEventGuest } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
-import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
-import List from '@organisms/List/List';
-import ListStore from '@organisms/List/List.store';
-import { ModalData } from '@organisms/Modal/Modal.types';
+import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
+import List from '@components/organisms/List/List';
+import ListStore from '@components/organisms/List/List.store';
+import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { IdProps, ModalType } from '@util/constants';
 import { cx, sortObjects } from '@util/util';

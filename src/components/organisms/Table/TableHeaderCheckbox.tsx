@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Checkbox from '@atoms/Checkbox/Checkbox';
+import Checkbox from '@components/atoms/Checkbox/Checkbox';
 import TableStore from './Table.store';
 import { TableRow } from './Table.types';
 import TablePaginationStore from './TablePagination/TablePagination.store';

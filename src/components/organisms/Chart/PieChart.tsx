@@ -9,7 +9,7 @@ import {
   Tooltip
 } from 'recharts';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import Chart from './Chart.store';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 

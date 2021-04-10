@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Card from '@containers/Card/Card';
+import Card from '@components/containers/Card/Card';
 import { cx } from '@util/util';
 import { RadioOptionProps } from './Radio.types';
 

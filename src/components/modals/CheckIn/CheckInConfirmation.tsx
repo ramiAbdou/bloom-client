@@ -1,6 +1,6 @@
 import React from 'react';
 
-import StoryPage from '@organisms/Story/StoryPage';
+import StoryPage from '@components/organisms/Story/StoryPage';
 
 const CheckInConfirmation: React.FC = () => (
   <StoryPage

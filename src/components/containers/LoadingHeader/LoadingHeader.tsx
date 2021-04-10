@@ -1,10 +1,10 @@
 import React from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
-import Spinner from '@atoms/Spinner/Spinner';
-import HeaderTag from '@atoms/Tag/HeaderTag';
-import Show from '@containers/Show';
+import Button from '@components/atoms/Button/Button';
+import Spinner from '@components/atoms/Spinner/Spinner';
+import HeaderTag from '@components/atoms/Tag/HeaderTag';
+import Show from '@components/containers/Show';
 import { BaseProps, LoadingProps } from '@util/constants';
 import { cx } from '@util/util';
 

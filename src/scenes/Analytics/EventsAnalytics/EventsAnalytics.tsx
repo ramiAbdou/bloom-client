@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { IEvent } from '@db/db.entities';
 import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';

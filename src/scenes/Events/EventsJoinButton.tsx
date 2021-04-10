@@ -1,11 +1,11 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button/Button';
+import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
-import { ModalData } from '@organisms/Modal/Modal.types';
+import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { useStoreActions } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';

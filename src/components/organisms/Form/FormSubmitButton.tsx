@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button/Button';
+import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { cx } from '@util/util';
 import FormStore from './Form.store';
 import FormErrorMessage from './FormErrorMessage';

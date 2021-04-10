@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { getFormItemKey } from '@organisms/Form/Form.util';
-import StoryStore from '@organisms/Story/Story.store';
+import { getFormItemKey } from '@components/organisms/Form/Form.util';
+import StoryStore from '@components/organisms/Story/Story.store';
 import { QuestionType } from '@util/constants';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';

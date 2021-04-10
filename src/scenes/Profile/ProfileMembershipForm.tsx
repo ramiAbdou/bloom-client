@@ -2,12 +2,12 @@ import React from 'react';
 
 import { IMember, IMemberValue } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import Form from '@organisms/Form/Form';
-import { FormItemData } from '@organisms/Form/Form.types';
-import { parseValue } from '@organisms/Form/Form.util';
-import FormHeader from '@organisms/Form/FormHeader';
-import FormItem from '@organisms/Form/FormItem';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import Form from '@components/organisms/Form/Form';
+import { FormItemData } from '@components/organisms/Form/Form.types';
+import { parseValue } from '@components/organisms/Form/Form.util';
+import FormHeader from '@components/organisms/Form/FormHeader';
+import FormItem from '@components/organisms/Form/FormItem';
+import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import useUpdateMemberValues from './useUpdateMemberValues';

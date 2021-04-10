@@ -2,12 +2,12 @@ import React from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@atoms/Button/Button';
-import Spinner from '@atoms/Spinner/Spinner';
-import HeaderTag from '@atoms/Tag/HeaderTag';
-import Row from '@containers/Row/Row';
+import Button from '@components/atoms/Button/Button';
+import Spinner from '@components/atoms/Spinner/Spinner';
+import HeaderTag from '@components/atoms/Tag/HeaderTag';
+import Row from '@components/containers/Row/Row';
 import useBreakpoint from '@hooks/useBreakpoint';
-import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
+import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
 import { ClassNameProps, LoadingProps, ShowProps } from '@util/constants';
 import { cx } from '@util/util';
 import MainNavigation, { MainNavigationProps } from './MainNavigation';

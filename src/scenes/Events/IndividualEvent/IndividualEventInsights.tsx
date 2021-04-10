@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Separator from '@atoms/Separator';
-import GrayCard from '@containers/Card/GrayCard';
-import Row from '@containers/Row/Row';
-import Section from '@containers/Section';
+import Separator from '@components/atoms/Separator';
+import GrayCard from '@components/containers/Card/GrayCard';
+import Row from '@components/containers/Row/Row';
+import Section from '@components/containers/Section';
 import { IEvent, IMember } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import SidebarHamburgerButton from '@organisms/Sidebar/SidebarHamburgerButton';
+import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 

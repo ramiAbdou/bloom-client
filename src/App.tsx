@@ -10,10 +10,10 @@ import utc from 'dayjs/plugin/utc';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Loader from '@organisms/Loader/Loader';
-import Modal from '@organisms/Modal/Modal';
-import Panel from '@organisms/Panel/Panel';
-import ToastQueue from '@organisms/Toast/Toast';
+import Loader from '@components/organisms/Loader/Loader';
+import Modal from '@components/organisms/Modal/Modal';
+import Panel from '@components/organisms/Panel/Panel';
+import ToastQueue from '@components/organisms/Toast/Toast';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import AppProvider from './AppProvider';

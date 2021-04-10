@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MainContent from '@containers/Main/MainContent';
-import Scene from '@containers/Scene';
+import MainContent from '@components/containers/Main/MainContent';
+import Scene from '@components/containers/Scene';
 import { IMember } from '@db/db.entities';
 import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@store/Store';

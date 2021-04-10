@@ -1,6 +1,6 @@
 import validator from 'validator';
 
-import { FormItemData } from '@organisms/Form/Form.types';
+import { FormItemData } from '@components/organisms/Form/Form.types';
 
 /**
  * Returns the error message from the form item.

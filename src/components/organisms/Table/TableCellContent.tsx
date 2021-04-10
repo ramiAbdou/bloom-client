@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Attribute from '@atoms/Tag/Attribute';
-import Pill from '@atoms/Tag/Pill';
+import Attribute from '@components/atoms/Tag/Attribute';
+import Pill from '@components/atoms/Tag/Pill';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import TableStore from './Table.store';
 import { TableColumn } from './Table.types';

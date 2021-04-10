@@ -1,11 +1,11 @@
 import React from 'react';
 
-import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import Section from '@containers/Section';
+import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
+import Section from '@components/containers/Section';
 import { IEvent, IEventGuest } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
-import List from '@organisms/List/List';
-import ListStore from '@organisms/List/List.store';
+import List from '@components/organisms/List/List';
+import ListStore from '@components/organisms/List/List.store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Radio from '@molecules/Radio/Radio';
-import { RadioOptionProps } from '@molecules/Radio/Radio.types';
+import Radio from '@components/molecules/Radio/Radio';
+import { RadioOptionProps } from '@components/molecules/Radio/Radio.types';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';

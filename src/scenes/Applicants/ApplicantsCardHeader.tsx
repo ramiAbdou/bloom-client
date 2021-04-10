@@ -1,8 +1,8 @@
 import day from 'dayjs';
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import Row from '@containers/Row/Row';
+import Button from '@components/atoms/Button/Button';
+import Row from '@components/containers/Row/Row';
 import { IMember } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';

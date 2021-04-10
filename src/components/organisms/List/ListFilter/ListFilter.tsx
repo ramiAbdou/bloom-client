@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
-import Row from '@containers/Row/Row';
+import Row from '@components/containers/Row/Row';
 import { IQuestion } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
-import PanelCloseButton from '@organisms/Panel/PanelCloseButton';
+import PanelCloseButton from '@components/organisms/Panel/PanelCloseButton';
 import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';

@@ -1,17 +1,17 @@
 import React from 'react';
 
-import Section from '@containers/Section';
-import Show from '@containers/Show';
+import Section from '@components/containers/Section';
+import Show from '@components/containers/Show';
 import { IEvent, IMember } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
-import Table from '@organisms/Table/Table';
+import Table from '@components/organisms/Table/Table';
 import {
   TableColumn,
   TableOptions,
   TableRow
-} from '@organisms/Table/Table.types';
-import TableContent from '@organisms/Table/TableContent';
+} from '@components/organisms/Table/Table.types';
+import TableContent from '@components/organisms/Table/TableContent';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import {

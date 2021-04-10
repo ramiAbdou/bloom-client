@@ -2,7 +2,7 @@ import { ICommunity, IMember, IQuestion } from '@db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@organisms/Form/Form.types';
+} from '@components/organisms/Form/Form.types';
 import { QuestionCategory } from '@util/constants';
 
 const useValidateEmail = (): OnFormSubmitFunction => {

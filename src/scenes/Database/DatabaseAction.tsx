@@ -1,6 +1,6 @@
 import React, { FC, MutableRefObject } from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button/Button';
+import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import useTooltip from '@hooks/useTooltip';
 import { cx } from '@util/util';
 

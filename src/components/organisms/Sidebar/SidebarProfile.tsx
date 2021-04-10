@@ -5,7 +5,7 @@ import { IMember } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
-import ProfilePicture from '@molecules/ProfilePicture/ProfilePicture';
+import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';

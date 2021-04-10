@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Row from '@containers/Row/Row';
-import Section from '@containers/Section';
+import Row from '@components/containers/Row/Row';
+import Section from '@components/containers/Section';
 import MembersAnalyticsActiveMembersCard from './MembersAnalyticsActiveCard';
 import MembersAnalyticsTotalMembersCard from './MembersAnalyticsTotalCard';
 

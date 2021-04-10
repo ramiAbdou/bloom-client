@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { ICommunity, IQuestion } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import Dropdown from '@molecules/Dropdown/Dropdown';
+import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
 import { useStoreState } from '@store/Store';
 import { QuestionCategory } from '@util/constants';

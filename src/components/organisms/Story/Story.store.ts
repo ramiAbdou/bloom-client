@@ -7,8 +7,8 @@ import {
   createContextStore
 } from 'easy-peasy';
 
-import { FormItemData, SetValueArgs } from '@organisms/Form/Form.types';
-import { getError, getFormItemKey } from '@organisms/Form/Form.util';
+import { FormItemData, SetValueArgs } from '@components/organisms/Form/Form.types';
+import { getError, getFormItemKey } from '@components/organisms/Form/Form.util';
 import { StoryPageProps } from './Story.types';
 
 export type StoryModel = {

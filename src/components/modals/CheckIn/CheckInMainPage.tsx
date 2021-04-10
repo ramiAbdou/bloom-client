@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 
-import StoryStore from '@organisms/Story/Story.store';
-import StoryPage from '@organisms/Story/StoryPage';
+import StoryStore from '@components/organisms/Story/Story.store';
+import StoryPage from '@components/organisms/Story/StoryPage';
 import { ErrorContext } from '@util/constants.errors';
 import CheckInGuestForm from './CheckInGuestForm';
 import CheckInLoginContent from './CheckInLoginContent';

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MainHeader from '@containers/Main/MainHeader';
-import Row from '@containers/Row/Row';
+import MainHeader from '@components/containers/Main/MainHeader';
+import Row from '@components/containers/Row/Row';
 import { IMember, MemberStatus } from '@db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import { useStoreState } from '@store/Store';

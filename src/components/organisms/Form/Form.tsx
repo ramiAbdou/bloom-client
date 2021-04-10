@@ -1,10 +1,10 @@
 import deepequal from 'fast-deep-equal';
 import React, { useCallback } from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
-import StoryStore from '@organisms/Story/Story.store';
+import StoryStore from '@components/organisms/Story/Story.store';
 import { useStore } from '@store/Store';
 import { cx } from '@util/util';
 import FormStore, { formModel } from './Form.store';

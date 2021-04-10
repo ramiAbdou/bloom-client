@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { BaseProps } from '@util/constants';
 import MainNavigationButton, {
   MainNavigationOptionProps

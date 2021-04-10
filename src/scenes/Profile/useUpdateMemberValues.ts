@@ -4,7 +4,7 @@ import {
   FormItemData,
   OnFormSubmitArgs,
   OnFormSubmitFunction
-} from '@organisms/Form/Form.types';
+} from '@components/organisms/Form/Form.types';
 import { MutationEvent } from '@util/constants.events';
 import { MemberValueInput, UpdateMemberValueArgs } from './Profile.types';
 

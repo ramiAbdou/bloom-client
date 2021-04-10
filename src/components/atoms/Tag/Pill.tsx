@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { ShowProps } from '@util/constants';
 import { cx, take } from '@util/util';
 

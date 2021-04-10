@@ -1,8 +1,8 @@
 import React from 'react';
 
-import LoadingHeader from '@containers/LoadingHeader/LoadingHeader';
-import Section from '@containers/Section';
-import Chart from '@organisms/Chart/Chart';
+import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
+import Section from '@components/containers/Section';
+import Chart from '@components/organisms/Chart/Chart';
 import IdStore from '@store/Id.store';
 import MembersAnalyticsPlaygroundHeader from './MembersAnalyticsPlaygroundHeader';
 import useInitMembersAnalyticsPlayground from './useInitMembersAnalyticsPlayground';

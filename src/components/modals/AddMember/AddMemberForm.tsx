@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
-import Row from '@containers/Row/Row';
-import Form from '@organisms/Form/Form';
-import FormErrorMessage from '@organisms/Form/FormErrorMessage';
-import FormHeader from '@organisms/Form/FormHeader';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import Button from '@components/atoms/Button/Button';
+import Row from '@components/containers/Row/Row';
+import Form from '@components/organisms/Form/Form';
+import FormErrorMessage from '@components/organisms/Form/FormErrorMessage';
+import FormHeader from '@components/organisms/Form/FormHeader';
+import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import IdStore from '@store/Id.store';
 import { useStoreActions } from '@store/Store';
 import AddMemberStore from './AddMember.store';

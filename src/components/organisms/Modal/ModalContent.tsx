@@ -1,10 +1,10 @@
 import { ActionCreator } from 'easy-peasy';
 import React, { useEffect } from 'react';
 
-import AddMemberModal from '@modals/AddMember/AddMember';
-import CheckInModal from '@modals/CheckIn/CheckIn';
-import EventForm from '@modals/EventForm/EventForm';
-import ProfileModal from '@modals/Profile/Profile';
+import AddMemberModal from '@components/modals/AddMember/AddMember';
+import CheckInModal from '@components/modals/CheckIn/CheckIn';
+import EventForm from '@components/modals/EventForm/EventForm';
+import ProfileModal from '@components/modals/Profile/Profile';
 import ApplicantsConfirmationModal from '@scenes/Applicants/ApplicantsConfirmationModal';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
 import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';

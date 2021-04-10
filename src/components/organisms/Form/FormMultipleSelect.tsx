@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Checkbox from '@atoms/Checkbox/Checkbox';
-import Show from '@containers/Show';
+import Checkbox from '@components/atoms/Checkbox/Checkbox';
+import Show from '@components/containers/Show';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';
 import { getFormItemKey } from './Form.util';

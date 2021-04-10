@@ -1,8 +1,8 @@
 import React from 'react';
 import { IoCreateOutline } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
-import Row from '@containers/Row/Row';
+import Button from '@components/atoms/Button/Button';
+import Row from '@components/containers/Row/Row';
 
 interface ProfileCardHeaderProps {
   canEdit?: boolean;

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { IoCamera } from 'react-icons/io5';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import { convertImageToBase64 } from '@util/imageUtil';
 import FormStore from './Form.store';
 import { FormItemData } from './Form.types';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@atoms/Button/Button';
-import MainHeader from '@containers/Main/MainHeader';
-import { MainNavigationOptionProps } from '@containers/Main/MainNavigationButton';
+import Button from '@components/atoms/Button/Button';
+import MainHeader from '@components/containers/Main/MainHeader';
+import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
 import { IMember, MemberRole } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useFinalPath from '@hooks/useFinalPath';

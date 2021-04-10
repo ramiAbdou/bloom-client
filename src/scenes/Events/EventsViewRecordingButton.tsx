@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@atoms/Button/Button';
+import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { IEvent, IEventWatch, IMember } from '@db/db.entities';
 import GQL from '@gql/GQL';
 import useFindOne from '@gql/hooks/useFindOne';

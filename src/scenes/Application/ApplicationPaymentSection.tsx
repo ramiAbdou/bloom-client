@@ -1,17 +1,17 @@
 import React from 'react';
 
-import Separator from '@atoms/Separator';
-import Row from '@containers/Row/Row';
-import Show from '@containers/Show';
+import Separator from '@components/atoms/Separator';
+import Row from '@components/containers/Row/Row';
+import Show from '@components/containers/Show';
 import { IMemberType } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-// import PaymentStripeProvider from '@modals/Payment/PaymentStripeProvider';
-import Form from '@organisms/Form/Form';
-import FormCreditCard from '@organisms/Form/FormCreditCard';
-import FormHeader from '@organisms/Form/FormHeader';
-import FormShortText from '@organisms/Form/FormShortText';
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
-import StoryStore from '@organisms/Story/Story.store';
+// import PaymentStripeProvider from '@components/modals/Payment/PaymentStripeProvider';
+import Form from '@components/organisms/Form/Form';
+import FormCreditCard from '@components/organisms/Form/FormCreditCard';
+import FormHeader from '@components/organisms/Form/FormHeader';
+import FormShortText from '@components/organisms/Form/FormShortText';
+import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
+import StoryStore from '@components/organisms/Story/Story.store';
 import { useStoreState } from '@store/Store';
 import useSavePaymentMethod from './useSavePaymentMethod';
 

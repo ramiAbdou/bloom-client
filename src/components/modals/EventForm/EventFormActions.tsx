@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FormSubmitButton from '@organisms/Form/FormSubmitButton';
+import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { useStoreState } from '@store/Store';
 import EventFormDeleteButton from './EventFormDeleteButton';
 

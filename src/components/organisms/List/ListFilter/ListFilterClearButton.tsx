@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import ListStore from '../List.store';
 import ListFilterStore from './ListFilter.store';
 

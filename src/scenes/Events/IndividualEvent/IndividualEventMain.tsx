@@ -1,7 +1,7 @@
 import day from 'dayjs';
 import React from 'react';
 
-import HeaderTag from '@atoms/Tag/HeaderTag';
+import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import { EventPrivacy, IEvent } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';

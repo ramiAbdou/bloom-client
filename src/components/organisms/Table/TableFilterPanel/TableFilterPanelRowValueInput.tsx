@@ -1,10 +1,10 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import Input from '@atoms/Input/Input';
+import Input from '@components/atoms/Input/Input';
 import { IQuestion } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import Dropdown from '@molecules/Dropdown/Dropdown';
+import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import IdStore from '@store/Id.store';
 import { QuestionType } from '@util/constants';
 import TableFilterStore from './TableFilterPanel.store';

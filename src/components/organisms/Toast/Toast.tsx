@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import Button from '@atoms/Button/Button';
+import Button from '@components/atoms/Button/Button';
 import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 import { ToastOptions } from './Toast.types';

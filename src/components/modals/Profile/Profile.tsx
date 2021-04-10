@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Show from '@containers/Show';
+import Show from '@components/containers/Show';
 import { IMember } from '@db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import IdStore from '@store/Id.store';

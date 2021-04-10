@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GrayCard from '@containers/Card/GrayCard';
+import GrayCard from '@components/containers/Card/GrayCard';
 import useCustomQuery from '@gql/hooks/useCustomQuery';
 
 interface GetActiveMembersGrowthResult {
