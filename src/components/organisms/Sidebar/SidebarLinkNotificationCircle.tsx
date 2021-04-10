@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { IMember, MemberStatus } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import { SidebarLinkOptions } from './Sidebar.types';
 
 const SidebarLinkNotificationCircle: React.FC<
@@ -10,7 +10,7 @@ const SidebarLinkNotificationCircle: React.FC<
 > = ({ to }) => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const pendingMembers: IMember[] = useFind(IMember, {
+  const { data: pendingMembers, loading } = useFindFull(IMember, {
     where: { communityId, status: MemberStatus.PENDING }
   });
 
@@ -19,7 +19,7 @@ const SidebarLinkNotificationCircle: React.FC<
   if (to !== 'applicants') return null;
 
   // If there are no applicants, return null.
-  if (!pendingMembers?.length) return null;
+  if (loading || !pendingMembers?.length) return null;
 
   return <div className="br-50 bg-primary h-ss ml-auto mr-xs w-ss" />;
 };

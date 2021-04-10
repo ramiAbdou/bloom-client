@@ -2,8 +2,8 @@ import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import { IMember } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 
 const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
   exact,
@@ -11,7 +11,7 @@ const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
 }) => {
   const userId: string = useStoreState(({ db }) => db.userId);
 
-  const members: IMember[] = useFind(IMember, {
+  const { data: members } = useFindFull(IMember, {
     fields: ['community.id', 'community.urlName'],
     skip: !userId, // Only fire query if userId is present.
     where: { userId }

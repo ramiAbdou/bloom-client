@@ -6,10 +6,9 @@ import MainContent from '@components/containers/Main/MainContent';
 import Section from '@components/containers/Section';
 import List from '@components/organisms/List/List';
 import ListStore from '@components/organisms/List/List.store';
-import { useStoreState } from '@core/store/Store';
 import { IEvent } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import { QueryResult } from '@gql/GQL.types';
-import useFind from '@gql/hooks/useFind';
 import useFindFull from '@gql/hooks/useFindFull';
 import { sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from './Events.util';
@@ -19,10 +18,12 @@ import EventsHeader from './EventsHeader';
 const UpcomingEventsContent: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const events = useFind(IEvent, {
+  const { data: events, loading } = useFindFull(IEvent, {
     fields: ['deletedAt', 'endTime', 'startTime'],
     where: { id: communityId }
   });
+
+  if (loading) return null;
 
   const upcomingEvents: IEvent[] = events
     ?.filter((event: IEvent) => !event.deletedAt)

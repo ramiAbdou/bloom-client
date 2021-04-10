@@ -3,8 +3,6 @@ import React from 'react';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
-import { IEvent, IEventAttendee } from '@core/db/db.entities';
-import useFind from '@gql/hooks/useFind';
 import Table from '@components/organisms/Table/Table';
 import {
   TableColumn,
@@ -12,6 +10,8 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
+import { IEvent, IEventAttendee } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -20,7 +20,7 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const events: IEvent[] = useFind(IEvent, {
+  const { data: events, loading } = useFindFull(IEvent, {
     fields: [
       'eventAttendees.id',
       'eventAttendees.member.email',
@@ -36,6 +36,8 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
     ],
     where: { communityId, endTime: { _lt: day.utc().format() } }
   });
+
+  if (loading) return null;
 
   const allAttendees: IEventAttendee[] = events?.reduce(
     (result: IEventAttendee[], event: IEvent) =>

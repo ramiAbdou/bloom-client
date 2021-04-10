@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import Row from '@components/containers/Row/Row';
 import PanelCloseButton from '@components/organisms/Panel/PanelCloseButton';
 import { IQuestion } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import ListFilterQuestion from '../ListFilterQuestion/ListFilterQuestion';
@@ -22,10 +22,12 @@ const ListFilterHeader: React.FC = () => (
 const ListFilterQuestionList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const questions: IQuestion[] = useFind(IQuestion, {
+  const { data: questions, loading } = useFindFull(IQuestion, {
     fields: ['locked', 'rank', 'type'],
     where: { communityId }
   });
+
+  if (loading) return null;
 
   const sortedQuestions: IQuestion[] = questions
     ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))

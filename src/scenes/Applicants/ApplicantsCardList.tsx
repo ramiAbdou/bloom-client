@@ -1,19 +1,21 @@
 import React from 'react';
 
-import { IMember } from '@core/db/db.entities';
+import { IMember, MemberStatus } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import ApplicantCard from './ApplicantsCard';
 
 const ApplicantsCardList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const pendingMembers: IMember[] = useFind(IMember, {
+  const { data: pendingMembers, loading } = useFindFull(IMember, {
     fields: ['createdAt', 'status'],
-    where: { communityId, status: 'Pending' }
+    where: { communityId, status: MemberStatus.PENDING }
   });
 
-  if (!pendingMembers?.length) {
+  if (loading) return null;
+
+  if (!pendingMembers.length) {
     return <p>There are no pending applicants. 👍</p>;
   }
 

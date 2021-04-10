@@ -6,8 +6,8 @@ import Section from '@components/containers/Section';
 import List from '@components/organisms/List/List';
 import ListStore from '@components/organisms/List/List.store';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';
 import EventsCard from './EventsCard/EventsCard';
@@ -16,7 +16,7 @@ const PastEventsYourList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const events: IEvent[] = useFind(IEvent, {
+  const { data: events, loading } = useFindFull(IEvent, {
     fields: [
       'deletedAt',
       'description',
@@ -29,6 +29,8 @@ const PastEventsYourList: React.FC = () => {
     ],
     where: { communityId, endTime: { _lt: day.utc().format() } }
   });
+
+  if (loading) return null;
 
   const sortedEvents: IEvent[] = events
     ?.filter((event: IEvent) =>
@@ -52,7 +54,7 @@ const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const events: IEvent[] = useFind(IEvent, {
+  const { data: events, loading: loading1 } = useFindFull(IEvent, {
     fields: [
       'deletedAt',
       'description',
@@ -65,6 +67,8 @@ const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
     ],
     where: { communityId, endTime: { _lt: day.utc().format() } }
   });
+
+  if (loading1) return null;
 
   const filteredEvents: IEvent[] = events?.filter((event: IEvent) =>
     event.eventAttendees.some(

@@ -7,8 +7,8 @@ import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { IMemberType } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
@@ -34,14 +34,18 @@ const ApplicationChooseTypeButton: React.FC = () => {
 
 const ApplicationChooseTypeForm: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
+  const goForward = StoryStore.useStoreActions((state) => state.goForward);
 
-  const memberTypes: IMemberType[] = useFind(IMemberType, {
+  const { data: memberTypes, loading } = useFindFull(IMemberType, {
     fields: ['amount'],
     where: { communityId }
   });
 
-  const goForward = StoryStore.useStoreActions((state) => state.goForward);
-  const onSubmit = async () => goForward();
+  if (loading) return null;
+
+  const onSubmit = async (): Promise<void> => {
+    goForward();
+  };
 
   return (
     <Form onSubmit={onSubmit}>
@@ -62,10 +66,12 @@ const ApplicationChooseTypeForm: React.FC = () => {
 const ApplicationChooseType: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const memberTypes: IMemberType[] = useFind(IMemberType, {
+  const { data: memberTypes, loading } = useFindFull(IMemberType, {
     fields: ['amount'],
     where: { communityId }
   });
+
+  if (loading) return null;
 
   const isMultipleTypesOrPaid: boolean = memberTypes?.some(
     (memberType: IMemberType) => !!memberType?.amount

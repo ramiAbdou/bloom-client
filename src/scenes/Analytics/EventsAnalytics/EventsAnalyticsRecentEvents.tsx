@@ -13,8 +13,8 @@ import {
 import TableContent from '@components/organisms/Table/TableContent';
 import TableSearchBar from '@components/organisms/Table/TableSeachBar';
 import { ICommunity, IEvent } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -22,7 +22,7 @@ import { sortObjects } from '@util/util';
 const EventsAnalyticsRecentEventsTable: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const events: IEvent[] = useFind(IEvent, {
+  const { data: events, loading: loading1 } = useFindFull(IEvent, {
     fields: [
       'eventAttendees.id',
       'eventGuests.id',
@@ -33,14 +33,14 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
     where: { communityId, endTime: { _lt: day.utc().format() } }
   });
 
-  const { data: community, loading } = useFindOne(ICommunity, {
+  const { data: community, loading: loading2 } = useFindOne(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });
 
   const { push } = useHistory();
 
-  if (loading) return null;
+  if (loading1 || loading2) return null;
 
   const rows: TableRow[] = events
     .sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'))

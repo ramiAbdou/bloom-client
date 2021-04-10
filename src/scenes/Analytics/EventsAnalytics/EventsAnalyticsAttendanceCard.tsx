@@ -3,16 +3,18 @@ import React from 'react';
 
 import GrayCard from '@components/containers/Card/GrayCard';
 import { IEvent } from '@core/db/db.entities';
-import useFind from '@gql/hooks/useFind';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
 
 const EventsAnalyticsTotalCard: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const pastEvents: IEvent[] = useFind(IEvent, {
+  const { data: pastEvents, loading } = useFindFull(IEvent, {
     fields: ['endTime', 'eventAttendees.id', 'startTime'],
     where: { communityId, endTime: { _lt: day.utc().format() } }
   });
+
+  if (loading) return null;
 
   const attendeesCount: number = pastEvents.reduce(
     (totalCount: number, event: IEvent) =>

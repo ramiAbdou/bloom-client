@@ -7,9 +7,9 @@ import {
   IQuestion,
   MemberStatus
 } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 
@@ -61,7 +61,7 @@ const getMemberValue = ({ member, question, value }: GetMemberValueArgs) => {
 export const useMemberDatabaseRows = (): TableRow[] => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const members: IMember[] = useFind(IMember, {
+  const { data: members, loading: loading1 } = useFindFull(IMember, {
     fields: [
       'bio',
       'deletedAt',
@@ -86,11 +86,11 @@ export const useMemberDatabaseRows = (): TableRow[] => {
     where: { communityId, status: MemberStatus.ACCEPTED }
   });
 
-  const { data: question, loading } = useFindOne(IQuestion, {
+  const { data: question, loading: loading2 } = useFindOne(IQuestion, {
     where: { category: QuestionCategory.JOINED_AT, communityId }
   });
 
-  if (loading) return [];
+  if (loading1 || loading2) return [];
 
   const rows: TableRow[] = members
     ?.filter((member: IMember) => !member.deletedAt)
@@ -117,10 +117,12 @@ export const useMemberDatabaseRows = (): TableRow[] => {
 export const useMemberDatabaseColumns = (): TableColumn[] => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const questions: IQuestion[] = useFind(IQuestion, {
+  const { data: questions, loading } = useFindFull(IQuestion, {
     fields: ['category', 'rank', 'title', 'type'],
     where: { communityId }
   });
+
+  if (loading) return null;
 
   const columns: TableColumn[] = questions
     ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'))

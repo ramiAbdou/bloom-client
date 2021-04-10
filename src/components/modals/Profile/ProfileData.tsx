@@ -4,15 +4,14 @@ import Separator from '@components/atoms/Separator';
 import Show from '@components/containers/Show';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import IdStore from '@core/store/Id.store';
 import { IMemberValue } from '@core/db/db.entities';
-import useFind from '@gql/hooks/useFind';
+import IdStore from '@core/store/Id.store';
 import useFindFull from '@gql/hooks/useFindFull';
 
 const ProfileDataContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const memberValues: IMemberValue[] = useFind(IMemberValue, {
+  const { data: memberValues, loading } = useFindFull(IMemberValue, {
     fields: [
       'id',
       'question.category',
@@ -24,6 +23,8 @@ const ProfileDataContent: React.FC = () => {
     ],
     where: { memberId }
   });
+
+  if (loading) return null;
 
   const items: QuestionBoxItemProps[] = memberValues
     ?.filter((memberValue: IMemberValue) => !memberValue.question.category)

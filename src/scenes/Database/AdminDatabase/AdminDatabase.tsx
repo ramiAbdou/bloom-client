@@ -5,9 +5,9 @@ import Table from '@components/organisms/Table/Table';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import { IMember, MemberRole } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
@@ -15,7 +15,7 @@ const AdminDatabase: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const members: IMember[] = useFind(IMember, {
+  const { data: members, loading: loading1 } = useFindFull(IMember, {
     fields: ['email', 'firstName', 'lastName'],
     where: { communityId, role: { _ne: null } }
   });
@@ -25,12 +25,12 @@ const AdminDatabase: React.FC = () => {
     return { email, firstName, id: member.id, lastName };
   }, []);
 
-  const { data: member, loading } = useFindOne(IMember, {
+  const { data: member, loading: loading2 } = useFindOne(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  if (loading) return null;
+  if (loading1 || loading2) return null;
 
   const isOwner: boolean = member.role === MemberRole.OWNER;
 

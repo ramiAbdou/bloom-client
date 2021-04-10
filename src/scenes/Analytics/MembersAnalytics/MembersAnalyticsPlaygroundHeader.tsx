@@ -2,9 +2,9 @@ import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { IMemberType, IQuestion } from '@core/db/db.entities';
-import useFind from '@gql/hooks/useFind';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
+import { IMemberType, IQuestion } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
@@ -12,15 +12,22 @@ import { sortObjects } from '@util/util';
 
 const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
+  const questionId: string = IdStore.useStoreState((state) => state.id);
 
-  const memberTypes: IMemberType[] = useFind(IMemberType, {
+  const setQuestionId: ActionCreator<string> = IdStore.useStoreActions(
+    (state) => state.setId
+  );
+
+  const { data: memberTypes, loading: loading1 } = useFindFull(IMemberType, {
     where: { communityId }
   });
 
-  const questions: IQuestion[] = useFind(IQuestion, {
+  const { data: questions, loading: loading2 } = useFindFull(IQuestion, {
     fields: ['category', 'rank', 'title'],
     where: { communityId }
   });
+
+  if (loading1 || loading2) return null;
 
   const filteredQuestions: IQuestion[] = questions
     ?.filter((question: IQuestion) => {
@@ -36,12 +43,6 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
       );
     })
     ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'));
-
-  const questionId: string = IdStore.useStoreState((state) => state.id);
-
-  const setQuestionId: ActionCreator<string> = IdStore.useStoreActions(
-    (state) => state.setId
-  );
 
   const onSelect = (result: string) => {
     const updatedQuestionId: string = filteredQuestions.find(

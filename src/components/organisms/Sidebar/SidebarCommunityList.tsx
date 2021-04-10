@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { IMember, MemberStatus } from '@core/db/db.entities';
+import useFindFull from '@core/gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
-import useFind from '@gql/hooks/useFind';
 import { sortObjects } from '@util/util';
 import SidebarCommunityButton from './SidebarCommunityButton';
 
 const SidebarCommunityList: React.FC = () => {
   const userId: string = useStoreState(({ db }) => db.userId);
 
-  const members: IMember[] = useFind(IMember, {
+  const { data: members, loading } = useFindFull(IMember, {
     fields: [
       'community.logoUrl',
       'community.id',
@@ -18,6 +18,8 @@ const SidebarCommunityList: React.FC = () => {
     ],
     where: { status: MemberStatus.ACCEPTED, userId }
   });
+
+  if (loading) return null;
 
   const sortedMembers: IMember[] = members?.sort((a: IMember, b: IMember) =>
     sortObjects(a, b, 'joinedAt', 'ASC')
