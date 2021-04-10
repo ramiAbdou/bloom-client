@@ -59,7 +59,7 @@ const TableBody: React.FC = () => {
 };
 
 const TableContent: React.FC<TableContentProps> = ({
-  emptyMessage: eMessage = `Couldn't find any table data.`,
+  emptyMessage: eMessage,
   small,
   rows
 }) => {
@@ -82,7 +82,7 @@ const TableContent: React.FC<TableContentProps> = ({
         </table>
       </div>
 
-      {emptyMessage && <p>{emptyMessage}</p>}
+      {emptyMessage && <p className="mt-sm">{emptyMessage}</p>}
     </Show>
   );
 };

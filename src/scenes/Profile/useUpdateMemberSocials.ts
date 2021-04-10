@@ -23,9 +23,7 @@ const useUpdateMemberSocials = (): OnFormSubmitFunction => {
 
     const { error } = await gql.update(IMemberSocials, {
       data: { facebookUrl, instagramUrl, linkedInUrl, twitterUrl },
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      where: { id: db.member.memberSocials }
+      where: { member: { id: db.memberId } }
     });
 
     if (error) {
