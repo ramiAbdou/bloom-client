@@ -3,7 +3,7 @@ import { IoTrash } from 'react-icons/io5';
 
 import TableStore from '@components/organisms/Table/Table.store';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType } from '@util/constants';
@@ -21,7 +21,7 @@ const useDeleteTooltip = (): string => {
     (state) => state.selectedRowIds
   );
 
-  const { data: members, loading: loading1 } = useFindFull(IMember, {
+  const { data: members, loading: loading1 } = useFind(IMember, {
     where: { id: { _in: selectedRowIds } }
   });
 

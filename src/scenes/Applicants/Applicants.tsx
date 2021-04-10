@@ -3,15 +3,15 @@ import React from 'react';
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
 import { IMember } from '@core/db/db.entities';
-import useFindFull from '@gql/hooks/useFindFull';
 import { useStoreState } from '@core/store/Store';
+import useFind from '@gql/hooks/useFind';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 
 const Applicants: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { loading } = useFindFull(IMember, {
+  const { loading } = useFind(IMember, {
     fields: [
       'community.id',
       'createdAt',

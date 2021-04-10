@@ -4,7 +4,7 @@ import React from 'react';
 import Show from '@components/containers/Show';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import { IMemberType, IQuestion } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
@@ -18,11 +18,11 @@ const MembersAnalyticsPlaygroundDropdown: React.FC = () => {
     (state) => state.setId
   );
 
-  const { data: memberTypes, loading: loading1 } = useFindFull(IMemberType, {
+  const { data: memberTypes, loading: loading1 } = useFind(IMemberType, {
     where: { communityId }
   });
 
-  const { data: questions, loading: loading2 } = useFindFull(IQuestion, {
+  const { data: questions, loading: loading2 } = useFind(IQuestion, {
     fields: ['category', 'rank', 'title'],
     where: { communityId }
   });

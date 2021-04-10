@@ -6,7 +6,7 @@ import Section from '@components/containers/Section';
 import List from '@components/organisms/List/List';
 import ListStore from '@components/organisms/List/List.store';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -16,7 +16,7 @@ const PastEventsYourList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: events, loading } = useFindFull(IEvent, {
+  const { data: events, loading } = useFind(IEvent, {
     fields: [
       'deletedAt',
       'description',
@@ -54,7 +54,7 @@ const PastEventsYourSection: React.FC<LoadingProps> = ({ loading }) => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: events, loading: loading1 } = useFindFull(IEvent, {
+  const { data: events, loading: loading1 } = useFind(IEvent, {
     fields: [
       'deletedAt',
       'description',

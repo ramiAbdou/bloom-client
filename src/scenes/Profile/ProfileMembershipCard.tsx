@@ -9,7 +9,7 @@ import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { ICommunity, IMember, IMemberValue } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindFull from '@gql/hooks/useFindFull';
+import useFind from '@gql/hooks/useFind';
 import { ModalType, QuestionCategory } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
 
@@ -40,7 +40,7 @@ const ProfileMembershipHeader: React.FC = () => {
 const ProfileMembershipContent: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: memberValues, loading } = useFindFull(IMemberValue, {
+  const { data: memberValues, loading } = useFind(IMemberValue, {
     fields: [
       'id',
       'question.category',
@@ -105,7 +105,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 const ProfileMembershipCard: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { loading } = useFindFull(IMemberValue, {
+  const { loading } = useFind(IMemberValue, {
     fields: ['id', 'member.id', 'question.id', 'value'],
     where: { memberId }
   });

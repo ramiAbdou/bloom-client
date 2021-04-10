@@ -7,7 +7,7 @@ import List from '@components/organisms/List/List';
 import ListStore from '@components/organisms/List/List.store';
 import ListSearchBar from '@components/organisms/List/ListSearchBar';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -17,7 +17,7 @@ const PastEventsList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: events, loading } = useFindFull(IEvent, {
+  const { data: events, loading } = useFind(IEvent, {
     fields: [
       'deletedAt',
       'description',

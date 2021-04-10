@@ -6,12 +6,12 @@ import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import { IMemberValue } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import useFindFull from '@gql/hooks/useFindFull';
+import useFind from '@gql/hooks/useFind';
 
 const ProfileDataContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { data: memberValues, loading } = useFindFull(IMemberValue, {
+  const { data: memberValues, loading } = useFind(IMemberValue, {
     fields: [
       'id',
       'question.category',
@@ -52,7 +52,7 @@ const ProfileDataContent: React.FC = () => {
 const ProfileData: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { data } = useFindFull(IMemberValue, {
+  const { data } = useFind(IMemberValue, {
     fields: ['member.id', 'question.id', 'value'],
     where: { memberId }
   });

@@ -5,7 +5,7 @@ import Table from '@components/organisms/Table/Table';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { QuestionType } from '@util/constants';
@@ -15,7 +15,7 @@ const AdminDatabase: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { data: members, loading: loading1 } = useFindFull(IMember, {
+  const { data: members, loading: loading1 } = useFind(IMember, {
     fields: ['email', 'firstName', 'lastName'],
     where: { communityId, role: { _ne: null } }
   });

@@ -4,7 +4,7 @@ import Show from '@components/containers/Show';
 import { IMember } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import { QueryResult } from '@gql/GQL.types';
-import useFindFull from '@gql/hooks/useFindFull';
+import useFind from '@gql/hooks/useFind';
 import MembersAnalyticsCharts from './MembersAnalyticsCharts';
 import MembersAnalyticsInsights from './MembersAnalyticsInsights';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';
@@ -12,7 +12,7 @@ import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';
 const MembersAnalytics: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { loading }: Partial<QueryResult> = useFindFull(IMember, {
+  const { loading }: Partial<QueryResult> = useFind(IMember, {
     fields: [
       'id',
       'community.id',

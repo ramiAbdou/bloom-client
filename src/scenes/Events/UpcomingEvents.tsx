@@ -9,7 +9,7 @@ import ListStore from '@components/organisms/List/List.store';
 import { IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
 import { QueryResult } from '@gql/GQL.types';
-import useFindFull from '@gql/hooks/useFindFull';
+import useFind from '@gql/hooks/useFind';
 import { sortObjects } from '@util/util';
 import { EventTiming, getEventTiming } from './Events.util';
 import EventsCard from './EventsCard/EventsCard';
@@ -18,7 +18,7 @@ import EventsHeader from './EventsHeader';
 const UpcomingEventsContent: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: events, loading } = useFindFull(IEvent, {
+  const { data: events, loading } = useFind(IEvent, {
     fields: ['deletedAt', 'endTime', 'startTime'],
     where: { id: communityId }
   });
@@ -43,7 +43,7 @@ const UpcomingEventsContent: React.FC = () => {
 const UpcomingEvents: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { loading }: QueryResult = useFindFull(IEvent, {
+  const { loading }: QueryResult = useFind(IEvent, {
     fields: [
       'community.id',
       'endTime',

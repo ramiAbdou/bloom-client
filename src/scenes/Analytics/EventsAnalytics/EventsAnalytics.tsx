@@ -4,7 +4,7 @@ import React from 'react';
 import Show from '@components/containers/Show';
 import { IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindFull from '@gql/hooks/useFindFull';
+import useFind from '@gql/hooks/useFind';
 import EventAnalyticsChart from './EventAnalyticsChart';
 import EventsAnalyticsOverview from './EventsAnalyticsOverview';
 import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';
@@ -13,7 +13,7 @@ import EventsAnalyticsTopEventGoers from './EventsAnalyticsTopEventGoers';
 const EventsAnalytics: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: events, loading } = useFindFull(IEvent, {
+  const { data: events, loading } = useFind(IEvent, {
     fields: [
       'community.id',
       'endTime',

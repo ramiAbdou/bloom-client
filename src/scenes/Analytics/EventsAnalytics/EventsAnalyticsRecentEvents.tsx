@@ -13,7 +13,7 @@ import {
 import TableContent from '@components/organisms/Table/TableContent';
 import TableSearchBar from '@components/organisms/Table/TableSeachBar';
 import { ICommunity, IEvent } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
@@ -22,7 +22,7 @@ import { sortObjects } from '@util/util';
 const EventsAnalyticsRecentEventsTable: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: events, loading: loading1 } = useFindFull(IEvent, {
+  const { data: events, loading: loading1 } = useFind(IEvent, {
     fields: [
       'eventAttendees.id',
       'eventGuests.id',

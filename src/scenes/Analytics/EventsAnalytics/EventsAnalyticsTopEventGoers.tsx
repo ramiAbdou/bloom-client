@@ -11,7 +11,7 @@ import {
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -20,7 +20,7 @@ const EventsAnalyticsTopEventGoersTable: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { data: events, loading } = useFindFull(IEvent, {
+  const { data: events, loading } = useFind(IEvent, {
     fields: [
       'eventAttendees.id',
       'eventAttendees.member.email',

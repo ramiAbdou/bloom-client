@@ -7,7 +7,7 @@ import {
   IQuestion,
   MemberStatus
 } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreState } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
@@ -61,7 +61,7 @@ const getMemberValue = ({ member, question, value }: GetMemberValueArgs) => {
 export const useMemberDatabaseRows = (): TableRow[] => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: members, loading: loading1 } = useFindFull(IMember, {
+  const { data: members, loading: loading1 } = useFind(IMember, {
     fields: [
       'bio',
       'deletedAt',
@@ -117,7 +117,7 @@ export const useMemberDatabaseRows = (): TableRow[] => {
 export const useMemberDatabaseColumns = (): TableColumn[] => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: questions, loading } = useFindFull(IQuestion, {
+  const { data: questions, loading } = useFind(IQuestion, {
     fields: ['category', 'rank', 'title', 'type'],
     where: { communityId }
   });

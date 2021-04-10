@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { IMember, MemberStatus } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
 import ApplicantCard from './ApplicantsCard';
 
 const ApplicantsCardList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: pendingMembers, loading } = useFindFull(IMember, {
+  const { data: pendingMembers, loading } = useFind(IMember, {
     fields: ['createdAt', 'status'],
     where: { communityId, status: MemberStatus.PENDING }
   });

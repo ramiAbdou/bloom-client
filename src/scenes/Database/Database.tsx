@@ -6,7 +6,7 @@ import Scene from '@components/containers/Scene';
 import Show from '@components/containers/Show';
 import { useStoreState } from '@core/store/Store';
 import { IMember, MemberStatus } from '@core/db/db.entities';
-import useFindFull from '@gql/hooks/useFindFull';
+import useFind from '@gql/hooks/useFind';
 import AdminDatabase from './AdminDatabase/AdminDatabase';
 import DatabaseHeader from './DatabaseHeader';
 import MemberDatabase from './MemberDatabase/MemberDatabase';
@@ -14,7 +14,7 @@ import MemberDatabase from './MemberDatabase/MemberDatabase';
 const Database: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { loading } = useFindFull(IMember, {
+  const { loading } = useFind(IMember, {
     fields: [
       'bio',
       'community.id',

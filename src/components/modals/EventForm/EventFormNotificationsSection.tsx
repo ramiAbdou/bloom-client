@@ -5,13 +5,13 @@ import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import { IMember } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindFull from '@gql/hooks/useFindFull';
+import useFind from '@gql/hooks/useFind';
 
 const EventFormNotificationsSection: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { data: members, loading } = useFindFull(IMember, {
+  const { data: members, loading } = useFind(IMember, {
     fields: ['id'],
     where: { communityId }
   });

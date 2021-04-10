@@ -7,7 +7,7 @@ import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { IMemberType } from '@core/db/db.entities';
-import useFindFull from '@core/gql/hooks/useFindFull';
+import useFind from '@core/gql/hooks/useFind';
 import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
@@ -36,7 +36,7 @@ const ApplicationChooseTypeForm: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const goForward = StoryStore.useStoreActions((state) => state.goForward);
 
-  const { data: memberTypes, loading } = useFindFull(IMemberType, {
+  const { data: memberTypes, loading } = useFind(IMemberType, {
     fields: ['amount'],
     where: { communityId }
   });
@@ -66,7 +66,7 @@ const ApplicationChooseTypeForm: React.FC = () => {
 const ApplicationChooseType: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { data: memberTypes, loading } = useFindFull(IMemberType, {
+  const { data: memberTypes, loading } = useFind(IMemberType, {
     fields: ['amount'],
     where: { communityId }
   });
