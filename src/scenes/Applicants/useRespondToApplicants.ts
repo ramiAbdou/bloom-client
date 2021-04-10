@@ -1,4 +1,4 @@
-import { IMember, MemberStatus } from '@db/db.entities';
+import { IMember, MemberStatus } from '@core/db/db.entities';
 import useBloomMutation, { MutationResult } from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,

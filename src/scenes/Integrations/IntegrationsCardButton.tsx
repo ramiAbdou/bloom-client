@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { ModalType } from '@util/constants';
 import { IntegrationsDetailsData } from './Integrations.types';
 

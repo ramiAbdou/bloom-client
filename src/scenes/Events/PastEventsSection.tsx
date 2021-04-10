@@ -2,13 +2,13 @@ import React from 'react';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
-import { IEvent, IEventGuest } from '@db/db.entities';
-import useFind from '@gql/hooks/useFind';
 import List from '@components/organisms/List/List';
 import ListStore from '@components/organisms/List/List.store';
 import ListSearchBar from '@components/organisms/List/ListSearchBar';
+import { IEvent, IEventGuest } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import useFind from '@gql/hooks/useFind';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { useStoreState } from '@store/Store';
 import { LoadingProps } from '@util/constants';
 import { sortObjects } from '@util/util';
 import EventsCard from './EventsCard/EventsCard';

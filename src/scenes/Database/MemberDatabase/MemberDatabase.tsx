@@ -1,9 +1,6 @@
 import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
-import { IQuestion } from '@db/db.entities';
-import GQL from '@gql/GQL';
-import useGQL from '@gql/hooks/useGQL';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import ModalLocal from '@components/organisms/Modal/ModalLocal';
 import Table from '@components/organisms/Table/Table';
@@ -14,7 +11,10 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { useStoreActions } from '@store/Store';
+import { IQuestion } from '@core/db/db.entities';
+import { useStoreActions } from '@core/store/Store';
+import GQL from '@gql/GQL';
+import useGQL from '@gql/hooks/useGQL';
 import { ModalType } from '@util/constants';
 import {
   useMemberDatabaseColumns,

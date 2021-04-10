@@ -2,11 +2,11 @@ import React from 'react';
 
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import Row from '@components/containers/Row/Row';
-import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import IdStore from '@store/Id.store';
+import IdStore from '@core/store/Id.store';
+import { IMember } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import ProfileSocialContainer from './ProfileSocial';
 
 const ProfilePersonalPicture: React.FC = () => {

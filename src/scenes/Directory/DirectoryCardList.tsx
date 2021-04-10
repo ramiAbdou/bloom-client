@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ICommunity, IMember, MemberStatus } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import MasonryList from '@components/organisms/List/MasonryList';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
+import { ICommunity, IMember, MemberStatus } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import { sortObjects } from '@util/util';
 import { prepareMemberForFilter } from './Directory.util';
 import DirectoryCard from './DirectoryCard';

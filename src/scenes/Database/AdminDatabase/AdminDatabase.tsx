@@ -4,10 +4,10 @@ import ModalLocal from '@components/organisms/Modal/ModalLocal';
 import Table from '@components/organisms/Table/Table';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { IMember, MemberRole } from '@db/db.entities';
+import { IMember, MemberRole } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
-import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';
 

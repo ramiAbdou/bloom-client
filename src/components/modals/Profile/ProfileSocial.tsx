@@ -8,9 +8,9 @@ import {
 
 import Button from '@components/atoms/Button/Button';
 import Show from '@components/containers/Show';
-import { IMemberSocials } from '@db/db.entities';
+import IdStore from '@core/store/Id.store';
+import { IMemberSocials } from '@core/db/db.entities';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
-import IdStore from '@store/Id.store';
 import { SocialBrand } from '@util/constants';
 import { cx } from '@util/util';
 

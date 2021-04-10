@@ -2,8 +2,8 @@ import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
+import { useStoreActions } from '@core/store/Store';
 import useTooltip from '@hooks/useTooltip';
-import { useStoreActions } from '@store/Store';
 import { PanelType } from '@util/constants';
 import { cx } from '@util/util';
 import ListStore from '../List.store';

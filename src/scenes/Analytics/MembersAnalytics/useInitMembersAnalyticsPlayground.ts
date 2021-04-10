@@ -1,10 +1,10 @@
 import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 
-import { ICommunity, IQuestion } from '@db/db.entities';
+import { ICommunity, IQuestion } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
+import IdStore from '@core/store/Id.store';
+import { useStoreState } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
 
 // Responsible for populating the initial question in the Data Playground.

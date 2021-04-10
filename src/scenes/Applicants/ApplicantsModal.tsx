@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { IMember, IMemberValue, MemberStatus } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
+import { IMember, IMemberValue, MemberStatus } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 

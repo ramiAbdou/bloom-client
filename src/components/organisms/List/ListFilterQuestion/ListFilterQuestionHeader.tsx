@@ -2,9 +2,9 @@ import React from 'react';
 import { IoAdd } from 'react-icons/io5';
 
 import Row from '@components/containers/Row/Row';
-import { IQuestion } from '@db/db.entities';
+import { IQuestion } from '@core/db/db.entities';
+import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
-import IdStore from '@store/Id.store';
 import { cx } from '@util/util';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';

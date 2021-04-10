@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { IMember } from '@db/db.entities';
+import { IMember } from '@core/db/db.entities';
 import ListFilterOpenButton from '@components/organisms/List/ListFilter/ListFilterOpenButton';
 import ListQuickFilter from '@components/organisms/List/ListFilter/ListQuickFilter';
 import ListSearchBar from '@components/organisms/List/ListSearchBar';

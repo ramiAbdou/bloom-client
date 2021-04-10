@@ -4,10 +4,10 @@ import { useHistory } from 'react-router-dom';
 import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
-import { IMember, MemberRole } from '@db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import { IMember, MemberRole } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useFinalPath from '@hooks/useFinalPath';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const DatbaseHeaderAddButton: React.FC = () => {

@@ -3,7 +3,7 @@ import { IoCopy } from 'react-icons/io5';
 
 import TableStore from '@components/organisms/Table/Table.store';
 import { TableRow } from '@components/organisms/Table/Table.types';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
 import DatabaseAction from '../DatabaseAction';
 

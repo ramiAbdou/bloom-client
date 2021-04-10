@@ -3,7 +3,7 @@ import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import TableFilterPanelStore from './TableFilterPanel.store';
 import TableFilterPanelApplyButton from './TableFilterPanelApplyButton';
 

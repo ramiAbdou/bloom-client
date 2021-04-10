@@ -1,4 +1,4 @@
-import { EventPrivacy, IEvent } from '@db/db.entities';
+import { EventPrivacy, IEvent } from '@core/db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

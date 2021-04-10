@@ -1,6 +1,6 @@
-import { IMember, IUser } from '@db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import { IMember, IUser } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import { useStoreState } from '@store/Store';
 
 /**
  * Returns true if the authenticated user has a membership with the active

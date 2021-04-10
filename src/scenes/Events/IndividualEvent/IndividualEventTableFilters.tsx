@@ -1,12 +1,12 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { IEvent } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import { TableFilterFunction } from '@components/organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
+import { IEvent } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { useStoreState } from '@store/Store';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 const IndividualEventViewedFilter: React.FC = () => {

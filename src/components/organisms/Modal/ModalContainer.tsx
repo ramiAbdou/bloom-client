@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { cx } from '@util/util';
 
 /**

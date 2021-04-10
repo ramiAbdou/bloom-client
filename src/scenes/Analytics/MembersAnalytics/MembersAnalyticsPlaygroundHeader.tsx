@@ -2,11 +2,11 @@ import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { IMemberType, IQuestion } from '@db/db.entities';
+import { IMemberType, IQuestion } from '@core/db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
-import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
+import IdStore from '@core/store/Id.store';
+import { useStoreState } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 

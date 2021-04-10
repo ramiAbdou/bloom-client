@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { ICommunity } from '@db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import { ICommunity } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import { useStoreState } from '@store/Store';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
 import IntegrationCard from './IntegrationsCard';

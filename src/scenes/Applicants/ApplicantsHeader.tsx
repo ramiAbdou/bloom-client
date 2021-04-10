@@ -2,9 +2,9 @@ import React from 'react';
 
 import MainHeader from '@components/containers/Main/MainHeader';
 import Row from '@components/containers/Row/Row';
-import { IMember, MemberStatus } from '@db/db.entities';
+import { IMember, MemberStatus } from '@core/db/db.entities';
 import useFind from '@gql/hooks/useFind';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import { LoadingProps } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 

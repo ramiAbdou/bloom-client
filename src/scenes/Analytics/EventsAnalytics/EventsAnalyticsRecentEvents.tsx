@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
-import { ICommunity, IEvent } from '@db/db.entities';
+import { ICommunity, IEvent } from '@core/db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import useFindOne from '@gql/hooks/useFindOne';
 import Table from '@components/organisms/Table/Table';
@@ -15,7 +15,7 @@ import {
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import TableSearchBar from '@components/organisms/Table/TableSeachBar';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 

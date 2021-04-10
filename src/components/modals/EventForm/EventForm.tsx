@@ -2,7 +2,7 @@ import React from 'react';
 
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import EventFormActions from './EventFormActions';
 import EventFormDetailsSection from './EventFormDetailsSection';
 import EventFormMainSection from './EventFormMainSection';

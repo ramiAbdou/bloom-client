@@ -1,4 +1,4 @@
-import { IEventAttendee } from '@db/db.entities';
+import { IEventAttendee } from '@core/db/db.entities';
 import useBloomMutation, {
   UseMutationFnResult
 } from '@gql/hooks/useBloomMutation';

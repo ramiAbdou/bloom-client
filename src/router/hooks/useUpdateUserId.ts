@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useCustomQuery from '@gql/hooks/useCustomQuery';
-import { useStoreActions, useStoreState } from '@store/Store';
 
 interface GetUserTokensResult {
   userId: string;

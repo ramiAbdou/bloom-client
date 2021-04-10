@@ -1,4 +1,4 @@
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import ListStore from './List.store';
 import ListFilterStore from './ListFilter/ListFilter.store';
 import { ListFilterArgs } from './ListFilter/ListFilter.types';

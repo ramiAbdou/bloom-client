@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { IMember } from '@db/db.entities';
-import useFind from '@gql/hooks/useFind';
 import FormMultipleChoice from '@components/organisms/Form/FormMultipleChoice';
 import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
+import { IMember } from '@core/db/db.entities';
+import useFind from '@gql/hooks/useFind';
 
 const EventFormNotificationsSection: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);

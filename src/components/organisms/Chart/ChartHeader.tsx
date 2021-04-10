@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
-import { IQuestion } from '@db/db.entities';
+import { IQuestion } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import ChartStore from './Chart.store';
 

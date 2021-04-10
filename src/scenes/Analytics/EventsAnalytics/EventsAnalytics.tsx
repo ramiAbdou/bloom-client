@@ -2,9 +2,9 @@ import day from 'dayjs';
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { IEvent } from '@db/db.entities';
+import { IEvent } from '@core/db/db.entities';
 import useFindFull from '@gql/hooks/useFindFull';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import EventAnalyticsChart from './EventAnalyticsChart';
 import EventsAnalyticsOverview from './EventsAnalyticsOverview';
 import EventsAnalyticsRecentEvents from './EventsAnalyticsRecentEvents';

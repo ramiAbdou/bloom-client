@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 
 /**
  * Updates the global loading state to match the loading state of the query

@@ -3,12 +3,12 @@ import { IoTrash } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
-import { IMember, MemberRole } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import FormMultipleSelect from '@components/organisms/Form/FormMultipleSelect';
 import FormShortText from '@components/organisms/Form/FormShortText';
-import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
+import IdStore from '@core/store/Id.store';
+import { useStoreState } from '@core/store/Store';
+import { IMember, MemberRole } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import AddMemberStore from './AddMember.store';
 

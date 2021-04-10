@@ -4,11 +4,11 @@ import Separator from '@components/atoms/Separator';
 import GrayCard from '@components/containers/Card/GrayCard';
 import Row from '@components/containers/Row/Row';
 import Section from '@components/containers/Section';
-import { IEvent, IMember } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import SidebarHamburgerButton from '@components/organisms/Sidebar/SidebarHamburgerButton';
+import { IEvent, IMember } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { useStoreState } from '@store/Store';
 
 const IndividualEventInsightsAttendeesCard: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);

@@ -2,9 +2,6 @@ import React from 'react';
 
 import Section from '@components/containers/Section';
 import Show from '@components/containers/Show';
-import { IEvent, IMember } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
 import Table from '@components/organisms/Table/Table';
 import {
   TableColumn,
@@ -12,7 +9,10 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { IEvent, IMember } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { ModalType } from '@util/constants';
 import {
   useIndividualEventTableColumns,

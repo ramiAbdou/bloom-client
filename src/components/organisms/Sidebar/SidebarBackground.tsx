@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 
 const SidebarBackground: React.FC = () => {
   const isOpen: boolean = useStoreState(({ sidebar }) => sidebar.isOpen);

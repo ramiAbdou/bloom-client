@@ -2,12 +2,12 @@ import React from 'react';
 
 import Separator from '@components/atoms/Separator';
 import Show from '@components/containers/Show';
-import { IMemberValue } from '@db/db.entities';
-import useFind from '@gql/hooks/useFind';
-import useFindFull from '@gql/hooks/useFindFull';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import IdStore from '@store/Id.store';
+import IdStore from '@core/store/Id.store';
+import { IMemberValue } from '@core/db/db.entities';
+import useFind from '@gql/hooks/useFind';
+import useFindFull from '@gql/hooks/useFindFull';
 
 const ProfileDataContent: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);

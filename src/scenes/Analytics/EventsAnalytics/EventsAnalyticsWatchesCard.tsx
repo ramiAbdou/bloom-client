@@ -2,9 +2,9 @@ import day from 'dayjs';
 import React from 'react';
 
 import GrayCard from '@components/containers/Card/GrayCard';
-import { IEvent } from '@db/db.entities';
+import { IEvent } from '@core/db/db.entities';
 import useFind from '@gql/hooks/useFind';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 
 const EventsAnalyticsGuestCard: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);

@@ -1,9 +1,9 @@
 import { ActionCreator, State } from 'easy-peasy';
 
-import { IPaymentMethod } from '@db/db.entities';
-import { DbModel } from '@db/db.types';
-import GQL from '@gql/GQL';
 import { ToastOptions } from '@components/organisms/Toast/Toast.types';
+import { IPaymentMethod } from '@core/db/db.entities';
+import { DbModel } from '@core/db/db.types';
+import GQL from '@gql/GQL';
 import {
   ClassNameProps,
   QuestionCategory,

@@ -11,10 +11,10 @@ import {
   YAxis
 } from 'recharts';
 
-import { ICommunity } from '@db/db.entities';
+import { ICommunity } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
-import { useStoreState } from '@store/Store';
 import { take } from '@util/util';
 import ChartStore from './Chart.store';
 import { ChartTooltipProps } from './Tooltip';

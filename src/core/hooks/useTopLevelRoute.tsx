@@ -1,8 +1,8 @@
 import { useHistory } from 'react-router-dom';
 
-import { ICommunity } from '@db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import { ICommunity } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import { useStoreState } from '@store/Store';
 import { RouteType } from '@util/constants';
 
 /**

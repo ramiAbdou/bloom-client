@@ -9,9 +9,9 @@ import {
   YAxis
 } from 'recharts';
 
-import { ICommunity } from '@db/db.entities';
+import { ICommunity } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
-import { useStoreState } from '@store/Store';
 import Chart from './Chart.store';
 import ChartTooltip, { ChartTooltipProps } from './Tooltip';
 import useXAxisOptions from './useXAxisOptions';

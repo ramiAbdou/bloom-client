@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { ICommunity } from '@db/db.entities';
+import { ICommunity } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
 import { SidebarLinkOptions } from './Sidebar.types';

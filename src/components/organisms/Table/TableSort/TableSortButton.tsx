@@ -3,7 +3,7 @@ import React from 'react';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import { cx } from '@util/util';
 import TableSortStore from './TableSort.store';
 import { TableSortDirection } from './TableSort.types';

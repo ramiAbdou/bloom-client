@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { IQuestion } from '@db/db.entities';
-import useFind from '@gql/hooks/useFind';
 import PanelCloseButton from '@components/organisms/Panel/PanelCloseButton';
-import { useStoreState } from '@store/Store';
+import { IQuestion } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import useFind from '@gql/hooks/useFind';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import ListFilterQuestion from '../ListFilterQuestion/ListFilterQuestion';

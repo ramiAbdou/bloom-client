@@ -2,7 +2,7 @@ import React from 'react';
 import { IoMenuOutline } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';
 

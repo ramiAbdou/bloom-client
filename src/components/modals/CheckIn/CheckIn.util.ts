@@ -1,4 +1,4 @@
-import { IMember } from '@db/db.entities';
+import { IMember } from '@core/db/db.entities';
 import { ErrorType } from '@util/constants.errors';
 
 interface GetCheckInErrorMessageArgs {

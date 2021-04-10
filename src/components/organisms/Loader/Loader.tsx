@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Show from '@components/containers/Show';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import Loader1 from './images/loader-1.svg';
 import Loader2 from './images/loader-2.svg';
 import Loader3 from './images/loader-3.svg';

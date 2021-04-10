@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { IMember } from '@db/db.entities';
+import { IMember } from '@core/db/db.entities';
 import { QueryResult } from '@gql/GQL.types';
 import useFindFull from '@gql/hooks/useFindFull';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import MembersAnalyticsCharts from './MembersAnalyticsCharts';
 import MembersAnalyticsInsights from './MembersAnalyticsInsights';
 import MembersAnalyticsPlayground from './MembersAnalyticsPlayground';

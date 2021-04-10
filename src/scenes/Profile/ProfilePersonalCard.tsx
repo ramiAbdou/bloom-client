@@ -4,12 +4,12 @@ import Button from '@components/atoms/Button/Button';
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
-import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
-import useBreakpoint from '@hooks/useBreakpoint';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { IMember } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
+import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 

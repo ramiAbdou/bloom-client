@@ -2,10 +2,10 @@ import day from 'dayjs';
 import React from 'react';
 
 import MainContent from '@components/containers/Main/MainContent';
-import { IEvent } from '@db/db.entities';
+import { IEvent } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import { QueryResult } from '@gql/GQL.types';
 import useFindFull from '@gql/hooks/useFindFull';
-import { useStoreState } from '@store/Store';
 import EventsHeader from './EventsHeader';
 import PastEventsSection from './PastEventsSection';
 import PastEventsYourSection from './PastEventsYourSection';

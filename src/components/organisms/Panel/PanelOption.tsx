@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { PanelAction } from './Panel.types';
 
 /**

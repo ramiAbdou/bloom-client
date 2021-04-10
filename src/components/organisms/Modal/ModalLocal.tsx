@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import { localModals } from './Modal.types';
 import LocalModalContent from './ModalLocalContent';
 

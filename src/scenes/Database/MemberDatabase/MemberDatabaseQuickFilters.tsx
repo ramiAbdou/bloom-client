@@ -1,12 +1,12 @@
 import React from 'react';
 
 // import Row from '@components/containers/Row/Row';
-// import { IQuestion } from '@db/db.entities';
+// import { IQuestion } from '@core/db/db.entities';
 // import useFindOne from '@gql/hooks/useFindOne';
 // import { TableRow } from '@components/organisms/Table/Table.types';
 // import { TableFilterFunction } from '@components/organisms/Table/TableFilterPanel/TableFilterPanel.types';
 // import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
-// import { useStoreState } from '@store/Store';
+// import { useStoreState } from '@core/store/Store';
 // import { QuestionCategory } from '@util/constants';
 
 // const MemberDatabaseInactiveFilter: React.FC = () => {

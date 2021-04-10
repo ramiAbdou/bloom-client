@@ -5,10 +5,10 @@ import { useHistory } from 'react-router-dom';
 import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
-import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { IMember } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
 import { LoadingProps, ModalType } from '@util/constants';
 
 const EventsHeaderCreateEventButton: React.FC = () => {

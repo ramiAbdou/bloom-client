@@ -3,7 +3,7 @@ import {
   IMemberType,
   IPaymentMethod,
   IQuestion
-} from '@db/db.entities';
+} from '@core/db/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,

@@ -1,4 +1,4 @@
-import { IMemberSocials } from '@db/db.entities';
+import { IMemberSocials } from '@core/db/db.entities';
 import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 import {

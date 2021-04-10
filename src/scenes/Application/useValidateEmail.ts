@@ -1,4 +1,4 @@
-import { ICommunity, IMember, IQuestion } from '@db/db.entities';
+import { ICommunity, IMember, IQuestion } from '@core/db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction

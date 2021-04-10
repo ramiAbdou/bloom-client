@@ -1,12 +1,12 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { IEvent, IEventWatch, IMember } from '@db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import { IEvent, IEventWatch, IMember } from '@core/db/db.entities';
 import GQL from '@gql/GQL';
 import useFindOne from '@gql/hooks/useFindOne';
 import useGQL from '@gql/hooks/useGQL';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { useStoreState } from '@store/Store';
 
 interface EventsViewRecordingButtonProps
   extends Partial<Pick<ButtonProps, 'large'>> {

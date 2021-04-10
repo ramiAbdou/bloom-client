@@ -1,4 +1,4 @@
-import { ICommunityIntegrations } from '@db/db.entities';
+import { ICommunityIntegrations } from '@core/db/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,

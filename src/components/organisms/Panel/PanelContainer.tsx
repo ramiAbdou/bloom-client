@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React, { CSSProperties, MutableRefObject, useRef } from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import { cx } from '@util/util';
 import usePanelPosition from './usePanelPosition';
 

@@ -2,9 +2,9 @@ import React from 'react';
 
 import MainContent from '@components/containers/Main/MainContent';
 import Scene from '@components/containers/Scene';
-import { IMember } from '@db/db.entities';
+import { IMember } from '@core/db/db.entities';
 import useFindFull from '@gql/hooks/useFindFull';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import ApplicantsCardList from './ApplicantsCardList';
 import ApplicantsHeader from './ApplicantsHeader';
 

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { IMember } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
@@ -9,7 +7,9 @@ import FormImage from '@components/organisms/Form/FormImage';
 import FormLongText from '@components/organisms/Form/FormLongText';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
+import { IMember } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import useUpdateMember from './useUpdateMember';
 

@@ -2,9 +2,9 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
-import { IEvent, IEventGuest, IMember } from '@db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import { IEvent, IEventGuest, IMember } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType, PanelType } from '@util/constants';
 import { EventTiming, getEventTiming } from '../Events.util';
 import EventsJoinButton from '../EventsJoinButton';

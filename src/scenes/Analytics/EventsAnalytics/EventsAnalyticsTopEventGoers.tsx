@@ -3,7 +3,7 @@ import React from 'react';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
-import { IEvent, IEventAttendee } from '@db/db.entities';
+import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFind from '@gql/hooks/useFind';
 import Table from '@components/organisms/Table/Table';
 import {
@@ -12,7 +12,7 @@ import {
   TableRow
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import { ModalType, QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 

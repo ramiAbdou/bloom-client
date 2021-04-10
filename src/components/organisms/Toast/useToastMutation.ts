@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
+import { useStoreActions } from '@core/store/Store';
 import useBloomMutation, {
   MutationResultVariablesFunction
 } from '@gql/hooks/useBloomMutation';
-import { useStoreActions } from '@store/Store';
 import { ToastOptions } from './Toast.types';
 
 interface UseMutationOnCompleteArgs

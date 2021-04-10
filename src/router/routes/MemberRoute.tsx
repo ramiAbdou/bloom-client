@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import { IMember } from '@db/db.entities';
-import { updateDocumentColors } from '@db/db.util';
+import { IMember } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { UrlNameProps } from '@util/constants';
+import { updateDocumentColors } from '@util/util';
 
 interface MemberRouteProps extends RouteProps {
   admin?: boolean;

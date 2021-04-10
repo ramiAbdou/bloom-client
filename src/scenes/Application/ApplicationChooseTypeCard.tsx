@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Show from '@components/containers/Show';
-import { IMemberType, RecurrenceType } from '@db/db.entities';
+import { IMemberType, RecurrenceType } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { IdProps } from '@util/constants';
 import { take } from '@util/util';

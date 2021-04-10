@@ -5,6 +5,7 @@ import AddMemberModal from '@components/modals/AddMember/AddMember';
 import CheckInModal from '@components/modals/CheckIn/CheckIn';
 import EventForm from '@components/modals/EventForm/EventForm';
 import ProfileModal from '@components/modals/Profile/Profile';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import ApplicantsConfirmationModal from '@scenes/Applicants/ApplicantsConfirmationModal';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
 import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
@@ -13,7 +14,6 @@ import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchi
 import ProfileMembershipForm from '@scenes/Profile/ProfileMembershipForm';
 import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
 import ModalContainer from './ModalContainer';

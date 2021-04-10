@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Checkbox from '@components/atoms/Checkbox/Checkbox';
-import { IMemberValue, IQuestion } from '@db/db.entities';
+import { IMemberValue, IQuestion } from '@core/db/db.entities';
+import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
-import IdStore from '@store/Id.store';
 import { ValueProps } from '@util/constants';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionStore from './ListFilterQuestion.store';

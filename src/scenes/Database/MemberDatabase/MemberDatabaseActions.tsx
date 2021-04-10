@@ -1,12 +1,12 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { IMember, MemberRole } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import TableStore from '@components/organisms/Table/Table.store';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
 import SearchBar from '@components/organisms/Table/TableSeachBar';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
+import { IMember, MemberRole } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
 import DeleteMembersButton from './MemberDatabaseDeleteButton';
 import MemberDatabaseExportButton from './MemberDatabaseExportButton';

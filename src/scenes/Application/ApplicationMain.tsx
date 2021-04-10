@@ -1,19 +1,19 @@
 import React from 'react';
 
-import {
-  IApplication,
-  ICommunity,
-  IQuestion,
-  IRankedQuestion
-} from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormItem from '@components/organisms/Form/FormItem';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import { useStoreState } from '@store/Store';
+import {
+  IApplication,
+  ICommunity,
+  IQuestion,
+  IRankedQuestion
+} from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
 import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';
 import useValidateEmail from './useValidateEmail';

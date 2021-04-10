@@ -2,12 +2,12 @@ import { ActionCreator } from 'easy-peasy';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { IEvent } from '@db/db.entities';
+import { ModalData } from '@components/organisms/Modal/Modal.types';
+import { IEvent } from '@core/db/db.entities';
+import { useStoreActions } from '@core/store/Store';
 import GQL from '@gql/GQL';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import useGQL from '@gql/hooks/useGQL';
-import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { useStoreActions } from '@store/Store';
 import { ModalType, VerifyEvent } from '@util/constants';
 import { ErrorType } from '@util/constants.errors';
 import { MutationEvent } from '@util/constants.events';

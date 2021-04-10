@@ -2,7 +2,7 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import IdStore from '@store/Id.store';
+import IdStore from '@core/store/Id.store';
 import TableFilterStore from './TableFilterPanel.store';
 
 const TableFilterPanelRowDeleteButton: React.FC = () => {

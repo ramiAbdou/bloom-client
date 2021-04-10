@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import AdminDatabaseDemoteForm from '@scenes/Database/AdminDatabase/AdminDatabaseDemoteForm';
 import MemberDatabaseDeleteForm from '@scenes/Database/MemberDatabase/MemberDatabaseDeleteForm';
 import MemberDatabasePromoteForm from '@scenes/Database/MemberDatabase/MemberDatabasePromoteForm';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
 import ModalContainer from './ModalContainer';

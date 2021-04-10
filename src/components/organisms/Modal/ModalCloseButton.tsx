@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { TitleProps } from '@util/constants';
 
 const ModalCloseButton: React.FC<TitleProps> = ({ title }) => {

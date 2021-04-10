@@ -39,8 +39,8 @@ import {
   IRankedQuestion,
   ISupporter,
   IUser
-} from '@db/db.entities';
-import { store } from '@store/Store';
+} from '@core/db/db.entities';
+import { store } from '@core/store/Store';
 import { APP } from '@util/constants';
 
 // Extend the time-based library for entire app.

@@ -1,4 +1,4 @@
-import { IEvent, IEventGuest } from '@db/db.entities';
+import { IEvent, IEventGuest } from '@core/db/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,

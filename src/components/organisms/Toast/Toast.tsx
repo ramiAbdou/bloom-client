@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import { cx } from '@util/util';
 import { ToastOptions } from './Toast.types';
 import useToastMutation from './useToastMutation';

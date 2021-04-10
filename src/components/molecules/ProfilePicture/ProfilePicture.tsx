@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import Show from '@components/containers/Show';
-import { Identifier, IMember, ISupporter } from '@db/db.entities';
+import { Identifier, IMember, ISupporter } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import { BaseProps } from '@util/constants';
 import { cx } from '@util/util';

@@ -2,10 +2,10 @@ import day from 'dayjs';
 import React from 'react';
 
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
-import { EventPrivacy, IEvent } from '@db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import { EventPrivacy, IEvent } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
-import { useStoreState } from '@store/Store';
 import IndividualEventActions from './IndividualEventActions';
 
 const IndividualEventMainHeaderContainer: React.FC = () => {

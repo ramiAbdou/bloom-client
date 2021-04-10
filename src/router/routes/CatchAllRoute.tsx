@@ -1,9 +1,9 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import { IMember } from '@db/db.entities';
+import { IMember } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import { useStoreState } from '@store/Store';
 
 const CatchAllRoute: React.FC<Pick<RouteProps, 'exact' | 'path'>> = ({
   exact,

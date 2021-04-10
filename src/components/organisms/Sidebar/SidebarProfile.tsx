@@ -1,12 +1,12 @@
 import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 
-import { IMember } from '@db/db.entities';
+import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
+import { IMember } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
-import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { PanelType, RouteType } from '@util/constants';
 import { cx } from '@util/util';
 

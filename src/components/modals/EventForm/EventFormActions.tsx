@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import EventFormDeleteButton from './EventFormDeleteButton';
 
 const EventFormActions: React.FC = () => {

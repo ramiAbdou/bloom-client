@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { IEvent } from '@db/db.entities';
-import GQL from '@gql/GQL';
-import useFindOne from '@gql/hooks/useFindOne';
-import useGQL from '@gql/hooks/useGQL';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitArgs } from '@components/organisms/Form/Form.types';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { useStoreState } from '@store/Store';
+import { IEvent } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
+import GQL from '@gql/GQL';
+import useFindOne from '@gql/hooks/useFindOne';
+import useGQL from '@gql/hooks/useGQL';
 
 const IndividualEventRecordingForm: React.FC = () => {
   const eventId: string = useStoreState(({ panel }) => panel.metadata);

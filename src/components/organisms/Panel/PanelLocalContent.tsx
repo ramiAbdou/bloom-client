@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import { PanelType } from '@util/constants';
 import ListFilter from '../List/ListFilter/ListFilter';
 import TableColumnPanel from '../Table/TableColumnPanel';

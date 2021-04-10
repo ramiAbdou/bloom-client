@@ -2,10 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '@components/atoms/Button/Button';
-import { ICommunity } from '@db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import { ICommunity } from '@core/db/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import useFindOne from '@gql/hooks/useFindOne';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { MutationEvent } from '@util/constants.events';
 
 const DeleteEventButton: React.FC = () => {

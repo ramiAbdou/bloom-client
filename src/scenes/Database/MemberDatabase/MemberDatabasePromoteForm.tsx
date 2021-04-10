@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IMember } from '@db/db.entities';
+import { IMember } from '@core/db/db.entities';
 import useBloomMutation from '@gql/hooks/useBloomMutation';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitArgs } from '@components/organisms/Form/Form.types';

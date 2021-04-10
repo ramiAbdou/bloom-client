@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
-import { IApplication } from '@db/db.entities';
-import useFindOneFull from '@gql/hooks/useFindOneFull';
 import Story from '@components/organisms/Story/Story';
-import { useStoreActions } from '@store/Store';
+import { IApplication } from '@core/db/db.entities';
+import { useStoreActions } from '@core/store/Store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { UrlNameProps } from '@util/constants';
 import ApplicationChooseTypePage from './ApplicationChooseType';
 import ApplicationConfirmationPage from './ApplicationConfirmation';

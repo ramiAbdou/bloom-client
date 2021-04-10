@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
-import { ICommunityIntegrations } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
-import { useStoreActions, useStoreState } from '@store/Store';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import { ICommunityIntegrations } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
 
 interface IntegrationsDetail {

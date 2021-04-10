@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import { IEvent, IEventAttendee, IEventGuest } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
+import { IEvent, IEventAttendee, IEventGuest } from '@core/db/db.entities';
+import IdStore from '@core/store/Id.store';
+import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import IdStore from '@store/Id.store';
 
 interface EventsCardPictureId {
   memberId?: string;

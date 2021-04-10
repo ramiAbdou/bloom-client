@@ -3,9 +3,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Card from '@components/containers/Card/Card';
-import { IEvent } from '@db/db.entities';
+import IdStore from '@core/store/Id.store';
+import { IEvent } from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import IdStore from '@store/Id.store';
 import { IdProps } from '@util/constants';
 import { cx, take } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';

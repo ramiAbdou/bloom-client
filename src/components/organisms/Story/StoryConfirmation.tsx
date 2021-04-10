@@ -3,7 +3,7 @@ import React from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
 import Button from '@components/atoms/Button/Button';
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { ShowProps } from '@util/constants';
 
 interface StoryConfirmationProps {

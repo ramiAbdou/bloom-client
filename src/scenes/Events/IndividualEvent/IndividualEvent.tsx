@@ -4,12 +4,12 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Show from '@components/containers/Show';
-import { EventPrivacy, IEvent } from '@db/db.entities';
-import { SetActiveEntitesArgs } from '@db/db.types';
+import { EventPrivacy, IEvent } from '@core/db/db.entities';
+import { SetActiveEntitesArgs } from '@core/db/db.types';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
 import useIsMember from '@hooks/useIsMember';
-import { useStoreActions, useStoreState } from '@store/Store';
 import { ModalType } from '@util/constants';
 import { ErrorContext } from '@util/constants.errors';
 import { cx } from '@util/util';

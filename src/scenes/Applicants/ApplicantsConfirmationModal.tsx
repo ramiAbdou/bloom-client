@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { MemberStatus } from '@db/db.entities';
+import { MemberStatus } from '@core/db/db.entities';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import useRespondToApplicants from './useRespondToApplicants';
 
 interface ApplicantsConfirmationModalMetadata {

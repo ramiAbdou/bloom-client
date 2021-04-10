@@ -11,11 +11,10 @@
     "outDir": "./dist/",
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@db/*": ["./src/core/db/*"],
+      "@core/*": ["./src/core/*"],
       "@gql/*": ["./src/core/gql/*"],
       "@hooks/*": ["./src/core/hooks/*"],
       "@scenes/*": ["./src/scenes/*"],
-      "@store/*": ["./src/core/store/*"],
       "@util/*": ["./src/util/*"]
     },
     "resolveJsonModule": true,

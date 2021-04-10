@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Row from '@components/containers/Row/Row';
-import IdStore from '@store/Id.store';
+import IdStore from '@core/store/Id.store';
 import { IdProps } from '@util/constants';
 import TableFilterRowDeleteButton from './TableFilterPanelRowDeleteButton';
 import TableFilterRowJoinOperator from './TableFilterPanelRowJoinOperator';

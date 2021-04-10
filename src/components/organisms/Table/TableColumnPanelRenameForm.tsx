@@ -4,7 +4,7 @@ import React from 'react';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
 import FormShortText from '../Form/FormShortText';
 import TableStore from './Table.store';
 import { RenameColumnFunction, TableColumn } from './Table.types';

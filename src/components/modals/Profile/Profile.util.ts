@@ -1,11 +1,11 @@
+import IdStore from '@core/store/Id.store';
 import {
   IEventAttendee,
   IEventGuest,
   IEventWatch,
   IMember
-} from '@db/db.entities';
+} from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import IdStore from '@store/Id.store';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
 

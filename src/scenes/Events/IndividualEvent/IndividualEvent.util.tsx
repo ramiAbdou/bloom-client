@@ -2,16 +2,16 @@ import day from 'dayjs';
 import deepmerge from 'deepmerge';
 import React from 'react';
 
+import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
+import { useStoreState } from '@core/store/Store';
 import {
   IEvent,
   IEventAttendee,
   IEventGuest,
   IEventWatch
-} from '@db/db.entities';
+} from '@core/db/db.entities';
 import useFindOne from '@gql/hooks/useFindOne';
-import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { useStoreState } from '@store/Store';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';

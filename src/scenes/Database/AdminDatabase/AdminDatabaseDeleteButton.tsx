@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
-import { useStoreActions } from '@store/Store';
+import { useStoreActions } from '@core/store/Store';
 import { ModalType } from '@util/constants';
 import DatabaseAction from '../DatabaseAction';
 

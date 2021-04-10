@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { IMemberSocials } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import Form from '@components/organisms/Form/Form';
 import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
+import { IMemberSocials } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {

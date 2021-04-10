@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Card from '@components/containers/Card/Card';
-import { ICommunity } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import StoryConfirmation from '@components/organisms/Story/StoryConfirmation';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import { useStoreState } from '@store/Store';
+import { useStoreState } from '@core/store/Store';
+import { ICommunity } from '@core/db/db.entities';
+import useFindOne from '@gql/hooks/useFindOne';
 
 const ApplicationConfirmationMessage: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);

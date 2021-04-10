@@ -1,11 +1,11 @@
 import { ActionCreator } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
 
-import { ICommunity, IQuestion } from '@db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import Dropdown from '@components/molecules/Dropdown/Dropdown';
-import IdStore from '@store/Id.store';
-import { useStoreState } from '@store/Store';
+import { ICommunity, IQuestion } from '@core/db/db.entities';
+import IdStore from '@core/store/Id.store';
+import { useStoreState } from '@core/store/Store';
+import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 import TableFilterStore from './TableFilterPanel.store';

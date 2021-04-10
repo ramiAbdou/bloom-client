@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Card from '@components/containers/Card/Card';
-import { IEvent } from '@db/db.entities';
+import { IEvent } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
-import { useStoreState } from '@store/Store';
 
 const IndividualEventAbout: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);

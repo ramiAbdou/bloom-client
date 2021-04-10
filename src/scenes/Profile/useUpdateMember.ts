@@ -1,6 +1,6 @@
 import validator from 'validator';
 
-import { IMember } from '@db/db.entities';
+import { IMember } from '@core/db/db.entities';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
