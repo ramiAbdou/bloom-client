@@ -3,21 +3,23 @@ import React from 'react';
 import Row from '@components/containers/Row/Row';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
-import { useStoreState } from '@core/store/Store';
 import { IMember, IMemberValue, MemberStatus } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import { useStoreState } from '@core/store/Store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { QuestionCategory } from '@util/constants';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
 
 const ApplicantsModalTitle: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { firstName, lastName } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['firstName', 'lastName'],
     where: { id: memberId }
   });
 
-  const fullName: string = `${firstName} ${lastName}`;
+  if (loading) return null;
+
+  const fullName: string = `${member.firstName} ${member.lastName}`;
 
   return <h1>{fullName}</h1>;
 };
@@ -25,7 +27,7 @@ const ApplicantsModalTitle: React.FC = () => {
 const ApplicantsModalItems: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { email, memberValues } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: [
       'email',
       'memberValues.id',
@@ -39,7 +41,9 @@ const ApplicantsModalItems: React.FC = () => {
     where: { id: memberId }
   });
 
-  const items: QuestionBoxItemProps[] = memberValues
+  if (loading) return null;
+
+  const items: QuestionBoxItemProps[] = member.memberValues
     ?.filter(
       (memberValue: IMemberValue) =>
         !memberValue.question.category ||
@@ -57,7 +61,7 @@ const ApplicantsModalItems: React.FC = () => {
         type: memberValue.question.type,
         value:
           memberValue.question.category === QuestionCategory.EMAIL
-            ? email
+            ? member.email
             : memberValue.value
       };
     });

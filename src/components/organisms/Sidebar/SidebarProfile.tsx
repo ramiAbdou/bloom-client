@@ -4,7 +4,7 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { IMember } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import useBreakpoint from '@hooks/useBreakpoint';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { PanelType, RouteType } from '@util/constants';
@@ -13,23 +13,21 @@ import { cx } from '@util/util';
 const SidebarProfileContent: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { firstName, lastName, memberType, position, role } = useFindOne(
-    IMember,
-    {
-      fields: [
-        'firstName',
-        'lastName',
-        'memberType.id',
-        'memberType.name',
-        'position',
-        'role'
-      ],
-      where: { id: memberId }
-    }
-  );
+  const { data: member, loading } = useFindOneFull(IMember, {
+    fields: [
+      'firstName',
+      'lastName',
+      'memberType.id',
+      'memberType.name',
+      'position',
+      'role'
+    ],
+    where: { id: memberId }
+  });
 
-  const fullName: string =
-    firstName && lastName ? `${firstName} ${lastName}` : '';
+  if (loading) return null;
+
+  const fullName: string = `${member.firstName} ${member.lastName}`;
 
   return (
     <div>
@@ -37,7 +35,7 @@ const SidebarProfileContent: React.FC = () => {
 
       <div className="o-nav-profile-info">
         <p>{fullName}</p>
-        <p>{position ?? role ?? memberType?.name}</p>
+        <p>{member.position ?? member.role ?? member.memberType?.name}</p>
       </div>
     </div>
   );

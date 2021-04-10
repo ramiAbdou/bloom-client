@@ -3,15 +3,15 @@ import { CSVLink } from 'react-csv';
 import { IoExit } from 'react-icons/io5';
 
 import TableStore from '@components/organisms/Table/Table.store';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 import { ICommunity } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import DatabaseAction from '../DatabaseAction';
 
 const MemberDatabaseExportButton: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { urlName } = useFindOne(ICommunity, {
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });
@@ -35,11 +35,13 @@ const MemberDatabaseExportButton: React.FC = () => {
     })
   );
 
+  if (loading) return null;
+
   const onClick = (): void => {
     showToast({ message: 'Member(s) data exported.' });
   };
 
-  const fileName: string = `${urlName}.csv`;
+  const fileName: string = `${community.urlName}.csv`;
 
   return (
     <CSVLink

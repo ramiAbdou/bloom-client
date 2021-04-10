@@ -3,7 +3,7 @@ import React from 'react';
 import Show from '@components/containers/Show';
 import { IMemberValue, IQuestion } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import ListFilterStore from '../ListFilter/ListFilter.store';
 import ListFilterQuestionOption from './ListFilterQuestionOption';
 
@@ -16,23 +16,27 @@ const ListFilterQuestionOptionList: React.FC = () => {
 
   const isOpen = questionId === openQuestionId;
 
-  const { memberValues, options } = useFindOne(IQuestion, {
+  const { data: question, loading } = useFindOneFull(IQuestion, {
     fields: ['memberValues.id', 'memberValues.value', 'options'],
     where: { id: questionId }
   });
 
-  const sortedOptions: string[] = options?.sort((a: string, b: string) => {
-    const aNumOptions: number = memberValues?.filter(
-      (memberValue: IMemberValue) => memberValue?.value === a
-    )?.length;
+  if (loading) return null;
 
-    const bNumOptions: number = memberValues?.filter(
-      (memberValue: IMemberValue) => memberValue?.value === b
-    )?.length;
+  const sortedOptions: string[] = question.options?.sort(
+    (a: string, b: string) => {
+      const aNumOptions: number = question.memberValues?.filter(
+        (memberValue: IMemberValue) => memberValue?.value === a
+      )?.length;
 
-    if (aNumOptions === bNumOptions) return 0;
-    return aNumOptions < bNumOptions ? 1 : -1;
-  });
+      const bNumOptions: number = question.memberValues?.filter(
+        (memberValue: IMemberValue) => memberValue?.value === b
+      )?.length;
+
+      if (aNumOptions === bNumOptions) return 0;
+      return aNumOptions < bNumOptions ? 1 : -1;
+    }
+  );
 
   return (
     <Show show={!!isOpen}>

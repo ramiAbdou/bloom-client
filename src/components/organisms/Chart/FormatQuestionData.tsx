@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { IQuestion } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { QuestionType } from '@util/constants';
 import Chart from './Chart.store';
 import { ChartModelInitArgs, ChartType } from './Chart.types';
@@ -114,7 +114,7 @@ export default ({
   const setQuestionId = Chart.useStoreActions((state) => state.setQuestionId);
   const setType = Chart.useStoreActions((state) => state.setType);
 
-  const { type } = useFindOne(IQuestion, {
+  const { data: question } = useFindOneFull(IQuestion, {
     fields: ['type'],
     where: { id: questionId }
   });
@@ -133,8 +133,10 @@ export default ({
   // the props when the chart was created, not here.
   useEffect(() => {
     if (
-      ([QuestionType.LONG_TEXT, QuestionType.SHORT_TEXT].includes(type) ||
-        (type === QuestionType.MULTIPLE_CHOICE && data.length >= 8)) &&
+      ([QuestionType.LONG_TEXT, QuestionType.SHORT_TEXT].includes(
+        question.type
+      ) ||
+        (question.type === QuestionType.MULTIPLE_CHOICE && data.length >= 8)) &&
       currentType !== ChartType.BAR
     ) {
       setType(ChartType.BAR);
@@ -143,13 +145,13 @@ export default ({
 
     if (
       [QuestionType.MULTIPLE_SELECT, QuestionType.MULTIPLE_CHOICE].includes(
-        type
+        question.type
       ) &&
       currentType !== ChartType.PIE
     ) {
       setType(ChartType.PIE);
     }
-  }, [data?.length, type]);
+  }, [data?.length, question.type]);
 
   useEffect(() => {
     if (data !== null && totalResponses !== null) {

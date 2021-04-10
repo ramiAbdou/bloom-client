@@ -10,9 +10,9 @@ import GoogleLogo from '@components/images/google.svg';
 import Form from '@components/organisms/Form/Form';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { useStoreState } from '@core/store/Store';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import { useStoreState } from '@core/store/Store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { APP, QuestionCategory, ShowProps } from '@util/constants';
 import { ErrorContext, ErrorType } from '@util/constants.errors';
 import { buildUrl } from '@util/util';
@@ -48,7 +48,7 @@ const CheckInGoogleButton: React.FC = () => {
 const LoginCardGoogleContainer: React.FC = React.memo(() => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const owner: IMember = useFindOne(IMember, {
+  const { data: owner, loading } = useFindOneFull(IMember, {
     fields: ['email', 'firstName', 'lastName'],
     where: { communityId, role: MemberRole.OWNER }
   });
@@ -67,6 +67,8 @@ const LoginCardGoogleContainer: React.FC = React.memo(() => {
 
     return () => clearTimeout(timeout);
   }, [error]);
+
+  if (loading) return null;
 
   return (
     <div>

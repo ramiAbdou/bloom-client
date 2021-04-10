@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 
 import Card from '@components/containers/Card/Card';
 import { IEvent } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import IdStore from '@core/store/Id.store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { IdProps } from '@util/constants';
 import { cx, take } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
@@ -32,21 +32,26 @@ const EventsCardButton: React.FC = () => {
 const EventsCardContent: React.FC = () => {
   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const { endTime, startTime, title } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['endTime', 'startTime', 'title'],
     where: { id: eventId }
   });
 
+  if (loading) return null;
+
   const isHappeningNow: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.HAPPENING_NOW;
+    getEventTiming(event) === EventTiming.HAPPENING_NOW;
 
   const isStartingSoon: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.STARTING_SOON;
+    getEventTiming(event) === EventTiming.STARTING_SOON;
 
   const formattedStartTime: string = take([
     [isHappeningNow, 'Happening Now'],
-    [isStartingSoon, `Starting Soon @ ${day(startTime).format('h:mm A z')}`],
-    [true, day(startTime).format('ddd, MMM D @ h:mm A z')]
+    [
+      isStartingSoon,
+      `Starting Soon @ ${day(event.startTime).format('h:mm A z')}`
+    ],
+    [true, day(event.startTime).format('ddd, MMM D @ h:mm A z')]
   ]);
 
   const css: string = cx('s-events-card-content', {
@@ -57,7 +62,7 @@ const EventsCardContent: React.FC = () => {
     <div className={css}>
       <div>
         <h5>{formattedStartTime}</h5>
-        <h3>{title}</h3>
+        <h3>{event.title}</h3>
         <EventsCardPeople />
       </div>
 
@@ -70,15 +75,17 @@ const EventsCard: React.FC<IdProps> = ({ id: eventId }) => {
   const { push } = useHistory();
   const onClick = () => push(eventId);
 
-  const { imageUrl } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['imageUrl'],
     where: { id: eventId }
   });
 
+  if (loading) return null;
+
   return (
     <IdStore.Provider runtimeModel={{ id: eventId }}>
       <Card noPadding className="s-events-card" onClick={onClick}>
-        <EventsAspectBackground imageUrl={imageUrl} />
+        <EventsAspectBackground imageUrl={event.imageUrl} />
         <EventsCardContent />
       </Card>
     </IdStore.Provider>

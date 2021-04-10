@@ -10,8 +10,8 @@ import {
   IPaymentMethod,
   RecurrenceType
 } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { take } from '@util/util';
 
 const ApplicationReviewMembership: React.FC = () => {
@@ -29,15 +29,19 @@ const ApplicationReviewMembership: React.FC = () => {
     ({ items }) => (items.CREDIT_OR_DEBIT_CARD?.value ?? {}) as IPaymentMethod
   );
 
-  const { amount, recurrence } = useFindOne(IMemberType, {
+  const { data: memberType, loading } = useFindOneFull(IMemberType, {
     where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   });
 
-  const amountString: string = amount ? `$${amount}` : 'FREE';
+  if (loading) return null;
+
+  const amountString: string = memberType.amount
+    ? `$${memberType.amount}`
+    : 'FREE';
 
   const recurrenceString: string = take([
-    [recurrence === RecurrenceType.YEARLY, 'Per Year'],
-    [recurrence === RecurrenceType.MONTHLY, 'Per Month']
+    [memberType.recurrence === RecurrenceType.YEARLY, 'Per Year'],
+    [memberType.recurrence === RecurrenceType.MONTHLY, 'Per Month']
   ]);
 
   const description: string = `${amountString} ${recurrenceString}`;
@@ -53,7 +57,7 @@ const ApplicationReviewMembership: React.FC = () => {
 
         <InformationCard
           description={`Expires ${expirationDate}`}
-          show={!!amount && !!last4}
+          show={!!memberType.amount && !!last4}
           title={`${brand} Ending in ${last4}`}
         />
       </Row>

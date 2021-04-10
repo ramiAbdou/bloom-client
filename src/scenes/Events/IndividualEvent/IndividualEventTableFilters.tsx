@@ -4,18 +4,20 @@ import Row from '@components/containers/Row/Row';
 import { TableFilterFunction } from '@components/organisms/Table/TableFilterPanel/TableFilterPanel.types';
 import TableQuickFilter from '@components/organisms/Table/TableQuickFilter';
 import { IEvent } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { IndividualEventTableRowProps } from './IndividualEvent.types';
 
 const IndividualEventViewedFilter: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { recordingUrl } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['recordingUrl'],
     where: { id: eventId }
   });
+
+  if (loading) return null;
 
   const filter: TableFilterFunction = (
     row: IndividualEventTableRowProps
@@ -24,7 +26,7 @@ const IndividualEventViewedFilter: React.FC = () => {
   return (
     <TableQuickFilter
       filter={filter}
-      show={!!recordingUrl}
+      show={!!event.recordingUrl}
       title="Viewed Recording"
     />
   );
@@ -40,13 +42,14 @@ const IndividualEventRsvpFilter: React.FC = () => {
 const IndividualEventJoinedFilter: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { endTime, startTime } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['endTime', 'startTime'],
     where: { id: eventId }
   });
 
-  const isUpcoming: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+  if (loading) return null;
+
+  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
   const filter: TableFilterFunction = (
     row: IndividualEventTableRowProps
@@ -58,13 +61,14 @@ const IndividualEventJoinedFilter: React.FC = () => {
 const IndividualEventNoShowFilter: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { endTime, startTime } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['endTime', 'startTime'],
     where: { id: eventId }
   });
 
-  const isPast: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
+  if (loading) return null;
+
+  const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
 
   const filter: TableFilterFunction = (
     row: IndividualEventTableRowProps

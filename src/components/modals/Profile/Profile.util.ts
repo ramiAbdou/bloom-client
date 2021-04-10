@@ -1,24 +1,18 @@
-import IdStore from '@core/store/Id.store';
 import {
   IEventAttendee,
   IEventGuest,
   IEventWatch,
   IMember
 } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import IdStore from '@core/store/Id.store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { sortObjects } from '@util/util';
 import { MemberHistoryData } from './Profile.types';
 
 export const useMemberHistory = (): MemberHistoryData[] => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const {
-    community,
-    eventAttendees,
-    eventGuests,
-    eventWatches,
-    joinedAt
-  } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: [
       'community.id',
       'community.name',
@@ -38,9 +32,14 @@ export const useMemberHistory = (): MemberHistoryData[] => {
     where: { id: memberId }
   });
 
-  if (!eventAttendees && !eventGuests && !eventWatches) return [];
+  if (
+    loading ||
+    (!member.eventAttendees && !member.eventGuests && !member.eventWatches)
+  ) {
+    return [];
+  }
 
-  const attendeeEvents: MemberHistoryData[] = eventWatches.map(
+  const attendeeEvents: MemberHistoryData[] = member.eventWatches.map(
     (eventAttendee: IEventAttendee) => {
       return {
         date: eventAttendee.createdAt,
@@ -50,7 +49,7 @@ export const useMemberHistory = (): MemberHistoryData[] => {
     }
   );
 
-  const guestEvents: MemberHistoryData[] = eventGuests.map(
+  const guestEvents: MemberHistoryData[] = member.eventGuests.map(
     (eventGuest: IEventGuest) => {
       return {
         date: eventGuest.createdAt,
@@ -62,13 +61,13 @@ export const useMemberHistory = (): MemberHistoryData[] => {
 
   const joinedAtEvents: MemberHistoryData[] = [
     {
-      date: joinedAt,
+      date: member.joinedAt,
       event: 'Joined Community',
-      title: community.name
+      title: member.community.name
     }
   ];
 
-  const watchEvents: MemberHistoryData[] = eventWatches.map(
+  const watchEvents: MemberHistoryData[] = member.eventWatches.map(
     (eventWatch: IEventWatch) => {
       return {
         date: eventWatch.createdAt,

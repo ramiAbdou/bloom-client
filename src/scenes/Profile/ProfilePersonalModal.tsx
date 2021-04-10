@@ -7,39 +7,45 @@ import FormImage from '@components/organisms/Form/FormImage';
 import FormLongText from '@components/organisms/Form/FormLongText';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
-import { useStoreState } from '@core/store/Store';
 import { IMember } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import { useStoreState } from '@core/store/Store';
 import { QuestionCategory } from '@util/constants';
 import useUpdateMember from './useUpdateMember';
 
 const ProfilePersonalModal: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
+  const updateMember: OnFormSubmitFunction = useUpdateMember();
 
-  const { bio, firstName, lastName, pictureUrl } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['bio', 'firstName', 'lastName', 'pictureUrl'],
     where: { id: memberId }
   });
 
-  const updateMember: OnFormSubmitFunction = useUpdateMember();
+  if (loading) return null;
 
   return (
     <Form onSubmit={updateMember}>
       <FormHeader title="Edit Personal Information" />
-      <FormImage id="PROFILE_PICTURE" required={false} value={pictureUrl} />
+      <FormImage
+        id="PROFILE_PICTURE"
+        required={false}
+        value={member.pictureUrl}
+      />
 
       <FormShortText
         category={QuestionCategory.FIRST_NAME}
         title="First Name"
-        value={firstName}
+        value={member.firstName}
       />
 
       <FormShortText
         category={QuestionCategory.LAST_NAME}
         title="Last Name"
-        value={lastName}
+        value={member.lastName}
       />
-      <FormLongText id="BIO" required={false} title="Bio" value={bio} />
+
+      <FormLongText id="BIO" required={false} title="Bio" value={member.bio} />
       <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>
     </Form>
   );

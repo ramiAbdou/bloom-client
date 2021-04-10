@@ -2,7 +2,7 @@ import React from 'react';
 
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import { IQuestion } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import ChartStore from './Chart.store';
 
 const ChartHeader: React.FC = () => {
@@ -14,14 +14,16 @@ const ChartHeader: React.FC = () => {
 
   const currentTitle = ChartStore.useStoreState((state) => state.title);
 
-  const { title } = useFindOne(IQuestion, {
+  const { data: question, loading } = useFindOneFull(IQuestion, {
     fields: ['title'],
     where: { id: questionId }
   });
 
+  if (loading) return null;
+
   return (
     <div>
-      <h4>{currentTitle ?? title}</h4>
+      <h4>{currentTitle ?? question.title}</h4>
       {totalResponses !== null && (
         <HeaderTag>{totalResponses} Responses</HeaderTag>
       )}

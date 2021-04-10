@@ -4,9 +4,9 @@ import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import Row from '@components/containers/Row/Row';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
-import IdStore from '@core/store/Id.store';
 import { IMember } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import IdStore from '@core/store/Id.store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import ProfileSocialContainer from './ProfileSocial';
 
 const ProfilePersonalPicture: React.FC = () => {
@@ -25,13 +25,14 @@ const ProfilePersonalPicture: React.FC = () => {
 const ProfilePersonalName: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { firstName, lastName } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['firstName', 'lastName'],
     where: { id: memberId }
   });
 
-  const fullName: string =
-    firstName && lastName ? `${firstName} ${lastName}` : '';
+  if (loading) return null;
+
+  const fullName: string = `${member.firstName} ${member.lastName}`;
 
   return <h1 className="mb-xs--nlc">{fullName}</h1>;
 };
@@ -39,16 +40,18 @@ const ProfilePersonalName: React.FC = () => {
 const ProfilePersonalTags: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { memberType, position, role } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['memberType.id', 'memberType.name', 'position', 'role'],
     where: { id: memberId }
   });
 
+  if (loading) return null;
+
   return (
     <Row wrap className="mb-ss--nlc" gap="xs">
-      <HeaderTag show={!!role}>{role}</HeaderTag>
-      <HeaderTag show={!!position}>{position}</HeaderTag>
-      <HeaderTag>{memberType?.name}</HeaderTag>
+      <HeaderTag show={!!member.role}>{member.role}</HeaderTag>
+      <HeaderTag show={!!member.position}>{member.position}</HeaderTag>
+      <HeaderTag>{member.memberType?.name}</HeaderTag>
     </Row>
   );
 };
@@ -56,23 +59,27 @@ const ProfilePersonalTags: React.FC = () => {
 const ProfilePersonalEmail: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { email } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['email'],
     where: { id: memberId }
   });
 
-  return <MailTo className="mb-sm--nlc" email={email} />;
+  if (loading) return null;
+
+  return <MailTo className="mb-sm--nlc" email={member.email} />;
 };
 
 const ProfilePersonalBio: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
 
-  const { bio } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['bio'],
     where: { id: memberId }
   });
 
-  return <p className="mb-sm--nlc ws-pre-wrap">{bio}</p>;
+  if (loading) return null;
+
+  return <p className="mb-sm--nlc ws-pre-wrap">{member.bio}</p>;
 };
 
 const ProfilePersonal: React.FC = () => (

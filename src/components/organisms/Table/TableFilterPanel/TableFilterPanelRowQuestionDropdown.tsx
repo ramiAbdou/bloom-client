@@ -5,7 +5,7 @@ import Dropdown from '@components/molecules/Dropdown/Dropdown';
 import { ICommunity, IQuestion } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 import TableFilterStore from './TableFilterPanel.store';
@@ -25,30 +25,36 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
 
   const [questionId, setQuestionId] = useState<string>(columnId);
 
-  const { memberTypes, questions } = useFindOne(ICommunity, {
+  const setFilter: ActionCreator<
+    Partial<TableFilterArgs>
+  > = TableFilterStore.useStoreActions((state) => state.setFilter);
+
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['memberTypes.id', 'questions.category', 'questions.id'],
     where: { communityId }
   });
 
-  const initialQuestionId: string = questions.find((question: IQuestion) => {
-    const isMemberTypeAllowed: boolean =
-      question.category === QuestionCategory.MEMBER_TYPE &&
-      memberTypes.length >= 2;
+  const initialQuestionId: string = community.questions.find(
+    (question: IQuestion) => {
+      const isMemberTypeAllowed: boolean =
+        question.category === QuestionCategory.MEMBER_TYPE &&
+        community.memberTypes.length >= 2;
 
-    return (
-      isMemberTypeAllowed ||
-      !question.category ||
-      question.category === QuestionCategory.BIO ||
-      question.category === QuestionCategory.EVENTS_ATTENDED ||
-      question.category === QuestionCategory.GENDER
-    );
-  })?.id;
+      return (
+        isMemberTypeAllowed ||
+        !question.category ||
+        question.category === QuestionCategory.BIO ||
+        question.category === QuestionCategory.EVENTS_ATTENDED ||
+        question.category === QuestionCategory.GENDER
+      );
+    }
+  )?.id;
 
-  const sortedQuestions: IQuestion[] = questions
+  const sortedQuestions: IQuestion[] = community.questions
     ?.filter((question: IQuestion) => {
       const isMemberTypeAllowed: boolean =
         question.category === QuestionCategory.MEMBER_TYPE &&
-        memberTypes.length >= 2;
+        community.memberTypes.length >= 2;
 
       return (
         isMemberTypeAllowed ||
@@ -60,10 +66,6 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
     })
     ?.sort((a: IQuestion, b: IQuestion) => sortObjects(a, b, 'rank', 'ASC'));
 
-  const setFilter: ActionCreator<
-    Partial<TableFilterArgs>
-  > = TableFilterStore.useStoreActions((state) => state.setFilter);
-
   useEffect(() => {
     if (!questionId && initialQuestionId) {
       setQuestionId(initialQuestionId);
@@ -73,6 +75,8 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
 
     if (columnId !== questionId) setQuestionId(columnId);
   }, [columnId, initialQuestionId]);
+
+  if (loading) return null;
 
   const onQuestionUpdate = (result: string) => {
     const updatedColumnId = sortedQuestions.find(

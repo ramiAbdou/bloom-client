@@ -1,33 +1,34 @@
 import React from 'react';
 
-import Show from '@components/containers/Show';
 import { IMemberType, RecurrenceType } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { IdProps } from '@util/constants';
 import { take } from '@util/util';
 
 const ApplicationChooseTypeCard: React.FC<IdProps> = ({ id: memberTypeId }) => {
-  const { amount, recurrence } = useFindOne(IMemberType, {
+  const { data: memberType, loading } = useFindOneFull(IMemberType, {
     fields: ['amount', 'recurrence'],
     where: { id: memberTypeId }
   });
 
+  if (loading) return null;
+
   // Formats the amount with FREE if the amount is 0.
-  const amountString: string = amount ? `$${amount}` : 'FREE';
+  const amountString: string = memberType.amount
+    ? `$${memberType.amount}`
+    : 'FREE';
 
   // Construct string "Per" timespan based on the recurrence.
   const recurrenceString: string = take([
-    [recurrence === RecurrenceType.YEARLY, 'Per Year'],
-    [recurrence === RecurrenceType.MONTHLY, 'Per Month']
+    [memberType.recurrence === RecurrenceType.YEARLY, 'Per Year'],
+    [memberType.recurrence === RecurrenceType.MONTHLY, 'Per Month']
   ]);
 
   return (
-    <Show show={amount !== undefined && recurrence !== undefined}>
-      <p className="s-application-type-string">
-        <span>{amountString}</span>
-        <span>{recurrenceString}</span>
-      </p>
-    </Show>
+    <p className="s-application-type-string">
+      <span>{amountString}</span>
+      <span>{recurrenceString}</span>
+    </p>
   );
 };
 

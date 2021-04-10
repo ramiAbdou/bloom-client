@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import useTopLevelRoute from '@hooks/useTopLevelRoute';
 import { OnClickProps } from '@util/constants';
 import { cx } from '@util/util';
@@ -47,10 +47,12 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
 
   const isActive: boolean = useTopLevelRoute() === to;
 
-  const { urlName } = useFindOne(ICommunity, {
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });
+
+  if (loading) return null;
 
   // If onClick is supplied, means it is an action.
   if (onClick) return <SidebarLinkAction {...props} />;
@@ -64,7 +66,11 @@ const SidebarLink: React.FC<SidebarLinkProps> = (props) => {
   };
 
   return (
-    <Link className={css} to={`/${urlName}/${to}`} onClick={onLinkClick}>
+    <Link
+      className={css}
+      to={`/${community.urlName}/${to}`}
+      onClick={onLinkClick}
+    >
       <Icon />
       {title}
       <SidebarLinkNotificationCircle to={to} />

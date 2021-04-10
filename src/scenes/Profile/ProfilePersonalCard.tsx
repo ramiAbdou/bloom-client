@@ -7,28 +7,28 @@ import Row from '@components/containers/Row/Row';
 import MailTo from '@components/molecules/MailTo';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { IMember } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
 import ProfileCardHeader, { ProfileEditButton } from './ProfileCardHeader';
 
 const ProfilePersonalHeader: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { firstName, lastName } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['firstName', 'lastName'],
     where: { id: memberId }
   });
 
-  const fullName: string =
-    firstName && lastName ? `${firstName} ${lastName}` : '';
+  if (loading) return null;
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
-
-  const onClick = () => {
+  const onClick = (): void => {
     showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
   };
+
+  const fullName: string = `${member.firstName} ${member.lastName}`;
 
   return (
     <ProfileCardHeader canEdit h2 title={fullName} onEditClick={onClick} />
@@ -38,15 +38,17 @@ const ProfilePersonalHeader: React.FC = () => {
 const ProfilePersonalTagList: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { memberType, role } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['role', 'memberType.id', 'memberType.name'],
     where: { id: memberId }
   });
 
+  if (loading) return null;
+
   return (
     <Row wrap gap="xs">
-      <HeaderTag show={!!role}>{role}</HeaderTag>
-      <HeaderTag>{memberType?.name}</HeaderTag>
+      <HeaderTag show={!!member.role}>{member.role}</HeaderTag>
+      <HeaderTag>{member.memberType?.name}</HeaderTag>
     </Row>
   );
 };
@@ -54,47 +56,48 @@ const ProfilePersonalTagList: React.FC = () => {
 const ProfilePersonalEmail: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { email } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['email'],
     where: { id: memberId }
   });
 
-  return <MailTo email={email} />;
+  if (loading) return null;
+  return <MailTo email={member.email} />;
 };
 
 const ProfilePersonalBio: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { bio } = useFindOne(IMember, {
+  const { data: member } = useFindOneFull(IMember, {
     fields: ['bio'],
     where: { id: memberId }
   });
 
-  return bio ? <p className="ws-pre-wrap">{bio}</p> : null;
+  return member.bio ? <p className="ws-pre-wrap">{member.bio}</p> : null;
 };
 
 const ProfilePersonalOnboardingContainer: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { bio, pictureUrl } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['bio', 'pictureUrl'],
     where: { id: memberId }
   });
 
-  if (bio && pictureUrl) return null;
+  if (loading || (member.bio && member.pictureUrl)) return null;
 
   const onClick = () => showModal({ id: ModalType.EDIT_PERSONAL_INFORMATION });
 
   return (
     <Row spacing="xs">
-      {!pictureUrl && (
+      {!member.pictureUrl && (
         <Button primary onClick={onClick}>
           + Add Profile Picture
         </Button>
       )}
 
-      {!bio && (
+      {!member.bio && (
         <Button primary onClick={onClick}>
           + Add Bio
         </Button>

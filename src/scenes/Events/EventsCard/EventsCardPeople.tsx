@@ -3,10 +3,9 @@ import React from 'react';
 import Row from '@components/containers/Row/Row';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
 import { IEvent, IEventAttendee, IEventGuest } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import IdStore from '@core/store/Id.store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
-import { isEmpty } from '@util/util';
 
 interface EventsCardPictureId {
   memberId?: string;
@@ -35,7 +34,7 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
 const EventsCardPeople: React.FC = () => {
   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const event: IEvent = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: [
       'endTime',
       'eventAttendees.id',
@@ -49,7 +48,7 @@ const EventsCardPeople: React.FC = () => {
     where: { id: eventId }
   });
 
-  if (isEmpty(event)) return null;
+  if (loading) return null;
 
   const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
 

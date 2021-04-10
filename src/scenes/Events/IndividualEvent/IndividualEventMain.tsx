@@ -3,22 +3,24 @@ import React from 'react';
 
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import IndividualEventActions from './IndividualEventActions';
 
 const IndividualEventMainHeaderContainer: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { endTime, startTime } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['endTime', 'startTime'],
     where: { id: eventId }
   });
 
-  const startDay: string = day(startTime).format('dddd, MMMM Do');
-  const startHour: string = day(startTime).format('h:mm A');
-  const endHour: string = day(endTime).format('h:mm A z');
+  if (loading) return null;
+
+  const startDay: string = day(event.startTime).format('dddd, MMMM Do');
+  const startHour: string = day(event.startTime).format('h:mm A');
+  const endHour: string = day(event.endTime).format('h:mm A z');
 
   return (
     <div className="s-events-individual-header-date">
@@ -32,20 +34,22 @@ const IndividualEventMain: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
   const isMember: boolean = useIsMember();
 
-  const { community, privacy, summary, title } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['community.id', 'community.name', 'privacy', 'summary', 'title'],
     where: { id: eventId }
   });
+
+  if (loading) return null;
 
   return (
     <div className="s-events-individual-header-content">
       <div>
         <IndividualEventMainHeaderContainer />
-        <h1>{title}</h1>
-        {!isMember && <p className="meta">Hosted by {community.name}</p>}
-        {summary && <p>{summary}</p>}
+        <h1>{event.title}</h1>
+        {!isMember && <p className="meta">Hosted by {event.community.name}</p>}
+        {event.summary && <p>{event.summary}</p>}
         <HeaderTag>
-          {privacy === EventPrivacy.MEMBERS_ONLY
+          {event.privacy === EventPrivacy.MEMBERS_ONLY
             ? 'Members Only'
             : 'Open to All'}{' '}
         </HeaderTag>

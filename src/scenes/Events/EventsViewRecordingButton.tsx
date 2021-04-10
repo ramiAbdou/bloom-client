@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { useStoreState } from '@core/store/Store';
 import { IEvent, IEventWatch, IMember } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import { useStoreState } from '@core/store/Store';
 import GQL from '@gql/GQL';
-import useFindOne from '@gql/hooks/useFindOne';
 import useGQL from '@gql/hooks/useGQL';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 
@@ -20,18 +20,19 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   const gql: GQL = useGQL();
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { role } = useFindOne(IMember, {
+  const { data: member, loading: loading1 } = useFindOneFull(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  const { endTime, recordingUrl, startTime } = useFindOne(IEvent, {
+  const { data: event, loading: loading2 } = useFindOneFull(IEvent, {
     fields: ['endTime', 'recordingUrl', 'startTime'],
     where: { id: eventId }
   });
 
-  const isPast: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
+  if (loading1 || loading2) return null;
+
+  const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -57,15 +58,15 @@ const EventsViewRecordingButton: React.FC<EventsViewRecordingButtonProps> = ({
   return (
     <Button
       fill
-      disabled={!recordingUrl}
-      href={recordingUrl}
+      disabled={!event.recordingUrl}
+      href={event.recordingUrl}
       large={large}
-      primary={!!recordingUrl}
-      secondary={!recordingUrl}
-      show={isPast && (!role || !large || !!recordingUrl)}
+      primary={!!event.recordingUrl}
+      secondary={!event.recordingUrl}
+      show={isPast && (!member.role || !large || !!event.recordingUrl)}
       onClick={onClick}
     >
-      {recordingUrl ? 'View Recording' : 'No Recording Available'}
+      {event.recordingUrl ? 'View Recording' : 'No Recording Available'}
     </Button>
   );
 };

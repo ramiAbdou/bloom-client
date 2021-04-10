@@ -5,19 +5,21 @@ import { OnFormSubmitArgs } from '@components/organisms/Form/Form.types';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IEvent } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
 import GQL from '@gql/GQL';
-import useFindOne from '@gql/hooks/useFindOne';
 import useGQL from '@gql/hooks/useGQL';
 
 const IndividualEventRecordingForm: React.FC = () => {
   const eventId: string = useStoreState(({ panel }) => panel.metadata);
   const gql: GQL = useGQL();
 
-  const { recordingUrl } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['recordingUrl'],
     where: { id: eventId }
   });
+
+  if (loading) return null;
 
   const onSubmit = async ({
     closePanel,
@@ -45,7 +47,7 @@ const IndividualEventRecordingForm: React.FC = () => {
         id="RECORDING_URL"
         title="Event Recording Link"
         validate="IS_URL"
-        value={recordingUrl ?? ''}
+        value={event.recordingUrl ?? ''}
       />
 
       <FormSubmitButton large={false} loadingText="Saving...">

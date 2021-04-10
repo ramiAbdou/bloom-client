@@ -1,9 +1,9 @@
 import React from 'react';
 
 import MasonryList from '@components/organisms/List/MasonryList';
-import { useStoreState } from '@core/store/Store';
 import { ICommunity, IMember, MemberStatus } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import { useStoreState } from '@core/store/Store';
 import { sortObjects } from '@util/util';
 import { prepareMemberForFilter } from './Directory.util';
 import DirectoryCard from './DirectoryCard';
@@ -11,7 +11,7 @@ import DirectoryCard from './DirectoryCard';
 const DirectoryCardList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const community: ICommunity = useFindOne(ICommunity, {
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: [
       'id',
       'members.id',
@@ -27,6 +27,8 @@ const DirectoryCardList: React.FC = () => {
     ],
     where: { id: communityId }
   });
+
+  if (loading) return null;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore b/c we haven't fixed the community.members type yet.

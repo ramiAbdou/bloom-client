@@ -7,24 +7,25 @@ import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
 import { ICommunity, IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { ShowProps } from '@util/constants';
 
 const CheckInChoosePageActions: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { endTime, startTime } = useFindOne(IEvent, {
+  const setCurrentPage = StoryStore.useStoreActions(
+    (state) => state.setCurrentPage
+  );
+
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['endTime', 'startTime'],
     where: { id: eventId }
   });
 
-  const isUpcoming: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+  if (loading) return null;
 
-  const setCurrentPage = StoryStore.useStoreActions(
-    (state) => state.setCurrentPage
-  );
+  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
   const onPrimaryClick = () => {
     setCurrentPage({ branchId: 'FINISH_MEMBER', id: 'FINISH' });
@@ -51,12 +52,12 @@ const CheckInChoosePageActions: React.FC = () => {
 const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { name } = useFindOne(ICommunity, {
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['name'],
     where: { id: communityId }
   });
 
-  if (show === false) return null;
+  if (loading || show === false) return null;
 
   return (
     <StoryPage
@@ -68,7 +69,9 @@ const CheckInChoosePage: React.FC<ShowProps> = ({ show }) => {
         }
       }}
     >
-      <FormLabel marginBottom={16}>{`Are you a member of ${name}?`}</FormLabel>
+      <FormLabel
+        marginBottom={16}
+      >{`Are you a member of ${community.name}?`}</FormLabel>
       <CheckInChoosePageActions />
     </StoryPage>
   );

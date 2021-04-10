@@ -7,9 +7,9 @@ import {
   IQuestion,
   MemberStatus
 } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory } from '@util/constants';
 import { sortObjects } from '@util/util';
 
@@ -86,9 +86,11 @@ export const useMemberDatabaseRows = (): TableRow[] => {
     where: { communityId, status: MemberStatus.ACCEPTED }
   });
 
-  const { id: sortQuestionId } = useFindOne(IQuestion, {
+  const { data: question, loading } = useFindOneFull(IQuestion, {
     where: { category: QuestionCategory.JOINED_AT, communityId }
   });
+
+  if (loading) return [];
 
   const rows: TableRow[] = members
     ?.filter((member: IMember) => !member.deletedAt)
@@ -107,7 +109,7 @@ export const useMemberDatabaseRows = (): TableRow[] => {
         { id: member.id }
       )
     )
-    ?.sort((a: TableRow, b: TableRow) => sortObjects(a, b, sortQuestionId));
+    ?.sort((a: TableRow, b: TableRow) => sortObjects(a, b, question.id));
 
   return rows;
 };

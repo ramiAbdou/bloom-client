@@ -4,9 +4,6 @@ import { useHistory } from 'react-router-dom';
 
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Section from '@components/containers/Section';
-import { ICommunity, IEvent } from '@core/db/db.entities';
-import useFind from '@gql/hooks/useFind';
-import useFindOne from '@gql/hooks/useFindOne';
 import Table from '@components/organisms/Table/Table';
 import {
   TableColumn,
@@ -15,7 +12,10 @@ import {
 } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import TableSearchBar from '@components/organisms/Table/TableSeachBar';
+import { ICommunity, IEvent } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
+import useFind from '@gql/hooks/useFind';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
 
@@ -33,10 +33,14 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
     where: { communityId, endTime: { _lt: day.utc().format() } }
   });
 
-  const { urlName } = useFindOne(ICommunity, {
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });
+
+  const { push } = useHistory();
+
+  if (loading) return null;
 
   const rows: TableRow[] = events
     .sort((a: IEvent, b: IEvent) => sortObjects(a, b, 'startTime'))
@@ -68,11 +72,10 @@ const EventsAnalyticsRecentEventsTable: React.FC = () => {
     }
   ];
 
-  const { push } = useHistory();
-
   const options: TableOptions = {
     isSortable: false,
-    onRowClick: ({ id }: TableRow) => push(`/${urlName}/events/${id}`),
+    onRowClick: ({ id }: TableRow) =>
+      push(`/${community.urlName}/events/${id}`),
     showCount: false
   };
 

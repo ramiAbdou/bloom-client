@@ -5,9 +5,9 @@ import Table from '@components/organisms/Table/Table';
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
 import TableContent from '@components/organisms/Table/TableContent';
 import { IMember, MemberRole } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionType } from '@util/constants';
 import AdminDatabaseActions from './AdminDatabaseActions';
 
@@ -25,12 +25,14 @@ const AdminDatabase: React.FC = () => {
     return { email, firstName, id: member.id, lastName };
   }, []);
 
-  const { role } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  const isOwner: boolean = role === MemberRole.OWNER;
+  if (loading) return null;
+
+  const isOwner: boolean = member.role === MemberRole.OWNER;
 
   // We typically fetch the question ID from the backend, but here, we are
   // only displaying a limited number of columns so we hard-code them.

@@ -7,7 +7,6 @@ import Show from '@components/containers/Show';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
 import { SetActiveEntitesArgs } from '@core/db/db.types';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
@@ -24,14 +23,16 @@ import IndividualEventTable from './IndividualEventTable';
 const IndividualEventHeader: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { imageUrl } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['imageUrl'],
     where: { id: eventId }
   });
 
+  if (loading) return null;
+
   return (
     <div className="cg-md d-grid p-md s-events-individual-header">
-      <EventsAspectBackground imageUrl={imageUrl} />
+      <EventsAspectBackground imageUrl={event.imageUrl} />
       <IndividualEventMain />
     </div>
   );
@@ -41,15 +42,15 @@ const IndividualEventContent: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { privacy } = useFindOne(IEvent, {
+  const { data: event } = useFindOneFull(IEvent, {
     fields: ['privacy'],
     where: { id: eventId }
   });
 
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-
   const isMember: boolean = useIsMember();
-  const isMembersOnly: boolean = privacy === EventPrivacy.MEMBERS_ONLY;
+
+  const isMembersOnly: boolean = event.privacy === EventPrivacy.MEMBERS_ONLY;
   const hasCookieError: boolean = !!Cookies.get(ErrorContext.LOGIN_ERROR);
 
   // If not a member of the community, and it's a member's only

@@ -3,10 +3,9 @@ import React from 'react';
 import Separator from '@components/atoms/Separator';
 import LoadingHeader from '@components/containers/LoadingHeader/LoadingHeader';
 import Show from '@components/containers/Show';
+import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import { IMember } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { MemberHistoryData } from './Profile.types';
 import { useMemberHistory } from './Profile.util';
@@ -93,13 +92,15 @@ const ProfileHistory: React.FC = () => {
   const memberId: string = IdStore.useStoreState((state) => state.id);
   const authenticatedMemberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { role } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['role'],
     where: { id: authenticatedMemberId }
   });
 
   const isMyProfile: boolean = memberId === authenticatedMemberId;
-  const hasAccessToHistory: boolean = !!role || isMyProfile;
+  const hasAccessToHistory: boolean = !!member.role || isMyProfile;
+
+  if (loading) return null;
 
   return (
     <Show show={hasAccessToHistory}>

@@ -3,22 +3,23 @@ import React from 'react';
 import HeaderTag from '@components/atoms/Tag/HeaderTag';
 import Card from '@components/containers/Card/Card';
 import ProfilePicture from '@components/molecules/ProfilePicture/ProfilePicture';
+import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreActions } from '@core/store/Store';
-import { IMember } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { ModalType } from '@util/constants';
 
 const DirectoryCardInformationFullName: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const { firstName, lastName }: IMember = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['firstName', 'lastName'],
     where: { id: memberId }
   });
 
-  const fullName: string =
-    firstName && lastName ? `${firstName} ${lastName}` : '';
+  if (loading) return null;
+
+  const fullName: string = `${member.firstName} ${member.lastName}`;
 
   return (
     <span className="body--bold d-block mb-xxs ta-center">{fullName}</span>
@@ -28,16 +29,16 @@ const DirectoryCardInformationFullName: React.FC = () => {
 const DirectoryCardInformationPosition: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const { position }: IMember = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['position'],
     where: { id: memberId }
   });
 
-  if (!position) return null;
+  if (loading) return null;
 
   return (
     <span className="body--bold c-primary d-block fs-13 mb-xxs ta-center">
-      {position}
+      {member.position}
     </span>
   );
 };
@@ -89,12 +90,14 @@ const DirectoryCardPicture: React.FC = () => {
 const DirectoryCardRole: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const { role }: IMember = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  return <HeaderTag show={!!role}>{role}</HeaderTag>;
+  if (loading) return null;
+
+  return <HeaderTag show={!!member.role}>{member.role}</HeaderTag>;
 };
 
 const DirectoryCardContent: React.FC = () => {

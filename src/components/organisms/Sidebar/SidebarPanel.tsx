@@ -6,13 +6,16 @@ import { PanelAction } from '@components/organisms/Panel/Panel.types';
 import PanelOption from '@components/organisms/Panel/PanelOption';
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import useLogout from './useLogout';
 
 const SidebarPanel: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { urlName } = useFindOne(ICommunity, {
+  const { push } = useHistory();
+  const logout = useLogout();
+
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['urlName'],
     where: { id: communityId }
   });
@@ -21,8 +24,7 @@ const SidebarPanel: React.FC = () => {
   //   ({ db }) => db.community?.canCollectDues
   // );
 
-  const { push } = useHistory();
-  const logout = useLogout();
+  if (loading) return null;
 
   // Show a panel that either allows them to view their profile or log out.
   const actions: PanelAction[] = [
@@ -37,7 +39,7 @@ const SidebarPanel: React.FC = () => {
     //   : []),
     {
       Icon: IoPerson,
-      onClick: () => push(`/${urlName}/profile`),
+      onClick: () => push(`/${community.urlName}/profile`),
       text: 'Your Profile'
     },
     { Icon: IoExit, onClick: logout, text: 'Log Out' }

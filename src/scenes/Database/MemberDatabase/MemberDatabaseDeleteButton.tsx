@@ -2,10 +2,10 @@ import React from 'react';
 import { IoTrash } from 'react-icons/io5';
 
 import TableStore from '@components/organisms/Table/Table.store';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 import { IMember, MemberRole } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { ModalType } from '@util/constants';
 import { take } from '@util/util';
 import DatabaseAction from '../DatabaseAction';
@@ -21,20 +21,22 @@ const useDeleteTooltip = (): string => {
     (state) => state.selectedRowIds
   );
 
-  const { role } = useFindOne(IMember, {
-    fields: ['role'],
-    where: { id: memberId }
-  });
-
-  const isSelfSelected: boolean = selectedRowIds.includes(memberId);
-
   const members: IMember[] = useFind(IMember, {
     where: { id: { _in: selectedRowIds } }
   });
 
+  const { data: member, loading } = useFindOneFull(IMember, {
+    fields: ['role'],
+    where: { id: memberId }
+  });
+
+  if (loading) return null;
+
+  const isSelfSelected: boolean = selectedRowIds.includes(memberId);
+
   const hasPermissions: boolean =
-    role === MemberRole.OWNER ||
-    members.every((member: IMember) => !member.role);
+    member.role === MemberRole.OWNER ||
+    members.every((entity: IMember) => !entity.role);
 
   const tooltip: string = take([
     [isSelfSelected, `Can't delete member(s) because you selected yourself.`],

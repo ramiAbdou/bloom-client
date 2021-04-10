@@ -3,9 +3,9 @@ import React from 'react';
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { ToastOptions } from '@components/organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import GQL from '@gql/GQL';
-import useFindOne from '@gql/hooks/useFindOne';
 import useGQL from '@gql/hooks/useGQL';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
@@ -29,7 +29,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
 
   const isMember: boolean = useIsMember();
 
-  const event: IEvent = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: [
       'endTime',
       'eventGuests.deletedAt',
@@ -40,7 +40,7 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     where: { id: eventId }
   });
 
-  if (!event.id) return null;
+  if (loading) return null;
 
   const isGoing: boolean = event.eventGuests.some(
     (eventGuest: IEventGuest) => eventGuest.member?.id === memberId

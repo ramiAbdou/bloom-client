@@ -6,10 +6,10 @@ import FormMultipleChoice from '@components/organisms/Form/FormMultipleChoice';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import { useStoreState } from '@core/store/Store';
 import { IMemberType } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { QuestionCategory } from '@util/constants';
 import ApplicationChooseTypeCard from './ApplicationChooseTypeCard';
 import ApplicationPaymentForm from './ApplicationPaymentSection';
@@ -21,9 +21,9 @@ const ApplicationChooseTypeButton: React.FC = () => {
 
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const isPaidMembershipSelected: boolean = !!useFindOne(IMemberType, {
+  const isPaidMembershipSelected: boolean = !!useFindOneFull(IMemberType, {
     where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
-  });
+  })?.data;
 
   return (
     <FormSubmitButton show={!isPaidMembershipSelected}>

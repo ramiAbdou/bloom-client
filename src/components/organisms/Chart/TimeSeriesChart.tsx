@@ -13,7 +13,7 @@ import {
 
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { take } from '@util/util';
 import ChartStore from './Chart.store';
@@ -52,7 +52,7 @@ const LineChartTooltip: React.FC<Pick<ChartTooltipProps, 'label'>> = ({
 const TimeSeriesChart: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { primaryColor } = useFindOne(ICommunity, {
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['primaryColor'],
     where: { id: communityId }
   });
@@ -63,7 +63,7 @@ const TimeSeriesChart: React.FC = () => {
   const xAxisOptions = useXAxisOptions();
   const yAxisOptions = useYAxisOptions();
 
-  if (!data?.length) return null;
+  if (loading || !data?.length) return null;
 
   return (
     <ResponsiveContainer height={isMonitor ? 360 : 240}>
@@ -76,7 +76,7 @@ const TimeSeriesChart: React.FC = () => {
           activeDot={{ r: 8 }}
           dataKey="value"
           dot={false}
-          stroke={primaryColor}
+          stroke={community.primaryColor}
           type="basis"
         />
       </LineChart>

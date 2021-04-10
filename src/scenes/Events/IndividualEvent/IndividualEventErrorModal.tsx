@@ -3,8 +3,8 @@ import React from 'react';
 
 import ModalCloseButton from '@components/organisms/Modal/ModalCloseButton';
 import { IEvent } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { ErrorType } from '@util/constants.errors';
 
 const IndividualEventErrorModal: React.FC = () => {
@@ -16,15 +16,16 @@ const IndividualEventErrorModal: React.FC = () => {
     ({ modal }) => modal.metadata
   );
 
-  const { startTime, title }: IEvent = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['startTime', 'title'],
     where: { id: eventId }
   });
 
-  const formattedStartTime: string = day(startTime).format('MMMM, D @ h:mm A');
+  if (loading) return null;
 
-  // If the Event content hasn't fully loaded yet, just wait to show modal.
-  if (!startTime || !title) return null;
+  const formattedStartTime: string = day(event.startTime).format(
+    'MMMM, D @ h:mm A'
+  );
 
   return (
     <>
@@ -35,8 +36,8 @@ const IndividualEventErrorModal: React.FC = () => {
       </h1>
       <p>
         {error === ErrorType.EVENT_HASNT_STARTED
-          ? `${title} is happening on ${formattedStartTime}. You will be able to join 10 minutes before the event starts.`
-          : `${title} happened on ${formattedStartTime}.`}
+          ? `${event.title} is happening on ${formattedStartTime}. You will be able to join 10 minutes before the event starts.`
+          : `${event.title} happened on ${formattedStartTime}.`}
       </p>
       <ModalCloseButton title="Got It" />
     </>

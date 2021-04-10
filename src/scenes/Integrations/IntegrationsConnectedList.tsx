@@ -4,8 +4,8 @@ import Separator from '@components/atoms/Separator';
 import Row from '@components/containers/Row/Row';
 import Show from '@components/containers/Show';
 import { ICommunity } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { IntegrationsDetailsData } from './Integrations.types';
 import { buildIntegrationData } from './Integrations.util';
 import IntegrationCard from './IntegrationsCard';
@@ -15,7 +15,7 @@ import IntegrationCard from './IntegrationsCard';
 const IntegrationsConnectedList: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { communityIntegrations, urlName } = useFindOne(ICommunity, {
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: [
       'communityIntegrations.id',
       'communityIntegrations.mailchimpListId',
@@ -25,11 +25,13 @@ const IntegrationsConnectedList: React.FC = () => {
     where: { id: communityId }
   });
 
+  if (loading) return null;
+
   const integrationData: IntegrationsDetailsData[] = buildIntegrationData({
-    isMailchimpAuthenticated: !!communityIntegrations.mailchimpListId,
-    mailchimpListId: communityIntegrations.mailchimpListId,
-    stripeAccountId: communityIntegrations.stripeAccountId,
-    urlName
+    isMailchimpAuthenticated: !!community.communityIntegrations.mailchimpListId,
+    mailchimpListId: community.communityIntegrations.mailchimpListId,
+    stripeAccountId: community.communityIntegrations.stripeAccountId,
+    urlName: community.urlName
   });
 
   const connectedData: IntegrationsDetailsData[] = integrationData.filter(

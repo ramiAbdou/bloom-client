@@ -3,9 +3,8 @@ import React from 'react';
 import Button from '@components/atoms/Button/Button';
 import Card from '@components/containers/Card/Card';
 import Show from '@components/containers/Show';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 import { IMemberSocials } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { ModalType, SocialBrand } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
@@ -13,19 +12,20 @@ import ProfileSocialValue from './ProfileSocialValue';
 
 const ProfileSocialOnboardingContainer: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = useFindOne(
-    IMemberSocials,
-    {
-      fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-      where: { memberId }
-    }
-  );
+  const { data: memberSocials, loading } = useFindOneFull(IMemberSocials, {
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    where: { memberId }
+  });
+
+  if (loading) return null;
 
   const isSocialLinked: boolean =
-    !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
-
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+    !!memberSocials.facebookUrl ||
+    !!memberSocials.instagramUrl ||
+    !!memberSocials.linkedInUrl ||
+    !!memberSocials.twitterUrl;
 
   const onClick = (): void => {
     showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
@@ -47,19 +47,20 @@ const ProfileSocialOnboardingContainer: React.FC = () => {
 
 const ProfileSocialHeader: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
-
-  const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = useFindOne(
-    IMemberSocials,
-    {
-      fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-      where: { memberId }
-    }
-  );
-
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
+  const { data: memberSocials, loading } = useFindOneFull(IMemberSocials, {
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    where: { memberId }
+  });
+
+  if (loading) return null;
+
   const isSocialLinked: boolean =
-    !!facebookUrl || !!instagramUrl || !!linkedInUrl || !!twitterUrl;
+    !!memberSocials.facebookUrl ||
+    !!memberSocials.instagramUrl ||
+    !!memberSocials.linkedInUrl ||
+    !!memberSocials.twitterUrl;
 
   const onClick = () => showModal({ id: ModalType.EDIT_SOCIAL_MEDIA });
   return (
@@ -74,47 +75,73 @@ const ProfileSocialHeader: React.FC = () => {
 const ProfileSocialFacebook: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { facebookUrl } = useFindOne(IMemberSocials, {
+  const { data: memberSocials, loading } = useFindOneFull(IMemberSocials, {
     fields: ['facebookUrl'],
     where: { memberId }
   });
 
-  return <ProfileSocialValue brand={SocialBrand.FACEBOOK} url={facebookUrl} />;
+  if (loading) return null;
+
+  return (
+    <ProfileSocialValue
+      brand={SocialBrand.FACEBOOK}
+      url={memberSocials.facebookUrl}
+    />
+  );
 };
 
 const ProfileSocialInstagram: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { instagramUrl } = useFindOne(IMemberSocials, {
+  const { data: memberSocials, loading } = useFindOneFull(IMemberSocials, {
     fields: ['instagramUrl'],
     where: { memberId }
   });
 
+  if (loading) return null;
+
   return (
-    <ProfileSocialValue brand={SocialBrand.INSTAGRAM} url={instagramUrl} />
+    <ProfileSocialValue
+      brand={SocialBrand.INSTAGRAM}
+      url={memberSocials.instagramUrl}
+    />
   );
 };
 
 const ProfileSocialLinkedIn: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { linkedInUrl } = useFindOne(IMemberSocials, {
+  const { data: memberSocials, loading } = useFindOneFull(IMemberSocials, {
     fields: ['linkedInUrl'],
     where: { memberId }
   });
 
-  return <ProfileSocialValue brand={SocialBrand.LINKED_IN} url={linkedInUrl} />;
+  if (loading) return null;
+
+  return (
+    <ProfileSocialValue
+      brand={SocialBrand.LINKED_IN}
+      url={memberSocials.linkedInUrl}
+    />
+  );
 };
 
 const ProfileSocialTwitter: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { twitterUrl } = useFindOne(IMemberSocials, {
+  const { data: memberSocials, loading } = useFindOneFull(IMemberSocials, {
     fields: ['twitterUrl'],
     where: { memberId }
   });
 
-  return <ProfileSocialValue brand={SocialBrand.TWITTER} url={twitterUrl} />;
+  if (loading) return null;
+
+  return (
+    <ProfileSocialValue
+      brand={SocialBrand.TWITTER}
+      url={memberSocials.twitterUrl}
+    />
+  );
 };
 
 const ProfileSocialCard: React.FC = () => {

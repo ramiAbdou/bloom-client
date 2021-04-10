@@ -4,9 +4,9 @@ import Row from '@components/containers/Row/Row';
 import TableStore from '@components/organisms/Table/Table.store';
 import TableFilterButton from '@components/organisms/Table/TableFilterButton';
 import SearchBar from '@components/organisms/Table/TableSeachBar';
-import { useStoreState } from '@core/store/Store';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import { useStoreState } from '@core/store/Store';
 import MemberDatabaseCopyButton from './MemberDatabaseCopyButton';
 import DeleteMembersButton from './MemberDatabaseDeleteButton';
 import MemberDatabaseExportButton from './MemberDatabaseExportButton';
@@ -16,16 +16,18 @@ import MemberDatabaseQuickFilters from './MemberDatabaseQuickFilters';
 const MemberDatabaseButtons: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { role } = useFindOne(IMember, {
+  const isAnythingSelected: boolean = TableStore.useStoreState(
+    ({ selectedRowIds }) => !!selectedRowIds.length
+  );
+
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  const isOwner: boolean = role === MemberRole.OWNER;
+  if (loading) return null;
 
-  const isAnythingSelected: boolean = TableStore.useStoreState(
-    ({ selectedRowIds }) => !!selectedRowIds.length
-  );
+  const isOwner: boolean = member.role === MemberRole.OWNER;
 
   return (
     <Row className="ml-auto" show={!!isAnythingSelected} spacing="xs">

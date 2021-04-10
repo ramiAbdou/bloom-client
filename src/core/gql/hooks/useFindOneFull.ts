@@ -2,7 +2,7 @@ import { ApolloQueryResult, DocumentNode, useQuery } from '@apollo/client';
 import { FindOneArgs, QueryResult } from '../GQL.types';
 import { getFindOneQuery, parseFindOneQueryResult } from '../repo/findOne';
 
-function useFindOneFull<T>(
+function useFindOne<T>(
   entity: new () => T,
   { fields, skip, where }: FindOneArgs<T>
 ): QueryResult<T> {
@@ -12,4 +12,4 @@ function useFindOneFull<T>(
   return parsedResult;
 }
 
-export default useFindOneFull;
+export default useFindOne;

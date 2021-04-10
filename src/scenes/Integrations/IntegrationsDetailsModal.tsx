@@ -2,9 +2,9 @@ import React from 'react';
 
 import Button from '@components/atoms/Button/Button';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 import { ICommunityIntegrations } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import { QuestionType } from '@util/constants';
 
 interface IntegrationsDetail {
@@ -19,7 +19,7 @@ const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
   //   ({ db }) => db.communityIntegrations.mailchimpListName
   // );
 
-  const { mailchimpListId, stripeAccountId } = useFindOne(
+  const { data: communityIntegrations, loading } = useFindOneFull(
     ICommunityIntegrations,
     {
       fields: ['mailchimpListId', 'stripeAccountId'],
@@ -27,16 +27,23 @@ const useIntegrationsDetails = (name: string): IntegrationsDetail[] => {
     }
   );
 
+  if (loading) return [];
+
   if (name === 'Mailchimp') {
     return [
       // { label: 'Audience/List Name', value: mailchimpListName },
       // { label: 'Audience/List Name', value: 'Mailchimp' },
-      { label: 'Audience/List ID', value: mailchimpListId }
+      {
+        label: 'Audience/List ID',
+        value: communityIntegrations.mailchimpListId
+      }
     ];
   }
 
   if (name === 'Stripe') {
-    return [{ label: 'Account ID', value: stripeAccountId }];
+    return [
+      { label: 'Account ID', value: communityIntegrations.stripeAccountId }
+    ];
   }
   return [];
 };

@@ -6,20 +6,22 @@ import Row from '@components/containers/Row/Row';
 import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreActions } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import useBreakpoint from '@hooks/useBreakpoint';
 import { ModalType } from '@util/constants';
 
 const ApplicantsCardHeaderDetails: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const { createdAt, firstName, lastName } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['createdAt', 'firstName', 'lastName'],
     where: { id: memberId }
   });
 
-  const formattedCreatedAt: string = day(createdAt).format('M/D/YY');
-  const fullName: string = `${firstName} ${lastName}`;
+  if (loading) return null;
+
+  const formattedCreatedAt: string = day(member.createdAt).format('M/D/YY');
+  const fullName: string = `${member.firstName} ${member.lastName}`;
 
   return (
     <div>

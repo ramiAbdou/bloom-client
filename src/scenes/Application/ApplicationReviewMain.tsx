@@ -1,19 +1,19 @@
 import React from 'react';
 
-import { IApplication, IQuestion, IRankedQuestion } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import StoryStore from '@components/organisms/Story/Story.store';
+import { IApplication, IQuestion, IRankedQuestion } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
 import { sortObjects } from '@util/util';
 
 const ApplicationReviewMain: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { rankedQuestions } = useFindOne(IApplication, {
+  const { data: application } = useFindOneFull(IApplication, {
     fields: [
       'rankedQuestions.id',
       'rankedQuestions.question.category',
@@ -27,7 +27,7 @@ const ApplicationReviewMain: React.FC = () => {
     where: { communityId }
   });
 
-  const questions: IQuestion[] = rankedQuestions
+  const questions: IQuestion[] = application.rankedQuestions
     ?.sort((a: IRankedQuestion, b: IRankedQuestion) =>
       sortObjects(a, b, 'rank', 'ASC')
     )

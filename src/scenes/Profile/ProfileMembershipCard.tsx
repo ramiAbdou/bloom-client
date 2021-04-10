@@ -6,32 +6,33 @@ import Card from '@components/containers/Card/Card';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 import { ICommunity, IMember, IMemberValue } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFind from '@gql/hooks/useFind';
 import useFindFull from '@gql/hooks/useFindFull';
-import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType, QuestionCategory } from '@util/constants';
 import ProfileCardHeader from './ProfileCardHeader';
 
 const ProfileMembershipHeader: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { name } = useFindOne(ICommunity, {
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['name'],
     where: { id: communityId }
   });
 
-  const showModal = useStoreActions(({ modal }) => modal.showModal);
+  if (loading) return null;
 
-  const onClick = () => {
+  const onClick = (): void => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
   };
 
   return (
     <ProfileCardHeader
       canEdit
-      title={`${name} Membership Information`}
+      title={`${community.name} Membership Information`}
       onEditClick={onClick}
     />
   );
@@ -78,21 +79,23 @@ const ProfileMembershipContent: React.FC = () => {
 const ProfileMembershipOnboardingContainer: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { memberValues } = useFindOne(IMember, {
+  const showModal: ActionCreator<ModalData> = useStoreActions(
+    ({ modal }) => modal.showModal
+  );
+
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['memberValues.id'],
     where: { memberId }
   });
 
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
-  );
+  if (loading) return null;
 
   const onClick = (): void => {
     showModal({ id: ModalType.EDIT_MEMBERSHIP_INFORMATION });
   };
 
   return (
-    <Button fill primary show={!!memberValues} onClick={onClick}>
+    <Button fill primary show={!!member.memberValues} onClick={onClick}>
       + Fill Out Membership Information
     </Button>
   );

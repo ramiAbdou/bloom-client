@@ -8,8 +8,8 @@ import List from '@components/organisms/List/List';
 import ListStore from '@components/organisms/List/List.store';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import { IdProps, ModalType } from '@util/constants';
 import { cx, sortObjects } from '@util/util';
@@ -18,7 +18,11 @@ import { EventTiming, getEventTiming } from '../Events.util';
 const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
   const isMember: boolean = useIsMember();
 
-  const { member, supporter }: IEventAttendee = useFindOne(IEventAttendee, {
+  const showModal: ActionCreator<ModalData> = useStoreActions(
+    ({ modal }) => modal.showModal
+  );
+
+  const { data: eventAttendee, loading } = useFindOneFull(IEventAttendee, {
     fields: [
       'member.firstName',
       'member.id',
@@ -30,17 +34,19 @@ const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
     where: { id: attendeeId }
   });
 
-  const firstName: string = member?.firstName ?? supporter?.firstName;
-  const lastName: string = member?.lastName ?? supporter?.lastName;
+  if (loading) return null;
+
+  const firstName: string =
+    eventAttendee.member?.firstName ?? eventAttendee.supporter?.firstName;
+
+  const lastName: string =
+    eventAttendee.member?.lastName ?? eventAttendee.supporter?.lastName;
+
   const fullName: string = `${firstName} ${lastName}`;
 
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
-  );
-
   const onClick = (): void => {
-    if (isMember && member?.id) {
-      showModal({ id: ModalType.PROFILE, metadata: member?.id });
+    if (isMember && eventAttendee.member?.id) {
+      showModal({ id: ModalType.PROFILE, metadata: eventAttendee.member?.id });
     }
   };
 
@@ -52,9 +58,9 @@ const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
     <Button className={css} onClick={onClick}>
       <ProfilePicture
         fontSize={16}
-        memberId={member?.id}
+        memberId={eventAttendee.member?.id}
         size={36}
-        supporterId={supporter?.id}
+        supporterId={eventAttendee.supporter?.id}
       />
 
       <p className="body--bold">{fullName}</p>
@@ -65,12 +71,14 @@ const IndividualEventAttendee: React.FC<IdProps> = ({ id: attendeeId }) => {
 const IndividualEventAttendeeListContent: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { eventAttendees }: IEvent = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['eventAttendees.createdAt', 'eventAttendees.id'],
     where: { id: eventId }
   });
 
-  const sortedEventAttendees: IdProps[] = eventAttendees
+  if (loading) return null;
+
+  const sortedEventAttendees: IdProps[] = event.eventAttendees
     ?.sort((a: IEventAttendee, b: IEventAttendee) =>
       sortObjects(a, b, 'createdAt')
     )
@@ -94,15 +102,15 @@ const IndividualEventAttendeeListContent: React.FC = () => {
 const IndividualEventGuestList: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { endTime, eventAttendees, startTime } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['endTime', 'eventAttendees.id', 'startTime'],
     where: { id: eventId }
   });
 
-  const attendeesCount: number = eventAttendees?.length;
+  if (loading) return null;
 
-  const hasEventFinished: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
+  const attendeesCount: number = event.eventAttendees?.length;
+  const hasEventFinished: boolean = getEventTiming(event) === EventTiming.PAST;
 
   return (
     <Card

@@ -7,15 +7,16 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormItem from '@components/organisms/Form/FormItem';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMember, IMemberValue } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { QuestionCategory, QuestionType } from '@util/constants';
 import useUpdateMemberValues from './useUpdateMemberValues';
 
 const ProfileMembershipForm: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
+  const updateMemberValues = useUpdateMemberValues();
 
-  const { memberValues } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: [
       'memberValues.id',
       'memberValues.question.category',
@@ -31,7 +32,9 @@ const ProfileMembershipForm: React.FC = () => {
     where: { id: memberId }
   });
 
-  const items: FormItemData[] = memberValues
+  if (loading) return null;
+
+  const items: FormItemData[] = member.memberValues
     ?.filter(
       (memberValue: IMemberValue) =>
         !memberValue.question.category ||
@@ -58,8 +61,6 @@ const ProfileMembershipForm: React.FC = () => {
 
       return { ...memberValue.question, value: parsedValue };
     });
-
-  const updateMemberValues = useUpdateMemberValues();
 
   return (
     <Form onSubmit={updateMemberValues}>

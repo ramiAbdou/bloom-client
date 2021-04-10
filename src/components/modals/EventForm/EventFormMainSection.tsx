@@ -5,17 +5,19 @@ import FormLargeTitle from '@components/organisms/Form/FormLargeTitle';
 import FormLongText from '@components/organisms/Form/FormLongText';
 import FormSection from '@components/organisms/Form/FormSection';
 import FormShortText from '@components/organisms/Form/FormShortText';
-import { useStoreState } from '@core/store/Store';
 import { IEvent } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import { useStoreState } from '@core/store/Store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 
 const EventFormMainSection: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { description, imageUrl, summary, title } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['description', 'imageUrl', 'summary', 'title'],
     where: { id: eventId }
   });
+
+  if (loading) return null;
 
   return (
     <FormSection>
@@ -23,27 +25,27 @@ const EventFormMainSection: React.FC = () => {
         id="COVER_IMAGE"
         required={false}
         title="Change Cover Photo"
-        value={imageUrl}
+        value={event.imageUrl}
       />
 
       <FormLargeTitle
         id="EVENT_NAME"
         placeholder="New Event"
         title="Event Name"
-        value={title}
+        value={event.title}
       />
 
       <FormLongText
         id="EVENT_DESCRIPTION"
         title="Event Description"
-        value={description}
+        value={event.description}
       />
 
       <FormShortText
         id="EVENT_SUMMARY"
         required={false}
         title="1-Sentence Summary"
-        value={summary}
+        value={event.summary}
       />
     </FormSection>
   );

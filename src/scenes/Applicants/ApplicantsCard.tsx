@@ -2,11 +2,11 @@ import React from 'react';
 
 import Card from '@components/containers/Card/Card';
 import Row from '@components/containers/Row/Row';
-import { IMember, IMemberValue, MemberStatus } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
 import QuestionBox from '@components/molecules/QuestionBox/QuestionBox';
 import { QuestionBoxItemProps } from '@components/molecules/QuestionBox/QuestionBox.types';
+import { IMember, IMemberValue, MemberStatus } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { IdProps, QuestionCategory } from '@util/constants';
 import ApplicantsCardHeader from './ApplicantsCardHeader';
 import ApplicantsRespondButton from './ApplicantsRespondButton';
@@ -32,7 +32,7 @@ const ApplicantsCardActions: React.FC = () => {
 const ApplicantsCardItems: React.FC = () => {
   const memberId: string = IdStore.useStoreState(({ id }) => id);
 
-  const { memberValues } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: [
       'memberValues.id',
       'memberValues.question.category',
@@ -45,7 +45,9 @@ const ApplicantsCardItems: React.FC = () => {
     where: { id: memberId }
   });
 
-  const items: QuestionBoxItemProps[] = memberValues
+  if (loading) return null;
+
+  const items: QuestionBoxItemProps[] = member.memberValues
     ?.filter(
       (memberValue: IMemberValue) =>
         !memberValue.question.category ||

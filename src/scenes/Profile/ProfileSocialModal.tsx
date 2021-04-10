@@ -6,22 +6,20 @@ import FormHeader from '@components/organisms/Form/FormHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import { IMemberSocials } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import useUpdateMemberSocials from './useUpdateMemberSocials';
 
 const ProfileSocialModal: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
-
-  const { facebookUrl, instagramUrl, linkedInUrl, twitterUrl } = useFindOne(
-    IMemberSocials,
-    {
-      fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
-      where: { memberId }
-    }
-  );
-
   const updateMemberSocials: OnFormSubmitFunction = useUpdateMemberSocials();
+
+  const { data: memberSocials, loading } = useFindOneFull(IMemberSocials, {
+    fields: ['facebookUrl', 'instagramUrl', 'linkedInUrl', 'twitterUrl'],
+    where: { memberId }
+  });
+
+  if (loading) return null;
 
   return (
     <Form onSubmit={updateMemberSocials}>
@@ -32,7 +30,7 @@ const ProfileSocialModal: React.FC = () => {
         required={false}
         title="LinkedIn URL"
         validate="IS_URL"
-        value={linkedInUrl}
+        value={memberSocials.linkedInUrl}
       />
 
       <FormShortText
@@ -40,7 +38,7 @@ const ProfileSocialModal: React.FC = () => {
         required={false}
         title="Facebook URL"
         validate="IS_URL"
-        value={facebookUrl}
+        value={memberSocials.facebookUrl}
       />
 
       <FormShortText
@@ -48,7 +46,7 @@ const ProfileSocialModal: React.FC = () => {
         required={false}
         title="Twitter URL"
         validate="IS_URL"
-        value={twitterUrl}
+        value={memberSocials.twitterUrl}
       />
 
       <FormShortText
@@ -56,7 +54,7 @@ const ProfileSocialModal: React.FC = () => {
         required={false}
         title="Instagram URL"
         validate="IS_URL"
-        value={instagramUrl}
+        value={memberSocials.instagramUrl}
       />
 
       <FormSubmitButton loadingText="Saving...">Save</FormSubmitButton>

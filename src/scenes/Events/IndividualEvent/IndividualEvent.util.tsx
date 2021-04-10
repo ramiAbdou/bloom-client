@@ -3,14 +3,14 @@ import deepmerge from 'deepmerge';
 import React from 'react';
 
 import { TableColumn, TableRow } from '@components/organisms/Table/Table.types';
-import { useStoreState } from '@core/store/Store';
 import {
   IEvent,
   IEventAttendee,
   IEventGuest,
   IEventWatch
 } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import { useStoreState } from '@core/store/Store';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
 import { QuestionType } from '@util/constants';
 import { sortObjects } from '@util/util';
@@ -27,7 +27,7 @@ const useIndividualEventTableAttendees = (): Record<
 > => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { eventAttendees } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: [
       'eventAttendees.createdAt',
       'eventAttendees.id',
@@ -43,9 +43,9 @@ const useIndividualEventTableAttendees = (): Record<
     where: { id: eventId }
   });
 
-  if (!eventAttendees) return {};
+  if (loading || !event.eventAttendees) return {};
 
-  return eventAttendees.reduce(
+  return event.eventAttendees.reduce(
     (
       acc: Record<string, IndividualEventTableRowProps>,
       eventAttendee: IEventAttendee
@@ -82,7 +82,7 @@ const useIndividualEventTableGuests = (): Record<
 > => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { eventGuests } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: [
       'eventGuests.createdAt',
       'eventGuests.id',
@@ -98,9 +98,9 @@ const useIndividualEventTableGuests = (): Record<
     where: { id: eventId }
   });
 
-  if (!eventGuests) return {};
+  if (loading || !event.eventGuests) return {};
 
-  return eventGuests.reduce(
+  return event.eventGuests.reduce(
     (
       acc: Record<string, IndividualEventTableRowProps>,
       eventGuest: IEventGuest
@@ -136,7 +136,7 @@ const useIndividualEventTableWatchers = (): Record<
 > => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { eventWatches } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: [
       'eventWatches.createdAt',
       'eventWatches.id',
@@ -148,9 +148,9 @@ const useIndividualEventTableWatchers = (): Record<
     where: { id: eventId }
   });
 
-  if (!eventWatches) return {};
+  if (loading || !event.eventWatches) return {};
 
-  return eventWatches.reduce(
+  return event.eventWatches.reduce(
     (
       acc: Record<string, IndividualEventTableRowProps>,
       eventWatch: IEventWatch
@@ -221,13 +221,14 @@ export const useIndividualEventTableRows = (): TableRow[] => {
 export const useIndividualEventTableColumns = (): TableColumn[] => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { endTime, recordingUrl, startTime } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['endTime', 'recordingUrl', 'startTime'],
     where: { id: eventId }
   });
 
-  const isUpcoming: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+  if (loading) return [];
+
+  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
   const joinedAtColumn: TableColumn[] = isUpcoming
     ? []
@@ -241,7 +242,7 @@ export const useIndividualEventTableColumns = (): TableColumn[] => {
         }
       ];
 
-  const viewedRecordingColumn: TableColumn[] = recordingUrl
+  const viewedRecordingColumn: TableColumn[] = event.recordingUrl
     ? [
         {
           format: (watched: boolean) => (watched ? 'Yes' : 'No'),

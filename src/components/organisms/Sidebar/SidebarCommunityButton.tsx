@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { ICommunity } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { IdProps } from '@util/constants';
 import { cx } from '@util/util';
 
@@ -12,16 +12,18 @@ const SidebarCommunityButton: React.FC<IdProps> = ({ id: communityId }) => {
     ({ db }) => db.communityId
   );
 
-  const { logoUrl, urlName } = useFindOne(ICommunity, {
+  const { push } = useHistory();
+
+  const { data: community, loading } = useFindOneFull(ICommunity, {
     fields: ['logoUrl', 'urlName'],
     where: { id: communityId }
   });
 
-  const { push } = useHistory();
+  if (loading) return null;
 
   const onClick = () => {
     if (communityId !== authenticatedCommunityId) {
-      push(`/${urlName}`);
+      push(`/${community.urlName}`);
     }
   };
 
@@ -31,7 +33,11 @@ const SidebarCommunityButton: React.FC<IdProps> = ({ id: communityId }) => {
 
   return (
     <button className={css} type="button" onClick={onClick}>
-      <img alt="Community Logo" className="br-xxs h-100 w-100" src={logoUrl} />
+      <img
+        alt="Community Logo"
+        className="br-xxs h-100 w-100"
+        src={community.logoUrl}
+      />
     </button>
   );
 };

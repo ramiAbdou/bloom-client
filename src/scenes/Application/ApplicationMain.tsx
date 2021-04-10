@@ -6,14 +6,9 @@ import FormItem from '@components/organisms/Form/FormItem';
 import FormSubmitButton from '@components/organisms/Form/FormSubmitButton';
 import StoryStore from '@components/organisms/Story/Story.store';
 import StoryPage from '@components/organisms/Story/StoryPage';
-import {
-  IApplication,
-  ICommunity,
-  IQuestion,
-  IRankedQuestion
-} from '@core/db/db.entities';
+import { IApplication, IQuestion, IRankedQuestion } from '@core/db/db.entities';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
 import { useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import { sortObjects } from '@util/util';
 import useApplyToCommunity from './useApplyToCommunity';
 import useValidateEmail from './useValidateEmail';
@@ -21,7 +16,17 @@ import useValidateEmail from './useValidateEmail';
 const ApplicationMainForm: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { rankedQuestions } = useFindOne(IApplication, {
+  const isSolo: boolean = StoryStore.useStoreState(
+    ({ pages }) =>
+      pages?.filter(({ id }) => id !== 'CONFIRMATION')?.length === 1
+  );
+
+  const items = StoryStore.useStoreState((state) => state.items);
+
+  const applyForMembership: OnFormSubmitFunction = useApplyToCommunity();
+  const validateEmail: OnFormSubmitFunction = useValidateEmail();
+
+  const { data: application, loading } = useFindOneFull(IApplication, {
     fields: [
       'rankedQuestions.id',
       'rankedQuestions.question.category',
@@ -35,21 +40,13 @@ const ApplicationMainForm: React.FC = () => {
     where: { communityId }
   });
 
-  const questions: IQuestion[] = rankedQuestions
+  if (loading) return null;
+
+  const questions: IQuestion[] = application.rankedQuestions
     ?.sort((a: IRankedQuestion, b: IRankedQuestion) =>
       sortObjects(a, b, 'rank', 'ASC')
     )
     ?.map((rankedQuestion: IRankedQuestion) => rankedQuestion.question);
-
-  const isSolo: boolean = StoryStore.useStoreState(
-    ({ pages }) =>
-      pages?.filter(({ id }) => id !== 'CONFIRMATION')?.length === 1
-  );
-
-  const items = StoryStore.useStoreState((state) => state.items);
-
-  const applyForMembership: OnFormSubmitFunction = useApplyToCommunity();
-  const validateEmail: OnFormSubmitFunction = useValidateEmail();
 
   return (
     <Form
@@ -73,22 +70,19 @@ const ApplicationMainForm: React.FC = () => {
 const ApplicationMain: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
 
-  const { description, title } = useFindOne(IApplication, {
-    fields: ['description', 'title'],
+  const { data: application, loading } = useFindOneFull(IApplication, {
+    fields: ['community.id', 'community.logoUrl', 'description', 'title'],
     where: { communityId }
   });
 
-  const { logoUrl } = useFindOne(ICommunity, {
-    fields: ['logoUrl'],
-    where: { id: communityId }
-  });
+  if (loading) return null;
 
   return (
     <StoryPage
-      description={description}
-      iconUrl={logoUrl}
+      description={application.description}
+      iconUrl={application.community.logoUrl}
       id="APPLICATION_MAIN"
-      title={title}
+      title={application.title}
     >
       <ApplicationMainForm />
     </StoryPage>

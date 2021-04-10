@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import Button from '@components/atoms/Button/Button';
 import MainHeader from '@components/containers/Main/MainHeader';
 import { MainNavigationOptionProps } from '@components/containers/Main/MainNavigationButton';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@core/gql/hooks/useFindOneFull';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFinalPath from '@hooks/useFinalPath';
 import { LoadingProps, ModalType } from '@util/constants';
 
@@ -14,15 +14,17 @@ const DatbaseHeaderAddButton: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { role } = useFindOne(IMember, {
+  const isAdminsPage: boolean = useFinalPath() === 'admins';
+  const isMembersPage: boolean = useFinalPath() === 'members';
+
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  const isOwner: boolean = role === MemberRole.OWNER;
+  if (loading) return null;
 
-  const isAdminsPage: boolean = useFinalPath() === 'admins';
-  const isMembersPage: boolean = useFinalPath() === 'members';
+  const isOwner: boolean = member.role === MemberRole.OWNER;
 
   const onClick = () => {
     if (isMembersPage) showModal({ id: ModalType.ADD_MEMBERS });

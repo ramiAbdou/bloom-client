@@ -11,7 +11,6 @@ import {
 import TableContent from '@components/organisms/Table/TableContent';
 import { IEvent, IMember } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import useFindOne from '@gql/hooks/useFindOne';
 import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { ModalType } from '@util/constants';
 import {
@@ -51,7 +50,7 @@ const IndividualEventTable: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
-  const { data: event, loading } = useFindOneFull(IEvent, {
+  const { data: event, loading: loading1 } = useFindOneFull(IEvent, {
     fields: [
       'eventAttendees.createdAt',
       'eventAttendees.event.id',
@@ -78,10 +77,12 @@ const IndividualEventTable: React.FC = () => {
     where: { id: eventId }
   });
 
-  const { role } = useFindOne(IMember, {
+  const { data: member, loading: loading2 } = useFindOneFull(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
+
+  if (loading1 || loading2) return null;
 
   const hasEventContent: boolean =
     !!event?.eventAttendees?.length ||
@@ -89,7 +90,7 @@ const IndividualEventTable: React.FC = () => {
     !!event?.eventWatches?.length;
 
   return (
-    <Show show={!!role && !loading && hasEventContent}>
+    <Show show={!!member.role && hasEventContent}>
       <IndividualEventTableContent />
     </Show>
   );

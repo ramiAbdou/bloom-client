@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Show from '@components/containers/Show';
+import { IMember } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import { IMember } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import ProfileData from './ProfileData';
 import ProfileHistory from './ProfileHistory';
 import ProfilePersonal from './ProfilePersonal';
@@ -12,11 +12,13 @@ import ProfilePersonal from './ProfilePersonal';
 const Profile: React.FC = () => {
   const memberId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const member: IMember = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['bio', 'email', 'id', 'joinedAt', 'position'],
     skip: !memberId,
     where: { id: memberId }
   });
+
+  if (loading) return null;
 
   return (
     <Show show={!!member.id}>

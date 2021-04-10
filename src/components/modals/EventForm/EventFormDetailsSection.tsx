@@ -7,9 +7,9 @@ import FormSection from '@components/organisms/Form/FormSection';
 import FormSectionHeader from '@components/organisms/Form/FormSectionHeader';
 import FormShortText from '@components/organisms/Form/FormShortText';
 import FormTime from '@components/organisms/Form/FormTime';
-import { useStoreState } from '@core/store/Store';
 import { IEvent } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import { useStoreState } from '@core/store/Store';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { ShowProps } from '@util/constants';
 
 const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
@@ -29,10 +29,12 @@ const EventFormTimeItems: React.FC<ShowProps> = ({ show }) => (
 const EventFormDetailsSection: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const { videoUrl } = useFindOne(IEvent, {
+  const { data: event, loading } = useFindOneFull(IEvent, {
     fields: ['videoUrl'],
     where: { id: eventId }
   });
+
+  if (loading) return null;
 
   return (
     <FormSection>
@@ -42,7 +44,7 @@ const EventFormDetailsSection: React.FC = () => {
         id="VIDEO_URL"
         title="Event Link"
         validate="IS_URL"
-        value={videoUrl}
+        value={event.videoUrl}
       />
 
       <EventFormTimeItems show={!eventId} />

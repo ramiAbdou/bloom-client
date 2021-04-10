@@ -5,10 +5,10 @@ import Button from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
 import FormMultipleSelect from '@components/organisms/Form/FormMultipleSelect';
 import FormShortText from '@components/organisms/Form/FormShortText';
+import { IMember, MemberRole } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import { useStoreState } from '@core/store/Store';
-import { IMember, MemberRole } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 import { QuestionCategory } from '@util/constants';
 import AddMemberStore from './AddMember.store';
 
@@ -32,15 +32,16 @@ const AddMemberInputTrashButton: React.FC = () => {
 const AddMemberInput: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const id: string = IdStore.useStoreState((state) => state.id);
+  const admin = AddMemberStore.useStoreState((state) => state.admin);
 
-  const { role } = useFindOne(IMember, {
+  const { data: member, loading } = useFindOneFull(IMember, {
     fields: ['role'],
     where: { id: memberId }
   });
 
-  const isOwner: boolean = role === MemberRole.OWNER;
+  if (loading) return null;
 
-  const admin = AddMemberStore.useStoreState((state) => state.admin);
+  const isOwner: boolean = member.role === MemberRole.OWNER;
 
   return (
     <Row align="baseline" className="mo-add-member-input" spacing="xs">
