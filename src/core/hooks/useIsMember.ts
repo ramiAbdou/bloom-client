@@ -1,6 +1,6 @@
+import { IMember } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import { IMember, IUser } from '@core/db/db.entities';
-import useFindOne from '@gql/hooks/useFindOne';
+import useFindOneFull from '@gql/hooks/useFindOneFull';
 
 /**
  * Returns true if the authenticated user has a membership with the active
@@ -13,15 +13,12 @@ const useIsMember = (): boolean => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
   const userId: string = useStoreState(({ db }) => db.userId);
 
-  const { members }: IUser = useFindOne(IUser, {
-    fields: ['members.community.id', 'members.id'],
-    where: { id: userId }
+  const { data: member, loading } = useFindOneFull(IMember, {
+    fields: ['community.id'],
+    where: { communityId, userId }
   });
 
-  return (
-    !!members &&
-    members.some((member: IMember) => member.community.id === communityId)
-  );
+  return loading || !!member.id;
 };
 
 export default useIsMember;

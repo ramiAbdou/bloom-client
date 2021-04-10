@@ -9,11 +9,13 @@ import { updateDocumentColors } from '@util/util';
 
 interface MemberRouteProps extends RouteProps {
   admin?: boolean;
+  redirect?: boolean;
 }
 
 const MemberRoute: React.FC<MemberRouteProps> = ({
   admin,
   component,
+  redirect = true,
   ...rest
 }) => {
   const storedCommunityId: string = useStoreState(({ db }) => db.communityId);
@@ -59,7 +61,7 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
   // If it is no longer loading and there is no member at all, that means the
   // user isn't authorized to view this community so let's redirect them to
   // the catch all route, maybe they are apart of another community.
-  if (!loading && !member) return <Redirect to="/" />;
+  if (!member && redirect) return <Redirect to="/" />;
 
   // If it is an admin route and the member is not an admin/owner, redirect
   // them to the community's directory page.

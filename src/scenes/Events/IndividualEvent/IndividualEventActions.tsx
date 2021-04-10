@@ -2,10 +2,11 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import Row from '@components/containers/Row/Row';
-import { useStoreActions, useStoreState } from '@core/store/Store';
 import { IEvent, IEventGuest, IMember } from '@core/db/db.entities';
+import { useStoreActions, useStoreState } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { ModalType, PanelType } from '@util/constants';
+import { isEmpty } from '@util/util';
 import { EventTiming, getEventTiming } from '../Events.util';
 import EventsJoinButton from '../EventsJoinButton';
 import EventsRsvpButton from '../EventsRsvpButton';
@@ -14,13 +15,14 @@ import EventsViewRecordingButton from '../EventsViewRecordingButton';
 
 const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
+  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
 
-  const { recordingUrl } = useFindOne(IEvent, {
+  const event: IEvent = useFindOne(IEvent, {
     fields: ['recordingUrl'],
     where: { id: eventId }
   });
 
-  const showPanel = useStoreActions(({ panel }) => panel.showPanel);
+  if (isEmpty(event)) return null;
 
   const onClick = () => {
     showPanel({ id: PanelType.ADD_RECORDING_LINK, metadata: eventId });
@@ -35,7 +37,7 @@ const EventsAddRecordingButton: React.FC<Partial<ButtonProps>> = (props) => {
       onClick={onClick}
       {...props}
     >
-      {recordingUrl ? 'Edit Event Recording' : '+ Add Event Recording'}
+      {event.recordingUrl ? 'Edit Event Recording' : '+ Add Event Recording'}
     </Button>
   );
 };
@@ -45,7 +47,7 @@ const EventsEditEventButton: React.FC = () => {
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
-  const { endTime, startTime } = useFindOne(IEvent, {
+  const event: IEvent = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],
     where: { id: eventId }
   });
@@ -55,8 +57,9 @@ const EventsEditEventButton: React.FC = () => {
     where: { id: memberId }
   });
 
-  const isPast: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
+  if (isEmpty(event)) return null;
+
+  const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
 
   const onClick = () => {
     showModal({ id: ModalType.CREATE_EVENT, metadata: eventId });
@@ -81,7 +84,7 @@ const IndividualEventActions: React.FC = () => {
   const eventId: string = useStoreState(({ db }) => db.eventId);
   const memberId: string = useStoreState(({ db }) => db.memberId);
 
-  const { endTime, eventGuests, startTime } = useFindOne(IEvent, {
+  const event: IEvent = useFindOne(IEvent, {
     fields: ['endTime', 'eventGuests.id', 'eventGuests.member.id', 'startTime'],
     where: { id: eventId }
   });
@@ -91,13 +94,12 @@ const IndividualEventActions: React.FC = () => {
     where: { id: memberId }
   });
 
-  const isPast: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
+  if (isEmpty(event)) return null;
 
-  const isUpcoming: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.UPCOMING;
+  const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
+  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
-  const isGoing: boolean = eventGuests.some(
+  const isGoing: boolean = event.eventGuests.some(
     (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
   );
 

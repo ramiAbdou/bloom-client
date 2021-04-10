@@ -38,6 +38,7 @@ const IndividualEventHeader: React.FC = () => {
 };
 
 const IndividualEventContent: React.FC = () => {
+  const communityId: string = useStoreState(({ db }) => db.communityId);
   const eventId: string = useStoreState(({ db }) => db.eventId);
 
   const { privacy } = useFindOne(IEvent, {
@@ -54,14 +55,14 @@ const IndividualEventContent: React.FC = () => {
   // If not a member of the community, and it's a member's only
   // event or there was an issue logging in, show a locked modal.
   useEffect(() => {
-    if (!isMember && (isMembersOnly || hasCookieError)) {
+    if (!isMember && !!communityId && (isMembersOnly || hasCookieError)) {
       showModal({
         id: ModalType.CHECK_IN,
         metadata: eventId,
         options: { lock: isMembersOnly }
       });
     }
-  }, [hasCookieError, isMember, isMembersOnly]);
+  }, [communityId, hasCookieError, isMember, isMembersOnly]);
 
   const css: string = cx('', { 's-events-individual--public': !isMember });
 

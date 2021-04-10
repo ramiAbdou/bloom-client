@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 
 import Scene from '@components/containers/Scene';
 import MemberRoute from '../../router/routes/MemberRoute';
@@ -18,10 +18,11 @@ const Events: React.FC = () => (
 
       <MemberRoute exact component={PastEvents} path="/:urlName/events/past" />
 
-      <Route
+      <MemberRoute
         exact
         component={IndividualEvent}
         path="/:urlName/events/:eventId"
+        redirect={false}
       />
 
       <Redirect to="/:urlName/events/upcoming" />

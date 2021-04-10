@@ -61,6 +61,9 @@ export const getGraphQLError = (error: APIError): string => {
   return (graphQLErrors[0] as GraphQLError)?.message;
 };
 
+export const isEmpty = (obj: Record<string, any>) =>
+  !obj || Object.keys(obj).length === 0;
+
 /**
  * Returns the current UTC timestamp as a string to the millisecond.
  *

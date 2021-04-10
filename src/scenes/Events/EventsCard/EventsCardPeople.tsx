@@ -6,6 +6,7 @@ import { IEvent, IEventAttendee, IEventGuest } from '@core/db/db.entities';
 import IdStore from '@core/store/Id.store';
 import useFindOne from '@gql/hooks/useFindOne';
 import { EventTiming, getEventTiming } from '@scenes/Events/Events.util';
+import { isEmpty } from '@util/util';
 
 interface EventsCardPictureId {
   memberId?: string;
@@ -34,34 +35,32 @@ const EventsCardPersonPictures: React.FC<EventsCardPersonPictures> = ({
 const EventsCardPeople: React.FC = () => {
   const eventId: string = IdStore.useStoreState((event) => event.id);
 
-  const { endTime, eventAttendees, eventGuests, startTime } = useFindOne(
-    IEvent,
-    {
-      fields: [
-        'endTime',
-        'eventAttendees.id',
-        'eventAttendees.member.id',
-        'eventAttendees.supporter.id',
-        'eventGuests.id',
-        'eventGuests.member.id',
-        'eventGuests.supporter.id',
-        'startTime'
-      ],
-      where: { id: eventId }
-    }
-  );
+  const event: IEvent = useFindOne(IEvent, {
+    fields: [
+      'endTime',
+      'eventAttendees.id',
+      'eventAttendees.member.id',
+      'eventAttendees.supporter.id',
+      'eventGuests.id',
+      'eventGuests.member.id',
+      'eventGuests.supporter.id',
+      'startTime'
+    ],
+    where: { id: eventId }
+  });
 
-  const isPast: boolean =
-    getEventTiming({ endTime, startTime }) === EventTiming.PAST;
+  if (isEmpty(event)) return null;
+
+  const isPast: boolean = getEventTiming(event) === EventTiming.PAST;
 
   const ids: EventsCardPictureId[] = isPast
-    ? eventAttendees?.slice(0, 3).map((eventAttendee: IEventAttendee) => {
+    ? event.eventAttendees?.slice(0, 3).map((eventAttendee: IEventAttendee) => {
         return {
           memberId: eventAttendee.member?.id,
           supporterId: eventAttendee.supporter?.id
         };
       })
-    : eventGuests?.slice(0, 3).map((eventGuest: IEventGuest) => {
+    : event.eventGuests?.slice(0, 3).map((eventGuest: IEventGuest) => {
         return {
           memberId: eventGuest.member?.id,
           supporterId: eventGuest.supporter?.id
@@ -73,8 +72,8 @@ const EventsCardPeople: React.FC = () => {
       <EventsCardPersonPictures ids={ids} />
       <p className="meta">
         {isPast
-          ? `${ids?.length} people attended`
-          : `${ids?.length} people going`}
+          ? `${event.eventAttendees?.length} people attended`
+          : `${event.eventGuests?.length} people going`}
       </p>
     </Row>
   );

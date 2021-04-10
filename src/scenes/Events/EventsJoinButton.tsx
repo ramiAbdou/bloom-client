@@ -3,11 +3,12 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { useStoreActions } from '@core/store/Store';
 import { IEvent } from '@core/db/db.entities';
+import { useStoreActions } from '@core/store/Store';
 import useFindOne from '@gql/hooks/useFindOne';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
+import { isEmpty } from '@util/util';
 import { EventTiming, getEventTiming } from './Events.util';
 import useCreateEventAttendeeWithMember from './useCreateEventAttendeeWithMember';
 
@@ -19,23 +20,24 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
   eventId,
   large
 }) => {
-  const isMember: boolean = useIsMember();
-
-  const { endTime, startTime, videoUrl } = useFindOne(IEvent, {
-    fields: ['endTime', 'startTime', 'videoUrl'],
-    where: { id: eventId }
-  });
-
   const showModal: ActionCreator<ModalData> = useStoreActions(
     ({ modal }) => modal.showModal
   );
 
+  const event: IEvent = useFindOne(IEvent, {
+    fields: ['endTime', 'startTime', 'videoUrl'],
+    where: { id: eventId }
+  });
+
+  const isMember: boolean = useIsMember();
+  const createEventAttendeeWithMember = useCreateEventAttendeeWithMember();
+
+  if (isEmpty(event)) return null;
+
   const isHappeningNowOrStartingSoon: boolean = [
     EventTiming.HAPPENING_NOW,
     EventTiming.STARTING_SOON
-  ].includes(getEventTiming({ endTime, startTime }));
-
-  const createEventAttendeeWithMember = useCreateEventAttendeeWithMember();
+  ].includes(getEventTiming(event));
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -52,7 +54,7 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
     <Button
       fill
       primary
-      href={isMember ? videoUrl : null}
+      href={isMember ? event.videoUrl : null}
       large={large}
       show={isHappeningNowOrStartingSoon}
       onClick={onClick}
