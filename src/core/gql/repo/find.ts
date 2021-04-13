@@ -1,22 +1,19 @@
 import camelCaseKeys from 'camelcase-keys';
-import { snakeCase } from 'change-case';
-import pluralize from 'pluralize';
 
 import { ApolloQueryResult, DocumentNode, gql } from '@apollo/client';
 import buildArgsString from '../buildArgsString';
 import buildFieldsString from '../buildFieldsString';
-import { FindOneArgs, QueryResult } from '../GQL.types';
+import buildOperationString from '../buildOperationString';
+import { FindOneArgs, GQLOperation, QueryResult } from '../GQL.types';
 
 export function getFindQuery<T>(
   entity: new () => T,
   { fields, where }: FindOneArgs<T>
 ): DocumentNode {
-  // All of our entity types start with an I (ex: IMember, IUser, etc).
-  const nameWithoutI: string = entity.name.substring(1);
-
-  // To get the GraphQL version of the entity name, we make the name plural
-  // and convert to snake case (which automatically converts to lowercase).
-  const entityName: string = snakeCase(pluralize(nameWithoutI));
+  const operationString: string = buildOperationString(
+    entity,
+    GQLOperation.FIND_ONE
+  );
 
   const argsString: string = buildArgsString({ where });
 
@@ -26,8 +23,8 @@ export function getFindQuery<T>(
   ] as string[]);
 
   const query: DocumentNode = gql`
-      query Find${nameWithoutI} {
-        ${entityName} ${argsString} {
+      query Find${entity.name.substring(1)} {
+        ${operationString} ${argsString} {
           ${fieldsString}
         }
       }
@@ -40,8 +37,10 @@ export function parseFindQueryResult<T>(
   entity: new () => T,
   result: ApolloQueryResult<unknown>
 ): QueryResult<T[]> {
-  const nameWithoutI: string = entity.name.substring(1);
-  const entityName: string = snakeCase(pluralize(nameWithoutI));
+  const operationString: string = buildOperationString(
+    entity,
+    GQLOperation.FIND_ONE
+  );
 
   if (!result.data) {
     return {
@@ -55,7 +54,7 @@ export function parseFindQueryResult<T>(
 
   // Deeply converts all of the data from the operation to camelCase, if the
   // data exists.
-  const camelCaseData: T[] = camelCaseKeys(result.data[entityName], {
+  const camelCaseData: T[] = camelCaseKeys(result.data[operationString], {
     deep: true
   });
 

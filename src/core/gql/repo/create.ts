@@ -1,18 +1,22 @@
 import camelCaseKeys from 'camelcase-keys';
-import { snakeCase } from 'change-case';
 import day from 'dayjs';
 import { nanoid } from 'nanoid';
-import pluralize from 'pluralize';
 
 import { DocumentNode, FetchResult, gql } from '@apollo/client';
 import buildArgsString from '../buildArgsString';
 import buildFieldsString from '../buildFieldsString';
-import { CreateArgs, MutationResult } from '../GQL.types';
+import buildOperationString from '../buildOperationString';
+import { CreateArgs, GQLOperation, MutationResult } from '../GQL.types';
 
 export function getCreateMutation<T>(
   entity: new () => T,
   { data, fields }: CreateArgs<T>
 ): DocumentNode {
+  const operationString: string = buildOperationString(
+    entity,
+    GQLOperation.CREATE
+  );
+
   const object = {
     ...data,
     createdAt: day.utc().format(),
@@ -20,24 +24,28 @@ export function getCreateMutation<T>(
     updatedAt: day.utc().format()
   };
 
-  // All of our entity types start with an I (ex: IMember, IUser, etc).
-  // To get the GraphQL version of the entity name, we make the name plural
-  // and convert to snake case (which automatically converts to lowercase).
-  const nameWithoutI: string = entity.name.substring(1);
-  const entityName: string = snakeCase(pluralize(nameWithoutI));
-  const operationString: string = `insert_one_${entityName}`;
-
   const argsString: string = buildArgsString({ object });
-  const fieldsString: string = buildFieldsString(fields);
+
+  const fieldsString: string = buildFieldsString([
+    ...(fields ?? []),
+    'id'
+  ] as string[]);
 
   const mutation: DocumentNode = gql`
     mutation Create${entity.name.substring(1)} {
       ${operationString} ${argsString} {
-        id
         ${fieldsString}
       }
     }
   `;
+
+  console.log(`
+  mutation Create${entity.name.substring(1)} {
+    ${operationString} ${argsString} {
+      ${fieldsString}
+    }
+  }
+`);
 
   return mutation;
 }
@@ -46,12 +54,10 @@ export function parseCreateMutationResult<T>(
   entity: new () => T,
   result: FetchResult<unknown>
 ): MutationResult<T> {
-  // All of our entity types start with an I (ex: IMember, IUser, etc).
-  // To get the GraphQL version of the entity name, we make the name plural
-  // and convert to snake case (which automatically converts to lowercase).
-  const nameWithoutI: string = entity.name.substring(1);
-  const entityName: string = snakeCase(pluralize(nameWithoutI));
-  const operationString: string = `insert_one_${entityName}`;
+  const operationString: string = buildOperationString(
+    entity,
+    GQLOperation.CREATE
+  );
 
   if (!result.data) {
     return {

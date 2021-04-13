@@ -1,29 +1,27 @@
 import camelCaseKeys from 'camelcase-keys';
-import { snakeCase } from 'change-case';
 import day from 'dayjs';
-import pluralize from 'pluralize';
 
 import { DocumentNode, FetchResult, gql } from '@apollo/client';
 import buildArgsString from '../buildArgsString';
 import buildFieldsString from '../buildFieldsString';
-import { MutationResult, UpdateArgs } from '../GQL.types';
+import buildOperationString from '../buildOperationString';
+import { GQLOperation, MutationResult, UpdateArgs } from '../GQL.types';
 
 export function getUpdateMutation<T>(
   entity: new () => T,
   { data, where }: UpdateArgs<T>
 ): DocumentNode {
+  const operationString: string = buildOperationString(
+    entity,
+    GQLOperation.UPDATE
+  );
+
   const set = { ...data, updatedAt: day.utc().format() };
-
-  // All of our entity types start with an I (ex: IMember, IUser, etc).
-  // To get the GraphQL version of the entity name, we make the name plural
-  // and convert to snake case (which automatically converts to lowercase).
-  const nameWithoutI: string = entity.name.substring(1);
-  const entityName: string = snakeCase(pluralize(nameWithoutI));
-  const operationString: string = `update_${entityName}`;
-
   const argsString: string = buildArgsString({ set, where });
 
   // Automatically return all of the variables that we just updated.
+
+  console.log(operationString);
   const fieldsString: string = buildFieldsString(Object.keys(set));
 
   const mutation: DocumentNode = gql`
@@ -44,12 +42,10 @@ export function parseUpdateResult<T>(
   entity: new () => T,
   result: FetchResult<unknown>
 ): MutationResult<T> {
-  // All of our entity types start with an I (ex: IMember, IUser, etc).
-  // To get the GraphQL version of the entity name, we make the name plural
-  // and convert to snake case (which automatically converts to lowercase).
-  const nameWithoutI: string = entity.name.substring(1);
-  const entityName: string = snakeCase(pluralize(nameWithoutI));
-  const operationString: string = `update_${entityName}`;
+  const operationString: string = buildOperationString(
+    entity,
+    GQLOperation.UPDATE
+  );
 
   if (!result.data) {
     return {

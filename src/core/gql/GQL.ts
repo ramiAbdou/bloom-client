@@ -31,7 +31,14 @@ class GQL {
     { data, fields }: CreateArgs<T>
   ): Promise<MutationResult<T>> {
     const mutation: DocumentNode = getCreateMutation(entity, { data, fields });
-    const result: FetchResult<unknown> = await this.client.mutate({ mutation });
+
+    const result: FetchResult<unknown> = await this.client.mutate({
+      mutation
+      // update: (cache, { data: d }) => {
+      //   console.log(cache, d);
+      //   return cache;
+      // }
+    });
 
     const parsedResult: MutationResult<T> = parseCreateMutationResult(
       entity,
