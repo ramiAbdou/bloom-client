@@ -1,4 +1,3 @@
-import { ActionCreator } from 'easy-peasy';
 import React, { useEffect } from 'react';
 
 import AddMemberModal from '@components/modals/AddMember/AddMember';
@@ -16,76 +15,68 @@ import ProfilePersonalModal from '@scenes/Profile/ProfilePersonalModal';
 import ProfileSocialModal from '@scenes/Profile/ProfileSocialModal';
 import { ModalType } from '@util/constants';
 import { cx } from '@util/util';
+import DeleteEventConfirmationForm from '../../modals/EventForm/DeleteEventConfirmationForm';
 import ModalContainer from './ModalContainer';
 
 const ModalCustomContent: React.FC = () => {
   const modalId: ModalType = useStoreState(({ modal }) => modal.id);
 
-  if (modalId === ModalType.ADD_ADMINS) {
-    return <AddMemberModal admin />;
-  }
+  switch (modalId) {
+    case ModalType.ADD_ADMINS:
+      return <AddMemberModal admin />;
 
-  if (modalId === ModalType.ADD_MEMBERS) {
-    return <AddMemberModal />;
-  }
+    case ModalType.ADD_MEMBERS:
+      return <AddMemberModal />;
 
-  if (modalId === ModalType.APPLICANT) {
-    return <ApplicantsModal />;
-  }
+    case ModalType.APPLICANT:
+      return <ApplicantsModal />;
 
-  if (modalId === ModalType.APPLICANT_CONFIRMATION) {
-    return <ApplicantsConfirmationModal />;
-  }
+    case ModalType.APPLICANT_CONFIRMATION:
+      return <ApplicantsConfirmationModal />;
 
-  if (modalId === ModalType.CHECK_IN) {
-    return <CheckInModal />;
-  }
+    case ModalType.CHECK_IN:
+      return <CheckInModal />;
 
-  if (modalId === ModalType.CREATE_EVENT) {
-    return <EventForm />;
-  }
+    case ModalType.CONFIRM_DELETE_EVENT:
+      return <DeleteEventConfirmationForm />;
 
-  if (modalId === ModalType.EDIT_MEMBERSHIP_INFORMATION) {
-    return <ProfileMembershipForm />;
-  }
+    case ModalType.CREATE_EVENT:
+      return <EventForm />;
 
-  if (modalId === ModalType.EDIT_PERSONAL_INFORMATION) {
-    return <ProfilePersonalModal />;
-  }
+    case ModalType.EDIT_MEMBERSHIP_INFORMATION:
+      return <ProfileMembershipForm />;
 
-  if (modalId === ModalType.EDIT_SOCIAL_MEDIA) {
-    return <ProfileSocialModal />;
-  }
+    case ModalType.EDIT_PERSONAL_INFORMATION:
+      return <ProfilePersonalModal />;
 
-  if (modalId === ModalType.EVENT_ERROR) {
-    return <IndividualEventErrorModal />;
-  }
+    case ModalType.EDIT_SOCIAL_MEDIA:
+      return <ProfileSocialModal />;
 
-  if (modalId === ModalType.INTEGRATIONS_DETAILS) {
-    return <IntegrationsDetailsModal />;
-  }
+    case ModalType.EVENT_ERROR:
+      return <IndividualEventErrorModal />;
 
-  if (modalId === ModalType.MAILCHIMP_FLOW) {
-    return <IntegrationsMailchimpModal />;
-  }
+    case ModalType.INTEGRATIONS_DETAILS:
+      return <IntegrationsDetailsModal />;
 
-  if (modalId === ModalType.PROFILE) {
-    return <ProfileModal />;
-  }
+    case ModalType.MAILCHIMP_FLOW:
+      return <IntegrationsMailchimpModal />;
 
-  return null;
+    case ModalType.PROFILE:
+      return <ProfileModal />;
+
+    default:
+      return null;
+  }
 };
 
 const ModalContent: React.FC = () => {
   const className: string = useStoreState(({ modal }) => modal.className);
 
-  const clearOptions: ActionCreator<void> = useStoreActions(
-    ({ modal }) => modal.clearOptions
-  );
-
   const confirmation: boolean = useStoreState(
     ({ modal }) => modal.options?.confirmation
   );
+
+  const clearOptions = useStoreActions(({ modal }) => modal.clearOptions);
 
   useEffect(() => () => clearOptions(), []);
 

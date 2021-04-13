@@ -31,18 +31,18 @@ export function getCreateMutation<T>(
   const fieldsString: string = buildFieldsString(fields);
 
   const mutation: DocumentNode = gql`
-  mutation Create${entity.name.substring(1)} {
-    ${operationString} ${argsString} {
-      id
-      ${fieldsString}
+    mutation Create${entity.name.substring(1)} {
+      ${operationString} ${argsString} {
+        id
+        ${fieldsString}
+      }
     }
-  }
-`;
+  `;
 
   return mutation;
 }
 
-export function parseCreateResult<T>(
+export function parseCreateMutationResult<T>(
   entity: new () => T,
   result: FetchResult<unknown>
 ): MutationResult<T> {

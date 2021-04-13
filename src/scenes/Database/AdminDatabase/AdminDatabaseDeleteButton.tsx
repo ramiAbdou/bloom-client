@@ -9,7 +9,10 @@ const AdminDatabaseDeleteButton: React.FC = () => {
   const showModal = useStoreActions(({ modal }) => modal.showModal);
 
   const onClick = (): void => {
-    showModal({ id: ModalType.DELETE_MEMBERS });
+    showModal({
+      id: ModalType.DELETE_MEMBERS,
+      options: { confirmation: true }
+    });
   };
 
   return (

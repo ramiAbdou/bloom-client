@@ -27,6 +27,7 @@ export const globalModals: ModalType[] = [
   ModalType.APPLICANT,
   ModalType.APPLICANT_CONFIRMATION,
   ModalType.CHECK_IN,
+  ModalType.CONFIRM_DELETE_EVENT,
   ModalType.CREATE_EVENT,
   ModalType.EDIT_MEMBERSHIP_INFORMATION,
   ModalType.EDIT_PERSONAL_INFORMATION,
@@ -50,10 +51,7 @@ export const defaultModalOptions: Record<string, Partial<ModalData>> = {
     className: 'mo-create-event',
     options: { sheet: true }
   },
-  [ModalType.DELETE_MEMBERS]: { options: { confirmation: true } },
-  [ModalType.DEMOTE_MEMBERS]: { options: { confirmation: true } },
-  [ModalType.INTEGRATIONS_DETAILS]: { className: 's-integrations-modal' },
-  [ModalType.PROMOTE_MEMBERS]: { options: { confirmation: true } }
+  [ModalType.INTEGRATIONS_DETAILS]: { className: 's-integrations-modal' }
 };
 
 export interface ModalModel extends ModalData {

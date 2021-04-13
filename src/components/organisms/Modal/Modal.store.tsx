@@ -29,6 +29,7 @@ const modalModel: ModalModel = {
 
     return {
       ...state,
+      ...initialModalModel,
       ...args,
       ...defaultOptions,
       isShowing: true,

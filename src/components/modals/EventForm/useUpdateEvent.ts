@@ -3,9 +3,12 @@ import {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
+import { useStoreState } from '@core/store/Store';
 import { uploadImage } from '@util/imageUtil';
 
-const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
+const useUpdateEvent = (): OnFormSubmitFunction => {
+  const eventId: string = useStoreState(({ modal }) => modal.metadata);
+
   const onSubmit = async ({
     closeModal,
     db,
@@ -15,13 +18,18 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
     showToast
   }: OnFormSubmitArgs) => {
     const base64String: string = items.COVER_IMAGE?.value as string;
-
-    let imageUrl: string;
+    const description: string = items.EVENT_DESCRIPTION?.value as string;
+    const privacy: EventPrivacy = items.PRIVACY?.value as EventPrivacy;
+    const summary: string = items.EVENT_SUMMARY?.value as string;
+    const title: string = items.EVENT_NAME?.value as string;
+    const videoUrl: string = items.VIDEO_URL?.value as string;
 
     const event: IEvent = await gql.findOne(IEvent, {
       fields: ['imageUrl'],
       where: { id: db.eventId }
     });
+
+    let imageUrl: string;
 
     if (base64String) {
       try {
@@ -37,14 +45,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
     }
 
     const { error } = await gql.update(IEvent, {
-      data: {
-        description: items.EVENT_DESCRIPTION?.value as string,
-        imageUrl,
-        privacy: items.PRIVACY?.value as EventPrivacy,
-        summary: items.EVENT_SUMMARY?.value as string,
-        title: items.EVENT_NAME?.value as string,
-        videoUrl: items.VIDEO_URL?.value as string
-      },
+      data: { description, imageUrl, privacy, summary, title, videoUrl },
       where: { id: eventId }
     });
 
@@ -53,7 +54,7 @@ const useUpdateEvent = (eventId: string): OnFormSubmitFunction => {
       return;
     }
 
-    showToast({ message: 'Event updated!' });
+    showToast({ message: 'Event updated.' });
     closeModal();
   };
 

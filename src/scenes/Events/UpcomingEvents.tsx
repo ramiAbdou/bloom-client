@@ -20,7 +20,7 @@ const UpcomingEventsContent: React.FC = () => {
 
   const { data: events, loading } = useFind(IEvent, {
     fields: ['deletedAt', 'endTime', 'startTime'],
-    where: { id: communityId }
+    where: { communityId }
   });
 
   if (loading) return null;

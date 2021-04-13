@@ -9,10 +9,8 @@ import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { MutationEvent } from '@util/constants.events';
 import { uploadImage } from '@util/imageUtil';
 
-type CreateEventArgs = Omit<Partial<IEvent>, 'guests' | 'id'>;
-
 const useCreateEvent = (): OnFormSubmitFunction => {
-  const [createEvent] = useBloomMutation<IEvent, CreateEventArgs>({
+  const [createEvent] = useBloomMutation<IEvent, any>({
     fields: [
       'description',
       'endTime',
@@ -92,7 +90,7 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     //         where: { community: { id: communityId } }
     //       })).data;
 
-    const args: CreateEventArgs = {
+    const args = {
       description: items.EVENT_DESCRIPTION?.value as string,
       endTime,
       eventInvitees: [],

@@ -52,7 +52,10 @@ const MemberDatabaseDeleteButton: React.FC = () => {
   const tooltip: string = useDeleteTooltip();
 
   const onClick = (): void => {
-    showModal({ id: ModalType.DELETE_MEMBERS });
+    showModal({
+      id: ModalType.DELETE_MEMBERS,
+      options: { confirmation: true }
+    });
   };
 
   return (

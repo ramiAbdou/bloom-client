@@ -17,7 +17,7 @@ const ModalBackground: React.FC = () => {
   const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
 
-  const onClick = () => {
+  const onClick = (): void => {
     if (!lock) closeModal();
   };
 
@@ -29,7 +29,10 @@ const ModalBackground: React.FC = () => {
 const ModalExitButton: React.FC = () => {
   const lock: boolean = useStoreState(({ modal }) => modal.options?.lock);
   const closeModal = useStoreActions(({ modal }) => modal.closeModal);
-  const onClick = () => closeModal();
+
+  const onClick = (): void => {
+    closeModal();
+  };
 
   return (
     <Button className="c-modal-cancel" show={!lock} onClick={onClick}>
@@ -47,7 +50,7 @@ const ModalContainer: React.FC = ({ children }) => {
 
   useEffect(() => () => onClose && onClose(), []);
 
-  const isMobile = useBreakpoint() === 1;
+  const isMobile: boolean = useBreakpoint() === 1;
 
   const animate: AnimationProps['animate'] =
     sheet ?? isMobile

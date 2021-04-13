@@ -14,7 +14,10 @@ const AdminDatabaseDemoteButton: React.FC = () => {
   );
 
   const onClick = (): void => {
-    showModal({ id: ModalType.DEMOTE_MEMBERS });
+    showModal({
+      id: ModalType.DEMOTE_MEMBERS,
+      options: { confirmation: true }
+    });
   };
 
   return (

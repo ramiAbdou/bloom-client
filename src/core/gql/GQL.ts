@@ -14,7 +14,7 @@ import {
   QueryResult,
   UpdateArgs
 } from './GQL.types';
-import { getCreateMutation, parseCreateResult } from './repo/create';
+import { getCreateMutation, parseCreateMutationResult } from './repo/create';
 import { getFindQuery, parseFindQueryResult } from './repo/find';
 import { getFindOneQuery, parseFindOneQueryResult } from './repo/findOne';
 import { getUpdateMutation, parseUpdateResult } from './repo/update';
@@ -32,7 +32,12 @@ class GQL {
   ): Promise<MutationResult<T>> {
     const mutation: DocumentNode = getCreateMutation(entity, { data, fields });
     const result: FetchResult<unknown> = await this.client.mutate({ mutation });
-    const parsedResult: MutationResult<T> = parseCreateResult(entity, result);
+
+    const parsedResult: MutationResult<T> = parseCreateMutationResult(
+      entity,
+      result
+    );
+
     return parsedResult;
   }
 

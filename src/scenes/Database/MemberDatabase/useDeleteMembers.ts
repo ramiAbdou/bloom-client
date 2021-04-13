@@ -1,11 +1,11 @@
-import { IMember } from '@core/db/db.entities';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import TableStore from '@components/organisms/Table/Table.store';
 import { ToastOptions } from '@components/organisms/Toast/Toast.types';
+import { IMember } from '@core/db/db.entities';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { MutationEvent } from '@util/constants.events';
 import { MemberIdsArgs } from '../Database.types';
 

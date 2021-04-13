@@ -14,8 +14,8 @@ import useUpdateEvent from './useUpdateEvent';
 const EventForm: React.FC = () => {
   const eventId: string = useStoreState(({ modal }) => modal.metadata);
 
-  const createEvent = useCreateEvent();
-  const updateEvent = useUpdateEvent(eventId);
+  const createEvent: OnFormSubmitFunction = useCreateEvent();
+  const updateEvent: OnFormSubmitFunction = useUpdateEvent();
   const onSubmit: OnFormSubmitFunction = eventId ? updateEvent : createEvent;
 
   return (
