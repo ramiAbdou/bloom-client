@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { ToastOptions } from '@components/organisms/Toast/Toast.types';
 import { IEvent, IEventGuest } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
@@ -9,8 +8,6 @@ import GQL from '@gql/GQL';
 import useGQL from '@gql/hooks/useGQL';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
-import { MutationEvent } from '@util/constants.events';
-import { DeleteEventGuestArgs } from './Events.types';
 import { EventTiming, getEventTiming } from './Events.util';
 
 interface EventRsvpButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
@@ -71,14 +68,14 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       ]
     });
 
-    const options: ToastOptions<DeleteEventGuestArgs> = {
-      message: 'RSVP was registered.',
-      mutationArgsOnUndo: {
-        fields: ['deletedAt', 'id'],
-        operation: MutationEvent.DELETE_EVENT_GUEST,
-        types: { eventId: { required: true } },
-        variables: { eventId }
-      }
+    const options = {
+      message: 'RSVP was registered.'
+      // mutationArgsOnUndo: {
+      //   fields: ['deletedAt', 'id'],
+      //   operation: MutationEvent.DELETE_EVENT_GUEST,
+      //   types: { eventId: { required: true } },
+      //   variables: { eventId }
+      // }
     };
 
     showToast(options);

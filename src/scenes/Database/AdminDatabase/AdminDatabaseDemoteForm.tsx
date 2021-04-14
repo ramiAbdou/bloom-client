@@ -11,10 +11,11 @@ import TableStore from '@components/organisms/Table/Table.store';
 import { IMember } from '@core/db/db.entities';
 
 const AdminDatabaseDemoteFormHeader: React.FC = () => {
-  const description: string =
-    'Are you sure you want to demote this admin to member? They will be lose all admin priviledges, but will remain in the community as a member. You can undo this action at any time.';
-
   const title: string = 'Demote to member?';
+
+  const description: string =
+    'Are you sure you want to demote this admin to member? They will be lose all admin priviledges, but will remain in the community as a member. You cannot undo this action at any time.';
+
   return <FormHeader description={description} title={title} />;
 };
 

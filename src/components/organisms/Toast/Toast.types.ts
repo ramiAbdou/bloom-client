@@ -1,11 +1,9 @@
 import { Action } from 'easy-peasy';
 
-import { UseMutationArgs } from '@gql/hooks/useBloomMutation';
 import { IdProps } from '@util/constants';
 
-export interface ToastOptions<S = any> extends Partial<IdProps> {
+export interface ToastOptions extends Partial<IdProps> {
   message?: string;
-  mutationArgsOnUndo?: UseMutationArgs<S>;
 }
 
 export type ToastModel = {

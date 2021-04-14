@@ -1,21 +1,27 @@
 import { action } from 'easy-peasy';
 import { nanoid } from 'nanoid';
 
-import { ToastModel } from './Toast.types';
+import { ToastModel, ToastOptions } from './Toast.types';
 
 const toastModel: ToastModel = {
-  dequeueToast: action(({ queue }, id: string) => {
-    const index = queue.findIndex(({ id: toastId }) => toastId === id);
+  dequeueToast: action(({ queue }, toastId: string) => {
+    const index: number = queue.findIndex(
+      (toast: ToastOptions) => toast.id === toastId
+    );
 
-    if (index < 0) return { queue };
-    return { queue: [...queue.slice(0, index), ...queue.slice(index + 1)] };
+    return {
+      queue:
+        index < 0
+          ? queue
+          : [...queue.slice(0, index), ...queue.slice(index + 1)]
+    };
   }),
 
   queue: [],
 
-  showToast: action(({ queue }, toast) => {
+  showToast: action(({ queue }, toast: ToastOptions) => {
     return {
-      queue: [...queue, { id: nanoid(), ...toast }]
+      queue: [...queue, { ...toast, id: nanoid() }]
     };
   })
 };

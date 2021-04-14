@@ -1,9 +1,9 @@
-import useBloomMutation from '@gql/hooks/useBloomMutation';
 import {
   FormItemData,
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
+import useBloomMutation from '@gql/hooks/useBloomMutation';
 import { QuestionCategory } from '@util/constants';
 import { MutationEvent } from '@util/constants.events';
 import { take } from '@util/util';
