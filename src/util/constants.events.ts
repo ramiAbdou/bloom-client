@@ -1,6 +1,5 @@
 export enum MutationEvent {
   APPLY_TO_COMMUNITY = 'applyToCommunity',
-  CREATE_EVENT = 'createEvent',
   CREATE_EVENT_ATTENDEE_WITH_MEMBER = 'createEventAttendeeWithMember',
   CREATE_EVENT_ATTENDEE_WITH_SUPPORTER = 'createEventAttendeeWithSupporter',
   CREATE_EVENT_GUEST_WITH_SUPPORTER = 'createEventGuestWithSupporter',

@@ -1,15 +1,21 @@
+import { snakeCase } from 'change-case';
+import pluralize from 'pluralize';
+
 import {
   ApolloClient,
   ApolloQueryResult,
   DocumentNode,
   FetchResult,
-  gql
+  gql,
+  Reference
 } from '@apollo/client';
 import buildFieldsString from './buildFieldsString';
+import buildOperationString from './buildOperationString';
 import {
   CreateArgs,
   CustomMutationArgs,
   FindOneArgs,
+  GQLOperation,
   MutationResult,
   QueryResult,
   UpdateArgs
@@ -33,11 +39,38 @@ class GQL {
     const mutation: DocumentNode = getCreateMutation(entity, { data, fields });
 
     const result: FetchResult<unknown> = await this.client.mutate({
-      mutation
-      // update: (cache, { data: d }) => {
-      //   console.log(cache, d);
-      //   return cache;
-      // }
+      mutation,
+      update: (cache, createResult) => {
+        const nameWithoutI: string = entity.name.substring(1);
+        const entityName: string = snakeCase(pluralize(nameWithoutI));
+
+        const createOperationString: string = buildOperationString(
+          entity,
+          GQLOperation.CREATE
+        );
+
+        const fieldsString: string = buildFieldsString([
+          ...(fields ?? []),
+          'id'
+        ] as string[]);
+
+        cache.modify({
+          fields: {
+            [entityName]: (existingEntityRefs = []) => {
+              const newEntityRef: Reference = cache.writeFragment({
+                data: createResult.data[createOperationString],
+                fragment: gql`
+                  fragment New${nameWithoutI} on ${entityName} {
+                    ${fieldsString}
+                  }
+                `
+              });
+
+              return [...existingEntityRefs, newEntityRef];
+            }
+          }
+        });
+      }
     });
 
     const parsedResult: MutationResult<T> = parseCreateMutationResult(

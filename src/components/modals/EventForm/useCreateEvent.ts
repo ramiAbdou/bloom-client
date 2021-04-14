@@ -34,33 +34,6 @@ const formatStartTime = ({ startDate, startTime }) => {
 };
 
 const useCreateEvent = (): OnFormSubmitFunction => {
-  // const [createEvent] = useBloomMutation<IEvent, any>({
-  //   fields: [
-  //     'description',
-  //     'endTime',
-  //     'id',
-  //     'imageUrl',
-  //     'privacy',
-  //     'startTime',
-  //     'summary',
-  //     'title',
-  //     'videoUrl',
-  //     { community: ['id'] }
-  //   ],
-  //   operation: MutationEvent.CREATE_EVENT,
-  //   types: {
-  //     description: { required: true },
-  //     endTime: { required: true },
-  //     eventInvitees: { required: true, type: '[String!]' },
-  //     imageUrl: { required: false },
-  //     privacy: { required: false },
-  //     startTime: { required: true },
-  //     summary: { required: false },
-  //     title: { required: true },
-  //     videoUrl: { required: true }
-  //   }
-  // });
-
   const onSubmit = async ({
     closeModal,
     db,
