@@ -24,6 +24,8 @@ export class IApplication extends BaseEntity {
 
   community: ICommunity;
 
+  communityId: string;
+
   rankedQuestions: IRankedQuestion[];
 }
 
