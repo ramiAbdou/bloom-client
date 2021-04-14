@@ -28,6 +28,7 @@ export const globalModals: ModalType[] = [
   ModalType.APPLICANT_CONFIRMATION,
   ModalType.CHECK_IN,
   ModalType.CONFIRM_DELETE_EVENT,
+  ModalType.CONFIRM_RSVP,
   ModalType.CREATE_EVENT,
   ModalType.EDIT_MEMBERSHIP_INFORMATION,
   ModalType.EDIT_PERSONAL_INFORMATION,

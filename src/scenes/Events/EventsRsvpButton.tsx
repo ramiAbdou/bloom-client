@@ -4,8 +4,6 @@ import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { IEvent, IEventGuest } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import GQL from '@gql/GQL';
-import useGQL from '@gql/hooks/useGQL';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
@@ -18,11 +16,8 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
   eventId,
   ...props
 }) => {
-  const gql: GQL = useGQL();
-
   const memberId: string = useStoreState(({ db }) => db.memberId);
   const showModal = useStoreActions(({ modal }) => modal.showModal);
-  const showToast = useStoreActions(({ toast }) => toast.showToast);
 
   const isMember: boolean = useIsMember();
 
@@ -37,15 +32,20 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
     where: { id: eventId }
   });
 
-  if (loading) return null;
+  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
 
-  const isGoing: boolean = event.eventGuests.some(
+  const isAlreadyGoing: boolean = event.eventGuests?.some(
     (eventGuest: IEventGuest) => eventGuest.member?.id === memberId
   );
+
+  // Don't show if loading, is already going or if the event is not upcoming.
+  if (loading || isAlreadyGoing || !isUpcoming) return null;
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    // We need to stop propagation because background of the card is also
+    // a clickable button that redirects to the individual event page.
     e.stopPropagation();
 
     if (!isMember) {
@@ -53,44 +53,11 @@ const EventRsvpButton: React.FC<EventRsvpButtonProps> = ({
       return;
     }
 
-    await gql.create(IEventGuest, {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      body: { eventId, memberId },
-      fields: [
-        'createdAt',
-        'event.id',
-        'id',
-        'member.firstName',
-        'member.id',
-        'member.lastName',
-        'member.pictureUrl'
-      ]
-    });
-
-    const options = {
-      message: 'RSVP was registered.'
-      // mutationArgsOnUndo: {
-      //   fields: ['deletedAt', 'id'],
-      //   operation: MutationEvent.DELETE_EVENT_GUEST,
-      //   types: { eventId: { required: true } },
-      //   variables: { eventId }
-      // }
-    };
-
-    showToast(options);
+    showModal({ id: ModalType.CONFIRM_RSVP, metadata: eventId });
   };
 
-  const isUpcoming: boolean = getEventTiming(event) === EventTiming.UPCOMING;
-
   return (
-    <Button
-      fill
-      primary
-      show={!isGoing && isUpcoming}
-      onClick={onClick}
-      {...props}
-    >
+    <Button fill primary onClick={onClick} {...props}>
       RSVP
     </Button>
   );

@@ -1,3 +1,5 @@
+import { ApolloCache, FetchResult } from '@apollo/client';
+
 type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
@@ -12,6 +14,10 @@ export enum GQLOperation {
 export interface CreateArgs<T> {
   data: RecursivePartial<T>;
   fields: string[];
+  modify?: (
+    cache: ApolloCache<unknown>,
+    createResult: FetchResult<unknown>
+  ) => void;
 }
 
 export interface CustomMutationArgs {

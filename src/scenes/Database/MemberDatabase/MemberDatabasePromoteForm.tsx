@@ -11,10 +11,11 @@ import TableStore from '@components/organisms/Table/Table.store';
 import { IMember, MemberRole } from '@core/db/db.entities';
 
 const MemberDatabasePromoteFormHeader: React.FC = () => {
+  const title: string = 'Promote to admin?';
+
   const description: string =
     'Are you sure you want to promote these member(s) to admin? They will be granted all admin priviledges. You cannot undo this action at any time.';
 
-  const title: string = 'Promote to admin?';
   return <FormHeader description={description} title={title} />;
 };
 

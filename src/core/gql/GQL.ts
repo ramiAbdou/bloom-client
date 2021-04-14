@@ -38,7 +38,7 @@ class GQL {
 
   async create<T>(
     entity: new () => T,
-    { data, fields }: CreateArgs<T>
+    { data, fields, modify }: CreateArgs<T>
   ): Promise<MutationResult<T>> {
     const mutation: DocumentNode = getCreateMutation(entity, { data, fields });
 
@@ -58,11 +58,13 @@ class GQL {
           'id'
         ] as string[]);
 
+        const resultData = createResult.data[createOperationString];
+
         cache.modify({
           fields: {
             [entityName]: (existingEntityRefs = []) => {
               const newEntityRef: Reference = cache.writeFragment({
-                data: createResult.data[createOperationString],
+                data: resultData,
                 fragment: gql`
                   fragment New${nameWithoutI} on ${entityName} {
                     ${fieldsString}
@@ -74,6 +76,8 @@ class GQL {
             }
           }
         });
+
+        if (modify) modify(cache, resultData);
       }
     });
 

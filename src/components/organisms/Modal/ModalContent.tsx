@@ -7,6 +7,7 @@ import ProfileModal from '@components/modals/Profile/Profile';
 import { useStoreActions, useStoreState } from '@core/store/Store';
 import ApplicantsConfirmationModal from '@scenes/Applicants/ApplicantsConfirmationModal';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
+import EventsConfirmRsvpForm from '@scenes/Events/EventsConfirmRsvpForm';
 import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
 import IntegrationsDetailsModal from '@scenes/Integrations/IntegrationsDetailsModal';
 import IntegrationsMailchimpModal from '@scenes/Integrations/IntegrationsMailchimpModal';
@@ -39,6 +40,9 @@ const ModalCustomContent: React.FC = () => {
 
     case ModalType.CONFIRM_DELETE_EVENT:
       return <DeleteEventConfirmationForm />;
+
+    case ModalType.CONFIRM_RSVP:
+      return <EventsConfirmRsvpForm />;
 
     case ModalType.CREATE_EVENT:
       return <EventForm />;
