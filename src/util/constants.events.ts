@@ -4,7 +4,6 @@ export enum MutationEvent {
   CREATE_EVENT_ATTENDEE_WITH_SUPPORTER = 'createEventAttendeeWithSupporter',
   CREATE_EVENT_GUEST_WITH_SUPPORTER = 'createEventGuestWithSupporter',
   DELETE_EVENT_GUEST = 'deleteEventGuest',
-  DELETE_MEMBERS = 'deleteMembers',
   INVITE_MEMBERS = 'inviteMembers',
   LOGOUT = 'logout',
   REMOVE_STRIPE_SUBSCRIPTION_ID = 'removeStripeSubscriptionId',
