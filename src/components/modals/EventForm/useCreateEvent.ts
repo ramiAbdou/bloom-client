@@ -5,18 +5,15 @@ import {
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
 import { IEvent } from '@core/db/db.entities';
-// import useBloomMutation from '@gql/hooks/useBloomMutation';
-// import { MutationEvent } from '@util/constants.events';
 import { uploadImage } from '@util/imageUtil';
 
 const formatEndTime = ({ endDate, endTime }) => {
   const endDateOnly: string = day(endDate)?.format('MMM D, YYYY');
   const endTimeOnly: string = day(endTime)?.format('h:mm A');
 
-  const formattedStartTime: string = day(
-    `${endDateOnly} @ ${endTimeOnly}`,
-    'MMMM D, YYYY @ h:mm A'
-  ).format();
+  const formattedStartTime: string = day
+    .utc(`${endDateOnly} @ ${endTimeOnly}`, 'MMMM D, YYYY @ h:mm A')
+    .format();
 
   return formattedStartTime;
 };
@@ -25,10 +22,9 @@ const formatStartTime = ({ startDate, startTime }) => {
   const startDateOnly: string = day(startDate)?.format('MMM D, YYYY');
   const startTimeOnly: string = day(startTime)?.format('h:mm A');
 
-  const formattedStartTime: string = day(
-    `${startDateOnly} @ ${startTimeOnly}`,
-    'MMMM D, YYYY @ h:mm A'
-  ).format();
+  const formattedStartTime: string = day
+    .utc(`${startDateOnly} @ ${startTimeOnly}`, 'MMMM D, YYYY @ h:mm A')
+    .format();
 
   return formattedStartTime;
 };

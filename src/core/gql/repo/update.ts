@@ -70,3 +70,32 @@ export function parseUpdateResult<T>(
     error: result.errors && result.errors[0]?.message
   };
 }
+export function parseUpdateManyResult<T>(
+  entity: new () => T,
+  result: FetchResult<unknown>
+): MutationResult<T[]> {
+  const operationString: string = buildOperationString(
+    entity,
+    GQLOperation.UPDATE
+  );
+
+  if (!result.data) {
+    return {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore b/c we want to destructure very easily.
+      data: {},
+      error: result.errors && result.errors[0]?.message
+    };
+  }
+
+  // Deeply converts all of the data from the operation to camelCase, if the
+  // data exists.
+  const camelCaseData: T[] = camelCaseKeys(result.data[operationString], {
+    deep: true
+  });
+
+  return {
+    data: camelCaseData,
+    error: result.errors && result.errors[0]?.message
+  };
+}

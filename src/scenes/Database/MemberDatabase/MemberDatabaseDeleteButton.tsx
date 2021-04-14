@@ -21,6 +21,8 @@ const useDeleteTooltip = (): string => {
     (state) => state.selectedRowIds
   );
 
+  // console.log(selectedRowIds);
+
   const { data: members, loading: loading1 } = useFind(IMember, {
     where: { id: { _in: selectedRowIds } }
   });

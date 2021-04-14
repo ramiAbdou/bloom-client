@@ -8,6 +8,8 @@ interface BuildArgsStringArgs {
   where?: Record<string, unknown>;
 }
 
+const operators: string[] = ['_eq', '_lt', '_gt', '_in'];
+
 /**
  * Returns the where query with any "_eq" operators inserted if necessary.
  *
@@ -29,7 +31,7 @@ const insertEqIntoWhereObject = (
   return Object.entries(where).reduce(
     (acc: Record<string, unknown>, [key, value]: [string, unknown]) => {
       // If the key is not an operator and the value is an object.
-      const isKeyOperator: boolean = ['_eq', '_lt', '_gt'].includes(key);
+      const isKeyOperator: boolean = operators.includes(key);
       const isValueObject: boolean = typeof value === 'object';
 
       // Example: key = 'urlName' and value = 'colorstack' transforms to
@@ -76,7 +78,7 @@ const buildWhereString = (where: Record<string, unknown>): string => {
   const snakeCaseWhere: Record<string, unknown> = snakeCaseKeys(
     whereWithEq,
     // Don't want to convert any of the query operators.
-    { exclude: ['_eq', '_lt', '_gt'] }
+    { exclude: operators }
   );
 
   // Converts the object to a string, and replaces the double quotes around
@@ -106,7 +108,7 @@ const buildArgsString = ({
 
   const snakeCaseSet: Record<string, unknown> = snakeCaseKeys(set ?? {}, {
     // Don't want to convert any of the query operators.
-    exclude: ['_eq', '_lt', '_gt']
+    exclude: operators
   });
 
   // Converts the object to a string, and replaces the double quotes around

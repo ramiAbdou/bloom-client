@@ -23,7 +23,11 @@ import {
 import { getCreateMutation, parseCreateMutationResult } from './repo/create';
 import { getFindQuery, parseFindQueryResult } from './repo/find';
 import { getFindOneQuery, parseFindOneQueryResult } from './repo/findOne';
-import { getUpdateMutation, parseUpdateResult } from './repo/update';
+import {
+  getUpdateMutation,
+  parseUpdateManyResult,
+  parseUpdateResult
+} from './repo/update';
 
 class GQL {
   client: ApolloClient<unknown>;
@@ -153,6 +157,21 @@ class GQL {
     const mutation: DocumentNode = getUpdateMutation(entity, { data, where });
     const result: FetchResult<unknown> = await this.client.mutate({ mutation });
     const parsedResult: MutationResult<T> = parseUpdateResult(entity, result);
+    return parsedResult;
+  }
+
+  async updateMany<T>(
+    entity: new () => T,
+    { data, where }: UpdateArgs<T>
+  ): Promise<MutationResult<T[]>> {
+    const mutation: DocumentNode = getUpdateMutation(entity, { data, where });
+    const result: FetchResult<unknown> = await this.client.mutate({ mutation });
+
+    const parsedResult: MutationResult<T[]> = parseUpdateManyResult(
+      entity,
+      result
+    );
+
     return parsedResult;
   }
 }

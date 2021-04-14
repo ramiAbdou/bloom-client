@@ -1,14 +1,22 @@
 import React from 'react';
 
 import Form from '@components/organisms/Form/Form';
-import { OnFormSubmitArgs } from '@components/organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
 import TableStore from '@components/organisms/Table/Table.store';
-import { IMember } from '@core/db/db.entities';
-import useBloomMutation from '@gql/hooks/useBloomMutation';
-import { MutationEvent } from '@util/constants.events';
-import { MemberIdsArgs } from '../Database.types';
+import { IMember, MemberRole } from '@core/db/db.entities';
+
+const MemberDatabasePromoteFormHeader: React.FC = () => {
+  const description: string =
+    'Are you sure you want to promote these member(s) to admin? They will be granted all admin priviledges. You can undo this action at any time.';
+
+  const title: string = 'Promote to admin?';
+  return <FormHeader description={description} title={title} />;
+};
 
 const MemberDatabasePromoteForm: React.FC = () => {
   const memberIds = TableStore.useStoreState(
@@ -19,21 +27,21 @@ const MemberDatabasePromoteForm: React.FC = () => {
     (state) => state.clearSelectedRows
   );
 
-  const [promoteMembers] = useBloomMutation<IMember[], MemberIdsArgs>({
-    fields: ['id', 'role'],
-    operation: MutationEvent.PROMOTE_MEMBERS,
-    types: { memberIds: { required: true, type: '[String!]' } }
-  });
-
-  const onSubmit = async ({
+  const onSubmit: OnFormSubmitFunction = async ({
     closeModal,
+    gql,
     setError,
     showToast
   }: OnFormSubmitArgs) => {
-    const { error } = await promoteMembers({ memberIds });
+    const { error } = await gql.updateMany(IMember, {
+      data: { role: MemberRole.ADMIN },
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      where: { id: { _in: memberIds } }
+    });
 
     if (error) {
-      setError(error);
+      setError('Failed to promote members. Please try again later.');
       return;
     }
 
@@ -44,10 +52,7 @@ const MemberDatabasePromoteForm: React.FC = () => {
 
   return (
     <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
-      <FormHeader
-        description="Are you sure you want to promote this member to admin? They will be granted all admin priviledges. You can undo this action at any time."
-        title="Promote to admin?"
-      />
+      <MemberDatabasePromoteFormHeader />
 
       <ModalConfirmationActions
         primaryLoadingText="Promoting..."
