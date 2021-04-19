@@ -1,8 +1,6 @@
-import { ActionCreator } from 'easy-peasy';
 import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
-import { ModalData } from '@components/organisms/Modal/Modal.types';
 import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
 import { useStoreActions, useStoreState } from '@core/store/Store';
@@ -11,7 +9,6 @@ import useGQL from '@gql/hooks/useGQL';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
-import useCreateEventAttendeeWithMember from './useCreateEventAttendeeWithMember';
 
 interface EventsJoinButtonProps extends Partial<Pick<ButtonProps, 'large'>> {
   eventId: string;
@@ -26,7 +23,6 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
 
   const gql: GQL = useGQL();
   const isMember: boolean = useIsMember();
-  // const createEventAttendeeWithMember = useCreateEventAttendeeWithMember();
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime', 'videoUrl'],
@@ -35,10 +31,9 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
 
   if (loading) return null;
 
-  const isHappeningNowOrStartingSoon: boolean = [
-    EventTiming.HAPPENING_NOW,
-    EventTiming.STARTING_SOON
-  ].includes(getEventTiming(event));
+  const isHappeningNowOrStartingSoon: boolean =
+    getEventTiming(event) === EventTiming.HAPPENING_NOW ||
+    getEventTiming(event) === EventTiming.STARTING_SOON;
 
   const onClick = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -54,11 +49,17 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
 
     await gql.create(IEventAttendee, {
       data: { eventId, memberId },
-      fields: ['event.id', 'member.id'],
-      modify: { entity: IEvent, field: 'eventAttendees', id: eventId }
+      fields: [
+        'createdAt',
+        'event.id',
+        'member.id',
+        'member.email',
+        'member.firstName',
+        'member.lastName',
+        'member.pictureUrl'
+      ],
+      modifications: [{ entity: IEvent, field: 'eventAttendees', id: eventId }]
     });
-    // if (isMember) await createEventAttendeeWithMember({ eventId });
-    // else
   };
 
   return (

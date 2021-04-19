@@ -40,8 +40,6 @@ const EventsConfirmRsvpForm: React.FC = () => {
     showToast
   }: OnFormSubmitArgs) => {
     const { error } = await gql.create(IEventGuest, {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       data: { eventId, memberId: db.memberId },
       fields: [
         'createdAt',
@@ -51,7 +49,7 @@ const EventsConfirmRsvpForm: React.FC = () => {
         'member.lastName',
         'member.pictureUrl'
       ],
-      modify: { entity: IEvent, field: 'eventGuests', id: eventId }
+      modifications: [{ entity: IEvent, field: 'eventGuests', id: eventId }]
     });
 
     if (error) {

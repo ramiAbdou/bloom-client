@@ -1,7 +1,11 @@
 type RecursivePartial<T> = {
-  [P in keyof T]?: P extends string
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
+
+type RecursiveWherePartial<T> = {
+  [P in keyof T]?: T[P] extends string
     ? string | { _in?: string[] }
-    : RecursivePartial<T[P]>;
+    : RecursiveWherePartial<T[P]>;
 };
 
 export enum GQLOperation {
@@ -11,7 +15,7 @@ export enum GQLOperation {
   UPDATE = 'Update'
 }
 
-interface CreateArgsModify<T> {
+interface CreateArgsModification<T> {
   entity: new () => T;
   id: string;
   field: RecursivePartial<T>;
@@ -23,7 +27,7 @@ export interface CreateArgs<T, S = unknown> {
     'createdAt' | 'deletedAt' | 'id' | 'updatedAt'
   >;
   fields: string[];
-  modify?: CreateArgsModify<S>;
+  modifications?: CreateArgsModification<S>[];
 }
 
 export interface CustomMutationArgs {
@@ -40,7 +44,7 @@ export interface CustomQueryArgs {
 export interface FindOneArgs<T> {
   fields?: (keyof T | string)[];
   skip?: boolean;
-  where: Record<string, unknown>;
+  where: RecursiveWherePartial<T>;
 }
 
 export interface MutationResult<T = unknown> {
@@ -56,5 +60,5 @@ export interface QueryResult<T = unknown> {
 
 export interface UpdateArgs<T> {
   data: Omit<RecursivePartial<T>, 'createdAt' | 'id' | 'updatedAt'>;
-  where: RecursivePartial<T>;
+  where: RecursiveWherePartial<T>;
 }

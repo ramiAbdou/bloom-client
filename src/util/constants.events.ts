@@ -1,13 +1,11 @@
 export enum MutationEvent {
   APPLY_TO_COMMUNITY = 'applyToCommunity',
-  CREATE_EVENT_ATTENDEE_WITH_MEMBER = 'createEventAttendeeWithMember',
   CREATE_EVENT_ATTENDEE_WITH_SUPPORTER = 'createEventAttendeeWithSupporter',
   CREATE_EVENT_GUEST_WITH_SUPPORTER = 'createEventGuestWithSupporter',
   INVITE_MEMBERS = 'inviteMembers',
   LOGOUT = 'logout',
   REMOVE_STRIPE_SUBSCRIPTION_ID = 'removeStripeSubscriptionId',
   RESPOND_TO_APPLICANTS = 'respondToApplicants',
-  RESTORE_MEMBERS = 'restoreMembers',
   SEND_LOGIN_LINK = 'sendLoginLink',
   UPDATE_MAILCHIMP_LIST_ID = 'updateMailchimpListId',
   UPDATE_MEMBER_VALUES = 'updateMemberValues',
