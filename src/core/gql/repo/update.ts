@@ -21,7 +21,6 @@ export function getUpdateMutation<T>(
 
   // Automatically return all of the variables that we just updated.
 
-  console.log(operationString);
   const fieldsString: string = buildFieldsString(Object.keys(set));
 
   const mutation: DocumentNode = gql`

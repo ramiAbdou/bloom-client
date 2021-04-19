@@ -39,14 +39,6 @@ export function getCreateMutation<T>(
     }
   `;
 
-  console.log(`
-  mutation Create${entity.name.substring(1)} {
-    ${operationString} ${argsString} {
-      ${fieldsString}
-    }
-  }
-`);
-
   return mutation;
 }
 

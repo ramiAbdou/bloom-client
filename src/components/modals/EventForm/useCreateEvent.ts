@@ -4,10 +4,15 @@ import {
   OnFormSubmitArgs,
   OnFormSubmitFunction
 } from '@components/organisms/Form/Form.types';
-import { IEvent } from '@core/db/db.entities';
+import { EventPrivacy, IEvent } from '@core/db/db.entities';
 import { uploadImage } from '@util/imageUtil';
 
-const formatEndTime = ({ endDate, endTime }) => {
+interface FormatEndTimeArgs {
+  endDate: string;
+  endTime: string;
+}
+
+const formatEndTime = ({ endDate, endTime }: FormatEndTimeArgs) => {
   const endDateOnly: string = day(endDate)?.format('MMM D, YYYY');
   const endTimeOnly: string = day(endTime)?.format('h:mm A');
 
@@ -18,7 +23,12 @@ const formatEndTime = ({ endDate, endTime }) => {
   return formattedStartTime;
 };
 
-const formatStartTime = ({ startDate, startTime }) => {
+interface FormatStartTimeArgs {
+  startDate: string;
+  startTime: string;
+}
+
+const formatStartTime = ({ startDate, startTime }: FormatStartTimeArgs) => {
   const startDateOnly: string = day(startDate)?.format('MMM D, YYYY');
   const startTimeOnly: string = day(startTime)?.format('h:mm A');
 
@@ -38,6 +48,12 @@ const useCreateEvent = (): OnFormSubmitFunction => {
     setError,
     showToast
   }: OnFormSubmitArgs) => {
+    const description: string = items.EVENT_DESCRIPTION?.value as string;
+    const privacy: EventPrivacy = items.PRIVACY?.value as EventPrivacy;
+    const summary: string = items.EVENT_SUMMARY?.value as string;
+    const title: string = items.EVENT_NAME?.value as string;
+    const videoUrl: string = items.VIDEO_URL?.value as string;
+
     const endTime: string = formatEndTime({
       endDate: items.END_DATE?.value as string,
       endTime: items.END_TIME?.value as string
@@ -87,16 +103,14 @@ const useCreateEvent = (): OnFormSubmitFunction => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore b/c
         communityId: db.communityId,
-        description: items.EVENT_DESCRIPTION?.value as string,
+        description,
         endTime,
-        // eventInvitees: [],
-        // eventInvitees,
         imageUrl,
-        privacy: items.PRIVACY?.value as any,
+        privacy,
         startTime,
-        summary: items.EVENT_SUMMARY?.value as string,
-        title: items.EVENT_NAME?.value as string,
-        videoUrl: items.VIDEO_URL?.value as string
+        summary,
+        title,
+        videoUrl
       },
       fields: [
         'description',
@@ -109,8 +123,6 @@ const useCreateEvent = (): OnFormSubmitFunction => {
         'videoUrl'
       ]
     });
-
-    // const { error } = await createEvent(args);
 
     if (error) {
       setError('Failed to create event. Please try again later.');

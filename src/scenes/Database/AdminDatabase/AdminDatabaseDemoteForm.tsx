@@ -32,8 +32,6 @@ const AdminDatabaseDemoteForm: React.FC = () => {
   }: OnFormSubmitArgs) => {
     const { error } = await gql.updateMany(IMember, {
       data: { role: null },
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       where: { id: { _in: memberIds } }
     });
 

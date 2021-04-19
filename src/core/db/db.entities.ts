@@ -22,6 +22,8 @@ export class IApplication extends BaseEntity {
 
   title: string;
 
+  // RELATIONSHIPS
+
   community: ICommunity;
 
   communityId: string;
@@ -44,13 +46,17 @@ export class ICommunity extends BaseEntity {
 
   urlName: string;
 
+  // RELATIONSHIPS
+
   application?: IApplication;
 
   communityIntegrations: ICommunityIntegrations;
 
-  events?: IEvent[];
+  events: IEvent[];
 
   highlightedQuestion: IQuestion;
+
+  highlightedQuestionId: string;
 
   memberTypes: IMemberType[];
 
@@ -59,8 +65,6 @@ export class ICommunity extends BaseEntity {
   payments: IPayment[];
 
   questions: IQuestion[];
-
-  owner?: IMember;
 
   supporters: ISupporter[];
 }
@@ -78,7 +82,11 @@ export class ICommunityIntegrations extends BaseEntity {
 
   stripeAccountId: string;
 
+  // RELATIONSHIPS
+
   community: ICommunity;
+
+  communityId: string;
 }
 
 // ## EVENT
@@ -107,13 +115,15 @@ export class IEvent extends BaseEntity {
 
   videoUrl: string;
 
+  // RELATIONSHIPS
+
   community: ICommunity;
+
+  communityId: string;
 
   eventAttendees: IEventAttendee[];
 
   eventGuests: IEventGuest[];
-
-  eventInvitees?: string[];
 
   eventWatches: IEventWatch[];
 }
@@ -121,29 +131,51 @@ export class IEvent extends BaseEntity {
 // ## EVENT ATTENDEE
 
 export class IEventAttendee extends BaseEntity {
+  // RELATIONSHIPS
+
   event: IEvent;
+
+  eventId: string;
 
   member?: IMember;
 
+  memberId?: string;
+
   supporter?: ISupporter;
+
+  supporterId?: string;
 }
 
 // ## EVENT GUEST
 
 export class IEventGuest extends BaseEntity {
+  // RELATIONSHIPS
+
   event: IEvent;
+
+  eventId: string;
 
   member?: IMember;
 
+  memberId?: string;
+
   supporter?: ISupporter;
+
+  supporterId?: string;
 }
 
 // ## EVENT WATCH
 
 export class IEventWatch extends BaseEntity {
+  // RELATIONSHIPS
+
   event: IEvent;
 
+  eventId: string;
+
   member: IMember;
+
+  memberId: string;
 }
 
 // ## MEMBER
@@ -179,7 +211,11 @@ export class IMember extends BaseEntity {
 
   status: MemberStatus;
 
+  // RELATIONSHIPS
+
   community: ICommunity;
+
+  communityId: string;
 
   eventAttendees: IEventAttendee[];
 
@@ -193,11 +229,15 @@ export class IMember extends BaseEntity {
 
   memberType: IMemberType;
 
+  memberTypeId: string;
+
   memberValues: IMemberValue[];
 
   payments: IPayment[];
 
   user: IUser;
+
+  userId: string;
 }
 
 // ## MEMBER INTEGRATIONS
@@ -217,7 +257,11 @@ export class IMemberIntegrations extends BaseEntity {
 
   stripeSubscriptionId?: string;
 
+  // RELATIONSHIPS
+
   member: IMember;
+
+  memberId: string;
 }
 
 // MEMBER SOCIALS
@@ -231,7 +275,11 @@ export class IMemberSocials extends BaseEntity {
 
   twitterUrl: string;
 
+  // RELATIONSHIPS
+
   member: IMember;
+
+  memberId: string;
 }
 
 // ## MEMBER TYPE
@@ -247,6 +295,12 @@ export class IMemberType extends BaseEntity {
   name: string;
 
   recurrence: RecurrenceType;
+
+  // RELATIONSHIPS
+
+  community: ICommunity;
+
+  communityId: string;
 }
 
 // ## MEMBER VALUE
@@ -254,9 +308,15 @@ export class IMemberType extends BaseEntity {
 export class IMemberValue extends BaseEntity {
   value: string;
 
+  // RELATIONSHIPS
+
   member: IMember;
 
+  memberId: string;
+
   question: IQuestion;
+
+  questionId: string;
 }
 
 // ## PAYMENT
@@ -273,9 +333,15 @@ export class IPayment extends BaseEntity {
 
   type: PaymentType;
 
+  // RELATIONSHIPS
+
   member: IMember;
 
+  memberId: string;
+
   memberType: IMemberType;
+
+  memberTypeId: string;
 }
 
 // ## QUESTION
@@ -295,6 +361,8 @@ export class IQuestion extends BaseEntity {
 
   type: QuestionType;
 
+  // RELATIONSHIPS
+
   memberValues?: IMemberValue[];
 }
 
@@ -303,9 +371,15 @@ export class IQuestion extends BaseEntity {
 export class IRankedQuestion extends BaseEntity {
   rank: number;
 
+  // RELATIONSHIPS
+
   application?: IApplication;
 
+  applicationId?: string;
+
   question: IQuestion;
+
+  questionId: string;
 }
 
 // ## SUPPORTER
@@ -319,6 +393,8 @@ export class ISupporter extends BaseEntity {
 
   pictureUrl: string;
 
+  // RELATIONSHIPS
+
   eventAttendees: IEventAttendee[];
 
   eventGuests: IEventGuest[];
@@ -330,6 +406,8 @@ export class ISupporter extends BaseEntity {
 
 export class IUser extends BaseEntity {
   email: string;
+
+  // RELATIONSHIPS
 
   members: IMember[];
 

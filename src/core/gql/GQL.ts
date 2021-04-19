@@ -77,7 +77,25 @@ class GQL {
           }
         });
 
-        if (modify) modify(cache, resultData);
+        if (modify) {
+          cache.modify({
+            fields: {
+              [snakeCase(modify.field as string)]: (existingRefs = []) => {
+                const newEntityRef = cache.writeFragment({
+                  data: resultData,
+                  fragment: gql`
+                  fragment New${nameWithoutI} on ${entityName} {
+                    ${fieldsString}
+                  }
+                `
+                });
+
+                return [...existingRefs, newEntityRef];
+              }
+            },
+            id: `${entityName}:${modify.id}`
+          });
+        }
       }
     });
 

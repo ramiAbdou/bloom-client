@@ -1,7 +1,7 @@
-import { ApolloCache, FetchResult } from '@apollo/client';
-
 type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
+  [P in keyof T]?: P extends string
+    ? string | { _in?: string[] }
+    : RecursivePartial<T[P]>;
 };
 
 export enum GQLOperation {
@@ -11,13 +11,19 @@ export enum GQLOperation {
   UPDATE = 'Update'
 }
 
-export interface CreateArgs<T> {
-  data: RecursivePartial<T>;
+interface CreateArgsModify<T> {
+  entity: new () => T;
+  id: string;
+  field: RecursivePartial<T>;
+}
+
+export interface CreateArgs<T, S = unknown> {
+  data: Omit<
+    RecursivePartial<T>,
+    'createdAt' | 'deletedAt' | 'id' | 'updatedAt'
+  >;
   fields: string[];
-  modify?: (
-    cache: ApolloCache<unknown>,
-    createResult: FetchResult<unknown>
-  ) => void;
+  modify?: CreateArgsModify<S>;
 }
 
 export interface CustomMutationArgs {
@@ -49,6 +55,6 @@ export interface QueryResult<T = unknown> {
 }
 
 export interface UpdateArgs<T> {
-  data: RecursivePartial<T>;
+  data: Omit<RecursivePartial<T>, 'createdAt' | 'id' | 'updatedAt'>;
   where: RecursivePartial<T>;
 }

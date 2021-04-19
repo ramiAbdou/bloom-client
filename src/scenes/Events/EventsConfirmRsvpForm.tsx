@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { gql as gqlTag } from '@apollo/client';
 import Form from '@components/organisms/Form/Form';
 import {
   OnFormSubmitArgs,
@@ -52,27 +51,7 @@ const EventsConfirmRsvpForm: React.FC = () => {
         'member.lastName',
         'member.pictureUrl'
       ],
-      modify: (cache, resultData) => {
-        cache.modify({
-          fields: {
-            event_guests: (existingEventGuestRefs = []) => {
-              console.log('existingEventGuestRefs', existingEventGuestRefs);
-
-              const newEventGuestRef = cache.writeFragment({
-                data: resultData,
-                fragment: gqlTag`
-                  fragment NewEventGuest on EventGuest {
-                    id
-                  }
-                `
-              });
-
-              return [...existingEventGuestRefs, newEventGuestRef];
-            }
-          },
-          id: `events:${eventId}`
-        });
-      }
+      modify: { entity: IEvent, field: 'eventGuests', id: eventId }
     });
 
     if (error) {

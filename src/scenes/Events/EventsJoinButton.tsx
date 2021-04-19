@@ -3,9 +3,11 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@components/atoms/Button/Button';
 import { ModalData } from '@components/organisms/Modal/Modal.types';
-import { IEvent } from '@core/db/db.entities';
+import { IEvent, IEventAttendee } from '@core/db/db.entities';
 import useFindOne from '@core/gql/hooks/useFindOne';
-import { useStoreActions } from '@core/store/Store';
+import { useStoreActions, useStoreState } from '@core/store/Store';
+import GQL from '@gql/GQL';
+import useGQL from '@gql/hooks/useGQL';
 import useIsMember from '@hooks/useIsMember';
 import { ModalType } from '@util/constants';
 import { EventTiming, getEventTiming } from './Events.util';
@@ -19,12 +21,12 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
   eventId,
   large
 }) => {
-  const showModal: ActionCreator<ModalData> = useStoreActions(
-    ({ modal }) => modal.showModal
-  );
+  const memberId: string = useStoreState(({ db }) => db.memberId);
+  const showModal = useStoreActions(({ modal }) => modal.showModal);
 
+  const gql: GQL = useGQL();
   const isMember: boolean = useIsMember();
-  const createEventAttendeeWithMember = useCreateEventAttendeeWithMember();
+  // const createEventAttendeeWithMember = useCreateEventAttendeeWithMember();
 
   const { data: event, loading } = useFindOne(IEvent, {
     fields: ['endTime', 'startTime', 'videoUrl'],
@@ -45,8 +47,18 @@ const EventsJoinButton: React.FC<EventsJoinButtonProps> = ({
     // clicking the background of an EventsCard).
     e.stopPropagation();
 
-    if (isMember) await createEventAttendeeWithMember({ eventId });
-    else showModal({ id: ModalType.CHECK_IN, metadata: eventId });
+    if (!isMember) {
+      showModal({ id: ModalType.CHECK_IN, metadata: eventId });
+      return;
+    }
+
+    await gql.create(IEventAttendee, {
+      data: { eventId, memberId },
+      fields: ['event.id', 'member.id'],
+      modify: { entity: IEvent, field: 'eventAttendees', id: eventId }
+    });
+    // if (isMember) await createEventAttendeeWithMember({ eventId });
+    // else
   };
 
   return (
