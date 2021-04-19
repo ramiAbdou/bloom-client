@@ -4,7 +4,7 @@ type RecursivePartial<T> = {
 
 type RecursiveWherePartial<T> = {
   [P in keyof T]?: T[P] extends string
-    ? string | { _in?: string[] }
+    ? string | { _in?: string[]; _lt?: string; _gt?: string }
     : RecursiveWherePartial<T[P]>;
 };
 

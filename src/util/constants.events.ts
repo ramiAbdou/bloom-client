@@ -4,8 +4,6 @@ export enum MutationEvent {
   CREATE_EVENT_GUEST_WITH_SUPPORTER = 'createEventGuestWithSupporter',
   INVITE_MEMBERS = 'inviteMembers',
   LOGOUT = 'logout',
-  REMOVE_STRIPE_SUBSCRIPTION_ID = 'removeStripeSubscriptionId',
-  RESPOND_TO_APPLICANTS = 'respondToApplicants',
   SEND_LOGIN_LINK = 'sendLoginLink',
   UPDATE_MAILCHIMP_LIST_ID = 'updateMailchimpListId',
   UPDATE_MEMBER_VALUES = 'updateMemberValues',

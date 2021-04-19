@@ -31,7 +31,7 @@ const TableFilterPanelRowQuestionDropdown: React.FC = () => {
 
   const { data: community, loading } = useFindOne(ICommunity, {
     fields: ['memberTypes.id', 'questions.category', 'questions.id'],
-    where: { communityId }
+    where: { id: communityId }
   });
 
   const initialQuestionId: string = community.questions.find(

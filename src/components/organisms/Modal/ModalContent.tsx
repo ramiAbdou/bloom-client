@@ -5,7 +5,7 @@ import CheckInModal from '@components/modals/CheckIn/CheckIn';
 import EventForm from '@components/modals/EventForm/EventForm';
 import ProfileModal from '@components/modals/Profile/Profile';
 import { useStoreActions, useStoreState } from '@core/store/Store';
-import ApplicantsConfirmationModal from '@scenes/Applicants/ApplicantsConfirmationModal';
+import ApplicantsConfirmationForm from '@scenes/Applicants/ApplicantsConfirmationForm';
 import ApplicantsModal from '@scenes/Applicants/ApplicantsModal';
 import EventsConfirmRsvpForm from '@scenes/Events/EventsConfirmRsvpForm';
 import IndividualEventErrorModal from '@scenes/Events/IndividualEvent/IndividualEventErrorModal';
@@ -33,7 +33,7 @@ const ModalCustomContent: React.FC = () => {
       return <ApplicantsModal />;
 
     case ModalType.APPLICANT_CONFIRMATION:
-      return <ApplicantsConfirmationModal />;
+      return <ApplicantsConfirmationForm />;
 
     case ModalType.CHECK_IN:
       return <CheckInModal />;

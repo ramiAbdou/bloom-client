@@ -86,7 +86,7 @@ const ProfileMembershipOnboardingContainer: React.FC = () => {
 
   const { data: member, loading } = useFindOne(IMember, {
     fields: ['memberValues.id'],
-    where: { memberId }
+    where: { id: memberId }
   });
 
   if (loading) return null;

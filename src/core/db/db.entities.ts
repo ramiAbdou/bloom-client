@@ -363,6 +363,10 @@ export class IQuestion extends BaseEntity {
 
   // RELATIONSHIPS
 
+  community: ICommunity;
+
+  communityId: string;
+
   memberValues?: IMemberValue[];
 }
 

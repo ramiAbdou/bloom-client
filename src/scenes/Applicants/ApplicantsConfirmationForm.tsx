@@ -1,19 +1,21 @@
 import React from 'react';
 
 import Form from '@components/organisms/Form/Form';
-import { OnFormSubmitFunction } from '@components/organisms/Form/Form.types';
+import {
+  OnFormSubmitArgs,
+  OnFormSubmitFunction
+} from '@components/organisms/Form/Form.types';
 import FormHeader from '@components/organisms/Form/FormHeader';
 import ModalConfirmationActions from '@components/organisms/Modal/ModalConfirmationActions';
-import { MemberStatus } from '@core/db/db.entities';
+import { IMember, MemberStatus } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import useRespondToApplicants from './useRespondToApplicants';
 
 interface ApplicantsConfirmationModalMetadata {
   applicantIds: string[];
   response: MemberStatus.ACCEPTED | MemberStatus.REJECTED;
 }
 
-const ApplicantsConfirmationModalHeader: React.FC = () => {
+const ApplicantsConfirmationFormHeader: React.FC = () => {
   const applicantIds: string[] = useStoreState(
     ({ modal }) =>
       (modal.metadata as ApplicantsConfirmationModalMetadata).applicantIds
@@ -40,7 +42,7 @@ const ApplicantsConfirmationModalHeader: React.FC = () => {
   );
 };
 
-const ApplicantsConfirmationModal: React.FC = () => {
+const ApplicantsConfirmationForm: React.FC = () => {
   const applicantIds: string[] = useStoreState(
     ({ modal }) =>
       (modal.metadata as ApplicantsConfirmationModalMetadata).applicantIds
@@ -51,17 +53,30 @@ const ApplicantsConfirmationModal: React.FC = () => {
       (modal.metadata as ApplicantsConfirmationModalMetadata).response
   );
 
-  const respondToApplicants: OnFormSubmitFunction = useRespondToApplicants({
-    memberIds: applicantIds,
-    response
-  });
+  const onSubmit: OnFormSubmitFunction = async ({
+    closeModal,
+    gql,
+    showToast
+  }: OnFormSubmitArgs) => {
+    const { error } = await gql.updateMany(IMember, {
+      data: { status: response },
+      where: { id: { _in: applicantIds } }
+    });
+
+    if (error) {
+      throw new Error(error);
+    }
+
+    closeModal();
+    showToast({ message: `Member(s) have been ${response.toLowerCase()}.` });
+  };
 
   return (
-    <Form options={{ disableValidation: true }} onSubmit={respondToApplicants}>
-      <ApplicantsConfirmationModalHeader />
+    <Form options={{ disableValidation: true }} onSubmit={onSubmit}>
+      <ApplicantsConfirmationFormHeader />
       <ModalConfirmationActions />
     </Form>
   );
 };
 
-export default ApplicantsConfirmationModal;
+export default ApplicantsConfirmationForm;
