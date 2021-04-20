@@ -17,6 +17,8 @@ const AdminDatabase: React.FC = () => {
 
   const { data: members, loading: loading1 } = useFind(IMember, {
     fields: ['email', 'firstName', 'lastName'],
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     where: { communityId, role: { _ne: null } }
   });
 

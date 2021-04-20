@@ -49,6 +49,8 @@ const ApplicationPaymentSection: React.FC = () => {
   );
 
   const isPaidMembershipSelected: boolean = !!useFindOne(IMemberType, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   }).data;
 

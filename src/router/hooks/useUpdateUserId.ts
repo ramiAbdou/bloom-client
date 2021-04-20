@@ -20,6 +20,8 @@ const useUpdateUserId = (): boolean => {
     queryName: 'getUserTokens'
   });
 
+  console.log(loading, data);
+
   const userId: string = data?.userId;
 
   useEffect(() => {

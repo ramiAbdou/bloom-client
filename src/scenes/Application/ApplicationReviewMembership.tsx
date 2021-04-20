@@ -30,6 +30,8 @@ const ApplicationReviewMembership: React.FC = () => {
   );
 
   const { data: memberType, loading } = useFindOne(IMemberType, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     where: { amount: { _gt: 0 }, communityId, name: selectedTypeName }
   });
 
