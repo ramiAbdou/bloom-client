@@ -1,4 +1,5 @@
 import pluralize from 'pluralize';
+import { communityIdVar, directorySearchStringVar } from 'src/reactive';
 
 import { InMemoryCache } from '@apollo/client';
 import {
@@ -20,7 +21,6 @@ import {
   ISupporter,
   IUser
 } from '@core/db/db.entities';
-import { directorySearchStringVar } from './scenes/Directory/Directory.reactive';
 
 /**
  * Resolves the Apollo Client query so that once an entity is fetched, if we
@@ -50,6 +50,7 @@ const cache: InMemoryCache = new InMemoryCache({
       fields: {
         applications: resolveReadQuery(IApplication),
         communities: resolveReadQuery(ICommunity),
+        communityId: { read: (): string => communityIdVar() },
         communityIntegrations: resolveReadQuery(ICommunityIntegrations),
         directorySearchString: {
           read: (): string => `%${directorySearchStringVar()}%`

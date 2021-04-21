@@ -2,6 +2,7 @@ import { ActionCreator } from 'easy-peasy';
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { communityIdVar, eventIdVar } from 'src/reactive';
 
 import Show from '@components/containers/Show';
 import { EventPrivacy, IEvent } from '@core/db/db.entities';
@@ -128,6 +129,9 @@ const IndividualEvent: React.FC = () => {
         communityId: event.community.id,
         eventId: event.id
       });
+
+      communityIdVar(event.community.id);
+      eventIdVar(event.id);
     }
   }, [event]);
 

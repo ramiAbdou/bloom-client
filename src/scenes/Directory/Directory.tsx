@@ -7,15 +7,10 @@ import ListStore from '@components/organisms/List/List.store';
 import ListFilterStore from '@components/organisms/List/ListFilter/ListFilter.store';
 import PanelLocal from '@components/organisms/Panel/PanelLocal';
 import { IMember } from '@core/db/db.entities';
-import { useStoreState } from '@core/store/Store';
 import DirectoryActionRow from './DirectoryActionRow';
 import DirectoryCard from './DirectoryCard';
 import DirectoryCardList from './DirectoryCardList';
 import DirectoryHeader from './DirectoryHeader';
-
-interface GetMembersByCommunityIdArgs {
-  communityId: string;
-}
 
 interface GetMembersByCommunityIdResult {
   directorySearchString: string;
@@ -28,6 +23,7 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
     $searchStringWord: String!
     $searchStringStarting: String!
   ) {
+    communityId @client @export(as: "communityId")
     directorySearchString @client @export(as: "searchStringWord")
     directorySearchStringStarting @client @export(as: "searchStringStarting")
 
@@ -55,16 +51,9 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
 `;
 
 const DirectoryContent: React.FC = () => {
-  const communityId: string = useStoreState(({ db }) => db.communityId);
-
-  const { data, loading } = useQuery<
-    GetMembersByCommunityIdResult,
-    GetMembersByCommunityIdArgs
-  >(GET_MEMBERS_BY_COMMUNITY_ID, {
-    variables: { communityId }
-  });
-
-  const members: IMember[] = data?.members ?? [];
+  const { data, loading } = useQuery<GetMembersByCommunityIdResult>(
+    GET_MEMBERS_BY_COMMUNITY_ID
+  );
 
   return (
     <MainContent>

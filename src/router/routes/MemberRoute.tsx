@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { communityIdVar, memberIdVar } from 'src/reactive';
 
 import { IMember } from '@core/db/db.entities';
 import { useStoreActions, useStoreState } from '@core/store/Store';
@@ -48,6 +49,9 @@ const MemberRoute: React.FC<MemberRouteProps> = ({
         communityId: member.community.id,
         memberId: member.id
       });
+
+      communityIdVar(member.community.id);
+      memberIdVar(member.id);
 
       // As we set the active entities, we must also update the document
       // colors with the community's primary color.
