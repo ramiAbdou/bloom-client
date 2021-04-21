@@ -4,25 +4,43 @@ $PREF: 'c-btn';
 
 .#{$PREF} {
   @extend .flex-acc;
-  
+
   border-radius: $xxs;
   transition: transform 0.2s ease-out;
 
   &:not(:disabled, &--white) {
-    @include HOVER { opacity: 0.8; }
-    &:active { transform: scale(0.95); transition: transform 0.2s ease-out; }
+    @include HOVER {
+      opacity: 0.8;
+    }
+
+    &:active {
+      transform: scale(0.95);
+      transition: transform 0.2s ease-out;
+    }
   }
 
-  &:disabled { cursor: not-allowed; }
+  &:disabled {
+    cursor: not-allowed;
+  }
 
-  &--fill { width: 100%; }
-  &--fit { width: fit-content; }
-  &--lg { height: $xl; }
+  &--fill {
+    width: 100%;
+  }
+
+  &--fit {
+    width: fit-content;
+  }
+
+  &--lg {
+    height: $xl;
+  }
 }
 
 // ## LOADING STATE - Includes the loading text as well as the Spinner.
 
-.#{$PREF}-loading-ctr { @extend .flex-acc; }
+.#{$PREF}-loading-ctr {
+  @extend .flex-acc;
+}
 .#{$PREF}-loading-ctr > p {
   @extend .meta--lg;
 
@@ -51,12 +69,23 @@ $PREF: 'c-btn';
 
 .#{$PREF}--secondary {
   @extend .meta--lg;
-  
+
   padding: $xs $sm;
 
-  &:not(&--red) { border: 1px $primary solid; color: $primary; }
-  &:disabled { border: 1px $gray-4 solid; color: $gray-4; }
-  &--red { border: 1px $red solid; color: $red; }
+  &:not(&--red) {
+    border: 1px $primary solid;
+    color: $primary;
+  }
+
+  &:disabled {
+    border: 1px $gray-4 solid;
+    color: $gray-4;
+  }
+
+  &--red {
+    border: 1px $red solid;
+    color: $red;
+  }
 }
 
 // ## TERTIARY BUTTON
@@ -67,9 +96,34 @@ $PREF: 'c-btn';
   color: $primary;
   padding: $xs $sm;
   text-decoration: underline;
-  
-  @include PRIMARY_HOVER;
-  @include HOVER { border-radius: $xxs; }
 
-  > svg { color: $primary; margin-left: $xs; }
+  @include PRIMARY_HOVER;
+  @include HOVER {
+    border-radius: $xxs;
+  }
+
+  > svg {
+    color: $primary;
+    margin-left: $xs;
+  }
+}
+
+// ## QUICK FILTER
+
+.#{$PREF}--quick-filter {
+  @extend .f;
+  @extend .f-ac;
+  @extend .meta;
+
+  background-color: $primary-bg;
+  border: 1px rgba($color: $primary-hex, $alpha: 0.3) solid;
+  border-radius: $sm;
+  padding: 6px;
+  text-align: left;
+  width: max-content;
+
+  &--active {
+    background-color: $primary;
+    color: white;
+  }
 }

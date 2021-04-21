@@ -12,13 +12,6 @@ export interface ListFilterArgs extends ValueProps {
   questionId: string;
 }
 
-// ## LIST QUICK FILTER
-
-export type ListQuickFilterArgs<T = any> = {
-  filterId: string;
-  filter: (row: T) => boolean;
-};
-
 // ## LIST MODEL
 
 export interface ListFilterModel {

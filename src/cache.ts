@@ -1,5 +1,9 @@
 import pluralize from 'pluralize';
-import { communityIdVar, directorySearchStringVar } from 'src/reactive';
+import {
+  communityIdVar,
+  directoryIsAdminsOnlyVar,
+  directorySearchStringVar
+} from 'src/reactive';
 
 import { InMemoryCache } from '@apollo/client';
 import {
@@ -52,6 +56,9 @@ const cache: InMemoryCache = new InMemoryCache({
         communities: resolveReadQuery(ICommunity),
         communityId: { read: (): string => communityIdVar() },
         communityIntegrations: resolveReadQuery(ICommunityIntegrations),
+        directoryIsAdminsOnly: {
+          read: (): boolean => directoryIsAdminsOnlyVar()
+        },
         directorySearchString: {
           read: (): string => `%${directorySearchStringVar()}%`
         },

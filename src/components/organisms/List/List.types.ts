@@ -4,8 +4,7 @@ import { MatchSorterOptions } from 'match-sorter';
 import { ClassNameProps } from '@util/constants';
 import {
   ListFilterArgs,
-  ListFilterFunction,
-  ListQuickFilterArgs
+  ListFilterFunction
 } from './ListFilter/ListFilter.types';
 
 // ## PREPARE FOR FILTER
@@ -33,7 +32,6 @@ export interface ListModel<T = any> {
   removeFilter: Action<ListModel<T>, string>;
   searchString: string;
   setCustomFilters: Action<ListModel<T>, Record<string, ListFilterArgs>>;
-  setFilter: Action<ListModel<T>, ListQuickFilterArgs>;
   setItems: Action<ListModel<T>, T[]>;
   setOptions: Action<ListModel<T>, MatchSorterOptions<T>>;
   setSearchString: Action<ListModel<T>, string>;

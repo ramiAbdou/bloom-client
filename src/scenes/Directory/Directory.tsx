@@ -13,6 +13,7 @@ import DirectoryCardList from './DirectoryCardList';
 import DirectoryHeader from './DirectoryHeader';
 
 interface GetMembersByCommunityIdResult {
+  directoryIsAdminsOnly: boolean;
   directorySearchString: string;
   members: IMember[];
 }
@@ -20,12 +21,35 @@ interface GetMembersByCommunityIdResult {
 const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
   query GetMembersByCommunityId(
     $communityId: String!
+    $isAdminsOnly: Boolean! = false
     $searchStringWord: String!
     $searchStringStarting: String!
   ) {
     communityId @client @export(as: "communityId")
+    directoryIsAdminsOnly @client @export(as: "isAdminsOnly")
     directorySearchString @client @export(as: "searchStringWord")
     directorySearchStringStarting @client @export(as: "searchStringStarting")
+
+    members(
+      where: {
+        _and: [
+          { communityId: { _eq: $communityId } }
+          { role: { _in: ["Admin", "Owner"] } }
+          { status: { _eq: "Accepted" } }
+          {
+            _or: [
+              { bio: { _ilike: $searchStringWord } }
+              { email: { _ilike: $searchStringWord } }
+              { firstName: { _ilike: $searchStringStarting } }
+              { lastName: { _ilike: $searchStringStarting } }
+            ]
+          }
+        ]
+      }
+      order_by: { joinedAt: desc }
+    ) @include(if: $isAdminsOnly) {
+      ...DirectoryCardFragment
+    }
 
     members(
       where: {
@@ -43,10 +67,11 @@ const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
         ]
       }
       order_by: { joinedAt: desc }
-    ) {
+    ) @skip(if: $isAdminsOnly) {
       ...DirectoryCardFragment
     }
   }
+
   ${DirectoryCard.fragments.data}
 `;
 
@@ -54,6 +79,8 @@ const DirectoryContent: React.FC = () => {
   const { data, loading } = useQuery<GetMembersByCommunityIdResult>(
     GET_MEMBERS_BY_COMMUNITY_ID
   );
+
+  console.log(data?.members?.length);
 
   return (
     <MainContent>

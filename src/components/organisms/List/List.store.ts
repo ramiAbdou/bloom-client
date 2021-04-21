@@ -2,7 +2,6 @@ import { action, createContextStore, State } from 'easy-peasy';
 
 import { ListModel } from './List.types';
 import { getListCacheKey, runListFilters } from './List.util';
-import { ListQuickFilterArgs } from './ListFilter/ListFilter.types';
 
 const listStateModel: State<ListModel> = {
   cacheKey: null,
@@ -35,21 +34,6 @@ const listModel: ListModel = {
 
   setCustomFilters: action((state, customFilters) => {
     const updatedState: State<ListModel> = { ...state, customFilters };
-
-    return {
-      ...updatedState,
-      cacheKey: getListCacheKey(updatedState),
-      filteredItems: runListFilters(updatedState)
-    };
-  }),
-
-  setFilter: action((state, { filterId, filter }: ListQuickFilterArgs) => {
-    const updatedFilters = { ...state.filters, [filterId]: filter };
-
-    const updatedState: State<ListModel> = {
-      ...state,
-      filters: updatedFilters
-    };
 
     return {
       ...updatedState,
