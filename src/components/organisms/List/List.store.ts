@@ -11,7 +11,6 @@ const listStateModel: State<ListModel> = {
   filters: {},
   items: [],
   options: null,
-  prepareForFilter: null,
   searchString: null
 };
 
@@ -65,10 +64,6 @@ const listModel: ListModel = {
 
   setOptions: action((state, options) => {
     return { ...state, options };
-  }),
-
-  setPrepareForFilter: action((state, prepareForFilter) => {
-    return { ...state, prepareForFilter };
   }),
 
   setSearchString: action((state, searchString) => {

@@ -23,13 +23,9 @@ export const runListFilters = (state: State<ListModel>): any[] => {
     ?.filter((entity) => {
       const customFilters = Object.values(state.customFilters);
 
-      const preparedEntity = state.prepareForFilter
-        ? state.prepareForFilter(entity)
-        : entity;
-
       return customFilters.every(
         ({ questionId, value: values }: ListFilterArgs) => {
-          const value = preparedEntity[questionId];
+          const value = entity[questionId];
           return values?.includes(value);
         }
       );

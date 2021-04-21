@@ -8,13 +8,14 @@ import ListFilterStore from '@components/organisms/List/ListFilter/ListFilter.st
 import PanelLocal from '@components/organisms/Panel/PanelLocal';
 import { IMember } from '@core/db/db.entities';
 import { useStoreState } from '@core/store/Store';
-import DirectoryActions from './DirectoryActions';
+import DirectoryActionRow from './DirectoryActionRow';
 import DirectoryCard from './DirectoryCard';
 import DirectoryCardList from './DirectoryCardList';
 import DirectoryHeader from './DirectoryHeader';
 
 interface GetMembersByCommunityIdArgs {
   communityId: string;
+  searchString: string;
 }
 
 interface GetMembersByCommunityIdResult {
@@ -22,36 +23,59 @@ interface GetMembersByCommunityIdResult {
 }
 
 const GET_MEMBERS_BY_COMMUNITY_ID: DocumentNode = gql`
-  query GetMembersByCommunityId($communityId: String!) {
-    members(where: { communityId: { _eq: $communityId } }) {
+  query GetMembersByCommunityId($communityId: String!, $searchString: String!) {
+    members(
+      where: {
+        _and: [
+          { communityId: { _eq: $communityId } }
+          { status: { _eq: "Accepted" } }
+          {
+            _or: [
+              { bio: { _ilike: $searchString } }
+              { email: { _ilike: $searchString } }
+              { firstName: { _ilike: $searchString } }
+              { lastName: { _ilike: $searchString } }
+            ]
+          }
+        ]
+      }
+      order_by: { joinedAt: desc }
+    ) {
       ...DirectoryCardFragment
     }
   }
   ${DirectoryCard.fragments.data}
 `;
 
-const Directory: React.FC = () => {
+const DirectoryContent: React.FC = () => {
   const communityId: string = useStoreState(({ db }) => db.communityId);
+  const searchString = ListStore.useStoreState((state) => state.searchString);
 
   const { data, loading } = useQuery<
     GetMembersByCommunityIdResult,
     GetMembersByCommunityIdArgs
-  >(GET_MEMBERS_BY_COMMUNITY_ID, { variables: { communityId } });
+  >(GET_MEMBERS_BY_COMMUNITY_ID, {
+    variables: { communityId, searchString: `%${searchString}%` }
+  });
 
   return (
-    <Scene>
-      <ListStore.Provider>
-        <ListFilterStore.Provider>
-          <MainContent>
-            <DirectoryHeader loading={loading} />
-            {!loading && <DirectoryActions />}
-            {!loading && <DirectoryCardList data={data?.members ?? []} />}
-            <PanelLocal />
-          </MainContent>
-        </ListFilterStore.Provider>
-      </ListStore.Provider>
-    </Scene>
+    <MainContent>
+      <DirectoryHeader loading={loading} />
+      <DirectoryActionRow />
+      {!loading && <DirectoryCardList data={data?.members ?? []} />}
+    </MainContent>
   );
 };
+
+const Directory: React.FC = () => (
+  <Scene>
+    <ListStore.Provider>
+      <ListFilterStore.Provider>
+        <DirectoryContent />
+        <PanelLocal />
+      </ListFilterStore.Provider>
+    </ListStore.Provider>
+  </Scene>
+);
 
 export default Directory;

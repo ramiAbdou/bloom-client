@@ -36,10 +36,6 @@ const DirectoryCard: ComponentWithFragments<IMember> = ({ data: member }) => {
 DirectoryCard.fragments = {
   data: gql`
     fragment DirectoryCardFragment on members {
-      bio
-      email
-      joinedAt
-      status
       ...DirectoryCardFullNameFragment
       ...DirectoryCardPictureFragment
       ...DirectoryCardPositionFragment

@@ -11,10 +11,9 @@ function List<T>({
   emptyMessage,
   render: ListItem,
   items,
-  options,
-  prepareForFilter
+  options
 }: ListProps<T>): JSX.Element {
-  useInitList({ items, options, prepareForFilter });
+  useInitList({ items, options });
 
   const filteredItems = ListStore.useStoreState((state) => state.filteredItems);
 

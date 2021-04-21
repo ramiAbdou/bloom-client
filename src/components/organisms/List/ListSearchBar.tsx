@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import SearchBar, { SearchBarProps } from '@components/molecules/SearchBar/SearchBar';
+import SearchBar, {
+  SearchBarProps
+} from '@components/molecules/SearchBar/SearchBar';
 import { cx } from '@util/util';
 import ListStore from './List.store';
 
@@ -8,7 +10,11 @@ const ListSearchBar: React.FC<Omit<SearchBarProps, 'onChange'>> = ({
   className,
   ...props
 }) => {
-  const [value, setValue] = useState<string>('');
+  const searchString: string = ListStore.useStoreState(
+    (state) => state.searchString
+  );
+
+  const [value, setValue] = useState<string>(searchString ?? '');
 
   const setSearchString = ListStore.useStoreActions(
     (state) => state.setSearchString
